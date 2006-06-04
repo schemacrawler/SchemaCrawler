@@ -1,0 +1,11 @@
+<?xml version="1.0"?><project>
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>schemacrawler</groupId>
+    <artifactId>schemacrawler-all</artifactId>
+    <version>3.7</version>
+  </parent>
+  <groupId>schemacrawler</groupId>
+  <artifactId>dbconnector</artifactId>
+  <name>Database Connector</name>
+</project>

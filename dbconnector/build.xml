@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="dbconnector" default="build" basedir=".">
+
+  <path id="project.classpath">
+		<pathelement location="target/test-classes" />
+		<pathelement location="target/classes" />
+	</path>
+
+  <target name="init">
+		<mkdir dir="target/classes" />
+	</target>
+
+  <target name="clean">
+		<delete dir="target" />
+	</target>
+
+  <target name="build" depends="init">
+
+		<echo message="${ant.project.name}: ${ant.file}" />
+
+		<javac destdir="target/classes">
+			<src path="src/main/java" />
+			<src path="src/main/resources" />
+			<exclude name="*.java" />
+			<classpath refid="project.classpath" />
+		</javac>
+
+    <copy todir="target/classes">
+       <fileset dir="src/main/resources"/>
+    </copy>
+
+	</target>
+
+	<target name="package"/>
+
+</project>
