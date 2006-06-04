@@ -1,0 +1,28 @@
+Examples
+
+  Several examples on how to use SchemaCrawler on the command line, as an ant task, or as an API, as well as how to use the Velocity (templating) and JUNG (graphing) integrations are provided in the _distrib/examples directory.
+
+JDBC Drivers
+
+  * Microsoft SQL Server - {{{http://sourceforge.net/projects/jtds/} jTDS driver}}
+
+  * MySQL -  {{{http://sourceforge.net/projects/mmmysql/} MM.MySQL driver}}
+
+  * CSV Files - {{{http://csvjdbc.sourceforge.net/} CsvJdbc driver}}
+
+  * Oracle - {{{http://www.oracle.com/technology/software/tech/java/sqlj_jdbc/index.html} Oracle driver}}
+
+Build
+
+* Ant Build
+
+  The ant build is a quick build that builds the SchemaCrawler jar without compiling and running unit tests. Download {{{http://ant.apache.org/} ant}}, and run it from the SchemaCrawler directory. The jar file will be created in the _distrib directory. The main targets are all.build and all.clean.
+
+* Maven Build
+
+  The maven build is a more comprehensive build that runs unit tests, and also creates the project web-site. Download {{{http://maven.apache.org/} Maven 2.0}}, and run the package goal from the SchemaCrawler directory. The jar file will be created in the _distrib directory.
+
+
+* Eclipse
+
+  SchemaCrawler consists of three Eclipse projects, dbconnector, schemacrawler, and integrations. Since each depends on the other before it, you will need to import all the projects into Eclipse. You will need to define two Eclipse Java Classpath Variables, MAVEN_REPO to point to the Maven 2.0 repository, and SchemaCrawlerHome to point to the top level directory of the SchemaCrawler source.

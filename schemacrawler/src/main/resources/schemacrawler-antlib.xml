@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<antlib>
+
+  <macrodef name="schemacrawler">
+
+    <!-- Attributes -->
+    <attribute name="config" default="schemacrawler.config.properties"/>
+    <attribute name="config-override" default="schemacrawler.config.override.properties"/>
+
+    <attribute name="datasource"/>
+    <attribute name="db-driver-classpath" default="${db-driver-classpath}"/>
+
+    <attribute name="command"/>
+
+    <attribute name="no-header" default="false"/>
+    <attribute name="no-footer" default="false"/>
+    <attribute name="no-info" default="false"/>
+
+    <attribute name="outputformat" default="text"/>
+    <attribute name="outputfile"/>
+    <attribute name="append" default="false"/>
+
+    <sequential>
+
+      <!-- Required properties: -->
+      <property name="schemacrawler.dir" value="${basedir}"/>
+
+      <java
+        taskname="schemacrawler-@{command}"
+        classname="schemacrawler.Main"
+        logerror="true"
+        failonerror="true">
+        <classpath>
+          <fileset dir="${schemacrawler.dir}">
+            <include name="*.jar"/>
+          </fileset>
+          <path refid="@{db-driver-classpath}"/>
+        </classpath>
+        <arg value="-g"/>
+        <arg value="@{config}"/>
+        <arg value="-p"/>
+        <arg value="@{config-override}"/>
+        <arg value="-c"/>
+        <arg value="@{datasource}"/>
+        <arg value="-command"/>
+        <arg value="@{command}"/>
+        <arg value="-noheader=@{no-header}"/>
+        <arg value="-nofooter=@{no-footer}"/>
+        <arg value="-noinfo=@{no-info}"/>
+        <arg value="-outputformat"/>
+        <arg value="@{outputformat}"/>
+        <arg value="-outputfile"/>
+        <arg value="@{outputfile}"/>
+        <arg value="-append"/>  
+        <arg value="@{append}"/>              
+      </java>
+    </sequential>
+
+  </macrodef>
+
+</antlib>
