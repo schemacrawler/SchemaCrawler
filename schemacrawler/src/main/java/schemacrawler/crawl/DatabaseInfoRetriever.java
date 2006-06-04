@@ -1,0 +1,422 @@
+/* 
+ *
+ * SchemaCrawler
+ * http://sourceforge.net/projects/schemacrawler
+ * Copyright (c) 2000-2006, Sualeh Fatehi.
+ *
+ * This library is free software; you can redistribute it and/or modify it under the terms
+ * of the GNU Lesser General Public License as published by the Free Software Foundation;
+ * either version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * Boston, MA 02111-1307, USA.
+ *
+ */
+
+package schemacrawler.crawl;
+
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import schemacrawler.schema.ColumnDataType;
+
+/**
+ * SchemaRetriever uses database metadata to get the details about the schema.
+ * 
+ * @author sfatehi
+ */
+final class DatabaseInfoRetriever
+  extends AbstractRetriever
+{
+
+  private static final Logger LOGGER = Logger
+    .getLogger(DatabaseInfoRetriever.class.getName());
+
+  /**
+   * Constructs a SchemaCrawler object, from a connection.
+   * 
+   * @param connection
+   *          An open database connection.
+   * @param driverClassName
+   *          Class name of the JDBC driver
+   * @param schemaPatternString
+   *          JDBC schema pattern, or null
+   * @throws SQLException
+   *           On a SQL exception
+   */
+  DatabaseInfoRetriever(final RetrieverConnection retrieverConnection)
+    throws SQLException
+  {
+    super(retrieverConnection);
+  }
+
+  /**
+   * Provides information on the database.
+   * 
+   * @return Database information
+   * @throws SQLException
+   *           On a SQL exception
+   */
+  MutableDatabaseInfo retrieveDatabaseInfo()
+    throws SQLException
+  {
+    DatabaseMetaData dbMetaData = getRetrieverConnection().getMetaData();
+    final String url = dbMetaData.getURL();
+    String jdbcDriverClassName;
+    try
+    {
+      jdbcDriverClassName = DriverManager.getDriver(url).getClass().getName();
+    }
+    catch (final SQLException e)
+    {
+      jdbcDriverClassName = "";
+    }
+
+    final MutableDatabaseInfo dbInfo = new MutableDatabaseInfo();
+
+    dbInfo.setProductName(dbMetaData.getDatabaseProductName());
+    dbInfo.setProductVersion(dbMetaData.getDatabaseProductVersion());
+    dbInfo.setDriverName(dbMetaData.getDriverName());
+    dbInfo.setDriverVersion(dbMetaData.getDriverVersion());
+    dbInfo.setConnectionUrl(dbMetaData.getURL());
+    dbInfo.setCatalog(dbMetaData.getConnection().getCatalog());
+    dbInfo.setJdbcDriverClassName(jdbcDriverClassName);
+    dbInfo.setSchemaPattern(getRetrieverConnection().getSchemaPattern());
+    dbInfo.setJdbcDriverClassName(getRetrieverConnection()
+      .getJdbcDriverClassName());
+
+    return dbInfo;
+  }
+
+  /**
+   * Provides additional information on the database.
+   * 
+   * @param dbInfo
+   *          Database information to add to
+   * @return Database information
+   * @throws SQLException
+   *           On a SQL exception
+   */
+  void retrieveAdditionalDatabaseInfo(final MutableDatabaseInfo dbInfo)
+    throws SQLException
+  {
+    final DatabaseMetaData dbMetaData = getRetrieverConnection().getMetaData();
+    final SortedMap dbProperties = new TreeMap();
+    try
+    {
+      final Method[] methods = DatabaseMetaData.class.getMethods();
+      for (int i = 0; i < methods.length; i++)
+      {
+        final Method method = methods[i];
+        if (isDatabasePropertyMethod(method))
+        {
+          String name = derivePropertyName(method);
+          Object value = method.invoke(dbMetaData, new Object[0]);
+          if (value != null && name.endsWith("s") && value instanceof String)
+          {
+            // Probably a comma-separated list
+            value = Collections.unmodifiableList(Arrays.asList(((String) value)
+              .split(",")));
+          }
+          // Add to the properties map
+          dbProperties.put(name, value);
+        }
+        else if (isDatabasePropertiesResultSetMethod(method))
+        {
+          String name = derivePropertyName(method);
+          ResultSet results = (ResultSet) method.invoke(dbMetaData,
+                                                        new Object[0]);
+          dbProperties.put(name, readResultsVector(results));
+        }
+        else if (isDatabasePropertyResultSetType(method))
+        {
+          retrieveResultSetTypeProperty(dbMetaData,
+                                        dbProperties,
+                                        method,
+                                        ResultSet.TYPE_FORWARD_ONLY,
+                                        "TypeForwardOnly");
+          retrieveResultSetTypeProperty(dbMetaData,
+                                        dbProperties,
+                                        method,
+                                        ResultSet.TYPE_SCROLL_INSENSITIVE,
+                                        "TypeScrollInsensitive");
+          retrieveResultSetTypeProperty(dbMetaData,
+                                        dbProperties,
+                                        method,
+                                        ResultSet.TYPE_SCROLL_SENSITIVE,
+                                        "TypeScrollSensitive");
+        }
+      }
+    }
+    catch (final IllegalAccessException e)
+    {
+      LOGGER.log(Level.WARNING, e.getMessage(), e);
+    }
+    catch (final IllegalArgumentException e)
+    {
+      LOGGER.log(Level.WARNING, e.getMessage(), e);
+    }
+    catch (final InvocationTargetException e)
+    {
+      LOGGER.log(Level.WARNING, e.getMessage(), e);
+    }
+
+    dbInfo.setProperties(dbProperties);
+  }
+
+  private void retrieveResultSetTypeProperty(final DatabaseMetaData dbMetaData,
+                                             final SortedMap dbProperties,
+                                             final Method method,
+                                             final int resultSetType,
+                                             final String resultSetTypeName)
+    throws IllegalAccessException, InvocationTargetException
+  {
+    String name = derivePropertyName(method) + "ResultSet" + resultSetTypeName;
+    Boolean propertyValue = null;
+    propertyValue = (Boolean) method.invoke(dbMetaData, new Object[] {
+      new Integer(resultSetType)
+    });
+    dbProperties.put(name, propertyValue);
+  }
+
+  /**
+   * Derives the property name from the method name.
+   * 
+   * @param method
+   *          Method
+   * @return Method name
+   */
+  private String derivePropertyName(final Method method)
+  {
+    final String get = "get";
+    String name = method.getName();
+    if (name.startsWith(get))
+    {
+      name = name.substring(get.length());
+    }
+    // Capitalize the first letter
+    name = name.substring(0, 1).toUpperCase() + name.substring(1);
+    return name;
+  }
+
+  /**
+   * Checks if a method should be converted to a database property.
+   * 
+   * @param method
+   * @return
+   */
+  private boolean isDatabasePropertyMethod(final Method method)
+  {
+    Class returnType = method.getReturnType();
+    boolean notPropertyMethod = returnType.equals(ResultSet.class)
+                                || returnType.equals(Connection.class)
+                                || method.getParameterTypes().length > 0;
+    return !notPropertyMethod;
+  }
+
+  /**
+   * Checks if a method should be converted to a database property.
+   * 
+   * @param method
+   * @return
+   */
+  private boolean isDatabasePropertiesResultSetMethod(final Method method)
+  {
+    Class returnType = method.getReturnType();
+    boolean isPropertiesResultSetMethod = returnType.equals(ResultSet.class)
+                                          && method.getParameterTypes().length == 0;
+    return isPropertiesResultSetMethod;
+  }
+
+  /**
+   * Checks if a method should be converted to a database property.
+   * 
+   * @param method
+   * @return
+   */
+  private boolean isDatabasePropertyResultSetType(final Method method)
+  {
+    final List resultSetTypeMethods = Arrays.asList(new String[] {
+      "deletesAreDetected",
+      "insertsAreDetected",
+      "updatesAreDetected",
+      "othersDeletesAreVisible",
+      "othersInsertsAreVisible",
+      "othersUpdatesAreVisible",
+      "ownDeletesAreVisible",
+      "ownInsertsAreVisible",
+      "ownUpdatesAreVisible",
+      "supportsResultSetType"
+    });
+    boolean isDatabasePropertyResultSetType = resultSetTypeMethods
+      .contains(method.getName());
+    return isDatabasePropertyResultSetType;
+  }
+
+  /**
+   * Reads a single column result set as a list.
+   * 
+   * @param results
+   *          Result set
+   * @return List
+   * @throws SQLException
+   */
+  private List readResultsVector(final ResultSet results)
+    throws SQLException
+  {
+    List values = new ArrayList();
+    try
+    {
+      while (results.next())
+      {
+        final String value = results.getString(1);
+        values.add(value);
+      }
+    }
+    finally
+    {
+      results.close();
+    }
+    return values;
+  }
+
+  /**
+   * Retrieves type metadata.
+   * 
+   * @param dbInfo
+   *          Database info
+   * @return A list of type in the database
+   * @throws SQLException
+   *           On a SQL exception
+   */
+  void retrieveColumnDataTypes(final MutableDatabaseInfo dbInfo)
+    throws SQLException
+  {
+    LOGGER.entering(this.getClass().getName(),
+                    "retrieveColumnDataTypes",
+                    new Object[] {
+                      dbInfo
+                    });
+
+    final ResultSet results = getRetrieverConnection().getMetaData()
+      .getTypeInfo();
+    try
+    {
+      while (results.next())
+      {
+        final String typeName = results.getString("TYPE_NAME");
+        final int type = results.getInt("DATA_TYPE");
+        final int precision = results.getInt("PRECISION");
+        final String literalPrefix = results.getString("LITERAL_PREFIX");
+        final String literalSuffix = results.getString("LITERAL_SUFFIX");
+        final String createParameters = results.getString("CREATE_PARAMS");
+        final boolean isNullable = results.getInt(NULLABLE) == DatabaseMetaData.typeNullable;
+        final boolean isCaseSensitive = results.getBoolean("CASE_SENSITIVE");
+        final int searchable = results.getInt("SEARCHABLE");
+        final boolean isUnsigned = results.getBoolean("UNSIGNED_ATTRIBUTE");
+        final boolean isFixedPrecisionScale = results
+          .getBoolean("FIXED_PREC_SCALE");
+        final boolean isAutoIncremented = results.getBoolean("AUTO_INCREMENT");
+        final String localTypeName = results.getString("LOCAL_TYPE_NAME");
+        final int minimumScale = results.getInt("MINIMUM_SCALE");
+        final int maximumScale = results.getInt("MAXIMUM_SCALE");
+        final int numPrecisionRadix = results.getInt("NUM_PREC_RADIX");
+
+        final MutableColumnDataType columnDataType = new MutableColumnDataType();
+        columnDataType.setName(typeName);
+        columnDataType.setType(type);
+        columnDataType.setPrecision(precision);
+        columnDataType.setLiteralPrefix(literalPrefix);
+        columnDataType.setLiteralSuffix(literalSuffix);
+        columnDataType.setCreateParameters(createParameters);
+        columnDataType.setNullable(isNullable);
+        columnDataType.setCaseSensitive(isCaseSensitive);
+        columnDataType.setSearchable(searchable);
+        columnDataType.setUnsigned(isUnsigned);
+        columnDataType.setFixedPrecisionScale(isFixedPrecisionScale);
+        columnDataType.setAutoIncrementable(isAutoIncremented);
+        columnDataType.setLocalTypeName(localTypeName);
+        columnDataType.setMinimumScale(minimumScale);
+        columnDataType.setMaximumScale(maximumScale);
+        columnDataType.setNumPrecisionRadix(numPrecisionRadix);
+
+        dbInfo.addColumnDataType(columnDataType);
+      }
+    }
+    finally
+    {
+      results.close();
+    }
+
+  }
+
+  /**
+   * Retrieves type metadata.
+   * 
+   * @param dbInfo
+   *          Database info
+   * @return A list of type in the database
+   * @throws SQLException
+   *           On a SQL exception
+   */
+  void retrieveUserDefinedColumnDataTypes(final MutableDatabaseInfo dbInfo)
+    throws SQLException
+  {
+    LOGGER.entering(this.getClass().getName(),
+                    "retrieveUserDefinedColumnDataTypes",
+                    new Object[] {
+                      dbInfo
+                    });
+
+    final ResultSet results = getRetrieverConnection().getMetaData()
+      .getUDTs(getRetrieverConnection().getCatalog(),
+               getRetrieverConnection().getSchemaPattern(),
+               "%",
+               null);
+    try
+    {
+      while (results.next())
+      {
+        final String typeName = results.getString("TYPE_NAME");
+        final int type = results.getInt("DATA_TYPE");
+        final String className = results.getString("CLASS_NAME");
+        final String remarks = results.getString("REMARKS");
+        final int baseTypeValue = results.getInt("BASE_TYPE");
+        ColumnDataType baseType = dbInfo.lookupByType(baseTypeValue);
+        final MutableColumnDataType columnDataType = new MutableColumnDataType();
+        columnDataType.setUserDefined(true);
+        columnDataType.setName(typeName);
+        columnDataType.setType(type);
+        columnDataType.setTypeClassName(className);
+        columnDataType.setBaseType(baseType);
+        columnDataType.setRemarks(remarks);
+
+        dbInfo.addColumnDataType(columnDataType);
+      }
+    }
+    finally
+    {
+      results.close();
+    }
+
+  }
+}
