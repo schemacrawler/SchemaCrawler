@@ -1,0 +1,4 @@
+#foreach($table in $schema.tables)- $table
+#foreach($column in $table.columns) - $column
+#end
+#end

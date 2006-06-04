@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<antlib>
+
+  <macrodef name="schemacrawler-velocity">
+
+    <!-- Attributes -->
+    <attribute name="config" default="schemacrawler.config.properties"/>
+    <attribute name="config-override" default="schemacrawler.config.override.properties"/>
+
+    <attribute name="datasource"/>
+    <attribute name="db-driver-classpath" default="${db-driver-classpath}"/>
+
+    <attribute name="velocity-classpath" default="${velocity-classpath}"/>
+
+    <attribute name="command"/>
+
+    <attribute name="template"/>
+    <attribute name="outputfile"/>
+
+    <sequential>
+
+      <!-- Required properties: -->
+      <property name="schemacrawler.dir" value="${basedir}"/>
+
+      <java
+        taskname="schemacrawler-velocity"
+        classname="schemacrawler.tools.integration.velocity.Main"
+        logerror="true"
+        failonerror="true">
+        <classpath>
+          <fileset dir="${schemacrawler.dir}">
+            <include name="*.jar"/>
+          </fileset>
+          <path refid="@{db-driver-classpath}"/>
+		  <path refid="@{velocity-classpath}"/>
+        </classpath>
+        <arg value="-g"/>
+        <arg value="@{config}"/>
+        <arg value="-p"/>
+        <arg value="@{config-override}"/>
+        <arg value="-c"/>
+        <arg value="@{datasource}"/>
+        <arg value="-command"/>
+        <arg value="@{command}"/>
+        <arg value="-outputformat"/>
+        <arg value="@{template}"/>
+        <arg value="-outputfile"/>
+        <arg value="@{outputfile}"/>              
+      </java>
+    </sequential>
+
+  </macrodef>
+
+  <macrodef name="schemacrawler-graphing">
+
+    <!-- Attributes -->
+    <attribute name="config" default="schemacrawler.config.properties"/>
+    <attribute name="config-override" default="schemacrawler.config.override.properties"/>
+
+    <attribute name="datasource"/>
+    <attribute name="db-driver-classpath" default="${db-driver-classpath}"/>
+
+    <attribute name="graphing-classpath" default="${graphing-classpath}"/>
+
+    <attribute name="command"/>
+
+    <attribute name="graph-size"/>
+    <attribute name="outputfile"/>
+
+    <sequential>
+
+      <!-- Required properties: -->
+      <property name="schemacrawler.dir" value="${basedir}"/>
+
+      <java
+        taskname="schemacrawler-graphing"
+        classname="schemacrawler.tools.integration.jung.Main"
+        logerror="true"
+        failonerror="true">
+        <classpath>
+          <fileset dir="${schemacrawler.dir}">
+            <include name="*.jar"/>
+          </fileset>
+          <path refid="@{db-driver-classpath}"/>
+		  <path refid="@{graphing-classpath}"/>
+        </classpath>
+        <arg value="-g"/>
+        <arg value="@{config}"/>
+        <arg value="-p"/>
+        <arg value="@{config-override}"/>
+        <arg value="-c"/>
+        <arg value="@{datasource}"/>
+        <arg value="-command"/>
+        <arg value="@{command}"/>
+        <arg value="-outputformat"/>
+        <arg value="@{graph-size}"/>
+        <arg value="-outputfile"/>
+        <arg value="@{outputfile}"/>              
+      </java>
+    </sequential>
+
+  </macrodef>
+  
+</antlib>
