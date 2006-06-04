@@ -1,0 +1,131 @@
+------------------------------------------------------------------------
+-- database product: HSQL Database Engine 1.8.0
+-- driver: org.hsqldb.jdbcDriver - HSQL Database Engine Driver 1.8.0
+-- connection: jdbc:hsqldb:hsql://localhost:9001/schemacrawler
+-- catalog: 
+-- schema pattern: PUBLIC
+------------------------------------------------------------------------
+
+
+ABC                                                          [table]
+------------------------------------------------------------------------
+  COL1                              INTEGER                  primary key
+
+SYS_PK_52  [primary key]
+  COL1                              INTEGER                  primary key
+
+
+ABC1                                                          [view]
+------------------------------------------------------------------------
+  COL1                              INTEGER                       
+
+
+BAC                                                          [table]
+------------------------------------------------------------------------
+  COL1                              INTEGER                       
+  NEWCOL                            INTEGER                       
+  ANOTHERCOL                        INTEGER                       
+
+
+CUSTOMER                                                     [table]
+------------------------------------------------------------------------
+  ID                                INTEGER                  primary key
+  FIRSTNAME                         VARCHAR(2147483647)           
+  LASTNAME                          VARCHAR(2147483647)           
+  STREET                            VARCHAR(2147483647)           
+  CITY                              VARCHAR(2147483647)           
+
+SYS_PK_48  [primary key]
+  ID                                INTEGER                  primary key
+
+SYS_FK_1  [foreign key, on update no action]
+  ID --> INVOICE.CUSTOMERID
+
+
+INVOICE                                                      [table]
+------------------------------------------------------------------------
+  ID                                INTEGER                  primary key
+  CUSTOMERID                        INTEGER                       
+  TOTAL                             DECIMAL(646456993, 0)         
+
+SYS_PK_49  [primary key]
+  ID                                INTEGER                  primary key
+
+SYS_FK_1  [foreign key, on update no action]
+  CUSTOMER.ID --> CUSTOMERID
+
+SYS_FK_4  [foreign key, on update no action]
+  ID --> ITEM.INVOICEID
+
+SYS_USER_SYS_IDX_2_9  [non-unique ascending other index]
+  CUSTOMERID                        INTEGER                       
+
+SYS_IDX_50  [non-unique ascending other index]
+  CUSTOMERID                        INTEGER                       
+
+
+ITEM                                                         [table]
+------------------------------------------------------------------------
+  INVOICEID                         INTEGER                  primary key
+  ITEM                              INTEGER                  primary key
+  PRODUCTID                         INTEGER                       
+  QUANTITY                          INTEGER                       
+  COST                              DECIMAL(646456993, 0)         
+
+SYS_PK_46  [primary key]
+  INVOICEID                         INTEGER                  primary key
+  ITEM                              INTEGER                  primary key
+
+SYS_FK_4  [foreign key, on update no action]
+  INVOICE.ID --> INVOICEID
+
+SYS_FK_5  [foreign key, on update no action]
+  PRODUCT.ID --> PRODUCTID
+
+SYS_IDX_55  [non-unique ascending other index]
+  INVOICEID                         INTEGER                  primary key
+
+SYS_USER_SYS_IDX_6_1  [non-unique ascending other index]
+  INVOICEID                         INTEGER                  primary key
+
+SYS_IDX_57  [non-unique ascending other index]
+  PRODUCTID                         INTEGER                       
+
+SYS_USER_SYS_IDX_8_2  [non-unique ascending other index]
+  PRODUCTID                         INTEGER                       
+
+
+PRODUCT                                                      [table]
+------------------------------------------------------------------------
+  ID                                INTEGER                  primary key
+  NAME                              VARCHAR(2147483647)           
+  PRICE                             DECIMAL(646456993, 0)         
+
+SYS_PK_47  [primary key]
+  ID                                INTEGER                  primary key
+
+SYS_FK_5  [foreign key, on update no action]
+  ID --> ITEM.PRODUCTID
+
+
+TEST                                                         [table]
+------------------------------------------------------------------------
+  ID                                INTEGER                  primary key
+  FIRSTNAME                         VARCHAR(20)                   
+  NAME                              VARCHAR(50)                   
+  ZIP                               INTEGER                       
+
+SYS_PK_53  [primary key]
+  ID                                INTEGER                  primary key
+
+
+ABC                                                         3 rows
+ABC1                                                        3 rows
+BAC                                                          empty
+CUSTOMER                                                   50 rows
+INVOICE                                                    50 rows
+ITEM                                                      650 rows
+PRODUCT                                                    50 rows
+TEST                                                    1,000 rows
+
+8 tables

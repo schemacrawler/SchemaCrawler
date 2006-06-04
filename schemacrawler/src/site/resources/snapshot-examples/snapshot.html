@@ -1,0 +1,169 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE html
+     PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN'
+    'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+  <title>SchemaCrawler Output</title>
+  <style type='text/css'>
+    body, p, pre, table, th, td, caption {
+      text-align: left;
+      white-space: pre;
+      font-family: Trebuchet MS;
+      font-size: 11.0px;
+    }
+    table, th, td {
+      border: 1px solid silver;
+      border-collapse: collapse;
+      vertical-align: top;
+      padding: 2px;
+    }
+    table {
+      width: 500px;
+    }
+    caption {
+      font-style: bold;
+    }
+  </style>
+</head>
+<body>
+
+<pre id='databaseInfo'>
+-- database product: HSQL Database Engine 1.8.0
+-- driver: org.hsqldb.jdbcDriver - HSQL Database Engine Driver 1.8.0
+-- connection: jdbc:hsqldb:hsql://localhost:9001/schemacrawler
+-- catalog: 
+-- schema pattern: PUBLIC
+</pre>
+<table>
+  <tr><td colspan='2'><b>ABC</b></td><td colspan='2'>[table]</td></tr>
+  <tr><td></td><td>COL1</td><td>INTEGER</td><td>primary key</td></tr>
+
+  <tr><td colspan='2'><b>SYS_PK_52</b></td><td colspan='2'>[primary key]</td></tr>
+  <tr><td></td><td>COL1</td><td>INTEGER</td><td>primary key</td></tr>
+</table>
+<p></p>
+
+<table>
+  <tr><td colspan='2'><b>ABC1</b></td><td colspan='2'>[view]</td></tr>
+  <tr><td></td><td>COL1</td><td>INTEGER</td><td></td></tr>
+</table>
+<p></p>
+
+<table>
+  <tr><td colspan='2'><b>BAC</b></td><td colspan='2'>[table]</td></tr>
+  <tr><td></td><td>COL1</td><td>INTEGER</td><td></td></tr>
+  <tr><td></td><td>NEWCOL</td><td>INTEGER</td><td></td></tr>
+  <tr><td></td><td>ANOTHERCOL</td><td>INTEGER</td><td></td></tr>
+</table>
+<p></p>
+
+<table>
+  <tr><td colspan='2'><b>CUSTOMER</b></td><td colspan='2'>[table]</td></tr>
+  <tr><td></td><td>ID</td><td>INTEGER</td><td>primary key</td></tr>
+  <tr><td></td><td>FIRSTNAME</td><td>VARCHAR(2147483647)</td><td></td></tr>
+  <tr><td></td><td>LASTNAME</td><td>VARCHAR(2147483647)</td><td></td></tr>
+  <tr><td></td><td>STREET</td><td>VARCHAR(2147483647)</td><td></td></tr>
+  <tr><td></td><td>CITY</td><td>VARCHAR(2147483647)</td><td></td></tr>
+
+  <tr><td colspan='2'><b>SYS_PK_48</b></td><td colspan='2'>[primary key]</td></tr>
+  <tr><td></td><td>ID</td><td>INTEGER</td><td>primary key</td></tr>
+
+  <tr><td colspan='2'><b>SYS_FK_1</b></tr><td colspan='2'>[foreign key, on update no action]</td></tr>
+  <tr><td></td><td>ID --> INVOICE.CUSTOMERID</td><td></td><td></td></tr>
+</table>
+<p></p>
+
+<table>
+  <tr><td colspan='2'><b>INVOICE</b></td><td colspan='2'>[table]</td></tr>
+  <tr><td></td><td>ID</td><td>INTEGER</td><td>primary key</td></tr>
+  <tr><td></td><td>CUSTOMERID</td><td>INTEGER</td><td></td></tr>
+  <tr><td></td><td>TOTAL</td><td>DECIMAL(646456993, 0)</td><td></td></tr>
+
+  <tr><td colspan='2'><b>SYS_PK_49</b></td><td colspan='2'>[primary key]</td></tr>
+  <tr><td></td><td>ID</td><td>INTEGER</td><td>primary key</td></tr>
+
+  <tr><td colspan='2'><b>SYS_FK_1</b></tr><td colspan='2'>[foreign key, on update no action]</td></tr>
+  <tr><td></td><td>CUSTOMER.ID --> CUSTOMERID</td><td></td><td></td></tr>
+
+  <tr><td colspan='2'><b>SYS_FK_4</b></tr><td colspan='2'>[foreign key, on update no action]</td></tr>
+  <tr><td></td><td>ID --> ITEM.INVOICEID</td><td></td><td></td></tr>
+
+  <tr><td colspan='2'><b>SYS_USER_SYS_IDX_2_9</b></td><td colspan='2'>[non-unique ascending other index]</td></tr>
+  <tr><td></td><td>CUSTOMERID</td><td>INTEGER</td><td></td></tr>
+
+  <tr><td colspan='2'><b>SYS_IDX_50</b></td><td colspan='2'>[non-unique ascending other index]</td></tr>
+  <tr><td></td><td>CUSTOMERID</td><td>INTEGER</td><td></td></tr>
+</table>
+<p></p>
+
+<table>
+  <tr><td colspan='2'><b>ITEM</b></td><td colspan='2'>[table]</td></tr>
+  <tr><td></td><td>INVOICEID</td><td>INTEGER</td><td>primary key</td></tr>
+  <tr><td></td><td>ITEM</td><td>INTEGER</td><td>primary key</td></tr>
+  <tr><td></td><td>PRODUCTID</td><td>INTEGER</td><td></td></tr>
+  <tr><td></td><td>QUANTITY</td><td>INTEGER</td><td></td></tr>
+  <tr><td></td><td>COST</td><td>DECIMAL(646456993, 0)</td><td></td></tr>
+
+  <tr><td colspan='2'><b>SYS_PK_46</b></td><td colspan='2'>[primary key]</td></tr>
+  <tr><td></td><td>INVOICEID</td><td>INTEGER</td><td>primary key</td></tr>
+  <tr><td></td><td>ITEM</td><td>INTEGER</td><td>primary key</td></tr>
+
+  <tr><td colspan='2'><b>SYS_FK_4</b></tr><td colspan='2'>[foreign key, on update no action]</td></tr>
+  <tr><td></td><td>INVOICE.ID --> INVOICEID</td><td></td><td></td></tr>
+
+  <tr><td colspan='2'><b>SYS_FK_5</b></tr><td colspan='2'>[foreign key, on update no action]</td></tr>
+  <tr><td></td><td>PRODUCT.ID --> PRODUCTID</td><td></td><td></td></tr>
+
+  <tr><td colspan='2'><b>SYS_IDX_55</b></td><td colspan='2'>[non-unique ascending other index]</td></tr>
+  <tr><td></td><td>INVOICEID</td><td>INTEGER</td><td>primary key</td></tr>
+
+  <tr><td colspan='2'><b>SYS_USER_SYS_IDX_6_1</b></td><td colspan='2'>[non-unique ascending other index]</td></tr>
+  <tr><td></td><td>INVOICEID</td><td>INTEGER</td><td>primary key</td></tr>
+
+  <tr><td colspan='2'><b>SYS_IDX_57</b></td><td colspan='2'>[non-unique ascending other index]</td></tr>
+  <tr><td></td><td>PRODUCTID</td><td>INTEGER</td><td></td></tr>
+
+  <tr><td colspan='2'><b>SYS_USER_SYS_IDX_8_2</b></td><td colspan='2'>[non-unique ascending other index]</td></tr>
+  <tr><td></td><td>PRODUCTID</td><td>INTEGER</td><td></td></tr>
+</table>
+<p></p>
+
+<table>
+  <tr><td colspan='2'><b>PRODUCT</b></td><td colspan='2'>[table]</td></tr>
+  <tr><td></td><td>ID</td><td>INTEGER</td><td>primary key</td></tr>
+  <tr><td></td><td>NAME</td><td>VARCHAR(2147483647)</td><td></td></tr>
+  <tr><td></td><td>PRICE</td><td>DECIMAL(646456993, 0)</td><td></td></tr>
+
+  <tr><td colspan='2'><b>SYS_PK_47</b></td><td colspan='2'>[primary key]</td></tr>
+  <tr><td></td><td>ID</td><td>INTEGER</td><td>primary key</td></tr>
+
+  <tr><td colspan='2'><b>SYS_FK_5</b></tr><td colspan='2'>[foreign key, on update no action]</td></tr>
+  <tr><td></td><td>ID --> ITEM.PRODUCTID</td><td></td><td></td></tr>
+</table>
+<p></p>
+
+<table>
+  <tr><td colspan='2'><b>TEST</b></td><td colspan='2'>[table]</td></tr>
+  <tr><td></td><td>ID</td><td>INTEGER</td><td>primary key</td></tr>
+  <tr><td></td><td>FIRSTNAME</td><td>VARCHAR(20)</td><td></td></tr>
+  <tr><td></td><td>NAME</td><td>VARCHAR(50)</td><td></td></tr>
+  <tr><td></td><td>ZIP</td><td>INTEGER</td><td></td></tr>
+
+  <tr><td colspan='2'><b>SYS_PK_53</b></td><td colspan='2'>[primary key]</td></tr>
+  <tr><td></td><td>ID</td><td>INTEGER</td><td>primary key</td></tr>
+</table>
+<p></p>
+
+<table>  <caption>Row Count</caption>
+<tr><td>ABC</td><td><div style="text-align: right">3 rows</div></td></tr>
+<tr><td>ABC1</td><td><div style="text-align: right">3 rows</div></td></tr>
+<tr><td>BAC</td><td><div style="text-align: right">empty</div></td></tr>
+<tr><td>CUSTOMER</td><td><div style="text-align: right">50 rows</div></td></tr>
+<tr><td>INVOICE</td><td><div style="text-align: right">50 rows</div></td></tr>
+<tr><td>ITEM</td><td><div style="text-align: right">650 rows</div></td></tr>
+<tr><td>PRODUCT</td><td><div style="text-align: right">50 rows</div></td></tr>
+<tr><td>TEST</td><td><div style="text-align: right">1,000 rows</div></td></tr>
+</table><p>&nbsp;</p><pre id='tableCount'>8 tables</pre>
+</body>
+</html>
