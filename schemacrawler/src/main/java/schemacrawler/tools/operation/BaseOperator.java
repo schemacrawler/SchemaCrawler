@@ -168,7 +168,7 @@ public abstract class BaseOperator
   /**
    * {@inheritDoc}
    * 
-   * @see CrawlHandler#getColumnInfoLevelHint()
+   * @see CrawlHandler#getInfoLevelHint()
    */
   public SchemaInfoLevel getInfoLevelHint()
   {

@@ -390,8 +390,7 @@ final class MutableColumnDataType
   }
 
   /**
-   * If the type is a character type. 
-   * @return If the type is a character type
+   * {@inheritDoc}
    */
   public boolean isCharacterType()
   {
@@ -399,24 +398,36 @@ final class MutableColumnDataType
            || type == Types.VARCHAR || type == Types.CLOB;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public boolean isRealType()
   {
     return type == Types.DECIMAL || type == Types.FLOAT || type == Types.REAL
            || type == Types.DOUBLE || type == Types.NUMERIC;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public boolean isBinaryType()
   {
     return type == Types.CLOB || type == Types.BLOB
            || type == Types.LONGVARBINARY || type == Types.OTHER;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public boolean isIntegralType()
   {
     return type == Types.INTEGER || type == Types.BIGINT
            || type == Types.SMALLINT || type == Types.TINYINT;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public boolean isDateType()
   {
     return type == Types.TIMESTAMP || type == Types.TIME || type == Types.DATE;

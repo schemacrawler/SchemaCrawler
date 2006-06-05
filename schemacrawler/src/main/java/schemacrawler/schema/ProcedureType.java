@@ -51,15 +51,20 @@ public final class ProcedureType
   }
 
   /**
-   * Procedure type id.
+   * {@inheritDoc}
    * 
-   * @return Returns the procedure type id.
+   * @see schemacrawler.schema.EnumType#getId()
    */
   public int getId()
   {
     return id;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.EnumType#getName()
+   */
   public String getName()
   {
     return name;

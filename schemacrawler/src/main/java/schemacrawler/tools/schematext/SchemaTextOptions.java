@@ -86,6 +86,11 @@ public final class SchemaTextOptions
     }
   }
 
+  /**
+   * Schema text detail type.
+   * 
+   * @return Schema text detail type
+   */
   public SchemaTextDetailType getSchemaTextDetailType()
   {
     return schemaTextDetailType;

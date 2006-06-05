@@ -32,16 +32,16 @@ public final class TableType
   implements EnumType
 {
 
-  public static final TableType UNKNOWN = new TableType("UNKNOWN");
-  public static final TableType TABLE = new TableType("TABLE");
-  public static final TableType VIEW = new TableType("VIEW");
-  public static final TableType SYSTEM_TABLE = new TableType("SYSTEM_TABLE");
-  public static final TableType GLOBAL_TEMPORARY = new TableType(
+  private static final TableType UNKNOWN = new TableType("UNKNOWN");
+  private static final TableType TABLE = new TableType("TABLE");
+  private static final TableType VIEW = new TableType("VIEW");
+  private static final TableType SYSTEM_TABLE = new TableType("SYSTEM_TABLE");
+  private static final TableType GLOBAL_TEMPORARY = new TableType(
       "GLOBAL_TEMPORARY");
-  public static final TableType LOCAL_TEMPORARY = new TableType(
+  private static final TableType LOCAL_TEMPORARY = new TableType(
       "LOCAL_TEMPORARY");
-  public static final TableType ALIAS = new TableType("ALIAS");
-  public static final TableType SYNONYM = new TableType("SYNONYM");
+  private static final TableType ALIAS = new TableType("ALIAS");
+  private static final TableType SYNONYM = new TableType("SYNONYM");
 
   private static final long serialVersionUID = 3546925783735220534L;
 
@@ -67,18 +67,45 @@ public final class TableType
   }
 
   /**
-   * @return Returns the id.
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.EnumType#getId()
    */
   public int getId()
   {
     return id;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.EnumType#getName()
+   */
   public String getName()
   {
     return name;
   }
 
+  /**
+   * Returns whether this table type represents a view.
+   * 
+   * @return Whether this table type represents a view
+   */
+  public boolean isView()
+  {
+    return id == VIEW.getId();
+  }
+
+  /**
+   * Returns whether this table type represents a table.
+   * 
+   * @return Whether this table type represents a table
+   */
+  public boolean isTable()
+  {
+    return id == TABLE.getId();
+  }
+  
   /**
    * {@inheritDoc}
    * 

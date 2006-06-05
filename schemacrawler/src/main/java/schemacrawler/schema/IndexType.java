@@ -50,11 +50,21 @@ public final class IndexType
     this.name = name;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.EnumType#getId()
+   */
   public int getId()
   {
     return id;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.EnumType#getName()
+   */
   public String getName()
   {
     return name;
@@ -94,7 +104,7 @@ public final class IndexType
   /**
    * Value of the enumeration from the code.
    * 
-   * @param indexTypeName
+   * @param name
    *          Code
    * @return Enumeration value
    */

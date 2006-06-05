@@ -42,8 +42,8 @@ public interface TextFormattingFunctor
    *          Text to format
    * @param maxWidth
    *          Maximum field width
-   * @param alignRight
-   *          Align right
+   * @param alignLeft
+   *          Align left
    * @return Formatted text
    */
   String format(String text, int maxWidth, boolean alignLeft);

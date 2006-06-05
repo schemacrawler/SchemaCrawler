@@ -22,14 +22,13 @@ package schemacrawler.schema;
 
 
 import java.io.ObjectStreamException;
-import java.io.Serializable;
 import java.sql.DatabaseMetaData;
 
 /**
  * The deferrability value for foreign keys.
  */
 public final class ForeignKeyDeferrability
-  implements Serializable
+  implements EnumType
 {
 
   private static final ForeignKeyDeferrability[] FOREIGN_KEY_DEFERRABILITY_ALL = {
@@ -50,17 +49,16 @@ public final class ForeignKeyDeferrability
   /**
    * Find the enumeration value corresponding to the string.
    * 
-   * @param fkDeferrabilityId
+   * @param id
    *          Id
    * @return Enumeration value
    */
-  public static ForeignKeyDeferrability valueOfFromId(
-                                                      final int fkDeferrabilityId)
+  public static ForeignKeyDeferrability valueOfFromId(final int id)
   {
     ForeignKeyDeferrability fkDeferrability = null;
     for (int i = 0; i < FOREIGN_KEY_DEFERRABILITY_ALL.length; i++)
     {
-      if (FOREIGN_KEY_DEFERRABILITY_ALL[i].getForeignKeyDeferrabilityId() == fkDeferrabilityId)
+      if (FOREIGN_KEY_DEFERRABILITY_ALL[i].getForeignKeyDeferrabilityId() == id)
       {
         fkDeferrability = FOREIGN_KEY_DEFERRABILITY_ALL[i];
         break;
@@ -81,7 +79,7 @@ public final class ForeignKeyDeferrability
     ForeignKeyDeferrability fkDeferrability = null;
     for (int i = 0; i < FOREIGN_KEY_DEFERRABILITY_ALL.length; i++)
     {
-      if (FOREIGN_KEY_DEFERRABILITY_ALL[i].getForeignKeyDeferrabilityName()
+      if (FOREIGN_KEY_DEFERRABILITY_ALL[i].getName()
         .equalsIgnoreCase(fkDeferrabilityName))
       {
         fkDeferrability = FOREIGN_KEY_DEFERRABILITY_ALL[i];
@@ -91,26 +89,40 @@ public final class ForeignKeyDeferrability
     return fkDeferrability;
   }
 
-  private final transient String fkDeferrabilityName;
-  private final transient int fkDeferrabilityId;
+  private final transient String name;
+  private final transient int id;
   private final int ordinal;
 
-  private ForeignKeyDeferrability(final int fkDeferrabilityId,
-                                  final String fkDeferrabilityName)
+  private ForeignKeyDeferrability(final int id, final String name)
   {
     ordinal = nextOrdinal++;
-    this.fkDeferrabilityId = fkDeferrabilityId;
-    this.fkDeferrabilityName = fkDeferrabilityName;
+    this.id = id;
+    this.name = name;
   }
 
   private int getForeignKeyDeferrabilityId()
   {
-    return fkDeferrabilityId;
+    return id;
   }
 
-  public String getForeignKeyDeferrabilityName()
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.EnumType#getName()
+   */
+  public String getName()
   {
-    return fkDeferrabilityName;
+    return name;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.EnumType#getId()
+   */
+  public int getId()
+  {
+    return id;
   }
 
   /**
@@ -120,7 +132,7 @@ public final class ForeignKeyDeferrability
    */
   public String toString()
   {
-    return getForeignKeyDeferrabilityName();
+    return getName();
   }
 
   Object readResolve()

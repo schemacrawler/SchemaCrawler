@@ -53,15 +53,20 @@ public final class ProcedureColumnType
   }
 
   /**
-   * Procedure column type id.
+   * {@inheritDoc}
    * 
-   * @return Returns the procedure column type id.
+   * @see schemacrawler.schema.EnumType#getId()
    */
   public int getId()
   {
     return id;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.EnumType#getName()
+   */
   public String getName()
   {
     return name;
