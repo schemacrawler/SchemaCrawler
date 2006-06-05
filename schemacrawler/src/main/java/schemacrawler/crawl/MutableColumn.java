@@ -113,7 +113,7 @@ final class MutableColumn
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.Table#getPrivileges()
+   * @see Column#getPrivileges()
    */
   public Privilege[] getPrivileges()
   {

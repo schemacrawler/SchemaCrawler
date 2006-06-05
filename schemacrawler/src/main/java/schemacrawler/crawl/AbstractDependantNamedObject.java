@@ -68,7 +68,7 @@ abstract class AbstractDependantNamedObject
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.ChildDatabaseObject#getParent()
+   * @see schemacrawler.schema.DependantNamedObject#getParent()
    */
   public final NamedObject getParent()
   {

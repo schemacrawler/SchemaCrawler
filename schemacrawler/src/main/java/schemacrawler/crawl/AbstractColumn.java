@@ -65,7 +65,7 @@ abstract class AbstractColumn
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.BaseColumn#getDataType()
+   * @see schemacrawler.schema.BaseColumn#getType()
    */
   public final ColumnDataType getType()
   {

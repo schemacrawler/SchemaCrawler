@@ -205,6 +205,11 @@ public final class SchemaCrawlerOptions
     return tableTypesCopy;
   }
 
+  /**
+   * Set show stored procedures.
+   * 
+   * @param showStoredProcedures Show stored procedures
+   */
   public void setShowStoredProcedures(final boolean showStoredProcedures)
   {
     this.showStoredProcedures = showStoredProcedures;

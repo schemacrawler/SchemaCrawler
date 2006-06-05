@@ -54,7 +54,7 @@ final class CachingCrawlerHandler
    * Column info level.
    * 
    * @return Column info level
-   * @see CrawlHandler#getSchemaInfoLevelHint()
+   * @see CrawlHandler#getInfoLevelHint()
    */
   public SchemaInfoLevel getInfoLevelHint()
   {
