@@ -104,8 +104,6 @@ class MutableForeignKey
   }
 
   /**
-   * {@inheritDoc}
-   * 
    * @see schemacrawler.crawl.ForeignKey#getColumnPairsList()
    */
   void addColumnPair(final ForeignKeyColumnMap columnPair)

@@ -71,8 +71,6 @@ final class MutableProcedureColumn
   }
 
   /**
-   * {@inheritDoc}
-   * 
    * @see ProcedureColumn#setProcedureColumnType(schemacrawler.crawl.ProcedureColumnType)
    */
   void setProcedureColumnType(final ProcedureColumnType procedureColumnType)

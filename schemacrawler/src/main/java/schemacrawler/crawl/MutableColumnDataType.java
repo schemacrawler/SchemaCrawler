@@ -389,6 +389,10 @@ final class MutableColumnDataType
     this.unsigned = unsignedAttribute;
   }
 
+  /**
+   * If the type is a character type. 
+   * @return If the type is a character type
+   */
   public boolean isCharacterType()
   {
     return type == Types.CHAR || type == Types.LONGVARCHAR
@@ -418,6 +422,11 @@ final class MutableColumnDataType
     return type == Types.TIMESTAMP || type == Types.TIME || type == Types.DATE;
   }
 
+  /**
+   * Get the base type.
+   * 
+   * @return Get the base type.
+   */
   public ColumnDataType getBaseType()
   {
     return baseType;
@@ -428,6 +437,11 @@ final class MutableColumnDataType
     this.baseType = baseType;
   }
 
+  /**
+   * Get the Java class for the type.
+   * 
+   * @return The Java class for the type
+   */
   public String getTypeClassName()
   {
     return typeClassName;
