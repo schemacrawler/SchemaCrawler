@@ -62,8 +62,8 @@ abstract class AbstractDatabaseObject
     return toString;
   }
 
-  /*
-   * (non-Javadoc)
+  /**
+   * {@inheritDoc}
    * 
    * @see schemacrawler.schema.DatabaseObject#getSchemaName()
    */
@@ -72,8 +72,8 @@ abstract class AbstractDatabaseObject
     return schemaName;
   }
 
-  /*
-   * (non-Javadoc)
+  /**
+   * {@inheritDoc}
    * 
    * @see schemacrawler.schema.DatabaseObject#getCatalogName()
    */
