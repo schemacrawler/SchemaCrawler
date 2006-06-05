@@ -30,11 +30,74 @@ public interface ColumnDataType
 {
 
   /**
-   * Whether the data type is user-defined.
+   * Parameters needed when using this data type.
    * 
-   * @return Whether the data type is user-defined
+   * @return Parameters needed when using this data type
    */
-  boolean isUserDefined();
+  String getCreateParameters();
+
+  /**
+   * The database specific data type name.
+   * 
+   * @return Database specific data type name
+   */
+  String getDatabaseSpecificTypeName();
+
+  /**
+   * Literal prefix.
+   * 
+   * @return Literal prefix
+   */
+  String getLiteralPrefix();
+
+  /**
+   * Literal suffix.
+   * 
+   * @return Literal suffix
+   */
+  String getLiteralSuffix();
+
+  /**
+   * Local data type name.
+   * 
+   * @return Local data type name
+   */
+  String getLocalTypeName();
+
+  /**
+   * Maximum scale.
+   * 
+   * @return Maximum scale
+   */
+  int getMaximumScale();
+
+  /**
+   * Minimum scale.
+   * 
+   * @return Minimum scale
+   */
+  int getMinimumScale();
+
+  /**
+   * Precision of the radix.
+   * 
+   * @return Precision of the radix
+   */
+  int getNumPrecisionRadix();
+
+  /**
+   * Precision.
+   * 
+   * @return Precision
+   */
+  int getPrecision();
+
+  /**
+   * Search method.
+   * 
+   * @return Search method
+   */
+  SearchableType getSearchable();
 
   /**
    * The java.sql.Types type.
@@ -51,18 +114,25 @@ public interface ColumnDataType
   String getTypeName();
 
   /**
-   * The database specific data type name.
-   * 
-   * @return Database specific data type name
-   */
-  String getDatabaseSpecificTypeName();
-
-  /**
    * Whether the data type is auto-incrementable.
    * 
    * @return Whether the data type is auto-incrementable
    */
   boolean isAutoIncrementable();
+
+  /**
+   * If the type is a binary type.
+   * 
+   * @return If the type is a binary type
+   */
+  boolean isBinaryType();
+
+  /**
+   * If the type is a character type.
+   * 
+   * @return If the type is a character type
+   */
+  boolean isCharacterType();
 
   /**
    * Whether the data type is case-sensitive.
@@ -71,7 +141,12 @@ public interface ColumnDataType
    */
   boolean isCaseSensitive();
 
-  String getCreateParameters();
+  /**
+   * If the type is a date type.
+   * 
+   * @return If the type is a date type
+   */
+  boolean isDateType();
 
   /**
    * Whether the data type has a fixed precision scale.
@@ -80,15 +155,12 @@ public interface ColumnDataType
    */
   boolean isFixedPrecisionScale();
 
-  String getLiteralPrefix();
-
-  String getLiteralSuffix();
-
-  String getLocalTypeName();
-
-  int getMaximumScale();
-
-  int getMinimumScale();
+  /**
+   * If the type is an integer type.
+   * 
+   * @return If the type is an integer type
+   */
+  boolean isIntegralType();
 
   /**
    * Whether the data type is nullable.
@@ -97,20 +169,25 @@ public interface ColumnDataType
    */
   boolean isNullable();
 
-  int getNumPrecisionRadix();
-
-  int getPrecision();
-
-  SearchableType getSearchable();
-
-  boolean isUnsigned();
-
+  /**
+   * If the type is a real number type.
+   * 
+   * @return If the type is a real number type
+   */
   boolean isRealType();
 
-  boolean isBinaryType();
+  /**
+   * Whether the data type is unsigned.
+   * 
+   * @return Whether the data type is unsigned
+   */
+  boolean isUnsigned();
 
-  boolean isIntegralType();
-
-  boolean isDateType();
+  /**
+   * Whether the data type is user-defined.
+   * 
+   * @return Whether the data type is user-defined
+   */
+  boolean isUserDefined();
 
 }

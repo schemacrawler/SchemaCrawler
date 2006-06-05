@@ -45,6 +45,11 @@ public abstract class BaseToolOptions
     this.outputOptions = outputOptions;
   }
 
+  /**
+   * Get output options.
+   * 
+   * @return Output options
+   */
   public OutputOptions getOutputOptions()
   {
     return outputOptions;

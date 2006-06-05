@@ -28,7 +28,6 @@ import java.util.logging.Logger;
 import javax.sql.DataSource;
 
 import schemacrawler.schema.Schema;
-import schemacrawler.schema.TableType;
 
 /**
  * SchemaCrawler uses database metadata to get the details about the schema.
@@ -178,7 +177,7 @@ public final class SchemaCrawler
           retrieverExtra.retrievePrivileges(table, table.getColumnsList());
         }
         retriever.retrievePrimaryKeys(table);
-        if (table.getType() != TableType.VIEW
+        if (table.getType().isView()
             && infoLevel.isGreaterThanOrEqualTo(SchemaInfoLevel.VERBOSE))
         {
           retriever.retrieveForeignKeys(tables, i);

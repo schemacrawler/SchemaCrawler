@@ -50,11 +50,21 @@ public final class IndexSortSequence
     this.indexSortSequenceCode = indexSortSequenceCode;
   }
 
+  /**
+   * Index sort sequence name.
+   * 
+   * @return Index sort sequence name
+   */
   public String getIndexSortSequence()
   {
     return indexSortSequence;
   }
 
+  /**
+   * Index sort sequence code.
+   * 
+   * @return Index sort sequence code
+   */
   public String getIndexSortSequenceCode()
   {
     return indexSortSequenceCode;

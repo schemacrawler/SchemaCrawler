@@ -95,7 +95,7 @@ public abstract class BaseSchemaTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see CrawlHandler#getColumnInfoLevelHint()
+   * @see CrawlHandler#getInfoLevelHint()
    */
   public SchemaInfoLevel getInfoLevelHint()
   {
@@ -122,6 +122,11 @@ public abstract class BaseSchemaTextFormatter
     return options.getSchemaTextDetailType();
   }
 
+  /**
+   * Tables count for tables processed.
+   * 
+   * @return Table count
+   */
   public final int getTableCount()
   {
     return tableCount;

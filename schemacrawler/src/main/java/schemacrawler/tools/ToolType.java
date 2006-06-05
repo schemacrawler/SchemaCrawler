@@ -33,8 +33,17 @@ public final class ToolType
 
   private static final long serialVersionUID = 4049642278194655797L;
 
+  /**
+   * 
+   */
   public static final ToolType SCHEMA_TEXT = new ToolType("text");
+  /**
+   * 
+   */
   public static final ToolType OPERATION = new ToolType("operation");
+  /**
+   * 
+   */
   public static final ToolType DATA_TEXT = new ToolType("datatext");
 
   private static final ToolType[] TOOL_TYPE_ALL = {

@@ -206,6 +206,7 @@ public final class FormatUtils
 
   }
 
+  /** Maximum output line length */
   public static final int MAX_LINE_LENGTH = 72;
 
   private FormatUtils()

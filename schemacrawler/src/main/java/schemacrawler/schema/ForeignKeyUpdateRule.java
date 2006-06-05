@@ -22,14 +22,13 @@ package schemacrawler.schema;
 
 
 import java.io.ObjectStreamException;
-import java.io.Serializable;
 import java.sql.DatabaseMetaData;
 
 /**
  * Foreign key update and delete rules.
  */
 public final class ForeignKeyUpdateRule
-  implements Serializable
+  implements EnumType
 {
 
   private static final long serialVersionUID = 3256728394182833712L;
@@ -55,7 +54,7 @@ public final class ForeignKeyUpdateRule
     ForeignKeyUpdateRule fkUpdateRule = null;
     for (int i = 0; i < FK_UPDATE_RULE_ALL.length; i++)
     {
-      if (FK_UPDATE_RULE_ALL[i].getForeignKeyUpdateRuleId() == fkUpdateRuleId)
+      if (FK_UPDATE_RULE_ALL[i].getId() == fkUpdateRuleId)
       {
         fkUpdateRule = FK_UPDATE_RULE_ALL[i];
         break;
@@ -76,8 +75,7 @@ public final class ForeignKeyUpdateRule
     ForeignKeyUpdateRule fkUpdateRule = null;
     for (int i = 0; i < FK_UPDATE_RULE_ALL.length; i++)
     {
-      if (FK_UPDATE_RULE_ALL[i].getForeignKeyUpdateRuleName()
-        .equalsIgnoreCase(fkUpdateRuleName))
+      if (FK_UPDATE_RULE_ALL[i].getName().equalsIgnoreCase(fkUpdateRuleName))
       {
         fkUpdateRule = FK_UPDATE_RULE_ALL[i];
         break;
@@ -86,25 +84,35 @@ public final class ForeignKeyUpdateRule
     return fkUpdateRule;
   }
 
-  private final transient String foreignKeyUpdateRuleName;
-  private final transient int foreignKeyUpdateRuleId;
+  private final transient String name;
+  private final transient int id;
 
   private ForeignKeyUpdateRule(final int foreignKeyUpdateRuleId,
                                final String foreignKeyUpdateRuleName)
   {
     ordinal = nextOrdinal++;
-    this.foreignKeyUpdateRuleId = foreignKeyUpdateRuleId;
-    this.foreignKeyUpdateRuleName = foreignKeyUpdateRuleName;
+    this.id = foreignKeyUpdateRuleId;
+    this.name = foreignKeyUpdateRuleName;
   }
 
-  private int getForeignKeyUpdateRuleId()
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.EnumType#getId()
+   */
+  public int getId()
   {
-    return foreignKeyUpdateRuleId;
+    return id;
   }
 
-  public String getForeignKeyUpdateRuleName()
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.EnumType#getName()
+   */
+  public String getName()
   {
-    return foreignKeyUpdateRuleName;
+    return name;
   }
 
   /**
@@ -114,7 +122,7 @@ public final class ForeignKeyUpdateRule
    */
   public String toString()
   {
-    return getForeignKeyUpdateRuleName();
+    return getName();
   }
 
   // The 4 declarations below are necessary for serialization

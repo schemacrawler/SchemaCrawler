@@ -31,6 +31,11 @@ public class PlainTextFormattingFunctor
   implements TextFormattingFunctor
 {
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingFunctor#getFieldSeparator()
+   */
   public String getFieldSeparator()
   {
     return "  ";
