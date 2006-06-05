@@ -48,7 +48,7 @@ final class TableVertex
 
   public Paint getFillPaint()
   {
-    if (table.getType() == TableType.TABLE)
+    if (table.getType().isTable())
     {
       return Color.RED;
     }
