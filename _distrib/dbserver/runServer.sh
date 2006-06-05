@@ -1,0 +1,1 @@
+java -cp hsqldb.jar org.hsqldb.Server -database.0 file:schemacrawler -dbname.0 schemacrawler -silent false

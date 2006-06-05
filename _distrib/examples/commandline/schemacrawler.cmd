@@ -1,0 +1,1 @@
+@java -jar schemacrawler-3.7.jar %*
