@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="schemacrawler" default="all.build" basedir=".">
+
+  <property name="pom.version" value="3.7" />
+
+  <target name="all.clean">
+
+		<ant
+		  antfile="build.xml"
+      dir="schemacrawler"
+      target="clean"/>
+		<ant
+		  antfile="build.xml"
+      dir="dbconnector"
+      target="clean"/>
+
+	</target>
+
+  <target name="all.build">
+
+		<ant antfile="schemacrawler/build.xml" inheritAll="false" />
+
+    <condition property="compiled">
+      <and>
+        <available file="dbconnector/target/classes" type="dir"/>
+        <available file="schemacrawler/target/classes" type="dir"/>
+        <available file="integrations/target/classes" type="dir"/>
+      </and>
+    </condition>
+
+    <antcall target="package"/>
+
+	</target>
+
+  <target name="package" if="compiled">
+
+    <jar
+      destfile="_distrib/${ant.project.name}-${pom.version}.jar"
+      duplicate="preserve"
+      index="true">
+      <manifest>
+        <attribute name="Product" value="SchemaCrawler"/>
+        <attribute name="Version" value="${pom.version}"/>
+        <attribute name="Author" value="Sualeh Fatehi"/>
+        <attribute name="Copyright" value="(c) 2003-2006, Sualeh Fatehi"/>
+        <attribute name="Main-Class" value="schemacrawler.Main"/>
+      </manifest>
+      <zipfileset dir="dbconnector/target/classes"/>
+      <zipfileset dir="schemacrawler/target/classes"/>
+      <zipfileset dir="integrations/target/classes"/>
+    </jar>
+
+	</target>
+
+  <target name="zip">
+
+    <zip destfile="_backups/SchemaCrawler-${pom.version}-distrib.zip">
+      <zipfileset
+        dir="_distrib"
+        prefix="SchemaCrawler-${pom.version}-distrib">
+        <exclude name="**/CVS/**/*"/>
+        <exclude name="**/.cvsignore"/>
+      </zipfileset>
+    </zip>
+
+    <zip destfile="_backups/SchemaCrawler-${pom.version}-src.zip">
+      <zipfileset
+        dir="."
+        prefix="SchemaCrawler-${pom.version}-src">
+        <exclude name="setm2.cmd"/>
+        <exclude name="_backups/*"/>
+        <exclude name="**/target/**/*"/>
+        <exclude name="**/CVS/**/*"/>
+        <exclude name="**/.cvsignore"/>
+      </zipfileset>
+    </zip>
+
+	</target>
+
+</project>
