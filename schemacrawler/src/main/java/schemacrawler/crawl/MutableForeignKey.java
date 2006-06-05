@@ -49,7 +49,7 @@ class MutableForeignKey
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.ForeignKey#getDeferrability()
+   * @see ForeignKey#getDeferrability()
    */
   public final ForeignKeyDeferrability getDeferrability()
   {
@@ -64,7 +64,7 @@ class MutableForeignKey
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.ForeignKey#getDeleteRule()
+   * @see ForeignKey#getDeleteRule()
    */
   public final ForeignKeyUpdateRule getDeleteRule()
   {
@@ -79,7 +79,7 @@ class MutableForeignKey
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.ForeignKey#getUpdateRule()
+   * @see ForeignKey#getUpdateRule()
    */
   public final ForeignKeyUpdateRule getUpdateRule()
   {
@@ -94,7 +94,7 @@ class MutableForeignKey
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.ForeignKey#getColumnPairs()
+   * @see ForeignKey#getColumnPairs()
    */
   public ForeignKeyColumnMap[] getColumnPairs()
   {
@@ -133,12 +133,13 @@ class MutableForeignKey
   }
 
   /**
-   * {@inheritDoc}
+   * {@inheritDoc} 
+   * <p>
+   * Note: Since foreign keys are not always explicitly named in
+   * databases, the sorting routine orders the foreign keys by the names of the
+   * columns in the foreign keys.
    * 
-   * @see schemacrawler.schema.AbstractNamedObject#compareTo(java.lang.Object)
-   *      Note: Since foreign keys are not always explicitly named in databases,
-   *      the sorting routine orders the foreign keys by the names of the
-   *      columns in the foreign keys.
+   * @see AbstractNamedObject#compareTo(java.lang.Object)
    */
   public int compareTo(final Object obj)
   {

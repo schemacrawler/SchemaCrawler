@@ -87,7 +87,7 @@ final class MutableDatabaseInfo
     return driverVersion;
   }
 
-  public void setDriverVersion(final String driverVersion)
+  void setDriverVersion(final String driverVersion)
   {
     this.driverVersion = driverVersion;
   }
@@ -102,7 +102,7 @@ final class MutableDatabaseInfo
     return jdbcDriverClassName;
   }
 
-  public void setJdbcDriverClassName(final String jdbcDriverClassName)
+  void setJdbcDriverClassName(final String jdbcDriverClassName)
   {
     this.jdbcDriverClassName = jdbcDriverClassName;
   }
@@ -117,7 +117,7 @@ final class MutableDatabaseInfo
     return productName;
   }
 
-  public void setProductName(final String productName)
+  void setProductName(final String productName)
   {
     this.productName = productName;
   }
@@ -132,7 +132,7 @@ final class MutableDatabaseInfo
     return productVersion;
   }
 
-  public void setProductVersion(final String productVersion)
+  void setProductVersion(final String productVersion)
   {
     this.productVersion = productVersion;
   }
@@ -147,7 +147,7 @@ final class MutableDatabaseInfo
     return connectionUrl;
   }
 
-  public void setConnectionUrl(final String connectionUrl)
+  void setConnectionUrl(final String connectionUrl)
   {
     this.connectionUrl = connectionUrl;
   }
@@ -162,7 +162,7 @@ final class MutableDatabaseInfo
     return schemaPattern;
   }
 
-  public void setSchemaPattern(final String schemaPattern)
+  void setSchemaPattern(final String schemaPattern)
   {
     this.schemaPattern = schemaPattern;
   }
@@ -200,6 +200,11 @@ final class MutableDatabaseInfo
     this.dbProperties = properties;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.DatabaseInfo#getProperties()
+   */
   public Map getProperties()
   {
     if (dbProperties == null)
@@ -212,6 +217,11 @@ final class MutableDatabaseInfo
     }
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.DatabaseInfo#getProperty(java.lang.String)
+   */
   public Object getProperty(final String name)
   {
     return dbProperties.get(name);
@@ -239,6 +249,11 @@ final class MutableDatabaseInfo
 
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.DatabaseInfo#getColumnDataTypes()
+   */
   public ColumnDataType[] getColumnDataTypes()
   {
     final List allColumnDataTypes = columnDataTypes.getAll();
