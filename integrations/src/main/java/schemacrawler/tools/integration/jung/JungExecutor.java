@@ -130,7 +130,7 @@ public final class JungExecutor
 
   /**
    * Executes main functionality.
-   * {@see {@link VelocityExecutor#execute(Options, DataSource)}}
+   * @see {@link VelocityExecutor#execute(Options, DataSource)}
    * 
    * @param schemaCrawlerOptions
    *          SchemaCrawler options

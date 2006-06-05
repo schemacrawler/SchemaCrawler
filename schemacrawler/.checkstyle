@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fileset-config file-format-version="1.2.0" simple-config="true">
-    <local-check-config name="SchemaCrawler CheckStyle Configuration" location="F:\Sualeh-Docs\_Projects\SchemaCrawler\checkstyle-coding.xml" type="external" description="">
-        <additional-data name="protect-config-file" value="false"/>
-    </local-check-config>
-    <fileset name="all" enabled="true" check-config-name="SchemaCrawler CheckStyle Configuration" local="true">
+    <fileset name="all" enabled="true" check-config-name="SchemaCrawler Configuration" local="false">
         <file-match-pattern match-pattern="." include-pattern="true"/>
     </fileset>
     <filter name="FileTypesFilter" enabled="true"/>

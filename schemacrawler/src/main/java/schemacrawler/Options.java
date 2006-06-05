@@ -141,6 +141,11 @@ public final class Options
     return schemaCrawlerOptions;
   }
 
+  /**
+   * Get schema text options.
+   * 
+   * @return Schema text options
+   */
   public SchemaTextOptions getSchemaTextOptions()
   {
     return schemaTextOptions;

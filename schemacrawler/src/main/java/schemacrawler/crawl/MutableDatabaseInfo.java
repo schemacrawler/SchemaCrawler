@@ -66,13 +66,13 @@ final class MutableDatabaseInfo
     return driverName;
   }
 
-  public/**
-         * Sets name of the driver.
-         * 
-         * @param driverName
-         *          Driver name
-         */
-  void setDriverName(final String driverName)
+  /**
+   * Sets name of the driver.
+   * 
+   * @param driverName
+   *          Driver name
+   */
+  public void setDriverName(final String driverName)
   {
     this.driverName = driverName;
   }
