@@ -69,7 +69,6 @@ final class TableExRetriever
    * @param useRegExpPattern
    *          True is the table name pattern is a regular expression; false if
    *          the table name pattern is the JDBC pattern
-   * @return A list of tables in the database that matech the pattern
    * @throws SQLException
    *           On a SQL exception
    */

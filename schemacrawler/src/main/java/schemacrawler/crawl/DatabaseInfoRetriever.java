@@ -112,7 +112,6 @@ final class DatabaseInfoRetriever
    * 
    * @param dbInfo
    *          Database information to add to
-   * @return Database information
    * @throws SQLException
    *           On a SQL exception
    */
@@ -219,10 +218,10 @@ final class DatabaseInfoRetriever
   }
 
   /**
-   * Checks if a method should be converted to a database property.
+   * Checks if a method is a database property.
    * 
    * @param method
-   * @return
+   * @return Whether method is a database property
    */
   private boolean isDatabasePropertyMethod(final Method method)
   {
@@ -234,10 +233,10 @@ final class DatabaseInfoRetriever
   }
 
   /**
-   * Checks if a method should be converted to a database property.
+   * Checks if a method is a result set method.
    * 
    * @param method
-   * @return
+   * @return Whether a method is a result set method
    */
   private boolean isDatabasePropertiesResultSetMethod(final Method method)
   {
@@ -248,10 +247,10 @@ final class DatabaseInfoRetriever
   }
 
   /**
-   * Checks if a method should be converted to a database property.
+   * Checks if a method is a database property result set type.
    * 
    * @param method
-   * @return
+   * @return Whether a method is a database property result set type
    */
   private boolean isDatabasePropertyResultSetType(final Method method)
   {
@@ -304,7 +303,6 @@ final class DatabaseInfoRetriever
    * 
    * @param dbInfo
    *          Database info
-   * @return A list of type in the database
    * @throws SQLException
    *           On a SQL exception
    */
@@ -374,7 +372,6 @@ final class DatabaseInfoRetriever
    * 
    * @param dbInfo
    *          Database info
-   * @return A list of type in the database
    * @throws SQLException
    *           On a SQL exception
    */
