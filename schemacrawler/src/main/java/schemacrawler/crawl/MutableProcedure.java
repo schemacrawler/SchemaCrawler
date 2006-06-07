@@ -65,7 +65,7 @@ final class MutableProcedure
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.Mutable#getType()
+   * @see Procedure#getType()
    */
   public ProcedureType getType()
   {
@@ -75,7 +75,7 @@ final class MutableProcedure
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.Mutable#getColumns()
+   * @see Procedure#getColumns()
    */
   public ProcedureColumn[] getColumns()
   {

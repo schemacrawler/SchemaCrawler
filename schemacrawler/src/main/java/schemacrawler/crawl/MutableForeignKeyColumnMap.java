@@ -38,16 +38,31 @@ final class MutableForeignKeyColumnMap
   private Column primaryKeyColumn;
   private int keySequence;
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ForeignKeyColumnMap#getForeignKeyColumn()
+   */
   public Column getForeignKeyColumn()
   {
     return foreignKeyColumn;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ForeignKeyColumnMap#getPrimaryKeyColumn()
+   */
   public Column getPrimaryKeyColumn()
   {
     return primaryKeyColumn;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ForeignKeyColumnMap#getKeySequence()
+   */
   public int getKeySequence()
   {
     return keySequence;

@@ -74,7 +74,7 @@ final class MutableTable
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.Table#getType()
+   * @see Table#getType()
    */
   public TableType getType()
   {
@@ -84,7 +84,7 @@ final class MutableTable
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.Table#getPrimaryKey()
+   * @see Table#getPrimaryKey()
    */
   public PrimaryKey getPrimaryKey()
   {
@@ -99,7 +99,7 @@ final class MutableTable
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.Table#getColumns()
+   * @see Table#getColumns()
    */
   public Column[] getColumns()
   {
@@ -169,7 +169,7 @@ final class MutableTable
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.Table#getForeignKeys()
+   * @see Table#getForeignKeys()
    */
   public ForeignKey[] getForeignKeys()
   {
@@ -197,7 +197,7 @@ final class MutableTable
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.Table#getIndices()
+   * @see Table#getIndices()
    */
   public Index[] getIndices()
   {
@@ -233,7 +233,7 @@ final class MutableTable
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.Table#getPrivileges()
+   * @see Table#getPrivileges()
    */
   public Privilege[] getPrivileges()
   {
