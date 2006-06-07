@@ -104,10 +104,10 @@ final class OperatorHTMLOutput
   }
 
   /**
-   * Provides information on the database schema.
+   * {@inheritDoc}
    * 
-   * @param table
-   *          Table metadata.
+   * @see schemacrawler.tools.operation.BaseOperator#handleTable(int,
+   *      java.lang.String, java.lang.String, int, java.lang.String)
    */
   public void handleTable(final int ordinalPosition, final String tableName,
                           final String tableType, final int count,
