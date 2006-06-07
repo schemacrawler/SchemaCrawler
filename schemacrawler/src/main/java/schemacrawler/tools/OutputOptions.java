@@ -88,21 +88,41 @@ public final class OutputOptions
     this.noInfo = true;
   }
 
+  /**
+   * Output format value.
+   * 
+   * @return Output format value
+   */
   public String getOutputFormatValue()
   {
     return outputFormatValue;
   }
 
+  /**
+   * Whether the output gets appended.
+   * 
+   * @return Whether the output gets appended
+   */
   public boolean isAppendOutput()
   {
     return appendOutput;
   }
 
+  /**
+   * Whether the output gets appended.
+   * 
+   * @param appendOutput Whether the output gets appended
+   */  
   public void setAppendOutput(final boolean appendOutput)
   {
     this.appendOutput = appendOutput;
   }
 
+  /**
+   * Output file, which has previously been created.
+   * 
+   * @return Output file
+   */
   public File getOutputFile()
   {
     return outputFile;
@@ -140,36 +160,71 @@ public final class OutputOptions
     return writer;
   }
 
+  /**
+   * Output format.
+   * 
+   * @return Output format
+   */
   public OutputFormat getOutputFormat()
   {
     return OutputFormat.valueOf(outputFormatValue);
   }
 
+  /**
+   * Whether to print footers.
+   * 
+   * @return Whether to print footers
+   */
   public boolean isNoFooter()
   {
     return noFooter;
   }
 
+  /**
+   * Whether to print headers.
+   * 
+   * @return Whether to print headers
+   */  
   public boolean isNoHeader()
   {
     return noHeader;
   }
 
+  /**
+   * Whether to print information.
+   * 
+   * @return Whether to print information
+   */  
   public boolean isNoInfo()
   {
     return noInfo;
   }
 
+  /**
+   * Whether to print footers.
+   * 
+   * @param noFooter Whether to print footers
+   */  
   public void setNoFooter(final boolean noFooter)
   {
     this.noFooter = noFooter;
   }
 
+  /**
+   * Whether to print headers.
+   * 
+   * @param noHeader Whether to print headers
+   */   
   public void setNoHeader(final boolean noHeader)
   {
     this.noHeader = noHeader;
   }
 
+  /**
+   * Whether to print information.
+   * 
+   * @param noInfo Whether to print information
+   */   
   public void setNoInfo(final boolean noInfo)
   {
     this.noInfo = noInfo;
