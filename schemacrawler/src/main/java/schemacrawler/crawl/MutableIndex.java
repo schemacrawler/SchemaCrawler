@@ -48,7 +48,7 @@ class MutableIndex
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.Index#getCardinality()
+   * @see Index#getCardinality()
    */
   public final int getCardinality()
   {
@@ -63,7 +63,7 @@ class MutableIndex
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.Index#isUnique()
+   * @see Index#isUnique()
    */
   public final boolean isUnique()
   {
@@ -78,7 +78,7 @@ class MutableIndex
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.Index#getPages()
+   * @see Index#getPages()
    */
   public final int getPages()
   {
@@ -93,7 +93,7 @@ class MutableIndex
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.Index#getSortSequence()
+   * @see Index#getSortSequence()
    */
   public final IndexSortSequence getSortSequence()
   {
@@ -108,7 +108,7 @@ class MutableIndex
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.Index#getType()
+   * @see Index#getType()
    */
   public final IndexType getType()
   {
@@ -123,7 +123,7 @@ class MutableIndex
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.Index#getColumns()
+   * @see Index#getColumns()
    */
   public Column[] getColumns()
   {
@@ -157,11 +157,13 @@ class MutableIndex
 
   /**
    * {@inheritDoc}
+   * <p>
+   * Note: Since indexes are not always explicitly named in databases, the
+   * sorting routine orders the indexes by the names of the columns in the
+   * index.
+   * <p>
    * 
-   * @see schemacrawler.schema.AbstractNamedObject#compareTo(java.lang.Object)
-   *      Note: Since indexes are not always explicitly named in databases, the
-   *      sorting routine orders the indexes by the names of the columns in the
-   *      index.
+   * @see AbstractNamedObject#compareTo(java.lang.Object)
    */
   public int compareTo(final Object obj)
   {

@@ -42,7 +42,7 @@ final class MutableProcedureColumn
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.ProcedureColumn#getPrecision()
+   * @see ProcedureColumn#getPrecision()
    */
   public int getPrecision()
   {
@@ -63,7 +63,7 @@ final class MutableProcedureColumn
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.ProcedureColumn#getProcedureColumnType()
+   * @see ProcedureColumn#getProcedureColumnType()
    */
   public ProcedureColumnType getProcedureColumnType()
   {
