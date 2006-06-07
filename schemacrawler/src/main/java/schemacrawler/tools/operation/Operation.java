@@ -74,31 +74,61 @@ public final class Operation
     return operation;
   }
 
+  /**
+   * Operation description.
+   * 
+   * @return Operation description
+   */
   public String getOperationDescription()
   {
     return operationDescription;
   }
 
+  /**
+   * Query.
+   * 
+   * @return Query
+   */
   public String getQuery()
   {
     return query;
   }
 
+  /**
+   * Message format for the counts.
+   * 
+   * @return Message format for the counts
+   */
   public String getCountMessageFormat()
   {
     return countMessageFormat;
   }
 
+  /**
+   * If this operation is a select operation.
+   * 
+   * @return If this operation is a select operation
+   */
   public boolean isSelectOperation()
   {
     return this == QUERYOVER || this == DUMP;
   }
 
+  /**
+   * If this operation is a query-over operation.
+   * 
+   * @return If this operation is a query-over operation
+   */  
   public boolean isQueryOver()
   {
     return this.getOperation().equals(QUERYOVER.getOperation());
   }
 
+  /**
+   * If this operation is an aggregate operation.
+   * 
+   * @return If this operation is an aggregate operation
+   */  
   public boolean isAggregateOperation()
   {
     return this == COUNT;
