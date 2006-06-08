@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Thomas Jolie (private) -->
 <document>
   <properties>
     <title>SchemaCrawler</title>
@@ -29,6 +28,7 @@
       <action dev="Sualeh Fatehi" type="add">Added Unix shell scripts for examples</action>
       <action dev="Sualeh Fatehi" type="fix">Fixed bug with the ordering of primary key and index columns</action>
       <action dev="Sualeh Fatehi" type="update">Changed API - ColumnInfoLevel is called SchemaInfoLevel</action>
+      <action dev="Sualeh Fatehi" type="update">Moved source repository to Subversion</action>
     </release>
     <release version="3.4" date="2006-01-17">
       <action dev="Sualeh Fatehi" type="fix">Correction of spelling of the "sort_alphabetically" option names </action>
