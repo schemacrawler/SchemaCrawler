@@ -7,6 +7,10 @@
 
 		<ant
 		  antfile="build.xml"
+      dir="integrations"
+      target="clean"/>
+		<ant
+		  antfile="build.xml"
       dir="schemacrawler"
       target="clean"/>
 		<ant
@@ -18,7 +22,7 @@
 
   <target name="all.build">
 
-		<ant antfile="schemacrawler/build.xml" inheritAll="false" />
+		<ant antfile="integrations/build.xml" inheritAll="false" />
 
     <condition property="compiled">
       <and>
@@ -32,7 +36,12 @@
 
 	</target>
 
-  <target name="package">
+  <target name="package"
+    description="Package all sub-project jars into the distributable jar"
+    depends="check_compiled,make_distributable"
+  />
+
+  <target name="make_distributable" if="compiled">
 
     <jar
       destfile="_distrib/${ant.project.name}-${pom.version}.jar"
@@ -49,6 +58,18 @@
       <zipfileset dir="schemacrawler/target/classes"/>
       <zipfileset dir="integrations/target/classes"/>
     </jar>
+
+	</target>
+
+  <target name="check_compiled">
+
+    <condition property="compiled">
+      <and>
+        <available file="dbconnector/target/classes" type="dir"/>
+        <available file="schemacrawler/target/classes" type="dir"/>
+        <available file="integrations/target/classes" type="dir"/>
+      </and>
+    </condition>
 
 	</target>
 
