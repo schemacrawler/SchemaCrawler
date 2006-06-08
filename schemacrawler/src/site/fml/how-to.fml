@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Thomas Jolie (private) -->
 <faqs title="SchemaCrawler - How-to" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://maven.apache.org/reference/plugins/faq/faq.xsd">
   <part id="include-exclude">
     <title>Include and Exclude Stuff from the Output</title>
