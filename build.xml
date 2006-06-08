@@ -43,8 +43,13 @@
 
   <target name="make_distributable" if="compiled">
 
+    <property
+      name="distributable"
+      value="_distrib/${ant.project.name}-${pom.version}.jar"/>
+
+    <delete file="{distributable}"/>
     <jar
-      destfile="_distrib/${ant.project.name}-${pom.version}.jar"
+      destfile="${distributable}"
       duplicate="preserve"
       index="true">
       <manifest>
