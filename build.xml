@@ -32,7 +32,7 @@
 
 	</target>
 
-  <target name="package" if="compiled">
+  <target name="package">
 
     <jar
       destfile="_distrib/${ant.project.name}-${pom.version}.jar"
