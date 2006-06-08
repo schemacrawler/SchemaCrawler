@@ -177,7 +177,7 @@ public final class SchemaCrawler
           retrieverExtra.retrievePrivileges(table, table.getColumnsList());
         }
         retriever.retrievePrimaryKeys(table);
-        if (table.getType().isView()
+        if (!table.getType().isView()
             && infoLevel.isGreaterThanOrEqualTo(SchemaInfoLevel.VERBOSE))
         {
           retriever.retrieveForeignKeys(tables, i);
