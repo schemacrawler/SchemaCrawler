@@ -78,7 +78,8 @@
 
 	</target>
 
-  <target name="zip">
+  <target name="zip"
+    description="Create distributable files for a version">
 
     <zip destfile="_backups/SchemaCrawler-${pom.version}-distrib.zip">
       <zipfileset
