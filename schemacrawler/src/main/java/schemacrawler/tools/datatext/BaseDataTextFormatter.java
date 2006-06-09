@@ -133,13 +133,15 @@ public abstract class BaseDataTextFormatter
       }
       final Object lastColumnData = rows.getObject(columnCount);
       final String lastColumnDataString = convertColumnDataToString(lastColumnData);
-      if (currentRow.containsAll(previousRow))
+      if (currentRow.equals(previousRow))
       {
         currentRowLastColumn.append(lastColumnDataString);
       }
       else
       {
-        doHandleOneRow(columnNames, previousRow, currentRowLastColumn);
+        // At this point, we have a new row coming in, so dump the
+        // previous merged row out
+        doHandleOneRow(columnNames, previousRow, currentRowLastColumn.toString());
         // reset
         currentRowLastColumn = new StringBuffer();
         // save the last column
@@ -148,8 +150,8 @@ public abstract class BaseDataTextFormatter
 
       previousRow = currentRow;
     }
-    // last row
-    doHandleOneRow(columnNames, previousRow, currentRowLastColumn);
+    // Dump the last row out
+    doHandleOneRow(columnNames, previousRow, currentRowLastColumn.toString());
   }
 
   private String convertColumnDataToString(final Object columnData)
@@ -208,14 +210,17 @@ public abstract class BaseDataTextFormatter
   }
 
   private void doHandleOneRow(final String[] columnNames,
-                              final List previousRow,
-                              final StringBuffer currentRowLastColumn)
+                              final List row,
+                              final String lastColumnData)
     throws QueryExecutorException
   {
+    if (row.size() == 0) {
+      return;
+    }
     final List outputRow = new ArrayList();
     // output
-    outputRow.addAll(previousRow);
-    outputRow.add(currentRowLastColumn.toString());
+    outputRow.addAll(row);
+    outputRow.add(lastColumnData);
     final String[] columnData = (String[]) outputRow
       .toArray(new String[outputRow.size()]);
     handleRow(columnNames, columnData);
