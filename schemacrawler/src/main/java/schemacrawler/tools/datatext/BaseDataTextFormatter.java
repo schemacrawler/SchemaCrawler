@@ -89,7 +89,7 @@ public abstract class BaseDataTextFormatter
       }
       handleRowsHeader(columnNames);
 
-      if (options.isMergeRows())
+      if (options.isMergeRows() && columnCount > 1)
       {
         iterateRowsAndMerge(rows, columnNames);
       }
