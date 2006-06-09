@@ -93,13 +93,13 @@ final class MutableForeignKeyColumnMap
 
     if (comparison == 0)
     {
-      comparison = this.keySequence - other.getKeySequence();
+      comparison = getPrimaryKeyColumn().compareTo(other.getPrimaryKeyColumn());
     }
     if (comparison == 0)
     {
-      comparison = super.compareTo(other);
+      comparison = getForeignKeyColumn().compareTo(other.getForeignKeyColumn());
     }
-
+    
     return comparison;
   }
 
