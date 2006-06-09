@@ -49,9 +49,7 @@ public class NaturalSortComparator
       throw new ClassCastException("Incompatibale classes for comparison -"
                                    + o1.getClass() + " and " + o2.getClass());
     }
-    final Comparable obj1 = (Comparable) o1;
-    final Comparable obj2 = (Comparable) o2;
-    return obj1.compareTo(obj2);
+    return ((Comparable) o1).compareTo(o2);
   }
 
 }
