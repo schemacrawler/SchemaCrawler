@@ -236,7 +236,7 @@ One of:
       <answer>
         <p>
             SchemaCrawler can be integrated with other programs, but this requires some Java
-            programming. From version 3.7, SchemaCrawler comes pre-built with integration
+            programming. From version 3.8, SchemaCrawler comes pre-built with integration
             with <a href="http://jakarta.apache.org/velocity/">Velocity</a>. This allows you to specify your own templates for formatting the
             schema. Examples are provided in the _distrib directory. There is also
             integration with <a href="http://jung.sourceforge.net/">JUNG</a> for creating graph JPEG files.

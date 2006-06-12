@@ -5,7 +5,7 @@
 		<author email="sualeh@hotmail.com">Sualeh Fatehi</author>
 	</properties>
 	<body>
-		<release version="3.7" date="2006-06-12">
+		<release version="3.8" date="2006-06-12">
 			<action dev="Sualeh Fatehi" type="add">
 				Added retrieval of database properties
 			</action>
