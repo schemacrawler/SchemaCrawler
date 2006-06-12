@@ -9,7 +9,7 @@
 
   <typedef
     resource="schemacrawler-antlib.xml"
-    classpath="${schemacrawler.dir}/schemacrawler-3.7.jar"/>
+    classpath="${schemacrawler.dir}/schemacrawler-3.8.jar"/>
 
   <path id="db-driver-classpath">
     <fileset dir="${db-driver.dir}">
