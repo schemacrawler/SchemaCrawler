@@ -69,8 +69,8 @@ public final class JungUtil
                                    final Dimension size)
     throws IOException
   {
-    Layout layout = new ISOMLayout(graph);
-    JpgVisualizationViewer vv = new JpgVisualizationViewer(layout);
+    final Layout layout = new ISOMLayout(graph);
+    final JpgVisualizationViewer vv = new JpgVisualizationViewer(layout);
     vv.save(file, size);
   }
 
@@ -83,8 +83,8 @@ public final class JungUtil
    */
   public static Graph makeSchemaGraph(final Schema schema)
   {
-    Graph graph = new DirectedSparseGraph();
-    Map verticesMap = new HashMap();
+    final Graph graph = new DirectedSparseGraph();
+    final Map verticesMap = new HashMap();
     final Table[] tables = schema.getTables();
     mapTablesAndColumns(graph, tables, verticesMap);
     mapForeignKeys(graph, tables, verticesMap);
@@ -95,26 +95,26 @@ public final class JungUtil
                                      final Map verticesMap)
   {
     // Make edges for each foreign key
-    Map columnPairMap = new HashMap();
+    final Map columnPairMap = new HashMap();
     for (int i = 0; i < tables.length; i++)
     {
       final Table table = tables[i];
       final ForeignKey[] foreignKeys = table.getForeignKeys();
       for (int j = 0; j < foreignKeys.length; j++)
       {
-        ForeignKey foreignKey = foreignKeys[j];
+        final ForeignKey foreignKey = foreignKeys[j];
         final ForeignKeyColumnMap[] columnPairs = foreignKey.getColumnPairs();
         for (int k = 0; k < columnPairs.length; k++)
         {
-          ForeignKeyColumnMap columnPair = columnPairs[k];
+          final ForeignKeyColumnMap columnPair = columnPairs[k];
           if (!columnPairMap.containsKey(columnPair.getFullName()))
           {
             columnPairMap.put(columnPair.getFullName(), columnPair);
-            Column fromColumn = (Column) columnPair.getPrimaryKeyColumn();
-            Column toColumn = (Column) columnPair.getForeignKeyColumn();
-            ColumnVertex fromColumnVertex = (ColumnVertex) verticesMap
+            final Column fromColumn = columnPair.getPrimaryKeyColumn();
+            final Column toColumn = columnPair.getForeignKeyColumn();
+            final ColumnVertex fromColumnVertex = (ColumnVertex) verticesMap
               .get(fromColumn);
-            ColumnVertex toColumnVeretx = (ColumnVertex) verticesMap
+            final ColumnVertex toColumnVeretx = (ColumnVertex) verticesMap
               .get(toColumn);
             final ForeignKeyEdge foreignKeyEdge = new ForeignKeyEdge(
                 fromColumnVertex, toColumnVeretx);

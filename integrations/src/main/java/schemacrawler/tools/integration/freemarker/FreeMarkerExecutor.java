@@ -146,8 +146,8 @@ public class FreeMarkerExecutor
     // the velocity template
     final Schema schema = SchemaCrawler.getSchema(dataSource, schemaTextOptions
       .getSchemaTextDetailType().mapToInfoLevel(), schemaCrawlerOptions);
-    Writer writer = schemaTextOptions.getOutputOptions().getOutputWriter();
-    String templateName = schemaTextOptions.getOutputOptions()
+    final Writer writer = schemaTextOptions.getOutputOptions().getOutputWriter();
+    final String templateName = schemaTextOptions.getOutputOptions()
       .getOutputFormatValue();
     renderTemplate(templateName, schema, writer);
   }
@@ -160,7 +160,7 @@ public class FreeMarkerExecutor
     // This allows Velocity to load templates from any directory
     String templateLocation = templateName;
     String templatePath = ".";
-    File templateFilePath = new File(templateLocation);
+    final File templateFilePath = new File(templateLocation);
     if (templateFilePath.exists())
     {
       templatePath = templateFilePath.getAbsoluteFile().getParent();
@@ -168,15 +168,15 @@ public class FreeMarkerExecutor
     }
 
     // Create a new instance of the configuration
-    Configuration cfg = new Configuration();
+    final Configuration cfg = new Configuration();
 
-    ClassTemplateLoader ctl = new ClassTemplateLoader(FreeMarkerExecutor.class,
+    final ClassTemplateLoader ctl = new ClassTemplateLoader(FreeMarkerExecutor.class,
         "/");
-    FileTemplateLoader ftl = new FileTemplateLoader(new File(templatePath));
-    TemplateLoader[] loaders = new TemplateLoader[] {
+    final FileTemplateLoader ftl = new FileTemplateLoader(new File(templatePath));
+    final TemplateLoader[] loaders = new TemplateLoader[] {
       ctl, ftl
     };
-    MultiTemplateLoader mtl = new MultiTemplateLoader(loaders);
+    final MultiTemplateLoader mtl = new MultiTemplateLoader(loaders);
     cfg.setTemplateLoader(mtl);
 
     cfg.setStrictSyntaxMode(true);
@@ -188,11 +188,11 @@ public class FreeMarkerExecutor
     LOGGER.log(Level.INFO, "FreeMarker configuration properties - " + cfg);
 
     // Create the root hash
-    Map objectMap = new HashMap();
+    final Map objectMap = new HashMap();
     objectMap.put("schema", schema);
 
     // Evaluate the template
-    Template template = cfg.getTemplate(templateLocation);
+    final Template template = cfg.getTemplate(templateLocation);
     template.process(objectMap, writer);
 
     writer.flush();

@@ -41,7 +41,7 @@ final class ForeignKeyEdge
   ForeignKeyEdge(final SchemaGraphVertex fromColumnVertex,
                  final SchemaGraphVertex toColumnVertex)
   {
-    super((Vertex) fromColumnVertex, (Vertex) toColumnVertex);
+    super(fromColumnVertex, toColumnVertex);
   }
 
   public Paint getDrawPaint()

@@ -26,7 +26,6 @@ import java.awt.Paint;
 import java.awt.Shape;
 
 import schemacrawler.schema.Table;
-import schemacrawler.schema.TableType;
 import edu.uci.ics.jung.graph.impl.DirectedSparseVertex;
 
 final class TableVertex

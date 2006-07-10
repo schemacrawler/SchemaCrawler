@@ -56,11 +56,11 @@ final class JpgVisualizationViewer
     setDoubleBuffered(false);
 
     // Create a graphics contents on the buffered image
-    Graphics2D g2d = bufferedImage.createGraphics();
+    final Graphics2D g2d = bufferedImage.createGraphics();
 
     // Draw graphics
     g2d.setColor(Color.WHITE);
-    g2d.fillRect(0, 0, (int) size.width, (int) size.height);
+    g2d.fillRect(0, 0, size.width, size.height);
 
     paintComponent(g2d);
 

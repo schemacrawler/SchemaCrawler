@@ -34,6 +34,7 @@ import javax.sql.DataSource;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
 
@@ -144,8 +145,8 @@ public class VelocityExecutor
     // the velocity template
     final Schema schema = SchemaCrawler.getSchema(dataSource, schemaTextOptions
       .getSchemaTextDetailType().mapToInfoLevel(), schemaCrawlerOptions);
-    Writer writer = schemaTextOptions.getOutputOptions().getOutputWriter();
-    String templateName = schemaTextOptions.getOutputOptions()
+    final Writer writer = schemaTextOptions.getOutputOptions().getOutputWriter();
+    final String templateName = schemaTextOptions.getOutputOptions()
       .getOutputFormatValue();
     renderTemplate(templateName, schema, writer);
   }
@@ -158,7 +159,7 @@ public class VelocityExecutor
     // This allows Velocity to load templates from any directory
     String templateLocation = templateName;
     String templatePath = ".";
-    File templateFilePath = new File(templateLocation);
+    final File templateFilePath = new File(templateLocation);
     if (templateFilePath.exists())
     {
       templatePath = templatePath + ","
@@ -167,15 +168,15 @@ public class VelocityExecutor
     }
 
     // Create a new instance of the engine
-    VelocityEngine ve = new VelocityEngine();
+    final VelocityEngine ve = new VelocityEngine();
 
     // Set up Velocity resource loaders for loading from the classpath,
     // as well as the file system
     // http://jakarta.apache.org/velocity/docs/developer-guide.html#Configuring%20Resource%20Loaders
     final String fileResourceLoader = "file";
     final String classpathResourceLoader = "classpath";
-    Properties p = new Properties();
-    p.setProperty(VelocityEngine.RESOURCE_LOADER, fileResourceLoader + ","
+    final Properties p = new Properties();
+    p.setProperty(RuntimeConstants.RESOURCE_LOADER, fileResourceLoader + ","
                                                   + classpathResourceLoader);
     setVelocityResourceLoaderProperty(p,
                                       classpathResourceLoader,
@@ -197,11 +198,11 @@ public class VelocityExecutor
     ve.init(p);
 
     // Set the context
-    VelocityContext context = new VelocityContext();
+    final VelocityContext context = new VelocityContext();
     context.put("schema", schema);
 
     // Evaluate the template
-    Template template = ve.getTemplate(templateLocation);
+    final Template template = ve.getTemplate(templateLocation);
     template.merge(context, writer);
 
     writer.flush();
@@ -213,7 +214,7 @@ public class VelocityExecutor
                                                         final String resourceLoaderPropertyName,
                                                         final String resourceLoaderPropertyValue)
   {
-    p.setProperty(resourceLoaderName + "." + VelocityEngine.RESOURCE_LOADER
+    p.setProperty(resourceLoaderName + "." + RuntimeConstants.RESOURCE_LOADER
                       + "." + resourceLoaderPropertyName,
                   resourceLoaderPropertyValue);
   }

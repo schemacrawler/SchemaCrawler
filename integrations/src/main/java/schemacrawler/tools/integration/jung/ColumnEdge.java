@@ -40,7 +40,7 @@ final class ColumnEdge
    */
   ColumnEdge(final TableVertex tableVertex, final SchemaGraphVertex columnVertex)
   {
-    super((Vertex) tableVertex, (Vertex) columnVertex);
+    super(tableVertex, columnVertex);
   }
 
   public Paint getDrawPaint()

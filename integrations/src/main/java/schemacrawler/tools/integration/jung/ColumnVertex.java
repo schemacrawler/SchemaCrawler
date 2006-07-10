@@ -37,7 +37,7 @@ final class ColumnVertex
 
   ColumnVertex(final Column namedObject)
   {
-    this.column = namedObject;
+    column = namedObject;
   }
 
   public String getLabel()
