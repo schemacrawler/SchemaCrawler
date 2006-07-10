@@ -56,11 +56,11 @@ public final class JungExecutor
 
   private Dimension getSize(final String dimensions)
   {
-    String[] sizes = dimensions.split("x");
+    final String[] sizes = dimensions.split("x");
     try
     {
-      int width = Integer.parseInt(sizes[0]);
-      int height = Integer.parseInt(sizes[1]);
+      final int width = Integer.parseInt(sizes[0]);
+      final int height = Integer.parseInt(sizes[1]);
       return new Dimension(width, height);
     }
     catch (final NumberFormatException e)
@@ -148,12 +148,12 @@ public final class JungExecutor
   {
     // Get the entire schema at once, since we need to use this to render
     // the velocity template
-    File outputFile = schemaTextOptions.getOutputOptions().getOutputFile();
-    Dimension size = getSize(schemaTextOptions.getOutputOptions()
+    final File outputFile = schemaTextOptions.getOutputOptions().getOutputFile();
+    final Dimension size = getSize(schemaTextOptions.getOutputOptions()
       .getOutputFormatValue());
     final Schema schema = SchemaCrawler.getSchema(dataSource, schemaTextOptions
       .getSchemaTextDetailType().mapToInfoLevel(), schemaCrawlerOptions);
-    Graph graph = JungUtil.makeSchemaGraph(schema);
+    final Graph graph = JungUtil.makeSchemaGraph(schema);
     JungUtil.saveGraphJpeg(graph, outputFile, size);
   }
 
