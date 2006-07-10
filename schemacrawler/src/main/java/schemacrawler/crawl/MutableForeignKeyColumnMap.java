@@ -99,7 +99,7 @@ final class MutableForeignKeyColumnMap
     {
       comparison = getForeignKeyColumn().compareTo(other.getForeignKeyColumn());
     }
-    
+
     return comparison;
   }
 

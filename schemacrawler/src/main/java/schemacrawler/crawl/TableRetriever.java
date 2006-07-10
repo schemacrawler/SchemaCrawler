@@ -89,7 +89,7 @@ final class TableRetriever
                                  final InclusionRule tableInclusionRule)
     throws SQLException
   {
-    LOGGER.entering(this.getClass().getName(), "retrieveTables", new Object[] {
+    LOGGER.entering(getClass().getName(), "retrieveTables", new Object[] {
       tableTypes, tableInclusionRule
     });
 
@@ -155,7 +155,7 @@ final class TableRetriever
                        final NamedObjectList columnDataTypes)
     throws SQLException
   {
-    LOGGER.entering(this.getClass().getName(), "retrieveColumns", new Object[] {
+    LOGGER.entering(getClass().getName(), "retrieveColumns", new Object[] {
       table, columnInclusionRule
     });
 
@@ -174,7 +174,7 @@ final class TableRetriever
         final String typeName = results.getString(TYPE_NAME);
         final int size = results.getInt(COLUMN_SIZE);
         final int decimalDigits = results.getInt(DECIMAL_DIGITS);
-        boolean isNullable = results.getInt(NULLABLE) == DatabaseMetaData.columnNullable;
+        final boolean isNullable = results.getInt(NULLABLE) == DatabaseMetaData.columnNullable;
         final Object defaultValue = results.getObject(COLUMN_DEFAULT);
         final String remarks = results.getString(REMARKS);
 
@@ -302,8 +302,8 @@ final class TableRetriever
 
     ResultSet results;
 
-    String catalog = getRetrieverConnection().getCatalog();
-    DatabaseMetaData metaData = getRetrieverConnection().getMetaData();
+    final String catalog = getRetrieverConnection().getCatalog();
+    final DatabaseMetaData metaData = getRetrieverConnection().getMetaData();
 
     results = metaData.getImportedKeys(catalog, schema, tableName);
     createForeignKeys(results, tablesMap, table, foreignKeysMap);

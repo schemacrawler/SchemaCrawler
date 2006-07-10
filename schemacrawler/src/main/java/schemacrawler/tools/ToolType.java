@@ -55,7 +55,7 @@ public final class ToolType
   private ToolType(final String indexType)
   {
     ordinal = nextOrdinal++;
-    this.toolType = indexType;
+    toolType = indexType;
   }
 
   /**

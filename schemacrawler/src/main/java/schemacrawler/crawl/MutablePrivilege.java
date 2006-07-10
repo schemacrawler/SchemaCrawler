@@ -81,7 +81,7 @@ final class MutablePrivilege
 
   void setGrantable(final boolean grantable)
   {
-    this.isGrantable = grantable;
+    isGrantable = grantable;
   }
 
 }

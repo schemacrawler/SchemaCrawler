@@ -125,7 +125,7 @@ class MutableForeignKey
                      final Column fkColumn)
   {
     final MutableForeignKeyColumnMap fkColumnPair = new MutableForeignKeyColumnMap();
-    fkColumnPair.setName(this.getName() + "." + keySequence);
+    fkColumnPair.setName(getName() + "." + keySequence);
     fkColumnPair.setKeySequence(keySequence);
     fkColumnPair.setPrimaryKeyColumn(pkColumn);
     fkColumnPair.setForeignKeyColumn(fkColumn);
@@ -133,11 +133,11 @@ class MutableForeignKey
   }
 
   /**
-   * {@inheritDoc} 
+   * {@inheritDoc}
    * <p>
-   * Note: Since foreign keys are not always explicitly named in
-   * databases, the sorting routine orders the foreign keys by the names of the
-   * columns in the foreign keys.
+   * Note: Since foreign keys are not always explicitly named in databases, the
+   * sorting routine orders the foreign keys by the names of the columns in the
+   * foreign keys.
    * 
    * @see AbstractNamedObject#compareTo(java.lang.Object)
    */
@@ -145,7 +145,7 @@ class MutableForeignKey
   {
     final ForeignKey other = (ForeignKey) obj;
     int comparison = 0;
-    final ForeignKeyColumnMap[] thisColumnPairs = this.getColumnPairs();
+    final ForeignKeyColumnMap[] thisColumnPairs = getColumnPairs();
     final ForeignKeyColumnMap[] otherColumnPairs = other.getColumnPairs();
 
     if (comparison == 0)

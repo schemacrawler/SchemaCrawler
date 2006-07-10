@@ -91,8 +91,8 @@ public final class ForeignKeyUpdateRule
                                final String foreignKeyUpdateRuleName)
   {
     ordinal = nextOrdinal++;
-    this.id = foreignKeyUpdateRuleId;
-    this.name = foreignKeyUpdateRuleName;
+    id = foreignKeyUpdateRuleId;
+    name = foreignKeyUpdateRuleName;
   }
 
   /**

@@ -127,11 +127,12 @@ public final class SchemaHTMLFormatter
     final String databaseSpecificTypeName = columnDataType
       .getDatabaseSpecificTypeName();
     final String typeName = columnDataType.getTypeName();
-    String userDefined = negate(columnDataType.isUserDefined(), "user defined");
-    String nullable = negate(columnDataType.isNullable(), "nullable");
-    String autoIncrementable = negate(columnDataType.isAutoIncrementable(),
-                                      "auto-incrementable");
-    String definedWith = makeDefinedWithString(columnDataType);
+    final String userDefined = negate(columnDataType.isUserDefined(),
+                                      "user defined");
+    final String nullable = negate(columnDataType.isNullable(), "nullable");
+    final String autoIncrementable = negate(columnDataType
+      .isAutoIncrementable(), "auto-incrementable");
+    final String definedWith = makeDefinedWithString(columnDataType);
 
     out.println("<table>");
     out.println();
@@ -157,7 +158,7 @@ public final class SchemaHTMLFormatter
 
   }
 
-  private void printColumnDataTypeProperty(String userDefined)
+  private void printColumnDataTypeProperty(final String userDefined)
   {
     out.print(RECORD_BEGIN);
     out.print(FIELD_EMPTY);

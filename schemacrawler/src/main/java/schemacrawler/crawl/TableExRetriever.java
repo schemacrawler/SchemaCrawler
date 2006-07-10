@@ -76,11 +76,9 @@ final class TableExRetriever
                           final NamedObjectList namedObjectList)
     throws SQLException
   {
-    LOGGER.entering(this.getClass().getName(),
-                    "retrievePrivileges",
-                    new Object[] {
-                      parent, namedObjectList
-                    });
+    LOGGER.entering(getClass().getName(), "retrievePrivileges", new Object[] {
+      parent, namedObjectList
+    });
 
     final ResultSet results;
 

@@ -63,7 +63,7 @@ public abstract class BaseDataTextFormatter
     }
     this.options = options;
 
-    this.out = options.getOutputOptions().getOutputWriter();
+    out = options.getOutputOptions().getOutputWriter();
 
   }
 
@@ -125,7 +125,7 @@ public abstract class BaseDataTextFormatter
     while (rows.next())
     {
       currentRow = new ArrayList(columnCount - 1);
-      for (int i = 0; i < (columnCount - 1); i++)
+      for (int i = 0; i < columnCount - 1; i++)
       {
         final Object columnData = rows.getObject(i + 1);
         final String columnDataString = convertColumnDataToString(columnData);
@@ -141,7 +141,8 @@ public abstract class BaseDataTextFormatter
       {
         // At this point, we have a new row coming in, so dump the
         // previous merged row out
-        doHandleOneRow(columnNames, previousRow, currentRowLastColumn.toString());
+        doHandleOneRow(columnNames, previousRow, currentRowLastColumn
+          .toString());
         // reset
         currentRowLastColumn = new StringBuffer();
         // save the last column
@@ -161,7 +162,7 @@ public abstract class BaseDataTextFormatter
     {
       columnDataString = "<null>";
     }
-    else if ((columnData instanceof Clob) || (columnData instanceof Blob))
+    else if (columnData instanceof Clob || columnData instanceof Blob)
     {
       columnDataString = BINARY;
       if (options.isShowLobs())
@@ -209,12 +210,12 @@ public abstract class BaseDataTextFormatter
 
   }
 
-  private void doHandleOneRow(final String[] columnNames,
-                              final List row,
+  private void doHandleOneRow(final String[] columnNames, final List row,
                               final String lastColumnData)
     throws QueryExecutorException
   {
-    if (row.size() == 0) {
+    if (row.size() == 0)
+    {
       return;
     }
     final List outputRow = new ArrayList();

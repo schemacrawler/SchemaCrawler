@@ -161,7 +161,7 @@ final class ProcedureRetriever
       final String typeName = results.getString(TYPE_NAME);
       final int length = results.getInt("LENGTH");
       final int precision = results.getInt("PRECISION");
-      boolean isNullable = results.getShort(NULLABLE) == DatabaseMetaData.procedureNullable;
+      final boolean isNullable = results.getShort(NULLABLE) == DatabaseMetaData.procedureNullable;
       final String remarks = results.getString(REMARKS);
 
       if (columnInclusionRule.include(columnName))

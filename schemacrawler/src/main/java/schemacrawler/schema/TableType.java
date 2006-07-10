@@ -62,8 +62,8 @@ public final class TableType
   private TableType(final String tableType)
   {
     ordinal = nextOrdinal++;
-    this.id = ordinal;
-    this.name = tableType;
+    id = ordinal;
+    name = tableType;
   }
 
   /**
@@ -105,7 +105,7 @@ public final class TableType
   {
     return id == TABLE.getId();
   }
-  
+
   /**
    * {@inheritDoc}
    * 

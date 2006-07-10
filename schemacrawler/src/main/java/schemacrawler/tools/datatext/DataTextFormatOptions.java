@@ -65,13 +65,13 @@ public final class DataTextFormatOptions
 
     if (config == null)
     {
-      this.mergeRows = false;
-      this.showLobs = false;
+      mergeRows = false;
+      showLobs = false;
     }
     else
     {
-      this.mergeRows = getBooleanProperty(MERGE_ROWS, config);
-      this.showLobs = getBooleanProperty(SHOW_LOBS, config);
+      mergeRows = getBooleanProperty(MERGE_ROWS, config);
+      showLobs = getBooleanProperty(SHOW_LOBS, config);
     }
   }
 

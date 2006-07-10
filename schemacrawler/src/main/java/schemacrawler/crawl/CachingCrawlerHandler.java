@@ -43,11 +43,11 @@ final class CachingCrawlerHandler
   CachingCrawlerHandler(final String catalogName,
                         final SchemaInfoLevel columnInfoLevel)
   {
-    this.schema = new MutableSchema();
-    this.schema.setName("schema");
-    this.schema.setCatalogName(catalogName);
+    schema = new MutableSchema();
+    schema.setName("schema");
+    schema.setCatalogName(catalogName);
 
-    this.infoLevel = columnInfoLevel;
+    infoLevel = columnInfoLevel;
   }
 
   /**

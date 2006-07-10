@@ -79,7 +79,7 @@ final class DatabaseInfoRetriever
   MutableDatabaseInfo retrieveDatabaseInfo()
     throws SQLException
   {
-    DatabaseMetaData dbMetaData = getRetrieverConnection().getMetaData();
+    final DatabaseMetaData dbMetaData = getRetrieverConnection().getMetaData();
     final String url = dbMetaData.getURL();
     String jdbcDriverClassName;
     try
@@ -128,7 +128,7 @@ final class DatabaseInfoRetriever
         final Method method = methods[i];
         if (isDatabasePropertyMethod(method))
         {
-          String name = derivePropertyName(method);
+          final String name = derivePropertyName(method);
           Object value = method.invoke(dbMetaData, new Object[0]);
           if (value != null && name.endsWith("s") && value instanceof String)
           {
@@ -141,9 +141,9 @@ final class DatabaseInfoRetriever
         }
         else if (isDatabasePropertiesResultSetMethod(method))
         {
-          String name = derivePropertyName(method);
-          ResultSet results = (ResultSet) method.invoke(dbMetaData,
-                                                        new Object[0]);
+          final String name = derivePropertyName(method);
+          final ResultSet results = (ResultSet) method.invoke(dbMetaData,
+                                                              new Object[0]);
           dbProperties.put(name, readResultsVector(results));
         }
         else if (isDatabasePropertyResultSetType(method))
@@ -189,7 +189,8 @@ final class DatabaseInfoRetriever
                                              final String resultSetTypeName)
     throws IllegalAccessException, InvocationTargetException
   {
-    String name = derivePropertyName(method) + "ResultSet" + resultSetTypeName;
+    final String name = derivePropertyName(method) + "ResultSet"
+                        + resultSetTypeName;
     Boolean propertyValue = null;
     propertyValue = (Boolean) method.invoke(dbMetaData, new Object[] {
       new Integer(resultSetType)
@@ -225,7 +226,7 @@ final class DatabaseInfoRetriever
    */
   private boolean isDatabasePropertyMethod(final Method method)
   {
-    Class returnType = method.getReturnType();
+    final Class returnType = method.getReturnType();
     boolean notPropertyMethod = returnType.equals(ResultSet.class)
                                 || returnType.equals(Connection.class)
                                 || method.getParameterTypes().length > 0;
@@ -240,9 +241,10 @@ final class DatabaseInfoRetriever
    */
   private boolean isDatabasePropertiesResultSetMethod(final Method method)
   {
-    Class returnType = method.getReturnType();
-    boolean isPropertiesResultSetMethod = returnType.equals(ResultSet.class)
-                                          && method.getParameterTypes().length == 0;
+    final Class returnType = method.getReturnType();
+    final boolean isPropertiesResultSetMethod = returnType
+      .equals(ResultSet.class)
+                                                && method.getParameterTypes().length == 0;
     return isPropertiesResultSetMethod;
   }
 
@@ -266,7 +268,7 @@ final class DatabaseInfoRetriever
       "ownUpdatesAreVisible",
       "supportsResultSetType"
     });
-    boolean isDatabasePropertyResultSetType = resultSetTypeMethods
+    final boolean isDatabasePropertyResultSetType = resultSetTypeMethods
       .contains(method.getName());
     return isDatabasePropertyResultSetType;
   }
@@ -282,7 +284,7 @@ final class DatabaseInfoRetriever
   private List readResultsVector(final ResultSet results)
     throws SQLException
   {
-    List values = new ArrayList();
+    final List values = new ArrayList();
     try
     {
       while (results.next())
@@ -309,7 +311,7 @@ final class DatabaseInfoRetriever
   void retrieveColumnDataTypes(final MutableDatabaseInfo dbInfo)
     throws SQLException
   {
-    LOGGER.entering(this.getClass().getName(),
+    LOGGER.entering(getClass().getName(),
                     "retrieveColumnDataTypes",
                     new Object[] {
                       dbInfo
@@ -378,7 +380,7 @@ final class DatabaseInfoRetriever
   void retrieveUserDefinedColumnDataTypes(final MutableDatabaseInfo dbInfo)
     throws SQLException
   {
-    LOGGER.entering(this.getClass().getName(),
+    LOGGER.entering(getClass().getName(),
                     "retrieveUserDefinedColumnDataTypes",
                     new Object[] {
                       dbInfo
@@ -398,7 +400,7 @@ final class DatabaseInfoRetriever
         final String className = results.getString("CLASS_NAME");
         final String remarks = results.getString("REMARKS");
         final int baseTypeValue = results.getInt("BASE_TYPE");
-        ColumnDataType baseType = dbInfo.lookupByType(baseTypeValue);
+        final ColumnDataType baseType = dbInfo.lookupByType(baseTypeValue);
         final MutableColumnDataType columnDataType = new MutableColumnDataType();
         columnDataType.setUserDefined(true);
         columnDataType.setName(typeName);

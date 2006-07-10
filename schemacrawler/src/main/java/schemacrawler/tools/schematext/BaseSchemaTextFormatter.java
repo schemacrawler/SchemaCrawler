@@ -66,7 +66,7 @@ public abstract class BaseSchemaTextFormatter
     }
     this.options = options;
 
-    this.out = options.getOutputOptions().getOutputWriter();
+    out = options.getOutputOptions().getOutputWriter();
 
   }
 
@@ -141,13 +141,13 @@ public abstract class BaseSchemaTextFormatter
   {
     handleDatabaseInfo(databaseInfo);
 
-    Set propertySet = databaseInfo.getProperties().entrySet();
+    final Set propertySet = databaseInfo.getProperties().entrySet();
     if (propertySet.size() > 0)
     {
       handleDatabasePropertiesStart();
-      for (Iterator iter = propertySet.iterator(); iter.hasNext();)
+      for (final Iterator iter = propertySet.iterator(); iter.hasNext();)
       {
-        Map.Entry property = (Map.Entry) iter.next();
+        final Map.Entry property = (Map.Entry) iter.next();
         handleDatabaseProperty((String) property.getKey(), property.getValue()
           .toString());
       }
@@ -155,10 +155,10 @@ public abstract class BaseSchemaTextFormatter
     }
 
     handleColumnDataTypesStart();
-    ColumnDataType[] columnDataTypes = databaseInfo.getColumnDataTypes();
+    final ColumnDataType[] columnDataTypes = databaseInfo.getColumnDataTypes();
     for (int i = 0; i < columnDataTypes.length; i++)
     {
-      ColumnDataType columnDataType = columnDataTypes[i];
+      final ColumnDataType columnDataType = columnDataTypes[i];
       handleColumnDataType(columnDataType);
     }
     handleColumnDataTypesEnd();
