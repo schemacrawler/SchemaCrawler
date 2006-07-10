@@ -98,14 +98,14 @@ public class Prompter
         answer = defaultValue;
       }
       if (answer == null
-          || (answer.toString().length() == 0 && defaultValue != null))
+          || answer.toString().length() == 0 && defaultValue != null)
       {
         answer = defaultValue;
       }
 
       // test input type
       if (type == Prompter.STRING
-          && (answer.toString().length() == 0 && !allowEmptyStrings))
+          && answer.toString().length() == 0 && !allowEmptyStrings)
       {
         isValid = false;
       }
@@ -125,7 +125,7 @@ public class Prompter
     }
 
     if (type == Prompter.STRING
-        && (answer.toString().length() == 0 && !allowEmptyStrings))
+        && answer.toString().length() == 0 && !allowEmptyStrings)
     {
       answer = answer.toString();
     }
@@ -199,7 +199,7 @@ public class Prompter
         continue;
       }
 
-      if (answer == null || (answer.length() == 0 && defaultValue == null))
+      if (answer == null || answer.length() == 0 && defaultValue == null)
       {
         out.println("Invalid choice");
         out.println();

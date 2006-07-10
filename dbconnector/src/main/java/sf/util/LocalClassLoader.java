@@ -82,13 +82,13 @@ public final class LocalClassLoader
     final LocalClassLoader loader = new LocalClassLoader(sysLoader.getURLs(),
         LocalClassLoader.class.getClassLoader());
 
-    if ((paths != null) && (paths.length > 0))
+    if (paths != null && paths.length > 0)
     {
       for (int i = 0; i < paths.length; i++)
       {
         final String path = paths[i];
 
-        if ((path != null) && (path.length() > 0))
+        if (path != null && path.length() > 0)
         {
           final File f = new File(path);
 

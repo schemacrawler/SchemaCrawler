@@ -76,7 +76,7 @@ public final class GroupedProperties
    */
   public Properties subgroup(final String prefix)
   {
-    if ((prefix == null) || (prefix.length() == 0))
+    if (prefix == null || prefix.length() == 0)
     {
       return this;
     }

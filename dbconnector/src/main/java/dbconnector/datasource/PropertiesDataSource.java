@@ -125,9 +125,9 @@ public final class PropertiesDataSource
     final SubstitutableProperties substitutedProperties = new SubstitutableProperties(
         groups.subgroup(useConnectionName));
 
-    this.logWriter = new PrintWriter(System.err);
+    logWriter = new PrintWriter(System.err);
 
-    this.connectionParams = substitutedProperties;
+    connectionParams = substitutedProperties;
 
     LOGGER.log(Level.FINE, "Using connection \"" + connectionName + "\"");
     LOGGER.log(Level.FINE, getConnectionParamsInfo());
@@ -138,9 +138,9 @@ public final class PropertiesDataSource
       Class.forName("java.sql.DriverManager", true, classLoader);
 
       // load driver
-      final String driver = this.connectionParams.getProperty("driver");
+      final String driver = connectionParams.getProperty("driver");
       final Class jdbcDriverClass = Class.forName(driver, true, classLoader);
-      this.jdbcDriver = (Driver) jdbcDriverClass.newInstance();
+      jdbcDriver = (Driver) jdbcDriverClass.newInstance();
     }
     catch (final ClassNotFoundException e)
     {
@@ -155,7 +155,7 @@ public final class PropertiesDataSource
       throw new PropertiesDataSourceException(e.getLocalizedMessage(), e);
     }
 
-    this.url = this.connectionParams.getProperty("url");
+    url = connectionParams.getProperty("url");
 
     testConnection();
 
@@ -360,7 +360,7 @@ public final class PropertiesDataSource
    */
   public void setLoginTimeout(final int seconds)
   {
-    this.loginTimeout = seconds;
+    loginTimeout = seconds;
   }
 
   /**

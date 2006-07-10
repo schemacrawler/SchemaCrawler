@@ -59,7 +59,7 @@ public final class Main
   static
   {
     // load about information
-    byte[] text = Utilities.readFully(Main.class
+    final byte[] text = Utilities.readFully(Main.class
       .getResourceAsStream("/dbconnector-readme.txt"));
     info = new String(text);
 
