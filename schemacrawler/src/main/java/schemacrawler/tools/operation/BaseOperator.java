@@ -83,8 +83,8 @@ public abstract class BaseOperator
     }
     this.options = options;
 
-    this.operation = options.getOperation();
-    if (this.operation == null)
+    operation = options.getOperation();
+    if (operation == null)
     {
       throw new SchemaCrawlerException("Cannot perform null operation");
     }
@@ -118,7 +118,7 @@ public abstract class BaseOperator
     }
     this.connection = connection;
     this.query = query;
-    this.out = options.getOutputOptions().getOutputWriter();
+    out = options.getOutputOptions().getOutputWriter();
 
   }
 

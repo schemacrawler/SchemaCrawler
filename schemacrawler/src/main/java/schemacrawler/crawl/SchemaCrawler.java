@@ -56,7 +56,7 @@ public final class SchemaCrawler
     throws SchemaCrawlerException
   {
 
-    this.retrieverConnection = new RetrieverConnection(dataSource);
+    retrieverConnection = new RetrieverConnection(dataSource);
 
     if (crawlHandler == null)
     {
@@ -90,8 +90,8 @@ public final class SchemaCrawler
 
       handler.begin();
 
-      MutableDatabaseInfo databaseInfo = crawlDatabaseInfo(infoLevel,
-                                                           schemaCrawlerOptions);
+      final MutableDatabaseInfo databaseInfo = crawlDatabaseInfo(infoLevel,
+                                                                 schemaCrawlerOptions);
       final NamedObjectList columnDataTypes = databaseInfo
         .getColumnDataTypesList();
 
@@ -112,7 +112,7 @@ public final class SchemaCrawler
                                                 final SchemaCrawlerOptions options)
     throws SQLException, SchemaCrawlerException
   {
-    DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(
+    final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(
         retrieverConnection);
     final MutableDatabaseInfo dbInfo = retriever.retrieveDatabaseInfo();
     retriever.retrieveColumnDataTypes(dbInfo);

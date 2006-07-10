@@ -137,7 +137,7 @@ public final class OptionsParser
     {
       final Command command = parseCommand(config, commandStrings[i]);
       //
-      OutputOptions outputOptions = masterOutputOptions.duplicate();
+      final OutputOptions outputOptions = masterOutputOptions.duplicate();
       if (i == 0)
       {
         // First command - no footer

@@ -197,7 +197,7 @@ final class MutableDatabaseInfo
 
   void setProperties(final SortedMap properties)
   {
-    this.dbProperties = properties;
+    dbProperties = properties;
   }
 
   /**
@@ -269,10 +269,10 @@ final class MutableDatabaseInfo
   ColumnDataType lookupByType(final int type)
   {
     ColumnDataType columnDataType = null;
-    List allColumnDataTypes = columnDataTypes.getAll();
-    for (Iterator iter = allColumnDataTypes.iterator(); iter.hasNext();)
+    final List allColumnDataTypes = columnDataTypes.getAll();
+    for (final Iterator iter = allColumnDataTypes.iterator(); iter.hasNext();)
     {
-      ColumnDataType currentColumnDataType = (ColumnDataType) iter.next();
+      final ColumnDataType currentColumnDataType = (ColumnDataType) iter.next();
       if (type == currentColumnDataType.getType())
       {
         columnDataType = currentColumnDataType;

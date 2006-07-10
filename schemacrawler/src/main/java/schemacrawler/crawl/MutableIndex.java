@@ -72,7 +72,7 @@ class MutableIndex
 
   final void setUnique(final boolean unique)
   {
-    this.isUnique = unique;
+    isUnique = unique;
   }
 
   /**
@@ -169,7 +169,7 @@ class MutableIndex
   {
     final Index other = (Index) obj;
     int comparison = 0;
-    final Column[] thisColumns = this.getColumns();
+    final Column[] thisColumns = getColumns();
     final Column[] otherColumns = other.getColumns();
 
     if (comparison == 0)

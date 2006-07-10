@@ -80,7 +80,7 @@ abstract class AbstractColumn
    */
   final void setType(final ColumnDataType columnDataType)
   {
-    this.dataType = columnDataType;
+    dataType = columnDataType;
   }
 
   /**
@@ -104,7 +104,7 @@ abstract class AbstractColumn
       columnDataType.setType(jdbcDataType);
       columnDataType.setDatabaseSpecificTypeName(databaseSpecificTypeName);
     }
-    this.dataType = columnDataType;
+    dataType = columnDataType;
   }
 
   /**
@@ -204,7 +204,7 @@ abstract class AbstractColumn
 
     if (comparison == 0)
     {
-      comparison = this.ordinalPosition - other.getOrdinalPosition();
+      comparison = ordinalPosition - other.getOrdinalPosition();
     }
     if (comparison == 0)
     {

@@ -59,7 +59,7 @@ final class MutableProcedure
     {
       throw new IllegalArgumentException("Null procedure type");
     }
-    this.procedureType = type;
+    procedureType = type;
   }
 
   /**

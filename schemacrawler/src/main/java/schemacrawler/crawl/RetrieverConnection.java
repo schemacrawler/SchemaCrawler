@@ -53,17 +53,17 @@ final class RetrieverConnection
 
     if (dataSource instanceof PropertiesDataSource)
     {
-      PropertiesDataSource propertiesDataSource = (PropertiesDataSource) dataSource;
-      this.jdbcDriverClassName = propertiesDataSource.getJdbcDriverClass();
-      this.catalog = propertiesDataSource.getCatalog();
-      this.schemaPattern = propertiesDataSource.getSourceProperties()
+      final PropertiesDataSource propertiesDataSource = (PropertiesDataSource) dataSource;
+      jdbcDriverClassName = propertiesDataSource.getJdbcDriverClass();
+      catalog = propertiesDataSource.getCatalog();
+      schemaPattern = propertiesDataSource.getSourceProperties()
         .getProperty("schemapattern");
     }
     else
     {
       try
       {
-        Connection connection = dataSource.getConnection();
+        final Connection connection = dataSource.getConnection();
         String driverClassName;
         try
         {
@@ -74,10 +74,10 @@ final class RetrieverConnection
         {
           driverClassName = "";
         }
-        this.jdbcDriverClassName = driverClassName;
-        this.catalog = connection.getCatalog();
+        jdbcDriverClassName = driverClassName;
+        catalog = connection.getCatalog();
         // NOTE: schemaPattern remains null, which is ok for JDBC
-        this.schemaPattern = null;
+        schemaPattern = null;
       }
       catch (final SQLException e)
       {
@@ -88,8 +88,8 @@ final class RetrieverConnection
 
     try
     {
-      Connection connection = dataSource.getConnection();
-      this.metaData = connection.getMetaData();
+      final Connection connection = dataSource.getConnection();
+      metaData = connection.getMetaData();
     }
     catch (final SQLException e)
     {

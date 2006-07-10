@@ -88,7 +88,7 @@ public final class Options
 
   void setLogLevel(final String logLevelString)
   {
-    this.logLevel = Level.parse(logLevelString.toUpperCase(Locale.ENGLISH));
+    logLevel = Level.parse(logLevelString.toUpperCase(Locale.ENGLISH));
   }
 
   /**

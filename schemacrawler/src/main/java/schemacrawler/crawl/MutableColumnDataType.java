@@ -46,15 +46,15 @@ final class MutableColumnDataType
   private static Map getJavaSqlTypes()
   {
 
-    Map javaSqlTypes = new HashMap();
-    Field[] staticFields = Types.class.getFields();
+    final Map javaSqlTypes = new HashMap();
+    final Field[] staticFields = Types.class.getFields();
     for (int i = 0; i < staticFields.length; i++)
     {
       try
       {
-        Field field = staticFields[i];
-        String fieldName = field.getName();
-        Integer fieldValue = (Integer) field.get(null);
+        final Field field = staticFields[i];
+        final String fieldName = field.getName();
+        final Integer fieldValue = (Integer) field.get(null);
         javaSqlTypes.put(fieldValue, fieldName);
       }
       catch (final SecurityException e)
@@ -287,7 +287,7 @@ final class MutableColumnDataType
    */
   void setCreateParameters(final String createParams)
   {
-    this.createParameters = createParams;
+    createParameters = createParams;
   }
 
   /**
@@ -386,7 +386,7 @@ final class MutableColumnDataType
    */
   void setUnsigned(final boolean unsignedAttribute)
   {
-    this.unsigned = unsignedAttribute;
+    unsigned = unsignedAttribute;
   }
 
   /**

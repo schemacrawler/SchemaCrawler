@@ -76,16 +76,16 @@ public final class OutputOptions
 
     if (outputFilename == null || outputFilename.length() == 0)
     {
-      this.outputFile = null;
+      outputFile = null;
     }
     else
     {
-      this.outputFile = new File(outputFilename);
+      outputFile = new File(outputFilename);
     }
 
-    this.noHeader = true;
-    this.noFooter = true;
-    this.noInfo = true;
+    noHeader = true;
+    noFooter = true;
+    noInfo = true;
   }
 
   /**
@@ -111,8 +111,9 @@ public final class OutputOptions
   /**
    * Whether the output gets appended.
    * 
-   * @param appendOutput Whether the output gets appended
-   */  
+   * @param appendOutput
+   *          Whether the output gets appended
+   */
   public void setAppendOutput(final boolean appendOutput)
   {
     this.appendOutput = appendOutput;
@@ -147,7 +148,7 @@ public final class OutputOptions
         try
         {
           writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(
-              this.outputFile, this.appendOutput), "UTF-8"), /* autoFlush = */
+              outputFile, appendOutput), "UTF-8"), /* autoFlush = */
           true);
         }
         catch (final IOException e)
@@ -184,7 +185,7 @@ public final class OutputOptions
    * Whether to print headers.
    * 
    * @return Whether to print headers
-   */  
+   */
   public boolean isNoHeader()
   {
     return noHeader;
@@ -194,7 +195,7 @@ public final class OutputOptions
    * Whether to print information.
    * 
    * @return Whether to print information
-   */  
+   */
   public boolean isNoInfo()
   {
     return noInfo;
@@ -203,8 +204,9 @@ public final class OutputOptions
   /**
    * Whether to print footers.
    * 
-   * @param noFooter Whether to print footers
-   */  
+   * @param noFooter
+   *          Whether to print footers
+   */
   public void setNoFooter(final boolean noFooter)
   {
     this.noFooter = noFooter;
@@ -213,8 +215,9 @@ public final class OutputOptions
   /**
    * Whether to print headers.
    * 
-   * @param noHeader Whether to print headers
-   */   
+   * @param noHeader
+   *          Whether to print headers
+   */
   public void setNoHeader(final boolean noHeader)
   {
     this.noHeader = noHeader;
@@ -223,8 +226,9 @@ public final class OutputOptions
   /**
    * Whether to print information.
    * 
-   * @param noInfo Whether to print information
-   */   
+   * @param noInfo
+   *          Whether to print information
+   */
   public void setNoInfo(final boolean noInfo)
   {
     this.noInfo = noInfo;
@@ -237,18 +241,18 @@ public final class OutputOptions
    */
   public OutputOptions duplicate()
   {
-    OutputOptions outputOptions = new OutputOptions();
+    final OutputOptions outputOptions = new OutputOptions();
 
-    outputOptions.outputFormatValue = this.outputFormatValue;
+    outputOptions.outputFormatValue = outputFormatValue;
 
-    outputOptions.outputFile = this.outputFile;
-    outputOptions.writer = this.writer;
+    outputOptions.outputFile = outputFile;
+    outputOptions.writer = writer;
 
-    outputOptions.appendOutput = this.appendOutput;
+    outputOptions.appendOutput = appendOutput;
 
-    outputOptions.noHeader = this.noHeader;
-    outputOptions.noFooter = this.noFooter;
-    outputOptions.noInfo = this.noInfo;
+    outputOptions.noHeader = noHeader;
+    outputOptions.noFooter = noFooter;
+    outputOptions.noInfo = noInfo;
 
     return outputOptions;
   }

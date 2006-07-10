@@ -60,11 +60,11 @@ public final class SchemaTextFormatter
     super(options);
     if (options.getOutputOptions().getOutputFormat() == OutputFormat.CSV)
     {
-      this.textFormattingFunctor = new CsvFormattingFunctor();
+      textFormattingFunctor = new CsvFormattingFunctor();
     }
     else
     {
-      this.textFormattingFunctor = new PlainTextFormattingFunctor();
+      textFormattingFunctor = new PlainTextFormattingFunctor();
     }
   }
 
@@ -123,11 +123,12 @@ public final class SchemaTextFormatter
     final String databaseSpecificTypeName = columnDataType
       .getDatabaseSpecificTypeName();
     final String typeName = columnDataType.getTypeName();
-    String userDefined = negate(columnDataType.isUserDefined(), "user defined");
-    String nullable = negate(columnDataType.isNullable(), "nullable");
-    String autoIncrementable = negate(columnDataType.isAutoIncrementable(),
-                                      "auto-incrementable");
-    String definedWith = makeDefinedWithString(columnDataType);
+    final String userDefined = negate(columnDataType.isUserDefined(),
+                                      "user defined");
+    final String nullable = negate(columnDataType.isNullable(), "nullable");
+    final String autoIncrementable = negate(columnDataType
+      .isAutoIncrementable(), "auto-incrementable");
+    final String definedWith = makeDefinedWithString(columnDataType);
 
     out.print(textFormattingFunctor.format(databaseSpecificTypeName,
                                            MAX_COLUMN_TYPE_WIDTH,
@@ -150,7 +151,8 @@ public final class SchemaTextFormatter
 
   }
 
-  private void printColumnDataTypeProperty(String userDefined, int width)
+  private void printColumnDataTypeProperty(final String userDefined,
+                                           final int width)
   {
     out.println();
     out.print(textFormattingFunctor.getFieldSeparator());

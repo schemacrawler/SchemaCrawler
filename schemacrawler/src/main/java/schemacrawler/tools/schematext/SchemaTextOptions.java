@@ -73,16 +73,16 @@ public final class SchemaTextOptions
 
     if (config == null)
     {
-      this.showJdbcColumnTypeNames = false;
-      this.showOrdinalNumbers = false;
-      this.hideIndexNames = false;
+      showJdbcColumnTypeNames = false;
+      showOrdinalNumbers = false;
+      hideIndexNames = false;
     }
     else
     {
-      this.showJdbcColumnTypeNames = getBooleanProperty(SHOW_JDBC_COLUMN_TYPE_NAMES,
-                                                        config);
-      this.showOrdinalNumbers = getBooleanProperty(SHOW_ORDINAL_NUMBERS, config);
-      this.hideIndexNames = getBooleanProperty(HIDE_INDEX_NAMES, config);
+      showJdbcColumnTypeNames = getBooleanProperty(SHOW_JDBC_COLUMN_TYPE_NAMES,
+                                                   config);
+      showOrdinalNumbers = getBooleanProperty(SHOW_ORDINAL_NUMBERS, config);
+      hideIndexNames = getBooleanProperty(HIDE_INDEX_NAMES, config);
     }
   }
 

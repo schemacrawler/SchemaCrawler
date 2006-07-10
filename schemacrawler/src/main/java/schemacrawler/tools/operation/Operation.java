@@ -63,8 +63,8 @@ public final class Operation
                     final String query, final String countMessageFormat)
   {
     ordinal = nextOrdinal++;
-    this.operation = name;
-    this.operationDescription = description;
+    operation = name;
+    operationDescription = description;
     this.query = query;
     this.countMessageFormat = countMessageFormat;
   }
@@ -118,17 +118,17 @@ public final class Operation
    * If this operation is a query-over operation.
    * 
    * @return If this operation is a query-over operation
-   */  
+   */
   public boolean isQueryOver()
   {
-    return this.getOperation().equals(QUERYOVER.getOperation());
+    return getOperation().equals(QUERYOVER.getOperation());
   }
 
   /**
    * If this operation is an aggregate operation.
    * 
    * @return If this operation is an aggregate operation
-   */  
+   */
   public boolean isAggregateOperation()
   {
     return this == COUNT;

@@ -62,9 +62,9 @@ public final class NamedObjectList
    */
   public NamedObjectList(final SerializableComparator serializableComparator)
   {
-    this.comparator = serializableComparator;
-    this.sortedList = new LinkedList();
-    this.map = new TreeMap();
+    comparator = serializableComparator;
+    sortedList = new LinkedList();
+    map = new TreeMap();
   }
 
   /**
@@ -148,7 +148,7 @@ public final class NamedObjectList
     if (LOGGER.isLoggable(Level.FINEST))
     {
       String message = "Adding \"" + namedObject + "\" at position #" + index;
-      if (index != (ordinalPosition - 1))
+      if (index != ordinalPosition - 1)
       {
         message = message + " (instead of at position #"
                   + (ordinalPosition - 1) + ")";
@@ -283,8 +283,8 @@ public final class NamedObjectList
       return false;
     }
 
-    NamedObjectList other = (NamedObjectList) o;
-    if (this.sortedList == null)
+    final NamedObjectList other = (NamedObjectList) o;
+    if (sortedList == null)
     {
       if (other.sortedList != null)
       {
@@ -293,7 +293,7 @@ public final class NamedObjectList
     }
     else
     {
-      if (!this.sortedList.equals(other.sortedList))
+      if (!sortedList.equals(other.sortedList))
       {
         return false;
       }

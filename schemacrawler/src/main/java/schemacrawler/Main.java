@@ -102,7 +102,7 @@ public final class Main
 
     if (optionCommands.length > 0)
     {
-      Options firstOption = optionCommands[0];
+      final Options firstOption = optionCommands[0];
       Utilities.setApplicationLogLevel(firstOption.getLogLevel());
       LOGGER.log(Level.CONFIG, Version.about());
       LOGGER.log(Level.CONFIG, "Commandline: " + Arrays.asList(args));

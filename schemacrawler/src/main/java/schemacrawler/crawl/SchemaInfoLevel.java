@@ -76,7 +76,7 @@ public final class SchemaInfoLevel
    */
   public boolean isGreaterThan(final SchemaInfoLevel infoLevel)
   {
-    return this.getInfoLevelId() > infoLevel.getInfoLevelId();
+    return getInfoLevelId() > infoLevel.getInfoLevelId();
   }
 
   /**
@@ -88,7 +88,7 @@ public final class SchemaInfoLevel
    */
   public boolean isGreaterThanOrEqualTo(final SchemaInfoLevel infoLevel)
   {
-    return this.getInfoLevelId() >= infoLevel.getInfoLevelId();
+    return getInfoLevelId() >= infoLevel.getInfoLevelId();
   }
 
   /**
