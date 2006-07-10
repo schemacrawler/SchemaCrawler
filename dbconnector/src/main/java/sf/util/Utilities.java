@@ -293,7 +293,7 @@ public final class Utilities
     }
 
     String shrunkTemplate = template;
-    Set keys = new HashSet();
+    final Set keys = new HashSet();
     for (int left; (left = shrunkTemplate.indexOf("${")) >= 0;)
     {
       final int right = shrunkTemplate.indexOf("}", left + 2);

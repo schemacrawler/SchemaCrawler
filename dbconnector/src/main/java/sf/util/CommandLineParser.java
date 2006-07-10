@@ -53,11 +53,11 @@ public final class CommandLineParser
   {
     if (option.hasShortForm())
     {
-      this.optionsMap.put(DASH + option.getShortForm(), option);
+      optionsMap.put(DASH + option.getShortForm(), option);
     }
     if (option.hasLongForm())
     {
-      this.optionsMap.put(DASH + option.getLongForm(), option);
+      optionsMap.put(DASH + option.getLongForm(), option);
     }
   }
 
@@ -68,7 +68,7 @@ public final class CommandLineParser
    */
   public String[] getRemainingArgs()
   {
-    String[] remainingArgsCopy = new String[remainingArgs.length];
+    final String[] remainingArgsCopy = new String[remainingArgs.length];
     System.arraycopy(remainingArgs,
                      0,
                      remainingArgsCopy,
@@ -84,12 +84,12 @@ public final class CommandLineParser
    */
   public BaseOption[] getOptions()
   {
-    Collection options = optionsMap.values();
-    Collection uniqueOptions = new HashSet();
+    final Collection options = optionsMap.values();
+    final Collection uniqueOptions = new HashSet();
 
-    for (Iterator iterator = options.iterator(); iterator.hasNext();)
+    for (final Iterator iterator = options.iterator(); iterator.hasNext();)
     {
-      BaseOption option = (BaseOption) iterator.next();
+      final BaseOption option = (BaseOption) iterator.next();
       if (!uniqueOptions.contains(option))
       {
         uniqueOptions.add(option);
@@ -124,7 +124,7 @@ public final class CommandLineParser
   {
 
     // clean out all options
-    BaseOption[] options = getOptions();
+    final BaseOption[] options = getOptions();
     for (int i = 0; i < options.length; i++)
     {
       options[i].reset();
@@ -148,7 +148,7 @@ public final class CommandLineParser
         currentArg = currentArg.substring(0, equalsPos);
       }
 
-      final BaseOption option = (BaseOption) this.optionsMap.get(currentArg);
+      final BaseOption option = (BaseOption) optionsMap.get(currentArg);
 
       if (option == null)
       {
@@ -180,7 +180,7 @@ public final class CommandLineParser
       position++;
     }
 
-    this.remainingArgs = (String[]) otherArgs.toArray(new String[otherArgs
+    remainingArgs = (String[]) otherArgs.toArray(new String[otherArgs
       .size()]);
   }
 
@@ -225,17 +225,17 @@ public final class CommandLineParser
       this.shortForm = new String(new char[] {
         shortForm
       });
-      this.hasShortForm = true;
+      hasShortForm = true;
     }
 
     private void setLongForm(final String longForm)
     {
-      if ((longForm == null) || (longForm.length() == 0))
+      if (longForm == null || longForm.length() == 0)
       {
         throw new IllegalArgumentException("Long form for option not specified");
       }
       this.longForm = longForm;
-      this.hasLongForm = true;
+      hasLongForm = true;
     }
 
     /**
@@ -311,7 +311,7 @@ public final class CommandLineParser
      */
     public final boolean wantsValue()
     {
-      return this.wantsValue;
+      return wantsValue;
     }
 
     /**
@@ -326,13 +326,13 @@ public final class CommandLineParser
 
     protected final void setValue(final String valueString)
     {
-      if (this.wantsValue && (valueString == null))
+      if (wantsValue && valueString == null)
       {
-        this.value = null;
+        value = null;
       }
       else
       {
-        this.value = parseValue(valueString);
+        value = parseValue(valueString);
       }
     }
 
@@ -393,7 +393,7 @@ public final class CommandLineParser
 
     protected Object parseValue(final String valueString)
     {
-      if ((valueString == null) || (valueString.length() == 0))
+      if (valueString == null || valueString.length() == 0)
       {
         return Boolean.FALSE;
       }

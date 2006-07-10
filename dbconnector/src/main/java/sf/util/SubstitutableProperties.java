@@ -116,7 +116,7 @@ public final class SubstitutableProperties
                                  + DELIMITER_START.length();
         final String key = template.substring(delimiterStartPosition,
                                               delimiterEndPosition);
-        String value = super.getProperty(key);
+        final String value = super.getProperty(key);
         if (value != null)
         {
           buffer.append(value);
