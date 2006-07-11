@@ -7,6 +7,10 @@
 
 		<ant
 		  antfile="build.xml"
+      dir="schemacrawler-maven-plugin"
+      target="clean"/>
+		<ant
+		  antfile="build.xml"
       dir="integrations"
       target="clean"/>
 		<ant
@@ -23,12 +27,14 @@
   <target name="all.build">
 
 		<ant antfile="integrations/build.xml" inheritAll="false" />
+		<ant antfile="schemacrawler-maven-plugin/build.xml" inheritAll="false" />
 
     <condition property="compiled">
       <and>
         <available file="dbconnector/target/classes" type="dir"/>
         <available file="schemacrawler/target/classes" type="dir"/>
         <available file="integrations/target/classes" type="dir"/>
+        <available file="schemacrawler-maven-plugin/target/classes" type="dir"/>
       </and>
     </condition>
 
@@ -62,6 +68,7 @@
       <zipfileset dir="dbconnector/target/classes"/>
       <zipfileset dir="schemacrawler/target/classes"/>
       <zipfileset dir="integrations/target/classes"/>
+      <zipfileset dir="schemacrawler-maven-plugin/target/classes"/>
     </jar>
 
 	</target>
@@ -73,6 +80,7 @@
         <available file="dbconnector/target/classes" type="dir"/>
         <available file="schemacrawler/target/classes" type="dir"/>
         <available file="integrations/target/classes" type="dir"/>
+        <available file="schemacrawler-maven-plugin/target/classes" type="dir"/>
       </and>
     </condition>
 
