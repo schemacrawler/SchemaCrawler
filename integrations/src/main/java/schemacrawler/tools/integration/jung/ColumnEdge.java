@@ -24,7 +24,6 @@ package schemacrawler.tools.integration.jung;
 import java.awt.Color;
 import java.awt.Paint;
 
-import edu.uci.ics.jung.graph.Vertex;
 import edu.uci.ics.jung.graph.impl.DirectedSparseEdge;
 
 final class ColumnEdge
