@@ -1,28 +1,51 @@
 package schemacrawler.tools.integration.maven;
 
 
+import java.io.File;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.doxia.siterenderer.Renderer;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.project.MavenProject;
+import org.apache.maven.reporting.AbstractMavenReport;
+import org.apache.maven.reporting.MavenReport;
+import org.apache.maven.reporting.MavenReportException;
+import org.codehaus.doxia.sink.Sink;
 
 /**
- * _@phase process-sources
+ * Generates a SchemaCrawler report of the database.
  * 
  * @goal schemacrawler
+ * @execute phase="generate-sources"
  */
 public class SchemaCrawlerMojo
-  extends AbstractMojo
+  extends AbstractMavenReport
+  implements MavenReport
 {
 
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerMojo.class
     .getName());
 
   /**
+   * @parameter expression="${project}"
+   * @required
+   * @readonly
+   */
+  protected MavenProject project;
+
+  /**
+   * @component
+   */
+  private Renderer siteRenderer;
+
+  /**
    * Config file.
    * 
    * @parameter expression="${schemacrawler.config}"
+   *            alias="schemacrawler.config"
+   *            default-value="schemacrawler.config.properties"
    * @required
    */
   private String config;
@@ -31,6 +54,8 @@ public class SchemaCrawlerMojo
    * Config override file.
    * 
    * @parameter expression="${schemacrawler.config-override}"
+   *            alias="schemacrawler.config-override"
+   *            default-value="schemacrawler.config.override.properties"
    */
   private String configOverride;
 
@@ -38,6 +63,7 @@ public class SchemaCrawlerMojo
    * Datasource.
    * 
    * @parameter expression="${schemacrawler.datasource}"
+   *            alias="schemacrawler.datasource"
    * @required
    */
   private String datasource;
@@ -46,6 +72,7 @@ public class SchemaCrawlerMojo
    * Command.
    * 
    * @parameter expression="${schemacrawler.command}"
+   *            alias="schemacrawler.command"
    * @required
    */
   private String command;
@@ -54,6 +81,7 @@ public class SchemaCrawlerMojo
    * Whether the header should be suppressed.
    * 
    * @parameter expression="${schemacrawler.no-header}"
+   *            alias="schemacrawler.no-header" default-value="false"
    */
   private boolean noHeader;
 
@@ -61,6 +89,7 @@ public class SchemaCrawlerMojo
    * Whether the footer should be suppressed.
    * 
    * @parameter expression="${schemacrawler.no-footer}"
+   *            alias="schemacrawler.no-footer" default-value="false"
    */
   private boolean noFooter;
 
@@ -68,6 +97,7 @@ public class SchemaCrawlerMojo
    * Whether the info should be suppressed.
    * 
    * @parameter expression="${schemacrawler.no-info}"
+   *            alias="schemacrawler.no-footer" default-value="false"
    */
   private boolean noInfo;
 
@@ -75,6 +105,7 @@ public class SchemaCrawlerMojo
    * Output format.
    * 
    * @parameter expression="${schemacrawler.outputformat}"
+   *            alias="schemacrawler.outputformat" default-value="text"
    */
   private String outputFormat;
 
@@ -82,6 +113,7 @@ public class SchemaCrawlerMojo
    * Output file.
    * 
    * @parameter expression="${schemacrawler.outputfile}"
+   *            alias="schemacrawler.outputfile"
    * @required
    */
   private String outputFile;
@@ -90,18 +122,149 @@ public class SchemaCrawlerMojo
    * Whether to append to the output.
    * 
    * @parameter expression="${schemacrawler.append}"
+   *            alias="schemacrawler.append" default-value="false"
    */
   private boolean append;
+
+  /**
+   * @see org.apache.maven.reporting.AbstractMavenReport#getProject()
+   */
+  protected MavenProject getProject()
+  {
+    return project;
+  }
+
+  /**
+   * @see org.apache.maven.reporting.AbstractMavenReport#getSiteRenderer()
+   */
+  protected Renderer getSiteRenderer()
+  {
+    return siteRenderer;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see org.apache.maven.reporting.MavenReport#canGenerateReport()
+   */
+  public boolean canGenerateReport()
+  {
+    // TODO: Test database connection?
+    return true;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see org.apache.maven.reporting.MavenReport#generate(org.codehaus.doxia.sink.Sink,
+   *      java.util.Locale)
+   */
+  public void generate(Sink sink, Locale locale)
+    throws MavenReportException
+  {
+    try
+    {
+      execute();
+    }
+    catch (MojoExecutionException e)
+    {
+      throw new MavenReportException(e.getLongMessage(), e);
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see org.apache.maven.reporting.MavenReport#getCategoryName()
+   */
+  public String getCategoryName()
+  {
+    return CATEGORY_PROJECT_REPORTS;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see org.apache.maven.reporting.MavenReport#getDescription(java.util.Locale)
+   */
+  public String getDescription(Locale locale)
+  {
+    return "SchemaCrawler Report";
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see org.apache.maven.reporting.MavenReport#getName(java.util.Locale)
+   */
+  public String getName(Locale locale)
+  {
+    return "SchemaCrawler";
+  }
+
+  /**
+   * @see org.apache.maven.reporting.AbstractMavenReport#getOutputDirectory()
+   */
+  protected String getOutputDirectory()
+  {
+    return (new File(outputFile)).getParentFile().getAbsolutePath();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see org.apache.maven.reporting.MavenReport#getOutputName()
+   */
+  public String getOutputName()
+  {
+    return (new File(outputFile)).getName();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see org.apache.maven.reporting.MavenReport#getReportOutputDirectory()
+   */
+  public File getReportOutputDirectory()
+  {
+    return (new File(outputFile)).getParentFile();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see org.apache.maven.reporting.MavenReport#isExternalReport()
+   */
+  public boolean isExternalReport()
+  {
+    return true;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see org.apache.maven.reporting.MavenReport#setReportOutputDirectory(java.io.File)
+   */
+  public void setReportOutputDirectory(File directory)
+  {
+    // Get the output filename
+    String outputFilename = (new File(outputFile)).getName();
+    // Set the new path
+    if (directory.exists() && directory.isDirectory())
+    {
+      outputFile = (new File(directory, outputFilename)).getAbsolutePath();
+    }
+  }
 
   public void execute()
     throws MojoExecutionException
   {
+    // TODO: Create site renderer sink, and generate report.
+  }
 
-    // Set defaults
-    config = defaulted(config, "schemacrawler.config.properties");
-    configOverride = defaulted(configOverride,
-                               "schemacrawler.config.override.properties");
-    outputFormat = defaulted(outputFormat, "text");
+  protected void executeReport(Locale locale)
+    throws MavenReportException
+  {
 
     // Build command line
     String[] args = new String[] {
@@ -127,13 +290,14 @@ public class SchemaCrawlerMojo
     // Execute command
     String commandLine = schemacrawler.Main.class + " " + toString(args);
     LOGGER.log(Level.CONFIG, commandLine);
+    getLog().info(commandLine);
     try
     {
       schemacrawler.Main.main(args);
     }
     catch (Exception e)
     {
-      throw new MojoExecutionException("Error executing: " + commandLine, e);
+      throw new MavenReportException("Error executing: " + commandLine, e);
     }
   }
 
@@ -145,18 +309,6 @@ public class SchemaCrawlerMojo
       buffer.append(args[i]).append(" ");
     }
     return buffer.toString();
-  }
-
-  private String defaulted(String parameter, String defaultValue)
-  {
-    if (parameter == null || parameter.trim().length() == 0)
-    {
-      return defaultValue;
-    }
-    else
-    {
-      return parameter;
-    }
   }
 
 }
