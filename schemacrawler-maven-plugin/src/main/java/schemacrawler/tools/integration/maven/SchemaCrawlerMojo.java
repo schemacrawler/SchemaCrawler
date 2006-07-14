@@ -117,7 +117,7 @@ public class SchemaCrawlerMojo
    * 
    * @parameter expression="${schemacrawler.outputfile}"
    *            alias="schemacrawler.outputfile"
-   * @required
+   *            default-value="schemacrawler.report.html"
    */
   private String outputFile;
 
@@ -165,14 +165,7 @@ public class SchemaCrawlerMojo
   public void generate(final Sink sink, final Locale locale)
     throws MavenReportException
   {
-    try
-    {
-      execute();
-    }
-    catch (final MojoExecutionException e)
-    {
-      throw new MavenReportException(e.getLongMessage(), e);
-    }
+    executeReport(locale);
   }
 
   /**
@@ -202,7 +195,7 @@ public class SchemaCrawlerMojo
    */
   public String getName(final Locale locale)
   {
-    return "SchemaCrawler";
+    return "SchemaCrawler Report";
   }
 
   /**
@@ -269,7 +262,7 @@ public class SchemaCrawlerMojo
     {
       final String outputDirectory = getOutputDirectory();
       final SiteRendererSink sink = siteRenderer.createSink(new File(
-          outputDirectory), getOutputName());
+          outputDirectory), getOutputName() + ".html");
       generate(sink, Locale.getDefault());
     }
     catch (final RendererException e)
