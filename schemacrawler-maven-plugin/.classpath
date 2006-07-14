@@ -12,7 +12,7 @@
 	<classpathentry kind="var" path="M2_REPO/org/apache/maven/maven-artifact/2.0/maven-artifact-2.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/codehaus/plexus/plexus-archiver/1.0-alpha-5/plexus-archiver-1.0-alpha-5.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/apache/maven/reporting/maven-reporting-api/2.0.2/maven-reporting-api-2.0.2.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/apache/maven/doxia/doxia-site-renderer/1.0-alpha-8/doxia-site-renderer-1.0-alpha-8.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/apache/maven/doxia/doxia-site-renderer/1.0-alpha-7/doxia-site-renderer-1.0-alpha-7.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/apache/maven/doxia/doxia-sink-api/1.0-alpha-7/doxia-sink-api-1.0-alpha-7.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/apache/maven/doxia/doxia-core/1.0-alpha-8/doxia-core-1.0-alpha-8.jar"/>
 	<classpathentry kind="var" path="M2_REPO/commons-lang/commons-lang/2.1/commons-lang-2.1.jar"/>

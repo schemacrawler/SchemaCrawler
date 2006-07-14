@@ -2,11 +2,14 @@ package schemacrawler.tools.integration.maven;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.maven.doxia.siterenderer.Renderer;
+import org.apache.maven.doxia.siterenderer.RendererException;
+import org.apache.maven.doxia.siterenderer.sink.SiteRendererSink;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
@@ -159,14 +162,14 @@ public class SchemaCrawlerMojo
    * @see org.apache.maven.reporting.MavenReport#generate(org.codehaus.doxia.sink.Sink,
    *      java.util.Locale)
    */
-  public void generate(Sink sink, Locale locale)
+  public void generate(final Sink sink, final Locale locale)
     throws MavenReportException
   {
     try
     {
       execute();
     }
-    catch (MojoExecutionException e)
+    catch (final MojoExecutionException e)
     {
       throw new MavenReportException(e.getLongMessage(), e);
     }
@@ -187,7 +190,7 @@ public class SchemaCrawlerMojo
    * 
    * @see org.apache.maven.reporting.MavenReport#getDescription(java.util.Locale)
    */
-  public String getDescription(Locale locale)
+  public String getDescription(final Locale locale)
   {
     return "SchemaCrawler Report";
   }
@@ -197,7 +200,7 @@ public class SchemaCrawlerMojo
    * 
    * @see org.apache.maven.reporting.MavenReport#getName(java.util.Locale)
    */
-  public String getName(Locale locale)
+  public String getName(final Locale locale)
   {
     return "SchemaCrawler";
   }
@@ -245,10 +248,10 @@ public class SchemaCrawlerMojo
    * 
    * @see org.apache.maven.reporting.MavenReport#setReportOutputDirectory(java.io.File)
    */
-  public void setReportOutputDirectory(File directory)
+  public void setReportOutputDirectory(final File directory)
   {
     // Get the output filename
-    String outputFilename = (new File(outputFile)).getName();
+    final String outputFilename = (new File(outputFile)).getName();
     // Set the new path
     if (directory.exists() && directory.isDirectory())
     {
@@ -259,15 +262,36 @@ public class SchemaCrawlerMojo
   public void execute()
     throws MojoExecutionException
   {
-    // TODO: Create site renderer sink, and generate report.
+    final String errorMessage = "An error has occurred in "
+                                + getName(Locale.ENGLISH)
+                                + " report generation.";
+    try
+    {
+      final String outputDirectory = getOutputDirectory();
+      final SiteRendererSink sink = siteRenderer.createSink(new File(
+          outputDirectory), getOutputName());
+      generate(sink, Locale.getDefault());
+    }
+    catch (final RendererException e)
+    {
+      throw new MojoExecutionException(errorMessage, e);
+    }
+    catch (final IOException e)
+    {
+      throw new MojoExecutionException(errorMessage, e);
+    }
+    catch (final MavenReportException e)
+    {
+      throw new MojoExecutionException(errorMessage, e);
+    }
   }
 
-  protected void executeReport(Locale locale)
+  protected void executeReport(final Locale locale)
     throws MavenReportException
   {
 
     // Build command line
-    String[] args = new String[] {
+    final String[] args = new String[] {
       "-g",
       config,
       "-p",
@@ -288,22 +312,22 @@ public class SchemaCrawlerMojo
     };
 
     // Execute command
-    String commandLine = schemacrawler.Main.class + " " + toString(args);
+    final String commandLine = schemacrawler.Main.class + " " + toString(args);
     LOGGER.log(Level.CONFIG, commandLine);
     getLog().info(commandLine);
     try
     {
       schemacrawler.Main.main(args);
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       throw new MavenReportException("Error executing: " + commandLine, e);
     }
   }
 
-  private String toString(String[] args)
+  private String toString(final String[] args)
   {
-    StringBuffer buffer = new StringBuffer();
+    final StringBuffer buffer = new StringBuffer();
     for (int i = 0; i < args.length; i++)
     {
       buffer.append(args[i]).append(" ");
