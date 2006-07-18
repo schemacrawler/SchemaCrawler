@@ -7,11 +7,6 @@
   <name>SchemaCrawler - Maven Plugin Test Project</name>
   <dependencies>
     <dependency>
-      <groupId>hsqldb</groupId>
-      <artifactId>hsqldb</artifactId>
-      <version>1.8.0.1</version>
-    </dependency>
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
@@ -28,6 +23,7 @@
           <schemacrawler.datasource>hsqldb</schemacrawler.datasource>
           <schemacrawler.command>verbose_schema</schemacrawler.command>
           <schemacrawler.outputformat>html</schemacrawler.outputformat>
+          <schemacrawler.jdbc.driver.classpath>./../../_distrib/dbserver/hsqldb.jar</schemacrawler.jdbc.driver.classpath>
         </configuration>
       </plugin>
     </plugins>
