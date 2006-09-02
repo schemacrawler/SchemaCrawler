@@ -106,6 +106,7 @@ final class ProcedureRetriever
       final String schema = results.getString(PROCEDURE_SCHEMA);
       final String catalog = results.getString("PROCEDURE_CAT");
       final String procedureName = results.getString(PROCEDURE_NAME);
+      LOGGER.log(Level.FINEST, "Retrieving procedure: " + procedureName);
       final short procedureType = results.getShort(PROCEDURE_TYPE);
       final String remarks = results.getString(REMARKS);
 
@@ -156,6 +157,7 @@ final class ProcedureRetriever
     {
 
       final String columnName = results.getString(COLUMN_NAME);
+      LOGGER.log(Level.FINEST, "Retrieving procedure column: " + columnName);
       final short columnType = results.getShort("COLUMN_TYPE");
       final int dataType = results.getInt(DATA_TYPE);
       final String typeName = results.getString(TYPE_NAME);

@@ -58,7 +58,7 @@ final class OperatorCSVOutput
    *      java.lang.String, java.lang.String, int, java.lang.String)
    */
   public void handleTable(final int ordinalPosition, final String tableName,
-                          final String tableType, final int count,
+                          final String tableType, final long count,
                           final String message)
   {
     out.print(FormatUtils.escapeAndQuoteForExcelCsv(tableName));

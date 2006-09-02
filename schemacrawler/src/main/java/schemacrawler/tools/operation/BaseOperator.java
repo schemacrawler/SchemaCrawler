@@ -24,10 +24,8 @@ package schemacrawler.tools.operation;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Types;
 import java.text.MessageFormat;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -107,9 +105,10 @@ public abstract class BaseOperator
 
     try
     {
-      connection
-        .setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
-      connection.setAutoCommit(true);
+      if (!operation.isSelectOperation())
+      {
+        connection.setAutoCommit(true);
+      }
       statement = connection.createStatement();
     }
     catch (final SQLException e)
@@ -305,63 +304,26 @@ public abstract class BaseOperator
                                                 final ResultSet results)
     throws SQLException
   {
-    double aggregate = 0D;
+    long aggregate = 0;
     if (results.next())
     {
-      final ResultSetMetaData metaData = results.getMetaData();
-      if (results.isFirst() && results.isLast() && isAggregateRow(metaData))
-      {
-        aggregate = results.getDouble(1);
-      }
+      aggregate = results.getLong(1);
     }
     final String message = getMessage(aggregate);
     handleTable(tableCount,
                 table.getName(),
                 table.getType().toString(),
-                getCount(),
+                aggregate,
                 message);
-  }
-
-  /**
-   * Gets the row count from the statment.
-   * 
-   * @return Row count
-   * @throws SQLException
-   *           On an exception
-   */
-  private int getCount()
-    throws SQLException
-  {
-    int count = statement.getUpdateCount();
-    if (count == -1)
-    {
-      count = 0;
-    }
-    return count;
   }
 
   private Properties createTableProperties(final Table table)
   {
     final Properties properties = new Properties();
-    properties.setProperty("table", table.getName());
+    properties.setProperty("table", table.getFullName());
     properties.setProperty("columns", table.getColumnsListAsString());
     properties.setProperty("tabletype", table.getType().toString());
     return properties;
-  }
-
-  private boolean isAggregateRow(final ResultSetMetaData metaData)
-    throws SQLException
-  {
-    final boolean hasSingleColumn = metaData.getColumnCount() == 1;
-    int columnType = 0;
-    if (hasSingleColumn)
-    {
-      columnType = metaData.getColumnType(1);
-    }
-    return hasSingleColumn
-           && (columnType == Types.INTEGER || columnType == Types.BIGINT
-               || columnType == Types.TINYINT || columnType == Types.FLOAT
-               || columnType == Types.DECIMAL || columnType == Types.DOUBLE);
   }
 
   private String getMessage(final double aggregate)
@@ -399,7 +361,7 @@ public abstract class BaseOperator
    */
   public abstract void handleTable(final int ordinalPosition,
                                    final String tableName,
-                                   final String tableType, final int count,
+                                   final String tableType, final long count,
                                    final String message);
 
   boolean getNoFooter()

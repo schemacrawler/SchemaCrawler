@@ -111,7 +111,7 @@ public final class Operation
    */
   public boolean isSelectOperation()
   {
-    return this == QUERYOVER || this == DUMP;
+    return this == QUERYOVER || this == DUMP || this == COUNT;
   }
 
   /**
