@@ -72,7 +72,7 @@ final class MutableColumnDataType
 
   private boolean userDefined;
   private int type;
-  private int precision; // maximum precision
+  private long precision; // maximum precision, long to account for the Oracle driver
   private String literalPrefix; // prefix used to quote a literal
   private String literalSuffix; // suffix used to quote a literal
   private String createParameters; // parameters used in creating the type
@@ -242,7 +242,7 @@ final class MutableColumnDataType
   /**
    * @return Returns the precision.
    */
-  public int getPrecision()
+  public long getPrecision()
   {
     return precision;
   }
@@ -366,7 +366,7 @@ final class MutableColumnDataType
    * @param precision
    *          The precision to set.
    */
-  void setPrecision(final int precision)
+  void setPrecision(final long precision)
   {
     this.precision = precision;
   }

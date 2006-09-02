@@ -90,7 +90,7 @@ public interface ColumnDataType
    * 
    * @return Precision
    */
-  int getPrecision();
+  long getPrecision();
 
   /**
    * Search method.

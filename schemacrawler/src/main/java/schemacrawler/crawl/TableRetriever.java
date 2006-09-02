@@ -113,10 +113,11 @@ final class TableRetriever
     {
       while (results.next())
       {
-        // final String getCatalog() = results.getString("TABLE_CAT");
+        // final String catalog = results.getString("TABLE_CAT");
         final String schema = results.getString(TABLE_SCHEMA);
 
         final String tableName = results.getString(TABLE_NAME);
+        LOGGER.log(Level.FINEST, "Retrieving table: " + tableName);
         final String tableType = results.getString(TABLE_TYPE);
         final String remarks = results.getString(REMARKS);
 
@@ -168,14 +169,19 @@ final class TableRetriever
     {
       while (results.next())
       {
+        // Get the "COLUMN_DEF" value first as it the Oracle drivers
+        // don't handle it properly otherwise.
+        // http://issues.apache.org/jira/browse/DDLUTILS-29?page=all
+        final String defaultValue = results.getString(COLUMN_DEFAULT);
+        //        
         final String columnName = results.getString(COLUMN_NAME);
+        LOGGER.log(Level.FINEST, "Retrieving column: " + columnName);
         final int oridinalPosition = results.getInt(ORDINAL_POSITION);
         final int dataType = results.getInt(DATA_TYPE);
         final String typeName = results.getString(TYPE_NAME);
         final int size = results.getInt(COLUMN_SIZE);
         final int decimalDigits = results.getInt(DECIMAL_DIGITS);
         final boolean isNullable = results.getInt(NULLABLE) == DatabaseMetaData.columnNullable;
-        final Object defaultValue = results.getObject(COLUMN_DEFAULT);
         final String remarks = results.getString(REMARKS);
 
         final MutableColumn column = new MutableColumn();
@@ -192,7 +198,7 @@ final class TableRetriever
           column.setNullable(isNullable);
           if (defaultValue != null)
           {
-            column.setDefaultValue(defaultValue.toString());
+            column.setDefaultValue(defaultValue);
           }
 
           table.addColumn(column);

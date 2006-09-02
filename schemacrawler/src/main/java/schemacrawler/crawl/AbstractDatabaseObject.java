@@ -85,6 +85,25 @@ abstract class AbstractDatabaseObject
   /**
    * {@inheritDoc}
    * 
+   * @see Object#toString()
+   */
+  public String getFullName()
+  {
+    final StringBuffer buffer = new StringBuffer();
+    if (schemaName != null && schemaName.length() > 0)
+    {
+      buffer.append(schemaName).append(".");
+    }
+    if (getName() != null)
+    {
+      buffer.append(getName());
+    }
+    return buffer.toString();
+  }
+  
+  /**
+   * {@inheritDoc}
+   * 
    * @see Object#equals(java.lang.Object)
    */
   public boolean equals(final Object o)

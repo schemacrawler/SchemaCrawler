@@ -44,4 +44,11 @@ public interface DatabaseObject
    */
   String getCatalogName();
 
+  /**
+   * Gets the full name, including the schema name.
+   * 
+   * @return Full name
+   */
+  String getFullName();
+  
 }

@@ -44,7 +44,7 @@ abstract class AbstractDependantNamedObject
   public String getFullName()
   {
     final StringBuffer buffer = new StringBuffer();
-    if (parent != null)
+    if (parent != null && parent.getName().length() > 0)
     {
       buffer.append(parent.getName()).append(".");
     }

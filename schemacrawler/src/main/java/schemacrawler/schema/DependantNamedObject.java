@@ -31,17 +31,17 @@ public interface DependantNamedObject
 {
 
   /**
-   * Gets the full name, including the parent's name.
-   * 
-   * @return Full name
-   */
-  String getFullName();
-
-  /**
    * Parent database object.
    * 
    * @return Parent
    */
   NamedObject getParent();
 
+  /**
+   * Gets the full name, including the schema name.
+   * 
+   * @return Full name
+   */
+  String getFullName();
+  
 }
