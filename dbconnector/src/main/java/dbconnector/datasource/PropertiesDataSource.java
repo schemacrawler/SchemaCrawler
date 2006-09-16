@@ -48,6 +48,13 @@ public final class PropertiesDataSource
   implements DataSource
 {
 
+  private static final String DRIVER = "driver";
+  private static final String URL = "url";
+  private static final String USER = "user";
+  private static final String PASSWORD = "password";
+    
+  private static final String DEFAULTCONNECTION = "defaultconnection";
+
   public static final Logger LOGGER = Logger
     .getLogger(PropertiesDataSource.class.getName());
 
@@ -79,10 +86,34 @@ public final class PropertiesDataSource
    * @throws PropertiesDataSourceException
    *           On any exception in creating the PropertiesDataSource.
    */
+  public PropertiesDataSource(final String jdbcDriver, final String url, 
+      final String user, final String password)
+    throws PropertiesDataSourceException
+  {
+    final String connectionName = "PropertiesDataSourceConnection";
+    //
+    final Properties properties = new Properties();
+    properties.setProperty(connectionName + "." + DRIVER, jdbcDriver);
+    properties.setProperty(connectionName + "." + URL, url);
+    properties.setProperty(connectionName + "." + USER, user);
+    properties.setProperty(connectionName + "." + PASSWORD, password);
+    //
+    constructPropertiesDataSource(properties, connectionName);
+  }
+  
+  /**
+   * Creates a PropertiesDataSource from a set of connection properties, using
+   * the default connection.
+   * 
+   * @param properties
+   *          Connection properties.
+   * @throws PropertiesDataSourceException
+   *           On any exception in creating the PropertiesDataSource.
+   */
   public PropertiesDataSource(final Properties properties)
     throws PropertiesDataSourceException
   {
-    this(properties, null);
+    constructPropertiesDataSource(properties, null);
   }
 
   /**
@@ -101,9 +132,12 @@ public final class PropertiesDataSource
                               final String connectionName)
     throws PropertiesDataSourceException
   {
+    constructPropertiesDataSource(properties, connectionName);
+  }
 
+  private void constructPropertiesDataSource(final Properties properties, final String connectionName) throws PropertiesDataSourceException {
     final String defaultConnection = properties
-      .getProperty("defaultconnection", "");
+      .getProperty(DEFAULTCONNECTION, "");
     String useConnectionName = connectionName;
 
     // get the subgroup of the properties for the given connection
@@ -138,7 +172,7 @@ public final class PropertiesDataSource
       Class.forName("java.sql.DriverManager", true, classLoader);
 
       // load driver
-      final String driver = connectionParams.getProperty("driver");
+      final String driver = connectionParams.getProperty(DRIVER);
       final Class jdbcDriverClass = Class.forName(driver, true, classLoader);
       jdbcDriver = (Driver) jdbcDriverClass.newInstance();
     }
@@ -155,10 +189,9 @@ public final class PropertiesDataSource
       throw new PropertiesDataSourceException(e.getLocalizedMessage(), e);
     }
 
-    url = connectionParams.getProperty("url");
+    url = connectionParams.getProperty(URL);
 
     testConnection();
-
   }
 
   private void testConnection()
@@ -229,7 +262,7 @@ public final class PropertiesDataSource
     {
       final String key = (String) connectionParamsKeys.nextElement();
       final String value = connectionParams.getProperty(key);
-      if (!key.equalsIgnoreCase("password"))
+      if (!key.equalsIgnoreCase(PASSWORD))
       {
         buffer.append(Utilities.NEWLINE).append("-- ").append(key).append(": ")
           .append(value);
@@ -267,7 +300,7 @@ public final class PropertiesDataSource
    */
   public String getUser()
   {
-    return connectionParams.getProperty("user");
+    return connectionParams.getProperty(USER);
   }
 
   /**
@@ -293,8 +326,8 @@ public final class PropertiesDataSource
     throws SQLException
   {
 
-    final String username = connectionParams.getProperty("user");
-    final String password = connectionParams.getProperty("password");
+    final String username = connectionParams.getProperty(USER);
+    final String password = connectionParams.getProperty(PASSWORD);
 
     return getConnection(username, password);
 
@@ -324,8 +357,8 @@ public final class PropertiesDataSource
 
     final Properties params = new Properties();
 
-    params.setProperty("user", username);
-    params.setProperty("password", password);
+    params.setProperty(USER, username);
+    params.setProperty(PASSWORD, password);
 
     return jdbcDriver.connect(url, params);
 
