@@ -131,11 +131,18 @@ public final class Main
     PropertiesDataSource dataSource = null;
 
     final CommandLineParser parser = new CommandLineParser();
+    //
     parser.addOption(new CommandLineParser.BooleanOption('h', "?"));
     parser.addOption(new CommandLineParser.BooleanOption('a', "testall"));
     parser.addOption(new CommandLineParser.StringOption('x', "prompt"));
     parser.addOption(new CommandLineParser.BooleanOption('d', "default"));
     parser.addOption(new CommandLineParser.StringOption('c', "connection"));
+    //
+    parser.addOption(new CommandLineParser.StringOption("driver"));
+    parser.addOption(new CommandLineParser.StringOption("url"));
+    parser.addOption(new CommandLineParser.StringOption("user"));
+    parser.addOption(new CommandLineParser.StringOption("password"));
+    //
     parser.parse(args);
 
     final boolean help = parser.getOption("h").isFound();
@@ -156,6 +163,17 @@ public final class Main
     final CommandLineParser.BaseOption connectionNameOption = parser
       .getOption("connection");
 
+    // JDBC connection information
+    final CommandLineParser.BaseOption driverOption = parser.getOption("driver");
+    String driver = (String) driverOption.getValue();
+    final CommandLineParser.BaseOption urlOption = parser.getOption("url");
+    String url = (String) urlOption.getValue();
+    final CommandLineParser.BaseOption userOption = parser.getOption("user");
+    String user = (String) userOption.getValue();
+    final CommandLineParser.BaseOption passwordOption = parser.getOption("password");
+    String password = (String) passwordOption.getValue();
+    boolean useJdbcConnection = urlOption.isFound();
+    
     String connectionName = null;
     if (prompt)
     {
@@ -190,6 +208,9 @@ public final class Main
                                                      connectionName);
       dataSource = new PropertiesDataSource(connectionProperties,
           connectionName);
+    }
+    else if (useJdbcConnection) {
+      dataSource = new PropertiesDataSource(driver, url, user, password);      
     }
     else
     {
