@@ -18,6 +18,7 @@
       <plugin>
         <groupId>schemacrawler</groupId>
         <artifactId>schemacrawler-maven-plugin</artifactId>
+        <version>3.8</version>
         <configuration>
           <schemacrawler.config>./../../_distrib/schemacrawler.config.properties</schemacrawler.config>
           <schemacrawler.datasource>hsqldb</schemacrawler.datasource>
