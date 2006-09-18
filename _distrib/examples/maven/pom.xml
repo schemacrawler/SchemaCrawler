@@ -20,11 +20,11 @@
         <artifactId>schemacrawler-maven-plugin</artifactId>
         <version>3.8</version>
         <configuration>
-          <schemacrawler.config>./../../_distrib/schemacrawler.config.properties</schemacrawler.config>
+          <schemacrawler.config>schemacrawler.config.properties</schemacrawler.config>
           <schemacrawler.datasource>hsqldb</schemacrawler.datasource>
           <schemacrawler.command>verbose_schema</schemacrawler.command>
           <schemacrawler.outputformat>html</schemacrawler.outputformat>
-          <schemacrawler.jdbc.driver.classpath>./../../_distrib/dbserver/hsqldb.jar</schemacrawler.jdbc.driver.classpath>
+          <schemacrawler.jdbc.driver.classpath>hsqldb.jar</schemacrawler.jdbc.driver.classpath>
         </configuration>
       </plugin>
     </plugins>
