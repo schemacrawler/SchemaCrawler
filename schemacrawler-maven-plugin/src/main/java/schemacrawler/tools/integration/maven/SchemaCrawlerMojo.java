@@ -3,9 +3,7 @@ package schemacrawler.tools.integration.maven;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Arrays;
@@ -267,8 +265,7 @@ public class SchemaCrawlerMojo
     throws MojoExecutionException
   {
     final String errorMessage = "An error has occurred in "
-                                + getName(Locale.ENGLISH)
-                                + " report generation.";
+        + getName(Locale.ENGLISH) + " report generation.";
     try
     {
       final String outputDirectory = getOutputDirectory();
@@ -295,29 +292,15 @@ public class SchemaCrawlerMojo
   {
 
     // Build command line
-    final String[] args = new String[] {
-      "-g",
-      config,
-      "-p",
-      configOverride,
-      "-c",
-      datasource,
-      "-command",
-      command,
-      "-noheader=" + noHeader,
-      "-nofooter=" + noFooter,
-      "-noinfo=" + noInfo,
-      "-outputformat",
-      outputFormat,
-      "-outputfile",
-      outputFile,
-      "-append",
-      String.valueOf(append),
-    };
+    final String[] args = new String[]
+    { "-g", config, "-p", configOverride, "-c", datasource, "-command",
+     command, "-noheader=" + noHeader, "-nofooter=" + noFooter,
+     "-noinfo=" + noInfo, "-outputformat", outputFormat, "-outputfile",
+     outputFile, "-append", String.valueOf(append), };
 
     // Execute command
     final String commandLine = schemacrawler.Main.class.getName() + " ~"
-                               + Arrays.asList(args);
+        + Arrays.asList(args);
     try
     {
       fixClassPath();
@@ -331,9 +314,9 @@ public class SchemaCrawlerMojo
   }
 
   /**
-   * The JDBC driver classpath comes from the configuration of the SchemaCrawler
-   * plugin. The current classloader needs to be "fixed" to include the JDBC
-   * driver in the classpath.
+   * The JDBC driver classpath comes from the configuration of the
+   * SchemaCrawler plugin. The current classloader needs to be "fixed"
+   * to include the JDBC driver in the classpath.
    * 
    * @throws MavenReportException
    */
@@ -345,7 +328,7 @@ public class SchemaCrawlerMojo
     {
 
       String[] jdbcJarPaths = jdbcDriverClasspath.split(System
-        .getProperty("path.separator"));
+          .getProperty("path.separator"));
       jdbcJarUrls = new URL[jdbcJarPaths.length];
       for (int i = 0; i < jdbcJarPaths.length; i++)
       {
@@ -354,31 +337,30 @@ public class SchemaCrawlerMojo
       }
 
       Method addUrlMethod = (new URLClassLoader(new URL[0])).getClass()
-        .getDeclaredMethod("addURL", new Class[] {
-          URL.class
-        });
+          .getDeclaredMethod("addURL", new Class[]
+          { URL.class });
 
       URLClassLoader classLoader = (URLClassLoader) this.getClass()
-        .getClassLoader();
+          .getClassLoader();
 
       addUrlMethod.setAccessible(true);
 
       for (int i = 0; i < jdbcJarUrls.length; i++)
       {
         URL jdbcJarUrl = jdbcJarUrls[i];
-        addUrlMethod.invoke(classLoader, new Object[] {
-          jdbcJarUrl
-        });
+        addUrlMethod.invoke(classLoader, new Object[]
+        { jdbcJarUrl });
       }
 
-      getLog().info("Fixed SchemaCrawler classpath: "
-                    + Arrays.asList(classLoader.getURLs()));
+      getLog().info(
+          "Fixed SchemaCrawler classpath: "
+              + Arrays.asList(classLoader.getURLs()));
 
     }
     catch (Exception e)
     {
       throw new MavenReportException("Error fixing classpath with "
-                                     + Arrays.asList(jdbcJarUrls), e);
+          + Arrays.asList(jdbcJarUrls), e);
     }
   }
 
