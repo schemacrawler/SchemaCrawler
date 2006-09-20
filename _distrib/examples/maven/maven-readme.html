@@ -198,8 +198,6 @@ span.code
 	mso-ascii-font-family:"Courier New";
 	mso-hansi-font-family:"Courier New";
 	mso-bidi-font-family:"Courier New";}
-span.spelle
-	{mso-style-name:spelle;}
 span.SpellE
 	{mso-style-name:"";
 	mso-spl-e:yes;}
@@ -255,10 +253,10 @@ div.Section1
 	mso-level-number-position:left;
 	text-indent:-.25in;}
 @list l1
-	{mso-list-id:512955824;
+	{mso-list-id:262495195;
 	mso-list-template-ids:1817236414;}
 @list l2
-	{mso-list-id:1178538861;
+	{mso-list-id:440028771;
 	mso-list-template-ids:1817236414;}
 @list l3
 	{mso-list-id:1833787913;
@@ -325,7 +323,7 @@ ul
 	mso-bidi-language:#0400;}
 </style>
 <![endif]--><!--[if gte mso 9]><xml>
- <o:shapedefaults v:ext="edit" spidmax="4098"/>
+ <o:shapedefaults v:ext="edit" spidmax="5122"/>
 </xml><![endif]--><!--[if gte mso 9]><xml>
  <o:shapelayout v:ext="edit">
   <o:idmap v:ext="edit" data="1"/>
@@ -349,16 +347,14 @@ of SchemaCrawler to generate a Maven site report. </p>
 
 <ol style='margin-top:0in' start=1 type=1>
  <li class=MsoNormal style='mso-list:l0 level1 lfo3;tab-stops:list .5in'>Install
-     <a href="http://maven.apache.org/">maven</a>, and make sure that ant is on
-     your path.</li>
+     <a href="http://maven.apache.org/">maven</a>, and make sure that maven is
+     on your path.</li>
+ <li class=MsoNormal style='mso-list:l0 level1 lfo3;tab-stops:list .5in'>Copy the
+     SchemaCrawler jar file and <span class=code>schemacrawler.config.properties</span>
+     into the <i>maven</i> example directory.</li>
  <li class=MsoNormal style='mso-list:l0 level1 lfo3;tab-stops:list .5in'>Copy
-     the SchemaCrawler jar file and <span class=code>schemacrawler.config.properties</span>
-     into the <span class=spelle><i>maven</i></span> example directory.</li>
- <li class=MsoNormal style='mso-list:l0 level1 lfo3;tab-stops:list .5in'>Copy
-     the <span class=SpellE><span class=spelle>hsqldb</span></span> jar file
-     from <span class=SpellE><span class=spelle>dbserver</span></span>
-     directory into the <span class=spelle><i>maven</i></span> example
-     directory.</li>
+     the <span class=SpellE>hsqldb</span> jar file from <span class=SpellE>dbserver</span>
+     directory into the <i>maven</i> example directory.</li>
  <li class=MsoNormal style='mso-list:l0 level1 lfo3;tab-stops:list .5in'>Start
      the <span class=SpellE>hsqldb</span> server by running <span class=SpellE><span
      class=code>runServer.cmd</span></span> (<span class=SpellE><span
@@ -366,14 +362,12 @@ of SchemaCrawler to generate a Maven site report. </p>
      from the <span class=SpellE><span class=code>dbserver</span></span>
      directory.</li>
  <li class=MsoNormal style='mso-list:l0 level1 lfo3;tab-stops:list .5in'>Install
-     the SchemaCrawler Maven plug-in by running <span class=code>install-schemacrawler-maven-plugin.cmd</span>
-     (<span class=code>install-schemacrawler-maven-plugin.sh</span> on <span
-     class=GramE>Unix</span>).</li>
- <li class=MsoNormal style='mso-list:l0 level1 lfo3;tab-stops:list .5in'>Verify
-     the SchemaCrawler Maven plug-in installation by running <span class=code>verify-schemacrawler-maven-plugin.cmd</span>
-     (<span class=code>verify-schemacrawler-maven-plugin.sh</span> on Unix).</li>
+     the SchemaCrawler Maven plug-in by running <br>
+     <span class=code>java -cp schemacrawler-3.8.jar <span class=SpellE>schemacrawler.tools.integration.maven.Main</span>
+     <br>
+     </span>and following the instructions.</li>
  <li class=MsoNormal style='mso-list:l0 level1 lfo3;tab-stops:list .5in'>Run <span
-     class=code>mvn site</span>.</li>
+     class=SpellE><span class=code>mvn</span></span><span class=code> site</span>.</li>
  <li class=MsoNormal style='mso-list:l0 level1 lfo3;tab-stops:list .5in'>See
      the output produced in the <span class=code>target/site</span> directory.</li>
 </ol>
