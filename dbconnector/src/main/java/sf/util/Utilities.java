@@ -23,6 +23,8 @@ package sf.util;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
@@ -185,8 +187,8 @@ public final class Utilities
   }
 
   /**
-   * Checks the Java version, and throw an exception if it does not match the
-   * version provided as an argument.
+   * Checks the Java version, and throw an exception if it does not
+   * match the version provided as an argument.
    * 
    * @param minVersion
    *          Minimum version supported
@@ -204,11 +206,12 @@ public final class Utilities
 
   /**
    * Interpolate substrings into property values. Substrings of the form ${<i>propname</i>}
-   * are interpolated into the text of the system property whose key matches
-   * <i>propname</i>. For example, expandProperties("hello.${user.name}.world")
-   * is "hello.foo.world" when called by a user named "foo". Property substrings
-   * can be nested. References to nonexistent system properties are interpolated
-   * to an empty string.
+   * are interpolated into the text of the system property whose key
+   * matches <i>propname</i>. For example,
+   * expandProperties("hello.${user.name}.world") is "hello.foo.world"
+   * when called by a user named "foo". Property substrings can be
+   * nested. References to nonexistent system properties are
+   * interpolated to an empty string.
    * 
    * @param template
    *          Template
@@ -261,12 +264,13 @@ public final class Utilities
   }
 
   /**
-   * Interpolate substrings into system property values. Substrings of the form ${<i>propname</i>}
-   * are interpolated into the text of the system property whose key matches
-   * <i>propname</i>. For example, expandProperties("hello.${user.name}.world")
-   * is "hello.foo.world" when called by a user named "foo". Property substrings
-   * can be nested. References to nonexistent system properties are interpolated
-   * to an empty string.
+   * Interpolate substrings into system property values. Substrings of
+   * the form ${<i>propname</i>} are interpolated into the text of the
+   * system property whose key matches <i>propname</i>. For example,
+   * expandProperties("hello.${user.name}.world") is "hello.foo.world"
+   * when called by a user named "foo". Property substrings can be
+   * nested. References to nonexistent system properties are
+   * interpolated to an empty string.
    * 
    * @param template
    *          Template
@@ -338,9 +342,52 @@ public final class Utilities
 
   }
 
-  public static boolean isIntegral(final double aggregate)
+  /**
+   * Returns true if the number is an integer within a certain tolerance.
+   * 
+   * @param number Number to check
+   * 
+   * @return Whether the double is an integer
+   */
+  public static boolean isIntegral(final double number)
   {
-    return Math.abs(aggregate - (int) aggregate) < 1E-10D;
+    return Math.abs(number - (int) number) < 1E-10D;
+  }
+
+  /**
+   * Writes a string to a file.
+   * 
+   * @param fileName Name of the file to write.
+   * @param fileContents Contents of the file.
+   * 
+   * @return The file.
+   * 
+   * @throws IOException On an exception.
+   */
+  public static File writeStringToFile(String fileName, String fileContents)
+    throws IOException
+  {
+
+    File pomFile = new File(fileName);
+    FileWriter writer = new FileWriter(pomFile);
+    writer.write(fileContents);
+    writer.flush();
+    writer.close();
+
+    return pomFile;
+  }
+
+  /**
+   * Returns true if the current operating system is Windows.
+   * 
+   * @return True is the current operating system is Windows.
+   */
+  public static boolean isWindowsOS()
+  {
+    String osName = System.getProperty("os.name");
+    boolean isWindowsOS = osName == null
+                          || osName.toLowerCase().indexOf("windows") != -1;
+    return isWindowsOS;
   }
 
 }
