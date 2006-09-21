@@ -89,4 +89,26 @@
       </answer>
     </faq>
   </part>
+  <part id="api">
+    <title>API</title>
+    <faq id="api">
+      <question>
+        <span>How to use SchemaCrawler programmatically</span>
+      </question>
+      <answer>
+        <p>
+					Read "<a href="http://www.devx.com/Java/Article/32443">Java 
+					API Makes Database Metadata as Easily Accessible as POJOs</a>" 
+					for an introduction to the SchemaCrawler API.
+				</p>
+        <p>
+          <i>
+						See the example in the
+						<pre>_distrib\examples\api</pre>
+						directory.
+					</i>
+        </p>
+      </answer>
+    </faq>
+  </part>
 </faqs>

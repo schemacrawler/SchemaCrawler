@@ -1,146 +1,154 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <document>
-	<properties>
-		<title>SchemaCrawler</title>
-		<author email="sualeh@hotmail.com">Sualeh Fatehi</author>
-	</properties>
-	<body>
-		<release version="3.8" date="2006-06-12">
-			<action dev="Sualeh Fatehi" type="add">
+  <properties>
+    <title>SchemaCrawler</title>
+    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
+  </properties>
+  <body>
+    <release version="3.8" date="2006-09-22">
+      <action dev="Sualeh Fatehi" type="add">
+				Added Maven 2.0 plugin for generation of schema reports
+			</action>
+      <action dev="Sualeh Fatehi" type="fix">
+				Worked around a bug in the Oracle driver as described in http://issues.apache.org/jira/browse/DDLUTILS-29?page=all
+			</action>
+    </release>
+    <release version="3.7" date="2006-06-12">
+      <action dev="Sualeh Fatehi" type="add">
 				Added retrieval of database properties
 			</action>
-			<action dev="Sualeh Fatehi" type="add">
+      <action dev="Sualeh Fatehi" type="add">
 				Added retrieval of column data types, both system
 				datatypes and UDTs
 			</action>
-			<action dev="Sualeh Fatehi" type="add">
+      <action dev="Sualeh Fatehi" type="add">
 				Added unit tests to ensure that the XHTML output is
 				valid XML
 			</action>
-			<action dev="Sualeh Fatehi" type="fix">
+      <action dev="Sualeh Fatehi" type="fix">
 				Fixed bug with merge rows option
 			</action>
-			<action dev="Sualeh Fatehi" type="fix">
+      <action dev="Sualeh Fatehi" type="fix">
 				Fixed bug with appending output when multiple runs of
 				SchemaCrawler append to the same output file
 			</action>
-			<action dev="Sualeh Fatehi" type="fix">
+      <action dev="Sualeh Fatehi" type="fix">
 				Fixed SQLException with Oracle Database 10g Express
 				Edition driver on outputting views
 			</action>
-			<action dev="Sualeh Fatehi" type="add">
+      <action dev="Sualeh Fatehi" type="add">
 				Added XStream integration for XML serialization and
 				deserialization
 			</action>
-			<action dev="Sualeh Fatehi" type="add">
+      <action dev="Sualeh Fatehi" type="add">
 				Added new command, maximum_schema, that can give all
 				possible details of the schema
 			</action>
-			<action dev="Sualeh Fatehi" type="add">
+      <action dev="Sualeh Fatehi" type="add">
 				Obtain database system properties when the maximum
 				schema command is used
 			</action>
-			<action dev="Sualeh Fatehi" type="add">
+      <action dev="Sualeh Fatehi" type="add">
 				Added integrations with FreeMarker for templated output
 			</action>
-			<action dev="Sualeh Fatehi" type="remove">
+      <action dev="Sualeh Fatehi" type="remove">
 				Removed Betwixt integration, since the required
 				functionality is provided by XStream
 			</action>
-		</release>
-		<release version="3.6" date="2006-03-31">
-			<action dev="Sualeh Fatehi" type="add">
+    </release>
+    <release version="3.6" date="2006-03-28">
+      <action dev="Sualeh Fatehi" type="add">
 				Added integrations with Velocity for templated output,
 				and with JUNG for JPEG graph generation
 			</action>
-			<action dev="Sualeh Fatehi" type="add">
+      <action dev="Sualeh Fatehi" type="add">
 				Added new examples to demonstrate Velocity templating,
 				and JUNG graphs
 			</action>
-			<action dev="Sualeh Fatehi" type="add">
+      <action dev="Sualeh Fatehi" type="add">
 				New command line option to specify the output file name
 			</action>
-		</release>
-		<release version="3.5" date="2006-02-28">
-			<action dev="Sualeh Fatehi" type="add">
+    </release>
+    <release version="3.5" date="2006-03-06">
+      <action dev="Sualeh Fatehi" type="add">
 				Added ability to retrieve column and table privileges
 			</action>
-			<action dev="Sualeh Fatehi" type="add">
+      <action dev="Sualeh Fatehi" type="add">
 				Added Betwixt mappings for XML serialization and
 				de-serialization
 			</action>
-			<action dev="Sualeh Fatehi" type="add">
+      <action dev="Sualeh Fatehi" type="add">
 				Added Unix shell scripts for examples
 			</action>
-			<action dev="Sualeh Fatehi" type="fix">
+      <action dev="Sualeh Fatehi" type="fix">
 				Fixed bug with the ordering of primary key and index
 				columns
 			</action>
-			<action dev="Sualeh Fatehi" type="update">
+      <action dev="Sualeh Fatehi" type="update">
 				Changed API - ColumnInfoLevel is called SchemaInfoLevel
 			</action>
-			<action dev="Sualeh Fatehi" type="update">
+      <action dev="Sualeh Fatehi" type="update">
 				Moved source repository to Subversion
 			</action>
-		</release>
-		<release version="3.4" date="2006-01-17">
-			<action dev="Sualeh Fatehi" type="fix">
+    </release>
+    <release version="3.4" date="2006-01-16">
+      <action dev="Sualeh Fatehi" type="fix">
 				Correction of spelling of the "sort_alphabetically"
 				option names
 			</action>
-			<action dev="Sualeh Fatehi" type="update">
+      <action dev="Sualeh Fatehi" type="update">
 				Refactoring of inhertance hierarchy of database objects,
 				resulting in fewer equals, hashCode and compareTo
 				implementations
 			</action>
-			<action dev="Sualeh Fatehi" type="update">
+      <action dev="Sualeh Fatehi" type="update">
 				Better HTML formatting for counts
 			</action>
-			<action dev="Sualeh Fatehi" type="fix">
+      <action dev="Sualeh Fatehi" type="fix">
 				Dirty reads are performed for counts and other
 				operations
 			</action>
-			<action dev="Sualeh Fatehi" type="fix">
+      <action dev="Sualeh Fatehi" type="fix">
 				Sets the default value for table columns
 			</action>
-			<action dev="Sualeh Fatehi" type="update">
+      <action dev="Sualeh Fatehi" type="update">
 				Javadoc clean-up
 			</action>
-			<action dev="Sualeh Fatehi" type="update">
+      <action dev="Sualeh Fatehi" type="update">
 				Findbugs, checkstyle, and PMD code smells clean-up
 			</action>
-		</release>
-		<release version="3.3" date="2005-11-04">
-			<action dev="Sualeh Fatehi" type="add">
+    </release>
+    <release version="3.3" date="2005-11-03">
+      <action dev="Sualeh Fatehi" type="add">
 				The ability to include as well as exclude tables using
 				regular expressions.
 			</action>
-			<action dev="Sualeh Fatehi" type="add">
+      <action dev="Sualeh Fatehi" type="add">
 				The ability to include as well as exclude columns using
 				regular expressions.
 			</action>
-			<action dev="Sualeh Fatehi" type="add">
+      <action dev="Sualeh Fatehi" type="add">
 				A new substitution variable, ${columns}, for use in
 				database queries that iterate over tables.
 			</action>
-			<action dev="Sualeh Fatehi" type="add">
+      <action dev="Sualeh Fatehi" type="add">
 				New examples for executing database-specific and
 				user-defined queries have been added.
 			</action>
-			<action dev="Sualeh Fatehi" type="add">
+      <action dev="Sualeh Fatehi" type="add">
 				Better output formatting for HTML dumps, and counts in
 				text format.
 			</action>
-			<action dev="Sualeh Fatehi" type="add">New website.</action>
-			<action dev="Sualeh Fatehi" type="fix">
+      <action dev="Sualeh Fatehi" type="add">New website.</action>
+      <action dev="Sualeh Fatehi" type="fix">
 				Worked around an issue with the Sybase driver, that
 				provides primary keys in a different order than most
 				other drivers.
 			</action>
-			<action dev="Sualeh Fatehi" type="fix">
+      <action dev="Sualeh Fatehi" type="fix">
 				Improved logging, and made the log level in the
 				configuration really work.
 			</action>
-		</release>
-	</body>
+    </release>
+  </body>
 </document>
