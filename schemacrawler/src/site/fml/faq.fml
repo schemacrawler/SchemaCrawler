@@ -221,6 +221,11 @@ One of:
 					properties files.
 				</p>
         <p>
+					Read "<a href="http://www.devx.com/Java/Article/32443">Java 
+					API Makes Database Metadata as Easily Accessible as POJOs</a>" 
+					for an introduction to the SchemaCrawler API.
+				</p>
+        <p>
           <i>
 						See the example in the
 						<pre>_distrib\examples\api</pre>
