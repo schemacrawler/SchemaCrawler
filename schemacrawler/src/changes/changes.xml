@@ -9,6 +9,9 @@
       <action dev="Sualeh Fatehi" type="add">
 				Added Maven 2.0 plugin for generation of schema reports
 			</action>
+      <action dev="Sualeh Fatehi" type="add">
+				Added command line option to provide database connection information
+			</action>
       <action dev="Sualeh Fatehi" type="fix">
 				Worked around a bug in the Oracle driver as described in http://issues.apache.org/jira/browse/DDLUTILS-29?page=all
 			</action>
