@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="schemacrawler" default="all.build" basedir=".">
 
-  <property name="pom.version" value="3.8" />
+  <property name="pom.version" value="3.9" />
 
   <target name="all.clean">
 

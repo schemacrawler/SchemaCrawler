@@ -3,7 +3,7 @@
   <parent>
     <groupId>schemacrawler</groupId>
     <artifactId>schemacrawler-all</artifactId>
-    <version>3.8</version>
+    <version>3.9</version>
   </parent>
   <groupId>schemacrawler</groupId>
   <artifactId>dbconnector</artifactId>
