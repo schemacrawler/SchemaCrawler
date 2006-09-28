@@ -35,7 +35,7 @@ public final class Version
 
   private static final String PRODUCTNAME = "schemacrawler-maven-plugin";
 
-  private static final String VERSION = "3.8";
+  private static final String VERSION = "3.9";
 
   private Version()
   {
