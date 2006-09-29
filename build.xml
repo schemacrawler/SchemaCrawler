@@ -89,12 +89,15 @@
   <target name="zip"
     description="Create distributable files for a version">
 
+    <mkdir dir="_backups"/>
+
     <zip destfile="_backups/SchemaCrawler-${pom.version}-distrib.zip">
       <zipfileset
         dir="_distrib"
         prefix="SchemaCrawler-${pom.version}-distrib">
         <exclude name="**/CVS/**/*"/>
         <exclude name="**/.cvsignore"/>
+        <exclude name="**/.svn/**/*"/>
       </zipfileset>
     </zip>
 
@@ -107,6 +110,7 @@
         <exclude name="**/target/**/*"/>
         <exclude name="**/CVS/**/*"/>
         <exclude name="**/.cvsignore"/>
+        <exclude name="**/.svn/**/*"/>
       </zipfileset>
     </zip>
 
