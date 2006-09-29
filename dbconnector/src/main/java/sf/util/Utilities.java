@@ -343,10 +343,11 @@ public final class Utilities
   }
 
   /**
-   * Returns true if the number is an integer within a certain tolerance.
+   * Returns true if the number is an integer within a certain
+   * tolerance.
    * 
-   * @param number Number to check
-   * 
+   * @param number
+   *          Number to check
    * @return Whether the double is an integer
    */
   public static boolean isIntegral(final double number)
@@ -357,12 +358,13 @@ public final class Utilities
   /**
    * Writes a string to a file.
    * 
-   * @param fileName Name of the file to write.
-   * @param fileContents Contents of the file.
-   * 
+   * @param fileName
+   *          Name of the file to write.
+   * @param fileContents
+   *          Contents of the file.
    * @return The file.
-   * 
-   * @throws IOException On an exception.
+   * @throws IOException
+   *           On an exception.
    */
   public static File writeStringToFile(String fileName, String fileContents)
     throws IOException
@@ -390,4 +392,15 @@ public final class Utilities
     return isWindowsOS;
   }
 
+  /**
+   * Checks if the text is null or empty.
+   * 
+   * @param text
+   * @return
+   */
+  public static boolean isBlank(String text)
+  {
+    return text == null || text.trim().length() == 0;
+  }
+  
 }
