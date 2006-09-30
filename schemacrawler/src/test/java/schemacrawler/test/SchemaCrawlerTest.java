@@ -59,7 +59,7 @@ public class SchemaCrawlerTest
                              .getProperty("schemapattern"));
     SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     LOGGER.log(Level.FINE, schemaCrawlerOptions.toString());
-    final Schema schema = SchemaCrawler.getSchema(dataSource,
+    final Schema schema = SchemaCrawler.getSchema(dataSource, null,
                                                   SchemaInfoLevel.MINIMUM,
                                                   schemaCrawlerOptions);
     Table[] tables = schema.getTables();
@@ -73,13 +73,13 @@ public class SchemaCrawlerTest
   {
 
     final String[] tableNames = {
-      "CUSTOMER", "CUSTOMERLIST", "INVOICE", "ITEM", "PRODUCT"
+        "CUSTOMER", "CUSTOMERLIST", "INVOICE", "ITEM", "PRODUCT"
     };
     final String[] tableTypes = {
-      "TABLE", "VIEW", "TABLE", "TABLE", "TABLE"
+        "TABLE", "VIEW", "TABLE", "TABLE", "TABLE"
     };
     SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    final Schema schema = SchemaCrawler.getSchema(dataSource,
+    final Schema schema = SchemaCrawler.getSchema(dataSource, null,
                                                   SchemaInfoLevel.MINIMUM,
                                                   schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema);
@@ -100,47 +100,49 @@ public class SchemaCrawlerTest
   {
 
     final String[][] columnNames = {
-      {
-        "CUSTOMER.ID",
-        "CUSTOMER.FIRSTNAME",
-        "CUSTOMER.LASTNAME",
-        "CUSTOMER.STREET",
-        "CUSTOMER.CITY"
-      },
-      {
-        "CUSTOMERLIST.ID", "CUSTOMERLIST.FIRSTNAME", "CUSTOMERLIST.LASTNAME",
-      },
-      {
-        "INVOICE.ID", "INVOICE.CUSTOMERID", "INVOICE.TOTAL"
-      },
-      {
-        "ITEM.INVOICEID",
-        "ITEM.ITEM",
-        "ITEM.PRODUCTID",
-        "ITEM.QUANTITY",
-        "ITEM.COST"
-      },
-      {
-        "PRODUCT.ID", "PRODUCT.NAME", "PRODUCT.PRICE"
-      }
+        {
+            "CUSTOMER.ID",
+            "CUSTOMER.FIRSTNAME",
+            "CUSTOMER.LASTNAME",
+            "CUSTOMER.STREET",
+            "CUSTOMER.CITY"
+        },
+        {
+            "CUSTOMERLIST.ID",
+            "CUSTOMERLIST.FIRSTNAME",
+            "CUSTOMERLIST.LASTNAME",
+        },
+        {
+            "INVOICE.ID", "INVOICE.CUSTOMERID", "INVOICE.TOTAL"
+        },
+        {
+            "ITEM.INVOICEID",
+            "ITEM.ITEM",
+            "ITEM.PRODUCTID",
+            "ITEM.QUANTITY",
+            "ITEM.COST"
+        },
+        {
+            "PRODUCT.ID", "PRODUCT.NAME", "PRODUCT.PRICE"
+        }
     };
 
     final String[][] columnDataTypes = {
-      {
-        "INTEGER", "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR"
-      }, {
-        "INTEGER", "VARCHAR", "VARCHAR"
-      }, {
-        "INTEGER", "INTEGER", "DECIMAL"
-      }, {
-        "INTEGER", "INTEGER", "INTEGER", "INTEGER", "DECIMAL"
-      }, {
-        "INTEGER", "VARCHAR", "DECIMAL"
-      }
+        {
+            "INTEGER", "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR"
+        }, {
+            "INTEGER", "VARCHAR", "VARCHAR"
+        }, {
+            "INTEGER", "INTEGER", "DECIMAL"
+        }, {
+            "INTEGER", "INTEGER", "INTEGER", "INTEGER", "DECIMAL"
+        }, {
+            "INTEGER", "VARCHAR", "DECIMAL"
+        }
     };
 
     SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    final Schema schema = SchemaCrawler.getSchema(dataSource,
+    final Schema schema = SchemaCrawler.getSchema(dataSource, null,
                                                   SchemaInfoLevel.BASIC,
                                                   schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema);
@@ -156,14 +158,13 @@ public class SchemaCrawlerTest
         Column column = columns[columnIdx];
         LOGGER.log(Level.FINE, column.toString());
         assertEquals("Column name does not match",
-                     columnsNamesForTable[columnIdx],
-                     column.toString());
+                     columnsNamesForTable[columnIdx], column.toString());
         assertEquals("Column type does not match",
-                     columnDataTypes[tableIdx][columnIdx],
-                     column.getType().getDatabaseSpecificTypeName());
+                     columnDataTypes[tableIdx][columnIdx], column.getType()
+                       .getDatabaseSpecificTypeName());
         assertEquals("Column JDBC type does not match",
-                     columnDataTypes[tableIdx][columnIdx],
-                     column.getType().getTypeName());
+                     columnDataTypes[tableIdx][columnIdx], column.getType()
+                       .getTypeName());
       }
     }
 

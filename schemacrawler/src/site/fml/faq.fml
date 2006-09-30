@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<faqs title="SchemaCrawler - Frequently Asked Questions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://maven.apache.org/reference/plugins/faq/faq.xsd">
+<faqs
+  title="SchemaCrawler - Frequently Asked Questions"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="http://maven.apache.org/reference/plugins/faq/faq.xsd">
   <part id="general">
     <title>General</title>
     <faq id="whats-schemacrawler">
@@ -8,12 +11,11 @@
       </question>
       <answer>
         <p>
-					SchemaCrawler is a command-line tool, written in
-					Java to output your database schema and data in a
-					human readable form. SchemaCrawler output is
-					designed to be diff-ed with previous versions of
-					your database schema or data.
-				</p>
+          SchemaCrawler is a command-line tool, written in Java to
+          output your database schema and data in a human readable form.
+          SchemaCrawler output is designed to be diff-ed with previous
+          versions of your database schema or data.
+        </p>
       </answer>
     </faq>
     <faq id="output">
@@ -22,27 +24,26 @@
       </question>
       <answer>
         <p>
-					SchemaCrawler can produce plain text output, XHTML,
-					or comma-separated text (CSV). The XHTML output is a
-					combination of valid XML (that can be manipulated by
-					XML tools or XSLT), and HTML that can be viewed in a
-					browser.
-				</p>
+          SchemaCrawler can produce plain text output, XHTML, or
+          comma-separated text (CSV). The XHTML output is a combination
+          of valid XML (that can be manipulated by XML tools or XSLT),
+          and HTML that can be viewed in a browser.
+        </p>
         <ul>
           <li>
             <a href="snapshot-examples/snapshot.txt">
-							Schema in text format
-						</a>
+              Schema in text format
+            </a>
           </li>
           <li>
             <a href="snapshot-examples/snapshot.html">
-							Schema in HTML format
-						</a>
+              Schema in HTML format
+            </a>
           </li>
           <li>
             <a href="snapshot-examples/snapshot.csv">
-							Schema in CSV format
-						</a>
+              Schema in CSV format
+            </a>
           </li>
         </ul>
       </answer>
@@ -53,24 +54,23 @@
       </question>
       <answer>
         <p>
-					SchemaCrawler can produce brief, basic, or verbose
-					details of your schema. The brief option gives you
-					just table, view, and procedure names. The basic
-					option gives you the column names and data types.
-					The verbose option will give you details of indices,
-					primary and foreign keys. Each successive option
-					takes more time to execute.
-				</p>
+          SchemaCrawler can produce brief, basic, or verbose details of
+          your schema. The brief option gives you just table, view, and
+          procedure names. The basic option gives you the column names
+          and data types. The verbose option will give you details of
+          indices, primary and foreign keys. Each successive option
+          takes more time to execute.
+        </p>
         <p>
-					SchemaCrawler can also manipulate your data. You can
-					get counts of the rows in tables and views, or you
-					can truncate or drop tables and views. SchemaCrawler
-					can output all the data in your tables and views, or
-					run specific SQL statements against table and views.
-					SchemaCrawler can be fine-tuned using configuration
-					files.
-				</p>
-        <source><![CDATA[java -jar <schemacrawler-jar> [options]
+          SchemaCrawler can also manipulate your data. You can get
+          counts of the rows in tables and views, or you can truncate or
+          drop tables and views. SchemaCrawler can output all the data
+          in your tables and views, or run specific SQL statements
+          against table and views. SchemaCrawler can be fine-tuned using
+          configuration files.
+        </p>
+        <source>
+          <![CDATA[java -jar <schemacrawler-jar> [options]
 
 --- Optional Configuration Options ---
 
@@ -139,7 +139,8 @@ One of:
 
 -outputfile=<outputfile>
 	Optional - <outputfile> is the path to the output file
-]]></source>
+]]>
+        </source>
       </answer>
     </faq>
   </part>
@@ -147,45 +148,39 @@ One of:
     <title>Supported Platforms</title>
     <faq id="supported-databases">
       <question>
-        <span>
-					What databases does SchemaCrawler work with?
-				</span>
+        <span>What databases does SchemaCrawler work with?</span>
       </question>
       <answer>
         <p>
-					SchemaCrawler supports any database for which there
-					is a JDBC database driver available. SchemaCrawler
-					has been tested with various databases, and JDBC
-					drivers.
-				</p>
+          SchemaCrawler supports any database for which there is a JDBC
+          database driver available. SchemaCrawler has been tested with
+          various databases, and JDBC drivers.
+        </p>
       </answer>
     </faq>
     <faq id="supported-java">
       <question>
-        <span>
-					What Java version does SchemaCrawler work with?
-				</span>
+        <span>What Java version does SchemaCrawler work with?</span>
       </question>
       <answer>
         <p>
-					SchemaCrawler works with J2SE 1.4 and above.
-					SchemaCrawler does not depend on any Java libraries
-					other than the standard J2SE 1.4 runtime libraries
-					and a JDBC driver.
-				</p>
+          SchemaCrawler works with J2SE 1.4 and above. SchemaCrawler
+          does not depend on any Java libraries other than the standard
+          J2SE 1.4 runtime libraries and a JDBC driver.
+        </p>
       </answer>
     </faq>
     <faq id="supported-os">
       <question>
         <span>
-					What operating systems does SchemaCrawler work with?
-				</span>
+          What operating systems does SchemaCrawler work with?
+        </span>
       </question>
       <answer>
         <p>
-					SchemaCrawler works with any operating system that
-					supports J2SE 1.4 and above.
-				</p>
+          SchemaCrawler works with any operating system that supports
+          J2SE 1.4 and above.
+        </p>
       </answer>
     </faq>
     <faq id="ant">
@@ -193,16 +188,13 @@ One of:
         <span>Can SchemaCrawler be used with ant?</span>
       </question>
       <answer>
-        <p>
-					Yes, SchemaCrawler comes with a full-featured ant
-					task.
-				</p>
+        <p>Yes, SchemaCrawler comes with a full-featured ant task.</p>
         <p>
           <i>
-						See the example in the
-						<pre>_distrib\examples\ant-task</pre>
-						directory.
-					</i>
+            See the example in the
+            <pre>_distrib\examples\ant-task</pre>
+            directory.
+          </i>
         </p>
       </answer>
     </faq>
@@ -212,40 +204,48 @@ One of:
       </question>
       <answer>
         <p>
-					SchemaCrawler is also an API that improves on the
-					standard JDBC metadata facilities. SchemaCrawler
-					provides an easy to use set of plain old Java
-					objects (POJOs) that represent your database schema.
-					SchemaCrawler also provides an API to create
-					connections (a data-source) to a database using
-					properties files.
-				</p>
+          SchemaCrawler is also an API that improves on the standard
+          JDBC metadata facilities. SchemaCrawler provides an easy to
+          use set of plain old Java objects (POJOs) that represent your
+          database schema. SchemaCrawler also provides an API to create
+          connections (a data-source) to a database using properties
+          files.
+        </p>
         <p>
-					Read "<a href="http://www.devx.com/Java/Article/32443">Java 
-					API Makes Database Metadata as Easily Accessible as POJOs</a>" 
-					for an introduction to the SchemaCrawler API.
-				</p>
+          Read "
+          <a href="http://www.devx.com/Java/Article/32443">
+            Java API Makes Database Metadata as Easily Accessible as
+            POJOs
+          </a>
+          " for an introduction to the SchemaCrawler API.
+        </p>
         <p>
           <i>
-						See the example in the
-						<pre>_distrib\examples\api</pre>
-						directory.
-					</i>
+            See the example in the
+            <pre>_distrib\examples\api</pre>
+            directory.
+          </i>
         </p>
       </answer>
     </faq>
     <faq id="integrations">
       <question>
-        <span>Can SchemaCrawler be used integrated with other programs?</span>
+        <span>
+          Can SchemaCrawler be used integrated with other programs?
+        </span>
       </question>
       <answer>
         <p>
-            SchemaCrawler can be integrated with other programs, but this requires some Java
-            programming. From version 3.8, SchemaCrawler comes pre-built with integration
-            with <a href="http://jakarta.apache.org/velocity/">Velocity</a>. This allows you to specify your own templates for formatting the
-            schema. Examples are provided in the _distrib directory. There is also
-            integration with <a href="http://jung.sourceforge.net/">JUNG</a> for creating graph JPEG files.
-				</p>
+          SchemaCrawler can be integrated with other programs, but this
+          requires some Java programming. From version 3.8,
+          SchemaCrawler comes pre-built with integration with
+          <a href="http://jakarta.apache.org/velocity/">Velocity</a>
+          . This allows you to specify your own templates for formatting
+          the schema. Examples are provided in the _distrib directory.
+          There is also integration with
+          <a href="http://jung.sourceforge.net/">JUNG</a>
+          for creating graph JPEG files.
+        </p>
       </answer>
     </faq>
   </part>
@@ -257,9 +257,13 @@ One of:
       </question>
       <answer>
         <p>
-					SchemaCrawler is available as a download from
-					<a href="https://sourceforge.net/project/showfiles.php?group_id=148383">SourceForge</a>.
-				</p>
+          SchemaCrawler is available as a download from
+          <a
+            href="https://sourceforge.net/project/showfiles.php?group_id=148383">
+            SourceForge
+          </a>
+          .
+        </p>
       </answer>
     </faq>
     <faq id="tech-support">
@@ -268,9 +272,9 @@ One of:
       </question>
       <answer>
         <p>
-					Technical support is not available for
-					SchemaCrawler. Please post questions on the forums.
-				</p>
+          Technical support is not available for SchemaCrawler. Please
+          post questions on the forums.
+        </p>
       </answer>
     </faq>
     <faq id="cost">
@@ -279,12 +283,13 @@ One of:
       </question>
       <answer>
         <p>
-					SchemaCrawler is free, but
-					<a href="http://sourceforge.net/donate/index.php?group_id=148383">
-						donations
-					</a>
-					are welcome.
-				</p>
+          SchemaCrawler is free, but
+          <a
+            href="http://sourceforge.net/donate/index.php?group_id=148383">
+            donations
+          </a>
+          are welcome.
+        </p>
       </answer>
     </faq>
   </part>

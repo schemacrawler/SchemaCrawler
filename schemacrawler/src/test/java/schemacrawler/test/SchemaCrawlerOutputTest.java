@@ -83,7 +83,7 @@ public class SchemaCrawlerOutputTest
     {
       final SchemaTextFormatter formatter = (SchemaTextFormatter) SchemaTextFormatterLoader
         .load(textFormatOptions);
-      final SchemaCrawler crawler = new SchemaCrawler(dataSource, formatter);
+      final SchemaCrawler crawler = new SchemaCrawler(dataSource, null, formatter);
       crawler.crawl(schemaCrawlerOptions);
       assertEquals("Table count does not match", 5, formatter.getTableCount());
     }
@@ -120,7 +120,7 @@ public class SchemaCrawlerOutputTest
     {
       final CrawlHandler formatter = SchemaTextFormatterLoader
         .load(textFormatOptions);
-      final SchemaCrawler crawler = new SchemaCrawler(dataSource, formatter);
+      final SchemaCrawler crawler = new SchemaCrawler(dataSource, null, formatter);
       crawler.crawl(schemaCrawlerOptions);
     }
     catch (final SchemaCrawlerException e)

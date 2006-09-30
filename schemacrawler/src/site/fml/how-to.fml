@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<faqs title="SchemaCrawler - How-to" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://maven.apache.org/reference/plugins/faq/faq.xsd">
+<faqs
+  title="SchemaCrawler - How-to"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="http://maven.apache.org/reference/plugins/faq/faq.xsd">
   <part id="include-exclude">
     <title>Include and Exclude Stuff from the Output</title>
     <faq id="excluded-tables">
       <question>
-        <span>How to see why certain tables or columns for excluded</span>
+        <span>
+          How to see why certain tables or columns for excluded
+        </span>
       </question>
       <answer>
-        <p>Change the configuration for the SchemaCrawler log level to <code>schemacrawler.log_level=ALL</code> in the <code>schemacrawler.config.properties</code> file.</p>
+        <p>
+          Change the configuration for the SchemaCrawler log level to
+          <code>schemacrawler.log_level=ALL</code>
+          in the
+          <code>schemacrawler.config.properties</code>
+          file.
+        </p>
       </answer>
     </faq>
     <faq id="excluded-tables-or-columns">
@@ -15,7 +26,18 @@
         <span>How to include or exclude certain tables or columns</span>
       </question>
       <answer>
-        <p>Change the configuration for the SchemaCrawler the table or column include and exclude patterns in the <code>schemacrawler.config.properties</code> file. The include or exclude specification is a <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/util/regex/Pattern.html">Java regular expression</a>. The include pattern is evaluated first, and the exclusions are made from the included tables or columns list.</p>
+        <p>
+          Change the configuration for the SchemaCrawler the table or
+          column include and exclude patterns in the
+          <code>schemacrawler.config.properties</code>
+          file. The include or exclude specification is a
+          <a
+            href="http://java.sun.com/j2se/1.4.2/docs/api/java/util/regex/Pattern.html">
+            Java regular expression
+          </a>
+          . The include pattern is evaluated first, and the exclusions
+          are made from the included tables or columns list.
+        </p>
       </answer>
     </faq>
     <faq id="excluded-views">
@@ -23,7 +45,13 @@
         <span>How to exclude database views from the output</span>
       </question>
       <answer>
-        <p>Change the configuration for the SchemaCrawler table types to <code>schemacrawler.table_types=TABLE</code> in the <code>schemacrawler.config.properties</code> file.</p>
+        <p>
+          Change the configuration for the SchemaCrawler table types to
+          <code>schemacrawler.table_types=TABLE</code>
+          in the
+          <code>schemacrawler.config.properties</code>
+          file.
+        </p>
       </answer>
     </faq>
     <faq id="excluded-procedures">
@@ -31,7 +59,14 @@
         <span>How to exclude stored procedures from the output</span>
       </question>
       <answer>
-        <p>Change the configuration for the SchemaCrawler stored procedures to <code>schemacrawler.show_stored_procedures=false</code> in the <code>schemacrawler.config.properties</code> file.</p>
+        <p>
+          Change the configuration for the SchemaCrawler stored
+          procedures to
+          <code>schemacrawler.show_stored_procedures=false</code>
+          in the
+          <code>schemacrawler.config.properties</code>
+          file.
+        </p>
       </answer>
     </faq>
   </part>
@@ -39,10 +74,17 @@
     <title>Create diff-able Output</title>
     <faq id="sorting">
       <question>
-        <span>How to sort columns, foreign-keys and indices alphabetically</span>
+        <span>
+          How to sort columns, foreign-keys and indices alphabetically
+        </span>
       </question>
       <answer>
-        <p>Change the configuration for the SchemaCrawler "sort alphabetically" properties in the <code>schemacrawler.config.properties</code> file.</p>
+        <p>
+          Change the configuration for the SchemaCrawler "sort
+          alphabetically" properties in the
+          <code>schemacrawler.config.properties</code>
+          file.
+        </p>
       </answer>
     </faq>
     <faq id="diff-data-types">
@@ -50,23 +92,57 @@
         <span>How to diff column data types across databases</span>
       </question>
       <answer>
-        <p>Change the configuration for the SchemaCrawler <code>schemacrawler.format.show_jdbc_column_type_names=true</code> in the <code>schemacrawler.config.properties</code> file. This setting will show standard data types across different database systems. On the other hand, if you want to see the real database specific data types, change the setting to a value of true.</p>
+        <p>
+          Change the configuration for the SchemaCrawler
+          <code>
+            schemacrawler.format.show_jdbc_column_type_names=true
+          </code>
+          in the
+          <code>schemacrawler.config.properties</code>
+          file. This setting will show standard data types across
+          different database systems. On the other hand, if you want to
+          see the real database specific data types, change the setting
+          to a value of true.
+        </p>
       </answer>
     </faq>
     <faq id="ordinal-numbers">
       <question>
-        <span>How to allow diffs of tables that have columns added in between</span>
+        <span>
+          How to allow diffs of tables that have columns added in
+          between
+        </span>
       </question>
       <answer>
-        <p>When columns are added into a table, they can change the column ordinal number. This can mess up the diffs. Change the configuration for the SchemaCrawler <code>schemacrawler.format.show_ordinal_numbers=false</code> in the <code>schemacrawler.config.properties</code> file. You can combine this setting with the setting to sort columns alphabetically to produce diff friendly output.</p>
+        <p>
+          When columns are added into a table, they can change the
+          column ordinal number. This can mess up the diffs. Change the
+          configuration for the SchemaCrawler
+          <code>schemacrawler.format.show_ordinal_numbers=false</code>
+          in the
+          <code>schemacrawler.config.properties</code>
+          file. You can combine this setting with the setting to sort
+          columns alphabetically to produce diff friendly output.
+        </p>
       </answer>
     </faq>
     <faq id="index-names">
       <question>
-        <span>How to hide primary key, foreign key and index names</span>
+        <span>
+          How to hide primary key, foreign key and index names
+        </span>
       </question>
       <answer>
-        <p>If index names are not explicitly provided while creating a schema, most database system assign default names. These names can show up as spurious diffs in SchemaCrawler output. Change the configuration for the SchemaCrawler <code>schemacrawler.format.hide_index_names=false</code> in the <code>schemacrawler.config.properties</code> file.</p>
+        <p>
+          If index names are not explicitly provided while creating a
+          schema, most database system assign default names. These names
+          can show up as spurious diffs in SchemaCrawler output. Change
+          the configuration for the SchemaCrawler
+          <code>schemacrawler.format.hide_index_names=false</code>
+          in the
+          <code>schemacrawler.config.properties</code>
+          file.
+        </p>
       </answer>
     </faq>
   </part>
@@ -77,7 +153,17 @@
         <span>How to create your own output format</span>
       </question>
       <answer>
-        <p>SchemaCrawler integrates with <a href="http://jakarta.apache.org/velocity/">Apache Jakarta Velocity</a> to allow for templated ouput. Put Velocity on your classpath, and create your template, and run <code>schemacrawler.tools.integration.velocity.Main</code>, with the correct options. See the Velocity example for more details.</p>
+        <p>
+          SchemaCrawler integrates with
+          <a href="http://jakarta.apache.org/velocity/">
+            Apache Jakarta Velocity
+          </a>
+          to allow for templated ouput. Put Velocity on your classpath,
+          and create your template, and run
+          <code>schemacrawler.tools.integration.velocity.Main</code>
+          , with the correct options. See the Velocity example for more
+          details.
+        </p>
       </answer>
     </faq>
     <faq id="jung">
@@ -85,7 +171,16 @@
         <span>How to create a JPEG image of your schema</span>
       </question>
       <answer>
-        <p>SchemaCrawler integrates with <a href="http://jung.sourceforge.net/">JUNG (Java Universal Network/Graph Framework) </a> to produce graph images. Put JUNG on your classpath, and run <code>schemacrawler.tools.integration.jung.Main</code>, with the correct options. See the graphing example for more details.</p>
+        <p>
+          SchemaCrawler integrates with
+          <a href="http://jung.sourceforge.net/">
+            JUNG (Java Universal Network/Graph Framework)
+          </a>
+          to produce graph images. Put JUNG on your classpath, and run
+          <code>schemacrawler.tools.integration.jung.Main</code>
+          , with the correct options. See the graphing example for more
+          details.
+        </p>
       </answer>
     </faq>
   </part>
@@ -97,16 +192,19 @@
       </question>
       <answer>
         <p>
-					Read "<a href="http://www.devx.com/Java/Article/32443">Java 
-					API Makes Database Metadata as Easily Accessible as POJOs</a>" 
-					for an introduction to the SchemaCrawler API.
-				</p>
+          Read "
+          <a href="http://www.devx.com/Java/Article/32443">
+            Java API Makes Database Metadata as Easily Accessible as
+            POJOs
+          </a>
+          " for an introduction to the SchemaCrawler API.
+        </p>
         <p>
           <i>
-						See the example in the
-						<pre>_distrib\examples\api</pre>
-						directory.
-					</i>
+            See the example in the
+            <pre>_distrib\examples\api</pre>
+            directory.
+          </i>
         </p>
       </answer>
     </faq>

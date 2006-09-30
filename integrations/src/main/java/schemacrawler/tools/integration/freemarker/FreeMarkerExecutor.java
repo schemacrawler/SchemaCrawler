@@ -27,6 +27,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -71,7 +72,8 @@ public class FreeMarkerExecutor
    * @see schemacrawler.Executor#execute(schemacrawler.Options,
    *      javax.sql.DataSource)
    */
-  public void execute(final Options options, final DataSource dataSource)
+  public void execute(final Options options, final DataSource dataSource,
+                      final Properties additionalConfiguration)
     throws Exception
   {
     DataHandler dataHandler = null;
@@ -84,7 +86,8 @@ public class FreeMarkerExecutor
 
     if (toolType == ToolType.SCHEMA_TEXT)
     {
-      execute(schemaCrawlerOptions, schemaTextOptions, dataSource);
+      execute(schemaCrawlerOptions, schemaTextOptions, dataSource,
+              additionalConfiguration);
     }
     else
     {
@@ -106,19 +109,20 @@ public class FreeMarkerExecutor
           throw new SchemaCrawlerException("Cannot obtain a connection", e);
         }
         crawlHandler = OperatorLoader.load(options.getOperatorOptions(),
-                                           connection,
-                                           dataHandler);
+                                           connection, dataHandler);
       }
       if (toolType == ToolType.DATA_TEXT)
       {
         final QueryExecutor executor = new QueryExecutor(dataSource,
-            dataHandler);
+                                                         dataHandler);
         executor.executeSQL(options.getQuery());
       }
       else if (toolType == ToolType.OPERATION)
       {
-        final SchemaCrawler crawler = new SchemaCrawler(dataSource,
-            crawlHandler);
+        final SchemaCrawler crawler = new SchemaCrawler(
+                                                        dataSource,
+                                                        additionalConfiguration,
+                                                        crawlHandler);
         crawler.crawl(schemaCrawlerOptions);
       }
     }
@@ -126,8 +130,8 @@ public class FreeMarkerExecutor
 
   /**
    * Executes main functionality.
-   * @see {@link VelocityExecutor#execute(Options, DataSource)}
    * 
+   * @see {@link VelocityExecutor#execute(Options, DataSource)}
    * @param schemaCrawlerOptions
    *          SchemaCrawler options
    * @param schemaTextOptions
@@ -139,14 +143,21 @@ public class FreeMarkerExecutor
    */
   public void execute(final SchemaCrawlerOptions schemaCrawlerOptions,
                       final SchemaTextOptions schemaTextOptions,
-                      final DataSource dataSource)
+                      final DataSource dataSource,
+                      final Properties additionalConfiguration)
     throws Exception
   {
-    // Get the entire schema at once, since we need to use this to render
+    // Get the entire schema at once, since we need to use this to
+    // render
     // the velocity template
-    final Schema schema = SchemaCrawler.getSchema(dataSource, schemaTextOptions
-      .getSchemaTextDetailType().mapToInfoLevel(), schemaCrawlerOptions);
-    final Writer writer = schemaTextOptions.getOutputOptions().getOutputWriter();
+    final Schema schema = SchemaCrawler.getSchema(dataSource,
+                                                  additionalConfiguration,
+                                                  schemaTextOptions
+                                                    .getSchemaTextDetailType()
+                                                    .mapToInfoLevel(),
+                                                  schemaCrawlerOptions);
+    final Writer writer = schemaTextOptions.getOutputOptions()
+      .getOutputWriter();
     final String templateName = schemaTextOptions.getOutputOptions()
       .getOutputFormatValue();
     renderTemplate(templateName, schema, writer);
@@ -170,11 +181,13 @@ public class FreeMarkerExecutor
     // Create a new instance of the configuration
     final Configuration cfg = new Configuration();
 
-    final ClassTemplateLoader ctl = new ClassTemplateLoader(FreeMarkerExecutor.class,
-        "/");
-    final FileTemplateLoader ftl = new FileTemplateLoader(new File(templatePath));
+    final ClassTemplateLoader ctl = new ClassTemplateLoader(
+                                                            FreeMarkerExecutor.class,
+                                                            "/");
+    final FileTemplateLoader ftl = new FileTemplateLoader(
+                                                          new File(templatePath));
     final TemplateLoader[] loaders = new TemplateLoader[] {
-      ctl, ftl
+        ctl, ftl
     };
     final MultiTemplateLoader mtl = new MultiTemplateLoader(loaders);
     cfg.setTemplateLoader(mtl);

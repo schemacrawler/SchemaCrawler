@@ -30,8 +30,8 @@ import schemacrawler.util.NaturalSortComparator;
 import schemacrawler.util.SerializableComparator;
 
 /**
- * Represents a database procedure. Created from metadata returned by a JDBC
- * call.
+ * Represents a database procedure. Created from metadata returned by a
+ * JDBC call.
  * 
  * @author sfatehi
  * @version 0.1
@@ -45,7 +45,8 @@ final class MutableProcedure
 
   private ProcedureType procedureType;
   private final NamedObjectList columns = new NamedObjectList(
-      new NaturalSortComparator());
+                                                              new NaturalSortComparator());
+  private String definition;
 
   /**
    * Sets the procedure type.
@@ -100,4 +101,25 @@ final class MutableProcedure
     columns.setComparator(comparator);
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Table#getDefinition()
+   */
+  public String getDefinition()
+  {
+    return definition;
+  }
+
+  /**
+   * Sets the definition.
+   * 
+   * @param definition
+   *          Definition.
+   */
+  public void setDefinition(String definition)
+  {
+    this.definition = definition;
+  }
+  
 }

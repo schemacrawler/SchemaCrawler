@@ -114,7 +114,7 @@ public final class Main
         LOGGER.log(Level.CONFIG, options.toString());
         final DataSource dataSource = dbconnector.Main.createDataSource(args,
                                                                         config);
-        executor.execute(options, dataSource);
+        executor.execute(options, dataSource, config);
       }
     }
   }
