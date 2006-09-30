@@ -21,6 +21,8 @@
 package schemacrawler.tools;
 
 
+import java.util.Properties;
+
 import javax.sql.DataSource;
 
 import schemacrawler.Executor;
@@ -50,7 +52,8 @@ public interface SchemaCrawlerExecutor
    */
   void execute(final SchemaCrawlerOptions schemaCrawlerOptions,
                final SchemaTextOptions schemaTextOptions,
-               final DataSource dataSource)
+               final DataSource dataSource,
+               final Properties additionalConfiguration)
     throws Exception;
 
 }

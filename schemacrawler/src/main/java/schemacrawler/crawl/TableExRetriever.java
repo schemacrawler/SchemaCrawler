@@ -21,15 +21,20 @@
 package schemacrawler.crawl;
 
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
+import sf.util.Utilities;
 
 /**
- * TableRetriever uses database metadata to get the details about the schema.
+ * TableRetriever uses database metadata to get the details about the
+ * schema.
  * 
  * @author sfatehi
  */
@@ -59,16 +64,16 @@ final class TableExRetriever
   }
 
   /**
-   * Retrieves table metadata according to the parameters specified. No column
-   * metadata is retrieved, for reasons of efficiency.
+   * Retrieves table metadata according to the parameters specified. No
+   * column metadata is retrieved, for reasons of efficiency.
    * 
    * @param tableTypes
    *          Array of table types
    * @param tablePatternInclude
    *          Table name pattern for table
    * @param useRegExpPattern
-   *          True is the table name pattern is a regular expression; false if
-   *          the table name pattern is the JDBC pattern
+   *          True is the table name pattern is a regular expression;
+   *          false if the table name pattern is the JDBC pattern
    * @throws SQLException
    *           On a SQL exception
    */
@@ -77,7 +82,7 @@ final class TableExRetriever
     throws SQLException
   {
     LOGGER.entering(getClass().getName(), "retrievePrivileges", new Object[] {
-      parent, namedObjectList
+        parent, namedObjectList
     });
 
     final ResultSet results;
@@ -87,16 +92,14 @@ final class TableExRetriever
     {
       results = getRetrieverConnection().getMetaData()
         .getTablePrivileges(getRetrieverConnection().getCatalog(),
-                            getRetrieverConnection().getSchemaPattern(),
-                            "%");
+                            getRetrieverConnection().getSchemaPattern(), "%");
     }
     else
     {
       results = getRetrieverConnection().getMetaData()
         .getColumnPrivileges(getRetrieverConnection().getCatalog(),
                              getRetrieverConnection().getSchemaPattern(),
-                             parent.getName(),
-                             "%");
+                             parent.getName(), "%");
     }
     try
     {
@@ -159,6 +162,58 @@ final class TableExRetriever
         }
       }
     }
+  }
+
+  /**
+   * Retrieves a view definitions from the database.
+   * 
+   * @param tables
+   *          List of tables and views.
+   * @throws SQLException
+   *           On a SQL exception
+   */
+  void retrieveViewDefinitions(final NamedObjectList tables)
+    throws SQLException
+  {
+    LOGGER.entering(getClass().getName(), "retrieveViewDefinitions",
+                    new Object[] {});
+    
+    String viewDefinitionsSql = getRetrieverConnection().getViewDefinitionsSql();
+    if (Utilities.isBlank(viewDefinitionsSql)) {
+      LOGGER.log(Level.FINE, "View definition SQL statement was not provided");
+      return;
+    }      
+    
+    Connection connection = getRetrieverConnection().getMetaData().getConnection();
+    Statement statement = connection.createStatement();
+    final ResultSet results = statement.executeQuery(viewDefinitionsSql);
+    
+    try
+    {
+
+      while (results.next())
+      {     
+        final String catalog = results.getString("VIEW_CAT");
+        final String schema = results.getString("VIEW_SCHEMA");
+        final String viewName = results.getString("VIEW_NAME");
+        LOGGER.log(Level.FINEST, "Retrieving view definition: " + viewName);
+        final String definition = results.getString("VIEW_DEFINITION");
+
+        final MutableTable view = (MutableTable) tables.lookup(viewName);
+        if (view == null) {
+          LOGGER.log(Level.FINEST, "View not found: " + viewName);
+          continue;
+        }
+        
+        view.setDefinition(definition);
+      }
+    }
+    finally
+    {
+      statement.close();
+      results.close();
+    }
+
   }
 
 }

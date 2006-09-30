@@ -46,16 +46,17 @@ final class MutableTable
   private static final long serialVersionUID = 3257290248802284852L;
 
   private TableType type;
-  private PrimaryKey primaryKey;
+  private PrimaryKey primaryKey;  
   private final NamedObjectList columns = new NamedObjectList(
-      new NaturalSortComparator());
+                                                              new NaturalSortComparator());
   private final NamedObjectList foreignKeys = new NamedObjectList(
-      new NaturalSortComparator());
+                                                                  new NaturalSortComparator());
   private final NamedObjectList indices = new NamedObjectList(
-      new NaturalSortComparator());
+                                                              new NaturalSortComparator());
   private final NamedObjectList privileges = new NamedObjectList(
-      new NaturalSortComparator());
-
+                                                                 new NaturalSortComparator());
+  private String definition;
+  
   /**
    * Sets the table type.
    * 
@@ -251,6 +252,25 @@ final class MutableTable
   void addPrivilege(final Privilege privilege)
   {
     privileges.add(privilege);
+  }
+
+  /**
+   * {@inheritDoc}
+   * @see schemacrawler.schema.Table#getDefinition()
+   */
+  public String getDefinition()
+  {
+    return definition;
+  }
+
+  /**
+   * Sets the definition.
+   * 
+   * @param definition Definition.
+   */
+  public void setDefinition(String definition)
+  {
+    this.definition = definition;
   }
 
 }

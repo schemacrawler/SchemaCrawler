@@ -1,28 +1,48 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="SchemaCrawler">
-	<bannerLeft>
-		<name>SourceForge</name>
-		<src><![CDATA[http://sourceforge.net/sflogo.php?group_id=148383&type=7]]></src>
-		<href>http://www.sourceforge.net/</href>
-	</bannerLeft>
-	<bannerRight>
-		<name>SchemaCrawler</name>
-		<href>http://sourceforge.net/projects/schemacrawler</href>
-	</bannerRight>
-	<body>
-		<links>
-			<item name="Donations" href="http://sourceforge.net/donate/index.php?group_id=148383"/>
-			<item name="Download" href="http://sourceforge.net/project/showfiles.php?group_id=148383"/>
-		</links>
-		<menu name="SchemaCrawler">
-			<item name="About SchemaCrawler" href="index.html"/>
-			<item name="FAQS" href="faq.html"/>
-			<item name="How-tos" href="how-to.html"/>
-			<item name="Donations" href="http://sourceforge.net/donate/index.php?group_id=148383"/>
-			<item name="Download" href="http://sourceforge.net/project/showfiles.php?group_id=148383"/>
-			<item name="Readme" href="schemacrawler-readme.html"/>
-			<item name="CVS Browser" href="http://cvs.sourceforge.net/viewcvs.py/schemacrawler/schemacrawler"/>
-		</menu>
+  <bannerLeft>
+    <name>SourceForge</name>
+    <src>
+      <![CDATA[http://sourceforge.net/sflogo.php?group_id=148383&type=7]]>
+    </src>
+    <href>http://www.sourceforge.net/</href>
+  </bannerLeft>
+  <bannerRight>
+    <name>SchemaCrawler</name>
+    <href>http://sourceforge.net/projects/schemacrawler</href>
+  </bannerRight>
+  <body>
+    <links>
+      <item
+        name="Donations"
+        href="http://sourceforge.net/donate/index.php?group_id=148383" />
+      <item
+        name="Download"
+        href="http://sourceforge.net/project/showfiles.php?group_id=148383" />
+    </links>
+    <menu name="SchemaCrawler">
+      <item
+        name="About SchemaCrawler"
+        href="index.html" />
+      <item
+        name="FAQS"
+        href="faq.html" />
+      <item
+        name="How-tos"
+        href="how-to.html" />
+      <item
+        name="Donations"
+        href="http://sourceforge.net/donate/index.php?group_id=148383" />
+      <item
+        name="Download"
+        href="http://sourceforge.net/project/showfiles.php?group_id=148383" />
+      <item
+        name="Readme"
+        href="schemacrawler-readme.html" />
+      <item
+        name="CVS Browser"
+        href="http://cvs.sourceforge.net/viewcvs.py/schemacrawler/schemacrawler" />
+    </menu>
     ${reports}
   </body>
 </project>

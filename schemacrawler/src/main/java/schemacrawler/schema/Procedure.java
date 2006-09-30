@@ -44,4 +44,11 @@ public interface Procedure
    */
   ProcedureColumn[] getColumns();
 
+  /**
+   * Gets the definition.
+   * 
+   * @return Definition
+   */
+  String getDefinition();
+
 }

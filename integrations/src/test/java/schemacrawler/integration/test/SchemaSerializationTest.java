@@ -57,12 +57,12 @@ public class SchemaSerializationTest
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
     options.setShowStoredProcedures(true);
 
-    final Schema schema = SchemaCrawler.getSchema(dataSource,
+    final Schema schema = SchemaCrawler.getSchema(dataSource, null,
                                                   SchemaInfoLevel.MAXIMUM,
                                                   options);
     XStream xStream = new XStream();
 
-    final String xmlSerializedSchema1 = xStream.toXML(schema);    
+    final String xmlSerializedSchema1 = xStream.toXML(schema);
 
     final Schema deserializedSchema = (Schema) xStream
       .fromXML(xmlSerializedSchema1);

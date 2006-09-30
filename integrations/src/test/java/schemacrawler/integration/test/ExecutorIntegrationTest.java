@@ -59,7 +59,7 @@ public class ExecutorIntegrationTest
 
       executor.execute(new SchemaCrawlerOptions(),
                        schemaTextOptions,
-                       dataSource);
+                       dataSource, null);
 
       // Check post-conditions
       File outputFile = outputOptions.getOutputFile();

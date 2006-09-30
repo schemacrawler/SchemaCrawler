@@ -25,6 +25,7 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import javax.sql.DataSource;
 
@@ -42,13 +43,24 @@ final class RetrieverConnection
   private final String catalog;
   private final String schemaPattern;
   private final String jdbcDriverClassName;
+  private final Properties additionalConfiguration;
 
-  RetrieverConnection(final DataSource dataSource)
+  RetrieverConnection(final DataSource dataSource,
+                      final Properties additionalConfiguration)
     throws SchemaCrawlerException
   {
     if (dataSource == null)
     {
       throw new SchemaCrawlerException("No data source provided");
+    }
+
+    if (additionalConfiguration == null)
+    {
+      this.additionalConfiguration = new Properties();
+    }
+    else
+    {
+      this.additionalConfiguration = additionalConfiguration;
     }
 
     if (dataSource instanceof PropertiesDataSource)
@@ -67,8 +79,10 @@ final class RetrieverConnection
         String driverClassName;
         try
         {
-          driverClassName = DriverManager.getDriver(connection.getMetaData()
-            .getURL()).getClass().getName();
+          driverClassName = DriverManager.getDriver(
+                                                    connection.getMetaData()
+                                                      .getURL()).getClass()
+            .getName();
         }
         catch (final SQLException e)
         {
@@ -82,7 +96,8 @@ final class RetrieverConnection
       catch (final SQLException e)
       {
         throw new SchemaCrawlerException(
-            "Exception instantiting SchemaCrawler", e);
+                                         "Exception instantiting SchemaCrawler",
+                                         e);
       }
     }
 
@@ -116,6 +131,27 @@ final class RetrieverConnection
   String getJdbcDriverClassName()
   {
     return jdbcDriverClassName;
+  }
+
+  /**
+   * Gets the view definitions SQL from the additional configuration.
+   * 
+   * @return View defnitions SQL.
+   */
+  String getViewDefinitionsSql()
+  {
+    return additionalConfiguration.getProperty("view_definitions");
+  }
+
+  /**
+   * Gets the procedure definitions SQL from the additional
+   * configuration.
+   * 
+   * @return Procedure defnitions SQL.
+   */
+  String getProcedureDefinitionsSql()
+  {
+    return additionalConfiguration.getProperty("procedure_definitions");
   }
 
 }

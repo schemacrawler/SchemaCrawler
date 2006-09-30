@@ -70,7 +70,8 @@ public class VelocityExecutor
    * @see schemacrawler.Executor#execute(schemacrawler.Options,
    *      javax.sql.DataSource)
    */
-  public void execute(final Options options, final DataSource dataSource)
+  public void execute(final Options options, final DataSource dataSource,
+                      final Properties additionalConfiguration)
     throws Exception
   {
     DataHandler dataHandler = null;
@@ -83,7 +84,8 @@ public class VelocityExecutor
 
     if (toolType == ToolType.SCHEMA_TEXT)
     {
-      execute(schemaCrawlerOptions, schemaTextOptions, dataSource);
+      execute(schemaCrawlerOptions, schemaTextOptions, dataSource,
+              additionalConfiguration);
     }
     else
     {
@@ -105,19 +107,20 @@ public class VelocityExecutor
           throw new SchemaCrawlerException("Cannot obtain a connection", e);
         }
         crawlHandler = OperatorLoader.load(options.getOperatorOptions(),
-                                           connection,
-                                           dataHandler);
+                                           connection, dataHandler);
       }
       if (toolType == ToolType.DATA_TEXT)
       {
         final QueryExecutor executor = new QueryExecutor(dataSource,
-            dataHandler);
+                                                         dataHandler);
         executor.executeSQL(options.getQuery());
       }
       else if (toolType == ToolType.OPERATION)
       {
-        final SchemaCrawler crawler = new SchemaCrawler(dataSource,
-            crawlHandler);
+        final SchemaCrawler crawler = new SchemaCrawler(
+                                                        dataSource,
+                                                        additionalConfiguration,
+                                                        crawlHandler);
         crawler.crawl(schemaCrawlerOptions);
       }
     }
@@ -125,8 +128,8 @@ public class VelocityExecutor
 
   /**
    * Executes main functionality.
-   * @see {@link VelocityExecutor#execute(Options, DataSource)}
    * 
+   * @see {@link VelocityExecutor#execute(Options, DataSource)}
    * @param schemaCrawlerOptions
    *          SchemaCrawler options
    * @param schemaTextOptions
@@ -138,14 +141,21 @@ public class VelocityExecutor
    */
   public void execute(final SchemaCrawlerOptions schemaCrawlerOptions,
                       final SchemaTextOptions schemaTextOptions,
-                      final DataSource dataSource)
+                      final DataSource dataSource,
+                      final Properties additionalConfiguration)
     throws Exception
   {
-    // Get the entire schema at once, since we need to use this to render
+    // Get the entire schema at once, since we need to use this to
+    // render
     // the velocity template
-    final Schema schema = SchemaCrawler.getSchema(dataSource, schemaTextOptions
-      .getSchemaTextDetailType().mapToInfoLevel(), schemaCrawlerOptions);
-    final Writer writer = schemaTextOptions.getOutputOptions().getOutputWriter();
+    final Schema schema = SchemaCrawler.getSchema(dataSource,
+                                                  additionalConfiguration,
+                                                  schemaTextOptions
+                                                    .getSchemaTextDetailType()
+                                                    .mapToInfoLevel(),
+                                                  schemaCrawlerOptions);
+    final Writer writer = schemaTextOptions.getOutputOptions()
+      .getOutputWriter();
     final String templateName = schemaTextOptions.getOutputOptions()
       .getOutputFormatValue();
     renderTemplate(templateName, schema, writer);
@@ -177,18 +187,12 @@ public class VelocityExecutor
     final String classpathResourceLoader = "classpath";
     final Properties p = new Properties();
     p.setProperty(RuntimeConstants.RESOURCE_LOADER, fileResourceLoader + ","
-                                                  + classpathResourceLoader);
-    setVelocityResourceLoaderProperty(p,
-                                      classpathResourceLoader,
-                                      "class",
+                                                    + classpathResourceLoader);
+    setVelocityResourceLoaderProperty(p, classpathResourceLoader, "class",
                                       ClasspathResourceLoader.class.getName());
-    setVelocityResourceLoaderProperty(p,
-                                      fileResourceLoader,
-                                      "class",
+    setVelocityResourceLoaderProperty(p, fileResourceLoader, "class",
                                       FileResourceLoader.class.getName());
-    setVelocityResourceLoaderProperty(p,
-                                      fileResourceLoader,
-                                      "path",
+    setVelocityResourceLoaderProperty(p, fileResourceLoader, "path",
                                       templatePath);
 
     LOGGER.log(Level.INFO, "Velocity configuration properties - "
@@ -215,7 +219,7 @@ public class VelocityExecutor
                                                         final String resourceLoaderPropertyValue)
   {
     p.setProperty(resourceLoaderName + "." + RuntimeConstants.RESOURCE_LOADER
-                      + "." + resourceLoaderPropertyName,
+                  + "." + resourceLoaderPropertyName,
                   resourceLoaderPropertyValue);
   }
 

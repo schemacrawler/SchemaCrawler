@@ -23,6 +23,7 @@ package schemacrawler.tools;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import javax.sql.DataSource;
 
@@ -52,7 +53,8 @@ public class ToolsExecutor
    * @see schemacrawler.Executor#execute(schemacrawler.Options,
    *      javax.sql.DataSource)
    */
-  public void execute(final Options options, final DataSource dataSource)
+  public void execute(final Options options, final DataSource dataSource,
+                      final Properties additionalConfiguration)
     throws Exception
   {
     DataHandler dataHandler = null;
@@ -83,8 +85,7 @@ public class ToolsExecutor
           throw new SchemaCrawlerException("Cannot obtain a connection", e);
         }
         crawlHandler = OperatorLoader.load(options.getOperatorOptions(),
-                                           connection,
-                                           dataHandler);
+                                           connection, dataHandler);
       }
     }
     if (toolType == ToolType.DATA_TEXT)
@@ -94,7 +95,9 @@ public class ToolsExecutor
     }
     else
     {
-      final SchemaCrawler crawler = new SchemaCrawler(dataSource, crawlHandler);
+      final SchemaCrawler crawler = new SchemaCrawler(dataSource,
+                                                      additionalConfiguration,
+                                                      crawlHandler);
       crawler.crawl(options.getSchemaCrawlerOptions());
     }
   }

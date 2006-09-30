@@ -25,6 +25,7 @@ import java.awt.Dimension;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import javax.sql.DataSource;
 
@@ -75,7 +76,8 @@ public final class JungExecutor
    * @see schemacrawler.Executor#execute(schemacrawler.Options,
    *      javax.sql.DataSource)
    */
-  public void execute(final Options options, final DataSource dataSource)
+  public void execute(final Options options, final DataSource dataSource,
+                      final Properties additionalConfiguration)
     throws Exception
   {
     DataHandler dataHandler = null;
@@ -88,7 +90,8 @@ public final class JungExecutor
 
     if (toolType == ToolType.SCHEMA_TEXT)
     {
-      execute(schemaCrawlerOptions, schemaTextOptions, dataSource);
+      execute(schemaCrawlerOptions, schemaTextOptions, dataSource,
+              additionalConfiguration);
     }
     else
     {
@@ -110,19 +113,20 @@ public final class JungExecutor
           throw new SchemaCrawlerException("Cannot obtain a connection", e);
         }
         crawlHandler = OperatorLoader.load(options.getOperatorOptions(),
-                                           connection,
-                                           dataHandler);
+                                           connection, dataHandler);
       }
       if (toolType == ToolType.DATA_TEXT)
       {
         final QueryExecutor executor = new QueryExecutor(dataSource,
-            dataHandler);
+                                                         dataHandler);
         executor.executeSQL(options.getQuery());
       }
       else if (toolType == ToolType.OPERATION)
       {
-        final SchemaCrawler crawler = new SchemaCrawler(dataSource,
-            crawlHandler);
+        final SchemaCrawler crawler = new SchemaCrawler(
+                                                        dataSource,
+                                                        additionalConfiguration,
+                                                        crawlHandler);
         crawler.crawl(schemaCrawlerOptions);
       }
     }
@@ -130,8 +134,8 @@ public final class JungExecutor
 
   /**
    * Executes main functionality.
-   * @see {@link VelocityExecutor#execute(Options, DataSource)}
    * 
+   * @see {@link VelocityExecutor#execute(Options, DataSource)}
    * @param schemaCrawlerOptions
    *          SchemaCrawler options
    * @param schemaTextOptions
@@ -143,16 +147,23 @@ public final class JungExecutor
    */
   public void execute(final SchemaCrawlerOptions schemaCrawlerOptions,
                       final SchemaTextOptions schemaTextOptions,
-                      final DataSource dataSource)
+                      final DataSource dataSource,
+                      final Properties additionalConfiguration)
     throws Exception
   {
-    // Get the entire schema at once, since we need to use this to render
+    // Get the entire schema at once, since we need to use this to
+    // render
     // the velocity template
-    final File outputFile = schemaTextOptions.getOutputOptions().getOutputFile();
+    final File outputFile = schemaTextOptions.getOutputOptions()
+      .getOutputFile();
     final Dimension size = getSize(schemaTextOptions.getOutputOptions()
       .getOutputFormatValue());
-    final Schema schema = SchemaCrawler.getSchema(dataSource, schemaTextOptions
-      .getSchemaTextDetailType().mapToInfoLevel(), schemaCrawlerOptions);
+    final Schema schema = SchemaCrawler.getSchema(dataSource,
+                                                  additionalConfiguration,
+                                                  schemaTextOptions
+                                                    .getSchemaTextDetailType()
+                                                    .mapToInfoLevel(),
+                                                  schemaCrawlerOptions);
     final Graph graph = JungUtil.makeSchemaGraph(schema);
     JungUtil.saveGraphJpeg(graph, outputFile, size);
   }
