@@ -137,8 +137,14 @@ public final class SchemaCrawler
   {
     final ProcedureRetriever retriever = new ProcedureRetriever(
                                                                 retrieverConnection);
+    final ProcedureExRetriever retrieverExtra = new ProcedureExRetriever(
+                                                                         retrieverConnection);
     final NamedObjectList procedures = retriever.retrieveProcedures(options
       .isShowStoredProcedures(), options.getTableInclusionRule());
+    if (infoLevel.isGreaterThanOrEqualTo(SchemaInfoLevel.VERBOSE))
+    {
+      retrieverExtra.retrieveProcedureDefinitions(procedures);
+    }
     for (int i = 0; i < procedures.size(); i++)
     {
       final MutableProcedure procedure = (MutableProcedure) procedures.get(i);
@@ -167,7 +173,7 @@ public final class SchemaCrawler
     if (infoLevel.isGreaterThanOrEqualTo(SchemaInfoLevel.VERBOSE))
     {
       retrieverExtra.retrieveViewDefinitions(tables);
-    }    
+    }
     if (infoLevel == SchemaInfoLevel.MAXIMUM)
     {
       retrieverExtra.retrievePrivileges(null, tables);
