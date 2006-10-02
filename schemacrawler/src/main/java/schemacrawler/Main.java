@@ -28,6 +28,8 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
+import dbconnector.datasource.PropertiesDataSource;
+
 import schemacrawler.tools.ToolsExecutor;
 import sf.util.Utilities;
 
@@ -112,9 +114,9 @@ public final class Main
       {
         final Options options = optionCommands[i];
         LOGGER.log(Level.CONFIG, options.toString());
-        final DataSource dataSource = dbconnector.Main.createDataSource(args,
+        final PropertiesDataSource dataSource = dbconnector.Main.createDataSource(args,
                                                                         config);
-        executor.execute(options, dataSource, config);
+        executor.execute(options, dataSource, dataSource.getSourceProperties());
       }
     }
   }
