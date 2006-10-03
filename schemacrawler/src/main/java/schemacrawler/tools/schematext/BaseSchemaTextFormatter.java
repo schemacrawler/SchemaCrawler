@@ -21,6 +21,7 @@
 package schemacrawler.tools.schematext;
 
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.Map;
@@ -58,7 +59,7 @@ public abstract class BaseSchemaTextFormatter
    * @param writer
    *          Writer to output to.
    */
-  BaseSchemaTextFormatter(final SchemaTextOptions options)
+  BaseSchemaTextFormatter(final SchemaTextOptions options) throws SchemaCrawlerException
   {
     if (options == null)
     {
@@ -66,7 +67,14 @@ public abstract class BaseSchemaTextFormatter
     }
     this.options = options;
 
-    out = options.getOutputOptions().getOutputWriter();
+    try
+    {
+      out = options.getOutputOptions().getOutputWriter();
+    }
+    catch (IOException e)
+    {
+      throw new SchemaCrawlerException("Could not obtain output writer", e);
+    }
 
   }
 
@@ -256,12 +264,14 @@ public abstract class BaseSchemaTextFormatter
       printColumns(table.getColumns());
     }
 
-    if (schemaTextDetailType == SchemaTextDetailType.VERBOSE
-        || schemaTextDetailType == SchemaTextDetailType.MAXIMUM)
+    if (schemaTextDetailType.isGreaterThanOrEqualTo(SchemaTextDetailType.VERBOSE))
     {
       printPrimaryKey(table.getPrimaryKey());
       printForeignKeys(table.getName(), table.getForeignKeys());
       printIndices(table.getIndices());
+      if (table.getType().isView()) {
+        handleDefinition(table.getDefinition());
+      }
     }
 
     handleTableEnd();
@@ -546,6 +556,8 @@ public abstract class BaseSchemaTextFormatter
     }
   }
 
+  protected abstract void handleDefinition(final String definition);
+  
   String negate(final boolean positive, final String text)
   {
     String textValue = text;

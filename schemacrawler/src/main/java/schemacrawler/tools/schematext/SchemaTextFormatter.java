@@ -56,6 +56,7 @@ public final class SchemaTextFormatter
    *          Options
    */
   SchemaTextFormatter(final SchemaTextOptions options)
+    throws SchemaCrawlerException
   {
     super(options);
     if (options.getOutputOptions().getOutputFormat() == OutputFormat.CSV)
@@ -158,6 +159,17 @@ public final class SchemaTextFormatter
     out.print(textFormattingFunctor.getFieldSeparator());
     out.print(textFormattingFunctor.getFieldSeparator());
     out.print(textFormattingFunctor.format(userDefined, width, true));
+  }
+
+  protected void handleDefinition(String definition)
+  {
+    if (Utilities.isBlank(definition)) {
+      return;
+    }    
+    out.println();
+    out.println("Definition:");
+    out.println(definition);
+    out.println();    
   }
 
   /**

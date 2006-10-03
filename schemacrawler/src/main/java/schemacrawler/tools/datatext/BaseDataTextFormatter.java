@@ -22,6 +22,7 @@ package schemacrawler.tools.datatext;
 
 
 import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Blob;
 import java.sql.Clob;
@@ -31,6 +32,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutorException;
 import schemacrawler.tools.util.FormatUtils;
@@ -56,6 +58,7 @@ public abstract class BaseDataTextFormatter
    * @param mergeRows
    */
   BaseDataTextFormatter(final DataTextFormatOptions options)
+    throws SchemaCrawlerException
   {
     if (options == null)
     {
@@ -63,7 +66,14 @@ public abstract class BaseDataTextFormatter
     }
     this.options = options;
 
-    out = options.getOutputOptions().getOutputWriter();
+    try
+    {
+      out = options.getOutputOptions().getOutputWriter();
+    }
+    catch (IOException e)
+    {
+      throw new SchemaCrawlerException("Could not obtain output writer", e);
+    }
 
   }
 

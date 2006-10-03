@@ -59,6 +59,7 @@ public final class SchemaHTMLFormatter
    *          Writer to output to
    */
   SchemaHTMLFormatter(final SchemaTextOptions options)
+    throws SchemaCrawlerException
   {
     super(options);
   }
@@ -442,4 +443,15 @@ public final class SchemaHTMLFormatter
     out.println("<table>");
   }
 
+  protected void handleDefinition(String definition)
+  {
+    if (Utilities.isBlank(definition)) {
+      return;
+    }
+    out.println("<table>");
+    out.println("<tr><td>Definition:</td></tr>");
+    out.println("<tr><td><pre>" + definition + "</pre></td></tr>");
+    out.println();    
+  }
+  
 }

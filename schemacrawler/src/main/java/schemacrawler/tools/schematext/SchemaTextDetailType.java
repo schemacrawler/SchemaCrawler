@@ -38,36 +38,40 @@ public final class SchemaTextDetailType
   /**
    * No column detail.
    */
-  public static final SchemaTextDetailType BRIEF = new SchemaTextDetailType(
-      "brief_schema");
+  public static final SchemaTextDetailType BRIEF = new SchemaTextDetailType(0,
+                                                                            "brief_schema");
 
   /**
    * Basic column detail.
    */
-  public static final SchemaTextDetailType BASIC = new SchemaTextDetailType(
-      "basic_schema");
+  public static final SchemaTextDetailType BASIC = new SchemaTextDetailType(1,
+                                                                            "basic_schema");
 
   /**
    * Verbose column detail, without table and column numbers.
    */
   public static final SchemaTextDetailType VERBOSE = new SchemaTextDetailType(
-      "verbose_schema");
+                                                                              2,
+                                                                              "verbose_schema");
 
   /**
    * Verbose column detail, without table and column numbers.
    */
   public static final SchemaTextDetailType MAXIMUM = new SchemaTextDetailType(
-      "maximum_schema");
+                                                                              3,
+                                                                              "maximum_schema");
 
   private static final SchemaTextDetailType[] TEXT_FORMAT_TYPE_ALL = {
-    BRIEF, BASIC, VERBOSE, MAXIMUM,
+      BRIEF, BASIC, VERBOSE, MAXIMUM,
   };
 
+  private final transient int id;
   private final transient String name;
 
-  private SchemaTextDetailType(final String name)
+  private SchemaTextDetailType(final int id, final String name)
   {
     ordinal = nextOrdinal++;
+    this.id = id;
     this.name = name;
   }
 
@@ -79,6 +83,31 @@ public final class SchemaTextDetailType
   public String toString()
   {
     return name;
+  }
+
+  /**
+   * Checks if this is greater than the provided info level.
+   * 
+   * @param schemaTextDetailType
+   *          SchemaTextDetailType to check against
+   * @return Yes if this is greater
+   */
+  public boolean isGreaterThan(final SchemaTextDetailType schemaTextDetailType)
+  {
+    return id > schemaTextDetailType.id;
+  }
+
+  /**
+   * Checks if this is greater than or equal to the provided info level.
+   * 
+   * @param schemaTextDetailType
+   *          SchemaTextDetailType to check against
+   * @return Yes if this is greater or equal to
+   */
+  public boolean isGreaterThanOrEqualTo(
+                                        final SchemaTextDetailType schemaTextDetailType)
+  {
+    return id >= schemaTextDetailType.id;
   }
 
   /**

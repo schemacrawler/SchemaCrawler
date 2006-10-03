@@ -22,10 +22,12 @@ package schemacrawler.tools;
 
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -136,6 +138,7 @@ public final class OutputOptions
    * @return Writer
    */
   public synchronized PrintWriter getOutputWriter()
+    throws IOException
   {
     if (writer == null)
     {
@@ -145,16 +148,12 @@ public final class OutputOptions
       }
       else
       {
-        try
-        {
-          writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(
-              outputFile, appendOutput), "UTF-8"), /* autoFlush = */
-          true);
-        }
-        catch (final IOException e)
-        {
-          LOGGER.log(Level.WARNING, e.getMessage());
-        }
+        FileOutputStream fileOutputStream = new FileOutputStream(outputFile,
+                                                                 appendOutput);
+        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+                                                                       fileOutputStream,
+                                                                       "UTF-8");
+        writer = new PrintWriter(outputStreamWriter, /* autoFlush = */true);
       }
     }
 

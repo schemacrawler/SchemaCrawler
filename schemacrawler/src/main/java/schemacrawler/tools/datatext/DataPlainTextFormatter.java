@@ -21,6 +21,7 @@
 package schemacrawler.tools.datatext;
 
 
+import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.tools.util.FormatUtils;
 import sf.util.Utilities;
 
@@ -40,6 +41,7 @@ public final class DataPlainTextFormatter
    *          Options
    */
   public DataPlainTextFormatter(final DataTextFormatOptions options)
+    throws SchemaCrawlerException
   {
     super(options);
   }
