@@ -21,6 +21,7 @@
 package schemacrawler.tools.datatext;
 
 
+import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
@@ -55,6 +56,7 @@ public final class DataTextFormatterLoader
    * @return CrawlHandler instance
    */
   public static DataHandler load(final DataTextFormatOptions options)
+    throws SchemaCrawlerException
   {
 
     if (!canLoad(options))

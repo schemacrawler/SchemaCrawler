@@ -22,6 +22,7 @@ package schemacrawler.tools.schematext;
 
 
 import schemacrawler.crawl.CrawlHandler;
+import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
 
@@ -55,6 +56,7 @@ public final class SchemaTextFormatterLoader
    * @return CrawlHandler instance
    */
   public static CrawlHandler load(final SchemaTextOptions options)
+    throws SchemaCrawlerException
   {
 
     if (!canLoad(options))
