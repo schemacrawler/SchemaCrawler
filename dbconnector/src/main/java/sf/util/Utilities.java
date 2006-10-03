@@ -125,7 +125,7 @@ public final class Utilities
 
     String repeated = "";
 
-    if (count >= 1)
+    if (string != null && count >= 1)
     {
       final StringBuffer stringbuffer = new StringBuffer(string.length()
                                                          * count);
