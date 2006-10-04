@@ -124,11 +124,12 @@ public final class QueryExecutor
         if (connection != null)
         {
           connection.close();
+          LOGGER.log(Level.FINE, "Database connection closed - " + connection);
         }
       }
       catch (final SQLException e)
       {
-        LOGGER.log(Level.WARNING, "", e);
+        LOGGER.log(Level.WARNING, "Connection resources could not be released", e);
       }
     }
 

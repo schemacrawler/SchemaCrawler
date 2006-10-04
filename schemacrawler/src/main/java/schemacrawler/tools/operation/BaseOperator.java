@@ -163,6 +163,7 @@ public abstract class BaseOperator
     try
     {
       connection.close();
+      LOGGER.log(Level.FINE, "Database connection closed - " + connection);
       out.flush();
     }
     catch (final SQLException e)
