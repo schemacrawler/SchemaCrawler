@@ -94,8 +94,8 @@ final class ProcedureExRetriever
 
       while (results.next())
       {
-        final String catalog = results.getString("PROCEDURE_CAT");
-        final String schema = results.getString("PROCEDURE_SCHEM");
+//        final String catalog = results.getString("PROCEDURE_CAT");
+//        final String schema = results.getString("PROCEDURE_SCHEM");
         final String procedureName = results.getString("PROCEDURE_NAME");
         LOGGER.log(Level.FINEST, "Retrieving procedure definition: "
                                  + procedureName);

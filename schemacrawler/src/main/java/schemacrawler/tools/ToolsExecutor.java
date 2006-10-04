@@ -47,14 +47,31 @@ public class ToolsExecutor
   implements Executor
 {
 
+  private Properties additionalConnectionConfiguration = new Properties();
+
+  /**
+   * Set additional connection (data source) specific configuration, if
+   * needed.
+   * 
+   * @param additionalConnectionConfiguration
+   *          Additional connection configuration.
+   */
+  public void setAdditionalConnectionConfiguration(
+                                                   Properties additionalConnectionConfiguration)
+  {
+    if (additionalConnectionConfiguration != null)
+    {
+      this.additionalConnectionConfiguration = additionalConnectionConfiguration;
+    }
+  }
+
   /**
    * {@inheritDoc}
    * 
    * @see schemacrawler.Executor#execute(schemacrawler.Options,
    *      javax.sql.DataSource)
    */
-  public void execute(final Options options, final DataSource dataSource,
-                      final Properties additionalConfiguration)
+  public void execute(final Options options, final DataSource dataSource)
     throws Exception
   {
     DataHandler dataHandler = null;
@@ -95,8 +112,9 @@ public class ToolsExecutor
     }
     else
     {
-      final SchemaCrawler crawler = new SchemaCrawler(dataSource,
-                                                      additionalConfiguration,
+      final SchemaCrawler crawler = new SchemaCrawler(
+                                                      dataSource,
+                                                      additionalConnectionConfiguration,
                                                       crawlHandler);
       crawler.crawl(options.getSchemaCrawlerOptions());
     }

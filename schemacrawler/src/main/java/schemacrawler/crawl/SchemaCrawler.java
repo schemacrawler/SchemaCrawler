@@ -40,7 +40,8 @@ public final class SchemaCrawler
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawler.class
     .getName());
 
-  private final RetrieverConnection retrieverConnection;
+  private final DataSource dataSource;
+  private final Properties additionalConnectionConfiguration;
   private final CrawlHandler handler;
 
   /**
@@ -54,19 +55,47 @@ public final class SchemaCrawler
    *           On a crawler exception
    */
   public SchemaCrawler(final DataSource dataSource,
-                       final Properties additionalConfiguration,
+                       final CrawlHandler crawlHandler)
+    throws SchemaCrawlerException
+  {
+    this(dataSource, null, crawlHandler);
+  }
+
+  /**
+   * Constructs a SchemaCrawler object, from a connection.
+   * 
+   * @param dataSource
+   *          An data source.
+   * @param crawlHandler
+   *          A crawl handler instance
+   * @throws SchemaCrawlerException
+   *           On a crawler exception
+   */
+  public SchemaCrawler(final DataSource dataSource,
+                       final Properties additionalConnectionConfiguration,
                        final CrawlHandler crawlHandler)
     throws SchemaCrawlerException
   {
 
-    retrieverConnection = new RetrieverConnection(dataSource,
-                                                  additionalConfiguration);
+    if (dataSource == null)
+    {
+      throw new SchemaCrawlerException("No data source specified");
+    }
+    this.dataSource = dataSource;
 
+    if (additionalConnectionConfiguration == null)
+    {
+      this.additionalConnectionConfiguration = new Properties();
+    }
+    else
+    {
+      this.additionalConnectionConfiguration = additionalConnectionConfiguration;
+    }
     if (crawlHandler == null)
     {
-      throw new SchemaCrawlerException("Error creating text formatter");
+      throw new SchemaCrawlerException("No crawl handler specified");
     }
-    handler = crawlHandler;
+    this.handler = crawlHandler;
 
   }
 
@@ -81,9 +110,12 @@ public final class SchemaCrawler
   public void crawl(final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
   {
-
+    RetrieverConnection retrieverConnection = null;
     try
     {
+
+      retrieverConnection = new RetrieverConnection(dataSource,
+                                                    additionalConnectionConfiguration);
 
       final SchemaInfoLevel infoLevel = handler.getInfoLevelHint();
       SchemaCrawlerOptions schemaCrawlerOptions = options;
@@ -93,14 +125,17 @@ public final class SchemaCrawler
       }
 
       handler.begin();
-
-      final MutableDatabaseInfo databaseInfo = crawlDatabaseInfo(infoLevel,
+      final MutableDatabaseInfo databaseInfo = crawlDatabaseInfo(
+                                                                 retrieverConnection,
+                                                                 infoLevel,
                                                                  schemaCrawlerOptions);
       final NamedObjectList columnDataTypes = databaseInfo
         .getColumnDataTypesList();
 
-      crawlTables(infoLevel, schemaCrawlerOptions, columnDataTypes);
-      crawlProcedures(infoLevel, schemaCrawlerOptions, columnDataTypes);
+      crawlTables(retrieverConnection, infoLevel, schemaCrawlerOptions,
+                  columnDataTypes);
+      crawlProcedures(retrieverConnection, infoLevel, schemaCrawlerOptions,
+                      columnDataTypes);
 
       handler.end();
     }
@@ -108,10 +143,17 @@ public final class SchemaCrawler
     {
       throw new SchemaCrawlerException("Database access error", e);
     }
-
+    finally
+    {
+      if (retrieverConnection != null)
+      {
+        retrieverConnection.close();
+      }
+    }
   }
 
   private MutableDatabaseInfo crawlDatabaseInfo(
+                                                final RetrieverConnection retrieverConnection,
                                                 final SchemaInfoLevel infoLevel,
                                                 final SchemaCrawlerOptions options)
     throws SQLException, SchemaCrawlerException
@@ -130,7 +172,8 @@ public final class SchemaCrawler
     return dbInfo;
   }
 
-  private void crawlProcedures(final SchemaInfoLevel infoLevel,
+  private void crawlProcedures(final RetrieverConnection retrieverConnection,
+                               final SchemaInfoLevel infoLevel,
                                final SchemaCrawlerOptions options,
                                final NamedObjectList columnDataTypes)
     throws SQLException, SchemaCrawlerException
@@ -160,7 +203,8 @@ public final class SchemaCrawler
     }
   }
 
-  private void crawlTables(final SchemaInfoLevel infoLevel,
+  private void crawlTables(final RetrieverConnection retrieverConnection,
+                           final SchemaInfoLevel infoLevel,
                            final SchemaCrawlerOptions options,
                            final NamedObjectList columnDataTypes)
     throws SQLException, SchemaCrawlerException
@@ -219,7 +263,26 @@ public final class SchemaCrawler
    * @return Schema
    */
   public static Schema getSchema(final DataSource dataSource,
-                                 final Properties additionalConfiguration,
+                                 final SchemaInfoLevel infoLevel,
+                                 final SchemaCrawlerOptions options)
+  {
+    return getSchema(dataSource, null, infoLevel, options);
+  }
+
+  /**
+   * Gets the entire schema.
+   * 
+   * @param dataSource
+   *          Data source
+   * @param infoLevel
+   *          Schema info level
+   * @param options
+   *          Options
+   * @return Schema
+   */
+  public static Schema getSchema(
+                                 final DataSource dataSource,
+                                 final Properties additionalConnectionConfiguration,
                                  final SchemaInfoLevel infoLevel,
                                  final SchemaCrawlerOptions options)
   {
@@ -240,8 +303,9 @@ public final class SchemaCrawler
                                                                         infoLevel);
     try
     {
-      final SchemaCrawler crawler = new SchemaCrawler(dataSource,
-                                                      additionalConfiguration,
+      final SchemaCrawler crawler = new SchemaCrawler(
+                                                      dataSource,
+                                                      additionalConnectionConfiguration,
                                                       schemaMaker);
       crawler.crawl(options);
     }

@@ -26,12 +26,9 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.sql.DataSource;
-
-import dbconnector.datasource.PropertiesDataSource;
-
 import schemacrawler.tools.ToolsExecutor;
 import sf.util.Utilities;
+import dbconnector.datasource.PropertiesDataSource;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -65,7 +62,8 @@ public final class Main
   }
 
   /**
-   * Get connection parameters, and creates a connection, and crawls the schema.<BR>
+   * Get connection parameters, and creates a connection, and crawls the
+   * schema.<BR>
    * 
    * @param args
    *          Arguments passed into the program from the command line.
@@ -85,9 +83,10 @@ public final class Main
   }
 
   /**
-   * Executes with the command line, and a given executor. The executor allows
-   * for the command line to be parsed independently of the excution. The
-   * execution can integrate with other software, such as Velocity.
+   * Executes with the command line, and a given executor. The executor
+   * allows for the command line to be parsed independently of the
+   * excution. The execution can integrate with other software, such as
+   * Velocity.
    * 
    * @param args
    *          Command line arguments
@@ -114,9 +113,15 @@ public final class Main
       {
         final Options options = optionCommands[i];
         LOGGER.log(Level.CONFIG, options.toString());
-        final PropertiesDataSource dataSource = dbconnector.Main.createDataSource(args,
-                                                                        config);
-        executor.execute(options, dataSource, dataSource.getSourceProperties());
+        final PropertiesDataSource dataSource = dbconnector.Main
+          .createDataSource(args, config);
+        if (executor instanceof ToolsExecutor)
+        {
+          ((ToolsExecutor) executor)
+            .setAdditionalConnectionConfiguration(dataSource
+              .getSourceProperties());
+        }
+        executor.execute(options, dataSource);
       }
     }
   }
