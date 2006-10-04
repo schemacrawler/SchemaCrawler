@@ -46,9 +46,9 @@ import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutor;
 import schemacrawler.schema.Schema;
-import schemacrawler.tools.SchemaCrawlerExecutor;
 import schemacrawler.tools.ToolType;
 import schemacrawler.tools.datatext.DataTextFormatterLoader;
+import schemacrawler.tools.integration.SchemaCrawlerExecutor;
 import schemacrawler.tools.operation.OperatorLoader;
 import schemacrawler.tools.schematext.SchemaTextOptions;
 
@@ -70,8 +70,7 @@ public class VelocityExecutor
    * @see schemacrawler.Executor#execute(schemacrawler.Options,
    *      javax.sql.DataSource)
    */
-  public void execute(final Options options, final DataSource dataSource,
-                      final Properties additionalConfiguration)
+  public void execute(final Options options, final DataSource dataSource)
     throws Exception
   {
     DataHandler dataHandler = null;
@@ -84,8 +83,7 @@ public class VelocityExecutor
 
     if (toolType == ToolType.SCHEMA_TEXT)
     {
-      execute(schemaCrawlerOptions, schemaTextOptions, dataSource,
-              additionalConfiguration);
+      execute(schemaCrawlerOptions, schemaTextOptions, dataSource);
     }
     else
     {
@@ -117,9 +115,7 @@ public class VelocityExecutor
       }
       else if (toolType == ToolType.OPERATION)
       {
-        final SchemaCrawler crawler = new SchemaCrawler(
-                                                        dataSource,
-                                                        additionalConfiguration,
+        final SchemaCrawler crawler = new SchemaCrawler(dataSource,
                                                         crawlHandler);
         crawler.crawl(schemaCrawlerOptions);
       }
@@ -141,19 +137,14 @@ public class VelocityExecutor
    */
   public void execute(final SchemaCrawlerOptions schemaCrawlerOptions,
                       final SchemaTextOptions schemaTextOptions,
-                      final DataSource dataSource,
-                      final Properties additionalConfiguration)
+                      final DataSource dataSource)
     throws Exception
   {
     // Get the entire schema at once, since we need to use this to
     // render
     // the velocity template
-    final Schema schema = SchemaCrawler.getSchema(dataSource,
-                                                  additionalConfiguration,
-                                                  schemaTextOptions
-                                                    .getSchemaTextDetailType()
-                                                    .mapToInfoLevel(),
-                                                  schemaCrawlerOptions);
+    final Schema schema = SchemaCrawler.getSchema(dataSource, schemaTextOptions
+      .getSchemaTextDetailType().mapToInfoLevel(), schemaCrawlerOptions);
     final Writer writer = schemaTextOptions.getOutputOptions()
       .getOutputWriter();
     final String templateName = schemaTextOptions.getOutputOptions()

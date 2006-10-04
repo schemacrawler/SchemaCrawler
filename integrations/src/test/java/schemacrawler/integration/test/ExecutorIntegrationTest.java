@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.integration.test.util.TestBase;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.SchemaCrawlerExecutor;
+import schemacrawler.tools.integration.SchemaCrawlerExecutor;
 import schemacrawler.tools.integration.freemarker.FreeMarkerExecutor;
 import schemacrawler.tools.integration.jung.JungExecutor;
 import schemacrawler.tools.integration.velocity.VelocityExecutor;
@@ -54,12 +54,13 @@ public class ExecutorIntegrationTest
   {
     try
     {
-      SchemaTextOptions schemaTextOptions = new SchemaTextOptions(null,
-          outputOptions, SchemaTextDetailType.BASIC);
+      SchemaTextOptions schemaTextOptions = new SchemaTextOptions(
+                                                                  null,
+                                                                  outputOptions,
+                                                                  SchemaTextDetailType.BASIC);
 
-      executor.execute(new SchemaCrawlerOptions(),
-                       schemaTextOptions,
-                       dataSource, null);
+      executor.execute(new SchemaCrawlerOptions(), schemaTextOptions,
+                       dataSource);
 
       // Check post-conditions
       File outputFile = outputOptions.getOutputFile();
@@ -98,7 +99,7 @@ public class ExecutorIntegrationTest
       String outputFilename = File.createTempFile("schemacrawler", ".txt")
         .getAbsolutePath();
       OutputOptions outputOptions = new OutputOptions("plaintextschema.vm",
-          outputFilename);
+                                                      outputFilename);
       executorIntegrationTest(new VelocityExecutor(), outputOptions);
     }
     catch (Exception e)
@@ -114,7 +115,7 @@ public class ExecutorIntegrationTest
       String outputFilename = File.createTempFile("schemacrawler", ".txt")
         .getAbsolutePath();
       OutputOptions outputOptions = new OutputOptions("plaintextschema.ftl",
-          outputFilename);
+                                                      outputFilename);
       executorIntegrationTest(new FreeMarkerExecutor(), outputOptions);
     }
     catch (Exception e)
@@ -122,5 +123,5 @@ public class ExecutorIntegrationTest
       fail(e.getMessage());
     }
   }
-  
+
 }

@@ -27,7 +27,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,9 +40,9 @@ import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutor;
 import schemacrawler.schema.Schema;
-import schemacrawler.tools.SchemaCrawlerExecutor;
 import schemacrawler.tools.ToolType;
 import schemacrawler.tools.datatext.DataTextFormatterLoader;
+import schemacrawler.tools.integration.SchemaCrawlerExecutor;
 import schemacrawler.tools.operation.OperatorLoader;
 import schemacrawler.tools.schematext.SchemaTextOptions;
 import freemarker.cache.ClassTemplateLoader;
@@ -72,8 +71,7 @@ public class FreeMarkerExecutor
    * @see schemacrawler.Executor#execute(schemacrawler.Options,
    *      javax.sql.DataSource)
    */
-  public void execute(final Options options, final DataSource dataSource,
-                      final Properties additionalConfiguration)
+  public void execute(final Options options, final DataSource dataSource)
     throws Exception
   {
     DataHandler dataHandler = null;
@@ -86,8 +84,7 @@ public class FreeMarkerExecutor
 
     if (toolType == ToolType.SCHEMA_TEXT)
     {
-      execute(schemaCrawlerOptions, schemaTextOptions, dataSource,
-              additionalConfiguration);
+      execute(schemaCrawlerOptions, schemaTextOptions, dataSource);
     }
     else
     {
@@ -121,7 +118,6 @@ public class FreeMarkerExecutor
       {
         final SchemaCrawler crawler = new SchemaCrawler(
                                                         dataSource,
-                                                        additionalConfiguration,
                                                         crawlHandler);
         crawler.crawl(schemaCrawlerOptions);
       }
@@ -143,15 +139,13 @@ public class FreeMarkerExecutor
    */
   public void execute(final SchemaCrawlerOptions schemaCrawlerOptions,
                       final SchemaTextOptions schemaTextOptions,
-                      final DataSource dataSource,
-                      final Properties additionalConfiguration)
+                      final DataSource dataSource)
     throws Exception
   {
     // Get the entire schema at once, since we need to use this to
     // render
     // the velocity template
     final Schema schema = SchemaCrawler.getSchema(dataSource,
-                                                  additionalConfiguration,
                                                   schemaTextOptions
                                                     .getSchemaTextDetailType()
                                                     .mapToInfoLevel(),
