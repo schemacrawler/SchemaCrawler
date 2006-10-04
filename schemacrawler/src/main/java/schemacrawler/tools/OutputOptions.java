@@ -22,14 +22,10 @@ package schemacrawler.tools;
 
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.BaseOptions;
 
@@ -41,9 +37,6 @@ import schemacrawler.BaseOptions;
 public final class OutputOptions
   extends BaseOptions
 {
-
-  private static final Logger LOGGER = Logger.getLogger(OutputOptions.class
-    .getName());
 
   private static final long serialVersionUID = 7018337388923813055L;
 

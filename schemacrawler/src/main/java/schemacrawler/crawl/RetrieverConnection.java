@@ -26,6 +26,8 @@ import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
@@ -38,6 +40,9 @@ import dbconnector.datasource.PropertiesDataSource;
  */
 final class RetrieverConnection
 {
+
+  private static final Logger LOGGER = Logger
+    .getLogger(RetrieverConnection.class.getName());
 
   private final DatabaseMetaData metaData;
   private final String catalog;
@@ -152,6 +157,18 @@ final class RetrieverConnection
   String getProcedureDefinitionsSql()
   {
     return additionalConfiguration.getProperty("procedure_definitions");
+  }
+
+  void close()
+  {
+    try
+    {
+      metaData.getConnection().close();
+    }
+    catch (SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not close database connection", e);
+    }
   }
 
 }

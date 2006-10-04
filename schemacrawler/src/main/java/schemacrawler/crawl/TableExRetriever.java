@@ -193,8 +193,8 @@ final class TableExRetriever
 
       while (results.next())
       {     
-        final String catalog = results.getString("VIEW_CAT");
-        final String schema = results.getString("VIEW_SCHEM");
+//        final String catalog = results.getString("VIEW_CAT");
+//        final String schema = results.getString("VIEW_SCHEM");
         final String viewName = results.getString("VIEW_NAME");
         LOGGER.log(Level.FINEST, "Retrieving view definition: " + viewName);
         final String definition = results.getString("VIEW_DEFINITION");
