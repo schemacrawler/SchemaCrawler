@@ -163,7 +163,9 @@ final class RetrieverConnection
   {
     try
     {
-      metaData.getConnection().close();
+      Connection connection = metaData.getConnection();
+      connection.close();
+      LOGGER.log(Level.FINE, "Database connection closed - " + connection);
     }
     catch (SQLException e)
     {
