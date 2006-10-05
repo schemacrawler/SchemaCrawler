@@ -52,7 +52,7 @@ public final class PropertiesDataSource
   private static final String URL = "url";
   private static final String USER = "user";
   private static final String PASSWORD = "password";
-    
+
   private static final String DEFAULTCONNECTION = "defaultconnection";
 
   public static final Logger LOGGER = Logger
@@ -78,18 +78,28 @@ public final class PropertiesDataSource
   }
 
   /**
-   * Creates a PropertiesDataSource from a set of connection properties, using
-   * the default connection.
+   * Creates a PropertiesDataSource from a set of connection properties,
+   * using the default connection.
    * 
    * @param properties
    *          Connection properties.
    * @throws PropertiesDataSourceException
    *           On any exception in creating the PropertiesDataSource.
    */
-  public PropertiesDataSource(final String jdbcDriver, final String url, 
-      final String user, final String password)
+  public PropertiesDataSource(final String jdbcDriver, final String url,
+                              final String user, final String password)
     throws PropertiesDataSourceException
   {
+
+    if (jdbcDriver == null || url == null || user == null || password == null)
+    {
+      throw new PropertiesDataSourceException(
+                                              "All connection properties should be provided - "
+                                                  + "JDBC database driver class name, "
+                                                  + "connection URL, "
+                                                  + "user name and password");
+    }
+
     final String connectionName = "PropertiesDataSourceConnection";
     //
     final Properties properties = new Properties();
@@ -99,11 +109,12 @@ public final class PropertiesDataSource
     properties.setProperty(connectionName + "." + PASSWORD, password);
     //
     constructPropertiesDataSource(properties, connectionName);
+
   }
-  
+
   /**
-   * Creates a PropertiesDataSource from a set of connection properties, using
-   * the default connection.
+   * Creates a PropertiesDataSource from a set of connection properties,
+   * using the default connection.
    * 
    * @param properties
    *          Connection properties.
@@ -117,9 +128,9 @@ public final class PropertiesDataSource
   }
 
   /**
-   * Creates a PropertiesDataSource from a set of connection properties, using
-   * the named connection. If the named connection is null or empty, use the
-   * default connection.
+   * Creates a PropertiesDataSource from a set of connection properties,
+   * using the named connection. If the named connection is null or
+   * empty, use the default connection.
    * 
    * @param properties
    *          Connection properties.
@@ -135,9 +146,12 @@ public final class PropertiesDataSource
     constructPropertiesDataSource(properties, connectionName);
   }
 
-  private void constructPropertiesDataSource(final Properties properties, final String connectionName) throws PropertiesDataSourceException {
-    final String defaultConnection = properties
-      .getProperty(DEFAULTCONNECTION, "");
+  private void constructPropertiesDataSource(final Properties properties,
+                                             final String connectionName)
+    throws PropertiesDataSourceException
+  {
+    final String defaultConnection = properties.getProperty(DEFAULTCONNECTION,
+                                                            "");
     String useConnectionName = connectionName;
 
     // get the subgroup of the properties for the given connection
@@ -157,7 +171,8 @@ public final class PropertiesDataSource
 
     // create substituted properties
     final SubstitutableProperties substitutedProperties = new SubstitutableProperties(
-        groups.subgroup(useConnectionName));
+                                                                                      groups
+                                                                                        .subgroup(useConnectionName));
 
     logWriter = new PrintWriter(System.err);
 
@@ -178,7 +193,8 @@ public final class PropertiesDataSource
     }
     catch (final ClassNotFoundException e)
     {
-      throw new PropertiesDataSourceException(e.getLocalizedMessage(), e);
+      throw new PropertiesDataSourceException("Driver class not found - "
+                                              + e.getLocalizedMessage(), e);
     }
     catch (final InstantiationException e)
     {
@@ -207,7 +223,7 @@ public final class PropertiesDataSource
       if (connection == null)
       {
         throw new PropertiesDataSourceException(
-            "Could not establish a connection");
+                                                "Could not establish a connection");
       }
       // set metadata properties
       final DatabaseMetaData metaData = connection.getMetaData();
@@ -229,7 +245,8 @@ public final class PropertiesDataSource
     catch (final SQLException e)
     {
       throw new PropertiesDataSourceException(
-          "Could not establish a connection", e);
+                                              "Could not establish a connection",
+                                              e);
     }
     finally
     {
@@ -339,7 +356,8 @@ public final class PropertiesDataSource
    * <code>DataSource</code> object represents.
    * 
    * @param username
-   *          the database user on whose behalf the connection is being made
+   *          the database user on whose behalf the connection is being
+   *          made
    * @param password
    *          the user's password
    * @return a connection to the data source
@@ -365,11 +383,12 @@ public final class PropertiesDataSource
   }
 
   /**
-   * Gets the maximum time in seconds that this data source can wait while
-   * attempting to connect to a database. A value of zero means that the timeout
-   * is the default system timeout if there is one; otherwise, it means that
-   * there is no timeout. When a <code>DataSource</code> object is created,
-   * the login timeout is initially zero.
+   * Gets the maximum time in seconds that this data source can wait
+   * while attempting to connect to a database. A value of zero means
+   * that the timeout is the default system timeout if there is one;
+   * otherwise, it means that there is no timeout. When a
+   * <code>DataSource</code> object is created, the login timeout is
+   * initially zero.
    * 
    * @return the data source login time limit
    * @see #setLoginTimeout
@@ -381,11 +400,12 @@ public final class PropertiesDataSource
 
   /**
    * <p>
-   * Sets the maximum time in seconds that this data source will wait while
-   * attempting to connect to a database. A value of zero specifies that the
-   * timeout is the default system timeout if there is one; otherwise, it
-   * specifies that there is no timeout. When a <code>DataSource</code> object
-   * is created, the login timeout is initially zero.
+   * Sets the maximum time in seconds that this data source will wait
+   * while attempting to connect to a database. A value of zero
+   * specifies that the timeout is the default system timeout if there
+   * is one; otherwise, it specifies that there is no timeout. When a
+   * <code>DataSource</code> object is created, the login timeout is
+   * initially zero.
    * 
    * @param seconds
    *          the data source login time limit
@@ -398,18 +418,22 @@ public final class PropertiesDataSource
 
   /**
    * <p>
-   * Retrieves the log writer for this <code>DataSource</code> object. <p/>
+   * Retrieves the log writer for this <code>DataSource</code> object.
+   * <p/>
    * <p>
-   * The log writer is a character output stream to which all logging and
-   * tracing messages for this data source will be printed. This includes
-   * messages printed by the methods of this object, messages printed by methods
-   * of other objects manufactured by this object, and so on. Messages printed
-   * to a data source specific log writer are not printed to the log writer
-   * associated with the <code>java.sql.Drivermanager</code> class. When a
-   * <code>DataSource</code> object is created, the log writer is initially
-   * null; in other words, the default is for logging to be disabled.
+   * The log writer is a character output stream to which all logging
+   * and tracing messages for this data source will be printed. This
+   * includes messages printed by the methods of this object, messages
+   * printed by methods of other objects manufactured by this object,
+   * and so on. Messages printed to a data source specific log writer
+   * are not printed to the log writer associated with the
+   * <code>java.sql.Drivermanager</code> class. When a
+   * <code>DataSource</code> object is created, the log writer is
+   * initially null; in other words, the default is for logging to be
+   * disabled.
    * 
-   * @return the log writer for this data source or null if logging is disabled
+   * @return the log writer for this data source or null if logging is
+   *         disabled
    * @see #setLogWriter
    */
   public PrintWriter getLogWriter()
@@ -419,17 +443,19 @@ public final class PropertiesDataSource
 
   /**
    * <p>
-   * Sets the log writer for this <code>DataSource</code> object to the given
-   * <code>java.io.PrintWriter</code> object. <p/>
+   * Sets the log writer for this <code>DataSource</code> object to
+   * the given <code>java.io.PrintWriter</code> object. <p/>
    * <p>
-   * The log writer is a character output stream to which all logging and
-   * tracing messages for this data source will be printed. This includes
-   * messages printed by the methods of this object, messages printed by methods
-   * of other objects manufactured by this object, and so on. Messages printed
-   * to a data source- specific log writer are not printed to the log writer
-   * associated with the <code>java.sql.Drivermanager</code> class. When a
-   * <code>DataSource</code> object is created the log writer is initially
-   * null; in other words, the default is for logging to be disabled.
+   * The log writer is a character output stream to which all logging
+   * and tracing messages for this data source will be printed. This
+   * includes messages printed by the methods of this object, messages
+   * printed by methods of other objects manufactured by this object,
+   * and so on. Messages printed to a data source- specific log writer
+   * are not printed to the log writer associated with the
+   * <code>java.sql.Drivermanager</code> class. When a
+   * <code>DataSource</code> object is created the log writer is
+   * initially null; in other words, the default is for logging to be
+   * disabled.
    * 
    * @param out
    *          the new log writer; to disable logging, set to null
