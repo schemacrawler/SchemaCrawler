@@ -197,12 +197,16 @@ final class TableExRetriever
 //        final String schema = results.getString("VIEW_SCHEM");
         final String viewName = results.getString("VIEW_NAME");
         LOGGER.log(Level.FINEST, "Retrieving view definition: " + viewName);
-        final String definition = results.getString("VIEW_DEFINITION");
+        String definition = results.getString("VIEW_DEFINITION");
 
         final MutableTable view = (MutableTable) tables.lookup(viewName);
         if (view == null) {
           LOGGER.log(Level.FINEST, "View not found: " + viewName);
           continue;
+        }
+        
+        if (!Utilities.isBlank(view.getDefinition())) {
+          definition = view.getDefinition() + definition;
         }
         
         view.setDefinition(definition);

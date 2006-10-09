@@ -99,7 +99,7 @@ final class ProcedureExRetriever
         final String procedureName = results.getString("PROCEDURE_NAME");
         LOGGER.log(Level.FINEST, "Retrieving procedure definition: "
                                  + procedureName);
-        final String definition = results.getString("PROCEDURE_DEFINITION");
+        String definition = results.getString("PROCEDURE_DEFINITION");
 
         final MutableTable procedure = (MutableTable) procedures
           .lookup(procedureName);
@@ -108,7 +108,11 @@ final class ProcedureExRetriever
           LOGGER.log(Level.FINEST, "Procedure not found: " + procedureName);
           continue;
         }
-
+        
+        if (!Utilities.isBlank(procedure.getDefinition())) {
+          definition = procedure.getDefinition() + definition;
+        }
+        
         procedure.setDefinition(definition);
       }
     }
