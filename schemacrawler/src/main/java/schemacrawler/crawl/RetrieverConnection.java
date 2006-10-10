@@ -143,9 +143,9 @@ final class RetrieverConnection
    * 
    * @return View defnitions SQL.
    */
-  String getViewDefinitionsSql()
+  String getViewInformationSql()
   {
-    return additionalConfiguration.getProperty("view_definitions");
+    return additionalConfiguration.getProperty("SELECT_INFORMATION_SCHEMA_VIEWS");
   }
 
   /**
@@ -154,9 +154,9 @@ final class RetrieverConnection
    * 
    * @return Procedure defnitions SQL.
    */
-  String getProcedureDefinitionsSql()
+  String getProcedureInformationSql()
   {
-    return additionalConfiguration.getProperty("procedure_definitions");
+    return additionalConfiguration.getProperty("SELECT_INFORMATION_SCHEMA_ROUTINES");
   }
 
   void close()

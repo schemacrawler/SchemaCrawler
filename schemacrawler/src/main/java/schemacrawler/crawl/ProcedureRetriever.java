@@ -39,7 +39,7 @@ import schemacrawler.util.AlphabeticalSortComparator;
 final class ProcedureRetriever
   extends AbstractRetriever
 {
-
+  
   private static final Logger LOGGER = Logger
     .getLogger(ProcedureRetriever.class.getName());
 
@@ -103,11 +103,11 @@ final class ProcedureRetriever
     }
     while (results.next())
     {
-      final String schema = results.getString(PROCEDURE_SCHEMA);
+      final String schema = results.getString("PROCEDURE_SCHEM");
       final String catalog = results.getString("PROCEDURE_CAT");
-      final String procedureName = results.getString(PROCEDURE_NAME);
+      final String procedureName = results.getString("PROCEDURE_NAME");
       LOGGER.log(Level.FINEST, "Retrieving procedure: " + procedureName);
-      final short procedureType = results.getShort(PROCEDURE_TYPE);
+      final short procedureType = results.getShort("PROCEDURE_TYPE");
       final String remarks = results.getString(REMARKS);
 
       if (procedureInclusionRule.include(procedureName))

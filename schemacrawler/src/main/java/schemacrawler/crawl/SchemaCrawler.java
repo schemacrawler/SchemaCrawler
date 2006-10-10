@@ -186,7 +186,7 @@ public final class SchemaCrawler
       .isShowStoredProcedures(), options.getTableInclusionRule());
     if (infoLevel.isGreaterThanOrEqualTo(SchemaInfoLevel.VERBOSE))
     {
-      retrieverExtra.retrieveProcedureDefinitions(procedures);
+      retrieverExtra.retrieveProcedureInformation(procedures);
     }
     for (int i = 0; i < procedures.size(); i++)
     {
@@ -216,7 +216,7 @@ public final class SchemaCrawler
       .getTableTypes(), options.getTableInclusionRule());
     if (infoLevel.isGreaterThanOrEqualTo(SchemaInfoLevel.VERBOSE))
     {
-      retrieverExtra.retrieveViewDefinitions(tables);
+      retrieverExtra.retrieveViewInformation(tables);
     }
     if (infoLevel == SchemaInfoLevel.MAXIMUM)
     {

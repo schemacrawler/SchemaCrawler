@@ -114,11 +114,11 @@ final class TableRetriever
       while (results.next())
       {
         // final String catalog = results.getString("TABLE_CAT");
-        final String schema = results.getString(TABLE_SCHEMA);
+        final String schema = results.getString("TABLE_SCHEM");
 
         final String tableName = results.getString(TABLE_NAME);
         LOGGER.log(Level.FINEST, "Retrieving table: " + tableName);
-        final String tableType = results.getString(TABLE_TYPE);
+        final String tableType = results.getString("TABLE_TYPE");
         final String remarks = results.getString(REMARKS);
 
         if (tableInclusionRule.include(tableName))
@@ -172,15 +172,15 @@ final class TableRetriever
         // Get the "COLUMN_DEF" value first as it the Oracle drivers
         // don't handle it properly otherwise.
         // http://issues.apache.org/jira/browse/DDLUTILS-29?page=all
-        final String defaultValue = results.getString(COLUMN_DEFAULT);
+        final String defaultValue = results.getString("COLUMN_DEF");
         //        
         final String columnName = results.getString(COLUMN_NAME);
         LOGGER.log(Level.FINEST, "Retrieving column: " + columnName);
         final int oridinalPosition = results.getInt(ORDINAL_POSITION);
         final int dataType = results.getInt(DATA_TYPE);
         final String typeName = results.getString(TYPE_NAME);
-        final int size = results.getInt(COLUMN_SIZE);
-        final int decimalDigits = results.getInt(DECIMAL_DIGITS);
+        final int size = results.getInt("COLUMN_SIZE");
+        final int decimalDigits = results.getInt("DECIMAL_DIGITS");
         final boolean isNullable = results.getInt(NULLABLE) == DatabaseMetaData.columnNullable;
         final String remarks = results.getString(REMARKS);
 
@@ -248,7 +248,7 @@ final class TableRetriever
     {
       while (results.next())
       {
-        String indexName = results.getString(INDEX_NAME);
+        String indexName = results.getString("INDEX_NAME");
         if (indexName == null || indexName.length() == 0)
         {
           indexName = UNKNOWN;
@@ -266,12 +266,12 @@ final class TableRetriever
         {
           continue;
         }
-        final boolean uniqueIndex = !results.getBoolean(NON_UNIQUE);
-        final int type = results.getInt(TYPE);
+        final boolean uniqueIndex = !results.getBoolean("NON_UNIQUE");
+        final int type = results.getInt("TYPE");
         final int ordinalPosition = results.getInt(ORDINAL_POSITION);
-        final String sortSequence = results.getString(ASC_OR_DESC);
-        final int cardinality = results.getInt(CARDINALITY);
-        final int pages = results.getInt(PAGES);
+        final String sortSequence = results.getString("ASC_OR_DESC");
+        final int cardinality = results.getInt("CARDINALITY");
+        final int pages = results.getInt("PAGES");
 
         final MutableColumn column = (MutableColumn) table
           .lookupColumn(columnName);
@@ -359,14 +359,14 @@ final class TableRetriever
           foreignKey.setSchemaName(table.getSchemaName());
           foreignKeysMap.put(foreignKeyName, foreignKey);
         }
-        final String pkTableName = results.getString(PKTABLE_NAME);
-        final String pkColumnName = results.getString(PKCOLUMN_NAME);
-        final String fkTableName = results.getString(FKTABLE_NAME);
-        final String fkColumnName = results.getString(FKCOLUMN_NAME);
+        final String pkTableName = results.getString("PKTABLE_NAME");
+        final String pkColumnName = results.getString("PKCOLUMN_NAME");
+        final String fkTableName = results.getString("FKTABLE_NAME");
+        final String fkColumnName = results.getString("FKCOLUMN_NAME");
         final int keySequence = results.getInt(KEY_SEQ);
-        final int updateRule = results.getInt(UPDATE_RULE);
-        final int deleteRule = results.getInt(DELETE_RULE);
-        final int deferrability = results.getInt(DEFERRABILITY);
+        final int updateRule = results.getInt("UPDATE_RULE");
+        final int deleteRule = results.getInt("DELETE_RULE");
+        final int deferrability = results.getInt("DEFERRABILITY");
         final MutableColumn pkColumn = lookupOrCreateColumn(tablesMap,
                                                             pkTableName,
                                                             pkColumnName);
@@ -437,7 +437,7 @@ final class TableRetriever
       {
         if (primaryKey == null)
         {
-          final String primaryKeyName = results.getString(PK_NAME);
+          final String primaryKeyName = results.getString("PK_NAME");
           primaryKey = new MutablePrimaryKey();
           primaryKey.setName(primaryKeyName);
           primaryKey.setParent(table);

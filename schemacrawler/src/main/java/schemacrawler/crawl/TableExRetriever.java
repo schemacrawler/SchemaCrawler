@@ -132,11 +132,11 @@ final class TableExRetriever
       if (namedObject != null)
       {
         final String privilegeName = results
-          .getString(AbstractRetriever.PRIVILEGE);
-        final String grantor = results.getString(AbstractRetriever.GRANTOR);
-        final String grantee = results.getString(AbstractRetriever.GRANTEE);
+          .getString("PRIVILEGE");
+        final String grantor = results.getString("GRANTOR");
+        final String grantee = results.getString("GRANTEE");
         final String isGrantableString = results
-          .getString(AbstractRetriever.IS_GRANTABLE);
+          .getString("IS_GRANTABLE");
         boolean isGrantable = false;
         if (isGrantableString != null
             && isGrantableString.equalsIgnoreCase("YES"))
@@ -165,39 +165,42 @@ final class TableExRetriever
   }
 
   /**
-   * Retrieves a view definitions from the database.
+   * Retrieves a view information from the database, in the INFORMATION_SCHEMA
+   * format.
    * 
    * @param tables
    *          List of tables and views.
    * @throws SQLException
    *           On a SQL exception
    */
-  void retrieveViewDefinitions(final NamedObjectList tables)
+  void retrieveViewInformation(final NamedObjectList tables)
     throws SQLException
   {
-    LOGGER.entering(getClass().getName(), "retrieveViewDefinitions",
+    LOGGER.entering(getClass().getName(), "retrieveViewInformation",
                     new Object[] {});
     
-    String viewDefinitionsSql = getRetrieverConnection().getViewDefinitionsSql();
-    if (Utilities.isBlank(viewDefinitionsSql)) {
+    String viewInformationSql = getRetrieverConnection().getViewInformationSql();
+    if (Utilities.isBlank(viewInformationSql)) {
       LOGGER.log(Level.FINE, "View definition SQL statement was not provided");
       return;
     }      
     
     Connection connection = getRetrieverConnection().getMetaData().getConnection();
     Statement statement = connection.createStatement();
-    final ResultSet results = statement.executeQuery(viewDefinitionsSql);
+    final ResultSet results = statement.executeQuery(viewInformationSql);
     
     try
     {
 
       while (results.next())
       {     
-//        final String catalog = results.getString("VIEW_CAT");
-//        final String schema = results.getString("VIEW_SCHEM");
-        final String viewName = results.getString("VIEW_NAME");
-        LOGGER.log(Level.FINEST, "Retrieving view definition: " + viewName);
+        final String catalog = results.getString("TABLE_CATALOG");
+        final String schema = results.getString("TABLE_SCHEMA");
+        final String viewName = results.getString("TABLE_NAME");
+        LOGGER.log(Level.FINEST, "Retrieving view information for " + viewName);
         String definition = results.getString("VIEW_DEFINITION");
+        String checkOption = results.getString("CHECK_OPTION");
+        String isUpdatable = results.getString("IS_UPDATABLE");
 
         final MutableTable view = (MutableTable) tables.lookup(viewName);
         if (view == null) {
@@ -207,8 +210,7 @@ final class TableExRetriever
         
         if (!Utilities.isBlank(view.getDefinition())) {
           definition = view.getDefinition() + definition;
-        }
-        
+        }        
         view.setDefinition(definition);
       }
     }
