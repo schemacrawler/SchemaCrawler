@@ -69,14 +69,14 @@ final class ProcedureExRetriever
    * @throws SQLException
    *           On a SQL exception
    */
-  void retrieveProcedureDefinitions(final NamedObjectList procedures)
+  void retrieveProcedureInformation(final NamedObjectList procedures)
     throws SQLException
   {
-    LOGGER.entering(getClass().getName(), "retrieveProcedureDefinitions",
+    LOGGER.entering(getClass().getName(), "retrieveProcedureInformation",
                     new Object[] {});
 
     String procedureDefinitionsSql = getRetrieverConnection()
-      .getProcedureDefinitionsSql();
+      .getProcedureInformationSql();
     if (Utilities.isBlank(procedureDefinitionsSql))
     {
       LOGGER.log(Level.FINE,
@@ -94,10 +94,10 @@ final class ProcedureExRetriever
 
       while (results.next())
       {
-//        final String catalog = results.getString("PROCEDURE_CAT");
-//        final String schema = results.getString("PROCEDURE_SCHEM");
+        // final String catalog = results.getString("PROCEDURE_CAT");
+        // final String schema = results.getString("PROCEDURE_SCHEM");
         final String procedureName = results.getString("PROCEDURE_NAME");
-        LOGGER.log(Level.FINEST, "Retrieving procedure definition: "
+        LOGGER.log(Level.FINEST, "Retrieving procedure information for "
                                  + procedureName);
         String definition = results.getString("PROCEDURE_DEFINITION");
 
@@ -108,11 +108,11 @@ final class ProcedureExRetriever
           LOGGER.log(Level.FINEST, "Procedure not found: " + procedureName);
           continue;
         }
-        
-        if (!Utilities.isBlank(procedure.getDefinition())) {
+
+        if (!Utilities.isBlank(procedure.getDefinition()))
+        {
           definition = procedure.getDefinition() + definition;
         }
-        
         procedure.setDefinition(definition);
       }
     }

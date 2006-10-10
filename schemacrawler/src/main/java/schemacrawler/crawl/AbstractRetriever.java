@@ -31,43 +31,15 @@ import java.sql.SQLException;
 abstract class AbstractRetriever
 {
 
-  protected static final String ASC_OR_DESC = "ASC_OR_DESC";
-  protected static final String CARDINALITY = "CARDINALITY";
-  protected static final String COLUMN_DEFAULT = "COLUMN_DEF";
   protected static final String COLUMN_NAME = "COLUMN_NAME";
-  protected static final String COLUMN_SIZE = "COLUMN_SIZE";
   protected static final String DATA_TYPE = "DATA_TYPE";
-  protected static final String DECIMAL_DIGITS = "DECIMAL_DIGITS";
-  protected static final String DEFERRABILITY = "DEFERRABILITY";
-  protected static final String DELETE_RULE = "DELETE_RULE";
-  protected static final String FKCOLUMN_NAME = "FKCOLUMN_NAME";
-  protected static final String FKTABLE_NAME = "FKTABLE_NAME";
-  protected static final String INDEX_NAME = "INDEX_NAME";
   protected static final String KEY_SEQ = "KEY_SEQ";
-  protected static final String NON_UNIQUE = "NON_UNIQUE";
   protected static final String NULLABLE = "NULLABLE";
   protected static final String ORDINAL_POSITION = "ORDINAL_POSITION";
-  protected static final String PAGES = "PAGES";
-  protected static final String PKCOLUMN_NAME = "PKCOLUMN_NAME";
-  protected static final String PKTABLE_NAME = "PKTABLE_NAME";
-  protected static final String PK_NAME = "PK_NAME";
   protected static final String REMARKS = "REMARKS";
   protected static final String TABLE_NAME = "TABLE_NAME";
-  protected static final String TABLE_SCHEMA = "TABLE_SCHEM";
-  protected static final String TABLE_TYPE = "TABLE_TYPE";
-  protected static final String TYPE = "TYPE";
   protected static final String TYPE_NAME = "TYPE_NAME";
-  protected static final String UPDATE_RULE = "UPDATE_RULE";
-
-  protected static final String IS_GRANTABLE = "IS_GRANTABLE";
-  protected static final String GRANTEE = "GRANTEE";
-  protected static final String GRANTOR = "GRANTOR";
-  protected static final String PRIVILEGE = "PRIVILEGE";
-
-  protected static final String PROCEDURE_NAME = "PROCEDURE_NAME";
-  protected static final String PROCEDURE_SCHEMA = "PROCEDURE_SCHEM";
-  protected static final String PROCEDURE_TYPE = "PROCEDURE_TYPE";
-
+  
   protected static final String UNKNOWN = "<unknown>";
   protected static final int FETCHSIZE = 5;
 
