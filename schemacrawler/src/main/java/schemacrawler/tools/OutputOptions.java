@@ -125,8 +125,9 @@ public final class OutputOptions
   }
 
   /**
-   * Gets the output writer. The first time this method is called, it creates a
-   * new output writer. Every subsequent time, it returns the same writer.
+   * Gets the output writer. The first time this method is called, it
+   * creates a new output writer. Every subsequent time, it returns the
+   * same writer.
    * 
    * @return Writer
    */
@@ -137,7 +138,7 @@ public final class OutputOptions
     {
       if (outputFile == null)
       {
-        writer = new PrintWriter(System.out, true);
+        writer = new PrintWriter(System.out, /* autoFlush = */true);
       }
       else
       {

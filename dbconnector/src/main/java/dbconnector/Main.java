@@ -269,7 +269,8 @@ public final class Main
         LOGGER.log(Level.WARNING, "Error testing connection \"" + groups[i]
                                   + "\"", e);
       }
-      System.err.print("\n\n");
+      System.err.println();
+      System.err.println();
     }
   }
 

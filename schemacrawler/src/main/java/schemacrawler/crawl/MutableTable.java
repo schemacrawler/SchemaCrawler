@@ -23,6 +23,7 @@ package schemacrawler.crawl;
 
 import java.util.List;
 
+import schemacrawler.schema.CheckOptionType;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
@@ -56,6 +57,8 @@ class MutableTable
   private final NamedObjectList privileges = new NamedObjectList(
                                                                  new NaturalSortComparator());
   private String definition;
+  private CheckOptionType checkOption;
+  private boolean updatable;
   
   /**
    * Sets the table type.
@@ -273,4 +276,30 @@ class MutableTable
     this.definition = definition;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  public CheckOptionType getCheckOption()
+  {
+    return checkOption;
+  }
+
+  void setCheckOption(CheckOptionType checkOption)
+  {
+    this.checkOption = checkOption;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean isUpdatable()
+  {
+    return updatable;
+  }
+
+  void setUpdatable(boolean updatable)
+  {
+    this.updatable = updatable;
+  }
+  
 }

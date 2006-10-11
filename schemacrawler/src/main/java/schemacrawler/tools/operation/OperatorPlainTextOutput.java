@@ -77,7 +77,7 @@ final class OperatorPlainTextOutput
 
     if (!getNoFooter())
     {
-      out.println("\n" + getTableCount() + " tables");
+      out.println(Utilities.NEWLINE + getTableCount() + " tables");
     }
     super.end();
   }

@@ -118,14 +118,7 @@ final class TableRetriever
 
         if (tableInclusionRule.include(tableName))
         {
-          final MutableTable table;
-          if (tableType.isTable())
-          {
-            table = new MutableTable();
-          } else
-          {
-            table = new MutableView();
-          }
+          final MutableTable table = new MutableTable();
           table.setName(tableName);
           table.setCatalogName(getRetrieverConnection().getCatalog());
           table.setSchemaName(schema);

@@ -44,9 +44,9 @@ public class NaturalSortComparator
    */
   public int compare(final Object o1, final Object o2)
   {
-    if (o1.getClass() != o2.getClass())
+    if (o2.getClass() != o1.getClass())
     {
-      throw new ClassCastException("Incompatibale classes for comparison -"
+      throw new ClassCastException("Incompatibale classes for comparison - "
                                    + o1.getClass() + " and " + o2.getClass());
     }
     return ((Comparable) o1).compareTo(o2);

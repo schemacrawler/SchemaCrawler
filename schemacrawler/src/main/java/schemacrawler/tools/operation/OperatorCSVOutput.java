@@ -26,6 +26,7 @@ import java.sql.Connection;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.tools.util.FormatUtils;
+import sf.util.Utilities;
 
 /**
  * 
@@ -76,7 +77,7 @@ final class OperatorCSVOutput
 
     if (!getNoFooter())
     {
-      out.println("\n" + getTableCount() + " tables");
+      out.println(Utilities.NEWLINE + getTableCount() + " tables");
     }
     super.end();
   }
