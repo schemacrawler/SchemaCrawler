@@ -1,21 +1,16 @@
-/* 
- *
- * SchemaCrawler
- * http://sourceforge.net/projects/schemacrawler
- * Copyright (c) 2000-2006, Sualeh Fatehi.
- *
- * This library is free software; you can redistribute it and/or modify it under the terms
- * of the GNU Lesser General Public License as published by the Free Software Foundation;
- * either version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
- * Boston, MA 02111-1307, USA.
- *
+/*
+ * SchemaCrawler http://sourceforge.net/projects/schemacrawler Copyright
+ * (c) 2000-2006, Sualeh Fatehi. This library is free software; you can
+ * redistribute it and/or modify it under the terms of the GNU Lesser
+ * General Public License as published by the Free Software Foundation;
+ * either version 2.1 of the License, or (at your option) any later
+ * version. This library is distributed in the hope that it will be
+ * useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+ * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details. You should have
+ * received a copy of the GNU Lesser General Public License along with
+ * this library; if not, write to the Free Software Foundation, Inc., 59
+ * Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 
 package sf.util;
@@ -45,13 +40,13 @@ public final class Utilities
 {
 
   private static final Logger LOGGER = Logger.getLogger(Utilities.class
-    .getName());
+      .getName());
 
   /**
    * System specific file separator character.
    */
   public static final char FILE_SEPARATOR = System
-    .getProperty("file.separator").charAt(0);
+      .getProperty("file.separator").charAt(0);
   /**
    * System specific line separator character.
    */
@@ -128,7 +123,7 @@ public final class Utilities
     if (string != null && count >= 1)
     {
       final StringBuffer stringbuffer = new StringBuffer(string.length()
-                                                         * count);
+          * count);
       for (int i = 0; i < count; i++)
       {
         stringbuffer.append(string);
@@ -200,7 +195,7 @@ public final class Utilities
         || Double.parseDouble(jvmVersion.substring(0, 3)) < minVersion)
     {
       throw new IllegalArgumentException("Needs Java " + minVersion
-                                         + " or greater");
+          + " or greater");
     }
   }
 
@@ -220,7 +215,7 @@ public final class Utilities
    * @return Expanded template
    */
   public static String expandTemplateFromProperties(final String template,
-                                                    final Map properties)
+      final Map properties)
   {
 
     if (template == null)
@@ -237,10 +232,8 @@ public final class Utilities
       {
         // Evaluate nested property value
         expandedTemplate = expandedTemplate.substring(0, inner)
-                           + expandTemplateFromProperties(expandedTemplate
-                             .substring(inner));
-      }
-      else if (right >= 0)
+            + expandTemplateFromProperties(expandedTemplate.substring(inner));
+      } else if (right >= 0)
       {
         // Evaluate this property value
         final String propertyKey = expandedTemplate.substring(left + 2, right);
@@ -250,9 +243,8 @@ public final class Utilities
           propertyValue = "";
         }
         expandedTemplate = expandedTemplate.substring(0, left) + propertyValue
-                           + expandedTemplate.substring(right + 1);
-      }
-      else
+            + expandedTemplate.substring(right + 1);
+      } else
       {
         // Unmatched left delimiter - ignore
         break;
@@ -307,7 +299,7 @@ public final class Utilities
         keys.add(propertyKey);
         // Destroy key, so we can find teh next one
         shrunkTemplate = shrunkTemplate.substring(0, left) + ""
-                         + shrunkTemplate.substring(right + 1);
+            + shrunkTemplate.substring(right + 1);
       }
     }
 
@@ -324,7 +316,7 @@ public final class Utilities
   {
     final LogManager logManager = LogManager.getLogManager();
     for (final Enumeration loggerNames = logManager.getLoggerNames(); loggerNames
-      .hasMoreElements();)
+        .hasMoreElements();)
     {
       final String loggerName = (String) loggerNames.nextElement();
       final Logger logger = logManager.getLogger(loggerName);
@@ -388,7 +380,7 @@ public final class Utilities
   {
     String osName = System.getProperty("os.name");
     boolean isWindowsOS = osName == null
-                          || osName.toLowerCase().indexOf("windows") != -1;
+        || osName.toLowerCase().indexOf("windows") != -1;
     return isWindowsOS;
   }
 
@@ -396,11 +388,25 @@ public final class Utilities
    * Checks if the text is null or empty.
    * 
    * @param text
-   * @return
+   *          Text to check.
+   * @return Whether the string is blank.
    */
   public static boolean isBlank(String text)
   {
     return text == null || text.trim().length() == 0;
   }
-  
+
+  /**
+   * Checks if the text is true.
+   * 
+   * @param text
+   *          Text to check.
+   * @return Whether the string is true or yes.
+   */
+  public static boolean parseBoolean(String text)
+  {
+    return (!isBlank(text) && text.equalsIgnoreCase("YES"))
+        || Boolean.valueOf(text).booleanValue();
+  }
+
 }
