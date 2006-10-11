@@ -97,7 +97,7 @@ public abstract class BaseSchemaTextFormatter
   public void end()
     throws SchemaCrawlerException
   {
-    out.flush();
+    out.close();
   }
 
   /**

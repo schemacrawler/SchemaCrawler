@@ -264,7 +264,7 @@ public final class PropertiesDataSource
     }
 
     LOGGER.log(Level.FINE, "Connection successful.");
-    LOGGER.log(Level.INFO, "\n" + toString());
+    LOGGER.log(Level.INFO, Utilities.NEWLINE + toString());
 
   }
 
