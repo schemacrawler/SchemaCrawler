@@ -18,44 +18,64 @@
  *
  */
 
-package schemacrawler.schema;
+package schemacrawler.crawl;
 
+
+import schemacrawler.schema.CheckOptionType;
+import schemacrawler.schema.Table;
+import schemacrawler.schema.TableType;
+import schemacrawler.schema.View;
 
 /**
- * Represents a procedure.
+ * {@inheritDoc}
  * 
  * @author sfatehi
  */
-public interface Procedure
-  extends DatabaseObject
+final class MutableView
+  extends MutableTable
+  implements View
 {
 
-  /**
-   * Procedure type.
-   * 
-   * @return Procedure type
-   */
-  ProcedureType getType();
+  private static final long serialVersionUID = 4323360093470059631L;
+  
+  private CheckOptionType checkOption;
+  private boolean updatable;
 
   /**
-   * List of columns in ordinal order.
+   * {@inheritDoc}
+   * OVERRIDE.
    * 
-   * @return Columns of the procedure.
+   * @see Table#getType()
    */
-  ProcedureColumn[] getColumns();
-
-  /**
-   * Gets the type of the routine body.
-   * 
-   * @return Routine body type.
-   */
-  RoutineBodyType getRoutineBodyType();
+  public TableType getType()
+  {
+    return TableType.VIEW;
+  }
   
   /**
-   * Gets the definition.
-   * 
-   * @return Definition
+   * {@inheritDoc}
    */
-  String getDefinition();
+  public CheckOptionType getCheckOption()
+  {
+    return checkOption;
+  }
+
+  void setCheckOption(CheckOptionType checkOption)
+  {
+    this.checkOption = checkOption;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean isUpdatable()
+  {
+    return updatable;
+  }
+
+  void setUpdatable(boolean updatable)
+  {
+    this.updatable = updatable;
+  }
 
 }

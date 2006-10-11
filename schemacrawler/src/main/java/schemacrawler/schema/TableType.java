@@ -32,16 +32,16 @@ public final class TableType
   implements EnumType
 {
 
-  private static final TableType UNKNOWN = new TableType("UNKNOWN");
-  private static final TableType TABLE = new TableType("TABLE");
-  private static final TableType VIEW = new TableType("VIEW");
-  private static final TableType SYSTEM_TABLE = new TableType("SYSTEM_TABLE");
-  private static final TableType GLOBAL_TEMPORARY = new TableType(
+  public static final TableType UNKNOWN = new TableType("UNKNOWN");
+  public static final TableType TABLE = new TableType("TABLE");
+  public static final TableType VIEW = new TableType("VIEW");
+  public static final TableType SYSTEM_TABLE = new TableType("SYSTEM_TABLE");
+  public static final TableType GLOBAL_TEMPORARY = new TableType(
       "GLOBAL_TEMPORARY");
-  private static final TableType LOCAL_TEMPORARY = new TableType(
+  public static final TableType LOCAL_TEMPORARY = new TableType(
       "LOCAL_TEMPORARY");
-  private static final TableType ALIAS = new TableType("ALIAS");
-  private static final TableType SYNONYM = new TableType("SYNONYM");
+  public static final TableType ALIAS = new TableType("ALIAS");
+  public static final TableType SYNONYM = new TableType("SYNONYM");
 
   private static final long serialVersionUID = 3546925783735220534L;
 

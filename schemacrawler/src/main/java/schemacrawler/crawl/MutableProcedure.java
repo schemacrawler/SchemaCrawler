@@ -26,6 +26,7 @@ import java.util.List;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.ProcedureType;
+import schemacrawler.schema.RoutineBodyType;
 import schemacrawler.util.NaturalSortComparator;
 import schemacrawler.util.SerializableComparator;
 
@@ -46,6 +47,7 @@ final class MutableProcedure
   private ProcedureType procedureType;
   private final NamedObjectList columns = new NamedObjectList(
                                                               new NaturalSortComparator());
+  private RoutineBodyType routineBodyType;
   private String definition;
 
   /**
@@ -104,7 +106,22 @@ final class MutableProcedure
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.Table#getDefinition()
+   * @see Procedure#getRoutineBodyType()
+   */
+  public RoutineBodyType getRoutineBodyType()
+  {
+    return routineBodyType;
+  }
+
+  void setRoutineBodyType(RoutineBodyType routineBodyType)
+  {
+    this.routineBodyType = routineBodyType;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Procedure#getDefinition()
    */
   public String getDefinition()
   {

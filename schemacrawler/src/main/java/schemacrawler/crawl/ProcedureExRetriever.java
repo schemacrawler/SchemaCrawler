@@ -28,6 +28,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schema.RoutineBodyType;
 import sf.util.Utilities;
 
 /**
@@ -41,7 +42,7 @@ final class ProcedureExRetriever
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(ProcedureExRetriever.class.getName());
+      .getLogger(ProcedureExRetriever.class.getName());
 
   /**
    * Constructs a SchemaCrawler object, from a connection.
@@ -73,19 +74,20 @@ final class ProcedureExRetriever
     throws SQLException
   {
     LOGGER.entering(getClass().getName(), "retrieveProcedureInformation",
-                    new Object[] {});
+        new Object[]
+        {});
 
     String procedureDefinitionsSql = getRetrieverConnection()
-      .getProcedureInformationSql();
+        .getProcedureInformationSql();
     if (Utilities.isBlank(procedureDefinitionsSql))
     {
       LOGGER.log(Level.FINE,
-                 "Procedure definition SQL statement was not provided");
+          "Procedure definition SQL statement was not provided");
       return;
     }
 
     Connection connection = getRetrieverConnection().getMetaData()
-      .getConnection();
+        .getConnection();
     Statement statement = connection.createStatement();
     final ResultSet results = statement.executeQuery(procedureDefinitionsSql);
 
@@ -94,15 +96,17 @@ final class ProcedureExRetriever
 
       while (results.next())
       {
-        // final String catalog = results.getString("PROCEDURE_CAT");
-        // final String schema = results.getString("PROCEDURE_SCHEM");
-        final String procedureName = results.getString("PROCEDURE_NAME");
+        final String catalog = results.getString("ROUTINE_CATALOG");
+        final String schema = results.getString("ROUTINE_SCHEMA");
+        final String procedureName = results.getString("ROUTINE_NAME");
         LOGGER.log(Level.FINEST, "Retrieving procedure information for "
-                                 + procedureName);
-        String definition = results.getString("PROCEDURE_DEFINITION");
+            + procedureName);
+        RoutineBodyType routineBodyType = RoutineBodyType.valueOf(results
+            .getString("ROUTINE_BODY"));
+        String definition = results.getString("ROUTINE_DEFINITION");
 
-        final MutableTable procedure = (MutableTable) procedures
-          .lookup(procedureName);
+        final MutableProcedure procedure = (MutableProcedure) procedures
+            .lookup(procedureName);
         if (procedure == null)
         {
           LOGGER.log(Level.FINEST, "Procedure not found: " + procedureName);
@@ -113,6 +117,8 @@ final class ProcedureExRetriever
         {
           definition = procedure.getDefinition() + definition;
         }
+        
+        procedure.setRoutineBodyType(routineBodyType);
         procedure.setDefinition(definition);
       }
     }

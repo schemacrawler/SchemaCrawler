@@ -38,7 +38,7 @@ import schemacrawler.util.SerializableComparator;
  * 
  * @author sfatehi
  */
-final class MutableTable
+class MutableTable
   extends AbstractDatabaseObject
   implements Table
 {
