@@ -1,21 +1,16 @@
-/* 
- *
- * SchemaCrawler
- * http://sourceforge.net/projects/schemacrawler
- * Copyright (c) 2000-2006, Sualeh Fatehi.
- *
- * This library is free software; you can redistribute it and/or modify it under the terms
- * of the GNU Lesser General Public License as published by the Free Software Foundation;
- * either version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
- * Boston, MA 02111-1307, USA.
- *
+/*
+ * SchemaCrawler http://sourceforge.net/projects/schemacrawler Copyright
+ * (c) 2000-2006, Sualeh Fatehi. This library is free software; you can
+ * redistribute it and/or modify it under the terms of the GNU Lesser
+ * General Public License as published by the Free Software Foundation;
+ * either version 2.1 of the License, or (at your option) any later
+ * version. This library is distributed in the hope that it will be
+ * useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+ * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details. You should have
+ * received a copy of the GNU Lesser General Public License along with
+ * this library; if not, write to the Free Software Foundation, Inc., 59
+ * Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 
 package schemacrawler.crawl;
@@ -23,7 +18,6 @@ package schemacrawler.crawl;
 
 import java.util.List;
 
-import schemacrawler.schema.CheckOptionType;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
@@ -47,19 +41,16 @@ class MutableTable
   private static final long serialVersionUID = 3257290248802284852L;
 
   private TableType type;
-  private PrimaryKey primaryKey;  
+  private PrimaryKey primaryKey;
   private final NamedObjectList columns = new NamedObjectList(
-                                                              new NaturalSortComparator());
+      new NaturalSortComparator());
   private final NamedObjectList foreignKeys = new NamedObjectList(
-                                                                  new NaturalSortComparator());
+      new NaturalSortComparator());
   private final NamedObjectList indices = new NamedObjectList(
-                                                              new NaturalSortComparator());
+      new NaturalSortComparator());
   private final NamedObjectList privileges = new NamedObjectList(
-                                                                 new NaturalSortComparator());
-  private String definition;
-  private CheckOptionType checkOption;
-  private boolean updatable;
-  
+      new NaturalSortComparator());
+
   /**
    * Sets the table type.
    * 
@@ -179,7 +170,7 @@ class MutableTable
   {
     final List allForeignKeys = foreignKeys.getAll();
     return (ForeignKey[]) allForeignKeys.toArray(new ForeignKey[allForeignKeys
-      .size()]);
+        .size()]);
   }
 
   /**
@@ -243,7 +234,7 @@ class MutableTable
   {
     final List allPrivileges = privileges.getAll();
     return (Privilege[]) allPrivileges.toArray(new Privilege[allPrivileges
-      .size()]);
+        .size()]);
   }
 
   /**
@@ -257,49 +248,4 @@ class MutableTable
     privileges.add(privilege);
   }
 
-  /**
-   * {@inheritDoc}
-   * @see schemacrawler.schema.Table#getDefinition()
-   */
-  public String getDefinition()
-  {
-    return definition;
-  }
-
-  /**
-   * Sets the definition.
-   * 
-   * @param definition Definition.
-   */
-  public void setDefinition(String definition)
-  {
-    this.definition = definition;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public CheckOptionType getCheckOption()
-  {
-    return checkOption;
-  }
-
-  void setCheckOption(CheckOptionType checkOption)
-  {
-    this.checkOption = checkOption;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public boolean isUpdatable()
-  {
-    return updatable;
-  }
-
-  void setUpdatable(boolean updatable)
-  {
-    this.updatable = updatable;
-  }
-  
 }

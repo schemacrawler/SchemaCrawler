@@ -39,6 +39,7 @@ import schemacrawler.schema.Index;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.View;
 import schemacrawler.tools.util.FormatUtils;
 
 /**
@@ -269,8 +270,9 @@ public abstract class BaseSchemaTextFormatter
       printPrimaryKey(table.getPrimaryKey());
       printForeignKeys(table.getName(), table.getForeignKeys());
       printIndices(table.getIndices());
-      if (table.getType().isView()) {
-        handleDefinition(table.getDefinition());
+      if (table instanceof View) {
+        View view = (View) table;
+        handleDefinition(view.getDefinition());
       }
     }
 

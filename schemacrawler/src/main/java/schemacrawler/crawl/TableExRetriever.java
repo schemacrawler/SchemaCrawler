@@ -196,7 +196,7 @@ final class TableExRetriever
         boolean updatable = Utilities.parseBoolean(results
             .getString("IS_UPDATABLE"));
 
-        final MutableTable view = (MutableTable) tables.lookup(viewName);
+        final MutableView view = (MutableView) tables.lookup(viewName);
         if (view == null)
         {
           LOGGER.log(Level.FINEST, "View not found: " + viewName);

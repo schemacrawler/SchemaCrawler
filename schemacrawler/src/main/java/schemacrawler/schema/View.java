@@ -41,4 +41,11 @@ public interface View
    */
   CheckOptionType getCheckOption();
 
+  /**
+   * Gets the definition.
+   * 
+   * @return Definition
+   */
+  String getDefinition();
+
 }
