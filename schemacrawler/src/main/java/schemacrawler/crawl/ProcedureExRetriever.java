@@ -42,7 +42,7 @@ final class ProcedureExRetriever
 {
 
   private static final Logger LOGGER = Logger
-      .getLogger(ProcedureExRetriever.class.getName());
+    .getLogger(ProcedureExRetriever.class.getName());
 
   /**
    * Constructs a SchemaCrawler object, from a connection.
@@ -74,20 +74,19 @@ final class ProcedureExRetriever
     throws SQLException
   {
     LOGGER.entering(getClass().getName(), "retrieveProcedureInformation",
-        new Object[]
-        {});
+                    new Object[] {});
 
     String procedureDefinitionsSql = getRetrieverConnection()
-        .getProcedureInformationSql();
+      .getInformationSchemaViews().getRoutinesSql();
     if (Utilities.isBlank(procedureDefinitionsSql))
     {
       LOGGER.log(Level.FINE,
-          "Procedure definition SQL statement was not provided");
+                 "Procedure definition SQL statement was not provided");
       return;
     }
 
     Connection connection = getRetrieverConnection().getMetaData()
-        .getConnection();
+      .getConnection();
     Statement statement = connection.createStatement();
     final ResultSet results = statement.executeQuery(procedureDefinitionsSql);
 
@@ -100,13 +99,13 @@ final class ProcedureExRetriever
         final String schema = results.getString("ROUTINE_SCHEMA");
         final String procedureName = results.getString("ROUTINE_NAME");
         LOGGER.log(Level.FINEST, "Retrieving procedure information for "
-            + procedureName);
+                                 + procedureName);
         RoutineBodyType routineBodyType = RoutineBodyType.valueOf(results
-            .getString("ROUTINE_BODY"));
+          .getString("ROUTINE_BODY"));
         String definition = results.getString("ROUTINE_DEFINITION");
 
         final MutableProcedure procedure = (MutableProcedure) procedures
-            .lookup(procedureName);
+          .lookup(procedureName);
         if (procedure == null)
         {
           LOGGER.log(Level.FINEST, "Procedure not found: " + procedureName);
@@ -117,7 +116,7 @@ final class ProcedureExRetriever
         {
           definition = procedure.getDefinition() + definition;
         }
-        
+
         procedure.setRoutineBodyType(routineBodyType);
         procedure.setDefinition(definition);
       }

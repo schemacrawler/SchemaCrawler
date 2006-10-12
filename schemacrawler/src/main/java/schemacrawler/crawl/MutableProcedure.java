@@ -54,7 +54,7 @@ final class MutableProcedure
    * Sets the procedure type.
    * 
    * @param type
-   *          Procedure type.
+   *        Procedure type.
    */
   void setType(final ProcedureType type)
   {
@@ -91,7 +91,7 @@ final class MutableProcedure
    * Adds a column.
    * 
    * @param column
-   *          Column
+   *        Column
    */
   void addColumn(final ProcedureColumn column)
   {
@@ -128,15 +128,9 @@ final class MutableProcedure
     return definition;
   }
 
-  /**
-   * Sets the definition.
-   * 
-   * @param definition
-   *          Definition.
-   */
-  public void setDefinition(String definition)
+  void setDefinition(String definition)
   {
     this.definition = definition;
   }
-  
+
 }

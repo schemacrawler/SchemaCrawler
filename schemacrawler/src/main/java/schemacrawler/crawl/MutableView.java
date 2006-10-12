@@ -17,7 +17,6 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.CheckOptionType;
-import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.View;
 
@@ -65,13 +64,7 @@ class MutableView
     return definition;
   }
 
-  /**
-   * Sets the definition.
-   * 
-   * @param definition
-   *          Definition.
-   */
-  public void setDefinition(String definition)
+  void setDefinition(String definition)
   {
     this.definition = definition;
   }

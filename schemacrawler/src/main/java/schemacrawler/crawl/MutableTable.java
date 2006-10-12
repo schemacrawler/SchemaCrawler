@@ -1,16 +1,21 @@
-/*
- * SchemaCrawler http://sourceforge.net/projects/schemacrawler Copyright
- * (c) 2000-2006, Sualeh Fatehi. This library is free software; you can
- * redistribute it and/or modify it under the terms of the GNU Lesser
- * General Public License as published by the Free Software Foundation;
- * either version 2.1 of the License, or (at your option) any later
- * version. This library is distributed in the hope that it will be
- * useful, but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details. You should have
- * received a copy of the GNU Lesser General Public License along with
- * this library; if not, write to the Free Software Foundation, Inc., 59
- * Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+/* 
+ *
+ * SchemaCrawler
+ * http://sourceforge.net/projects/schemacrawler
+ * Copyright (c) 2000-2006, Sualeh Fatehi.
+ *
+ * This library is free software; you can redistribute it and/or modify it under the terms
+ * of the GNU Lesser General Public License as published by the Free Software Foundation;
+ * either version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * Boston, MA 02111-1307, USA.
+ *
  */
 
 package schemacrawler.crawl;
@@ -24,6 +29,7 @@ import schemacrawler.schema.Index;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableType;
 import schemacrawler.util.NaturalSortComparator;
 import schemacrawler.util.SerializableComparator;
@@ -43,19 +49,21 @@ class MutableTable
   private TableType type;
   private PrimaryKey primaryKey;
   private final NamedObjectList columns = new NamedObjectList(
-      new NaturalSortComparator());
+                                                              new NaturalSortComparator());
   private final NamedObjectList foreignKeys = new NamedObjectList(
-      new NaturalSortComparator());
+                                                                  new NaturalSortComparator());
   private final NamedObjectList indices = new NamedObjectList(
-      new NaturalSortComparator());
+                                                              new NaturalSortComparator());
+  private final NamedObjectList checkConstraints = new NamedObjectList(
+                                                                       new NaturalSortComparator());
   private final NamedObjectList privileges = new NamedObjectList(
-      new NaturalSortComparator());
+                                                                 new NaturalSortComparator());
 
   /**
    * Sets the table type.
    * 
    * @param type
-   *          Table type
+   *        Table type
    */
   void setType(final TableType type)
   {
@@ -137,7 +145,7 @@ class MutableTable
    * Adds a column.
    * 
    * @param column
-   *          Column
+   *        Column
    */
   void addColumn(final Column column)
   {
@@ -148,7 +156,7 @@ class MutableTable
    * Looks up a column by name.
    * 
    * @param columnName
-   *          Column name
+   *        Column name
    * @return Column, if found, or null
    */
   Column lookupColumn(final String columnName)
@@ -170,14 +178,14 @@ class MutableTable
   {
     final List allForeignKeys = foreignKeys.getAll();
     return (ForeignKey[]) allForeignKeys.toArray(new ForeignKey[allForeignKeys
-        .size()]);
+      .size()]);
   }
 
   /**
    * Adds a foreign key.
    * 
    * @param foreignKey
-   *          Foreign key
+   *        Foreign key
    */
   void addForeignKey(final ForeignKey foreignKey)
   {
@@ -213,7 +221,7 @@ class MutableTable
    * Adds an index.
    * 
    * @param index
-   *          Index
+   *        Index
    */
   void addIndex(final Index index)
   {
@@ -228,20 +236,48 @@ class MutableTable
   /**
    * {@inheritDoc}
    * 
+   * @see Table#getCheckConstraints()
+   */
+  public TableConstraint[] getCheckConstraints()
+  {
+    final List allCheckConstraints = checkConstraints.getAll();
+    return (TableConstraint[]) allCheckConstraints
+      .toArray(new TableConstraint[allCheckConstraints.size()]);
+  }
+
+  /**
+   * Adds an check constraints.
+   * 
+   * @param checkConstraints
+   *        Check constraints
+   */
+  void addCheckConstraint(final TableConstraint checkConstraint)
+  {
+    checkConstraints.add(checkConstraint);
+  }
+
+  void setCheckConstraintComparator(final SerializableComparator comparator)
+  {
+    checkConstraints.setComparator(comparator);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see Table#getPrivileges()
    */
   public Privilege[] getPrivileges()
   {
     final List allPrivileges = privileges.getAll();
     return (Privilege[]) allPrivileges.toArray(new Privilege[allPrivileges
-        .size()]);
+      .size()]);
   }
 
   /**
    * Adds a privilege.
    * 
    * @param privilege
-   *          Privilege
+   *        Privilege
    */
   void addPrivilege(final Privilege privilege)
   {

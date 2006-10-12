@@ -20,10 +20,15 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.CheckOptionType;
+import schemacrawler.schema.ConstraintType;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
 import sf.util.Utilities;
@@ -39,19 +44,19 @@ final class TableExRetriever
 {
 
   private static final Logger LOGGER = Logger.getLogger(TableExRetriever.class
-      .getName());
+    .getName());
 
   /**
    * Constructs a SchemaCrawler object, from a connection.
    * 
    * @param connection
-   *          An open database connection.
+   *        An open database connection.
    * @param driverClassName
-   *          Class name of the JDBC driver
+   *        Class name of the JDBC driver
    * @param schemaPatternString
-   *          JDBC schema pattern, or null
+   *        JDBC schema pattern, or null
    * @throws SQLException
-   *           On a SQL exception
+   *         On a SQL exception
    */
   TableExRetriever(final RetrieverConnection retrieverConnection)
     throws SQLException
@@ -64,35 +69,38 @@ final class TableExRetriever
    * column metadata is retrieved, for reasons of efficiency.
    * 
    * @param tableTypes
-   *          Array of table types
+   *        Array of table types
    * @param tablePatternInclude
-   *          Table name pattern for table
+   *        Table name pattern for table
    * @param useRegExpPattern
-   *          True is the table name pattern is a regular expression;
-   *          false if the table name pattern is the JDBC pattern
+   *        True is the table name pattern is a regular expression;
+   *        false if the table name pattern is the JDBC pattern
    * @throws SQLException
-   *           On a SQL exception
+   *         On a SQL exception
    */
   void retrievePrivileges(final DatabaseObject parent,
-      final NamedObjectList namedObjectList)
+                          final NamedObjectList namedObjectList)
     throws SQLException
   {
-    LOGGER.entering(getClass().getName(), "retrievePrivileges", new Object[]
-    { parent, namedObjectList });
+    LOGGER.entering(getClass().getName(), "retrievePrivileges", new Object[] {
+        parent, namedObjectList
+    });
 
     final ResultSet results;
 
     final boolean privilegesForTable = parent == null;
     if (privilegesForTable)
     {
-      results = getRetrieverConnection().getMetaData().getTablePrivileges(
-          getRetrieverConnection().getCatalog(),
-          getRetrieverConnection().getSchemaPattern(), "%");
-    } else
+      results = getRetrieverConnection().getMetaData()
+        .getTablePrivileges(getRetrieverConnection().getCatalog(),
+                            getRetrieverConnection().getSchemaPattern(), "%");
+    }
+    else
     {
-      results = getRetrieverConnection().getMetaData().getColumnPrivileges(
-          getRetrieverConnection().getCatalog(),
-          getRetrieverConnection().getSchemaPattern(), parent.getName(), "%");
+      results = getRetrieverConnection().getMetaData()
+        .getColumnPrivileges(getRetrieverConnection().getCatalog(),
+                             getRetrieverConnection().getSchemaPattern(),
+                             parent.getName(), "%");
     }
     try
     {
@@ -106,7 +114,8 @@ final class TableExRetriever
   }
 
   private void createPrivileges(final ResultSet results,
-      final NamedObjectList namedObjectList, final boolean privilegesForTable)
+                                final NamedObjectList namedObjectList,
+                                final boolean privilegesForTable)
     throws SQLException
   {
     while (results.next())
@@ -115,7 +124,8 @@ final class TableExRetriever
       if (privilegesForTable)
       {
         name = results.getString(TABLE_NAME);
-      } else
+      }
+      else
       {
         name = results.getString(COLUMN_NAME);
       }
@@ -143,7 +153,8 @@ final class TableExRetriever
         {
           final MutableTable table = (MutableTable) namedObject;
           table.addPrivilege(privilege);
-        } else
+        }
+        else
         {
           final MutableColumn column = (MutableColumn) namedObject;
           column.addPrivilege(privilege);
@@ -157,19 +168,19 @@ final class TableExRetriever
    * INFORMATION_SCHEMA format.
    * 
    * @param tables
-   *          List of tables and views.
+   *        List of tables and views.
    * @throws SQLException
-   *           On a SQL exception
+   *         On a SQL exception
    */
   void retrieveViewInformation(final NamedObjectList tables)
     throws SQLException
   {
     LOGGER.entering(getClass().getName(), "retrieveViewInformation",
-        new Object[]
-        {});
+                    new Object[] {});
 
-    String viewInformationSql = getRetrieverConnection()
-        .getViewInformationSql();
+    InformationSchemaViews informationSchemaViews = getRetrieverConnection()
+      .getInformationSchemaViews();
+    String viewInformationSql = informationSchemaViews.getViewsSql();
     if (Utilities.isBlank(viewInformationSql))
     {
       LOGGER.log(Level.FINE, "View definition SQL statement was not provided");
@@ -177,7 +188,7 @@ final class TableExRetriever
     }
 
     Connection connection = getRetrieverConnection().getMetaData()
-        .getConnection();
+      .getConnection();
     Statement statement = connection.createStatement();
     final ResultSet results = statement.executeQuery(viewInformationSql);
 
@@ -192,9 +203,9 @@ final class TableExRetriever
         LOGGER.log(Level.FINEST, "Retrieving view information for " + viewName);
         String definition = results.getString("VIEW_DEFINITION");
         CheckOptionType checkOption = CheckOptionType.valueOf(results
-            .getString("CHECK_OPTION"));
+          .getString("CHECK_OPTION"));
         boolean updatable = Utilities.parseBoolean(results
-            .getString("IS_UPDATABLE"));
+          .getString("IS_UPDATABLE"));
 
         final MutableView view = (MutableView) tables.lookup(viewName);
         if (view == null)
@@ -217,6 +228,144 @@ final class TableExRetriever
     {
       statement.close();
       results.close();
+    }
+
+  }
+
+  /**
+   * Retrieves a check constraint information from the database, in the
+   * INFORMATION_SCHEMA format.
+   * 
+   * @param tables
+   *        List of tables and views.
+   * @throws SQLException
+   *         On a SQL exception
+   */
+  void retrieveCheckConstraintInformation(final NamedObjectList tables)
+    throws SQLException
+  {
+    LOGGER.entering(getClass().getName(), "retrieveCheckConstraintInformation",
+                    new Object[] {});
+
+    final Map checkConstraintsMap = new HashMap();
+
+    InformationSchemaViews informationSchemaViews = getRetrieverConnection()
+      .getInformationSchemaViews();
+
+    String tableConstraintsInformationSql = informationSchemaViews
+      .getTableConstraintsSql();
+    if (Utilities.isBlank(tableConstraintsInformationSql))
+    {
+      LOGGER
+        .log(Level.FINE, "Table constraints SQL statement was not provided");
+      return;
+    }
+
+    Connection connection = getRetrieverConnection().getMetaData()
+      .getConnection();
+    Statement statement = connection.createStatement();
+    ResultSet results = statement.executeQuery(tableConstraintsInformationSql);
+
+    try
+    {
+      while (results.next())
+      {
+        final String catalog = results.getString("CONSTRAINT_CATALOG");
+        final String schema = results.getString("CONSTRAINT_SCHEMA");
+        final String constraintName = results.getString("CONSTRAINT_NAME");
+        LOGGER.log(Level.FINEST, "Retrieving constraint information for "
+                                 + constraintName);
+        final String tableCatalog = results.getString("TABLE_CATALOG");
+        final String tableSchema = results.getString("TABLE_SCHEMA");
+        final String tableName = results.getString("TABLE_NAME");
+        ConstraintType constraintType = ConstraintType.valueOf(results
+          .getString("CONSTRAINT_TYPE"));
+        boolean deferrable = Utilities.parseBoolean(results
+          .getString("IS_DEFERRABLE"));
+        boolean initiallyDeferred = Utilities.parseBoolean(results
+          .getString("INITIALLY_DEFERRED"));
+
+        if (constraintType == ConstraintType.CHECK)
+        {
+          final MutableTable table = (MutableTable) tables.lookup(tableName);
+          if (table == null)
+          {
+            LOGGER.log(Level.FINEST, "Table not found: " + tableName);
+            continue;
+          }
+
+          MutableTableConstraint checkConstraint = new MutableTableConstraint();
+          checkConstraint.setName(constraintName);
+          checkConstraint.setParent(table);
+          checkConstraint.setType(constraintType);
+          checkConstraint.setDeferrable(deferrable);
+          checkConstraint.setInitiallyDeferred(initiallyDeferred);
+          // Add to map, since we will need this later
+          checkConstraintsMap.put(constraintName, checkConstraint);
+        }
+      }
+    }
+    finally
+    {
+      statement.close();
+      results.close();
+    }
+
+    String checkConstraintInformationSql = informationSchemaViews
+      .getCheckConstraintsSql();
+    if (Utilities.isBlank(checkConstraintInformationSql))
+    {
+      LOGGER
+        .log(Level.FINE, "Check constraints SQL statement was not provided");
+      return;
+    }
+
+    // Get check constraint definitions
+    statement = connection.createStatement();
+    results = statement.executeQuery(checkConstraintInformationSql);
+    try
+    {
+      while (results.next())
+      {
+        final String catalog = results.getString("CONSTRAINT_CATALOG");
+        final String schema = results.getString("CONSTRAINT_SCHEMA");
+        final String constraintName = results.getString("CONSTRAINT_NAME");
+        LOGGER.log(Level.FINEST, "Retrieving constraint definition for "
+                                 + constraintName);
+        String definition = results.getString("CHECK_CLAUSE");
+
+        final MutableTableConstraint checkConstraint = (MutableTableConstraint) checkConstraintsMap
+          .get(constraintName);
+        if (checkConstraint == null)
+        {
+          LOGGER.log(Level.FINEST, "Could not add check constraint to table: "
+                                   + constraintName);
+          continue;
+        }
+
+        if (!Utilities.isBlank(checkConstraint.getDefinition()))
+        {
+          definition = checkConstraint.getDefinition() + definition;
+        }
+
+        checkConstraint.setDefinition(definition);
+      }
+    }
+    finally
+    {
+      statement.close();
+      results.close();
+    }
+
+    // Add check constraints to tables
+    final Collection checkConstraintsCollection = checkConstraintsMap.values();
+    for (final Iterator iter = checkConstraintsCollection.iterator(); iter
+      .hasNext();)
+    {
+      final MutableTableConstraint checkConstraint = (MutableTableConstraint) iter
+        .next();
+      MutableTable table = (MutableTable) checkConstraint.getParent();
+      table.addCheckConstraint(checkConstraint);
     }
 
   }

@@ -24,24 +24,30 @@ package schemacrawler.schema;
 import java.io.ObjectStreamException;
 
 /**
- * View check options.
+ * Constraint type.
  */
-public final class CheckOptionType
+public final class ConstraintType
   implements EnumType
 {
 
-  private static final CheckOptionType NONE = new CheckOptionType("none");
-  private static final CheckOptionType CASCADE = new CheckOptionType("cascade");
+  private static final long serialVersionUID = 4767973714560552564L;
 
-  private static final long serialVersionUID = 3546925783735220534L;
+  public static final ConstraintType UNKNOWN = new ConstraintType("unknown");
+  public static final ConstraintType CHECK = new ConstraintType("check");
+  public static final ConstraintType UNIQUE = new ConstraintType("unique");
+  public static final ConstraintType PRIMARY_KEY = new ConstraintType(
+                                                                      "primary key");
+  public static final ConstraintType FOREIGN_KEY = new ConstraintType(
+                                                                      "foreign key");
 
-  private static final CheckOptionType[] ALL =
-  { NONE, CASCADE, };
+  private static final ConstraintType[] ALL = {
+      UNKNOWN, CHECK, UNIQUE, PRIMARY_KEY, FOREIGN_KEY,
+  };
 
   private final int id;
   private final String name;
 
-  private CheckOptionType(final String typeName)
+  private ConstraintType(final String typeName)
   {
     ordinal = nextOrdinal++;
     id = ordinal;
@@ -82,13 +88,13 @@ public final class CheckOptionType
    * Find the enumeration value corresponding to the string.
    * 
    * @param typeString
-   *          String value of table type
+   *        String value of table type
    * @return Enumeration value
    */
-  public static CheckOptionType valueOf(final String typeString)
+  public static ConstraintType valueOf(final String typeString)
   {
 
-    CheckOptionType checkOptionType = ALL[0];
+    ConstraintType checkOptionType = ALL[0];
 
     for (int i = 0; i < ALL.length; i++)
     {
@@ -107,11 +113,12 @@ public final class CheckOptionType
   private static int nextOrdinal;
   private final int ordinal;
 
-  private static final CheckOptionType[] VALUES = ALL;
+  private static final ConstraintType[] VALUES = ALL;
 
   Object readResolve()
     throws ObjectStreamException
   {
     return VALUES[ordinal]; // Canonicalize
   }
+
 }

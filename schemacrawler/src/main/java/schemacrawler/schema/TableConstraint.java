@@ -22,68 +22,40 @@ package schemacrawler.schema;
 
 
 /**
- * Represents a table in the database.
+ * Represents an table constraint.
  * 
  * @author sfatehi
  */
-public interface Table
-  extends DatabaseObject
+public interface TableConstraint
+  extends DependantNamedObject
 {
 
   /**
-   * Table type.
+   * Constraint type.
    * 
-   * @return Table type.
+   * @return Constraint type
    */
-  TableType getType();
-
-  /**
-   * Primary key.
-   * 
-   * @return Primary key
-   */
-  PrimaryKey getPrimaryKey();
-
-  /**
-   * List of columns in ordinal order.
-   * 
-   * @return Columns of the table.
-   */
-  Column[] getColumns();
-
-  /**
-   * Gets a comma-separated list of columns.
-   * 
-   * @return Comma-separated list of columns
-   */
-  String getColumnsListAsString();
-
-  /**
-   * List of foreign keys.
-   * 
-   * @return Foreign keys of the table.
-   */
-  ForeignKey[] getForeignKeys();
-
-  /**
-   * List of indices.
-   * 
-   * @return Indices of the table.
-   */
-  Index[] getIndices();
-
-  /**
-   * List of check constraints.
-   * 
-   * @return Check constraints for the table.
-   */
-  TableConstraint[] getCheckConstraints();
+  ConstraintType getType();
   
   /**
-   * List of privileges.
+   * Whether the constraint is deferrable.
    * 
-   * @return Privileges for the table.
+   * @return Whether the constraint is deferrable
    */
-  Privilege[] getPrivileges();
+  boolean isDeferrable();
+
+  /**
+   * Whether the constraint is initially deferred.
+   * 
+   * @return Whether the constraint is initially deferred
+   */  
+  boolean isInitiallyDeferred();
+
+  /**
+   * Gets the definition.
+   * 
+   * @return Definition
+   */
+  String getDefinition();
   
 }
