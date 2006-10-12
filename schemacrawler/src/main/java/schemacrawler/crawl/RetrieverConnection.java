@@ -48,7 +48,7 @@ final class RetrieverConnection
   private final String catalog;
   private final String schemaPattern;
   private final String jdbcDriverClassName;
-  private final Properties additionalConfiguration;
+  private final InformationSchemaViews informationSchemaViews;
 
   RetrieverConnection(final DataSource dataSource,
                       final Properties additionalConfiguration)
@@ -59,14 +59,7 @@ final class RetrieverConnection
       throw new SchemaCrawlerException("No data source provided");
     }
 
-    if (additionalConfiguration == null)
-    {
-      this.additionalConfiguration = new Properties();
-    }
-    else
-    {
-      this.additionalConfiguration = additionalConfiguration;
-    }
+    informationSchemaViews = new InformationSchemaViews(additionalConfiguration);
 
     if (dataSource instanceof PropertiesDataSource)
     {
@@ -138,25 +131,9 @@ final class RetrieverConnection
     return jdbcDriverClassName;
   }
 
-  /**
-   * Gets the view definitions SQL from the additional configuration.
-   * 
-   * @return View defnitions SQL.
-   */
-  String getViewInformationSql()
+  public InformationSchemaViews getInformationSchemaViews()
   {
-    return additionalConfiguration.getProperty("SELECT_INFORMATION_SCHEMA_VIEWS");
-  }
-
-  /**
-   * Gets the procedure definitions SQL from the additional
-   * configuration.
-   * 
-   * @return Procedure defnitions SQL.
-   */
-  String getProcedureInformationSql()
-  {
-    return additionalConfiguration.getProperty("SELECT_INFORMATION_SCHEMA_ROUTINES");
+    return informationSchemaViews;
   }
 
   void close()

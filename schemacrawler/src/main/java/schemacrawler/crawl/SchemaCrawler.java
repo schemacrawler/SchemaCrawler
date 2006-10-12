@@ -212,6 +212,7 @@ public final class SchemaCrawler
     if (infoLevel == SchemaInfoLevel.MAXIMUM)
     {
       retrieverExtra.retrievePrivileges(null, tables);
+      retrieverExtra.retrieveCheckConstraintInformation(tables);
     }
     for (int i = 0; i < tables.size(); i++)
     {
