@@ -78,12 +78,5 @@ public interface Table
    * @return Privileges for the table.
    */
   Privilege[] getPrivileges();
-
-  /**
-   * Gets the definition.
-   * 
-   * @return Definition
-   */
-  String getDefinition();
   
 }
