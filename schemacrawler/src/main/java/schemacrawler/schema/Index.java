@@ -21,6 +21,8 @@
 package schemacrawler.schema;
 
 
+import schemacrawler.crawl.SchemaCrawlerException;
+
 /**
  * Represents an index.
  * 
@@ -78,10 +80,13 @@ public interface Index
 
   /**
    * Converts this index into a table constraint. If the index is not
-   * unique, returns null.
+   * unique, throws an exception.
    * 
+   * @throws SchemaCrawlerException
+   *         If the index is not null.
    * @return Table constraint, or null
    */
-  TableConstraint asTableConstraint();
+  TableConstraint asTableConstraint()
+    throws SchemaCrawlerException;
 
 }

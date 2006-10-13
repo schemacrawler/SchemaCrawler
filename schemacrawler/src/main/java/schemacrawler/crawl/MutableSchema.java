@@ -43,9 +43,14 @@ class MutableSchema
 
   private DatabaseInfo databaseInfo;
   private final NamedObjectList tables = new NamedObjectList(
-      new NaturalSortComparator());
+                                                             new NaturalSortComparator());
   private final NamedObjectList procedures = new NamedObjectList(
-      new NaturalSortComparator());
+                                                                 new NaturalSortComparator());
+
+  MutableSchema(String schemaName, String catalogName, String name)
+  {
+    super(schemaName, catalogName, name);
+  }
 
   /**
    * {@inheritDoc}
@@ -71,7 +76,7 @@ class MutableSchema
   {
     final List allProcedures = procedures.getAll();
     return (Procedure[]) allProcedures.toArray(new Procedure[allProcedures
-        .size()]);
+      .size()]);
   }
 
   /**

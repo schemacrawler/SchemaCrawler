@@ -41,12 +41,9 @@ final class CachingCrawlerHandler
    *        Writer to output to.
    */
   CachingCrawlerHandler(final String catalogName,
-      final SchemaInfoLevel columnInfoLevel)
+                        final SchemaInfoLevel columnInfoLevel)
   {
-    schema = new MutableSchema();
-    schema.setName("schema");
-    schema.setCatalogName(catalogName);
-
+    schema = new MutableSchema(catalogName, "schema", "schema");
     infoLevel = columnInfoLevel;
   }
 

@@ -24,6 +24,7 @@ package schemacrawler.crawl;
 import java.util.List;
 
 import schemacrawler.schema.Column;
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Privilege;
 import schemacrawler.util.NaturalSortComparator;
 
@@ -45,7 +46,12 @@ final class MutableColumn
   private boolean isPartOfPrimaryKey;
   private boolean isPartOfUniqueIndex;
   private final NamedObjectList privileges = new NamedObjectList(
-      new NaturalSortComparator());
+                                                                 new NaturalSortComparator());
+
+  MutableColumn(String name, NamedObject parent)
+  {
+    super(name, parent);
+  }
 
   /**
    * Gets the column's default value.
@@ -119,7 +125,7 @@ final class MutableColumn
   {
     final List allPrivileges = privileges.getAll();
     return (Privilege[]) allPrivileges.toArray(new Privilege[allPrivileges
-        .size()]);
+      .size()]);
   }
 
   /**

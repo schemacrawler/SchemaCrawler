@@ -23,6 +23,7 @@ package schemacrawler.crawl;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKeyColumnMap;
+import schemacrawler.schema.NamedObject;
 
 /**
  * {@inheritDoc}
@@ -37,6 +38,11 @@ final class MutableForeignKeyColumnMap
   private Column foreignKeyColumn;
   private Column primaryKeyColumn;
   private int keySequence;
+
+  MutableForeignKeyColumnMap(String name, NamedObject parent)
+  {
+    super(name, parent);
+  }
 
   /**
    * {@inheritDoc}

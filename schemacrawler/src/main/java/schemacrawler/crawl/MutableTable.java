@@ -49,15 +49,20 @@ class MutableTable
   private TableType type;
   private PrimaryKey primaryKey;
   private final NamedObjectList columns = new NamedObjectList(
-      new NaturalSortComparator());
+                                                              new NaturalSortComparator());
   private final NamedObjectList foreignKeys = new NamedObjectList(
-      new NaturalSortComparator());
+                                                                  new NaturalSortComparator());
   private final NamedObjectList indices = new NamedObjectList(
-      new NaturalSortComparator());
+                                                              new NaturalSortComparator());
   private final NamedObjectList checkConstraints = new NamedObjectList(
-      new NaturalSortComparator());
+                                                                       new NaturalSortComparator());
   private final NamedObjectList privileges = new NamedObjectList(
-      new NaturalSortComparator());
+                                                                 new NaturalSortComparator());
+
+  MutableTable(String schemaName, String catalogName, String name)
+  {
+    super(schemaName, catalogName, name);
+  }
 
   /**
    * Sets the table type.
@@ -178,7 +183,7 @@ class MutableTable
   {
     final List allForeignKeys = foreignKeys.getAll();
     return (ForeignKey[]) allForeignKeys.toArray(new ForeignKey[allForeignKeys
-        .size()]);
+      .size()]);
   }
 
   /**
@@ -242,7 +247,7 @@ class MutableTable
   {
     final List allCheckConstraints = checkConstraints.getAll();
     return (TableConstraint[]) allCheckConstraints
-        .toArray(new TableConstraint[allCheckConstraints.size()]);
+      .toArray(new TableConstraint[allCheckConstraints.size()]);
   }
 
   /**
@@ -270,7 +275,7 @@ class MutableTable
   {
     final List allPrivileges = privileges.getAll();
     return (Privilege[]) allPrivileges.toArray(new Privilege[allPrivileges
-        .size()]);
+      .size()]);
   }
 
   /**

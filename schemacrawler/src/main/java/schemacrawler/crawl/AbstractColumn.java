@@ -23,6 +23,7 @@ package schemacrawler.crawl;
 
 import schemacrawler.schema.BaseColumn;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.NamedObject;
 
 /**
  * Represents a column in a database table. Created from metadata
@@ -40,6 +41,11 @@ abstract class AbstractColumn
   private int size;
   private int decimalDigits;
   private boolean nullable;
+
+  AbstractColumn(String name, NamedObject parent)
+  {
+    super(name, parent);
+  }
 
   /**
    * {@inheritDoc}
@@ -93,16 +99,15 @@ abstract class AbstractColumn
    *        Database specific type name
    */
   final void lookupAndSetDataType(final int jdbcDataType,
-      final String databaseSpecificTypeName,
-      final NamedObjectList columnDataTypes)
+                                  final String databaseSpecificTypeName,
+                                  final NamedObjectList columnDataTypes)
   {
     MutableColumnDataType columnDataType = (MutableColumnDataType) columnDataTypes
-        .lookup(databaseSpecificTypeName);
+      .lookup(databaseSpecificTypeName);
     if (columnDataType == null)
     {
-      columnDataType = new MutableColumnDataType();
+      columnDataType = new MutableColumnDataType(databaseSpecificTypeName);
       columnDataType.setType(jdbcDataType);
-      columnDataType.setDatabaseSpecificTypeName(databaseSpecificTypeName);
     }
     dataType = columnDataType;
   }

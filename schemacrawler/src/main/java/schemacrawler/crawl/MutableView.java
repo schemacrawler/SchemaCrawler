@@ -41,6 +41,11 @@ class MutableView
   private CheckOptionType checkOption;
   private boolean updatable;
 
+  MutableView(String schemaName, String catalogName, String name)
+  {
+    super(schemaName, catalogName, name);
+  }
+
   void setType(final TableType type)
   {
     if (type != TableType.VIEW)

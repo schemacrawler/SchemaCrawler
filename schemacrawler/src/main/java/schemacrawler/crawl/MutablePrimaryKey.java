@@ -23,6 +23,7 @@ package schemacrawler.crawl;
 
 import schemacrawler.schema.ConstraintType;
 import schemacrawler.schema.Index;
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.TableConstraint;
 
@@ -47,9 +48,8 @@ class MutablePrimaryKey
    */
   static MutablePrimaryKey fromIndex(final Index index)
   {
-    final MutablePrimaryKey pk = new MutablePrimaryKey();
-    pk.setName(index.getName());
-    pk.setParent(index.getParent());
+    final MutablePrimaryKey pk = new MutablePrimaryKey(index.getName(), index
+      .getParent());
     pk.setCardinality(index.getCardinality());
     pk.setPages(index.getPages());
     pk.setRemarks(index.getRemarks());
@@ -59,13 +59,19 @@ class MutablePrimaryKey
     return pk;
   }
 
+  MutablePrimaryKey(String name, NamedObject parent)
+  {
+    super(name, parent);
+  }
+
   /**
    * {@inheritDoc}
    */
   public TableConstraint asTableConstraint()
+    throws SchemaCrawlerException
   {
     final MutableTableConstraint constraint = (MutableTableConstraint) super
-        .asTableConstraint();
+      .asTableConstraint();
     constraint.setType(ConstraintType.PRIMARY_KEY);
     return constraint;
   }
