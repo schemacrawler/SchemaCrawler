@@ -38,18 +38,9 @@ abstract class AbstractNamedObject
   private String remarks;
   private final SerializableComparator comparator = new AlphabeticalSortComparator();
 
-  /**
-   * Sets the name.
-   * 
-   * @param name
-   *        Name
-   */
-  void setName(final String name)
+  AbstractNamedObject(String name)
   {
-    if (name == null || name.length() == 0)
-    {
-      throw new IllegalArgumentException("Named object name not specified");
-    }
+    super();
     this.name = name;
   }
 
@@ -102,7 +93,8 @@ abstract class AbstractNamedObject
     if (remarks == null)
     {
       this.remarks = "";
-    } else
+    }
+    else
     {
       this.remarks = remarks;
     }

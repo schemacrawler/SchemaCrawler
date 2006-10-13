@@ -36,6 +36,16 @@ abstract class AbstractDependantNamedObject
 
   private NamedObject parent;
 
+  AbstractDependantNamedObject(String name, NamedObject parent)
+  {
+    super(name);
+    if (parent == null)
+    {
+      throw new IllegalArgumentException("Parent object not specified");
+    }    
+    this.parent = parent;
+  }
+
   /**
    * {@inheritDoc}
    * 
@@ -73,21 +83,6 @@ abstract class AbstractDependantNamedObject
   public final NamedObject getParent()
   {
     return parent;
-  }
-
-  /**
-   * Sets the parent object.
-   * 
-   * @param parent
-   *        Parent
-   */
-  void setParent(final NamedObject parent)
-  {
-    if (parent == null)
-    {
-      throw new IllegalArgumentException("Parent object not specified");
-    }
-    this.parent = parent;
   }
 
   /**

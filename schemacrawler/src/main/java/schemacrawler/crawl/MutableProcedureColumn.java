@@ -21,6 +21,7 @@
 package schemacrawler.crawl;
 
 
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.ProcedureColumnType;
 
@@ -38,6 +39,11 @@ final class MutableProcedureColumn
   private static final long serialVersionUID = 3546361725629772857L;
 
   private ProcedureColumnType procedureColumnType;
+
+  MutableProcedureColumn(String name, NamedObject parent)
+  {
+    super(name, parent);
+  }
 
   /**
    * {@inheritDoc}

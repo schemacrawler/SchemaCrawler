@@ -21,6 +21,7 @@
 package schemacrawler.crawl;
 
 
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Privilege;
 
 /**
@@ -38,6 +39,11 @@ final class MutablePrivilege
   private String grantor;
   private String grantee;
   private boolean isGrantable;
+
+  MutablePrivilege(String name, NamedObject parent)
+  {
+    super(name, parent);
+  }
 
   /**
    * {@inheritDoc}

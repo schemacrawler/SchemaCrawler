@@ -28,6 +28,7 @@ import schemacrawler.schema.ConstraintType;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexSortSequence;
 import schemacrawler.schema.IndexType;
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.TableConstraint;
 
 /**
@@ -46,6 +47,11 @@ class MutableIndex
   private IndexSortSequence sortSequence;
   private int cardinality;
   private int pages;
+
+  MutableIndex(String name, NamedObject parent)
+  {
+    super(name, parent);
+  }
 
   /**
    * {@inheritDoc}
@@ -186,7 +192,8 @@ class MutableIndex
       if (comparison == 0)
       {
         comparison = thisColumn.compareTo(otherColumn);
-      } else
+      }
+      else
       {
         break;
       }
@@ -199,16 +206,17 @@ class MutableIndex
    * {@inheritDoc}
    */
   public TableConstraint asTableConstraint()
+    throws SchemaCrawlerException
   {
     if (!isUnique())
     {
       // Non-unique indexes are not constraints
-      return null;
+      throw new SchemaCrawlerException("Cannot convert index to constraint");
     }
 
-    final MutableTableConstraint constraint = new MutableTableConstraint();
-    constraint.setName(getName());
-    constraint.setParent(getParent());
+    final MutableTableConstraint constraint = new MutableTableConstraint(
+                                                                         getName(),
+                                                                         getParent());
     constraint.setType(ConstraintType.UNIQUE);
 
     return constraint;

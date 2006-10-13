@@ -94,6 +94,11 @@ final class MutableColumnDataType
   private ColumnDataType baseType;
   private String typeClassName;
 
+  MutableColumnDataType(String name)
+  {
+    super(name);
+  }
+
   /**
    * @return Returns the userDefined.
    */
@@ -114,11 +119,6 @@ final class MutableColumnDataType
   void setType(final int type)
   {
     this.type = type;
-  }
-
-  void setDatabaseSpecificTypeName(final String databaseSpecificTypeName)
-  {
-    setName(databaseSpecificTypeName);
   }
 
   /**
@@ -400,7 +400,7 @@ final class MutableColumnDataType
   public boolean isCharacterType()
   {
     return type == Types.CHAR || type == Types.LONGVARCHAR
-        || type == Types.VARCHAR || type == Types.CLOB;
+           || type == Types.VARCHAR || type == Types.CLOB;
   }
 
   /**
@@ -409,7 +409,7 @@ final class MutableColumnDataType
   public boolean isRealType()
   {
     return type == Types.DECIMAL || type == Types.FLOAT || type == Types.REAL
-        || type == Types.DOUBLE || type == Types.NUMERIC;
+           || type == Types.DOUBLE || type == Types.NUMERIC;
   }
 
   /**
@@ -418,7 +418,7 @@ final class MutableColumnDataType
   public boolean isBinaryType()
   {
     return type == Types.CLOB || type == Types.BLOB
-        || type == Types.LONGVARBINARY || type == Types.OTHER;
+           || type == Types.LONGVARBINARY || type == Types.OTHER;
   }
 
   /**
@@ -427,7 +427,7 @@ final class MutableColumnDataType
   public boolean isIntegralType()
   {
     return type == Types.INTEGER || type == Types.BIGINT
-        || type == Types.SMALLINT || type == Types.TINYINT;
+           || type == Types.SMALLINT || type == Types.TINYINT;
   }
 
   /**

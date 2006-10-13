@@ -22,6 +22,7 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.ConstraintType;
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.TableConstraint;
 
 /**
@@ -38,6 +39,11 @@ class MutableTableConstraint
   private boolean deferrable;
   private boolean initiallyDeferred;
   private String definition;
+
+  MutableTableConstraint(String name, NamedObject parent)
+  {
+    super(name, parent);
+  }
 
   /**
    * {@inheritDoc}

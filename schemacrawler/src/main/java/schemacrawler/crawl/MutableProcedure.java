@@ -50,6 +50,11 @@ final class MutableProcedure
   private RoutineBodyType routineBodyType;
   private String definition;
 
+  MutableProcedure(String schemaName, String catalogName, String name)
+  {
+    super(schemaName, catalogName, name);
+  }
+
   /**
    * Sets the procedure type.
    * 

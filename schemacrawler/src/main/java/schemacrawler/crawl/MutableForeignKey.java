@@ -41,10 +41,15 @@ class MutableForeignKey
   private static final long serialVersionUID = 4121411795974895671L;
 
   private final NamedObjectList columnPairs = new NamedObjectList(
-      new NaturalSortComparator());
+                                                                  new NaturalSortComparator());
   private ForeignKeyUpdateRule updateRule;
   private ForeignKeyUpdateRule deleteRule;
   private ForeignKeyDeferrability deferrability;
+
+  MutableForeignKey(String schemaName, String catalogName, String name)
+  {
+    super(schemaName, catalogName, name);
+  }
 
   /**
    * {@inheritDoc}
@@ -100,7 +105,7 @@ class MutableForeignKey
   {
     final List allColumnPairs = columnPairs.getAll();
     return (ForeignKeyColumnMap[]) allColumnPairs
-        .toArray(new ForeignKeyColumnMap[allColumnPairs.size()]);
+      .toArray(new ForeignKeyColumnMap[allColumnPairs.size()]);
   }
 
   /**
@@ -122,10 +127,12 @@ class MutableForeignKey
    *        Foreign key
    */
   void addColumnPair(final int keySequence, final Column pkColumn,
-      final Column fkColumn)
+                     final Column fkColumn)
   {
-    final MutableForeignKeyColumnMap fkColumnPair = new MutableForeignKeyColumnMap();
-    fkColumnPair.setName(getName() + "." + keySequence);
+    String fkColumnMapName = getName() + "." + keySequence;
+    final MutableForeignKeyColumnMap fkColumnPair = new MutableForeignKeyColumnMap(
+                                                                                   fkColumnMapName,
+                                                                                   this);
     fkColumnPair.setKeySequence(keySequence);
     fkColumnPair.setPrimaryKeyColumn(pkColumn);
     fkColumnPair.setForeignKeyColumn(fkColumn);
@@ -160,7 +167,8 @@ class MutableForeignKey
       if (comparison == 0)
       {
         comparison = thisColumnPair.compareTo(otherColumnPair);
-      } else
+      }
+      else
       {
         break;
       }
