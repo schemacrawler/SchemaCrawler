@@ -22,7 +22,6 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.CheckOptionType;
-import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.View;
 
