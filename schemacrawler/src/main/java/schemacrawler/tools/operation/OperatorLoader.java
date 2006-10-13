@@ -42,7 +42,7 @@ public final class OperatorLoader
    * Checks if the CrawlHandler mnemonic is valid.
    * 
    * @param operation
-   *          Mnemonic name for a CrawlHandler
+   *        Mnemonic name for a CrawlHandler
    * @return True if the mnemonic is known
    */
   private static boolean canLoad(final OperatorOptions options)
@@ -51,22 +51,21 @@ public final class OperatorLoader
   }
 
   /**
-   * Instantiates a text formatter type of CrawlHandler from the mnemonic
-   * string.
+   * Instantiates a text formatter type of CrawlHandler from the
+   * mnemonic string.
    * 
    * @param options
-   *          Options
+   *        Options
    * @param connection
-   *          Open database connection
+   *        Open database connection
    * @param dataHandler
-   *          Data handler
+   *        Data handler
    * @return CrawlHandler instance
    * @throws schemacrawler.crawl.SchemaCrawlerException
-   *           On an exception
+   *         On an exception
    */
   public static CrawlHandler load(final OperatorOptions options,
-                                  final Connection connection,
-                                  final DataHandler dataHandler)
+      final Connection connection, final DataHandler dataHandler)
     throws SchemaCrawlerException
   {
 
@@ -81,24 +80,21 @@ public final class OperatorLoader
     if (operation.isQueryOver())
     {
       query = options.getQuery();
-    }
-    else
+    } else
     {
       query = operation.getQuery();
     }
 
     final OutputFormat outputFormatType = options.getOutputOptions()
-      .getOutputFormat();
+        .getOutputFormat();
     if (outputFormatType == OutputFormat.TEXT)
     {
       handler = new OperatorPlainTextOutput(options, query, connection,
           dataHandler);
-    }
-    else if (outputFormatType == OutputFormat.HTML)
+    } else if (outputFormatType == OutputFormat.HTML)
     {
       handler = new OperatorHTMLOutput(options, query, connection, dataHandler);
-    }
-    else if (outputFormatType == OutputFormat.CSV)
+    } else if (outputFormatType == OutputFormat.CSV)
     {
       handler = new OperatorCSVOutput(options, query, connection, dataHandler);
     }

@@ -33,12 +33,11 @@ public final class IndexType
 
   private static final long serialVersionUID = 3258693221411599160L;
 
-  private static final IndexType[] ALL = {
-    new IndexType(DatabaseMetaData.tableIndexStatistic, "statistic"),
-    new IndexType(DatabaseMetaData.tableIndexClustered, "clustered"),
-    new IndexType(DatabaseMetaData.tableIndexHashed, "hashed"),
-    new IndexType(DatabaseMetaData.tableIndexOther, "other"),
-  };
+  private static final IndexType[] ALL =
+  { new IndexType(DatabaseMetaData.tableIndexStatistic, "statistic"),
+   new IndexType(DatabaseMetaData.tableIndexClustered, "clustered"),
+   new IndexType(DatabaseMetaData.tableIndexHashed, "hashed"),
+   new IndexType(DatabaseMetaData.tableIndexOther, "other"), };
 
   private final transient int id;
   private final transient String name;
@@ -84,7 +83,7 @@ public final class IndexType
    * Find the enumeration value corresponding to the string.
    * 
    * @param id
-   *          int value of type
+   *        int value of type
    * @return Enumeration value
    */
   public static IndexType valueOf(final int id)
@@ -105,7 +104,7 @@ public final class IndexType
    * Value of the enumeration from the code.
    * 
    * @param name
-   *          Code
+   *        Code
    * @return Enumeration value
    */
   public static IndexType valueOf(final String name)

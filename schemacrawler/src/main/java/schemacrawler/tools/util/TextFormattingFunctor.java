@@ -39,11 +39,11 @@ public interface TextFormattingFunctor
    * Formats text, with options.
    * 
    * @param text
-   *          Text to format
+   *        Text to format
    * @param maxWidth
-   *          Maximum field width
+   *        Maximum field width
    * @param alignLeft
-   *          Align left
+   *        Align left
    * @return Formatted text
    */
   String format(String text, int maxWidth, boolean alignLeft);

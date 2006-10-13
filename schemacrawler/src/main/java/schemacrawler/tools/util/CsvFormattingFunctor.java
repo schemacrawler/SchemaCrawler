@@ -46,7 +46,7 @@ public class CsvFormattingFunctor
    *      int, boolean)
    */
   public String format(final String text, final int maxWidth,
-                       final boolean alignLeft)
+      final boolean alignLeft)
   {
     return FormatUtils.escapeAndQuoteForExcelCsv(text);
   }

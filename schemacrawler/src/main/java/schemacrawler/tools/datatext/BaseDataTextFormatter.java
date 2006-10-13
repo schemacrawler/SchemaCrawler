@@ -53,7 +53,8 @@ public abstract class BaseDataTextFormatter
   private final DataTextFormatOptions options;
 
   /**
-   * Constructor for a base data handler that is capable of merging rows.
+   * Constructor for a base data handler that is capable of merging
+   * rows.
    * 
    * @param mergeRows
    */
@@ -70,7 +71,7 @@ public abstract class BaseDataTextFormatter
     {
       out = options.getOutputOptions().getOutputWriter();
     }
-    catch (IOException e)
+    catch (final IOException e)
     {
       throw new SchemaCrawlerException("Could not obtain output writer", e);
     }
@@ -102,8 +103,7 @@ public abstract class BaseDataTextFormatter
       if (options.isMergeRows() && columnCount > 1)
       {
         iterateRowsAndMerge(rows, columnNames);
-      }
-      else
+      } else
       {
         iterateRows(rows, columnNames);
       }
@@ -124,7 +124,7 @@ public abstract class BaseDataTextFormatter
    * @throws QueryExecutorException
    */
   private void iterateRowsAndMerge(final ResultSet rows,
-                                   final String[] columnNames)
+      final String[] columnNames)
     throws SQLException, QueryExecutorException
   {
     final int columnCount = columnNames.length;
@@ -146,13 +146,12 @@ public abstract class BaseDataTextFormatter
       if (currentRow.equals(previousRow))
       {
         currentRowLastColumn.append(lastColumnDataString);
-      }
-      else
+      } else
       {
         // At this point, we have a new row coming in, so dump the
         // previous merged row out
         doHandleOneRow(columnNames, previousRow, currentRowLastColumn
-          .toString());
+            .toString());
         // reset
         currentRowLastColumn = new StringBuffer();
         // save the last column
@@ -171,16 +170,14 @@ public abstract class BaseDataTextFormatter
     if (columnData == null)
     {
       columnDataString = "<null>";
-    }
-    else if (columnData instanceof Clob || columnData instanceof Blob)
+    } else if (columnData instanceof Clob || columnData instanceof Blob)
     {
       columnDataString = BINARY;
       if (options.isShowLobs())
       {
         columnDataString = readLob(columnData);
       }
-    }
-    else
+    } else
     {
       columnDataString = columnData.toString();
     }
@@ -188,10 +185,11 @@ public abstract class BaseDataTextFormatter
   }
 
   /**
-   * Reads data from a LOB into a string. Default system encoding is assumed.
+   * Reads data from a LOB into a string. Default system encoding is
+   * assumed.
    * 
    * @param columnData
-   *          Column data object returned by JDBC
+   *        Column data object returned by JDBC
    * @return A string with the contents of the LOB
    */
   private String readLob(final Object columnData)
@@ -204,8 +202,7 @@ public abstract class BaseDataTextFormatter
       {
         final Blob blob = (Blob) columnData;
         in = new BufferedInputStream(blob.getBinaryStream());
-      }
-      else if (columnData instanceof Clob)
+      } else if (columnData instanceof Clob)
       {
         final Clob clob = (Clob) columnData;
         in = new BufferedInputStream(clob.getAsciiStream());
@@ -221,7 +218,7 @@ public abstract class BaseDataTextFormatter
   }
 
   private void doHandleOneRow(final String[] columnNames, final List row,
-                              final String lastColumnData)
+      final String lastColumnData)
     throws QueryExecutorException
   {
     if (row.size() == 0)
@@ -233,7 +230,7 @@ public abstract class BaseDataTextFormatter
     outputRow.addAll(row);
     outputRow.add(lastColumnData);
     final String[] columnData = (String[]) outputRow
-      .toArray(new String[outputRow.size()]);
+        .toArray(new String[outputRow.size()]);
     handleRow(columnNames, columnData);
   }
 
@@ -253,7 +250,7 @@ public abstract class BaseDataTextFormatter
         currentRow.add(columnDataString);
       }
       final String[] columnData = (String[]) currentRow
-        .toArray(new String[currentRow.size()]);
+          .toArray(new String[currentRow.size()]);
       handleRow(columnNames, columnData);
     }
   }
@@ -269,48 +266,50 @@ public abstract class BaseDataTextFormatter
   }
 
   /**
-   * Called to handle the beginning of row output. Handler to be implemented by
-   * subclass.
+   * Called to handle the beginning of row output. Handler to be
+   * implemented by subclass.
    * 
    * @throws QueryExecutorException
-   *           On an exception
+   *         On an exception
    */
   public abstract void handleRowsBegin()
     throws QueryExecutorException;
 
   /**
-   * Called to handle the end of row output. Handler to be implemented by
-   * subclass.
+   * Called to handle the end of row output. Handler to be implemented
+   * by subclass.
    * 
    * @throws QueryExecutorException
-   *           On an exception
+   *         On an exception
    */
   public abstract void handleRowsEnd()
     throws QueryExecutorException;
 
   /**
-   * Called to handle the header output. Handler to be implemented by subclass.
+   * Called to handle the header output. Handler to be implemented by
+   * subclass.
    * 
    * @param columnNames
-   *          Column names
+   *        Column names
    * @throws QueryExecutorException
-   *           On an exception
+   *         On an exception
    */
   public abstract void handleRowsHeader(final String[] columnNames)
     throws QueryExecutorException;
 
   /**
-   * Called to handle the row output. Handler to be implemented by subclass.
+   * Called to handle the row output. Handler to be implemented by
+   * subclass.
    * 
    * @param columnNames
-   *          Column names
+   *        Column names
    * @param columnData
-   *          Column data
+   *        Column data
    * @throws QueryExecutorException
-   *           On an exception
+   *         On an exception
    */
   public abstract void handleRow(final String[] columnNames,
-                                 final String[] columnData)
+      final String[] columnData)
     throws QueryExecutorException;
 
   /**
@@ -341,7 +340,7 @@ public abstract class BaseDataTextFormatter
    * Handles metadata information.
    * 
    * @param databaseInfo
-   *          Database info.
+   *        Database info.
    */
   public void handleMetadata(final String databaseInfo)
   {

@@ -1,4 +1,4 @@
-/*
+/* 
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -43,7 +43,7 @@ public final class OutputOptions
   private String outputFormatValue;
 
   private File outputFile;
-  private PrintWriter writer;
+  private transient PrintWriter writer;
 
   private boolean appendOutput;
 
@@ -60,20 +60,19 @@ public final class OutputOptions
    * Output options, given the type and the output filename.
    * 
    * @param outputFormatValue
-   *          Type of output, which is dependent on the executor
+   *        Type of output, which is dependent on the executor
    * @param outputFilename
-   *          Output filename
+   *        Output filename
    */
   public OutputOptions(final String outputFormatValue,
-                       final String outputFilename)
+      final String outputFilename)
   {
     this.outputFormatValue = outputFormatValue;
 
     if (outputFilename == null || outputFilename.length() == 0)
     {
       outputFile = null;
-    }
-    else
+    } else
     {
       outputFile = new File(outputFilename);
     }
@@ -107,7 +106,7 @@ public final class OutputOptions
    * Whether the output gets appended.
    * 
    * @param appendOutput
-   *          Whether the output gets appended
+   *        Whether the output gets appended
    */
   public void setAppendOutput(final boolean appendOutput)
   {
@@ -129,6 +128,8 @@ public final class OutputOptions
    * creates a new output writer. Every subsequent time, it returns the
    * same writer.
    * 
+   * @throws IOException
+   *         On an exception
    * @return Writer
    */
   public synchronized PrintWriter getOutputWriter()
@@ -139,14 +140,12 @@ public final class OutputOptions
       if (outputFile == null)
       {
         writer = new PrintWriter(System.out, /* autoFlush = */true);
-      }
-      else
+      } else
       {
-        FileOutputStream fileOutputStream = new FileOutputStream(outputFile,
-                                                                 appendOutput);
-        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
-                                                                       fileOutputStream,
-                                                                       "UTF-8");
+        final FileOutputStream fileOutputStream = new FileOutputStream(
+            outputFile, appendOutput);
+        final OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+            fileOutputStream, "UTF-8");
         writer = new PrintWriter(outputStreamWriter, /* autoFlush = */true);
       }
     }
@@ -198,7 +197,7 @@ public final class OutputOptions
    * Whether to print footers.
    * 
    * @param noFooter
-   *          Whether to print footers
+   *        Whether to print footers
    */
   public void setNoFooter(final boolean noFooter)
   {
@@ -209,7 +208,7 @@ public final class OutputOptions
    * Whether to print headers.
    * 
    * @param noHeader
-   *          Whether to print headers
+   *        Whether to print headers
    */
   public void setNoHeader(final boolean noHeader)
   {
@@ -220,7 +219,7 @@ public final class OutputOptions
    * Whether to print information.
    * 
    * @param noInfo
-   *          Whether to print information
+   *        Whether to print information
    */
   public void setNoInfo(final boolean noInfo)
   {
@@ -239,7 +238,10 @@ public final class OutputOptions
     outputOptions.outputFormatValue = outputFormatValue;
 
     outputOptions.outputFile = outputFile;
-    outputOptions.writer = writer;
+    synchronized (writer)
+    {
+      outputOptions.writer = writer;
+    }
 
     outputOptions.appendOutput = appendOutput;
 

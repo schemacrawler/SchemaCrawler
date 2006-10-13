@@ -52,25 +52,24 @@ public final class OperatorOptions
    * Operator options from properties. Constructor.
    * 
    * @param config
-   *          Properties
+   *        Properties
    * @param outputOptions
-   *          Output options
+   *        Output options
    * @param operation
-   *          Operation
+   *        Operation
    * @param query
-   *          Query
+   *        Query
    */
   public OperatorOptions(final Properties config,
-                         final OutputOptions outputOptions,
-                         final Operation operation, final String query)
+      final OutputOptions outputOptions, final Operation operation,
+      final String query)
   {
     super(outputOptions);
 
     if (operation == null)
     {
       this.operation = Operation.valueOf("count");
-    }
-    else
+    } else
     {
       this.operation = operation;
     }

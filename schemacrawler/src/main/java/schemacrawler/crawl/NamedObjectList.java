@@ -47,18 +47,18 @@ public final class NamedObjectList
   private static final long serialVersionUID = 3257847666804142128L;
 
   private static final Logger LOGGER = Logger.getLogger(NamedObjectList.class
-    .getName());
+      .getName());
 
   private SerializableComparator comparator;
   private final List sortedList;
   private final Map map;
 
   /**
-   * Construct an initially empty ordered list of named objects, that can be
-   * searched associately.
+   * Construct an initially empty ordered list of named objects, that
+   * can be searched associately.
    * 
    * @param serializableComparator
-   *          Comparator for named objects, or null for no sorting
+   *        Comparator for named objects, or null for no sorting
    */
   public NamedObjectList(final SerializableComparator serializableComparator)
   {
@@ -82,7 +82,7 @@ public final class NamedObjectList
    * 
    * @see java.util.List#get(int)
    * @param index
-   *          Index of the requested object
+   *        Index of the requested object
    * @return Named object
    */
   public NamedObject get(final int index)
@@ -94,7 +94,7 @@ public final class NamedObjectList
    * Add a named object to the list.
    * 
    * @param namedObject
-   *          Named object
+   *        Named object
    */
   public void add(final NamedObject namedObject)
   {
@@ -110,8 +110,7 @@ public final class NamedObjectList
     {
       index = -index - 1;
       sortedList.add(index, namedObject);
-    }
-    else
+    } else
     {
       sortedList.add(namedObject);
     }
@@ -119,13 +118,13 @@ public final class NamedObjectList
   }
 
   /**
-   * Add a named object at a given ordinal position. If the ordinal position is
-   * beyond the end of the list, add the object to the end.
+   * Add a named object at a given ordinal position. If the ordinal
+   * position is beyond the end of the list, add the object to the end.
    * 
    * @param ordinalPosition
-   *          Position to add at, starting from 1
+   *        Position to add at, starting from 1
    * @param namedObject
-   *          Named object to add
+   *        Named object to add
    */
   void add(final int ordinalPosition, final NamedObject namedObject)
   {
@@ -139,8 +138,7 @@ public final class NamedObjectList
     if (index < 0)
     {
       index = 0;
-    }
-    else if (index > size)
+    } else if (index > size)
     {
       index = size;
     }
@@ -151,7 +149,7 @@ public final class NamedObjectList
       if (index != ordinalPosition - 1)
       {
         message = message + " (instead of at position #"
-                  + (ordinalPosition - 1) + ")";
+            + (ordinalPosition - 1) + ")";
       }
       LOGGER.log(Level.FINEST, message);
     }
@@ -164,7 +162,7 @@ public final class NamedObjectList
    * Remove a named object by name.
    * 
    * @param name
-   *          Name
+   *        Name
    * @return Object that was removed
    */
   NamedObject remove(final String name)
@@ -182,7 +180,7 @@ public final class NamedObjectList
    * Remove a named object.
    * 
    * @param namedObject
-   *          named object
+   *        named object
    * @return Object that was removed
    */
   NamedObject remove(final NamedObject namedObject)
@@ -205,7 +203,7 @@ public final class NamedObjectList
    * Looks up a named object by name.
    * 
    * @param name
-   *          Name
+   *        Name
    * @return Named object
    */
   public NamedObject lookup(final String name)
@@ -227,7 +225,7 @@ public final class NamedObjectList
    * Sets the comparator.
    * 
    * @param comparator
-   *          Comparator
+   *        Comparator
    */
   void setComparator(final SerializableComparator comparator)
   {
@@ -290,8 +288,7 @@ public final class NamedObjectList
       {
         return false;
       }
-    }
-    else
+    } else
     {
       if (!sortedList.equals(other.sortedList))
       {

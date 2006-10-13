@@ -41,13 +41,12 @@ final class OperatorPlainTextOutput
    * Constructs a new table dropper.
    * 
    * @param operation
-   *          Operation to perform.
+   *        Operation to perform.
    * @param connection
-   *          Database connection to use
+   *        Database connection to use
    */
   OperatorPlainTextOutput(final OperatorOptions options, final String query,
-                          final Connection connection,
-                          final DataHandler dataHandler)
+      final Connection connection, final DataHandler dataHandler)
     throws SchemaCrawlerException
   {
     super(options, query, connection, dataHandler);
@@ -60,8 +59,7 @@ final class OperatorPlainTextOutput
    *      java.lang.String, java.lang.String, int, java.lang.String)
    */
   public void handleTable(final int ordinalPosition, final String tableName,
-                          final String tableType, final long count,
-                          final String message)
+      final String tableType, final long count, final String message)
   {
     out.print(Utilities.padRight(tableName, MAX_TABLE_NAME_WIDTH));
     out.print(Utilities.padLeft(message, MESSAGE_WIDTH));

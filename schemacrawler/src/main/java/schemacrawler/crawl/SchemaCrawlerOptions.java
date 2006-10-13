@@ -89,25 +89,23 @@ public final class SchemaCrawlerOptions
    * Options from properties.
    * 
    * @param tableTypes
-   *          Table types to show
+   *        Table types to show
    * @param tableInclusionRule
-   *          Rule for including or excluding columns
+   *        Rule for including or excluding columns
    * @param columnInclusionRule
-   *          Rule for including or excluding columns
+   *        Rule for including or excluding columns
    * @param config
-   *          Configuration properties
+   *        Configuration properties
    */
   public SchemaCrawlerOptions(final Properties config,
-                              final TableType[] tableTypes,
-                              final InclusionRule tableInclusionRule,
-                              final InclusionRule columnInclusionRule)
+      final TableType[] tableTypes, final InclusionRule tableInclusionRule,
+      final InclusionRule columnInclusionRule)
   {
 
     if (tableTypes == null)
     {
       this.tableTypes = TableType.valueOf(DEFAULT_TABLE_TYPES.split(","));
-    }
-    else
+    } else
     {
       final int size = tableTypes.length;
       this.tableTypes = new TableType[size];
@@ -121,56 +119,55 @@ public final class SchemaCrawlerOptions
 
     // comparators
     tableColumnComparator = getComparator(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS,
-                                          config);
-    tableForeignKeyComparator = getComparator(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS,
-                                              config);
+        config);
+    tableForeignKeyComparator = getComparator(
+        SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS, config);
     tableIndexComparator = getComparator(SC_SORT_ALPHABETICALLY_TABLE_INDICES,
-                                         config);
-    procedureColumnComparator = getComparator(SC_SORT_ALPHABETICALLY_PROCEDURE_COLUMNS,
-                                              config);
+        config);
+    procedureColumnComparator = getComparator(
+        SC_SORT_ALPHABETICALLY_PROCEDURE_COLUMNS, config);
   }
 
   /**
    * Options from properties.
    * 
    * @param config
-   *          Configuration properties
+   *        Configuration properties
    */
   public SchemaCrawlerOptions(final Properties config)
   {
 
     final String tableTypesString = config.getProperty(SC_TABLE_TYPES,
-                                                       DEFAULT_TABLE_TYPES);
+        DEFAULT_TABLE_TYPES);
     tableTypes = TableType.valueOf(tableTypesString.split(","));
 
     showStoredProcedures = getBooleanProperty(SC_SHOW_STORED_PROCEDURES, config);
 
-    tableInclusionRule = new InclusionRule(Pattern.compile(config
-      .getProperty(SC_TABLE_PATTERN_INCLUDE, ".*")), Pattern.compile(config
-      .getProperty(SC_TABLE_PATTERN_EXCLUDE, ".*")));
-    columnInclusionRule = new InclusionRule(Pattern.compile(config
-      .getProperty(SC_COLUMN_PATTERN_INCLUDE, ".*")), Pattern.compile(config
-      .getProperty(SC_COLUMN_PATTERN_EXCLUDE, ".*")));
+    tableInclusionRule = new InclusionRule(Pattern.compile(config.getProperty(
+        SC_TABLE_PATTERN_INCLUDE, ".*")), Pattern.compile(config.getProperty(
+        SC_TABLE_PATTERN_EXCLUDE, ".*")));
+    columnInclusionRule = new InclusionRule(Pattern.compile(config.getProperty(
+        SC_COLUMN_PATTERN_INCLUDE, ".*")), Pattern.compile(config.getProperty(
+        SC_COLUMN_PATTERN_EXCLUDE, ".*")));
 
     // comparators
     tableColumnComparator = getComparator(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS,
-                                          config);
-    tableForeignKeyComparator = getComparator(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS,
-                                              config);
+        config);
+    tableForeignKeyComparator = getComparator(
+        SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS, config);
     tableIndexComparator = getComparator(SC_SORT_ALPHABETICALLY_TABLE_INDICES,
-                                         config);
-    procedureColumnComparator = getComparator(SC_SORT_ALPHABETICALLY_PROCEDURE_COLUMNS,
-                                              config);
+        config);
+    procedureColumnComparator = getComparator(
+        SC_SORT_ALPHABETICALLY_PROCEDURE_COLUMNS, config);
   }
 
   private SerializableComparator getComparator(final String propertyName,
-                                               final Properties config)
+      final Properties config)
   {
     if (getBooleanProperty(propertyName, config))
     {
       return new AlphabeticalSortComparator();
-    }
-    else
+    } else
     {
       return new NaturalSortComparator();
     }
@@ -207,7 +204,7 @@ public final class SchemaCrawlerOptions
    * Set show stored procedures.
    * 
    * @param showStoredProcedures
-   *          Show stored procedures
+   *        Show stored procedures
    */
   public void setShowStoredProcedures(final boolean showStoredProcedures)
   {
@@ -229,11 +226,10 @@ public final class SchemaCrawlerOptions
     if (tableTypes == null)
     {
       buffer.append(", tableTypes=").append("null");
-    }
-    else
+    } else
     {
-      buffer.append(", tableTypes=").append(Arrays.asList(tableTypes)
-        .toString());
+      buffer.append(", tableTypes=").append(
+          Arrays.asList(tableTypes).toString());
     }
     buffer.append("]");
     return buffer.toString();

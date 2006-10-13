@@ -54,10 +54,10 @@ public class ToolsExecutor
    * needed.
    * 
    * @param additionalConnectionConfiguration
-   *          Additional connection configuration.
+   *        Additional connection configuration.
    */
   public void setAdditionalConnectionConfiguration(
-                                                   Properties additionalConnectionConfiguration)
+      final Properties additionalConnectionConfiguration)
   {
     if (additionalConnectionConfiguration != null)
     {
@@ -81,13 +81,12 @@ public class ToolsExecutor
     if (toolType == ToolType.SCHEMA_TEXT)
     {
       crawlHandler = SchemaTextFormatterLoader.load(options
-        .getSchemaTextOptions());
-    }
-    else
+          .getSchemaTextOptions());
+    } else
     {
       // For operations and single queries
       dataHandler = DataTextFormatterLoader.load(options
-        .getDataTextFormatOptions());
+          .getDataTextFormatOptions());
       if (toolType == ToolType.OPERATION)
       {
         // Operations are crawl handlers that rely on
@@ -102,20 +101,17 @@ public class ToolsExecutor
           throw new SchemaCrawlerException("Cannot obtain a connection", e);
         }
         crawlHandler = OperatorLoader.load(options.getOperatorOptions(),
-                                           connection, dataHandler);
+            connection, dataHandler);
       }
     }
     if (toolType == ToolType.DATA_TEXT)
     {
       final QueryExecutor executor = new QueryExecutor(dataSource, dataHandler);
       executor.executeSQL(options.getQuery());
-    }
-    else
+    } else
     {
-      final SchemaCrawler crawler = new SchemaCrawler(
-                                                      dataSource,
-                                                      additionalConnectionConfiguration,
-                                                      crawlHandler);
+      final SchemaCrawler crawler = new SchemaCrawler(dataSource,
+          additionalConnectionConfiguration, crawlHandler);
       crawler.crawl(options.getSchemaCrawlerOptions());
     }
   }

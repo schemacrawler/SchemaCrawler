@@ -40,7 +40,8 @@ import java.util.logging.Logger;
 import schemacrawler.schema.ColumnDataType;
 
 /**
- * SchemaRetriever uses database metadata to get the details about the schema.
+ * SchemaRetriever uses database metadata to get the details about the
+ * schema.
  * 
  * @author sfatehi
  */
@@ -49,19 +50,19 @@ final class DatabaseInfoRetriever
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(DatabaseInfoRetriever.class.getName());
+      .getLogger(DatabaseInfoRetriever.class.getName());
 
   /**
    * Constructs a SchemaCrawler object, from a connection.
    * 
    * @param connection
-   *          An open database connection.
+   *        An open database connection.
    * @param driverClassName
-   *          Class name of the JDBC driver
+   *        Class name of the JDBC driver
    * @param schemaPatternString
-   *          JDBC schema pattern, or null
+   *        JDBC schema pattern, or null
    * @throws SQLException
-   *           On a SQL exception
+   *         On a SQL exception
    */
   DatabaseInfoRetriever(final RetrieverConnection retrieverConnection)
     throws SQLException
@@ -74,7 +75,7 @@ final class DatabaseInfoRetriever
    * 
    * @return Database information
    * @throws SQLException
-   *           On a SQL exception
+   *         On a SQL exception
    */
   MutableDatabaseInfo retrieveDatabaseInfo()
     throws SQLException
@@ -102,7 +103,7 @@ final class DatabaseInfoRetriever
     dbInfo.setJdbcDriverClassName(jdbcDriverClassName);
     dbInfo.setSchemaPattern(getRetrieverConnection().getSchemaPattern());
     dbInfo.setJdbcDriverClassName(getRetrieverConnection()
-      .getJdbcDriverClassName());
+        .getJdbcDriverClassName());
 
     return dbInfo;
   }
@@ -111,9 +112,9 @@ final class DatabaseInfoRetriever
    * Provides additional information on the database.
    * 
    * @param dbInfo
-   *          Database information to add to
+   *        Database information to add to
    * @throws SQLException
-   *           On a SQL exception
+   *         On a SQL exception
    */
   void retrieveAdditionalDatabaseInfo(final MutableDatabaseInfo dbInfo)
     throws SQLException
@@ -134,35 +135,24 @@ final class DatabaseInfoRetriever
           {
             // Probably a comma-separated list
             value = Collections.unmodifiableList(Arrays.asList(((String) value)
-              .split(",")));
+                .split(",")));
           }
           // Add to the properties map
           dbProperties.put(name, value);
-        }
-        else if (isDatabasePropertiesResultSetMethod(method))
+        } else if (isDatabasePropertiesResultSetMethod(method))
         {
           final String name = derivePropertyName(method);
           final ResultSet results = (ResultSet) method.invoke(dbMetaData,
-                                                              new Object[0]);
+              new Object[0]);
           dbProperties.put(name, readResultsVector(results));
-        }
-        else if (isDatabasePropertyResultSetType(method))
+        } else if (isDatabasePropertyResultSetType(method))
         {
-          retrieveResultSetTypeProperty(dbMetaData,
-                                        dbProperties,
-                                        method,
-                                        ResultSet.TYPE_FORWARD_ONLY,
-                                        "TypeForwardOnly");
-          retrieveResultSetTypeProperty(dbMetaData,
-                                        dbProperties,
-                                        method,
-                                        ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                        "TypeScrollInsensitive");
-          retrieveResultSetTypeProperty(dbMetaData,
-                                        dbProperties,
-                                        method,
-                                        ResultSet.TYPE_SCROLL_SENSITIVE,
-                                        "TypeScrollSensitive");
+          retrieveResultSetTypeProperty(dbMetaData, dbProperties, method,
+              ResultSet.TYPE_FORWARD_ONLY, "TypeForwardOnly");
+          retrieveResultSetTypeProperty(dbMetaData, dbProperties, method,
+              ResultSet.TYPE_SCROLL_INSENSITIVE, "TypeScrollInsensitive");
+          retrieveResultSetTypeProperty(dbMetaData, dbProperties, method,
+              ResultSet.TYPE_SCROLL_SENSITIVE, "TypeScrollSensitive");
         }
       }
     }
@@ -183,18 +173,15 @@ final class DatabaseInfoRetriever
   }
 
   private void retrieveResultSetTypeProperty(final DatabaseMetaData dbMetaData,
-                                             final SortedMap dbProperties,
-                                             final Method method,
-                                             final int resultSetType,
-                                             final String resultSetTypeName)
+      final SortedMap dbProperties, final Method method,
+      final int resultSetType, final String resultSetTypeName)
     throws IllegalAccessException, InvocationTargetException
   {
     final String name = derivePropertyName(method) + "ResultSet"
-                        + resultSetTypeName;
+        + resultSetTypeName;
     Boolean propertyValue = null;
-    propertyValue = (Boolean) method.invoke(dbMetaData, new Object[] {
-      new Integer(resultSetType)
-    });
+    propertyValue = (Boolean) method.invoke(dbMetaData, new Object[]
+    { new Integer(resultSetType) });
     dbProperties.put(name, propertyValue);
   }
 
@@ -202,7 +189,7 @@ final class DatabaseInfoRetriever
    * Derives the property name from the method name.
    * 
    * @param method
-   *          Method
+   *        Method
    * @return Method name
    */
   private String derivePropertyName(final Method method)
@@ -228,8 +215,8 @@ final class DatabaseInfoRetriever
   {
     final Class returnType = method.getReturnType();
     boolean notPropertyMethod = returnType.equals(ResultSet.class)
-                                || returnType.equals(Connection.class)
-                                || method.getParameterTypes().length > 0;
+        || returnType.equals(Connection.class)
+        || method.getParameterTypes().length > 0;
     return !notPropertyMethod;
   }
 
@@ -243,8 +230,8 @@ final class DatabaseInfoRetriever
   {
     final Class returnType = method.getReturnType();
     final boolean isPropertiesResultSetMethod = returnType
-      .equals(ResultSet.class)
-                                                && method.getParameterTypes().length == 0;
+        .equals(ResultSet.class)
+        && method.getParameterTypes().length == 0;
     return isPropertiesResultSetMethod;
   }
 
@@ -256,20 +243,13 @@ final class DatabaseInfoRetriever
    */
   private boolean isDatabasePropertyResultSetType(final Method method)
   {
-    final List resultSetTypeMethods = Arrays.asList(new String[] {
-      "deletesAreDetected",
-      "insertsAreDetected",
-      "updatesAreDetected",
-      "othersDeletesAreVisible",
-      "othersInsertsAreVisible",
-      "othersUpdatesAreVisible",
-      "ownDeletesAreVisible",
-      "ownInsertsAreVisible",
-      "ownUpdatesAreVisible",
-      "supportsResultSetType"
-    });
+    final List resultSetTypeMethods = Arrays.asList(new String[]
+    { "deletesAreDetected", "insertsAreDetected", "updatesAreDetected",
+     "othersDeletesAreVisible", "othersInsertsAreVisible",
+     "othersUpdatesAreVisible", "ownDeletesAreVisible", "ownInsertsAreVisible",
+     "ownUpdatesAreVisible", "supportsResultSetType" });
     final boolean isDatabasePropertyResultSetType = resultSetTypeMethods
-      .contains(method.getName());
+        .contains(method.getName());
     return isDatabasePropertyResultSetType;
   }
 
@@ -277,7 +257,7 @@ final class DatabaseInfoRetriever
    * Reads a single column result set as a list.
    * 
    * @param results
-   *          Result set
+   *        Result set
    * @return List
    * @throws SQLException
    */
@@ -304,21 +284,19 @@ final class DatabaseInfoRetriever
    * Retrieves type metadata.
    * 
    * @param dbInfo
-   *          Database info
+   *        Database info
    * @throws SQLException
-   *           On a SQL exception
+   *         On a SQL exception
    */
   void retrieveColumnDataTypes(final MutableDatabaseInfo dbInfo)
     throws SQLException
   {
-    LOGGER.entering(getClass().getName(),
-                    "retrieveColumnDataTypes",
-                    new Object[] {
-                      dbInfo
-                    });
+    LOGGER.entering(getClass().getName(), "retrieveColumnDataTypes",
+        new Object[]
+        { dbInfo });
 
     final ResultSet results = getRetrieverConnection().getMetaData()
-      .getTypeInfo();
+        .getTypeInfo();
     try
     {
       while (results.next())
@@ -335,7 +313,7 @@ final class DatabaseInfoRetriever
         final int searchable = results.getInt("SEARCHABLE");
         final boolean isUnsigned = results.getBoolean("UNSIGNED_ATTRIBUTE");
         final boolean isFixedPrecisionScale = results
-          .getBoolean("FIXED_PREC_SCALE");
+            .getBoolean("FIXED_PREC_SCALE");
         final boolean isAutoIncremented = results.getBoolean("AUTO_INCREMENT");
         final String localTypeName = results.getString("LOCAL_TYPE_NAME");
         final int minimumScale = results.getInt("MINIMUM_SCALE");
@@ -374,24 +352,20 @@ final class DatabaseInfoRetriever
    * Retrieves type metadata.
    * 
    * @param dbInfo
-   *          Database info
+   *        Database info
    * @throws SQLException
-   *           On a SQL exception
+   *         On a SQL exception
    */
   void retrieveUserDefinedColumnDataTypes(final MutableDatabaseInfo dbInfo)
     throws SQLException
   {
-    LOGGER.entering(getClass().getName(),
-                    "retrieveUserDefinedColumnDataTypes",
-                    new Object[] {
-                      dbInfo
-                    });
+    LOGGER.entering(getClass().getName(), "retrieveUserDefinedColumnDataTypes",
+        new Object[]
+        { dbInfo });
 
-    final ResultSet results = getRetrieverConnection().getMetaData()
-      .getUDTs(getRetrieverConnection().getCatalog(),
-               getRetrieverConnection().getSchemaPattern(),
-               "%",
-               null);
+    final ResultSet results = getRetrieverConnection().getMetaData().getUDTs(
+        getRetrieverConnection().getCatalog(),
+        getRetrieverConnection().getSchemaPattern(), "%", null);
     try
     {
       while (results.next())

@@ -13,13 +13,12 @@ final class InformationSchemaViews
 
   private Properties informationSchemaViewsSql;
 
-  InformationSchemaViews(Properties informationSchemaViewsSql)
+  InformationSchemaViews(final Properties informationSchemaViewsSql)
   {
     if (informationSchemaViewsSql != null)
     {
       this.informationSchemaViewsSql = informationSchemaViewsSql;
-    }
-    else
+    } else
     {
       this.informationSchemaViewsSql = new Properties();
     }
@@ -33,7 +32,7 @@ final class InformationSchemaViews
   String getViewsSql()
   {
     return informationSchemaViewsSql
-      .getProperty("select.INFORMATION_SCHEMA.VIEWS");
+        .getProperty("select.INFORMATION_SCHEMA.VIEWS");
   }
 
   /**
@@ -45,7 +44,7 @@ final class InformationSchemaViews
   String getRoutinesSql()
   {
     return informationSchemaViewsSql
-      .getProperty("select.INFORMATION_SCHEMA.ROUTINES");
+        .getProperty("select.INFORMATION_SCHEMA.ROUTINES");
   }
 
   /**
@@ -56,7 +55,7 @@ final class InformationSchemaViews
   String getTableConstraintsSql()
   {
     return informationSchemaViewsSql
-      .getProperty("select.INFORMATION_SCHEMA.TABLE_CONSTRAINTS");
+        .getProperty("select.INFORMATION_SCHEMA.TABLE_CONSTRAINTS");
   }
 
   /**
@@ -68,7 +67,7 @@ final class InformationSchemaViews
   String getCheckConstraintsSql()
   {
     return informationSchemaViewsSql
-      .getProperty("select.INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
+        .getProperty("select.INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
   }
 
 }

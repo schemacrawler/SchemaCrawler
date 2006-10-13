@@ -24,9 +24,9 @@ package schemacrawler;
 import sf.util.Utilities;
 
 /**
- * Version information for this product. Has methods to obtain information about
- * the product, as well as a main method, so it can be called from the command
- * line.
+ * Version information for this product. Has methods to obtain
+ * information about the product, as well as a main method, so it can be
+ * called from the command line.
  * 
  * @author Sualeh Fatehi
  */
@@ -71,7 +71,7 @@ public final class Version
   public static String about()
   {
     return PRODUCTNAME + " " + VERSION + Utilities.NEWLINE
-           + "(c) 2003-2006 Sualeh Fatehi";
+        + "(c) 2003-2006 Sualeh Fatehi";
   }
 
   /**
@@ -88,7 +88,7 @@ public final class Version
    * Main routine. Prints information about this product.
    * 
    * @param args
-   *          Arguments to the main routine - they are ignored.
+   *        Arguments to the main routine - they are ignored.
    */
   public static void main(final String[] args)
   {

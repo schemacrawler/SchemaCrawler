@@ -28,8 +28,8 @@ import schemacrawler.schema.Privilege;
 import schemacrawler.util.NaturalSortComparator;
 
 /**
- * Represents a column in a database table. Created from metadata returned by a
- * JDBC call.
+ * Represents a column in a database table. Created from metadata
+ * returned by a JDBC call.
  * 
  * @author sfatehi
  * @version 0.1
@@ -61,7 +61,7 @@ final class MutableColumn
    * Setter for property default value.
    * 
    * @param defaultValue
-   *          New value of property default value.
+   *        New value of property default value.
    */
   void setDefaultValue(final String defaultValue)
   {
@@ -82,7 +82,7 @@ final class MutableColumn
    * Sets true if this column is a part of primary key.
    * 
    * @param partOfPrimaryKey
-   *          Is the column a part of primary key
+   *        Is the column a part of primary key
    */
   void setPartOfPrimaryKey(final boolean partOfPrimaryKey)
   {
@@ -103,7 +103,7 @@ final class MutableColumn
    * Sets true if this column is a unique index.
    * 
    * @param partOfUniqueIndex
-   *          Is the column a part of a unique index
+   *        Is the column a part of a unique index
    */
   void setPartOfUniqueIndex(final boolean partOfUniqueIndex)
   {
@@ -119,14 +119,14 @@ final class MutableColumn
   {
     final List allPrivileges = privileges.getAll();
     return (Privilege[]) allPrivileges.toArray(new Privilege[allPrivileges
-      .size()]);
+        .size()]);
   }
 
   /**
    * Adds a privilege to the collection.
    * 
    * @param privilege
-   *          Privilege
+   *        Privilege
    */
   void addPrivilege(final Privilege privilege)
   {

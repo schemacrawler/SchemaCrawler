@@ -33,14 +33,13 @@ public final class ProcedureColumnType
 
   private static final long serialVersionUID = 3256718481347981367L;
 
-  private static final ProcedureColumnType[] ALL = {
-    new ProcedureColumnType(DatabaseMetaData.procedureColumnUnknown, "?"),
-    new ProcedureColumnType(DatabaseMetaData.procedureColumnIn, "in"),
-    new ProcedureColumnType(DatabaseMetaData.procedureColumnInOut, "in/ out"),
-    new ProcedureColumnType(DatabaseMetaData.procedureColumnOut, "out"),
-    new ProcedureColumnType(DatabaseMetaData.procedureColumnReturn, "return"),
-    new ProcedureColumnType(DatabaseMetaData.procedureColumnResult, "result")
-  };
+  private static final ProcedureColumnType[] ALL =
+  { new ProcedureColumnType(DatabaseMetaData.procedureColumnUnknown, "?"),
+   new ProcedureColumnType(DatabaseMetaData.procedureColumnIn, "in"),
+   new ProcedureColumnType(DatabaseMetaData.procedureColumnInOut, "in/ out"),
+   new ProcedureColumnType(DatabaseMetaData.procedureColumnOut, "out"),
+   new ProcedureColumnType(DatabaseMetaData.procedureColumnReturn, "return"),
+   new ProcedureColumnType(DatabaseMetaData.procedureColumnResult, "result") };
 
   private final transient int id;
   private final transient String name;
@@ -86,7 +85,7 @@ public final class ProcedureColumnType
    * Find the enumeration value corresponding to the string.
    * 
    * @param id
-   *          int value of type
+   *        int value of type
    * @return Enumeration value
    */
   public static ProcedureColumnType valueOf(final int id)
@@ -107,7 +106,7 @@ public final class ProcedureColumnType
    * Value of the enumeration from the code.
    * 
    * @param name
-   *          Code
+   *        Code
    * @return Enumeration value
    */
   public static ProcedureColumnType valueOf(final String name)

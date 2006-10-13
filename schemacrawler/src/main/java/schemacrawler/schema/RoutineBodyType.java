@@ -31,9 +31,10 @@ public final class RoutineBodyType
 {
 
   private static final long serialVersionUID = 6162604444140905085L;
-  
+
   private static final RoutineBodyType SQL = new RoutineBodyType("SQL");
-  private static final RoutineBodyType EXTERNAL = new RoutineBodyType("EXTERNAL");
+  private static final RoutineBodyType EXTERNAL = new RoutineBodyType(
+      "EXTERNAL");
 
   private static final RoutineBodyType[] ALL =
   { SQL, EXTERNAL, };
@@ -82,7 +83,7 @@ public final class RoutineBodyType
    * Find the enumeration value corresponding to the string.
    * 
    * @param typeString
-   *          String value of table type
+   *        String value of table type
    * @return Enumeration value
    */
   public static RoutineBodyType valueOf(final String typeString)

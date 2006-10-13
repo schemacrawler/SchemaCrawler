@@ -43,12 +43,12 @@ final class OperatorHTMLOutput
    * Constructs a new table dropper.
    * 
    * @param operation
-   *          Operation to perform.
+   *        Operation to perform.
    * @param connection
-   *          Database connection to use
+   *        Database connection to use
    */
   OperatorHTMLOutput(final OperatorOptions options, final String query,
-                     final Connection connection, final DataHandler dataHandler)
+      final Connection connection, final DataHandler dataHandler)
     throws SchemaCrawlerException
   {
     super(options, query, connection, dataHandler);
@@ -68,7 +68,7 @@ final class OperatorHTMLOutput
     }
     out.print("<table>");
     out.println("  <caption>" + getOperation().getOperationDescription()
-                + "</caption>");
+        + "</caption>");
   }
 
   /**
@@ -83,7 +83,7 @@ final class OperatorHTMLOutput
     if (!getNoFooter())
     {
       out.println("<pre id='tableCount'>" + getTableCount() + " tables"
-                  + "</pre>");
+          + "</pre>");
       out.println(FormatUtils.HTML_FOOTER);
     }
     super.end();
@@ -110,8 +110,7 @@ final class OperatorHTMLOutput
    *      java.lang.String, java.lang.String, int, java.lang.String)
    */
   public void handleTable(final int ordinalPosition, final String tableName,
-                          final String tableType, final long count,
-                          final String message)
+      final String tableType, final long count, final String message)
   {
 
     out.print("<tr>");

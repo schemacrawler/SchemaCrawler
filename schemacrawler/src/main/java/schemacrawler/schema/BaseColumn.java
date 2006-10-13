@@ -67,8 +67,9 @@ public interface BaseColumn
   int getOrdinalPosition();
 
   /**
-   * Gets the width of the column, if the column width is required. (Column
-   * width is not siginificant for column types such as TIME and DATE.)
+   * Gets the width of the column, if the column width is required.
+   * (Column width is not siginificant for column types such as TIME and
+   * DATE.)
    * 
    * @return Column width as a String
    */

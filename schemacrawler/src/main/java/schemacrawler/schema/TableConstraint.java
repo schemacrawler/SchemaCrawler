@@ -36,7 +36,7 @@ public interface TableConstraint
    * @return Constraint type
    */
   ConstraintType getType();
-  
+
   /**
    * Whether the constraint is deferrable.
    * 
@@ -48,7 +48,7 @@ public interface TableConstraint
    * Whether the constraint is initially deferred.
    * 
    * @return Whether the constraint is initially deferred
-   */  
+   */
   boolean isInitiallyDeferred();
 
   /**
@@ -57,5 +57,5 @@ public interface TableConstraint
    * @return Definition
    */
   String getDefinition();
-  
+
 }

@@ -25,8 +25,8 @@ import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.ProcedureColumnType;
 
 /**
- * Represents a column in a database table. Created from metadata returned by a
- * JDBC call.
+ * Represents a column in a database table. Created from metadata
+ * returned by a JDBC call.
  * 
  * @author sfatehi
  */
@@ -53,7 +53,7 @@ final class MutableProcedureColumn
    * Sets the precision.
    * 
    * @param precision
-   *          Precision
+   *        Precision
    */
   void setPrecision(final int precision)
   {

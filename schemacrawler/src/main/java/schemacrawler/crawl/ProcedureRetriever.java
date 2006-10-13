@@ -32,28 +32,29 @@ import schemacrawler.schema.ProcedureType;
 import schemacrawler.util.AlphabeticalSortComparator;
 
 /**
- * SchemaRetriever uses database metadata to get the details about the schema.
+ * SchemaRetriever uses database metadata to get the details about the
+ * schema.
  * 
  * @author sfatehi
  */
 final class ProcedureRetriever
   extends AbstractRetriever
 {
-  
+
   private static final Logger LOGGER = Logger
-    .getLogger(ProcedureRetriever.class.getName());
+      .getLogger(ProcedureRetriever.class.getName());
 
   /**
    * Constructs a SchemaCrawler object, from a connection.
    * 
    * @param connection
-   *          An open database connection.
+   *        An open database connection.
    * @param driverClassName
-   *          Class name of the JDBC driver
+   *        Class name of the JDBC driver
    * @param schemaPatternString
-   *          JDBC schema pattern, or null
+   *        JDBC schema pattern, or null
    * @throws SQLException
-   *           On a SQL exception
+   *         On a SQL exception
    */
   ProcedureRetriever(final RetrieverConnection retrieverConnection)
     throws SQLException
@@ -62,20 +63,20 @@ final class ProcedureRetriever
   }
 
   /**
-   * Retrieves procedure metadata according to the parameters specified. No
-   * column metadata is retrieved, for reasons of efficiency.
+   * Retrieves procedure metadata according to the parameters specified.
+   * No column metadata is retrieved, for reasons of efficiency.
    * 
    * @param pattern
-   *          Procedure name pattern for table
+   *        Procedure name pattern for table
    * @param useRegExpPattern
-   *          True is the procedure name pattern is a regular expression; false
-   *          if the procedure name pattern is the JDBC pattern
+   *        True is the procedure name pattern is a regular expression;
+   *        false if the procedure name pattern is the JDBC pattern
    * @return A list of tables in the database that match the pattern
    * @throws SQLException
-   *           On a SQL exception
+   *         On a SQL exception
    */
   NamedObjectList retrieveProcedures(final boolean retrieveProcedures,
-                                     final InclusionRule procedureInclusionRule)
+      final InclusionRule procedureInclusionRule)
     throws SQLException
   {
 
@@ -90,8 +91,8 @@ final class ProcedureRetriever
     final ResultSet results;
 
     // get tables
-    results = getRetrieverConnection().getMetaData()
-      .getProcedures(null, getRetrieverConnection().getSchemaPattern(), "%");
+    results = getRetrieverConnection().getMetaData().getProcedures(null,
+        getRetrieverConnection().getSchemaPattern(), "%");
     try
     {
       results.setFetchSize(FETCHSIZE);
@@ -129,16 +130,17 @@ final class ProcedureRetriever
   }
 
   /**
-   * Retrieves a list of columns from the database, for the table specified.
+   * Retrieves a list of columns from the database, for the table
+   * specified.
    * 
    * @param procedure
-   *          Table for which data is required.
+   *        Table for which data is required.
    * @throws SQLException
-   *           On a SQL exception
+   *         On a SQL exception
    */
   void retrieveProcedureColumns(final MutableProcedure procedure,
-                                final InclusionRule columnInclusionRule,
-                                final NamedObjectList columnDataTypes)
+      final InclusionRule columnInclusionRule,
+      final NamedObjectList columnDataTypes)
     throws SQLException
   {
 
@@ -147,11 +149,8 @@ final class ProcedureRetriever
 
     final ResultSet results;
 
-    results = getRetrieverConnection().getMetaData()
-      .getProcedureColumns(getRetrieverConnection().getCatalog(),
-                           schema,
-                           procedureName,
-                           null);
+    results = getRetrieverConnection().getMetaData().getProcedureColumns(
+        getRetrieverConnection().getCatalog(), schema, procedureName, null);
     int ordinalNumber = 0;
     while (results.next())
     {

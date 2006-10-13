@@ -79,7 +79,7 @@ abstract class AbstractDependantNamedObject
    * Sets the parent object.
    * 
    * @param parent
-   *          Parent
+   *        Parent
    */
   void setParent(final NamedObject parent)
   {
@@ -97,6 +97,10 @@ abstract class AbstractDependantNamedObject
    */
   public boolean equals(final Object o)
   {
+    if (o == null)
+    {
+      return false;
+    }
     final DependantNamedObject childObject = (DependantNamedObject) o;
     if (!super.equals(childObject))
     {

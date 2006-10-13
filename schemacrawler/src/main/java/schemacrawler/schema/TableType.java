@@ -45,16 +45,9 @@ public final class TableType
 
   private static final long serialVersionUID = 3546925783735220534L;
 
-  private static final TableType[] ALL = {
-    UNKNOWN,
-    TABLE,
-    VIEW,
-    SYSTEM_TABLE,
-    GLOBAL_TEMPORARY,
-    LOCAL_TEMPORARY,
-    ALIAS,
-    SYNONYM,
-  };
+  private static final TableType[] ALL =
+  { UNKNOWN, TABLE, VIEW, SYSTEM_TABLE, GLOBAL_TEMPORARY, LOCAL_TEMPORARY,
+   ALIAS, SYNONYM, };
 
   private final int id;
   private final String name;
@@ -120,7 +113,7 @@ public final class TableType
    * Find the enumeration value corresponding to the string.
    * 
    * @param tableTypeString
-   *          String value of table type
+   *        String value of table type
    * @return Enumeration value
    */
   public static TableType valueOf(final String tableTypeString)
@@ -142,11 +135,11 @@ public final class TableType
   }
 
   /**
-   * Converts an array of string table types to an array of their corresponding
-   * enumeration values.
+   * Converts an array of string table types to an array of their
+   * corresponding enumeration values.
    * 
    * @param tableTypeStrings
-   *          Array of string table types
+   *        Array of string table types
    * @return Array of table types
    */
   public static TableType[] valueOf(final String[] tableTypeStrings)
@@ -168,11 +161,11 @@ public final class TableType
   }
 
   /**
-   * Converts an array of table types to an array of their corresponding string
-   * values.
+   * Converts an array of table types to an array of their corresponding
+   * string values.
    * 
    * @param tableTypes
-   *          Array of table types
+   *        Array of table types
    * @return Array of string table types
    */
   public static String[] toStringArray(final TableType[] tableTypes)
@@ -194,7 +187,7 @@ public final class TableType
     }
 
     return (String[]) tableTypeStrings.toArray(new String[tableTypeStrings
-      .size()]);
+        .size()]);
   }
 
   // The 4 declarations below are necessary for serialization

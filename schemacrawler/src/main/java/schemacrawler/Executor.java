@@ -15,11 +15,11 @@ public interface Executor
    * Executes main functionality for SchemaCrawler.
    * 
    * @param options
-   *          Options
+   *        Options
    * @param dataSource
-   *          Datasource
+   *        Datasource
    * @throws Exception
-   *           On an exception
+   *         On an exception
    */
   void execute(final Options options, final DataSource dataSource)
     throws Exception;

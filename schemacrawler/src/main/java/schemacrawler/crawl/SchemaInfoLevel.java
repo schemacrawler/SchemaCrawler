@@ -49,9 +49,8 @@ public final class SchemaInfoLevel
   public static final SchemaInfoLevel MAXIMUM = new SchemaInfoLevel(3,
       "MAXIMUM");
 
-  private static final SchemaInfoLevel[] SCHEMA_INFO_LEVEL_ALL = {
-    MINIMUM, BASIC, VERBOSE, MAXIMUM
-  };
+  private static final SchemaInfoLevel[] SCHEMA_INFO_LEVEL_ALL =
+  { MINIMUM, BASIC, VERBOSE, MAXIMUM };
 
   private final int infoLevelId;
   private final String infoLevelName;
@@ -71,7 +70,7 @@ public final class SchemaInfoLevel
    * Checks if this is greater than the provided info level.
    * 
    * @param infoLevel
-   *          Info level to check against
+   *        Info level to check against
    * @return Yes if this is greater
    */
   public boolean isGreaterThan(final SchemaInfoLevel infoLevel)
@@ -83,7 +82,7 @@ public final class SchemaInfoLevel
    * Checks if this is greater than or equal to the provided info level.
    * 
    * @param infoLevel
-   *          Info level to check against
+   *        Info level to check against
    * @return Yes if this is greater or equal to
    */
   public boolean isGreaterThanOrEqualTo(final SchemaInfoLevel infoLevel)
@@ -105,7 +104,7 @@ public final class SchemaInfoLevel
    * Find the enumeration value corresponding to the string.
    * 
    * @param infoLevelString
-   *          String value of table type
+   *        String value of table type
    * @return Enumeration value
    */
   public static SchemaInfoLevel valueOf(final String infoLevelString)

@@ -42,9 +42,8 @@ public final class ColumnInfoLevel
    */
   public static final ColumnInfoLevel VERBOSE = new ColumnInfoLevel("VERBOSE");
 
-  private static final ColumnInfoLevel[] COLUMN_INFO_LEVEL_ALL = {
-    NONE, BASIC, VERBOSE
-  };
+  private static final ColumnInfoLevel[] COLUMN_INFO_LEVEL_ALL =
+  { NONE, BASIC, VERBOSE };
 
   private final String levelName;
 
@@ -67,7 +66,7 @@ public final class ColumnInfoLevel
    * Find the enumeration value corresponding to the string.
    * 
    * @param columnInfoLevelString
-   *          String value of table type
+   *        String value of table type
    * @return Enumeration value
    */
   public static ColumnInfoLevel valueOf(final String columnInfoLevelString)
@@ -77,8 +76,8 @@ public final class ColumnInfoLevel
 
     for (int i = 0; i < COLUMN_INFO_LEVEL_ALL.length; i++)
     {
-      if (COLUMN_INFO_LEVEL_ALL[i].toString()
-        .equalsIgnoreCase(columnInfoLevelString))
+      if (COLUMN_INFO_LEVEL_ALL[i].toString().equalsIgnoreCase(
+          columnInfoLevelString))
       {
         columnInfoLevel = COLUMN_INFO_LEVEL_ALL[i];
         break;

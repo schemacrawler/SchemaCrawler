@@ -46,7 +46,7 @@ final class MutableProcedure
 
   private ProcedureType procedureType;
   private final NamedObjectList columns = new NamedObjectList(
-                                                              new NaturalSortComparator());
+      new NaturalSortComparator());
   private RoutineBodyType routineBodyType;
   private String definition;
 
@@ -84,7 +84,7 @@ final class MutableProcedure
   {
     final List allColumns = columns.getAll();
     return (ProcedureColumn[]) allColumns
-      .toArray(new ProcedureColumn[allColumns.size()]);
+        .toArray(new ProcedureColumn[allColumns.size()]);
   }
 
   /**
@@ -113,7 +113,7 @@ final class MutableProcedure
     return routineBodyType;
   }
 
-  void setRoutineBodyType(RoutineBodyType routineBodyType)
+  void setRoutineBodyType(final RoutineBodyType routineBodyType)
   {
     this.routineBodyType = routineBodyType;
   }
@@ -128,7 +128,7 @@ final class MutableProcedure
     return definition;
   }
 
-  void setDefinition(String definition)
+  void setDefinition(final String definition)
   {
     this.definition = definition;
   }

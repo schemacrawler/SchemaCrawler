@@ -38,10 +38,10 @@ final class CachingCrawlerHandler
 
   /**
    * @param writer
-   *          Writer to output to.
+   *        Writer to output to.
    */
   CachingCrawlerHandler(final String catalogName,
-                        final SchemaInfoLevel columnInfoLevel)
+      final SchemaInfoLevel columnInfoLevel)
   {
     schema = new MutableSchema();
     schema.setName("schema");
@@ -91,7 +91,7 @@ final class CachingCrawlerHandler
    * Provides information on the database schema.
    * 
    * @param table
-   *          Table metadata.
+   *        Table metadata.
    */
   public void handle(final Table table)
   {
@@ -102,7 +102,7 @@ final class CachingCrawlerHandler
    * Provides information on the database schema.
    * 
    * @param procedure
-   *          Procedure metadata.
+   *        Procedure metadata.
    */
   public void handle(final Procedure procedure)
   {

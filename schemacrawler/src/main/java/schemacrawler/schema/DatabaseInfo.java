@@ -93,7 +93,7 @@ public interface DatabaseInfo
    * Gets a database property.
    * 
    * @param name
-   *          Name of the property.
+   *        Name of the property.
    * @return Value of the property.
    */
   Object getProperty(String name);

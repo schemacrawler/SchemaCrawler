@@ -46,7 +46,7 @@ public final class Main
   static
   {
     final byte[] text = Utilities.readFully(Main.class
-      .getResourceAsStream("/schemacrawler-readme.txt"));
+        .getResourceAsStream("/schemacrawler-readme.txt"));
     info = new String(text);
 
   }
@@ -66,9 +66,9 @@ public final class Main
    * schema.<BR>
    * 
    * @param args
-   *          Arguments passed into the program from the command line.
+   *        Arguments passed into the program from the command line.
    * @throws Exception
-   *           On an exception
+   *         On an exception
    */
   public static void main(final String[] args)
     throws Exception
@@ -89,11 +89,11 @@ public final class Main
    * Velocity.
    * 
    * @param args
-   *          Command line arguments
+   *        Command line arguments
    * @param executor
-   *          Executor
+   *        Executor
    * @throws Exception
-   *           On an exception
+   *         On an exception
    */
   public static void doMain(final String[] args, final Executor executor)
     throws Exception
@@ -114,12 +114,12 @@ public final class Main
         final Options options = optionCommands[i];
         LOGGER.log(Level.CONFIG, options.toString());
         final PropertiesDataSource dataSource = dbconnector.Main
-          .createDataSource(args, config);
+            .createDataSource(args, config);
         if (executor instanceof ToolsExecutor)
         {
           ((ToolsExecutor) executor)
-            .setAdditionalConnectionConfiguration(dataSource
-              .getSourceProperties());
+              .setAdditionalConnectionConfiguration(dataSource
+                  .getSourceProperties());
         }
         executor.execute(options, dataSource);
       }

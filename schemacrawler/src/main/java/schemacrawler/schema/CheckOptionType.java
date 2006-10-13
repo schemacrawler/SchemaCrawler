@@ -82,7 +82,7 @@ public final class CheckOptionType
    * Find the enumeration value corresponding to the string.
    * 
    * @param typeString
-   *          String value of table type
+   *        String value of table type
    * @return Enumeration value
    */
   public static CheckOptionType valueOf(final String typeString)

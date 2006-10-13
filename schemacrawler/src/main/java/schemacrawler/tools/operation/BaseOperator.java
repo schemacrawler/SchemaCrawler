@@ -53,7 +53,7 @@ public abstract class BaseOperator
 {
 
   private static final Logger LOGGER = Logger.getLogger(BaseOperator.class
-    .getName());
+      .getName());
 
   private final Connection connection;
   private final DataHandler dataHandler;
@@ -68,12 +68,12 @@ public abstract class BaseOperator
    * Constructs a new table dropper.
    * 
    * @param operation
-   *          Operation to perform.
+   *        Operation to perform.
    * @param connection
-   *          Database connection to use
+   *        Database connection to use
    */
   BaseOperator(final OperatorOptions options, final String query,
-               final Connection connection, final DataHandler dataHandler)
+      final Connection connection, final DataHandler dataHandler)
     throws SchemaCrawlerException
   {
     if (options == null)
@@ -122,7 +122,7 @@ public abstract class BaseOperator
     {
       out = options.getOutputOptions().getOutputWriter();
     }
-    catch (IOException e)
+    catch (final IOException e)
     {
       throw new SchemaCrawlerException("Could not obtain output writer", e);
     }
@@ -233,7 +233,7 @@ public abstract class BaseOperator
     // Create sql
     String sql = null;
     sql = Utilities.expandTemplateFromProperties(query,
-                                                 createTableProperties(table));
+        createTableProperties(table));
     sql = Utilities.expandTemplateFromProperties(sql);
     LOGGER.fine("Executing: " + sql);
 
@@ -248,8 +248,7 @@ public abstract class BaseOperator
         if (operation.isAggregateOperation())
         {
           handleAggregateOperationForTable(table, results);
-        }
-        else
+        } else
         {
           handleOperationForTable(table, results);
         }
@@ -285,14 +284,14 @@ public abstract class BaseOperator
    * Handles an operation, for a given table.
    * 
    * @param table
-   *          Table
+   *        Table
    * @param results
-   *          Results
+   *        Results
    * @throws SQLException
-   *           On an exception
+   *         On an exception
    */
   private void handleOperationForTable(final Table table,
-                                       final ResultSet results)
+      final ResultSet results)
     throws QueryExecutorException
   {
     dataHandler.handleTitle(table.getName());
@@ -303,14 +302,14 @@ public abstract class BaseOperator
    * Handles an aggregate operation, such as a count, for a given table.
    * 
    * @param table
-   *          Table
+   *        Table
    * @param results
-   *          Results
+   *        Results
    * @throws SQLException
-   *           On an exception
+   *         On an exception
    */
   private void handleAggregateOperationForTable(final Table table,
-                                                final ResultSet results)
+      final ResultSet results)
     throws SQLException
   {
     long aggregate = 0;
@@ -319,11 +318,8 @@ public abstract class BaseOperator
       aggregate = results.getLong(1);
     }
     final String message = getMessage(aggregate);
-    handleTable(tableCount,
-                table.getName(),
-                table.getType().toString(),
-                aggregate,
-                message);
+    handleTable(tableCount, table.getName(), table.getType().toString(),
+        aggregate, message);
   }
 
   private Properties createTableProperties(final Table table)
@@ -342,15 +338,13 @@ public abstract class BaseOperator
     if (Utilities.isIntegral(aggregate))
     {
       number = new Integer((int) aggregate);
-    }
-    else
+    } else
     {
       number = new Double(aggregate);
     }
     final String message = MessageFormat.format(operation
-      .getCountMessageFormat(), new Object[] {
-      number
-    });
+        .getCountMessageFormat(), new Object[]
+    { number });
     return message;
   }
 
@@ -358,20 +352,19 @@ public abstract class BaseOperator
    * Prints information on the table.
    * 
    * @param ordinalPosition
-   *          Position of table in the schema
+   *        Position of table in the schema
    * @param tableName
-   *          Table name
+   *        Table name
    * @param tableType
-   *          Table type
+   *        Table type
    * @param count
-   *          Count
+   *        Count
    * @param message
-   *          Message to print
+   *        Message to print
    */
   public abstract void handleTable(final int ordinalPosition,
-                                   final String tableName,
-                                   final String tableType, final long count,
-                                   final String message);
+      final String tableName, final String tableType, final long count,
+      final String message);
 
   boolean getNoFooter()
   {

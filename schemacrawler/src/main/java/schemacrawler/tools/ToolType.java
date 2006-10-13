@@ -46,9 +46,8 @@ public final class ToolType
    */
   public static final ToolType DATA_TEXT = new ToolType("datatext");
 
-  private static final ToolType[] TOOL_TYPE_ALL = {
-    SCHEMA_TEXT, OPERATION, DATA_TEXT,
-  };
+  private static final ToolType[] TOOL_TYPE_ALL =
+  { SCHEMA_TEXT, OPERATION, DATA_TEXT, };
 
   private final transient String toolType;
 
@@ -62,7 +61,7 @@ public final class ToolType
    * Find the enumeration value corresponding to the string.
    * 
    * @param toolTypeString
-   *          Value of tool type
+   *        Value of tool type
    * @return Enumeration value
    */
   public static ToolType valueOf(final String toolTypeString)

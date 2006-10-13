@@ -32,8 +32,9 @@ public interface CrawlHandler
 {
 
   /**
-   * Hint for the level detail requires. Helps SchemaCrawler optimize the
-   * metadata queries. One of the level constants defined in SchemaCrawler.
+   * Hint for the level detail requires. Helps SchemaCrawler optimize
+   * the metadata queries. One of the level constants defined in
+   * SchemaCrawler.
    * 
    * @return Level hint
    */
@@ -43,7 +44,7 @@ public interface CrawlHandler
    * Handles the begin of the crawl.
    * 
    * @throws SchemaCrawlerException
-   *           On an exception
+   *         On an exception
    */
   void begin()
     throws SchemaCrawlerException;
@@ -52,7 +53,7 @@ public interface CrawlHandler
    * Handles the end of the crawl.
    * 
    * @throws SchemaCrawlerException
-   *           On an exception
+   *         On an exception
    */
   void end()
     throws SchemaCrawlerException;
@@ -61,9 +62,9 @@ public interface CrawlHandler
    * Provides information on the database schema.
    * 
    * @param table
-   *          Table information
+   *        Table information
    * @throws SchemaCrawlerException
-   *           On an exception
+   *         On an exception
    */
   void handle(final Table table)
     throws SchemaCrawlerException;
@@ -72,9 +73,9 @@ public interface CrawlHandler
    * Provides information on the database schema.
    * 
    * @param procedure
-   *          Procedure information
+   *        Procedure information
    * @throws SchemaCrawlerException
-   *           On an exception
+   *         On an exception
    */
   void handle(final Procedure procedure)
     throws SchemaCrawlerException;
@@ -83,9 +84,9 @@ public interface CrawlHandler
    * Provides information on the database schema.
    * 
    * @param databaseInfo
-   *          Database information
+   *        Database information
    * @throws SchemaCrawlerException
-   *           On an exception
+   *         On an exception
    */
   void handle(final DatabaseInfo databaseInfo)
     throws SchemaCrawlerException;

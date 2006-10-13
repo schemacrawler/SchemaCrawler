@@ -1,16 +1,21 @@
-/*
- * SchemaCrawler http://sourceforge.net/projects/schemacrawler Copyright
- * (c) 2000-2006, Sualeh Fatehi. This library is free software; you can
- * redistribute it and/or modify it under the terms of the GNU Lesser
- * General Public License as published by the Free Software Foundation;
- * either version 2.1 of the License, or (at your option) any later
- * version. This library is distributed in the hope that it will be
- * useful, but WITHOUT ANY WARRANTY; without even the implied warranty
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details. You should have
- * received a copy of the GNU Lesser General Public License along with
- * this library; if not, write to the Free Software Foundation, Inc., 59
- * Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+/* 
+ *
+ * SchemaCrawler
+ * http://sourceforge.net/projects/schemacrawler
+ * Copyright (c) 2000-2006, Sualeh Fatehi.
+ *
+ * This library is free software; you can redistribute it and/or modify it under the terms
+ * of the GNU Lesser General Public License as published by the Free Software Foundation;
+ * either version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * Boston, MA 02111-1307, USA.
+ *
  */
 
 package schemacrawler.crawl;
@@ -52,13 +57,13 @@ final class TableRetriever
    * Constructs a SchemaCrawler object, from a connection.
    * 
    * @param connection
-   *          An open database connection.
+   *        An open database connection.
    * @param driverClassName
-   *          Class name of the JDBC driver
+   *        Class name of the JDBC driver
    * @param schemaPatternString
-   *          JDBC schema pattern, or null
+   *        JDBC schema pattern, or null
    * @throws SQLException
-   *           On a SQL exception
+   *         On a SQL exception
    */
   TableRetriever(final RetrieverConnection retrieverConnection)
     throws SQLException
@@ -71,15 +76,15 @@ final class TableRetriever
    * column metadata is retrieved, for reasons of efficiency.
    * 
    * @param tableTypes
-   *          Array of table types
+   *        Array of table types
    * @param tablePatternInclude
-   *          Table name pattern for table
+   *        Table name pattern for table
    * @param useRegExpPattern
-   *          True is the table name pattern is a regular expression;
-   *          false if the table name pattern is the JDBC pattern
+   *        True is the table name pattern is a regular expression;
+   *        false if the table name pattern is the JDBC pattern
    * @return A list of tables in the database that matech the pattern
    * @throws SQLException
-   *           On a SQL exception
+   *         On a SQL exception
    */
   NamedObjectList retrieveTables(final TableType[] tableTypes,
       final InclusionRule tableInclusionRule)
@@ -150,9 +155,9 @@ final class TableRetriever
    * specified.
    * 
    * @param table
-   *          Table for which data is required.
+   *        Table for which data is required.
    * @throws SQLException
-   *           On a SQL exception
+   *         On a SQL exception
    */
   void retrieveColumns(final MutableTable table,
       final InclusionRule columnInclusionRule,

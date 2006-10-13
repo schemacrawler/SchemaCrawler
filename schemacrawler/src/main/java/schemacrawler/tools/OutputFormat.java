@@ -52,9 +52,8 @@ public final class OutputFormat
    */
   public static final OutputFormat OTHER = new OutputFormat("other");
 
-  private static final OutputFormat[] TEXT_FORMAT_TYPE_ALL = {
-    TEXT, HTML, CSV, OTHER
-  };
+  private static final OutputFormat[] TEXT_FORMAT_TYPE_ALL =
+  { TEXT, HTML, CSV, OTHER };
 
   private final String name;
 
@@ -77,7 +76,7 @@ public final class OutputFormat
    * Find the enumeration value corresponding to the string.
    * 
    * @param outputFormatTypeString
-   *          String value of table type
+   *        String value of table type
    * @return Enumeration value
    */
   public static OutputFormat valueOf(final String outputFormatTypeString)
@@ -87,8 +86,8 @@ public final class OutputFormat
 
     for (int i = 0; i < TEXT_FORMAT_TYPE_ALL.length; i++)
     {
-      if (TEXT_FORMAT_TYPE_ALL[i].toString()
-        .equalsIgnoreCase(outputFormatTypeString))
+      if (TEXT_FORMAT_TYPE_ALL[i].toString().equalsIgnoreCase(
+          outputFormatTypeString))
       {
         outputFormatType = TEXT_FORMAT_TYPE_ALL[i];
         break;

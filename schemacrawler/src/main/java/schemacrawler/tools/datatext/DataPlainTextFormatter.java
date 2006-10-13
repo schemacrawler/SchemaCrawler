@@ -38,7 +38,9 @@ public final class DataPlainTextFormatter
    * Formats data as plain text for output.
    * 
    * @param options
-   *          Options
+   *        Options
+   * @throws SchemaCrawlerException
+   *         On an exception
    */
   public DataPlainTextFormatter(final DataTextFormatOptions options)
     throws SchemaCrawlerException
@@ -50,7 +52,7 @@ public final class DataPlainTextFormatter
    * Handles metadata information.
    * 
    * @param title
-   *          Execution title.
+   *        Execution title.
    */
   public void handleTitle(final String title)
   {
@@ -75,9 +77,9 @@ public final class DataPlainTextFormatter
    * Handles a row output.
    * 
    * @param columnNames
-   *          Names of the columns.
+   *        Names of the columns.
    * @param columnData
-   *          Column data.
+   *        Column data.
    */
   public void handleRow(final String[] columnNames, final String[] columnData)
   {

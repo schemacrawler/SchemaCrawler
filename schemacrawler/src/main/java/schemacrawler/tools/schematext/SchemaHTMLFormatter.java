@@ -43,20 +43,20 @@ public final class SchemaHTMLFormatter
   private static final String RECORD_END = "</tr>" + Utilities.NEWLINE;
   private static final String RECORD_BEGIN = "  <tr>";
   private static final String RECORD_EMPTY = "  <tr><td colspan='4'>&nbsp;</td></tr>"
-                                             + Utilities.NEWLINE;
+      + Utilities.NEWLINE;
   private static final String FIELD_BEGIN = "<td>";
   private static final String FIELD_END = "</td>" + Utilities.NEWLINE;
   private static final String FIELD_SEPARATOR = "</td>" + Utilities.NEWLINE
-                                                + "<td>";
+      + "<td>";
   private static final String FIELD_EMPTY = "<td></td>" + Utilities.NEWLINE;
 
   /**
    * Formats the schema as HTML for output.
    * 
    * @param options
-   *          Options
+   *        Options
    * @param writer
-   *          Writer to output to
+   *        Writer to output to
    */
   SchemaHTMLFormatter(final SchemaTextOptions options)
     throws SchemaCrawlerException
@@ -90,7 +90,7 @@ public final class SchemaHTMLFormatter
     if (!getNoFooter())
     {
       out.println("<pre id='tableCount'>" + getTableCount() + " tables"
-                  + "</pre>");
+          + "</pre>");
       out.println(FormatUtils.HTML_FOOTER);
       out.flush();
     }
@@ -126,13 +126,13 @@ public final class SchemaHTMLFormatter
   void handleColumnDataType(final ColumnDataType columnDataType)
   {
     final String databaseSpecificTypeName = columnDataType
-      .getDatabaseSpecificTypeName();
+        .getDatabaseSpecificTypeName();
     final String typeName = columnDataType.getTypeName();
     final String userDefined = negate(columnDataType.isUserDefined(),
-                                      "user defined");
+        "user defined");
     final String nullable = negate(columnDataType.isNullable(), "nullable");
     final String autoIncrementable = negate(columnDataType
-      .isAutoIncrementable(), "auto-incrementable");
+        .isAutoIncrementable(), "auto-incrementable");
     final String definedWith = makeDefinedWithString(columnDataType);
 
     out.println("<table>");
@@ -202,10 +202,11 @@ public final class SchemaHTMLFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see BaseSchemaTextFormatter#handleColumn(int, String, String, String)
+   * @see BaseSchemaTextFormatter#handleColumn(int, String, String,
+   *      String)
    */
   void handleColumn(final int ordinalNumber, final String name,
-                    final String type, final String symbol)
+      final String type, final String symbol)
   {
     out.print(RECORD_BEGIN);
     out.print(FIELD_BEGIN);
@@ -228,12 +229,11 @@ public final class SchemaHTMLFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see BaseSchemaTextFormatter#handleForeignKeyColumnPair(String, String,
-   *      int)
+   * @see BaseSchemaTextFormatter#handleForeignKeyColumnPair(String,
+   *      String, int)
    */
   void handleForeignKeyColumnPair(final String pkColumnName,
-                                  final String fkColumnName,
-                                  final int keySequence)
+      final String fkColumnName, final int keySequence)
   {
     out.print(RECORD_BEGIN);
     out.print(FIELD_BEGIN);
@@ -255,10 +255,11 @@ public final class SchemaHTMLFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see BaseSchemaTextFormatter#handleForeignKeyName(int, String, String)
+   * @see BaseSchemaTextFormatter#handleForeignKeyName(int, String,
+   *      String)
    */
   void handleForeignKeyName(final int ordinalNumber, final String name,
-                            final String updateRule)
+      final String updateRule)
   {
     out.println();
     out.print(RECORD_EMPTY);
@@ -280,12 +281,11 @@ public final class SchemaHTMLFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see BaseSchemaTextFormatter#handleIndexName(int, String, String, boolean,
-   *      String)
+   * @see BaseSchemaTextFormatter#handleIndexName(int, String, String,
+   *      boolean, String)
    */
   void handleIndexName(final int ordinalNumber, final String name,
-                       final String type, final boolean unique,
-                       final String sortSequence)
+      final String type, final boolean unique, final String sortSequence)
   {
     out.println();
     out.print(RECORD_EMPTY);
@@ -297,7 +297,7 @@ public final class SchemaHTMLFormatter
     }
     out.print(FIELD_END + FIELD_BEGIN_2);
     final String indexDetails = "[" + (unique? "": "non-") + "unique "
-                                + sortSequence + " " + type + " " + "index]";
+        + sortSequence + " " + type + " " + "index]";
     out.print(FormatUtils.htmlAlignRight(indexDetails));
     out.print(FIELD_END);
     out.print(RECORD_END);
@@ -329,11 +329,11 @@ public final class SchemaHTMLFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see BaseSchemaTextFormatter#handleProcedureColumn(int, String, String,
-   *      String)
+   * @see BaseSchemaTextFormatter#handleProcedureColumn(int, String,
+   *      String, String)
    */
   void handleProcedureColumn(final int ordinalNumber, final String name,
-                             final String type, final String procedureColumnType)
+      final String type, final String procedureColumnType)
   {
     out.print(RECORD_BEGIN);
     out.print(FIELD_BEGIN);
@@ -367,10 +367,11 @@ public final class SchemaHTMLFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see BaseSchemaTextFormatter#handleProcedureName(int, String, String)
+   * @see BaseSchemaTextFormatter#handleProcedureName(int, String,
+   *      String)
    */
   void handleProcedureName(final int ordinalNumber, final String name,
-                           final String type)
+      final String type)
   {
     out.print(RECORD_BEGIN);
     out.print(FIELD_BEGIN_2);
@@ -420,7 +421,7 @@ public final class SchemaHTMLFormatter
    * @see BaseSchemaTextFormatter#handleTableName(int, String, String)
    */
   void handleTableName(final int ordinalNumber, final String name,
-                       final String type)
+      final String type)
   {
     out.print(RECORD_BEGIN);
     out.print(FIELD_BEGIN_2);
@@ -443,15 +444,16 @@ public final class SchemaHTMLFormatter
     out.println("<table>");
   }
 
-  protected void handleDefinition(String definition)
+  protected void handleDefinition(final String definition)
   {
-    if (Utilities.isBlank(definition)) {
+    if (Utilities.isBlank(definition))
+    {
       return;
     }
     out.println("<table>");
     out.println("<tr><td>Definition:</td></tr>");
     out.println("<tr><td><pre>" + definition + "</pre></td></tr>");
-    out.println();    
+    out.println();
   }
-  
+
 }

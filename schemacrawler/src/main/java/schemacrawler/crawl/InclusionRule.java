@@ -27,8 +27,8 @@ import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 /**
- * Specifies inclusion and exclusion patterns that can be applied to the names
- * of database objects.
+ * Specifies inclusion and exclusion patterns that can be applied to the
+ * names of database objects.
  * 
  * @author sfatehi
  */
@@ -37,7 +37,7 @@ public final class InclusionRule
 {
 
   private static final Logger LOGGER = Logger.getLogger(InclusionRule.class
-    .getName());
+      .getName());
 
   private static final long serialVersionUID = 3443758881974362293L;
 
@@ -57,12 +57,12 @@ public final class InclusionRule
    * Constructor.
    * 
    * @param patternInclude
-   *          Inclusion pattern
+   *        Inclusion pattern
    * @param patternExclude
-   *          Exclusion pattern
+   *        Exclusion pattern
    */
   public InclusionRule(final Pattern patternInclude,
-                       final Pattern patternExclude)
+      final Pattern patternExclude)
   {
     super();
     this.patternInclude = patternInclude;
@@ -70,10 +70,11 @@ public final class InclusionRule
   }
 
   /**
-   * Adds a named object after considering the include and exclude patterns.
+   * Adds a named object after considering the include and exclude
+   * patterns.
    * 
    * @param name
-   *          Name to check
+   *        Name to check
    * @return Whether the name should be included or not
    */
   public boolean include(final String name)
@@ -82,14 +83,12 @@ public final class InclusionRule
     if (!patternInclude.matcher(name).matches())
     {
       LOGGER.log(Level.FINE, "Excluding " + name
-                             + " since it does not match the include pattern");
-    }
-    else if (patternExclude.matcher(name).matches())
+          + " since it does not match the include pattern");
+    } else if (patternExclude.matcher(name).matches())
     {
       LOGGER.log(Level.FINE, "Excluding " + name
-                             + " since it matches the exclude pattern");
-    }
-    else
+          + " since it matches the exclude pattern");
+    } else
     {
       LOGGER.log(Level.FINE, "Including " + name);
       include = true;
