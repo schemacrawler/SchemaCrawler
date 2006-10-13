@@ -36,13 +36,12 @@ public final class ConstraintType
   public static final ConstraintType CHECK = new ConstraintType("check");
   public static final ConstraintType UNIQUE = new ConstraintType("unique");
   public static final ConstraintType PRIMARY_KEY = new ConstraintType(
-                                                                      "primary key");
+      "primary key");
   public static final ConstraintType FOREIGN_KEY = new ConstraintType(
-                                                                      "foreign key");
+      "foreign key");
 
-  private static final ConstraintType[] ALL = {
-      UNKNOWN, CHECK, UNIQUE, PRIMARY_KEY, FOREIGN_KEY,
-  };
+  private static final ConstraintType[] ALL =
+  { UNKNOWN, CHECK, UNIQUE, PRIMARY_KEY, FOREIGN_KEY, };
 
   private final int id;
   private final String name;

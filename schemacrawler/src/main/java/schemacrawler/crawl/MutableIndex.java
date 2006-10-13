@@ -24,9 +24,11 @@ package schemacrawler.crawl;
 import java.util.List;
 
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ConstraintType;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexSortSequence;
 import schemacrawler.schema.IndexType;
+import schemacrawler.schema.TableConstraint;
 
 /**
  * Represents an index on a database table.
@@ -135,7 +137,7 @@ class MutableIndex
    * Adds a column.
    * 
    * @param column
-   *          Column
+   *        Column
    */
   void addColumn(final Column column)
   {
@@ -146,9 +148,9 @@ class MutableIndex
    * Adds a column at an ordinal position.
    * 
    * @param ordinalPosition
-   *          Oridinal position
+   *        Oridinal position
    * @param column
-   *          Column
+   *        Column
    */
   void addColumn(final int ordinalPosition, final Column column)
   {
@@ -158,9 +160,9 @@ class MutableIndex
   /**
    * {@inheritDoc}
    * <p>
-   * Note: Since indexes are not always explicitly named in databases, the
-   * sorting routine orders the indexes by the names of the columns in the
-   * index.
+   * Note: Since indexes are not always explicitly named in databases,
+   * the sorting routine orders the indexes by the names of the columns
+   * in the index.
    * <p>
    * 
    * @see AbstractNamedObject#compareTo(java.lang.Object)
@@ -184,14 +186,32 @@ class MutableIndex
       if (comparison == 0)
       {
         comparison = thisColumn.compareTo(otherColumn);
-      }
-      else
+      } else
       {
         break;
       }
     }
 
     return comparison;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public TableConstraint asTableConstraint()
+  {
+    if (!isUnique())
+    {
+      // Non-unique indexes are not constraints
+      return null;
+    }
+
+    final MutableTableConstraint constraint = new MutableTableConstraint();
+    constraint.setName(getName());
+    constraint.setParent(getParent());
+    constraint.setType(ConstraintType.UNIQUE);
+
+    return constraint;
   }
 
 }

@@ -22,8 +22,8 @@ package schemacrawler.schema;
 
 
 /**
- * A column type. Provide the java.sql.Types type, the java.sql.Types type name,
- * and the database specific data type name.
+ * A column type. Provide the java.sql.Types type, the java.sql.Types
+ * type name, and the database specific data type name.
  */
 public interface ColumnDataType
   extends NamedObject

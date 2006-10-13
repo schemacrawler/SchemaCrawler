@@ -31,14 +31,14 @@ public final class ForeignKeyDeferrability
   implements EnumType
 {
 
-  private static final ForeignKeyDeferrability[] FOREIGN_KEY_DEFERRABILITY_ALL = {
-    new ForeignKeyDeferrability(DatabaseMetaData.importedKeyInitiallyDeferred,
-        "initially deferred"),
-    new ForeignKeyDeferrability(DatabaseMetaData.importedKeyInitiallyImmediate,
-        "initially immediate"),
-    new ForeignKeyDeferrability(DatabaseMetaData.importedKeyNotDeferrable,
-        "not deferrable"),
-  };
+  private static final ForeignKeyDeferrability[] FOREIGN_KEY_DEFERRABILITY_ALL =
+  {
+   new ForeignKeyDeferrability(DatabaseMetaData.importedKeyInitiallyDeferred,
+       "initially deferred"),
+   new ForeignKeyDeferrability(DatabaseMetaData.importedKeyInitiallyImmediate,
+       "initially immediate"),
+   new ForeignKeyDeferrability(DatabaseMetaData.importedKeyNotDeferrable,
+       "not deferrable"), };
 
   // The declarations below are necessary for serialization
   private static int nextOrdinal;
@@ -50,7 +50,7 @@ public final class ForeignKeyDeferrability
    * Find the enumeration value corresponding to the string.
    * 
    * @param id
-   *          Id
+   *        Id
    * @return Enumeration value
    */
   public static ForeignKeyDeferrability valueOfFromId(final int id)
@@ -71,7 +71,7 @@ public final class ForeignKeyDeferrability
    * Value of the enumeration from the code.
    * 
    * @param fkDeferrabilityName
-   *          Code
+   *        Code
    * @return Enumeration value
    */
   public static ForeignKeyDeferrability valueOf(final String fkDeferrabilityName)
@@ -79,8 +79,8 @@ public final class ForeignKeyDeferrability
     ForeignKeyDeferrability fkDeferrability = null;
     for (int i = 0; i < FOREIGN_KEY_DEFERRABILITY_ALL.length; i++)
     {
-      if (FOREIGN_KEY_DEFERRABILITY_ALL[i].getName()
-        .equalsIgnoreCase(fkDeferrabilityName))
+      if (FOREIGN_KEY_DEFERRABILITY_ALL[i].getName().equalsIgnoreCase(
+          fkDeferrabilityName))
       {
         fkDeferrability = FOREIGN_KEY_DEFERRABILITY_ALL[i];
         break;

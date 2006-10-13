@@ -31,8 +31,8 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.SearchableType;
 
 /**
- * A column type. Provide the java.sql.Types type, the java.sql.Types type name,
- * and the database specific data type name.
+ * A column type. Provide the java.sql.Types type, the java.sql.Types
+ * type name, and the database specific data type name.
  */
 final class MutableColumnDataType
   extends AbstractNamedObject
@@ -72,17 +72,22 @@ final class MutableColumnDataType
 
   private boolean userDefined;
   private int type;
-  private long precision; // maximum precision, long to account for the Oracle driver
+  private long precision; // maximum precision, long to account for the
+  // Oracle driver
   private String literalPrefix; // prefix used to quote a literal
   private String literalSuffix; // suffix used to quote a literal
-  private String createParameters; // parameters used in creating the type
+  private String createParameters; // parameters used in creating the
+  // type
   private boolean nullable; // can you use null for this type
   private boolean caseSensitive; // is it case sensitive
-  private SearchableType searchable; // can you use "where" based on this type
+  private SearchableType searchable; // can you use "where" based on
+  // this type
   private boolean unsigned; // is it unsigned
   private boolean fixedPrecisionScale; // can it be a money value
-  private boolean autoIncrementable; // can it be used for auto-increment
-  private String localTypeName; // localized version of type name (may be null)
+  private boolean autoIncrementable; // can it be used for
+  // auto-increment
+  private String localTypeName; // localized version of type name (may
+  // be null)
   private int minimumScale; // minimum scale supported
   private int maximumScale; // maximum scale supported
   private int numPrecisionRadix; // usually 2 or 10
@@ -99,7 +104,7 @@ final class MutableColumnDataType
 
   /**
    * @param userDefined
-   *          The userDefined to set.
+   *        The userDefined to set.
    */
   void setUserDefined(final boolean userDefined)
   {
@@ -265,7 +270,7 @@ final class MutableColumnDataType
 
   /**
    * @param autoIncremented
-   *          The autoIncremented to set.
+   *        The autoIncremented to set.
    */
   void setAutoIncrementable(final boolean autoIncrementable)
   {
@@ -274,7 +279,7 @@ final class MutableColumnDataType
 
   /**
    * @param caseSensitive
-   *          The caseSensitive to set.
+   *        The caseSensitive to set.
    */
   void setCaseSensitive(final boolean caseSensitive)
   {
@@ -283,7 +288,7 @@ final class MutableColumnDataType
 
   /**
    * @param createParams
-   *          The createParams to set.
+   *        The createParams to set.
    */
   void setCreateParameters(final String createParams)
   {
@@ -292,7 +297,7 @@ final class MutableColumnDataType
 
   /**
    * @param fixedPrecisionScale
-   *          The fixedPrecisionScale to set.
+   *        The fixedPrecisionScale to set.
    */
   void setFixedPrecisionScale(final boolean fixedPrecisionScale)
   {
@@ -301,7 +306,7 @@ final class MutableColumnDataType
 
   /**
    * @param literalPrefix
-   *          The literalPrefix to set.
+   *        The literalPrefix to set.
    */
   void setLiteralPrefix(final String literalPrefix)
   {
@@ -310,7 +315,7 @@ final class MutableColumnDataType
 
   /**
    * @param literalSuffix
-   *          The literalSuffix to set.
+   *        The literalSuffix to set.
    */
   void setLiteralSuffix(final String literalSuffix)
   {
@@ -319,7 +324,7 @@ final class MutableColumnDataType
 
   /**
    * @param localTypeName
-   *          The localTypeName to set.
+   *        The localTypeName to set.
    */
   void setLocalTypeName(final String localTypeName)
   {
@@ -328,7 +333,7 @@ final class MutableColumnDataType
 
   /**
    * @param maximumScale
-   *          The maximumScale to set.
+   *        The maximumScale to set.
    */
   void setMaximumScale(final int maximumScale)
   {
@@ -337,7 +342,7 @@ final class MutableColumnDataType
 
   /**
    * @param minimumScale
-   *          The minimumScale to set.
+   *        The minimumScale to set.
    */
   void setMinimumScale(final int minimumScale)
   {
@@ -346,7 +351,7 @@ final class MutableColumnDataType
 
   /**
    * @param nullable
-   *          The nullable to set.
+   *        The nullable to set.
    */
   void setNullable(final boolean nullable)
   {
@@ -355,7 +360,7 @@ final class MutableColumnDataType
 
   /**
    * @param numPrecisionRadix
-   *          The numPrecisionRadix to set.
+   *        The numPrecisionRadix to set.
    */
   void setNumPrecisionRadix(final int numPrecisionRadix)
   {
@@ -364,7 +369,7 @@ final class MutableColumnDataType
 
   /**
    * @param precision
-   *          The precision to set.
+   *        The precision to set.
    */
   void setPrecision(final long precision)
   {
@@ -373,7 +378,7 @@ final class MutableColumnDataType
 
   /**
    * @param searchable
-   *          The searchable to set.
+   *        The searchable to set.
    */
   void setSearchable(final int searchable)
   {
@@ -382,7 +387,7 @@ final class MutableColumnDataType
 
   /**
    * @param unsignedAttribute
-   *          The unsignedAttribute to set.
+   *        The unsignedAttribute to set.
    */
   void setUnsigned(final boolean unsignedAttribute)
   {
@@ -395,7 +400,7 @@ final class MutableColumnDataType
   public boolean isCharacterType()
   {
     return type == Types.CHAR || type == Types.LONGVARCHAR
-           || type == Types.VARCHAR || type == Types.CLOB;
+        || type == Types.VARCHAR || type == Types.CLOB;
   }
 
   /**
@@ -404,7 +409,7 @@ final class MutableColumnDataType
   public boolean isRealType()
   {
     return type == Types.DECIMAL || type == Types.FLOAT || type == Types.REAL
-           || type == Types.DOUBLE || type == Types.NUMERIC;
+        || type == Types.DOUBLE || type == Types.NUMERIC;
   }
 
   /**
@@ -413,7 +418,7 @@ final class MutableColumnDataType
   public boolean isBinaryType()
   {
     return type == Types.CLOB || type == Types.BLOB
-           || type == Types.LONGVARBINARY || type == Types.OTHER;
+        || type == Types.LONGVARBINARY || type == Types.OTHER;
   }
 
   /**
@@ -422,7 +427,7 @@ final class MutableColumnDataType
   public boolean isIntegralType()
   {
     return type == Types.INTEGER || type == Types.BIGINT
-           || type == Types.SMALLINT || type == Types.TINYINT;
+        || type == Types.SMALLINT || type == Types.TINYINT;
   }
 
   /**

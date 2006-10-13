@@ -50,9 +50,8 @@ public final class Operation
   private static final Operation QUERYOVER = new Operation("QUERYOVER", "",
       "Query Over Table", "{0,choice,0#-|0<{0,number,integer}}");
 
-  private static final Operation[] OPERATION_ALL = new Operation[] {
-    COUNT, DROP, TRUNCATE, DUMP, QUERYOVER
-  };
+  private static final Operation[] OPERATION_ALL = new Operation[]
+  { COUNT, DROP, TRUNCATE, DUMP, QUERYOVER };
 
   private final transient String operation;
   private final transient String operationDescription;
@@ -60,7 +59,7 @@ public final class Operation
   private final transient String countMessageFormat;
 
   private Operation(final String name, final String description,
-                    final String query, final String countMessageFormat)
+      final String query, final String countMessageFormat)
   {
     ordinal = nextOrdinal++;
     operation = name;
@@ -158,7 +157,7 @@ public final class Operation
    * Find the enumeration value corresponding to the string.
    * 
    * @param operationString
-   *          String value of table type
+   *        String value of table type
    * @return Enumeration value
    */
   public static Operation valueOf(final String operationString)

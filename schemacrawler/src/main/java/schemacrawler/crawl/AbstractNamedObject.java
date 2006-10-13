@@ -42,7 +42,7 @@ abstract class AbstractNamedObject
    * Sets the name.
    * 
    * @param name
-   *          Name
+   *        Name
    */
   void setName(final String name)
   {
@@ -95,15 +95,14 @@ abstract class AbstractNamedObject
    * Setter for property remarks.
    * 
    * @param remarks
-   *          New value of property remarks.
+   *        New value of property remarks.
    */
   final void setRemarks(final String remarks)
   {
     if (remarks == null)
     {
       this.remarks = "";
-    }
-    else
+    } else
     {
       this.remarks = remarks;
     }

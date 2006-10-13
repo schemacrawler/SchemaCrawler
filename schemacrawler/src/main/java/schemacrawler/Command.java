@@ -42,17 +42,17 @@ final class Command
    * Creates a command.
    * 
    * @param textOutputFormatType
-   *          Type of text output to generate
+   *        Type of text output to generate
    * @param schemaTextDetailType
-   *          Text output detail
+   *        Text output detail
    * @param operation
-   *          Operation
+   *        Operation
    * @param query
-   *          Query
+   *        Query
    * @return Command
    */
   static Command createCommand(final SchemaTextDetailType schemaTextDetailType,
-                               final Operation operation, final String query)
+      final Operation operation, final String query)
   {
 
     ToolType toolType = null;
@@ -61,13 +61,11 @@ final class Command
     {
       // Single query
       toolType = ToolType.DATA_TEXT;
-    }
-    else if (schemaTextDetailType != null)
+    } else if (schemaTextDetailType != null)
     {
       // Crawl schema
       toolType = ToolType.SCHEMA_TEXT;
-    }
-    else if (operation != null)
+    } else if (operation != null)
     {
       // Operation
       toolType = ToolType.OPERATION;
@@ -87,8 +85,8 @@ final class Command
    * @param query
    */
   private Command(final ToolType toolType,
-                  final SchemaTextDetailType schemaTextDetailType,
-                  final Operation operation, final String query)
+      final SchemaTextDetailType schemaTextDetailType,
+      final Operation operation, final String query)
   {
     this.toolType = toolType;
     this.schemaTextDetailType = schemaTextDetailType;

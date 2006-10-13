@@ -41,7 +41,7 @@ public final class QueryExecutor
 {
 
   private static final Logger LOGGER = Logger.getLogger(QueryExecutor.class
-    .getName());
+      .getName());
 
   private final DataSource dataSource;
   private final DataHandler handler;
@@ -50,11 +50,11 @@ public final class QueryExecutor
    * Constructs a SchemaCrawler object, from a connection.
    * 
    * @param dataSource
-   *          A data source.
+   *        A data source.
    * @param handler
-   *          Execution handler.
+   *        Execution handler.
    * @throws QueryExecutorException
-   *           On query execution error
+   *         On query execution error
    */
   public QueryExecutor(final DataSource dataSource, final DataHandler handler)
     throws QueryExecutorException
@@ -75,12 +75,13 @@ public final class QueryExecutor
   }
 
   /**
-   * Executes a SQL statement, and calls the registered handler on events.
+   * Executes a SQL statement, and calls the registered handler on
+   * events.
    * 
    * @param query
-   *          SQL statement.
+   *        SQL statement.
    * @throws QueryExecutorException
-   *           On query execution error
+   *         On query execution error
    */
   public void executeSQL(final String query)
     throws QueryExecutorException
@@ -107,7 +108,7 @@ public final class QueryExecutor
     catch (final SQLException e)
     {
       throw new QueryExecutorException(e.getMessage() + " - when executing - "
-                                       + sql, e);
+          + sql, e);
     }
     finally
     {
@@ -129,7 +130,8 @@ public final class QueryExecutor
       }
       catch (final SQLException e)
       {
-        LOGGER.log(Level.WARNING, "Connection resources could not be released", e);
+        LOGGER.log(Level.WARNING, "Connection resources could not be released",
+            e);
       }
     }
 
@@ -143,7 +145,7 @@ public final class QueryExecutor
   public String toString()
   {
     return "QueryExecutor{" + "dataSource=" + dataSource + ", handler="
-           + handler + "}";
+        + handler + "}";
   }
 
 }

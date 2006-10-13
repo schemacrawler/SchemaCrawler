@@ -58,9 +58,10 @@ public abstract class BaseSchemaTextFormatter
 
   /**
    * @param writer
-   *          Writer to output to.
+   *        Writer to output to.
    */
-  BaseSchemaTextFormatter(final SchemaTextOptions options) throws SchemaCrawlerException
+  BaseSchemaTextFormatter(final SchemaTextOptions options)
+    throws SchemaCrawlerException
   {
     if (options == null)
     {
@@ -72,7 +73,7 @@ public abstract class BaseSchemaTextFormatter
     {
       out = options.getOutputOptions().getOutputWriter();
     }
-    catch (IOException e)
+    catch (final IOException e)
     {
       throw new SchemaCrawlerException("Could not obtain output writer", e);
     }
@@ -158,7 +159,7 @@ public abstract class BaseSchemaTextFormatter
       {
         final Map.Entry property = (Map.Entry) iter.next();
         handleDatabaseProperty((String) property.getKey(), property.getValue()
-          .toString());
+            .toString());
       }
       handleDatabasePropertiesEnd();
     }
@@ -180,8 +181,7 @@ public abstract class BaseSchemaTextFormatter
     if (columnDataType.getCreateParameters() == null)
     {
       definedWith = definedWith + "no parameters";
-    }
-    else
+    } else
     {
       definedWith = definedWith + columnDataType.getCreateParameters();
     }
@@ -200,7 +200,7 @@ public abstract class BaseSchemaTextFormatter
    * Provides information on the database schema.
    * 
    * @param procedure
-   *          Procedure metadata.
+   *        Procedure metadata.
    */
   public final void handle(final Procedure procedure)
   {
@@ -232,9 +232,7 @@ public abstract class BaseSchemaTextFormatter
         }
 
         handleProcedureColumn(column.getOrdinalPosition() + 1,
-                              column.getName(),
-                              columnType,
-                              procedureColumnType);
+            column.getName(), columnType, procedureColumnType);
       }
 
       handleProcedureEnd();
@@ -248,7 +246,7 @@ public abstract class BaseSchemaTextFormatter
    * Provides information on the database schema.
    * 
    * @param table
-   *          Table metadata.
+   *        Table metadata.
    */
   public final void handle(final Table table)
   {
@@ -257,7 +255,7 @@ public abstract class BaseSchemaTextFormatter
     handleTableName(++tableCount, table.getName(), table.getType().toString());
 
     final SchemaTextDetailType schemaTextDetailType = options
-      .getSchemaTextDetailType();
+        .getSchemaTextDetailType();
 
     if (schemaTextDetailType != SchemaTextDetailType.BRIEF)
     {
@@ -265,13 +263,15 @@ public abstract class BaseSchemaTextFormatter
       printColumns(table.getColumns());
     }
 
-    if (schemaTextDetailType.isGreaterThanOrEqualTo(SchemaTextDetailType.VERBOSE))
+    if (schemaTextDetailType
+        .isGreaterThanOrEqualTo(SchemaTextDetailType.VERBOSE))
     {
       printPrimaryKey(table.getPrimaryKey());
       printForeignKeys(table.getName(), table.getForeignKeys());
       printIndices(table.getIndices());
-      if (table instanceof View) {
-        View view = (View) table;
+      if (table instanceof View)
+      {
+        final View view = (View) table;
         handleDefinition(view.getDefinition());
       }
     }
@@ -286,67 +286,65 @@ public abstract class BaseSchemaTextFormatter
    * Handles the output for a column.
    * 
    * @param ordinalNumber
-   *          Ordinal number for the column
+   *        Ordinal number for the column
    * @param name
-   *          Column name
+   *        Column name
    * @param type
-   *          Column type
+   *        Column type
    * @param symbol
-   *          Symbol
+   *        Symbol
    */
   abstract void handleColumn(final int ordinalNumber, final String name,
-                             final String type, final String symbol);
+      final String type, final String symbol);
 
   /**
    * Handles the output for a foreign key column pair.
    * 
    * @param pkColumnName
-   *          Primary key column name
+   *        Primary key column name
    * @param fkColumnName
-   *          Foreign key column name
+   *        Foreign key column name
    * @param keySequence
-   *          Key squence number
+   *        Key squence number
    */
   abstract void handleForeignKeyColumnPair(final String pkColumnName,
-                                           final String fkColumnName,
-                                           final int keySequence);
+      final String fkColumnName, final int keySequence);
 
   /**
    * Handles the output for a foreign key name.
    * 
    * @param ordinalNumber
-   *          Ordinal number for the foreign key
+   *        Ordinal number for the foreign key
    * @param name
-   *          Foreign key name
+   *        Foreign key name
    * @param updateRule
-   *          Update rule
+   *        Update rule
    */
   abstract void handleForeignKeyName(final int ordinalNumber,
-                                     final String name, final String updateRule);
+      final String name, final String updateRule);
 
   /**
    * Handles the output for a index name.
    * 
    * @param ordinalNumber
-   *          Ordinal number for the index
+   *        Ordinal number for the index
    * @param name
-   *          Index name
+   *        Index name
    * @param type
-   *          Index type
+   *        Index type
    * @param unique
-   *          Is the index is unique
+   *        Is the index is unique
    * @param sortSequence
-   *          Sort sequence
+   *        Sort sequence
    */
   abstract void handleIndexName(final int ordinalNumber, final String name,
-                                final String type, final boolean unique,
-                                final String sortSequence);
+      final String type, final boolean unique, final String sortSequence);
 
   /**
    * Handles the output for a primaey key name.
    * 
    * @param name
-   *          Primary key name
+   *        Primary key name
    */
   abstract void handlePrimaryKeyName(final String name);
 
@@ -354,17 +352,16 @@ public abstract class BaseSchemaTextFormatter
    * Handles the output for a column.
    * 
    * @param ordinalNumber
-   *          Ordinal number for the column
+   *        Ordinal number for the column
    * @param name
-   *          Column name
+   *        Column name
    * @param type
-   *          Column type
+   *        Column type
    * @param procedureColumnType
-   *          Procedure column type
+   *        Procedure column type
    */
   abstract void handleProcedureColumn(final int ordinalNumber,
-                                      final String name, final String type,
-                                      final String procedureColumnType);
+      final String name, final String type, final String procedureColumnType);
 
   /**
    * Handles the end of output for a procedure.
@@ -375,14 +372,14 @@ public abstract class BaseSchemaTextFormatter
    * Handles the output for a procedure.
    * 
    * @param ordinalNumber
-   *          Ordinal number for the procedure
+   *        Ordinal number for the procedure
    * @param name
-   *          Procedure name
+   *        Procedure name
    * @param type
-   *          Procedure type
+   *        Procedure type
    */
   abstract void handleProcedureName(final int ordinalNumber, final String name,
-                                    final String type);
+      final String type);
 
   /**
    * Handles the start of output for a procedure.
@@ -403,14 +400,14 @@ public abstract class BaseSchemaTextFormatter
    * Handles the output for a table name.
    * 
    * @param ordinalNumber
-   *          Ordinal number for the table
+   *        Ordinal number for the table
    * @param name
-   *          Table name
+   *        Table name
    * @param type
-   *          Table type
+   *        Table type
    */
   abstract void handleTableName(final int ordinalNumber, final String name,
-                                final String type);
+      final String type);
 
   /**
    * Handles the start of output for a table.
@@ -449,7 +446,7 @@ public abstract class BaseSchemaTextFormatter
    * @param columnPairs
    */
   private void printColumnPairs(final String tableName,
-                                final ForeignKeyColumnMap[] columnPairs)
+      final ForeignKeyColumnMap[] columnPairs)
   {
     for (int j = 0; j < columnPairs.length; j++)
     {
@@ -463,16 +460,14 @@ public abstract class BaseSchemaTextFormatter
       if (pkColumn.getParent().getName().equals(tableName))
       {
         pkColumnName = pkColumn.getName();
-      }
-      else
+      } else
       {
         pkColumnName = pkColumn.getFullName();
       }
       if (fkColumn.getParent().getName().equals(tableName))
       {
         fkColumnName = fkColumn.getName();
-      }
-      else
+      } else
       {
         fkColumnName = fkColumn.getFullName();
       }
@@ -500,12 +495,10 @@ public abstract class BaseSchemaTextFormatter
       if (column.isPartOfPrimaryKey())
       {
         symbol = "primary key";
-      }
-      else if (column.isPartOfUniqueIndex())
+      } else if (column.isPartOfUniqueIndex())
       {
         symbol = "unique index";
-      }
-      else if (!column.isNullable())
+      } else if (!column.isNullable())
       {
         symbol = "not null";
       }
@@ -515,7 +508,7 @@ public abstract class BaseSchemaTextFormatter
   }
 
   private void printForeignKeys(final String tableName,
-                                final ForeignKey[] foreignKeys)
+      final ForeignKey[] foreignKeys)
   {
     for (int i = 0; i < foreignKeys.length; i++)
     {
@@ -538,11 +531,8 @@ public abstract class BaseSchemaTextFormatter
       final Index index = indices[i];
       if (index != null)
       {
-        handleIndexName(i + 1,
-                        index.getName(),
-                        index.getType().toString(),
-                        index.isUnique(),
-                        index.getSortSequence().toString());
+        handleIndexName(i + 1, index.getName(), index.getType().toString(),
+            index.isUnique(), index.getSortSequence().toString());
         printColumns(index.getColumns());
       }
     }
@@ -559,7 +549,7 @@ public abstract class BaseSchemaTextFormatter
   }
 
   protected abstract void handleDefinition(final String definition);
-  
+
   String negate(final boolean positive, final String text)
   {
     String textValue = text;

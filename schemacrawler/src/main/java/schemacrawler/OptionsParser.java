@@ -57,7 +57,7 @@ public final class OptionsParser
   private static final String OPTION_OUTPUT_APPEND = "append";
 
   private static final Logger LOGGER = Logger.getLogger(OptionsParser.class
-    .getName());
+      .getName());
 
   private OptionsParser()
   {
@@ -68,7 +68,7 @@ public final class OptionsParser
    * Parses the command line.
    * 
    * @param args
-   *          Command line arguments
+   *        Command line arguments
    * @return Command line options
    */
   public static Options[] parseCommandLine(final String[] args)
@@ -76,7 +76,7 @@ public final class OptionsParser
 
     final CommandLineParser parser = new CommandLineParser();
     parser
-      .addOption(new CommandLineParser.StringOption('g', OPTION_CONFIGFILE));
+        .addOption(new CommandLineParser.StringOption('g', OPTION_CONFIGFILE));
     parser.addOption(new CommandLineParser.StringOption('p',
         OPTION_CONFIGOVERRIDEFILE));
     parser.addOption(new CommandLineParser.StringOption(OPTION_COMMAND));
@@ -89,20 +89,20 @@ public final class OptionsParser
     parser.parse(args);
 
     final String cfgFile = getStringOption(parser.getOption(OPTION_CONFIGFILE),
-                                           "schemacrawler.config.properties");
+        "schemacrawler.config.properties");
     final String cfgOverrideFile = getStringOption(parser
-                                                     .getOption(OPTION_CONFIGOVERRIDEFILE),
-                                                   "schemacrawler.config.override.properties");
+        .getOption(OPTION_CONFIGOVERRIDEFILE),
+        "schemacrawler.config.override.properties");
     final Properties config = loadConfig(cfgFile, cfgOverrideFile);
 
     final String outputFormatValue = getStringOption(parser
-      .getOption(OPTION_OUTPUT_FORMAT), OutputFormat.TEXT.toString());
+        .getOption(OPTION_OUTPUT_FORMAT), OutputFormat.TEXT.toString());
 
     final String outputFile = getStringOption(parser
-      .getOption(OPTION_OUTPUT_FILE), "");
+        .getOption(OPTION_OUTPUT_FILE), "");
 
     final boolean appendOutput = getBooleanOption(parser
-      .getOption(OPTION_OUTPUT_APPEND));
+        .getOption(OPTION_OUTPUT_APPEND));
 
     final boolean noHeader = getBooleanOption(parser.getOption(OPTION_NOHEADER));
     final boolean noFooter = getBooleanOption(parser.getOption(OPTION_NOFOOTER));
@@ -116,21 +116,19 @@ public final class OptionsParser
     masterOutputOptions.setNoInfo(noInfo);
 
     final CommandLineParser.BaseOption commandOption = parser
-      .getOption(OPTION_COMMAND);
+        .getOption(OPTION_COMMAND);
     final String[] commandStrings = ((String) commandOption.getValue())
-      .split(",");
+        .split(",");
     final Options[] optionCommands = createOptionsPerCommand(commandStrings,
-                                                             config,
-                                                             masterOutputOptions);
+        config, masterOutputOptions);
 
     return optionCommands;
 
   }
 
   private static Options[] createOptionsPerCommand(
-                                                   final String[] commandStrings,
-                                                   final Properties config,
-                                                   final OutputOptions masterOutputOptions)
+      final String[] commandStrings, final Properties config,
+      final OutputOptions masterOutputOptions)
   {
     final List optionCommandsList = new ArrayList();
     for (int i = 0; i < commandStrings.length; i++)
@@ -142,16 +140,14 @@ public final class OptionsParser
       {
         // First command - no footer
         outputOptions.setNoFooter(true);
-      }
-      else if (i == commandStrings.length - 1)
+      } else if (i == commandStrings.length - 1)
       {
         // Last command - no header, or info
         outputOptions.setNoHeader(true);
         outputOptions.setNoInfo(true);
 
         outputOptions.setAppendOutput(true);
-      }
-      else
+      } else
       {
         // Middle command - no header, footer, or info
         outputOptions.setNoHeader(true);
@@ -166,54 +162,71 @@ public final class OptionsParser
       optionCommandsList.add(options);
     }
     final Options[] optionCommands = (Options[]) optionCommandsList
-      .toArray(new Options[optionCommandsList.size()]);
+        .toArray(new Options[optionCommandsList.size()]);
 
     return optionCommands;
   }
 
   private static Properties loadConfig(final String configfilename,
-                                       final String configoverridefilename)
+      final String configoverridefilename)
   {
     final File configfile = new File(configfilename);
     final File configoverridefile = new File(configoverridefilename);
     final Properties config = new Properties();
+    FileInputStream fileInputStream = null;
     try
     {
       if (configfile.exists())
       {
-        config.load(new FileInputStream(configfile));
+        fileInputStream = new FileInputStream(configfile);
+        config.load(fileInputStream);
+        fileInputStream.close();
         LOGGER.log(Level.FINE, "Using configuration file "
-                               + configfile.getAbsolutePath());
-      }
-      else
+            + configfile.getAbsolutePath());
+      } else
       {
         LOGGER.log(Level.FINE, "Not using configuration file "
-                               + configfile.getAbsolutePath());
+            + configfile.getAbsolutePath());
       }
       if (configoverridefile.exists())
       {
-        config.load(new FileInputStream(configoverridefile));
+        fileInputStream = new FileInputStream(configoverridefile);
+        config.load(fileInputStream);
+        fileInputStream.close();
         LOGGER.fine("Using configuration override file "
-                    + configoverridefile.getAbsolutePath());
-      }
-      else
+            + configoverridefile.getAbsolutePath());
+      } else
       {
         LOGGER.log(Level.FINE, "Not using configuration override file "
-                               + configoverridefile.getAbsolutePath());
+            + configoverridefile.getAbsolutePath());
       }
     }
     catch (final IOException e)
     {
       LOGGER.log(Level.WARNING, "Error loading config", e);
     }
+    finally
+    {
+      try
+      {
+        if (fileInputStream != null)
+        {
+          fileInputStream.close();
+        }
+      }
+      catch (IOException e)
+      {
+        LOGGER.log(Level.WARNING, "Could not close file input stream", e);
+      }
+    }
     return config;
   }
 
   private static Command parseCommand(final Properties config,
-                                      final String commandString)
+      final String commandString)
   {
     final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType
-      .valueOf(commandString);
+        .valueOf(commandString);
     Operation operation = Operation.valueOf(commandString);
     String query = "";
     if (schemaTextDetailType == null && operation == null)
@@ -231,8 +244,7 @@ public final class OptionsParser
     }
 
     final Command command = Command.createCommand(schemaTextDetailType,
-                                                  operation,
-                                                  query);
+        operation, query);
     return command;
   }
 
@@ -240,9 +252,8 @@ public final class OptionsParser
   {
     boolean isQueryOver = false;
     final Set keys = Utilities.extractTemplateVariables(query);
-    final String[] queryOverKeys = {
-      "table", "table_type"
-    };
+    final String[] queryOverKeys =
+    { "table", "table_type" };
     for (int i = 0; i < queryOverKeys.length; i++)
     {
       if (keys.contains(queryOverKeys[i]))
@@ -255,7 +266,7 @@ public final class OptionsParser
   }
 
   private static boolean getBooleanOption(
-                                          final CommandLineParser.BaseOption option)
+      final CommandLineParser.BaseOption option)
   {
     if (option == null || option.getValue() == null)
     {
@@ -265,8 +276,7 @@ public final class OptionsParser
   }
 
   private static String getStringOption(
-                                        final CommandLineParser.BaseOption option,
-                                        final String defaultValue)
+      final CommandLineParser.BaseOption option, final String defaultValue)
   {
     if (option == null || option.getValue() == null)
     {

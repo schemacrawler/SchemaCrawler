@@ -42,73 +42,57 @@ final class RetrieverConnection
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(RetrieverConnection.class.getName());
+      .getLogger(RetrieverConnection.class.getName());
 
-  private final DatabaseMetaData metaData;
-  private final String catalog;
-  private final String schemaPattern;
-  private final String jdbcDriverClassName;
-  private final InformationSchemaViews informationSchemaViews;
+  private DatabaseMetaData metaData;
+  private String catalog;
+  private String schemaPattern;
+  private String jdbcDriverClassName;
+  private InformationSchemaViews informationSchemaViews;
 
   RetrieverConnection(final DataSource dataSource,
-                      final Properties additionalConfiguration)
+      final Properties additionalConfiguration)
     throws SchemaCrawlerException
   {
     if (dataSource == null)
     {
       throw new SchemaCrawlerException("No data source provided");
     }
-
-    informationSchemaViews = new InformationSchemaViews(additionalConfiguration);
-
-    if (dataSource instanceof PropertiesDataSource)
-    {
-      final PropertiesDataSource propertiesDataSource = (PropertiesDataSource) dataSource;
-      jdbcDriverClassName = propertiesDataSource.getJdbcDriverClass();
-      catalog = propertiesDataSource.getCatalog();
-      schemaPattern = propertiesDataSource.getSourceProperties()
-        .getProperty("schemapattern");
-    }
-    else
-    {
-      try
-      {
-        final Connection connection = dataSource.getConnection();
-        String driverClassName;
-        try
-        {
-          driverClassName = DriverManager.getDriver(
-                                                    connection.getMetaData()
-                                                      .getURL()).getClass()
-            .getName();
-        }
-        catch (final SQLException e)
-        {
-          driverClassName = "";
-        }
-        jdbcDriverClassName = driverClassName;
-        catalog = connection.getCatalog();
-        // NOTE: schemaPattern remains null, which is ok for JDBC
-        schemaPattern = null;
-      }
-      catch (final SQLException e)
-      {
-        throw new SchemaCrawlerException(
-                                         "Exception instantiting SchemaCrawler",
-                                         e);
-      }
-    }
-
+    final Connection connection;
     try
     {
-      final Connection connection = dataSource.getConnection();
+      connection = dataSource.getConnection();
       metaData = connection.getMetaData();
     }
     catch (final SQLException e)
     {
-      throw new SchemaCrawlerException("Error getting database metadata", e);
+      throw new SchemaCrawlerException("Could not obtain database metadata", e);
     }
 
+    if (dataSource instanceof PropertiesDataSource)
+    {
+      final PropertiesDataSource propertiesDataSource = (PropertiesDataSource) dataSource;
+      catalog = propertiesDataSource.getCatalog();
+      schemaPattern = propertiesDataSource.getSourceProperties().getProperty(
+          "schemapattern");
+      jdbcDriverClassName = propertiesDataSource.getJdbcDriverClass();
+    } else
+    {
+      try
+      {
+        catalog = connection.getCatalog();
+        // NOTE: schemaPattern remains null, which is ok for JDBC
+        schemaPattern = null;
+        jdbcDriverClassName = DriverManager.getDriver(metaData.getURL())
+            .getClass().getName();
+      }
+      catch (final SQLException e)
+      {
+        LOGGER.log(Level.WARNING, "", e);
+      }
+    }
+
+    informationSchemaViews = new InformationSchemaViews(additionalConfiguration);
   }
 
   String getCatalog()
@@ -131,6 +115,11 @@ final class RetrieverConnection
     return jdbcDriverClassName;
   }
 
+  /**
+   * Gets the INFORMATION_SCHEMA views select SQL statements.
+   * 
+   * @return INFORMATION_SCHEMA views selects
+   */
   public InformationSchemaViews getInformationSchemaViews()
   {
     return informationSchemaViews;
@@ -140,13 +129,27 @@ final class RetrieverConnection
   {
     try
     {
-      Connection connection = metaData.getConnection();
+      final Connection connection = metaData.getConnection();
       connection.close();
       LOGGER.log(Level.FINE, "Database connection closed - " + connection);
     }
-    catch (SQLException e)
+    catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING, "Could not close database connection", e);
+    }
+  }
+
+  /**
+   * @see java.lang.Object#finalize()
+   */
+  protected void finalize()
+    throws Throwable
+  {
+    // Release database resources
+    if (metaData != null)
+    {
+      final Connection connection = metaData.getConnection();
+      connection.close();
     }
   }
 

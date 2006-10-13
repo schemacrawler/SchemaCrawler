@@ -49,7 +49,7 @@ class MutableTableConstraint
     return deferrable;
   }
 
-  void setDeferrable(boolean deferrable)
+  void setDeferrable(final boolean deferrable)
   {
     this.deferrable = deferrable;
   }
@@ -64,7 +64,7 @@ class MutableTableConstraint
     return initiallyDeferred;
   }
 
-  void setInitiallyDeferred(boolean initiallyDeferred)
+  void setInitiallyDeferred(final boolean initiallyDeferred)
   {
     this.initiallyDeferred = initiallyDeferred;
   }
@@ -79,7 +79,7 @@ class MutableTableConstraint
     return type;
   }
 
-  void setType(ConstraintType type)
+  void setType(final ConstraintType type)
   {
     this.type = type;
   }
@@ -94,7 +94,7 @@ class MutableTableConstraint
     return definition;
   }
 
-  void setDefinition(String definition)
+  void setDefinition(final String definition)
   {
     this.definition = definition;
   }

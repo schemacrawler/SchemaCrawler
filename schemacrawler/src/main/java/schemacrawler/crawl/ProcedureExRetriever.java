@@ -42,19 +42,19 @@ final class ProcedureExRetriever
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(ProcedureExRetriever.class.getName());
+      .getLogger(ProcedureExRetriever.class.getName());
 
   /**
    * Constructs a SchemaCrawler object, from a connection.
    * 
    * @param connection
-   *          An open database connection.
+   *        An open database connection.
    * @param driverClassName
-   *          Class name of the JDBC driver
+   *        Class name of the JDBC driver
    * @param schemaPatternString
-   *          JDBC schema pattern, or null
+   *        JDBC schema pattern, or null
    * @throws SQLException
-   *           On a SQL exception
+   *         On a SQL exception
    */
   ProcedureExRetriever(final RetrieverConnection retrieverConnection)
     throws SQLException
@@ -66,28 +66,29 @@ final class ProcedureExRetriever
    * Retrieves a procedure definitions from the database.
    * 
    * @param procedures
-   *          List of procedures.
+   *        List of procedures.
    * @throws SQLException
-   *           On a SQL exception
+   *         On a SQL exception
    */
   void retrieveProcedureInformation(final NamedObjectList procedures)
     throws SQLException
   {
     LOGGER.entering(getClass().getName(), "retrieveProcedureInformation",
-                    new Object[] {});
+        new Object[]
+        {});
 
-    String procedureDefinitionsSql = getRetrieverConnection()
-      .getInformationSchemaViews().getRoutinesSql();
+    final String procedureDefinitionsSql = getRetrieverConnection()
+        .getInformationSchemaViews().getRoutinesSql();
     if (Utilities.isBlank(procedureDefinitionsSql))
     {
       LOGGER.log(Level.FINE,
-                 "Procedure definition SQL statement was not provided");
+          "Procedure definition SQL statement was not provided");
       return;
     }
 
-    Connection connection = getRetrieverConnection().getMetaData()
-      .getConnection();
-    Statement statement = connection.createStatement();
+    final Connection connection = getRetrieverConnection().getMetaData()
+        .getConnection();
+    final Statement statement = connection.createStatement();
     final ResultSet results = statement.executeQuery(procedureDefinitionsSql);
 
     try
@@ -95,17 +96,17 @@ final class ProcedureExRetriever
 
       while (results.next())
       {
-        final String catalog = results.getString("ROUTINE_CATALOG");
-        final String schema = results.getString("ROUTINE_SCHEMA");
+        // final String catalog = results.getString("ROUTINE_CATALOG");
+        // final String schema = results.getString("ROUTINE_SCHEMA");
         final String procedureName = results.getString("ROUTINE_NAME");
         LOGGER.log(Level.FINEST, "Retrieving procedure information for "
-                                 + procedureName);
-        RoutineBodyType routineBodyType = RoutineBodyType.valueOf(results
-          .getString("ROUTINE_BODY"));
+            + procedureName);
+        final RoutineBodyType routineBodyType = RoutineBodyType.valueOf(results
+            .getString("ROUTINE_BODY"));
         String definition = results.getString("ROUTINE_DEFINITION");
 
         final MutableProcedure procedure = (MutableProcedure) procedures
-          .lookup(procedureName);
+            .lookup(procedureName);
         if (procedure == null)
         {
           LOGGER.log(Level.FINEST, "Procedure not found: " + procedureName);

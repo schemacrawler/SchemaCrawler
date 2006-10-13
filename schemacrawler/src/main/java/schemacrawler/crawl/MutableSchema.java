@@ -71,14 +71,14 @@ class MutableSchema
   {
     final List allProcedures = procedures.getAll();
     return (Procedure[]) allProcedures.toArray(new Procedure[allProcedures
-      .size()]);
+        .size()]);
   }
 
   /**
    * Adds a procedure.
    * 
    * @param procedure
-   *          Procedure
+   *        Procedure
    */
   void addProcedure(final Procedure procedure)
   {
@@ -100,7 +100,7 @@ class MutableSchema
    * Adds a table.
    * 
    * @param table
-   *          Table
+   *        Table
    */
   void addTable(final Table table)
   {

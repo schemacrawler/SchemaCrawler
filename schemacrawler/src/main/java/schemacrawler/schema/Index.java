@@ -31,9 +31,9 @@ public interface Index
 {
 
   /**
-   * Cardinality. When the index type is statistic, then this is the number of
-   * rows in the table; otherwise, it is the number of unique values in the
-   * index.
+   * Cardinality. When the index type is statistic, then this is the
+   * number of rows in the table; otherwise, it is the number of unique
+   * values in the index.
    * 
    * @return Cardinality
    */
@@ -47,9 +47,9 @@ public interface Index
   boolean isUnique();
 
   /**
-   * Pages. When the index type is statistic, then this is the number of pages
-   * used for the table, otherwise it is the number of pages used for the
-   * current index.
+   * Pages. When the index type is statistic, then this is the number of
+   * pages used for the table, otherwise it is the number of pages used
+   * for the current index.
    * 
    * @return Pages
    */
@@ -75,5 +75,13 @@ public interface Index
    * @return Columns of the table.
    */
   Column[] getColumns();
+
+  /**
+   * Converts this index into a table constraint. If the index is not
+   * unique, returns null.
+   * 
+   * @return Table constraint, or null
+   */
+  TableConstraint asTableConstraint();
 
 }

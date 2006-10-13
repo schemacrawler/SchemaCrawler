@@ -26,7 +26,7 @@ public abstract class TestBase
   private static final String HSQLDB_JDBC_DRIVER = "org.hsqldb.jdbcDriver";
 
   private static final Logger LOGGER = Logger.getLogger(TestBase.class
-    .getName());
+      .getName());
 
   private static final String HSQLDB_FILE_URL = "jdbc:hsqldb:file:_distrib/dbserver/schemacrawler;shutdown=true";
   private static final String HSQLDB_SERVER_URL = "jdbc:hsqldb:hsql://localhost/schemacrawler";
@@ -44,7 +44,7 @@ public abstract class TestBase
   protected PropertiesDataSource dataSource;
   protected PrintWriter out;
 
-  public TestBase(String name)
+  public TestBase(final String name)
   {
     super(name);
   }
@@ -58,8 +58,7 @@ public abstract class TestBase
     {
       Utilities.setApplicationLogLevel(Level.FINEST);
       out = new PrintWriter(System.out, true);
-    }
-    else
+    } else
     {
       Utilities.setApplicationLogLevel(Level.OFF);
       out = NullWriter.getNullPrintWriter();
@@ -75,8 +74,7 @@ public abstract class TestBase
         server.setDatabasePath(0, "_distrib/dbserver/schemacrawler");
         server.start();
       }
-    }
-    else
+    } else
     {
       url = HSQLDB_FILE_URL;
     }
@@ -97,14 +95,14 @@ public abstract class TestBase
     }
   }
 
-  private synchronized void makeDataSource(String url)
+  private synchronized void makeDataSource(final String url)
     throws PropertiesDataSourceException
   {
     final String DATASOURCE_NAME = "schemacrawler";
 
-    Properties connectionProperties = new Properties();
+    final Properties connectionProperties = new Properties();
     connectionProperties.setProperty(DATASOURCE_NAME + ".driver",
-                                     HSQLDB_JDBC_DRIVER);
+        HSQLDB_JDBC_DRIVER);
     connectionProperties.setProperty(DATASOURCE_NAME + ".url", url);
     connectionProperties.setProperty(DATASOURCE_NAME + ".user", "sa");
     connectionProperties.setProperty(DATASOURCE_NAME + ".password", "");
@@ -124,7 +122,7 @@ public abstract class TestBase
     {
       if (dataSource != null)
       {
-        Connection connection = dataSource.getConnection();
+        final Connection connection = dataSource.getConnection();
         if (connection != null)
         {
           connection.close();
@@ -132,7 +130,7 @@ public abstract class TestBase
         dataSource = null;
       }
     }
-    catch (SQLException e)
+    catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING, "", e);
     }

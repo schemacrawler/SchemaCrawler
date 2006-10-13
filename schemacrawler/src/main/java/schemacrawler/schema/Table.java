@@ -78,12 +78,12 @@ public interface Table
    * @return Check constraints for the table.
    */
   TableConstraint[] getCheckConstraints();
-  
+
   /**
    * List of privileges.
    * 
    * @return Privileges for the table.
    */
   Privilege[] getPrivileges();
-  
+
 }

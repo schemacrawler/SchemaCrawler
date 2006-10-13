@@ -25,8 +25,8 @@ import schemacrawler.schema.BaseColumn;
 import schemacrawler.schema.ColumnDataType;
 
 /**
- * Represents a column in a database table. Created from metadata returned by a
- * JDBC call.
+ * Represents a column in a database table. Created from metadata
+ * returned by a JDBC call.
  * 
  * @author sfatehi
  */
@@ -55,7 +55,7 @@ abstract class AbstractColumn
    * Sets the column size.
    * 
    * @param size
-   *          Size of the column
+   *        Size of the column
    */
   final void setSize(final int size)
   {
@@ -76,7 +76,7 @@ abstract class AbstractColumn
    * Sets the column's data type.
    * 
    * @param columnDataType
-   *          Column data type
+   *        Column data type
    */
   final void setType(final ColumnDataType columnDataType)
   {
@@ -84,20 +84,20 @@ abstract class AbstractColumn
   }
 
   /**
-   * Creates a data type from the JDBC data type id, and the database specific
-   * type name.
+   * Creates a data type from the JDBC data type id, and the database
+   * specific type name.
    * 
    * @param jdbcDataType
-   *          JDBC data type
+   *        JDBC data type
    * @param databaseSpecificTypeName
-   *          Database specific type name
+   *        Database specific type name
    */
   final void lookupAndSetDataType(final int jdbcDataType,
-                                  final String databaseSpecificTypeName,
-                                  final NamedObjectList columnDataTypes)
+      final String databaseSpecificTypeName,
+      final NamedObjectList columnDataTypes)
   {
     MutableColumnDataType columnDataType = (MutableColumnDataType) columnDataTypes
-      .lookup(databaseSpecificTypeName);
+        .lookup(databaseSpecificTypeName);
     if (columnDataType == null)
     {
       columnDataType = new MutableColumnDataType();

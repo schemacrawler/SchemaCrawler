@@ -48,13 +48,12 @@ public class PlainTextFormattingFunctor
    *      int, boolean)
    */
   public String format(final String text, final int maxWidth,
-                       final boolean alignLeft)
+      final boolean alignLeft)
   {
     if (alignLeft)
     {
       return Utilities.padRight(text, maxWidth);
-    }
-    else
+    } else
     {
       return Utilities.padLeft(text, maxWidth);
     }

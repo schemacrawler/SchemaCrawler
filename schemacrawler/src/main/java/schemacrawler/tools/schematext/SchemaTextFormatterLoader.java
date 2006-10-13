@@ -40,7 +40,7 @@ public final class SchemaTextFormatterLoader
    * Checks if the text formatter mnemonic is valid.
    * 
    * @param textFormatterName
-   *          Mnemonic name for a text formatter
+   *        Mnemonic name for a text formatter
    * @return True if the mnemonic is known
    */
   private static boolean canLoad(final SchemaTextOptions options)
@@ -52,7 +52,9 @@ public final class SchemaTextFormatterLoader
    * Instantiates a text formatter from the mnemonic string.
    * 
    * @param options
-   *          Options
+   *        Options
+   * @throws SchemaCrawlerException
+   *         On an exception
    * @return CrawlHandler instance
    */
   public static CrawlHandler load(final SchemaTextOptions options)
@@ -70,8 +72,7 @@ public final class SchemaTextFormatterLoader
     if (outputFormatType == OutputFormat.HTML)
     {
       handler = new SchemaHTMLFormatter(options);
-    }
-    else
+    } else
     {
       handler = new SchemaTextFormatter(options);
     }

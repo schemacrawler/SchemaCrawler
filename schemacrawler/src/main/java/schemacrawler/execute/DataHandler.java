@@ -33,7 +33,7 @@ public interface DataHandler
    * Handles the begin of the execution.
    * 
    * @throws QueryExecutorException
-   *           On an exception
+   *         On an exception
    */
   void begin()
     throws QueryExecutorException;
@@ -42,9 +42,9 @@ public interface DataHandler
    * Handles metadata information.
    * 
    * @param databaseInfo
-   *          Database metadata.
+   *        Database metadata.
    * @throws QueryExecutorException
-   *           On an exception
+   *         On an exception
    */
   void handleMetadata(final String databaseInfo)
     throws QueryExecutorException;
@@ -53,9 +53,9 @@ public interface DataHandler
    * Handles metadata information.
    * 
    * @param title
-   *          Execution title.
+   *        Execution title.
    * @throws QueryExecutorException
-   *           On an exception
+   *         On an exception
    */
   void handleTitle(final String title)
     throws QueryExecutorException;
@@ -64,9 +64,9 @@ public interface DataHandler
    * Handles actual data.
    * 
    * @param rows
-   *          Data from the execution.
+   *        Data from the execution.
    * @throws QueryExecutorException
-   *           On an exception
+   *         On an exception
    */
   void handleData(final ResultSet rows)
     throws QueryExecutorException;
@@ -75,7 +75,7 @@ public interface DataHandler
    * Handles the end of the execution.
    * 
    * @throws QueryExecutorException
-   *           On an exception
+   *         On an exception
    */
   void end()
     throws QueryExecutorException;

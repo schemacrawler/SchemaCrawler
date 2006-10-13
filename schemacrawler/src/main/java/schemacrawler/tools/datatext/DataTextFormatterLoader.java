@@ -40,7 +40,7 @@ public final class DataTextFormatterLoader
    * Checks if the CrawlHandler mnemonic is valid.
    * 
    * @param printFormatterName
-   *          Mnemonic name for a CrawlHandler
+   *        Mnemonic name for a CrawlHandler
    * @return True if the mnemonic is known
    */
   private static boolean canLoad(final DataTextFormatOptions options)
@@ -49,10 +49,13 @@ public final class DataTextFormatterLoader
   }
 
   /**
-   * Instantiates a text formatter type of DataHandler from the mnemonic string.
+   * Instantiates a text formatter type of DataHandler from the mnemonic
+   * string.
    * 
    * @param options
-   *          Options
+   *        Options
+   * @throws SchemaCrawlerException
+   *         On an exception
    * @return CrawlHandler instance
    */
   public static DataHandler load(final DataTextFormatOptions options)
@@ -70,12 +73,10 @@ public final class DataTextFormatterLoader
     if (outputFormatType == OutputFormat.TEXT)
     {
       handler = new DataPlainTextFormatter(options);
-    }
-    else if (outputFormatType == OutputFormat.HTML)
+    } else if (outputFormatType == OutputFormat.HTML)
     {
       handler = new DataHTMLFormatter(options);
-    }
-    else if (outputFormatType == OutputFormat.CSV)
+    } else if (outputFormatType == OutputFormat.CSV)
     {
       handler = new DataCSVFormatter(options);
     }

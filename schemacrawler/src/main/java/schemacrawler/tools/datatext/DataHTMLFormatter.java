@@ -21,6 +21,8 @@
 package schemacrawler.tools.datatext;
 
 
+import java.io.Writer;
+
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.tools.util.FormatUtils;
 import sf.util.Entities;
@@ -60,7 +62,7 @@ final class DataHTMLFormatter
    * Handles metadata information.
    * 
    * @param databaseInfo
-   *          Database info.
+   *        Database info.
    */
   public void handleMetadata(final String databaseInfo)
   {
@@ -77,7 +79,7 @@ final class DataHTMLFormatter
    * Handles metadata information.
    * 
    * @param title
-   *          Execution title.
+   *        Execution title.
    */
   public void handleTitle(final String title)
   {
@@ -107,7 +109,7 @@ final class DataHTMLFormatter
 
   /**
    * @param columnNames
-   *          Names of the columns.
+   *        Names of the columns.
    */
   public void handleRowsHeader(final String[] columnNames)
   {
@@ -124,9 +126,9 @@ final class DataHTMLFormatter
    * Handles a row output.
    * 
    * @param columnNames
-   *          Names of the columns.
+   *        Names of the columns.
    * @param columnData
-   *          Column data.
+   *        Column data.
    */
   public void handleRow(final String[] columnNames, final String[] columnData)
   {
@@ -137,11 +139,10 @@ final class DataHTMLFormatter
       if (columnData[i] == null)
       {
         out.println("      <td>&nbsp;</td>");
-      }
-      else
+      } else
       {
         out.println("      " + "<td " + "title=\"" + columnNames[i] + "\""
-                    + ">" + Entities.XML.escape(columnData[i]) + "</td>");
+            + ">" + Entities.XML.escape(columnData[i]) + "</td>");
       }
     }
     out.println("    </tr>");

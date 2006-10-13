@@ -50,7 +50,7 @@ public interface Procedure
    * @return Routine body type.
    */
   RoutineBodyType getRoutineBodyType();
-  
+
   /**
    * Gets the definition.
    * 

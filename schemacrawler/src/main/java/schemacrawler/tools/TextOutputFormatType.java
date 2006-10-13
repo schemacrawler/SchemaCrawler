@@ -49,9 +49,8 @@ public final class TextOutputFormatType
    */
   public static final TextOutputFormatType CSV = new TextOutputFormatType("csv");
 
-  private static final TextOutputFormatType[] TEXT_FORMAT_TYPE_ALL = {
-    TEXT, HTML, CSV
-  };
+  private static final TextOutputFormatType[] TEXT_FORMAT_TYPE_ALL =
+  { TEXT, HTML, CSV };
 
   private final String name;
 
@@ -74,7 +73,7 @@ public final class TextOutputFormatType
    * Find the enumeration value corresponding to the string.
    * 
    * @param outputFormatTypeString
-   *          String value of table type
+   *        String value of table type
    * @return Enumeration value
    */
   public static TextOutputFormatType valueOf(final String outputFormatTypeString)
@@ -84,8 +83,8 @@ public final class TextOutputFormatType
 
     for (int i = 0; i < TEXT_FORMAT_TYPE_ALL.length; i++)
     {
-      if (TEXT_FORMAT_TYPE_ALL[i].toString()
-        .equalsIgnoreCase(outputFormatTypeString))
+      if (TEXT_FORMAT_TYPE_ALL[i].toString().equalsIgnoreCase(
+          outputFormatTypeString))
       {
         outputFormatType = TEXT_FORMAT_TYPE_ALL[i];
         break;

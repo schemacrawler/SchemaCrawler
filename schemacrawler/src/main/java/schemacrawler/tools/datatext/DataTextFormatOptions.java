@@ -54,12 +54,12 @@ public final class DataTextFormatOptions
    * Data text formatting options from properties.
    * 
    * @param config
-   *          Properties
+   *        Properties
    * @param outputOptions
-   *          Page options
+   *        Page options
    */
   public DataTextFormatOptions(final Properties config,
-                               final OutputOptions outputOptions)
+      final OutputOptions outputOptions)
   {
     super(outputOptions);
 
@@ -67,8 +67,7 @@ public final class DataTextFormatOptions
     {
       mergeRows = false;
       showLobs = false;
-    }
-    else
+    } else
     {
       mergeRows = getBooleanProperty(MERGE_ROWS, config);
       showLobs = getBooleanProperty(SHOW_LOBS, config);

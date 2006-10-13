@@ -50,23 +50,22 @@ public final class SchemaTextOptions
    * Options from properties. Constructor.
    * 
    * @param config
-   *          Properties
+   *        Properties
    * @param schemaTextDetailType
-   *          Schema detail
+   *        Schema detail
    * @param outputOptions
-   *          Output options
+   *        Output options
    */
   public SchemaTextOptions(final Properties config,
-                           final OutputOptions outputOptions,
-                           final SchemaTextDetailType schemaTextDetailType)
+      final OutputOptions outputOptions,
+      final SchemaTextDetailType schemaTextDetailType)
   {
     super(outputOptions);
 
     if (schemaTextDetailType == null)
     {
       this.schemaTextDetailType = SchemaTextDetailType.BRIEF;
-    }
-    else
+    } else
     {
       this.schemaTextDetailType = schemaTextDetailType;
     }
@@ -76,11 +75,10 @@ public final class SchemaTextOptions
       showJdbcColumnTypeNames = false;
       showOrdinalNumbers = false;
       hideIndexNames = false;
-    }
-    else
+    } else
     {
       showJdbcColumnTypeNames = getBooleanProperty(SHOW_JDBC_COLUMN_TYPE_NAMES,
-                                                   config);
+          config);
       showOrdinalNumbers = getBooleanProperty(SHOW_ORDINAL_NUMBERS, config);
       hideIndexNames = getBooleanProperty(HIDE_INDEX_NAMES, config);
     }

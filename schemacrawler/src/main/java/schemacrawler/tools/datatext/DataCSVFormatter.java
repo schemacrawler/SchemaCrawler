@@ -21,6 +21,8 @@
 package schemacrawler.tools.datatext;
 
 
+import java.io.Writer;
+
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.tools.util.FormatUtils;
 import sf.util.Utilities;
@@ -48,7 +50,7 @@ final class DataCSVFormatter
    * Handles metadata information.
    * 
    * @param title
-   *          Execution title.
+   *        Execution title.
    */
   public void handleTitle(final String title)
   {
@@ -60,7 +62,7 @@ final class DataCSVFormatter
 
   /**
    * @param columnNames
-   *          Names of the columns.
+   *        Names of the columns.
    */
   public void handleRowsHeader(final String[] columnNames)
   {
@@ -71,9 +73,9 @@ final class DataCSVFormatter
    * Handles a row output.
    * 
    * @param columnNames
-   *          Names of the columns.
+   *        Names of the columns.
    * @param columnData
-   *          Column data.
+   *        Column data.
    */
   public void handleRow(final String[] columnNames, final String[] columnData)
   {
@@ -101,7 +103,7 @@ final class DataCSVFormatter
    * Prints a row of data as CSV.
    * 
    * @param fields
-   *          Fields in the row.
+   *        Fields in the row.
    */
   private void printRowCsv(final String[] fields)
   {

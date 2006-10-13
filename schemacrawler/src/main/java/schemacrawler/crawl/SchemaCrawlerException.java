@@ -35,7 +35,7 @@ public class SchemaCrawlerException
    * 
    * @see Exception#Exception(java.lang.String)
    * @param message
-   *          Exception message
+   *        Exception message
    */
   public SchemaCrawlerException(final String message)
   {
@@ -43,13 +43,14 @@ public class SchemaCrawlerException
   }
 
   /**
-   * Constructs a new exception with the specified detail message and cause.
+   * Constructs a new exception with the specified detail message and
+   * cause.
    * 
    * @see Exception#Exception(java.lang.String, java.lang.Throwable)
    * @param message
-   *          Error message
+   *        Error message
    * @param cause
-   *          Cause of exception
+   *        Cause of exception
    */
   public SchemaCrawlerException(final String message, final Throwable cause)
   {

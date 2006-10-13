@@ -21,8 +21,10 @@
 package schemacrawler.crawl;
 
 
+import schemacrawler.schema.ConstraintType;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.PrimaryKey;
+import schemacrawler.schema.TableConstraint;
 
 /**
  * Primary key.
@@ -40,7 +42,7 @@ class MutablePrimaryKey
    * Copies information from an index.
    * 
    * @param index
-   *          Index
+   *        Index
    * @return Primary key
    */
   static MutablePrimaryKey fromIndex(final Index index)
@@ -55,6 +57,17 @@ class MutablePrimaryKey
     pk.setType(index.getType());
     pk.setUnique(index.isUnique());
     return pk;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public TableConstraint asTableConstraint()
+  {
+    final MutableTableConstraint constraint = (MutableTableConstraint) super
+        .asTableConstraint();
+    constraint.setType(ConstraintType.PRIMARY_KEY);
+    return constraint;
   }
 
 }

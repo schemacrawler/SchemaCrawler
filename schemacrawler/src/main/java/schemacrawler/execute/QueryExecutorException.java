@@ -37,7 +37,7 @@ public final class QueryExecutorException
    * 
    * @see Exception#Exception(java.lang.String)
    * @param message
-   *          Error message
+   *        Error message
    */
   public QueryExecutorException(final String message)
   {
@@ -49,9 +49,9 @@ public final class QueryExecutorException
    * 
    * @see Exception#Exception(java.lang.String, java.lang.Throwable)
    * @param message
-   *          Error message
+   *        Error message
    * @param cause
-   *          Cause of exception
+   *        Cause of exception
    */
   public QueryExecutorException(final String message, final Throwable cause)
   {

@@ -33,14 +33,14 @@ public final class SearchableType
 
   private static final long serialVersionUID = -3030898601085718915L;
 
-  private static final SearchableType[] ALL = {
-    new SearchableType(DatabaseMetaData.typePredNone, "not searchable"),
-    new SearchableType(DatabaseMetaData.typePredChar,
-        "only searchable with where .. like"),
-    new SearchableType(DatabaseMetaData.typePredBasic,
-        "searchable except with where .. like"),
-    new SearchableType(DatabaseMetaData.typeSearchable, "searchable"),
-  };
+  private static final SearchableType[] ALL =
+  {
+   new SearchableType(DatabaseMetaData.typePredNone, "not searchable"),
+   new SearchableType(DatabaseMetaData.typePredChar,
+       "only searchable with where .. like"),
+   new SearchableType(DatabaseMetaData.typePredBasic,
+       "searchable except with where .. like"),
+   new SearchableType(DatabaseMetaData.typeSearchable, "searchable"), };
 
   private final transient int id;
   private final transient String name;
@@ -86,7 +86,7 @@ public final class SearchableType
    * Find the enumeration value corresponding to the string.
    * 
    * @param id
-   *          int value of type
+   *        int value of type
    * @return Enumeration value
    */
   public static SearchableType valueOf(final int id)
@@ -107,7 +107,7 @@ public final class SearchableType
    * Value of the enumeration from the code.
    * 
    * @param name
-   *          Code
+   *        Code
    * @return Enumeration value
    */
   public static EnumType valueOf(final String name)

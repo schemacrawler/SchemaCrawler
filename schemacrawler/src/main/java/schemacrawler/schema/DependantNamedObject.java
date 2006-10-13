@@ -22,7 +22,8 @@ package schemacrawler.schema;
 
 
 /**
- * Represents the child of a database object, such as a column or an index.
+ * Represents the child of a database object, such as a column or an
+ * index.
  * 
  * @author sfatehi
  */
@@ -43,5 +44,5 @@ public interface DependantNamedObject
    * @return Full name
    */
   String getFullName();
-  
+
 }

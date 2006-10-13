@@ -24,7 +24,8 @@ package schemacrawler.crawl;
 import java.sql.SQLException;
 
 /**
- * SchemaRetriever uses database metadata to get the details about the schema.
+ * SchemaRetriever uses database metadata to get the details about the
+ * schema.
  * 
  * @author sfatehi
  */
@@ -39,7 +40,7 @@ abstract class AbstractRetriever
   protected static final String REMARKS = "REMARKS";
   protected static final String TABLE_NAME = "TABLE_NAME";
   protected static final String TYPE_NAME = "TYPE_NAME";
-  
+
   protected static final String UNKNOWN = "<unknown>";
   protected static final int FETCHSIZE = 5;
 
@@ -49,13 +50,13 @@ abstract class AbstractRetriever
    * Constructs a SchemaCrawler object, from a connection.
    * 
    * @param connection
-   *          An open database connection.
+   *        An open database connection.
    * @param driverClassName
-   *          Class name of the JDBC driver
+   *        Class name of the JDBC driver
    * @param schemaPatternString
-   *          JDBC schema pattern, or null
+   *        JDBC schema pattern, or null
    * @throws SQLException
-   *           On a SQL exception
+   *         On a SQL exception
    */
   AbstractRetriever(final RetrieverConnection retrieverConnection)
     throws SQLException

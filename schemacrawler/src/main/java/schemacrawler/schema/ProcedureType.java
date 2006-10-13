@@ -33,12 +33,12 @@ public final class ProcedureType
 
   private static final long serialVersionUID = 3545517287747366960L;
 
-  private static final ProcedureType[] ALL = {
-    new ProcedureType(DatabaseMetaData.procedureResultUnknown, "<unknown>"),
-    new ProcedureType(DatabaseMetaData.procedureResultUnknown, "result unknown"),
-    new ProcedureType(DatabaseMetaData.procedureNoResult, "no result"),
-    new ProcedureType(DatabaseMetaData.procedureReturnsResult, "returns result"),
-  };
+  private static final ProcedureType[] ALL =
+  {
+   new ProcedureType(DatabaseMetaData.procedureResultUnknown, "<unknown>"),
+   new ProcedureType(DatabaseMetaData.procedureResultUnknown, "result unknown"),
+   new ProcedureType(DatabaseMetaData.procedureNoResult, "no result"),
+   new ProcedureType(DatabaseMetaData.procedureReturnsResult, "returns result"), };
 
   private final transient int id;
   private final transient String name;
@@ -84,7 +84,7 @@ public final class ProcedureType
    * Find the enumeration value corresponding to the string.
    * 
    * @param id
-   *          int value of procedure type
+   *        int value of procedure type
    * @return Enumeration value
    */
   public static ProcedureType valueOf(final int id)
@@ -105,7 +105,7 @@ public final class ProcedureType
    * Value of the enumeration from the code.
    * 
    * @param name
-   *          Code
+   *        Code
    * @return Enumeration value
    */
   public static ProcedureType valueOf(final String name)

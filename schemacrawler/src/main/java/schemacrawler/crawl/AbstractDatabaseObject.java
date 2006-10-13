@@ -100,7 +100,7 @@ abstract class AbstractDatabaseObject
     }
     return buffer.toString();
   }
-  
+
   /**
    * {@inheritDoc}
    * 
