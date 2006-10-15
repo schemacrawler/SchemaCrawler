@@ -31,6 +31,7 @@ import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableType;
+import schemacrawler.schema.Trigger;
 import schemacrawler.util.NaturalSortComparator;
 import schemacrawler.util.SerializableComparator;
 
@@ -49,15 +50,17 @@ class MutableTable
   private TableType type;
   private PrimaryKey primaryKey;
   private final NamedObjectList columns = new NamedObjectList(
-                                                              new NaturalSortComparator());
+      new NaturalSortComparator());
   private final NamedObjectList foreignKeys = new NamedObjectList(
-                                                                  new NaturalSortComparator());
+      new NaturalSortComparator());
   private final NamedObjectList indices = new NamedObjectList(
-                                                              new NaturalSortComparator());
+      new NaturalSortComparator());
   private final NamedObjectList checkConstraints = new NamedObjectList(
-                                                                       new NaturalSortComparator());
+      new NaturalSortComparator());
+  private final NamedObjectList triggers = new NamedObjectList(
+      new NaturalSortComparator());
   private final NamedObjectList privileges = new NamedObjectList(
-                                                                 new NaturalSortComparator());
+      new NaturalSortComparator());
 
   MutableTable(String schemaName, String catalogName, String name)
   {
@@ -183,7 +186,7 @@ class MutableTable
   {
     final List allForeignKeys = foreignKeys.getAll();
     return (ForeignKey[]) allForeignKeys.toArray(new ForeignKey[allForeignKeys
-      .size()]);
+        .size()]);
   }
 
   /**
@@ -247,7 +250,7 @@ class MutableTable
   {
     final List allCheckConstraints = checkConstraints.getAll();
     return (TableConstraint[]) allCheckConstraints
-      .toArray(new TableConstraint[allCheckConstraints.size()]);
+        .toArray(new TableConstraint[allCheckConstraints.size()]);
   }
 
   /**
@@ -269,13 +272,40 @@ class MutableTable
   /**
    * {@inheritDoc}
    * 
+   * @see Table#getTriggers()
+   */
+  public Trigger[] getTriggers()
+  {
+    final List allTriggers = triggers.getAll();
+    return (Trigger[]) allTriggers.toArray(new Trigger[allTriggers.size()]);
+  }
+
+  /**
+   * Adds an trigger.
+   * 
+   * @param trigger
+   *        Trigger
+   */
+  void addTrigger(final Trigger trigger)
+  {
+    triggers.add(trigger);
+  }
+
+  void setTriggerComparator(final SerializableComparator comparator)
+  {
+    triggers.setComparator(comparator);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see Table#getPrivileges()
    */
   public Privilege[] getPrivileges()
   {
     final List allPrivileges = privileges.getAll();
     return (Privilege[]) allPrivileges.toArray(new Privilege[allPrivileges
-      .size()]);
+        .size()]);
   }
 
   /**

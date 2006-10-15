@@ -80,6 +80,13 @@ public interface Table
   TableConstraint[] getCheckConstraints();
 
   /**
+   * List of triggers.
+   * 
+   * @return Triggers for the table.
+   */
+  Trigger[] getTriggers();
+  
+  /**
    * List of privileges.
    * 
    * @return Privileges for the table.

@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>schemacrawler</groupId>
   <artifactId>schemacrawler-maven-plugin</artifactId>
-  <version>3.9</version>
+  <version>4.0</version>
   <packaging>maven-plugin</packaging>
   <name>SchemaCrawler Maven Plugin</name>
   <description>SchemaCrawler is a command-line tool to output your database schema and data in a readable form. The output is designed to be diff-ed with previous versions of your database schema. SchemaCrawler is also an API that improves on the standard JDBC metadata.</description>
