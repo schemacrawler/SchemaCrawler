@@ -222,10 +222,21 @@ final class TableRetriever
 
     final Map indicesMap = new HashMap();
 
-    final ResultSet results = getRetrieverConnection()
-      .getMetaData()
-      .getIndexInfo(getRetrieverConnection().getCatalog(),
-                    table.getSchemaName(), table.getName(), unique, approximate);
+    InformationSchemaViews informationSchemaViews = getRetrieverConnection()
+      .getInformationSchemaViews();
+
+    ResultSet results = null;
+    if (informationSchemaViews.hasIndexInfoSql())
+    {
+
+    }
+    else
+    {
+      results = getRetrieverConnection().getMetaData()
+        .getIndexInfo(getRetrieverConnection().getCatalog(),
+                      table.getSchemaName(), table.getName(), unique,
+                      approximate);
+    }
     createIndices(results, table, indicesMap);
 
     final Collection indexCollection = indicesMap.values();

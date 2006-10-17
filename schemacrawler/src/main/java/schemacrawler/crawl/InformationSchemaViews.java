@@ -4,6 +4,7 @@ package schemacrawler.crawl;
 import java.util.Properties;
 
 import schemacrawler.BaseOptions;
+import sf.util.Utilities;
 
 final class InformationSchemaViews
   extends BaseOptions
@@ -18,7 +19,8 @@ final class InformationSchemaViews
     if (informationSchemaViewsSql != null)
     {
       this.informationSchemaViewsSql = informationSchemaViewsSql;
-    } else
+    }
+    else
     {
       this.informationSchemaViewsSql = new Properties();
     }
@@ -32,7 +34,12 @@ final class InformationSchemaViews
   String getViewsSql()
   {
     return informationSchemaViewsSql
-        .getProperty("select.INFORMATION_SCHEMA.VIEWS");
+      .getProperty("select.INFORMATION_SCHEMA.VIEWS");
+  }
+
+  boolean hasViewsSql()
+  {
+    return !Utilities.isBlank(getViewsSql());
   }
 
   /**
@@ -44,7 +51,12 @@ final class InformationSchemaViews
   String getRoutinesSql()
   {
     return informationSchemaViewsSql
-        .getProperty("select.INFORMATION_SCHEMA.ROUTINES");
+      .getProperty("select.INFORMATION_SCHEMA.ROUTINES");
+  }
+
+  boolean hasRoutinesSql()
+  {
+    return !Utilities.isBlank(getRoutinesSql());
   }
 
   /**
@@ -55,7 +67,12 @@ final class InformationSchemaViews
   String getTableConstraintsSql()
   {
     return informationSchemaViewsSql
-        .getProperty("select.INFORMATION_SCHEMA.TABLE_CONSTRAINTS");
+      .getProperty("select.INFORMATION_SCHEMA.TABLE_CONSTRAINTS");
+  }
+
+  boolean hasTableConstraintsSql()
+  {
+    return !Utilities.isBlank(getTableConstraintsSql());
   }
 
   /**
@@ -67,7 +84,27 @@ final class InformationSchemaViews
   String getCheckConstraintsSql()
   {
     return informationSchemaViewsSql
-        .getProperty("select.INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
+      .getProperty("select.INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
+  }
+
+  boolean hasCheckConstraintsSql()
+  {
+    return !Utilities.isBlank(getCheckConstraintsSql());
+  }
+
+  /**
+   * Gets the index info SQL from the additional configuration.
+   * 
+   * @return Index info constraints SQL.
+   */
+  String getIndexInfoSql()
+  {
+    return informationSchemaViewsSql.getProperty("getIndexInfo");
+  }
+
+  boolean hasIndexInfoSql()
+  {
+    return !Utilities.isBlank(getIndexInfoSql());
   }
 
 }

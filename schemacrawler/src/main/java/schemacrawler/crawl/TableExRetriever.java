@@ -184,12 +184,13 @@ final class TableExRetriever
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
-    final String viewInformationSql = informationSchemaViews.getViewsSql();
-    if (Utilities.isBlank(viewInformationSql))
+    
+    if (informationSchemaViews.hasViewsSql())
     {
-      LOGGER.log(Level.FINE, "View definition SQL statement was not provided");
+      LOGGER.log(Level.FINE, "Views SQL statement was not provided");
       return;
     }
+    final String viewInformationSql = informationSchemaViews.getViewsSql();
 
     final Connection connection = getRetrieverConnection().getMetaData()
       .getConnection();
@@ -256,14 +257,14 @@ final class TableExRetriever
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
 
-    final String tableConstraintsInformationSql = informationSchemaViews
-      .getTableConstraintsSql();
-    if (Utilities.isBlank(tableConstraintsInformationSql))
+    if (informationSchemaViews.hasTableConstraintsSql())
     {
       LOGGER
         .log(Level.FINE, "Table constraints SQL statement was not provided");
       return;
     }
+    final String tableConstraintsInformationSql = informationSchemaViews
+      .getTableConstraintsSql();
 
     final Connection connection = getRetrieverConnection().getMetaData()
       .getConnection();
@@ -317,14 +318,14 @@ final class TableExRetriever
       results.close();
     }
 
-    final String checkConstraintInformationSql = informationSchemaViews
-      .getCheckConstraintsSql();
-    if (Utilities.isBlank(checkConstraintInformationSql))
+    if (informationSchemaViews.hasCheckConstraintsSql())
     {
       LOGGER
         .log(Level.FINE, "Check constraints SQL statement was not provided");
       return;
     }
+    final String checkConstraintInformationSql = informationSchemaViews
+      .getCheckConstraintsSql();
 
     // Get check constraint definitions
     statement = connection.createStatement();

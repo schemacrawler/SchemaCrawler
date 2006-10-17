@@ -6,6 +6,28 @@
   </properties>
   <body>
     <release
+      version="4.0"
+      date="2006-10-30">
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Added support for SQL99 INFORMATION_SCHEMA views. If equivalent
+        SQL for the standard INFORMATION_SCHEMA view is specified, it is
+        used to provide additional schema information such as check
+        constraints, triggers, and view and procedure definitions.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        Better handling of output file resources.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        Better handling of database connection resources.
+      </action>
+    </release>
+    <release
       version="3.8"
       date="2006-09-26">
       <action
