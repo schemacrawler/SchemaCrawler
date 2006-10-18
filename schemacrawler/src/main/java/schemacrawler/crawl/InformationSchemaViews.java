@@ -43,6 +43,17 @@ final class InformationSchemaViews
   }
 
   /**
+   * Gets the trigger definitions SQL from the additional configuration.
+   * 
+   * @return Trigger defnitions SQL.
+   */
+  String getTriggersSql()
+  {
+    return informationSchemaViewsSql
+        .getProperty("select.INFORMATION_SCHEMA.TRIGGERS");
+  }
+
+  /**
    * Gets the procedure definitions SQL from the additional
    * configuration.
    * 
