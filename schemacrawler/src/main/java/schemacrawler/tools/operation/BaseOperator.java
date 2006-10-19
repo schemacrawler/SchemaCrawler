@@ -28,11 +28,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.MessageFormat;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.crawl.CrawlHandler;
+import schemacrawler.crawl.CrawlerUtililties;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.crawl.SchemaInfoLevel;
 import schemacrawler.execute.DataHandler;
@@ -231,10 +231,7 @@ public abstract class BaseOperator
     tableCount++;
 
     // Create sql
-    String sql = null;
-    sql = Utilities.expandTemplateFromProperties(query,
-        createTableProperties(table));
-    sql = Utilities.expandTemplateFromProperties(sql);
+    String sql = CrawlerUtililties.expandSqlForTable(query, table);
     LOGGER.fine("Executing: " + sql);
 
     ResultSet results = null;
@@ -320,15 +317,6 @@ public abstract class BaseOperator
     final String message = getMessage(aggregate);
     handleTable(tableCount, table.getName(), table.getType().toString(),
         aggregate, message);
-  }
-
-  private Properties createTableProperties(final Table table)
-  {
-    final Properties properties = new Properties();
-    properties.setProperty("table", table.getFullName());
-    properties.setProperty("columns", table.getColumnsListAsString());
-    properties.setProperty("tabletype", table.getType().toString());
-    return properties;
   }
 
   private String getMessage(final double aggregate)

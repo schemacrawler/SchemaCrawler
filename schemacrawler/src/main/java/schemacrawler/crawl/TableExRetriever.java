@@ -183,7 +183,7 @@ final class TableExRetriever
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
         .getInformationSchemaViews();
 
-    if (informationSchemaViews.hasViewsSql())
+    if (!informationSchemaViews.hasViewsSql())
     {
       LOGGER.log(Level.FINE, "Views SQL statement was not provided");
       return;
@@ -304,7 +304,15 @@ final class TableExRetriever
         }
 
         MutableTrigger trigger = new MutableTrigger(triggerName, table);
-
+        trigger.setEventManipulationType(eventManipulationType);
+        trigger.setActionOrder(actionOrder);
+        trigger.setActionCondition(actionCondition);
+        trigger.setActionStatement(actionStatement);
+        trigger.setActionOrientation(actionOrientation);
+        trigger.setConditionTiming(conditionTiming);
+        // Add trigger to the table
+        table.addTrigger(trigger);
+        
       }
     }
     finally
@@ -336,7 +344,7 @@ final class TableExRetriever
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
         .getInformationSchemaViews();
 
-    if (informationSchemaViews.hasTableConstraintsSql())
+    if (!informationSchemaViews.hasTableConstraintsSql())
     {
       LOGGER
           .log(Level.FINE, "Table constraints SQL statement was not provided");
@@ -396,7 +404,7 @@ final class TableExRetriever
       results.close();
     }
 
-    if (informationSchemaViews.hasCheckConstraintsSql())
+    if (!informationSchemaViews.hasCheckConstraintsSql())
     {
       LOGGER
           .log(Level.FINE, "Check constraints SQL statement was not provided");
