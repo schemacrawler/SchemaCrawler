@@ -41,6 +41,7 @@ import schemacrawler.schema.IndexSortSequence;
 import schemacrawler.schema.IndexType;
 import schemacrawler.schema.TableType;
 import schemacrawler.util.AlphabeticalSortComparator;
+import sf.util.Utilities;
 
 /**
  * TableRetriever uses database metadata to get the details about the
@@ -226,9 +227,10 @@ final class TableRetriever
 
     ResultSet results = null;
     if (informationSchemaViews.hasIndexInfoSql())
-    {
-      LOGGER.log(Level.FINE, "Using getIndexInfo SQL");
+    {      
       String indexInfoSql = informationSchemaViews.getIndexInfoSql();
+      indexInfoSql = CrawlerUtililties.expandSqlForTable(indexInfoSql, table);
+      LOGGER.log(Level.FINE, "Using getIndexInfo SQL:" + Utilities.NEWLINE + indexInfoSql);
       final Connection connection = getRetrieverConnection().getMetaData()
           .getConnection();
       final Statement statement = connection.createStatement();

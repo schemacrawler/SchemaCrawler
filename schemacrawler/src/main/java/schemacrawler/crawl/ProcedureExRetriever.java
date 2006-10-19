@@ -78,7 +78,7 @@ final class ProcedureExRetriever
 
     InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
-    if (informationSchemaViews.hasRoutinesSql())
+    if (!informationSchemaViews.hasRoutinesSql())
     {
       LOGGER.log(Level.FINE,
                  "Procedure definition SQL statement was not provided");
