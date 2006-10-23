@@ -62,9 +62,9 @@ class MutableTable
   private final NamedObjectList privileges = new NamedObjectList(
       new NaturalSortComparator());
 
-  MutableTable(String schemaName, String catalogName, String name)
+  MutableTable(String catalogName, String schemaName, String name)
   {
-    super(schemaName, catalogName, name);
+    super(catalogName, schemaName, name);
   }
 
   /**
