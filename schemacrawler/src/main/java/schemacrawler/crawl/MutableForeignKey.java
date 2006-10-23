@@ -46,9 +46,9 @@ class MutableForeignKey
   private ForeignKeyUpdateRule deleteRule;
   private ForeignKeyDeferrability deferrability;
 
-  MutableForeignKey(String schemaName, String catalogName, String name)
+  MutableForeignKey(String catalogName, String schemaName, String name)
   {
-    super(schemaName, catalogName, name);
+    super(catalogName, schemaName, name);
   }
 
   /**

@@ -47,9 +47,9 @@ class MutableSchema
   private final NamedObjectList procedures = new NamedObjectList(
                                                                  new NaturalSortComparator());
 
-  MutableSchema(String schemaName, String catalogName, String name)
+  MutableSchema(String catalogName, String schemaName, String name)
   {
-    super(schemaName, catalogName, name);
+    super(catalogName, schemaName, name);
   }
 
   /**

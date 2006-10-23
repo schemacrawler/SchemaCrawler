@@ -50,9 +50,9 @@ final class MutableProcedure
   private RoutineBodyType routineBodyType;
   private String definition;
 
-  MutableProcedure(String schemaName, String catalogName, String name)
+  MutableProcedure(String catalogName, String schemaName, String name)
   {
-    super(schemaName, catalogName, name);
+    super(catalogName, schemaName, name);
   }
 
   /**
