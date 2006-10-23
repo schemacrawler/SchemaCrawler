@@ -26,6 +26,8 @@ import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.crawl.CrawlHandler;
 import schemacrawler.crawl.SchemaCrawlerException;
@@ -51,6 +53,9 @@ public abstract class BaseSchemaTextFormatter
   implements CrawlHandler
 {
 
+  private static final Logger LOGGER = Logger.getLogger(BaseSchemaTextFormatter.class
+                                                        .getName());
+  
   protected final PrintWriter out;
   private final SchemaTextOptions options;
 
@@ -98,8 +103,9 @@ public abstract class BaseSchemaTextFormatter
    */
   public void end()
     throws SchemaCrawlerException
-  {
+  {    
     out.close();
+    LOGGER.log(Level.FINER, "Output writer closed");
   }
 
   /**

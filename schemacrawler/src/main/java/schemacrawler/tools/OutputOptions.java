@@ -23,11 +23,13 @@ package schemacrawler.tools;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
 import schemacrawler.BaseOptions;
+import sf.util.Utilities;
 
 /**
  * Contains output options.
@@ -42,8 +44,8 @@ public final class OutputOptions
 
   private String outputFormatValue;
 
-  private File outputFile;
-  private transient PrintWriter writer;
+  private File outputFile = null;
+  private transient PrintWriter writer = null;
 
   private boolean appendOutput;
 
@@ -65,14 +67,11 @@ public final class OutputOptions
    *        Output filename
    */
   public OutputOptions(final String outputFormatValue,
-      final String outputFilename)
+                       final String outputFilename)
   {
     this.outputFormatValue = outputFormatValue;
 
-    if (outputFilename == null || outputFilename.length() == 0)
-    {
-      outputFile = null;
-    } else
+    if (!Utilities.isBlank(outputFilename))
     {
       outputFile = new File(outputFilename);
     }
@@ -140,13 +139,11 @@ public final class OutputOptions
       if (outputFile == null)
       {
         writer = new PrintWriter(System.out, /* autoFlush = */true);
-      } else
+      }
+      else
       {
-        final FileOutputStream fileOutputStream = new FileOutputStream(
-            outputFile, appendOutput);
-        final OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
-            fileOutputStream, "UTF-8");
-        writer = new PrintWriter(outputStreamWriter, /* autoFlush = */true);
+        FileWriter fileWriter = new FileWriter(outputFile, appendOutput);
+        writer = new PrintWriter(fileWriter, /* autoFlush = */true);
       }
     }
 
@@ -238,10 +235,6 @@ public final class OutputOptions
     outputOptions.outputFormatValue = outputFormatValue;
 
     outputOptions.outputFile = outputFile;
-    synchronized (writer)
-    {
-      outputOptions.writer = writer;
-    }
 
     outputOptions.appendOutput = appendOutput;
 
