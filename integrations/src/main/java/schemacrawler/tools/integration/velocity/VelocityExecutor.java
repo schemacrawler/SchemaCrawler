@@ -146,7 +146,7 @@ public class VelocityExecutor
     final Schema schema = SchemaCrawler.getSchema(dataSource, schemaTextOptions
       .getSchemaTextDetailType().mapToInfoLevel(), schemaCrawlerOptions);
     final Writer writer = schemaTextOptions.getOutputOptions()
-      .getOutputWriter();
+      .openOutputWriter();
     final String templateName = schemaTextOptions.getOutputOptions()
       .getOutputFormatValue();
     renderTemplate(templateName, schema, writer);

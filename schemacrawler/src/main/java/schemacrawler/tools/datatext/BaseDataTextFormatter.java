@@ -74,7 +74,7 @@ public abstract class BaseDataTextFormatter
 
     try
     {
-      out = options.getOutputOptions().getOutputWriter();
+      out = options.getOutputOptions().openOutputWriter();
     }
     catch (final IOException e)
     {
