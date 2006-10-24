@@ -76,7 +76,7 @@ public abstract class BaseSchemaTextFormatter
 
     try
     {
-      out = options.getOutputOptions().getOutputWriter();
+      out = options.getOutputOptions().openOutputWriter();
     }
     catch (final IOException e)
     {

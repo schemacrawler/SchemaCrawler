@@ -120,7 +120,7 @@ public abstract class BaseOperator
     this.query = query;
     try
     {
-      out = options.getOutputOptions().getOutputWriter();
+      out = options.getOutputOptions().openOutputWriter();
     }
     catch (final IOException e)
     {

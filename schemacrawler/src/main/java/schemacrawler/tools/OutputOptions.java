@@ -22,10 +22,8 @@ package schemacrawler.tools;
 
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
 import schemacrawler.BaseOptions;
@@ -45,7 +43,6 @@ public final class OutputOptions
   private String outputFormatValue;
 
   private File outputFile = null;
-  private transient PrintWriter writer = null;
 
   private boolean appendOutput;
 
@@ -67,7 +64,7 @@ public final class OutputOptions
    *        Output filename
    */
   public OutputOptions(final String outputFormatValue,
-                       final String outputFilename)
+      final String outputFilename)
   {
     this.outputFormatValue = outputFormatValue;
 
@@ -123,30 +120,24 @@ public final class OutputOptions
   }
 
   /**
-   * Gets the output writer. The first time this method is called, it
-   * creates a new output writer. Every subsequent time, it returns the
-   * same writer.
+   * Opens the output writer.
    * 
    * @throws IOException
    *         On an exception
    * @return Writer
    */
-  public synchronized PrintWriter getOutputWriter()
+  public PrintWriter openOutputWriter()
     throws IOException
   {
-    if (writer == null)
+    PrintWriter writer;
+    if (outputFile == null)
     {
-      if (outputFile == null)
-      {
-        writer = new PrintWriter(System.out, /* autoFlush = */true);
-      }
-      else
-      {
-        FileWriter fileWriter = new FileWriter(outputFile, appendOutput);
-        writer = new PrintWriter(fileWriter, /* autoFlush = */true);
-      }
+      writer = new PrintWriter(System.out, /* autoFlush = */true);
+    } else
+    {
+      FileWriter fileWriter = new FileWriter(outputFile, appendOutput);
+      writer = new PrintWriter(fileWriter, /* autoFlush = */true);
     }
-
     return writer;
   }
 
