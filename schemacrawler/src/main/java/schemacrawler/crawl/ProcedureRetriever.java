@@ -42,7 +42,7 @@ final class ProcedureRetriever
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(ProcedureRetriever.class.getName());
+      .getLogger(ProcedureRetriever.class.getName());
 
   /**
    * Constructs a SchemaCrawler object, from a connection.
@@ -76,12 +76,12 @@ final class ProcedureRetriever
    *         On a SQL exception
    */
   NamedObjectList retrieveProcedures(final boolean retrieveProcedures,
-                                     final InclusionRule procedureInclusionRule)
+      final InclusionRule procedureInclusionRule)
     throws SQLException
   {
 
     final NamedObjectList procedures = new NamedObjectList(
-                                                           new AlphabeticalSortComparator());
+        new AlphabeticalSortComparator());
 
     if (!retrieveProcedures)
     {
@@ -91,8 +91,8 @@ final class ProcedureRetriever
     final ResultSet results;
 
     // get tables
-    results = getRetrieverConnection().getMetaData()
-      .getProcedures(null, getRetrieverConnection().getSchemaPattern(), "%");
+    results = getRetrieverConnection().getMetaData().getProcedures(null,
+        getRetrieverConnection().getSchemaPattern(), "%");
     try
     {
       results.setFetchSize(FETCHSIZE);
@@ -113,8 +113,8 @@ final class ProcedureRetriever
 
       if (procedureInclusionRule.include(procedureName))
       {
-        final MutableProcedure procedure = new MutableProcedure(procedureName,
-                                                                catalog, schema);
+        final MutableProcedure procedure = new MutableProcedure(catalog,
+            schema, procedureName);
         procedure.setType(ProcedureType.valueOf(procedureType));
         procedure.setRemarks(remarks);
         // add it to the list
@@ -137,8 +137,8 @@ final class ProcedureRetriever
    *         On a SQL exception
    */
   void retrieveProcedureColumns(final MutableProcedure procedure,
-                                final InclusionRule columnInclusionRule,
-                                final NamedObjectList columnDataTypes)
+      final InclusionRule columnInclusionRule,
+      final NamedObjectList columnDataTypes)
     throws SQLException
   {
 
@@ -147,9 +147,8 @@ final class ProcedureRetriever
 
     final ResultSet results;
 
-    results = getRetrieverConnection().getMetaData()
-      .getProcedureColumns(getRetrieverConnection().getCatalog(), schema,
-                           procedureName, null);
+    results = getRetrieverConnection().getMetaData().getProcedureColumns(
+        getRetrieverConnection().getCatalog(), schema, procedureName, null);
     int ordinalNumber = 0;
     while (results.next())
     {
@@ -167,8 +166,7 @@ final class ProcedureRetriever
       if (columnInclusionRule.include(columnName))
       {
         final MutableProcedureColumn column = new MutableProcedureColumn(
-                                                                         columnName,
-                                                                         procedure);
+            columnName, procedure);
         column.setOrdinalPosition(ordinalNumber++);
         column.setProcedureColumnType(ProcedureColumnType.valueOf(columnType));
         column.lookupAndSetDataType(dataType, typeName, columnDataTypes);

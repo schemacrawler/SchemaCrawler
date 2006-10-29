@@ -194,10 +194,8 @@ final class TableExRetriever
         .getConnection();
     final Statement statement = connection.createStatement();
     final ResultSet results = statement.executeQuery(viewInformationSql);
-
     try
     {
-
       while (results.next())
       {
         // final String catalog = results.getString("TABLE_CATALOG");
@@ -266,10 +264,8 @@ final class TableExRetriever
         .getConnection();
     final Statement statement = connection.createStatement();
     final ResultSet results = statement.executeQuery(triggerInformationSql);
-
     try
     {
-
       while (results.next())
       {
         // final String catalog = results.getString("TRIGGER_CATALOG");
@@ -281,10 +277,10 @@ final class TableExRetriever
         EventManipulationType eventManipulationType = EventManipulationType
             .valueOf(results.getString("EVENT_MANIPULATION"));
 
-        final String eventObjectCatalog = results
-            .getString("EVENT_OBJECT_CATALOG");
-        final String eventObjectSchema = results
-            .getString("EVENT_OBJECT_SCHEMA");
+        // final String eventObjectCatalog = results
+        // .getString("EVENT_OBJECT_CATALOG");
+        // final String eventObjectSchema = results
+        // .getString("EVENT_OBJECT_SCHEMA");
         final String tableName = results.getString("EVENT_OBJECT_TABLE");
 
         int actionOrder = results.getInt("ACTION_ORDER");
@@ -312,13 +308,13 @@ final class TableExRetriever
         trigger.setConditionTiming(conditionTiming);
         // Add trigger to the table
         table.addTrigger(trigger);
-        
+
       }
     }
     finally
     {
-      statement.close();
       results.close();
+      statement.close();
     }
 
   }

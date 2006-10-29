@@ -103,8 +103,9 @@ public final class NamedObjectList
       throw new IllegalArgumentException("Cannot add an object to the list");
     }
 
-    remove(namedObject);
+    remove(namedObject.getName());
 
+    map.put(namedObject.getName(), namedObject);
     int index = Collections.binarySearch(sortedList, namedObject, comparator);
     if (index < 0)
     {
@@ -113,8 +114,7 @@ public final class NamedObjectList
     } else
     {
       sortedList.add(namedObject);
-    }
-    map.put(namedObject.getName(), namedObject);
+    }    
   }
 
   /**
@@ -153,7 +153,7 @@ public final class NamedObjectList
       }
       LOGGER.log(Level.FINEST, message);
     }
-    remove(namedObject);
+    remove(namedObject.getName());
     sortedList.add(index, namedObject);
     map.put(namedObject.getName(), namedObject);
   }
@@ -174,19 +174,6 @@ public final class NamedObjectList
       return namedObject;
     }
     return null;
-  }
-
-  /**
-   * Remove a named object.
-   * 
-   * @param namedObject
-   *        named object
-   * @return Object that was removed
-   */
-  NamedObject remove(final NamedObject namedObject)
-  {
-    /* boolean removed = */sortedList.remove(namedObject);
-    return (NamedObject) map.remove(namedObject.getName());
   }
 
   /**
