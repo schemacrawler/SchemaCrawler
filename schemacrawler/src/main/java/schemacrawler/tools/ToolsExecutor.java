@@ -24,6 +24,8 @@ package schemacrawler.tools;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
@@ -47,6 +49,9 @@ public class ToolsExecutor
   implements Executor
 {
 
+  public static final Logger LOGGER = Logger.getLogger(ToolsExecutor.class
+    .getName());
+  
   private Properties additionalConnectionConfiguration = new Properties();
 
   /**
@@ -98,7 +103,9 @@ public class ToolsExecutor
         }
         catch (final SQLException e)
         {
-          throw new SchemaCrawlerException("Cannot obtain a connection", e);
+          final String errorMessage = e.getMessage();
+          LOGGER.log(Level.WARNING, "Cannot obtain a connection: " + errorMessage);      
+          throw new SchemaCrawlerException(errorMessage, e);
         }
         crawlHandler = OperatorLoader.load(options.getOperatorOptions(),
             connection, dataHandler);

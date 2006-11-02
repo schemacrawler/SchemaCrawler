@@ -114,7 +114,9 @@ public abstract class BaseOperator
     }
     catch (final SQLException e)
     {
-      throw new SchemaCrawlerException("Cannot set autocommit", e);
+      final String errorMessage = e.getMessage();
+      LOGGER.log(Level.WARNING, "Cannot set autocommit: " + errorMessage);      
+      throw new SchemaCrawlerException(errorMessage, e);
     }
     this.connection = connection;
     this.query = query;
@@ -147,7 +149,9 @@ public abstract class BaseOperator
     }
     catch (final SQLException e)
     {
-      throw new SchemaCrawlerException("Connection is closed", e);
+      final String errorMessage = e.getMessage();
+      LOGGER.log(Level.WARNING, "Connection is closed: " + errorMessage);      
+      throw new SchemaCrawlerException(errorMessage, e);
     }
   }
 
@@ -169,7 +173,9 @@ public abstract class BaseOperator
     }
     catch (final SQLException e)
     {
-      throw new SchemaCrawlerException("Cannot close connection", e);
+      final String errorMessage = e.getMessage();
+      LOGGER.log(Level.WARNING, "Cannot close connection: " + errorMessage);      
+      throw new SchemaCrawlerException(errorMessage, e);
     }
 
   }
