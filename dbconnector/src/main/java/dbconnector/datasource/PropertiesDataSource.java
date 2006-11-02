@@ -244,9 +244,9 @@ public final class PropertiesDataSource
     }
     catch (final SQLException e)
     {
-      throw new PropertiesDataSourceException(
-                                              "Could not establish a connection",
-                                              e);
+      final String errorMessage = e.getMessage();
+      LOGGER.log(Level.WARNING, "Could not establish a connection: " + errorMessage);      
+      throw new PropertiesDataSourceException(errorMessage, e);
     }
     finally
     {
@@ -259,7 +259,9 @@ public final class PropertiesDataSource
       }
       catch (final SQLException e)
       {
-        throw new PropertiesDataSourceException("Could not close connection", e);
+        final String errorMessage = e.getMessage();
+        LOGGER.log(Level.WARNING, "Could not close the connection: " + errorMessage);
+        throw new PropertiesDataSourceException(errorMessage, e);
       }
     }
 
