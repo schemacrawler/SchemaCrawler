@@ -175,8 +175,8 @@ public class SchemaCrawlerTest
       {
         foundTrigger = true;
         final Trigger trigger = triggers[i];
-        assertEquals("Triggers full name does not match", "CUSTOMER.SCTRIGGER", trigger
-            .getFullName());
+        assertEquals("Triggers full name does not match", "CUSTOMER.SCTRIGGER",
+            trigger.getFullName());
         assertEquals("Trigger EventManipulationType does not match",
             EventManipulationType.DELETE, trigger.getEventManipulationType());
       }
