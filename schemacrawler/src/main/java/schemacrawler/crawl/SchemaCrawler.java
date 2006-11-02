@@ -141,7 +141,9 @@ public final class SchemaCrawler
     }
     catch (final SQLException e)
     {
-      throw new SchemaCrawlerException("Database access error", e);
+      final String errorMessage = e.getMessage();
+      LOGGER.log(Level.WARNING, "Database access error: " + errorMessage);      
+      throw new SchemaCrawlerException(errorMessage, e);
     }
     finally
     {

@@ -66,7 +66,9 @@ final class RetrieverConnection
     }
     catch (final SQLException e)
     {
-      throw new SchemaCrawlerException("Could not obtain database metadata", e);
+      final String errorMessage = e.getMessage();
+      LOGGER.log(Level.WARNING, "Could not obtain database metadata: " + errorMessage);      
+      throw new SchemaCrawlerException(errorMessage, e);
     }
 
     if (dataSource instanceof PropertiesDataSource)
