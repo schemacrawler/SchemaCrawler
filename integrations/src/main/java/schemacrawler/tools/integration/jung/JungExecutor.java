@@ -25,6 +25,8 @@ import java.awt.Dimension;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
@@ -52,6 +54,9 @@ public final class JungExecutor
   implements SchemaCrawlerExecutor
 {
 
+  public static final Logger LOGGER = Logger.getLogger(JungExecutor.class
+    .getName());
+  
   private static final int DEFAULT_IMAGE_WIDTH = 600;
 
   private Dimension getSize(final String dimensions)
@@ -107,7 +112,9 @@ public final class JungExecutor
         }
         catch (final SQLException e)
         {
-          throw new SchemaCrawlerException("Cannot obtain a connection", e);
+          final String errorMessage = e.getMessage();
+          LOGGER.log(Level.WARNING, "Cannot obtain a connection: " + errorMessage);      
+          throw new SchemaCrawlerException(errorMessage, e);
         }
         crawlHandler = OperatorLoader.load(options.getOperatorOptions(),
                                            connection, dataHandler);

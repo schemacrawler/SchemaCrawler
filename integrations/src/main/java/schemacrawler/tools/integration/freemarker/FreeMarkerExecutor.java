@@ -103,7 +103,9 @@ public class FreeMarkerExecutor
         }
         catch (final SQLException e)
         {
-          throw new SchemaCrawlerException("Cannot obtain a connection", e);
+          final String errorMessage = e.getMessage();
+          LOGGER.log(Level.WARNING, "Cannot obtain a connection: " + errorMessage);      
+          throw new SchemaCrawlerException(errorMessage, e);
         }
         crawlHandler = OperatorLoader.load(options.getOperatorOptions(),
                                            connection, dataHandler);
