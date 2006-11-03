@@ -18,6 +18,14 @@
       </action>
       <action
         dev="Sualeh Fatehi"
+        type="add">
+        Added support for get index information views. This SQL will be 
+        used in preference to the getIndexInfo JDBC method to allow for 
+        databases and drivers that do not support getIndexInfo due to 
+        permissioning issues.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
         type="fix">
         Better handling of output file resources.
       </action>

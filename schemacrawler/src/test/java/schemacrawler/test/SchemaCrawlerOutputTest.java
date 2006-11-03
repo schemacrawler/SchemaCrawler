@@ -94,6 +94,12 @@ public class SchemaCrawlerOutputTest
       fail("SchemaCrawlerException getting table count: " + e.getMessage());
     }
 
+    File outputFile = new File(outputFilename);
+    if (!outputFile.delete())
+    {
+      fail("SchemaCrawlerException cannot delete output file");
+    }
+
   }
 
   public void testValidXMLOutput()

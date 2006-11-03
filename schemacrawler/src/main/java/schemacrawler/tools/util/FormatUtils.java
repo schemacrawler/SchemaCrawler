@@ -58,7 +58,6 @@ public final class FormatUtils
       + "  <style type='text/css'>" + Utilities.NEWLINE
       + "    body, p, pre, table, th, td, caption {" + Utilities.NEWLINE
       + "      text-align: left;" + Utilities.NEWLINE
-      + "      white-space: pre;" + Utilities.NEWLINE
       + "      font-family: Trebuchet MS;" + Utilities.NEWLINE
       + "      font-size: 11.0px;" + Utilities.NEWLINE + "    }"
       + Utilities.NEWLINE + "    table, th, td {" + Utilities.NEWLINE

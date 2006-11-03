@@ -450,9 +450,8 @@ public final class SchemaHTMLFormatter
     {
       return;
     }
-    out.println("<table>");
-    out.println("<tr><td>Definition:</td></tr>");
-    out.println("<tr><td><pre>" + definition + "</pre></td></tr>");
+    out.println("<tr><td colspan='4'>Definition:</td></tr>");
+    out.println("<tr><td colspan='4'><pre>" + definition + "</pre></td></tr>");
     out.println();
   }
 
