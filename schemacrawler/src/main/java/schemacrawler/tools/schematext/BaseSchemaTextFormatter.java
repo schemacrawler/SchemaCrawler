@@ -53,9 +53,9 @@ public abstract class BaseSchemaTextFormatter
   implements CrawlHandler
 {
 
-  private static final Logger LOGGER = Logger.getLogger(BaseSchemaTextFormatter.class
-                                                        .getName());
-  
+  private static final Logger LOGGER = Logger
+      .getLogger(BaseSchemaTextFormatter.class.getName());
+
   protected final PrintWriter out;
   private final SchemaTextOptions options;
 
@@ -103,7 +103,7 @@ public abstract class BaseSchemaTextFormatter
    */
   public void end()
     throws SchemaCrawlerException
-  {    
+  {
     out.close();
     LOGGER.log(Level.FINER, "Output writer closed");
   }
@@ -216,7 +216,9 @@ public abstract class BaseSchemaTextFormatter
     final String procedureTypeDetail = "procedure, " + procedure.getType();
     handleProcedureName(++tableCount, procedure.getName(), procedureTypeDetail);
 
-    if (options.getSchemaTextDetailType() != SchemaTextDetailType.BRIEF)
+    SchemaTextDetailType schemaTextDetailType = options
+        .getSchemaTextDetailType();
+    if (schemaTextDetailType != SchemaTextDetailType.BRIEF)
     {
 
       handleStartTableColumns();
@@ -240,7 +242,11 @@ public abstract class BaseSchemaTextFormatter
         handleProcedureColumn(column.getOrdinalPosition() + 1,
             column.getName(), columnType, procedureColumnType);
       }
-
+      if (schemaTextDetailType
+          .isGreaterThanOrEqualTo(SchemaTextDetailType.VERBOSE))
+      {
+        handleDefinition(procedure.getDefinition());
+      }
       handleProcedureEnd();
     }
 
