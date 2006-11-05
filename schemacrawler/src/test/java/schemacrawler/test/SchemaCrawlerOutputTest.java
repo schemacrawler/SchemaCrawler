@@ -37,8 +37,15 @@ import schemacrawler.crawl.CrawlHandler;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.crawl.SchemaCrawlerOptions;
+import schemacrawler.execute.DataHandler;
+import schemacrawler.execute.QueryExecutor;
 import schemacrawler.test.util.TestBase;
 import schemacrawler.tools.OutputOptions;
+import schemacrawler.tools.datatext.DataTextFormatOptions;
+import schemacrawler.tools.datatext.DataTextFormatterLoader;
+import schemacrawler.tools.operation.Operation;
+import schemacrawler.tools.operation.OperatorLoader;
+import schemacrawler.tools.operation.OperatorOptions;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextFormatter;
 import schemacrawler.tools.schematext.SchemaTextFormatterLoader;
@@ -97,7 +104,101 @@ public class SchemaCrawlerOutputTest
     File outputFile = new File(outputFilename);
     if (!outputFile.delete())
     {
-      fail("SchemaCrawlerException cannot delete output file");
+      fail("Cannot delete output file");
+    }
+
+  }
+
+  public void testSchemaOutput()
+  {
+    try
+    {
+      String outputFilename = File.createTempFile("schemacrawler", "test")
+          .getAbsolutePath();
+
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      final SchemaTextOptions textFormatOptions = new SchemaTextOptions(
+          new Properties(), new OutputOptions("text", outputFilename),
+          SchemaTextDetailType.BRIEF);
+
+      final SchemaTextFormatter formatter = (SchemaTextFormatter) SchemaTextFormatterLoader
+          .load(textFormatOptions);
+      final SchemaCrawler crawler = new SchemaCrawler(dataSource, null,
+          formatter);
+      crawler.crawl(schemaCrawlerOptions);
+
+      File outputFile = new File(outputFilename);
+      if (!outputFile.delete())
+      {
+        fail("Cannot delete output file");
+      }
+    }
+    catch (final Exception e)
+    {
+      fail(e.getMessage());
+    }
+
+  }
+
+  public void testDataOutput()
+  {
+    try
+    {
+      String outputFilename = File.createTempFile("schemacrawler", "test")
+          .getAbsolutePath();
+
+      final DataTextFormatOptions textFormatOptions = new DataTextFormatOptions(
+          new Properties(), new OutputOptions("text", outputFilename));
+
+      final DataHandler dataHandler = (DataHandler) DataTextFormatterLoader
+          .load(textFormatOptions);
+      final QueryExecutor executor = new QueryExecutor(dataSource, dataHandler);
+      executor.executeSQL("SELECT COUNT(*) FROM CUSTOMER");
+
+      File outputFile = new File(outputFilename);
+      if (!outputFile.delete())
+      {
+        fail("Cannot delete output file");
+      }
+    }
+    catch (final Exception e)
+    {
+      fail(e.getMessage());
+    }
+
+  }
+
+  public void testOperatorOutput()
+  {
+    try
+    {
+      String outputFilename = File.createTempFile("schemacrawler", "test")
+          .getAbsolutePath();
+
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      final DataTextFormatOptions textFormatOptions = new DataTextFormatOptions(
+          new Properties(), new OutputOptions("text", outputFilename));
+      final OperatorOptions operatorOptions = new OperatorOptions(
+          new Properties(), new OutputOptions("text", outputFilename),
+          Operation.COUNT, null);
+
+      final DataHandler dataHandler = (DataHandler) DataTextFormatterLoader
+          .load(textFormatOptions);
+      final CrawlHandler formatter = OperatorLoader.load(operatorOptions,
+          dataSource.getConnection(), dataHandler);
+      final SchemaCrawler crawler = new SchemaCrawler(dataSource, null,
+          formatter);
+      crawler.crawl(schemaCrawlerOptions);
+
+      File outputFile = new File(outputFilename);
+      if (!outputFile.delete())
+      {
+        fail("Cannot delete output file");
+      }
+    }
+    catch (final Exception e)
+    {
+      fail(e.getMessage());
     }
 
   }
