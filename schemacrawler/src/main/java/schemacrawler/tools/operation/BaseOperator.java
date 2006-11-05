@@ -163,13 +163,24 @@ public abstract class BaseOperator
   public void end()
     throws SchemaCrawlerException
   {
+    
+    out.close();
+    LOGGER.log(Level.FINER, "Output writer closed");
+    try
+    {
+      dataHandler.end();
+    }
+    catch (final QueryExecutorException e)
+    {
+      final String errorMessage = e.getMessage();
+      LOGGER.log(Level.WARNING, "Cannot end data handler: " + errorMessage);      
+      throw new SchemaCrawlerException(errorMessage, e);
+    }
 
     try
     {
       connection.close();
       LOGGER.log(Level.FINER, "Database connection closed - " + connection);
-      out.close();
-      LOGGER.log(Level.FINER, "Output writer closed");
     }
     catch (final SQLException e)
     {

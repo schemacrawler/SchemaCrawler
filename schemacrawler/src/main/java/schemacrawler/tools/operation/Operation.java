@@ -33,21 +33,21 @@ public final class Operation
 
   private static final long serialVersionUID = -5097434654628745480L;
 
-  private static final Operation COUNT = new Operation("COUNT", "Row Count",
+  public static final Operation COUNT = new Operation("COUNT", "Row Count",
       "SELECT COUNT(*) FROM ${table}",
       "{0,choice,0#empty|0<{0,number,integer} rows}");
 
-  private static final Operation DROP = new Operation("DROP", "Drop Table",
+  public static final Operation DROP = new Operation("DROP", "Drop Table",
       "DROP ${tabletype} ${table}", "dropped");
 
-  private static final Operation TRUNCATE = new Operation("TRUNCATE",
+  public static final Operation TRUNCATE = new Operation("TRUNCATE",
       "Truncate Table", "DELETE FROM ${table}",
       "truncated; {0,choice,0#was already empty|0<had {0,number,integer} rows}");
 
-  private static final Operation DUMP = new Operation("DUMP", "Dump",
+  public static final Operation DUMP = new Operation("DUMP", "Dump",
       "SELECT ${columns} FROM ${table} ORDER BY ${columns}", "");
 
-  private static final Operation QUERYOVER = new Operation("QUERYOVER", "",
+  public static final Operation QUERYOVER = new Operation("QUERYOVER", "",
       "Query Over Table", "{0,choice,0#-|0<{0,number,integer}}");
 
   private static final Operation[] OPERATION_ALL = new Operation[]
