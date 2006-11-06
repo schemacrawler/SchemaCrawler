@@ -170,7 +170,7 @@ public final class Utilities
       try
       {
         output.close();
-        stream.close();
+        input.close();
       }
       catch (final IOException e)
       {
