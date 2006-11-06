@@ -49,7 +49,7 @@ public class ToolsExecutor
   implements Executor
 {
 
-  public static final Logger LOGGER = Logger.getLogger(ToolsExecutor.class
+  private static final Logger LOGGER = Logger.getLogger(ToolsExecutor.class
     .getName());
   
   private Properties additionalConnectionConfiguration = new Properties();
