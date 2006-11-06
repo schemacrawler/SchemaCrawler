@@ -41,6 +41,7 @@ import schemacrawler.schema.Index;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.View;
 import schemacrawler.tools.util.FormatUtils;
 
@@ -118,26 +119,6 @@ public abstract class BaseSchemaTextFormatter
     return options.getSchemaTextDetailType().mapToInfoLevel();
   }
 
-  final boolean isShowOrdinalNumbers()
-  {
-    return options.isShowOrdinalNumbers();
-  }
-
-  final boolean isShowJdbcColumnTypeNames()
-  {
-    return options.isShowJdbcColumnTypeNames();
-  }
-
-  final boolean isShowIndexNames()
-  {
-    return !options.isHideIndexNames();
-  }
-
-  final SchemaTextDetailType getSchemaTextDetailType()
-  {
-    return options.getSchemaTextDetailType();
-  }
-
   /**
    * Tables count for tables processed.
    * 
@@ -179,27 +160,6 @@ public abstract class BaseSchemaTextFormatter
     }
     handleColumnDataTypesEnd();
 
-  }
-
-  String makeDefinedWithString(final ColumnDataType columnDataType)
-  {
-    String definedWith = "defined with ";
-    if (columnDataType.getCreateParameters() == null)
-    {
-      definedWith = definedWith + "no parameters";
-    } else
-    {
-      definedWith = definedWith + columnDataType.getCreateParameters();
-    }
-    return definedWith;
-  }
-
-  void handleDatabaseInfo(final DatabaseInfo databaseInfo)
-  {
-    if (!getNoInfo())
-    {
-      FormatUtils.printDatabaseInfo(databaseInfo, out);
-    }
   }
 
   /**
@@ -281,6 +241,13 @@ public abstract class BaseSchemaTextFormatter
       printPrimaryKey(table.getPrimaryKey());
       printForeignKeys(table.getName(), table.getForeignKeys());
       printIndices(table.getIndices());
+      if (schemaTextDetailType
+          .isGreaterThanOrEqualTo(SchemaTextDetailType.MAXIMUM))
+      {
+        printTableConstraints(table.getCheckConstraints());
+        // printPrivileges(table.getPrivileges());
+        // printTriggers(table.getTriggers());
+      }
       if (table instanceof View)
       {
         final View view = (View) table;
@@ -292,6 +259,26 @@ public abstract class BaseSchemaTextFormatter
 
     out.flush();
 
+  }
+
+  boolean getNoFooter()
+  {
+    return options.getOutputOptions().isNoFooter();
+  }
+
+  boolean getNoHeader()
+  {
+    return options.getOutputOptions().isNoHeader();
+  }
+
+  boolean getNoInfo()
+  {
+    return options.getOutputOptions().isNoInfo();
+  }
+
+  final SchemaTextDetailType getSchemaTextDetailType()
+  {
+    return options.getSchemaTextDetailType();
   }
 
   /**
@@ -308,6 +295,28 @@ public abstract class BaseSchemaTextFormatter
    */
   abstract void handleColumn(final int ordinalNumber, final String name,
       final String type, final String symbol);
+
+  abstract void handleColumnDataType(ColumnDataType columnDataType);
+
+  abstract void handleColumnDataTypesEnd();
+
+  abstract void handleColumnDataTypesStart();
+
+  void handleDatabaseInfo(final DatabaseInfo databaseInfo)
+  {
+    if (!getNoInfo())
+    {
+      FormatUtils.printDatabaseInfo(databaseInfo, out);
+    }
+  }
+
+  abstract void handleDatabasePropertiesEnd();
+
+  abstract void handleDatabasePropertiesStart();
+
+  abstract void handleDatabaseProperty(String name, String value);
+
+  abstract void handleDefinition(final String definition);
 
   /**
    * Handles the output for a foreign key column pair.
@@ -403,6 +412,9 @@ public abstract class BaseSchemaTextFormatter
    */
   abstract void handleStartTableColumns();
 
+  abstract void handleTableConstraintName(final int ordinalNumber,
+      final String name, final String definition);
+
   /**
    * Handles the end of output for a table.
    */
@@ -426,31 +438,42 @@ public abstract class BaseSchemaTextFormatter
    */
   abstract void handleTableStart();
 
-  abstract void handleDatabaseProperty(String name, String value);
-
-  abstract void handleDatabasePropertiesEnd();
-
-  abstract void handleDatabasePropertiesStart();
-
-  abstract void handleColumnDataTypesEnd();
-
-  abstract void handleColumnDataType(ColumnDataType columnDataType);
-
-  abstract void handleColumnDataTypesStart();
-
-  boolean getNoFooter()
+  final boolean isShowConstraintNames()
   {
-    return options.getOutputOptions().isNoFooter();
+    return !options.isHideConstraintNames();
   }
 
-  boolean getNoHeader()
+  final boolean isShowJdbcColumnTypeNames()
   {
-    return options.getOutputOptions().isNoHeader();
+    return options.isShowJdbcColumnTypeNames();
   }
 
-  boolean getNoInfo()
+  final boolean isShowOrdinalNumbers()
   {
-    return options.getOutputOptions().isNoInfo();
+    return options.isShowOrdinalNumbers();
+  }
+
+  String makeDefinedWithString(final ColumnDataType columnDataType)
+  {
+    String definedWith = "defined with ";
+    if (columnDataType.getCreateParameters() == null)
+    {
+      definedWith = definedWith + "no parameters";
+    } else
+    {
+      definedWith = definedWith + columnDataType.getCreateParameters();
+    }
+    return definedWith;
+  }
+
+  String negate(final boolean positive, final String text)
+  {
+    String textValue = text;
+    if (!positive)
+    {
+      textValue = "not " + textValue;
+    }
+    return textValue;
   }
 
   /**
@@ -560,15 +583,18 @@ public abstract class BaseSchemaTextFormatter
     }
   }
 
-  protected abstract void handleDefinition(final String definition);
-
-  String negate(final boolean positive, final String text)
+  private void printTableConstraints(final TableConstraint[] constraints)
   {
-    String textValue = text;
-    if (!positive)
+
+    for (int i = 0; i < constraints.length; i++)
     {
-      textValue = "not " + textValue;
+      TableConstraint constraint = constraints[i];
+      if (constraint != null)
+      {
+        handleTableConstraintName(i + 1, constraint.getName(), constraint
+            .getDefinition());
+      }
     }
-    return textValue;
   }
+
 }

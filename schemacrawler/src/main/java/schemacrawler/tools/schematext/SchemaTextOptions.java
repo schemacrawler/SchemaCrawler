@@ -38,12 +38,13 @@ public final class SchemaTextOptions
   private static final long serialVersionUID = -8133661515343358712L;
 
   private static final String HIDE_INDEX_NAMES = "schemacrawler.format.hide_index_names";
+  private static final String HIDE_CONSTRAINT_NAMES = "schemacrawler.format.hide_constraint_names";
   private static final String SHOW_ORDINAL_NUMBERS = "schemacrawler.format.show_ordinal_numbers";
   private static final String SHOW_JDBC_COLUMN_TYPE_NAMES = "schemacrawler.format.show_jdbc_column_type_names";
 
   private final boolean showJdbcColumnTypeNames;
   private final boolean showOrdinalNumbers;
-  private final boolean hideIndexNames;
+  private final boolean hideConstraintNames;
   private final SchemaTextDetailType schemaTextDetailType;
 
   /**
@@ -74,13 +75,14 @@ public final class SchemaTextOptions
     {
       showJdbcColumnTypeNames = false;
       showOrdinalNumbers = false;
-      hideIndexNames = false;
+      hideConstraintNames = false;
     } else
     {
       showJdbcColumnTypeNames = getBooleanProperty(SHOW_JDBC_COLUMN_TYPE_NAMES,
           config);
       showOrdinalNumbers = getBooleanProperty(SHOW_ORDINAL_NUMBERS, config);
-      hideIndexNames = getBooleanProperty(HIDE_INDEX_NAMES, config);
+      hideConstraintNames = getBooleanProperty(HIDE_INDEX_NAMES, config)
+          || getBooleanProperty(HIDE_CONSTRAINT_NAMES, config);
     }
   }
 
@@ -94,9 +96,9 @@ public final class SchemaTextOptions
     return schemaTextDetailType;
   }
 
-  boolean isHideIndexNames()
+  boolean isHideConstraintNames()
   {
-    return hideIndexNames;
+    return hideConstraintNames;
   }
 
   boolean isShowJdbcColumnTypeNames()
@@ -118,7 +120,7 @@ public final class SchemaTextOptions
   {
     final StringBuffer buffer = new StringBuffer();
     buffer.append("TextFormatOptions[");
-    buffer.append("hideIndexNames=").append(hideIndexNames);
+    buffer.append("hideIndexNames=").append(hideConstraintNames);
     buffer.append(", showJdbcColumnTypeNames=").append(showJdbcColumnTypeNames);
     buffer.append(", showOrdinalNumbers=").append(showOrdinalNumbers);
     buffer.append(", schemaTextDetailType=").append(schemaTextDetailType);

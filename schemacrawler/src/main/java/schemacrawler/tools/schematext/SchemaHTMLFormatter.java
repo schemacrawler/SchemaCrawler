@@ -100,22 +100,28 @@ public final class SchemaHTMLFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.CrawlHandler#handle(schemacrawler.schema.DatabaseInfo)
+   * @see BaseSchemaTextFormatter#handleColumn(int, String, String,
+   *      String)
    */
-  void handleDatabaseInfo(final DatabaseInfo databaseInfo)
+  void handleColumn(final int ordinalNumber, final String name,
+      final String type, final String symbol)
   {
-    if (!getNoInfo())
+    out.print(RECORD_BEGIN);
+    out.print(FIELD_BEGIN);
+    if (isShowOrdinalNumbers())
     {
-      out.println("<pre id='databaseInfo'>");
-      out.println(databaseInfo);
-      out.println("</pre>");
-      out.flush();
+      final String ordinalNumberString = String.valueOf(ordinalNumber);
+      out.print(ordinalNumberString);
     }
-  }
-
-  void handleColumnDataTypesStart()
-  {
-
+    out.print(FIELD_SEPARATOR);
+    out.print(name);
+    out.print(FIELD_SEPARATOR);
+    out.print(type);
+    out.print(FIELD_SEPARATOR);
+    out.print(symbol);
+    out.print(FIELD_END);
+    out.print(RECORD_END);
+    out.println();
   }
 
   /**
@@ -159,21 +165,36 @@ public final class SchemaHTMLFormatter
 
   }
 
-  private void printColumnDataTypeProperty(final String userDefined)
-  {
-    out.print(RECORD_BEGIN);
-    out.print(FIELD_EMPTY);
-    out.print(FIELD_BEGIN);
-    out.print(userDefined);
-    out.print(FIELD_END);
-    out.print(FIELD_EMPTY);
-    out.print(RECORD_END);
-    out.println();
-  }
-
   void handleColumnDataTypesEnd()
   {
 
+  }
+
+  void handleColumnDataTypesStart()
+  {
+
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.crawl.CrawlHandler#handle(schemacrawler.schema.DatabaseInfo)
+   */
+  void handleDatabaseInfo(final DatabaseInfo databaseInfo)
+  {
+    if (!getNoInfo())
+    {
+      out.println("<pre id='databaseInfo'>");
+      out.println(databaseInfo);
+      out.println("</pre>");
+      out.flush();
+    }
+  }
+
+  void handleDatabasePropertiesEnd()
+  {
+    out.println("</table>");
+    out.println("<p></p>");
   }
 
   void handleDatabasePropertiesStart()
@@ -193,36 +214,14 @@ public final class SchemaHTMLFormatter
     out.print(RECORD_END);
   }
 
-  void handleDatabasePropertiesEnd()
+  void handleDefinition(final String definition)
   {
-    out.println("</table>");
-    out.println("<p></p>");
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see BaseSchemaTextFormatter#handleColumn(int, String, String,
-   *      String)
-   */
-  void handleColumn(final int ordinalNumber, final String name,
-      final String type, final String symbol)
-  {
-    out.print(RECORD_BEGIN);
-    out.print(FIELD_BEGIN);
-    if (isShowOrdinalNumbers())
+    if (Utilities.isBlank(definition))
     {
-      final String ordinalNumberString = String.valueOf(ordinalNumber);
-      out.print(ordinalNumberString);
+      return;
     }
-    out.print(FIELD_SEPARATOR);
-    out.print(name);
-    out.print(FIELD_SEPARATOR);
-    out.print(type);
-    out.print(FIELD_SEPARATOR);
-    out.print(symbol);
-    out.print(FIELD_END);
-    out.print(RECORD_END);
+    out.println("<tr><td colspan='4'>Definition:</td></tr>");
+    out.println("<tr><td colspan='4'><pre>" + definition + "</pre></td></tr>");
     out.println();
   }
 
@@ -265,7 +264,7 @@ public final class SchemaHTMLFormatter
     out.print(RECORD_EMPTY);
     out.print(RECORD_BEGIN);
     out.print(FIELD_BEGIN_2);
-    if (isShowIndexNames())
+    if (isShowConstraintNames())
     {
       out.print(FormatUtils.htmlBold(name));
     }
@@ -291,7 +290,7 @@ public final class SchemaHTMLFormatter
     out.print(RECORD_EMPTY);
     out.print(RECORD_BEGIN);
     out.print(FIELD_BEGIN_2);
-    if (isShowIndexNames())
+    if (isShowConstraintNames())
     {
       out.print(FormatUtils.htmlBold(name));
     }
@@ -315,7 +314,7 @@ public final class SchemaHTMLFormatter
     out.print(RECORD_EMPTY);
     out.print(RECORD_BEGIN);
     out.print(FIELD_BEGIN_2);
-    if (isShowIndexNames())
+    if (isShowConstraintNames())
     {
       out.print(FormatUtils.htmlBold(name));
     }
@@ -325,7 +324,7 @@ public final class SchemaHTMLFormatter
     out.print(RECORD_END);
     out.println();
   }
-
+  
   /**
    * {@inheritDoc}
    * 
@@ -406,6 +405,40 @@ public final class SchemaHTMLFormatter
   /**
    * {@inheritDoc}
    * 
+   * @see BaseSchemaTextFormatter#handleIndexName(int, String, String,
+   *      boolean, String)
+   */
+  void handleTableConstraintName(final int ordinalNumber, final String name,
+      final String definition)
+  {
+    out.println();
+    out.print(RECORD_EMPTY);
+    out.print(RECORD_BEGIN);
+    out.print(FIELD_BEGIN_2);
+    if (isShowConstraintNames())
+    {
+      out.print(FormatUtils.htmlBold(name));
+    }
+    out.print(FIELD_END + FIELD_BEGIN_2);
+    final String constraintDetails = "[check constraint]";
+    out.print(FormatUtils.htmlAlignRight(constraintDetails));
+    out.print(FIELD_END);
+    out.print(RECORD_END);
+    out.println();
+    
+    out.print(RECORD_EMPTY);
+    out.print(RECORD_BEGIN);
+    out.print(FIELD_BEGIN_2);
+    out.print(FIELD_END + FIELD_BEGIN_2);
+    out.print(definition);
+    out.print(FIELD_END);
+    out.print(RECORD_END);
+    out.println();    
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see BaseSchemaTextFormatter#handleTableEnd()
    */
   void handleTableEnd()
@@ -444,14 +477,15 @@ public final class SchemaHTMLFormatter
     out.println("<table>");
   }
 
-  protected void handleDefinition(final String definition)
+  private void printColumnDataTypeProperty(final String userDefined)
   {
-    if (Utilities.isBlank(definition))
-    {
-      return;
-    }
-    out.println("<tr><td colspan='4'>Definition:</td></tr>");
-    out.println("<tr><td colspan='4'><pre>" + definition + "</pre></td></tr>");
+    out.print(RECORD_BEGIN);
+    out.print(FIELD_EMPTY);
+    out.print(FIELD_BEGIN);
+    out.print(userDefined);
+    out.print(FIELD_END);
+    out.print(FIELD_EMPTY);
+    out.print(RECORD_END);
     out.println();
   }
 

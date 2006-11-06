@@ -84,31 +84,28 @@ public final class SchemaTextFormatter
     super.end();
   }
 
-  void handleColumnDataTypesEnd()
+  /**
+   * {@inheritDoc}
+   * 
+   * @see BaseSchemaTextFormatter#handleColumn(int, String, String,
+   *      String)
+   */
+  void handleColumn(final int ordinalNumber, final String name,
+      final String type, final String symbol)
   {
-    out.println();
-    out.println();
-  }
-
-  void handleColumnDataTypesStart()
-  {
-  }
-
-  void handleDatabasePropertiesEnd()
-  {
-    out.println();
-    out.println();
-  }
-
-  void handleDatabasePropertiesStart()
-  {
-  }
-
-  void handleDatabaseProperty(final String name, final String value)
-  {
-    out.print(textFormattingFunctor.format(name, 0, true));
     out.print(textFormattingFunctor.getFieldSeparator());
-    out.print(textFormattingFunctor.format(value, 0, true));
+    if (isShowOrdinalNumbers())
+    {
+      final String ordinalNumberString = String.valueOf(ordinalNumber);
+      out.print(textFormattingFunctor.format(ordinalNumberString, 2, true));
+      out.print(textFormattingFunctor.getFieldSeparator());
+    }
+    out.print(textFormattingFunctor.format(name, MAX_COLUMN_NAME_WIDTH, true));
+    out.print(textFormattingFunctor.getFieldSeparator());
+    out.print(textFormattingFunctor.format(type, MAX_COLUMN_TYPE_WIDTH, true));
+    out.print(textFormattingFunctor.getFieldSeparator());
+    out.print(textFormattingFunctor.format(symbol, MAX_COLUMN_MODIFIER_WIDTH,
+        false));
     out.println();
   }
 
@@ -149,16 +146,35 @@ public final class SchemaTextFormatter
 
   }
 
-  private void printColumnDataTypeProperty(final String userDefined,
-      final int width)
+  void handleColumnDataTypesEnd()
   {
     out.println();
-    out.print(textFormattingFunctor.getFieldSeparator());
-    out.print(textFormattingFunctor.getFieldSeparator());
-    out.print(textFormattingFunctor.format(userDefined, width, true));
+    out.println();
   }
 
-  protected void handleDefinition(final String definition)
+  void handleColumnDataTypesStart()
+  {
+  }
+
+  void handleDatabasePropertiesEnd()
+  {
+    out.println();
+    out.println();
+  }
+
+  void handleDatabasePropertiesStart()
+  {
+  }
+
+  void handleDatabaseProperty(final String name, final String value)
+  {
+    out.print(textFormattingFunctor.format(name, 0, true));
+    out.print(textFormattingFunctor.getFieldSeparator());
+    out.print(textFormattingFunctor.format(value, 0, true));
+    out.println();
+  }
+
+  void handleDefinition(final String definition)
   {
     if (Utilities.isBlank(definition))
     {
@@ -167,31 +183,6 @@ public final class SchemaTextFormatter
     out.println();
     out.println("Definition:");
     out.println(definition);
-    out.println();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see BaseSchemaTextFormatter#handleColumn(int, String, String,
-   *      String)
-   */
-  void handleColumn(final int ordinalNumber, final String name,
-      final String type, final String symbol)
-  {
-    out.print(textFormattingFunctor.getFieldSeparator());
-    if (isShowOrdinalNumbers())
-    {
-      final String ordinalNumberString = String.valueOf(ordinalNumber);
-      out.print(textFormattingFunctor.format(ordinalNumberString, 2, true));
-      out.print(textFormattingFunctor.getFieldSeparator());
-    }
-    out.print(textFormattingFunctor.format(name, MAX_COLUMN_NAME_WIDTH, true));
-    out.print(textFormattingFunctor.getFieldSeparator());
-    out.print(textFormattingFunctor.format(type, MAX_COLUMN_TYPE_WIDTH, true));
-    out.print(textFormattingFunctor.getFieldSeparator());
-    out.print(textFormattingFunctor.format(symbol, MAX_COLUMN_MODIFIER_WIDTH,
-        false));
     out.println();
   }
 
@@ -226,7 +217,7 @@ public final class SchemaTextFormatter
       final String updateRule)
   {
     out.println();
-    if (isShowIndexNames())
+    if (isShowConstraintNames())
     {
       out.print(name);
       out.print(textFormattingFunctor.getFieldSeparator());
@@ -245,7 +236,7 @@ public final class SchemaTextFormatter
       final String type, final boolean unique, final String sortSequence)
   {
     out.println();
-    if (isShowIndexNames())
+    if (isShowConstraintNames())
     {
       out.print(name);
       out.print(textFormattingFunctor.getFieldSeparator());
@@ -258,12 +249,32 @@ public final class SchemaTextFormatter
   /**
    * {@inheritDoc}
    * 
+   * @see BaseSchemaTextFormatter#handleIndexName(int, String, String,
+   *      boolean, String)
+   */
+  void handleTableConstraintName(final int ordinalNumber, final String name,
+      final String definition)
+  {
+    out.println();
+    if (isShowConstraintNames())
+    {
+      out.print(name);
+      out.print(textFormattingFunctor.getFieldSeparator());
+    }
+    final String constraintDetails = "[check constraint]";
+    out.println(constraintDetails);
+    out.println(definition);
+  }
+  
+  /**
+   * {@inheritDoc}
+   * 
    * @see BaseSchemaTextFormatter#handlePrimaryKeyName(String)
    */
   void handlePrimaryKeyName(final String name)
   {
     out.println();
-    if (isShowIndexNames())
+    if (isShowConstraintNames())
     {
       out.print(name);
       out.print(textFormattingFunctor.getFieldSeparator());
@@ -380,6 +391,15 @@ public final class SchemaTextFormatter
    */
   void handleTableStart()
   {
+  }
+
+  private void printColumnDataTypeProperty(final String userDefined,
+      final int width)
+  {
+    out.println();
+    out.print(textFormattingFunctor.getFieldSeparator());
+    out.print(textFormattingFunctor.getFieldSeparator());
+    out.print(textFormattingFunctor.format(userDefined, width, true));
   }
 
 }
