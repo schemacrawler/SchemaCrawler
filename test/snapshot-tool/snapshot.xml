@@ -25,6 +25,8 @@
       <snapshot-db
         db-name="hsqldb"
         outputfile="${outputfile-hsqldb}"/>
+    <fixcrlf srcdir="snapshots" eol="crlf"/>
+
   </target>
 
   <!-- = = = = = = = = = = = = = = = = = -->
