@@ -93,7 +93,7 @@ public class SchemaCrawlerOutputTest
       final SchemaCrawler crawler = new SchemaCrawler(dataSource, null,
           formatter);
       crawler.crawl(schemaCrawlerOptions);
-      assertEquals("Table count does not match", 5, formatter.getTableCount());
+      assertEquals("Table count does not match", 6, formatter.getTableCount());
     }
     catch (final SchemaCrawlerException e)
     {

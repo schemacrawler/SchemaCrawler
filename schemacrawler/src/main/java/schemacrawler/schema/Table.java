@@ -77,7 +77,7 @@ public interface Table
    * 
    * @return Check constraints for the table.
    */
-  TableConstraint[] getCheckConstraints();
+  CheckConstraint[] getCheckConstraints();
 
   /**
    * List of triggers.

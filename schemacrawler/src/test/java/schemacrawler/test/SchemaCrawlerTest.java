@@ -70,7 +70,7 @@ public class SchemaCrawlerTest
     final Table[] tables = schema.getTables();
     final int numTables = tables.length;
     assertNotNull("Could not obtain schema", schema);
-    assertEquals("Table count does not match", 5, numTables);
+    assertEquals("Table count does not match", 6, numTables);
 
   }
 
@@ -79,15 +79,15 @@ public class SchemaCrawlerTest
 
     final String schemaName = "PUBLIC";
     final String[] tableNames =
-    { "CUSTOMER", "CUSTOMERLIST", "INVOICE", "ITEM", "PRODUCT" };
+    { "CUSTOMER", "CUSTOMERLIST", "INVOICE", "ITEM", "PRODUCT", "SUPPLIER" };
     final String[] tableTypes =
-    { "TABLE", "VIEW", "TABLE", "TABLE", "TABLE" };
+    { "TABLE", "VIEW", "TABLE", "TABLE", "TABLE", "TABLE" };
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     final Schema schema = SchemaCrawler.getSchema(dataSource, null,
         SchemaInfoLevel.MINIMUM, schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema);
     final Table[] tables = schema.getTables();
-    assertEquals("Table count does not match", 5, tables.length);
+    assertEquals("Table count does not match", 6, tables.length);
     for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
     {
       final Table table = tables[tableIdx];
@@ -165,7 +165,6 @@ public class SchemaCrawlerTest
         schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema);
     final Table[] tables = schema.getTables();
-    assertEquals("Table count does not match", 5, tables.length);
     boolean foundTrigger = false;
     for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
     {
@@ -198,7 +197,7 @@ public class SchemaCrawlerTest
         schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema);
     final Table[] tables = schema.getTables();
-    assertEquals("Table count does not match", 5, tables.length);
+    assertEquals("Table count does not match", 6, tables.length);
     boolean foundView = false;
     for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
     {
@@ -228,7 +227,8 @@ public class SchemaCrawlerTest
      { "INVOICE.ID", "INVOICE.CUSTOMERID", "INVOICE.TOTAL" },
      { "ITEM.INVOICEID", "ITEM.ITEM", "ITEM.PRODUCTID", "ITEM.QUANTITY",
       "ITEM.COST" },
-     { "PRODUCT.ID", "PRODUCT.NAME", "PRODUCT.PRICE" } };
+     { "PRODUCT.ID", "PRODUCT.NAME", "PRODUCT.PRICE" },
+     { "SUPPLIER.SUPPLIER_ID", "SUPPLIER.SUPPLIER_NAME" }};
 
     final String[][] columnDataTypes =
     {
@@ -236,14 +236,15 @@ public class SchemaCrawlerTest
     { "INTEGER", "VARCHAR", "VARCHAR" },
     { "INTEGER", "INTEGER", "DECIMAL" },
     { "INTEGER", "INTEGER", "INTEGER", "INTEGER", "DECIMAL" },
-    { "INTEGER", "VARCHAR", "DECIMAL" } };
+    { "INTEGER", "VARCHAR", "DECIMAL" },
+    { "INTEGER", "VARCHAR" }};
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     final Schema schema = SchemaCrawler.getSchema(dataSource, null,
         SchemaInfoLevel.BASIC, schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema);
     final Table[] tables = schema.getTables();
-    assertEquals("Table count does not match", 5, tables.length);
+    assertEquals("Table count does not match", 6, tables.length);
     for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
     {
       final Table table = tables[tableIdx];

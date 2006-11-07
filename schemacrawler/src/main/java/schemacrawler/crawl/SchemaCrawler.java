@@ -215,12 +215,12 @@ public final class SchemaCrawler
         .getTableTypes(), options.getTableInclusionRule());
     if (infoLevel.isGreaterThanOrEqualTo(SchemaInfoLevel.VERBOSE))
     {
+      retrieverExtra.retrieveCheckConstraintInformation(tables);
       retrieverExtra.retrieveViewInformation(tables);
     }
     if (infoLevel == SchemaInfoLevel.MAXIMUM)
     {
-      retrieverExtra.retrievePrivileges(null, tables);
-      retrieverExtra.retrieveCheckConstraintInformation(tables);   
+      retrieverExtra.retrievePrivileges(null, tables);      
       retrieverExtra.retrieveTriggerInformation(tables);
     }
     for (int i = 0; i < tables.size(); i++)

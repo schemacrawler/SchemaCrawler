@@ -21,8 +21,6 @@
 package schemacrawler.tools.datatext;
 
 
-import java.io.Writer;
-
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.tools.util.FormatUtils;
 import sf.util.Utilities;

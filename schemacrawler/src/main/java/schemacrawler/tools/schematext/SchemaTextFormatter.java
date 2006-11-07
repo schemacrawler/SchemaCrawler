@@ -62,7 +62,8 @@ public final class SchemaTextFormatter
     if (options.getOutputOptions().getOutputFormat() == OutputFormat.CSV)
     {
       textFormattingFunctor = new CsvFormattingFunctor();
-    } else
+    }
+    else
     {
       textFormattingFunctor = new PlainTextFormattingFunctor();
     }
@@ -87,11 +88,33 @@ public final class SchemaTextFormatter
   /**
    * {@inheritDoc}
    * 
+   * @see BaseSchemaTextFormatter#handleCheckConstraintName(int, String,
+   *      String)
+   */
+  void handleCheckConstraintName(final int ordinalNumber, final String name,
+                                 final String definition)
+  {
+    out.println();
+    if (isShowConstraintNames())
+    {
+      out.print(name);
+      out.print(textFormattingFunctor.getFieldSeparator());
+    }
+    final String constraintDetails = "[check constraint]";
+    out.println(constraintDetails);
+    //
+    out.print(textFormattingFunctor.getFieldSeparator());
+    out.println(definition);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see BaseSchemaTextFormatter#handleColumn(int, String, String,
    *      String)
    */
   void handleColumn(final int ordinalNumber, final String name,
-      final String type, final String symbol)
+                    final String type, final String symbol)
   {
     out.print(textFormattingFunctor.getFieldSeparator());
     if (isShowOrdinalNumbers())
@@ -105,7 +128,7 @@ public final class SchemaTextFormatter
     out.print(textFormattingFunctor.format(type, MAX_COLUMN_TYPE_WIDTH, true));
     out.print(textFormattingFunctor.getFieldSeparator());
     out.print(textFormattingFunctor.format(symbol, MAX_COLUMN_MODIFIER_WIDTH,
-        false));
+                                           false));
     out.println();
   }
 
@@ -118,21 +141,21 @@ public final class SchemaTextFormatter
   {
 
     final String databaseSpecificTypeName = columnDataType
-        .getDatabaseSpecificTypeName();
+      .getDatabaseSpecificTypeName();
     final String typeName = columnDataType.getTypeName();
     final String userDefined = negate(columnDataType.isUserDefined(),
-        "user defined");
+                                      "user defined");
     final String nullable = negate(columnDataType.isNullable(), "nullable");
     final String autoIncrementable = negate(columnDataType
-        .isAutoIncrementable(), "auto-incrementable");
+      .isAutoIncrementable(), "auto-incrementable");
     final String definedWith = makeDefinedWithString(columnDataType);
 
     out.print(textFormattingFunctor.format(databaseSpecificTypeName,
-        MAX_COLUMN_TYPE_WIDTH, true));
+                                           MAX_COLUMN_TYPE_WIDTH, true));
 
     out.print(textFormattingFunctor.getFieldSeparator());
     out.print(textFormattingFunctor.format("[data type]",
-        MAX_COLUMN_TYPE_WIDTH, false));
+                                           MAX_COLUMN_TYPE_WIDTH, false));
 
     printColumnDataTypeProperty("based on " + typeName, 40);
     printColumnDataTypeProperty(userDefined, 8);
@@ -192,8 +215,7 @@ public final class SchemaTextFormatter
    * @see BaseSchemaTextFormatter#handleForeignKeyColumnPair(String,
    *      String, int)
    */
-  void handleForeignKeyColumnPair(final String pkColumnName,
-      final String fkColumnName, final int keySequence)
+  void handleForeignKeyColumnPair(final String mapping, final int keySequence)
   {
     out.print(textFormattingFunctor.getFieldSeparator());
     if (isShowOrdinalNumbers())
@@ -202,7 +224,6 @@ public final class SchemaTextFormatter
       out.print(textFormattingFunctor.format(keySequenceString, 2, true));
       out.print(textFormattingFunctor.getFieldSeparator());
     }
-    final String mapping = pkColumnName + " --> " + fkColumnName;
     out.print(mapping);
     out.println();
   }
@@ -214,7 +235,7 @@ public final class SchemaTextFormatter
    *      String)
    */
   void handleForeignKeyName(final int ordinalNumber, final String name,
-      final String updateRule)
+                            final String updateRule)
   {
     out.println();
     if (isShowConstraintNames())
@@ -233,7 +254,8 @@ public final class SchemaTextFormatter
    *      boolean, String)
    */
   void handleIndexName(final int ordinalNumber, final String name,
-      final String type, final boolean unique, final String sortSequence)
+                       final String type, final boolean unique,
+                       final String sortSequence)
   {
     out.println();
     if (isShowConstraintNames())
@@ -242,30 +264,10 @@ public final class SchemaTextFormatter
       out.print(textFormattingFunctor.getFieldSeparator());
     }
     final String indexDetails = "[" + (unique? "": "non-") + "unique "
-        + sortSequence + " " + type + " " + "index]";
+                                + sortSequence + " " + type + " " + "index]";
     out.println(indexDetails);
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see BaseSchemaTextFormatter#handleIndexName(int, String, String,
-   *      boolean, String)
-   */
-  void handleTableConstraintName(final int ordinalNumber, final String name,
-      final String definition)
-  {
-    out.println();
-    if (isShowConstraintNames())
-    {
-      out.print(name);
-      out.print(textFormattingFunctor.getFieldSeparator());
-    }
-    final String constraintDetails = "[check constraint]";
-    out.println(constraintDetails);
-    out.println(definition);
-  }
-  
   /**
    * {@inheritDoc}
    * 
@@ -282,6 +284,22 @@ public final class SchemaTextFormatter
     out.println("[primary key]");
   }
 
+  void handlePrivilege(int i, String name, String privilegeType,
+                       String grantedFrom)
+  {
+    out.println();
+    if (isShowConstraintNames())
+    {
+      out.print(name);
+      out.print(textFormattingFunctor.getFieldSeparator());
+    }
+    out.println("[" + privilegeType + "]");
+
+    out.print(textFormattingFunctor.getFieldSeparator());
+    out.print(grantedFrom);
+    out.println();
+  }
+
   /**
    * {@inheritDoc}
    * 
@@ -289,13 +307,13 @@ public final class SchemaTextFormatter
    *      String, String)
    */
   void handleProcedureColumn(final int ordinalNumber, final String name,
-      final String type, final String procedureColumnType)
+                             final String type, final String procedureColumnType)
   {
     out.print(textFormattingFunctor.getFieldSeparator());
     if (isShowOrdinalNumbers())
     {
       out.print(textFormattingFunctor.format(String.valueOf(ordinalNumber), 2,
-          false));
+                                             false));
       out.print(textFormattingFunctor.getFieldSeparator());
     }
     out.print(textFormattingFunctor.format(name, MAX_COLUMN_NAME_WIDTH, true));
@@ -303,7 +321,7 @@ public final class SchemaTextFormatter
     out.print(textFormattingFunctor.format(type, MAX_COLUMN_TYPE_WIDTH, true));
     out.print(textFormattingFunctor.getFieldSeparator());
     out.print(textFormattingFunctor.format(procedureColumnType,
-        MAX_COLUMN_MODIFIER_WIDTH, false));
+                                           MAX_COLUMN_MODIFIER_WIDTH, false));
     out.println();
   }
 
@@ -325,13 +343,13 @@ public final class SchemaTextFormatter
    *      String)
    */
   void handleProcedureName(final int ordinalNumber, final String name,
-      final String type)
+                           final String type)
   {
     out.print(textFormattingFunctor.format(name, MAX_TABLE_NAME_WIDTH, true));
     out.print(textFormattingFunctor.getFieldSeparator());
     final String procedureTypeDetail = "[" + type + "]";
     out.print(textFormattingFunctor.format(procedureTypeDetail,
-        MAX_TABLE_TYPE_WIDTH, false));
+                                           MAX_TABLE_TYPE_WIDTH, false));
     out.println();
   }
 
@@ -374,13 +392,13 @@ public final class SchemaTextFormatter
    * @see BaseSchemaTextFormatter#handleTableName(int, String, String)
    */
   void handleTableName(final int ordinalNumber, final String name,
-      final String type)
+                       final String type)
   {
     out.print(textFormattingFunctor.format(name, MAX_TABLE_NAME_WIDTH, true));
     out.print(textFormattingFunctor.getFieldSeparator());
     final String tableTypeDetail = "[" + type.toLowerCase(Locale.ENGLISH) + "]";
     out.print(textFormattingFunctor.format(tableTypeDetail,
-        MAX_TABLE_TYPE_WIDTH, false));
+                                           MAX_TABLE_TYPE_WIDTH, false));
     out.println();
   }
 
@@ -393,8 +411,26 @@ public final class SchemaTextFormatter
   {
   }
 
+  void handleTrigger(int i, String name, String triggerType,
+                     String actionCondition, String actionStatement)
+  {
+    out.println();
+    if (isShowConstraintNames())
+    {
+      out.print(name);
+      out.print(textFormattingFunctor.getFieldSeparator());
+    }
+    out.println(triggerType);
+    //
+    out.print(textFormattingFunctor.getFieldSeparator());
+    out.println(actionCondition);
+    //
+    out.print(textFormattingFunctor.getFieldSeparator());
+    out.println(actionStatement);
+  }
+
   private void printColumnDataTypeProperty(final String userDefined,
-      final int width)
+                                           final int width)
   {
     out.println();
     out.print(textFormattingFunctor.getFieldSeparator());

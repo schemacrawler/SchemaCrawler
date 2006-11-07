@@ -32,16 +32,18 @@ import java.util.logging.Logger;
 import schemacrawler.crawl.CrawlHandler;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.crawl.SchemaInfoLevel;
+import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.Index;
+import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.TableConstraint;
+import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.tools.util.FormatUtils;
 
@@ -55,7 +57,7 @@ public abstract class BaseSchemaTextFormatter
 {
 
   private static final Logger LOGGER = Logger
-      .getLogger(BaseSchemaTextFormatter.class.getName());
+    .getLogger(BaseSchemaTextFormatter.class.getName());
 
   protected final PrintWriter out;
   private final SchemaTextOptions options;
@@ -146,7 +148,7 @@ public abstract class BaseSchemaTextFormatter
       {
         final Map.Entry property = (Map.Entry) iter.next();
         handleDatabaseProperty((String) property.getKey(), property.getValue()
-            .toString());
+          .toString());
       }
       handleDatabasePropertiesEnd();
     }
@@ -177,7 +179,7 @@ public abstract class BaseSchemaTextFormatter
     handleProcedureName(++tableCount, procedure.getName(), procedureTypeDetail);
 
     SchemaTextDetailType schemaTextDetailType = options
-        .getSchemaTextDetailType();
+      .getSchemaTextDetailType();
     if (schemaTextDetailType != SchemaTextDetailType.BRIEF)
     {
 
@@ -200,10 +202,10 @@ public abstract class BaseSchemaTextFormatter
         }
 
         handleProcedureColumn(column.getOrdinalPosition() + 1,
-            column.getName(), columnType, procedureColumnType);
+                              column.getName(), columnType, procedureColumnType);
       }
       if (schemaTextDetailType
-          .isGreaterThanOrEqualTo(SchemaTextDetailType.VERBOSE))
+        .isGreaterThanOrEqualTo(SchemaTextDetailType.VERBOSE))
       {
         handleDefinition(procedure.getDefinition());
       }
@@ -227,7 +229,7 @@ public abstract class BaseSchemaTextFormatter
     handleTableName(++tableCount, table.getName(), table.getType().toString());
 
     final SchemaTextDetailType schemaTextDetailType = options
-        .getSchemaTextDetailType();
+      .getSchemaTextDetailType();
 
     if (schemaTextDetailType != SchemaTextDetailType.BRIEF)
     {
@@ -236,17 +238,17 @@ public abstract class BaseSchemaTextFormatter
     }
 
     if (schemaTextDetailType
-        .isGreaterThanOrEqualTo(SchemaTextDetailType.VERBOSE))
+      .isGreaterThanOrEqualTo(SchemaTextDetailType.VERBOSE))
     {
       printPrimaryKey(table.getPrimaryKey());
       printForeignKeys(table.getName(), table.getForeignKeys());
       printIndices(table.getIndices());
+      printCheckConstraints(table.getCheckConstraints());
       if (schemaTextDetailType
-          .isGreaterThanOrEqualTo(SchemaTextDetailType.MAXIMUM))
+        .isGreaterThanOrEqualTo(SchemaTextDetailType.MAXIMUM))
       {
-        printTableConstraints(table.getCheckConstraints());
-        // printPrivileges(table.getPrivileges());
-        // printTriggers(table.getTriggers());
+        printPrivileges(table.getPrivileges());
+        printTriggers(table.getTriggers());
       }
       if (table instanceof View)
       {
@@ -281,6 +283,10 @@ public abstract class BaseSchemaTextFormatter
     return options.getSchemaTextDetailType();
   }
 
+  abstract void handleCheckConstraintName(final int ordinalNumber,
+                                          final String name,
+                                          final String definition);
+
   /**
    * Handles the output for a column.
    * 
@@ -294,7 +300,7 @@ public abstract class BaseSchemaTextFormatter
    *        Symbol
    */
   abstract void handleColumn(final int ordinalNumber, final String name,
-      final String type, final String symbol);
+                             final String type, final String symbol);
 
   abstract void handleColumnDataType(ColumnDataType columnDataType);
 
@@ -328,8 +334,8 @@ public abstract class BaseSchemaTextFormatter
    * @param keySequence
    *        Key squence number
    */
-  abstract void handleForeignKeyColumnPair(final String pkColumnName,
-      final String fkColumnName, final int keySequence);
+  abstract void handleForeignKeyColumnPair(final String mapping,
+                                           final int keySequence);
 
   /**
    * Handles the output for a foreign key name.
@@ -342,7 +348,7 @@ public abstract class BaseSchemaTextFormatter
    *        Update rule
    */
   abstract void handleForeignKeyName(final int ordinalNumber,
-      final String name, final String updateRule);
+                                     final String name, final String updateRule);
 
   /**
    * Handles the output for a index name.
@@ -359,7 +365,8 @@ public abstract class BaseSchemaTextFormatter
    *        Sort sequence
    */
   abstract void handleIndexName(final int ordinalNumber, final String name,
-      final String type, final boolean unique, final String sortSequence);
+                                final String type, final boolean unique,
+                                final String sortSequence);
 
   /**
    * Handles the output for a primaey key name.
@@ -368,6 +375,9 @@ public abstract class BaseSchemaTextFormatter
    *        Primary key name
    */
   abstract void handlePrimaryKeyName(final String name);
+
+  abstract void handlePrivilege(int i, String name, String privilegeType,
+                                String grantedFrom);
 
   /**
    * Handles the output for a column.
@@ -382,7 +392,8 @@ public abstract class BaseSchemaTextFormatter
    *        Procedure column type
    */
   abstract void handleProcedureColumn(final int ordinalNumber,
-      final String name, final String type, final String procedureColumnType);
+                                      final String name, final String type,
+                                      final String procedureColumnType);
 
   /**
    * Handles the end of output for a procedure.
@@ -400,7 +411,7 @@ public abstract class BaseSchemaTextFormatter
    *        Procedure type
    */
   abstract void handleProcedureName(final int ordinalNumber, final String name,
-      final String type);
+                                    final String type);
 
   /**
    * Handles the start of output for a procedure.
@@ -411,9 +422,6 @@ public abstract class BaseSchemaTextFormatter
    * Handles the start of output for table columns.
    */
   abstract void handleStartTableColumns();
-
-  abstract void handleTableConstraintName(final int ordinalNumber,
-      final String name, final String definition);
 
   /**
    * Handles the end of output for a table.
@@ -431,12 +439,15 @@ public abstract class BaseSchemaTextFormatter
    *        Table type
    */
   abstract void handleTableName(final int ordinalNumber, final String name,
-      final String type);
+                                final String type);
 
   /**
    * Handles the start of output for a table.
    */
   abstract void handleTableStart();
+
+  abstract void handleTrigger(int i, String name, String triggerType,
+                              String actionCondition, String actionStatement);
 
   final boolean isShowConstraintNames()
   {
@@ -459,7 +470,8 @@ public abstract class BaseSchemaTextFormatter
     if (columnDataType.getCreateParameters() == null)
     {
       definedWith = definedWith + "no parameters";
-    } else
+    }
+    else
     {
       definedWith = definedWith + columnDataType.getCreateParameters();
     }
@@ -476,12 +488,26 @@ public abstract class BaseSchemaTextFormatter
     return textValue;
   }
 
+  private void printCheckConstraints(final CheckConstraint[] constraints)
+  {
+
+    for (int i = 0; i < constraints.length; i++)
+    {
+      CheckConstraint constraint = constraints[i];
+      if (constraint != null)
+      {
+        handleCheckConstraintName(i + 1, constraint.getName(), constraint
+          .getDefinition());
+      }
+    }
+  }
+
   /**
    * @param table
    * @param columnPairs
    */
   private void printColumnPairs(final String tableName,
-      final ForeignKeyColumnMap[] columnPairs)
+                                final ForeignKeyColumnMap[] columnPairs)
   {
     for (int j = 0; j < columnPairs.length; j++)
     {
@@ -495,19 +521,22 @@ public abstract class BaseSchemaTextFormatter
       if (pkColumn.getParent().getName().equals(tableName))
       {
         pkColumnName = pkColumn.getName();
-      } else
+      }
+      else
       {
         pkColumnName = pkColumn.getFullName();
       }
       if (fkColumn.getParent().getName().equals(tableName))
       {
         fkColumnName = fkColumn.getName();
-      } else
+      }
+      else
       {
         fkColumnName = fkColumn.getFullName();
       }
       final int keySequence = columnPair.getKeySequence();
-      handleForeignKeyColumnPair(pkColumnName, fkColumnName, keySequence);
+      handleForeignKeyColumnPair(pkColumnName + " --> " + fkColumnName,
+                                 keySequence);
     }
   }
 
@@ -530,10 +559,12 @@ public abstract class BaseSchemaTextFormatter
       if (column.isPartOfPrimaryKey())
       {
         symbol = "primary key";
-      } else if (column.isPartOfUniqueIndex())
+      }
+      else if (column.isPartOfUniqueIndex())
       {
         symbol = "unique index";
-      } else if (!column.isNullable())
+      }
+      else if (!column.isNullable())
       {
         symbol = "not null";
       }
@@ -543,7 +574,7 @@ public abstract class BaseSchemaTextFormatter
   }
 
   private void printForeignKeys(final String tableName,
-      final ForeignKey[] foreignKeys)
+                                final ForeignKey[] foreignKeys)
   {
     for (int i = 0; i < foreignKeys.length; i++)
     {
@@ -567,7 +598,7 @@ public abstract class BaseSchemaTextFormatter
       if (index != null)
       {
         handleIndexName(i + 1, index.getName(), index.getType().toString(),
-            index.isUnique(), index.getSortSequence().toString());
+                        index.isUnique(), index.getSortSequence().toString());
         printColumns(index.getColumns());
       }
     }
@@ -583,16 +614,41 @@ public abstract class BaseSchemaTextFormatter
     }
   }
 
-  private void printTableConstraints(final TableConstraint[] constraints)
+  private void printPrivileges(final Privilege[] privileges)
   {
 
-    for (int i = 0; i < constraints.length; i++)
+    for (int i = 0; i < privileges.length; i++)
     {
-      TableConstraint constraint = constraints[i];
-      if (constraint != null)
+      Privilege privilege = privileges[i];
+      if (privilege != null)
       {
-        handleTableConstraintName(i + 1, constraint.getName(), constraint
-            .getDefinition());
+        String privilegeType = "privilege";
+        if (privilege.isGrantable())
+        {
+          privilegeType = "grantable " + privilegeType;
+        }
+        String grantedFrom = privilege.getGrantor() + " --> "
+                             + privilege.getGrantee();
+        handlePrivilege(i + 1, privilege.getName(), privilegeType, grantedFrom);
+      }
+    }
+  }
+
+  private void printTriggers(final Trigger[] triggers)
+  {
+
+    for (int i = 0; i < triggers.length; i++)
+    {
+      Trigger trigger = triggers[i];
+      if (trigger != null)
+      {
+        String triggerType = "[trigger, "
+                             + trigger.getConditionTiming().getName() + " "
+                             + trigger.getEventManipulationType().getName()
+                             + ", per " + trigger.getActionOrientation() + "]";
+        triggerType = triggerType.toLowerCase();
+        handleTrigger(i + 1, trigger.getName(), triggerType, trigger
+          .getActionCondition(), trigger.getActionStatement());
       }
     }
   }

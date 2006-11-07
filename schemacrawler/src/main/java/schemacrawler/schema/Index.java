@@ -21,7 +21,6 @@
 package schemacrawler.schema;
 
 
-import schemacrawler.crawl.SchemaCrawlerException;
 
 /**
  * Represents an index.
@@ -77,16 +76,5 @@ public interface Index
    * @return Columns of the table.
    */
   Column[] getColumns();
-
-  /**
-   * Converts this index into a table constraint. If the index is not
-   * unique, throws an exception.
-   * 
-   * @throws SchemaCrawlerException
-   *         If the index is not null.
-   * @return Table constraint, or null
-   */
-  TableConstraint asTableConstraint()
-    throws SchemaCrawlerException;
 
 }

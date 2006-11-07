@@ -24,12 +24,10 @@ package schemacrawler.crawl;
 import java.util.List;
 
 import schemacrawler.schema.Column;
-import schemacrawler.schema.ConstraintType;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexSortSequence;
 import schemacrawler.schema.IndexType;
 import schemacrawler.schema.NamedObject;
-import schemacrawler.schema.TableConstraint;
 
 /**
  * Represents an index on a database table.
@@ -200,26 +198,6 @@ class MutableIndex
     }
 
     return comparison;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public TableConstraint asTableConstraint()
-    throws SchemaCrawlerException
-  {
-    if (!isUnique())
-    {
-      // Non-unique indexes are not constraints
-      throw new SchemaCrawlerException("Cannot convert index to constraint");
-    }
-
-    final MutableTableConstraint constraint = new MutableTableConstraint(
-                                                                         getName(),
-                                                                         getParent());
-    constraint.setType(ConstraintType.UNIQUE);
-
-    return constraint;
   }
 
 }

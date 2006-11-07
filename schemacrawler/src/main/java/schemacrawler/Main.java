@@ -46,7 +46,7 @@ public final class Main
   static
   {
     final byte[] text = Utilities.readFully(Main.class
-        .getResourceAsStream("/schemacrawler-readme.txt"));
+      .getResourceAsStream("/schemacrawler-readme.txt"));
     info = new String(text);
 
   }
@@ -114,12 +114,12 @@ public final class Main
         final Options options = optionCommands[i];
         LOGGER.log(Level.CONFIG, options.toString());
         final PropertiesDataSource dataSource = dbconnector.Main
-            .createDataSource(args, config);
+          .createDataSource(args, config);
         if (executor instanceof ToolsExecutor)
         {
           ((ToolsExecutor) executor)
-              .setAdditionalConnectionConfiguration(dataSource
-                  .getSourceProperties());
+            .setAdditionalConnectionConfiguration(dataSource
+              .getSourceProperties());
         }
         executor.execute(options, dataSource);
       }

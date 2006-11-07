@@ -62,7 +62,7 @@ public final class Options
    *        Page options
    */
   Options(final Properties config, final Command command,
-      final OutputOptions outputOptions)
+          final OutputOptions outputOptions)
   {
     if (config == null || command == null || outputOptions == null)
     {
@@ -74,10 +74,10 @@ public final class Options
     schemaCrawlerOptions = new SchemaCrawlerOptions(config);
 
     schemaTextOptions = new SchemaTextOptions(config, outputOptions, command
-        .getSchemaTextDetailType());
+      .getSchemaTextDetailType());
     dataTextFormatOptions = new DataTextFormatOptions(config, outputOptions);
     operatorOptions = new OperatorOptions(config, outputOptions, command
-        .getOperation(), command.getQuery());
+      .getOperation(), command.getQuery());
 
     toolType = command.getToolType();
     query = command.getQuery();
