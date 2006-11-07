@@ -34,10 +34,10 @@ public abstract class BaseOptions
 {
 
   protected boolean getBooleanProperty(final String propertyName,
-      final Properties config)
+                                       final Properties config)
   {
     return Boolean.valueOf(config.getProperty(propertyName, "false"))
-        .booleanValue();
+      .booleanValue();
   }
 
 }

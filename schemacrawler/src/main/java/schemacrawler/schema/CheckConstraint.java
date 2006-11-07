@@ -26,16 +26,9 @@ package schemacrawler.schema;
  * 
  * @author sfatehi
  */
-public interface TableConstraint
+public interface CheckConstraint
   extends DependantNamedObject
 {
-
-  /**
-   * Constraint type.
-   * 
-   * @return Constraint type
-   */
-  ConstraintType getType();
 
   /**
    * Whether the constraint is deferrable.

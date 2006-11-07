@@ -366,8 +366,8 @@ final class TableRetriever
             .get(foreignKeyName);
         if (foreignKey == null)
         {
-          foreignKey = new MutableForeignKey(foreignKeyName, table
-              .getCatalogName(), table.getSchemaName());
+          foreignKey = new MutableForeignKey(table
+              .getCatalogName(), table.getSchemaName(), foreignKeyName);
           foreignKeysMap.put(foreignKeyName, foreignKey);
         }
         final String pkTableName = results.getString("PKTABLE_NAME");

@@ -29,7 +29,7 @@ import schemacrawler.schema.Index;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.TableConstraint;
+import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.util.NaturalSortComparator;
@@ -246,11 +246,11 @@ class MutableTable
    * 
    * @see Table#getCheckConstraints()
    */
-  public TableConstraint[] getCheckConstraints()
+  public CheckConstraint[] getCheckConstraints()
   {
     final List allCheckConstraints = checkConstraints.getAll();
-    return (TableConstraint[]) allCheckConstraints
-        .toArray(new TableConstraint[allCheckConstraints.size()]);
+    return (CheckConstraint[]) allCheckConstraints
+        .toArray(new CheckConstraint[allCheckConstraints.size()]);
   }
 
   /**
@@ -259,7 +259,7 @@ class MutableTable
    * @param checkConstraints
    *        Check constraints
    */
-  void addCheckConstraint(final TableConstraint checkConstraint)
+  void addCheckConstraint(final CheckConstraint checkConstraint)
   {
     checkConstraints.add(checkConstraint);
   }

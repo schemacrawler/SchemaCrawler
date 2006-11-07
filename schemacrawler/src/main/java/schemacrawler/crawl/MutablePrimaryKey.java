@@ -21,11 +21,9 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.ConstraintType;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.PrimaryKey;
-import schemacrawler.schema.TableConstraint;
 
 /**
  * Primary key.
@@ -62,18 +60,6 @@ class MutablePrimaryKey
   MutablePrimaryKey(String name, NamedObject parent)
   {
     super(name, parent);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public TableConstraint asTableConstraint()
-    throws SchemaCrawlerException
-  {
-    final MutableTableConstraint constraint = (MutableTableConstraint) super
-      .asTableConstraint();
-    constraint.setType(ConstraintType.PRIMARY_KEY);
-    return constraint;
   }
 
 }

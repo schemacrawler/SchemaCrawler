@@ -21,26 +21,24 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.ConstraintType;
+import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.NamedObject;
-import schemacrawler.schema.TableConstraint;
 
 /**
  * Represents an index on a database table.
  */
-class MutableTableConstraint
+class MutableCheckConstraint
   extends AbstractDependantNamedObject
-  implements TableConstraint
+  implements CheckConstraint
 {
 
   private static final long serialVersionUID = 1155277343302693656L;
 
-  private ConstraintType type;
   private boolean deferrable;
   private boolean initiallyDeferred;
   private String definition;
 
-  MutableTableConstraint(String name, NamedObject parent)
+  MutableCheckConstraint(String name, NamedObject parent)
   {
     super(name, parent);
   }
@@ -48,7 +46,7 @@ class MutableTableConstraint
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.TableConstraint#isDeferrable()
+   * @see schemacrawler.schema.CheckConstraint#isDeferrable()
    */
   public boolean isDeferrable()
   {
@@ -63,7 +61,7 @@ class MutableTableConstraint
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.TableConstraint#isInitiallyDeferred()
+   * @see schemacrawler.schema.CheckConstraint#isInitiallyDeferred()
    */
   public boolean isInitiallyDeferred()
   {
@@ -78,22 +76,7 @@ class MutableTableConstraint
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.TableConstraint#getType()
-   */
-  public ConstraintType getType()
-  {
-    return type;
-  }
-
-  void setType(final ConstraintType type)
-  {
-    this.type = type;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.TableConstraint#getDefinition()
+   * @see schemacrawler.schema.CheckConstraint#getDefinition()
    */
   public String getDefinition()
   {

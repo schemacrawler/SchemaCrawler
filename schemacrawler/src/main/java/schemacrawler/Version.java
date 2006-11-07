@@ -71,7 +71,7 @@ public final class Version
   public static String about()
   {
     return PRODUCTNAME + " " + VERSION + Utilities.NEWLINE
-        + "(c) 2003-2006 Sualeh Fatehi";
+           + "(c) 2003-2006 Sualeh Fatehi";
   }
 
   /**
