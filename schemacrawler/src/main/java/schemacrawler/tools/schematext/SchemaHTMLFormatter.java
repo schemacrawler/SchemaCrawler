@@ -27,6 +27,8 @@ import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.tools.util.FormatUtils;
+import schemacrawler.tools.util.FormatUtils.HtmlTable;
+import schemacrawler.tools.util.FormatUtils.TableRow;
 import sf.util.Entities;
 import sf.util.Utilities;
 
@@ -38,17 +40,6 @@ import sf.util.Utilities;
 public final class SchemaHTMLFormatter
   extends BaseSchemaTextFormatter
 {
-
-  private static final String FIELD_BEGIN_2 = "<td colspan='2'>";
-  private static final String RECORD_END = "</tr>" + Utilities.NEWLINE;
-  private static final String RECORD_BEGIN = "  <tr>";
-  private static final String RECORD_EMPTY = "  <tr><td colspan='4'>&nbsp;</td></tr>"
-                                             + Utilities.NEWLINE;
-  private static final String FIELD_BEGIN = "<td>";
-  private static final String FIELD_END = "</td>" + Utilities.NEWLINE;
-  private static final String FIELD_SEPARATOR = "</td>" + Utilities.NEWLINE
-                                                + "<td>";
-  private static final String FIELD_EMPTY = "<td></td>" + Utilities.NEWLINE;
 
   /**
    * Formats the schema as HTML for output.
@@ -106,28 +97,19 @@ public final class SchemaHTMLFormatter
   void handleCheckConstraintName(final int ordinalNumber, final String name,
                                  final String definition)
   {
-    out.println();
-    out.print(RECORD_EMPTY);
-    out.print(RECORD_BEGIN);
-    out.print(FIELD_BEGIN_2);
+    String nameValue = "";
     if (isShowConstraintNames())
     {
-      out.print(FormatUtils.htmlBold(name));
+      nameValue = name;
     }
-    out.print(FIELD_END + FIELD_BEGIN_2);
-    final String constraintDetails = "[check constraint]";
-    out.print(FormatUtils.htmlAlignRight(constraintDetails));
-    out.print(FIELD_END);
-    out.print(RECORD_END);
-    out.println();
+    out.println(createEmptyRow());
+    out.println(createNameRow(nameValue, "[check constraint]"));
+    out.println(createDefinitionRow(definition));
+  }
 
-    out.print(RECORD_BEGIN);
-    out.print(FIELD_BEGIN_2);
-    out.print(FIELD_END + FIELD_BEGIN_2);
-    out.print(definition);
-    out.print(FIELD_END);
-    out.print(RECORD_END);
-    out.println();
+  private TableRow createEmptyRow()
+  {
+    return new FormatUtils.TableRow(4);
   }
 
   /**
@@ -139,22 +121,12 @@ public final class SchemaHTMLFormatter
   void handleColumn(final int ordinalNumber, final String name,
                     final String type, final String symbol)
   {
-    out.print(RECORD_BEGIN);
-    out.print(FIELD_BEGIN);
+    String ordinalNumberString = "";
     if (isShowOrdinalNumbers())
     {
-      final String ordinalNumberString = String.valueOf(ordinalNumber);
-      out.print(ordinalNumberString);
+      ordinalNumberString = String.valueOf(ordinalNumber);
     }
-    out.print(FIELD_SEPARATOR);
-    out.print(name);
-    out.print(FIELD_SEPARATOR);
-    out.print(type);
-    out.print(FIELD_SEPARATOR);
-    out.print(symbol);
-    out.print(FIELD_END);
-    out.print(RECORD_END);
-    out.println();
+    out.println(createDetailRow(ordinalNumberString, name, type, symbol));
   }
 
   /**
@@ -174,26 +146,17 @@ public final class SchemaHTMLFormatter
       .isAutoIncrementable(), "auto-incrementable");
     final String definedWith = makeDefinedWithString(columnDataType);
 
-    out.println("<table>");
-    out.println();
+    HtmlTable htmlTable = new HtmlTable();
+    htmlTable.addRow(createNameRow(databaseSpecificTypeName, "[data type]"));
+    htmlTable.addRow(createDefinitionRow("based on " + typeName));
+    htmlTable.addRow(createDefinitionRow(userDefined));
+    htmlTable.addRow(createDefinitionRow(definedWith));
+    htmlTable.addRow(createDefinitionRow(nullable));
+    htmlTable.addRow(createDefinitionRow(autoIncrementable));
+    htmlTable.addRow(createDefinitionRow(columnDataType.getSearchable()
+      .toString()));
 
-    out.print(RECORD_BEGIN);
-    out.print(FIELD_BEGIN_2);
-    out.print(FormatUtils.htmlBold(databaseSpecificTypeName));
-    out.print(FIELD_SEPARATOR);
-    out.print(FormatUtils.htmlAlignRight("[data type]"));
-    out.print(FIELD_END);
-    out.print(RECORD_END);
-    out.println();
-
-    printColumnDataTypeProperty("based on " + typeName);
-    printColumnDataTypeProperty(userDefined);
-    printColumnDataTypeProperty(definedWith);
-    printColumnDataTypeProperty(nullable);
-    printColumnDataTypeProperty(autoIncrementable);
-    printColumnDataTypeProperty(columnDataType.getSearchable().toString());
-
-    out.println("</table>");
+    out.println(htmlTable);
     out.println("<p></p>");
 
   }
@@ -238,13 +201,7 @@ public final class SchemaHTMLFormatter
 
   void handleDatabaseProperty(final String name, final String value)
   {
-    out.print(RECORD_BEGIN);
-    out.print(FIELD_BEGIN);
-    out.print(name);
-    out.print(FIELD_END + FIELD_BEGIN);
-    out.print(Entities.HTML40.escape(value));
-    out.print(FIELD_END);
-    out.print(RECORD_END);
+    out.println(createNameRow(name, Entities.HTML40.escape(value)));
   }
 
   void handleDefinition(final String definition)
@@ -253,9 +210,7 @@ public final class SchemaHTMLFormatter
     {
       return;
     }
-    out.println("<tr><td colspan='4'>Definition:</td></tr>");
-    out.println("<tr><td colspan='4'><pre>" + definition + "</pre></td></tr>");
-    out.println();
+    out.println(createDefinitionRow(definition));
   }
 
   /**
@@ -266,20 +221,12 @@ public final class SchemaHTMLFormatter
    */
   void handleForeignKeyColumnPair(final String mapping, final int keySequence)
   {
-    out.print(RECORD_BEGIN);
-    out.print(FIELD_BEGIN);
+    String keySequenceString = "";
     if (isShowOrdinalNumbers())
     {
-      final String keySequenceString = String.valueOf(keySequence);
-      out.print(Utilities.padLeft(keySequenceString, 2));
+      keySequenceString = Utilities.padLeft(String.valueOf(keySequence), 2);
     }
-    out.print(FIELD_SEPARATOR);
-    out.print(mapping);
-    out.print(FIELD_SEPARATOR);
-    out.print(FIELD_SEPARATOR);
-    out.print(FIELD_END);
-    out.print(RECORD_END);
-    out.println();
+    out.println(createDetailRow(keySequenceString, mapping, "", ""));
   }
 
   /**
@@ -291,21 +238,16 @@ public final class SchemaHTMLFormatter
   void handleForeignKeyName(final int ordinalNumber, final String name,
                             final String updateRule)
   {
-    out.println();
-    out.print(RECORD_EMPTY);
-    out.print(RECORD_BEGIN);
-    out.print(FIELD_BEGIN_2);
+    out.println(createEmptyRow());
+
+    String fkName = "";
     if (isShowConstraintNames())
     {
-      out.print(FormatUtils.htmlBold(name));
-    }
-    out.print(FIELD_END);
-    out.print(FIELD_BEGIN_2);
+      fkName = name;
+    }    
     final String fkDetails = "[foreign key" + ", on update " + updateRule + "]";
-    out.print(FormatUtils.htmlAlignRight(fkDetails));
-    out.print(FIELD_END);
-    out.print(RECORD_END);
-    out.println();
+    out.println(createNameRow(fkName, fkDetails));
+
   }
 
   /**
@@ -319,7 +261,7 @@ public final class SchemaHTMLFormatter
                        final String sortSequence)
   {
     out.println();
-    out.print(RECORD_EMPTY);
+    out.print(createEmptyRow());
     out.print(RECORD_BEGIN);
     out.print(FIELD_BEGIN_2);
     if (isShowConstraintNames())
@@ -343,7 +285,7 @@ public final class SchemaHTMLFormatter
   void handlePrimaryKeyName(final String name)
   {
     out.println();
-    out.print(RECORD_EMPTY);
+    out.print(createEmptyRow());
     out.print(RECORD_BEGIN);
     out.print(FIELD_BEGIN_2);
     if (isShowConstraintNames())
@@ -361,7 +303,7 @@ public final class SchemaHTMLFormatter
                        String grantedFrom)
   {
     out.println();
-    out.print(RECORD_EMPTY);
+    out.print(createEmptyRow());
     out.print(RECORD_BEGIN);
     out.print(FIELD_BEGIN_2);
     if (isShowConstraintNames())
@@ -508,7 +450,7 @@ public final class SchemaHTMLFormatter
                      String actionCondition, String actionStatement)
   {
     out.println();
-    out.print(RECORD_EMPTY);
+    out.print(createEmptyRow());
     out.print(RECORD_BEGIN);
     out.print(FIELD_BEGIN_2);
     if (isShowConstraintNames())
@@ -544,15 +486,36 @@ public final class SchemaHTMLFormatter
     out.println();
   }
 
-  private void printColumnDataTypeProperty(final String userDefined)
+  private FormatUtils.TableRow createDefinitionRow(final String definition)
   {
-    out.print(RECORD_BEGIN);
-    out.print(FIELD_EMPTY);
-    out.print(FIELD_BEGIN);
-    out.print(userDefined);
-    out.print(FIELD_END);
-    out.print(FIELD_EMPTY);
-    out.print(RECORD_END);
-    out.println();
+    FormatUtils.TableRow row = new FormatUtils.TableRow();
+    row.addCell(new FormatUtils.TableCell("ordinal", ""));
+    row.addCell(new FormatUtils.TableCell(3, "definition", definition));
+    return row;
   }
+
+  private FormatUtils.TableRow createDetailRow(String ordinal,
+                                               final String name,
+                                               final String type,
+                                               final String remarks)
+  {
+    FormatUtils.TableRow row;
+    row = new FormatUtils.TableRow();
+    row.addCell(new FormatUtils.TableCell("ordinal", ordinal));
+    row.addCell(new FormatUtils.TableCell("", name));
+    row.addCell(new FormatUtils.TableCell("", type));
+    row.addCell(new FormatUtils.TableCell("", remarks));
+    return row;
+  }
+
+  private FormatUtils.TableRow createNameRow(final String name,
+                                             final String description)
+  {
+    FormatUtils.TableRow row;
+    row = new FormatUtils.TableRow();
+    row.addCell(new FormatUtils.TableCell(2, "name", name));
+    row.addCell(new FormatUtils.TableCell(2, "description", description));
+    return row;
+  }
+
 }
