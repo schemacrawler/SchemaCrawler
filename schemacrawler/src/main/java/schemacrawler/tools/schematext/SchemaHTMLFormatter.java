@@ -21,16 +21,10 @@
 package schemacrawler.tools.schematext;
 
 
-import java.util.Locale;
-
 import schemacrawler.crawl.SchemaCrawlerException;
-import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.tools.util.FormatUtils;
-import schemacrawler.tools.util.FormatUtils.HtmlTable;
-import schemacrawler.tools.util.FormatUtils.TableRow;
-import sf.util.Entities;
-import sf.util.Utilities;
+import schemacrawler.tools.util.HtmlTableCell;
+import schemacrawler.tools.util.HtmlTableRow;
 
 /**
  * Formats the schema as HTML for output.
@@ -40,7 +34,6 @@ import sf.util.Utilities;
 public final class SchemaHTMLFormatter
   extends BaseSchemaTextFormatter
 {
-
   /**
    * Formats the schema as HTML for output.
    * 
@@ -81,79 +74,70 @@ public final class SchemaHTMLFormatter
     if (!getNoFooter())
     {
       out.println("<pre id='tableCount'>" + getTableCount() + " tables"
-          + "</pre>");
+                  + "</pre>");
       out.println(FormatUtils.HTML_FOOTER);
       out.flush();
     }
     super.end();
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see BaseSchemaTextFormatter#handleCheckConstraintName(int, String,
-   *      String)
-   */
-  void handleCheckConstraintName(final int ordinalNumber, final String name,
-      final String definition)
+  String createDefinitionRow(final String definition)
   {
-    String constraintName = "";
-    if (isShowConstraintNames())
-    {
-      constraintName = name;
-    }
-    out.println(createEmptyRow());
-    out.println(createNameRow(constraintName, "[check constraint]"));
-    out.println(createDefinitionRow(definition));
+    HtmlTableRow row = new HtmlTableRow();
+    row.addCell(new HtmlTableCell("ordinal", ""));
+    row.addCell(new HtmlTableCell(3, "definition", definition));
+    return row.toString();
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see BaseSchemaTextFormatter#handleColumn(int, String, String,
-   *      String)
-   */
-  void handleColumn(final int ordinalNumber, final String name,
-      final String type, final String symbol)
+  String createDetailRow(String ordinal, final String subName,
+                         final String type, final String remarks)
   {
-    String ordinalNumberString = "";
-    if (isShowOrdinalNumbers())
-    {
-      ordinalNumberString = String.valueOf(ordinalNumber);
-    }
-    out.println(createDetailRow(ordinalNumberString, name, type, symbol));
+    HtmlTableRow row;
+    row = new HtmlTableRow();
+    row.addCell(new HtmlTableCell("ordinal", ordinal));
+    row.addCell(new HtmlTableCell("subname", subName));
+    row.addCell(new HtmlTableCell("type", type));
+    row.addCell(new HtmlTableCell("remarks", remarks));
+    return row.toString();
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see BaseSchemaTextFormatter#handleColumnDataType(schemacrawler.schema.ColumnDataType)
-   */
-  void handleColumnDataType(final ColumnDataType columnDataType)
+  String createEmptyRow()
   {
-    final String databaseSpecificTypeName = columnDataType
-        .getDatabaseSpecificTypeName();
-    final String typeName = columnDataType.getTypeName();
-    final String userDefined = negate(columnDataType.isUserDefined(),
-        "user defined");
-    final String nullable = negate(columnDataType.isNullable(), "nullable");
-    final String autoIncrementable = negate(columnDataType
-        .isAutoIncrementable(), "auto-incrementable");
-    final String definedWith = makeDefinedWithString(columnDataType);
+    return new HtmlTableRow(4).toString();
+  }
 
-    HtmlTable htmlTable = new HtmlTable();
-    htmlTable.addRow(createNameRow(databaseSpecificTypeName, "[data type]"));
-    htmlTable.addRow(createDefinitionRow("based on " + typeName));
-    htmlTable.addRow(createDefinitionRow(userDefined));
-    htmlTable.addRow(createDefinitionRow(definedWith));
-    htmlTable.addRow(createDefinitionRow(nullable));
-    htmlTable.addRow(createDefinitionRow(autoIncrementable));
-    htmlTable.addRow(createDefinitionRow(columnDataType.getSearchable()
-        .toString()));
+  String createNameRow(final String name, final String description)
+  {
+    HtmlTableRow row;
+    row = new HtmlTableRow();
+    row.addCell(new HtmlTableCell(2, "name", name));
+    row.addCell(new HtmlTableCell(2, "description", description));
+    return row.toString();
+  }
 
-    out.println(htmlTable);
+  String createNameValueRow(final String name, final String value)
+  {
+    HtmlTableRow row;
+    row = new HtmlTableRow();
+    row.addCell(new HtmlTableCell("", name));
+    row.addCell(new HtmlTableCell("", value));
+    return row.toString();
+  }
+
+  String createSeparatorRow()
+  {
+    return "<td colspan='4'><hr></td>";
+  }
+
+  String getArrow()
+  {
+    return " &rarr; ";
+  }
+
+  void handleColumnDataTypeEnd()
+  {
+    out.println("</table>");
     out.println("<p></p>");
-
   }
 
   void handleColumnDataTypesEnd()
@@ -166,20 +150,9 @@ public final class SchemaHTMLFormatter
 
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.crawl.CrawlHandler#handle(schemacrawler.schema.DatabaseInfo)
-   */
-  void handleDatabaseInfo(final DatabaseInfo databaseInfo)
+  void handleColumnDataTypeStart()
   {
-    if (!getNoInfo())
-    {
-      out.println("<pre id='databaseInfo'>");
-      out.println(databaseInfo);
-      out.println("</pre>");
-      out.flush();
-    }
+    out.println("<table>");
   }
 
   void handleDatabasePropertiesEnd()
@@ -192,131 +165,6 @@ public final class SchemaHTMLFormatter
   void handleDatabasePropertiesStart()
   {
     out.println("<table>");
-  }
-
-  void handleDatabaseProperty(final String name, final String value)
-  {
-    out.println(createNameValueRow(name, Entities.HTML40.escape(value)));
-  }
-
-  void handleDefinition(final String definition)
-  {
-    out.println(createEmptyRow());
-
-    if (Utilities.isBlank(definition))
-    {
-      return;
-    }
-    out.println(createDefinitionRow(definition));
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see BaseSchemaTextFormatter#handleForeignKeyColumnPair(String,
-   *      String, int)
-   */
-  void handleForeignKeyColumnPair(final String mapping, final int keySequence)
-  {
-    String keySequenceString = "";
-    if (isShowOrdinalNumbers())
-    {
-      keySequenceString = Utilities.padLeft(String.valueOf(keySequence), 2);
-    }
-    out.println(createDetailRow(keySequenceString, mapping, "", ""));
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see BaseSchemaTextFormatter#handleForeignKeyName(int, String,
-   *      String)
-   */
-  void handleForeignKeyName(final int ordinalNumber, final String name,
-      final String updateRule)
-  {
-    out.println(createEmptyRow());
-
-    String fkName = "";
-    if (isShowConstraintNames())
-    {
-      fkName = name;
-    }
-    final String fkDetails = "[foreign key" + ", on update " + updateRule + "]";
-    out.println(createNameRow(fkName, fkDetails));
-
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see BaseSchemaTextFormatter#handleIndexName(int, String, String,
-   *      boolean, String)
-   */
-  void handleIndexName(final int ordinalNumber, final String name,
-      final String type, final boolean unique, final String sortSequence)
-  {
-    out.println(createEmptyRow());
-
-    String indexName = "";
-    if (isShowConstraintNames())
-    {
-      indexName = name;
-    }
-    final String indexDetails = "[" + (unique? "": "non-") + "unique "
-        + sortSequence + " " + type + " " + "index]";
-    out.println(createNameRow(indexName, indexDetails));
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see BaseSchemaTextFormatter#handlePrimaryKeyName(String)
-   */
-  void handlePrimaryKeyName(final String name)
-  {
-    out.println(createEmptyRow());
-
-    String pkName = "";
-    if (isShowConstraintNames())
-    {
-      pkName = name;
-    }
-    out.println(createNameRow(pkName, "[primary key]"));
-  }
-
-  void handlePrivilege(int i, String name, String privilegeType,
-      String grantedFrom)
-  {
-    out.println(createEmptyRow());
-
-    String privilegeName = "";
-    if (isShowConstraintNames())
-    {
-      privilegeName = name;
-    }
-    final String privilegeDetails = "[" + privilegeType + "]";
-    out.println(createNameRow(privilegeName, privilegeDetails));
-
-    out.println(createDetailRow("", grantedFrom, "", ""));
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see BaseSchemaTextFormatter#handleProcedureColumn(int, String,
-   *      String, String)
-   */
-  void handleProcedureColumn(final int ordinalNumber, final String name,
-      final String type, final String procedureColumnType)
-  {
-    String ordinalNumberString = "";
-    if (isShowOrdinalNumbers())
-    {
-      ordinalNumberString = String.valueOf(ordinalNumber);
-    }
-    out.println(createDetailRow(ordinalNumberString, name, type,
-        procedureColumnType));
   }
 
   /**
@@ -334,33 +182,11 @@ public final class SchemaHTMLFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see BaseSchemaTextFormatter#handleProcedureName(int, String,
-   *      String)
-   */
-  void handleProcedureName(final int ordinalNumber, final String name,
-      final String type)
-  {
-    out.println(createNameRow(name, "[" + type + "]"));
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see BaseSchemaTextFormatter#handleProcedureStart()
    */
   void handleProcedureStart()
   {
     out.println("<table>");
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see BaseSchemaTextFormatter#handleStartTableColumns()
-   */
-  void handleStartTableColumns()
-  {
-
   }
 
   /**
@@ -378,90 +204,11 @@ public final class SchemaHTMLFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see BaseSchemaTextFormatter#handleTableName(int, String, String)
-   */
-  void handleTableName(final int ordinalNumber, final String name,
-      final String type)
-  {
-    final String typeBracketed = "[" + type.toLowerCase(Locale.ENGLISH) + "]";
-    out.println(createNameRow(name, typeBracketed));
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see BaseSchemaTextFormatter#handleTableStart()
    */
   void handleTableStart()
   {
     out.println("<table>");
-  }
-
-  void handleTrigger(int i, String name, String triggerType,
-      String actionCondition, String actionStatement)
-  {
-    out.println(createEmptyRow());
-
-    String triggerName = "";
-    if (isShowConstraintNames())
-    {
-      triggerName = name;
-    }
-    out.println(createNameRow(triggerName, triggerType));
-
-    if (!Utilities.isBlank(actionCondition))
-    {
-      out.println(createDefinitionRow(actionCondition));
-    }
-    if (!Utilities.isBlank(actionStatement))
-    {
-      out.println(createDefinitionRow(actionStatement));
-    }
-  }
-
-  private FormatUtils.TableRow createDefinitionRow(final String definition)
-  {
-    FormatUtils.TableRow row = new FormatUtils.TableRow();
-    row.addCell(new FormatUtils.TableCell("ordinal", ""));
-    row.addCell(new FormatUtils.TableCell(3, "definition", definition));
-    return row;
-  }
-
-  private FormatUtils.TableRow createDetailRow(String ordinal,
-      final String subName, final String type, final String remarks)
-  {
-    FormatUtils.TableRow row;
-    row = new FormatUtils.TableRow();
-    row.addCell(new FormatUtils.TableCell("ordinal", ordinal));
-    row.addCell(new FormatUtils.TableCell("subname", subName));
-    row.addCell(new FormatUtils.TableCell("type", type));
-    row.addCell(new FormatUtils.TableCell("remarks", remarks));
-    return row;
-  }
-
-  private TableRow createEmptyRow()
-  {
-    return new FormatUtils.TableRow(4);
-  }
-
-  private FormatUtils.TableRow createNameRow(final String name,
-      final String description)
-  {
-    FormatUtils.TableRow row;
-    row = new FormatUtils.TableRow();
-    row.addCell(new FormatUtils.TableCell(2, "name", name));
-    row.addCell(new FormatUtils.TableCell(2, "description", description));
-    return row;
-  }
-
-  private FormatUtils.TableRow createNameValueRow(final String name,
-      final String value)
-  {
-    FormatUtils.TableRow row;
-    row = new FormatUtils.TableRow();
-    row.addCell(new FormatUtils.TableCell("", name));
-    row.addCell(new FormatUtils.TableCell("", value));
-    return row;
   }
 
 }
