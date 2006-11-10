@@ -24,8 +24,7 @@ package schemacrawler.tools.schematext;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.tools.util.FormatUtils;
-import schemacrawler.tools.util.HtmlTableCell;
-import schemacrawler.tools.util.HtmlTableRow;
+import schemacrawler.tools.util.HtmlFormattingHelper;
 
 /**
  * Formats the schema as HTML for output.
@@ -46,7 +45,7 @@ public final class SchemaHTMLFormatter
   SchemaHTMLFormatter(final SchemaTextOptions options)
     throws SchemaCrawlerException
   {
-    super(options);
+    super(options, new HtmlFormattingHelper());
   }
 
   /**
@@ -74,60 +73,11 @@ public final class SchemaHTMLFormatter
   {
     if (!getNoFooter())
     {
-      out.println("<pre id='tableCount'>" + getTableCount() + " tables"
-                  + "</pre>");
+      out.println("<p id='tableCount'>" + getTableCount() + " tables" + "</p>");
     }
     out.println(FormatUtils.HTML_FOOTER);
     out.flush();
     super.end();
-  }
-
-  String createDefinitionRow(final String definition)
-  {
-    HtmlTableRow row = new HtmlTableRow();
-    row.addCell(new HtmlTableCell("ordinal", ""));
-    row.addCell(new HtmlTableCell(3, "definition", definition));
-    return row.toString();
-  }
-
-  String createDetailRow(String ordinal, final String subName,
-                         final String type, final String remarks)
-  {
-    HtmlTableRow row;
-    row = new HtmlTableRow();
-    row.addCell(new HtmlTableCell("ordinal", ordinal));
-    row.addCell(new HtmlTableCell("subname", subName));
-    row.addCell(new HtmlTableCell("type", type));
-    row.addCell(new HtmlTableCell("remarks", remarks));
-    return row.toString();
-  }
-
-  String createEmptyRow()
-  {
-    return new HtmlTableRow(4).toString();
-  }
-
-  String createNameRow(final String name, final String description)
-  {
-    HtmlTableRow row;
-    row = new HtmlTableRow();
-    row.addCell(new HtmlTableCell(2, "name", name));
-    row.addCell(new HtmlTableCell(2, "description", description));
-    return row.toString();
-  }
-
-  String createNameValueRow(final String name, final String value)
-  {
-    HtmlTableRow row;
-    row = new HtmlTableRow();
-    row.addCell(new HtmlTableCell("", name));
-    row.addCell(new HtmlTableCell("", value));
-    return row.toString();
-  }
-
-  String createSeparatorRow()
-  {
-    return "<tr><td colspan='4'><hr/></td></tr>";
   }
 
   String getArrow()
@@ -158,9 +108,9 @@ public final class SchemaHTMLFormatter
 
   void handleDatabaseInfo(final DatabaseInfo databaseInfo)
   {
-    out.println("<pre>");
+    out.println("<p id=\'databaseInfo\'>");
     FormatUtils.printDatabaseInfo(databaseInfo, out);
-    out.println("</pre>");
+    out.println("</p>");
   }
 
   void handleDatabasePropertiesEnd()

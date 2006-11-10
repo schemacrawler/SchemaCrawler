@@ -23,12 +23,8 @@ package schemacrawler.tools.schematext;
 
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.tools.OutputFormat;
-import schemacrawler.tools.util.CsvFormattingFunctor;
 import schemacrawler.tools.util.FormatUtils;
-import schemacrawler.tools.util.PlainTextFormattingFunctor;
-import schemacrawler.tools.util.TextFormattingFunctor;
-import sf.util.Utilities;
+import schemacrawler.tools.util.PlainTextFormattingHelper;
 
 /**
  * Formats the schema as plain text for output.
@@ -39,8 +35,6 @@ public final class SchemaTextFormatter
   extends BaseSchemaTextFormatter
 {
 
-  private final TextFormattingFunctor textFormattingFunctor;
-
   /**
    * Formats the schema as plain text for output.
    * 
@@ -50,15 +44,8 @@ public final class SchemaTextFormatter
   SchemaTextFormatter(final SchemaTextOptions options)
     throws SchemaCrawlerException
   {
-    super(options);
-    if (options.getOutputOptions().getOutputFormat() == OutputFormat.CSV)
-    {
-      textFormattingFunctor = new CsvFormattingFunctor();
-    }
-    else
-    {
-      textFormattingFunctor = new PlainTextFormattingFunctor();
-    }
+    super(options, new PlainTextFormattingHelper(options.getOutputOptions()
+      .getOutputFormat()));
   }
 
   /**
@@ -77,70 +64,6 @@ public final class SchemaTextFormatter
     super.end();
   }
 
-  String createDefinitionRow(final String definition)
-  {
-    StringBuffer row = new StringBuffer();
-    row.append(textFormattingFunctor.getFieldSeparator());
-    row.append(definition);
-    return row.toString();
-  }
-
-  String createDetailRow(String ordinal, final String subName,
-                         final String type, final String remarks)
-  {
-    final int REMARKS_WIDTH = 5;
-    final int SUB_NAME_WIDTH = 32;
-    final int TYPE_WIDTH = 23;
-
-    StringBuffer row = new StringBuffer();
-    out.print(textFormattingFunctor.getFieldSeparator());
-    if (!Utilities.isBlank(ordinal))
-    {
-      row.append(textFormattingFunctor.format(ordinal, 2, true));
-      row.append(textFormattingFunctor.getFieldSeparator());
-    }
-    row.append(textFormattingFunctor.format(subName, SUB_NAME_WIDTH, true));
-    row.append(textFormattingFunctor.getFieldSeparator());
-    row.append(textFormattingFunctor.format(type, TYPE_WIDTH, true));
-    row.append(textFormattingFunctor.getFieldSeparator());
-    row.append(textFormattingFunctor.format(remarks, REMARKS_WIDTH, true));
-    return row.toString();
-  }
-
-  String createEmptyRow()
-  {
-    return "";
-  }
-
-  String createNameRow(final String name, final String description)
-  {
-    final int NAME_WIDTH = 36;
-    final int DESCRIPTION_WIDTH = 34;
-
-    StringBuffer row = new StringBuffer();
-    row.append(textFormattingFunctor.format(name, NAME_WIDTH, true));
-    row.append(textFormattingFunctor.getFieldSeparator());
-    row.append(textFormattingFunctor.format(description, DESCRIPTION_WIDTH,
-                                            false));
-    return row.toString();
-  }
-
-  String createNameValueRow(final String name, final String value)
-  {
-    final int NAME_WIDTH = 36;
-
-    StringBuffer row = new StringBuffer();
-    row.append(textFormattingFunctor.format(name, NAME_WIDTH, true));
-    row.append(textFormattingFunctor.getFieldSeparator());
-    row.append(value);
-    return row.toString();
-  }
-
-  String createSeparatorRow()
-  {
-    return Utilities.repeat("-", FormatUtils.MAX_LINE_LENGTH);
-  }
-
   String getArrow()
   {
     return " --> ";
@@ -148,7 +71,6 @@ public final class SchemaTextFormatter
 
   void handleColumnDataTypeEnd()
   {
-    out.println();
     out.println();
   }
 
@@ -199,16 +121,6 @@ public final class SchemaTextFormatter
    */
   void handleProcedureStart()
   {
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see BaseSchemaTextFormatter#handleStartTableColumns()
-   */
-  void handleStartTableColumns()
-  {
-    createSeparatorRow();
   }
 
   /**
