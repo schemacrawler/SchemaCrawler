@@ -22,6 +22,7 @@ package schemacrawler.tools.schematext;
 
 
 import schemacrawler.crawl.SchemaCrawlerException;
+import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.util.CsvFormattingFunctor;
 import schemacrawler.tools.util.FormatUtils;
@@ -163,6 +164,11 @@ public final class SchemaTextFormatter
 
   void handleColumnDataTypeStart()
   {
+  }
+
+  void handleDatabaseInfo(final DatabaseInfo databaseInfo)
+  {
+    FormatUtils.printDatabaseInfo(databaseInfo, out);
   }
 
   void handleDatabasePropertiesEnd()

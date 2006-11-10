@@ -46,7 +46,6 @@ import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
-import schemacrawler.tools.util.FormatUtils;
 import sf.util.Utilities;
 
 /**
@@ -142,7 +141,7 @@ public abstract class BaseSchemaTextFormatter
   {
     if (!options.getOutputOptions().isNoInfo())
     {
-      FormatUtils.printDatabaseInfo(databaseInfo, out);
+      handleDatabaseInfo(databaseInfo);
     }
 
     final Set propertySet = databaseInfo.getProperties().entrySet();
@@ -275,6 +274,8 @@ public abstract class BaseSchemaTextFormatter
 
     handleTableEnd();
 
+    tableCount = tableCount + 1;
+
     out.flush();
 
   }
@@ -286,11 +287,13 @@ public abstract class BaseSchemaTextFormatter
 
   abstract String createEmptyRow();
 
-  abstract String createSeparatorRow();
-
   abstract String createNameRow(final String name, final String description);
 
   abstract String createNameValueRow(final String name, final String value);
+
+  abstract String createSeparatorRow();
+
+  abstract String getArrow();
 
   final boolean getNoFooter()
   {
@@ -315,6 +318,8 @@ public abstract class BaseSchemaTextFormatter
 
   abstract void handleColumnDataTypeStart();
 
+  abstract void handleDatabaseInfo(final DatabaseInfo databaseInfo);
+
   abstract void handleDatabasePropertiesEnd();
 
   abstract void handleDatabasePropertiesStart();
@@ -338,8 +343,6 @@ public abstract class BaseSchemaTextFormatter
    * Handles the start of output for a table.
    */
   abstract void handleTableStart();
-
-  abstract String getArrow();
 
   private final boolean isShowConstraintNames()
   {
