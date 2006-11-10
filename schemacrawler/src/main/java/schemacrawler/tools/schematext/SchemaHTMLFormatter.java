@@ -81,7 +81,7 @@ public final class SchemaHTMLFormatter
     if (!getNoFooter())
     {
       out.println("<pre id='tableCount'>" + getTableCount() + " tables"
-                  + "</pre>");
+          + "</pre>");
       out.println(FormatUtils.HTML_FOOTER);
       out.flush();
     }
@@ -95,21 +95,16 @@ public final class SchemaHTMLFormatter
    *      String)
    */
   void handleCheckConstraintName(final int ordinalNumber, final String name,
-                                 final String definition)
+      final String definition)
   {
-    String nameValue = "";
+    String constraintName = "";
     if (isShowConstraintNames())
     {
-      nameValue = name;
+      constraintName = name;
     }
     out.println(createEmptyRow());
-    out.println(createNameRow(nameValue, "[check constraint]"));
+    out.println(createNameRow(constraintName, "[check constraint]"));
     out.println(createDefinitionRow(definition));
-  }
-
-  private TableRow createEmptyRow()
-  {
-    return new FormatUtils.TableRow(4);
   }
 
   /**
@@ -119,7 +114,7 @@ public final class SchemaHTMLFormatter
    *      String)
    */
   void handleColumn(final int ordinalNumber, final String name,
-                    final String type, final String symbol)
+      final String type, final String symbol)
   {
     String ordinalNumberString = "";
     if (isShowOrdinalNumbers())
@@ -137,13 +132,13 @@ public final class SchemaHTMLFormatter
   void handleColumnDataType(final ColumnDataType columnDataType)
   {
     final String databaseSpecificTypeName = columnDataType
-      .getDatabaseSpecificTypeName();
+        .getDatabaseSpecificTypeName();
     final String typeName = columnDataType.getTypeName();
     final String userDefined = negate(columnDataType.isUserDefined(),
-                                      "user defined");
+        "user defined");
     final String nullable = negate(columnDataType.isNullable(), "nullable");
     final String autoIncrementable = negate(columnDataType
-      .isAutoIncrementable(), "auto-incrementable");
+        .isAutoIncrementable(), "auto-incrementable");
     final String definedWith = makeDefinedWithString(columnDataType);
 
     HtmlTable htmlTable = new HtmlTable();
@@ -154,7 +149,7 @@ public final class SchemaHTMLFormatter
     htmlTable.addRow(createDefinitionRow(nullable));
     htmlTable.addRow(createDefinitionRow(autoIncrementable));
     htmlTable.addRow(createDefinitionRow(columnDataType.getSearchable()
-      .toString()));
+        .toString()));
 
     out.println(htmlTable);
     out.println("<p></p>");
@@ -191,21 +186,23 @@ public final class SchemaHTMLFormatter
   {
     out.println("</table>");
     out.println("<p></p>");
+    out.println();
   }
 
   void handleDatabasePropertiesStart()
   {
     out.println("<table>");
-    out.println();
   }
 
   void handleDatabaseProperty(final String name, final String value)
   {
-    out.println(createNameRow(name, Entities.HTML40.escape(value)));
+    out.println(createNameValueRow(name, Entities.HTML40.escape(value)));
   }
 
   void handleDefinition(final String definition)
   {
+    out.println(createEmptyRow());
+
     if (Utilities.isBlank(definition))
     {
       return;
@@ -236,7 +233,7 @@ public final class SchemaHTMLFormatter
    *      String)
    */
   void handleForeignKeyName(final int ordinalNumber, final String name,
-                            final String updateRule)
+      final String updateRule)
   {
     out.println(createEmptyRow());
 
@@ -244,7 +241,7 @@ public final class SchemaHTMLFormatter
     if (isShowConstraintNames())
     {
       fkName = name;
-    }    
+    }
     final String fkDetails = "[foreign key" + ", on update " + updateRule + "]";
     out.println(createNameRow(fkName, fkDetails));
 
@@ -257,24 +254,18 @@ public final class SchemaHTMLFormatter
    *      boolean, String)
    */
   void handleIndexName(final int ordinalNumber, final String name,
-                       final String type, final boolean unique,
-                       final String sortSequence)
+      final String type, final boolean unique, final String sortSequence)
   {
-    out.println();
-    out.print(createEmptyRow());
-    out.print(RECORD_BEGIN);
-    out.print(FIELD_BEGIN_2);
+    out.println(createEmptyRow());
+
+    String indexName = "";
     if (isShowConstraintNames())
     {
-      out.print(FormatUtils.htmlBold(name));
+      indexName = name;
     }
-    out.print(FIELD_END + FIELD_BEGIN_2);
     final String indexDetails = "[" + (unique? "": "non-") + "unique "
-                                + sortSequence + " " + type + " " + "index]";
-    out.print(FormatUtils.htmlAlignRight(indexDetails));
-    out.print(FIELD_END);
-    out.print(RECORD_END);
-    out.println();
+        + sortSequence + " " + type + " " + "index]";
+    out.println(createNameRow(indexName, indexDetails));
   }
 
   /**
@@ -284,48 +275,30 @@ public final class SchemaHTMLFormatter
    */
   void handlePrimaryKeyName(final String name)
   {
-    out.println();
-    out.print(createEmptyRow());
-    out.print(RECORD_BEGIN);
-    out.print(FIELD_BEGIN_2);
+    out.println(createEmptyRow());
+
+    String pkName = "";
     if (isShowConstraintNames())
     {
-      out.print(FormatUtils.htmlBold(name));
+      pkName = name;
     }
-    out.print(FIELD_END + FIELD_BEGIN_2);
-    out.print(FormatUtils.htmlAlignRight("[primary key]"));
-    out.print(FIELD_END);
-    out.print(RECORD_END);
-    out.println();
+    out.println(createNameRow(pkName, "[primary key]"));
   }
 
   void handlePrivilege(int i, String name, String privilegeType,
-                       String grantedFrom)
+      String grantedFrom)
   {
-    out.println();
-    out.print(createEmptyRow());
-    out.print(RECORD_BEGIN);
-    out.print(FIELD_BEGIN_2);
+    out.println(createEmptyRow());
+
+    String privilegeName = "";
     if (isShowConstraintNames())
     {
-      out.print(FormatUtils.htmlBold(name));
+      privilegeName = name;
     }
-    out.print(FIELD_END);
-    out.print(FIELD_BEGIN_2);
-    out.print(FormatUtils.htmlAlignRight("[" + privilegeType + "]"));
-    out.print(FIELD_END);
-    out.print(RECORD_END);
-    out.println();
+    final String privilegeDetails = "[" + privilegeType + "]";
+    out.println(createNameRow(privilegeName, privilegeDetails));
 
-    out.print(RECORD_BEGIN);
-    out.print(FIELD_BEGIN);
-    out.print(FIELD_SEPARATOR);
-    out.print(grantedFrom);
-    out.print(FIELD_SEPARATOR);
-    out.print(FIELD_SEPARATOR);
-    out.print(FIELD_END);
-    out.print(RECORD_END);
-    out.println();
+    out.println(createDetailRow("", grantedFrom, "", ""));
   }
 
   /**
@@ -335,23 +308,15 @@ public final class SchemaHTMLFormatter
    *      String, String)
    */
   void handleProcedureColumn(final int ordinalNumber, final String name,
-                             final String type, final String procedureColumnType)
+      final String type, final String procedureColumnType)
   {
-    out.print(RECORD_BEGIN);
-    out.print(FIELD_BEGIN);
+    String ordinalNumberString = "";
     if (isShowOrdinalNumbers())
     {
-      out.print(String.valueOf(ordinalNumber));
+      ordinalNumberString = String.valueOf(ordinalNumber);
     }
-    out.print(FIELD_SEPARATOR);
-    out.print(name);
-    out.print(FIELD_SEPARATOR);
-    out.print(type);
-    out.print(FIELD_SEPARATOR);
-    out.print(procedureColumnType);
-    out.print(FIELD_END);
-    out.print(RECORD_END);
-    out.println();
+    out.println(createDetailRow(ordinalNumberString, name, type,
+        procedureColumnType));
   }
 
   /**
@@ -373,16 +338,9 @@ public final class SchemaHTMLFormatter
    *      String)
    */
   void handleProcedureName(final int ordinalNumber, final String name,
-                           final String type)
+      final String type)
   {
-    out.print(RECORD_BEGIN);
-    out.print(FIELD_BEGIN_2);
-    out.print(FormatUtils.htmlBold(name));
-    out.print(FIELD_END + FIELD_BEGIN_2);
-    out.print(FormatUtils.htmlAlignRight("[" + type + "]"));
-    out.print(FIELD_END);
-    out.print(RECORD_END);
-    out.println();
+    out.println(createNameRow(name, "[" + type + "]"));
   }
 
   /**
@@ -423,17 +381,10 @@ public final class SchemaHTMLFormatter
    * @see BaseSchemaTextFormatter#handleTableName(int, String, String)
    */
   void handleTableName(final int ordinalNumber, final String name,
-                       final String type)
+      final String type)
   {
-    out.print(RECORD_BEGIN);
-    out.print(FIELD_BEGIN_2);
-    out.print(FormatUtils.htmlBold(name));
-    out.print(FIELD_END + FIELD_BEGIN_2);
     final String typeBracketed = "[" + type.toLowerCase(Locale.ENGLISH) + "]";
-    out.print(FormatUtils.htmlAlignRight(typeBracketed));
-    out.print(FIELD_END);
-    out.print(RECORD_END);
-    out.println();
+    out.println(createNameRow(name, typeBracketed));
   }
 
   /**
@@ -447,43 +398,25 @@ public final class SchemaHTMLFormatter
   }
 
   void handleTrigger(int i, String name, String triggerType,
-                     String actionCondition, String actionStatement)
+      String actionCondition, String actionStatement)
   {
-    out.println();
-    out.print(createEmptyRow());
-    out.print(RECORD_BEGIN);
-    out.print(FIELD_BEGIN_2);
+    out.println(createEmptyRow());
+
+    String triggerName = "";
     if (isShowConstraintNames())
     {
-      out.print(FormatUtils.htmlBold(name));
+      triggerName = name;
     }
-    out.print(FIELD_END + FIELD_BEGIN_2);
-    out.print(FormatUtils.htmlAlignRight(triggerType));
-    out.print(FIELD_END);
-    out.print(RECORD_END);
-    out.println();
+    out.println(createNameRow(triggerName, triggerType));
 
-    out.print(RECORD_BEGIN);
-    out.print(FIELD_BEGIN_2);
-    out.print(FIELD_END + FIELD_BEGIN_2);
-    final String actionConditionValue = actionCondition == null
-                                                               ? ""
-                                                               : actionCondition;
-    out.print(actionConditionValue);
-    out.print(FIELD_END);
-    out.print(RECORD_END);
-    out.println();
-
-    out.print(RECORD_BEGIN);
-    out.print(FIELD_BEGIN_2);
-    out.print(FIELD_END + FIELD_BEGIN_2);
-    final String actionStatementValue = actionStatement == null
-                                                               ? ""
-                                                               : actionStatement;
-    out.print(actionStatementValue);
-    out.print(FIELD_END);
-    out.print(RECORD_END);
-    out.println();
+    if (!Utilities.isBlank(actionCondition))
+    {
+      out.println(createDefinitionRow(actionCondition));
+    }
+    if (!Utilities.isBlank(actionStatement))
+    {
+      out.println(createDefinitionRow(actionStatement));
+    }
   }
 
   private FormatUtils.TableRow createDefinitionRow(final String definition)
@@ -495,26 +428,39 @@ public final class SchemaHTMLFormatter
   }
 
   private FormatUtils.TableRow createDetailRow(String ordinal,
-                                               final String name,
-                                               final String type,
-                                               final String remarks)
+      final String subName, final String type, final String remarks)
   {
     FormatUtils.TableRow row;
     row = new FormatUtils.TableRow();
     row.addCell(new FormatUtils.TableCell("ordinal", ordinal));
-    row.addCell(new FormatUtils.TableCell("", name));
-    row.addCell(new FormatUtils.TableCell("", type));
-    row.addCell(new FormatUtils.TableCell("", remarks));
+    row.addCell(new FormatUtils.TableCell("subname", subName));
+    row.addCell(new FormatUtils.TableCell("type", type));
+    row.addCell(new FormatUtils.TableCell("remarks", remarks));
     return row;
   }
 
+  private TableRow createEmptyRow()
+  {
+    return new FormatUtils.TableRow(4);
+  }
+
   private FormatUtils.TableRow createNameRow(final String name,
-                                             final String description)
+      final String description)
   {
     FormatUtils.TableRow row;
     row = new FormatUtils.TableRow();
     row.addCell(new FormatUtils.TableCell(2, "name", name));
     row.addCell(new FormatUtils.TableCell(2, "description", description));
+    return row;
+  }
+
+  private FormatUtils.TableRow createNameValueRow(final String name,
+      final String value)
+  {
+    FormatUtils.TableRow row;
+    row = new FormatUtils.TableRow();
+    row.addCell(new FormatUtils.TableCell("", name));
+    row.addCell(new FormatUtils.TableCell("", value));
     return row;
   }
 
