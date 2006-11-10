@@ -22,6 +22,7 @@ package schemacrawler.tools.schematext;
 
 
 import schemacrawler.crawl.SchemaCrawlerException;
+import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.tools.util.FormatUtils;
 import schemacrawler.tools.util.HtmlTableCell;
 import schemacrawler.tools.util.HtmlTableRow;
@@ -75,9 +76,9 @@ public final class SchemaHTMLFormatter
     {
       out.println("<pre id='tableCount'>" + getTableCount() + " tables"
                   + "</pre>");
-      out.println(FormatUtils.HTML_FOOTER);
-      out.flush();
     }
+    out.println(FormatUtils.HTML_FOOTER);
+    out.flush();
     super.end();
   }
 
@@ -126,7 +127,7 @@ public final class SchemaHTMLFormatter
 
   String createSeparatorRow()
   {
-    return "<td colspan='4'><hr></td>";
+    return "<tr><td colspan='4'><hr/></td></tr>";
   }
 
   String getArrow()
@@ -153,6 +154,13 @@ public final class SchemaHTMLFormatter
   void handleColumnDataTypeStart()
   {
     out.println("<table>");
+  }
+
+  void handleDatabaseInfo(final DatabaseInfo databaseInfo)
+  {
+    out.println("<pre>");
+    FormatUtils.printDatabaseInfo(databaseInfo, out);
+    out.println("</pre>");
   }
 
   void handleDatabasePropertiesEnd()

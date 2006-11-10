@@ -173,30 +173,6 @@ public final class FormatUtils
   }
 
   /**
-   * Wraps text in HTML boldface tags.
-   * 
-   * @param name
-   *        Text
-   * @return HTML with boldface tags
-   */
-  public static String htmlBold(final String name)
-  {
-    return "<b>" + name + "</b>";
-  }
-
-  /**
-   * Wraps text in HTML boldface tags.
-   * 
-   * @param name
-   *        Text
-   * @return HTML with boldface tags
-   */
-  public static String htmlAlignRight(final String name)
-  {
-    return "<div style='text-align: right'>" + name + "</div>";
-  }
-
-  /**
    * Prints database information.
    * 
    * @param databaseInfo
