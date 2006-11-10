@@ -24,6 +24,7 @@ package schemacrawler.tools.schematext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
@@ -46,6 +47,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.tools.util.FormatUtils;
+import sf.util.Utilities;
 
 /**
  * Base functionality for the text formatting of schema.
@@ -138,7 +140,10 @@ public abstract class BaseSchemaTextFormatter
    */
   public void handle(final DatabaseInfo databaseInfo)
   {
-    handleDatabaseInfo(databaseInfo);
+    if (!options.getOutputOptions().isNoInfo())
+    {
+      FormatUtils.printDatabaseInfo(databaseInfo, out);
+    }
 
     final Set propertySet = databaseInfo.getProperties().entrySet();
     if (propertySet.size() > 0)
@@ -147,8 +152,8 @@ public abstract class BaseSchemaTextFormatter
       for (final Iterator iter = propertySet.iterator(); iter.hasNext();)
       {
         final Map.Entry property = (Map.Entry) iter.next();
-        handleDatabaseProperty((String) property.getKey(), property.getValue()
-          .toString());
+        out.println(createNameValueRow(((String) property.getKey()), property
+          .getValue().toString()));
       }
       handleDatabasePropertiesEnd();
     }
@@ -158,7 +163,9 @@ public abstract class BaseSchemaTextFormatter
     for (int i = 0; i < columnDataTypes.length; i++)
     {
       final ColumnDataType columnDataType = columnDataTypes[i];
-      handleColumnDataType(columnDataType);
+      handleColumnDataTypeStart();
+      printColumnDataType(columnDataType);
+      handleColumnDataTypeEnd();
     }
     handleColumnDataTypesEnd();
 
@@ -176,14 +183,15 @@ public abstract class BaseSchemaTextFormatter
     handleProcedureStart();
 
     final String procedureTypeDetail = "procedure, " + procedure.getType();
-    handleProcedureName(++tableCount, procedure.getName(), procedureTypeDetail);
+    out.println(createNameRow(procedure.getName(), "[" + procedureTypeDetail
+                                                   + "]"));
 
     SchemaTextDetailType schemaTextDetailType = options
       .getSchemaTextDetailType();
     if (schemaTextDetailType != SchemaTextDetailType.BRIEF)
     {
 
-      handleStartTableColumns();
+      out.println(createSeparatorRow());
 
       final ProcedureColumn[] columns = procedure.getColumns();
       for (int i = 0; i < columns.length; i++)
@@ -201,13 +209,18 @@ public abstract class BaseSchemaTextFormatter
           procedureColumnType = column.getProcedureColumnType().toString();
         }
 
-        handleProcedureColumn(column.getOrdinalPosition() + 1,
-                              column.getName(), columnType, procedureColumnType);
+        String ordinalNumberString = "";
+        if (options.isShowOrdinalNumbers())
+        {
+          ordinalNumberString = String.valueOf(column.getOrdinalPosition() + 1);
+        }
+        out.println(createDetailRow(ordinalNumberString, column.getName(),
+                                    columnType, procedureColumnType));
       }
       if (schemaTextDetailType
         .isGreaterThanOrEqualTo(SchemaTextDetailType.VERBOSE))
       {
-        handleDefinition(procedure.getDefinition());
+        printDefinition(procedure.getDefinition());
       }
       handleProcedureEnd();
     }
@@ -226,14 +239,17 @@ public abstract class BaseSchemaTextFormatter
   {
 
     handleTableStart();
-    handleTableName(++tableCount, table.getName(), table.getType().toString());
+    final String typeBracketed = "["
+                                 + table.getType().toString()
+                                   .toLowerCase(Locale.ENGLISH) + "]";
+    out.println(createNameRow(table.getName(), typeBracketed));
 
     final SchemaTextDetailType schemaTextDetailType = options
       .getSchemaTextDetailType();
 
     if (schemaTextDetailType != SchemaTextDetailType.BRIEF)
     {
-      handleStartTableColumns();
+      out.println(createSeparatorRow());
       printColumns(table.getColumns());
     }
 
@@ -253,7 +269,7 @@ public abstract class BaseSchemaTextFormatter
       if (table instanceof View)
       {
         final View view = (View) table;
-        handleDefinition(view.getDefinition());
+        printDefinition(view.getDefinition());
       }
     }
 
@@ -263,19 +279,27 @@ public abstract class BaseSchemaTextFormatter
 
   }
 
-  boolean getNoFooter()
+  abstract String createDefinitionRow(final String definition);
+
+  abstract String createDetailRow(String ordinal, final String subName,
+                                  final String type, final String remarks);
+
+  abstract String createEmptyRow();
+
+  abstract String createSeparatorRow();
+
+  abstract String createNameRow(final String name, final String description);
+
+  abstract String createNameValueRow(final String name, final String value);
+
+  final boolean getNoFooter()
   {
     return options.getOutputOptions().isNoFooter();
   }
 
-  boolean getNoHeader()
+  final boolean getNoHeader()
   {
     return options.getOutputOptions().isNoHeader();
-  }
-
-  boolean getNoInfo()
-  {
-    return options.getOutputOptions().isNoInfo();
   }
 
   final SchemaTextDetailType getSchemaTextDetailType()
@@ -283,117 +307,17 @@ public abstract class BaseSchemaTextFormatter
     return options.getSchemaTextDetailType();
   }
 
-  abstract void handleCheckConstraintName(final int ordinalNumber,
-                                          final String name,
-                                          final String definition);
-
-  /**
-   * Handles the output for a column.
-   * 
-   * @param ordinalNumber
-   *        Ordinal number for the column
-   * @param name
-   *        Column name
-   * @param type
-   *        Column type
-   * @param symbol
-   *        Symbol
-   */
-  abstract void handleColumn(final int ordinalNumber, final String name,
-                             final String type, final String symbol);
-
-  abstract void handleColumnDataType(ColumnDataType columnDataType);
+  abstract void handleColumnDataTypeEnd();
 
   abstract void handleColumnDataTypesEnd();
 
   abstract void handleColumnDataTypesStart();
 
-  void handleDatabaseInfo(final DatabaseInfo databaseInfo)
-  {
-    if (!getNoInfo())
-    {
-      FormatUtils.printDatabaseInfo(databaseInfo, out);
-    }
-  }
+  abstract void handleColumnDataTypeStart();
 
   abstract void handleDatabasePropertiesEnd();
 
   abstract void handleDatabasePropertiesStart();
-
-  abstract void handleDatabaseProperty(String name, String value);
-
-  abstract void handleDefinition(final String definition);
-
-  /**
-   * Handles the output for a foreign key column pair.
-   * 
-   * @param pkColumnName
-   *        Primary key column name
-   * @param fkColumnName
-   *        Foreign key column name
-   * @param keySequence
-   *        Key squence number
-   */
-  abstract void handleForeignKeyColumnPair(final String mapping,
-                                           final int keySequence);
-
-  /**
-   * Handles the output for a foreign key name.
-   * 
-   * @param ordinalNumber
-   *        Ordinal number for the foreign key
-   * @param name
-   *        Foreign key name
-   * @param updateRule
-   *        Update rule
-   */
-  abstract void handleForeignKeyName(final int ordinalNumber,
-                                     final String name, final String updateRule);
-
-  /**
-   * Handles the output for a index name.
-   * 
-   * @param ordinalNumber
-   *        Ordinal number for the index
-   * @param name
-   *        Index name
-   * @param type
-   *        Index type
-   * @param unique
-   *        Is the index is unique
-   * @param sortSequence
-   *        Sort sequence
-   */
-  abstract void handleIndexName(final int ordinalNumber, final String name,
-                                final String type, final boolean unique,
-                                final String sortSequence);
-
-  /**
-   * Handles the output for a primaey key name.
-   * 
-   * @param name
-   *        Primary key name
-   */
-  abstract void handlePrimaryKeyName(final String name);
-
-  abstract void handlePrivilege(int i, String name, String privilegeType,
-                                String grantedFrom);
-
-  /**
-   * Handles the output for a column.
-   * 
-   * @param ordinalNumber
-   *        Ordinal number for the column
-   * @param name
-   *        Column name
-   * @param type
-   *        Column type
-   * @param procedureColumnType
-   *        Procedure column type
-   */
-  abstract void handleProcedureColumn(final int ordinalNumber,
-                                      final String name, final String type,
-                                      final String procedureColumnType);
 
   /**
    * Handles the end of output for a procedure.
@@ -401,27 +325,9 @@ public abstract class BaseSchemaTextFormatter
   abstract void handleProcedureEnd();
 
   /**
-   * Handles the output for a procedure.
-   * 
-   * @param ordinalNumber
-   *        Ordinal number for the procedure
-   * @param name
-   *        Procedure name
-   * @param type
-   *        Procedure type
-   */
-  abstract void handleProcedureName(final int ordinalNumber, final String name,
-                                    final String type);
-
-  /**
    * Handles the start of output for a procedure.
    */
   abstract void handleProcedureStart();
-
-  /**
-   * Handles the start of output for table columns.
-   */
-  abstract void handleStartTableColumns();
 
   /**
    * Handles the end of output for a table.
@@ -429,56 +335,18 @@ public abstract class BaseSchemaTextFormatter
   abstract void handleTableEnd();
 
   /**
-   * Handles the output for a table name.
-   * 
-   * @param ordinalNumber
-   *        Ordinal number for the table
-   * @param name
-   *        Table name
-   * @param type
-   *        Table type
-   */
-  abstract void handleTableName(final int ordinalNumber, final String name,
-                                final String type);
-
-  /**
    * Handles the start of output for a table.
    */
   abstract void handleTableStart();
 
-  abstract void handleTrigger(int i, String name, String triggerType,
-                              String actionCondition, String actionStatement);
+  abstract String getArrow();
 
-  final boolean isShowConstraintNames()
+  private final boolean isShowConstraintNames()
   {
     return !options.isHideConstraintNames();
   }
 
-  final boolean isShowJdbcColumnTypeNames()
-  {
-    return options.isShowJdbcColumnTypeNames();
-  }
-
-  final boolean isShowOrdinalNumbers()
-  {
-    return options.isShowOrdinalNumbers();
-  }
-
-  String makeDefinedWithString(final ColumnDataType columnDataType)
-  {
-    String definedWith = "defined with ";
-    if (columnDataType.getCreateParameters() == null)
-    {
-      definedWith = definedWith + "no parameters";
-    }
-    else
-    {
-      definedWith = definedWith + columnDataType.getCreateParameters();
-    }
-    return definedWith;
-  }
-
-  String negate(final boolean positive, final String text)
+  private String negate(final boolean positive, final String text)
   {
     String textValue = text;
     if (!positive)
@@ -496,10 +364,50 @@ public abstract class BaseSchemaTextFormatter
       CheckConstraint constraint = constraints[i];
       if (constraint != null)
       {
-        handleCheckConstraintName(i + 1, constraint.getName(), constraint
-          .getDefinition());
+        String constraintName = "";
+        if (isShowConstraintNames())
+        {
+          constraintName = constraint.getName();
+        }
+        out.println(createEmptyRow());
+        out.println(createNameRow(constraintName, "[check constraint]"));
+        out.println(createDefinitionRow(constraint.getDefinition()));
       }
     }
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see BaseSchemaTextFormatter#handleColumnDataType(schemacrawler.schema.ColumnDataType)
+   */
+  private void printColumnDataType(final ColumnDataType columnDataType)
+  {
+    final String databaseSpecificTypeName = columnDataType
+      .getDatabaseSpecificTypeName();
+    final String typeName = columnDataType.getTypeName();
+    final String userDefined = negate(columnDataType.isUserDefined(),
+                                      "user defined");
+    final String nullable = negate(columnDataType.isNullable(), "nullable");
+    final String autoIncrementable = negate(columnDataType
+      .isAutoIncrementable(), "auto-incrementable");
+    String definedWith = "defined with ";
+    if (columnDataType.getCreateParameters() == null)
+    {
+      definedWith = definedWith + "no parameters";
+    }
+    else
+    {
+      definedWith = definedWith + columnDataType.getCreateParameters();
+    }
+    out.println(createNameRow(databaseSpecificTypeName, "[data type]"));
+    out.println(createDefinitionRow("based on " + typeName));
+    out.println(createDefinitionRow(userDefined));
+    out.println(createDefinitionRow(definedWith));
+    out.println(createDefinitionRow(nullable));
+    out.println(createDefinitionRow(autoIncrementable));
+    out.println(createDefinitionRow(columnDataType.getSearchable().toString()));
+
   }
 
   /**
@@ -535,8 +443,13 @@ public abstract class BaseSchemaTextFormatter
         fkColumnName = fkColumn.getFullName();
       }
       final int keySequence = columnPair.getKeySequence();
-      handleForeignKeyColumnPair(pkColumnName + " --> " + fkColumnName,
-                                 keySequence);
+      String keySequenceString = "";
+      if (options.isShowOrdinalNumbers())
+      {
+        keySequenceString = Utilities.padLeft(String.valueOf(keySequence), 2);
+      }
+      out.println(createDetailRow(keySequenceString, pkColumnName + getArrow()
+                                                     + fkColumnName, "", ""));
     }
   }
 
@@ -569,8 +482,25 @@ public abstract class BaseSchemaTextFormatter
         symbol = "not null";
       }
 
-      handleColumn(i + 1, columnName, columnType, symbol);
+      String ordinalNumberString = "";
+      if (options.isShowOrdinalNumbers())
+      {
+        ordinalNumberString = String.valueOf(i + 1);
+      }
+      out.println(createDetailRow(ordinalNumberString, columnName, columnType,
+                                  symbol));
     }
+  }
+
+  private void printDefinition(final String definition)
+  {
+    out.println(createEmptyRow());
+
+    if (Utilities.isBlank(definition))
+    {
+      return;
+    }
+    out.println(createDefinitionRow(definition));
   }
 
   private void printForeignKeys(final String tableName,
@@ -583,7 +513,16 @@ public abstract class BaseSchemaTextFormatter
       {
         final String name = foreignKey.getName();
         final String updateRule = foreignKey.getUpdateRule().toString();
-        handleForeignKeyName(i + 1, name, updateRule);
+        out.println(createEmptyRow());
+
+        String fkName = "";
+        if (isShowConstraintNames())
+        {
+          fkName = name;
+        }
+        final String fkDetails = "[foreign key" + ", on update " + updateRule
+                                 + "]";
+        out.println(createNameRow(fkName, fkDetails));
         final ForeignKeyColumnMap[] columnPairs = foreignKey.getColumnPairs();
         printColumnPairs(tableName, columnPairs);
       }
@@ -597,8 +536,19 @@ public abstract class BaseSchemaTextFormatter
       final Index index = indices[i];
       if (index != null)
       {
-        handleIndexName(i + 1, index.getName(), index.getType().toString(),
-                        index.isUnique(), index.getSortSequence().toString());
+        out.println(createEmptyRow());
+
+        String indexName = "";
+        if (isShowConstraintNames())
+        {
+          indexName = index.getName();
+        }
+        final String indexDetails = "[" + (index.isUnique()? "": "non-")
+                                    + "unique "
+                                    + index.getSortSequence().toString() + " "
+                                    + index.getType().toString() + " "
+                                    + "index]";
+        out.println(createNameRow(indexName, indexDetails));
         printColumns(index.getColumns());
       }
     }
@@ -609,7 +559,14 @@ public abstract class BaseSchemaTextFormatter
     if (primaryKey != null)
     {
       final String name = primaryKey.getName();
-      handlePrimaryKeyName(name);
+      out.println(createEmptyRow());
+
+      String pkName = "";
+      if (isShowConstraintNames())
+      {
+        pkName = name;
+      }
+      out.println(createNameRow(pkName, "[primary key]"));
       printColumns(primaryKey.getColumns());
     }
   }
@@ -627,9 +584,19 @@ public abstract class BaseSchemaTextFormatter
         {
           privilegeType = "grantable " + privilegeType;
         }
-        String grantedFrom = privilege.getGrantor() + " --> "
+        String grantedFrom = privilege.getGrantor() + getArrow()
                              + privilege.getGrantee();
-        handlePrivilege(i + 1, privilege.getName(), privilegeType, grantedFrom);
+        out.println(createEmptyRow());
+
+        String privilegeName = "";
+        if (isShowConstraintNames())
+        {
+          privilegeName = privilege.getName();
+        }
+        final String privilegeDetails = "[" + privilegeType + "]";
+        out.println(createNameRow(privilegeName, privilegeDetails));
+
+        out.println(createDetailRow("", grantedFrom, "", ""));
       }
     }
   }
@@ -647,8 +614,25 @@ public abstract class BaseSchemaTextFormatter
                              + trigger.getEventManipulationType().getName()
                              + ", per " + trigger.getActionOrientation() + "]";
         triggerType = triggerType.toLowerCase();
-        handleTrigger(i + 1, trigger.getName(), triggerType, trigger
-          .getActionCondition(), trigger.getActionStatement());
+        String actionCondition = trigger.getActionCondition();
+        String actionStatement = trigger.getActionStatement();
+        out.println(createEmptyRow());
+
+        String triggerName = "";
+        if (isShowConstraintNames())
+        {
+          triggerName = trigger.getName();
+        }
+        out.println(createNameRow(triggerName, triggerType));
+
+        if (!Utilities.isBlank(actionCondition))
+        {
+          out.println(createDefinitionRow(actionCondition));
+        }
+        if (!Utilities.isBlank(actionStatement))
+        {
+          out.println(createDefinitionRow(actionStatement));
+        }
       }
     }
   }

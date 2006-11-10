@@ -22,10 +22,6 @@ package schemacrawler.tools.util;
 
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
 
 import schemacrawler.schema.DatabaseInfo;
 import sf.util.Utilities;
@@ -46,132 +42,10 @@ public final class FormatUtils
   static
   {
     final byte[] text = Utilities.readFully(FormatUtils.class
-      .getResourceAsStream("/schema_output.css"));
+      .getResourceAsStream("/schemacrawler-output.css"));
     styleSheet = new String(text);
   }  
 
-  public static class TableCell
-  {
-  
-    private String styleClass;
-    private int colSpan = 1;
-    private String innerHtml;
-  
-    public TableCell()
-    {
-      this(0, null, null);
-    }
-  
-    public TableCell(String styleClass, String innerHtml)
-    {
-      this.styleClass = styleClass;
-      this.innerHtml = innerHtml;
-    }
-    
-    public TableCell(int colSpan, String styleClass, String innerHtml)
-    {
-      this.colSpan = colSpan;
-      this.styleClass = styleClass;
-      this.innerHtml = innerHtml;
-    }
-  
-    public String toString()
-    {
-      StringBuffer buffer = new StringBuffer();
-      buffer.append("<td");
-      if (colSpan > 1)
-      {
-        buffer.append(" colspan='").append(colSpan).append("'");
-      }
-      if (!Utilities.isBlank(styleClass))
-      {
-        buffer.append(" class='").append(styleClass).append("'");
-      }
-      buffer.append(">");
-      if (!Utilities.isBlank(innerHtml))
-      {
-        buffer.append(innerHtml);
-      }
-      else
-      {
-        buffer.append("&nbsp;");
-      }
-      buffer.append("</td>");
-  
-      return buffer.toString();
-    }
-  
-  }
-
-  public static class TableRow
-  {
-
-    private List cells;
-
-    public TableRow(int colSpan)
-    {
-      this.cells = Arrays.asList(new TableCell[] {
-        new TableCell(colSpan, null, null)
-      });
-    }
-
-    public TableRow()
-    {
-      this.cells = new ArrayList();
-    }
-
-    public void addCell(TableCell cell)
-    {
-      cells.add(cell);
-    }
-
-    public String toString()
-    {
-      StringBuffer buffer = new StringBuffer();
-      buffer.append("\t<tr>\n");
-      for (Iterator iter = cells.iterator(); iter.hasNext();)
-      {
-        TableCell cell = (TableCell) iter.next();
-        buffer.append("\t\t").append(cell).append("\n");
-      }
-      buffer.append("\t</tr>");
-
-      return buffer.toString();
-    }
-
-  }
-
-  public static class HtmlTable
-  {
-
-    private List rows;
-
-    public HtmlTable()
-    {
-      this.rows = new ArrayList();
-    }
-
-    public void addRow(TableRow row)
-    {
-      rows.add(row);
-    }
-
-    public String toString()
-    {
-      StringBuffer buffer = new StringBuffer();
-      buffer.append("<table>\n");
-      for (Iterator iter = rows.iterator(); iter.hasNext();)
-      {
-        TableRow row = (TableRow) iter.next();
-        buffer.append("\t").append(row).append("\n");
-      }
-      buffer.append("\n</table>");
-
-      return buffer.toString();
-    }
-
-  }
-  
   /**
    * HTML footer.
    */
