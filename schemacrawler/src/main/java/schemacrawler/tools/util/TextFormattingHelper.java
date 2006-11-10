@@ -17,35 +17,24 @@
  * Boston, MA 02111-1307, USA.
  *
  */
+
 package schemacrawler.tools.util;
 
 
-/**
- * Functor for formatting text.
- * 
- * @author sfatehi
- */
-public interface TextFormattingFunctor
+public interface TextFormattingHelper
 {
 
-  /**
-   * Field separator.
-   * 
-   * @return Separator
-   */
-  String getFieldSeparator();
+  String createDefinitionRow(final String definition);
 
-  /**
-   * Formats text, with options.
-   * 
-   * @param text
-   *        Text to format
-   * @param maxWidth
-   *        Maximum field width
-   * @param alignLeft
-   *        Align left
-   * @return Formatted text
-   */
-  String format(String text, int maxWidth, boolean alignLeft);
+  String createDetailRow(String ordinal, final String subName,
+                         final String type, final String remarks);
 
+  String createEmptyRow();
+
+  String createNameRow(final String name, final String description);
+
+  String createNameValueRow(final String name, final String value);
+
+  String createSeparatorRow();
+  
 }

@@ -96,9 +96,9 @@ final class OperatorHTMLOutput
   {
     if (!getNoInfo())
     {
-      out.println("<pre id='databaseInfo'>");
+      out.println("<p id='databaseInfo'>");
       out.println(databaseInfo);
-      out.println("</pre>");
+      out.println("</p>");
       out.flush();
     }
   }

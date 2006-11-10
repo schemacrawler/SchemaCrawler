@@ -17,7 +17,7 @@ package schemacrawler.tools.util;
 
 import sf.util.Utilities;
 
-public class HtmlTableCell
+final class HtmlTableCell
 {
 
   private String styleClass;

@@ -21,7 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 
 
-public class HtmlTableRow
+final class HtmlTableRow
 {
 
   private List cells;
