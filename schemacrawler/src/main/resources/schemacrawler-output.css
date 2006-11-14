@@ -26,16 +26,13 @@
 
 .definition {
 	width: 580px;
+	white-space: pre;
 }
 
 body,p,pre,table,th,td,caption {
 	text-align: left;
 	font-family: Trebuchet MS;
 	font-size: 8pt;
-}
-
-body {
-	white-space: pre;
 }
 
 table,th,td {

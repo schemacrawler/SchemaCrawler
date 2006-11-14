@@ -86,17 +86,13 @@ public final class OperatorLoader
     }
 
     final OutputFormat outputFormatType = options.getOutputOptions()
-        .getOutputFormat();
-    if (outputFormatType == OutputFormat.TEXT)
-    {
-      handler = new OperatorPlainTextOutput(options, query, connection,
-          dataHandler);
-    } else if (outputFormatType == OutputFormat.HTML)
+      .getOutputFormat();
+    if (outputFormatType == OutputFormat.HTML)
     {
       handler = new OperatorHTMLOutput(options, query, connection, dataHandler);
-    } else if (outputFormatType == OutputFormat.CSV)
+    } else 
     {
-      handler = new OperatorCSVOutput(options, query, connection, dataHandler);
+      handler = new OperatorTextOutput(options, query, connection, dataHandler);
     }
 
     return handler;
