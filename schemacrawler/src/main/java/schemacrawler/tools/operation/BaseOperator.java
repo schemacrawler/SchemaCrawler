@@ -41,6 +41,7 @@ import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.util.FormatUtils;
+import schemacrawler.tools.util.TextFormattingHelper;
 import sf.util.Utilities;
 
 /**
@@ -53,7 +54,7 @@ public abstract class BaseOperator
 {
 
   private static final Logger LOGGER = Logger.getLogger(BaseOperator.class
-      .getName());
+    .getName());
 
   private final Connection connection;
   private final DataHandler dataHandler;
@@ -63,6 +64,7 @@ public abstract class BaseOperator
   private final Statement statement;
   private int tableCount;
   private final OperatorOptions options;
+  private final TextFormattingHelper formattingHelper;
 
   /**
    * Constructs a new table dropper.
@@ -73,7 +75,8 @@ public abstract class BaseOperator
    *        Database connection to use
    */
   BaseOperator(final OperatorOptions options, final String query,
-      final Connection connection, final DataHandler dataHandler)
+               final Connection connection, final DataHandler dataHandler,
+               final TextFormattingHelper formattingHelper)
     throws SchemaCrawlerException
   {
     if (options == null)
@@ -103,6 +106,8 @@ public abstract class BaseOperator
     {
       throw new SchemaCrawlerException("No query provided");
     }
+    
+    this.formattingHelper = formattingHelper;
 
     try
     {
@@ -115,7 +120,7 @@ public abstract class BaseOperator
     catch (final SQLException e)
     {
       final String errorMessage = e.getMessage();
-      LOGGER.log(Level.WARNING, "Cannot set autocommit: " + errorMessage);      
+      LOGGER.log(Level.WARNING, "Cannot set autocommit: " + errorMessage);
       throw new SchemaCrawlerException(errorMessage, e);
     }
     this.connection = connection;
@@ -150,7 +155,7 @@ public abstract class BaseOperator
     catch (final SQLException e)
     {
       final String errorMessage = e.getMessage();
-      LOGGER.log(Level.WARNING, "Connection is closed: " + errorMessage);      
+      LOGGER.log(Level.WARNING, "Connection is closed: " + errorMessage);
       throw new SchemaCrawlerException(errorMessage, e);
     }
   }
@@ -163,7 +168,7 @@ public abstract class BaseOperator
   public void end()
     throws SchemaCrawlerException
   {
-    
+
     out.close();
     LOGGER.log(Level.FINER, "Output writer closed");
     try
@@ -173,7 +178,7 @@ public abstract class BaseOperator
     catch (final QueryExecutorException e)
     {
       final String errorMessage = e.getMessage();
-      LOGGER.log(Level.WARNING, "Cannot end data handler: " + errorMessage);      
+      LOGGER.log(Level.WARNING, "Cannot end data handler: " + errorMessage);
       throw new SchemaCrawlerException(errorMessage, e);
     }
 
@@ -185,7 +190,7 @@ public abstract class BaseOperator
     catch (final SQLException e)
     {
       final String errorMessage = e.getMessage();
-      LOGGER.log(Level.WARNING, "Cannot close connection: " + errorMessage);      
+      LOGGER.log(Level.WARNING, "Cannot close connection: " + errorMessage);
       throw new SchemaCrawlerException(errorMessage, e);
     }
 
@@ -263,7 +268,8 @@ public abstract class BaseOperator
         if (operation.isAggregateOperation())
         {
           handleAggregateOperationForTable(table, results);
-        } else
+        }
+        else
         {
           handleOperationForTable(table, results);
         }
@@ -306,7 +312,7 @@ public abstract class BaseOperator
    *         On an exception
    */
   private void handleOperationForTable(final Table table,
-      final ResultSet results)
+                                       final ResultSet results)
     throws QueryExecutorException
   {
     dataHandler.handleTitle(table.getName());
@@ -324,7 +330,7 @@ public abstract class BaseOperator
    *         On an exception
    */
   private void handleAggregateOperationForTable(final Table table,
-      final ResultSet results)
+                                                final ResultSet results)
     throws SQLException
   {
     long aggregate = 0;
@@ -333,8 +339,8 @@ public abstract class BaseOperator
       aggregate = results.getLong(1);
     }
     final String message = getMessage(aggregate);
-    handleTable(tableCount, table.getName(), table.getType().toString(),
-        aggregate, message);
+    //
+    out.println(formattingHelper.createNameValueRow(table.getName(), message));
   }
 
   private String getMessage(final double aggregate)
@@ -344,33 +350,17 @@ public abstract class BaseOperator
     if (Utilities.isIntegral(aggregate))
     {
       number = new Integer((int) aggregate);
-    } else
+    }
+    else
     {
       number = new Double(aggregate);
     }
     final String message = MessageFormat.format(operation
-        .getCountMessageFormat(), new Object[]
-    { number });
+      .getCountMessageFormat(), new Object[] {
+      number
+    });
     return message;
   }
-
-  /**
-   * Prints information on the table.
-   * 
-   * @param ordinalPosition
-   *        Position of table in the schema
-   * @param tableName
-   *        Table name
-   * @param tableType
-   *        Table type
-   * @param count
-   *        Count
-   * @param message
-   *        Message to print
-   */
-  public abstract void handleTable(final int ordinalPosition,
-      final String tableName, final String tableType, final long count,
-      final String message);
 
   boolean getNoFooter()
   {

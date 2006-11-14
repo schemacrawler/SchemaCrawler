@@ -27,6 +27,7 @@ import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.tools.util.FormatUtils;
+import schemacrawler.tools.util.HtmlFormattingHelper;
 
 /**
  * 
@@ -34,10 +35,6 @@ import schemacrawler.tools.util.FormatUtils;
 final class OperatorHTMLOutput
   extends BaseOperator
 {
-
-  private static final String FIELD_BEGIN = "<td>";
-  private static final String FIELD_END = "</td>";
-  private static final String FIELD_SEPARATOR = "</td><td>";
 
   /**
    * Constructs a new table dropper.
@@ -48,10 +45,10 @@ final class OperatorHTMLOutput
    *        Database connection to use
    */
   OperatorHTMLOutput(final OperatorOptions options, final String query,
-      final Connection connection, final DataHandler dataHandler)
+                     final Connection connection, final DataHandler dataHandler)
     throws SchemaCrawlerException
   {
-    super(options, query, connection, dataHandler);
+    super(options, query, connection, dataHandler, new HtmlFormattingHelper());
   }
 
   /**
@@ -68,7 +65,7 @@ final class OperatorHTMLOutput
     }
     out.print("<table>");
     out.println("  <caption>" + getOperation().getOperationDescription()
-        + "</caption>");
+                + "</caption>");
   }
 
   /**
@@ -83,7 +80,7 @@ final class OperatorHTMLOutput
     if (!getNoFooter())
     {
       out.println("<pre id='tableCount'>" + getTableCount() + " tables"
-          + "</pre>");
+                  + "</pre>");
       out.println(FormatUtils.HTML_FOOTER);
     }
     super.end();
@@ -101,29 +98,6 @@ final class OperatorHTMLOutput
       out.println("</p>");
       out.flush();
     }
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.operation.BaseOperator#handleTable(int,
-   *      java.lang.String, java.lang.String, int, java.lang.String)
-   */
-  public void handleTable(final int ordinalPosition, final String tableName,
-      final String tableType, final long count, final String message)
-  {
-
-    out.print("<tr>");
-    out.print(FIELD_BEGIN);
-    out.print(tableName);
-    out.print(FIELD_SEPARATOR);
-    out.print("<div style=\"text-align: right\">");
-    out.print(message);
-    out.print("</div>");
-    out.print(FIELD_END);
-    out.print("</tr>");
-
-    out.println();
   }
 
 }

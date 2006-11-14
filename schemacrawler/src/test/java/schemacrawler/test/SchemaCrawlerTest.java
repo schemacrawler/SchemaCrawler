@@ -212,13 +212,15 @@ public class SchemaCrawlerTest
         }
       }
     }
+    if (!foundView) {
+      fail("No views found");
+    }
 
   }
 
   public void testColumns()
   {
 
-    final String schemaName = "PUBLIC";
     final String[][] columnNames =
     {
      { "CUSTOMER.ID", "CUSTOMER.FIRSTNAME", "CUSTOMER.LASTNAME",

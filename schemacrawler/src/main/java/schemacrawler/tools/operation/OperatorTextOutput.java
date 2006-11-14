@@ -25,17 +25,15 @@ import java.sql.Connection;
 
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.execute.DataHandler;
+import schemacrawler.tools.util.PlainTextFormattingHelper;
 import sf.util.Utilities;
 
 /**
  * 
  */
-final class OperatorPlainTextOutput
+final class OperatorTextOutput
   extends BaseOperator
 {
-
-  private static final int MESSAGE_WIDTH = 30;
-  private static final int MAX_TABLE_NAME_WIDTH = 36;
 
   /**
    * Constructs a new table dropper.
@@ -45,25 +43,13 @@ final class OperatorPlainTextOutput
    * @param connection
    *        Database connection to use
    */
-  OperatorPlainTextOutput(final OperatorOptions options, final String query,
-      final Connection connection, final DataHandler dataHandler)
+  OperatorTextOutput(final OperatorOptions options, final String query,
+                     final Connection connection, final DataHandler dataHandler)
     throws SchemaCrawlerException
   {
-    super(options, query, connection, dataHandler);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.operation.BaseOperator#handleTable(int,
-   *      java.lang.String, java.lang.String, int, java.lang.String)
-   */
-  public void handleTable(final int ordinalPosition, final String tableName,
-      final String tableType, final long count, final String message)
-  {
-    out.print(Utilities.padRight(tableName, MAX_TABLE_NAME_WIDTH));
-    out.print(Utilities.padLeft(message, MESSAGE_WIDTH));
-    out.println();
+    super(options, query, connection, dataHandler,
+          new PlainTextFormattingHelper(options.getOutputOptions()
+            .getOutputFormat()));
   }
 
   /**

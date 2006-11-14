@@ -56,7 +56,7 @@ public final class HtmlFormattingHelper
     row.addCell(new HtmlTableCell(2, "description", description));
     return row.toString();
   }
-
+  
   public String createNameValueRow(final String name, final String value)
   {
     HtmlTableRow row = new HtmlTableRow();
