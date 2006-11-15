@@ -44,8 +44,10 @@ final class OperatorHTMLOutput
    * @param connection
    *        Database connection to use
    */
-  OperatorHTMLOutput(final OperatorOptions options, final String query,
-                     final Connection connection, final DataHandler dataHandler)
+  OperatorHTMLOutput(final OperatorOptions options,
+                     final String query,
+                     final Connection connection,
+                     final DataHandler dataHandler)
     throws SchemaCrawlerException
   {
     super(options, query, connection, dataHandler, new HtmlFormattingHelper());
