@@ -73,7 +73,8 @@ abstract class AbstractRetriever
   }
 
   protected boolean belongsToSchema(final DatabaseObject dbObject,
-      final String catalog, final String schema)
+                                    final String catalog,
+                                    final String schema)
   {
     if (dbObject == null)
     {

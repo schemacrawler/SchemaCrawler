@@ -33,33 +33,44 @@ public final class Operation
 
   private static final long serialVersionUID = -5097434654628745480L;
 
-  public static final Operation COUNT = new Operation("COUNT", "Row Count",
-      "SELECT COUNT(*) FROM ${table}",
-      "{0,choice,0#empty|0<{0,number,integer} rows}");
+  public static final Operation COUNT = new Operation("COUNT",
+                                                      "Row Count",
+                                                      "SELECT COUNT(*) FROM ${table}",
+                                                      "{0,choice,0#empty|0<{0,number,integer} rows}");
 
-  public static final Operation DROP = new Operation("DROP", "Drop Table",
-      "DROP ${tabletype} ${table}", "dropped");
+  public static final Operation DROP = new Operation("DROP",
+                                                     "Drop Table",
+                                                     "DROP ${tabletype} ${table}",
+                                                     "dropped");
 
   public static final Operation TRUNCATE = new Operation("TRUNCATE",
-      "Truncate Table", "DELETE FROM ${table}",
-      "truncated; {0,choice,0#was already empty|0<had {0,number,integer} rows}");
+                                                         "Truncate Table",
+                                                         "DELETE FROM ${table}",
+                                                         "truncated; {0,choice,0#was already empty|0<had {0,number,integer} rows}");
 
-  public static final Operation DUMP = new Operation("DUMP", "Dump",
-      "SELECT ${columns} FROM ${table} ORDER BY ${columns}", "");
+  public static final Operation DUMP = new Operation("DUMP",
+                                                     "Dump",
+                                                     "SELECT ${columns} FROM ${table} ORDER BY ${columns}",
+                                                     "");
 
-  public static final Operation QUERYOVER = new Operation("QUERYOVER", "",
-      "Query Over Table", "{0,choice,0#-|0<{0,number,integer}}");
+  public static final Operation QUERYOVER = new Operation("QUERYOVER",
+                                                          "",
+                                                          "Query Over Table",
+                                                          "{0,choice,0#-|0<{0,number,integer}}");
 
-  private static final Operation[] OPERATION_ALL = new Operation[]
-  { COUNT, DROP, TRUNCATE, DUMP, QUERYOVER };
+  private static final Operation[] OPERATION_ALL = new Operation[] {
+      COUNT, DROP, TRUNCATE, DUMP, QUERYOVER
+  };
 
   private final transient String operation;
   private final transient String operationDescription;
   private final transient String query;
   private final transient String countMessageFormat;
 
-  private Operation(final String name, final String description,
-      final String query, final String countMessageFormat)
+  private Operation(final String name,
+                    final String description,
+                    final String query,
+                    final String countMessageFormat)
   {
     ordinal = nextOrdinal++;
     operation = name;

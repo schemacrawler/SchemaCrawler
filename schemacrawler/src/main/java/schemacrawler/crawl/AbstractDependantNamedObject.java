@@ -36,13 +36,13 @@ abstract class AbstractDependantNamedObject
 
   private NamedObject parent;
 
-  AbstractDependantNamedObject(String name, NamedObject parent)
+  AbstractDependantNamedObject(final String name, final NamedObject parent)
   {
     super(name);
     if (parent == null)
     {
       throw new IllegalArgumentException("Parent object not specified");
-    }    
+    }
     this.parent = parent;
   }
 

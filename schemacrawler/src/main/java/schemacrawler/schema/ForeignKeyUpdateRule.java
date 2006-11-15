@@ -33,14 +33,15 @@ public final class ForeignKeyUpdateRule
 
   private static final long serialVersionUID = 3256728394182833712L;
 
-  private static final ForeignKeyUpdateRule[] FK_UPDATE_RULE_ALL =
-  {
-   new ForeignKeyUpdateRule(DatabaseMetaData.importedKeyNoAction, "no action"),
-   new ForeignKeyUpdateRule(DatabaseMetaData.importedKeyCascade, "cascade"),
-   new ForeignKeyUpdateRule(DatabaseMetaData.importedKeySetNull, "set null"),
-   new ForeignKeyUpdateRule(DatabaseMetaData.importedKeySetDefault,
-       "set default"),
-   new ForeignKeyUpdateRule(DatabaseMetaData.importedKeyRestrict, "restrict"), };
+  private static final ForeignKeyUpdateRule[] FK_UPDATE_RULE_ALL = {
+      new ForeignKeyUpdateRule(DatabaseMetaData.importedKeyNoAction,
+                               "no action"),
+      new ForeignKeyUpdateRule(DatabaseMetaData.importedKeyCascade, "cascade"),
+      new ForeignKeyUpdateRule(DatabaseMetaData.importedKeySetNull, "set null"),
+      new ForeignKeyUpdateRule(DatabaseMetaData.importedKeySetDefault,
+                               "set default"),
+      new ForeignKeyUpdateRule(DatabaseMetaData.importedKeyRestrict, "restrict"),
+  };
 
   /**
    * Find the enumeration value corresponding to the string.
@@ -88,7 +89,7 @@ public final class ForeignKeyUpdateRule
   private final transient int id;
 
   private ForeignKeyUpdateRule(final int foreignKeyUpdateRuleId,
-      final String foreignKeyUpdateRuleName)
+                               final String foreignKeyUpdateRuleName)
   {
     ordinal = nextOrdinal++;
     id = foreignKeyUpdateRuleId;

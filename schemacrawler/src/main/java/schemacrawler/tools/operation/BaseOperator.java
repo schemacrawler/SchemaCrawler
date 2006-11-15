@@ -74,8 +74,10 @@ public abstract class BaseOperator
    * @param connection
    *        Database connection to use
    */
-  BaseOperator(final OperatorOptions options, final String query,
-               final Connection connection, final DataHandler dataHandler,
+  BaseOperator(final OperatorOptions options,
+               final String query,
+               final Connection connection,
+               final DataHandler dataHandler,
                final TextFormattingHelper formattingHelper)
     throws SchemaCrawlerException
   {
@@ -106,7 +108,7 @@ public abstract class BaseOperator
     {
       throw new SchemaCrawlerException("No query provided");
     }
-    
+
     this.formattingHelper = formattingHelper;
 
     try
@@ -254,7 +256,7 @@ public abstract class BaseOperator
     tableCount++;
 
     // Create sql
-    String sql = CrawlerUtililties.expandSqlForTable(query, table);
+    final String sql = CrawlerUtililties.expandSqlForTable(query, table);
     LOGGER.fine("Executing: " + sql);
 
     ResultSet results = null;

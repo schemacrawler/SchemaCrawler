@@ -33,11 +33,12 @@ public final class IndexType
 
   private static final long serialVersionUID = 3258693221411599160L;
 
-  private static final IndexType[] ALL =
-  { new IndexType(DatabaseMetaData.tableIndexStatistic, "statistic"),
-   new IndexType(DatabaseMetaData.tableIndexClustered, "clustered"),
-   new IndexType(DatabaseMetaData.tableIndexHashed, "hashed"),
-   new IndexType(DatabaseMetaData.tableIndexOther, "other"), };
+  private static final IndexType[] ALL = {
+      new IndexType(DatabaseMetaData.tableIndexStatistic, "statistic"),
+      new IndexType(DatabaseMetaData.tableIndexClustered, "clustered"),
+      new IndexType(DatabaseMetaData.tableIndexHashed, "hashed"),
+      new IndexType(DatabaseMetaData.tableIndexOther, "other"),
+  };
 
   private final transient int id;
   private final transient String name;

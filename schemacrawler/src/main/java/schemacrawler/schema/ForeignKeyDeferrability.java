@@ -31,14 +31,14 @@ public final class ForeignKeyDeferrability
   implements EnumType
 {
 
-  private static final ForeignKeyDeferrability[] FOREIGN_KEY_DEFERRABILITY_ALL =
-  {
-   new ForeignKeyDeferrability(DatabaseMetaData.importedKeyInitiallyDeferred,
-       "initially deferred"),
-   new ForeignKeyDeferrability(DatabaseMetaData.importedKeyInitiallyImmediate,
-       "initially immediate"),
-   new ForeignKeyDeferrability(DatabaseMetaData.importedKeyNotDeferrable,
-       "not deferrable"), };
+  private static final ForeignKeyDeferrability[] FOREIGN_KEY_DEFERRABILITY_ALL = {
+      new ForeignKeyDeferrability(DatabaseMetaData.importedKeyInitiallyDeferred,
+                                  "initially deferred"),
+      new ForeignKeyDeferrability(DatabaseMetaData.importedKeyInitiallyImmediate,
+                                  "initially immediate"),
+      new ForeignKeyDeferrability(DatabaseMetaData.importedKeyNotDeferrable,
+                                  "not deferrable"),
+  };
 
   // The declarations below are necessary for serialization
   private static int nextOrdinal;
@@ -79,8 +79,8 @@ public final class ForeignKeyDeferrability
     ForeignKeyDeferrability fkDeferrability = null;
     for (int i = 0; i < FOREIGN_KEY_DEFERRABILITY_ALL.length; i++)
     {
-      if (FOREIGN_KEY_DEFERRABILITY_ALL[i].getName().equalsIgnoreCase(
-          fkDeferrabilityName))
+      if (FOREIGN_KEY_DEFERRABILITY_ALL[i].getName()
+        .equalsIgnoreCase(fkDeferrabilityName))
       {
         fkDeferrability = FOREIGN_KEY_DEFERRABILITY_ALL[i];
         break;

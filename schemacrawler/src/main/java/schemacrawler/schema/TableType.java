@@ -36,18 +36,23 @@ public final class TableType
   public static final TableType TABLE = new TableType("TABLE");
   public static final TableType VIEW = new TableType("VIEW");
   public static final TableType SYSTEM_TABLE = new TableType("SYSTEM_TABLE");
-  public static final TableType GLOBAL_TEMPORARY = new TableType(
-      "GLOBAL_TEMPORARY");
-  public static final TableType LOCAL_TEMPORARY = new TableType(
-      "LOCAL_TEMPORARY");
+  public static final TableType GLOBAL_TEMPORARY = new TableType("GLOBAL_TEMPORARY");
+  public static final TableType LOCAL_TEMPORARY = new TableType("LOCAL_TEMPORARY");
   public static final TableType ALIAS = new TableType("ALIAS");
   public static final TableType SYNONYM = new TableType("SYNONYM");
 
   private static final long serialVersionUID = 3546925783735220534L;
 
-  private static final TableType[] ALL =
-  { UNKNOWN, TABLE, VIEW, SYSTEM_TABLE, GLOBAL_TEMPORARY, LOCAL_TEMPORARY,
-   ALIAS, SYNONYM, };
+  private static final TableType[] ALL = {
+      UNKNOWN,
+      TABLE,
+      VIEW,
+      SYSTEM_TABLE,
+      GLOBAL_TEMPORARY,
+      LOCAL_TEMPORARY,
+      ALIAS,
+      SYNONYM,
+  };
 
   private final int id;
   private final String name;
@@ -187,7 +192,7 @@ public final class TableType
     }
 
     return (String[]) tableTypeStrings.toArray(new String[tableTypeStrings
-        .size()]);
+      .size()]);
   }
 
   // The 4 declarations below are necessary for serialization

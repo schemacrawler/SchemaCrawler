@@ -49,9 +49,9 @@ public abstract class BaseDataTextFormatter
   implements DataHandler
 {
 
-  private static final Logger LOGGER = Logger.getLogger(BaseDataTextFormatter.class
-                                                        .getName());
-  
+  private static final Logger LOGGER = Logger
+    .getLogger(BaseDataTextFormatter.class.getName());
+
   private static final String BINARY = "<binary>";
 
   protected final PrintWriter out;
@@ -108,7 +108,8 @@ public abstract class BaseDataTextFormatter
       if (options.isMergeRows() && columnCount > 1)
       {
         iterateRowsAndMerge(rows, columnNames);
-      } else
+      }
+      else
       {
         iterateRows(rows, columnNames);
       }
@@ -129,7 +130,7 @@ public abstract class BaseDataTextFormatter
    * @throws QueryExecutorException
    */
   private void iterateRowsAndMerge(final ResultSet rows,
-      final String[] columnNames)
+                                   final String[] columnNames)
     throws SQLException, QueryExecutorException
   {
     final int columnCount = columnNames.length;
@@ -151,12 +152,13 @@ public abstract class BaseDataTextFormatter
       if (currentRow.equals(previousRow))
       {
         currentRowLastColumn.append(lastColumnDataString);
-      } else
+      }
+      else
       {
         // At this point, we have a new row coming in, so dump the
         // previous merged row out
         doHandleOneRow(columnNames, previousRow, currentRowLastColumn
-            .toString());
+          .toString());
         // reset
         currentRowLastColumn = new StringBuffer();
         // save the last column
@@ -175,14 +177,16 @@ public abstract class BaseDataTextFormatter
     if (columnData == null)
     {
       columnDataString = "<null>";
-    } else if (columnData instanceof Clob || columnData instanceof Blob)
+    }
+    else if (columnData instanceof Clob || columnData instanceof Blob)
     {
       columnDataString = BINARY;
       if (options.isShowLobs())
       {
         columnDataString = readLob(columnData);
       }
-    } else
+    }
+    else
     {
       columnDataString = columnData.toString();
     }
@@ -207,7 +211,8 @@ public abstract class BaseDataTextFormatter
       {
         final Blob blob = (Blob) columnData;
         in = new BufferedInputStream(blob.getBinaryStream());
-      } else if (columnData instanceof Clob)
+      }
+      else if (columnData instanceof Clob)
       {
         final Clob clob = (Clob) columnData;
         in = new BufferedInputStream(clob.getAsciiStream());
@@ -222,8 +227,9 @@ public abstract class BaseDataTextFormatter
 
   }
 
-  private void doHandleOneRow(final String[] columnNames, final List row,
-      final String lastColumnData)
+  private void doHandleOneRow(final String[] columnNames,
+                              final List row,
+                              final String lastColumnData)
     throws QueryExecutorException
   {
     if (row.size() == 0)
@@ -235,7 +241,7 @@ public abstract class BaseDataTextFormatter
     outputRow.addAll(row);
     outputRow.add(lastColumnData);
     final String[] columnData = (String[]) outputRow
-        .toArray(new String[outputRow.size()]);
+      .toArray(new String[outputRow.size()]);
     handleRow(columnNames, columnData);
   }
 
@@ -255,7 +261,7 @@ public abstract class BaseDataTextFormatter
         currentRow.add(columnDataString);
       }
       final String[] columnData = (String[]) currentRow
-          .toArray(new String[currentRow.size()]);
+        .toArray(new String[currentRow.size()]);
       handleRow(columnNames, columnData);
     }
   }
@@ -315,7 +321,7 @@ public abstract class BaseDataTextFormatter
    *         On an exception
    */
   public abstract void handleRow(final String[] columnNames,
-      final String[] columnData)
+                                 final String[] columnData)
     throws QueryExecutorException;
 
   /**

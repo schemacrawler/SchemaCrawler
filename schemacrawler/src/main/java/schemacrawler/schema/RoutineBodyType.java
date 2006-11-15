@@ -33,11 +33,11 @@ public final class RoutineBodyType
   private static final long serialVersionUID = 6162604444140905085L;
 
   private static final RoutineBodyType SQL = new RoutineBodyType("SQL");
-  private static final RoutineBodyType EXTERNAL = new RoutineBodyType(
-      "EXTERNAL");
+  private static final RoutineBodyType EXTERNAL = new RoutineBodyType("EXTERNAL");
 
-  private static final RoutineBodyType[] ALL =
-  { SQL, EXTERNAL, };
+  private static final RoutineBodyType[] ALL = {
+      SQL, EXTERNAL,
+  };
 
   private final int id;
   private final String name;

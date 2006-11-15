@@ -38,7 +38,7 @@ class MutableCheckConstraint
   private boolean initiallyDeferred;
   private String definition;
 
-  MutableCheckConstraint(String name, NamedObject parent)
+  MutableCheckConstraint(final String name, final NamedObject parent)
   {
     super(name, parent);
   }

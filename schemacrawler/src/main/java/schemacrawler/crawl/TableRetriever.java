@@ -54,7 +54,7 @@ final class TableRetriever
 {
 
   private static final Logger LOGGER = Logger.getLogger(TableRetriever.class
-      .getName());
+    .getName());
 
   /**
    * Constructs a SchemaCrawler object, from a connection.
@@ -90,18 +90,20 @@ final class TableRetriever
    *         On a SQL exception
    */
   NamedObjectList retrieveTables(final TableType[] tableTypes,
-      final InclusionRule tableInclusionRule)
+                                 final InclusionRule tableInclusionRule)
     throws SQLException
   {
-    LOGGER.entering(getClass().getName(), "retrieveTables", new Object[]
-    { tableTypes, tableInclusionRule });
+    LOGGER.entering(getClass().getName(), "retrieveTables", new Object[] {
+        tableTypes, tableInclusionRule
+    });
 
-    final NamedObjectList tables = new NamedObjectList(
-        new AlphabeticalSortComparator());
-    String catalog = getRetrieverConnection().getCatalog();
-    final ResultSet results = getRetrieverConnection().getMetaData().getTables(
-        catalog, getRetrieverConnection().getSchemaPattern(), "%",
-        TableType.toStringArray(tableTypes));
+    final NamedObjectList tables = new NamedObjectList(new AlphabeticalSortComparator());
+    final String catalog = getRetrieverConnection().getCatalog();
+    final ResultSet results = getRetrieverConnection().getMetaData()
+      .getTables(catalog,
+                 getRetrieverConnection().getSchemaPattern(),
+                 "%",
+                 TableType.toStringArray(tableTypes));
     try
     {
       results.setFetchSize(FETCHSIZE);
@@ -121,7 +123,7 @@ final class TableRetriever
         final String tableName = results.getString(TABLE_NAME);
         LOGGER.log(Level.FINEST, "Retrieving table: " + tableName);
         final TableType tableType = TableType.valueOf(results
-            .getString("TABLE_TYPE"));
+          .getString("TABLE_TYPE"));
         final String remarks = results.getString(REMARKS);
 
         if (tableInclusionRule.include(tableName))
@@ -130,7 +132,8 @@ final class TableRetriever
           if (tableType.isView())
           {
             table = new MutableView(catalog, schema, tableName);
-          } else
+          }
+          else
           {
             table = new MutableTable(catalog, schema, tableName);
           }
@@ -160,16 +163,19 @@ final class TableRetriever
    *         On a SQL exception
    */
   void retrieveColumns(final MutableTable table,
-      final InclusionRule columnInclusionRule,
-      final NamedObjectList columnDataTypes)
+                       final InclusionRule columnInclusionRule,
+                       final NamedObjectList columnDataTypes)
     throws SQLException
   {
-    LOGGER.entering(getClass().getName(), "retrieveColumns", new Object[]
-    { table, columnInclusionRule });
+    LOGGER.entering(getClass().getName(), "retrieveColumns", new Object[] {
+        table, columnInclusionRule
+    });
 
     final ResultSet results = getRetrieverConnection().getMetaData()
-        .getColumns(getRetrieverConnection().getCatalog(),
-            table.getSchemaName(), table.getName(), null);
+      .getColumns(getRetrieverConnection().getCatalog(),
+                  table.getSchemaName(),
+                  table.getName(),
+                  null);
     try
     {
       while (results.next())
@@ -215,15 +221,16 @@ final class TableRetriever
 
   }
 
-  void retrieveIndices(final MutableTable table, final boolean unique,
-      final boolean approximate)
+  void retrieveIndices(final MutableTable table,
+                       final boolean unique,
+                       final boolean approximate)
     throws SQLException
   {
 
     final Map indicesMap = new HashMap();
 
-    InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-        .getInformationSchemaViews();
+    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
+      .getInformationSchemaViews();
 
     ResultSet results = null;
     if (informationSchemaViews.hasIndexInfoSql())
@@ -231,17 +238,21 @@ final class TableRetriever
       String indexInfoSql = informationSchemaViews.getIndexInfoSql();
       indexInfoSql = CrawlerUtililties.expandSqlForTable(indexInfoSql, table);
       LOGGER.log(Level.FINE, "Using getIndexInfo SQL:" + Utilities.NEWLINE
-          + indexInfoSql);
+                             + indexInfoSql);
       final Connection connection = getRetrieverConnection().getMetaData()
-          .getConnection();
+        .getConnection();
       final Statement statement = connection.createStatement();
       results = statement.executeQuery(indexInfoSql);
-    } else
+    }
+    else
     {
       LOGGER.log(Level.FINE, "Using getIndexInfo()");
-      results = getRetrieverConnection().getMetaData().getIndexInfo(
-          getRetrieverConnection().getCatalog(), table.getSchemaName(),
-          table.getName(), unique, approximate);
+      results = getRetrieverConnection().getMetaData()
+        .getIndexInfo(getRetrieverConnection().getCatalog(),
+                      table.getSchemaName(),
+                      table.getName(),
+                      unique,
+                      approximate);
     }
     createIndices(results, table, indicesMap);
 
@@ -258,7 +269,8 @@ final class TableRetriever
   }
 
   private static void createIndices(final ResultSet results,
-      final MutableTable table, final Map indicesMap)
+                                    final MutableTable table,
+                                    final Map indicesMap)
     throws SQLException
   {
     try
@@ -289,7 +301,7 @@ final class TableRetriever
         final int pages = results.getInt("PAGES");
 
         final MutableColumn column = (MutableColumn) table
-            .lookupColumn(columnName);
+          .lookupColumn(columnName);
         if (column != null)
         {
           index.addColumn(ordinalPosition, column);
@@ -297,7 +309,7 @@ final class TableRetriever
           column.setPartOfUniqueIndex(uniqueIndex);
           index.setType(IndexType.valueOf(type));
           index
-              .setSortSequence(IndexSortSequence.valueOfFromCode(sortSequence));
+            .setSortSequence(IndexSortSequence.valueOfFromCode(sortSequence));
           index.setCardinality(cardinality);
           index.setPages(pages);
         }
@@ -349,7 +361,9 @@ final class TableRetriever
    * @throws SQLException
    */
   private static void createForeignKeys(final ResultSet results,
-      final Map tablesMap, final MutableTable table, final Map foreignKeysMap)
+                                        final Map tablesMap,
+                                        final MutableTable table,
+                                        final Map foreignKeysMap)
     throws SQLException
   {
 
@@ -363,11 +377,11 @@ final class TableRetriever
           foreignKeyName = UNKNOWN;
         }
         MutableForeignKey foreignKey = (MutableForeignKey) foreignKeysMap
-            .get(foreignKeyName);
+          .get(foreignKeyName);
         if (foreignKey == null)
         {
-          foreignKey = new MutableForeignKey(table
-              .getCatalogName(), table.getSchemaName(), foreignKeyName);
+          foreignKey = new MutableForeignKey(table.getCatalogName(), table
+            .getSchemaName(), foreignKeyName);
           foreignKeysMap.put(foreignKeyName, foreignKey);
         }
         final String pkTableName = results.getString("PKTABLE_NAME");
@@ -379,16 +393,18 @@ final class TableRetriever
         final int deleteRule = results.getInt("DELETE_RULE");
         final int deferrability = results.getInt("DEFERRABILITY");
         final MutableColumn pkColumn = lookupOrCreateColumn(tablesMap,
-            pkTableName, pkColumnName);
+                                                            pkTableName,
+                                                            pkColumnName);
         final MutableColumn fkColumn = lookupOrCreateColumn(tablesMap,
-            fkTableName, fkColumnName);
+                                                            fkTableName,
+                                                            fkColumnName);
         foreignKey.addColumnPair(keySequence, pkColumn, fkColumn);
         foreignKey
-            .setUpdateRule(ForeignKeyUpdateRule.valueOfFromId(updateRule));
+          .setUpdateRule(ForeignKeyUpdateRule.valueOfFromId(updateRule));
         foreignKey
-            .setDeleteRule(ForeignKeyUpdateRule.valueOfFromId(deleteRule));
+          .setDeleteRule(ForeignKeyUpdateRule.valueOfFromId(deleteRule));
         foreignKey.setDeferrability(ForeignKeyDeferrability
-            .valueOfFromId(deferrability));
+          .valueOfFromId(deferrability));
       }
     }
     finally
@@ -399,7 +415,8 @@ final class TableRetriever
   }
 
   private static MutableColumn lookupOrCreateColumn(final Map tablesMap,
-      final String tableName, final String columnName)
+                                                    final String tableName,
+                                                    final String columnName)
   {
 
     MutableColumn column = null;
@@ -431,8 +448,10 @@ final class TableRetriever
     ResultSet results = null;
     try
     {
-      results = getRetrieverConnection().getMetaData().getPrimaryKeys(
-          getRetrieverConnection().getCatalog(), schema, tableName);
+      results = getRetrieverConnection().getMetaData()
+        .getPrimaryKeys(getRetrieverConnection().getCatalog(),
+                        schema,
+                        tableName);
       MutablePrimaryKey primaryKey = null;
       while (results.next())
       {
@@ -445,7 +464,7 @@ final class TableRetriever
         final int keySequence = Integer.parseInt(results.getString(KEY_SEQ));
         // register primary key information
         final MutableColumn column = (MutableColumn) table
-            .lookupColumn(columnName);
+          .lookupColumn(columnName);
         if (column != null)
         {
           column.setPartOfPrimaryKey(true);

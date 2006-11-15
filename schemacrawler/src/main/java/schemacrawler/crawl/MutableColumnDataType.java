@@ -94,7 +94,7 @@ final class MutableColumnDataType
   private ColumnDataType baseType;
   private String typeClassName;
 
-  MutableColumnDataType(String name)
+  MutableColumnDataType(final String name)
   {
     super(name);
   }

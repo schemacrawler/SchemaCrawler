@@ -37,20 +37,22 @@ public class PlainTextFormattingHelper
 
   public String createDefinitionRow(final String definition)
   {
-    StringBuffer row = new StringBuffer();
+    final StringBuffer row = new StringBuffer();
     row.append(getFieldSeparator());
     row.append(definition);
     return row.toString();
   }
 
-  public String createDetailRow(String ordinal, final String subName,
-                                final String type, final String remarks)
+  public String createDetailRow(final String ordinal,
+                                final String subName,
+                                final String type,
+                                final String remarks)
   {
     final int REMARKS_WIDTH = 5;
     final int SUB_NAME_WIDTH = 32;
     final int TYPE_WIDTH = 23;
 
-    StringBuffer row = new StringBuffer();
+    final StringBuffer row = new StringBuffer();
     row.append(getFieldSeparator());
     if (!Utilities.isBlank(ordinal))
     {
@@ -75,7 +77,7 @@ public class PlainTextFormattingHelper
     final int NAME_WIDTH = 36;
     final int DESCRIPTION_WIDTH = 34;
 
-    StringBuffer row = new StringBuffer();
+    final StringBuffer row = new StringBuffer();
     row.append(format(name, NAME_WIDTH, true));
     row.append(getFieldSeparator());
     row.append(format(description, DESCRIPTION_WIDTH, false));
@@ -86,7 +88,7 @@ public class PlainTextFormattingHelper
   {
     final int NAME_WIDTH = 36;
 
-    StringBuffer row = new StringBuffer();
+    final StringBuffer row = new StringBuffer();
     row.append(format(name, NAME_WIDTH, true));
     row.append(getFieldSeparator());
     row.append(value);
@@ -116,7 +118,8 @@ public class PlainTextFormattingHelper
    * @see schemacrawler.tools.util.TextFormattingFunctor#format(java.lang.String,
    *      int, boolean)
    */
-  private String format(final String text, final int maxWidth,
+  private String format(final String text,
+                        final int maxWidth,
                         final boolean alignLeft)
   {
     if (outputFormat == OutputFormat.CSV)

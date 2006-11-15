@@ -41,7 +41,9 @@ class MutableView
   private CheckOptionType checkOption;
   private boolean updatable;
 
-  MutableView(String catalogName, String schemaName, String name)
+  MutableView(final String catalogName,
+              final String schemaName,
+              final String name)
   {
     super(catalogName, schemaName, name);
   }

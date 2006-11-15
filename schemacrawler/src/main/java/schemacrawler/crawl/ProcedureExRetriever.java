@@ -42,7 +42,7 @@ final class ProcedureExRetriever
 {
 
   private static final Logger LOGGER = Logger
-      .getLogger(ProcedureExRetriever.class.getName());
+    .getLogger(ProcedureExRetriever.class.getName());
 
   /**
    * Constructs a SchemaCrawler object, from a connection.
@@ -73,23 +73,23 @@ final class ProcedureExRetriever
   void retrieveProcedureInformation(final NamedObjectList procedures)
     throws SQLException
   {
-    LOGGER.entering(getClass().getName(), "retrieveProcedureInformation",
-        new Object[]
-        {});
+    LOGGER.entering(getClass().getName(),
+                    "retrieveProcedureInformation",
+                    new Object[] {});
 
-    InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-        .getInformationSchemaViews();
+    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
+      .getInformationSchemaViews();
     if (!informationSchemaViews.hasRoutinesSql())
     {
       LOGGER.log(Level.FINE,
-          "Procedure definition SQL statement was not provided");
+                 "Procedure definition SQL statement was not provided");
       return;
     }
     final String procedureDefinitionsSql = informationSchemaViews
-        .getRoutinesSql();
+      .getRoutinesSql();
 
     final Connection connection = getRetrieverConnection().getMetaData()
-        .getConnection();
+      .getConnection();
     final Statement statement = connection.createStatement();
     final ResultSet results = statement.executeQuery(procedureDefinitionsSql);
 
@@ -102,13 +102,13 @@ final class ProcedureExRetriever
         final String schema = results.getString("ROUTINE_SCHEMA");
         final String procedureName = results.getString("ROUTINE_NAME");
         LOGGER.log(Level.FINEST, "Retrieving procedure information for "
-            + procedureName);
+                                 + procedureName);
         final RoutineBodyType routineBodyType = RoutineBodyType.valueOf(results
-            .getString("ROUTINE_BODY"));
+          .getString("ROUTINE_BODY"));
         String definition = results.getString("ROUTINE_DEFINITION");
 
         final MutableProcedure procedure = (MutableProcedure) procedures
-            .lookup(procedureName);
+          .lookup(procedureName);
         if (!belongsToSchema(procedure, catalog, schema))
         {
           LOGGER.log(Level.FINEST, "Procedure not found: " + procedureName);

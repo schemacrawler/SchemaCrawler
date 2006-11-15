@@ -42,7 +42,7 @@ abstract class AbstractColumn
   private int decimalDigits;
   private boolean nullable;
 
-  AbstractColumn(String name, NamedObject parent)
+  AbstractColumn(final String name, final NamedObject parent)
   {
     super(name, parent);
   }

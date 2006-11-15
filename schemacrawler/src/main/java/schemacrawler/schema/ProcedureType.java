@@ -33,12 +33,14 @@ public final class ProcedureType
 
   private static final long serialVersionUID = 3545517287747366960L;
 
-  private static final ProcedureType[] ALL =
-  {
-   new ProcedureType(DatabaseMetaData.procedureResultUnknown, "<unknown>"),
-   new ProcedureType(DatabaseMetaData.procedureResultUnknown, "result unknown"),
-   new ProcedureType(DatabaseMetaData.procedureNoResult, "no result"),
-   new ProcedureType(DatabaseMetaData.procedureReturnsResult, "returns result"), };
+  private static final ProcedureType[] ALL = {
+      new ProcedureType(DatabaseMetaData.procedureResultUnknown, "<unknown>"),
+      new ProcedureType(DatabaseMetaData.procedureResultUnknown,
+                        "result unknown"),
+      new ProcedureType(DatabaseMetaData.procedureNoResult, "no result"),
+      new ProcedureType(DatabaseMetaData.procedureReturnsResult,
+                        "returns result"),
+  };
 
   private final transient int id;
   private final transient String name;

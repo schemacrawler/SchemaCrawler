@@ -26,8 +26,10 @@ public interface TextFormattingHelper
 
   String createDefinitionRow(final String definition);
 
-  String createDetailRow(String ordinal, final String subName,
-                         final String type, final String remarks);
+  String createDetailRow(String ordinal,
+                         final String subName,
+                         final String type,
+                         final String remarks);
 
   String createEmptyRow();
 
@@ -36,5 +38,5 @@ public interface TextFormattingHelper
   String createNameValueRow(final String name, final String value);
 
   String createSeparatorRow();
-  
+
 }

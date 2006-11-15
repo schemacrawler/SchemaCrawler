@@ -35,22 +35,21 @@ public final class TextOutputFormatType
   /**
    * Text formatting.
    */
-  public static final TextOutputFormatType TEXT = new TextOutputFormatType(
-      "text");
+  public static final TextOutputFormatType TEXT = new TextOutputFormatType("text");
 
   /**
    * HTML formatting.
    */
-  public static final TextOutputFormatType HTML = new TextOutputFormatType(
-      "html");
+  public static final TextOutputFormatType HTML = new TextOutputFormatType("html");
 
   /**
    * CSV formatting.
    */
   public static final TextOutputFormatType CSV = new TextOutputFormatType("csv");
 
-  private static final TextOutputFormatType[] TEXT_FORMAT_TYPE_ALL =
-  { TEXT, HTML, CSV };
+  private static final TextOutputFormatType[] TEXT_FORMAT_TYPE_ALL = {
+      TEXT, HTML, CSV
+  };
 
   private final String name;
 
@@ -83,8 +82,8 @@ public final class TextOutputFormatType
 
     for (int i = 0; i < TEXT_FORMAT_TYPE_ALL.length; i++)
     {
-      if (TEXT_FORMAT_TYPE_ALL[i].toString().equalsIgnoreCase(
-          outputFormatTypeString))
+      if (TEXT_FORMAT_TYPE_ALL[i].toString()
+        .equalsIgnoreCase(outputFormatTypeString))
       {
         outputFormatType = TEXT_FORMAT_TYPE_ALL[i];
         break;

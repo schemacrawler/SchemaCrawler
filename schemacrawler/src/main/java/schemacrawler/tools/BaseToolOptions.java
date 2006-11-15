@@ -38,7 +38,7 @@ public abstract class BaseToolOptions
    * Data text formatting options from properties.
    * 
    * @param outputOptions
-   *        Output options
+   *          Output options
    */
   public BaseToolOptions(final OutputOptions outputOptions)
   {

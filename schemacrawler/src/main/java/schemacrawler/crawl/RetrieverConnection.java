@@ -42,7 +42,7 @@ final class RetrieverConnection
 {
 
   private static final Logger LOGGER = Logger
-      .getLogger(RetrieverConnection.class.getName());
+    .getLogger(RetrieverConnection.class.getName());
 
   private DatabaseMetaData metaData;
   private String catalog;
@@ -51,7 +51,7 @@ final class RetrieverConnection
   private InformationSchemaViews informationSchemaViews;
 
   RetrieverConnection(final DataSource dataSource,
-      final Properties additionalConfiguration)
+                      final Properties additionalConfiguration)
     throws SchemaCrawlerException
   {
     if (dataSource == null)
@@ -67,7 +67,8 @@ final class RetrieverConnection
     catch (final SQLException e)
     {
       final String errorMessage = e.getMessage();
-      LOGGER.log(Level.WARNING, "Could not obtain database metadata: " + errorMessage);      
+      LOGGER.log(Level.WARNING, "Could not obtain database metadata: "
+                                + errorMessage);
       throw new SchemaCrawlerException(errorMessage, e);
     }
 
@@ -75,10 +76,11 @@ final class RetrieverConnection
     {
       final PropertiesDataSource propertiesDataSource = (PropertiesDataSource) dataSource;
       catalog = propertiesDataSource.getCatalog();
-      schemaPattern = propertiesDataSource.getSourceProperties().getProperty(
-          "schemapattern");
+      schemaPattern = propertiesDataSource.getSourceProperties()
+        .getProperty("schemapattern");
       jdbcDriverClassName = propertiesDataSource.getJdbcDriverClass();
-    } else
+    }
+    else
     {
       try
       {
@@ -86,7 +88,7 @@ final class RetrieverConnection
         // NOTE: schemaPattern remains null, which is ok for JDBC
         schemaPattern = null;
         jdbcDriverClassName = DriverManager.getDriver(metaData.getURL())
-            .getClass().getName();
+          .getClass().getName();
       }
       catch (final SQLException e)
       {

@@ -33,7 +33,7 @@ import sf.util.Utilities;
  */
 public final class FormatUtils
 {
-  
+
   /**
    * Internal storage for information. Read from text file.
    */
@@ -44,28 +44,37 @@ public final class FormatUtils
     final byte[] text = Utilities.readFully(FormatUtils.class
       .getResourceAsStream("/schemacrawler-output.css"));
     styleSheet = new String(text);
-  }  
+  }
 
   /**
    * HTML footer.
    */
   public static final String HTML_FOOTER = "</body>" + Utilities.NEWLINE
-      + "</html>";
+                                           + "</html>";
   /**
    * HTML header.
    */
   public static final String HTML_HEADER = ""
-      + "<?xml version='1.0' encoding='UTF-8'?>" + Utilities.NEWLINE
-      + "<!DOCTYPE html" + Utilities.NEWLINE
-      + "     PUBLIC \"-//W3C//DTD HTML 4.01 Strict//EN\"" + Utilities.NEWLINE
-      + "    \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"
-      + Utilities.NEWLINE + "<html xmlns='http://www.w3.org/1999/xhtml'>"
-      + Utilities.NEWLINE + "<head>" + Utilities.NEWLINE
-      + "  <title>SchemaCrawler Output</title>" + Utilities.NEWLINE
-      + "  <style type='text/css'>" + Utilities.NEWLINE
-      + styleSheet + Utilities.NEWLINE + "  " +
-          "</style>" + Utilities.NEWLINE
-      + "</head>" + Utilities.NEWLINE + "<body>" + Utilities.NEWLINE;
+                                           + "<?xml version='1.0' encoding='UTF-8'?>"
+                                           + Utilities.NEWLINE
+                                           + "<!DOCTYPE html"
+                                           + Utilities.NEWLINE
+                                           + "     PUBLIC \"-//W3C//DTD HTML 4.01 Strict//EN\""
+                                           + Utilities.NEWLINE
+                                           + "    \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"
+                                           + Utilities.NEWLINE
+                                           + "<html xmlns='http://www.w3.org/1999/xhtml'>"
+                                           + Utilities.NEWLINE
+                                           + "<head>"
+                                           + Utilities.NEWLINE
+                                           + "  <title>SchemaCrawler Output</title>"
+                                           + Utilities.NEWLINE
+                                           + "  <style type='text/css'>"
+                                           + Utilities.NEWLINE + styleSheet
+                                           + Utilities.NEWLINE + "  "
+                                           + "</style>" + Utilities.NEWLINE
+                                           + "</head>" + Utilities.NEWLINE
+                                           + "<body>" + Utilities.NEWLINE;
 
   private static final char QUOTE = '\"';
   private static final char SEPARATOR = ',';
@@ -112,7 +121,8 @@ public final class FormatUtils
           if (c == QUOTE)
           {
             sb.append("\\" + QUOTE);
-          } else
+          }
+          else
           {
             sb.append(c);
           }
@@ -154,7 +164,8 @@ public final class FormatUtils
       if (c == QUOTE)
       {
         sb.append(QUOTE + QUOTE);
-      } else
+      }
+      else
       {
         sb.append(c);
       }
@@ -181,7 +192,7 @@ public final class FormatUtils
    *        Output writer
    */
   public static void printDatabaseInfo(final DatabaseInfo databaseInfo,
-      final PrintWriter out)
+                                       final PrintWriter out)
   {
     out.println(Utilities.repeat("-", MAX_LINE_LENGTH));
     out.println(databaseInfo.toString());

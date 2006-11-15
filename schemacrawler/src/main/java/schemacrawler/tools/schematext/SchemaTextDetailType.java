@@ -39,28 +39,29 @@ public final class SchemaTextDetailType
    * No column detail.
    */
   public static final SchemaTextDetailType BRIEF = new SchemaTextDetailType(0,
-      "brief_schema");
+                                                                            "brief_schema");
 
   /**
    * Basic column detail.
    */
   public static final SchemaTextDetailType BASIC = new SchemaTextDetailType(1,
-      "basic_schema");
+                                                                            "basic_schema");
 
   /**
    * Verbose column detail, without table and column numbers.
    */
-  public static final SchemaTextDetailType VERBOSE = new SchemaTextDetailType(
-      2, "verbose_schema");
+  public static final SchemaTextDetailType VERBOSE = new SchemaTextDetailType(2,
+                                                                              "verbose_schema");
 
   /**
    * Verbose column detail, without table and column numbers.
    */
-  public static final SchemaTextDetailType MAXIMUM = new SchemaTextDetailType(
-      3, "maximum_schema");
+  public static final SchemaTextDetailType MAXIMUM = new SchemaTextDetailType(3,
+                                                                              "maximum_schema");
 
-  private static final SchemaTextDetailType[] TEXT_FORMAT_TYPE_ALL =
-  { BRIEF, BASIC, VERBOSE, MAXIMUM, };
+  private static final SchemaTextDetailType[] TEXT_FORMAT_TYPE_ALL = {
+      BRIEF, BASIC, VERBOSE, MAXIMUM,
+  };
 
   private final transient int id;
   private final transient String name;
@@ -101,8 +102,7 @@ public final class SchemaTextDetailType
    *        SchemaTextDetailType to check against
    * @return Yes if this is greater or equal to
    */
-  public boolean isGreaterThanOrEqualTo(
-      final SchemaTextDetailType schemaTextDetailType)
+  public boolean isGreaterThanOrEqualTo(final SchemaTextDetailType schemaTextDetailType)
   {
     return id >= schemaTextDetailType.id;
   }
@@ -145,13 +145,16 @@ public final class SchemaTextDetailType
     if (this == BRIEF)
     {
       columnInfoLevel = SchemaInfoLevel.MINIMUM;
-    } else if (this == BASIC)
+    }
+    else if (this == BASIC)
     {
       columnInfoLevel = SchemaInfoLevel.BASIC;
-    } else if (this == VERBOSE)
+    }
+    else if (this == VERBOSE)
     {
       columnInfoLevel = SchemaInfoLevel.VERBOSE;
-    } else if (this == MAXIMUM)
+    }
+    else if (this == MAXIMUM)
     {
       columnInfoLevel = SchemaInfoLevel.MAXIMUM;
     }

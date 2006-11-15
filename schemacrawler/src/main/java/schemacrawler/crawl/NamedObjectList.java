@@ -47,7 +47,7 @@ public final class NamedObjectList
   private static final long serialVersionUID = 3257847666804142128L;
 
   private static final Logger LOGGER = Logger.getLogger(NamedObjectList.class
-      .getName());
+    .getName());
 
   private SerializableComparator comparator;
   private final List sortedList;
@@ -111,10 +111,11 @@ public final class NamedObjectList
     {
       index = -index - 1;
       sortedList.add(index, namedObject);
-    } else
+    }
+    else
     {
       sortedList.add(namedObject);
-    }    
+    }
   }
 
   /**
@@ -138,7 +139,8 @@ public final class NamedObjectList
     if (index < 0)
     {
       index = 0;
-    } else if (index > size)
+    }
+    else if (index > size)
     {
       index = size;
     }
@@ -149,7 +151,7 @@ public final class NamedObjectList
       if (index != ordinalPosition - 1)
       {
         message = message + " (instead of at position #"
-            + (ordinalPosition - 1) + ")";
+                  + (ordinalPosition - 1) + ")";
       }
       LOGGER.log(Level.FINEST, message);
     }
@@ -275,7 +277,8 @@ public final class NamedObjectList
       {
         return false;
       }
-    } else
+    }
+    else
     {
       if (!sortedList.equals(other.sortedList))
       {

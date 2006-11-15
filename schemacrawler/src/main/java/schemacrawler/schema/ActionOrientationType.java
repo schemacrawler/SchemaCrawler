@@ -32,15 +32,13 @@ public final class ActionOrientationType
 
   private static final long serialVersionUID = 4767973714560552564L;
 
-  public static final ActionOrientationType UNKNOWN = new ActionOrientationType(
-      "unknown");
-  public static final ActionOrientationType ROW = new ActionOrientationType(
-      "ROW");
-  public static final ActionOrientationType STATEMENT = new ActionOrientationType(
-      "STATEMENT");
+  public static final ActionOrientationType UNKNOWN = new ActionOrientationType("unknown");
+  public static final ActionOrientationType ROW = new ActionOrientationType("ROW");
+  public static final ActionOrientationType STATEMENT = new ActionOrientationType("STATEMENT");
 
-  private static final ActionOrientationType[] ALL =
-  { UNKNOWN, ROW, STATEMENT, };
+  private static final ActionOrientationType[] ALL = {
+      UNKNOWN, ROW, STATEMENT,
+  };
 
   private final int id;
   private final String name;

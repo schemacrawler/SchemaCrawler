@@ -40,7 +40,7 @@ final class MutablePrivilege
   private String grantee;
   private boolean isGrantable;
 
-  MutablePrivilege(String name, NamedObject parent)
+  MutablePrivilege(final String name, final NamedObject parent)
   {
     super(name, parent);
   }

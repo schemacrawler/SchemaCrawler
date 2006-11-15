@@ -38,7 +38,7 @@ abstract class AbstractNamedObject
   private String remarks;
   private final SerializableComparator comparator = new AlphabeticalSortComparator();
 
-  AbstractNamedObject(String name)
+  AbstractNamedObject(final String name)
   {
     super();
     this.name = name;

@@ -53,8 +53,7 @@ final class MutableDatabaseInfo
   private String schemaPattern;
   private String catalog;
   private SortedMap dbProperties;
-  private final NamedObjectList columnDataTypes = new NamedObjectList(
-      new AlphabeticalSortComparator());
+  private final NamedObjectList columnDataTypes = new NamedObjectList(new AlphabeticalSortComparator());
 
   /**
    * {@inheritDoc}
@@ -188,7 +187,8 @@ final class MutableDatabaseInfo
     if (catalog == null)
     {
       this.catalog = "";
-    } else
+    }
+    else
     {
       this.catalog = catalog;
     }
@@ -209,7 +209,8 @@ final class MutableDatabaseInfo
     if (dbProperties == null)
     {
       return Collections.EMPTY_MAP;
-    } else
+    }
+    else
     {
       return Collections.unmodifiableSortedMap(dbProperties);
     }
@@ -236,12 +237,12 @@ final class MutableDatabaseInfo
     final StringBuffer info = new StringBuffer();
 
     info.append("-- database product: ").append(getProductName()).append(" ")
-        .append(getProductVersion()).append(Utilities.NEWLINE).append(
-            "-- driver: ").append(getJdbcDriverClassName()).append(" - ")
-        .append(getDriverName()).append(" ").append(getDriverVersion()).append(
-            Utilities.NEWLINE).append("-- connection: ").append(
-            getConnectionUrl()).append(Utilities.NEWLINE).append(
-            "-- schema pattern: ").append(getSchemaPattern());
+      .append(getProductVersion()).append(Utilities.NEWLINE)
+      .append("-- driver: ").append(getJdbcDriverClassName()).append(" - ")
+      .append(getDriverName()).append(" ").append(getDriverVersion())
+      .append(Utilities.NEWLINE).append("-- connection: ")
+      .append(getConnectionUrl()).append(Utilities.NEWLINE)
+      .append("-- schema pattern: ").append(getSchemaPattern());
 
     return info.toString();
 
@@ -256,7 +257,7 @@ final class MutableDatabaseInfo
   {
     final List allColumnDataTypes = columnDataTypes.getAll();
     return (ColumnDataType[]) allColumnDataTypes
-        .toArray(new ColumnDataType[allColumnDataTypes.size()]);
+      .toArray(new ColumnDataType[allColumnDataTypes.size()]);
   }
 
   NamedObjectList getColumnDataTypesList()

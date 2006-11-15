@@ -85,7 +85,7 @@ public interface Table
    * @return Triggers for the table.
    */
   Trigger[] getTriggers();
-  
+
   /**
    * List of privileges.
    * 
