@@ -376,11 +376,6 @@ public abstract class BaseSchemaTextFormatter
     }
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see BaseSchemaTextFormatter#handleColumnDataType(schemacrawler.schema.ColumnDataType)
-   */
   private void printColumnDataType(final ColumnDataType columnDataType)
   {
     final String databaseSpecificTypeName = columnDataType

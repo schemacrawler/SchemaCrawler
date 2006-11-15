@@ -23,6 +23,9 @@ package schemacrawler.crawl;
 
 import java.sql.SQLException;
 
+import schemacrawler.schema.DatabaseObject;
+import sf.util.Utilities;
+
 /**
  * SchemaRetriever uses database metadata to get the details about the
  * schema.
@@ -67,6 +70,35 @@ abstract class AbstractRetriever
   protected RetrieverConnection getRetrieverConnection()
   {
     return retrieverConnection;
+  }
+
+  protected boolean belongsToSchema(final DatabaseObject dbObject,
+      final String catalog, final String schema)
+  {
+    if (dbObject == null)
+    {
+      return false;
+    }
+
+    boolean belongsToCatalog = true;
+    boolean belongsToSchema = true;
+    final String dbObjectCatalog = dbObject.getCatalogName();
+    if (!Utilities.isBlank(catalog) && !Utilities.isBlank(dbObjectCatalog))
+    {
+      if (!catalog.equals(dbObjectCatalog))
+      {
+        belongsToCatalog = false;
+      }
+    }
+    final String dbObjectSchema = dbObject.getSchemaName();
+    if (!Utilities.isBlank(schema) && !Utilities.isBlank(dbObjectSchema))
+    {
+      if (!schema.equals(dbObjectSchema))
+      {
+        belongsToSchema = false;
+      }
+    }
+    return belongsToCatalog && belongsToSchema;
   }
 
 }
