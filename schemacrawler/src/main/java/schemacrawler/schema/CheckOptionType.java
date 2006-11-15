@@ -35,8 +35,9 @@ public final class CheckOptionType
 
   private static final long serialVersionUID = 3546925783735220534L;
 
-  private static final CheckOptionType[] ALL =
-  { NONE, CASCADE, };
+  private static final CheckOptionType[] ALL = {
+      NONE, CASCADE,
+  };
 
   private final int id;
   private final String name;

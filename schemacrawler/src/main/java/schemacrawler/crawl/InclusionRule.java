@@ -37,7 +37,7 @@ public final class InclusionRule
 {
 
   private static final Logger LOGGER = Logger.getLogger(InclusionRule.class
-      .getName());
+    .getName());
 
   private static final long serialVersionUID = 3443758881974362293L;
 
@@ -62,7 +62,7 @@ public final class InclusionRule
    *        Exclusion pattern
    */
   public InclusionRule(final Pattern patternInclude,
-      final Pattern patternExclude)
+                       final Pattern patternExclude)
   {
     super();
     this.patternInclude = patternInclude;
@@ -83,12 +83,14 @@ public final class InclusionRule
     if (!patternInclude.matcher(name).matches())
     {
       LOGGER.log(Level.FINE, "Excluding " + name
-          + " since it does not match the include pattern");
-    } else if (patternExclude.matcher(name).matches())
+                             + " since it does not match the include pattern");
+    }
+    else if (patternExclude.matcher(name).matches())
     {
       LOGGER.log(Level.FINE, "Excluding " + name
-          + " since it matches the exclude pattern");
-    } else
+                             + " since it matches the exclude pattern");
+    }
+    else
     {
       LOGGER.log(Level.FINE, "Including " + name);
       include = true;

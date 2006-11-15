@@ -15,6 +15,7 @@
  */
 package schemacrawler.tools.util;
 
+
 import sf.util.Utilities;
 
 final class HtmlTableCell
@@ -29,13 +30,15 @@ final class HtmlTableCell
     this(0, null, null);
   }
 
-  public HtmlTableCell(String styleClass, String innerHtml)
+  public HtmlTableCell(final String styleClass, final String innerHtml)
   {
     this.styleClass = styleClass;
     this.innerHtml = innerHtml;
   }
-  
-  public HtmlTableCell(int colSpan, String styleClass, String innerHtml)
+
+  public HtmlTableCell(final int colSpan,
+                       final String styleClass,
+                       final String innerHtml)
   {
     this.colSpan = colSpan;
     this.styleClass = styleClass;
@@ -44,7 +47,7 @@ final class HtmlTableCell
 
   public String toString()
   {
-    StringBuffer buffer = new StringBuffer();
+    final StringBuffer buffer = new StringBuffer();
     buffer.append("<td");
     if (colSpan > 1)
     {

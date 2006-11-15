@@ -51,7 +51,7 @@ public class ToolsExecutor
 
   private static final Logger LOGGER = Logger.getLogger(ToolsExecutor.class
     .getName());
-  
+
   private Properties additionalConnectionConfiguration = new Properties();
 
   /**
@@ -61,8 +61,7 @@ public class ToolsExecutor
    * @param additionalConnectionConfiguration
    *        Additional connection configuration.
    */
-  public void setAdditionalConnectionConfiguration(
-      final Properties additionalConnectionConfiguration)
+  public void setAdditionalConnectionConfiguration(final Properties additionalConnectionConfiguration)
   {
     if (additionalConnectionConfiguration != null)
     {
@@ -86,12 +85,13 @@ public class ToolsExecutor
     if (toolType == ToolType.SCHEMA_TEXT)
     {
       crawlHandler = SchemaTextFormatterLoader.load(options
-          .getSchemaTextOptions());
-    } else
+        .getSchemaTextOptions());
+    }
+    else
     {
       // For operations and single queries
       dataHandler = DataTextFormatterLoader.load(options
-          .getDataTextFormatOptions());
+        .getDataTextFormatOptions());
       if (toolType == ToolType.OPERATION)
       {
         // Operations are crawl handlers that rely on
@@ -104,21 +104,25 @@ public class ToolsExecutor
         catch (final SQLException e)
         {
           final String errorMessage = e.getMessage();
-          LOGGER.log(Level.WARNING, "Cannot obtain a connection: " + errorMessage);      
+          LOGGER.log(Level.WARNING, "Cannot obtain a connection: "
+                                    + errorMessage);
           throw new SchemaCrawlerException(errorMessage, e);
         }
         crawlHandler = OperatorLoader.load(options.getOperatorOptions(),
-            connection, dataHandler);
+                                           connection,
+                                           dataHandler);
       }
     }
     if (toolType == ToolType.DATA_TEXT)
     {
       final QueryExecutor executor = new QueryExecutor(dataSource, dataHandler);
       executor.executeSQL(options.getQuery());
-    } else
+    }
+    else
     {
       final SchemaCrawler crawler = new SchemaCrawler(dataSource,
-          additionalConnectionConfiguration, crawlHandler);
+                                                      additionalConnectionConfiguration,
+                                                      crawlHandler);
       crawler.crawl(options.getSchemaCrawlerOptions());
     }
   }

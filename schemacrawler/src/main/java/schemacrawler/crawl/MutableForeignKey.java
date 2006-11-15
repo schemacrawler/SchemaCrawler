@@ -40,13 +40,14 @@ class MutableForeignKey
 
   private static final long serialVersionUID = 4121411795974895671L;
 
-  private final NamedObjectList columnPairs = new NamedObjectList(
-                                                                  new NaturalSortComparator());
+  private final NamedObjectList columnPairs = new NamedObjectList(new NaturalSortComparator());
   private ForeignKeyUpdateRule updateRule;
   private ForeignKeyUpdateRule deleteRule;
   private ForeignKeyDeferrability deferrability;
 
-  MutableForeignKey(String catalogName, String schemaName, String name)
+  MutableForeignKey(final String catalogName,
+                    final String schemaName,
+                    final String name)
   {
     super(catalogName, schemaName, name);
   }
@@ -126,12 +127,12 @@ class MutableForeignKey
    * @param fkColumn
    *        Foreign key
    */
-  void addColumnPair(final int keySequence, final Column pkColumn,
+  void addColumnPair(final int keySequence,
+                     final Column pkColumn,
                      final Column fkColumn)
   {
-    String fkColumnMapName = getName() + "." + keySequence;
-    final MutableForeignKeyColumnMap fkColumnPair = new MutableForeignKeyColumnMap(
-                                                                                   fkColumnMapName,
+    final String fkColumnMapName = getName() + "." + keySequence;
+    final MutableForeignKeyColumnMap fkColumnPair = new MutableForeignKeyColumnMap(fkColumnMapName,
                                                                                    this);
     fkColumnPair.setKeySequence(keySequence);
     fkColumnPair.setPrimaryKeyColumn(pkColumn);

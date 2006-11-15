@@ -27,16 +27,18 @@ public final class HtmlFormattingHelper
 
   public String createDefinitionRow(final String definition)
   {
-    HtmlTableRow row = new HtmlTableRow();
+    final HtmlTableRow row = new HtmlTableRow();
     row.addCell(new HtmlTableCell("ordinal", ""));
     row.addCell(new HtmlTableCell(3, "definition", definition));
     return row.toString();
   }
 
-  public String createDetailRow(String ordinal, final String subName,
-                                final String type, final String remarks)
+  public String createDetailRow(final String ordinal,
+                                final String subName,
+                                final String type,
+                                final String remarks)
   {
-    HtmlTableRow row = new HtmlTableRow();
+    final HtmlTableRow row = new HtmlTableRow();
     row.addCell(new HtmlTableCell("ordinal", ordinal));
     row.addCell(new HtmlTableCell("subname", subName));
     row.addCell(new HtmlTableCell("type", type));
@@ -51,15 +53,15 @@ public final class HtmlFormattingHelper
 
   public String createNameRow(final String name, final String description)
   {
-    HtmlTableRow row = new HtmlTableRow();
+    final HtmlTableRow row = new HtmlTableRow();
     row.addCell(new HtmlTableCell(2, "name", name));
     row.addCell(new HtmlTableCell(2, "description", description));
     return row.toString();
   }
-  
+
   public String createNameValueRow(final String name, final String value)
   {
-    HtmlTableRow row = new HtmlTableRow();
+    final HtmlTableRow row = new HtmlTableRow();
     row.addCell(new HtmlTableCell("", name));
     row.addCell(new HtmlTableCell("", value));
     return row.toString();
@@ -67,7 +69,7 @@ public final class HtmlFormattingHelper
 
   public String createSeparatorRow()
   {
-    HtmlTableRow row = new HtmlTableRow();
+    final HtmlTableRow row = new HtmlTableRow();
     row.addCell(new HtmlTableCell(4, "", "<hr/>"));
     return row.toString();
   }

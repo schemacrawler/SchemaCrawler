@@ -31,18 +31,15 @@ public final class ConditionTimingType
 {
 
   private static final long serialVersionUID = -3033092069397416072L;
-  
-  public static final ConditionTimingType UNKNOWN = new ConditionTimingType(
-      "unknown");
-  public static final ConditionTimingType BEFORE = new ConditionTimingType(
-      "BEFORE");
-  public static final ConditionTimingType INSTEAD_OF = new ConditionTimingType(
-      "INSTEAD OF");
-  public static final ConditionTimingType AFTER = new ConditionTimingType(
-      "AFTER");
 
-  private static final ConditionTimingType[] ALL =
-  { UNKNOWN, BEFORE, INSTEAD_OF, AFTER, };
+  public static final ConditionTimingType UNKNOWN = new ConditionTimingType("unknown");
+  public static final ConditionTimingType BEFORE = new ConditionTimingType("BEFORE");
+  public static final ConditionTimingType INSTEAD_OF = new ConditionTimingType("INSTEAD OF");
+  public static final ConditionTimingType AFTER = new ConditionTimingType("AFTER");
+
+  private static final ConditionTimingType[] ALL = {
+      UNKNOWN, BEFORE, INSTEAD_OF, AFTER,
+  };
 
   private final int id;
   private final String name;

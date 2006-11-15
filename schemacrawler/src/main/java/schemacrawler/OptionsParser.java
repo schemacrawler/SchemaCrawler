@@ -92,7 +92,7 @@ public final class OptionsParser
     final String cfgFile = getStringOption(parser.getOption(OPTION_CONFIGFILE),
                                            "schemacrawler.config.properties");
     final String cfgOverrideFile = getStringOption(parser
-      .getOption(OPTION_CONFIGOVERRIDEFILE),
+                                                     .getOption(OPTION_CONFIGOVERRIDEFILE),
                                                    "schemacrawler.config.override.properties");
     final Properties config = loadConfig(cfgFile, cfgOverrideFile);
 
@@ -109,8 +109,7 @@ public final class OptionsParser
     final boolean noFooter = getBooleanOption(parser.getOption(OPTION_NOFOOTER));
     final boolean noInfo = getBooleanOption(parser.getOption(OPTION_NOINFO));
 
-    final OutputOptions masterOutputOptions = new OutputOptions(
-                                                                outputFormatValue,
+    final OutputOptions masterOutputOptions = new OutputOptions(outputFormatValue,
                                                                 outputFile);
     masterOutputOptions.setAppendOutput(appendOutput);
     masterOutputOptions.setNoHeader(noHeader);
@@ -129,8 +128,7 @@ public final class OptionsParser
 
   }
 
-  private static Options[] createOptionsPerCommand(
-                                                   final String[] commandStrings,
+  private static Options[] createOptionsPerCommand(final String[] commandStrings,
                                                    final Properties config,
                                                    final OutputOptions masterOutputOptions)
   {
@@ -237,7 +235,7 @@ public final class OptionsParser
       .valueOf(commandString);
     Operation operation = Operation.valueOf(commandString);
     String query = "";
-    if ((schemaTextDetailType == null) && (operation == null))
+    if (schemaTextDetailType == null && operation == null)
     {
       // Assume that the command is a query
       query = config.getProperty(commandString);
@@ -252,7 +250,8 @@ public final class OptionsParser
     }
 
     final Command command = Command.createCommand(schemaTextDetailType,
-                                                  operation, query);
+                                                  operation,
+                                                  query);
     return command;
   }
 
@@ -274,21 +273,19 @@ public final class OptionsParser
     return isQueryOver;
   }
 
-  private static boolean getBooleanOption(
-                                          final CommandLineParser.BaseOption option)
+  private static boolean getBooleanOption(final CommandLineParser.BaseOption option)
   {
-    if ((option == null) || (option.getValue() == null))
+    if (option == null || option.getValue() == null)
     {
       return false;
     }
     return Boolean.valueOf(option.getValue().toString()).booleanValue();
   }
 
-  private static String getStringOption(
-                                        final CommandLineParser.BaseOption option,
+  private static String getStringOption(final CommandLineParser.BaseOption option,
                                         final String defaultValue)
   {
-    if ((option == null) || (option.getValue() == null))
+    if (option == null || option.getValue() == null)
     {
       return defaultValue;
     }

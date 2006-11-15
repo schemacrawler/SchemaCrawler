@@ -44,7 +44,7 @@ class MutableTrigger
   private ActionOrientationType actionOrientation;
   private ConditionTimingType conditionTiming;
 
-  MutableTrigger(String name, NamedObject parent)
+  MutableTrigger(final String name, final NamedObject parent)
   {
     super(name, parent);
   }
@@ -57,7 +57,7 @@ class MutableTrigger
     return actionCondition;
   }
 
-  void setActionCondition(String actionCondition)
+  void setActionCondition(final String actionCondition)
   {
     this.actionCondition = actionCondition;
   }
@@ -70,7 +70,7 @@ class MutableTrigger
     return actionOrder;
   }
 
-  void setActionOrder(int actionOrder)
+  void setActionOrder(final int actionOrder)
   {
     this.actionOrder = actionOrder;
   }
@@ -83,7 +83,7 @@ class MutableTrigger
     return actionOrientation;
   }
 
-  void setActionOrientation(ActionOrientationType actionOrientation)
+  void setActionOrientation(final ActionOrientationType actionOrientation)
   {
     this.actionOrientation = actionOrientation;
   }
@@ -96,7 +96,7 @@ class MutableTrigger
     return actionStatement;
   }
 
-  void setActionStatement(String actionStatement)
+  void setActionStatement(final String actionStatement)
   {
     this.actionStatement = actionStatement;
   }
@@ -109,7 +109,7 @@ class MutableTrigger
     return conditionTiming;
   }
 
-  void setConditionTiming(ConditionTimingType conditionTiming)
+  void setConditionTiming(final ConditionTimingType conditionTiming)
   {
     this.conditionTiming = conditionTiming;
   }
@@ -122,7 +122,7 @@ class MutableTrigger
     return eventManipulationType;
   }
 
-  void setEventManipulationType(EventManipulationType eventManipulationType)
+  void setEventManipulationType(final EventManipulationType eventManipulationType)
   {
     this.eventManipulationType = eventManipulationType;
   }

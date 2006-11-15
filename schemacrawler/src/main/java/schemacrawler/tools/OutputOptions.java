@@ -64,7 +64,7 @@ public final class OutputOptions
    *        Output filename
    */
   public OutputOptions(final String outputFormatValue,
-      final String outputFilename)
+                       final String outputFilename)
   {
     this.outputFormatValue = outputFormatValue;
 
@@ -133,9 +133,10 @@ public final class OutputOptions
     if (outputFile == null)
     {
       writer = new PrintWriter(System.out, /* autoFlush = */true);
-    } else
+    }
+    else
     {
-      FileWriter fileWriter = new FileWriter(outputFile, appendOutput);
+      final FileWriter fileWriter = new FileWriter(outputFile, appendOutput);
       writer = new PrintWriter(fileWriter, /* autoFlush = */true);
     }
     return writer;

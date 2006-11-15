@@ -37,11 +37,13 @@ abstract class AbstractDatabaseObject
   private String schemaName;
   private String catalogName;
 
-  AbstractDatabaseObject(String catalogName, String schemaName, String name)
+  AbstractDatabaseObject(final String catalogName,
+                         final String schemaName,
+                         final String name)
   {
     super(name);
     this.catalogName = catalogName;
-    this.schemaName = schemaName;    
+    this.schemaName = schemaName;
   }
 
   /**

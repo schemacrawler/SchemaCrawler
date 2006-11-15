@@ -65,7 +65,8 @@ public final class OperatorLoader
    *         On an exception
    */
   public static CrawlHandler load(final OperatorOptions options,
-      final Connection connection, final DataHandler dataHandler)
+                                  final Connection connection,
+                                  final DataHandler dataHandler)
     throws SchemaCrawlerException
   {
 
@@ -80,7 +81,8 @@ public final class OperatorLoader
     if (operation.isQueryOver())
     {
       query = options.getQuery();
-    } else
+    }
+    else
     {
       query = operation.getQuery();
     }
@@ -90,7 +92,8 @@ public final class OperatorLoader
     if (outputFormatType == OutputFormat.HTML)
     {
       handler = new OperatorHTMLOutput(options, query, connection, dataHandler);
-    } else 
+    }
+    else
     {
       handler = new OperatorTextOutput(options, query, connection, dataHandler);
     }

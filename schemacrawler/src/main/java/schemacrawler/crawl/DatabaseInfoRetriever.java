@@ -149,13 +149,19 @@ final class DatabaseInfoRetriever
         }
         else if (isDatabasePropertyResultSetType(method))
         {
-          retrieveResultSetTypeProperty(dbMetaData, dbProperties, method,
+          retrieveResultSetTypeProperty(dbMetaData,
+                                        dbProperties,
+                                        method,
                                         ResultSet.TYPE_FORWARD_ONLY,
                                         "TypeForwardOnly");
-          retrieveResultSetTypeProperty(dbMetaData, dbProperties, method,
+          retrieveResultSetTypeProperty(dbMetaData,
+                                        dbProperties,
+                                        method,
                                         ResultSet.TYPE_SCROLL_INSENSITIVE,
                                         "TypeScrollInsensitive");
-          retrieveResultSetTypeProperty(dbMetaData, dbProperties, method,
+          retrieveResultSetTypeProperty(dbMetaData,
+                                        dbProperties,
+                                        method,
                                         ResultSet.TYPE_SCROLL_SENSITIVE,
                                         "TypeScrollSensitive");
         }
@@ -306,7 +312,8 @@ final class DatabaseInfoRetriever
   void retrieveColumnDataTypes(final MutableDatabaseInfo dbInfo)
     throws SQLException
   {
-    LOGGER.entering(getClass().getName(), "retrieveColumnDataTypes",
+    LOGGER.entering(getClass().getName(),
+                    "retrieveColumnDataTypes",
                     new Object[] {
                       dbInfo
                     });
@@ -336,8 +343,7 @@ final class DatabaseInfoRetriever
         final int maximumScale = results.getInt("MAXIMUM_SCALE");
         final int numPrecisionRadix = results.getInt("NUM_PREC_RADIX");
 
-        final MutableColumnDataType columnDataType = new MutableColumnDataType(
-                                                                               typeName);
+        final MutableColumnDataType columnDataType = new MutableColumnDataType(typeName);
         columnDataType.setType(type);
         columnDataType.setPrecision(precision);
         columnDataType.setLiteralPrefix(literalPrefix);
@@ -375,14 +381,17 @@ final class DatabaseInfoRetriever
   void retrieveUserDefinedColumnDataTypes(final MutableDatabaseInfo dbInfo)
     throws SQLException
   {
-    LOGGER.entering(getClass().getName(), "retrieveUserDefinedColumnDataTypes",
+    LOGGER.entering(getClass().getName(),
+                    "retrieveUserDefinedColumnDataTypes",
                     new Object[] {
                       dbInfo
                     });
 
     final ResultSet results = getRetrieverConnection().getMetaData()
       .getUDTs(getRetrieverConnection().getCatalog(),
-               getRetrieverConnection().getSchemaPattern(), "%", null);
+               getRetrieverConnection().getSchemaPattern(),
+               "%",
+               null);
     try
     {
       while (results.next())

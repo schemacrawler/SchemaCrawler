@@ -42,12 +42,12 @@ class MutableSchema
   private static final long serialVersionUID = 3258128063743931187L;
 
   private DatabaseInfo databaseInfo;
-  private final NamedObjectList tables = new NamedObjectList(
-                                                             new NaturalSortComparator());
-  private final NamedObjectList procedures = new NamedObjectList(
-                                                                 new NaturalSortComparator());
+  private final NamedObjectList tables = new NamedObjectList(new NaturalSortComparator());
+  private final NamedObjectList procedures = new NamedObjectList(new NaturalSortComparator());
 
-  MutableSchema(String catalogName, String schemaName, String name)
+  MutableSchema(final String catalogName,
+                final String schemaName,
+                final String name)
   {
     super(catalogName, schemaName, name);
   }

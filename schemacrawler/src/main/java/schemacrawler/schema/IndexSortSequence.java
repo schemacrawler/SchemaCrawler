@@ -33,15 +33,17 @@ public final class IndexSortSequence
 
   private static final long serialVersionUID = 4048790182419837238L;
 
-  private static final IndexSortSequence[] INDEX_SORT_SEQUENCE_ALL =
-  { new IndexSortSequence("", ""), new IndexSortSequence("ascending", "A"),
-   new IndexSortSequence("descending", "D") };
+  private static final IndexSortSequence[] INDEX_SORT_SEQUENCE_ALL = {
+      new IndexSortSequence("", ""),
+      new IndexSortSequence("ascending", "A"),
+      new IndexSortSequence("descending", "D")
+  };
 
   private final transient String indexSortSequence;
   private final transient String indexSortSequenceCode;
 
   private IndexSortSequence(final String indexSortSequence,
-      final String indexSortSequenceCode)
+                            final String indexSortSequenceCode)
   {
     ordinal = nextOrdinal++;
     this.indexSortSequence = indexSortSequence;
@@ -91,7 +93,7 @@ public final class IndexSortSequence
     for (int i = 0; i < INDEX_SORT_SEQUENCE_ALL.length; i++)
     {
       if (INDEX_SORT_SEQUENCE_ALL[i].getIndexSortSequenceCode()
-          .equalsIgnoreCase(sortSequenceCode))
+        .equalsIgnoreCase(sortSequenceCode))
       {
         indexSortSequence = INDEX_SORT_SEQUENCE_ALL[i];
         break;
@@ -112,8 +114,8 @@ public final class IndexSortSequence
     IndexSortSequence indexSortSequence = INDEX_SORT_SEQUENCE_ALL[0];
     for (int i = 0; i < INDEX_SORT_SEQUENCE_ALL.length; i++)
     {
-      if (INDEX_SORT_SEQUENCE_ALL[i].getIndexSortSequence().equalsIgnoreCase(
-          sortSequenceCode))
+      if (INDEX_SORT_SEQUENCE_ALL[i].getIndexSortSequence()
+        .equalsIgnoreCase(sortSequenceCode))
       {
         indexSortSequence = INDEX_SORT_SEQUENCE_ALL[i];
         break;

@@ -58,15 +58,16 @@ public final class SchemaTextOptions
    *        Output options
    */
   public SchemaTextOptions(final Properties config,
-      final OutputOptions outputOptions,
-      final SchemaTextDetailType schemaTextDetailType)
+                           final OutputOptions outputOptions,
+                           final SchemaTextDetailType schemaTextDetailType)
   {
     super(outputOptions);
 
     if (schemaTextDetailType == null)
     {
       this.schemaTextDetailType = SchemaTextDetailType.BRIEF;
-    } else
+    }
+    else
     {
       this.schemaTextDetailType = schemaTextDetailType;
     }
@@ -76,13 +77,14 @@ public final class SchemaTextOptions
       showJdbcColumnTypeNames = false;
       showOrdinalNumbers = false;
       hideConstraintNames = false;
-    } else
+    }
+    else
     {
       showJdbcColumnTypeNames = getBooleanProperty(SHOW_JDBC_COLUMN_TYPE_NAMES,
-          config);
+                                                   config);
       showOrdinalNumbers = getBooleanProperty(SHOW_ORDINAL_NUMBERS, config);
       hideConstraintNames = getBooleanProperty(HIDE_INDEX_NAMES, config)
-          || getBooleanProperty(HIDE_CONSTRAINT_NAMES, config);
+                            || getBooleanProperty(HIDE_CONSTRAINT_NAMES, config);
     }
   }
 

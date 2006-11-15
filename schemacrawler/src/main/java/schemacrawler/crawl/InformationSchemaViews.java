@@ -50,7 +50,7 @@ final class InformationSchemaViews
   String getTriggersSql()
   {
     return informationSchemaViewsSql
-        .getProperty("select.INFORMATION_SCHEMA.TRIGGERS");
+      .getProperty("select.INFORMATION_SCHEMA.TRIGGERS");
   }
 
   /**

@@ -23,13 +23,13 @@ package schemacrawler.crawl;
 
 import java.util.List;
 
+import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.util.NaturalSortComparator;
@@ -49,20 +49,16 @@ class MutableTable
 
   private TableType type;
   private PrimaryKey primaryKey;
-  private final NamedObjectList columns = new NamedObjectList(
-      new NaturalSortComparator());
-  private final NamedObjectList foreignKeys = new NamedObjectList(
-      new NaturalSortComparator());
-  private final NamedObjectList indices = new NamedObjectList(
-      new NaturalSortComparator());
-  private final NamedObjectList checkConstraints = new NamedObjectList(
-      new NaturalSortComparator());
-  private final NamedObjectList triggers = new NamedObjectList(
-      new NaturalSortComparator());
-  private final NamedObjectList privileges = new NamedObjectList(
-      new NaturalSortComparator());
+  private final NamedObjectList columns = new NamedObjectList(new NaturalSortComparator());
+  private final NamedObjectList foreignKeys = new NamedObjectList(new NaturalSortComparator());
+  private final NamedObjectList indices = new NamedObjectList(new NaturalSortComparator());
+  private final NamedObjectList checkConstraints = new NamedObjectList(new NaturalSortComparator());
+  private final NamedObjectList triggers = new NamedObjectList(new NaturalSortComparator());
+  private final NamedObjectList privileges = new NamedObjectList(new NaturalSortComparator());
 
-  MutableTable(String catalogName, String schemaName, String name)
+  MutableTable(final String catalogName,
+               final String schemaName,
+               final String name)
   {
     super(catalogName, schemaName, name);
   }
@@ -186,7 +182,7 @@ class MutableTable
   {
     final List allForeignKeys = foreignKeys.getAll();
     return (ForeignKey[]) allForeignKeys.toArray(new ForeignKey[allForeignKeys
-        .size()]);
+      .size()]);
   }
 
   /**
@@ -250,7 +246,7 @@ class MutableTable
   {
     final List allCheckConstraints = checkConstraints.getAll();
     return (CheckConstraint[]) allCheckConstraints
-        .toArray(new CheckConstraint[allCheckConstraints.size()]);
+      .toArray(new CheckConstraint[allCheckConstraints.size()]);
   }
 
   /**
@@ -305,7 +301,7 @@ class MutableTable
   {
     final List allPrivileges = privileges.getAll();
     return (Privilege[]) allPrivileges.toArray(new Privilege[allPrivileges
-        .size()]);
+      .size()]);
   }
 
   /**

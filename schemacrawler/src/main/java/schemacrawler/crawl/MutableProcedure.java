@@ -45,12 +45,13 @@ final class MutableProcedure
   private static final long serialVersionUID = 3906925686089134130L;
 
   private ProcedureType procedureType;
-  private final NamedObjectList columns = new NamedObjectList(
-      new NaturalSortComparator());
+  private final NamedObjectList columns = new NamedObjectList(new NaturalSortComparator());
   private RoutineBodyType routineBodyType;
   private String definition;
 
-  MutableProcedure(String catalogName, String schemaName, String name)
+  MutableProcedure(final String catalogName,
+                   final String schemaName,
+                   final String name)
   {
     super(catalogName, schemaName, name);
   }
@@ -89,7 +90,7 @@ final class MutableProcedure
   {
     final List allColumns = columns.getAll();
     return (ProcedureColumn[]) allColumns
-        .toArray(new ProcedureColumn[allColumns.size()]);
+      .toArray(new ProcedureColumn[allColumns.size()]);
   }
 
   /**

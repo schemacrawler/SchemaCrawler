@@ -52,7 +52,8 @@ final class Command
    * @return Command
    */
   static Command createCommand(final SchemaTextDetailType schemaTextDetailType,
-                               final Operation operation, final String query)
+                               final Operation operation,
+                               final String query)
   {
 
     ToolType toolType = null;
@@ -88,7 +89,8 @@ final class Command
    */
   private Command(final ToolType toolType,
                   final SchemaTextDetailType schemaTextDetailType,
-                  final Operation operation, final String query)
+                  final Operation operation,
+                  final String query)
   {
     this.toolType = toolType;
     this.schemaTextDetailType = schemaTextDetailType;
@@ -103,7 +105,7 @@ final class Command
    */
   Operation getOperation()
   {
-    return this.operation;
+    return operation;
   }
 
   /**
@@ -113,7 +115,7 @@ final class Command
    */
   String getQuery()
   {
-    return this.query;
+    return query;
   }
 
   /**
@@ -123,7 +125,7 @@ final class Command
    */
   SchemaTextDetailType getSchemaTextDetailType()
   {
-    return this.schemaTextDetailType;
+    return schemaTextDetailType;
   }
 
   /**
@@ -133,7 +135,7 @@ final class Command
    */
   ToolType getToolType()
   {
-    return this.toolType;
+    return toolType;
   }
 
 }

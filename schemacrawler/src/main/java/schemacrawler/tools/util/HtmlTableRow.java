@@ -15,41 +15,41 @@
  */
 package schemacrawler.tools.util;
 
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-
 
 final class HtmlTableRow
 {
 
   private List cells;
 
-  public HtmlTableRow(int colSpan)
+  public HtmlTableRow(final int colSpan)
   {
-    this.cells = Arrays.asList(new HtmlTableCell[] {
+    cells = Arrays.asList(new HtmlTableCell[] {
       new HtmlTableCell(colSpan, null, null)
     });
   }
 
   public HtmlTableRow()
   {
-    this.cells = new ArrayList();
+    cells = new ArrayList();
   }
 
-  public void addCell(HtmlTableCell cell)
+  public void addCell(final HtmlTableCell cell)
   {
     cells.add(cell);
   }
 
   public String toString()
   {
-    StringBuffer buffer = new StringBuffer();
+    final StringBuffer buffer = new StringBuffer();
     buffer.append("\t<tr>\n");
-    for (Iterator iter = cells.iterator(); iter.hasNext();)
+    for (final Iterator iter = cells.iterator(); iter.hasNext();)
     {
-      HtmlTableCell cell = (HtmlTableCell) iter.next();
+      final HtmlTableCell cell = (HtmlTableCell) iter.next();
       buffer.append("\t\t").append(cell).append("\n");
     }
     buffer.append("\t</tr>");

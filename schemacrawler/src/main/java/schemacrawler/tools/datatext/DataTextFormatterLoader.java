@@ -73,10 +73,12 @@ public final class DataTextFormatterLoader
     if (outputFormatType == OutputFormat.TEXT)
     {
       handler = new DataPlainTextFormatter(options);
-    } else if (outputFormatType == OutputFormat.HTML)
+    }
+    else if (outputFormatType == OutputFormat.HTML)
     {
       handler = new DataHTMLFormatter(options);
-    } else if (outputFormatType == OutputFormat.CSV)
+    }
+    else if (outputFormatType == OutputFormat.CSV)
     {
       handler = new DataCSVFormatter(options);
     }

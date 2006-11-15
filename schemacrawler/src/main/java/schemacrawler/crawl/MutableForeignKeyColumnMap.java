@@ -39,7 +39,7 @@ final class MutableForeignKeyColumnMap
   private Column primaryKeyColumn;
   private int keySequence;
 
-  MutableForeignKeyColumnMap(String name, NamedObject parent)
+  MutableForeignKeyColumnMap(final String name, final NamedObject parent)
   {
     super(name, parent);
   }

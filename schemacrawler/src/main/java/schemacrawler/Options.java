@@ -61,7 +61,8 @@ public final class Options
    * @param pageOptions
    *        Page options
    */
-  Options(final Properties config, final Command command,
+  Options(final Properties config,
+          final Command command,
           final OutputOptions outputOptions)
   {
     if (config == null || command == null || outputOptions == null)

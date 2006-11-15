@@ -137,10 +137,11 @@ final class DataHTMLFormatter
       if (columnData[i] == null)
       {
         out.println("      <td>&nbsp;</td>");
-      } else
+      }
+      else
       {
         out.println("      " + "<td " + "title=\"" + columnNames[i] + "\""
-            + ">" + Entities.XML.escape(columnData[i]) + "</td>");
+                    + ">" + Entities.XML.escape(columnData[i]) + "</td>");
       }
     }
     out.println("    </tr>");

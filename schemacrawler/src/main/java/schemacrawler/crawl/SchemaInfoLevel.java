@@ -41,16 +41,17 @@ public final class SchemaInfoLevel
    * Verbose schema detail.
    */
   public static final SchemaInfoLevel VERBOSE = new SchemaInfoLevel(2,
-      "VERBOSE");
+                                                                    "VERBOSE");
 
   /**
    * Maximum schema detail.
    */
   public static final SchemaInfoLevel MAXIMUM = new SchemaInfoLevel(3,
-      "MAXIMUM");
+                                                                    "MAXIMUM");
 
-  private static final SchemaInfoLevel[] SCHEMA_INFO_LEVEL_ALL =
-  { MINIMUM, BASIC, VERBOSE, MAXIMUM };
+  private static final SchemaInfoLevel[] SCHEMA_INFO_LEVEL_ALL = {
+      MINIMUM, BASIC, VERBOSE, MAXIMUM
+  };
 
   private final int infoLevelId;
   private final String infoLevelName;

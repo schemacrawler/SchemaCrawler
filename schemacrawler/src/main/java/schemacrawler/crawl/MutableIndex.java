@@ -46,7 +46,7 @@ class MutableIndex
   private int cardinality;
   private int pages;
 
-  MutableIndex(String name, NamedObject parent)
+  MutableIndex(final String name, final NamedObject parent)
   {
     super(name, parent);
   }

@@ -191,7 +191,7 @@ public abstract class BaseSchemaTextFormatter
       .println(formattingHelper.createNameRow(procedure.getName(),
                                               "[" + procedureTypeDetail + "]"));
 
-    SchemaTextDetailType schemaTextDetailType = options
+    final SchemaTextDetailType schemaTextDetailType = options
       .getSchemaTextDetailType();
     if (schemaTextDetailType != SchemaTextDetailType.BRIEF)
     {
@@ -359,7 +359,7 @@ public abstract class BaseSchemaTextFormatter
 
     for (int i = 0; i < constraints.length; i++)
     {
-      CheckConstraint constraint = constraints[i];
+      final CheckConstraint constraint = constraints[i];
       if (constraint != null)
       {
         String constraintName = "";
@@ -447,7 +447,9 @@ public abstract class BaseSchemaTextFormatter
       }
       out.println(formattingHelper.createDetailRow(keySequenceString,
                                                    pkColumnName + getArrow()
-                                                       + fkColumnName, "", ""));
+                                                       + fkColumnName,
+                                                   "",
+                                                   ""));
     }
   }
 
@@ -486,7 +488,8 @@ public abstract class BaseSchemaTextFormatter
         ordinalNumberString = String.valueOf(i + 1);
       }
       out.println(formattingHelper.createDetailRow(ordinalNumberString,
-                                                   columnName, columnType,
+                                                   columnName,
+                                                   columnType,
                                                    symbol));
     }
   }
@@ -575,7 +578,7 @@ public abstract class BaseSchemaTextFormatter
 
     for (int i = 0; i < privileges.length; i++)
     {
-      Privilege privilege = privileges[i];
+      final Privilege privilege = privileges[i];
       if (privilege != null)
       {
         String privilegeType = "privilege";
@@ -583,8 +586,8 @@ public abstract class BaseSchemaTextFormatter
         {
           privilegeType = "grantable " + privilegeType;
         }
-        String grantedFrom = privilege.getGrantor() + getArrow()
-                             + privilege.getGrantee();
+        final String grantedFrom = privilege.getGrantor() + getArrow()
+                                   + privilege.getGrantee();
         out.println(formattingHelper.createEmptyRow());
 
         String privilegeName = "";
@@ -606,7 +609,7 @@ public abstract class BaseSchemaTextFormatter
 
     for (int i = 0; i < triggers.length; i++)
     {
-      Trigger trigger = triggers[i];
+      final Trigger trigger = triggers[i];
       if (trigger != null)
       {
         String triggerType = "[trigger, "
@@ -614,8 +617,8 @@ public abstract class BaseSchemaTextFormatter
                              + trigger.getEventManipulationType().getName()
                              + ", per " + trigger.getActionOrientation() + "]";
         triggerType = triggerType.toLowerCase();
-        String actionCondition = trigger.getActionCondition();
-        String actionStatement = trigger.getActionStatement();
+        final String actionCondition = trigger.getActionCondition();
+        final String actionStatement = trigger.getActionStatement();
         out.println(formattingHelper.createEmptyRow());
 
         String triggerName = "";

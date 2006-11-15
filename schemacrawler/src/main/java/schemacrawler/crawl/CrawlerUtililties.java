@@ -41,12 +41,13 @@ public final class CrawlerUtililties
    * Expands placeholders in the template SQL from the table properties.
    * 
    * @param templateSql
-   *          Template SQL
+   *        Template SQL
    * @param table
-   *          Table
+   *        Table
    * @return Expanded SQL
    */
-  public static String expandSqlForTable(String templateSql, final Table table)
+  public static String expandSqlForTable(final String templateSql,
+                                         final Table table)
   {
 
     final Properties tableProperties = new Properties();

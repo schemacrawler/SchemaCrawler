@@ -61,15 +61,17 @@ public final class OperatorOptions
    *        Query
    */
   public OperatorOptions(final Properties config,
-      final OutputOptions outputOptions, final Operation operation,
-      final String query)
+                         final OutputOptions outputOptions,
+                         final Operation operation,
+                         final String query)
   {
     super(outputOptions);
 
     if (operation == null)
     {
       this.operation = Operation.valueOf("count");
-    } else
+    }
+    else
     {
       this.operation = operation;
     }

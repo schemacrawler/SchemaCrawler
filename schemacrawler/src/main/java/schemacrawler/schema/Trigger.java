@@ -21,7 +21,6 @@
 package schemacrawler.schema;
 
 
-
 /**
  * Represents an trigger.
  * 

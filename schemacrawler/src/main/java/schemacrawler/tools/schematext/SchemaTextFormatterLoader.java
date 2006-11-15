@@ -72,7 +72,8 @@ public final class SchemaTextFormatterLoader
     if (outputFormatType == OutputFormat.HTML)
     {
       handler = new SchemaHTMLFormatter(options);
-    } else
+    }
+    else
     {
       handler = new SchemaTextFormatter(options);
     }

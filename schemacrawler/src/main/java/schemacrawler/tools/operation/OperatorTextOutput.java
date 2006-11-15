@@ -43,11 +43,16 @@ final class OperatorTextOutput
    * @param connection
    *        Database connection to use
    */
-  OperatorTextOutput(final OperatorOptions options, final String query,
-                     final Connection connection, final DataHandler dataHandler)
+  OperatorTextOutput(final OperatorOptions options,
+                     final String query,
+                     final Connection connection,
+                     final DataHandler dataHandler)
     throws SchemaCrawlerException
   {
-    super(options, query, connection, dataHandler,
+    super(options,
+          query,
+          connection,
+          dataHandler,
           new PlainTextFormattingHelper(options.getOutputOptions()
             .getOutputFormat()));
   }

@@ -57,7 +57,7 @@ class MutablePrimaryKey
     return pk;
   }
 
-  MutablePrimaryKey(String name, NamedObject parent)
+  MutablePrimaryKey(final String name, final NamedObject parent)
   {
     super(name, parent);
   }

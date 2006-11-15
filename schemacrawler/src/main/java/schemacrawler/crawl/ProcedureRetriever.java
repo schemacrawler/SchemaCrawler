@@ -80,8 +80,7 @@ final class ProcedureRetriever
     throws SQLException
   {
 
-    final NamedObjectList procedures = new NamedObjectList(
-                                                           new AlphabeticalSortComparator());
+    final NamedObjectList procedures = new NamedObjectList(new AlphabeticalSortComparator());
 
     if (!retrieveProcedures)
     {
@@ -146,8 +145,10 @@ final class ProcedureRetriever
     final ResultSet results;
 
     results = getRetrieverConnection().getMetaData()
-      .getProcedureColumns(getRetrieverConnection().getCatalog(), schema,
-                           procedureName, null);
+      .getProcedureColumns(getRetrieverConnection().getCatalog(),
+                           schema,
+                           procedureName,
+                           null);
     int ordinalNumber = 0;
     while (results.next())
     {
@@ -164,8 +165,7 @@ final class ProcedureRetriever
 
       if (columnInclusionRule.include(columnName))
       {
-        final MutableProcedureColumn column = new MutableProcedureColumn(
-                                                                         columnName,
+        final MutableProcedureColumn column = new MutableProcedureColumn(columnName,
                                                                          procedure);
         column.setOrdinalPosition(ordinalNumber++);
         column.setProcedureColumnType(ProcedureColumnType.valueOf(columnType));

@@ -41,7 +41,7 @@ public final class QueryExecutor
 {
 
   private static final Logger LOGGER = Logger.getLogger(QueryExecutor.class
-      .getName());
+    .getName());
 
   private final DataSource dataSource;
   private final DataHandler handler;
@@ -108,7 +108,7 @@ public final class QueryExecutor
     catch (final SQLException e)
     {
       throw new QueryExecutorException(e.getMessage() + " - when executing - "
-          + sql, e);
+                                       + sql, e);
     }
     finally
     {
@@ -130,8 +130,9 @@ public final class QueryExecutor
       }
       catch (final SQLException e)
       {
-        LOGGER.log(Level.WARNING, "Connection resources could not be released",
-            e);
+        LOGGER.log(Level.WARNING,
+                   "Connection resources could not be released",
+                   e);
       }
     }
 
@@ -145,7 +146,7 @@ public final class QueryExecutor
   public String toString()
   {
     return "QueryExecutor{" + "dataSource=" + dataSource + ", handler="
-        + handler + "}";
+           + handler + "}";
   }
 
 }

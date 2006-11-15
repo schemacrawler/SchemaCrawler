@@ -45,10 +45,9 @@ final class MutableColumn
   private String defaultValue;
   private boolean isPartOfPrimaryKey;
   private boolean isPartOfUniqueIndex;
-  private final NamedObjectList privileges = new NamedObjectList(
-                                                                 new NaturalSortComparator());
+  private final NamedObjectList privileges = new NamedObjectList(new NaturalSortComparator());
 
-  MutableColumn(String name, NamedObject parent)
+  MutableColumn(final String name, final NamedObject parent)
   {
     super(name, parent);
   }
