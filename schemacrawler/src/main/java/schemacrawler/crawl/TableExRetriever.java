@@ -51,7 +51,7 @@ final class TableExRetriever
 {
 
   private static final Logger LOGGER = Logger.getLogger(TableExRetriever.class
-    .getName());
+      .getName());
 
   /**
    * Constructs a SchemaCrawler object, from a connection.
@@ -86,28 +86,25 @@ final class TableExRetriever
    *         On a SQL exception
    */
   void retrievePrivileges(final DatabaseObject parent,
-                          final NamedObjectList namedObjectList)
+      final NamedObjectList namedObjectList)
     throws SQLException
   {
-    LOGGER.entering(getClass().getName(), "retrievePrivileges", new Object[] {
-        parent, namedObjectList
-    });
+    LOGGER.entering(getClass().getName(), "retrievePrivileges", new Object[]
+    { parent, namedObjectList });
 
     final ResultSet results;
 
     final boolean privilegesForTable = parent == null;
     if (privilegesForTable)
     {
-      results = getRetrieverConnection().getMetaData()
-        .getTablePrivileges(getRetrieverConnection().getCatalog(),
-                            getRetrieverConnection().getSchemaPattern(), "%");
-    }
-    else
+      results = getRetrieverConnection().getMetaData().getTablePrivileges(
+          getRetrieverConnection().getCatalog(),
+          getRetrieverConnection().getSchemaPattern(), "%");
+    } else
     {
-      results = getRetrieverConnection().getMetaData()
-        .getColumnPrivileges(getRetrieverConnection().getCatalog(),
-                             getRetrieverConnection().getSchemaPattern(),
-                             parent.getName(), "%");
+      results = getRetrieverConnection().getMetaData().getColumnPrivileges(
+          getRetrieverConnection().getCatalog(),
+          getRetrieverConnection().getSchemaPattern(), parent.getName(), "%");
     }
     try
     {
@@ -121,8 +118,7 @@ final class TableExRetriever
   }
 
   private void createPrivileges(final ResultSet results,
-                                final NamedObjectList namedObjectList,
-                                final boolean privilegesForTable)
+      final NamedObjectList namedObjectList, final boolean privilegesForTable)
     throws SQLException
   {
     while (results.next())
@@ -131,8 +127,7 @@ final class TableExRetriever
       if (privilegesForTable)
       {
         name = results.getString(TABLE_NAME);
-      }
-      else
+      } else
       {
         name = results.getString(COLUMN_NAME);
       }
@@ -151,7 +146,7 @@ final class TableExRetriever
         }
 
         final MutablePrivilege privilege = new MutablePrivilege(privilegeName,
-                                                                namedObject);
+            namedObject);
         privilege.setGrantor(grantor);
         privilege.setGrantee(grantee);
         privilege.setGrantable(isGrantable);
@@ -159,8 +154,7 @@ final class TableExRetriever
         {
           final MutableTable table = (MutableTable) namedObject;
           table.addPrivilege(privilege);
-        }
-        else
+        } else
         {
           final MutableColumn column = (MutableColumn) namedObject;
           column.addPrivilege(privilege);
@@ -182,10 +176,11 @@ final class TableExRetriever
     throws SQLException
   {
     LOGGER.entering(getClass().getName(), "retrieveViewInformation",
-                    new Object[] {});
+        new Object[]
+        {});
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-      .getInformationSchemaViews();
+        .getInformationSchemaViews();
 
     if (!informationSchemaViews.hasViewsSql())
     {
@@ -195,25 +190,25 @@ final class TableExRetriever
     final String viewInformationSql = informationSchemaViews.getViewsSql();
 
     final Connection connection = getRetrieverConnection().getMetaData()
-      .getConnection();
+        .getConnection();
     final Statement statement = connection.createStatement();
     final ResultSet results = statement.executeQuery(viewInformationSql);
     try
     {
       while (results.next())
       {
-        // final String catalog = results.getString("TABLE_CATALOG");
-        // final String schema = results.getString("TABLE_SCHEMA");
+        final String catalog = results.getString("TABLE_CATALOG");
+        final String schema = results.getString("TABLE_SCHEMA");
         final String viewName = results.getString("TABLE_NAME");
         LOGGER.log(Level.FINEST, "Retrieving view information for " + viewName);
         String definition = results.getString("VIEW_DEFINITION");
         final CheckOptionType checkOption = CheckOptionType.valueOf(results
-          .getString("CHECK_OPTION"));
+            .getString("CHECK_OPTION"));
         final boolean updatable = Utilities.parseBoolean(results
-          .getString("IS_UPDATABLE"));
+            .getString("IS_UPDATABLE"));
 
         final MutableView view = (MutableView) tables.lookup(viewName);
-        if (view == null)
+        if (!belongsToSchema(view, catalog, schema))
         {
           LOGGER.log(Level.FINEST, "View not found: " + viewName);
           continue;
@@ -250,35 +245,36 @@ final class TableExRetriever
     throws SQLException
   {
     LOGGER.entering(getClass().getName(), "retrieveTriggerInformation",
-                    new Object[] {});
+        new Object[]
+        {});
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-      .getInformationSchemaViews();
+        .getInformationSchemaViews();
     final String triggerInformationSql = informationSchemaViews
-      .getTriggersSql();
+        .getTriggersSql();
     if (Utilities.isBlank(triggerInformationSql))
     {
       LOGGER.log(Level.FINE,
-                 "Trigger definition SQL statement was not provided");
+          "Trigger definition SQL statement was not provided");
       return;
     }
 
     final Connection connection = getRetrieverConnection().getMetaData()
-      .getConnection();
+        .getConnection();
     final Statement statement = connection.createStatement();
     final ResultSet results = statement.executeQuery(triggerInformationSql);
     try
     {
       while (results.next())
       {
-        // final String catalog = results.getString("TRIGGER_CATALOG");
-        // final String schema = results.getString("TRIGGER_SCHEMA");
+        final String catalog = results.getString("TRIGGER_CATALOG");
+        final String schema = results.getString("TRIGGER_SCHEMA");
         final String triggerName = results.getString("TRIGGER_NAME");
         LOGGER.log(Level.FINEST, "Retrieving trigger information for "
-                                 + triggerName);
+            + triggerName);
 
         EventManipulationType eventManipulationType = EventManipulationType
-          .valueOf(results.getString("EVENT_MANIPULATION"));
+            .valueOf(results.getString("EVENT_MANIPULATION"));
 
         // final String eventObjectCatalog = results
         // .getString("EVENT_OBJECT_CATALOG");
@@ -290,15 +286,15 @@ final class TableExRetriever
         String actionCondition = results.getString("ACTION_CONDITION");
         String actionStatement = results.getString("ACTION_STATEMENT");
         ActionOrientationType actionOrientation = ActionOrientationType
-          .valueOf(results.getString("ACTION_ORIENTATION"));
+            .valueOf(results.getString("ACTION_ORIENTATION"));
         ConditionTimingType conditionTiming = ConditionTimingType
-          .valueOf(results.getString("CONDITION_TIMING"));
+            .valueOf(results.getString("CONDITION_TIMING"));
 
         final MutableTable table = (MutableTable) tables.lookup(tableName);
-        if (table == null)
+        if (!belongsToSchema(table, catalog, schema))
         {
           LOGGER
-            .log(Level.FINEST, "Table not found for trigger " + triggerName);
+              .log(Level.FINEST, "Table not found for trigger " + triggerName);
           continue;
         }
 
@@ -335,24 +331,25 @@ final class TableExRetriever
     throws SQLException
   {
     LOGGER.entering(getClass().getName(), "retrieveCheckConstraintInformation",
-                    new Object[] {});
+        new Object[]
+        {});
 
     final Map checkConstraintsMap = new HashMap();
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-      .getInformationSchemaViews();
+        .getInformationSchemaViews();
 
     if (!informationSchemaViews.hasTableConstraintsSql())
     {
       LOGGER
-        .log(Level.FINE, "Table constraints SQL statement was not provided");
+          .log(Level.FINE, "Table constraints SQL statement was not provided");
       return;
     }
     final String tableConstraintsInformationSql = informationSchemaViews
-      .getTableConstraintsSql();
+        .getTableConstraintsSql();
 
     final Connection connection = getRetrieverConnection().getMetaData()
-      .getConnection();
+        .getConnection();
     Statement statement = connection.createStatement();
     ResultSet results = statement.executeQuery(tableConstraintsInformationSql);
 
@@ -360,34 +357,32 @@ final class TableExRetriever
     {
       while (results.next())
       {
-        // final String catalog =
-        // results.getString("CONSTRAINT_CATALOG");
-        // final String schema = results.getString("CONSTRAINT_SCHEMA");
+        final String catalog = results.getString("CONSTRAINT_CATALOG");
+        final String schema = results.getString("CONSTRAINT_SCHEMA");
         final String constraintName = results.getString("CONSTRAINT_NAME");
         LOGGER.log(Level.FINEST, "Retrieving constraint information for "
-                                 + constraintName);
+            + constraintName);
         // final String tableCatalog =
         // results.getString("TABLE_CATALOG");
         // final String tableSchema = results.getString("TABLE_SCHEMA");
         final String tableName = results.getString("TABLE_NAME");
         final String constraintType = results.getString("CONSTRAINT_TYPE");
         final boolean deferrable = Utilities.parseBoolean(results
-          .getString("IS_DEFERRABLE"));
+            .getString("IS_DEFERRABLE"));
         final boolean initiallyDeferred = Utilities.parseBoolean(results
-          .getString("INITIALLY_DEFERRED"));
+            .getString("INITIALLY_DEFERRED"));
 
         if (constraintType.equalsIgnoreCase("check"))
         {
           final MutableTable table = (MutableTable) tables.lookup(tableName);
-          if (table == null)
+          if (!belongsToSchema(table, catalog, schema))
           {
             LOGGER.log(Level.FINEST, "Table not found: " + tableName);
             continue;
           }
 
           final MutableCheckConstraint checkConstraint = new MutableCheckConstraint(
-                                                                                    constraintName,
-                                                                                    table);
+              constraintName, table);
           checkConstraint.setDeferrable(deferrable);
           checkConstraint.setInitiallyDeferred(initiallyDeferred);
           // Add to map, since we will need this later
@@ -404,11 +399,11 @@ final class TableExRetriever
     if (!informationSchemaViews.hasCheckConstraintsSql())
     {
       LOGGER
-        .log(Level.FINE, "Check constraints SQL statement was not provided");
+          .log(Level.FINE, "Check constraints SQL statement was not provided");
       return;
     }
     final String checkConstraintInformationSql = informationSchemaViews
-      .getCheckConstraintsSql();
+        .getCheckConstraintsSql();
 
     // Get check constraint definitions
     statement = connection.createStatement();
@@ -422,15 +417,15 @@ final class TableExRetriever
         // final String schema = results.getString("CONSTRAINT_SCHEMA");
         final String constraintName = results.getString("CONSTRAINT_NAME");
         LOGGER.log(Level.FINEST, "Retrieving constraint definition for "
-                                 + constraintName);
+            + constraintName);
         String definition = results.getString("CHECK_CLAUSE");
 
         final MutableCheckConstraint checkConstraint = (MutableCheckConstraint) checkConstraintsMap
-          .get(constraintName);
+            .get(constraintName);
         if (checkConstraint == null)
         {
           LOGGER.log(Level.FINEST, "Could not add check constraint to table: "
-                                   + constraintName);
+              + constraintName);
           continue;
         }
 
@@ -451,10 +446,10 @@ final class TableExRetriever
     // Add check constraints to tables
     final Collection checkConstraintsCollection = checkConstraintsMap.values();
     for (final Iterator iter = checkConstraintsCollection.iterator(); iter
-      .hasNext();)
+        .hasNext();)
     {
       final MutableCheckConstraint checkConstraint = (MutableCheckConstraint) iter
-        .next();
+          .next();
       final MutableTable table = (MutableTable) checkConstraint.getParent();
       table.addCheckConstraint(checkConstraint);
     }

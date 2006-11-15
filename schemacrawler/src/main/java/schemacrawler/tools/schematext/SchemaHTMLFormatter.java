@@ -108,9 +108,9 @@ public final class SchemaHTMLFormatter
 
   void handleDatabaseInfo(final DatabaseInfo databaseInfo)
   {
-    out.println("<p id=\'databaseInfo\'>");
+    out.println("<pre id=\'databaseInfo\'>");
     FormatUtils.printDatabaseInfo(databaseInfo, out);
-    out.println("</p>");
+    out.println("</pre>");
   }
 
   void handleDatabasePropertiesEnd()
