@@ -61,7 +61,7 @@
       config="schemacrawler.config.properties"
       config-override="snapshot.config.properties"
       datasource="${db-name}"
-      command="verbose_schema,hsqldb.views"
+      command="maximum_schema"
       outputfile="${outputfile}"
       outputformat="text"
       append="false"
