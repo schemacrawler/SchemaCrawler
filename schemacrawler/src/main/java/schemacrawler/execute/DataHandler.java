@@ -21,6 +21,7 @@
 package schemacrawler.execute;
 
 
+import java.io.PrintWriter;
 import java.sql.ResultSet;
 
 /**
@@ -29,6 +30,13 @@ import java.sql.ResultSet;
 public interface DataHandler
 {
 
+  /**
+   * Gets the output print writer.
+   * 
+   * @return Print writer
+   */
+  PrintWriter getPrintWriter();
+  
   /**
    * Handles the begin of the execution.
    * 

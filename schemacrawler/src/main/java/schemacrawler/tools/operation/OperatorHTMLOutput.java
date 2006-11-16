@@ -63,11 +63,7 @@ final class OperatorHTMLOutput
     if (!getNoHeader())
     {
       out.println(FormatUtils.HTML_HEADER);
-      out.flush();
     }
-    out.print("<table>");
-    out.println("  <caption>" + getOperation().getOperationDescription()
-                + "</caption>");
   }
 
   /**
@@ -76,9 +72,7 @@ final class OperatorHTMLOutput
   public void end()
     throws SchemaCrawlerException
   {
-
-    out.print("</table>");
-    out.print("<p>&nbsp;</p>");
+    handleEndTables();
     if (!getNoFooter())
     {
       out.println("<pre id='tableCount'>" + getTableCount() + " tables"
@@ -95,10 +89,29 @@ final class OperatorHTMLOutput
   {
     if (!getNoInfo())
     {
-      out.println("<p id='databaseInfo'>");
+      out.println("<pre id='databaseInfo'>");
       out.println(databaseInfo);
-      out.println("</p>");
+      out.println("</pre>");
       out.flush();
+    }
+  }
+
+  private void handleEndTables()
+  {
+    if (operation.isAggregateOperation())
+    {
+      out.print("</table>");
+      out.println("<p>&nbsp;</p>");
+    }
+  }
+
+  protected void handleStartTables()
+  {
+    if (operation.isAggregateOperation())
+    {
+      out.print("<table>");
+      out.println("  <caption>" + getOperation().getOperationDescription()
+                  + "</caption>");
     }
   }
 

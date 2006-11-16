@@ -66,9 +66,9 @@ final class DataHTMLFormatter
   {
     if (!getNoInfo())
     {
-      out.println("<p id='databaseInfo'>");
+      out.println("<pre id='databaseInfo'>");
       out.println(databaseInfo);
-      out.println("</p>");
+      out.println("</pre>");
       out.flush();
     }
   }
@@ -81,6 +81,7 @@ final class DataHTMLFormatter
    */
   public void handleTitle(final String title)
   {
+    out.println("<p></p>");
     out.println("<table>");
     out.println("  <caption>" + title + "</caption>");
   }
@@ -102,7 +103,8 @@ final class DataHTMLFormatter
    */
   public void handleRowsBegin()
   {
-
+    out.println("  <tbody>");
+    out.flush();
   }
 
   /**
@@ -111,6 +113,7 @@ final class DataHTMLFormatter
    */
   public void handleRowsHeader(final String[] columnNames)
   {
+    out.println(" <thead>");
     out.println(" <tr>");
     final int count = columnNames.length;
     for (int i = 0; i < count; i++)
@@ -118,6 +121,7 @@ final class DataHTMLFormatter
       out.println(" <th>" + columnNames[i] + "</th>");
     }
     out.println(" </tr>");
+    out.println(" </thead>");
   }
 
   /**
@@ -152,6 +156,7 @@ final class DataHTMLFormatter
    */
   public void handleRowsEnd()
   {
+    out.println("  </tbody>");
     out.println("  </table>");
     out.flush();
   }

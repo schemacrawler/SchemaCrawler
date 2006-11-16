@@ -86,6 +86,34 @@ public abstract class BaseDataTextFormatter
   /**
    * {@inheritDoc}
    * 
+   * @see DataHandler#begin()
+   */
+  public void begin()
+  {
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see DataHandler#end()
+   */
+  public void end()
+  {
+    out.close();
+    LOGGER.log(Level.FINER, "Output writer closed");
+  }
+
+  /**
+   * @see schemacrawler.execute.DataHandler#getPrintWriter()
+   */
+  public PrintWriter getPrintWriter()
+  {
+    return out;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see schemacrawler.execute.DataHandler#handleData(java.sql.ResultSet)
    */
   public final void handleData(final ResultSet rows)
@@ -93,9 +121,6 @@ public abstract class BaseDataTextFormatter
   {
     try
     {
-      handleRowsBegin();
-
-      // write out the columns
       final ResultSetMetaData rsm = rows.getMetaData();
       final int columnCount = rsm.getColumnCount();
       final String[] columnNames = new String[columnCount];
@@ -105,6 +130,7 @@ public abstract class BaseDataTextFormatter
       }
       handleRowsHeader(columnNames);
 
+      handleRowsBegin();
       if (options.isMergeRows() && columnCount > 1)
       {
         iterateRowsAndMerge(rows, columnNames);
@@ -119,6 +145,146 @@ public abstract class BaseDataTextFormatter
     catch (final SQLException e)
     {
       throw new QueryExecutorException(e.getMessage(), e);
+    }
+  }
+
+  /**
+   * Handles metadata information.
+   * 
+   * @param databaseInfo
+   *        Database info.
+   */
+  public void handleMetadata(final String databaseInfo)
+  {
+    if (!getNoInfo())
+    {
+      out.println(Utilities.repeat("-", FormatUtils.MAX_LINE_LENGTH));
+      out.println(databaseInfo);
+      out.println(Utilities.repeat("-", FormatUtils.MAX_LINE_LENGTH));
+      out.flush();
+    }
+  }
+
+  /**
+   * Called to handle the row output. Handler to be implemented by
+   * subclass.
+   * 
+   * @param columnNames
+   *        Column names
+   * @param columnData
+   *        Column data
+   * @throws QueryExecutorException
+   *         On an exception
+   */
+  public abstract void handleRow(final String[] columnNames,
+                                 final String[] columnData)
+    throws QueryExecutorException;
+
+  /**
+   * Called to handle the beginning of row output. Handler to be
+   * implemented by subclass.
+   * 
+   * @throws QueryExecutorException
+   *         On an exception
+   */
+  public abstract void handleRowsBegin()
+    throws QueryExecutorException;
+
+  /**
+   * Called to handle the end of row output. Handler to be implemented
+   * by subclass.
+   * 
+   * @throws QueryExecutorException
+   *         On an exception
+   */
+  public abstract void handleRowsEnd()
+    throws QueryExecutorException;
+
+  /**
+   * Called to handle the header output. Handler to be implemented by
+   * subclass.
+   * 
+   * @param columnNames
+   *        Column names
+   * @throws QueryExecutorException
+   *         On an exception
+   */
+  public abstract void handleRowsHeader(final String[] columnNames)
+    throws QueryExecutorException;
+
+  boolean getNoFooter()
+  {
+    return options.getOutputOptions().isNoFooter();
+  }
+
+  boolean getNoHeader()
+  {
+    return options.getOutputOptions().isNoHeader();
+  }
+
+  boolean getNoInfo()
+  {
+    return options.getOutputOptions().isNoInfo();
+  }
+
+  private String convertColumnDataToString(final Object columnData)
+  {
+    String columnDataString;
+    if (columnData == null)
+    {
+      columnDataString = "<null>";
+    }
+    else if (columnData instanceof Clob || columnData instanceof Blob)
+    {
+      columnDataString = BINARY;
+      if (options.isShowLobs())
+      {
+        columnDataString = readLob(columnData);
+      }
+    }
+    else
+    {
+      columnDataString = columnData.toString();
+    }
+    return columnDataString;
+  }
+
+  private void doHandleOneRow(final String[] columnNames,
+                              final List row,
+                              final String lastColumnData)
+    throws QueryExecutorException
+  {
+    if (row.size() == 0)
+    {
+      return;
+    }
+    final List outputRow = new ArrayList();
+    // output
+    outputRow.addAll(row);
+    outputRow.add(lastColumnData);
+    final String[] columnData = (String[]) outputRow
+      .toArray(new String[outputRow.size()]);
+    handleRow(columnNames, columnData);
+  }
+
+  private void iterateRows(final ResultSet rows, final String[] columnNames)
+    throws SQLException, QueryExecutorException
+  {
+    final int columnCount = columnNames.length;
+    List currentRow;
+    while (rows.next())
+    {
+      currentRow = new ArrayList(columnCount);
+      for (int i = 0; i < columnCount; i++)
+      {
+        final int columnIndex = i + 1;
+        final Object columnData = rows.getObject(columnIndex);
+        final String columnDataString = convertColumnDataToString(columnData);
+        currentRow.add(columnDataString);
+      }
+      final String[] columnData = (String[]) currentRow
+        .toArray(new String[currentRow.size()]);
+      handleRow(columnNames, columnData);
     }
   }
 
@@ -171,28 +337,6 @@ public abstract class BaseDataTextFormatter
     doHandleOneRow(columnNames, previousRow, currentRowLastColumn.toString());
   }
 
-  private String convertColumnDataToString(final Object columnData)
-  {
-    String columnDataString;
-    if (columnData == null)
-    {
-      columnDataString = "<null>";
-    }
-    else if (columnData instanceof Clob || columnData instanceof Blob)
-    {
-      columnDataString = BINARY;
-      if (options.isShowLobs())
-      {
-        columnDataString = readLob(columnData);
-      }
-    }
-    else
-    {
-      columnDataString = columnData.toString();
-    }
-    return columnDataString;
-  }
-
   /**
    * Reads data from a LOB into a string. Default system encoding is
    * assumed.
@@ -225,144 +369,6 @@ public abstract class BaseDataTextFormatter
       return lobData;
     }
 
-  }
-
-  private void doHandleOneRow(final String[] columnNames,
-                              final List row,
-                              final String lastColumnData)
-    throws QueryExecutorException
-  {
-    if (row.size() == 0)
-    {
-      return;
-    }
-    final List outputRow = new ArrayList();
-    // output
-    outputRow.addAll(row);
-    outputRow.add(lastColumnData);
-    final String[] columnData = (String[]) outputRow
-      .toArray(new String[outputRow.size()]);
-    handleRow(columnNames, columnData);
-  }
-
-  private void iterateRows(final ResultSet rows, final String[] columnNames)
-    throws SQLException, QueryExecutorException
-  {
-    final int columnCount = columnNames.length;
-    List currentRow;
-    while (rows.next())
-    {
-      currentRow = new ArrayList(columnCount);
-      for (int i = 0; i < columnCount; i++)
-      {
-        final int columnIndex = i + 1;
-        final Object columnData = rows.getObject(columnIndex);
-        final String columnDataString = convertColumnDataToString(columnData);
-        currentRow.add(columnDataString);
-      }
-      final String[] columnData = (String[]) currentRow
-        .toArray(new String[currentRow.size()]);
-      handleRow(columnNames, columnData);
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see DataHandler#end()
-   */
-  public void end()
-  {
-    out.close();
-    LOGGER.log(Level.FINER, "Output writer closed");
-  }
-
-  /**
-   * Called to handle the beginning of row output. Handler to be
-   * implemented by subclass.
-   * 
-   * @throws QueryExecutorException
-   *         On an exception
-   */
-  public abstract void handleRowsBegin()
-    throws QueryExecutorException;
-
-  /**
-   * Called to handle the end of row output. Handler to be implemented
-   * by subclass.
-   * 
-   * @throws QueryExecutorException
-   *         On an exception
-   */
-  public abstract void handleRowsEnd()
-    throws QueryExecutorException;
-
-  /**
-   * Called to handle the header output. Handler to be implemented by
-   * subclass.
-   * 
-   * @param columnNames
-   *        Column names
-   * @throws QueryExecutorException
-   *         On an exception
-   */
-  public abstract void handleRowsHeader(final String[] columnNames)
-    throws QueryExecutorException;
-
-  /**
-   * Called to handle the row output. Handler to be implemented by
-   * subclass.
-   * 
-   * @param columnNames
-   *        Column names
-   * @param columnData
-   *        Column data
-   * @throws QueryExecutorException
-   *         On an exception
-   */
-  public abstract void handleRow(final String[] columnNames,
-                                 final String[] columnData)
-    throws QueryExecutorException;
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see DataHandler#begin()
-   */
-  public void begin()
-  {
-  }
-
-  boolean getNoFooter()
-  {
-    return options.getOutputOptions().isNoFooter();
-  }
-
-  boolean getNoHeader()
-  {
-    return options.getOutputOptions().isNoHeader();
-  }
-
-  boolean getNoInfo()
-  {
-    return options.getOutputOptions().isNoInfo();
-  }
-
-  /**
-   * Handles metadata information.
-   * 
-   * @param databaseInfo
-   *        Database info.
-   */
-  public void handleMetadata(final String databaseInfo)
-  {
-    if (!getNoInfo())
-    {
-      out.println(Utilities.repeat("-", FormatUtils.MAX_LINE_LENGTH));
-      out.println(databaseInfo);
-      out.println(Utilities.repeat("-", FormatUtils.MAX_LINE_LENGTH));
-      out.flush();
-    }
   }
 
 }
