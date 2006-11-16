@@ -37,6 +37,8 @@ public final class SchemaTextOptions
 
   private static final long serialVersionUID = -8133661515343358712L;
 
+  private static final String HIDE_PRIMARY_KEY_NAMES = "schemacrawler.format.hide_primarykey_names";
+  private static final String HIDE_FOREIGN_KEY_NAMES = "schemacrawler.format.hide_foreignkey_names";
   private static final String HIDE_INDEX_NAMES = "schemacrawler.format.hide_index_names";
   private static final String HIDE_CONSTRAINT_NAMES = "schemacrawler.format.hide_constraint_names";
   private static final String SHOW_ORDINAL_NUMBERS = "schemacrawler.format.show_ordinal_numbers";
@@ -44,7 +46,12 @@ public final class SchemaTextOptions
 
   private final boolean showJdbcColumnTypeNames;
   private final boolean showOrdinalNumbers;
+
+  private final boolean hidePrimaryKeyNames;
+  private final boolean hideForeignKeyNames;
+  private final boolean hideIndexNames;
   private final boolean hideConstraintNames;
+
   private final SchemaTextDetailType schemaTextDetailType;
 
   /**
@@ -76,6 +83,10 @@ public final class SchemaTextOptions
     {
       showJdbcColumnTypeNames = false;
       showOrdinalNumbers = false;
+      
+      hideForeignKeyNames = false;
+      hidePrimaryKeyNames = false;
+      hideIndexNames = false;
       hideConstraintNames = false;
     }
     else
@@ -83,8 +94,11 @@ public final class SchemaTextOptions
       showJdbcColumnTypeNames = getBooleanProperty(SHOW_JDBC_COLUMN_TYPE_NAMES,
                                                    config);
       showOrdinalNumbers = getBooleanProperty(SHOW_ORDINAL_NUMBERS, config);
-      hideConstraintNames = getBooleanProperty(HIDE_INDEX_NAMES, config)
-                            || getBooleanProperty(HIDE_CONSTRAINT_NAMES, config);
+
+      hideForeignKeyNames = getBooleanProperty(HIDE_FOREIGN_KEY_NAMES, config);
+      hidePrimaryKeyNames = getBooleanProperty(HIDE_PRIMARY_KEY_NAMES, config);
+      hideIndexNames = getBooleanProperty(HIDE_INDEX_NAMES, config);
+      hideConstraintNames = getBooleanProperty(HIDE_CONSTRAINT_NAMES, config);
     }
   }
 
@@ -101,6 +115,21 @@ public final class SchemaTextOptions
   boolean isHideConstraintNames()
   {
     return hideConstraintNames;
+  }
+
+  boolean isHideForeignKeyNames()
+  {
+    return hideForeignKeyNames;
+  }
+
+  boolean isHideIndexNames()
+  {
+    return hideIndexNames;
+  }
+
+  boolean isHidePrimaryKeyNames()
+  {
+    return hidePrimaryKeyNames;
   }
 
   boolean isShowJdbcColumnTypeNames()

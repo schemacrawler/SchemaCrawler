@@ -339,11 +339,6 @@ public abstract class BaseSchemaTextFormatter
    */
   abstract void handleTableStart();
 
-  private final boolean isShowConstraintNames()
-  {
-    return !options.isHideConstraintNames();
-  }
-
   private String negate(final boolean positive, final String text)
   {
     String textValue = text;
@@ -363,7 +358,7 @@ public abstract class BaseSchemaTextFormatter
       if (constraint != null)
       {
         String constraintName = "";
-        if (isShowConstraintNames())
+        if (!options.isHideConstraintNames())
         {
           constraintName = constraint.getName();
         }
@@ -518,7 +513,7 @@ public abstract class BaseSchemaTextFormatter
         out.println(formattingHelper.createEmptyRow());
 
         String fkName = "";
-        if (isShowConstraintNames())
+        if (!options.isHideForeignKeyNames())
         {
           fkName = name;
         }
@@ -541,7 +536,7 @@ public abstract class BaseSchemaTextFormatter
         out.println(formattingHelper.createEmptyRow());
 
         String indexName = "";
-        if (isShowConstraintNames())
+        if (!options.isHideIndexNames())
         {
           indexName = index.getName();
         }
@@ -564,7 +559,7 @@ public abstract class BaseSchemaTextFormatter
       out.println(formattingHelper.createEmptyRow());
 
       String pkName = "";
-      if (isShowConstraintNames())
+      if (!options.isHidePrimaryKeyNames())
       {
         pkName = name;
       }
@@ -590,11 +585,7 @@ public abstract class BaseSchemaTextFormatter
                                    + privilege.getGrantee();
         out.println(formattingHelper.createEmptyRow());
 
-        String privilegeName = "";
-        if (isShowConstraintNames())
-        {
-          privilegeName = privilege.getName();
-        }
+        String privilegeName = privilege.getName();
         final String privilegeDetails = "[" + privilegeType + "]";
         out.println(formattingHelper.createNameRow(privilegeName,
                                                    privilegeDetails));
@@ -621,11 +612,7 @@ public abstract class BaseSchemaTextFormatter
         final String actionStatement = trigger.getActionStatement();
         out.println(formattingHelper.createEmptyRow());
 
-        String triggerName = "";
-        if (isShowConstraintNames())
-        {
-          triggerName = trigger.getName();
-        }
+        String triggerName = trigger.getName();
         out.println(formattingHelper.createNameRow(triggerName, triggerType));
 
         if (!Utilities.isBlank(actionCondition))

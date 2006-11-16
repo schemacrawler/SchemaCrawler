@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="examples/api"/>
+	<classpathentry kind="src" path="examples/maven/src/main/java"/>
+	<classpathentry kind="lib" path="dbserver/hsqldb.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/dbconnector"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/integrations"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/schemacrawler"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/schemacrawler-maven-plugin"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

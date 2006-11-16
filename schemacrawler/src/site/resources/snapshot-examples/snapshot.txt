@@ -2,69 +2,431 @@
 -- database product: HSQL Database Engine 1.8.0
 -- driver: org.hsqldb.jdbcDriver - HSQL Database Engine Driver 1.8.0
 -- connection: jdbc:hsqldb:hsql://localhost:9001/schemacrawler
--- catalog: 
 -- schema pattern: PUBLIC
 ------------------------------------------------------------------------
 
 
-ABC                                                          [table]
-------------------------------------------------------------------------
-  COL1                              INTEGER                  primary key
+AllProceduresAreCallable              true
+AllTablesAreSelectable                true
+CatalogSeparator                      
+CatalogTerm                           
+Catalogs                              []
+DataDefinitionCausesTransactionCommit  true
+DataDefinitionIgnoredInTransactions   false
+DatabaseMajorVersion                  1
+DatabaseMinorVersion                  8
+DatabaseProductName                   HSQL Database Engine
+DatabaseProductVersion                1.8.0
+DefaultTransactionIsolation           1
+DeletesAreDetectedResultSetTypeForwardOnly  false
+DeletesAreDetectedResultSetTypeScrollInsensitive  false
+DeletesAreDetectedResultSetTypeScrollSensitive  false
+DoesMaxRowSizeIncludeBlobs            true
+DriverMajorVersion                    1
+DriverMinorVersion                    8
+DriverName                            HSQL Database Engine Driver
+DriverVersion                         1.8.0
+ExtraNameCharacters                   []
+IdentifierQuoteString                 "
+InsertsAreDetectedResultSetTypeForwardOnly  false
+InsertsAreDetectedResultSetTypeScrollInsensitive  false
+InsertsAreDetectedResultSetTypeScrollSensitive  false
+IsCatalogAtStart                      false
+IsReadOnly                            false
+JDBCMajorVersion                      3
+JDBCMinorVersion                      0
+LocatorsUpdateCopy                    false
+MaxBinaryLiteralLength                0
+MaxCatalogNameLength                  0
+MaxCharLiteralLength                  0
+MaxColumnNameLength                   0
+MaxColumnsInGroupBy                   0
+MaxColumnsInIndex                     0
+MaxColumnsInOrderBy                   0
+MaxColumnsInSelect                    0
+MaxColumnsInTable                     0
+MaxConnections                        0
+MaxCursorNameLength                   0
+MaxIndexLength                        0
+MaxProcedureNameLength                0
+MaxRowSize                            0
+MaxSchemaNameLength                   0
+MaxStatementLength                    0
+MaxStatements                         0
+MaxTableNameLength                    0
+MaxTablesInSelect                     0
+MaxUserNameLength                     0
+NullPlusNonNullIsNull                 true
+NullsAreSortedAtEnd                   false
+NullsAreSortedAtStart                 false
+NullsAreSortedHigh                    false
+NullsAreSortedLow                     true
+NumericFunctions                      [ABS, ACOS, ASIN, ATAN, ATAN2, CEILING, COS, COT, DEGREES, EXP, FLOOR, LOG, LOG10, MOD, PI, POWER, RADIANS, RAND, ROUND, SIGN, SIN, SQRT, TAN, TRUNCATE, BITAND, BITOR, BITXOR, ROUNDMAGIC]
+OthersDeletesAreVisibleResultSetTypeForwardOnly  false
+OthersDeletesAreVisibleResultSetTypeScrollInsensitive  false
+OthersDeletesAreVisibleResultSetTypeScrollSensitive  false
+OthersInsertsAreVisibleResultSetTypeForwardOnly  false
+OthersInsertsAreVisibleResultSetTypeScrollInsensitive  false
+OthersInsertsAreVisibleResultSetTypeScrollSensitive  false
+OthersUpdatesAreVisibleResultSetTypeForwardOnly  false
+OthersUpdatesAreVisibleResultSetTypeScrollInsensitive  false
+OthersUpdatesAreVisibleResultSetTypeScrollSensitive  false
+OwnDeletesAreVisibleResultSetTypeForwardOnly  false
+OwnDeletesAreVisibleResultSetTypeScrollInsensitive  false
+OwnDeletesAreVisibleResultSetTypeScrollSensitive  false
+OwnInsertsAreVisibleResultSetTypeForwardOnly  false
+OwnInsertsAreVisibleResultSetTypeScrollInsensitive  false
+OwnInsertsAreVisibleResultSetTypeScrollSensitive  false
+OwnUpdatesAreVisibleResultSetTypeForwardOnly  false
+OwnUpdatesAreVisibleResultSetTypeScrollInsensitive  false
+OwnUpdatesAreVisibleResultSetTypeScrollSensitive  false
+ProcedureTerm                         
+ResultSetHoldability                  1
+SQLKeywords                           [BEFORE, BIGINT, BINARY, CACHED, DATETIME, LIMIT, LONGVARBINARY, LONGVARCHAR, OBJECT, OTHER, SAVEPOINT, TEMP, TEXT, TOP, TRIGGER, TINYINT, VARBINARY, VARCHAR_IGNORECASE]
+SQLStateType                          2
+SchemaTerm                            SCHEMA
+Schemas                               [INFORMATION_SCHEMA, PUBLIC]
+SearchStringEscape                    \
+StoresLowerCaseIdentifiers            false
+StoresLowerCaseQuotedIdentifiers      false
+StoresMixedCaseIdentifiers            false
+StoresMixedCaseQuotedIdentifiers      false
+StoresUpperCaseIdentifiers            true
+StoresUpperCaseQuotedIdentifiers      false
+StringFunctions                       [ASCII, BIT_LENGTH, CHAR, CHAR_LENGTH, CHARACTER_LENGTH, CONCAT, DIFFERENCE, HEXTORAW, INSERT, LCASE, LEFT, LENGTH, LOCATE, LTRIM, OCTET_LENGTH, RAWTOHEX, REPEAT, REPLACE, RIGHT, RTRIM, SOUNDEX, SPACE, SUBSTR, SUBSTRING, UCASE, LOWER, UPPER]
+SupportsANSI92EntryLevelSQL           false
+SupportsANSI92FullSQL                 false
+SupportsANSI92IntermediateSQL         false
+SupportsAlterTableWithAddColumn       true
+SupportsAlterTableWithDropColumn      true
+SupportsBatchUpdates                  true
+SupportsCatalogsInDataManipulation    false
+SupportsCatalogsInIndexDefinitions    false
+SupportsCatalogsInPrivilegeDefinitions  false
+SupportsCatalogsInProcedureCalls      false
+SupportsCatalogsInTableDefinitions    false
+SupportsColumnAliasing                true
+SupportsConvert                       true
+SupportsCoreSQLGrammar                true
+SupportsCorrelatedSubqueries          true
+SupportsDataDefinitionAndDataManipulationTransactions  false
+SupportsDataManipulationTransactionsOnly  true
+SupportsDifferentTableCorrelationNames  true
+SupportsExpressionsInOrderBy          true
+SupportsExtendedSQLGrammar            false
+SupportsFullOuterJoins                false
+SupportsGetGeneratedKeys              false
+SupportsGroupBy                       true
+SupportsGroupByBeyondSelect           true
+SupportsGroupByUnrelated              true
+SupportsIntegrityEnhancementFacility  true
+SupportsLikeEscapeClause              true
+SupportsLimitedOuterJoins             true
+SupportsMinimumSQLGrammar             false
+SupportsMixedCaseIdentifiers          false
+SupportsMixedCaseQuotedIdentifiers    true
+SupportsMultipleOpenResults           false
+SupportsMultipleResultSets            false
+SupportsMultipleTransactions          true
+SupportsNamedParameters               true
+SupportsNonNullableColumns            true
+SupportsOpenCursorsAcrossCommit       false
+SupportsOpenCursorsAcrossRollback     false
+SupportsOpenStatementsAcrossCommit    true
+SupportsOpenStatementsAcrossRollback  true
+SupportsOrderByUnrelated              true
+SupportsOuterJoins                    true
+SupportsPositionedDelete              false
+SupportsPositionedUpdate              false
+SupportsResultSetTypeResultSetTypeForwardOnly  true
+SupportsResultSetTypeResultSetTypeScrollInsensitive  true
+SupportsResultSetTypeResultSetTypeScrollSensitive  false
+SupportsSavepoints                    true
+SupportsSchemasInDataManipulation     false
+SupportsSchemasInIndexDefinitions     true
+SupportsSchemasInPrivilegeDefinitions  true
+SupportsSchemasInProcedureCalls       false
+SupportsSchemasInTableDefinitions     true
+SupportsSelectForUpdate               false
+SupportsStatementPooling              false
+SupportsStoredProcedures              true
+SupportsSubqueriesInComparisons       true
+SupportsSubqueriesInExists            true
+SupportsSubqueriesInIns               true
+SupportsSubqueriesInQuantifieds       true
+SupportsTableCorrelationNames         true
+SupportsTransactions                  true
+SupportsUnion                         true
+SupportsUnionAll                      true
+SystemFunctions                       [DATABASE, USER, IDENTITY]
+TableTypes                            [GLOBAL TEMPORARY, SYSTEM TABLE, TABLE, VIEW]
+TimeDateFunctions                     [CURDATE, CURTIME, DATEDIFF, DAYNAME, DAY, DAYOFMONTH, DAYOFWEEK, DAYOFYEAR, HOUR, MINUTE, MONTH, MONTHNAME, NOW, QUARTER, SECOND, WEEK, YEAR, TO_CHAR]
+TypeInfo                              [TINYINT, BIGINT, LONGVARBINARY, VARBINARY, BINARY, LONGVARCHAR, CHAR, NUMERIC, DECIMAL, INTEGER, SMALLINT, FLOAT, REAL, DOUBLE, VARCHAR, VARCHAR_IGNORECASE, BOOLEAN, DATE, TIME, TIMESTAMP, OTHER]
+URL                                   jdbc:hsqldb:hsql://localhost:9001/schemacrawler
+UpdatesAreDetectedResultSetTypeForwardOnly  false
+UpdatesAreDetectedResultSetTypeScrollInsensitive  false
+UpdatesAreDetectedResultSetTypeScrollSensitive  false
+UserName                              SA
+UsesLocalFilePerTable                 false
+UsesLocalFiles                        false
 
-SYS_PK_52  [primary key]
-  COL1                              INTEGER                  primary key
+
+BIGINT                                                       [data type]
+  based on BIGINT
+  not user defined
+  defined with no parameters
+  nullable
+  auto-incrementable
+  searchable
+
+BINARY                                                       [data type]
+  based on BINARY
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+BOOLEAN                                                      [data type]
+  based on BOOLEAN
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+CHAR                                                         [data type]
+  based on CHAR
+  not user defined
+  defined with LENGTH
+  nullable
+  not auto-incrementable
+  searchable
+
+DATE                                                         [data type]
+  based on DATE
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+DECIMAL                                                      [data type]
+  based on DECIMAL
+  not user defined
+  defined with PRECISION,SCALE
+  nullable
+  not auto-incrementable
+  searchable
+
+DOUBLE                                                       [data type]
+  based on DOUBLE
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+FLOAT                                                        [data type]
+  based on FLOAT
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+INTEGER                                                      [data type]
+  based on INTEGER
+  not user defined
+  defined with no parameters
+  nullable
+  auto-incrementable
+  searchable
+
+LONGVARBINARY                                                [data type]
+  based on LONGVARBINARY
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+LONGVARCHAR                                                  [data type]
+  based on LONGVARCHAR
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+NUMERIC                                                      [data type]
+  based on NUMERIC
+  not user defined
+  defined with PRECISION,SCALE
+  nullable
+  not auto-incrementable
+  searchable
+
+OTHER                                                        [data type]
+  based on OTHER
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  not searchable
+
+REAL                                                         [data type]
+  based on REAL
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+SMALLINT                                                     [data type]
+  based on SMALLINT
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+TIME                                                         [data type]
+  based on TIME
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+TIMESTAMP                                                    [data type]
+  based on TIMESTAMP
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+TINYINT                                                      [data type]
+  based on TINYINT
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+VARBINARY                                                    [data type]
+  based on VARBINARY
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+VARCHAR                                                      [data type]
+  based on VARCHAR
+  not user defined
+  defined with LENGTH
+  nullable
+  not auto-incrementable
+  searchable
+
+VARCHAR_IGNORECASE                                           [data type]
+  based on VARCHAR
+  not user defined
+  defined with LENGTH
+  nullable
+  not auto-incrementable
+  searchable
 
 
-ABC1                                                          [view]
-------------------------------------------------------------------------
-  COL1                              INTEGER                       
 
-
-BAC                                                          [table]
-------------------------------------------------------------------------
-  COL1                              INTEGER                       
-  NEWCOL                            INTEGER                       
-  ANOTHERCOL                        INTEGER                       
-
-
-CUSTOMER                                                     [table]
+CUSTOMER                                                         [table]
 ------------------------------------------------------------------------
   ID                                INTEGER                  primary key
-  FIRSTNAME                         VARCHAR(2147483647)           
-  LASTNAME                          VARCHAR(2147483647)           
-  STREET                            VARCHAR(2147483647)           
-  CITY                              VARCHAR(2147483647)           
+  FIRSTNAME                         VARCHAR                       
+  LASTNAME                          VARCHAR                       
+  STREET                            VARCHAR                       
+  CITY                              VARCHAR                       
 
-SYS_PK_48  [primary key]
+SYS_PK_48                                                  [primary key]
   ID                                INTEGER                  primary key
 
-SYS_FK_1  [foreign key, on update no action]
-  ID --> INVOICE.CUSTOMERID
+SYS_FK_1                              [foreign key, on update no action]
+  ID --> INVOICE.CUSTOMERID                                       
+
+DELETE                                             [grantable privilege]
+  DBA --> SA                                                      
+
+INSERT                                             [grantable privilege]
+  DBA --> SA                                                      
+
+SELECT                                             [grantable privilege]
+  DBA --> SA                                                      
+
+UPDATE                                             [grantable privilege]
+  DBA --> SA                                                      
+
+SCTRIGGER                              [trigger, before delete, per row]
+  CREATE TRIGGER SCTRIGGER BEFORE DELETE ON CUSTOMER FOR EACH ROW CALL "org.hsqldb.sample.TriggerSample"
 
 
-INVOICE                                                      [table]
+CUSTOMERLIST                                                      [view]
+------------------------------------------------------------------------
+  ID                                INTEGER                       
+  FIRSTNAME                         VARCHAR                       
+  LASTNAME                          VARCHAR                       
+
+DELETE                                             [grantable privilege]
+  DBA --> SA                                                      
+
+INSERT                                             [grantable privilege]
+  DBA --> SA                                                      
+
+SELECT                                             [grantable privilege]
+  DBA --> SA                                                      
+
+UPDATE                                             [grantable privilege]
+  DBA --> SA                                                      
+
+  SELECT ID, FIRSTNAME, LASTNAME FROM CUSTOMER
+
+
+INVOICE                                                          [table]
 ------------------------------------------------------------------------
   ID                                INTEGER                  primary key
   CUSTOMERID                        INTEGER                       
   TOTAL                             DECIMAL(646456993, 0)         
 
-SYS_PK_49  [primary key]
+SYS_PK_49                                                  [primary key]
   ID                                INTEGER                  primary key
 
-SYS_FK_1  [foreign key, on update no action]
-  CUSTOMER.ID --> CUSTOMERID
+SYS_FK_1                              [foreign key, on update no action]
+  CUSTOMER.ID --> CUSTOMERID                                      
 
-SYS_FK_4  [foreign key, on update no action]
-  ID --> ITEM.INVOICEID
+SYS_FK_4                              [foreign key, on update no action]
+  ID --> ITEM.INVOICEID                                           
 
-SYS_USER_SYS_IDX_2_9  [non-unique ascending other index]
+SYS_USER_SYS_IDX_2_9                  [non-unique ascending other index]
   CUSTOMERID                        INTEGER                       
 
-SYS_IDX_50  [non-unique ascending other index]
+SYS_IDX_50                            [non-unique ascending other index]
   CUSTOMERID                        INTEGER                       
 
+DELETE                                             [grantable privilege]
+  DBA --> SA                                                      
 
-ITEM                                                         [table]
+INSERT                                             [grantable privilege]
+  DBA --> SA                                                      
+
+SELECT                                             [grantable privilege]
+  DBA --> SA                                                      
+
+UPDATE                                             [grantable privilege]
+  DBA --> SA                                                      
+
+
+ITEM                                                             [table]
 ------------------------------------------------------------------------
   INVOICEID                         INTEGER                  primary key
   ITEM                              INTEGER                  primary key
@@ -72,60 +434,1423 @@ ITEM                                                         [table]
   QUANTITY                          INTEGER                       
   COST                              DECIMAL(646456993, 0)         
 
-SYS_PK_46  [primary key]
+SYS_PK_46                                                  [primary key]
   INVOICEID                         INTEGER                  primary key
   ITEM                              INTEGER                  primary key
 
-SYS_FK_4  [foreign key, on update no action]
-  INVOICE.ID --> INVOICEID
+SYS_FK_5                              [foreign key, on update no action]
+  PRODUCT.ID --> PRODUCTID                                        
 
-SYS_FK_5  [foreign key, on update no action]
-  PRODUCT.ID --> PRODUCTID
+SYS_FK_4                              [foreign key, on update no action]
+  INVOICE.ID --> INVOICEID                                        
 
-SYS_IDX_55  [non-unique ascending other index]
+SYS_USER_SYS_IDX_6_1                  [non-unique ascending other index]
   INVOICEID                         INTEGER                  primary key
 
-SYS_USER_SYS_IDX_6_1  [non-unique ascending other index]
+SYS_IDX_55                            [non-unique ascending other index]
+  PRODUCTID                         INTEGER                       
+
+SYS_USER_SYS_IDX_8_2                  [non-unique ascending other index]
+  PRODUCTID                         INTEGER                       
+
+SYS_IDX_53                            [non-unique ascending other index]
   INVOICEID                         INTEGER                  primary key
 
-SYS_IDX_57  [non-unique ascending other index]
-  PRODUCTID                         INTEGER                       
+DELETE                                             [grantable privilege]
+  DBA --> SA                                                      
 
-SYS_USER_SYS_IDX_8_2  [non-unique ascending other index]
-  PRODUCTID                         INTEGER                       
+INSERT                                             [grantable privilege]
+  DBA --> SA                                                      
+
+SELECT                                             [grantable privilege]
+  DBA --> SA                                                      
+
+UPDATE                                             [grantable privilege]
+  DBA --> SA                                                      
 
 
-PRODUCT                                                      [table]
+PRODUCT                                                          [table]
 ------------------------------------------------------------------------
   ID                                INTEGER                  primary key
-  NAME                              VARCHAR(2147483647)           
+  NAME                              VARCHAR                       
   PRICE                             DECIMAL(646456993, 0)         
 
-SYS_PK_47  [primary key]
+SYS_PK_47                                                  [primary key]
   ID                                INTEGER                  primary key
 
-SYS_FK_5  [foreign key, on update no action]
-  ID --> ITEM.PRODUCTID
+SYS_FK_5                              [foreign key, on update no action]
+  ID --> ITEM.PRODUCTID                                           
+
+DELETE                                             [grantable privilege]
+  DBA --> SA                                                      
+
+INSERT                                             [grantable privilege]
+  DBA --> SA                                                      
+
+SELECT                                             [grantable privilege]
+  DBA --> SA                                                      
+
+UPDATE                                             [grantable privilege]
+  DBA --> SA                                                      
 
 
-TEST                                                         [table]
+SUPPLIER                                                         [table]
 ------------------------------------------------------------------------
-  ID                                INTEGER                  primary key
-  FIRSTNAME                         VARCHAR(20)                   
-  NAME                              VARCHAR(50)                   
-  ZIP                               INTEGER                       
+  SUPPLIER_ID                       INTEGER                       
+  SUPPLIER_NAME                     VARCHAR(50)                   
 
-SYS_PK_53  [primary key]
-  ID                                INTEGER                  primary key
+CHECK_UPPERCASE_SUPPLIER_NAME                         [check constraint]
+  SUPPLIER.SUPPLIER_NAME=UPPER(SUPPLIER.SUPPLIER_NAME)
+
+DELETE                                             [grantable privilege]
+  DBA --> SA                                                      
+
+INSERT                                             [grantable privilege]
+  DBA --> SA                                                      
+
+SELECT                                             [grantable privilege]
+  DBA --> SA                                                      
+
+UPDATE                                             [grantable privilege]
+  DBA --> SA                                                      
 
 
-ABC                                                         3 rows
-ABC1                                                        3 rows
-BAC                                                          empty
-CUSTOMER                                                   50 rows
-INVOICE                                                    50 rows
-ITEM                                                      650 rows
-PRODUCT                                                    50 rows
-TEST                                                    1,000 rows
+ABS                                          [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
 
-8 tables
+  org.hsqldb.Library.abs(double)
+
+
+ACOS                                         [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.acos(double)
+
+
+ASCII                                        [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.ascii(java.lang.String)
+
+
+ASIN                                         [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.asin(double)
+
+
+ATAN                                         [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.atan(double)
+
+
+ATAN2                                        [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p2                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.atan2(double,double)
+
+
+BIT_LENGTH                                   [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.bitLength(java.lang.String)
+
+
+BITAND                                       [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               INTEGER                  in   
+  @p2                               INTEGER                  in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.bitand(int,int)
+
+
+BITOR                                        [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               INTEGER                  in   
+  @p2                               INTEGER                  in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.bitor(int,int)
+
+
+BITXOR                                       [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               INTEGER                  in   
+  @p2                               INTEGER                  in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.bitxor(int,int)
+
+
+CEILING                                      [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.ceil(double)
+
+
+CHAR                                         [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               INTEGER                  in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.character(int)
+
+
+CHAR_LENGTH                                  [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.length(java.lang.String)
+
+
+CHARACTER_LENGTH                             [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.length(java.lang.String)
+
+
+CONCAT                                       [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p2                               LONGVARCHAR              in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.concat(java.lang.String,java.lang.String)
+
+
+COS                                          [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.cos(double)
+
+
+COT                                          [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  org.hsqldb.Library.cot(double)
+
+
+CURDATE                                      [procedure, returns result]
+------------------------------------------------------------------------
+  @p0                               DATE                     result
+
+  org.hsqldb.Library.curdate(java.sql.Connection)
+
+
+CURTIME                                      [procedure, returns result]
+------------------------------------------------------------------------
+  @p0                               TIME                     result
+
+  org.hsqldb.Library.curtime(java.sql.Connection)
+
+
+DATABASE                                     [procedure, returns result]
+------------------------------------------------------------------------
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.database(java.sql.Connection)
+
+
+DATEDIFF                                     [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p2                               TIMESTAMP                in   
+  @p3                               TIMESTAMP                in   
+  @p0                               BIGINT                   result
+
+  org.hsqldb.Library.datediff(java.lang.String,java.sql.Timestamp,java.sql.Timestamp)
+
+
+DAY                                          [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DATE                     in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.dayofmonth(java.sql.Date)
+
+
+DAYNAME                                      [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DATE                     in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.dayname(java.sql.Date)
+
+
+DAYOFMONTH                                   [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DATE                     in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.dayofmonth(java.sql.Date)
+
+
+DAYOFWEEK                                    [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DATE                     in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.dayofweek(java.sql.Date)
+
+
+DAYOFYEAR                                    [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DATE                     in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.dayofyear(java.sql.Date)
+
+
+DEGREES                                      [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.toDegrees(double)
+
+
+DIFFERENCE                                   [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p2                               LONGVARCHAR              in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.difference(java.lang.String,java.lang.String)
+
+
+EXP                                          [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.exp(double)
+
+
+FLOOR                                        [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.floor(double)
+
+
+HEXTORAW                                     [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.hexToRaw(java.lang.String)
+
+
+HOUR                                         [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               TIME                     in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.hour(java.sql.Time)
+
+
+IDENTITY                                     [procedure, returns result]
+------------------------------------------------------------------------
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.identity()
+
+
+INSERT                                       [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p2                               INTEGER                  in   
+  @p3                               INTEGER                  in   
+  @p4                               LONGVARCHAR              in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.insert(java.lang.String,int,int,java.lang.String)
+
+
+java.lang.Math.abs                           [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               BIGINT                   in   
+  @p0                               BIGINT                   result
+
+  java.lang.Math.abs(double)java.lang.Math.abs(float)java.lang.Math.abs(int)java.lang.Math.abs(long)
+
+
+java.lang.Math.acos                          [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.acos(double)
+
+
+java.lang.Math.asin                          [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.asin(double)
+
+
+java.lang.Math.atan                          [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.atan(double)
+
+
+java.lang.Math.atan2                         [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p2                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.atan2(double,double)
+
+
+java.lang.Math.ceil                          [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.ceil(double)
+
+
+java.lang.Math.cos                           [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.cos(double)
+
+
+java.lang.Math.exp                           [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.exp(double)
+
+
+java.lang.Math.floor                         [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.floor(double)
+
+
+java.lang.Math.IEEEremainder                 [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p2                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.IEEEremainder(double,double)
+
+
+java.lang.Math.log                           [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.log(double)
+
+
+java.lang.Math.max                           [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               BIGINT                   in   
+  @p2                               BIGINT                   in   
+  @p0                               BIGINT                   result
+
+  java.lang.Math.max(double,double)java.lang.Math.max(float,float)java.lang.Math.max(int,int)java.lang.Math.max(long,long)
+
+
+java.lang.Math.min                           [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               BIGINT                   in   
+  @p2                               BIGINT                   in   
+  @p0                               BIGINT                   result
+
+  java.lang.Math.min(double,double)java.lang.Math.min(float,float)java.lang.Math.min(int,int)java.lang.Math.min(long,long)
+
+
+java.lang.Math.pow                           [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p2                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.pow(double,double)
+
+
+java.lang.Math.random                        [procedure, returns result]
+------------------------------------------------------------------------
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.random()
+
+
+java.lang.Math.rint                          [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.rint(double)
+
+
+java.lang.Math.round                         [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               FLOAT(8, 17)             in   
+  @p0                               INTEGER                  result
+
+  java.lang.Math.round(double)java.lang.Math.round(float)
+
+
+java.lang.Math.sin                           [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.sin(double)
+
+
+java.lang.Math.sqrt                          [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.sqrt(double)
+
+
+java.lang.Math.tan                           [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.tan(double)
+
+
+java.lang.Math.toDegrees                     [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.toDegrees(double)
+
+
+java.lang.Math.toRadians                     [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.toRadians(double)
+
+
+LCASE                                        [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.lcase(java.lang.String)
+
+
+LEFT                                         [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p2                               INTEGER                  in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.left(java.lang.String,int)
+
+
+LENGTH                                       [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.length(java.lang.String)
+
+
+LOCATE                                       [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p2                               LONGVARCHAR              in   
+  @p3                               INTEGER                  in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.locate(java.lang.String,java.lang.String,java.lang.Integer)
+
+
+LOG                                          [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.log(double)
+
+
+LOG10                                        [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  org.hsqldb.Library.log10(double)
+
+
+LOWER                                        [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.lcase(java.lang.String)
+
+
+LTRIM                                        [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.ltrim(java.lang.String)
+
+
+MINUTE                                       [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               TIME                     in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.minute(java.sql.Time)
+
+
+MOD                                          [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               INTEGER                  in   
+  @p2                               INTEGER                  in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.mod(int,int)
+
+
+MONTH                                        [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DATE                     in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.month(java.sql.Date)
+
+
+MONTHNAME                                    [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DATE                     in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.monthname(java.sql.Date)
+
+
+NOW                                          [procedure, returns result]
+------------------------------------------------------------------------
+  @p0                               TIMESTAMP                result
+
+  org.hsqldb.Library.now(java.sql.Connection)
+
+
+OCTET_LENGTH                                 [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.octetLength(java.lang.String)
+
+
+org.hsqldb.Library.abs                       [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  org.hsqldb.Library.abs(double)
+
+
+org.hsqldb.Library.ascii                     [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.ascii(java.lang.String)
+
+
+org.hsqldb.Library.bitand                    [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               INTEGER                  in   
+  @p2                               INTEGER                  in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.bitand(int,int)
+
+
+org.hsqldb.Library.bitLength                 [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.bitLength(java.lang.String)
+
+
+org.hsqldb.Library.bitor                     [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               INTEGER                  in   
+  @p2                               INTEGER                  in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.bitor(int,int)
+
+
+org.hsqldb.Library.bitxor                    [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               INTEGER                  in   
+  @p2                               INTEGER                  in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.bitxor(int,int)
+
+
+org.hsqldb.Library.character                 [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               INTEGER                  in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.character(int)
+
+
+org.hsqldb.Library.concat                    [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p2                               LONGVARCHAR              in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.concat(java.lang.String,java.lang.String)
+
+
+org.hsqldb.Library.cot                       [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  org.hsqldb.Library.cot(double)
+
+
+org.hsqldb.Library.curdate                   [procedure, returns result]
+------------------------------------------------------------------------
+  @p0                               DATE                     result
+
+  org.hsqldb.Library.curdate(java.sql.Connection)
+
+
+org.hsqldb.Library.curtime                   [procedure, returns result]
+------------------------------------------------------------------------
+  @p0                               TIME                     result
+
+  org.hsqldb.Library.curtime(java.sql.Connection)
+
+
+org.hsqldb.Library.database                  [procedure, returns result]
+------------------------------------------------------------------------
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.database(java.sql.Connection)
+
+
+org.hsqldb.Library.datediff                  [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p2                               TIMESTAMP                in   
+  @p3                               TIMESTAMP                in   
+  @p0                               BIGINT                   result
+
+  org.hsqldb.Library.datediff(java.lang.String,java.sql.Timestamp,java.sql.Timestamp)
+
+
+org.hsqldb.Library.dayname                   [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DATE                     in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.dayname(java.sql.Date)
+
+
+org.hsqldb.Library.dayofmonth                [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DATE                     in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.dayofmonth(java.sql.Date)
+
+
+org.hsqldb.Library.dayofweek                 [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DATE                     in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.dayofweek(java.sql.Date)
+
+
+org.hsqldb.Library.dayofyear                 [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DATE                     in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.dayofyear(java.sql.Date)
+
+
+org.hsqldb.Library.difference                [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p2                               LONGVARCHAR              in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.difference(java.lang.String,java.lang.String)
+
+
+org.hsqldb.Library.getAutoCommit             [procedure, returns result]
+------------------------------------------------------------------------
+  @p0                               BOOLEAN(1)               result
+
+  org.hsqldb.Library.getAutoCommit(java.sql.Connection)
+
+
+org.hsqldb.Library.getDatabaseMajorVersion         [procedure, returns result]
+------------------------------------------------------------------------
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.getDatabaseMajorVersion()
+
+
+org.hsqldb.Library.getDatabaseMinorVersion         [procedure, returns result]
+------------------------------------------------------------------------
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.getDatabaseMinorVersion()
+
+
+org.hsqldb.Library.getDatabaseProductName         [procedure, returns result]
+------------------------------------------------------------------------
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.getDatabaseProductName()
+
+
+org.hsqldb.Library.getDatabaseProductVersion         [procedure, returns result]
+------------------------------------------------------------------------
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.getDatabaseProductVersion()
+
+
+org.hsqldb.Library.hexToRaw                  [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.hexToRaw(java.lang.String)
+
+
+org.hsqldb.Library.hour                      [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               TIME                     in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.hour(java.sql.Time)
+
+
+org.hsqldb.Library.identity                  [procedure, returns result]
+------------------------------------------------------------------------
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.identity()
+
+
+org.hsqldb.Library.insert                    [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p2                               INTEGER                  in   
+  @p3                               INTEGER                  in   
+  @p4                               LONGVARCHAR              in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.insert(java.lang.String,int,int,java.lang.String)
+
+
+org.hsqldb.Library.isReadOnlyConnection         [procedure, returns result]
+------------------------------------------------------------------------
+  @p0                               BOOLEAN(1)               result
+
+  org.hsqldb.Library.isReadOnlyConnection(java.sql.Connection)
+
+
+org.hsqldb.Library.isReadOnlyDatabase         [procedure, returns result]
+------------------------------------------------------------------------
+  @p0                               BOOLEAN(1)               result
+
+  org.hsqldb.Library.isReadOnlyDatabase(java.sql.Connection)
+
+
+org.hsqldb.Library.isReadOnlyDatabaseFiles         [procedure, returns result]
+------------------------------------------------------------------------
+  @p0                               BOOLEAN(1)               result
+
+  org.hsqldb.Library.isReadOnlyDatabaseFiles(java.sql.Connection)
+
+
+org.hsqldb.Library.lcase                     [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.lcase(java.lang.String)
+
+
+org.hsqldb.Library.left                      [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p2                               INTEGER                  in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.left(java.lang.String,int)
+
+
+org.hsqldb.Library.length                    [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.length(java.lang.String)
+
+
+org.hsqldb.Library.locate                    [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p2                               LONGVARCHAR              in   
+  @p3                               INTEGER                  in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.locate(java.lang.String,java.lang.String,java.lang.Integer)
+
+
+org.hsqldb.Library.log10                     [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  org.hsqldb.Library.log10(double)
+
+
+org.hsqldb.Library.ltrim                     [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.ltrim(java.lang.String)
+
+
+org.hsqldb.Library.minute                    [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               TIME                     in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.minute(java.sql.Time)
+
+
+org.hsqldb.Library.mod                       [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               INTEGER                  in   
+  @p2                               INTEGER                  in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.mod(int,int)
+
+
+org.hsqldb.Library.month                     [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DATE                     in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.month(java.sql.Date)
+
+
+org.hsqldb.Library.monthname                 [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DATE                     in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.monthname(java.sql.Date)
+
+
+org.hsqldb.Library.now                       [procedure, returns result]
+------------------------------------------------------------------------
+  @p0                               TIMESTAMP                result
+
+  org.hsqldb.Library.now(java.sql.Connection)
+
+
+org.hsqldb.Library.octetLength               [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.octetLength(java.lang.String)
+
+
+org.hsqldb.Library.pi                        [procedure, returns result]
+------------------------------------------------------------------------
+  @p0                               DOUBLE(8, 17)            result
+
+  org.hsqldb.Library.pi()
+
+
+org.hsqldb.Library.position                  [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p2                               LONGVARCHAR              in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.position(java.lang.String,java.lang.String)
+
+
+org.hsqldb.Library.quarter                   [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DATE                     in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.quarter(java.sql.Date)
+
+
+org.hsqldb.Library.rand                      [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               INTEGER                  in   
+  @p0                               DOUBLE(8, 17)            result
+
+  org.hsqldb.Library.rand(java.lang.Integer)
+
+
+org.hsqldb.Library.rawToHex                  [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.rawToHex(java.lang.String)
+
+
+org.hsqldb.Library.repeat                    [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p2                               INTEGER                  in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.repeat(java.lang.String,java.lang.Integer)
+
+
+org.hsqldb.Library.replace                   [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p2                               LONGVARCHAR              in   
+  @p3                               LONGVARCHAR              in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.replace(java.lang.String,java.lang.String,java.lang.String)
+
+
+org.hsqldb.Library.right                     [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p2                               INTEGER                  in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.right(java.lang.String,int)
+
+
+org.hsqldb.Library.round                     [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p2                               INTEGER                  in   
+  @p0                               DOUBLE(8, 17)            result
+
+  org.hsqldb.Library.round(double,int)
+
+
+org.hsqldb.Library.roundMagic                [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  org.hsqldb.Library.roundMagic(double)
+
+
+org.hsqldb.Library.rtrim                     [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.rtrim(java.lang.String)
+
+
+org.hsqldb.Library.second                    [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               TIME                     in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.second(java.sql.Time)
+
+
+org.hsqldb.Library.sign                      [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.sign(double)
+
+
+org.hsqldb.Library.soundex                   [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.soundex(java.lang.String)
+
+
+org.hsqldb.Library.space                     [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               INTEGER                  in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.space(int)
+
+
+org.hsqldb.Library.substring                 [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p2                               INTEGER                  in   
+  @p3                               INTEGER                  in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.substring(java.lang.String,int,java.lang.Integer)
+
+
+org.hsqldb.Library.to_char                   [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DATE                     in   
+  @p2                               LONGVARCHAR              in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.to_char(java.util.Date,java.lang.String)
+
+
+org.hsqldb.Library.trim                      [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p2                               LONGVARCHAR              in   
+  @p3                               BOOLEAN(1)               in   
+  @p4                               BOOLEAN(1)               in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.trim(java.lang.String,java.lang.String,boolean,boolean)
+
+
+org.hsqldb.Library.truncate                  [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p2                               INTEGER                  in   
+  @p0                               DOUBLE(8, 17)            result
+
+  org.hsqldb.Library.truncate(double,int)
+
+
+org.hsqldb.Library.ucase                     [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.ucase(java.lang.String)
+
+
+org.hsqldb.Library.user                      [procedure, returns result]
+------------------------------------------------------------------------
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.user(java.sql.Connection)
+
+
+org.hsqldb.Library.week                      [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DATE                     in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.week(java.sql.Date)
+
+
+org.hsqldb.Library.year                      [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DATE                     in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.year(java.sql.Date)
+
+
+PI                                           [procedure, returns result]
+------------------------------------------------------------------------
+  @p0                               DOUBLE(8, 17)            result
+
+  org.hsqldb.Library.pi()
+
+
+POWER                                        [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p2                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.pow(double,double)
+
+
+QUARTER                                      [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DATE                     in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.quarter(java.sql.Date)
+
+
+RADIANS                                      [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.toRadians(double)
+
+
+RAND                                         [procedure, returns result]
+------------------------------------------------------------------------
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.random()
+
+
+RAWTOHEX                                     [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.rawToHex(java.lang.String)
+
+
+REPEAT                                       [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p2                               INTEGER                  in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.repeat(java.lang.String,java.lang.Integer)
+
+
+REPLACE                                      [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p2                               LONGVARCHAR              in   
+  @p3                               LONGVARCHAR              in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.replace(java.lang.String,java.lang.String,java.lang.String)
+
+
+RIGHT                                        [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p2                               INTEGER                  in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.right(java.lang.String,int)
+
+
+ROUND                                        [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p2                               INTEGER                  in   
+  @p0                               DOUBLE(8, 17)            result
+
+  org.hsqldb.Library.round(double,int)
+
+
+ROUNDMAGIC                                   [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  org.hsqldb.Library.roundMagic(double)
+
+
+RTRIM                                        [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.rtrim(java.lang.String)
+
+
+SECOND                                       [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               TIME                     in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.second(java.sql.Time)
+
+
+SIGN                                         [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.sign(double)
+
+
+SIN                                          [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.sin(double)
+
+
+SOUNDEX                                      [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.soundex(java.lang.String)
+
+
+SPACE                                        [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               INTEGER                  in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.space(int)
+
+
+SQRT                                         [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.sqrt(double)
+
+
+SUBSTR                                       [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p2                               INTEGER                  in   
+  @p3                               INTEGER                  in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.substring(java.lang.String,int,java.lang.Integer)
+
+
+SUBSTRING                                    [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p2                               INTEGER                  in   
+  @p3                               INTEGER                  in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.substring(java.lang.String,int,java.lang.Integer)
+
+
+TAN                                          [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p0                               DOUBLE(8, 17)            result
+
+  java.lang.Math.tan(double)
+
+
+TO_CHAR                                      [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DATE                     in   
+  @p2                               LONGVARCHAR              in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.to_char(java.util.Date,java.lang.String)
+
+
+TRUNCATE                                     [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17)            in   
+  @p2                               INTEGER                  in   
+  @p0                               DOUBLE(8, 17)            result
+
+  org.hsqldb.Library.truncate(double,int)
+
+
+UCASE                                        [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.ucase(java.lang.String)
+
+
+UPPER                                        [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR              in   
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.ucase(java.lang.String)
+
+
+USER                                         [procedure, returns result]
+------------------------------------------------------------------------
+  @p0                               LONGVARCHAR              result
+
+  org.hsqldb.Library.user(java.sql.Connection)
+
+
+WEEK                                         [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DATE                     in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.week(java.sql.Date)
+
+
+YEAR                                         [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DATE                     in   
+  @p0                               INTEGER                  result
+
+  org.hsqldb.Library.year(java.sql.Date)
+
+
