@@ -56,10 +56,10 @@ public abstract class BaseOperator
   private static final Logger LOGGER = Logger.getLogger(BaseOperator.class
     .getName());
 
+  protected final Operation operation;
+  protected final PrintWriter out;
   private final Connection connection;
   private final DataHandler dataHandler;
-  private final Operation operation;
-  protected final PrintWriter out;
   private final String query;
   private final Statement statement;
   private int tableCount;
@@ -93,7 +93,7 @@ public abstract class BaseOperator
       throw new SchemaCrawlerException("Cannot perform null operation");
     }
 
-    if (dataHandler == null)
+    if (dataHandler == null && !operation.isAggregateOperation())
     {
       throw new SchemaCrawlerException("No data handler provided");
     }
@@ -129,7 +129,14 @@ public abstract class BaseOperator
     this.query = query;
     try
     {
-      out = options.getOutputOptions().openOutputWriter();
+      if (operation.isAggregateOperation())
+      {
+        out = options.getOutputOptions().openOutputWriter();
+      }
+      else
+      {
+        out = dataHandler.getPrintWriter();
+      }
     }
     catch (final IOException e)
     {
@@ -175,7 +182,10 @@ public abstract class BaseOperator
     LOGGER.log(Level.FINER, "Output writer closed");
     try
     {
-      dataHandler.end();
+      if (dataHandler != null)
+      {
+        dataHandler.end();
+      }
     }
     catch (final QueryExecutorException e)
     {
@@ -206,11 +216,6 @@ public abstract class BaseOperator
   public SchemaInfoLevel getInfoLevelHint()
   {
     return SchemaInfoLevel.BASIC;
-  }
-
-  protected Operation getOperation()
-  {
-    return operation;
   }
 
   /**
@@ -253,9 +258,12 @@ public abstract class BaseOperator
   public final void handle(final Table table)
   {
 
+    if (tableCount == 0)
+    {
+      handleStartTables();
+    }
     tableCount++;
 
-    // Create sql
     final String sql = CrawlerUtililties.expandSqlForTable(query, table);
     LOGGER.fine("Executing: " + sql);
 
@@ -303,22 +311,47 @@ public abstract class BaseOperator
 
   }
 
-  /**
-   * Handles an operation, for a given table.
-   * 
-   * @param table
-   *        Table
-   * @param results
-   *        Results
-   * @throws SQLException
-   *         On an exception
-   */
-  private void handleOperationForTable(final Table table,
-                                       final ResultSet results)
-    throws QueryExecutorException
+  protected void handleStartTables()
   {
-    dataHandler.handleTitle(table.getName());
-    dataHandler.handleData(results);
+  }
+
+  protected Operation getOperation()
+  {
+    return operation;
+  }
+
+  boolean getNoFooter()
+  {
+    return options.getOutputOptions().isNoFooter();
+  }
+
+  boolean getNoHeader()
+  {
+    return options.getOutputOptions().isNoHeader();
+  }
+
+  boolean getNoInfo()
+  {
+    return options.getOutputOptions().isNoInfo();
+  }
+
+  private String getMessage(final double aggregate)
+  {
+
+    Number number;
+    if (Utilities.isIntegral(aggregate))
+    {
+      number = new Integer((int) aggregate);
+    }
+    else
+    {
+      number = new Double(aggregate);
+    }
+    final String message = MessageFormat.format(operation
+      .getCountMessageFormat(), new Object[] {
+      number
+    });
+    return message;
   }
 
   /**
@@ -345,38 +378,22 @@ public abstract class BaseOperator
     out.println(formattingHelper.createNameValueRow(table.getName(), message));
   }
 
-  private String getMessage(final double aggregate)
+  /**
+   * Handles an operation, for a given table.
+   * 
+   * @param table
+   *        Table
+   * @param results
+   *        Results
+   * @throws SQLException
+   *         On an exception
+   */
+  private void handleOperationForTable(final Table table,
+                                       final ResultSet results)
+    throws QueryExecutorException
   {
-
-    Number number;
-    if (Utilities.isIntegral(aggregate))
-    {
-      number = new Integer((int) aggregate);
-    }
-    else
-    {
-      number = new Double(aggregate);
-    }
-    final String message = MessageFormat.format(operation
-      .getCountMessageFormat(), new Object[] {
-      number
-    });
-    return message;
-  }
-
-  boolean getNoFooter()
-  {
-    return options.getOutputOptions().isNoFooter();
-  }
-
-  boolean getNoHeader()
-  {
-    return options.getOutputOptions().isNoHeader();
-  }
-
-  boolean getNoInfo()
-  {
-    return options.getOutputOptions().isNoInfo();
+    dataHandler.handleTitle(table.getName());
+    dataHandler.handleData(results);
   }
 
 }
