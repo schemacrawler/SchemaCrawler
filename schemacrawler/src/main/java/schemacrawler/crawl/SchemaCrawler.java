@@ -129,8 +129,7 @@ public final class SchemaCrawler
 
       handler.begin();
       final MutableDatabaseInfo databaseInfo = crawlDatabaseInfo(retrieverConnection,
-                                                                 infoLevel,
-                                                                 schemaCrawlerOptions);
+                                                                 infoLevel);
       final NamedObjectList columnDataTypes = databaseInfo
         .getColumnDataTypesList();
 
@@ -161,8 +160,7 @@ public final class SchemaCrawler
   }
 
   private MutableDatabaseInfo crawlDatabaseInfo(final RetrieverConnection retrieverConnection,
-                                                final SchemaInfoLevel infoLevel,
-                                                final SchemaCrawlerOptions options)
+                                                final SchemaInfoLevel infoLevel)
     throws SQLException, SchemaCrawlerException
   {
     final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection);

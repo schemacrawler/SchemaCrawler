@@ -185,8 +185,7 @@ public class SchemaCrawlerOutputTest
                                                             outputFilename);
       final DataTextFormatOptions textFormatOptions = new DataTextFormatOptions(new Properties(),
                                                                                 outputOptions);
-      final OperatorOptions operatorOptions = new OperatorOptions(new Properties(),
-                                                                  outputOptions,
+      final OperatorOptions operatorOptions = new OperatorOptions(outputOptions,
                                                                   Operation.COUNT,
                                                                   null);
 
@@ -284,8 +283,7 @@ public class SchemaCrawlerOutputTest
     outputOptions.setNoHeader(false);
     outputOptions.setNoFooter(false);
     outputOptions.setNoInfo(false);
-    final OperatorOptions operatorOptions = new OperatorOptions(new Properties(),
-                                                                outputOptions,
+    final OperatorOptions operatorOptions = new OperatorOptions(outputOptions,
                                                                 Operation.COUNT,
                                                                 null);
 
@@ -342,8 +340,7 @@ public class SchemaCrawlerOutputTest
     outputOptions.setNoInfo(false);
     final DataTextFormatOptions textFormatOptions = new DataTextFormatOptions(new Properties(),
                                                                               outputOptions);
-    final OperatorOptions operatorOptions = new OperatorOptions(new Properties(),
-                                                                outputOptions,
+    final OperatorOptions operatorOptions = new OperatorOptions(outputOptions,
                                                                 Operation.DUMP,
                                                                 null);
 

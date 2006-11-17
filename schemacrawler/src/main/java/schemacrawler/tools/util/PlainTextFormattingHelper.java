@@ -24,17 +24,33 @@ package schemacrawler.tools.util;
 import schemacrawler.tools.OutputFormat;
 import sf.util.Utilities;
 
+/**
+ * Methods to format entire rows of output as text.
+ * 
+ * @author Sualeh Fatehi
+ */
 public class PlainTextFormattingHelper
   implements TextFormattingHelper
 {
 
   private final OutputFormat outputFormat;
 
+  /**
+   * Constructor.
+   * 
+   * @param outputFormat
+   *        Output format - text or CSV.
+   */
   public PlainTextFormattingHelper(final OutputFormat outputFormat)
   {
     this.outputFormat = outputFormat;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createDefinitionRow(java.lang.String)
+   */
   public String createDefinitionRow(final String definition)
   {
     final StringBuffer row = new StringBuffer();
@@ -43,6 +59,12 @@ public class PlainTextFormattingHelper
     return row.toString();
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createDetailRow(java.lang.String,
+   *      java.lang.String, java.lang.String, java.lang.String)
+   */
   public String createDetailRow(final String ordinal,
                                 final String subName,
                                 final String type,
@@ -67,11 +89,22 @@ public class PlainTextFormattingHelper
     return row.toString();
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createEmptyRow()
+   */
   public String createEmptyRow()
   {
     return "";
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createNameRow(java.lang.String,
+   *      java.lang.String)
+   */
   public String createNameRow(final String name, final String description)
   {
     final int NAME_WIDTH = 36;
@@ -84,6 +117,12 @@ public class PlainTextFormattingHelper
     return row.toString();
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createNameValueRow(java.lang.String,
+   *      java.lang.String)
+   */
   public String createNameValueRow(final String name, final String value)
   {
     final int NAME_WIDTH = 36;
@@ -95,6 +134,11 @@ public class PlainTextFormattingHelper
     return row.toString();
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createSeparatorRow()
+   */
   public String createSeparatorRow()
   {
     return Utilities.repeat("-", FormatUtils.MAX_LINE_LENGTH);
@@ -112,12 +156,6 @@ public class PlainTextFormattingHelper
     }
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.util.TextFormattingFunctor#format(java.lang.String,
-   *      int, boolean)
-   */
   private String format(final String text,
                         final int maxWidth,
                         final boolean alignLeft)

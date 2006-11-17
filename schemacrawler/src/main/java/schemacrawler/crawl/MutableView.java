@@ -59,7 +59,7 @@ class MutableView
   /**
    * {@inheritDoc}
    * 
-   * @see Table#getType()
+   * @see View#getType()
    */
   public TableType getType()
   {
@@ -69,7 +69,7 @@ class MutableView
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.Table#getDefinition()
+   * @see schemacrawler.schema.View#getDefinition()
    */
   public String getDefinition()
   {

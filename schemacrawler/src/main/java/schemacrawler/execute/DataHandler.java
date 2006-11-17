@@ -36,7 +36,7 @@ public interface DataHandler
    * @return Print writer
    */
   PrintWriter getPrintWriter();
-  
+
   /**
    * Handles the begin of the execution.
    * 

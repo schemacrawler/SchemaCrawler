@@ -32,9 +32,13 @@ public final class EventManipulationType
 
   private static final long serialVersionUID = 4767973714560552564L;
 
+  /** Unknown */
   public static final EventManipulationType UNKNOWN = new EventManipulationType("unknown");
+  /** Insert */
   public static final EventManipulationType INSERT = new EventManipulationType("INSERT");
+  /** Delete */
   public static final EventManipulationType DELETE = new EventManipulationType("DELETE");
+  /** Update */
   public static final EventManipulationType UPDATE = new EventManipulationType("UPDATE");
 
   private static final EventManipulationType[] ALL = {

@@ -21,22 +21,75 @@
 package schemacrawler.tools.util;
 
 
+/**
+ * Methods to format entire rows of output.
+ * 
+ * @author Sualeh Fatehi
+ */
 public interface TextFormattingHelper
 {
 
+  /**
+   * Creates a definition row with a pre-formatted definition.
+   * 
+   * @param definition
+   *        Definition
+   * @return Row as a string
+   */
   String createDefinitionRow(final String definition);
 
+  /**
+   * Creates a detail row, with four fields.
+   * 
+   * @param ordinal
+   *        Ordinal value
+   * @param subName
+   *        Name
+   * @param type
+   *        Type
+   * @param remarks
+   *        Remarks
+   * @return Row as a string
+   */
   String createDetailRow(String ordinal,
                          final String subName,
                          final String type,
                          final String remarks);
 
+  /**
+   * Create an empty row.
+   * 
+   * @return Row as a string
+   */
   String createEmptyRow();
 
+  /**
+   * Create a name and description row.
+   * 
+   * @param name
+   *        Name
+   * @param description
+   *        Description
+   * @return Row as a string
+   */
   String createNameRow(final String name, final String description);
 
+  /**
+   * Create a name and value row.
+   * 
+   * @param name
+   *        Name
+   * @param value
+   *        Value
+   * @return Row as a string
+   */
   String createNameValueRow(final String name, final String value);
 
+  /**
+   * Creates a separator row.
+   * 
+   * @return Row as a string
+   */
   String createSeparatorRow();
 
 }

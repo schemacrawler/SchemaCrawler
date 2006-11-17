@@ -21,10 +21,20 @@
 package schemacrawler.tools.util;
 
 
+/**
+ * Methods to format entire rows of output as HTML.
+ * 
+ * @author Sualeh Fatehi
+ */
 public final class HtmlFormattingHelper
   implements TextFormattingHelper
 {
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createDefinitionRow(java.lang.String)
+   */
   public String createDefinitionRow(final String definition)
   {
     final HtmlTableRow row = new HtmlTableRow();
@@ -33,6 +43,12 @@ public final class HtmlFormattingHelper
     return row.toString();
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createDetailRow(java.lang.String,
+   *      java.lang.String, java.lang.String, java.lang.String)
+   */
   public String createDetailRow(final String ordinal,
                                 final String subName,
                                 final String type,
@@ -46,11 +62,22 @@ public final class HtmlFormattingHelper
     return row.toString();
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createEmptyRow()
+   */
   public String createEmptyRow()
   {
     return new HtmlTableRow(4).toString();
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createNameRow(java.lang.String,
+   *      java.lang.String)
+   */
   public String createNameRow(final String name, final String description)
   {
     final HtmlTableRow row = new HtmlTableRow();
@@ -59,6 +86,12 @@ public final class HtmlFormattingHelper
     return row.toString();
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createNameValueRow(java.lang.String,
+   *      java.lang.String)
+   */
   public String createNameValueRow(final String name, final String value)
   {
     final HtmlTableRow row = new HtmlTableRow();
@@ -67,6 +100,11 @@ public final class HtmlFormattingHelper
     return row.toString();
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createSeparatorRow()
+   */
   public String createSeparatorRow()
   {
     final HtmlTableRow row = new HtmlTableRow();
