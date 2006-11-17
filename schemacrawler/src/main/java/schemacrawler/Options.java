@@ -77,8 +77,9 @@ public final class Options
     schemaTextOptions = new SchemaTextOptions(config, outputOptions, command
       .getSchemaTextDetailType());
     dataTextFormatOptions = new DataTextFormatOptions(config, outputOptions);
-    operatorOptions = new OperatorOptions(config, outputOptions, command
-      .getOperation(), command.getQuery());
+    operatorOptions = new OperatorOptions(outputOptions,
+                                          command.getOperation(),
+                                          command.getQuery());
 
     toolType = command.getToolType();
     query = command.getQuery();

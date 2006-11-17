@@ -83,7 +83,7 @@ public final class SchemaTextOptions
     {
       showJdbcColumnTypeNames = false;
       showOrdinalNumbers = false;
-      
+
       hideForeignKeyNames = false;
       hidePrimaryKeyNames = false;
       hideIndexNames = false;

@@ -21,8 +21,6 @@
 package schemacrawler.tools.operation;
 
 
-import java.util.Properties;
-
 import schemacrawler.tools.BaseToolOptions;
 import schemacrawler.tools.OutputOptions;
 
@@ -45,14 +43,12 @@ public final class OperatorOptions
    */
   public OperatorOptions()
   {
-    this(null, null, null, null);
+    this(null, null, null);
   }
 
   /**
    * Operator options from properties. Constructor.
    * 
-   * @param config
-   *        Properties
    * @param outputOptions
    *        Output options
    * @param operation
@@ -60,8 +56,7 @@ public final class OperatorOptions
    * @param query
    *        Query
    */
-  public OperatorOptions(final Properties config,
-                         final OutputOptions outputOptions,
+  public OperatorOptions(final OutputOptions outputOptions,
                          final Operation operation,
                          final String query)
   {

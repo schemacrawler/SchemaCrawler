@@ -1,18 +1,23 @@
-/*
- *  Module:  TableRow.java
+/* 
  *
- *  Description:
+ * SchemaCrawler
+ * http://sourceforge.net/projects/schemacrawler
+ * Copyright (c) 2000-2006, Sualeh Fatehi.
  *
- *  Copyright (C) 2001-2005 Vestmark, Inc. All rights reserved.
- *  THIS PROGRAM IS AN UNPUBLISHED WORK AND IS CONSIDERED A TRADE SECRET AND
- *  CONFIDENTIAL INFORMATION BELONGING TO VESTMARK, INC.
- *  ANY UNAUTHORIZED USE IS STRICTLY PROHIBITED.
+ * This library is free software; you can redistribute it and/or modify it under the terms
+ * of the GNU Lesser General Public License as published by the Free Software Foundation;
+ * either version 2.1 of the License, or (at your option) any later version.
  *
- *  Last modified:
- *    $Author: sfatehi $
- *    $Date: Nov 10, 2006 $
- *    $Revision: 1.0 $
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * Boston, MA 02111-1307, USA.
+ *
  */
+
 package schemacrawler.tools.util;
 
 
@@ -21,28 +26,38 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Represents an HTML table row.
+ * 
+ * @author Sualeh Fatehi
+ */
 final class HtmlTableRow
 {
 
   private List cells;
 
-  public HtmlTableRow(final int colSpan)
+  HtmlTableRow(final int colSpan)
   {
     cells = Arrays.asList(new HtmlTableCell[] {
       new HtmlTableCell(colSpan, null, null)
     });
   }
 
-  public HtmlTableRow()
+  HtmlTableRow()
   {
     cells = new ArrayList();
   }
 
-  public void addCell(final HtmlTableCell cell)
+  void addCell(final HtmlTableCell cell)
   {
     cells.add(cell);
   }
 
+  /**
+   * Converts the table row to HTML.
+   * 
+   * @return HTML
+   */
   public String toString()
   {
     final StringBuffer buffer = new StringBuffer();

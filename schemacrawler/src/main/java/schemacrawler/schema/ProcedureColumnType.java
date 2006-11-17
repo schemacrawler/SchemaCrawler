@@ -86,7 +86,7 @@ public final class ProcedureColumnType
    * Find the enumeration value corresponding to the string.
    * 
    * @param id
-   *          int value of type
+   *        int value of type
    * @return Enumeration value
    */
   public static ProcedureColumnType valueOf(final int id)
@@ -107,7 +107,7 @@ public final class ProcedureColumnType
    * Value of the enumeration from the code.
    * 
    * @param name
-   *          Code
+   *        Code
    * @return Enumeration value
    */
   public static ProcedureColumnType valueOf(final String name)
