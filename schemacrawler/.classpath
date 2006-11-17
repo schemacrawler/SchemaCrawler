@@ -7,10 +7,10 @@
 	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" path="src/test/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/dbconnector"/>
 	<classpathentry kind="var" path="M2_REPO/junit/junit/3.8.1/junit-3.8.1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/hsqldb/hsqldb/1.8.0.1/hsqldb-1.8.0.1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/xmlunit/xmlunit/1.0/xmlunit-1.0.jar"/>
 	<classpathentry kind="var" path="M2_REPO/xerces/xercesImpl/2.4.0/xercesImpl-2.4.0.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SchemaCrawler - Database Connector"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
