@@ -4,9 +4,8 @@
 	<classpathentry kind="src" path="examples/maven/src/main/java"/>
 	<classpathentry kind="lib" path="dbserver/hsqldb.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/dbconnector"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/integrations"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/schemacrawler"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/schemacrawler-maven-plugin"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SchemaCrawler - Database Connector"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SchemaCrawler - Integrations"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SchemaCrawler - Main"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

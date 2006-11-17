@@ -10,7 +10,7 @@
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="4"/>
 </listAttribute>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-g ../../_distrib/schemacrawler.config.properties -c hsqldb -command=maximum_schema -outputformat=text -outputfile=schemacrawler.txt"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-g ../../_distrib/schemacrawler.config.properties -c hsqldb -command=dump -outputformat=html -outputfile=schemacrawler-dump.html"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SchemaCrawler - Main"/>
 <listAttribute key="org.eclipse.debug.ui.favoriteGroups">
 <listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
