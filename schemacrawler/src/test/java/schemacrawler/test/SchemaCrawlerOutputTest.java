@@ -306,7 +306,6 @@ public class SchemaCrawlerOutputTest
 
     try
     {
-      System.out.println(outputFilename);
       final Validator validator = new Validator(new FileReader(outputFilename));
       validator.assertIsValid();
     }

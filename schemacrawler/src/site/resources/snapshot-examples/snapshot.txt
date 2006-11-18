@@ -367,9 +367,6 @@ SELECT                                             [grantable privilege]
 UPDATE                                             [grantable privilege]
   DBA --> SA                                                      
 
-SCTRIGGER                              [trigger, before delete, per row]
-  CREATE TRIGGER SCTRIGGER BEFORE DELETE ON CUSTOMER FOR EACH ROW CALL "org.hsqldb.sample.TriggerSample"
-
 
 CUSTOMERLIST                                                      [view]
 ------------------------------------------------------------------------
@@ -389,7 +386,6 @@ SELECT                                             [grantable privilege]
 UPDATE                                             [grantable privilege]
   DBA --> SA                                                      
 
-  SELECT ID, FIRSTNAME, LASTNAME FROM CUSTOMER
 
 
 INVOICE                                                          [table]
@@ -407,10 +403,10 @@ SYS_FK_1                              [foreign key, on update no action]
 SYS_FK_4                              [foreign key, on update no action]
   ID --> ITEM.INVOICEID                                           
 
-SYS_USER_SYS_IDX_2_9                  [non-unique ascending other index]
+                                      [non-unique ascending other index]
   CUSTOMERID                        INTEGER                       
 
-SYS_IDX_50                            [non-unique ascending other index]
+                                      [non-unique ascending other index]
   CUSTOMERID                        INTEGER                       
 
 DELETE                                             [grantable privilege]
@@ -444,16 +440,16 @@ SYS_FK_5                              [foreign key, on update no action]
 SYS_FK_4                              [foreign key, on update no action]
   INVOICE.ID --> INVOICEID                                        
 
-SYS_USER_SYS_IDX_6_1                  [non-unique ascending other index]
+                                      [non-unique ascending other index]
   INVOICEID                         INTEGER                  primary key
 
-SYS_IDX_55                            [non-unique ascending other index]
+                                      [non-unique ascending other index]
   PRODUCTID                         INTEGER                       
 
-SYS_USER_SYS_IDX_8_2                  [non-unique ascending other index]
+                                      [non-unique ascending other index]
   PRODUCTID                         INTEGER                       
 
-SYS_IDX_53                            [non-unique ascending other index]
+                                      [non-unique ascending other index]
   INVOICEID                         INTEGER                  primary key
 
 DELETE                                             [grantable privilege]
@@ -499,9 +495,6 @@ SUPPLIER                                                         [table]
   SUPPLIER_ID                       INTEGER                       
   SUPPLIER_NAME                     VARCHAR(50)                   
 
-CHECK_UPPERCASE_SUPPLIER_NAME                         [check constraint]
-  SUPPLIER.SUPPLIER_NAME=UPPER(SUPPLIER.SUPPLIER_NAME)
-
 DELETE                                             [grantable privilege]
   DBA --> SA                                                      
 
@@ -515,1342 +508,4838 @@ UPDATE                                             [grantable privilege]
   DBA --> SA                                                      
 
 
-ABS                                          [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  org.hsqldb.Library.abs(double)
-
-
-ACOS                                         [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.acos(double)
-
-
-ASCII                                        [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.ascii(java.lang.String)
-
-
-ASIN                                         [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.asin(double)
-
-
-ATAN                                         [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.atan(double)
-
-
-ATAN2                                        [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p2                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.atan2(double,double)
-
-
-BIT_LENGTH                                   [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.bitLength(java.lang.String)
-
-
-BITAND                                       [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               INTEGER                  in   
-  @p2                               INTEGER                  in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.bitand(int,int)
-
-
-BITOR                                        [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               INTEGER                  in   
-  @p2                               INTEGER                  in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.bitor(int,int)
-
-
-BITXOR                                       [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               INTEGER                  in   
-  @p2                               INTEGER                  in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.bitxor(int,int)
-
-
-CEILING                                      [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.ceil(double)
-
-
-CHAR                                         [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               INTEGER                  in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.character(int)
-
-
-CHAR_LENGTH                                  [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.length(java.lang.String)
-
-
-CHARACTER_LENGTH                             [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.length(java.lang.String)
-
-
-CONCAT                                       [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p2                               LONGVARCHAR              in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.concat(java.lang.String,java.lang.String)
-
-
-COS                                          [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.cos(double)
-
-
-COT                                          [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  org.hsqldb.Library.cot(double)
-
-
-CURDATE                                      [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               DATE                     result
-
-  org.hsqldb.Library.curdate(java.sql.Connection)
-
-
-CURTIME                                      [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               TIME                     result
-
-  org.hsqldb.Library.curtime(java.sql.Connection)
-
-
-DATABASE                                     [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.database(java.sql.Connection)
-
-
-DATEDIFF                                     [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p2                               TIMESTAMP                in   
-  @p3                               TIMESTAMP                in   
-  @p0                               BIGINT                   result
-
-  org.hsqldb.Library.datediff(java.lang.String,java.sql.Timestamp,java.sql.Timestamp)
-
-
-DAY                                          [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DATE                     in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.dayofmonth(java.sql.Date)
-
-
-DAYNAME                                      [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DATE                     in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.dayname(java.sql.Date)
-
-
-DAYOFMONTH                                   [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DATE                     in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.dayofmonth(java.sql.Date)
-
-
-DAYOFWEEK                                    [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DATE                     in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.dayofweek(java.sql.Date)
-
-
-DAYOFYEAR                                    [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DATE                     in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.dayofyear(java.sql.Date)
-
-
-DEGREES                                      [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.toDegrees(double)
-
-
-DIFFERENCE                                   [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p2                               LONGVARCHAR              in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.difference(java.lang.String,java.lang.String)
-
-
-EXP                                          [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.exp(double)
-
-
-FLOOR                                        [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.floor(double)
-
-
-HEXTORAW                                     [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.hexToRaw(java.lang.String)
-
-
-HOUR                                         [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               TIME                     in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.hour(java.sql.Time)
-
-
-IDENTITY                                     [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.identity()
-
-
-INSERT                                       [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p2                               INTEGER                  in   
-  @p3                               INTEGER                  in   
-  @p4                               LONGVARCHAR              in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.insert(java.lang.String,int,int,java.lang.String)
-
-
-java.lang.Math.abs                           [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               BIGINT                   in   
-  @p0                               BIGINT                   result
-
-  java.lang.Math.abs(double)java.lang.Math.abs(float)java.lang.Math.abs(int)java.lang.Math.abs(long)
-
-
-java.lang.Math.acos                          [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.acos(double)
-
-
-java.lang.Math.asin                          [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.asin(double)
-
-
-java.lang.Math.atan                          [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.atan(double)
-
-
-java.lang.Math.atan2                         [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p2                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.atan2(double,double)
-
-
-java.lang.Math.ceil                          [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.ceil(double)
-
-
-java.lang.Math.cos                           [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.cos(double)
-
-
-java.lang.Math.exp                           [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.exp(double)
-
-
-java.lang.Math.floor                         [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.floor(double)
-
-
-java.lang.Math.IEEEremainder                 [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p2                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.IEEEremainder(double,double)
-
-
-java.lang.Math.log                           [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.log(double)
-
-
-java.lang.Math.max                           [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               BIGINT                   in   
-  @p2                               BIGINT                   in   
-  @p0                               BIGINT                   result
-
-  java.lang.Math.max(double,double)java.lang.Math.max(float,float)java.lang.Math.max(int,int)java.lang.Math.max(long,long)
-
-
-java.lang.Math.min                           [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               BIGINT                   in   
-  @p2                               BIGINT                   in   
-  @p0                               BIGINT                   result
-
-  java.lang.Math.min(double,double)java.lang.Math.min(float,float)java.lang.Math.min(int,int)java.lang.Math.min(long,long)
-
-
-java.lang.Math.pow                           [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p2                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.pow(double,double)
-
-
-java.lang.Math.random                        [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.random()
-
-
-java.lang.Math.rint                          [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.rint(double)
-
-
-java.lang.Math.round                         [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               FLOAT(8, 17)             in   
-  @p0                               INTEGER                  result
-
-  java.lang.Math.round(double)java.lang.Math.round(float)
-
-
-java.lang.Math.sin                           [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.sin(double)
-
-
-java.lang.Math.sqrt                          [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.sqrt(double)
-
-
-java.lang.Math.tan                           [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.tan(double)
-
-
-java.lang.Math.toDegrees                     [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.toDegrees(double)
-
-
-java.lang.Math.toRadians                     [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.toRadians(double)
-
-
-LCASE                                        [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.lcase(java.lang.String)
-
-
-LEFT                                         [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p2                               INTEGER                  in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.left(java.lang.String,int)
-
-
-LENGTH                                       [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.length(java.lang.String)
-
-
-LOCATE                                       [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p2                               LONGVARCHAR              in   
-  @p3                               INTEGER                  in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.locate(java.lang.String,java.lang.String,java.lang.Integer)
-
-
-LOG                                          [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.log(double)
-
-
-LOG10                                        [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  org.hsqldb.Library.log10(double)
-
-
-LOWER                                        [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.lcase(java.lang.String)
-
-
-LTRIM                                        [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.ltrim(java.lang.String)
-
-
-MINUTE                                       [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               TIME                     in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.minute(java.sql.Time)
-
-
-MOD                                          [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               INTEGER                  in   
-  @p2                               INTEGER                  in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.mod(int,int)
-
-
-MONTH                                        [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DATE                     in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.month(java.sql.Date)
-
-
-MONTHNAME                                    [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DATE                     in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.monthname(java.sql.Date)
-
-
-NOW                                          [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               TIMESTAMP                result
-
-  org.hsqldb.Library.now(java.sql.Connection)
-
-
-OCTET_LENGTH                                 [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.octetLength(java.lang.String)
-
-
-org.hsqldb.Library.abs                       [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  org.hsqldb.Library.abs(double)
-
-
-org.hsqldb.Library.ascii                     [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.ascii(java.lang.String)
-
-
-org.hsqldb.Library.bitand                    [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               INTEGER                  in   
-  @p2                               INTEGER                  in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.bitand(int,int)
-
-
-org.hsqldb.Library.bitLength                 [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.bitLength(java.lang.String)
-
-
-org.hsqldb.Library.bitor                     [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               INTEGER                  in   
-  @p2                               INTEGER                  in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.bitor(int,int)
-
-
-org.hsqldb.Library.bitxor                    [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               INTEGER                  in   
-  @p2                               INTEGER                  in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.bitxor(int,int)
-
-
-org.hsqldb.Library.character                 [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               INTEGER                  in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.character(int)
-
-
-org.hsqldb.Library.concat                    [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p2                               LONGVARCHAR              in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.concat(java.lang.String,java.lang.String)
-
-
-org.hsqldb.Library.cot                       [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  org.hsqldb.Library.cot(double)
-
-
-org.hsqldb.Library.curdate                   [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               DATE                     result
-
-  org.hsqldb.Library.curdate(java.sql.Connection)
-
-
-org.hsqldb.Library.curtime                   [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               TIME                     result
-
-  org.hsqldb.Library.curtime(java.sql.Connection)
-
-
-org.hsqldb.Library.database                  [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.database(java.sql.Connection)
-
-
-org.hsqldb.Library.datediff                  [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p2                               TIMESTAMP                in   
-  @p3                               TIMESTAMP                in   
-  @p0                               BIGINT                   result
-
-  org.hsqldb.Library.datediff(java.lang.String,java.sql.Timestamp,java.sql.Timestamp)
-
-
-org.hsqldb.Library.dayname                   [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DATE                     in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.dayname(java.sql.Date)
-
-
-org.hsqldb.Library.dayofmonth                [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DATE                     in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.dayofmonth(java.sql.Date)
-
-
-org.hsqldb.Library.dayofweek                 [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DATE                     in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.dayofweek(java.sql.Date)
-
-
-org.hsqldb.Library.dayofyear                 [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DATE                     in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.dayofyear(java.sql.Date)
-
-
-org.hsqldb.Library.difference                [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p2                               LONGVARCHAR              in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.difference(java.lang.String,java.lang.String)
-
-
-org.hsqldb.Library.getAutoCommit             [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               BOOLEAN(1)               result
-
-  org.hsqldb.Library.getAutoCommit(java.sql.Connection)
-
-
-org.hsqldb.Library.getDatabaseMajorVersion         [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.getDatabaseMajorVersion()
-
-
-org.hsqldb.Library.getDatabaseMinorVersion         [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.getDatabaseMinorVersion()
-
-
-org.hsqldb.Library.getDatabaseProductName         [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.getDatabaseProductName()
-
-
-org.hsqldb.Library.getDatabaseProductVersion         [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.getDatabaseProductVersion()
-
-
-org.hsqldb.Library.hexToRaw                  [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.hexToRaw(java.lang.String)
-
-
-org.hsqldb.Library.hour                      [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               TIME                     in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.hour(java.sql.Time)
-
-
-org.hsqldb.Library.identity                  [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.identity()
-
-
-org.hsqldb.Library.insert                    [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p2                               INTEGER                  in   
-  @p3                               INTEGER                  in   
-  @p4                               LONGVARCHAR              in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.insert(java.lang.String,int,int,java.lang.String)
-
-
-org.hsqldb.Library.isReadOnlyConnection         [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               BOOLEAN(1)               result
-
-  org.hsqldb.Library.isReadOnlyConnection(java.sql.Connection)
-
-
-org.hsqldb.Library.isReadOnlyDatabase         [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               BOOLEAN(1)               result
-
-  org.hsqldb.Library.isReadOnlyDatabase(java.sql.Connection)
-
-
-org.hsqldb.Library.isReadOnlyDatabaseFiles         [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               BOOLEAN(1)               result
-
-  org.hsqldb.Library.isReadOnlyDatabaseFiles(java.sql.Connection)
-
-
-org.hsqldb.Library.lcase                     [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.lcase(java.lang.String)
-
-
-org.hsqldb.Library.left                      [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p2                               INTEGER                  in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.left(java.lang.String,int)
-
-
-org.hsqldb.Library.length                    [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.length(java.lang.String)
-
-
-org.hsqldb.Library.locate                    [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p2                               LONGVARCHAR              in   
-  @p3                               INTEGER                  in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.locate(java.lang.String,java.lang.String,java.lang.Integer)
-
-
-org.hsqldb.Library.log10                     [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  org.hsqldb.Library.log10(double)
-
-
-org.hsqldb.Library.ltrim                     [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.ltrim(java.lang.String)
-
-
-org.hsqldb.Library.minute                    [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               TIME                     in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.minute(java.sql.Time)
-
-
-org.hsqldb.Library.mod                       [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               INTEGER                  in   
-  @p2                               INTEGER                  in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.mod(int,int)
-
-
-org.hsqldb.Library.month                     [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DATE                     in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.month(java.sql.Date)
-
-
-org.hsqldb.Library.monthname                 [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DATE                     in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.monthname(java.sql.Date)
-
-
-org.hsqldb.Library.now                       [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               TIMESTAMP                result
-
-  org.hsqldb.Library.now(java.sql.Connection)
-
-
-org.hsqldb.Library.octetLength               [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.octetLength(java.lang.String)
-
-
-org.hsqldb.Library.pi                        [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               DOUBLE(8, 17)            result
-
-  org.hsqldb.Library.pi()
-
-
-org.hsqldb.Library.position                  [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p2                               LONGVARCHAR              in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.position(java.lang.String,java.lang.String)
-
-
-org.hsqldb.Library.quarter                   [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DATE                     in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.quarter(java.sql.Date)
-
-
-org.hsqldb.Library.rand                      [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               INTEGER                  in   
-  @p0                               DOUBLE(8, 17)            result
-
-  org.hsqldb.Library.rand(java.lang.Integer)
-
-
-org.hsqldb.Library.rawToHex                  [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.rawToHex(java.lang.String)
-
-
-org.hsqldb.Library.repeat                    [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p2                               INTEGER                  in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.repeat(java.lang.String,java.lang.Integer)
-
-
-org.hsqldb.Library.replace                   [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p2                               LONGVARCHAR              in   
-  @p3                               LONGVARCHAR              in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.replace(java.lang.String,java.lang.String,java.lang.String)
-
-
-org.hsqldb.Library.right                     [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p2                               INTEGER                  in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.right(java.lang.String,int)
-
-
-org.hsqldb.Library.round                     [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p2                               INTEGER                  in   
-  @p0                               DOUBLE(8, 17)            result
-
-  org.hsqldb.Library.round(double,int)
-
-
-org.hsqldb.Library.roundMagic                [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  org.hsqldb.Library.roundMagic(double)
-
-
-org.hsqldb.Library.rtrim                     [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.rtrim(java.lang.String)
-
-
-org.hsqldb.Library.second                    [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               TIME                     in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.second(java.sql.Time)
-
-
-org.hsqldb.Library.sign                      [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.sign(double)
-
-
-org.hsqldb.Library.soundex                   [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.soundex(java.lang.String)
-
-
-org.hsqldb.Library.space                     [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               INTEGER                  in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.space(int)
-
-
-org.hsqldb.Library.substring                 [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p2                               INTEGER                  in   
-  @p3                               INTEGER                  in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.substring(java.lang.String,int,java.lang.Integer)
-
-
-org.hsqldb.Library.to_char                   [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DATE                     in   
-  @p2                               LONGVARCHAR              in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.to_char(java.util.Date,java.lang.String)
-
-
-org.hsqldb.Library.trim                      [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p2                               LONGVARCHAR              in   
-  @p3                               BOOLEAN(1)               in   
-  @p4                               BOOLEAN(1)               in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.trim(java.lang.String,java.lang.String,boolean,boolean)
-
-
-org.hsqldb.Library.truncate                  [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p2                               INTEGER                  in   
-  @p0                               DOUBLE(8, 17)            result
-
-  org.hsqldb.Library.truncate(double,int)
-
-
-org.hsqldb.Library.ucase                     [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.ucase(java.lang.String)
-
-
-org.hsqldb.Library.user                      [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.user(java.sql.Connection)
-
-
-org.hsqldb.Library.week                      [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DATE                     in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.week(java.sql.Date)
-
-
-org.hsqldb.Library.year                      [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DATE                     in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.year(java.sql.Date)
-
-
-PI                                           [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               DOUBLE(8, 17)            result
-
-  org.hsqldb.Library.pi()
-
-
-POWER                                        [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p2                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.pow(double,double)
-
-
-QUARTER                                      [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DATE                     in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.quarter(java.sql.Date)
-
-
-RADIANS                                      [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.toRadians(double)
-
-
-RAND                                         [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.random()
-
-
-RAWTOHEX                                     [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.rawToHex(java.lang.String)
-
-
-REPEAT                                       [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p2                               INTEGER                  in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.repeat(java.lang.String,java.lang.Integer)
-
-
-REPLACE                                      [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p2                               LONGVARCHAR              in   
-  @p3                               LONGVARCHAR              in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.replace(java.lang.String,java.lang.String,java.lang.String)
-
-
-RIGHT                                        [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p2                               INTEGER                  in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.right(java.lang.String,int)
-
-
-ROUND                                        [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p2                               INTEGER                  in   
-  @p0                               DOUBLE(8, 17)            result
-
-  org.hsqldb.Library.round(double,int)
-
-
-ROUNDMAGIC                                   [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  org.hsqldb.Library.roundMagic(double)
-
-
-RTRIM                                        [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.rtrim(java.lang.String)
-
-
-SECOND                                       [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               TIME                     in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.second(java.sql.Time)
-
-
-SIGN                                         [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.sign(double)
-
-
-SIN                                          [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.sin(double)
-
-
-SOUNDEX                                      [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.soundex(java.lang.String)
-
-
-SPACE                                        [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               INTEGER                  in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.space(int)
-
-
-SQRT                                         [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.sqrt(double)
-
-
-SUBSTR                                       [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p2                               INTEGER                  in   
-  @p3                               INTEGER                  in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.substring(java.lang.String,int,java.lang.Integer)
-
-
-SUBSTRING                                    [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p2                               INTEGER                  in   
-  @p3                               INTEGER                  in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.substring(java.lang.String,int,java.lang.Integer)
-
-
-TAN                                          [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p0                               DOUBLE(8, 17)            result
-
-  java.lang.Math.tan(double)
-
-
-TO_CHAR                                      [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DATE                     in   
-  @p2                               LONGVARCHAR              in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.to_char(java.util.Date,java.lang.String)
-
-
-TRUNCATE                                     [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17)            in   
-  @p2                               INTEGER                  in   
-  @p0                               DOUBLE(8, 17)            result
-
-  org.hsqldb.Library.truncate(double,int)
-
-
-UCASE                                        [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.ucase(java.lang.String)
-
-
-UPPER                                        [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR              in   
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.ucase(java.lang.String)
-
-
-USER                                         [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               LONGVARCHAR              result
-
-  org.hsqldb.Library.user(java.sql.Connection)
-
-
-WEEK                                         [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DATE                     in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.week(java.sql.Date)
-
-
-YEAR                                         [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DATE                     in   
-  @p0                               INTEGER                  result
-
-  org.hsqldb.Library.year(java.sql.Date)
-
-
+CUSTOMER                                                         50 rows
+CUSTOMERLIST                                                     50 rows
+INVOICE                                                          50 rows
+ITEM                                                            650 rows
+PRODUCT                                                          50 rows
+SUPPLIER                                                          1 rows
+
+CUSTOMER
+
+------------------------------------------------------------------------
+ID: 0
+FIRSTNAME: Laura
+LASTNAME: Steel
+STREET: 429 Seventh Av.
+CITY: Dallas
+------------------------------------------------------------------------
+ID: 1
+FIRSTNAME: Susanne
+LASTNAME: King
+STREET: 366 - 20th Ave.
+CITY: Olten
+------------------------------------------------------------------------
+ID: 2
+FIRSTNAME: Anne
+LASTNAME: Miller
+STREET: 20 Upland Pl.
+CITY: Lyon
+------------------------------------------------------------------------
+ID: 3
+FIRSTNAME: Michael
+LASTNAME: Clancy
+STREET: 542 Upland Pl.
+CITY: San Francisco
+------------------------------------------------------------------------
+ID: 4
+FIRSTNAME: Sylvia
+LASTNAME: Ringer
+STREET: 365 College Av.
+CITY: Dallas
+------------------------------------------------------------------------
+ID: 5
+FIRSTNAME: Laura
+LASTNAME: Miller
+STREET: 294 Seventh Av.
+CITY: Paris
+------------------------------------------------------------------------
+ID: 6
+FIRSTNAME: Laura
+LASTNAME: White
+STREET: 506 Upland Pl.
+CITY: Palo Alto
+------------------------------------------------------------------------
+ID: 7
+FIRSTNAME: James
+LASTNAME: Peterson
+STREET: 231 Upland Pl.
+CITY: San Francisco
+------------------------------------------------------------------------
+ID: 8
+FIRSTNAME: Andrew
+LASTNAME: Miller
+STREET: 288 - 20th Ave.
+CITY: Seattle
+------------------------------------------------------------------------
+ID: 9
+FIRSTNAME: James
+LASTNAME: Schneider
+STREET: 277 Seventh Av.
+CITY: Berne
+------------------------------------------------------------------------
+ID: 10
+FIRSTNAME: Anne
+LASTNAME: Fuller
+STREET: 135 Upland Pl.
+CITY: Dallas
+------------------------------------------------------------------------
+ID: 11
+FIRSTNAME: Julia
+LASTNAME: White
+STREET: 412 Upland Pl.
+CITY: Chicago
+------------------------------------------------------------------------
+ID: 12
+FIRSTNAME: George
+LASTNAME: Ott
+STREET: 381 Upland Pl.
+CITY: Palo Alto
+------------------------------------------------------------------------
+ID: 13
+FIRSTNAME: Laura
+LASTNAME: Ringer
+STREET: 38 College Av.
+CITY: New York
+------------------------------------------------------------------------
+ID: 14
+FIRSTNAME: Bill
+LASTNAME: Karsen
+STREET: 53 College Av.
+CITY: Oslo
+------------------------------------------------------------------------
+ID: 15
+FIRSTNAME: Bill
+LASTNAME: Clancy
+STREET: 319 Upland Pl.
+CITY: Seattle
+------------------------------------------------------------------------
+ID: 16
+FIRSTNAME: John
+LASTNAME: Fuller
+STREET: 195 Seventh Av.
+CITY: New York
+------------------------------------------------------------------------
+ID: 17
+FIRSTNAME: Laura
+LASTNAME: Ott
+STREET: 443 Seventh Av.
+CITY: Lyon
+------------------------------------------------------------------------
+ID: 18
+FIRSTNAME: Sylvia
+LASTNAME: Fuller
+STREET: 158 - 20th Ave.
+CITY: Paris
+------------------------------------------------------------------------
+ID: 19
+FIRSTNAME: Susanne
+LASTNAME: Heiniger
+STREET: 86 - 20th Ave.
+CITY: Dallas
+------------------------------------------------------------------------
+ID: 20
+FIRSTNAME: Janet
+LASTNAME: Schneider
+STREET: 309 - 20th Ave.
+CITY: Oslo
+------------------------------------------------------------------------
+ID: 21
+FIRSTNAME: Julia
+LASTNAME: Clancy
+STREET: 18 Seventh Av.
+CITY: Seattle
+------------------------------------------------------------------------
+ID: 22
+FIRSTNAME: Bill
+LASTNAME: Ott
+STREET: 250 - 20th Ave.
+CITY: Berne
+------------------------------------------------------------------------
+ID: 23
+FIRSTNAME: Julia
+LASTNAME: Heiniger
+STREET: 358 College Av.
+CITY: Boston
+------------------------------------------------------------------------
+ID: 24
+FIRSTNAME: James
+LASTNAME: Sommer
+STREET: 333 Upland Pl.
+CITY: Olten
+------------------------------------------------------------------------
+ID: 25
+FIRSTNAME: Sylvia
+LASTNAME: Steel
+STREET: 269 College Av.
+CITY: Paris
+------------------------------------------------------------------------
+ID: 26
+FIRSTNAME: James
+LASTNAME: Clancy
+STREET: 195 Upland Pl.
+CITY: Oslo
+------------------------------------------------------------------------
+ID: 27
+FIRSTNAME: Bob
+LASTNAME: Sommer
+STREET: 509 College Av.
+CITY: Seattle
+------------------------------------------------------------------------
+ID: 28
+FIRSTNAME: Susanne
+LASTNAME: White
+STREET: 74 - 20th Ave.
+CITY: Lyon
+------------------------------------------------------------------------
+ID: 29
+FIRSTNAME: Andrew
+LASTNAME: Smith
+STREET: 254 College Av.
+CITY: New York
+------------------------------------------------------------------------
+ID: 30
+FIRSTNAME: Bill
+LASTNAME: Sommer
+STREET: 362 - 20th Ave.
+CITY: Olten
+------------------------------------------------------------------------
+ID: 31
+FIRSTNAME: Bob
+LASTNAME: Ringer
+STREET: 371 College Av.
+CITY: Olten
+------------------------------------------------------------------------
+ID: 32
+FIRSTNAME: Michael
+LASTNAME: Ott
+STREET: 339 College Av.
+CITY: Boston
+------------------------------------------------------------------------
+ID: 33
+FIRSTNAME: Mary
+LASTNAME: King
+STREET: 491 College Av.
+CITY: Oslo
+------------------------------------------------------------------------
+ID: 34
+FIRSTNAME: Julia
+LASTNAME: May
+STREET: 33 Upland Pl.
+CITY: Seattle
+------------------------------------------------------------------------
+ID: 35
+FIRSTNAME: George
+LASTNAME: Karsen
+STREET: 412 College Av.
+CITY: Chicago
+------------------------------------------------------------------------
+ID: 36
+FIRSTNAME: John
+LASTNAME: Steel
+STREET: 276 Upland Pl.
+CITY: Dallas
+------------------------------------------------------------------------
+ID: 37
+FIRSTNAME: Michael
+LASTNAME: Clancy
+STREET: 19 Seventh Av.
+CITY: Dallas
+------------------------------------------------------------------------
+ID: 38
+FIRSTNAME: Andrew
+LASTNAME: Heiniger
+STREET: 347 College Av.
+CITY: Lyon
+------------------------------------------------------------------------
+ID: 39
+FIRSTNAME: Mary
+LASTNAME: Karsen
+STREET: 202 College Av.
+CITY: Chicago
+------------------------------------------------------------------------
+ID: 40
+FIRSTNAME: Susanne
+LASTNAME: Miller
+STREET: 440 - 20th Ave.
+CITY: Dallas
+------------------------------------------------------------------------
+ID: 41
+FIRSTNAME: Bill
+LASTNAME: King
+STREET: 546 College Av.
+CITY: New York
+------------------------------------------------------------------------
+ID: 42
+FIRSTNAME: Robert
+LASTNAME: Ott
+STREET: 503 Seventh Av.
+CITY: Oslo
+------------------------------------------------------------------------
+ID: 43
+FIRSTNAME: Susanne
+LASTNAME: Smith
+STREET: 2 Upland Pl.
+CITY: Dallas
+------------------------------------------------------------------------
+ID: 44
+FIRSTNAME: Sylvia
+LASTNAME: Ott
+STREET: 361 College Av.
+CITY: New York
+------------------------------------------------------------------------
+ID: 45
+FIRSTNAME: Janet
+LASTNAME: May
+STREET: 396 Seventh Av.
+CITY: Oslo
+------------------------------------------------------------------------
+ID: 46
+FIRSTNAME: Andrew
+LASTNAME: May
+STREET: 172 Seventh Av.
+CITY: New York
+------------------------------------------------------------------------
+ID: 47
+FIRSTNAME: Janet
+LASTNAME: Fuller
+STREET: 445 Upland Pl.
+CITY: Dallas
+------------------------------------------------------------------------
+ID: 48
+FIRSTNAME: Robert
+LASTNAME: White
+STREET: 549 Seventh Av.
+CITY: San Francisco
+------------------------------------------------------------------------
+ID: 49
+FIRSTNAME: George
+LASTNAME: Fuller
+STREET: 534 - 20th Ave.
+CITY: Olten
+------------------------------------------------------------------------
+
+CUSTOMERLIST
+
+------------------------------------------------------------------------
+ID: 0
+FIRSTNAME: Laura
+LASTNAME: Steel
+------------------------------------------------------------------------
+ID: 1
+FIRSTNAME: Susanne
+LASTNAME: King
+------------------------------------------------------------------------
+ID: 2
+FIRSTNAME: Anne
+LASTNAME: Miller
+------------------------------------------------------------------------
+ID: 3
+FIRSTNAME: Michael
+LASTNAME: Clancy
+------------------------------------------------------------------------
+ID: 4
+FIRSTNAME: Sylvia
+LASTNAME: Ringer
+------------------------------------------------------------------------
+ID: 5
+FIRSTNAME: Laura
+LASTNAME: Miller
+------------------------------------------------------------------------
+ID: 6
+FIRSTNAME: Laura
+LASTNAME: White
+------------------------------------------------------------------------
+ID: 7
+FIRSTNAME: James
+LASTNAME: Peterson
+------------------------------------------------------------------------
+ID: 8
+FIRSTNAME: Andrew
+LASTNAME: Miller
+------------------------------------------------------------------------
+ID: 9
+FIRSTNAME: James
+LASTNAME: Schneider
+------------------------------------------------------------------------
+ID: 10
+FIRSTNAME: Anne
+LASTNAME: Fuller
+------------------------------------------------------------------------
+ID: 11
+FIRSTNAME: Julia
+LASTNAME: White
+------------------------------------------------------------------------
+ID: 12
+FIRSTNAME: George
+LASTNAME: Ott
+------------------------------------------------------------------------
+ID: 13
+FIRSTNAME: Laura
+LASTNAME: Ringer
+------------------------------------------------------------------------
+ID: 14
+FIRSTNAME: Bill
+LASTNAME: Karsen
+------------------------------------------------------------------------
+ID: 15
+FIRSTNAME: Bill
+LASTNAME: Clancy
+------------------------------------------------------------------------
+ID: 16
+FIRSTNAME: John
+LASTNAME: Fuller
+------------------------------------------------------------------------
+ID: 17
+FIRSTNAME: Laura
+LASTNAME: Ott
+------------------------------------------------------------------------
+ID: 18
+FIRSTNAME: Sylvia
+LASTNAME: Fuller
+------------------------------------------------------------------------
+ID: 19
+FIRSTNAME: Susanne
+LASTNAME: Heiniger
+------------------------------------------------------------------------
+ID: 20
+FIRSTNAME: Janet
+LASTNAME: Schneider
+------------------------------------------------------------------------
+ID: 21
+FIRSTNAME: Julia
+LASTNAME: Clancy
+------------------------------------------------------------------------
+ID: 22
+FIRSTNAME: Bill
+LASTNAME: Ott
+------------------------------------------------------------------------
+ID: 23
+FIRSTNAME: Julia
+LASTNAME: Heiniger
+------------------------------------------------------------------------
+ID: 24
+FIRSTNAME: James
+LASTNAME: Sommer
+------------------------------------------------------------------------
+ID: 25
+FIRSTNAME: Sylvia
+LASTNAME: Steel
+------------------------------------------------------------------------
+ID: 26
+FIRSTNAME: James
+LASTNAME: Clancy
+------------------------------------------------------------------------
+ID: 27
+FIRSTNAME: Bob
+LASTNAME: Sommer
+------------------------------------------------------------------------
+ID: 28
+FIRSTNAME: Susanne
+LASTNAME: White
+------------------------------------------------------------------------
+ID: 29
+FIRSTNAME: Andrew
+LASTNAME: Smith
+------------------------------------------------------------------------
+ID: 30
+FIRSTNAME: Bill
+LASTNAME: Sommer
+------------------------------------------------------------------------
+ID: 31
+FIRSTNAME: Bob
+LASTNAME: Ringer
+------------------------------------------------------------------------
+ID: 32
+FIRSTNAME: Michael
+LASTNAME: Ott
+------------------------------------------------------------------------
+ID: 33
+FIRSTNAME: Mary
+LASTNAME: King
+------------------------------------------------------------------------
+ID: 34
+FIRSTNAME: Julia
+LASTNAME: May
+------------------------------------------------------------------------
+ID: 35
+FIRSTNAME: George
+LASTNAME: Karsen
+------------------------------------------------------------------------
+ID: 36
+FIRSTNAME: John
+LASTNAME: Steel
+------------------------------------------------------------------------
+ID: 37
+FIRSTNAME: Michael
+LASTNAME: Clancy
+------------------------------------------------------------------------
+ID: 38
+FIRSTNAME: Andrew
+LASTNAME: Heiniger
+------------------------------------------------------------------------
+ID: 39
+FIRSTNAME: Mary
+LASTNAME: Karsen
+------------------------------------------------------------------------
+ID: 40
+FIRSTNAME: Susanne
+LASTNAME: Miller
+------------------------------------------------------------------------
+ID: 41
+FIRSTNAME: Bill
+LASTNAME: King
+------------------------------------------------------------------------
+ID: 42
+FIRSTNAME: Robert
+LASTNAME: Ott
+------------------------------------------------------------------------
+ID: 43
+FIRSTNAME: Susanne
+LASTNAME: Smith
+------------------------------------------------------------------------
+ID: 44
+FIRSTNAME: Sylvia
+LASTNAME: Ott
+------------------------------------------------------------------------
+ID: 45
+FIRSTNAME: Janet
+LASTNAME: May
+------------------------------------------------------------------------
+ID: 46
+FIRSTNAME: Andrew
+LASTNAME: May
+------------------------------------------------------------------------
+ID: 47
+FIRSTNAME: Janet
+LASTNAME: Fuller
+------------------------------------------------------------------------
+ID: 48
+FIRSTNAME: Robert
+LASTNAME: White
+------------------------------------------------------------------------
+ID: 49
+FIRSTNAME: George
+LASTNAME: Fuller
+------------------------------------------------------------------------
+
+INVOICE
+
+------------------------------------------------------------------------
+ID: 0
+CUSTOMERID: 0
+TOTAL: 2607.60
+------------------------------------------------------------------------
+ID: 1
+CUSTOMERID: 33
+TOTAL: 1610.70
+------------------------------------------------------------------------
+ID: 2
+CUSTOMERID: 23
+TOTAL: 3789.00
+------------------------------------------------------------------------
+ID: 3
+CUSTOMERID: 21
+TOTAL: 5974.50
+------------------------------------------------------------------------
+ID: 4
+CUSTOMERID: 30
+TOTAL: 1953.00
+------------------------------------------------------------------------
+ID: 5
+CUSTOMERID: 34
+TOTAL: 4182.90
+------------------------------------------------------------------------
+ID: 6
+CUSTOMERID: 19
+TOTAL: 3340.20
+------------------------------------------------------------------------
+ID: 7
+CUSTOMERID: 26
+TOTAL: 5328.60
+------------------------------------------------------------------------
+ID: 8
+CUSTOMERID: 29
+TOTAL: 2675.10
+------------------------------------------------------------------------
+ID: 9
+CUSTOMERID: 38
+TOTAL: 6982.20
+------------------------------------------------------------------------
+ID: 10
+CUSTOMERID: 24
+TOTAL: 3274.50
+------------------------------------------------------------------------
+ID: 11
+CUSTOMERID: 24
+TOTAL: 2532.30
+------------------------------------------------------------------------
+ID: 12
+CUSTOMERID: 23
+TOTAL: 4578.30
+------------------------------------------------------------------------
+ID: 13
+CUSTOMERID: 39
+TOTAL: 7001.70
+------------------------------------------------------------------------
+ID: 14
+CUSTOMERID: 35
+TOTAL: 4940.40
+------------------------------------------------------------------------
+ID: 15
+CUSTOMERID: 39
+TOTAL: 1027.80
+------------------------------------------------------------------------
+ID: 16
+CUSTOMERID: 45
+TOTAL: 3657.30
+------------------------------------------------------------------------
+ID: 17
+CUSTOMERID: 46
+TOTAL: 3776.40
+------------------------------------------------------------------------
+ID: 18
+CUSTOMERID: 4
+TOTAL: 3772.80
+------------------------------------------------------------------------
+ID: 19
+CUSTOMERID: 9
+TOTAL: 804.30
+------------------------------------------------------------------------
+ID: 20
+CUSTOMERID: 19
+TOTAL: 3139.20
+------------------------------------------------------------------------
+ID: 21
+CUSTOMERID: 8
+TOTAL: 3740.10
+------------------------------------------------------------------------
+ID: 22
+CUSTOMERID: 40
+TOTAL: 2289.90
+------------------------------------------------------------------------
+ID: 23
+CUSTOMERID: 36
+TOTAL: 5166.60
+------------------------------------------------------------------------
+ID: 24
+CUSTOMERID: 15
+TOTAL: 4344.30
+------------------------------------------------------------------------
+ID: 25
+CUSTOMERID: 31
+TOTAL: 2054.10
+------------------------------------------------------------------------
+ID: 26
+CUSTOMERID: 27
+TOTAL: 4972.80
+------------------------------------------------------------------------
+ID: 27
+CUSTOMERID: 24
+TOTAL: 583.50
+------------------------------------------------------------------------
+ID: 28
+CUSTOMERID: 35
+TOTAL: 1664.40
+------------------------------------------------------------------------
+ID: 29
+CUSTOMERID: 46
+TOTAL: 2515.50
+------------------------------------------------------------------------
+ID: 30
+CUSTOMERID: 13
+TOTAL: 2117.40
+------------------------------------------------------------------------
+ID: 31
+CUSTOMERID: 22
+TOTAL: 2715.90
+------------------------------------------------------------------------
+ID: 32
+CUSTOMERID: 20
+TOTAL: 1098.60
+------------------------------------------------------------------------
+ID: 33
+CUSTOMERID: 40
+TOTAL: 4300.20
+------------------------------------------------------------------------
+ID: 34
+CUSTOMERID: 33
+TOTAL: 4290.60
+------------------------------------------------------------------------
+ID: 35
+CUSTOMERID: 4
+TOTAL: 3102.60
+------------------------------------------------------------------------
+ID: 36
+CUSTOMERID: 42
+TOTAL: 3200.10
+------------------------------------------------------------------------
+ID: 37
+CUSTOMERID: 39
+TOTAL: 7331.10
+------------------------------------------------------------------------
+ID: 38
+CUSTOMERID: 46
+TOTAL: 6373.80
+------------------------------------------------------------------------
+ID: 39
+CUSTOMERID: 5
+TOTAL: 1311.60
+------------------------------------------------------------------------
+ID: 40
+CUSTOMERID: 4
+TOTAL: 5288.40
+------------------------------------------------------------------------
+ID: 41
+CUSTOMERID: 19
+TOTAL: 5475.60
+------------------------------------------------------------------------
+ID: 42
+CUSTOMERID: 38
+TOTAL: 1436.40
+------------------------------------------------------------------------
+ID: 43
+CUSTOMERID: 13
+TOTAL: 4827.60
+------------------------------------------------------------------------
+ID: 44
+CUSTOMERID: 32
+TOTAL: 3388.20
+------------------------------------------------------------------------
+ID: 45
+CUSTOMERID: 42
+TOTAL: 4731.00
+------------------------------------------------------------------------
+ID: 46
+CUSTOMERID: 24
+TOTAL: 5827.20
+------------------------------------------------------------------------
+ID: 47
+CUSTOMERID: 45
+TOTAL: 2320.80
+------------------------------------------------------------------------
+ID: 48
+CUSTOMERID: 22
+TOTAL: 3494.70
+------------------------------------------------------------------------
+ID: 49
+CUSTOMERID: 32
+TOTAL: 4944.30
+------------------------------------------------------------------------
+
+ITEM
+
+------------------------------------------------------------------------
+INVOICEID: 0
+ITEM: 0
+PRODUCTID: 7
+QUANTITY: 12
+COST: 12.60
+------------------------------------------------------------------------
+INVOICEID: 0
+ITEM: 1
+PRODUCTID: 14
+QUANTITY: 19
+COST: 18.60
+------------------------------------------------------------------------
+INVOICEID: 0
+ITEM: 2
+PRODUCTID: 47
+QUANTITY: 3
+COST: 26.70
+------------------------------------------------------------------------
+INVOICEID: 0
+ITEM: 3
+PRODUCTID: 1
+QUANTITY: 9
+COST: 37.20
+------------------------------------------------------------------------
+INVOICEID: 0
+ITEM: 4
+PRODUCTID: 47
+QUANTITY: 1
+COST: 26.70
+------------------------------------------------------------------------
+INVOICEID: 0
+ITEM: 5
+PRODUCTID: 12
+QUANTITY: 15
+COST: 25.20
+------------------------------------------------------------------------
+INVOICEID: 0
+ITEM: 6
+PRODUCTID: 16
+QUANTITY: 9
+COST: 29.10
+------------------------------------------------------------------------
+INVOICEID: 0
+ITEM: 7
+PRODUCTID: 7
+QUANTITY: 10
+COST: 12.60
+------------------------------------------------------------------------
+INVOICEID: 0
+ITEM: 8
+PRODUCTID: 0
+QUANTITY: 23
+COST: 8.10
+------------------------------------------------------------------------
+INVOICEID: 0
+ITEM: 9
+PRODUCTID: 35
+QUANTITY: 4
+COST: 11.40
+------------------------------------------------------------------------
+INVOICEID: 0
+ITEM: 10
+PRODUCTID: 4
+QUANTITY: 8
+COST: 19.20
+------------------------------------------------------------------------
+INVOICEID: 0
+ITEM: 11
+PRODUCTID: 12
+QUANTITY: 4
+COST: 25.20
+------------------------------------------------------------------------
+INVOICEID: 0
+ITEM: 12
+PRODUCTID: 1
+QUANTITY: 11
+COST: 37.20
+------------------------------------------------------------------------
+INVOICEID: 1
+ITEM: 0
+PRODUCTID: 40
+QUANTITY: 8
+COST: 4.20
+------------------------------------------------------------------------
+INVOICEID: 1
+ITEM: 1
+PRODUCTID: 0
+QUANTITY: 9
+COST: 8.10
+------------------------------------------------------------------------
+INVOICEID: 1
+ITEM: 2
+PRODUCTID: 19
+QUANTITY: 6
+COST: 16.50
+------------------------------------------------------------------------
+INVOICEID: 1
+ITEM: 3
+PRODUCTID: 38
+QUANTITY: 8
+COST: 32.40
+------------------------------------------------------------------------
+INVOICEID: 1
+ITEM: 4
+PRODUCTID: 16
+QUANTITY: 16
+COST: 29.10
+------------------------------------------------------------------------
+INVOICEID: 1
+ITEM: 5
+PRODUCTID: 25
+QUANTITY: 9
+COST: 24.30
+------------------------------------------------------------------------
+INVOICEID: 1
+ITEM: 6
+PRODUCTID: 25
+QUANTITY: 19
+COST: 24.30
+------------------------------------------------------------------------
+INVOICEID: 2
+ITEM: 0
+PRODUCTID: 4
+QUANTITY: 18
+COST: 19.20
+------------------------------------------------------------------------
+INVOICEID: 2
+ITEM: 1
+PRODUCTID: 25
+QUANTITY: 3
+COST: 24.30
+------------------------------------------------------------------------
+INVOICEID: 2
+ITEM: 2
+PRODUCTID: 11
+QUANTITY: 9
+COST: 13.20
+------------------------------------------------------------------------
+INVOICEID: 2
+ITEM: 3
+PRODUCTID: 19
+QUANTITY: 13
+COST: 16.50
+------------------------------------------------------------------------
+INVOICEID: 2
+ITEM: 4
+PRODUCTID: 38
+QUANTITY: 18
+COST: 32.40
+------------------------------------------------------------------------
+INVOICEID: 2
+ITEM: 5
+PRODUCTID: 30
+QUANTITY: 4
+COST: 34.80
+------------------------------------------------------------------------
+INVOICEID: 2
+ITEM: 6
+PRODUCTID: 43
+QUANTITY: 8
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 2
+ITEM: 7
+PRODUCTID: 30
+QUANTITY: 5
+COST: 34.80
+------------------------------------------------------------------------
+INVOICEID: 2
+ITEM: 8
+PRODUCTID: 39
+QUANTITY: 2
+COST: 23.10
+------------------------------------------------------------------------
+INVOICEID: 2
+ITEM: 9
+PRODUCTID: 18
+QUANTITY: 7
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 2
+ITEM: 10
+PRODUCTID: 49
+QUANTITY: 11
+COST: 3.30
+------------------------------------------------------------------------
+INVOICEID: 2
+ITEM: 11
+PRODUCTID: 42
+QUANTITY: 21
+COST: 29.70
+------------------------------------------------------------------------
+INVOICEID: 2
+ITEM: 12
+PRODUCTID: 21
+QUANTITY: 15
+COST: 17.10
+------------------------------------------------------------------------
+INVOICEID: 2
+ITEM: 13
+PRODUCTID: 12
+QUANTITY: 1
+COST: 25.20
+------------------------------------------------------------------------
+INVOICEID: 2
+ITEM: 14
+PRODUCTID: 48
+QUANTITY: 19
+COST: 31.50
+------------------------------------------------------------------------
+INVOICEID: 2
+ITEM: 15
+PRODUCTID: 0
+QUANTITY: 18
+COST: 8.10
+------------------------------------------------------------------------
+INVOICEID: 2
+ITEM: 16
+PRODUCTID: 36
+QUANTITY: 24
+COST: 4.80
+------------------------------------------------------------------------
+INVOICEID: 3
+ITEM: 0
+PRODUCTID: 11
+QUANTITY: 21
+COST: 13.20
+------------------------------------------------------------------------
+INVOICEID: 3
+ITEM: 1
+PRODUCTID: 1
+QUANTITY: 20
+COST: 37.20
+------------------------------------------------------------------------
+INVOICEID: 3
+ITEM: 2
+PRODUCTID: 49
+QUANTITY: 3
+COST: 3.30
+------------------------------------------------------------------------
+INVOICEID: 3
+ITEM: 3
+PRODUCTID: 0
+QUANTITY: 22
+COST: 8.10
+------------------------------------------------------------------------
+INVOICEID: 3
+ITEM: 4
+PRODUCTID: 20
+QUANTITY: 12
+COST: 30.00
+------------------------------------------------------------------------
+INVOICEID: 3
+ITEM: 5
+PRODUCTID: 30
+QUANTITY: 10
+COST: 34.80
+------------------------------------------------------------------------
+INVOICEID: 3
+ITEM: 6
+PRODUCTID: 13
+QUANTITY: 18
+COST: 27.00
+------------------------------------------------------------------------
+INVOICEID: 3
+ITEM: 7
+PRODUCTID: 26
+QUANTITY: 4
+COST: 37.80
+------------------------------------------------------------------------
+INVOICEID: 3
+ITEM: 8
+PRODUCTID: 49
+QUANTITY: 9
+COST: 3.30
+------------------------------------------------------------------------
+INVOICEID: 3
+ITEM: 9
+PRODUCTID: 29
+QUANTITY: 17
+COST: 16.80
+------------------------------------------------------------------------
+INVOICEID: 3
+ITEM: 10
+PRODUCTID: 10
+QUANTITY: 17
+COST: 30.60
+------------------------------------------------------------------------
+INVOICEID: 3
+ITEM: 11
+PRODUCTID: 7
+QUANTITY: 11
+COST: 12.60
+------------------------------------------------------------------------
+INVOICEID: 3
+ITEM: 12
+PRODUCTID: 41
+QUANTITY: 22
+COST: 30.90
+------------------------------------------------------------------------
+INVOICEID: 3
+ITEM: 13
+PRODUCTID: 41
+QUANTITY: 2
+COST: 30.90
+------------------------------------------------------------------------
+INVOICEID: 3
+ITEM: 14
+PRODUCTID: 17
+QUANTITY: 22
+COST: 33.00
+------------------------------------------------------------------------
+INVOICEID: 3
+ITEM: 15
+PRODUCTID: 23
+QUANTITY: 18
+COST: 11.40
+------------------------------------------------------------------------
+INVOICEID: 3
+ITEM: 16
+PRODUCTID: 19
+QUANTITY: 11
+COST: 16.50
+------------------------------------------------------------------------
+INVOICEID: 3
+ITEM: 17
+PRODUCTID: 30
+QUANTITY: 17
+COST: 34.80
+------------------------------------------------------------------------
+INVOICEID: 4
+ITEM: 0
+PRODUCTID: 28
+QUANTITY: 9
+COST: 4.50
+------------------------------------------------------------------------
+INVOICEID: 4
+ITEM: 1
+PRODUCTID: 35
+QUANTITY: 15
+COST: 11.40
+------------------------------------------------------------------------
+INVOICEID: 4
+ITEM: 2
+PRODUCTID: 41
+QUANTITY: 23
+COST: 30.90
+------------------------------------------------------------------------
+INVOICEID: 4
+ITEM: 3
+PRODUCTID: 23
+QUANTITY: 20
+COST: 11.40
+------------------------------------------------------------------------
+INVOICEID: 4
+ITEM: 4
+PRODUCTID: 9
+QUANTITY: 18
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 4
+ITEM: 5
+PRODUCTID: 37
+QUANTITY: 24
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 5
+ITEM: 0
+PRODUCTID: 9
+QUANTITY: 5
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 5
+ITEM: 1
+PRODUCTID: 9
+QUANTITY: 23
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 5
+ITEM: 2
+PRODUCTID: 20
+QUANTITY: 18
+COST: 30.00
+------------------------------------------------------------------------
+INVOICEID: 5
+ITEM: 3
+PRODUCTID: 24
+QUANTITY: 12
+COST: 10.80
+------------------------------------------------------------------------
+INVOICEID: 5
+ITEM: 4
+PRODUCTID: 32
+QUANTITY: 14
+COST: 28.50
+------------------------------------------------------------------------
+INVOICEID: 5
+ITEM: 5
+PRODUCTID: 46
+QUANTITY: 15
+COST: 9.30
+------------------------------------------------------------------------
+INVOICEID: 5
+ITEM: 6
+PRODUCTID: 7
+QUANTITY: 9
+COST: 12.60
+------------------------------------------------------------------------
+INVOICEID: 5
+ITEM: 7
+PRODUCTID: 2
+QUANTITY: 4
+COST: 37.20
+------------------------------------------------------------------------
+INVOICEID: 5
+ITEM: 8
+PRODUCTID: 20
+QUANTITY: 3
+COST: 30.00
+------------------------------------------------------------------------
+INVOICEID: 5
+ITEM: 9
+PRODUCTID: 37
+QUANTITY: 9
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 5
+ITEM: 10
+PRODUCTID: 28
+QUANTITY: 18
+COST: 4.50
+------------------------------------------------------------------------
+INVOICEID: 5
+ITEM: 11
+PRODUCTID: 38
+QUANTITY: 23
+COST: 32.40
+------------------------------------------------------------------------
+INVOICEID: 5
+ITEM: 12
+PRODUCTID: 8
+QUANTITY: 15
+COST: 33.90
+------------------------------------------------------------------------
+INVOICEID: 5
+ITEM: 13
+PRODUCTID: 18
+QUANTITY: 17
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 6
+ITEM: 0
+PRODUCTID: 15
+QUANTITY: 20
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 6
+ITEM: 1
+PRODUCTID: 38
+QUANTITY: 21
+COST: 32.40
+------------------------------------------------------------------------
+INVOICEID: 6
+ITEM: 2
+PRODUCTID: 23
+QUANTITY: 8
+COST: 11.40
+------------------------------------------------------------------------
+INVOICEID: 6
+ITEM: 3
+PRODUCTID: 30
+QUANTITY: 2
+COST: 34.80
+------------------------------------------------------------------------
+INVOICEID: 6
+ITEM: 4
+PRODUCTID: 31
+QUANTITY: 20
+COST: 7.20
+------------------------------------------------------------------------
+INVOICEID: 6
+ITEM: 5
+PRODUCTID: 14
+QUANTITY: 20
+COST: 18.60
+------------------------------------------------------------------------
+INVOICEID: 6
+ITEM: 6
+PRODUCTID: 37
+QUANTITY: 22
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 6
+ITEM: 7
+PRODUCTID: 26
+QUANTITY: 10
+COST: 37.80
+------------------------------------------------------------------------
+INVOICEID: 6
+ITEM: 8
+PRODUCTID: 41
+QUANTITY: 19
+COST: 30.90
+------------------------------------------------------------------------
+INVOICEID: 6
+ITEM: 9
+PRODUCTID: 19
+QUANTITY: 2
+COST: 16.50
+------------------------------------------------------------------------
+INVOICEID: 6
+ITEM: 10
+PRODUCTID: 16
+QUANTITY: 13
+COST: 29.10
+------------------------------------------------------------------------
+INVOICEID: 6
+ITEM: 11
+PRODUCTID: 44
+QUANTITY: 1
+COST: 14.40
+------------------------------------------------------------------------
+INVOICEID: 7
+ITEM: 0
+PRODUCTID: 43
+QUANTITY: 16
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 7
+ITEM: 1
+PRODUCTID: 23
+QUANTITY: 12
+COST: 11.40
+------------------------------------------------------------------------
+INVOICEID: 7
+ITEM: 2
+PRODUCTID: 27
+QUANTITY: 17
+COST: 34.50
+------------------------------------------------------------------------
+INVOICEID: 7
+ITEM: 3
+PRODUCTID: 30
+QUANTITY: 2
+COST: 34.80
+------------------------------------------------------------------------
+INVOICEID: 7
+ITEM: 4
+PRODUCTID: 2
+QUANTITY: 13
+COST: 37.20
+------------------------------------------------------------------------
+INVOICEID: 7
+ITEM: 5
+PRODUCTID: 24
+QUANTITY: 10
+COST: 10.80
+------------------------------------------------------------------------
+INVOICEID: 7
+ITEM: 6
+PRODUCTID: 14
+QUANTITY: 4
+COST: 18.60
+------------------------------------------------------------------------
+INVOICEID: 7
+ITEM: 7
+PRODUCTID: 2
+QUANTITY: 22
+COST: 37.20
+------------------------------------------------------------------------
+INVOICEID: 7
+ITEM: 8
+PRODUCTID: 42
+QUANTITY: 19
+COST: 29.70
+------------------------------------------------------------------------
+INVOICEID: 7
+ITEM: 9
+PRODUCTID: 9
+QUANTITY: 21
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 7
+ITEM: 10
+PRODUCTID: 7
+QUANTITY: 1
+COST: 12.60
+------------------------------------------------------------------------
+INVOICEID: 7
+ITEM: 11
+PRODUCTID: 19
+QUANTITY: 13
+COST: 16.50
+------------------------------------------------------------------------
+INVOICEID: 7
+ITEM: 12
+PRODUCTID: 40
+QUANTITY: 16
+COST: 4.20
+------------------------------------------------------------------------
+INVOICEID: 7
+ITEM: 13
+PRODUCTID: 32
+QUANTITY: 23
+COST: 28.50
+------------------------------------------------------------------------
+INVOICEID: 7
+ITEM: 14
+PRODUCTID: 47
+QUANTITY: 14
+COST: 26.70
+------------------------------------------------------------------------
+INVOICEID: 7
+ITEM: 15
+PRODUCTID: 24
+QUANTITY: 17
+COST: 10.80
+------------------------------------------------------------------------
+INVOICEID: 7
+ITEM: 16
+PRODUCTID: 7
+QUANTITY: 12
+COST: 12.60
+------------------------------------------------------------------------
+INVOICEID: 7
+ITEM: 17
+PRODUCTID: 40
+QUANTITY: 1
+COST: 4.20
+------------------------------------------------------------------------
+INVOICEID: 7
+ITEM: 18
+PRODUCTID: 23
+QUANTITY: 5
+COST: 11.40
+------------------------------------------------------------------------
+INVOICEID: 8
+ITEM: 0
+PRODUCTID: 34
+QUANTITY: 15
+COST: 38.40
+------------------------------------------------------------------------
+INVOICEID: 8
+ITEM: 1
+PRODUCTID: 44
+QUANTITY: 16
+COST: 14.40
+------------------------------------------------------------------------
+INVOICEID: 8
+ITEM: 2
+PRODUCTID: 11
+QUANTITY: 8
+COST: 13.20
+------------------------------------------------------------------------
+INVOICEID: 8
+ITEM: 3
+PRODUCTID: 41
+QUANTITY: 16
+COST: 30.90
+------------------------------------------------------------------------
+INVOICEID: 8
+ITEM: 4
+PRODUCTID: 15
+QUANTITY: 8
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 8
+ITEM: 5
+PRODUCTID: 24
+QUANTITY: 18
+COST: 10.80
+------------------------------------------------------------------------
+INVOICEID: 8
+ITEM: 6
+PRODUCTID: 15
+QUANTITY: 19
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 8
+ITEM: 7
+PRODUCTID: 6
+QUANTITY: 5
+COST: 14.70
+------------------------------------------------------------------------
+INVOICEID: 8
+ITEM: 8
+PRODUCTID: 38
+QUANTITY: 7
+COST: 32.40
+------------------------------------------------------------------------
+INVOICEID: 8
+ITEM: 9
+PRODUCTID: 21
+QUANTITY: 23
+COST: 17.10
+------------------------------------------------------------------------
+INVOICEID: 9
+ITEM: 0
+PRODUCTID: 45
+QUANTITY: 8
+COST: 27.00
+------------------------------------------------------------------------
+INVOICEID: 9
+ITEM: 1
+PRODUCTID: 18
+QUANTITY: 21
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 9
+ITEM: 2
+PRODUCTID: 29
+QUANTITY: 12
+COST: 16.80
+------------------------------------------------------------------------
+INVOICEID: 9
+ITEM: 3
+PRODUCTID: 4
+QUANTITY: 14
+COST: 19.20
+------------------------------------------------------------------------
+INVOICEID: 9
+ITEM: 4
+PRODUCTID: 36
+QUANTITY: 16
+COST: 4.80
+------------------------------------------------------------------------
+INVOICEID: 9
+ITEM: 5
+PRODUCTID: 6
+QUANTITY: 2
+COST: 14.70
+------------------------------------------------------------------------
+INVOICEID: 9
+ITEM: 6
+PRODUCTID: 18
+QUANTITY: 10
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 9
+ITEM: 7
+PRODUCTID: 2
+QUANTITY: 22
+COST: 37.20
+------------------------------------------------------------------------
+INVOICEID: 9
+ITEM: 8
+PRODUCTID: 24
+QUANTITY: 11
+COST: 10.80
+------------------------------------------------------------------------
+INVOICEID: 9
+ITEM: 9
+PRODUCTID: 13
+QUANTITY: 6
+COST: 27.00
+------------------------------------------------------------------------
+INVOICEID: 9
+ITEM: 10
+PRODUCTID: 38
+QUANTITY: 11
+COST: 32.40
+------------------------------------------------------------------------
+INVOICEID: 9
+ITEM: 11
+PRODUCTID: 12
+QUANTITY: 16
+COST: 25.20
+------------------------------------------------------------------------
+INVOICEID: 9
+ITEM: 12
+PRODUCTID: 25
+QUANTITY: 23
+COST: 24.30
+------------------------------------------------------------------------
+INVOICEID: 9
+ITEM: 13
+PRODUCTID: 42
+QUANTITY: 13
+COST: 29.70
+------------------------------------------------------------------------
+INVOICEID: 9
+ITEM: 14
+PRODUCTID: 15
+QUANTITY: 8
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 9
+ITEM: 15
+PRODUCTID: 48
+QUANTITY: 23
+COST: 31.50
+------------------------------------------------------------------------
+INVOICEID: 9
+ITEM: 16
+PRODUCTID: 24
+QUANTITY: 10
+COST: 10.80
+------------------------------------------------------------------------
+INVOICEID: 9
+ITEM: 17
+PRODUCTID: 13
+QUANTITY: 17
+COST: 27.00
+------------------------------------------------------------------------
+INVOICEID: 9
+ITEM: 18
+PRODUCTID: 3
+QUANTITY: 12
+COST: 38.10
+------------------------------------------------------------------------
+INVOICEID: 9
+ITEM: 19
+PRODUCTID: 48
+QUANTITY: 23
+COST: 31.50
+------------------------------------------------------------------------
+INVOICEID: 10
+ITEM: 0
+PRODUCTID: 20
+QUANTITY: 1
+COST: 30.00
+------------------------------------------------------------------------
+INVOICEID: 10
+ITEM: 1
+PRODUCTID: 33
+QUANTITY: 17
+COST: 27.30
+------------------------------------------------------------------------
+INVOICEID: 10
+ITEM: 2
+PRODUCTID: 7
+QUANTITY: 9
+COST: 12.60
+------------------------------------------------------------------------
+INVOICEID: 10
+ITEM: 3
+PRODUCTID: 46
+QUANTITY: 1
+COST: 9.30
+------------------------------------------------------------------------
+INVOICEID: 10
+ITEM: 4
+PRODUCTID: 10
+QUANTITY: 24
+COST: 30.60
+------------------------------------------------------------------------
+INVOICEID: 10
+ITEM: 5
+PRODUCTID: 5
+QUANTITY: 24
+COST: 35.40
+------------------------------------------------------------------------
+INVOICEID: 10
+ITEM: 6
+PRODUCTID: 18
+QUANTITY: 14
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 10
+ITEM: 7
+PRODUCTID: 4
+QUANTITY: 13
+COST: 19.20
+------------------------------------------------------------------------
+INVOICEID: 10
+ITEM: 8
+PRODUCTID: 22
+QUANTITY: 11
+COST: 9.90
+------------------------------------------------------------------------
+INVOICEID: 10
+ITEM: 9
+PRODUCTID: 5
+QUANTITY: 10
+COST: 35.40
+------------------------------------------------------------------------
+INVOICEID: 11
+ITEM: 0
+PRODUCTID: 45
+QUANTITY: 10
+COST: 27.00
+------------------------------------------------------------------------
+INVOICEID: 11
+ITEM: 1
+PRODUCTID: 21
+QUANTITY: 21
+COST: 17.10
+------------------------------------------------------------------------
+INVOICEID: 11
+ITEM: 2
+PRODUCTID: 0
+QUANTITY: 3
+COST: 8.10
+------------------------------------------------------------------------
+INVOICEID: 11
+ITEM: 3
+PRODUCTID: 32
+QUANTITY: 21
+COST: 28.50
+------------------------------------------------------------------------
+INVOICEID: 11
+ITEM: 4
+PRODUCTID: 47
+QUANTITY: 16
+COST: 26.70
+------------------------------------------------------------------------
+INVOICEID: 11
+ITEM: 5
+PRODUCTID: 19
+QUANTITY: 2
+COST: 16.50
+------------------------------------------------------------------------
+INVOICEID: 11
+ITEM: 6
+PRODUCTID: 0
+QUANTITY: 12
+COST: 8.10
+------------------------------------------------------------------------
+INVOICEID: 11
+ITEM: 7
+PRODUCTID: 48
+QUANTITY: 22
+COST: 31.50
+------------------------------------------------------------------------
+INVOICEID: 11
+ITEM: 8
+PRODUCTID: 20
+QUANTITY: 1
+COST: 30.00
+------------------------------------------------------------------------
+INVOICEID: 12
+ITEM: 0
+PRODUCTID: 1
+QUANTITY: 24
+COST: 37.20
+------------------------------------------------------------------------
+INVOICEID: 12
+ITEM: 1
+PRODUCTID: 41
+QUANTITY: 19
+COST: 30.90
+------------------------------------------------------------------------
+INVOICEID: 12
+ITEM: 2
+PRODUCTID: 6
+QUANTITY: 5
+COST: 14.70
+------------------------------------------------------------------------
+INVOICEID: 12
+ITEM: 3
+PRODUCTID: 0
+QUANTITY: 18
+COST: 8.10
+------------------------------------------------------------------------
+INVOICEID: 12
+ITEM: 4
+PRODUCTID: 20
+QUANTITY: 11
+COST: 30.00
+------------------------------------------------------------------------
+INVOICEID: 12
+ITEM: 5
+PRODUCTID: 37
+QUANTITY: 17
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 12
+ITEM: 6
+PRODUCTID: 31
+QUANTITY: 15
+COST: 7.20
+------------------------------------------------------------------------
+INVOICEID: 12
+ITEM: 7
+PRODUCTID: 48
+QUANTITY: 7
+COST: 31.50
+------------------------------------------------------------------------
+INVOICEID: 12
+ITEM: 8
+PRODUCTID: 48
+QUANTITY: 2
+COST: 31.50
+------------------------------------------------------------------------
+INVOICEID: 12
+ITEM: 9
+PRODUCTID: 25
+QUANTITY: 22
+COST: 24.30
+------------------------------------------------------------------------
+INVOICEID: 12
+ITEM: 10
+PRODUCTID: 46
+QUANTITY: 19
+COST: 9.30
+------------------------------------------------------------------------
+INVOICEID: 12
+ITEM: 11
+PRODUCTID: 28
+QUANTITY: 16
+COST: 4.50
+------------------------------------------------------------------------
+INVOICEID: 12
+ITEM: 12
+PRODUCTID: 13
+QUANTITY: 12
+COST: 27.00
+------------------------------------------------------------------------
+INVOICEID: 12
+ITEM: 13
+PRODUCTID: 36
+QUANTITY: 21
+COST: 4.80
+------------------------------------------------------------------------
+INVOICEID: 12
+ITEM: 14
+PRODUCTID: 25
+QUANTITY: 11
+COST: 24.30
+------------------------------------------------------------------------
+INVOICEID: 12
+ITEM: 15
+PRODUCTID: 22
+QUANTITY: 16
+COST: 9.90
+------------------------------------------------------------------------
+INVOICEID: 12
+ITEM: 16
+PRODUCTID: 0
+QUANTITY: 9
+COST: 8.10
+------------------------------------------------------------------------
+INVOICEID: 12
+ITEM: 17
+PRODUCTID: 31
+QUANTITY: 15
+COST: 7.20
+------------------------------------------------------------------------
+INVOICEID: 12
+ITEM: 18
+PRODUCTID: 9
+QUANTITY: 4
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 13
+ITEM: 0
+PRODUCTID: 16
+QUANTITY: 10
+COST: 29.10
+------------------------------------------------------------------------
+INVOICEID: 13
+ITEM: 1
+PRODUCTID: 1
+QUANTITY: 1
+COST: 37.20
+------------------------------------------------------------------------
+INVOICEID: 13
+ITEM: 2
+PRODUCTID: 13
+QUANTITY: 20
+COST: 27.00
+------------------------------------------------------------------------
+INVOICEID: 13
+ITEM: 3
+PRODUCTID: 32
+QUANTITY: 2
+COST: 28.50
+------------------------------------------------------------------------
+INVOICEID: 13
+ITEM: 4
+PRODUCTID: 26
+QUANTITY: 21
+COST: 37.80
+------------------------------------------------------------------------
+INVOICEID: 13
+ITEM: 5
+PRODUCTID: 22
+QUANTITY: 19
+COST: 9.90
+------------------------------------------------------------------------
+INVOICEID: 13
+ITEM: 6
+PRODUCTID: 19
+QUANTITY: 8
+COST: 16.50
+------------------------------------------------------------------------
+INVOICEID: 13
+ITEM: 7
+PRODUCTID: 29
+QUANTITY: 24
+COST: 16.80
+------------------------------------------------------------------------
+INVOICEID: 13
+ITEM: 8
+PRODUCTID: 48
+QUANTITY: 11
+COST: 31.50
+------------------------------------------------------------------------
+INVOICEID: 13
+ITEM: 9
+PRODUCTID: 24
+QUANTITY: 10
+COST: 10.80
+------------------------------------------------------------------------
+INVOICEID: 13
+ITEM: 10
+PRODUCTID: 45
+QUANTITY: 24
+COST: 27.00
+------------------------------------------------------------------------
+INVOICEID: 13
+ITEM: 11
+PRODUCTID: 14
+QUANTITY: 3
+COST: 18.60
+------------------------------------------------------------------------
+INVOICEID: 13
+ITEM: 12
+PRODUCTID: 17
+QUANTITY: 3
+COST: 33.00
+------------------------------------------------------------------------
+INVOICEID: 13
+ITEM: 13
+PRODUCTID: 10
+QUANTITY: 20
+COST: 30.60
+------------------------------------------------------------------------
+INVOICEID: 13
+ITEM: 14
+PRODUCTID: 1
+QUANTITY: 12
+COST: 37.20
+------------------------------------------------------------------------
+INVOICEID: 13
+ITEM: 15
+PRODUCTID: 0
+QUANTITY: 20
+COST: 8.10
+------------------------------------------------------------------------
+INVOICEID: 13
+ITEM: 16
+PRODUCTID: 22
+QUANTITY: 23
+COST: 9.90
+------------------------------------------------------------------------
+INVOICEID: 13
+ITEM: 17
+PRODUCTID: 32
+QUANTITY: 18
+COST: 28.50
+------------------------------------------------------------------------
+INVOICEID: 13
+ITEM: 18
+PRODUCTID: 0
+QUANTITY: 16
+COST: 8.10
+------------------------------------------------------------------------
+INVOICEID: 13
+ITEM: 19
+PRODUCTID: 42
+QUANTITY: 18
+COST: 29.70
+------------------------------------------------------------------------
+INVOICEID: 13
+ITEM: 20
+PRODUCTID: 5
+QUANTITY: 19
+COST: 35.40
+------------------------------------------------------------------------
+INVOICEID: 13
+ITEM: 21
+PRODUCTID: 40
+QUANTITY: 1
+COST: 4.20
+------------------------------------------------------------------------
+INVOICEID: 14
+ITEM: 0
+PRODUCTID: 42
+QUANTITY: 18
+COST: 29.70
+------------------------------------------------------------------------
+INVOICEID: 14
+ITEM: 1
+PRODUCTID: 9
+QUANTITY: 22
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 14
+ITEM: 2
+PRODUCTID: 15
+QUANTITY: 18
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 14
+ITEM: 3
+PRODUCTID: 34
+QUANTITY: 11
+COST: 38.40
+------------------------------------------------------------------------
+INVOICEID: 14
+ITEM: 4
+PRODUCTID: 41
+QUANTITY: 17
+COST: 30.90
+------------------------------------------------------------------------
+INVOICEID: 14
+ITEM: 5
+PRODUCTID: 11
+QUANTITY: 8
+COST: 13.20
+------------------------------------------------------------------------
+INVOICEID: 14
+ITEM: 6
+PRODUCTID: 26
+QUANTITY: 18
+COST: 37.80
+------------------------------------------------------------------------
+INVOICEID: 14
+ITEM: 7
+PRODUCTID: 43
+QUANTITY: 4
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 14
+ITEM: 8
+PRODUCTID: 23
+QUANTITY: 7
+COST: 11.40
+------------------------------------------------------------------------
+INVOICEID: 14
+ITEM: 9
+PRODUCTID: 13
+QUANTITY: 16
+COST: 27.00
+------------------------------------------------------------------------
+INVOICEID: 14
+ITEM: 10
+PRODUCTID: 44
+QUANTITY: 16
+COST: 14.40
+------------------------------------------------------------------------
+INVOICEID: 14
+ITEM: 11
+PRODUCTID: 25
+QUANTITY: 15
+COST: 24.30
+------------------------------------------------------------------------
+INVOICEID: 14
+ITEM: 12
+PRODUCTID: 4
+QUANTITY: 20
+COST: 19.20
+------------------------------------------------------------------------
+INVOICEID: 14
+ITEM: 13
+PRODUCTID: 11
+QUANTITY: 23
+COST: 13.20
+------------------------------------------------------------------------
+INVOICEID: 15
+ITEM: 0
+PRODUCTID: 17
+QUANTITY: 12
+COST: 33.00
+------------------------------------------------------------------------
+INVOICEID: 15
+ITEM: 1
+PRODUCTID: 13
+QUANTITY: 21
+COST: 27.00
+------------------------------------------------------------------------
+INVOICEID: 15
+ITEM: 2
+PRODUCTID: 24
+QUANTITY: 6
+COST: 10.80
+------------------------------------------------------------------------
+INVOICEID: 16
+ITEM: 0
+PRODUCTID: 18
+QUANTITY: 15
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 16
+ITEM: 1
+PRODUCTID: 36
+QUANTITY: 20
+COST: 4.80
+------------------------------------------------------------------------
+INVOICEID: 16
+ITEM: 2
+PRODUCTID: 20
+QUANTITY: 15
+COST: 30.00
+------------------------------------------------------------------------
+INVOICEID: 16
+ITEM: 3
+PRODUCTID: 0
+QUANTITY: 3
+COST: 8.10
+------------------------------------------------------------------------
+INVOICEID: 16
+ITEM: 4
+PRODUCTID: 10
+QUANTITY: 24
+COST: 30.60
+------------------------------------------------------------------------
+INVOICEID: 16
+ITEM: 5
+PRODUCTID: 11
+QUANTITY: 15
+COST: 13.20
+------------------------------------------------------------------------
+INVOICEID: 16
+ITEM: 6
+PRODUCTID: 44
+QUANTITY: 7
+COST: 14.40
+------------------------------------------------------------------------
+INVOICEID: 16
+ITEM: 7
+PRODUCTID: 8
+QUANTITY: 17
+COST: 33.90
+------------------------------------------------------------------------
+INVOICEID: 16
+ITEM: 8
+PRODUCTID: 13
+QUANTITY: 17
+COST: 27.00
+------------------------------------------------------------------------
+INVOICEID: 16
+ITEM: 9
+PRODUCTID: 11
+QUANTITY: 10
+COST: 13.20
+------------------------------------------------------------------------
+INVOICEID: 16
+ITEM: 10
+PRODUCTID: 43
+QUANTITY: 8
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 16
+ITEM: 11
+PRODUCTID: 24
+QUANTITY: 7
+COST: 10.80
+------------------------------------------------------------------------
+INVOICEID: 16
+ITEM: 12
+PRODUCTID: 18
+QUANTITY: 2
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 16
+ITEM: 13
+PRODUCTID: 20
+QUANTITY: 1
+COST: 30.00
+------------------------------------------------------------------------
+INVOICEID: 16
+ITEM: 14
+PRODUCTID: 0
+QUANTITY: 19
+COST: 8.10
+------------------------------------------------------------------------
+INVOICEID: 16
+ITEM: 15
+PRODUCTID: 12
+QUANTITY: 3
+COST: 25.20
+------------------------------------------------------------------------
+INVOICEID: 17
+ITEM: 0
+PRODUCTID: 16
+QUANTITY: 8
+COST: 29.10
+------------------------------------------------------------------------
+INVOICEID: 17
+ITEM: 1
+PRODUCTID: 19
+QUANTITY: 19
+COST: 16.50
+------------------------------------------------------------------------
+INVOICEID: 17
+ITEM: 2
+PRODUCTID: 44
+QUANTITY: 11
+COST: 14.40
+------------------------------------------------------------------------
+INVOICEID: 17
+ITEM: 3
+PRODUCTID: 24
+QUANTITY: 4
+COST: 10.80
+------------------------------------------------------------------------
+INVOICEID: 17
+ITEM: 4
+PRODUCTID: 23
+QUANTITY: 2
+COST: 11.40
+------------------------------------------------------------------------
+INVOICEID: 17
+ITEM: 5
+PRODUCTID: 44
+QUANTITY: 1
+COST: 14.40
+------------------------------------------------------------------------
+INVOICEID: 17
+ITEM: 6
+PRODUCTID: 43
+QUANTITY: 6
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 17
+ITEM: 7
+PRODUCTID: 6
+QUANTITY: 15
+COST: 14.70
+------------------------------------------------------------------------
+INVOICEID: 17
+ITEM: 8
+PRODUCTID: 49
+QUANTITY: 8
+COST: 3.30
+------------------------------------------------------------------------
+INVOICEID: 17
+ITEM: 9
+PRODUCTID: 8
+QUANTITY: 15
+COST: 33.90
+------------------------------------------------------------------------
+INVOICEID: 17
+ITEM: 10
+PRODUCTID: 10
+QUANTITY: 12
+COST: 30.60
+------------------------------------------------------------------------
+INVOICEID: 17
+ITEM: 11
+PRODUCTID: 45
+QUANTITY: 10
+COST: 27.00
+------------------------------------------------------------------------
+INVOICEID: 17
+ITEM: 12
+PRODUCTID: 22
+QUANTITY: 16
+COST: 9.90
+------------------------------------------------------------------------
+INVOICEID: 17
+ITEM: 13
+PRODUCTID: 41
+QUANTITY: 5
+COST: 30.90
+------------------------------------------------------------------------
+INVOICEID: 17
+ITEM: 14
+PRODUCTID: 18
+QUANTITY: 2
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 17
+ITEM: 15
+PRODUCTID: 35
+QUANTITY: 10
+COST: 11.40
+------------------------------------------------------------------------
+INVOICEID: 17
+ITEM: 16
+PRODUCTID: 8
+QUANTITY: 16
+COST: 33.90
+------------------------------------------------------------------------
+INVOICEID: 17
+ITEM: 17
+PRODUCTID: 7
+QUANTITY: 5
+COST: 12.60
+------------------------------------------------------------------------
+INVOICEID: 17
+ITEM: 18
+PRODUCTID: 5
+QUANTITY: 9
+COST: 35.40
+------------------------------------------------------------------------
+INVOICEID: 17
+ITEM: 19
+PRODUCTID: 46
+QUANTITY: 12
+COST: 9.30
+------------------------------------------------------------------------
+INVOICEID: 18
+ITEM: 0
+PRODUCTID: 32
+QUANTITY: 1
+COST: 28.50
+------------------------------------------------------------------------
+INVOICEID: 18
+ITEM: 1
+PRODUCTID: 33
+QUANTITY: 12
+COST: 27.30
+------------------------------------------------------------------------
+INVOICEID: 18
+ITEM: 2
+PRODUCTID: 40
+QUANTITY: 12
+COST: 4.20
+------------------------------------------------------------------------
+INVOICEID: 18
+ITEM: 3
+PRODUCTID: 19
+QUANTITY: 8
+COST: 16.50
+------------------------------------------------------------------------
+INVOICEID: 18
+ITEM: 4
+PRODUCTID: 28
+QUANTITY: 6
+COST: 4.50
+------------------------------------------------------------------------
+INVOICEID: 18
+ITEM: 5
+PRODUCTID: 15
+QUANTITY: 6
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 18
+ITEM: 6
+PRODUCTID: 29
+QUANTITY: 4
+COST: 16.80
+------------------------------------------------------------------------
+INVOICEID: 18
+ITEM: 7
+PRODUCTID: 15
+QUANTITY: 14
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 18
+ITEM: 8
+PRODUCTID: 1
+QUANTITY: 24
+COST: 37.20
+------------------------------------------------------------------------
+INVOICEID: 18
+ITEM: 9
+PRODUCTID: 2
+QUANTITY: 2
+COST: 37.20
+------------------------------------------------------------------------
+INVOICEID: 18
+ITEM: 10
+PRODUCTID: 34
+QUANTITY: 18
+COST: 38.40
+------------------------------------------------------------------------
+INVOICEID: 18
+ITEM: 11
+PRODUCTID: 30
+QUANTITY: 8
+COST: 34.80
+------------------------------------------------------------------------
+INVOICEID: 18
+ITEM: 12
+PRODUCTID: 37
+QUANTITY: 12
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 18
+ITEM: 13
+PRODUCTID: 14
+QUANTITY: 12
+COST: 18.60
+------------------------------------------------------------------------
+INVOICEID: 18
+ITEM: 14
+PRODUCTID: 28
+QUANTITY: 20
+COST: 4.50
+------------------------------------------------------------------------
+INVOICEID: 18
+ITEM: 15
+PRODUCTID: 44
+QUANTITY: 20
+COST: 14.40
+------------------------------------------------------------------------
+INVOICEID: 18
+ITEM: 16
+PRODUCTID: 31
+QUANTITY: 12
+COST: 7.20
+------------------------------------------------------------------------
+INVOICEID: 18
+ITEM: 17
+PRODUCTID: 8
+QUANTITY: 1
+COST: 33.90
+------------------------------------------------------------------------
+INVOICEID: 18
+ITEM: 18
+PRODUCTID: 10
+QUANTITY: 1
+COST: 30.60
+------------------------------------------------------------------------
+INVOICEID: 19
+ITEM: 0
+PRODUCTID: 12
+QUANTITY: 7
+COST: 25.20
+------------------------------------------------------------------------
+INVOICEID: 19
+ITEM: 1
+PRODUCTID: 31
+QUANTITY: 2
+COST: 7.20
+------------------------------------------------------------------------
+INVOICEID: 19
+ITEM: 2
+PRODUCTID: 4
+QUANTITY: 22
+COST: 19.20
+------------------------------------------------------------------------
+INVOICEID: 19
+ITEM: 3
+PRODUCTID: 49
+QUANTITY: 23
+COST: 3.30
+------------------------------------------------------------------------
+INVOICEID: 19
+ITEM: 4
+PRODUCTID: 36
+QUANTITY: 24
+COST: 4.80
+------------------------------------------------------------------------
+INVOICEID: 20
+ITEM: 0
+PRODUCTID: 47
+QUANTITY: 15
+COST: 26.70
+------------------------------------------------------------------------
+INVOICEID: 20
+ITEM: 1
+PRODUCTID: 29
+QUANTITY: 6
+COST: 16.80
+------------------------------------------------------------------------
+INVOICEID: 20
+ITEM: 2
+PRODUCTID: 24
+QUANTITY: 22
+COST: 10.80
+------------------------------------------------------------------------
+INVOICEID: 20
+ITEM: 3
+PRODUCTID: 25
+QUANTITY: 14
+COST: 24.30
+------------------------------------------------------------------------
+INVOICEID: 20
+ITEM: 4
+PRODUCTID: 30
+QUANTITY: 13
+COST: 34.80
+------------------------------------------------------------------------
+INVOICEID: 20
+ITEM: 5
+PRODUCTID: 8
+QUANTITY: 14
+COST: 33.90
+------------------------------------------------------------------------
+INVOICEID: 20
+ITEM: 6
+PRODUCTID: 20
+QUANTITY: 2
+COST: 30.00
+------------------------------------------------------------------------
+INVOICEID: 20
+ITEM: 7
+PRODUCTID: 9
+QUANTITY: 9
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 20
+ITEM: 8
+PRODUCTID: 44
+QUANTITY: 18
+COST: 14.40
+------------------------------------------------------------------------
+INVOICEID: 20
+ITEM: 9
+PRODUCTID: 12
+QUANTITY: 8
+COST: 25.20
+------------------------------------------------------------------------
+INVOICEID: 20
+ITEM: 10
+PRODUCTID: 25
+QUANTITY: 11
+COST: 24.30
+------------------------------------------------------------------------
+INVOICEID: 20
+ITEM: 11
+PRODUCTID: 15
+QUANTITY: 8
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 21
+ITEM: 0
+PRODUCTID: 9
+QUANTITY: 10
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 21
+ITEM: 1
+PRODUCTID: 38
+QUANTITY: 19
+COST: 32.40
+------------------------------------------------------------------------
+INVOICEID: 21
+ITEM: 2
+PRODUCTID: 31
+QUANTITY: 17
+COST: 7.20
+------------------------------------------------------------------------
+INVOICEID: 21
+ITEM: 3
+PRODUCTID: 30
+QUANTITY: 13
+COST: 34.80
+------------------------------------------------------------------------
+INVOICEID: 21
+ITEM: 4
+PRODUCTID: 49
+QUANTITY: 22
+COST: 3.30
+------------------------------------------------------------------------
+INVOICEID: 21
+ITEM: 5
+PRODUCTID: 27
+QUANTITY: 18
+COST: 34.50
+------------------------------------------------------------------------
+INVOICEID: 21
+ITEM: 6
+PRODUCTID: 26
+QUANTITY: 7
+COST: 37.80
+------------------------------------------------------------------------
+INVOICEID: 21
+ITEM: 7
+PRODUCTID: 8
+QUANTITY: 9
+COST: 33.90
+------------------------------------------------------------------------
+INVOICEID: 21
+ITEM: 8
+PRODUCTID: 44
+QUANTITY: 19
+COST: 14.40
+------------------------------------------------------------------------
+INVOICEID: 21
+ITEM: 9
+PRODUCTID: 35
+QUANTITY: 17
+COST: 11.40
+------------------------------------------------------------------------
+INVOICEID: 21
+ITEM: 10
+PRODUCTID: 19
+QUANTITY: 14
+COST: 16.50
+------------------------------------------------------------------------
+INVOICEID: 21
+ITEM: 11
+PRODUCTID: 20
+QUANTITY: 11
+COST: 30.00
+------------------------------------------------------------------------
+INVOICEID: 22
+ITEM: 0
+PRODUCTID: 9
+QUANTITY: 6
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 22
+ITEM: 1
+PRODUCTID: 30
+QUANTITY: 11
+COST: 34.80
+------------------------------------------------------------------------
+INVOICEID: 22
+ITEM: 2
+PRODUCTID: 12
+QUANTITY: 20
+COST: 25.20
+------------------------------------------------------------------------
+INVOICEID: 22
+ITEM: 3
+PRODUCTID: 22
+QUANTITY: 5
+COST: 9.90
+------------------------------------------------------------------------
+INVOICEID: 22
+ITEM: 4
+PRODUCTID: 5
+QUANTITY: 21
+COST: 35.40
+------------------------------------------------------------------------
+INVOICEID: 22
+ITEM: 5
+PRODUCTID: 24
+QUANTITY: 5
+COST: 10.80
+------------------------------------------------------------------------
+INVOICEID: 22
+ITEM: 6
+PRODUCTID: 4
+QUANTITY: 11
+COST: 19.20
+------------------------------------------------------------------------
+INVOICEID: 22
+ITEM: 7
+PRODUCTID: 21
+QUANTITY: 6
+COST: 17.10
+------------------------------------------------------------------------
+INVOICEID: 22
+ITEM: 8
+PRODUCTID: 3
+QUANTITY: 2
+COST: 38.10
+------------------------------------------------------------------------
+INVOICEID: 22
+ITEM: 9
+PRODUCTID: 23
+QUANTITY: 1
+COST: 11.40
+------------------------------------------------------------------------
+INVOICEID: 23
+ITEM: 0
+PRODUCTID: 48
+QUANTITY: 22
+COST: 31.50
+------------------------------------------------------------------------
+INVOICEID: 23
+ITEM: 1
+PRODUCTID: 26
+QUANTITY: 8
+COST: 37.80
+------------------------------------------------------------------------
+INVOICEID: 23
+ITEM: 2
+PRODUCTID: 33
+QUANTITY: 18
+COST: 27.30
+------------------------------------------------------------------------
+INVOICEID: 23
+ITEM: 3
+PRODUCTID: 40
+QUANTITY: 19
+COST: 4.20
+------------------------------------------------------------------------
+INVOICEID: 23
+ITEM: 4
+PRODUCTID: 23
+QUANTITY: 19
+COST: 11.40
+------------------------------------------------------------------------
+INVOICEID: 23
+ITEM: 5
+PRODUCTID: 32
+QUANTITY: 14
+COST: 28.50
+------------------------------------------------------------------------
+INVOICEID: 23
+ITEM: 6
+PRODUCTID: 16
+QUANTITY: 1
+COST: 29.10
+------------------------------------------------------------------------
+INVOICEID: 23
+ITEM: 7
+PRODUCTID: 39
+QUANTITY: 3
+COST: 23.10
+------------------------------------------------------------------------
+INVOICEID: 23
+ITEM: 8
+PRODUCTID: 6
+QUANTITY: 17
+COST: 14.70
+------------------------------------------------------------------------
+INVOICEID: 23
+ITEM: 9
+PRODUCTID: 20
+QUANTITY: 18
+COST: 30.00
+------------------------------------------------------------------------
+INVOICEID: 23
+ITEM: 10
+PRODUCTID: 4
+QUANTITY: 18
+COST: 19.20
+------------------------------------------------------------------------
+INVOICEID: 23
+ITEM: 11
+PRODUCTID: 41
+QUANTITY: 8
+COST: 30.90
+------------------------------------------------------------------------
+INVOICEID: 23
+ITEM: 12
+PRODUCTID: 4
+QUANTITY: 17
+COST: 19.20
+------------------------------------------------------------------------
+INVOICEID: 23
+ITEM: 13
+PRODUCTID: 14
+QUANTITY: 17
+COST: 18.60
+------------------------------------------------------------------------
+INVOICEID: 23
+ITEM: 14
+PRODUCTID: 44
+QUANTITY: 2
+COST: 14.40
+------------------------------------------------------------------------
+INVOICEID: 23
+ITEM: 15
+PRODUCTID: 13
+QUANTITY: 17
+COST: 27.00
+------------------------------------------------------------------------
+INVOICEID: 23
+ITEM: 16
+PRODUCTID: 8
+QUANTITY: 11
+COST: 33.90
+------------------------------------------------------------------------
+INVOICEID: 24
+ITEM: 0
+PRODUCTID: 43
+QUANTITY: 14
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 24
+ITEM: 1
+PRODUCTID: 46
+QUANTITY: 18
+COST: 9.30
+------------------------------------------------------------------------
+INVOICEID: 24
+ITEM: 2
+PRODUCTID: 38
+QUANTITY: 10
+COST: 32.40
+------------------------------------------------------------------------
+INVOICEID: 24
+ITEM: 3
+PRODUCTID: 17
+QUANTITY: 23
+COST: 33.00
+------------------------------------------------------------------------
+INVOICEID: 24
+ITEM: 4
+PRODUCTID: 15
+QUANTITY: 17
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 24
+ITEM: 5
+PRODUCTID: 35
+QUANTITY: 16
+COST: 11.40
+------------------------------------------------------------------------
+INVOICEID: 24
+ITEM: 6
+PRODUCTID: 40
+QUANTITY: 3
+COST: 4.20
+------------------------------------------------------------------------
+INVOICEID: 24
+ITEM: 7
+PRODUCTID: 7
+QUANTITY: 13
+COST: 12.60
+------------------------------------------------------------------------
+INVOICEID: 24
+ITEM: 8
+PRODUCTID: 5
+QUANTITY: 18
+COST: 35.40
+------------------------------------------------------------------------
+INVOICEID: 24
+ITEM: 9
+PRODUCTID: 21
+QUANTITY: 8
+COST: 17.10
+------------------------------------------------------------------------
+INVOICEID: 24
+ITEM: 10
+PRODUCTID: 27
+QUANTITY: 4
+COST: 34.50
+------------------------------------------------------------------------
+INVOICEID: 24
+ITEM: 11
+PRODUCTID: 1
+QUANTITY: 4
+COST: 37.20
+------------------------------------------------------------------------
+INVOICEID: 24
+ITEM: 12
+PRODUCTID: 0
+QUANTITY: 8
+COST: 8.10
+------------------------------------------------------------------------
+INVOICEID: 24
+ITEM: 13
+PRODUCTID: 15
+QUANTITY: 21
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 24
+ITEM: 14
+PRODUCTID: 1
+QUANTITY: 13
+COST: 37.20
+------------------------------------------------------------------------
+INVOICEID: 24
+ITEM: 15
+PRODUCTID: 39
+QUANTITY: 17
+COST: 23.10
+------------------------------------------------------------------------
+INVOICEID: 25
+ITEM: 0
+PRODUCTID: 5
+QUANTITY: 15
+COST: 35.40
+------------------------------------------------------------------------
+INVOICEID: 25
+ITEM: 1
+PRODUCTID: 43
+QUANTITY: 13
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 25
+ITEM: 2
+PRODUCTID: 13
+QUANTITY: 8
+COST: 27.00
+------------------------------------------------------------------------
+INVOICEID: 25
+ITEM: 3
+PRODUCTID: 19
+QUANTITY: 4
+COST: 16.50
+------------------------------------------------------------------------
+INVOICEID: 25
+ITEM: 4
+PRODUCTID: 47
+QUANTITY: 10
+COST: 26.70
+------------------------------------------------------------------------
+INVOICEID: 25
+ITEM: 5
+PRODUCTID: 10
+QUANTITY: 5
+COST: 30.60
+------------------------------------------------------------------------
+INVOICEID: 25
+ITEM: 6
+PRODUCTID: 21
+QUANTITY: 18
+COST: 17.10
+------------------------------------------------------------------------
+INVOICEID: 25
+ITEM: 7
+PRODUCTID: 16
+QUANTITY: 8
+COST: 29.10
+------------------------------------------------------------------------
+INVOICEID: 25
+ITEM: 8
+PRODUCTID: 38
+QUANTITY: 3
+COST: 32.40
+------------------------------------------------------------------------
+INVOICEID: 26
+ITEM: 0
+PRODUCTID: 42
+QUANTITY: 16
+COST: 29.70
+------------------------------------------------------------------------
+INVOICEID: 26
+ITEM: 1
+PRODUCTID: 43
+QUANTITY: 21
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 26
+ITEM: 2
+PRODUCTID: 33
+QUANTITY: 7
+COST: 27.30
+------------------------------------------------------------------------
+INVOICEID: 26
+ITEM: 3
+PRODUCTID: 16
+QUANTITY: 3
+COST: 29.10
+------------------------------------------------------------------------
+INVOICEID: 26
+ITEM: 4
+PRODUCTID: 46
+QUANTITY: 7
+COST: 9.30
+------------------------------------------------------------------------
+INVOICEID: 26
+ITEM: 5
+PRODUCTID: 38
+QUANTITY: 4
+COST: 32.40
+------------------------------------------------------------------------
+INVOICEID: 26
+ITEM: 6
+PRODUCTID: 7
+QUANTITY: 23
+COST: 12.60
+------------------------------------------------------------------------
+INVOICEID: 26
+ITEM: 7
+PRODUCTID: 4
+QUANTITY: 16
+COST: 19.20
+------------------------------------------------------------------------
+INVOICEID: 26
+ITEM: 8
+PRODUCTID: 40
+QUANTITY: 13
+COST: 4.20
+------------------------------------------------------------------------
+INVOICEID: 26
+ITEM: 9
+PRODUCTID: 1
+QUANTITY: 23
+COST: 37.20
+------------------------------------------------------------------------
+INVOICEID: 26
+ITEM: 10
+PRODUCTID: 34
+QUANTITY: 16
+COST: 38.40
+------------------------------------------------------------------------
+INVOICEID: 26
+ITEM: 11
+PRODUCTID: 18
+QUANTITY: 3
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 26
+ITEM: 12
+PRODUCTID: 27
+QUANTITY: 20
+COST: 34.50
+------------------------------------------------------------------------
+INVOICEID: 26
+ITEM: 13
+PRODUCTID: 13
+QUANTITY: 10
+COST: 27.00
+------------------------------------------------------------------------
+INVOICEID: 26
+ITEM: 14
+PRODUCTID: 26
+QUANTITY: 6
+COST: 37.80
+------------------------------------------------------------------------
+INVOICEID: 26
+ITEM: 15
+PRODUCTID: 8
+QUANTITY: 6
+COST: 33.90
+------------------------------------------------------------------------
+INVOICEID: 26
+ITEM: 16
+PRODUCTID: 30
+QUANTITY: 4
+COST: 34.80
+------------------------------------------------------------------------
+INVOICEID: 27
+ITEM: 0
+PRODUCTID: 24
+QUANTITY: 15
+COST: 10.80
+------------------------------------------------------------------------
+INVOICEID: 27
+ITEM: 1
+PRODUCTID: 45
+QUANTITY: 15
+COST: 27.00
+------------------------------------------------------------------------
+INVOICEID: 27
+ITEM: 2
+PRODUCTID: 19
+QUANTITY: 1
+COST: 16.50
+------------------------------------------------------------------------
+INVOICEID: 28
+ITEM: 0
+PRODUCTID: 35
+QUANTITY: 13
+COST: 11.40
+------------------------------------------------------------------------
+INVOICEID: 28
+ITEM: 1
+PRODUCTID: 15
+QUANTITY: 13
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 28
+ITEM: 2
+PRODUCTID: 44
+QUANTITY: 22
+COST: 14.40
+------------------------------------------------------------------------
+INVOICEID: 28
+ITEM: 3
+PRODUCTID: 6
+QUANTITY: 3
+COST: 14.70
+------------------------------------------------------------------------
+INVOICEID: 28
+ITEM: 4
+PRODUCTID: 45
+QUANTITY: 17
+COST: 27.00
+------------------------------------------------------------------------
+INVOICEID: 28
+ITEM: 5
+PRODUCTID: 49
+QUANTITY: 4
+COST: 3.30
+------------------------------------------------------------------------
+INVOICEID: 28
+ITEM: 6
+PRODUCTID: 33
+QUANTITY: 16
+COST: 27.30
+------------------------------------------------------------------------
+INVOICEID: 28
+ITEM: 7
+PRODUCTID: 28
+QUANTITY: 8
+COST: 4.50
+------------------------------------------------------------------------
+INVOICEID: 28
+ITEM: 8
+PRODUCTID: 28
+QUANTITY: 6
+COST: 4.50
+------------------------------------------------------------------------
+INVOICEID: 29
+ITEM: 0
+PRODUCTID: 33
+QUANTITY: 17
+COST: 27.30
+------------------------------------------------------------------------
+INVOICEID: 29
+ITEM: 1
+PRODUCTID: 38
+QUANTITY: 12
+COST: 32.40
+------------------------------------------------------------------------
+INVOICEID: 29
+ITEM: 2
+PRODUCTID: 17
+QUANTITY: 23
+COST: 33.00
+------------------------------------------------------------------------
+INVOICEID: 29
+ITEM: 3
+PRODUCTID: 7
+QUANTITY: 21
+COST: 12.60
+------------------------------------------------------------------------
+INVOICEID: 29
+ITEM: 4
+PRODUCTID: 4
+QUANTITY: 7
+COST: 19.20
+------------------------------------------------------------------------
+INVOICEID: 29
+ITEM: 5
+PRODUCTID: 31
+QUANTITY: 13
+COST: 7.20
+------------------------------------------------------------------------
+INVOICEID: 29
+ITEM: 6
+PRODUCTID: 4
+QUANTITY: 16
+COST: 19.20
+------------------------------------------------------------------------
+INVOICEID: 29
+ITEM: 7
+PRODUCTID: 5
+QUANTITY: 1
+COST: 35.40
+------------------------------------------------------------------------
+INVOICEID: 29
+ITEM: 8
+PRODUCTID: 35
+QUANTITY: 6
+COST: 11.40
+------------------------------------------------------------------------
+INVOICEID: 30
+ITEM: 0
+PRODUCTID: 14
+QUANTITY: 7
+COST: 18.60
+------------------------------------------------------------------------
+INVOICEID: 30
+ITEM: 1
+PRODUCTID: 16
+QUANTITY: 19
+COST: 29.10
+------------------------------------------------------------------------
+INVOICEID: 30
+ITEM: 2
+PRODUCTID: 10
+QUANTITY: 18
+COST: 30.60
+------------------------------------------------------------------------
+INVOICEID: 30
+ITEM: 3
+PRODUCTID: 33
+QUANTITY: 2
+COST: 27.30
+------------------------------------------------------------------------
+INVOICEID: 30
+ITEM: 4
+PRODUCTID: 34
+QUANTITY: 2
+COST: 38.40
+------------------------------------------------------------------------
+INVOICEID: 30
+ITEM: 5
+PRODUCTID: 43
+QUANTITY: 23
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 30
+ITEM: 6
+PRODUCTID: 14
+QUANTITY: 23
+COST: 18.60
+------------------------------------------------------------------------
+INVOICEID: 31
+ITEM: 0
+PRODUCTID: 33
+QUANTITY: 10
+COST: 27.30
+------------------------------------------------------------------------
+INVOICEID: 31
+ITEM: 1
+PRODUCTID: 4
+QUANTITY: 23
+COST: 19.20
+------------------------------------------------------------------------
+INVOICEID: 31
+ITEM: 2
+PRODUCTID: 4
+QUANTITY: 3
+COST: 19.20
+------------------------------------------------------------------------
+INVOICEID: 31
+ITEM: 3
+PRODUCTID: 12
+QUANTITY: 10
+COST: 25.20
+------------------------------------------------------------------------
+INVOICEID: 31
+ITEM: 4
+PRODUCTID: 8
+QUANTITY: 14
+COST: 33.90
+------------------------------------------------------------------------
+INVOICEID: 31
+ITEM: 5
+PRODUCTID: 1
+QUANTITY: 4
+COST: 37.20
+------------------------------------------------------------------------
+INVOICEID: 31
+ITEM: 6
+PRODUCTID: 26
+QUANTITY: 16
+COST: 37.80
+------------------------------------------------------------------------
+INVOICEID: 31
+ITEM: 7
+PRODUCTID: 38
+QUANTITY: 3
+COST: 32.40
+------------------------------------------------------------------------
+INVOICEID: 31
+ITEM: 8
+PRODUCTID: 7
+QUANTITY: 5
+COST: 12.60
+------------------------------------------------------------------------
+INVOICEID: 31
+ITEM: 9
+PRODUCTID: 14
+QUANTITY: 15
+COST: 18.60
+------------------------------------------------------------------------
+INVOICEID: 31
+ITEM: 10
+PRODUCTID: 0
+QUANTITY: 3
+COST: 8.10
+------------------------------------------------------------------------
+INVOICEID: 32
+ITEM: 0
+PRODUCTID: 35
+QUANTITY: 11
+COST: 11.40
+------------------------------------------------------------------------
+INVOICEID: 32
+ITEM: 1
+PRODUCTID: 30
+QUANTITY: 13
+COST: 34.80
+------------------------------------------------------------------------
+INVOICEID: 32
+ITEM: 2
+PRODUCTID: 1
+QUANTITY: 14
+COST: 37.20
+------------------------------------------------------------------------
+INVOICEID: 33
+ITEM: 0
+PRODUCTID: 36
+QUANTITY: 5
+COST: 4.80
+------------------------------------------------------------------------
+INVOICEID: 33
+ITEM: 1
+PRODUCTID: 10
+QUANTITY: 21
+COST: 30.60
+------------------------------------------------------------------------
+INVOICEID: 33
+ITEM: 2
+PRODUCTID: 36
+QUANTITY: 16
+COST: 4.80
+------------------------------------------------------------------------
+INVOICEID: 33
+ITEM: 3
+PRODUCTID: 48
+QUANTITY: 1
+COST: 31.50
+------------------------------------------------------------------------
+INVOICEID: 33
+ITEM: 4
+PRODUCTID: 24
+QUANTITY: 1
+COST: 10.80
+------------------------------------------------------------------------
+INVOICEID: 33
+ITEM: 5
+PRODUCTID: 8
+QUANTITY: 11
+COST: 33.90
+------------------------------------------------------------------------
+INVOICEID: 33
+ITEM: 6
+PRODUCTID: 17
+QUANTITY: 16
+COST: 33.00
+------------------------------------------------------------------------
+INVOICEID: 33
+ITEM: 7
+PRODUCTID: 43
+QUANTITY: 10
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 33
+ITEM: 8
+PRODUCTID: 3
+QUANTITY: 15
+COST: 38.10
+------------------------------------------------------------------------
+INVOICEID: 33
+ITEM: 9
+PRODUCTID: 29
+QUANTITY: 5
+COST: 16.80
+------------------------------------------------------------------------
+INVOICEID: 33
+ITEM: 10
+PRODUCTID: 24
+QUANTITY: 9
+COST: 10.80
+------------------------------------------------------------------------
+INVOICEID: 33
+ITEM: 11
+PRODUCTID: 5
+QUANTITY: 7
+COST: 35.40
+------------------------------------------------------------------------
+INVOICEID: 33
+ITEM: 12
+PRODUCTID: 16
+QUANTITY: 23
+COST: 29.10
+------------------------------------------------------------------------
+INVOICEID: 33
+ITEM: 13
+PRODUCTID: 25
+QUANTITY: 16
+COST: 24.30
+------------------------------------------------------------------------
+INVOICEID: 33
+ITEM: 14
+PRODUCTID: 44
+QUANTITY: 13
+COST: 14.40
+------------------------------------------------------------------------
+INVOICEID: 33
+ITEM: 15
+PRODUCTID: 38
+QUANTITY: 7
+COST: 32.40
+------------------------------------------------------------------------
+INVOICEID: 34
+ITEM: 0
+PRODUCTID: 10
+QUANTITY: 22
+COST: 30.60
+------------------------------------------------------------------------
+INVOICEID: 34
+ITEM: 1
+PRODUCTID: 4
+QUANTITY: 3
+COST: 19.20
+------------------------------------------------------------------------
+INVOICEID: 34
+ITEM: 2
+PRODUCTID: 28
+QUANTITY: 22
+COST: 4.50
+------------------------------------------------------------------------
+INVOICEID: 34
+ITEM: 3
+PRODUCTID: 44
+QUANTITY: 15
+COST: 14.40
+------------------------------------------------------------------------
+INVOICEID: 34
+ITEM: 4
+PRODUCTID: 27
+QUANTITY: 1
+COST: 34.50
+------------------------------------------------------------------------
+INVOICEID: 34
+ITEM: 5
+PRODUCTID: 45
+QUANTITY: 13
+COST: 27.00
+------------------------------------------------------------------------
+INVOICEID: 34
+ITEM: 6
+PRODUCTID: 32
+QUANTITY: 7
+COST: 28.50
+------------------------------------------------------------------------
+INVOICEID: 34
+ITEM: 7
+PRODUCTID: 21
+QUANTITY: 22
+COST: 17.10
+------------------------------------------------------------------------
+INVOICEID: 34
+ITEM: 8
+PRODUCTID: 3
+QUANTITY: 1
+COST: 38.10
+------------------------------------------------------------------------
+INVOICEID: 34
+ITEM: 9
+PRODUCTID: 8
+QUANTITY: 17
+COST: 33.90
+------------------------------------------------------------------------
+INVOICEID: 34
+ITEM: 10
+PRODUCTID: 41
+QUANTITY: 16
+COST: 30.90
+------------------------------------------------------------------------
+INVOICEID: 34
+ITEM: 11
+PRODUCTID: 4
+QUANTITY: 17
+COST: 19.20
+------------------------------------------------------------------------
+INVOICEID: 34
+ITEM: 12
+PRODUCTID: 43
+QUANTITY: 21
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 34
+ITEM: 13
+PRODUCTID: 30
+QUANTITY: 14
+COST: 34.80
+------------------------------------------------------------------------
+INVOICEID: 34
+ITEM: 14
+PRODUCTID: 46
+QUANTITY: 7
+COST: 9.30
+------------------------------------------------------------------------
+INVOICEID: 35
+ITEM: 0
+PRODUCTID: 20
+QUANTITY: 17
+COST: 30.00
+------------------------------------------------------------------------
+INVOICEID: 35
+ITEM: 1
+PRODUCTID: 3
+QUANTITY: 9
+COST: 38.10
+------------------------------------------------------------------------
+INVOICEID: 35
+ITEM: 2
+PRODUCTID: 14
+QUANTITY: 4
+COST: 18.60
+------------------------------------------------------------------------
+INVOICEID: 35
+ITEM: 3
+PRODUCTID: 27
+QUANTITY: 10
+COST: 34.50
+------------------------------------------------------------------------
+INVOICEID: 35
+ITEM: 4
+PRODUCTID: 14
+QUANTITY: 17
+COST: 18.60
+------------------------------------------------------------------------
+INVOICEID: 35
+ITEM: 5
+PRODUCTID: 33
+QUANTITY: 5
+COST: 27.30
+------------------------------------------------------------------------
+INVOICEID: 35
+ITEM: 6
+PRODUCTID: 5
+QUANTITY: 4
+COST: 35.40
+------------------------------------------------------------------------
+INVOICEID: 35
+ITEM: 7
+PRODUCTID: 22
+QUANTITY: 15
+COST: 9.90
+------------------------------------------------------------------------
+INVOICEID: 35
+ITEM: 8
+PRODUCTID: 0
+QUANTITY: 1
+COST: 8.10
+------------------------------------------------------------------------
+INVOICEID: 35
+ITEM: 9
+PRODUCTID: 19
+QUANTITY: 1
+COST: 16.50
+------------------------------------------------------------------------
+INVOICEID: 35
+ITEM: 10
+PRODUCTID: 17
+QUANTITY: 11
+COST: 33.00
+------------------------------------------------------------------------
+INVOICEID: 35
+ITEM: 11
+PRODUCTID: 44
+QUANTITY: 9
+COST: 14.40
+------------------------------------------------------------------------
+INVOICEID: 35
+ITEM: 12
+PRODUCTID: 7
+QUANTITY: 23
+COST: 12.60
+------------------------------------------------------------------------
+INVOICEID: 35
+ITEM: 13
+PRODUCTID: 19
+QUANTITY: 17
+COST: 16.50
+------------------------------------------------------------------------
+INVOICEID: 36
+ITEM: 0
+PRODUCTID: 18
+QUANTITY: 13
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 36
+ITEM: 1
+PRODUCTID: 15
+QUANTITY: 23
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 36
+ITEM: 2
+PRODUCTID: 1
+QUANTITY: 6
+COST: 37.20
+------------------------------------------------------------------------
+INVOICEID: 36
+ITEM: 3
+PRODUCTID: 10
+QUANTITY: 8
+COST: 30.60
+------------------------------------------------------------------------
+INVOICEID: 36
+ITEM: 4
+PRODUCTID: 40
+QUANTITY: 5
+COST: 4.20
+------------------------------------------------------------------------
+INVOICEID: 36
+ITEM: 5
+PRODUCTID: 25
+QUANTITY: 8
+COST: 24.30
+------------------------------------------------------------------------
+INVOICEID: 36
+ITEM: 6
+PRODUCTID: 39
+QUANTITY: 20
+COST: 23.10
+------------------------------------------------------------------------
+INVOICEID: 36
+ITEM: 7
+PRODUCTID: 39
+QUANTITY: 19
+COST: 23.10
+------------------------------------------------------------------------
+INVOICEID: 36
+ITEM: 8
+PRODUCTID: 4
+QUANTITY: 21
+COST: 19.20
+------------------------------------------------------------------------
+INVOICEID: 36
+ITEM: 9
+PRODUCTID: 31
+QUANTITY: 18
+COST: 7.20
+------------------------------------------------------------------------
+INVOICEID: 36
+ITEM: 10
+PRODUCTID: 47
+QUANTITY: 11
+COST: 26.70
+------------------------------------------------------------------------
+INVOICEID: 36
+ITEM: 11
+PRODUCTID: 44
+QUANTITY: 9
+COST: 14.40
+------------------------------------------------------------------------
+INVOICEID: 37
+ITEM: 0
+PRODUCTID: 41
+QUANTITY: 24
+COST: 30.90
+------------------------------------------------------------------------
+INVOICEID: 37
+ITEM: 1
+PRODUCTID: 15
+QUANTITY: 20
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 37
+ITEM: 2
+PRODUCTID: 36
+QUANTITY: 8
+COST: 4.80
+------------------------------------------------------------------------
+INVOICEID: 37
+ITEM: 3
+PRODUCTID: 26
+QUANTITY: 7
+COST: 37.80
+------------------------------------------------------------------------
+INVOICEID: 37
+ITEM: 4
+PRODUCTID: 13
+QUANTITY: 20
+COST: 27.00
+------------------------------------------------------------------------
+INVOICEID: 37
+ITEM: 5
+PRODUCTID: 1
+QUANTITY: 14
+COST: 37.20
+------------------------------------------------------------------------
+INVOICEID: 37
+ITEM: 6
+PRODUCTID: 34
+QUANTITY: 12
+COST: 38.40
+------------------------------------------------------------------------
+INVOICEID: 37
+ITEM: 7
+PRODUCTID: 24
+QUANTITY: 19
+COST: 10.80
+------------------------------------------------------------------------
+INVOICEID: 37
+ITEM: 8
+PRODUCTID: 46
+QUANTITY: 9
+COST: 9.30
+------------------------------------------------------------------------
+INVOICEID: 37
+ITEM: 9
+PRODUCTID: 47
+QUANTITY: 16
+COST: 26.70
+------------------------------------------------------------------------
+INVOICEID: 37
+ITEM: 10
+PRODUCTID: 1
+QUANTITY: 18
+COST: 37.20
+------------------------------------------------------------------------
+INVOICEID: 37
+ITEM: 11
+PRODUCTID: 30
+QUANTITY: 5
+COST: 34.80
+------------------------------------------------------------------------
+INVOICEID: 37
+ITEM: 12
+PRODUCTID: 24
+QUANTITY: 23
+COST: 10.80
+------------------------------------------------------------------------
+INVOICEID: 37
+ITEM: 13
+PRODUCTID: 32
+QUANTITY: 3
+COST: 28.50
+------------------------------------------------------------------------
+INVOICEID: 37
+ITEM: 14
+PRODUCTID: 12
+QUANTITY: 3
+COST: 25.20
+------------------------------------------------------------------------
+INVOICEID: 37
+ITEM: 15
+PRODUCTID: 32
+QUANTITY: 12
+COST: 28.50
+------------------------------------------------------------------------
+INVOICEID: 37
+ITEM: 16
+PRODUCTID: 27
+QUANTITY: 8
+COST: 34.50
+------------------------------------------------------------------------
+INVOICEID: 37
+ITEM: 17
+PRODUCTID: 38
+QUANTITY: 18
+COST: 32.40
+------------------------------------------------------------------------
+INVOICEID: 37
+ITEM: 18
+PRODUCTID: 26
+QUANTITY: 22
+COST: 37.80
+------------------------------------------------------------------------
+INVOICEID: 37
+ITEM: 19
+PRODUCTID: 19
+QUANTITY: 20
+COST: 16.50
+------------------------------------------------------------------------
+INVOICEID: 37
+ITEM: 20
+PRODUCTID: 14
+QUANTITY: 1
+COST: 18.60
+------------------------------------------------------------------------
+INVOICEID: 37
+ITEM: 21
+PRODUCTID: 6
+QUANTITY: 9
+COST: 14.70
+------------------------------------------------------------------------
+INVOICEID: 38
+ITEM: 0
+PRODUCTID: 48
+QUANTITY: 14
+COST: 31.50
+------------------------------------------------------------------------
+INVOICEID: 38
+ITEM: 1
+PRODUCTID: 45
+QUANTITY: 13
+COST: 27.00
+------------------------------------------------------------------------
+INVOICEID: 38
+ITEM: 2
+PRODUCTID: 4
+QUANTITY: 8
+COST: 19.20
+------------------------------------------------------------------------
+INVOICEID: 38
+ITEM: 3
+PRODUCTID: 27
+QUANTITY: 19
+COST: 34.50
+------------------------------------------------------------------------
+INVOICEID: 38
+ITEM: 4
+PRODUCTID: 45
+QUANTITY: 14
+COST: 27.00
+------------------------------------------------------------------------
+INVOICEID: 38
+ITEM: 5
+PRODUCTID: 48
+QUANTITY: 17
+COST: 31.50
+------------------------------------------------------------------------
+INVOICEID: 38
+ITEM: 6
+PRODUCTID: 5
+QUANTITY: 19
+COST: 35.40
+------------------------------------------------------------------------
+INVOICEID: 38
+ITEM: 7
+PRODUCTID: 15
+QUANTITY: 1
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 38
+ITEM: 8
+PRODUCTID: 40
+QUANTITY: 10
+COST: 4.20
+------------------------------------------------------------------------
+INVOICEID: 38
+ITEM: 9
+PRODUCTID: 27
+QUANTITY: 20
+COST: 34.50
+------------------------------------------------------------------------
+INVOICEID: 38
+ITEM: 10
+PRODUCTID: 4
+QUANTITY: 18
+COST: 19.20
+------------------------------------------------------------------------
+INVOICEID: 38
+ITEM: 11
+PRODUCTID: 19
+QUANTITY: 18
+COST: 16.50
+------------------------------------------------------------------------
+INVOICEID: 38
+ITEM: 12
+PRODUCTID: 1
+QUANTITY: 18
+COST: 37.20
+------------------------------------------------------------------------
+INVOICEID: 38
+ITEM: 13
+PRODUCTID: 8
+QUANTITY: 7
+COST: 33.90
+------------------------------------------------------------------------
+INVOICEID: 38
+ITEM: 14
+PRODUCTID: 20
+QUANTITY: 7
+COST: 30.00
+------------------------------------------------------------------------
+INVOICEID: 38
+ITEM: 15
+PRODUCTID: 47
+QUANTITY: 10
+COST: 26.70
+------------------------------------------------------------------------
+INVOICEID: 38
+ITEM: 16
+PRODUCTID: 40
+QUANTITY: 18
+COST: 4.20
+------------------------------------------------------------------------
+INVOICEID: 38
+ITEM: 17
+PRODUCTID: 32
+QUANTITY: 4
+COST: 28.50
+------------------------------------------------------------------------
+INVOICEID: 38
+ITEM: 18
+PRODUCTID: 28
+QUANTITY: 20
+COST: 4.50
+------------------------------------------------------------------------
+INVOICEID: 38
+ITEM: 19
+PRODUCTID: 4
+QUANTITY: 7
+COST: 19.20
+------------------------------------------------------------------------
+INVOICEID: 39
+ITEM: 0
+PRODUCTID: 10
+QUANTITY: 12
+COST: 30.60
+------------------------------------------------------------------------
+INVOICEID: 39
+ITEM: 1
+PRODUCTID: 24
+QUANTITY: 6
+COST: 10.80
+------------------------------------------------------------------------
+INVOICEID: 39
+ITEM: 2
+PRODUCTID: 39
+QUANTITY: 16
+COST: 23.10
+------------------------------------------------------------------------
+INVOICEID: 39
+ITEM: 3
+PRODUCTID: 20
+QUANTITY: 17
+COST: 30.00
+------------------------------------------------------------------------
+INVOICEID: 40
+ITEM: 0
+PRODUCTID: 46
+QUANTITY: 24
+COST: 9.30
+------------------------------------------------------------------------
+INVOICEID: 40
+ITEM: 1
+PRODUCTID: 45
+QUANTITY: 24
+COST: 27.00
+------------------------------------------------------------------------
+INVOICEID: 40
+ITEM: 2
+PRODUCTID: 4
+QUANTITY: 5
+COST: 19.20
+------------------------------------------------------------------------
+INVOICEID: 40
+ITEM: 3
+PRODUCTID: 26
+QUANTITY: 10
+COST: 37.80
+------------------------------------------------------------------------
+INVOICEID: 40
+ITEM: 4
+PRODUCTID: 18
+QUANTITY: 13
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 40
+ITEM: 5
+PRODUCTID: 32
+QUANTITY: 18
+COST: 28.50
+------------------------------------------------------------------------
+INVOICEID: 40
+ITEM: 6
+PRODUCTID: 28
+QUANTITY: 12
+COST: 4.50
+------------------------------------------------------------------------
+INVOICEID: 40
+ITEM: 7
+PRODUCTID: 31
+QUANTITY: 1
+COST: 7.20
+------------------------------------------------------------------------
+INVOICEID: 40
+ITEM: 8
+PRODUCTID: 11
+QUANTITY: 4
+COST: 13.20
+------------------------------------------------------------------------
+INVOICEID: 40
+ITEM: 9
+PRODUCTID: 40
+QUANTITY: 17
+COST: 4.20
+------------------------------------------------------------------------
+INVOICEID: 40
+ITEM: 10
+PRODUCTID: 6
+QUANTITY: 11
+COST: 14.70
+------------------------------------------------------------------------
+INVOICEID: 40
+ITEM: 11
+PRODUCTID: 27
+QUANTITY: 2
+COST: 34.50
+------------------------------------------------------------------------
+INVOICEID: 40
+ITEM: 12
+PRODUCTID: 35
+QUANTITY: 13
+COST: 11.40
+------------------------------------------------------------------------
+INVOICEID: 40
+ITEM: 13
+PRODUCTID: 6
+QUANTITY: 8
+COST: 14.70
+------------------------------------------------------------------------
+INVOICEID: 40
+ITEM: 14
+PRODUCTID: 4
+QUANTITY: 24
+COST: 19.20
+------------------------------------------------------------------------
+INVOICEID: 40
+ITEM: 15
+PRODUCTID: 22
+QUANTITY: 12
+COST: 9.90
+------------------------------------------------------------------------
+INVOICEID: 40
+ITEM: 16
+PRODUCTID: 27
+QUANTITY: 16
+COST: 34.50
+------------------------------------------------------------------------
+INVOICEID: 40
+ITEM: 17
+PRODUCTID: 4
+QUANTITY: 20
+COST: 19.20
+------------------------------------------------------------------------
+INVOICEID: 40
+ITEM: 18
+PRODUCTID: 33
+QUANTITY: 11
+COST: 27.30
+------------------------------------------------------------------------
+INVOICEID: 40
+ITEM: 19
+PRODUCTID: 7
+QUANTITY: 23
+COST: 12.60
+------------------------------------------------------------------------
+INVOICEID: 40
+ITEM: 20
+PRODUCTID: 4
+QUANTITY: 16
+COST: 19.20
+------------------------------------------------------------------------
+INVOICEID: 41
+ITEM: 0
+PRODUCTID: 5
+QUANTITY: 24
+COST: 35.40
+------------------------------------------------------------------------
+INVOICEID: 41
+ITEM: 1
+PRODUCTID: 47
+QUANTITY: 19
+COST: 26.70
+------------------------------------------------------------------------
+INVOICEID: 41
+ITEM: 2
+PRODUCTID: 36
+QUANTITY: 2
+COST: 4.80
+------------------------------------------------------------------------
+INVOICEID: 41
+ITEM: 3
+PRODUCTID: 29
+QUANTITY: 20
+COST: 16.80
+------------------------------------------------------------------------
+INVOICEID: 41
+ITEM: 4
+PRODUCTID: 16
+QUANTITY: 22
+COST: 29.10
+------------------------------------------------------------------------
+INVOICEID: 41
+ITEM: 5
+PRODUCTID: 9
+QUANTITY: 21
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 41
+ITEM: 6
+PRODUCTID: 17
+QUANTITY: 11
+COST: 33.00
+------------------------------------------------------------------------
+INVOICEID: 41
+ITEM: 7
+PRODUCTID: 22
+QUANTITY: 18
+COST: 9.90
+------------------------------------------------------------------------
+INVOICEID: 41
+ITEM: 8
+PRODUCTID: 9
+QUANTITY: 22
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 41
+ITEM: 9
+PRODUCTID: 26
+QUANTITY: 21
+COST: 37.80
+------------------------------------------------------------------------
+INVOICEID: 41
+ITEM: 10
+PRODUCTID: 24
+QUANTITY: 20
+COST: 10.80
+------------------------------------------------------------------------
+INVOICEID: 41
+ITEM: 11
+PRODUCTID: 48
+QUANTITY: 15
+COST: 31.50
+------------------------------------------------------------------------
+INVOICEID: 42
+ITEM: 0
+PRODUCTID: 48
+QUANTITY: 9
+COST: 31.50
+------------------------------------------------------------------------
+INVOICEID: 42
+ITEM: 1
+PRODUCTID: 18
+QUANTITY: 21
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 42
+ITEM: 2
+PRODUCTID: 40
+QUANTITY: 19
+COST: 4.20
+------------------------------------------------------------------------
+INVOICEID: 42
+ITEM: 3
+PRODUCTID: 40
+QUANTITY: 14
+COST: 4.20
+------------------------------------------------------------------------
+INVOICEID: 42
+ITEM: 4
+PRODUCTID: 48
+QUANTITY: 15
+COST: 31.50
+------------------------------------------------------------------------
+INVOICEID: 43
+ITEM: 0
+PRODUCTID: 15
+QUANTITY: 22
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 43
+ITEM: 1
+PRODUCTID: 18
+QUANTITY: 19
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 43
+ITEM: 2
+PRODUCTID: 2
+QUANTITY: 15
+COST: 37.20
+------------------------------------------------------------------------
+INVOICEID: 43
+ITEM: 3
+PRODUCTID: 6
+QUANTITY: 18
+COST: 14.70
+------------------------------------------------------------------------
+INVOICEID: 43
+ITEM: 4
+PRODUCTID: 32
+QUANTITY: 22
+COST: 28.50
+------------------------------------------------------------------------
+INVOICEID: 43
+ITEM: 5
+PRODUCTID: 33
+QUANTITY: 6
+COST: 27.30
+------------------------------------------------------------------------
+INVOICEID: 43
+ITEM: 6
+PRODUCTID: 24
+QUANTITY: 1
+COST: 10.80
+------------------------------------------------------------------------
+INVOICEID: 43
+ITEM: 7
+PRODUCTID: 11
+QUANTITY: 15
+COST: 13.20
+------------------------------------------------------------------------
+INVOICEID: 43
+ITEM: 8
+PRODUCTID: 44
+QUANTITY: 8
+COST: 14.40
+------------------------------------------------------------------------
+INVOICEID: 43
+ITEM: 9
+PRODUCTID: 7
+QUANTITY: 23
+COST: 12.60
+------------------------------------------------------------------------
+INVOICEID: 43
+ITEM: 10
+PRODUCTID: 35
+QUANTITY: 1
+COST: 11.40
+------------------------------------------------------------------------
+INVOICEID: 43
+ITEM: 11
+PRODUCTID: 49
+QUANTITY: 23
+COST: 3.30
+------------------------------------------------------------------------
+INVOICEID: 43
+ITEM: 12
+PRODUCTID: 40
+QUANTITY: 24
+COST: 4.20
+------------------------------------------------------------------------
+INVOICEID: 43
+ITEM: 13
+PRODUCTID: 44
+QUANTITY: 22
+COST: 14.40
+------------------------------------------------------------------------
+INVOICEID: 43
+ITEM: 14
+PRODUCTID: 3
+QUANTITY: 18
+COST: 38.10
+------------------------------------------------------------------------
+INVOICEID: 43
+ITEM: 15
+PRODUCTID: 48
+QUANTITY: 7
+COST: 31.50
+------------------------------------------------------------------------
+INVOICEID: 43
+ITEM: 16
+PRODUCTID: 38
+QUANTITY: 12
+COST: 32.40
+------------------------------------------------------------------------
+INVOICEID: 44
+ITEM: 0
+PRODUCTID: 33
+QUANTITY: 20
+COST: 27.30
+------------------------------------------------------------------------
+INVOICEID: 44
+ITEM: 1
+PRODUCTID: 34
+QUANTITY: 17
+COST: 38.40
+------------------------------------------------------------------------
+INVOICEID: 44
+ITEM: 2
+PRODUCTID: 17
+QUANTITY: 14
+COST: 33.00
+------------------------------------------------------------------------
+INVOICEID: 44
+ITEM: 3
+PRODUCTID: 3
+QUANTITY: 14
+COST: 38.10
+------------------------------------------------------------------------
+INVOICEID: 44
+ITEM: 4
+PRODUCTID: 12
+QUANTITY: 3
+COST: 25.20
+------------------------------------------------------------------------
+INVOICEID: 44
+ITEM: 5
+PRODUCTID: 41
+QUANTITY: 22
+COST: 30.90
+------------------------------------------------------------------------
+INVOICEID: 44
+ITEM: 6
+PRODUCTID: 14
+QUANTITY: 15
+COST: 18.60
+------------------------------------------------------------------------
+INVOICEID: 44
+ITEM: 7
+PRODUCTID: 49
+QUANTITY: 17
+COST: 3.30
+------------------------------------------------------------------------
+INVOICEID: 44
+ITEM: 8
+PRODUCTID: 28
+QUANTITY: 23
+COST: 4.50
+------------------------------------------------------------------------
+INVOICEID: 45
+ITEM: 0
+PRODUCTID: 44
+QUANTITY: 6
+COST: 14.40
+------------------------------------------------------------------------
+INVOICEID: 45
+ITEM: 1
+PRODUCTID: 11
+QUANTITY: 6
+COST: 13.20
+------------------------------------------------------------------------
+INVOICEID: 45
+ITEM: 2
+PRODUCTID: 46
+QUANTITY: 8
+COST: 9.30
+------------------------------------------------------------------------
+INVOICEID: 45
+ITEM: 3
+PRODUCTID: 14
+QUANTITY: 11
+COST: 18.60
+------------------------------------------------------------------------
+INVOICEID: 45
+ITEM: 4
+PRODUCTID: 3
+QUANTITY: 14
+COST: 38.10
+------------------------------------------------------------------------
+INVOICEID: 45
+ITEM: 5
+PRODUCTID: 45
+QUANTITY: 17
+COST: 27.00
+------------------------------------------------------------------------
+INVOICEID: 45
+ITEM: 6
+PRODUCTID: 39
+QUANTITY: 5
+COST: 23.10
+------------------------------------------------------------------------
+INVOICEID: 45
+ITEM: 7
+PRODUCTID: 6
+QUANTITY: 24
+COST: 14.70
+------------------------------------------------------------------------
+INVOICEID: 45
+ITEM: 8
+PRODUCTID: 9
+QUANTITY: 2
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 45
+ITEM: 9
+PRODUCTID: 26
+QUANTITY: 18
+COST: 37.80
+------------------------------------------------------------------------
+INVOICEID: 45
+ITEM: 10
+PRODUCTID: 41
+QUANTITY: 24
+COST: 30.90
+------------------------------------------------------------------------
+INVOICEID: 45
+ITEM: 11
+PRODUCTID: 31
+QUANTITY: 22
+COST: 7.20
+------------------------------------------------------------------------
+INVOICEID: 45
+ITEM: 12
+PRODUCTID: 32
+QUANTITY: 13
+COST: 28.50
+------------------------------------------------------------------------
+INVOICEID: 45
+ITEM: 13
+PRODUCTID: 47
+QUANTITY: 8
+COST: 26.70
+------------------------------------------------------------------------
+INVOICEID: 45
+ITEM: 14
+PRODUCTID: 3
+QUANTITY: 16
+COST: 38.10
+------------------------------------------------------------------------
+INVOICEID: 46
+ITEM: 0
+PRODUCTID: 5
+QUANTITY: 21
+COST: 35.40
+------------------------------------------------------------------------
+INVOICEID: 46
+ITEM: 1
+PRODUCTID: 12
+QUANTITY: 24
+COST: 25.20
+------------------------------------------------------------------------
+INVOICEID: 46
+ITEM: 2
+PRODUCTID: 30
+QUANTITY: 14
+COST: 34.80
+------------------------------------------------------------------------
+INVOICEID: 46
+ITEM: 3
+PRODUCTID: 21
+QUANTITY: 19
+COST: 17.10
+------------------------------------------------------------------------
+INVOICEID: 46
+ITEM: 4
+PRODUCTID: 17
+QUANTITY: 5
+COST: 33.00
+------------------------------------------------------------------------
+INVOICEID: 46
+ITEM: 5
+PRODUCTID: 25
+QUANTITY: 9
+COST: 24.30
+------------------------------------------------------------------------
+INVOICEID: 46
+ITEM: 6
+PRODUCTID: 41
+QUANTITY: 18
+COST: 30.90
+------------------------------------------------------------------------
+INVOICEID: 46
+ITEM: 7
+PRODUCTID: 49
+QUANTITY: 9
+COST: 3.30
+------------------------------------------------------------------------
+INVOICEID: 46
+ITEM: 8
+PRODUCTID: 8
+QUANTITY: 22
+COST: 33.90
+------------------------------------------------------------------------
+INVOICEID: 46
+ITEM: 9
+PRODUCTID: 7
+QUANTITY: 4
+COST: 12.60
+------------------------------------------------------------------------
+INVOICEID: 46
+ITEM: 10
+PRODUCTID: 11
+QUANTITY: 24
+COST: 13.20
+------------------------------------------------------------------------
+INVOICEID: 46
+ITEM: 11
+PRODUCTID: 1
+QUANTITY: 4
+COST: 37.20
+------------------------------------------------------------------------
+INVOICEID: 46
+ITEM: 12
+PRODUCTID: 21
+QUANTITY: 24
+COST: 17.10
+------------------------------------------------------------------------
+INVOICEID: 46
+ITEM: 13
+PRODUCTID: 36
+QUANTITY: 20
+COST: 4.80
+------------------------------------------------------------------------
+INVOICEID: 46
+ITEM: 14
+PRODUCTID: 24
+QUANTITY: 10
+COST: 10.80
+------------------------------------------------------------------------
+INVOICEID: 46
+ITEM: 15
+PRODUCTID: 40
+QUANTITY: 11
+COST: 4.20
+------------------------------------------------------------------------
+INVOICEID: 46
+ITEM: 16
+PRODUCTID: 46
+QUANTITY: 21
+COST: 9.30
+------------------------------------------------------------------------
+INVOICEID: 46
+ITEM: 17
+PRODUCTID: 12
+QUANTITY: 23
+COST: 25.20
+------------------------------------------------------------------------
+INVOICEID: 47
+ITEM: 0
+PRODUCTID: 23
+QUANTITY: 15
+COST: 11.40
+------------------------------------------------------------------------
+INVOICEID: 47
+ITEM: 1
+PRODUCTID: 23
+QUANTITY: 13
+COST: 11.40
+------------------------------------------------------------------------
+INVOICEID: 47
+ITEM: 2
+PRODUCTID: 17
+QUANTITY: 6
+COST: 33.00
+------------------------------------------------------------------------
+INVOICEID: 47
+ITEM: 3
+PRODUCTID: 1
+QUANTITY: 4
+COST: 37.20
+------------------------------------------------------------------------
+INVOICEID: 47
+ITEM: 4
+PRODUCTID: 15
+QUANTITY: 1
+COST: 14.10
+------------------------------------------------------------------------
+INVOICEID: 47
+ITEM: 5
+PRODUCTID: 40
+QUANTITY: 8
+COST: 4.20
+------------------------------------------------------------------------
+INVOICEID: 47
+ITEM: 6
+PRODUCTID: 8
+QUANTITY: 10
+COST: 33.90
+------------------------------------------------------------------------
+INVOICEID: 47
+ITEM: 7
+PRODUCTID: 28
+QUANTITY: 14
+COST: 4.50
+------------------------------------------------------------------------
+INVOICEID: 47
+ITEM: 8
+PRODUCTID: 16
+QUANTITY: 2
+COST: 29.10
+------------------------------------------------------------------------
+INVOICEID: 47
+ITEM: 9
+PRODUCTID: 32
+QUANTITY: 9
+COST: 28.50
+------------------------------------------------------------------------
+INVOICEID: 47
+ITEM: 10
+PRODUCTID: 45
+QUANTITY: 2
+COST: 27.00
+------------------------------------------------------------------------
+INVOICEID: 47
+ITEM: 11
+PRODUCTID: 35
+QUANTITY: 10
+COST: 11.40
+------------------------------------------------------------------------
+INVOICEID: 47
+ITEM: 12
+PRODUCTID: 12
+QUANTITY: 20
+COST: 25.20
+------------------------------------------------------------------------
+INVOICEID: 47
+ITEM: 13
+PRODUCTID: 33
+QUANTITY: 8
+COST: 27.30
+------------------------------------------------------------------------
+INVOICEID: 48
+ITEM: 0
+PRODUCTID: 6
+QUANTITY: 23
+COST: 14.70
+------------------------------------------------------------------------
+INVOICEID: 48
+ITEM: 1
+PRODUCTID: 26
+QUANTITY: 23
+COST: 37.80
+------------------------------------------------------------------------
+INVOICEID: 48
+ITEM: 2
+PRODUCTID: 23
+QUANTITY: 10
+COST: 11.40
+------------------------------------------------------------------------
+INVOICEID: 48
+ITEM: 3
+PRODUCTID: 10
+QUANTITY: 2
+COST: 30.60
+------------------------------------------------------------------------
+INVOICEID: 48
+ITEM: 4
+PRODUCTID: 48
+QUANTITY: 4
+COST: 31.50
+------------------------------------------------------------------------
+INVOICEID: 48
+ITEM: 5
+PRODUCTID: 24
+QUANTITY: 16
+COST: 10.80
+------------------------------------------------------------------------
+INVOICEID: 48
+ITEM: 6
+PRODUCTID: 11
+QUANTITY: 17
+COST: 13.20
+------------------------------------------------------------------------
+INVOICEID: 48
+ITEM: 7
+PRODUCTID: 30
+QUANTITY: 19
+COST: 34.80
+------------------------------------------------------------------------
+INVOICEID: 48
+ITEM: 8
+PRODUCTID: 5
+QUANTITY: 12
+COST: 35.40
+------------------------------------------------------------------------
+INVOICEID: 48
+ITEM: 9
+PRODUCTID: 35
+QUANTITY: 17
+COST: 11.40
+------------------------------------------------------------------------
+INVOICEID: 48
+ITEM: 10
+PRODUCTID: 41
+QUANTITY: 10
+COST: 30.90
+------------------------------------------------------------------------
+INVOICEID: 49
+ITEM: 0
+PRODUCTID: 18
+QUANTITY: 6
+COST: 25.80
+------------------------------------------------------------------------
+INVOICEID: 49
+ITEM: 1
+PRODUCTID: 22
+QUANTITY: 16
+COST: 9.90
+------------------------------------------------------------------------
+INVOICEID: 49
+ITEM: 2
+PRODUCTID: 29
+QUANTITY: 6
+COST: 16.80
+------------------------------------------------------------------------
+INVOICEID: 49
+ITEM: 3
+PRODUCTID: 17
+QUANTITY: 19
+COST: 33.00
+------------------------------------------------------------------------
+INVOICEID: 49
+ITEM: 4
+PRODUCTID: 47
+QUANTITY: 14
+COST: 26.70
+------------------------------------------------------------------------
+INVOICEID: 49
+ITEM: 5
+PRODUCTID: 16
+QUANTITY: 1
+COST: 29.10
+------------------------------------------------------------------------
+INVOICEID: 49
+ITEM: 6
+PRODUCTID: 29
+QUANTITY: 15
+COST: 16.80
+------------------------------------------------------------------------
+INVOICEID: 49
+ITEM: 7
+PRODUCTID: 6
+QUANTITY: 21
+COST: 14.70
+------------------------------------------------------------------------
+INVOICEID: 49
+ITEM: 8
+PRODUCTID: 48
+QUANTITY: 24
+COST: 31.50
+------------------------------------------------------------------------
+INVOICEID: 49
+ITEM: 9
+PRODUCTID: 7
+QUANTITY: 24
+COST: 12.60
+------------------------------------------------------------------------
+INVOICEID: 49
+ITEM: 10
+PRODUCTID: 30
+QUANTITY: 16
+COST: 34.80
+------------------------------------------------------------------------
+INVOICEID: 49
+ITEM: 11
+PRODUCTID: 40
+QUANTITY: 15
+COST: 4.20
+------------------------------------------------------------------------
+INVOICEID: 49
+ITEM: 12
+PRODUCTID: 21
+QUANTITY: 17
+COST: 17.10
+------------------------------------------------------------------------
+INVOICEID: 49
+ITEM: 13
+PRODUCTID: 6
+QUANTITY: 22
+COST: 14.70
+------------------------------------------------------------------------
+INVOICEID: 49
+ITEM: 14
+PRODUCTID: 23
+QUANTITY: 5
+COST: 11.40
+------------------------------------------------------------------------
+INVOICEID: 49
+ITEM: 15
+PRODUCTID: 19
+QUANTITY: 24
+COST: 16.50
+------------------------------------------------------------------------
+INVOICEID: 49
+ITEM: 16
+PRODUCTID: 24
+QUANTITY: 18
+COST: 10.80
+------------------------------------------------------------------------
+
+PRODUCT
+
+------------------------------------------------------------------------
+ID: 0
+NAME: Iron Iron
+PRICE: 5.4
+------------------------------------------------------------------------
+ID: 1
+NAME: Chair Shoe
+PRICE: 24.8
+------------------------------------------------------------------------
+ID: 2
+NAME: Telephone Clock
+PRICE: 24.8
+------------------------------------------------------------------------
+ID: 3
+NAME: Chair Chair
+PRICE: 25.4
+------------------------------------------------------------------------
+ID: 4
+NAME: Ice Tea Shoe
+PRICE: 12.8
+------------------------------------------------------------------------
+ID: 5
+NAME: Clock Clock
+PRICE: 23.6
+------------------------------------------------------------------------
+ID: 6
+NAME: Ice Tea Chair
+PRICE: 9.8
+------------------------------------------------------------------------
+ID: 7
+NAME: Telephone Shoe
+PRICE: 8.4
+------------------------------------------------------------------------
+ID: 8
+NAME: Ice Tea Clock
+PRICE: 22.6
+------------------------------------------------------------------------
+ID: 9
+NAME: Clock Telephone
+PRICE: 17.2
+------------------------------------------------------------------------
+ID: 10
+NAME: Telephone Ice Tea
+PRICE: 20.4
+------------------------------------------------------------------------
+ID: 11
+NAME: Telephone Iron
+PRICE: 8.8
+------------------------------------------------------------------------
+ID: 12
+NAME: Clock Ice Tea
+PRICE: 16.8
+------------------------------------------------------------------------
+ID: 13
+NAME: Telephone Clock
+PRICE: 18.0
+------------------------------------------------------------------------
+ID: 14
+NAME: Telephone Iron
+PRICE: 12.4
+------------------------------------------------------------------------
+ID: 15
+NAME: Ice Tea Chair
+PRICE: 9.4
+------------------------------------------------------------------------
+ID: 16
+NAME: Ice Tea Shoe
+PRICE: 19.4
+------------------------------------------------------------------------
+ID: 17
+NAME: Clock Ice Tea
+PRICE: 22.0
+------------------------------------------------------------------------
+ID: 18
+NAME: Chair Clock
+PRICE: 17.2
+------------------------------------------------------------------------
+ID: 19
+NAME: Ice Tea Ice Tea
+PRICE: 11.0
+------------------------------------------------------------------------
+ID: 20
+NAME: Ice Tea Telephone
+PRICE: 20.0
+------------------------------------------------------------------------
+ID: 21
+NAME: Chair Chair
+PRICE: 11.4
+------------------------------------------------------------------------
+ID: 22
+NAME: Iron Iron
+PRICE: 6.6
+------------------------------------------------------------------------
+ID: 23
+NAME: Shoe Chair
+PRICE: 7.6
+------------------------------------------------------------------------
+ID: 24
+NAME: Chair Shoe
+PRICE: 7.2
+------------------------------------------------------------------------
+ID: 25
+NAME: Shoe Shoe
+PRICE: 16.2
+------------------------------------------------------------------------
+ID: 26
+NAME: Shoe Shoe
+PRICE: 25.2
+------------------------------------------------------------------------
+ID: 27
+NAME: Telephone Iron
+PRICE: 23.0
+------------------------------------------------------------------------
+ID: 28
+NAME: Clock Iron
+PRICE: 3.0
+------------------------------------------------------------------------
+ID: 29
+NAME: Chair Telephone
+PRICE: 11.2
+------------------------------------------------------------------------
+ID: 30
+NAME: Shoe Iron
+PRICE: 23.2
+------------------------------------------------------------------------
+ID: 31
+NAME: Ice Tea Telephone
+PRICE: 4.8
+------------------------------------------------------------------------
+ID: 32
+NAME: Clock Iron
+PRICE: 19.0
+------------------------------------------------------------------------
+ID: 33
+NAME: Iron Chair
+PRICE: 18.2
+------------------------------------------------------------------------
+ID: 34
+NAME: Chair Iron
+PRICE: 25.6
+------------------------------------------------------------------------
+ID: 35
+NAME: Telephone Shoe
+PRICE: 7.6
+------------------------------------------------------------------------
+ID: 36
+NAME: Ice Tea Iron
+PRICE: 3.2
+------------------------------------------------------------------------
+ID: 37
+NAME: Clock Shoe
+PRICE: 9.4
+------------------------------------------------------------------------
+ID: 38
+NAME: Clock Ice Tea
+PRICE: 21.6
+------------------------------------------------------------------------
+ID: 39
+NAME: Ice Tea Shoe
+PRICE: 15.4
+------------------------------------------------------------------------
+ID: 40
+NAME: Shoe Clock
+PRICE: 2.8
+------------------------------------------------------------------------
+ID: 41
+NAME: Clock Ice Tea
+PRICE: 20.6
+------------------------------------------------------------------------
+ID: 42
+NAME: Iron Chair
+PRICE: 19.8
+------------------------------------------------------------------------
+ID: 43
+NAME: Telephone Clock
+PRICE: 9.4
+------------------------------------------------------------------------
+ID: 44
+NAME: Ice Tea Ice Tea
+PRICE: 9.6
+------------------------------------------------------------------------
+ID: 45
+NAME: Iron Ice Tea
+PRICE: 18.0
+------------------------------------------------------------------------
+ID: 46
+NAME: Ice Tea Clock
+PRICE: 6.2
+------------------------------------------------------------------------
+ID: 47
+NAME: Ice Tea Iron
+PRICE: 17.8
+------------------------------------------------------------------------
+ID: 48
+NAME: Clock Clock
+PRICE: 21.0
+------------------------------------------------------------------------
+ID: 49
+NAME: Iron Iron
+PRICE: 2.2
+------------------------------------------------------------------------
+
+SUPPLIER
+
+------------------------------------------------------------------------
+SUPPLIER_ID: 1
+SUPPLIER_NAME: IBM
+------------------------------------------------------------------------
+
+6 tables
