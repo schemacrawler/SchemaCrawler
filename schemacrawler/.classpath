@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src/main/java"/>
-	<classpathentry kind="src" path="src/changes"/>
-	<classpathentry kind="src" path="src/site"/>
-	<classpathentry kind="src" path="src/test/java"/>
-	<classpathentry kind="src" path="src/main/resources"/>
-	<classpathentry kind="src" path="src/test/resources"/>
+	<classpathentry excluding=".svn/**/*" kind="src" path="src/main/java"/>
+	<classpathentry excluding=".svn/**/*" kind="src" path="src/changes"/>
+	<classpathentry excluding="**/.svn/**/*" kind="src" path="src/site"/>
+	<classpathentry excluding="**/.svn/**/*" kind="src" path="src/test/java"/>
+	<classpathentry excluding="**/.svn/**/*" kind="src" path="src/main/resources"/>
+	<classpathentry excluding="**/.svn/**/*" kind="src" path="src/test/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="var" path="M2_REPO/junit/junit/3.8.1/junit-3.8.1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/hsqldb/hsqldb/1.8.0.1/hsqldb-1.8.0.1.jar"/>

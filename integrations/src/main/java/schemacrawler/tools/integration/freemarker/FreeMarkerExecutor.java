@@ -43,6 +43,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.tools.ToolType;
 import schemacrawler.tools.datatext.DataTextFormatterLoader;
 import schemacrawler.tools.integration.SchemaCrawlerExecutor;
+import schemacrawler.tools.integration.velocity.VelocityExecutor;
 import schemacrawler.tools.operation.OperatorLoader;
 import schemacrawler.tools.schematext.SchemaTextOptions;
 import freemarker.cache.ClassTemplateLoader;
@@ -104,11 +105,13 @@ public class FreeMarkerExecutor
         catch (final SQLException e)
         {
           final String errorMessage = e.getMessage();
-          LOGGER.log(Level.WARNING, "Cannot obtain a connection: " + errorMessage);      
+          LOGGER.log(Level.WARNING, "Cannot obtain a connection: "
+                                    + errorMessage);
           throw new SchemaCrawlerException(errorMessage, e);
         }
         crawlHandler = OperatorLoader.load(options.getOperatorOptions(),
-                                           connection, dataHandler);
+                                           connection,
+                                           dataHandler);
       }
       if (toolType == ToolType.DATA_TEXT)
       {
@@ -118,8 +121,7 @@ public class FreeMarkerExecutor
       }
       else if (toolType == ToolType.OPERATION)
       {
-        final SchemaCrawler crawler = new SchemaCrawler(
-                                                        dataSource,
+        final SchemaCrawler crawler = new SchemaCrawler(dataSource,
                                                         crawlHandler);
         crawler.crawl(schemaCrawlerOptions);
       }
@@ -131,13 +133,13 @@ public class FreeMarkerExecutor
    * 
    * @see {@link VelocityExecutor#execute(Options, DataSource)}
    * @param schemaCrawlerOptions
-   *          SchemaCrawler options
+   *        SchemaCrawler options
    * @param schemaTextOptions
-   *          Text output options
+   *        Text output options
    * @param dataSource
-   *          Datasource
+   *        Datasource
    * @throws Exception
-   *           On an exception
+   *         On an exception
    */
   public void execute(final SchemaCrawlerOptions schemaCrawlerOptions,
                       final SchemaTextOptions schemaTextOptions,
@@ -147,11 +149,8 @@ public class FreeMarkerExecutor
     // Get the entire schema at once, since we need to use this to
     // render
     // the velocity template
-    final Schema schema = SchemaCrawler.getSchema(dataSource,
-                                                  schemaTextOptions
-                                                    .getSchemaTextDetailType()
-                                                    .mapToInfoLevel(),
-                                                  schemaCrawlerOptions);
+    final Schema schema = SchemaCrawler.getSchema(dataSource, schemaTextOptions
+      .getSchemaTextDetailType().mapToInfoLevel(), schemaCrawlerOptions);
     final Writer writer = schemaTextOptions.getOutputOptions()
       .openOutputWriter();
     final String templateName = schemaTextOptions.getOutputOptions()
@@ -160,7 +159,8 @@ public class FreeMarkerExecutor
   }
 
   private static void renderTemplate(final String templateName,
-                                     final Schema schema, final Writer writer)
+                                     final Schema schema,
+                                     final Writer writer)
     throws Exception
   {
     // Set the file path, in case the template is a file template
@@ -177,11 +177,9 @@ public class FreeMarkerExecutor
     // Create a new instance of the configuration
     final Configuration cfg = new Configuration();
 
-    final ClassTemplateLoader ctl = new ClassTemplateLoader(
-                                                            FreeMarkerExecutor.class,
+    final ClassTemplateLoader ctl = new ClassTemplateLoader(FreeMarkerExecutor.class,
                                                             "/");
-    final FileTemplateLoader ftl = new FileTemplateLoader(
-                                                          new File(templatePath));
+    final FileTemplateLoader ftl = new FileTemplateLoader(new File(templatePath));
     final TemplateLoader[] loaders = new TemplateLoader[] {
         ctl, ftl
     };

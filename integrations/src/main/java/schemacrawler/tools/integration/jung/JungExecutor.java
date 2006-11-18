@@ -41,6 +41,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.tools.ToolType;
 import schemacrawler.tools.datatext.DataTextFormatterLoader;
 import schemacrawler.tools.integration.SchemaCrawlerExecutor;
+import schemacrawler.tools.integration.velocity.VelocityExecutor;
 import schemacrawler.tools.operation.OperatorLoader;
 import schemacrawler.tools.schematext.SchemaTextOptions;
 import edu.uci.ics.jung.graph.Graph;
@@ -54,9 +55,9 @@ public final class JungExecutor
   implements SchemaCrawlerExecutor
 {
 
-  public static final Logger LOGGER = Logger.getLogger(JungExecutor.class
+  private static final Logger LOGGER = Logger.getLogger(JungExecutor.class
     .getName());
-  
+
   private static final int DEFAULT_IMAGE_WIDTH = 600;
 
   private Dimension getSize(final String dimensions)
@@ -113,11 +114,13 @@ public final class JungExecutor
         catch (final SQLException e)
         {
           final String errorMessage = e.getMessage();
-          LOGGER.log(Level.WARNING, "Cannot obtain a connection: " + errorMessage);      
+          LOGGER.log(Level.WARNING, "Cannot obtain a connection: "
+                                    + errorMessage);
           throw new SchemaCrawlerException(errorMessage, e);
         }
         crawlHandler = OperatorLoader.load(options.getOperatorOptions(),
-                                           connection, dataHandler);
+                                           connection,
+                                           dataHandler);
       }
       if (toolType == ToolType.DATA_TEXT)
       {
@@ -139,13 +142,13 @@ public final class JungExecutor
    * 
    * @see {@link VelocityExecutor#execute(Options, DataSource)}
    * @param schemaCrawlerOptions
-   *          SchemaCrawler options
+   *        SchemaCrawler options
    * @param schemaTextOptions
-   *          Text output options
+   *        Text output options
    * @param dataSource
-   *          Datasource
+   *        Datasource
    * @throws Exception
-   *           On an exception
+   *         On an exception
    */
   public void execute(final SchemaCrawlerOptions schemaCrawlerOptions,
                       final SchemaTextOptions schemaTextOptions,

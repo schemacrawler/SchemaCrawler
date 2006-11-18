@@ -55,7 +55,7 @@ public final class PropertiesDataSource
 
   private static final String DEFAULTCONNECTION = "defaultconnection";
 
-  public static final Logger LOGGER = Logger
+  private static final Logger LOGGER = Logger
     .getLogger(PropertiesDataSource.class.getName());
 
   private String url;
@@ -81,23 +81,30 @@ public final class PropertiesDataSource
    * Creates a PropertiesDataSource from a set of connection properties,
    * using the default connection.
    * 
-   * @param properties
-   *          Connection properties.
+   * @param jdbcDriver
+   *        JDBC driver class name
+   * @param url
+   *        Database connection URL
+   * @param user
+   *        Database user name
+   * @param password
+   *        Database password
    * @throws PropertiesDataSourceException
-   *           On any exception in creating the PropertiesDataSource.
+   *         On any exception in creating the PropertiesDataSource.
    */
-  public PropertiesDataSource(final String jdbcDriver, final String url,
-                              final String user, final String password)
+  public PropertiesDataSource(final String jdbcDriver,
+                              final String url,
+                              final String user,
+                              final String password)
     throws PropertiesDataSourceException
   {
 
     if (jdbcDriver == null || url == null || user == null || password == null)
     {
-      throw new PropertiesDataSourceException(
-                                              "All connection properties should be provided - "
-                                                  + "JDBC database driver class name, "
-                                                  + "connection URL, "
-                                                  + "user name and password");
+      throw new PropertiesDataSourceException("All connection properties should be provided - "
+                                              + "JDBC database driver class name, "
+                                              + "connection URL, "
+                                              + "user name and password");
     }
 
     final String connectionName = "PropertiesDataSourceConnection";
@@ -117,9 +124,9 @@ public final class PropertiesDataSource
    * using the default connection.
    * 
    * @param properties
-   *          Connection properties.
+   *        Connection properties.
    * @throws PropertiesDataSourceException
-   *           On any exception in creating the PropertiesDataSource.
+   *         On any exception in creating the PropertiesDataSource.
    */
   public PropertiesDataSource(final Properties properties)
     throws PropertiesDataSourceException
@@ -133,11 +140,11 @@ public final class PropertiesDataSource
    * empty, use the default connection.
    * 
    * @param properties
-   *          Connection properties.
+   *        Connection properties.
    * @param connectionName
-   *          The name of the connection to use.
+   *        The name of the connection to use.
    * @throws PropertiesDataSourceException
-   *           On any exception in creating the PropertiesDataSource.
+   *         On any exception in creating the PropertiesDataSource.
    */
   public PropertiesDataSource(final Properties properties,
                               final String connectionName)
@@ -170,9 +177,8 @@ public final class PropertiesDataSource
     }
 
     // create substituted properties
-    final SubstitutableProperties substitutedProperties = new SubstitutableProperties(
-                                                                                      groups
-                                                                                        .subgroup(useConnectionName));
+    final SubstitutableProperties substitutedProperties = new SubstitutableProperties(groups
+      .subgroup(useConnectionName));
 
     logWriter = new PrintWriter(System.err);
 
@@ -222,8 +228,7 @@ public final class PropertiesDataSource
       connection = getConnection();
       if (connection == null)
       {
-        throw new PropertiesDataSourceException(
-                                                "Could not establish a connection");
+        throw new PropertiesDataSourceException("Could not establish a connection");
       }
       // set metadata properties
       final DatabaseMetaData metaData = connection.getMetaData();
@@ -245,7 +250,8 @@ public final class PropertiesDataSource
     catch (final SQLException e)
     {
       final String errorMessage = e.getMessage();
-      LOGGER.log(Level.WARNING, "Could not establish a connection: " + errorMessage);      
+      LOGGER.log(Level.WARNING, "Could not establish a connection: "
+                                + errorMessage);
       throw new PropertiesDataSourceException(errorMessage, e);
     }
     finally
@@ -260,7 +266,8 @@ public final class PropertiesDataSource
       catch (final SQLException e)
       {
         final String errorMessage = e.getMessage();
-        LOGGER.log(Level.WARNING, "Could not close the connection: " + errorMessage);
+        LOGGER.log(Level.WARNING, "Could not close the connection: "
+                                  + errorMessage);
         throw new PropertiesDataSourceException(errorMessage, e);
       }
     }
@@ -339,7 +346,7 @@ public final class PropertiesDataSource
    * 
    * @return a connection to the data source
    * @throws SQLException
-   *           if a database access error occurs
+   *         if a database access error occurs
    */
   public Connection getConnection()
     throws SQLException
@@ -358,13 +365,13 @@ public final class PropertiesDataSource
    * <code>DataSource</code> object represents.
    * 
    * @param username
-   *          the database user on whose behalf the connection is being
-   *          made
+   *        the database user on whose behalf the connection is being
+   *        made
    * @param password
-   *          the user's password
+   *        the user's password
    * @return a connection to the data source
    * @throws SQLException
-   *           if a database access error occurs
+   *         if a database access error occurs
    */
   public Connection getConnection(final String username, final String password)
     throws SQLException
@@ -410,7 +417,7 @@ public final class PropertiesDataSource
    * initially zero.
    * 
    * @param seconds
-   *          the data source login time limit
+   *        the data source login time limit
    * @see #getLoginTimeout
    */
   public void setLoginTimeout(final int seconds)
@@ -460,7 +467,7 @@ public final class PropertiesDataSource
    * disabled.
    * 
    * @param out
-   *          the new log writer; to disable logging, set to null
+   *        the new log writer; to disable logging, set to null
    * @see #getLogWriter
    */
   public void setLogWriter(final PrintWriter out)

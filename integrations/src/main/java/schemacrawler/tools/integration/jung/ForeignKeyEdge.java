@@ -43,11 +43,17 @@ final class ForeignKeyEdge
     super(fromColumnVertex, toColumnVertex);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public Paint getDrawPaint()
   {
     return Color.BLACK;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public Paint getFillPaint()
   {
     return null;

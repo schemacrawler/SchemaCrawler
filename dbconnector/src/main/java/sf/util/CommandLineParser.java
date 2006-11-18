@@ -47,7 +47,7 @@ public final class CommandLineParser
    * Add the specified Option to the list of accepted options.
    * 
    * @param option
-   *          Option to add
+   *        Option to add
    */
   public void addOption(final BaseOption option)
   {
@@ -104,7 +104,7 @@ public final class CommandLineParser
    * Get an option by name.
    * 
    * @param optionName
-   *          Name of the option
+   *        Name of the option
    * @return Option
    */
   public BaseOption getOption(final String optionName)
@@ -114,11 +114,11 @@ public final class CommandLineParser
 
   /**
    * Extract the options and non-option arguments from the given list of
-   * command-line arguments. The default locale is used for parsing options
-   * whose values might be locale-specific.
+   * command-line arguments. The default locale is used for parsing
+   * options whose values might be locale-specific.
    * 
    * @param args
-   *          Command line arguments
+   *        Command line arguments
    */
   public void parse(final String[] args)
   {
@@ -180,8 +180,7 @@ public final class CommandLineParser
       position++;
     }
 
-    remainingArgs = (String[]) otherArgs.toArray(new String[otherArgs
-      .size()]);
+    remainingArgs = (String[]) otherArgs.toArray(new String[otherArgs.size()]);
   }
 
   /**
@@ -211,7 +210,8 @@ public final class CommandLineParser
       this.wantsValue = wantsValue;
     }
 
-    protected BaseOption(final char shortForm, final String longForm,
+    protected BaseOption(final char shortForm,
+                         final String longForm,
                          final boolean wantsValue)
     {
       setShortForm(shortForm);
@@ -341,6 +341,7 @@ public final class CommandLineParser
      * command-line.
      * 
      * @param valueString
+     * @return Parsed value
      */
     protected abstract Object parseValue(final String valueString);
 
@@ -357,7 +358,7 @@ public final class CommandLineParser
      * Constructor that takes the short form of the switch only.
      * 
      * @param shortForm
-     *          Short form of the switch
+     *        Short form of the switch
      */
     public BooleanOption(final char shortForm)
     {
@@ -369,7 +370,7 @@ public final class CommandLineParser
      * Constructor that takes the long form of the switch only.
      * 
      * @param longForm
-     *          Long form of the switch
+     *        Long form of the switch
      */
     public BooleanOption(final String longForm)
     {
@@ -378,12 +379,13 @@ public final class CommandLineParser
     }
 
     /**
-     * Constructor that takes the short form and long form of the switch.
+     * Constructor that takes the short form and long form of the
+     * switch.
      * 
      * @param shortForm
-     *          Short form of the switch
+     *        Short form of the switch
      * @param longForm
-     *          Long form of the switch
+     *        Long form of the switch
      */
     public BooleanOption(final char shortForm, final String longForm)
     {
@@ -412,7 +414,7 @@ public final class CommandLineParser
      * Constructor that takes the short form of the switch only.
      * 
      * @param shortForm
-     *          Short form of the switch
+     *        Short form of the switch
      */
     public NumberOption(final char shortForm)
     {
@@ -423,7 +425,7 @@ public final class CommandLineParser
      * Constructor that takes the long form of the switch only.
      * 
      * @param longForm
-     *          Long form of the switch
+     *        Long form of the switch
      */
     public NumberOption(final String longForm)
     {
@@ -431,12 +433,13 @@ public final class CommandLineParser
     }
 
     /**
-     * Constructor that takes the short form and long form of the switch.
+     * Constructor that takes the short form and long form of the
+     * switch.
      * 
      * @param shortForm
-     *          Short form of the switch
+     *        Short form of the switch
      * @param longForm
-     *          Long form of the switch
+     *        Long form of the switch
      */
     public NumberOption(final char shortForm, final String longForm)
     {
@@ -467,7 +470,7 @@ public final class CommandLineParser
      * Constructor that takes the short form of the switch only.
      * 
      * @param shortForm
-     *          Short form of the switch
+     *        Short form of the switch
      */
     public StringOption(final char shortForm)
     {
@@ -478,7 +481,7 @@ public final class CommandLineParser
      * Constructor that takes the long form of the switch only.
      * 
      * @param longForm
-     *          Long form of the switch
+     *        Long form of the switch
      */
     public StringOption(final String longForm)
     {
@@ -486,12 +489,13 @@ public final class CommandLineParser
     }
 
     /**
-     * Constructor that takes the short form and long form of the switch.
+     * Constructor that takes the short form and long form of the
+     * switch.
      * 
      * @param shortForm
-     *          Short form of the switch
+     *        Short form of the switch
      * @param longForm
-     *          Long form of the switch
+     *        Long form of the switch
      */
     public StringOption(final char shortForm, final String longForm)
     {

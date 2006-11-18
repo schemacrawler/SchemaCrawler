@@ -39,17 +39,34 @@ final class JpgVisualizationViewer
 
   private static final long serialVersionUID = 1600814850469256520L;
 
+  /**
+   * Constructor with a viewer with a SchemaCrawler renderer.
+   * 
+   * @param layout
+   *        Layout
+   */
   public JpgVisualizationViewer(final Layout layout)
   {
     super(layout, new SchemaCrawlerRenderer());
   }
 
+  /**
+   * Saves the graph as an image.
+   * 
+   * @param file
+   *        Image file name
+   * @param size
+   *        Image size
+   * @throws IOException
+   *         On an exception
+   */
   public void save(final File file, final Dimension size)
     throws IOException
   {
 
     final BufferedImage bufferedImage = new BufferedImage(size.width,
-        size.height, BufferedImage.TYPE_INT_RGB);
+                                                          size.height,
+                                                          BufferedImage.TYPE_INT_RGB);
 
     // use double buffering until now
     // turn it off to capture

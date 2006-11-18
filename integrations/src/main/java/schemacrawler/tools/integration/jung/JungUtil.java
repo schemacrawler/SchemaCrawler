@@ -57,15 +57,16 @@ public final class JungUtil
    * Saves a schema graph as a JPEG file.
    * 
    * @param graph
-   *          Schema graph
+   *        Schema graph
    * @param file
-   *          Output JPEG file
+   *        Output JPEG file
    * @param size
-   *          Image size
+   *        Image size
    * @throws IOException
-   *           On an exception
+   *         On an exception
    */
-  public static void saveGraphJpeg(final Graph graph, final File file,
+  public static void saveGraphJpeg(final Graph graph,
+                                   final File file,
                                    final Dimension size)
     throws IOException
   {
@@ -78,7 +79,7 @@ public final class JungUtil
    * Turns the schema into a directed graph.
    * 
    * @param schema
-   *          Schema
+   *        Schema
    * @return Graph
    */
   public static Graph makeSchemaGraph(final Schema schema)
@@ -91,7 +92,8 @@ public final class JungUtil
     return graph;
   }
 
-  private static void mapForeignKeys(final Graph graph, final Table[] tables,
+  private static void mapForeignKeys(final Graph graph,
+                                     final Table[] tables,
                                      final Map verticesMap)
   {
     // Make edges for each foreign key
@@ -116,8 +118,8 @@ public final class JungUtil
               .get(fromColumn);
             final ColumnVertex toColumnVeretx = (ColumnVertex) verticesMap
               .get(toColumn);
-            final ForeignKeyEdge foreignKeyEdge = new ForeignKeyEdge(
-                fromColumnVertex, toColumnVeretx);
+            final ForeignKeyEdge foreignKeyEdge = new ForeignKeyEdge(fromColumnVertex,
+                                                                     toColumnVeretx);
             graph.addEdge(foreignKeyEdge);
           }
         }

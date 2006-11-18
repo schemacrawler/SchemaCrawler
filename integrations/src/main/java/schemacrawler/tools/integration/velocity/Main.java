@@ -54,13 +54,13 @@ public final class Main
   }
 
   /**
-   * s Get connection parameters, and creates a connection, and crawls the
-   * schema.<BR>
+   * s Get connection parameters, and creates a connection, and crawls
+   * the schema.<BR>
    * 
    * @param args
-   *          Arguments passed into the program from the command line.
+   *        Arguments passed into the program from the command line.
    * @throws Exception
-   *           On an exception
+   *         On an exception
    */
   public static void main(final String[] args)
     throws Exception

@@ -42,11 +42,17 @@ final class ColumnEdge
     super(tableVertex, columnVertex);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public Paint getDrawPaint()
   {
     return Color.GRAY;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public Paint getFillPaint()
   {
     return null;

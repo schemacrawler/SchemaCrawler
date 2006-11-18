@@ -40,11 +40,17 @@ final class ColumnVertex
     column = namedObject;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public String getLabel()
   {
     return column.getName();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public Paint getFillPaint()
   {
     if (column.isPartOfPrimaryKey())
@@ -57,11 +63,17 @@ final class ColumnVertex
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public Paint getDrawPaint()
   {
     return Color.GRAY;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public Shape getShape()
   {
     return VERTEX_SHAPE_FACTORY.getEllipse(this);
