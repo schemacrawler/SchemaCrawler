@@ -19,7 +19,7 @@
 
   <target name="hsqldb">
       <tstamp prefix="start">
-        <format property="filename.time" pattern="yyyy-MMM-dd-HHmm"/>
+        <format property="filename.time" pattern="yyyy-MMM-dd-HHmmss"/>
       </tstamp>
       <property name="outputfile-hsqldb" value="snapshots/${start.filename.time}-hsqldb.txt"/>
       <snapshot-db

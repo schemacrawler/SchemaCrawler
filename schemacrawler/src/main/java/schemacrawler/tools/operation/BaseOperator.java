@@ -375,7 +375,7 @@ public abstract class BaseOperator
     }
     final String message = getMessage(aggregate);
     //
-    out.println(formattingHelper.createNameValueRow(table.getName(), message));
+    out.println(formattingHelper.createNameRow(table.getName(), message));
   }
 
   /**
