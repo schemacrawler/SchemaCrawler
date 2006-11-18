@@ -29,8 +29,18 @@ interface SchemaGraphEdge
   extends DirectedEdge
 {
 
+  /**
+   * Gets the drawing paint object.
+   * 
+   * @return Drawing paint object
+   */
   Paint getDrawPaint();
 
+  /**
+   * Gets the fill paint object.
+   * 
+   * @return Fill paint object
+   */
   Paint getFillPaint();
 
 }

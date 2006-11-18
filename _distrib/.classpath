@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding=".svn/**/*" kind="src" path="examples/api"/>
-	<classpathentry excluding=".svn/**/*" kind="src" path="examples/maven/src/main/java"/>
+	<classpathentry excluding="**/.svn/**/*" kind="src" path="examples/api"/>
+	<classpathentry excluding="**/.svn/**/*" kind="src" path="examples/maven/src/main/java"/>
 	<classpathentry kind="lib" path="dbserver/hsqldb.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/SchemaCrawler - Database Connector"/>

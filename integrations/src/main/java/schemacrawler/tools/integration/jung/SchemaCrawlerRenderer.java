@@ -44,11 +44,17 @@ final class SchemaCrawlerRenderer
   private final class SchemaCrawlerEdgePaintFunction
     implements EdgePaintFunction
   {
+    /**
+     * {@inheritDoc}
+     */
     public Paint getDrawPaint(final Edge edge)
     {
       return ((SchemaGraphEdge) edge).getDrawPaint();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Paint getFillPaint(final Edge edge)
     {
       return ((SchemaGraphEdge) edge).getFillPaint();
@@ -58,6 +64,9 @@ final class SchemaCrawlerRenderer
   private final class SchemaCrawlerVertexShapeFunction
     implements VertexShapeFunction
   {
+    /**
+     * {@inheritDoc}
+     */
     public Shape getShape(final Vertex vertex)
     {
       return ((SchemaGraphVertex) vertex).getShape();
@@ -67,11 +76,17 @@ final class SchemaCrawlerRenderer
   private final class SchemaCrawlerVertexPaintFunction
     implements VertexPaintFunction
   {
+    /**
+     * {@inheritDoc}
+     */
     public Paint getFillPaint(final Vertex vertex)
     {
       return ((SchemaGraphVertex) vertex).getFillPaint();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Paint getDrawPaint(final Vertex vertex)
     {
       return ((SchemaGraphVertex) vertex).getDrawPaint();
@@ -81,19 +96,26 @@ final class SchemaCrawlerRenderer
   private final class SchemaCrawlerVertexStringer
     implements VertexStringer
   {
+    /**
+     * {@inheritDoc}
+     */
     public String getLabel(final ArchetypeVertex vertex)
     {
       return ((SchemaGraphVertex) vertex).getLabel();
     }
   }
 
+  /**
+   * Constructs a new SchemaCrawler renderer, with customizations.
+   */
   public SchemaCrawlerRenderer()
   {
     vertexStringer = new SchemaCrawlerVertexStringer();
     vertexPaintFunction = new SchemaCrawlerVertexPaintFunction();
     vertexShapeFunction = new SchemaCrawlerVertexShapeFunction();
     vertexFontFunction = new ConstantVertexFontFunction(new Font("Helvetica",
-        Font.PLAIN, FONT_SIZE));
+                                                                 Font.PLAIN,
+                                                                 FONT_SIZE));
     edgePaintFunction = new SchemaCrawlerEdgePaintFunction();
   }
 

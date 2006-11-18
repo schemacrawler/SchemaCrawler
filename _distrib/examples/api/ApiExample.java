@@ -2,13 +2,13 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import schemacrawler.crawl.SchemaInfoLevel;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
+import schemacrawler.crawl.SchemaInfoLevel;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-
+import schemacrawler.schema.View;
 import dbconnector.datasource.PropertiesDataSource;
 import dbconnector.datasource.PropertiesDataSourceException;
 
@@ -30,7 +30,16 @@ public final class ApiExample
     for (int i = 0; i < tables.length; i++)
     {
       final Table table = tables[i];
-      System.out.println(table);
+      System.out.print(table);
+      if (table instanceof View)
+      {
+        System.out.println(" (view)");
+      }
+      else
+      {
+        System.out.println();
+      }
+
       final Column[] columns = table.getColumns();
       for (int j = 0; j < columns.length; j++)
       {

@@ -103,11 +103,13 @@ public class VelocityExecutor
         catch (final SQLException e)
         {
           final String errorMessage = e.getMessage();
-          LOGGER.log(Level.WARNING, "Cannot obtain a connection: " + errorMessage);      
+          LOGGER.log(Level.WARNING, "Cannot obtain a connection: "
+                                    + errorMessage);
           throw new SchemaCrawlerException(errorMessage, e);
         }
         crawlHandler = OperatorLoader.load(options.getOperatorOptions(),
-                                           connection, dataHandler);
+                                           connection,
+                                           dataHandler);
       }
       if (toolType == ToolType.DATA_TEXT)
       {
@@ -129,13 +131,13 @@ public class VelocityExecutor
    * 
    * @see {@link VelocityExecutor#execute(Options, DataSource)}
    * @param schemaCrawlerOptions
-   *          SchemaCrawler options
+   *        SchemaCrawler options
    * @param schemaTextOptions
-   *          Text output options
+   *        Text output options
    * @param dataSource
-   *          Datasource
+   *        Datasource
    * @throws Exception
-   *           On an exception
+   *         On an exception
    */
   public void execute(final SchemaCrawlerOptions schemaCrawlerOptions,
                       final SchemaTextOptions schemaTextOptions,
@@ -155,7 +157,8 @@ public class VelocityExecutor
   }
 
   private static void renderTemplate(final String templateName,
-                                     final Schema schema, final Writer writer)
+                                     final Schema schema,
+                                     final Writer writer)
     throws Exception
   {
     // Set the file path, in case the template is a file template
@@ -181,11 +184,17 @@ public class VelocityExecutor
     final Properties p = new Properties();
     p.setProperty(RuntimeConstants.RESOURCE_LOADER, fileResourceLoader + ","
                                                     + classpathResourceLoader);
-    setVelocityResourceLoaderProperty(p, classpathResourceLoader, "class",
+    setVelocityResourceLoaderProperty(p,
+                                      classpathResourceLoader,
+                                      "class",
                                       ClasspathResourceLoader.class.getName());
-    setVelocityResourceLoaderProperty(p, fileResourceLoader, "class",
+    setVelocityResourceLoaderProperty(p,
+                                      fileResourceLoader,
+                                      "class",
                                       FileResourceLoader.class.getName());
-    setVelocityResourceLoaderProperty(p, fileResourceLoader, "path",
+    setVelocityResourceLoaderProperty(p,
+                                      fileResourceLoader,
+                                      "path",
                                       templatePath);
 
     LOGGER.log(Level.INFO, "Velocity configuration properties - "
@@ -205,14 +214,13 @@ public class VelocityExecutor
     writer.flush();
   }
 
-  private static void setVelocityResourceLoaderProperty(
-                                                        final Properties p,
+  private static void setVelocityResourceLoaderProperty(final Properties p,
                                                         final String resourceLoaderName,
                                                         final String resourceLoaderPropertyName,
                                                         final String resourceLoaderPropertyValue)
   {
     p.setProperty(resourceLoaderName + "." + RuntimeConstants.RESOURCE_LOADER
-                  + "." + resourceLoaderPropertyName,
+                      + "." + resourceLoaderPropertyName,
                   resourceLoaderPropertyValue);
   }
 

@@ -33,16 +33,36 @@ interface SchemaGraphVertex
   extends Vertex
 {
 
-  VertexShapeFactory VERTEX_SHAPE_FACTORY = new VertexShapeFactory(
-      new ConstantVertexSizeFunction(10),
-      new ConstantVertexAspectRatioFunction(0.8f));
+  /** Vertex shape factory */
+  VertexShapeFactory VERTEX_SHAPE_FACTORY = new VertexShapeFactory(new ConstantVertexSizeFunction(10),
+                                                                   new ConstantVertexAspectRatioFunction(0.8f));
 
+  /**
+   * Gets the label.
+   * 
+   * @return Label
+   */
   String getLabel();
 
+  /**
+   * Gets the fill paint object.
+   * 
+   * @return Fill paint object
+   */
   Paint getFillPaint();
 
+  /**
+   * Gets the drawing paint object.
+   * 
+   * @return Drawing paint object
+   */
   Paint getDrawPaint();
 
+  /**
+   * Gets the shape.
+   * 
+   * @return Shape
+   */
   Shape getShape();
 
 }

@@ -40,11 +40,21 @@ final class TableVertex
     this.table = table;
   }
 
+  /**
+   * Gets the label.
+   * 
+   * @return Label.
+   */
   public String getLabel()
   {
     return table.getName();
   }
 
+  /**
+   * Gets the fill paint object.
+   * 
+   * @return Fill paint object
+   */
   public Paint getFillPaint()
   {
     if (table.getType().isTable())
@@ -57,11 +67,21 @@ final class TableVertex
     }
   }
 
+  /**
+   * Gets the drawing paint object.
+   * 
+   * @return Drawing paint object
+   */
   public Paint getDrawPaint()
   {
     return Color.GRAY;
   }
 
+  /**
+   * Gets the shape.
+   * 
+   * @return Shape.
+   */
   public Shape getShape()
   {
     return VERTEX_SHAPE_FACTORY.getRectangle(this);

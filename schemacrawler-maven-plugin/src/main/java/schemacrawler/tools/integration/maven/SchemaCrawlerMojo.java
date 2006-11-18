@@ -261,6 +261,9 @@ public class SchemaCrawlerMojo
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public void execute()
     throws MojoExecutionException
   {

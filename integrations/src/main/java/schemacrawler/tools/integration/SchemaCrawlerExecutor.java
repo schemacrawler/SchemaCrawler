@@ -40,13 +40,13 @@ public interface SchemaCrawlerExecutor
    * Executes main functionality.
    * 
    * @param schemaCrawlerOptions
-   *          SchemaCrawler options
+   *        SchemaCrawler options
    * @param schemaTextOptions
-   *          Text output options
+   *        Text output options
    * @param dataSource
-   *          Datasource
+   *        Datasource
    * @throws Exception
-   *           On an exception
+   *         On an exception
    */
   void execute(final SchemaCrawlerOptions schemaCrawlerOptions,
                final SchemaTextOptions schemaTextOptions,

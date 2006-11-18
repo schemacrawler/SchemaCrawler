@@ -22,7 +22,6 @@ package schemacrawler.tools.integration.maven;
 
 
 import java.io.File;
-import java.util.logging.Logger;
 
 import sf.util.Utilities;
 
@@ -36,8 +35,6 @@ public final class Main
   private static final String INSTALL_MAVEN_PLUGIN_SCRIPT_FILESTEM = "install-schemacrawler-maven-plugin";
   private static final String MAVEN_PLUGIN_POM_FILENAME = "schemacrawler-maven-plugin.pom";
   private static final String MAVEN_PLUGIN_INSTRUCTONS_FILENAME = "schemacrawler-maven-plugin.txt";
-
-  private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
   /**
    * Internal storage for information. Read from text file.
