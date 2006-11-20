@@ -165,7 +165,10 @@ public final class SchemaCrawler
   {
     final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection);
     final MutableDatabaseInfo dbInfo = retriever.retrieveDatabaseInfo();
-    retriever.retrieveColumnDataTypes(dbInfo);
+    if (infoLevel.isGreaterThan(SchemaInfoLevel.BASIC))
+    {
+      retriever.retrieveColumnDataTypes(dbInfo);
+    }
     if (infoLevel.isGreaterThan(SchemaInfoLevel.VERBOSE))
     {
       retriever.retrieveAdditionalDatabaseInfo(dbInfo);
