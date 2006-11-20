@@ -110,10 +110,32 @@ public class PlainTextFormattingHelper
     final int NAME_WIDTH = 36;
     final int DESCRIPTION_WIDTH = 34;
 
+    boolean overlay = false;
+    final int nameLength = name.length();
+    final int descriptionLength = description.length();
+    final int fieldSeparatorLength = getFieldSeparator().length();
+    final int minimumLength = nameLength + descriptionLength
+                              + fieldSeparatorLength;
+    final int totalLength = (NAME_WIDTH + DESCRIPTION_WIDTH + fieldSeparatorLength);
+    if (nameLength > NAME_WIDTH && descriptionLength < DESCRIPTION_WIDTH)
+    {
+      overlay = true;
+    }
+
     final StringBuffer row = new StringBuffer();
-    row.append(format(name, NAME_WIDTH, true));
-    row.append(getFieldSeparator());
-    row.append(format(description, DESCRIPTION_WIDTH, false));
+    if (overlay)
+    {
+      row.append(name);
+      row.append(getFieldSeparator());
+      row.append(Utilities.repeat(" ", totalLength - minimumLength));
+      row.append(description);
+    }
+    else
+    {
+      row.append(format(name, NAME_WIDTH, true));
+      row.append(getFieldSeparator());
+      row.append(format(description, DESCRIPTION_WIDTH, false));
+    }
     return row.toString();
   }
 
