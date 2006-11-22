@@ -52,25 +52,14 @@ final class RetrieverConnection
 
   RetrieverConnection(final DataSource dataSource,
                       final Properties additionalConfiguration)
-    throws SchemaCrawlerException
+    throws SchemaCrawlerException, SQLException
   {
     if (dataSource == null)
     {
       throw new SchemaCrawlerException("No data source provided");
     }
-    final Connection connection;
-    try
-    {
-      connection = dataSource.getConnection();
-      metaData = connection.getMetaData();
-    }
-    catch (final SQLException e)
-    {
-      final String errorMessage = e.getMessage();
-      LOGGER.log(Level.WARNING, "Could not obtain database metadata: "
-                                + errorMessage);
-      throw new SchemaCrawlerException(errorMessage, e);
-    }
+    final Connection connection = dataSource.getConnection();
+    metaData = connection.getMetaData();
 
     if (dataSource instanceof PropertiesDataSource)
     {

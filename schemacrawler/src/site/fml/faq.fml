@@ -198,6 +198,25 @@ One of:
         </p>
       </answer>
     </faq>
+    <faq id="maven">
+      <question>
+        <span>Can SchemaCrawler be used with Maven?</span>
+      </question>
+      <answer>
+        <p>
+          Yes, SchemaCrawler comes with a Maven plug-in. You can
+          generate a SchemaCrawler report along with other reports for
+          your Maven generated site.
+        </p>
+        <p>
+          <i>
+            See the example in the
+            <pre>_distrib\examples\maven</pre>
+            directory.
+          </i>
+        </p>
+      </answer>
+    </faq>
     <faq id="api">
       <question>
         <span>Can SchemaCrawler be used programmatically?</span>
