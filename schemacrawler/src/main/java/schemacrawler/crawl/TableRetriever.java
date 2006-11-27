@@ -154,27 +154,28 @@ final class TableRetriever
   }
 
   /**
-   * Retrieves a list of columns from the database, for all tables.
+   * Retrieves a list of columns from the database, for the table
+   * specified.
    * 
    * @param table
    *        Table for which data is required.
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveColumns(final NamedObjectList tables,
+  void retrieveColumns(final MutableTable table,
                        final InclusionRule columnInclusionRule,
                        final NamedObjectList columnDataTypes)
     throws SQLException
   {
     LOGGER.entering(getClass().getName(), "retrieveColumns", new Object[] {
-        tables, columnInclusionRule, columnDataTypes
+        table, columnInclusionRule
     });
 
     final ResultSet results = getRetrieverConnection().getMetaData()
       .getColumns(getRetrieverConnection().getCatalog(),
-                  getRetrieverConnection().getSchemaPattern(),
-                  /* tableNamePattern */null,
-                  /* columnNamePattern */null);
+                  table.getSchemaName(),
+                  table.getName(),
+                  null);
     try
     {
       while (results.next())
@@ -183,27 +184,14 @@ final class TableRetriever
         // don't handle it properly otherwise.
         // http://issues.apache.org/jira/browse/DDLUTILS-29?page=all
         final String defaultValue = results.getString("COLUMN_DEF");
-        // 
-        final String catalog = results.getString("TABLE_CAT");
-        final String schema = results.getString("TABLE_SCHEM");
-        final String tableName = results.getString("TABLE_NAME");
-
+        //        
         final String columnName = results.getString(COLUMN_NAME);
-
-        final MutableTable table = (MutableTable) tables.lookup(tableName);
-        if (!belongsToSchema(table, catalog, schema))
-        {
-          LOGGER.log(Level.FINEST, "Skipping column " + columnName
-                                   + " for table " + tableName);
-          continue;
-        }
+        
         final MutableColumn column = new MutableColumn(columnName, table);
         final String columnFullName = column.getFullName();
-
         if (columnInclusionRule.include(columnFullName))
         {
-          LOGGER.log(Level.FINEST, "Retrieving column information for "
-                                   + columnName);
+          LOGGER.log(Level.FINEST, "Retrieving column: " + columnName);
           final int oridinalPosition = results.getInt(ORDINAL_POSITION);
           final int dataType = results.getInt(DATA_TYPE);
           final String typeName = results.getString(TYPE_NAME);
