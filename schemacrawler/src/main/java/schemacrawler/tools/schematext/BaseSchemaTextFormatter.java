@@ -261,9 +261,14 @@ public abstract class BaseSchemaTextFormatter
     }
 
     if (schemaTextDetailType
-      .isGreaterThanOrEqualTo(SchemaTextDetailType.VERBOSE))
+      .isGreaterThanOrEqualTo(SchemaTextDetailType.BASIC))
     {
       printPrimaryKey(table.getPrimaryKey());
+    }
+
+    if (schemaTextDetailType
+      .isGreaterThanOrEqualTo(SchemaTextDetailType.VERBOSE))
+    {
       printForeignKeys(table.getName(), table.getForeignKeys());
       printIndices(table.getIndices());
       printCheckConstraints(table.getCheckConstraints());
@@ -464,15 +469,7 @@ public abstract class BaseSchemaTextFormatter
       }
       final String columnType = columnTypeName + column.getWidth();
       String symbol = "";
-      if (column.isPartOfPrimaryKey())
-      {
-        symbol = "primary key";
-      }
-      else if (column.isPartOfUniqueIndex())
-      {
-        symbol = "unique index";
-      }
-      else if (!column.isNullable())
+      if (!column.isNullable())
       {
         symbol = "not null";
       }
