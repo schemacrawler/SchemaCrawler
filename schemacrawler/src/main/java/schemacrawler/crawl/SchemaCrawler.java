@@ -251,6 +251,12 @@ public final class SchemaCrawler
       retrieverExtra = new TableExRetriever(retrieverConnection);
       tables = retriever.retrieveTables(options.getTableTypes(), options
         .getTableInclusionRule());
+      if (infoLevel.isGreaterThan(SchemaInfoLevel.MINIMUM))
+      {
+        retriever.retrieveColumns(tables,
+                                  options.getColumnInclusionRule(),
+                                  columnDataTypes);
+      }
       if (infoLevel.isGreaterThanOrEqualTo(SchemaInfoLevel.VERBOSE))
       {
         retrieverExtra.retrieveCheckConstraintInformation(tables);
@@ -274,9 +280,6 @@ public final class SchemaCrawler
       {
         try
         {
-          retriever.retrieveColumns(table,
-                                    options.getColumnInclusionRule(),
-                                    columnDataTypes);
           if (infoLevel == SchemaInfoLevel.MAXIMUM)
           {
             retrieverExtra.retrievePrivileges(table, table.getColumnsList());

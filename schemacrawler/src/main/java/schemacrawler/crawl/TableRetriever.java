@@ -162,20 +162,20 @@ final class TableRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveColumns(final MutableTable table,
+  void retrieveColumns(final NamedObjectList tables,
                        final InclusionRule columnInclusionRule,
                        final NamedObjectList columnDataTypes)
     throws SQLException
   {
     LOGGER.entering(getClass().getName(), "retrieveColumns", new Object[] {
-        table, columnInclusionRule
+        tables, columnInclusionRule, columnDataTypes
     });
 
     final ResultSet results = getRetrieverConnection().getMetaData()
       .getColumns(getRetrieverConnection().getCatalog(),
-                  table.getSchemaName(),
-                  table.getName(),
-                  null);
+                  getRetrieverConnection().getSchemaPattern(),
+                  /* tableNamePattern */null,
+                  /* columnNamePattern */null);
     try
     {
       while (results.next())
@@ -184,7 +184,10 @@ final class TableRetriever
         // don't handle it properly otherwise.
         // http://issues.apache.org/jira/browse/DDLUTILS-29?page=all
         final String defaultValue = results.getString("COLUMN_DEF");
-        //        
+        // 
+        final String catalog = results.getString("TABLE_CAT");
+        final String schema = results.getString("TABLE_SCHEM");
+        final String tableName = results.getString("TABLE_NAME");
         final String columnName = results.getString(COLUMN_NAME);
         LOGGER.log(Level.FINEST, "Retrieving column: " + columnName);
         final int oridinalPosition = results.getInt(ORDINAL_POSITION);
@@ -195,6 +198,13 @@ final class TableRetriever
         final boolean isNullable = results.getInt(NULLABLE) == DatabaseMetaData.columnNullable;
         final String remarks = results.getString(REMARKS);
 
+        final MutableTable table = (MutableTable) tables.lookup(tableName);
+        if (!belongsToSchema(table, catalog, schema))
+        {
+          LOGGER.log(Level.FINEST, "Table not found: " + tableName);
+          continue;
+        }
+        
         final MutableColumn column = new MutableColumn(columnName, table);
         final String columnFullName = column.getFullName();
         if (columnInclusionRule.include(columnFullName))
