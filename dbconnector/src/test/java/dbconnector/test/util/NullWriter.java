@@ -33,17 +33,17 @@ public class NullWriter
   {
   }
 
-  public void write(int c)
+  public void write(final int c)
     throws IOException
   {
   }
 
-  public void write(char cbuf[], int off, int len)
+  public void write(final char cbuf[], final int off, final int len)
     throws IOException
   {
   }
 
-  public void write(String str, int off, int len)
+  public void write(final String str, final int off, final int len)
     throws IOException
   {
   }

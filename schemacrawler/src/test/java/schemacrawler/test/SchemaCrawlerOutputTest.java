@@ -33,13 +33,14 @@ import junit.framework.TestSuite;
 
 import org.custommonkey.xmlunit.Validator;
 
+import dbconnector.test.util.TestBase;
+
 import schemacrawler.crawl.CrawlHandler;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutor;
-import schemacrawler.test.util.TestBase;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.datatext.DataTextFormatOptions;
 import schemacrawler.tools.datatext.DataTextFormatterLoader;
@@ -103,7 +104,7 @@ public class SchemaCrawlerOutputTest
       fail("SchemaCrawlerException getting table count: " + e.getMessage());
     }
 
-    File outputFile = new File(outputFilename);
+    final File outputFile = new File(outputFilename);
     if (!outputFile.delete())
     {
       fail("Cannot delete output file");
@@ -115,7 +116,7 @@ public class SchemaCrawlerOutputTest
   {
     try
     {
-      String outputFilename = File.createTempFile("schemacrawler", "test")
+      final String outputFilename = File.createTempFile("schemacrawler", "test")
         .getAbsolutePath();
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -131,7 +132,7 @@ public class SchemaCrawlerOutputTest
                                                       formatter);
       crawler.crawl(schemaCrawlerOptions);
 
-      File outputFile = new File(outputFilename);
+      final File outputFile = new File(outputFilename);
       if (!outputFile.delete())
       {
         fail("Cannot delete output file");
@@ -148,19 +149,19 @@ public class SchemaCrawlerOutputTest
   {
     try
     {
-      String outputFilename = File.createTempFile("schemacrawler", "test")
+      final String outputFilename = File.createTempFile("schemacrawler", "test")
         .getAbsolutePath();
 
       final DataTextFormatOptions textFormatOptions = new DataTextFormatOptions(new Properties(),
                                                                                 new OutputOptions("text",
                                                                                                   outputFilename));
 
-      final DataHandler dataHandler = (DataHandler) DataTextFormatterLoader
+      final DataHandler dataHandler = DataTextFormatterLoader
         .load(textFormatOptions);
       final QueryExecutor executor = new QueryExecutor(dataSource, dataHandler);
       executor.executeSQL("SELECT COUNT(*) FROM CUSTOMER");
 
-      File outputFile = new File(outputFilename);
+      final File outputFile = new File(outputFilename);
       if (!outputFile.delete())
       {
         fail("Cannot delete output file");
@@ -177,7 +178,7 @@ public class SchemaCrawlerOutputTest
   {
     try
     {
-      String outputFilename = File.createTempFile("schemacrawler", "test")
+      final String outputFilename = File.createTempFile("schemacrawler", "test")
         .getAbsolutePath();
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -189,7 +190,7 @@ public class SchemaCrawlerOutputTest
                                                                   Operation.COUNT,
                                                                   null);
 
-      final DataHandler dataHandler = (DataHandler) DataTextFormatterLoader
+      final DataHandler dataHandler = DataTextFormatterLoader
         .load(textFormatOptions);
       final CrawlHandler formatter = OperatorLoader.load(operatorOptions,
                                                          dataSource
@@ -200,7 +201,7 @@ public class SchemaCrawlerOutputTest
                                                       formatter);
       crawler.crawl(schemaCrawlerOptions);
 
-      File outputFile = new File(outputFilename);
+      final File outputFile = new File(outputFilename);
       if (!outputFile.delete())
       {
         fail("Cannot delete output file");
@@ -345,7 +346,7 @@ public class SchemaCrawlerOutputTest
 
     try
     {
-      final DataHandler dataHandler = (DataHandler) DataTextFormatterLoader
+      final DataHandler dataHandler = DataTextFormatterLoader
         .load(textFormatOptions);
       final CrawlHandler formatter = OperatorLoader.load(operatorOptions,
                                                          dataSource

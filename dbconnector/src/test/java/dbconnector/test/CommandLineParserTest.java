@@ -33,7 +33,7 @@ public class CommandLineParserTest
   extends TestCase
 {
 
-  public CommandLineParserTest(String name)
+  public CommandLineParserTest(final String name)
   {
     super(name);
   }
@@ -41,7 +41,7 @@ public class CommandLineParserTest
   public void testStandardOptions()
     throws Exception
   {
-    CommandLineParser parser = new CommandLineParser();
+    final CommandLineParser parser = new CommandLineParser();
     parser.addOption(new CommandLineParser.BooleanOption('v', "verbose"));
     parser.addOption(new CommandLineParser.NumberOption('s', "size"));
     parser.addOption(new CommandLineParser.StringOption('n', "name"));
@@ -57,7 +57,7 @@ public class CommandLineParserTest
     assertEquals("foo", parser.getOption("name").getValue());
     assertEquals(0.1, ((Number) parser.getOption("fraction").getValue())
       .doubleValue(), 0.1e-6);
-    String[] otherArgs = parser.getRemainingArgs();
+    final String[] otherArgs = parser.getRemainingArgs();
     assertEquals(1, otherArgs.length);
     assertEquals("rest", otherArgs[0]);
   }
@@ -65,7 +65,7 @@ public class CommandLineParserTest
   public void testBadFormat()
     throws Exception
   {
-    CommandLineParser parser = new CommandLineParser();
+    final CommandLineParser parser = new CommandLineParser();
     parser.addOption(new CommandLineParser.NumberOption('s', "size"));
     parser.parse(new String[] {
       "-size=blah"
@@ -76,7 +76,7 @@ public class CommandLineParserTest
   public void testResetBetweenParse()
     throws Exception
   {
-    CommandLineParser parser = new CommandLineParser();
+    final CommandLineParser parser = new CommandLineParser();
     parser.addOption(new CommandLineParser.BooleanOption('v', "verbose"));
     parser.parse(new String[] {
       "-v"
@@ -91,12 +91,12 @@ public class CommandLineParserTest
   public void testCustomOption()
     throws Exception
   {
-    CommandLineParser parser = new CommandLineParser();
+    final CommandLineParser parser = new CommandLineParser();
     parser.addOption(new CommandLineParserTest.ShortDateOption('d', "date"));
     parser.parse(new String[] {
       "-d", "11/03/2003"
     });
-    Calendar d = (Calendar) parser.getOption("date").getValue();
+    final Calendar d = (Calendar) parser.getOption("date").getValue();
     assertEquals(11, d.get(Calendar.MONTH) + 1);
     assertEquals(3, d.get(Calendar.DATE));
     assertEquals(2003, d.get(Calendar.YEAR));
@@ -106,7 +106,7 @@ public class CommandLineParserTest
     throws Exception
   {
 
-    CommandLineParser parser = new CommandLineParser();
+    final CommandLineParser parser = new CommandLineParser();
     parser.addOption(new CommandLineParserTest.ShortDateOption('d', "date"));
     parser.parse(new String[] {
       "-d", "foobar"
@@ -119,22 +119,22 @@ public class CommandLineParserTest
     extends CommandLineParser.BaseOption
   {
 
-    public ShortDateOption(char shortForm, String longForm)
+    public ShortDateOption(final char shortForm, final String longForm)
     {
       super(shortForm, longForm, true);
     }
 
-    protected Object parseValue(String arg)
+    protected Object parseValue(final String arg)
     {
       try
       {
         final Date date = DateFormat.getDateInstance(DateFormat.SHORT)
           .parse(arg);
-        Calendar calendar = Calendar.getInstance();
+        final Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return calendar;
       }
-      catch (ParseException e)
+      catch (final ParseException e)
       {
         return null;
       }
