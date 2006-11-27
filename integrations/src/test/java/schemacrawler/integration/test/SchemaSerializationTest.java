@@ -31,10 +31,11 @@ import junit.framework.TestSuite;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
-import schemacrawler.integration.test.util.TestBase;
 import schemacrawler.schema.Schema;
 
 import com.thoughtworks.xstream.XStream;
+
+import dbconnector.test.util.TestBase;
 
 public class SchemaSerializationTest
   extends TestBase
@@ -47,7 +48,7 @@ public class SchemaSerializationTest
     return new TestSuite(SchemaSerializationTest.class);
   }
 
-  public SchemaSerializationTest(String name)
+  public SchemaSerializationTest(final String name)
   {
     super(name);
   }
@@ -60,7 +61,7 @@ public class SchemaSerializationTest
     final Schema schema = SchemaCrawler.getSchema(dataSource, null,
                                                   SchemaInfoLevel.MAXIMUM,
                                                   options);
-    XStream xStream = new XStream();
+    final XStream xStream = new XStream();
 
     final String xmlSerializedSchema1 = xStream.toXML(schema);
 
@@ -81,7 +82,7 @@ public class SchemaSerializationTest
     if (!actualXml.equals(expectedXml))
     {
       int index;
-      int minLength = Math.min(expectedXml.length(), actualXml.length());
+      final int minLength = Math.min(expectedXml.length(), actualXml.length());
       for (index = 0; index <= minLength; ++index)
       {
         if (expectedXml.charAt(index) != actualXml.charAt(index))
@@ -91,10 +92,10 @@ public class SchemaSerializationTest
       }
       if (index <= minLength)
       {
-        int expectedStartPos = Math.max(0, (index - CONTEXT));
-        int expectedEndPos = Math.min((index + CONTEXT), expectedXml.length());
-        int actualStartPos = Math.max(0, (index - CONTEXT));
-        int actualEndPos = Math.min((index + CONTEXT), actualXml.length());
+        final int expectedStartPos = Math.max(0, (index - CONTEXT));
+        final int expectedEndPos = Math.min((index + CONTEXT), expectedXml.length());
+        final int actualStartPos = Math.max(0, (index - CONTEXT));
+        final int actualEndPos = Math.min((index + CONTEXT), actualXml.length());
         System.out.println("expected: "
                            + expectedXml.substring(expectedStartPos,
                                                    expectedEndPos));
@@ -109,17 +110,17 @@ public class SchemaSerializationTest
     }
   }
 
-  private void write(String contents, String filename)
+  private void write(final String contents, final String filename)
   {
     try
     {
-      File file = new File(filename);
+      final File file = new File(filename);
       file.getAbsoluteFile().getParentFile().mkdirs();
-      Writer writer = new FileWriter(file);
+      final Writer writer = new FileWriter(file);
       writer.write(contents);
       writer.close();
     }
-    catch (IOException e)
+    catch (final IOException e)
     {
       e.printStackTrace();
     }

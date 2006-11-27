@@ -25,6 +25,8 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import dbconnector.test.util.TestBase;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import schemacrawler.crawl.SchemaCrawler;
@@ -38,7 +40,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
-import schemacrawler.test.util.TestBase;
 import sf.util.Utilities;
 
 public class SchemaCrawlerTest
@@ -113,7 +114,7 @@ public class SchemaCrawlerTest
   {
 
     // Set up information schema properties
-    Properties informationSchemaProperties = new Properties();
+    final Properties informationSchemaProperties = new Properties();
     informationSchemaProperties
       .setProperty("select.INFORMATION_SCHEMA.ROUTINES",
                    "SELECT " + "PROCEDURE_CAT AS ROUTINE_CATALOG, "
@@ -148,7 +149,7 @@ public class SchemaCrawlerTest
   {
 
     // Set up information schema properties
-    Properties informationSchemaProperties = new Properties();
+    final Properties informationSchemaProperties = new Properties();
     informationSchemaProperties
       .setProperty("select.INFORMATION_SCHEMA.TRIGGERS",
                    "SELECT "
@@ -199,7 +200,7 @@ public class SchemaCrawlerTest
   {
 
     // Set up information schema properties
-    Properties informationSchemaProperties = new Properties();
+    final Properties informationSchemaProperties = new Properties();
     informationSchemaProperties
       .setProperty("select.INFORMATION_SCHEMA.VIEWS",
                    "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_VIEWS");
@@ -219,7 +220,7 @@ public class SchemaCrawlerTest
       if (table.getType() == TableType.VIEW)
       {
         foundView = true;
-        View view = (View) table;
+        final View view = (View) table;
         if (Utilities.isBlank(view.getDefinition()))
         {
           fail("View definition not found");

@@ -34,7 +34,7 @@ public class PropertiesDataSourceTest
     return new TestSuite(PropertiesDataSourceTest.class);
   }
 
-  public PropertiesDataSourceTest(String name)
+  public PropertiesDataSourceTest(final String name)
   {
     super(name);
   }

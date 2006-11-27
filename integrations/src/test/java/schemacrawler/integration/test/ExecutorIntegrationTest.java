@@ -23,10 +23,11 @@ package schemacrawler.integration.test;
 
 import java.io.File;
 
+import dbconnector.test.util.TestBase;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import schemacrawler.crawl.SchemaCrawlerOptions;
-import schemacrawler.integration.test.util.TestBase;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.integration.SchemaCrawlerExecutor;
 import schemacrawler.tools.integration.freemarker.FreeMarkerExecutor;
@@ -44,17 +45,17 @@ public class ExecutorIntegrationTest
     return new TestSuite(ExecutorIntegrationTest.class);
   }
 
-  public ExecutorIntegrationTest(String name)
+  public ExecutorIntegrationTest(final String name)
   {
     super(name);
   }
 
-  private void executorIntegrationTest(SchemaCrawlerExecutor executor,
-                                       OutputOptions outputOptions)
+  private void executorIntegrationTest(final SchemaCrawlerExecutor executor,
+                                       final OutputOptions outputOptions)
   {
     try
     {
-      SchemaTextOptions schemaTextOptions = new SchemaTextOptions(
+      final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(
                                                                   null,
                                                                   outputOptions,
                                                                   SchemaTextDetailType.BASIC);
@@ -63,14 +64,14 @@ public class ExecutorIntegrationTest
                        dataSource);
 
       // Check post-conditions
-      File outputFile = outputOptions.getOutputFile();
+      final File outputFile = outputOptions.getOutputFile();
       if (!outputFile.exists())
       {
         fail("Output file '" + outputFile.getName() + "' was not created");
       }
 
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       fail(e.getMessage());
     }
@@ -81,12 +82,12 @@ public class ExecutorIntegrationTest
   {
     try
     {
-      String outputFilename = File.createTempFile("schemacrawler", ".jpg")
+      final String outputFilename = File.createTempFile("schemacrawler", ".jpg")
         .getAbsolutePath();
-      OutputOptions outputOptions = new OutputOptions("800x600", outputFilename);
+      final OutputOptions outputOptions = new OutputOptions("800x600", outputFilename);
       executorIntegrationTest(new JungExecutor(), outputOptions);
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       fail(e.getMessage());
     }
@@ -96,13 +97,13 @@ public class ExecutorIntegrationTest
   {
     try
     {
-      String outputFilename = File.createTempFile("schemacrawler", ".txt")
+      final String outputFilename = File.createTempFile("schemacrawler", ".txt")
         .getAbsolutePath();
-      OutputOptions outputOptions = new OutputOptions("plaintextschema.vm",
+      final OutputOptions outputOptions = new OutputOptions("plaintextschema.vm",
                                                       outputFilename);
       executorIntegrationTest(new VelocityExecutor(), outputOptions);
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       fail(e.getMessage());
     }
@@ -112,13 +113,13 @@ public class ExecutorIntegrationTest
   {
     try
     {
-      String outputFilename = File.createTempFile("schemacrawler", ".txt")
+      final String outputFilename = File.createTempFile("schemacrawler", ".txt")
         .getAbsolutePath();
-      OutputOptions outputOptions = new OutputOptions("plaintextschema.ftl",
+      final OutputOptions outputOptions = new OutputOptions("plaintextschema.ftl",
                                                       outputFilename);
       executorIntegrationTest(new FreeMarkerExecutor(), outputOptions);
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       fail(e.getMessage());
     }
