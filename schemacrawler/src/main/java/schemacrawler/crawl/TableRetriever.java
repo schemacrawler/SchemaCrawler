@@ -154,8 +154,7 @@ final class TableRetriever
   }
 
   /**
-   * Retrieves a list of columns from the database, for the table
-   * specified.
+   * Retrieves a list of columns from the database, for all tables.
    * 
    * @param table
    *        Table for which data is required.
@@ -188,6 +187,14 @@ final class TableRetriever
         final String catalog = results.getString("TABLE_CAT");
         final String schema = results.getString("TABLE_SCHEM");
         final String tableName = results.getString("TABLE_NAME");
+        
+        final MutableTable table = (MutableTable) tables.lookup(tableName);
+        if (!belongsToSchema(table, catalog, schema))
+        {
+          LOGGER.log(Level.FINEST, "Table not found: " + tableName);
+          continue;
+        }
+        
         final String columnName = results.getString(COLUMN_NAME);
         LOGGER.log(Level.FINEST, "Retrieving column: " + columnName);
         final int oridinalPosition = results.getInt(ORDINAL_POSITION);
@@ -197,13 +204,6 @@ final class TableRetriever
         final int decimalDigits = results.getInt("DECIMAL_DIGITS");
         final boolean isNullable = results.getInt(NULLABLE) == DatabaseMetaData.columnNullable;
         final String remarks = results.getString(REMARKS);
-
-        final MutableTable table = (MutableTable) tables.lookup(tableName);
-        if (!belongsToSchema(table, catalog, schema))
-        {
-          LOGGER.log(Level.FINEST, "Table not found: " + tableName);
-          continue;
-        }
         
         final MutableColumn column = new MutableColumn(columnName, table);
         final String columnFullName = column.getFullName();

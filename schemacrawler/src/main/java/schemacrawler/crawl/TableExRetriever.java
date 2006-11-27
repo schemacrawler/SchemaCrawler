@@ -208,19 +208,20 @@ final class TableExRetriever
         final String catalog = results.getString("TABLE_CATALOG");
         final String schema = results.getString("TABLE_SCHEMA");
         final String viewName = results.getString("TABLE_NAME");
-        LOGGER.log(Level.FINEST, "Retrieving view information for " + viewName);
-        String definition = results.getString("VIEW_DEFINITION");
-        final CheckOptionType checkOption = CheckOptionType.valueOf(results
-          .getString("CHECK_OPTION"));
-        final boolean updatable = Utilities.parseBoolean(results
-          .getString("IS_UPDATABLE"));
-
+        
         final MutableView view = (MutableView) tables.lookup(viewName);
         if (!belongsToSchema(view, catalog, schema))
         {
           LOGGER.log(Level.FINEST, "View not found: " + viewName);
           continue;
         }
+        
+        LOGGER.log(Level.FINEST, "Retrieving view information for " + viewName);
+        String definition = results.getString("VIEW_DEFINITION");
+        final CheckOptionType checkOption = CheckOptionType.valueOf(results
+          .getString("CHECK_OPTION"));
+        final boolean updatable = Utilities.parseBoolean(results
+          .getString("IS_UPDATABLE"));
 
         if (!Utilities.isBlank(view.getDefinition()))
         {
@@ -289,15 +290,7 @@ final class TableExRetriever
         // final String eventObjectSchema = results
         // .getString("EVENT_OBJECT_SCHEMA");
         final String tableName = results.getString("EVENT_OBJECT_TABLE");
-
-        final int actionOrder = results.getInt("ACTION_ORDER");
-        final String actionCondition = results.getString("ACTION_CONDITION");
-        final String actionStatement = results.getString("ACTION_STATEMENT");
-        final ActionOrientationType actionOrientation = ActionOrientationType
-          .valueOf(results.getString("ACTION_ORIENTATION"));
-        final ConditionTimingType conditionTiming = ConditionTimingType
-          .valueOf(results.getString("CONDITION_TIMING"));
-
+        
         final MutableTable table = (MutableTable) tables.lookup(tableName);
         if (!belongsToSchema(table, catalog, schema))
         {
@@ -305,6 +298,14 @@ final class TableExRetriever
             .log(Level.FINEST, "Table not found for trigger " + triggerName);
           continue;
         }
+        
+        final int actionOrder = results.getInt("ACTION_ORDER");
+        final String actionCondition = results.getString("ACTION_CONDITION");
+        final String actionStatement = results.getString("ACTION_STATEMENT");
+        final ActionOrientationType actionOrientation = ActionOrientationType
+          .valueOf(results.getString("ACTION_ORIENTATION"));
+        final ConditionTimingType conditionTiming = ConditionTimingType
+          .valueOf(results.getString("CONDITION_TIMING"));
 
         final MutableTrigger trigger = new MutableTrigger(triggerName, table);
         trigger.setEventManipulationType(eventManipulationType);
