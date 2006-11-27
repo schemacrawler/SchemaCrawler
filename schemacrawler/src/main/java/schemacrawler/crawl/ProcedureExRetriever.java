@@ -101,11 +101,6 @@ final class ProcedureExRetriever
         final String catalog = results.getString("ROUTINE_CATALOG");
         final String schema = results.getString("ROUTINE_SCHEMA");
         final String procedureName = results.getString("ROUTINE_NAME");
-        LOGGER.log(Level.FINEST, "Retrieving procedure information for "
-                                 + procedureName);
-        final RoutineBodyType routineBodyType = RoutineBodyType.valueOf(results
-          .getString("ROUTINE_BODY"));
-        String definition = results.getString("ROUTINE_DEFINITION");
 
         final MutableProcedure procedure = (MutableProcedure) procedures
           .lookup(procedureName);
@@ -114,6 +109,12 @@ final class ProcedureExRetriever
           LOGGER.log(Level.FINEST, "Procedure not found: " + procedureName);
           continue;
         }
+
+        LOGGER.log(Level.FINEST, "Retrieving procedure information for "
+                                 + procedureName);
+        final RoutineBodyType routineBodyType = RoutineBodyType.valueOf(results
+          .getString("ROUTINE_BODY"));
+        String definition = results.getString("ROUTINE_DEFINITION");
 
         if (!Utilities.isBlank(procedure.getDefinition()))
         {

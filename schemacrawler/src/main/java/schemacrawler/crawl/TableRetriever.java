@@ -187,28 +187,31 @@ final class TableRetriever
         final String catalog = results.getString("TABLE_CAT");
         final String schema = results.getString("TABLE_SCHEM");
         final String tableName = results.getString("TABLE_NAME");
-        
+
+        final String columnName = results.getString(COLUMN_NAME);
+
         final MutableTable table = (MutableTable) tables.lookup(tableName);
         if (!belongsToSchema(table, catalog, schema))
         {
-          LOGGER.log(Level.FINEST, "Table not found: " + tableName);
+          LOGGER.log(Level.FINEST, "Skipping column " + columnName
+                                   + " for table " + tableName);
           continue;
         }
-        
-        final String columnName = results.getString(COLUMN_NAME);
-        LOGGER.log(Level.FINEST, "Retrieving column: " + columnName);
-        final int oridinalPosition = results.getInt(ORDINAL_POSITION);
-        final int dataType = results.getInt(DATA_TYPE);
-        final String typeName = results.getString(TYPE_NAME);
-        final int size = results.getInt("COLUMN_SIZE");
-        final int decimalDigits = results.getInt("DECIMAL_DIGITS");
-        final boolean isNullable = results.getInt(NULLABLE) == DatabaseMetaData.columnNullable;
-        final String remarks = results.getString(REMARKS);
-        
         final MutableColumn column = new MutableColumn(columnName, table);
         final String columnFullName = column.getFullName();
+
         if (columnInclusionRule.include(columnFullName))
         {
+          LOGGER.log(Level.FINEST, "Retrieving column information for "
+                                   + columnName);
+          final int oridinalPosition = results.getInt(ORDINAL_POSITION);
+          final int dataType = results.getInt(DATA_TYPE);
+          final String typeName = results.getString(TYPE_NAME);
+          final int size = results.getInt("COLUMN_SIZE");
+          final int decimalDigits = results.getInt("DECIMAL_DIGITS");
+          final boolean isNullable = results.getInt(NULLABLE) == DatabaseMetaData.columnNullable;
+          final String remarks = results.getString(REMARKS);
+
           column.setOrdinalPosition(oridinalPosition);
           column.lookupAndSetDataType(dataType, typeName, columnDataTypes);
           column.setSize(size);

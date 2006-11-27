@@ -208,14 +208,14 @@ final class TableExRetriever
         final String catalog = results.getString("TABLE_CATALOG");
         final String schema = results.getString("TABLE_SCHEMA");
         final String viewName = results.getString("TABLE_NAME");
-        
+
         final MutableView view = (MutableView) tables.lookup(viewName);
         if (!belongsToSchema(view, catalog, schema))
         {
-          LOGGER.log(Level.FINEST, "View not found: " + viewName);
+          LOGGER.log(Level.FINEST, "Skipping definition for view " + viewName);
           continue;
         }
-        
+
         LOGGER.log(Level.FINEST, "Retrieving view information for " + viewName);
         String definition = results.getString("VIEW_DEFINITION");
         final CheckOptionType checkOption = CheckOptionType.valueOf(results
@@ -290,15 +290,15 @@ final class TableExRetriever
         // final String eventObjectSchema = results
         // .getString("EVENT_OBJECT_SCHEMA");
         final String tableName = results.getString("EVENT_OBJECT_TABLE");
-        
+
         final MutableTable table = (MutableTable) tables.lookup(tableName);
         if (!belongsToSchema(table, catalog, schema))
         {
-          LOGGER
-            .log(Level.FINEST, "Table not found for trigger " + triggerName);
+          LOGGER.log(Level.FINEST, "Skipping trigger " + triggerName
+                                   + " for table " + tableName);
           continue;
         }
-        
+
         final int actionOrder = results.getInt("ACTION_ORDER");
         final String actionCondition = results.getString("ACTION_CONDITION");
         final String actionStatement = results.getString("ACTION_STATEMENT");
@@ -375,6 +375,14 @@ final class TableExRetriever
         // results.getString("TABLE_CATALOG");
         // final String tableSchema = results.getString("TABLE_SCHEMA");
         final String tableName = results.getString("TABLE_NAME");
+
+        final MutableTable table = (MutableTable) tables.lookup(tableName);
+        if (!belongsToSchema(table, catalog, schema))
+        {
+          LOGGER.log(Level.FINEST, "Table not found: " + tableName);
+          continue;
+        }
+
         final String constraintType = results.getString("CONSTRAINT_TYPE");
         final boolean deferrable = Utilities.parseBoolean(results
           .getString("IS_DEFERRABLE"));
@@ -383,13 +391,6 @@ final class TableExRetriever
 
         if (constraintType.equalsIgnoreCase("check"))
         {
-          final MutableTable table = (MutableTable) tables.lookup(tableName);
-          if (!belongsToSchema(table, catalog, schema))
-          {
-            LOGGER.log(Level.FINEST, "Table not found: " + tableName);
-            continue;
-          }
-
           final MutableCheckConstraint checkConstraint = new MutableCheckConstraint(constraintName,
                                                                                     table);
           checkConstraint.setDeferrable(deferrable);
