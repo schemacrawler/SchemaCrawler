@@ -67,47 +67,46 @@ public final class Main
    * schema.<BR>
    * 
    * @param args
-   *          Arguments passed into the program from the command line.
+   *        Arguments passed into the program from the command line.
    * @throws Exception
-   *           On an exception
+   *         On an exception
    */
   public static void main(final String[] args)
     throws Exception
   {
 
-    String shellExt = Utilities.isWindowsOS()? ".cmd": ".sh";
+    final String shellExt = Utilities.isWindowsOS()? ".cmd": ".sh";
 
     System.out.println(Version.about());
 
     // Create POM file
-    File pomFile = Utilities.writeStringToFile(MAVEN_PLUGIN_POM_FILENAME,
-                                               pluginPom);
+    final File pomFile = Utilities.writeStringToFile(MAVEN_PLUGIN_POM_FILENAME,
+                                                     pluginPom);
     System.out.println("Created Maven POM file: " + pomFile.getAbsolutePath());
 
     // Create install script
-    String installScript = "mvn install:install-file "
-                           + "-DgroupId=schemacrawler "
-                           + "-DartifactId=schemacrawler-maven-plugin "
-                           + "-Dversion=" + Version.getVersion() + " "
-                           + "-Dpackaging=maven-plugin "
-                           + "-Dfile=schemacrawler-" + Version.getVersion()
-                           + ".jar "
-                           + "-DpomFile=schemacrawler-maven-plugin.pom ";
-    File installScriptFile = Utilities.writeStringToFile(
-                                                         INSTALL_MAVEN_PLUGIN_SCRIPT_FILESTEM
-                                                             + shellExt,
-                                                         installScript);
+    final String installScript = "mvn install:install-file "
+                                 + "-DgroupId=schemacrawler "
+                                 + "-DartifactId=schemacrawler-maven-plugin "
+                                 + "-Dversion=" + Version.getVersion() + " "
+                                 + "-Dpackaging=maven-plugin "
+                                 + "-Dfile=schemacrawler-"
+                                 + Version.getVersion() + ".jar "
+                                 + "-DpomFile=schemacrawler-maven-plugin.pom ";
+    final File installScriptFile = Utilities
+      .writeStringToFile(INSTALL_MAVEN_PLUGIN_SCRIPT_FILESTEM + shellExt,
+                         installScript);
     System.out.println("Created installation script: "
                        + installScriptFile.getAbsolutePath());
 
     // Create verify script
-    String verifyScript = "mvn help:describe " + "-DgroupId=schemacrawler "
-                          + "-DartifactId=schemacrawler-maven-plugin "
-                          + "-Dversion=" + Version.getVersion() + " ";
-    File verifyScriptFile = Utilities.writeStringToFile(
-                                                        VERIFY_MAVEN_PLUGIN_SCRIPT_FILESTEM
-                                                            + shellExt,
-                                                        verifyScript);
+    final String verifyScript = "mvn help:describe "
+                                + "-DgroupId=schemacrawler "
+                                + "-DartifactId=schemacrawler-maven-plugin "
+                                + "-Dversion=" + Version.getVersion() + " ";
+    final File verifyScriptFile = Utilities
+      .writeStringToFile(VERIFY_MAVEN_PLUGIN_SCRIPT_FILESTEM + shellExt,
+                         verifyScript);
     System.out.println("Created verification script: "
                        + verifyScriptFile.getAbsolutePath());
 
