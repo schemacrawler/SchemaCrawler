@@ -207,11 +207,11 @@ public abstract class BaseSchemaTextFormatter
         {
           columnTypeName = column.getType().toString();
         }
-        final String columnType = columnTypeName + column.getWidth();
-        String procedureColumnType = "";
+        String columnType = columnTypeName + column.getWidth();
         if (column.getProcedureColumnType() != null)
         {
-          procedureColumnType = column.getProcedureColumnType().toString();
+          columnType = columnType + ", "
+                       + column.getProcedureColumnType().toString();
         }
 
         String ordinalNumberString = "";
@@ -221,8 +221,7 @@ public abstract class BaseSchemaTextFormatter
         }
         out.println(formattingHelper.createDetailRow(ordinalNumberString,
                                                      column.getName(),
-                                                     columnType,
-                                                     procedureColumnType));
+                                                     columnType));
       }
       if (schemaTextDetailType
         .isGreaterThanOrEqualTo(SchemaTextDetailType.VERBOSE))
@@ -260,8 +259,7 @@ public abstract class BaseSchemaTextFormatter
       printColumns(table.getColumns());
     }
 
-    if (schemaTextDetailType
-      .isGreaterThanOrEqualTo(SchemaTextDetailType.BASIC))
+    if (schemaTextDetailType.isGreaterThanOrEqualTo(SchemaTextDetailType.BASIC))
     {
       printPrimaryKey(table.getPrimaryKey());
     }
@@ -448,7 +446,6 @@ public abstract class BaseSchemaTextFormatter
       out.println(formattingHelper.createDetailRow(keySequenceString,
                                                    pkColumnName + getArrow()
                                                        + fkColumnName,
-                                                   "",
                                                    ""));
     }
   }
@@ -467,11 +464,10 @@ public abstract class BaseSchemaTextFormatter
       {
         columnTypeName = column.getType().toString();
       }
-      final String columnType = columnTypeName + column.getWidth();
-      String symbol = "";
+      String columnType = columnTypeName + column.getWidth();
       if (!column.isNullable())
       {
-        symbol = "not null";
+        columnType = columnType + ", not null";
       }
 
       String ordinalNumberString = "";
@@ -481,8 +477,7 @@ public abstract class BaseSchemaTextFormatter
       }
       out.println(formattingHelper.createDetailRow(ordinalNumberString,
                                                    columnName,
-                                                   columnType,
-                                                   symbol));
+                                                   columnType));
     }
   }
 
@@ -494,6 +489,7 @@ public abstract class BaseSchemaTextFormatter
     {
       return;
     }
+    out.println(formattingHelper.createNameRow("", "[definition]"));
     out.println(formattingHelper.createDefinitionRow(definition));
   }
 
@@ -587,7 +583,7 @@ public abstract class BaseSchemaTextFormatter
         out.println(formattingHelper.createNameRow(privilegeName,
                                                    privilegeDetails));
 
-        out.println(formattingHelper.createDetailRow("", grantedFrom, "", ""));
+        out.println(formattingHelper.createDetailRow("", grantedFrom, ""));
       }
     }
   }

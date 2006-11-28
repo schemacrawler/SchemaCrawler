@@ -53,8 +53,7 @@ public interface TextFormattingHelper
    */
   String createDetailRow(String ordinal,
                          final String subName,
-                         final String type,
-                         final String remarks);
+                         final String type);
 
   /**
    * Create an empty row.
