@@ -389,6 +389,7 @@ SELECT                                             [grantable privilege]
 UPDATE                                             [grantable privilege]
   DBA --> SA                                                    
 
+                                                            [definition]
   SELECT ID, FIRSTNAME, LASTNAME FROM CUSTOMER
 
 
@@ -520,6 +521,7 @@ ABS                                          [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   org.hsqldb.Library.abs(double)
 
 
@@ -528,6 +530,7 @@ ACOS                                         [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.acos(double)
 
 
@@ -536,6 +539,7 @@ ASCII                                        [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.ascii(java.lang.String)
 
 
@@ -544,6 +548,7 @@ ASIN                                         [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.asin(double)
 
 
@@ -552,6 +557,7 @@ ATAN                                         [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.atan(double)
 
 
@@ -561,6 +567,7 @@ ATAN2                                        [procedure, returns result]
   @p2                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.atan2(double,double)
 
 
@@ -569,6 +576,7 @@ BIT_LENGTH                                   [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.bitLength(java.lang.String)
 
 
@@ -578,6 +586,7 @@ BITAND                                       [procedure, returns result]
   @p2                               INTEGER, in                 
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.bitand(int,int)
 
 
@@ -587,6 +596,7 @@ BITOR                                        [procedure, returns result]
   @p2                               INTEGER, in                 
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.bitor(int,int)
 
 
@@ -596,6 +606,7 @@ BITXOR                                       [procedure, returns result]
   @p2                               INTEGER, in                 
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.bitxor(int,int)
 
 
@@ -604,6 +615,7 @@ CEILING                                      [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.ceil(double)
 
 
@@ -612,6 +624,7 @@ CHAR                                         [procedure, returns result]
   @p1                               INTEGER, in                 
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.character(int)
 
 
@@ -620,6 +633,7 @@ CHAR_LENGTH                                  [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.length(java.lang.String)
 
 
@@ -628,6 +642,7 @@ CHARACTER_LENGTH                             [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.length(java.lang.String)
 
 
@@ -637,6 +652,7 @@ CONCAT                                       [procedure, returns result]
   @p2                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.concat(java.lang.String,java.lang.String)
 
 
@@ -645,6 +661,7 @@ COS                                          [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.cos(double)
 
 
@@ -653,6 +670,7 @@ COT                                          [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   org.hsqldb.Library.cot(double)
 
 
@@ -660,6 +678,7 @@ CURDATE                                      [procedure, returns result]
 ------------------------------------------------------------------------
   @p0                               DATE, result                
 
+                                                            [definition]
   org.hsqldb.Library.curdate(java.sql.Connection)
 
 
@@ -667,6 +686,7 @@ CURTIME                                      [procedure, returns result]
 ------------------------------------------------------------------------
   @p0                               TIME, result                
 
+                                                            [definition]
   org.hsqldb.Library.curtime(java.sql.Connection)
 
 
@@ -674,6 +694,7 @@ DATABASE                                     [procedure, returns result]
 ------------------------------------------------------------------------
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.database(java.sql.Connection)
 
 
@@ -684,6 +705,7 @@ DATEDIFF                                     [procedure, returns result]
   @p3                               TIMESTAMP, in               
   @p0                               BIGINT, result              
 
+                                                            [definition]
   org.hsqldb.Library.datediff(java.lang.String,java.sql.Timestamp,java.sql.Timestamp)
 
 
@@ -692,6 +714,7 @@ DAY                                          [procedure, returns result]
   @p1                               DATE, in                    
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.dayofmonth(java.sql.Date)
 
 
@@ -700,6 +723,7 @@ DAYNAME                                      [procedure, returns result]
   @p1                               DATE, in                    
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.dayname(java.sql.Date)
 
 
@@ -708,6 +732,7 @@ DAYOFMONTH                                   [procedure, returns result]
   @p1                               DATE, in                    
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.dayofmonth(java.sql.Date)
 
 
@@ -716,6 +741,7 @@ DAYOFWEEK                                    [procedure, returns result]
   @p1                               DATE, in                    
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.dayofweek(java.sql.Date)
 
 
@@ -724,6 +750,7 @@ DAYOFYEAR                                    [procedure, returns result]
   @p1                               DATE, in                    
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.dayofyear(java.sql.Date)
 
 
@@ -732,6 +759,7 @@ DEGREES                                      [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.toDegrees(double)
 
 
@@ -741,6 +769,7 @@ DIFFERENCE                                   [procedure, returns result]
   @p2                               LONGVARCHAR, in             
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.difference(java.lang.String,java.lang.String)
 
 
@@ -749,6 +778,7 @@ EXP                                          [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.exp(double)
 
 
@@ -757,6 +787,7 @@ FLOOR                                        [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.floor(double)
 
 
@@ -765,6 +796,7 @@ HEXTORAW                                     [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.hexToRaw(java.lang.String)
 
 
@@ -773,6 +805,7 @@ HOUR                                         [procedure, returns result]
   @p1                               TIME, in                    
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.hour(java.sql.Time)
 
 
@@ -780,6 +813,7 @@ IDENTITY                                     [procedure, returns result]
 ------------------------------------------------------------------------
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.identity()
 
 
@@ -791,6 +825,7 @@ INSERT                                       [procedure, returns result]
   @p4                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.insert(java.lang.String,int,int,java.lang.String)
 
 
@@ -799,6 +834,7 @@ java.lang.Math.abs                           [procedure, returns result]
   @p1                               BIGINT, in                  
   @p0                               BIGINT, result              
 
+                                                            [definition]
   java.lang.Math.abs(double)java.lang.Math.abs(float)java.lang.Math.abs(int)java.lang.Math.abs(long)
 
 
@@ -807,6 +843,7 @@ java.lang.Math.acos                          [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.acos(double)
 
 
@@ -815,6 +852,7 @@ java.lang.Math.asin                          [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.asin(double)
 
 
@@ -823,6 +861,7 @@ java.lang.Math.atan                          [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.atan(double)
 
 
@@ -832,6 +871,7 @@ java.lang.Math.atan2                         [procedure, returns result]
   @p2                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.atan2(double,double)
 
 
@@ -840,6 +880,7 @@ java.lang.Math.ceil                          [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.ceil(double)
 
 
@@ -848,6 +889,7 @@ java.lang.Math.cos                           [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.cos(double)
 
 
@@ -856,6 +898,7 @@ java.lang.Math.exp                           [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.exp(double)
 
 
@@ -864,6 +907,7 @@ java.lang.Math.floor                         [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.floor(double)
 
 
@@ -873,6 +917,7 @@ java.lang.Math.IEEEremainder                 [procedure, returns result]
   @p2                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.IEEEremainder(double,double)
 
 
@@ -881,6 +926,7 @@ java.lang.Math.log                           [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.log(double)
 
 
@@ -890,6 +936,7 @@ java.lang.Math.max                           [procedure, returns result]
   @p2                               BIGINT, in                  
   @p0                               BIGINT, result              
 
+                                                            [definition]
   java.lang.Math.max(double,double)java.lang.Math.max(float,float)java.lang.Math.max(int,int)java.lang.Math.max(long,long)
 
 
@@ -899,6 +946,7 @@ java.lang.Math.min                           [procedure, returns result]
   @p2                               BIGINT, in                  
   @p0                               BIGINT, result              
 
+                                                            [definition]
   java.lang.Math.min(double,double)java.lang.Math.min(float,float)java.lang.Math.min(int,int)java.lang.Math.min(long,long)
 
 
@@ -908,6 +956,7 @@ java.lang.Math.pow                           [procedure, returns result]
   @p2                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.pow(double,double)
 
 
@@ -915,6 +964,7 @@ java.lang.Math.random                        [procedure, returns result]
 ------------------------------------------------------------------------
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.random()
 
 
@@ -923,6 +973,7 @@ java.lang.Math.rint                          [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.rint(double)
 
 
@@ -931,6 +982,7 @@ java.lang.Math.round                         [procedure, returns result]
   @p1                               FLOAT(8, 17), in            
   @p0                               INTEGER, result             
 
+                                                            [definition]
   java.lang.Math.round(double)java.lang.Math.round(float)
 
 
@@ -939,6 +991,7 @@ java.lang.Math.sin                           [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.sin(double)
 
 
@@ -947,6 +1000,7 @@ java.lang.Math.sqrt                          [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.sqrt(double)
 
 
@@ -955,6 +1009,7 @@ java.lang.Math.tan                           [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.tan(double)
 
 
@@ -963,6 +1018,7 @@ java.lang.Math.toDegrees                     [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.toDegrees(double)
 
 
@@ -971,6 +1027,7 @@ java.lang.Math.toRadians                     [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.toRadians(double)
 
 
@@ -979,6 +1036,7 @@ LCASE                                        [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.lcase(java.lang.String)
 
 
@@ -988,6 +1046,7 @@ LEFT                                         [procedure, returns result]
   @p2                               INTEGER, in                 
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.left(java.lang.String,int)
 
 
@@ -996,6 +1055,7 @@ LENGTH                                       [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.length(java.lang.String)
 
 
@@ -1006,6 +1066,7 @@ LOCATE                                       [procedure, returns result]
   @p3                               INTEGER, in                 
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.locate(java.lang.String,java.lang.String,java.lang.Integer)
 
 
@@ -1014,6 +1075,7 @@ LOG                                          [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.log(double)
 
 
@@ -1022,6 +1084,7 @@ LOG10                                        [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   org.hsqldb.Library.log10(double)
 
 
@@ -1030,6 +1093,7 @@ LOWER                                        [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.lcase(java.lang.String)
 
 
@@ -1038,6 +1102,7 @@ LTRIM                                        [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.ltrim(java.lang.String)
 
 
@@ -1046,6 +1111,7 @@ MINUTE                                       [procedure, returns result]
   @p1                               TIME, in                    
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.minute(java.sql.Time)
 
 
@@ -1055,6 +1121,7 @@ MOD                                          [procedure, returns result]
   @p2                               INTEGER, in                 
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.mod(int,int)
 
 
@@ -1063,6 +1130,7 @@ MONTH                                        [procedure, returns result]
   @p1                               DATE, in                    
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.month(java.sql.Date)
 
 
@@ -1071,6 +1139,7 @@ MONTHNAME                                    [procedure, returns result]
   @p1                               DATE, in                    
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.monthname(java.sql.Date)
 
 
@@ -1078,6 +1147,7 @@ NOW                                          [procedure, returns result]
 ------------------------------------------------------------------------
   @p0                               TIMESTAMP, result           
 
+                                                            [definition]
   org.hsqldb.Library.now(java.sql.Connection)
 
 
@@ -1086,6 +1156,7 @@ OCTET_LENGTH                                 [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.octetLength(java.lang.String)
 
 
@@ -1094,6 +1165,7 @@ org.hsqldb.Library.abs                       [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   org.hsqldb.Library.abs(double)
 
 
@@ -1102,6 +1174,7 @@ org.hsqldb.Library.ascii                     [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.ascii(java.lang.String)
 
 
@@ -1111,6 +1184,7 @@ org.hsqldb.Library.bitand                    [procedure, returns result]
   @p2                               INTEGER, in                 
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.bitand(int,int)
 
 
@@ -1119,6 +1193,7 @@ org.hsqldb.Library.bitLength                 [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.bitLength(java.lang.String)
 
 
@@ -1128,6 +1203,7 @@ org.hsqldb.Library.bitor                     [procedure, returns result]
   @p2                               INTEGER, in                 
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.bitor(int,int)
 
 
@@ -1137,6 +1213,7 @@ org.hsqldb.Library.bitxor                    [procedure, returns result]
   @p2                               INTEGER, in                 
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.bitxor(int,int)
 
 
@@ -1145,6 +1222,7 @@ org.hsqldb.Library.character                 [procedure, returns result]
   @p1                               INTEGER, in                 
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.character(int)
 
 
@@ -1154,6 +1232,7 @@ org.hsqldb.Library.concat                    [procedure, returns result]
   @p2                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.concat(java.lang.String,java.lang.String)
 
 
@@ -1162,6 +1241,7 @@ org.hsqldb.Library.cot                       [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   org.hsqldb.Library.cot(double)
 
 
@@ -1169,6 +1249,7 @@ org.hsqldb.Library.curdate                   [procedure, returns result]
 ------------------------------------------------------------------------
   @p0                               DATE, result                
 
+                                                            [definition]
   org.hsqldb.Library.curdate(java.sql.Connection)
 
 
@@ -1176,6 +1257,7 @@ org.hsqldb.Library.curtime                   [procedure, returns result]
 ------------------------------------------------------------------------
   @p0                               TIME, result                
 
+                                                            [definition]
   org.hsqldb.Library.curtime(java.sql.Connection)
 
 
@@ -1183,6 +1265,7 @@ org.hsqldb.Library.database                  [procedure, returns result]
 ------------------------------------------------------------------------
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.database(java.sql.Connection)
 
 
@@ -1193,6 +1276,7 @@ org.hsqldb.Library.datediff                  [procedure, returns result]
   @p3                               TIMESTAMP, in               
   @p0                               BIGINT, result              
 
+                                                            [definition]
   org.hsqldb.Library.datediff(java.lang.String,java.sql.Timestamp,java.sql.Timestamp)
 
 
@@ -1201,6 +1285,7 @@ org.hsqldb.Library.dayname                   [procedure, returns result]
   @p1                               DATE, in                    
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.dayname(java.sql.Date)
 
 
@@ -1209,6 +1294,7 @@ org.hsqldb.Library.dayofmonth                [procedure, returns result]
   @p1                               DATE, in                    
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.dayofmonth(java.sql.Date)
 
 
@@ -1217,6 +1303,7 @@ org.hsqldb.Library.dayofweek                 [procedure, returns result]
   @p1                               DATE, in                    
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.dayofweek(java.sql.Date)
 
 
@@ -1225,6 +1312,7 @@ org.hsqldb.Library.dayofyear                 [procedure, returns result]
   @p1                               DATE, in                    
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.dayofyear(java.sql.Date)
 
 
@@ -1234,6 +1322,7 @@ org.hsqldb.Library.difference                [procedure, returns result]
   @p2                               LONGVARCHAR, in             
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.difference(java.lang.String,java.lang.String)
 
 
@@ -1241,6 +1330,7 @@ org.hsqldb.Library.getAutoCommit             [procedure, returns result]
 ------------------------------------------------------------------------
   @p0                               BOOLEAN(1), result          
 
+                                                            [definition]
   org.hsqldb.Library.getAutoCommit(java.sql.Connection)
 
 
@@ -1248,6 +1338,7 @@ org.hsqldb.Library.getDatabaseMajorVersion   [procedure, returns result]
 ------------------------------------------------------------------------
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.getDatabaseMajorVersion()
 
 
@@ -1255,6 +1346,7 @@ org.hsqldb.Library.getDatabaseMinorVersion   [procedure, returns result]
 ------------------------------------------------------------------------
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.getDatabaseMinorVersion()
 
 
@@ -1262,6 +1354,7 @@ org.hsqldb.Library.getDatabaseProductName    [procedure, returns result]
 ------------------------------------------------------------------------
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.getDatabaseProductName()
 
 
@@ -1269,6 +1362,7 @@ org.hsqldb.Library.getDatabaseProductVersion  [procedure, returns result]
 ------------------------------------------------------------------------
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.getDatabaseProductVersion()
 
 
@@ -1277,6 +1371,7 @@ org.hsqldb.Library.hexToRaw                  [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.hexToRaw(java.lang.String)
 
 
@@ -1285,6 +1380,7 @@ org.hsqldb.Library.hour                      [procedure, returns result]
   @p1                               TIME, in                    
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.hour(java.sql.Time)
 
 
@@ -1292,6 +1388,7 @@ org.hsqldb.Library.identity                  [procedure, returns result]
 ------------------------------------------------------------------------
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.identity()
 
 
@@ -1303,6 +1400,7 @@ org.hsqldb.Library.insert                    [procedure, returns result]
   @p4                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.insert(java.lang.String,int,int,java.lang.String)
 
 
@@ -1310,6 +1408,7 @@ org.hsqldb.Library.isReadOnlyConnection      [procedure, returns result]
 ------------------------------------------------------------------------
   @p0                               BOOLEAN(1), result          
 
+                                                            [definition]
   org.hsqldb.Library.isReadOnlyConnection(java.sql.Connection)
 
 
@@ -1317,6 +1416,7 @@ org.hsqldb.Library.isReadOnlyDatabase        [procedure, returns result]
 ------------------------------------------------------------------------
   @p0                               BOOLEAN(1), result          
 
+                                                            [definition]
   org.hsqldb.Library.isReadOnlyDatabase(java.sql.Connection)
 
 
@@ -1324,6 +1424,7 @@ org.hsqldb.Library.isReadOnlyDatabaseFiles   [procedure, returns result]
 ------------------------------------------------------------------------
   @p0                               BOOLEAN(1), result          
 
+                                                            [definition]
   org.hsqldb.Library.isReadOnlyDatabaseFiles(java.sql.Connection)
 
 
@@ -1332,6 +1433,7 @@ org.hsqldb.Library.lcase                     [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.lcase(java.lang.String)
 
 
@@ -1341,6 +1443,7 @@ org.hsqldb.Library.left                      [procedure, returns result]
   @p2                               INTEGER, in                 
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.left(java.lang.String,int)
 
 
@@ -1349,6 +1452,7 @@ org.hsqldb.Library.length                    [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.length(java.lang.String)
 
 
@@ -1359,6 +1463,7 @@ org.hsqldb.Library.locate                    [procedure, returns result]
   @p3                               INTEGER, in                 
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.locate(java.lang.String,java.lang.String,java.lang.Integer)
 
 
@@ -1367,6 +1472,7 @@ org.hsqldb.Library.log10                     [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   org.hsqldb.Library.log10(double)
 
 
@@ -1375,6 +1481,7 @@ org.hsqldb.Library.ltrim                     [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.ltrim(java.lang.String)
 
 
@@ -1383,6 +1490,7 @@ org.hsqldb.Library.minute                    [procedure, returns result]
   @p1                               TIME, in                    
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.minute(java.sql.Time)
 
 
@@ -1392,6 +1500,7 @@ org.hsqldb.Library.mod                       [procedure, returns result]
   @p2                               INTEGER, in                 
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.mod(int,int)
 
 
@@ -1400,6 +1509,7 @@ org.hsqldb.Library.month                     [procedure, returns result]
   @p1                               DATE, in                    
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.month(java.sql.Date)
 
 
@@ -1408,6 +1518,7 @@ org.hsqldb.Library.monthname                 [procedure, returns result]
   @p1                               DATE, in                    
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.monthname(java.sql.Date)
 
 
@@ -1415,6 +1526,7 @@ org.hsqldb.Library.now                       [procedure, returns result]
 ------------------------------------------------------------------------
   @p0                               TIMESTAMP, result           
 
+                                                            [definition]
   org.hsqldb.Library.now(java.sql.Connection)
 
 
@@ -1423,6 +1535,7 @@ org.hsqldb.Library.octetLength               [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.octetLength(java.lang.String)
 
 
@@ -1430,6 +1543,7 @@ org.hsqldb.Library.pi                        [procedure, returns result]
 ------------------------------------------------------------------------
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   org.hsqldb.Library.pi()
 
 
@@ -1439,6 +1553,7 @@ org.hsqldb.Library.position                  [procedure, returns result]
   @p2                               LONGVARCHAR, in             
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.position(java.lang.String,java.lang.String)
 
 
@@ -1447,6 +1562,7 @@ org.hsqldb.Library.quarter                   [procedure, returns result]
   @p1                               DATE, in                    
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.quarter(java.sql.Date)
 
 
@@ -1455,6 +1571,7 @@ org.hsqldb.Library.rand                      [procedure, returns result]
   @p1                               INTEGER, in                 
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   org.hsqldb.Library.rand(java.lang.Integer)
 
 
@@ -1463,6 +1580,7 @@ org.hsqldb.Library.rawToHex                  [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.rawToHex(java.lang.String)
 
 
@@ -1472,6 +1590,7 @@ org.hsqldb.Library.repeat                    [procedure, returns result]
   @p2                               INTEGER, in                 
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.repeat(java.lang.String,java.lang.Integer)
 
 
@@ -1482,6 +1601,7 @@ org.hsqldb.Library.replace                   [procedure, returns result]
   @p3                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.replace(java.lang.String,java.lang.String,java.lang.String)
 
 
@@ -1491,6 +1611,7 @@ org.hsqldb.Library.right                     [procedure, returns result]
   @p2                               INTEGER, in                 
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.right(java.lang.String,int)
 
 
@@ -1500,6 +1621,7 @@ org.hsqldb.Library.round                     [procedure, returns result]
   @p2                               INTEGER, in                 
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   org.hsqldb.Library.round(double,int)
 
 
@@ -1508,6 +1630,7 @@ org.hsqldb.Library.roundMagic                [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   org.hsqldb.Library.roundMagic(double)
 
 
@@ -1516,6 +1639,7 @@ org.hsqldb.Library.rtrim                     [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.rtrim(java.lang.String)
 
 
@@ -1524,6 +1648,7 @@ org.hsqldb.Library.second                    [procedure, returns result]
   @p1                               TIME, in                    
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.second(java.sql.Time)
 
 
@@ -1532,6 +1657,7 @@ org.hsqldb.Library.sign                      [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.sign(double)
 
 
@@ -1540,6 +1666,7 @@ org.hsqldb.Library.soundex                   [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.soundex(java.lang.String)
 
 
@@ -1548,6 +1675,7 @@ org.hsqldb.Library.space                     [procedure, returns result]
   @p1                               INTEGER, in                 
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.space(int)
 
 
@@ -1558,6 +1686,7 @@ org.hsqldb.Library.substring                 [procedure, returns result]
   @p3                               INTEGER, in                 
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.substring(java.lang.String,int,java.lang.Integer)
 
 
@@ -1567,6 +1696,7 @@ org.hsqldb.Library.to_char                   [procedure, returns result]
   @p2                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.to_char(java.util.Date,java.lang.String)
 
 
@@ -1578,6 +1708,7 @@ org.hsqldb.Library.trim                      [procedure, returns result]
   @p4                               BOOLEAN(1), in              
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.trim(java.lang.String,java.lang.String,boolean,boolean)
 
 
@@ -1587,6 +1718,7 @@ org.hsqldb.Library.truncate                  [procedure, returns result]
   @p2                               INTEGER, in                 
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   org.hsqldb.Library.truncate(double,int)
 
 
@@ -1595,6 +1727,7 @@ org.hsqldb.Library.ucase                     [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.ucase(java.lang.String)
 
 
@@ -1602,6 +1735,7 @@ org.hsqldb.Library.user                      [procedure, returns result]
 ------------------------------------------------------------------------
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.user(java.sql.Connection)
 
 
@@ -1610,6 +1744,7 @@ org.hsqldb.Library.week                      [procedure, returns result]
   @p1                               DATE, in                    
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.week(java.sql.Date)
 
 
@@ -1618,6 +1753,7 @@ org.hsqldb.Library.year                      [procedure, returns result]
   @p1                               DATE, in                    
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.year(java.sql.Date)
 
 
@@ -1625,6 +1761,7 @@ PI                                           [procedure, returns result]
 ------------------------------------------------------------------------
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   org.hsqldb.Library.pi()
 
 
@@ -1634,6 +1771,7 @@ POWER                                        [procedure, returns result]
   @p2                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.pow(double,double)
 
 
@@ -1642,6 +1780,7 @@ QUARTER                                      [procedure, returns result]
   @p1                               DATE, in                    
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.quarter(java.sql.Date)
 
 
@@ -1650,6 +1789,7 @@ RADIANS                                      [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.toRadians(double)
 
 
@@ -1657,6 +1797,7 @@ RAND                                         [procedure, returns result]
 ------------------------------------------------------------------------
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.random()
 
 
@@ -1665,6 +1806,7 @@ RAWTOHEX                                     [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.rawToHex(java.lang.String)
 
 
@@ -1674,6 +1816,7 @@ REPEAT                                       [procedure, returns result]
   @p2                               INTEGER, in                 
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.repeat(java.lang.String,java.lang.Integer)
 
 
@@ -1684,6 +1827,7 @@ REPLACE                                      [procedure, returns result]
   @p3                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.replace(java.lang.String,java.lang.String,java.lang.String)
 
 
@@ -1693,6 +1837,7 @@ RIGHT                                        [procedure, returns result]
   @p2                               INTEGER, in                 
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.right(java.lang.String,int)
 
 
@@ -1702,6 +1847,7 @@ ROUND                                        [procedure, returns result]
   @p2                               INTEGER, in                 
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   org.hsqldb.Library.round(double,int)
 
 
@@ -1710,6 +1856,7 @@ ROUNDMAGIC                                   [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   org.hsqldb.Library.roundMagic(double)
 
 
@@ -1718,6 +1865,7 @@ RTRIM                                        [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.rtrim(java.lang.String)
 
 
@@ -1726,6 +1874,7 @@ SECOND                                       [procedure, returns result]
   @p1                               TIME, in                    
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.second(java.sql.Time)
 
 
@@ -1734,6 +1883,7 @@ SIGN                                         [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.sign(double)
 
 
@@ -1742,6 +1892,7 @@ SIN                                          [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.sin(double)
 
 
@@ -1750,6 +1901,7 @@ SOUNDEX                                      [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.soundex(java.lang.String)
 
 
@@ -1758,6 +1910,7 @@ SPACE                                        [procedure, returns result]
   @p1                               INTEGER, in                 
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.space(int)
 
 
@@ -1766,6 +1919,7 @@ SQRT                                         [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.sqrt(double)
 
 
@@ -1776,6 +1930,7 @@ SUBSTR                                       [procedure, returns result]
   @p3                               INTEGER, in                 
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.substring(java.lang.String,int,java.lang.Integer)
 
 
@@ -1786,6 +1941,7 @@ SUBSTRING                                    [procedure, returns result]
   @p3                               INTEGER, in                 
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.substring(java.lang.String,int,java.lang.Integer)
 
 
@@ -1794,6 +1950,7 @@ TAN                                          [procedure, returns result]
   @p1                               DOUBLE(8, 17), in           
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   java.lang.Math.tan(double)
 
 
@@ -1803,6 +1960,7 @@ TO_CHAR                                      [procedure, returns result]
   @p2                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.to_char(java.util.Date,java.lang.String)
 
 
@@ -1812,6 +1970,7 @@ TRUNCATE                                     [procedure, returns result]
   @p2                               INTEGER, in                 
   @p0                               DOUBLE(8, 17), result       
 
+                                                            [definition]
   org.hsqldb.Library.truncate(double,int)
 
 
@@ -1820,6 +1979,7 @@ UCASE                                        [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.ucase(java.lang.String)
 
 
@@ -1828,6 +1988,7 @@ UPPER                                        [procedure, returns result]
   @p1                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.ucase(java.lang.String)
 
 
@@ -1835,6 +1996,7 @@ USER                                         [procedure, returns result]
 ------------------------------------------------------------------------
   @p0                               LONGVARCHAR, result         
 
+                                                            [definition]
   org.hsqldb.Library.user(java.sql.Connection)
 
 
@@ -1843,6 +2005,7 @@ WEEK                                         [procedure, returns result]
   @p1                               DATE, in                    
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.week(java.sql.Date)
 
 
@@ -1851,6 +2014,7 @@ YEAR                                         [procedure, returns result]
   @p1                               DATE, in                    
   @p0                               INTEGER, result             
 
+                                                            [definition]
   org.hsqldb.Library.year(java.sql.Date)
 
 

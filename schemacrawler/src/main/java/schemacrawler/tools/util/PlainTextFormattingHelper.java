@@ -67,12 +67,10 @@ public class PlainTextFormattingHelper
    */
   public String createDetailRow(final String ordinal,
                                 final String subName,
-                                final String type,
-                                final String remarks)
+                                final String type)
   {
-    final int REMARKS_WIDTH = 5;
     final int SUB_NAME_WIDTH = 32;
-    final int TYPE_WIDTH = 23;
+    final int TYPE_WIDTH = 28;
 
     final StringBuffer row = new StringBuffer();
     row.append(getFieldSeparator());
@@ -84,8 +82,6 @@ public class PlainTextFormattingHelper
     row.append(format(subName, SUB_NAME_WIDTH, true));
     row.append(getFieldSeparator());
     row.append(format(type, TYPE_WIDTH, true));
-    row.append(getFieldSeparator());
-    row.append(format(remarks, REMARKS_WIDTH, true));
     return row.toString();
   }
 
