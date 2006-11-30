@@ -1,7 +1,28 @@
-package dbconnector.test.util;
+/* 
+ *
+ * SchemaCrawler
+ * http://sourceforge.net/projects/schemacrawler
+ * Copyright (c) 2000-2006, Sualeh Fatehi.
+ *
+ * This library is free software; you can redistribute it and/or modify it under the terms
+ * of the GNU Lesser General Public License as published by the Free Software Foundation;
+ * either version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * Boston, MA 02111-1307, USA.
+ *
+ */
+package dbconnector.test;
 
 
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -44,6 +65,12 @@ public abstract class TestBase
   protected PropertiesDataSource dataSource;
   protected PrintWriter out;
 
+  /**
+   * Creates a new test case.
+   * 
+   * @param name
+   *        Name of the test.
+   */
   public TestBase(final String name)
   {
     super(name);
@@ -62,7 +89,7 @@ public abstract class TestBase
     else
     {
       Utilities.setApplicationLogLevel(Level.OFF);
-      out = NullWriter.getNullPrintWriter();
+      out = new PrintWriter(this.new NullWriter(), true);
     }
 
     if (IS_SERVER)
@@ -112,13 +139,7 @@ public abstract class TestBase
     dataSource = new PropertiesDataSource(connectionProperties, DATASOURCE_NAME);
   }
 
-  public synchronized PropertiesDataSource getDataSource()
-    throws PropertiesDataSourceException
-  {
-    return dataSource;
-  }
-
-  synchronized void closeDataSource()
+  private synchronized void closeDataSource()
   {
     try
     {
@@ -136,6 +157,56 @@ public abstract class TestBase
     {
       LOGGER.log(Level.WARNING, "", e);
     }
+  }
+
+  private class NullWriter
+    extends Writer
+  {
+
+    private NullWriter()
+    {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void write(final int c)
+      throws IOException
+    {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void write(final char cbuf[], final int off, final int len)
+      throws IOException
+    {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void write(final String str, final int off, final int len)
+      throws IOException
+    {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void flush()
+      throws IOException
+    {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void close()
+      throws IOException
+    {
+    }
+
   }
 
 }

@@ -25,7 +25,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import dbconnector.test.util.TestBase;
+import dbconnector.test.TestBase;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
