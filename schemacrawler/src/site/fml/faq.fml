@@ -192,7 +192,7 @@ One of:
         <p>
           <i>
             See the example in the
-            <pre>_distrib\examples\ant-task</pre>
+            <code>_distrib\examples\ant-task</code>
             directory.
           </i>
         </p>
@@ -211,7 +211,7 @@ One of:
         <p>
           <i>
             See the example in the
-            <pre>_distrib\examples\maven</pre>
+            <code>_distrib\examples\maven</code>
             directory.
           </i>
         </p>
@@ -231,17 +231,17 @@ One of:
           files.
         </p>
         <p>
-          Read "
+          Read
           <a href="http://www.devx.com/Java/Article/32443">
             Java API Makes Database Metadata as Easily Accessible as
             POJOs
           </a>
-          " for an introduction to the SchemaCrawler API.
+          for an introduction to the SchemaCrawler API.
         </p>
         <p>
           <i>
             See the example in the
-            <pre>_distrib\examples\api</pre>
+            <code>_distrib\examples\api</code>
             directory.
           </i>
         </p>
