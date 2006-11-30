@@ -184,27 +184,129 @@
       </answer>
     </faq>
   </part>
-  <part id="api">
-    <title>API</title>
+  <part id="projects">
+    <title>How to Use SchemaCrawler in Projects</title>
     <faq id="api">
       <question>
         <span>How to use SchemaCrawler programmatically</span>
       </question>
       <answer>
         <p>
-          Read "
+          Read
           <a href="http://www.devx.com/Java/Article/32443">
             Java API Makes Database Metadata as Easily Accessible as
             POJOs
           </a>
-          " for an introduction to the SchemaCrawler API.
+          for an introduction to the SchemaCrawler API. Also, you can
+          browse the
+          <a href="apidocs/index.html">javadocs</a>
+          .
         </p>
         <p>
           <i>
             See the example in the
-            <pre>_distrib\examples\api</pre>
+            <code>_distrib\examples\api</code>
             directory.
           </i>
+        </p>
+      </answer>
+    </faq>
+    <faq id="ant">
+      <question>
+        <span>How to use SchemaCrawler As An ant Task</span>
+      </question>
+      <answer>
+        <p>SchemaCrawler comes with a full-featured ant task.</p>
+        <p>
+          <i>
+            See the example in the
+            <code>_distrib\examples\ant-task</code>
+            directory.
+          </i>
+        </p>
+        <p>
+          In addition to the ant task parameters mentioned in the
+          example, you may find the following parameters useful.
+        </p>
+        <ul>
+          <li>
+            <code>config</code>
+            (default=&quot;schemacrawler.config.properties&quot;)
+          </li>
+          <li>
+            <code>config-override</code>
+            (default=&quot;schemacrawler.config.override.properties&quot;)
+          </li>
+          <li>
+            <code>outputformat</code>
+            (default=&quot;text&quot;)
+          </li>
+        </ul>
+      </answer>
+    </faq>
+    <faq id="maven">
+      <question>
+        <span>How to use SchemaCrawler To Produce a Maven Report</span>
+      </question>
+      <answer>
+        <p>
+          SchemaCrawler comes with a Maven reports plug-in. You can
+          generate a SchemaCrawler report along with other reports for
+          your Maven generated site.
+        </p>
+        <p>
+          <i>
+            See the example in the
+            <code>_distrib\examples\maven</code>
+            directory.
+          </i>
+        </p>
+        <p>
+          Install the SchemaCrawler Maven plug-in by running
+          <pre>
+            java -cp schemacrawler-4.0.jar
+            schemacrawler.tools.integration.maven.Main
+          </pre>
+          and following the instructions.
+        </p>
+        <p>
+          Add a section to your Maven 2.0 project's pom.xml file,
+          similar to that below:
+        </p>
+        <source>
+          <reporting>
+            <plugins>
+              <plugin>
+                <groupId>schemacrawler</groupId>
+                <artifactId>schemacrawler-maven-plugin</artifactId>
+                <version>4.0</version>
+                <configuration>
+                  <schemacrawler.config>
+                    schemacrawler.config.properties
+                  </schemacrawler.config>
+                  <schemacrawler.datasource>
+                    hsqldb
+                  </schemacrawler.datasource>
+                  <schemacrawler.command>
+                    verbose_schema
+                  </schemacrawler.command>
+                  <schemacrawler.outputformat>
+                    html
+                  </schemacrawler.outputformat>
+                  <schemacrawler.jdbc.driver.classpath>
+                    hsqldb.jar
+                  </schemacrawler.jdbc.driver.classpath>
+                </configuration>
+              </plugin>
+            </plugins>
+          </reporting>
+        </source>
+        <p>
+          Run
+          <code>mvn site</code>
+          . See the output produced in the
+          <code>target/site</code>
+          directory of your project.
         </p>
       </answer>
     </faq>

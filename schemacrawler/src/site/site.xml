@@ -43,6 +43,9 @@
         name="Download"
         href="http://sourceforge.net/project/showfiles.php?group_id=148383" />
       <item
+        name="Change History"
+        href="changes-report.html" />                
+      <item
         name="Source Code"
         href="http://sourceforge.net/svn/?group_id=148383" />
       <item
