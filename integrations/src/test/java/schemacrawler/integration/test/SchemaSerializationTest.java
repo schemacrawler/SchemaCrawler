@@ -35,7 +35,7 @@ import schemacrawler.schema.Schema;
 
 import com.thoughtworks.xstream.XStream;
 
-import dbconnector.test.util.TestBase;
+import dbconnector.test.TestBase;
 
 public class SchemaSerializationTest
   extends TestBase

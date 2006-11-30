@@ -23,7 +23,6 @@ package dbconnector.test;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import dbconnector.test.util.TestBase;
 
 public class PropertiesDataSourceTest
   extends TestBase

@@ -23,7 +23,7 @@ package schemacrawler.integration.test;
 
 import java.io.File;
 
-import dbconnector.test.util.TestBase;
+import dbconnector.test.TestBase;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

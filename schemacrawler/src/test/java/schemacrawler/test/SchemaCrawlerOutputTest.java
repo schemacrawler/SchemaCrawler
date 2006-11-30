@@ -33,7 +33,7 @@ import junit.framework.TestSuite;
 
 import org.custommonkey.xmlunit.Validator;
 
-import dbconnector.test.util.TestBase;
+import dbconnector.test.TestBase;
 
 import schemacrawler.crawl.CrawlHandler;
 import schemacrawler.crawl.SchemaCrawler;

@@ -31,6 +31,9 @@
         name="How-tos"
         href="how-to.html" />
       <item
+        name="Using INFORMATION_SCHEMA Views"
+        href="INFORMATION_SCHEMA.html" />
+      <item
         name="Donations"
         href="http://sourceforge.net/donate/index.php?group_id=148383" />
       <item
