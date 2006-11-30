@@ -1,16 +1,16 @@
 body,td,select,input,li {
 	font-family: Verdana, Helvetica, Arial, sans-serif;
-	font-size: 8pt;
+	font-size: 9pt;
 }
 
 code {
-	font-family: Courier, monospace;
+	font-family: Courier New, Courier, monospace;
 	font-size: 9pt;
 }
 
 h2 {
 	color: #000060;
-	font-size: 12pt;
+	font-size: 11pt;
 }
 
 h3 {
@@ -25,20 +25,21 @@ h4 {
 
 h5 {
 	color: #000060;
-	font-size: 8pt;
+	font-size: 9pt;
 }
 
 dl {
+	padding: 0px 0px 0px 0px;
+	border: 0px;
 	background-color: #ffffff;
 }
 
 dt {
 	color: #000060;
-	font-weight: bold;
 }
 
 p {
-	font-size: 8pt;
+	font-size: 9pt;
 }
 
 a:link {
