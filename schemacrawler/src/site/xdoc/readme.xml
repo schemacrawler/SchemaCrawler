@@ -28,7 +28,7 @@
         <p>
           Once you start getting comfortable with SchemaCrawler, and
           need to know more about how to do things, read the
-          <a href="how-to.html">how-to</a>
+          <a href="how-to.html">how-tos</a>
           section.
         </p>
       </subsection>
@@ -107,9 +107,15 @@
           The Maven build is a more comprehensive build that runs unit
           tests, and can also create the project web-site. Download
           <a href="http://maven.apache.org/">Maven 2.0</a>
-          , and run the
-          <code>package goal</code>
-          from the SchemaCrawler directory. The SchemaCrawler jar file
+          . Start the hsqldb server by running
+          <code>runServer.cmd</code>
+          (
+          <code>runServer.sh</code>
+          on Unix) from the dbserver directory. Then run the
+          <code>package</code>
+          goal (
+          <code>mvn site</code>
+          ) from the SchemaCrawler directory. The SchemaCrawler jar file
           will be created in the
           <code>_distrib</code>
           directory.
