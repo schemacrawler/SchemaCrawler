@@ -1,7 +1,9 @@
+<!DOCTYPE document PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+  "http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
   <properties>
-    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
     <title>INFORMATION_SCHEMA</title>
+    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
     <section name="INFORMATION_SCHEMA Views">

@@ -1,33 +1,54 @@
 body,td,select,input,li {
-  font-family: Verdana, Helvetica, Arial, sans-serif;
-  font-size: 8pt;
+	font-family: Verdana, Helvetica, Arial, sans-serif;
+	font-size: 8pt;
 }
 
 code {
-  font-family: Courier, monospace;
-  font-size: 9pt;
+	font-family: Courier, monospace;
+	font-size: 9pt;
 }
 
 h2 {
-  color: #000060;
-  font-size: 12pt;
+	color: #000060;
+	font-size: 12pt;
 }
 
 h3 {
-  color: #000060;
-  font-size: 10pt;
+	color: #000060;
+	font-size: 10pt;
 }
 
 h4 {
-  color: #000060;
-  font-size: 9pt;
+	color: #000060;
+	font-size: 9pt;
 }
 
 h5 {
-  color: #000060;
-  font-size: 8pt;
+	color: #000060;
+	font-size: 8pt;
+}
+
+dl {
+	background-color: #ffffff;
+}
+
+dt {
+	color: #000060;
+	font-weight: bold;
 }
 
 p {
-  font-size: 8pt;
+	font-size: 8pt;
+}
+
+a:link {
+	color: #0000AA;
+}
+
+a:visited {
+	color: #000060;
+}
+
+a:active,a:hover {
+	color: #900000;
 }
