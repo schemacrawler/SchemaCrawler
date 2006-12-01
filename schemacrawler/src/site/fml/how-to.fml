@@ -142,14 +142,14 @@
           <code>schemacrawler.config.properties</code>
           file.
         </p>
-        <code>
+        <source>
           <![CDATA[
 schemacrawler.format.hide_primarykey_names=false
 schemacrawler.format.hide_foreignkey_names=false
 schemacrawler.format.hide_index_names=false
 schemacrawler.format.hide_constraint_names=false
 ]]>
-        </code>
+        </source>
       </answer>
     </faq>
   </part>
@@ -280,7 +280,7 @@ schemacrawler.format.hide_constraint_names=false
           Next, add a section to your Maven 2.0 project's pom.xml file,
           similar to that below, changing what needs to be changed:
         </p>
-        <code>
+        <source>
           <![CDATA[
 <reporting>
   <plugins>
@@ -299,7 +299,7 @@ schemacrawler.format.hide_constraint_names=false
   </plugins>
 </reporting>
 ]]>
-        </code>
+        </source>
         <p>
           Run
           <code>mvn site</code>
