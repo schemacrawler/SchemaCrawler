@@ -11,7 +11,7 @@
     <name>SchemaCrawler</name>
     <href>http://sourceforge.net/projects/schemacrawler</href>
   </bannerRight>
-  <body>
+  <body>      
     <links>
       <item
         name="Donations"
@@ -52,6 +52,6 @@
         name="Project Page on SourceForge"
         href="http://sourceforge.net/projects/schemacrawler/" />        
     </menu>
-    ${reports}
+    ${reports}   
   </body>
 </project>

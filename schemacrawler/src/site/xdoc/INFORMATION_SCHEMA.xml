@@ -7,6 +7,47 @@
   </properties>
   <body>
     <section name="INFORMATION_SCHEMA Views">
+      <subsection name="Enhancing SchemaCrawler Output">
+        <p>
+          SchemaCrawler can display view and procedure definitions,
+          trigger information, and check constaints by using data from
+          the INFORMATION_SCHEMA views. Even though INFORMATION_SCHEMA
+          views are defined in the SQL Standard, not all database
+          systems provide these views. However, if it is possible to
+          construct a metadata view with columns that match the
+          INFORMATION_SCHEMA views, then SchemaCrawler can use the data
+          to obtain view and procedure definitions, trigger information,
+          and check constaints. The INFORMATION_SCHEMA views currently
+          processed by SchemaCrawler are shown below.
+        </p>
+        <p>
+          To get SchemaCrawler to use the views you will need to modify
+          your database connection properties in your SchemaCrawler
+          configuration file. Some examples are provided in the
+          <code>schemacrawler.config.properties</code>
+          file in the
+          <code>_distrib</code>
+          folder of the download.
+        </p>
+        <p>
+          For example, if you had defined a connection called
+          <code>hsqldb</code>
+          , going against the HSQLDB database, and wanted to get view
+          definitions in the schema output, you would create a property
+          in your
+          <code>schemacrawler.config.properties</code>
+          file like this:
+        </p>
+        <source>
+          <![CDATA[        
+hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
+  SELECT \
+    * \
+  FROM \
+    INFORMATION_SCHEMA.SYSTEM_VIEWS
+]]>    
+    </source>
+      </subsection>
       <subsection name="INFORMATION_SCHEMA.VIEWS">
         <table>
           <thead>
