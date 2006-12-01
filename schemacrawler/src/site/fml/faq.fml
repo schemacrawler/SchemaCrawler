@@ -88,14 +88,14 @@ One of:
 
 -c <connection_name> (short for -connection <connection_name>)
     Uses a named connection
-
+    
 -d (short for -default)
     Uses the default connection
-
+    
 -x <connection_name> (short for -prompt <connection_name>)
     Prompts for connection information, which is saved
     into <connection_name>.properties
-
+    
 -a (short for -testall)
     Tests all the connections defined in the configuration properties file,
     but does not execute any commands
@@ -110,6 +110,8 @@ One of:
         For more details of tables and views
     verbose_schema
         For most details of tables and views, including keys
+    maximum_schema
+        For maximum possible detail of the schema
     count
         To count rows in the tables
     truncate

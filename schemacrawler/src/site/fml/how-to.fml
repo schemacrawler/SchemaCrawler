@@ -138,7 +138,14 @@
           schema, most database system assign default names. These names
           can show up as spurious diffs in SchemaCrawler output. Change
           the configuration for the SchemaCrawler
-          <code>schemacrawler.format.hide_index_names=false</code>
+          <source>
+            <![CDATA[
+schemacrawler.sort_alphabetically.table_columns=false
+schemacrawler.sort_alphabetically.table_foreignkeys=false
+schemacrawler.sort_alphabetically.table_indices=false
+schemacrawler.sort_alphabetically.procedure_columns=false
+]]>
+          </source>
           in the
           <code>schemacrawler.config.properties</code>
           file.
@@ -262,44 +269,36 @@
           </i>
         </p>
         <p>
-          Install the SchemaCrawler Maven plug-in by running
-          <pre>
-            java -cp schemacrawler-4.0.jar
-            schemacrawler.tools.integration.maven.Main
-          </pre>
-          and following the instructions.
+          Install the SchemaCrawler Maven plug-in by running the
+          following command, and following the instructions that are
+          printed out.
         </p>
+        <code>
+          <![CDATA[java -cp schemacrawler-4.0.jar schemacrawler.tools.integration.maven.Main]]>
+        </code>
         <p>
-          Add a section to your Maven 2.0 project's pom.xml file,
-          similar to that below:
+          Next, add a section to your Maven 2.0 project's pom.xml file,
+          similar to that below, changing what needs to be changed:
         </p>
         <source>
-          <reporting>
-            <plugins>
-              <plugin>
-                <groupId>schemacrawler</groupId>
-                <artifactId>schemacrawler-maven-plugin</artifactId>
-                <version>4.0</version>
-                <configuration>
-                  <schemacrawler.config>
-                    schemacrawler.config.properties
-                  </schemacrawler.config>
-                  <schemacrawler.datasource>
-                    hsqldb
-                  </schemacrawler.datasource>
-                  <schemacrawler.command>
-                    verbose_schema
-                  </schemacrawler.command>
-                  <schemacrawler.outputformat>
-                    html
-                  </schemacrawler.outputformat>
-                  <schemacrawler.jdbc.driver.classpath>
-                    hsqldb.jar
-                  </schemacrawler.jdbc.driver.classpath>
-                </configuration>
-              </plugin>
-            </plugins>
-          </reporting>
+          <![CDATA[
+<reporting>
+  <plugins>
+    <plugin>
+      <groupId>schemacrawler</groupId>
+      <artifactId>schemacrawler-maven-plugin</artifactId>
+      <version>4.0</version>
+      <configuration>
+        <schemacrawler.config>schemacrawler.config.properties</schemacrawler.config>
+        <schemacrawler.datasource>hsqldb</schemacrawler.datasource>
+        <schemacrawler.command>verbose_schema</schemacrawler.command>
+        <schemacrawler.outputformat>html</schemacrawler.outputformat>
+        <schemacrawler.jdbc.driver.classpath>hsqldb.jar</schemacrawler.jdbc.driver.classpath>
+      </configuration>
+    </plugin>
+  </plugins>
+</reporting>
+]]>
         </source>
         <p>
           Run
