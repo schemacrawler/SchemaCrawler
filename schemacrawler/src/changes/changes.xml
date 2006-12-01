@@ -7,14 +7,15 @@
   <body>
     <release
       version="4.0"
-      date="2006-11-30">
+      date="2006-12-03">
       <action
         dev="Sualeh Fatehi"
         type="add">
-        Added support for SQL standard INFORMATION_SCHEMA views. If equivalent
-        SQL for the standard INFORMATION_SCHEMA view is specified, it is
-        used to provide additional schema information such as check
-        constraints, triggers, and view and procedure definitions.
+        Added support for SQL standard INFORMATION_SCHEMA views. If
+        equivalent SQL for the standard INFORMATION_SCHEMA view is
+        specified, it is used to provide additional schema information
+        such as check constraints, triggers, and view and procedure
+        definitions.
       </action>
       <action
         dev="Sualeh Fatehi"
@@ -28,7 +29,7 @@
         dev="Sualeh Fatehi"
         type="fix">
         Better output format for HTML and text.
-      </action>      
+      </action>
       <action
         dev="Sualeh Fatehi"
         type="fix">
@@ -38,6 +39,11 @@
         dev="Sualeh Fatehi"
         type="fix">
         Better handling of database connection resources.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        More information on the website, and better website usability.
       </action>
     </release>
     <release

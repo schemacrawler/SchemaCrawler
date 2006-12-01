@@ -134,22 +134,22 @@
       </question>
       <answer>
         <p>
-          If index names are not explicitly provided while creating a
-          schema, most database system assign default names. These names
-          can show up as spurious diffs in SchemaCrawler output. Change
-          the configuration for the SchemaCrawler
-          <source>
-            <![CDATA[
-schemacrawler.sort_alphabetically.table_columns=false
-schemacrawler.sort_alphabetically.table_foreignkeys=false
-schemacrawler.sort_alphabetically.table_indices=false
-schemacrawler.sort_alphabetically.procedure_columns=false
-]]>
-          </source>
-          in the
+          If primary key, foreign key and index names are not explicitly
+          provided while creating a schema, most database system assign
+          default names. These names can show up as spurious diffs in
+          SchemaCrawler output. Change the configuration for the
+          following properties in your
           <code>schemacrawler.config.properties</code>
           file.
         </p>
+        <code>
+          <![CDATA[
+schemacrawler.format.hide_primarykey_names=false
+schemacrawler.format.hide_foreignkey_names=false
+schemacrawler.format.hide_index_names=false
+schemacrawler.format.hide_constraint_names=false
+]]>
+        </code>
       </answer>
     </faq>
   </part>
@@ -280,7 +280,7 @@ schemacrawler.sort_alphabetically.procedure_columns=false
           Next, add a section to your Maven 2.0 project's pom.xml file,
           similar to that below, changing what needs to be changed:
         </p>
-        <source>
+        <code>
           <![CDATA[
 <reporting>
   <plugins>
@@ -299,13 +299,48 @@ schemacrawler.sort_alphabetically.procedure_columns=false
   </plugins>
 </reporting>
 ]]>
-        </source>
+        </code>
         <p>
           Run
           <code>mvn site</code>
           . See the output produced in the
           <code>target/site</code>
           directory of your project.
+        </p>
+      </answer>
+    </faq>
+  </part>
+  <part id="advanced">
+    <title>Advanced SchemaCrawler Usage</title>
+    <faq id="definitions">
+      <question>
+        <span>How to get view and procedure definitions</span>
+      </question>
+      <answer>
+        <p>
+          <i>
+            See the documentation in
+            <a href="INFORMATION_SCHEMA.html">
+              INFORMATION_SCHEMA Views
+            </a>
+            .
+          </i>
+        </p>
+      </answer>
+    </faq>
+    <faq id="check_constraints">
+      <question>
+        <span>How to obtain check constraints</span>
+      </question>
+      <answer>
+        <p>
+          <i>
+            See the documentation in
+            <a href="INFORMATION_SCHEMA.html">
+              INFORMATION_SCHEMA Views
+            </a>
+            .
+          </i>
         </p>
       </answer>
     </faq>
