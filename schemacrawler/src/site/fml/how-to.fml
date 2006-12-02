@@ -168,8 +168,9 @@ schemacrawler.format.hide_constraint_names=false
           to allow for templated ouput. Put Velocity on your classpath,
           and create your template, and run
           <code>schemacrawler.tools.integration.velocity.Main</code>
-          , with the correct options. See the Velocity example for more
-          details.
+          , with the correct options. See the Velocity example in the
+          <code>_distrib\velocity</code>
+          directory for more details.
         </p>
       </answer>
     </faq>
@@ -185,8 +186,9 @@ schemacrawler.format.hide_constraint_names=false
           </a>
           to produce graph images. Put JUNG on your classpath, and run
           <code>schemacrawler.tools.integration.jung.Main</code>
-          , with the correct options. See the graphing example for more
-          details.
+          , with the correct options. See the graphing example in the
+          <code>_distrib\graphing</code>
+          directory for more details.
         </p>
       </answer>
     </faq>
