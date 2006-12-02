@@ -84,20 +84,16 @@ abstract class AbstractRetriever
     boolean belongsToCatalog = true;
     boolean belongsToSchema = true;
     final String dbObjectCatalog = dbObject.getCatalogName();
-    if (!Utilities.isBlank(catalog) && !Utilities.isBlank(dbObjectCatalog))
+    if (!Utilities.isBlank(catalog) && !Utilities.isBlank(dbObjectCatalog)
+        && !catalog.equals(dbObjectCatalog))
     {
-      if (!catalog.equals(dbObjectCatalog))
-      {
-        belongsToCatalog = false;
-      }
+      belongsToCatalog = false;
     }
     final String dbObjectSchema = dbObject.getSchemaName();
-    if (!Utilities.isBlank(schema) && !Utilities.isBlank(dbObjectSchema))
+    if (!Utilities.isBlank(schema) && !Utilities.isBlank(dbObjectSchema)
+        && !schema.equals(dbObjectSchema))
     {
-      if (!schema.equals(dbObjectSchema))
-      {
-        belongsToSchema = false;
-      }
+      belongsToSchema = false;
     }
     return belongsToCatalog && belongsToSchema;
   }

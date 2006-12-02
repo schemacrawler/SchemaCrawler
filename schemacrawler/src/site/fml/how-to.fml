@@ -272,10 +272,10 @@ schemacrawler.format.hide_constraint_names=false
           Install the SchemaCrawler Maven plug-in by running the
           following command, and following the instructions that are
           printed out.
+          <pre>
+            <![CDATA[java -cp schemacrawler-4.0.jar schemacrawler.tools.integration.maven.Main]]>
+          </pre>
         </p>
-        <code>
-          <![CDATA[java -cp schemacrawler-4.0.jar schemacrawler.tools.integration.maven.Main]]>
-        </code>
         <p>
           Next, add a section to your Maven 2.0 project's pom.xml file,
           similar to that below, changing what needs to be changed:

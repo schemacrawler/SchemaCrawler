@@ -21,8 +21,6 @@
 package schemacrawler.tools.datatext;
 
 
-import java.io.Writer;
-
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.tools.util.FormatUtils;
 import sf.util.Entities;
@@ -37,8 +35,7 @@ final class DataHTMLFormatter
 {
 
   /**
-   * @see BaseDataTextFormatter#BaseDataTextFormatter(DataTextFormatOptions,
-   *      Writer)
+   * @see BaseDataTextFormatter#BaseDataTextFormatter(DataTextFormatOptions)
    */
   DataHTMLFormatter(final DataTextFormatOptions options)
     throws SchemaCrawlerException

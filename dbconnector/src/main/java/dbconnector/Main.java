@@ -70,7 +70,7 @@ public final class Main
   }
 
   /**
-   * Get connection parameters, and creates a connection, and crawls the schema.<BR>
+   * Get connection parameters, and creates a connection, and crawls the schema.
    * 
    * @param args
    *          Arguments passed into the program from the command line.

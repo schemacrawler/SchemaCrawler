@@ -304,7 +304,9 @@ One of:
       </question>
       <answer>
         <p>
-          SchemaCrawler is free, but
+          SchemaCrawler is free, licensed under the
+          <a href="license.html">LGPL</a>
+          , but
           <a
             href="http://sourceforge.net/donate/index.php?group_id=148383">
             donations
