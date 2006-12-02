@@ -106,7 +106,7 @@ public final class Main
       System.exit(2);
     }
 
-  } // end main
+  }
 
   /**
    * Creates a PropertiesDataSource using an argument list as passed into a main

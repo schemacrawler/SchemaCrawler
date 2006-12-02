@@ -47,13 +47,18 @@ One of:
 -command=<command>
 	Required, where <command> is a comma-separated list of:
     brief_schema
-        If you only want to see table and view names
+        If you only want to see table, view and procedure names
     basic_schema
-        For more details of tables and views
+        For more details of tables, views and procedures, 
+        including columns and primary keys
     verbose_schema
-        For most details of tables and views, including keys
+        For the most detail of the schema, including data 
+        types, indexes, foreign keys, and view and 
+        procedure definitions
     maximum_schema
-        For maximum possible detail of the schema
+        For maximum possible detail of the schema, including
+        privileges, and details of privileges, triggers,
+        and check constraints
     count
         To count rows in the tables
     truncate
