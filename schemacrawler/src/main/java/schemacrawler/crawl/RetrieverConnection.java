@@ -138,6 +138,7 @@ final class RetrieverConnection
   protected void finalize()
     throws Throwable
   {
+    super.finalize();
     // Release database resources
     if (metaData != null)
     {

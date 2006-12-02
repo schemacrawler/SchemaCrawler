@@ -21,15 +21,10 @@
 package schemacrawler;
 
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
@@ -55,9 +50,6 @@ public final class OptionsParser
   private static final String OPTION_OUTPUT_FORMAT = "outputformat";
   private static final String OPTION_OUTPUT_FILE = "outputfile";
   private static final String OPTION_OUTPUT_APPEND = "append";
-
-  private static final Logger LOGGER = Logger.getLogger(OptionsParser.class
-    .getName());
 
   private OptionsParser()
   {
@@ -174,57 +166,9 @@ public final class OptionsParser
   private static Properties loadConfig(final String configfilename,
                                        final String configoverridefilename)
   {
-    final File configfile = new File(configfilename);
-    final File configoverridefile = new File(configoverridefilename);
-    final Properties config = new Properties();
-    FileInputStream fileInputStream = null;
-    try
-    {
-      if (configfile.exists())
-      {
-        fileInputStream = new FileInputStream(configfile);
-        config.load(fileInputStream);
-        fileInputStream.close();
-        LOGGER.log(Level.FINE, "Using configuration file "
-                               + configfile.getAbsolutePath());
-      }
-      else
-      {
-        LOGGER.log(Level.FINE, "Not using configuration file "
-                               + configfile.getAbsolutePath());
-      }
-      if (configoverridefile.exists())
-      {
-        fileInputStream = new FileInputStream(configoverridefile);
-        config.load(fileInputStream);
-        fileInputStream.close();
-        LOGGER.fine("Using configuration override file "
-                    + configoverridefile.getAbsolutePath());
-      }
-      else
-      {
-        LOGGER.log(Level.FINE, "Not using configuration override file "
-                               + configoverridefile.getAbsolutePath());
-      }
-    }
-    catch (final IOException e)
-    {
-      LOGGER.log(Level.WARNING, "Error loading config", e);
-    }
-    finally
-    {
-      try
-      {
-        if (fileInputStream != null)
-        {
-          fileInputStream.close();
-        }
-      }
-      catch (final IOException e)
-      {
-        LOGGER.log(Level.WARNING, "Could not close file input stream", e);
-      }
-    }
+    Properties config = new Properties();
+    config = Utilities.loadProperties(config, configfilename);
+    config = Utilities.loadProperties(config, configoverridefilename);
     return config;
   }
 

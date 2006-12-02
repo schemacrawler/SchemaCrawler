@@ -21,12 +21,10 @@
 package dbconnector;
 
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -102,7 +100,7 @@ public final class Main
       connectionsFileName = (String) connectionsFileOption.getValue();
     }
 
-    final Properties config = loadConnections(connectionsFileName);
+    final Properties config = Utilities.loadProperties(new Properties(), connectionsFileName);
     if (createDataSource(args, config) == null)
     {
       System.exit(2);
@@ -219,39 +217,6 @@ public final class Main
 
     return dataSource;
 
-  }
-
-  private static Properties loadConnections(final String connectionsFileName)
-  {
-    final Properties properties = new Properties();
-
-    InputStream propertiesStream = null;
-    try
-    {
-      propertiesStream = new BufferedInputStream(new FileInputStream(
-          connectionsFileName));
-      properties.load(propertiesStream);
-      propertiesStream.close();
-    }
-    catch (final IOException e)
-    {
-      LOGGER.log(Level.WARNING, "Error loading connection parameters", e);
-    }
-    finally
-    {
-      try
-      {
-        if (propertiesStream != null)
-        {
-          propertiesStream.close();
-        }
-      }
-      catch (final IOException e)
-      {
-        LOGGER.log(Level.WARNING, "Error closing stream", e);
-      }
-    }
-    return properties;
   }
 
   private static void testAllConnections(final Properties properties)

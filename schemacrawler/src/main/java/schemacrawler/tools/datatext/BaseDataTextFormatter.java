@@ -104,6 +104,8 @@ public abstract class BaseDataTextFormatter
   }
 
   /**
+   * {@inheritDoc}
+   * 
    * @see schemacrawler.execute.DataHandler#getPrintWriter()
    */
   public PrintWriter getPrintWriter()

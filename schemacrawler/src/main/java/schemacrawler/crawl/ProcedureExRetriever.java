@@ -73,10 +73,6 @@ final class ProcedureExRetriever
   void retrieveProcedureInformation(final NamedObjectList procedures)
     throws SQLException
   {
-    LOGGER.entering(getClass().getName(),
-                    "retrieveProcedureInformation",
-                    new Object[] {});
-
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
     if (!informationSchemaViews.hasRoutinesSql())

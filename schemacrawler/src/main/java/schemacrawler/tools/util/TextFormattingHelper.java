@@ -47,8 +47,6 @@ public interface TextFormattingHelper
    *        Name
    * @param type
    *        Type
-   * @param remarks
-   *        Remarks
    * @return Row as a string
    */
   String createDetailRow(String ordinal,

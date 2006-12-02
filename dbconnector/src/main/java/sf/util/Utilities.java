@@ -19,12 +19,14 @@ package sf.util;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -40,13 +42,13 @@ public final class Utilities
 {
 
   private static final Logger LOGGER = Logger.getLogger(Utilities.class
-      .getName());
+    .getName());
 
   /**
    * System specific file separator character.
    */
   public static final char FILE_SEPARATOR = System
-      .getProperty("file.separator").charAt(0);
+    .getProperty("file.separator").charAt(0);
   /**
    * System specific line separator character.
    */
@@ -64,9 +66,9 @@ public final class Utilities
    * Left justifies the string in given field length.
    * 
    * @param string
-   *          String to right justify
+   *        String to right justify
    * @param len
-   *          Length of the field
+   *        Length of the field
    * @return Justified string
    */
   public static String padRight(final String string, final int len)
@@ -87,9 +89,9 @@ public final class Utilities
    * Right justifies the string in given field length.
    * 
    * @param string
-   *          String to right justify
+   *        String to right justify
    * @param len
-   *          Length of the field
+   *        Length of the field
    * @return Justified string
    */
   public static String padLeft(final String string, final int len)
@@ -110,9 +112,9 @@ public final class Utilities
    * Repeats a string.
    * 
    * @param string
-   *          String to repeat
+   *        String to repeat
    * @param count
-   *          Number of times to repeat
+   *        Number of times to repeat
    * @return String with repetitions
    */
   public static String repeat(final String string, final int count)
@@ -123,7 +125,7 @@ public final class Utilities
     if (string != null && count >= 1)
     {
       final StringBuffer stringbuffer = new StringBuffer(string.length()
-          * count);
+                                                         * count);
       for (int i = 0; i < count; i++)
       {
         stringbuffer.append(string);
@@ -139,7 +141,7 @@ public final class Utilities
    * Reads the stream fully, and returns a byte array of data.
    * 
    * @param stream
-   *          Stream to read.
+   *        Stream to read.
    * @return Byte array
    */
   public static byte[] readFully(final InputStream stream)
@@ -186,7 +188,7 @@ public final class Utilities
    * match the version provided as an argument.
    * 
    * @param minVersion
-   *          Minimum version supported
+   *        Minimum version supported
    */
   public static void checkJavaVersion(final double minVersion)
   {
@@ -195,7 +197,7 @@ public final class Utilities
         || Double.parseDouble(jvmVersion.substring(0, 3)) < minVersion)
     {
       throw new IllegalArgumentException("Needs Java " + minVersion
-          + " or greater");
+                                         + " or greater");
     }
   }
 
@@ -209,13 +211,13 @@ public final class Utilities
    * interpolated to an empty string.
    * 
    * @param template
-   *          Template
+   *        Template
    * @param properties
-   *          Properties to substitute in the template
+   *        Properties to substitute in the template
    * @return Expanded template
    */
   public static String expandTemplateFromProperties(final String template,
-      final Map properties)
+                                                    final Map properties)
   {
 
     if (template == null)
@@ -232,8 +234,10 @@ public final class Utilities
       {
         // Evaluate nested property value
         expandedTemplate = expandedTemplate.substring(0, inner)
-            + expandTemplateFromProperties(expandedTemplate.substring(inner));
-      } else if (right >= 0)
+                           + expandTemplateFromProperties(expandedTemplate
+                             .substring(inner));
+      }
+      else if (right >= 0)
       {
         // Evaluate this property value
         final String propertyKey = expandedTemplate.substring(left + 2, right);
@@ -243,8 +247,9 @@ public final class Utilities
           propertyValue = "";
         }
         expandedTemplate = expandedTemplate.substring(0, left) + propertyValue
-            + expandedTemplate.substring(right + 1);
-      } else
+                           + expandedTemplate.substring(right + 1);
+      }
+      else
       {
         // Unmatched left delimiter - ignore
         break;
@@ -265,7 +270,7 @@ public final class Utilities
    * interpolated to an empty string.
    * 
    * @param template
-   *          Template
+   *        Template
    * @return Expanded template
    */
   public static String expandTemplateFromProperties(final String template)
@@ -277,7 +282,7 @@ public final class Utilities
    * Gets a list of template variables.
    * 
    * @param template
-   *          Template to extract variables from
+   *        Template to extract variables from
    * @return Set of variables
    */
   public static Set extractTemplateVariables(final String template)
@@ -299,7 +304,7 @@ public final class Utilities
         keys.add(propertyKey);
         // Destroy key, so we can find teh next one
         shrunkTemplate = shrunkTemplate.substring(0, left) + ""
-            + shrunkTemplate.substring(right + 1);
+                         + shrunkTemplate.substring(right + 1);
       }
     }
 
@@ -310,13 +315,13 @@ public final class Utilities
    * Sets the application-wide log level.
    * 
    * @param logLevel
-   *          Log level to set
+   *        Log level to set
    */
   public static void setApplicationLogLevel(final Level logLevel)
   {
     final LogManager logManager = LogManager.getLogManager();
     for (final Enumeration loggerNames = logManager.getLoggerNames(); loggerNames
-        .hasMoreElements();)
+      .hasMoreElements();)
     {
       final String loggerName = (String) loggerNames.nextElement();
       final Logger logger = logManager.getLogger(loggerName);
@@ -339,7 +344,7 @@ public final class Utilities
    * tolerance.
    * 
    * @param number
-   *          Number to check
+   *        Number to check
    * @return Whether the double is an integer
    */
   public static boolean isIntegral(final double number)
@@ -351,12 +356,12 @@ public final class Utilities
    * Writes a string to a file.
    * 
    * @param fileName
-   *          Name of the file to write.
+   *        Name of the file to write.
    * @param fileContents
-   *          Contents of the file.
+   *        Contents of the file.
    * @return The file.
    * @throws IOException
-   *           On an exception.
+   *         On an exception.
    */
   public static File writeStringToFile(String fileName, String fileContents)
     throws IOException
@@ -380,7 +385,7 @@ public final class Utilities
   {
     String osName = System.getProperty("os.name");
     boolean isWindowsOS = osName == null
-        || osName.toLowerCase().indexOf("windows") != -1;
+                          || osName.toLowerCase().indexOf("windows") != -1;
     return isWindowsOS;
   }
 
@@ -388,7 +393,7 @@ public final class Utilities
    * Checks if the text is null or empty.
    * 
    * @param text
-   *          Text to check.
+   *        Text to check.
    * @return Whether the string is blank.
    */
   public static boolean isBlank(String text)
@@ -400,13 +405,63 @@ public final class Utilities
    * Checks if the text is true.
    * 
    * @param text
-   *          Text to check.
+   *        Text to check.
    * @return Whether the string is true or yes.
    */
   public static boolean parseBoolean(String text)
   {
     return (!isBlank(text) && text.equalsIgnoreCase("YES"))
-        || Boolean.valueOf(text).booleanValue();
+           || Boolean.valueOf(text).booleanValue();
+  }
+
+  /**
+   * Loads a properties file.
+   * 
+   * @param properties
+   *        Properties object.
+   * @param propertiesFileName
+   *        Properties file name.
+   * @return Properties
+   */
+  public static Properties loadProperties(Properties properties,
+                                          final String propertiesFileName)
+  {
+    InputStream propertiesStream = null;
+    try
+    {
+      final File propertiesFile = new File(propertiesFileName);
+      if (propertiesFile.exists())
+      {
+        propertiesStream = new BufferedInputStream(new FileInputStream(propertiesFile));
+        properties.load(propertiesStream);
+        propertiesStream.close();
+      }
+      else
+      {
+        LOGGER.log(Level.WARNING, "Cannot find properties file "
+                                  + propertiesFileName);
+      }
+    }
+    catch (final IOException e)
+    {
+      LOGGER.log(Level.WARNING, "Error loading properties file "
+                                + propertiesFileName, e);
+    }
+    finally
+    {
+      try
+      {
+        if (propertiesStream != null)
+        {
+          propertiesStream.close();
+        }
+      }
+      catch (final IOException e)
+      {
+        LOGGER.log(Level.WARNING, "Error closing stream", e);
+      }
+    }
+    return properties;
   }
 
 }
