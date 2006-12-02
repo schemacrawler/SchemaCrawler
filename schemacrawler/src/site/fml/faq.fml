@@ -16,6 +16,10 @@
           SchemaCrawler output is designed to be diff-ed with previous
           versions of your database schema or data.
         </p>
+        <p>
+          SchemaCrawler is also an API that improves on the standard
+          JDBC metadata.
+        </p>
       </answer>
     </faq>
     <faq id="output">
@@ -55,11 +59,14 @@
       <answer>
         <p>
           SchemaCrawler can produce brief, basic, or verbose details of
-          your schema. The brief option gives you just table, view, and
-          procedure names. The basic option gives you the column names
-          and data types. The verbose option will give you details of
-          indices, primary and foreign keys. Each successive option
-          takes more time to execute.
+          your schema. The brief schema option gives you just table,
+          view, and procedure names. The basic schema option gives you
+          the column names and data types. The verbose schema option
+          will give you details of indices, primary and foreign keys.
+          The maximum schema option will give you details of data types,
+          privileges, view and procedure definitions, triggers, and
+          check constraints. Each successive option takes more time to
+          execute.
         </p>
         <p>
           SchemaCrawler can also manipulate your data. You can get
@@ -70,7 +77,8 @@
           configuration files.
         </p>
         <source>
-          <![CDATA[java -jar <schemacrawler-jar> [options]
+          <![CDATA[
+java -jar <schemacrawler-jar> [options]
 
 --- Optional Configuration Options ---
 
@@ -143,6 +151,22 @@ One of:
 	Optional - <outputfile> is the path to the output file
 ]]>
         </source>
+      </answer>
+    </faq>
+    <faq id="config">
+      <question>
+        <span>
+          What does a SchemaCrawler configuration file look like?
+        </span>
+      </question>
+      <answer>
+        <p>
+          An example of a
+          <a href="config/schemacrawler.config.properties">
+            SchemaCrawler configuration file
+          </a>
+          .
+        </p>
       </answer>
     </faq>
   </part>
@@ -258,8 +282,8 @@ One of:
       <answer>
         <p>
           SchemaCrawler can be integrated with other programs, but this
-          requires some Java programming. From version 3.8,
-          SchemaCrawler comes pre-built with integration with
+          requires some Java programming. SchemaCrawler comes pre-built
+          with integration with
           <a href="http://jakarta.apache.org/velocity/">Velocity</a>
           . This allows you to specify your own templates for formatting
           the schema. Examples are provided in the _distrib directory.

@@ -71,6 +71,10 @@
       <zipfileset dir="schemacrawler-maven-plugin/target/classes"/>
     </jar>
 
+    <copy
+      file="schemacrawler/src/site/resources/config/schemacrawler.config.properties"
+      todir="_distrib"/>
+
 	</target>
 
   <target name="check_compiled">
