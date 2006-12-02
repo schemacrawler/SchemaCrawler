@@ -89,10 +89,6 @@ final class TableExRetriever
                           final NamedObjectList namedObjectList)
     throws SQLException
   {
-    LOGGER.entering(getClass().getName(), "retrievePrivileges", new Object[] {
-        parent, namedObjectList
-    });
-
     final ResultSet results;
 
     final boolean privilegesForTable = parent == null;
@@ -183,10 +179,6 @@ final class TableExRetriever
   void retrieveViewInformation(final NamedObjectList tables)
     throws SQLException
   {
-    LOGGER.entering(getClass().getName(),
-                    "retrieveViewInformation",
-                    new Object[] {});
-
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
 
@@ -253,10 +245,6 @@ final class TableExRetriever
   void retrieveTriggerInformation(final NamedObjectList tables)
     throws SQLException
   {
-    LOGGER.entering(getClass().getName(),
-                    "retrieveTriggerInformation",
-                    new Object[] {});
-
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
     final String triggerInformationSql = informationSchemaViews
@@ -339,10 +327,6 @@ final class TableExRetriever
   void retrieveCheckConstraintInformation(final NamedObjectList tables)
     throws SQLException
   {
-    LOGGER.entering(getClass().getName(),
-                    "retrieveCheckConstraintInformation",
-                    new Object[] {});
-
     final Map checkConstraintsMap = new HashMap();
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()

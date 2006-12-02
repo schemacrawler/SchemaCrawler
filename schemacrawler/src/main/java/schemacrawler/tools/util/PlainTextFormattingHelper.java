@@ -69,8 +69,8 @@ public class PlainTextFormattingHelper
                                 final String subName,
                                 final String type)
   {
-    final int SUB_NAME_WIDTH = 32;
-    final int TYPE_WIDTH = 28;
+    final int subNameWidth = 32;
+    final int typeWidth = 28;
 
     final StringBuffer row = new StringBuffer();
     row.append(getFieldSeparator());
@@ -79,9 +79,9 @@ public class PlainTextFormattingHelper
       row.append(format(ordinal, 2, true));
       row.append(getFieldSeparator());
     }
-    row.append(format(subName, SUB_NAME_WIDTH, true));
+    row.append(format(subName, subNameWidth, true));
     row.append(getFieldSeparator());
-    row.append(format(type, TYPE_WIDTH, true));
+    row.append(format(type, typeWidth, true));
     return row.toString();
   }
 
@@ -103,8 +103,8 @@ public class PlainTextFormattingHelper
    */
   public String createNameRow(final String name, final String description)
   {
-    final int NAME_WIDTH = 36;
-    final int DESCRIPTION_WIDTH = 34;
+    final int nameWidth = 36;
+    final int descriptionWidth = 34;
 
     boolean overlay = false;
     final int nameLength = name.length();
@@ -112,8 +112,8 @@ public class PlainTextFormattingHelper
     final int fieldSeparatorLength = getFieldSeparator().length();
     final int minimumLength = nameLength + descriptionLength
                               + fieldSeparatorLength;
-    final int totalLength = (NAME_WIDTH + DESCRIPTION_WIDTH + fieldSeparatorLength);
-    if (nameLength > NAME_WIDTH && descriptionLength < DESCRIPTION_WIDTH)
+    final int totalLength = nameWidth + descriptionWidth + fieldSeparatorLength;
+    if (nameLength > nameWidth && descriptionLength < descriptionWidth)
     {
       overlay = true;
     }
@@ -128,9 +128,9 @@ public class PlainTextFormattingHelper
     }
     else
     {
-      row.append(format(name, NAME_WIDTH, true));
+      row.append(format(name, nameWidth, true));
       row.append(getFieldSeparator());
-      row.append(format(description, DESCRIPTION_WIDTH, false));
+      row.append(format(description, descriptionWidth, false));
     }
     return row.toString();
   }
@@ -143,10 +143,10 @@ public class PlainTextFormattingHelper
    */
   public String createNameValueRow(final String name, final String value)
   {
-    final int NAME_WIDTH = 36;
+    final int nameWidth = 36;
 
     final StringBuffer row = new StringBuffer();
-    row.append(format(name, NAME_WIDTH, true));
+    row.append(format(name, nameWidth, true));
     row.append(getFieldSeparator());
     row.append(value);
     return row.toString();

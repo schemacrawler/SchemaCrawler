@@ -312,12 +312,6 @@ final class DatabaseInfoRetriever
   void retrieveColumnDataTypes(final MutableDatabaseInfo dbInfo)
     throws SQLException
   {
-    LOGGER.entering(getClass().getName(),
-                    "retrieveColumnDataTypes",
-                    new Object[] {
-                      dbInfo
-                    });
-
     final ResultSet results = getRetrieverConnection().getMetaData()
       .getTypeInfo();
     try
@@ -381,12 +375,6 @@ final class DatabaseInfoRetriever
   void retrieveUserDefinedColumnDataTypes(final MutableDatabaseInfo dbInfo)
     throws SQLException
   {
-    LOGGER.entering(getClass().getName(),
-                    "retrieveUserDefinedColumnDataTypes",
-                    new Object[] {
-                      dbInfo
-                    });
-
     final ResultSet results = getRetrieverConnection().getMetaData()
       .getUDTs(getRetrieverConnection().getCatalog(),
                getRetrieverConnection().getSchemaPattern(),

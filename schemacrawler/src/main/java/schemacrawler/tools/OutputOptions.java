@@ -42,7 +42,7 @@ public final class OutputOptions
 
   private String outputFormatValue;
 
-  private File outputFile = null;
+  private File outputFile;
 
   private boolean appendOutput;
 

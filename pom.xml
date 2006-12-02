@@ -109,15 +109,6 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>changes-maven-plugin</artifactId>
       </plugin>
-      <!--
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-        <configuration>
-          <configLocation>file://../checkstyle-coding.xml</configLocation>
-        </configuration>
-			</plugin>
-			-->
     </plugins>
   </reporting>
 </project>

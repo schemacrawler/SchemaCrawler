@@ -93,10 +93,6 @@ final class TableRetriever
                                  final InclusionRule tableInclusionRule)
     throws SQLException
   {
-    LOGGER.entering(getClass().getName(), "retrieveTables", new Object[] {
-        tableTypes, tableInclusionRule
-    });
-
     final NamedObjectList tables = new NamedObjectList(new AlphabeticalSortComparator());
     final String catalog = getRetrieverConnection().getCatalog();
     final ResultSet results = getRetrieverConnection().getMetaData()
@@ -167,10 +163,6 @@ final class TableRetriever
                        final NamedObjectList columnDataTypes)
     throws SQLException
   {
-    LOGGER.entering(getClass().getName(), "retrieveColumns", new Object[] {
-        table, columnInclusionRule
-    });
-
     final ResultSet results = getRetrieverConnection().getMetaData()
       .getColumns(getRetrieverConnection().getCatalog(),
                   table.getSchemaName(),
@@ -186,7 +178,7 @@ final class TableRetriever
         final String defaultValue = results.getString("COLUMN_DEF");
         //        
         final String columnName = results.getString(COLUMN_NAME);
-        
+
         final MutableColumn column = new MutableColumn(columnName, table);
         final String columnFullName = column.getFullName();
         if (columnInclusionRule.include(columnFullName))
