@@ -51,8 +51,8 @@
     </dependency>
   </dependencies>
   <scm>
-    <connection>scm:cvs:pserver:anonymous@cvs.sourceforge.net:/cvsroot/schemacrawler:schemacrawler</connection>
-    <url>http://cvs.sourceforge.net/viewcvs.py/schemacrawler/schemacrawler/</url>
+    <connection>scm:svn:https://svn.sourceforge.net/svnroot/schemacrawler</connection>
+    <url>http://schemacrawler.svn.sourceforge.net/viewvc/schemacrawler/</url>
   </scm>
   <modules>
     <module>dbconnector</module>
@@ -101,19 +101,10 @@
           <link>http://java.sun.com/j2se/1.4.2/docs/api</link>
         </configuration>
       </plugin>
-      <!--
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
-        <configuration>
-          <rulesets>
-            <ruleset>pmd-ruleset.xml</ruleset>
-          </rulesets>
-          <format>xml</format>
-          <linkXref>true</linkXref>
-        </configuration>
       </plugin>
-      -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>changes-maven-plugin</artifactId>
@@ -122,9 +113,9 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
-				<configuration>
-					<propertiesFile>../checkstyle-coding.xml</propertiesFile>
-				</configuration>
+        <configuration>
+          <configLocation>file://../checkstyle-coding.xml</configLocation>
+        </configuration>
 			</plugin>
 			-->
     </plugins>
