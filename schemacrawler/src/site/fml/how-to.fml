@@ -206,7 +206,7 @@ schemacrawler.format.hide_constraint_names=false
             Java API Makes Database Metadata as Easily Accessible as
             POJOs
           </a>
-          for an introduction to the SchemaCrawler API. Also, you can
+          for an introduction to the SchemaCrawler API. You can also
           browse the
           <a href="apidocs/index.html">javadocs</a>
           .

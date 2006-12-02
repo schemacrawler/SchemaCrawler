@@ -32,7 +32,7 @@
           section.
         </p>
       </subsection>
-      <subsection name="Whitepapers">
+      <subsection name="Whitepapers and Documentation">
         <p>To read more about SchemaCrawler, you can read:</p>
         <ul>
           <li>
@@ -41,6 +41,11 @@
               POJOs
             </a>
             for an introduction to the SchemaCrawler API.
+          </li>
+          <li>
+            The SchemaCrawler API
+            <a href="apidocs/index.html">javadocs</a>
+            .
           </li>
         </ul>
       </subsection>

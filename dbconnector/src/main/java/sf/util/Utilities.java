@@ -438,8 +438,8 @@ public final class Utilities
       }
       else
       {
-        LOGGER.log(Level.WARNING, "Cannot find properties file "
-                                  + propertiesFileName);
+        LOGGER.log(Level.CONFIG, "Cannot find properties file "
+                                 + propertiesFileName);
       }
     }
     catch (final IOException e)

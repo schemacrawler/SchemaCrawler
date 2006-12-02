@@ -61,12 +61,12 @@
           SchemaCrawler can produce brief, basic, or verbose details of
           your schema. The brief schema option gives you just table,
           view, and procedure names. The basic schema option gives you
-          the column names and data types. The verbose schema option
-          will give you details of indices, primary and foreign keys.
-          The maximum schema option will give you details of data types,
-          privileges, view and procedure definitions, triggers, and
-          check constraints. Each successive option takes more time to
-          execute.
+          the column names and primary keys. The verbose schema option
+          will give you details of data types, indices, primary and
+          foreign keys, view and procedure definitions. The maximum
+          schema option will give you details of privileges, triggers,
+          and check constraints. Each successive option takes more time
+          to execute.
         </p>
         <p>
           SchemaCrawler can also manipulate your data. You can get
@@ -113,13 +113,18 @@ One of:
 -command=<command>
 	Required, where <command> is a comma-separated list of:
     brief_schema
-        If you only want to see table and view names
+        If you only want to see table, view and procedure names
     basic_schema
-        For more details of tables and views
+        For more details of tables, views and procedures, 
+        including columns and primary keys
     verbose_schema
-        For most details of tables and views, including keys
+        For the most detail of the schema, including data 
+        types, indexes, foreign keys, and view and 
+        procedure definitions
     maximum_schema
-        For maximum possible detail of the schema
+        For maximum possible detail of the schema, including
+        privileges, and details of privileges, triggers,
+        and check constraints
     count
         To count rows in the tables
     truncate
@@ -262,7 +267,10 @@ One of:
             Java API Makes Database Metadata as Easily Accessible as
             POJOs
           </a>
-          for an introduction to the SchemaCrawler API.
+          for an introduction to the SchemaCrawler API. You can also
+          browse the
+          <a href="apidocs/index.html">javadocs</a>
+          .
         </p>
         <p>
           <i>
