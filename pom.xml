@@ -109,6 +109,13 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>changes-maven-plugin</artifactId>
       </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>findbugs-maven-plugin</artifactId>
+        <configuration>
+          <threshold>Low</threshold>
+        </configuration>
+      </plugin>
     </plugins>
   </reporting>
 </project>
