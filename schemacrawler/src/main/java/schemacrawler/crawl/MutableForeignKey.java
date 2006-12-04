@@ -146,6 +146,7 @@ class MutableForeignKey
    * Note: Since foreign keys are not always explicitly named in
    * databases, the sorting routine orders the foreign keys by the names
    * of the columns in the foreign keys.
+   * </p>
    * 
    * @see AbstractNamedObject#compareTo(java.lang.Object)
    */
