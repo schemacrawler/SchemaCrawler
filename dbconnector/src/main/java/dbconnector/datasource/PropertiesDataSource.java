@@ -340,7 +340,6 @@ public final class PropertiesDataSource
   }
 
   /**
-   * <p>
    * Attempts to establish a connection with the data source that this
    * <code>DataSource</code> object represents.
    * 
@@ -360,7 +359,6 @@ public final class PropertiesDataSource
   }
 
   /**
-   * <p>
    * Attempts to establish a connection with the data source that this
    * <code>DataSource</code> object represents.
    * 
@@ -408,7 +406,6 @@ public final class PropertiesDataSource
   }
 
   /**
-   * <p>
    * Sets the maximum time in seconds that this data source will wait
    * while attempting to connect to a database. A value of zero
    * specifies that the timeout is the default system timeout if there
@@ -426,10 +423,7 @@ public final class PropertiesDataSource
   }
 
   /**
-   * <p>
    * Retrieves the log writer for this <code>DataSource</code> object.
-   * <p/>
-   * <p>
    * The log writer is a character output stream to which all logging
    * and tracing messages for this data source will be printed. This
    * includes messages printed by the methods of this object, messages
@@ -451,16 +445,14 @@ public final class PropertiesDataSource
   }
 
   /**
-   * <p>
    * Sets the log writer for this <code>DataSource</code> object to
-   * the given <code>java.io.PrintWriter</code> object. <p/>
-   * <p>
-   * The log writer is a character output stream to which all logging
-   * and tracing messages for this data source will be printed. This
-   * includes messages printed by the methods of this object, messages
-   * printed by methods of other objects manufactured by this object,
-   * and so on. Messages printed to a data source- specific log writer
-   * are not printed to the log writer associated with the
+   * the given <code>java.io.PrintWriter</code> object. The log writer
+   * is a character output stream to which all logging and tracing
+   * messages for this data source will be printed. This includes
+   * messages printed by the methods of this object, messages printed by
+   * methods of other objects manufactured by this object, and so on.
+   * Messages printed to a data source- specific log writer are not
+   * printed to the log writer associated with the
    * <code>java.sql.Drivermanager</code> class. When a
    * <code>DataSource</code> object is created the log writer is
    * initially null; in other words, the default is for logging to be

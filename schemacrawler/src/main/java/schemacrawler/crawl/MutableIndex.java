@@ -167,7 +167,7 @@ class MutableIndex
    * Note: Since indexes are not always explicitly named in databases,
    * the sorting routine orders the indexes by the names of the columns
    * in the index.
-   * <p>
+   * </p>
    * 
    * @see AbstractNamedObject#compareTo(java.lang.Object)
    */
