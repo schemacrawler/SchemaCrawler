@@ -34,7 +34,7 @@ public final class Version
 {
 
   private static final String PRODUCTNAME = "dbconnector";
-  private static final String VERSION = "4.0";
+  private static final String VERSION = "4.1";
 
   private Version()
   {
