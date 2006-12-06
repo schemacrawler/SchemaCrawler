@@ -176,12 +176,18 @@ final class TableRetriever
         // don't handle it properly otherwise.
         // http://issues.apache.org/jira/browse/DDLUTILS-29?page=all
         final String defaultValue = results.getString("COLUMN_DEF");
-        //        
+        //
+        final String tableName = results.getString("TABLE_NAME");
         final String columnName = results.getString(COLUMN_NAME);
+        
 
         final MutableColumn column = new MutableColumn(columnName, table);
         final String columnFullName = column.getFullName();
-        if (columnInclusionRule.include(columnFullName))
+        // Note: If the table name contains an underscore character, this is a
+        // wildcard character. We need to do another check to see if the table
+        // name matches.
+        if (columnInclusionRule.include(columnFullName)
+            && table.getName().equals(tableName))
         {
           LOGGER.log(Level.FINEST, "Retrieving column: " + columnName);
           final int oridinalPosition = results.getInt(ORDINAL_POSITION);
