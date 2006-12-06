@@ -139,20 +139,18 @@ final class ProcedureRetriever
     throws SQLException
   {
 
-    final String procedureName = procedure.getName();
-    final String schema = procedure.getSchemaName();
-
     final ResultSet results;
 
     results = getRetrieverConnection().getMetaData()
       .getProcedureColumns(getRetrieverConnection().getCatalog(),
-                           schema,
-                           procedureName,
+                           procedure.getSchemaName(),
+                           procedure.getName(),
                            null);
     int ordinalNumber = 0;
     while (results.next())
     {
 
+      final String procedureName = results.getString("PROCEDURE_NAME");
       final String columnName = results.getString(COLUMN_NAME);
       LOGGER.log(Level.FINEST, "Retrieving procedure column: " + columnName);
       final short columnType = results.getShort("COLUMN_TYPE");
@@ -162,8 +160,11 @@ final class ProcedureRetriever
       final int precision = results.getInt("PRECISION");
       final boolean isNullable = results.getShort(NULLABLE) == DatabaseMetaData.procedureNullable;
       final String remarks = results.getString(REMARKS);
-
-      if (columnInclusionRule.include(columnName))
+      // Note: If the procedure name contains an underscore character, this is a
+      // wildcard character. We need to do another check to see if the procedure
+      // name matches.
+      if (columnInclusionRule.include(columnName)
+          && procedure.getName().equals(procedureName))
       {
         final MutableProcedureColumn column = new MutableProcedureColumn(columnName,
                                                                          procedure);
