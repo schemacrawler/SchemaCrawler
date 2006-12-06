@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="integrations" default="build" basedir=".">
+
+  <property name="SchemaCrawlerHome" value=".." />
+	<property name="dbconnector.location" value="${SchemaCrawlerHome}/dbconnector" />
+	<property name="schemacrawler.location" value="${SchemaCrawlerHome}/schemacrawler" />
+
+	<path id="project.classpath">
+		<path refid="mainproject.classpath" />
+		<path refid="dbconnector.classpath" />
+		<path refid="schemacrawler.classpath" />
+	</path>
+
+	<path id="mainproject.classpath">
+		<pathelement location="target/classes" />
+	</path>
+
+	<path id="dbconnector.classpath">
+		<pathelement location="${dbconnector.location}/target/classes" />
+	</path>
+
+	<path id="schemacrawler.classpath">
+		<pathelement location="${schemacrawler.location}/target/classes" />
+	</path>
+
+	<target name="init">
+		<mkdir dir="target/classes" />
+	</target>
+
+	<target name="clean">
+		<delete dir="target" />
+	</target>
+
+	<target name="build" depends="init">
+
+		<ant antfile="${dbconnector.location}/build.xml" inheritAll="false" />
+		<ant antfile="${schemacrawler.location}/build.xml" inheritAll="false" />
+
+		<echo message="${ant.project.name}: ${ant.file}" />
+
+		<javac destdir="target/classes">
+			<src path="src/main/java" />
+			<classpath refid="project.classpath" />
+		</javac>
+
+    <copy todir="target/classes">
+       <fileset dir="src/main/resources"/>
+    </copy>
+
+	</target>
+
+	<target name="package"/>
+
+</project>
