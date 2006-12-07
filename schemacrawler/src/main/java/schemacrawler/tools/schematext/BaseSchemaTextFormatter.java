@@ -203,9 +203,9 @@ public abstract class BaseSchemaTextFormatter
       {
         final ProcedureColumn column = columns[i];
         String columnTypeName = column.getType().getDatabaseSpecificTypeName();
-        if (options.isShowJdbcColumnTypeNames())
+        if (options.isShowStandardColumnTypeNames())
         {
-          columnTypeName = column.getType().toString();
+          columnTypeName = column.getType().getTypeName();
         }
         String columnType = columnTypeName + column.getWidth();
         if (column.getProcedureColumnType() != null)
@@ -460,9 +460,9 @@ public abstract class BaseSchemaTextFormatter
       final Column column = columns[i];
       final String columnName = column.getName();
       String columnTypeName = column.getType().getDatabaseSpecificTypeName();
-      if (options.isShowJdbcColumnTypeNames())
+      if (options.isShowStandardColumnTypeNames())
       {
-        columnTypeName = column.getType().toString();
+        columnTypeName = column.getType().getTypeName();
       }
       String columnType = columnTypeName + column.getWidth();
       if (!column.isNullable())

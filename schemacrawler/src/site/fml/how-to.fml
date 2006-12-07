@@ -95,7 +95,7 @@
         <p>
           Change the configuration for the SchemaCrawler
           <code>
-            schemacrawler.format.show_jdbc_column_type_names=true
+            schemacrawler.format.show_standard_column_type_names=true
           </code>
           in the
           <code>schemacrawler.config.properties</code>
