@@ -42,9 +42,11 @@ public final class SchemaTextOptions
   private static final String HIDE_INDEX_NAMES = "schemacrawler.format.hide_index_names";
   private static final String HIDE_CONSTRAINT_NAMES = "schemacrawler.format.hide_constraint_names";
   private static final String SHOW_ORDINAL_NUMBERS = "schemacrawler.format.show_ordinal_numbers";
+  private static final String SHOW_STANDARD_COLUMN_TYPE_NAMES = "schemacrawler.format.show_standard_column_type_names";
+  /** Deprecated */
   private static final String SHOW_JDBC_COLUMN_TYPE_NAMES = "schemacrawler.format.show_jdbc_column_type_names";
 
-  private final boolean showJdbcColumnTypeNames;
+  private final boolean showStandardColumnTypeNames;
   private final boolean showOrdinalNumbers;
 
   private final boolean hidePrimaryKeyNames;
@@ -81,7 +83,7 @@ public final class SchemaTextOptions
 
     if (config == null)
     {
-      showJdbcColumnTypeNames = false;
+      showStandardColumnTypeNames = false;
       showOrdinalNumbers = false;
 
       hideForeignKeyNames = false;
@@ -91,8 +93,10 @@ public final class SchemaTextOptions
     }
     else
     {
-      showJdbcColumnTypeNames = getBooleanProperty(SHOW_JDBC_COLUMN_TYPE_NAMES,
-                                                   config);
+      showStandardColumnTypeNames = getBooleanProperty(SHOW_JDBC_COLUMN_TYPE_NAMES,
+                                                   config)
+                                || getBooleanProperty(SHOW_STANDARD_COLUMN_TYPE_NAMES,
+                                                      config);
       showOrdinalNumbers = getBooleanProperty(SHOW_ORDINAL_NUMBERS, config);
 
       hideForeignKeyNames = getBooleanProperty(HIDE_FOREIGN_KEY_NAMES, config);
@@ -132,9 +136,9 @@ public final class SchemaTextOptions
     return hidePrimaryKeyNames;
   }
 
-  boolean isShowJdbcColumnTypeNames()
+  boolean isShowStandardColumnTypeNames()
   {
-    return showJdbcColumnTypeNames;
+    return showStandardColumnTypeNames;
   }
 
   boolean isShowOrdinalNumbers()
@@ -152,7 +156,7 @@ public final class SchemaTextOptions
     final StringBuffer buffer = new StringBuffer();
     buffer.append("TextFormatOptions[");
     buffer.append("hideIndexNames=").append(hideConstraintNames);
-    buffer.append(", showJdbcColumnTypeNames=").append(showJdbcColumnTypeNames);
+    buffer.append(", showJdbcColumnTypeNames=").append(showStandardColumnTypeNames);
     buffer.append(", showOrdinalNumbers=").append(showOrdinalNumbers);
     buffer.append(", schemaTextDetailType=").append(schemaTextDetailType);
     buffer.append(", outputOptions=").append(getOutputOptions());
