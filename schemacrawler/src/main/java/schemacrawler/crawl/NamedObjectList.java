@@ -36,7 +36,7 @@ import schemacrawler.schema.NamedObject;
 import schemacrawler.util.SerializableComparator;
 
 /**
- * Ordered list of named objects, that can be searched associately.
+ * Ordered list of named objects, that can be searched associatively.
  * 
  * @author sfatehi
  */
@@ -211,7 +211,7 @@ public final class NamedObjectList
   }
 
   /**
-   * Sets the comparator.
+   * Sets the comparator, and re-sorts the list.
    * 
    * @param comparator
    *        Comparator
@@ -219,6 +219,7 @@ public final class NamedObjectList
   void setComparator(final SerializableComparator comparator)
   {
     this.comparator = comparator;
+    Collections.sort(sortedList, comparator);
   }
 
   /**
