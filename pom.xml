@@ -127,6 +127,7 @@
           <threshold>Low</threshold>
         </configuration>
       </plugin>
+      <!--
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jxr-plugin</artifactId>
@@ -138,6 +139,7 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>cobertura-maven-plugin</artifactId>
       </plugin>
+      -->
     </plugins>
   </reporting>
 </project>
