@@ -439,9 +439,7 @@ final class MutableColumnDataType
   }
 
   /**
-   * Get the base type.
-   * 
-   * @return Get the base type.
+   * {@inheritDoc}
    */
   public ColumnDataType getBaseType()
   {
@@ -454,9 +452,7 @@ final class MutableColumnDataType
   }
 
   /**
-   * Get the Java class for the type.
-   * 
-   * @return The Java class for the type
+   * {@inheritDoc}
    */
   public String getTypeClassName()
   {
