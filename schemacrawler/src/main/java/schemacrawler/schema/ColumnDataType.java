@@ -147,7 +147,21 @@ public interface ColumnDataType
    * @return If the type is a date type
    */
   boolean isDateType();
+  
+  /**
+   * The base type of the data type. 
+   * 
+   * @return Base type
+   */
+  ColumnDataType getBaseType(); 
 
+  /**
+   * Get the Java class for the type.
+   * 
+   * @return The Java class for the type
+   */
+  String getTypeClassName();
+  
   /**
    * Whether the data type has a fixed precision scale.
    * 
