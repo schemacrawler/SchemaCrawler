@@ -42,39 +42,72 @@ import sf.util.Utilities;
  * A DataSource that creates connections by reading a proerties file.
  * 
  * @author Sualeh Fatehi sualeh@hotmail.com
- * @version 1.0
  */
 public final class PropertiesDataSource
   implements DataSource
 {
 
   private static final String DRIVER = "driver";
+
   private static final String URL = "url";
+
   private static final String USER = "user";
   private static final String PASSWORD = "password";
-
   private static final String DEFAULTCONNECTION = "defaultconnection";
-
   private static final Logger LOGGER = Logger
     .getLogger(PropertiesDataSource.class.getName());
 
+  static
+  {
+    Utilities.checkJavaVersion(1.4);
+  }
+
   private String url;
+
   private Properties connectionParams;
   private int loginTimeout;
   private Driver jdbcDriver;
-
   private String databaseProductName;
+
   private String databaseProductVersion;
   private String driverName;
   private String driverVersion;
   private String catalogTerm;
   private String catalog;
-
   private PrintWriter logWriter;
 
-  static
+  /**
+   * Creates a PropertiesDataSource from a set of connection properties,
+   * using the default connection.
+   * 
+   * @param properties
+   *        Connection properties.
+   * @throws PropertiesDataSourceException
+   *         On any exception in creating the PropertiesDataSource.
+   */
+  public PropertiesDataSource(final Properties properties)
+    throws PropertiesDataSourceException
   {
-    Utilities.checkJavaVersion(1.4);
+    constructPropertiesDataSource(properties, null);
+  }
+
+  /**
+   * Creates a PropertiesDataSource from a set of connection properties,
+   * using the named connection. If the named connection is null or
+   * empty, use the default connection.
+   * 
+   * @param properties
+   *        Connection properties.
+   * @param connectionName
+   *        The name of the connection to use.
+   * @throws PropertiesDataSourceException
+   *         On any exception in creating the PropertiesDataSource.
+   */
+  public PropertiesDataSource(final Properties properties,
+                              final String connectionName)
+    throws PropertiesDataSourceException
+  {
+    constructPropertiesDataSource(properties, connectionName);
   }
 
   /**
@@ -120,38 +153,208 @@ public final class PropertiesDataSource
   }
 
   /**
-   * Creates a PropertiesDataSource from a set of connection properties,
-   * using the default connection.
+   * Get the catalog for this database connection.
    * 
-   * @param properties
-   *        Connection properties.
-   * @throws PropertiesDataSourceException
-   *         On any exception in creating the PropertiesDataSource.
+   * @return Catalog name
    */
-  public PropertiesDataSource(final Properties properties)
-    throws PropertiesDataSourceException
+  public String getCatalog()
   {
-    constructPropertiesDataSource(properties, null);
+    return catalog;
   }
 
   /**
-   * Creates a PropertiesDataSource from a set of connection properties,
-   * using the named connection. If the named connection is null or
-   * empty, use the default connection.
+   * Attempts to establish a connection with the data source that this
+   * <code>DataSource</code> object represents.
    * 
-   * @param properties
-   *        Connection properties.
-   * @param connectionName
-   *        The name of the connection to use.
-   * @throws PropertiesDataSourceException
-   *         On any exception in creating the PropertiesDataSource.
+   * @return a connection to the data source
+   * @throws SQLException
+   *         if a database access error occurs
    */
-  public PropertiesDataSource(final Properties properties,
-                              final String connectionName)
-    throws PropertiesDataSourceException
+  public Connection getConnection()
+    throws SQLException
   {
-    constructPropertiesDataSource(properties, connectionName);
+
+    final String username = connectionParams.getProperty(USER);
+    final String password = connectionParams.getProperty(PASSWORD);
+
+    return getConnection(username, password);
+
   }
+
+  /**
+   * Attempts to establish a connection with the data source that this
+   * <code>DataSource</code> object represents.
+   * 
+   * @param username
+   *        the database user on whose behalf the connection is being
+   *        made
+   * @param password
+   *        the user's password
+   * @return a connection to the data source
+   * @throws SQLException
+   *         if a database access error occurs
+   */
+  public Connection getConnection(final String username, final String password)
+    throws SQLException
+  {
+
+    if (username == null || password == null)
+    {
+      throw new SQLException("Null username or password");
+    }
+
+    final Properties params = new Properties();
+
+    params.setProperty(USER, username);
+    params.setProperty(PASSWORD, password);
+
+    return jdbcDriver.connect(url, params);
+
+  }
+
+  /**
+   * Gets the name of the JDBC driver class.
+   * 
+   * @return Name of the JDBC driver class.
+   */
+  public String getJdbcDriverClass()
+  {
+    return jdbcDriver.getClass().getName();
+  }
+
+  /**
+   * Gets the maximum time in seconds that this data source can wait
+   * while attempting to connect to a database. A value of zero means
+   * that the timeout is the default system timeout if there is one;
+   * otherwise, it means that there is no timeout. When a
+   * <code>DataSource</code> object is created, the login timeout is
+   * initially zero.
+   * 
+   * @return the data source login time limit
+   * @see #setLoginTimeout
+   */
+  public int getLoginTimeout()
+  {
+    return loginTimeout;
+  }
+
+  /**
+   * Retrieves the log writer for this <code>DataSource</code> object.
+   * The log writer is a character output stream to which all logging
+   * and tracing messages for this data source will be printed. This
+   * includes messages printed by the methods of this object, messages
+   * printed by methods of other objects manufactured by this object,
+   * and so on. Messages printed to a data source specific log writer
+   * are not printed to the log writer associated with the
+   * <code>java.sql.Drivermanager</code> class. When a
+   * <code>DataSource</code> object is created, the log writer is
+   * initially null; in other words, the default is for logging to be
+   * disabled.
+   * 
+   * @return the log writer for this data source or null if logging is
+   *         disabled
+   * @see #setLogWriter
+   */
+  public PrintWriter getLogWriter()
+  {
+    return logWriter;
+  }
+
+  /**
+   * Gets the properties that were used to create this data source.
+   * 
+   * @return Source properties
+   */
+  public Properties getSourceProperties()
+  {
+    return new Properties(connectionParams);
+  }
+
+  /**
+   * Gets the database connection URL.
+   * 
+   * @return Database connection URL
+   */
+  public String getUrl()
+  {
+    return url;
+  }
+
+  /**
+   * Get the username for the database connection.
+   * 
+   * @return Username for the database connection
+   */
+  public String getUser()
+  {
+    return connectionParams.getProperty(USER);
+  }
+
+  /**
+   * Sets the maximum time in seconds that this data source will wait
+   * while attempting to connect to a database. A value of zero
+   * specifies that the timeout is the default system timeout if there
+   * is one; otherwise, it specifies that there is no timeout. When a
+   * <code>DataSource</code> object is created, the login timeout is
+   * initially zero.
+   * 
+   * @param seconds
+   *        the data source login time limit
+   * @see #getLoginTimeout
+   */
+  public void setLoginTimeout(final int seconds)
+  {
+    loginTimeout = seconds;
+  }
+
+  /**
+   * Sets the log writer for this <code>DataSource</code> object to
+   * the given <code>java.io.PrintWriter</code> object. The log writer
+   * is a character output stream to which all logging and tracing
+   * messages for this data source will be printed. This includes
+   * messages printed by the methods of this object, messages printed by
+   * methods of other objects manufactured by this object, and so on.
+   * Messages printed to a data source- specific log writer are not
+   * printed to the log writer associated with the
+   * <code>java.sql.Drivermanager</code> class. When a
+   * <code>DataSource</code> object is created the log writer is
+   * initially null; in other words, the default is for logging to be
+   * disabled.
+   * 
+   * @param out
+   *        the new log writer; to disable logging, set to null
+   * @see #getLogWriter
+   */
+  public void setLogWriter(final PrintWriter out)
+  {
+    if (out != null)
+    {
+      logWriter = out;
+      // DriverManager.setLogWriter(out);
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Object#toString()
+   */
+  public String toString()
+  {
+
+    final StringBuffer info = new StringBuffer();
+
+    info.append("-- database product: ").append(databaseProductName)
+      .append(" ").append(databaseProductVersion).append(Utilities.NEWLINE)
+      .append("-- driver: ").append(jdbcDriver.getClass().getName())
+      .append(" - ").append(driverName).append(" ").append(driverVersion)
+      .append(Utilities.NEWLINE).append("-- connection: ").append(url)
+      .append(Utilities.NEWLINE).append("-- " + catalogTerm + ": ")
+      .append(catalog);
+
+    return info.toString();
+
+  } // end databaseInfo
 
   private void constructPropertiesDataSource(final Properties properties,
                                              final String connectionName)
@@ -216,6 +419,28 @@ public final class PropertiesDataSource
     testConnection();
   }
 
+  private String getConnectionParamsInfo()
+  {
+
+    final StringBuffer buffer = new StringBuffer();
+    final Enumeration connectionParamsKeys = connectionParams.propertyNames();
+
+    buffer.append("Connection parameters:");
+    while (connectionParamsKeys.hasMoreElements())
+    {
+      final String key = (String) connectionParamsKeys.nextElement();
+      final String value = connectionParams.getProperty(key);
+      if (!key.equalsIgnoreCase(PASSWORD))
+      {
+        buffer.append(Utilities.NEWLINE).append("-- ").append(key).append(": ")
+          .append(value);
+      }
+    }
+
+    return buffer.toString();
+
+  }
+
   private void testConnection()
     throws PropertiesDataSourceException
   {
@@ -276,231 +501,5 @@ public final class PropertiesDataSource
     LOGGER.log(Level.INFO, Utilities.NEWLINE + toString());
 
   }
-
-  private String getConnectionParamsInfo()
-  {
-
-    final StringBuffer buffer = new StringBuffer();
-    final Enumeration connectionParamsKeys = connectionParams.propertyNames();
-
-    buffer.append("Connection parameters:");
-    while (connectionParamsKeys.hasMoreElements())
-    {
-      final String key = (String) connectionParamsKeys.nextElement();
-      final String value = connectionParams.getProperty(key);
-      if (!key.equalsIgnoreCase(PASSWORD))
-      {
-        buffer.append(Utilities.NEWLINE).append("-- ").append(key).append(": ")
-          .append(value);
-      }
-    }
-
-    return buffer.toString();
-
-  }
-
-  /**
-   * Gets the database connection URL.
-   * 
-   * @return Database connection URL
-   */
-  public String getUrl()
-  {
-    return url;
-  }
-
-  /**
-   * Gets the name of the JDBC driver class.
-   * 
-   * @return Name of the JDBC driver class.
-   */
-  public String getJdbcDriverClass()
-  {
-    return jdbcDriver.getClass().getName();
-  }
-
-  /**
-   * Get the username for the database connection.
-   * 
-   * @return Username for the database connection
-   */
-  public String getUser()
-  {
-    return connectionParams.getProperty(USER);
-  }
-
-  /**
-   * Get the catalog for this database connection.
-   * 
-   * @return Catalog name
-   */
-  public String getCatalog()
-  {
-    return catalog;
-  }
-
-  /**
-   * Attempts to establish a connection with the data source that this
-   * <code>DataSource</code> object represents.
-   * 
-   * @return a connection to the data source
-   * @throws SQLException
-   *         if a database access error occurs
-   */
-  public Connection getConnection()
-    throws SQLException
-  {
-
-    final String username = connectionParams.getProperty(USER);
-    final String password = connectionParams.getProperty(PASSWORD);
-
-    return getConnection(username, password);
-
-  }
-
-  /**
-   * Attempts to establish a connection with the data source that this
-   * <code>DataSource</code> object represents.
-   * 
-   * @param username
-   *        the database user on whose behalf the connection is being
-   *        made
-   * @param password
-   *        the user's password
-   * @return a connection to the data source
-   * @throws SQLException
-   *         if a database access error occurs
-   */
-  public Connection getConnection(final String username, final String password)
-    throws SQLException
-  {
-
-    if (username == null || password == null)
-    {
-      throw new SQLException("Null username or password");
-    }
-
-    final Properties params = new Properties();
-
-    params.setProperty(USER, username);
-    params.setProperty(PASSWORD, password);
-
-    return jdbcDriver.connect(url, params);
-
-  }
-
-  /**
-   * Gets the maximum time in seconds that this data source can wait
-   * while attempting to connect to a database. A value of zero means
-   * that the timeout is the default system timeout if there is one;
-   * otherwise, it means that there is no timeout. When a
-   * <code>DataSource</code> object is created, the login timeout is
-   * initially zero.
-   * 
-   * @return the data source login time limit
-   * @see #setLoginTimeout
-   */
-  public int getLoginTimeout()
-  {
-    return loginTimeout;
-  }
-
-  /**
-   * Sets the maximum time in seconds that this data source will wait
-   * while attempting to connect to a database. A value of zero
-   * specifies that the timeout is the default system timeout if there
-   * is one; otherwise, it specifies that there is no timeout. When a
-   * <code>DataSource</code> object is created, the login timeout is
-   * initially zero.
-   * 
-   * @param seconds
-   *        the data source login time limit
-   * @see #getLoginTimeout
-   */
-  public void setLoginTimeout(final int seconds)
-  {
-    loginTimeout = seconds;
-  }
-
-  /**
-   * Retrieves the log writer for this <code>DataSource</code> object.
-   * The log writer is a character output stream to which all logging
-   * and tracing messages for this data source will be printed. This
-   * includes messages printed by the methods of this object, messages
-   * printed by methods of other objects manufactured by this object,
-   * and so on. Messages printed to a data source specific log writer
-   * are not printed to the log writer associated with the
-   * <code>java.sql.Drivermanager</code> class. When a
-   * <code>DataSource</code> object is created, the log writer is
-   * initially null; in other words, the default is for logging to be
-   * disabled.
-   * 
-   * @return the log writer for this data source or null if logging is
-   *         disabled
-   * @see #setLogWriter
-   */
-  public PrintWriter getLogWriter()
-  {
-    return logWriter;
-  }
-
-  /**
-   * Sets the log writer for this <code>DataSource</code> object to
-   * the given <code>java.io.PrintWriter</code> object. The log writer
-   * is a character output stream to which all logging and tracing
-   * messages for this data source will be printed. This includes
-   * messages printed by the methods of this object, messages printed by
-   * methods of other objects manufactured by this object, and so on.
-   * Messages printed to a data source- specific log writer are not
-   * printed to the log writer associated with the
-   * <code>java.sql.Drivermanager</code> class. When a
-   * <code>DataSource</code> object is created the log writer is
-   * initially null; in other words, the default is for logging to be
-   * disabled.
-   * 
-   * @param out
-   *        the new log writer; to disable logging, set to null
-   * @see #getLogWriter
-   */
-  public void setLogWriter(final PrintWriter out)
-  {
-    if (out != null)
-    {
-      logWriter = out;
-      // DriverManager.setLogWriter(out);
-    }
-  }
-
-  /**
-   * Gets the properties that were used to create this data source.
-   * 
-   * @return Source properties
-   */
-  public Properties getSourceProperties()
-  {
-    return new Properties(connectionParams);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  public String toString()
-  {
-
-    final StringBuffer info = new StringBuffer();
-
-    info.append("-- database product: ").append(databaseProductName)
-      .append(" ").append(databaseProductVersion).append(Utilities.NEWLINE)
-      .append("-- driver: ").append(jdbcDriver.getClass().getName())
-      .append(" - ").append(driverName).append(" ").append(driverVersion)
-      .append(Utilities.NEWLINE).append("-- connection: ").append(url)
-      .append(Utilities.NEWLINE).append("-- " + catalogTerm + ": ")
-      .append(catalog);
-
-    return info.toString();
-
-  } // end databaseInfo
 
 }

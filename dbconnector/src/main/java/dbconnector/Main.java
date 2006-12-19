@@ -41,7 +41,6 @@ import dbconnector.datasource.PropertiesDataSourceException;
  * and tests the database connections.
  * 
  * @author Sualeh Fatehi sualeh@hotmail.com
- * @version 1.0
  */
 public final class Main
 {
