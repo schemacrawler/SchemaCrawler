@@ -156,8 +156,13 @@ public abstract class BaseSchemaTextFormatter
       for (final Iterator iter = propertySet.iterator(); iter.hasNext();)
       {
         final Map.Entry property = (Map.Entry) iter.next();
-        out.println(formattingHelper.createNameValueRow((String) property
-          .getKey(), property.getValue().toString()));
+        final String key = (String) property.getKey();
+        final Object value = property.getValue();
+        if (value != null)
+        {
+          out.println(formattingHelper
+            .createNameValueRow(key, value.toString()));
+        }
       }
       handleDatabasePropertiesEnd();
     }
