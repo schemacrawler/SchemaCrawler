@@ -157,12 +157,12 @@ public abstract class BaseSchemaTextFormatter
       {
         final Map.Entry property = (Map.Entry) iter.next();
         final String key = (String) property.getKey();
-        final Object value = property.getValue();
-        if (value != null)
+        Object value = property.getValue();
+        if (value == null)
         {
-          out.println(formattingHelper
-            .createNameValueRow(key, value.toString()));
+          value = "";
         }
+        out.println(formattingHelper.createNameValueRow(key, value.toString()));
       }
       handleDatabasePropertiesEnd();
     }
