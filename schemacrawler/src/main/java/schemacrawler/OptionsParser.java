@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
+import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.operation.Operation;
@@ -62,8 +63,10 @@ public final class OptionsParser
    * @param args
    *        Command line arguments
    * @return Command line options
+   * @throws SchemaCrawlerException
    */
   public static Options[] parseCommandLine(final String[] args)
+    throws SchemaCrawlerException
   {
 
     final CommandLineParser parser = new CommandLineParser();
@@ -110,8 +113,12 @@ public final class OptionsParser
 
     final CommandLineParser.BaseOption commandOption = parser
       .getOption(OPTION_COMMAND);
-    final String[] commandStrings = ((String) commandOption.getValue())
-      .split(",");
+    String commandOptionValue = getStringOption(commandOption, "");
+    if (Utilities.isBlank(commandOptionValue))
+    {
+      throw new SchemaCrawlerException("No SchemaCrawler command specified");
+    }
+    final String[] commandStrings = commandOptionValue.split(",");
     final Options[] optionCommands = createOptionsPerCommand(commandStrings,
                                                              config,
                                                              masterOutputOptions);
