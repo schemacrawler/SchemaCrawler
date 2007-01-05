@@ -2,7 +2,7 @@
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
- * Copyright (c) 2000-2006, Sualeh Fatehi.
+ * Copyright (c) 2000-2007, Sualeh Fatehi.
  *
  * This library is free software; you can redistribute it and/or modify it under the terms
  * of the GNU Lesser General Public License as published by the Free Software Foundation;
@@ -131,20 +131,16 @@ public final class TableType
    */
   public static TableType valueOf(final String tableTypeString)
   {
-
     TableType tableType = ALL[0];
-
     for (int i = 0; i < ALL.length; i++)
     {
-      if (ALL[i].toString().equalsIgnoreCase(tableTypeString))
+      if (ALL[i].toString().equalsIgnoreCase(tableTypeString.trim()))
       {
         tableType = ALL[i];
         break;
       }
     }
-
     return tableType;
-
   }
 
   /**
@@ -158,7 +154,7 @@ public final class TableType
   public static TableType[] valueOf(final String[] tableTypeStrings)
   {
 
-    if (tableTypeStrings == null)
+    if (tableTypeStrings == null || tableTypeStrings.length == 0)
     {
       return new TableType[0];
     }
@@ -169,7 +165,6 @@ public final class TableType
       final String tableTypeString = tableTypeStrings[i];
       tableTypes.add(valueOf(tableTypeString));
     }
-
     return (TableType[]) tableTypes.toArray(new TableType[tableTypes.size()]);
   }
 
@@ -198,7 +193,6 @@ public final class TableType
         tableTypeStrings.add(tableType.toString());
       }
     }
-
     return (String[]) tableTypeStrings.toArray(new String[tableTypeStrings
       .size()]);
   }

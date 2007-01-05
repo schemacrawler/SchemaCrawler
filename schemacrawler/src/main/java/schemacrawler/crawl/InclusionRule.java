@@ -2,7 +2,7 @@
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
- * Copyright (c) 2000-2006, Sualeh Fatehi.
+ * Copyright (c) 2000-2007, Sualeh Fatehi.
  *
  * This library is free software; you can redistribute it and/or modify it under the terms
  * of the GNU Lesser General Public License as published by the Free Software Foundation;
@@ -36,6 +36,13 @@ public final class InclusionRule
   implements Serializable
 {
 
+  public static final String EXCLUDE_NONE = "";
+  public static final String INCLUDE_ALL = ".*";
+  public static final Pattern EXCLUDE_NONE_PATTERN = Pattern
+    .compile(EXCLUDE_NONE);
+  public static final Pattern INCLUDE_ALL_PATTERN = Pattern
+    .compile(INCLUDE_ALL);
+
   private static final Logger LOGGER = Logger.getLogger(InclusionRule.class
     .getName());
 
@@ -45,16 +52,15 @@ public final class InclusionRule
   private final Pattern patternExclude;
 
   /**
-   * Constructor.
+   * Include all, exclude none.
    */
   public InclusionRule()
   {
-    patternInclude = Pattern.compile(".*");
-    patternExclude = Pattern.compile("");
+    this(INCLUDE_ALL_PATTERN, EXCLUDE_NONE_PATTERN);
   }
 
   /**
-   * Constructor.
+   * Set include and exclude patterns.
    * 
    * @param patternInclude
    *        Inclusion pattern
@@ -64,9 +70,21 @@ public final class InclusionRule
   public InclusionRule(final Pattern patternInclude,
                        final Pattern patternExclude)
   {
-    super();
     this.patternInclude = patternInclude;
     this.patternExclude = patternExclude;
+  }
+
+  /**
+   * Set include and exclude patterns.
+   * 
+   * @param patternInclude
+   *        Inclusion pattern
+   * @param patternExclude
+   *        Exclusion pattern
+   */
+  public InclusionRule(final String patternInclude, final String patternExclude)
+  {
+    this(Pattern.compile(patternInclude), Pattern.compile(patternExclude));
   }
 
   /**

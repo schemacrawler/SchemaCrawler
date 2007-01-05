@@ -2,7 +2,7 @@
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
- * Copyright (c) 2000-2006, Sualeh Fatehi.
+ * Copyright (c) 2000-2007, Sualeh Fatehi.
  *
  * This library is free software; you can redistribute it and/or modify it under the terms
  * of the GNU Lesser General Public License as published by the Free Software Foundation;
@@ -23,7 +23,6 @@ package schemacrawler.crawl;
 
 import java.util.Arrays;
 import java.util.Properties;
-import java.util.regex.Pattern;
 
 import schemacrawler.BaseOptions;
 import schemacrawler.schema.TableType;
@@ -55,16 +54,25 @@ public final class SchemaCrawlerOptions
   private static final String SC_SORT_ALPHABETICALLY_TABLE_COLUMNS = "schemacrawler.sort_alphabetically.table_columns";
   private static final String SC_TABLE_TYPES = "schemacrawler.table_types";
 
-  private final TableType[] tableTypes;
+  private static TableType[] copyTableTypes(final TableType[] tableTypes)
+  {
+    final TableType[] tableTypesCopy = new TableType[tableTypes.length];
+    System.arraycopy(tableTypes, 0, tableTypesCopy, 0, tableTypes.length);
+    return tableTypesCopy;
+  }
+
+  private TableType[] tableTypes;
+
   private boolean showStoredProcedures;
 
-  private final InclusionRule tableInclusionRule;
-  private final InclusionRule columnInclusionRule;
+  private InclusionRule tableInclusionRule;
+  private InclusionRule columnInclusionRule;
 
-  private final SerializableComparator tableColumnComparator;
-  private final SerializableComparator tableForeignKeyComparator;
-  private final SerializableComparator tableIndexComparator;
-  private final SerializableComparator procedureColumnComparator;
+  private SerializableComparator tableColumnComparator;
+  private SerializableComparator tableForeignKeyComparator;
+  private SerializableComparator tableIndexComparator;
+
+  private SerializableComparator procedureColumnComparator;
 
   /**
    * Default options.
@@ -88,51 +96,6 @@ public final class SchemaCrawlerOptions
   /**
    * Options from properties.
    * 
-   * @param tableTypes
-   *        Table types to show
-   * @param tableInclusionRule
-   *        Rule for including or excluding columns
-   * @param columnInclusionRule
-   *        Rule for including or excluding columns
-   * @param config
-   *        Configuration properties
-   */
-  public SchemaCrawlerOptions(final Properties config,
-                              final TableType[] tableTypes,
-                              final InclusionRule tableInclusionRule,
-                              final InclusionRule columnInclusionRule)
-  {
-
-    if (tableTypes == null)
-    {
-      this.tableTypes = TableType.valueOf(DEFAULT_TABLE_TYPES.split(","));
-    }
-    else
-    {
-      final int size = tableTypes.length;
-      this.tableTypes = new TableType[size];
-      System.arraycopy(tableTypes, 0, this.tableTypes, 0, size);
-    }
-
-    this.tableInclusionRule = tableInclusionRule;
-    this.columnInclusionRule = columnInclusionRule;
-
-    showStoredProcedures = getBooleanProperty(SC_SHOW_STORED_PROCEDURES, config);
-
-    // comparators
-    tableColumnComparator = getComparator(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS,
-                                          config);
-    tableForeignKeyComparator = getComparator(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS,
-                                              config);
-    tableIndexComparator = getComparator(SC_SORT_ALPHABETICALLY_TABLE_INDICES,
-                                         config);
-    procedureColumnComparator = getComparator(SC_SORT_ALPHABETICALLY_PROCEDURE_COLUMNS,
-                                              config);
-  }
-
-  /**
-   * Options from properties.
-   * 
    * @param config
    *        Configuration properties
    */
@@ -145,12 +108,12 @@ public final class SchemaCrawlerOptions
 
     showStoredProcedures = getBooleanProperty(SC_SHOW_STORED_PROCEDURES, config);
 
-    tableInclusionRule = new InclusionRule(Pattern.compile(config
-      .getProperty(SC_TABLE_PATTERN_INCLUDE, ".*")), Pattern.compile(config
-      .getProperty(SC_TABLE_PATTERN_EXCLUDE, ".*")));
-    columnInclusionRule = new InclusionRule(Pattern.compile(config
-      .getProperty(SC_COLUMN_PATTERN_INCLUDE, ".*")), Pattern.compile(config
-      .getProperty(SC_COLUMN_PATTERN_EXCLUDE, ".*")));
+    tableInclusionRule = new InclusionRule(config
+      .getProperty(SC_TABLE_PATTERN_INCLUDE, ".*"), config
+      .getProperty(SC_TABLE_PATTERN_EXCLUDE, ".*"));
+    columnInclusionRule = new InclusionRule(config
+      .getProperty(SC_COLUMN_PATTERN_INCLUDE, ".*"), config
+      .getProperty(SC_COLUMN_PATTERN_EXCLUDE, ".*"));
 
     // comparators
     tableColumnComparator = getComparator(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS,
@@ -163,32 +126,14 @@ public final class SchemaCrawlerOptions
                                               config);
   }
 
-  private SerializableComparator getComparator(final String propertyName,
-                                               final Properties config)
-  {
-    if (getBooleanProperty(propertyName, config))
-    {
-      return new AlphabeticalSortComparator();
-    }
-    else
-    {
-      return new NaturalSortComparator();
-    }
-  }
-
-  InclusionRule getColumnInclusionRule()
+  public InclusionRule getColumnInclusionRule()
   {
     return columnInclusionRule;
   }
 
-  InclusionRule getTableInclusionRule()
+  public InclusionRule getTableInclusionRule()
   {
     return tableInclusionRule;
-  }
-
-  boolean isShowStoredProcedures()
-  {
-    return showStoredProcedures;
   }
 
   /**
@@ -196,11 +141,64 @@ public final class SchemaCrawlerOptions
    * 
    * @return Table types
    */
-  TableType[] getTableTypes()
+  public TableType[] getTableTypes()
   {
-    final TableType[] tableTypesCopy = new TableType[tableTypes.length];
-    System.arraycopy(tableTypes, 0, tableTypesCopy, 0, tableTypes.length);
+    final TableType[] tableTypesCopy = copyTableTypes(tableTypes);
     return tableTypesCopy;
+  }
+
+  public boolean isAlphabeticalSortForForeignKeys()
+  {
+    return tableForeignKeyComparator != null
+           && tableForeignKeyComparator instanceof AlphabeticalSortComparator;
+  }
+
+  public boolean isAlphabeticalSortForIndexes()
+  {
+    return tableIndexComparator != null
+           && tableIndexComparator instanceof AlphabeticalSortComparator;
+  }
+
+  public boolean isAlphabeticalSortForProcedureColumns()
+  {
+    return procedureColumnComparator != null
+           && procedureColumnComparator instanceof AlphabeticalSortComparator;
+  }
+
+  public boolean isAlphabeticalSortForTableColumns()
+  {
+    return tableColumnComparator != null
+           && tableColumnComparator instanceof AlphabeticalSortComparator;
+  }
+
+  public boolean isShowStoredProcedures()
+  {
+    return showStoredProcedures;
+  }
+
+  public void setAlphabeticalSortForForeignKeys(final boolean alphabeticalSort)
+  {
+    tableForeignKeyComparator = getComparator(alphabeticalSort);
+  }
+
+  public void setAlphabeticalSortForIndexes(final boolean alphabeticalSort)
+  {
+    tableIndexComparator = getComparator(alphabeticalSort);
+  }
+
+  public void setAlphabeticalSortForProcedureColumns(final boolean alphabeticalSort)
+  {
+    procedureColumnComparator = getComparator(alphabeticalSort);
+  }
+
+  public void setAlphabeticalSortForTableColumns(final boolean alphabeticalSort)
+  {
+    tableColumnComparator = getComparator(alphabeticalSort);
+  }
+
+  public void setColumnInclusionRule(final InclusionRule columnInclusionRule)
+  {
+    this.columnInclusionRule = columnInclusionRule;
   }
 
   /**
@@ -212,6 +210,35 @@ public final class SchemaCrawlerOptions
   public void setShowStoredProcedures(final boolean showStoredProcedures)
   {
     this.showStoredProcedures = showStoredProcedures;
+  }
+
+  public void setTableInclusionRule(final InclusionRule tableInclusionRule)
+  {
+    this.tableInclusionRule = tableInclusionRule;
+  }
+
+  /**
+   * Sets table types from a comma-separated list of table types. For
+   * example:
+   * TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS,SYNONYM
+   * 
+   * @param tableTypes
+   *        Comma-separated list of table types.
+   */
+  public void setTableTypes(final String tableTypesString)
+  {
+    tableTypes = TableType.valueOf(tableTypesString.split(","));
+  }
+
+  /**
+   * Sets table types from an array of table types.
+   * 
+   * @param tableTypes
+   *        Array of table types.
+   */
+  public void setTableTypes(final TableType[] tableTypesArray)
+  {
+    tableTypes = copyTableTypes(tableTypesArray);
   }
 
   /**
@@ -239,6 +266,29 @@ public final class SchemaCrawlerOptions
     return buffer.toString();
   }
 
+  private SerializableComparator getComparator(final boolean alphabeticalSort)
+  {
+    if (alphabeticalSort)
+    {
+      return new AlphabeticalSortComparator();
+    }
+    else
+    {
+      return new NaturalSortComparator();
+    }
+  }
+
+  private SerializableComparator getComparator(final String propertyName,
+                                               final Properties config)
+  {
+    return getComparator(getBooleanProperty(propertyName, config));
+  }
+
+  SerializableComparator getProcedureColumnComparator()
+  {
+    return procedureColumnComparator;
+  }
+
   SerializableComparator getTableColumnComparator()
   {
     return tableColumnComparator;
@@ -252,11 +302,6 @@ public final class SchemaCrawlerOptions
   SerializableComparator getTableIndexComparator()
   {
     return tableIndexComparator;
-  }
-
-  SerializableComparator getProcedureColumnComparator()
-  {
-    return procedureColumnComparator;
   }
 
 }
