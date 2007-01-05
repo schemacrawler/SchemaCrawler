@@ -34,7 +34,7 @@ public final class Version
 {
 
   private static final String PRODUCTNAME = "dbconnector";
-  private static final String VERSION = "4.1";
+  private static final String VERSION = "4.2";
 
   private Version()
   {
@@ -68,7 +68,7 @@ public final class Version
   public static String about()
   {
     return PRODUCTNAME + " " + VERSION + Utilities.NEWLINE
-           + "(c) 2003-2006 Sualeh Fatehi";
+           + "Copyright (c) 2000-2007, Sualeh Fatehi.";
   }
 
   /**

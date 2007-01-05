@@ -27,7 +27,7 @@ import sf.util.Utilities;
  * Version information for this product. Has methods to obtain
  * information about the product, as well as a main method, so it can be
  * called from the command line.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class Version
@@ -35,7 +35,7 @@ public final class Version
 
   private static final String PRODUCTNAME = "schemacrawler";
 
-  private static final String VERSION = "4.0";
+  private static final String VERSION = "4.2";
 
   private Version()
   {
@@ -43,7 +43,7 @@ public final class Version
 
   /**
    * Product name.
-   * 
+   *
    * @return Product name.
    */
   public static String getProductName()
@@ -54,7 +54,7 @@ public final class Version
 
   /**
    * Product version number.
-   * 
+   *
    * @return Product version number.
    */
   public static String getVersion()
@@ -65,18 +65,18 @@ public final class Version
 
   /**
    * Information about this product.
-   * 
+   *
    * @return Information about this product.
    */
   public static String about()
   {
     return PRODUCTNAME + " " + VERSION + Utilities.NEWLINE
-           + "(c) 2003-2006 Sualeh Fatehi";
+           + "Copyright (c) 2000-2007, Sualeh Fatehi.";
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Object#toString()
    */
   public String toString()
@@ -86,7 +86,7 @@ public final class Version
 
   /**
    * Main routine. Prints information about this product.
-   * 
+   *
    * @param args
    *        Arguments to the main routine - they are ignored.
    */
