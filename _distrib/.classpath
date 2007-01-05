@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry excluding="**/.svn/**/*" kind="src" path="examples/api"/>
+	<classpathentry kind="src" path="examples/more-api/src/main/java"/>
 	<classpathentry excluding="**/.svn/**/*" kind="src" path="examples/maven/src/main/java"/>
 	<classpathentry kind="lib" path="dbserver/hsqldb.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.4"/>
