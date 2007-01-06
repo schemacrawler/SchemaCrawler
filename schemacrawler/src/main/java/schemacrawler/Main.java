@@ -21,22 +21,14 @@
 package schemacrawler;
 
 
-import java.util.Arrays;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import schemacrawler.tools.ToolsExecutor;
+import schemacrawler.main.SchemaCrawlerMain;
 import sf.util.Utilities;
-import dbconnector.datasource.PropertiesDataSource;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
  */
 public final class Main
 {
-
-  private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
   /**
    * Internal storage for information. Read from text file.
@@ -79,51 +71,7 @@ public final class Main
       return;
     }
 
-    doMain(args, new ToolsExecutor());
-  }
-
-  /**
-   * Executes with the command line, and a given executor. The executor
-   * allows for the command line to be parsed independently of the
-   * excution. The execution can integrate with other software, such as
-   * Velocity.
-   * 
-   * @param args
-   *        Command line arguments
-   * @param executor
-   *        Executor
-   * @throws Exception
-   *         On an exception
-   */
-  public static void doMain(final String[] args, final Executor executor)
-    throws Exception
-  {
-
-    final Options[] optionCommands = OptionsParser.parseCommandLine(args);
-
-    if (optionCommands.length > 0)
-    {
-      final Options firstOption = optionCommands[0];
-      Utilities.setApplicationLogLevel(firstOption.getLogLevel());
-      LOGGER.log(Level.CONFIG, Version.about());
-      LOGGER.log(Level.CONFIG, "Commandline: " + Arrays.asList(args));
-      final Properties config = firstOption.getConfig();
-
-      for (int i = 0; i < optionCommands.length; i++)
-      {
-        final Options options = optionCommands[i];
-        LOGGER.log(Level.CONFIG, options.toString());
-        final PropertiesDataSource dataSource = dbconnector.Main
-          .createDataSource(args, config);
-        if (executor instanceof ToolsExecutor)
-        {
-          ((ToolsExecutor) executor)
-            .setAdditionalConnectionConfiguration(dataSource
-              .getSourceProperties());
-        }
-        executor.execute(options, dataSource);
-      }
-    }
+    SchemaCrawlerMain.schemacrawler(args);
   }
 
 }

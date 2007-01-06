@@ -33,8 +33,6 @@ public final class SchemaTextDetailType
   implements Serializable
 {
 
-  private static final long serialVersionUID = 6740850596238696478L;
-
   /**
    * No column detail.
    */
@@ -59,53 +57,15 @@ public final class SchemaTextDetailType
   public static final SchemaTextDetailType MAXIMUM = new SchemaTextDetailType(3,
                                                                               "maximum_schema");
 
+  private static final long serialVersionUID = 6740850596238696478L;
+
   private static final SchemaTextDetailType[] TEXT_FORMAT_TYPE_ALL = {
       BRIEF, BASIC, VERBOSE, MAXIMUM,
   };
 
-  private final transient int id;
-  private final transient String name;
-
-  private SchemaTextDetailType(final int id, final String name)
-  {
-    ordinal = nextOrdinal++;
-    this.id = id;
-    this.name = name;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  public String toString()
-  {
-    return name;
-  }
-
-  /**
-   * Checks if this is greater than the provided info level.
-   * 
-   * @param schemaTextDetailType
-   *        SchemaTextDetailType to check against
-   * @return Yes if this is greater
-   */
-  public boolean isGreaterThan(final SchemaTextDetailType schemaTextDetailType)
-  {
-    return id > schemaTextDetailType.id;
-  }
-
-  /**
-   * Checks if this is greater than or equal to the provided info level.
-   * 
-   * @param schemaTextDetailType
-   *        SchemaTextDetailType to check against
-   * @return Yes if this is greater or equal to
-   */
-  public boolean isGreaterThanOrEqualTo(final SchemaTextDetailType schemaTextDetailType)
-  {
-    return id >= schemaTextDetailType.id;
-  }
+  // The 4 declarations below are necessary for serialization
+  private static int nextOrdinal;
+  private static final SchemaTextDetailType[] VALUES = TEXT_FORMAT_TYPE_ALL;
 
   /**
    * Find the enumeration value corresponding to the string.
@@ -132,6 +92,42 @@ public final class SchemaTextDetailType
 
   }
 
+  private final transient int id;
+
+  private final transient String name;
+
+  private final int ordinal;
+
+  private SchemaTextDetailType(final int id, final String name)
+  {
+    ordinal = nextOrdinal++;
+    this.id = id;
+    this.name = name;
+  }
+
+  /**
+   * Checks if this is greater than the provided info level.
+   * 
+   * @param schemaTextDetailType
+   *        SchemaTextDetailType to check against
+   * @return Yes if this is greater
+   */
+  public boolean isGreaterThan(final SchemaTextDetailType schemaTextDetailType)
+  {
+    return id > schemaTextDetailType.id;
+  }
+
+  /**
+   * Checks if this is greater than or equal to the provided info level.
+   * 
+   * @param schemaTextDetailType
+   *        SchemaTextDetailType to check against
+   * @return Yes if this is greater or equal to
+   */
+  public boolean isGreaterThanOrEqualTo(final SchemaTextDetailType schemaTextDetailType)
+  {
+    return id >= schemaTextDetailType.id;
+  }
   /**
    * Find the enumeration value corresponding to the string.
    * 
@@ -163,11 +159,15 @@ public final class SchemaTextDetailType
 
   }
 
-  // The 4 declarations below are necessary for serialization
-  private static int nextOrdinal;
-  private final int ordinal;
-
-  private static final SchemaTextDetailType[] VALUES = TEXT_FORMAT_TYPE_ALL;
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Object#toString()
+   */
+  public String toString()
+  {
+    return name;
+  }
 
   Object readResolve()
     throws ObjectStreamException

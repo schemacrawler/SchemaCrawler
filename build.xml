@@ -62,7 +62,7 @@
         <attribute name="Product" value="SchemaCrawler"/>
         <attribute name="Version" value="${pom.version}"/>
         <attribute name="Author" value="Sualeh Fatehi"/>
-        <attribute name="Copyright" value="(c) 2003-2006, Sualeh Fatehi"/>
+        <attribute name="Copyright" value="(c) 2003-2007, Sualeh Fatehi"/>
         <attribute name="Main-Class" value="schemacrawler.Main"/>
       </manifest>
       <zipfileset dir="dbconnector/target/classes"/>

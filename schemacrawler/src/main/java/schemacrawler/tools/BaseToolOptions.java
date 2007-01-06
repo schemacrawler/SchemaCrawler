@@ -21,7 +21,7 @@
 package schemacrawler.tools;
 
 
-import schemacrawler.BaseOptions;
+import schemacrawler.main.BaseOptions;
 
 /**
  * Tool options.

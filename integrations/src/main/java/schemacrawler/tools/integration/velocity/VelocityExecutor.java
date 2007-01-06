@@ -38,13 +38,13 @@ import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
 
-import schemacrawler.Options;
 import schemacrawler.crawl.CrawlHandler;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutor;
+import schemacrawler.main.Options;
 import schemacrawler.schema.Schema;
 import schemacrawler.tools.ToolType;
 import schemacrawler.tools.datatext.DataTextFormatterLoader;
@@ -67,7 +67,7 @@ public class VelocityExecutor
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.Executor#execute(schemacrawler.Options,
+   * @see schemacrawler.Executor#execute(schemacrawler.main.Options,
    *      javax.sql.DataSource)
    */
   public void execute(final Options options, final DataSource dataSource)

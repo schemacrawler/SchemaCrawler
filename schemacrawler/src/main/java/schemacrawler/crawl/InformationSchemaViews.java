@@ -22,7 +22,7 @@ package schemacrawler.crawl;
 
 import java.util.Properties;
 
-import schemacrawler.BaseOptions;
+import schemacrawler.main.BaseOptions;
 import sf.util.Utilities;
 
 final class InformationSchemaViews

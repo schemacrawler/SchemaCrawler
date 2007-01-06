@@ -31,6 +31,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.crawl.CrawlHandler;
+import schemacrawler.crawl.InclusionRule;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.crawl.SchemaInfoLevel;
 import schemacrawler.schema.CheckConstraint;
@@ -61,11 +62,12 @@ public abstract class BaseSchemaTextFormatter
   private static final Logger LOGGER = Logger
     .getLogger(BaseSchemaTextFormatter.class.getName());
 
-  protected final PrintWriter out;
   private final SchemaTextOptions options;
-  protected final TextFormattingHelper formattingHelper;
-
+  private InclusionRule tableColumnInclusionRule;
   private int tableCount;
+  protected final PrintWriter out;
+
+  protected final TextFormattingHelper formattingHelper;
 
   /**
    * @param writer
@@ -92,6 +94,19 @@ public abstract class BaseSchemaTextFormatter
 
     this.formattingHelper = formattingHelper;
 
+  }
+
+  /**
+   * @param writer
+   *        Writer to output to.
+   */
+  BaseSchemaTextFormatter(final SchemaTextOptions options,
+                          final TextFormattingHelper formattingHelper,
+                          final InclusionRule tableColumnInclusionRule)
+    throws SchemaCrawlerException
+  {
+    this(options, formattingHelper);
+    this.tableColumnInclusionRule = tableColumnInclusionRule;
   }
 
   /**
@@ -249,6 +264,15 @@ public abstract class BaseSchemaTextFormatter
   public final void handle(final Table table)
   {
 
+    // Special case for "grep" like functionality
+    // If a column inclusion rule is present, only process the
+    // table if the column that matches is present in the table
+    boolean handleTable = shouldHandleTable(table);
+    if (!handleTable)
+    {
+      return;
+    }
+
     handleTableStart();
     final String typeBracketed = "["
                                  + table.getType().toString()
@@ -295,57 +319,6 @@ public abstract class BaseSchemaTextFormatter
     out.flush();
 
   }
-
-  abstract String getArrow();
-
-  final boolean getNoFooter()
-  {
-    return options.getOutputOptions().isNoFooter();
-  }
-
-  final boolean getNoHeader()
-  {
-    return options.getOutputOptions().isNoHeader();
-  }
-
-  final SchemaTextDetailType getSchemaTextDetailType()
-  {
-    return options.getSchemaTextDetailType();
-  }
-
-  abstract void handleColumnDataTypeEnd();
-
-  abstract void handleColumnDataTypesEnd();
-
-  abstract void handleColumnDataTypesStart();
-
-  abstract void handleColumnDataTypeStart();
-
-  abstract void handleDatabaseInfo(final DatabaseInfo databaseInfo);
-
-  abstract void handleDatabasePropertiesEnd();
-
-  abstract void handleDatabasePropertiesStart();
-
-  /**
-   * Handles the end of output for a procedure.
-   */
-  abstract void handleProcedureEnd();
-
-  /**
-   * Handles the start of output for a procedure.
-   */
-  abstract void handleProcedureStart();
-
-  /**
-   * Handles the end of output for a table.
-   */
-  abstract void handleTableEnd();
-
-  /**
-   * Handles the start of output for a table.
-   */
-  abstract void handleTableStart();
 
   private String negate(final boolean positive, final String text)
   {
@@ -624,5 +597,87 @@ public abstract class BaseSchemaTextFormatter
       }
     }
   }
+
+  /**
+   * Special case for "grep" like functionality. Handle table if a table
+   * column inclusion rule is found, and at least one column matches the
+   * rule.
+   * 
+   * @param table
+   * @return
+   */
+  private boolean shouldHandleTable(final Table table)
+  {
+    if (tableColumnInclusionRule == null)
+    {
+      return true;
+    }
+
+    boolean handleTable = false;
+    final Column[] columns = table.getColumns();
+    for (int j = 0; j < columns.length; j++)
+    {
+      final Column column = columns[j];
+      if (tableColumnInclusionRule.include(column.getFullName()))
+      {
+        // We found a column that should be included, so handle the
+        // table
+        handleTable = true;
+        break;
+      }
+    }
+    return handleTable;
+  }
+
+  abstract String getArrow();
+
+  final boolean getNoFooter()
+  {
+    return options.getOutputOptions().isNoFooter();
+  }
+
+  final boolean getNoHeader()
+  {
+    return options.getOutputOptions().isNoHeader();
+  }
+
+  final SchemaTextDetailType getSchemaTextDetailType()
+  {
+    return options.getSchemaTextDetailType();
+  }
+
+  abstract void handleColumnDataTypeEnd();
+
+  abstract void handleColumnDataTypesEnd();
+
+  abstract void handleColumnDataTypesStart();
+
+  abstract void handleColumnDataTypeStart();
+
+  abstract void handleDatabaseInfo(final DatabaseInfo databaseInfo);
+
+  abstract void handleDatabasePropertiesEnd();
+
+  abstract void handleDatabasePropertiesStart();
+
+  /**
+   * Handles the end of output for a procedure.
+   */
+  abstract void handleProcedureEnd();
+
+  /**
+   * Handles the start of output for a procedure.
+   */
+  abstract void handleProcedureStart();
+
+  /**
+   * Handles the end of output for a table.
+   */
+  abstract void handleTableEnd();
+
+  /**
+   * Handles the start of output for a table.
+   */
+  abstract void handleTableStart();
 
 }

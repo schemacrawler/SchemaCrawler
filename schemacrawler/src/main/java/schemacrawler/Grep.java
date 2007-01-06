@@ -18,17 +18,17 @@
  *
  */
 
-package schemacrawler.tools.integration.freemarker;
+package schemacrawler;
 
 
-import schemacrawler.Version;
-import schemacrawler.main.SchemaCrawlerMain;
+import schemacrawler.tools.grep.ColumnsGrep;
 import sf.util.Utilities;
 
 /**
- * Main class that takes arguments for a database for crawling a schema.
+ * Main class that takes arguments for grep-ping table and columns in a
+ * schema.
  */
-public final class Main
+public final class Grep
 {
 
   /**
@@ -38,13 +38,13 @@ public final class Main
 
   static
   {
-    final byte[] text = Utilities.readFully(Main.class
-      .getResourceAsStream("/schemacrawler-templating-readme.txt"));
+    final byte[] text = Utilities.readFully(Grep.class
+      .getResourceAsStream("/schemacrawler-grep-readme.txt"));
     info = new String(text);
 
   }
 
-  private Main()
+  private Grep()
   {
   }
 
@@ -55,8 +55,8 @@ public final class Main
   }
 
   /**
-   * Get connection parameters, and creates a connection, and crawls
-   * the schema.
+   * Get connection parameters, and creates a connection, and crawls the
+   * schema.
    * 
    * @param args
    *        Arguments passed into the program from the command line.
@@ -66,15 +66,13 @@ public final class Main
   public static void main(final String[] args)
     throws Exception
   {
-
     if (args.length == 0)
     {
       printUsage();
       return;
     }
 
-    SchemaCrawlerMain.schemacrawler(args, new FreeMarkerExecutor());
-
+    ColumnsGrep.grep(args);
   }
 
 }

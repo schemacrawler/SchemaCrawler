@@ -24,7 +24,7 @@ package schemacrawler.crawl;
 import java.util.Arrays;
 import java.util.Properties;
 
-import schemacrawler.BaseOptions;
+import schemacrawler.main.BaseOptions;
 import schemacrawler.schema.TableType;
 import schemacrawler.util.AlphabeticalSortComparator;
 import schemacrawler.util.NaturalSortComparator;

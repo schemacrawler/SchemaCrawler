@@ -22,6 +22,7 @@ package schemacrawler.tools.integration.velocity;
 
 
 import schemacrawler.Version;
+import schemacrawler.main.SchemaCrawlerMain;
 import sf.util.Utilities;
 
 /**
@@ -72,7 +73,7 @@ public final class Main
       return;
     }
 
-    schemacrawler.Main.doMain(args, new VelocityExecutor());
+    SchemaCrawlerMain.schemacrawler(args, new VelocityExecutor());
 
   }
 

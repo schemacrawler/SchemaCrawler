@@ -21,6 +21,7 @@
 package schemacrawler.tools.schematext;
 
 
+import schemacrawler.crawl.InclusionRule;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.tools.util.FormatUtils;
@@ -46,6 +47,25 @@ public final class SchemaTextFormatter
   {
     super(options, new PlainTextFormattingHelper(options.getOutputOptions()
       .getOutputFormat()));
+  }
+
+  /**
+   * Formats the schema as plain text for output. Contains a table
+   * column inclusion rule as a special case for "grep" like
+   * functionality.
+   * 
+   * @param options
+   *        Options
+   * @param tableColumnInclusionRule
+   *        Table column inclusion rule
+   * @throws SchemaCrawlerException
+   */
+  public SchemaTextFormatter(SchemaTextOptions options,
+                             InclusionRule tableColumnInclusionRule)
+    throws SchemaCrawlerException
+  {
+    super(options, new PlainTextFormattingHelper(options.getOutputOptions()
+      .getOutputFormat()), tableColumnInclusionRule);
   }
 
   /**
