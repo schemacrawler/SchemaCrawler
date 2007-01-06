@@ -26,7 +26,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import schemacrawler.BaseOptions;
+import schemacrawler.main.BaseOptions;
 import sf.util.Utilities;
 
 /**
@@ -49,11 +49,6 @@ public final class OutputOptions
   private boolean noHeader;
   private boolean noFooter;
   private boolean noInfo;
-
-  private OutputOptions()
-  {
-    this("", "");
-  }
 
   /**
    * Output options, given the type and the output filename.
@@ -78,35 +73,31 @@ public final class OutputOptions
     noInfo = true;
   }
 
-  /**
-   * Output format value.
-   * 
-   * @return Output format value
-   */
-  public String getOutputFormatValue()
+  private OutputOptions()
   {
-    return outputFormatValue;
+    this("", "");
   }
 
   /**
-   * Whether the output gets appended.
+   * Clone this object.
    * 
-   * @return Whether the output gets appended
+   * @return Clone
    */
-  public boolean isAppendOutput()
+  public OutputOptions duplicate()
   {
-    return appendOutput;
-  }
+    final OutputOptions outputOptions = new OutputOptions();
 
-  /**
-   * Whether the output gets appended.
-   * 
-   * @param appendOutput
-   *        Whether the output gets appended
-   */
-  public void setAppendOutput(final boolean appendOutput)
-  {
-    this.appendOutput = appendOutput;
+    outputOptions.outputFormatValue = outputFormatValue;
+
+    outputOptions.outputFile = outputFile;
+
+    outputOptions.appendOutput = appendOutput;
+
+    outputOptions.noHeader = noHeader;
+    outputOptions.noFooter = noFooter;
+    outputOptions.noInfo = noInfo;
+
+    return outputOptions;
   }
 
   /**
@@ -120,29 +111,6 @@ public final class OutputOptions
   }
 
   /**
-   * Opens the output writer.
-   * 
-   * @throws IOException
-   *         On an exception
-   * @return Writer
-   */
-  public PrintWriter openOutputWriter()
-    throws IOException
-  {
-    PrintWriter writer;
-    if (outputFile == null)
-    {
-      writer = new PrintWriter(System.out, /* autoFlush = */true);
-    }
-    else
-    {
-      final FileWriter fileWriter = new FileWriter(outputFile, appendOutput);
-      writer = new PrintWriter(fileWriter, /* autoFlush = */true);
-    }
-    return writer;
-  }
-
-  /**
    * Output format.
    * 
    * @return Output format
@@ -150,6 +118,21 @@ public final class OutputOptions
   public OutputFormat getOutputFormat()
   {
     return OutputFormat.valueOf(outputFormatValue);
+  }
+
+  public String getOutputFormatValue()
+  {
+    return outputFormatValue;
+  }
+
+  /**
+   * Whether the output gets appended.
+   * 
+   * @return Whether the output gets appended
+   */
+  public boolean isAppendOutput()
+  {
+    return appendOutput;
   }
 
   /**
@@ -180,6 +163,40 @@ public final class OutputOptions
   public boolean isNoInfo()
   {
     return noInfo;
+  }
+
+  /**
+   * Opens the output writer.
+   * 
+   * @throws IOException
+   *         On an exception
+   * @return Writer
+   */
+  public PrintWriter openOutputWriter()
+    throws IOException
+  {
+    PrintWriter writer;
+    if (outputFile == null)
+    {
+      writer = new PrintWriter(System.out, /* autoFlush = */true);
+    }
+    else
+    {
+      final FileWriter fileWriter = new FileWriter(outputFile, appendOutput);
+      writer = new PrintWriter(fileWriter, /* autoFlush = */true);
+    }
+    return writer;
+  }
+
+  /**
+   * Whether the output gets appended.
+   * 
+   * @param appendOutput
+   *        Whether the output gets appended
+   */
+  public void setAppendOutput(final boolean appendOutput)
+  {
+    this.appendOutput = appendOutput;
   }
 
   /**
@@ -215,26 +232,9 @@ public final class OutputOptions
     this.noInfo = noInfo;
   }
 
-  /**
-   * Clone this object.
-   * 
-   * @return Clone
-   */
-  public OutputOptions duplicate()
+  public void setOutputFormatValue(String outputFormatValue)
   {
-    final OutputOptions outputOptions = new OutputOptions();
-
-    outputOptions.outputFormatValue = outputFormatValue;
-
-    outputOptions.outputFile = outputFile;
-
-    outputOptions.appendOutput = appendOutput;
-
-    outputOptions.noHeader = noHeader;
-    outputOptions.noFooter = noFooter;
-    outputOptions.noInfo = noInfo;
-
-    return outputOptions;
+    this.outputFormatValue = outputFormatValue;
   }
 
   /**

@@ -22,6 +22,7 @@ package schemacrawler.tools.integration.jung;
 
 
 import schemacrawler.Version;
+import schemacrawler.main.SchemaCrawlerMain;
 import sf.util.Utilities;
 
 /**
@@ -72,7 +73,7 @@ public final class Main
       return;
     }
 
-    schemacrawler.Main.doMain(args, new JungExecutor());
+    SchemaCrawlerMain.schemacrawler(args, new JungExecutor());
 
   }
 

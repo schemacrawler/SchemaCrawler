@@ -32,13 +32,13 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
-import schemacrawler.Options;
 import schemacrawler.crawl.CrawlHandler;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutor;
+import schemacrawler.main.Options;
 import schemacrawler.schema.Schema;
 import schemacrawler.tools.ToolType;
 import schemacrawler.tools.datatext.DataTextFormatterLoader;
@@ -69,7 +69,7 @@ public class FreeMarkerExecutor
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.Executor#execute(schemacrawler.Options,
+   * @see schemacrawler.Executor#execute(schemacrawler.main.Options,
    *      javax.sql.DataSource)
    */
   public void execute(final Options options, final DataSource dataSource)

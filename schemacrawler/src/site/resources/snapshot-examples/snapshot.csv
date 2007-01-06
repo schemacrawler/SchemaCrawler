@@ -448,14 +448,14 @@ SYS_FK_4,"[foreign key, on update no action]"
 SYS_USER_SYS_IDX_6_1,[non-unique ascending other index]
 ,INVOICEID,"INTEGER, not null"
 
+SYS_IDX_53,[non-unique ascending other index]
+,INVOICEID,"INTEGER, not null"
+
 SYS_IDX_55,[non-unique ascending other index]
 ,PRODUCTID,INTEGER
 
 SYS_USER_SYS_IDX_8_2,[non-unique ascending other index]
 ,PRODUCTID,INTEGER
-
-SYS_IDX_53,[non-unique ascending other index]
-,INVOICEID,"INTEGER, not null"
 
 DELETE,[grantable privilege]
 ,DBA --> SA,""
