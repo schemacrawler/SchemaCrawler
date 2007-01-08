@@ -60,12 +60,13 @@ public final class SchemaTextFormatter
    *        Table column inclusion rule
    * @throws SchemaCrawlerException
    */
-  public SchemaTextFormatter(SchemaTextOptions options,
-                             InclusionRule tableColumnInclusionRule)
+  public SchemaTextFormatter(final SchemaTextOptions options,
+                             final InclusionRule tableColumnInclusionRule,
+                             final boolean invertMatch)
     throws SchemaCrawlerException
   {
     super(options, new PlainTextFormattingHelper(options.getOutputOptions()
-      .getOutputFormat()), tableColumnInclusionRule);
+      .getOutputFormat()), tableColumnInclusionRule, invertMatch);
   }
 
   /**

@@ -21,9 +21,8 @@
 package schemacrawler.tools.integration.freemarker;
 
 
-import schemacrawler.Version;
+import schemacrawler.main.CommandLineUtility;
 import schemacrawler.main.SchemaCrawlerMain;
-import sf.util.Utilities;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -31,32 +30,13 @@ import sf.util.Utilities;
 public final class Main
 {
 
-  /**
-   * Internal storage for information. Read from text file.
-   */
-  private static String info;
-
-  static
-  {
-    final byte[] text = Utilities.readFully(Main.class
-      .getResourceAsStream("/schemacrawler-templating-readme.txt"));
-    info = new String(text);
-
-  }
-
   private Main()
   {
   }
 
-  private static void printUsage()
-  {
-    System.out.println(Version.about());
-    System.out.println(info);
-  }
-
   /**
-   * Get connection parameters, and creates a connection, and crawls
-   * the schema.
+   * Get connection parameters, and creates a connection, and crawls the
+   * schema.
    * 
    * @param args
    *        Arguments passed into the program from the command line.
@@ -66,15 +46,9 @@ public final class Main
   public static void main(final String[] args)
     throws Exception
   {
-
-    if (args.length == 0)
-    {
-      printUsage();
-      return;
-    }
-
+    CommandLineUtility.checkForHelp(args,
+                                    "/schemacrawler-templating-readme.txt");
     SchemaCrawlerMain.schemacrawler(args, new FreeMarkerExecutor());
-
   }
 
 }

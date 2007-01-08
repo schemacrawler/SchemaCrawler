@@ -63,11 +63,13 @@ public abstract class BaseSchemaTextFormatter
     .getLogger(BaseSchemaTextFormatter.class.getName());
 
   private final SchemaTextOptions options;
-  private InclusionRule tableColumnInclusionRule;
   private int tableCount;
   protected final PrintWriter out;
 
   protected final TextFormattingHelper formattingHelper;
+
+  private InclusionRule tableColumnInclusionRule;
+  private boolean invertMatch;
 
   /**
    * @param writer
@@ -102,11 +104,13 @@ public abstract class BaseSchemaTextFormatter
    */
   BaseSchemaTextFormatter(final SchemaTextOptions options,
                           final TextFormattingHelper formattingHelper,
-                          final InclusionRule tableColumnInclusionRule)
+                          final InclusionRule tableColumnInclusionRule,
+                          final boolean invertMatch)
     throws SchemaCrawlerException
   {
     this(options, formattingHelper);
     this.tableColumnInclusionRule = tableColumnInclusionRule;
+    this.invertMatch = invertMatch;
   }
 
   /**
@@ -625,6 +629,10 @@ public abstract class BaseSchemaTextFormatter
         handleTable = true;
         break;
       }
+    }
+    if (invertMatch)
+    {
+      handleTable = !handleTable;
     }
     return handleTable;
   }
