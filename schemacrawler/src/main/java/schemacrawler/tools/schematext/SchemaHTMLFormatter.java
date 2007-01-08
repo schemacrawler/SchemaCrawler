@@ -60,11 +60,15 @@ public final class SchemaHTMLFormatter
    *        Table column inclusion rule
    * @throws SchemaCrawlerException
    */
-  public SchemaHTMLFormatter(SchemaTextOptions options,
-                             InclusionRule tableColumnInclusionRule)
+  public SchemaHTMLFormatter(final SchemaTextOptions options,
+                             final InclusionRule tableColumnInclusionRule,
+                             final boolean invertMatch)
     throws SchemaCrawlerException
   {
-    super(options, new HtmlFormattingHelper(), tableColumnInclusionRule);
+    super(options,
+          new HtmlFormattingHelper(),
+          tableColumnInclusionRule,
+          invertMatch);
   }
 
   /**

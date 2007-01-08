@@ -53,7 +53,7 @@ Or, all of the following:
 	
 
 --- Grep Options ---
-
+	
 -tables=<regular-expression>
 	Optional, where <regular-expression> is a regular expression to match table 
 	names.
@@ -67,4 +67,7 @@ Or, all of the following:
 	For example,
 	-columns .*\.STREET|.*\.PRICE
 	matches columns named STREET or PRICE in any table.
+	
+-v (short for -invert-match)        
+	Inverts the match, and shows non-matching tables and columns.	
 		

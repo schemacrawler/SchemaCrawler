@@ -21,8 +21,8 @@
 package schemacrawler;
 
 
+import schemacrawler.main.CommandLineUtility;
 import schemacrawler.tools.grep.ColumnsGrep;
-import sf.util.Utilities;
 
 /**
  * Main class that takes arguments for grep-ping table and columns in a
@@ -31,27 +31,8 @@ import sf.util.Utilities;
 public final class Grep
 {
 
-  /**
-   * Internal storage for information. Read from text file.
-   */
-  private static String info;
-
-  static
-  {
-    final byte[] text = Utilities.readFully(Grep.class
-      .getResourceAsStream("/schemacrawler-grep-readme.txt"));
-    info = new String(text);
-
-  }
-
   private Grep()
   {
-  }
-
-  private static void printUsage()
-  {
-    System.out.println(Version.about());
-    System.out.println(info);
   }
 
   /**
@@ -66,12 +47,7 @@ public final class Grep
   public static void main(final String[] args)
     throws Exception
   {
-    if (args.length == 0)
-    {
-      printUsage();
-      return;
-    }
-
+    CommandLineUtility.checkForHelp(args, "/schemacrawler-grep-readme.txt");
     ColumnsGrep.grep(args);
   }
 

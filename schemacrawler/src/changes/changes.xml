@@ -6,6 +6,27 @@
   </properties>
   <body>
     <release
+      version="4.2"
+      date="2007-01-07">
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        Fixed null pointer exception with DB2.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        Fixed error message on a bad command line. Added a general -help
+        option.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Added new schema grep functionality, that can search for tables
+        and columns usng regular expressions.
+      </action>
+    </release>
+    <release
       version="4.1"
       date="2006-12-07">
       <action
@@ -23,8 +44,8 @@
         dev="Sualeh Fatehi"
         type="fix">
         Fixed column output for tables and procedures that contain an
-        underscore in their name. JDBC matches the underscore to a wildcard
-        character.
+        underscore in their name. JDBC matches the underscore to a
+        wildcard character.
       </action>
     </release>
     <release

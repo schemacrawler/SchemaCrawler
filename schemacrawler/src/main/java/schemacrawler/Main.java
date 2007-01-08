@@ -21,8 +21,8 @@
 package schemacrawler;
 
 
+import schemacrawler.main.CommandLineUtility;
 import schemacrawler.main.SchemaCrawlerMain;
-import sf.util.Utilities;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -30,27 +30,8 @@ import sf.util.Utilities;
 public final class Main
 {
 
-  /**
-   * Internal storage for information. Read from text file.
-   */
-  private static String info;
-
-  static
-  {
-    final byte[] text = Utilities.readFully(Main.class
-      .getResourceAsStream("/schemacrawler-readme.txt"));
-    info = new String(text);
-
-  }
-
   private Main()
   {
-  }
-
-  private static void printUsage()
-  {
-    System.out.println(Version.about());
-    System.out.println(info);
   }
 
   /**
@@ -65,12 +46,7 @@ public final class Main
   public static void main(final String[] args)
     throws Exception
   {
-    if (args.length == 0)
-    {
-      printUsage();
-      return;
-    }
-
+    CommandLineUtility.checkForHelp(args, "/schemacrawler-readme.txt");
     SchemaCrawlerMain.schemacrawler(args);
   }
 
