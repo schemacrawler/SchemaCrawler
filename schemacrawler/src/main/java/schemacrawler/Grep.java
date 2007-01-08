@@ -21,8 +21,8 @@
 package schemacrawler;
 
 
-import schemacrawler.main.CommandLineUtility;
 import schemacrawler.tools.grep.ColumnsGrep;
+import sf.util.CommandLineUtility;
 
 /**
  * Main class that takes arguments for grep-ping table and columns in a

@@ -29,7 +29,6 @@ import schemacrawler.crawl.CrawlHandler;
 import schemacrawler.crawl.InclusionRule;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
-import schemacrawler.main.CommandLineUtility;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextFormatter;
@@ -70,35 +69,33 @@ public final class ColumnsGrep
     throws Exception
   {
 
-    final CommandLineParser parser = parseCommandLine(args);
+    final CommandLineParser parser = createCommandLineParser();
+    parser.parse(args);
 
-    String logLevelString = CommandLineUtility.getStringOption(parser
-      .getOption(OPTION_LOG_LEVEL), "OFF");
+    String logLevelString = parser.getStringOptionValue(OPTION_LOG_LEVEL);
     Level logLevel = Level.parse(logLevelString.toUpperCase(Locale.ENGLISH));
     Utilities.setApplicationLogLevel(logLevel);
 
-    final String cfgFile = CommandLineUtility.getStringOption(parser
-      .getOption(OPTION_CONFIGFILE), "schemacrawler.config.properties");
-    final String cfgOverrideFile = CommandLineUtility
-      .getStringOption(parser.getOption(OPTION_CONFIGOVERRIDEFILE),
-                       "schemacrawler.config.override.properties");
-    final Properties config = CommandLineUtility
-      .loadConfig(cfgFile, cfgOverrideFile);
+    final String cfgFile = parser.getStringOptionValue(OPTION_CONFIGFILE);
+    final String cfgOverrideFile = parser
+      .getStringOptionValue(OPTION_CONFIGOVERRIDEFILE);
+    final Properties config = Utilities.loadConfig(cfgFile,
+                                                            cfgOverrideFile);
     final PropertiesDataSource dataSource = dbconnector.Main
       .createDataSource(args, config);
 
-    final String includeTables = CommandLineUtility.getStringOption(parser
-      .getOption(OPTION_INCLUDE_TABLES), InclusionRule.INCLUDE_ALL);
+    final String includeTables = parser
+      .getStringOptionValue(OPTION_INCLUDE_TABLES);
     final InclusionRule tableInclusionRule = new InclusionRule(includeTables,
                                                                InclusionRule.EXCLUDE_NONE);
 
-    final String includeColumns = CommandLineUtility.getStringOption(parser
-      .getOption(OPTION_INCLUDE_COLUMNS), InclusionRule.INCLUDE_ALL);
+    final String includeColumns = parser
+      .getStringOptionValue(OPTION_INCLUDE_COLUMNS);
     final InclusionRule columnInclusionRule = new InclusionRule(includeColumns,
                                                                 InclusionRule.EXCLUDE_NONE);
 
-    final boolean invertMatch = CommandLineUtility.getBooleanOption(parser
-      .getOption(OPTION_INVERT_MATCH));
+    final boolean invertMatch = parser
+      .getBooleanOptionValue(OPTION_INVERT_MATCH);
 
     // Create the options
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
@@ -120,25 +117,35 @@ public final class ColumnsGrep
 
   }
 
-  private static CommandLineParser parseCommandLine(final String[] args)
+  private static CommandLineParser createCommandLineParser()
   {
     final CommandLineParser parser = new CommandLineParser();
 
     parser
-      .addOption(new CommandLineParser.StringOption('g', OPTION_CONFIGFILE));
+      .addOption(new CommandLineParser.StringOption('g',
+                                                    OPTION_CONFIGFILE,
+                                                    "schemacrawler.config.properties"));
     parser
       .addOption(new CommandLineParser.StringOption('p',
-                                                    OPTION_CONFIGOVERRIDEFILE));
+                                                    OPTION_CONFIGOVERRIDEFILE,
+                                                    "schemacrawler.config.override.properties"));
 
-    parser.addOption(new CommandLineParser.StringOption(OPTION_INCLUDE_TABLES));
     parser
-      .addOption(new CommandLineParser.StringOption(OPTION_INCLUDE_COLUMNS));
+      .addOption(new CommandLineParser.StringOption(CommandLineParser.Option.NO_SHORT_FORM,
+                                                    OPTION_INCLUDE_TABLES,
+                                                    InclusionRule.INCLUDE_ALL));
+    parser
+      .addOption(new CommandLineParser.StringOption(CommandLineParser.Option.NO_SHORT_FORM,
+                                                    OPTION_INCLUDE_COLUMNS,
+                                                    InclusionRule.INCLUDE_ALL));
     parser.addOption(new CommandLineParser.BooleanOption('v',
                                                          OPTION_INVERT_MATCH));
 
-    parser.addOption(new CommandLineParser.StringOption(OPTION_LOG_LEVEL));
+    parser
+      .addOption(new CommandLineParser.StringOption(CommandLineParser.Option.NO_SHORT_FORM,
+                                                    OPTION_LOG_LEVEL,
+                                                    "OFF"));
 
-    parser.parse(args);
     return parser;
   }
 

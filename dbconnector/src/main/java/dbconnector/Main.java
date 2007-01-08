@@ -30,6 +30,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import sf.util.CommandLineParser;
+import sf.util.CommandLineUtility;
 import sf.util.GroupedProperties;
 import sf.util.Prompter;
 import sf.util.Utilities;
@@ -37,69 +38,56 @@ import dbconnector.datasource.PropertiesDataSource;
 import dbconnector.datasource.PropertiesDataSourceException;
 
 /**
- * Main class that reads a properties file for database connection information,
- * and tests the database connections.
+ * Main class that reads a properties file for database connection
+ * information, and tests the database connections.
  * 
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
 public final class Main
 {
 
+  private static final String OPTION_PASSWORD = "password";
+  private static final String OPTION_USER = "user";
+  private static final String OPTION_URL = "url";
+  private static final String OPTION_DRIVER = "driver";
+  private static final String OPTION_CONNECTION = "connection";
+  private static final String OPTION_DEFAULT = "default";
+  private static final String OPTION_PROMPT = "prompt";
+  private static final String OPTION_TESTALL = "testall";
+  private static final String OPTION_CONNECTIONSFILE = "connectionsfile";
   private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
-  private static final String CONNECTION_PROPERTIES = "connection.properties";
-
-  /**
-   * Internal storage for information. Read from text file.
-   */
-  private static String info;
-
-  static
-  {
-    // load about information
-    final byte[] text = Utilities.readFully(Main.class
-      .getResourceAsStream("/dbconnector-readme.txt"));
-    info = new String(text);
-
-  }
 
   private Main()
   {
   }
 
   /**
-   * Get connection parameters, and creates a connection, and crawls the schema.
+   * Get connection parameters, and creates a connection, and crawls the
+   * schema.
    * 
    * @param args
-   *          Arguments passed into the program from the command line.
+   *        Arguments passed into the program from the command line.
    * @throws PropertiesDataSourceException
-   *           On an exception creating the data source
+   *         On an exception creating the data source
    */
   public static void main(final String[] args)
     throws PropertiesDataSourceException
   {
+    CommandLineUtility.checkForHelp(args, "/dbconnector-readme.txt");
 
-    if (args.length == 0)
-    {
-      printUsage();
-      return;
-    }
     final CommandLineParser parser = new CommandLineParser();
 
     parser
-      .addOption(new CommandLineParser.StringOption('f', "connectionsfile"));
+      .addOption(new CommandLineParser.StringOption('f',
+                                                    OPTION_CONNECTIONSFILE,
+                                                    "connection.properties"));
 
     parser.parse(args);
 
-    String connectionsFileName = CONNECTION_PROPERTIES;
-    final CommandLineParser.BaseOption connectionsFileOption = parser
-      .getOption("connectionsfile");
-
-    if (connectionsFileOption.isFound())
-    {
-      connectionsFileName = (String) connectionsFileOption.getValue();
-    }
-
-    final Properties config = Utilities.loadProperties(new Properties(), connectionsFileName);
+    String connectionsFileName = parser
+      .getStringOptionValue(OPTION_CONNECTIONSFILE);
+    final Properties config = Utilities.loadProperties(new Properties(),
+                                                       connectionsFileName);
     if (createDataSource(args, config) == null)
     {
       System.exit(2);
@@ -108,86 +96,48 @@ public final class Main
   }
 
   /**
-   * Creates a PropertiesDataSource using an argument list as passed into a main
-   * program.
+   * Creates a PropertiesDataSource using an argument list as passed
+   * into a main program.
    * 
    * @param args
-   *          List of arguments.
+   *        List of arguments.
    * @param properties
-   *          Connection properties
+   *        Connection properties
    * @return A PropertiesDataSource, or null on an exception.
    * @throws PropertiesDataSourceException
-   *           on an exception
+   *         on an exception
    */
-  public static PropertiesDataSource createDataSource(
-                                                      final String[] args,
+  public static PropertiesDataSource createDataSource(final String[] args,
                                                       final Properties properties)
     throws PropertiesDataSourceException
   {
 
     PropertiesDataSource dataSource = null;
 
-    final CommandLineParser parser = new CommandLineParser();
-    //
-    parser.addOption(new CommandLineParser.BooleanOption('h', "?"));
-    parser.addOption(new CommandLineParser.BooleanOption('a', "testall"));
-    parser.addOption(new CommandLineParser.StringOption('x', "prompt"));
-    parser.addOption(new CommandLineParser.BooleanOption('d', "default"));
-    parser.addOption(new CommandLineParser.StringOption('c', "connection"));
-    //
-    parser.addOption(new CommandLineParser.StringOption("driver"));
-    parser.addOption(new CommandLineParser.StringOption("url"));
-    parser.addOption(new CommandLineParser.StringOption("user"));
-    parser.addOption(new CommandLineParser.StringOption("password"));
-    //
+    final CommandLineParser parser = createCommandLineParser();
     parser.parse(args);
 
-    final boolean help = parser.getOption("h").isFound();
-    if (help)
-    {
-      printUsage();
-      return null;
-    }
-
-    final boolean testAll = parser.getOption("testall").isFound();
-
-    final CommandLineParser.BaseOption promptOption = parser
-      .getOption("prompt");
-    final boolean prompt = promptOption.isFound();
-
-    boolean defaultConnection = parser.getOption("default").isFound();
-
-    final CommandLineParser.BaseOption connectionNameOption = parser
-      .getOption("connection");
+    final boolean testAll = parser.getBooleanOptionValue(OPTION_TESTALL);
+    final boolean prompt = parser.getBooleanOptionValue(OPTION_PROMPT);
+    boolean defaultConnection = parser.getBooleanOptionValue(OPTION_DEFAULT);
 
     // JDBC connection information
-    final CommandLineParser.BaseOption driverOption = parser.getOption("driver");
-    String driver = (String) driverOption.getValue();
-    final CommandLineParser.BaseOption urlOption = parser.getOption("url");
-    String url = (String) urlOption.getValue();
-    final CommandLineParser.BaseOption userOption = parser.getOption("user");
-    String user = (String) userOption.getValue();
-    final CommandLineParser.BaseOption passwordOption = parser.getOption("password");
-    String password = (String) passwordOption.getValue();
-    boolean useJdbcConnection = urlOption.isFound();
-    
+    String driver = parser.getStringOptionValue(OPTION_DRIVER);
+    String url = parser.getStringOptionValue(OPTION_URL);
+    String user = parser.getStringOptionValue(OPTION_USER);
+    String password = parser.getStringOptionValue(OPTION_PASSWORD);
+    boolean useJdbcConnection = url != null;
+
     String connectionName = null;
     if (prompt)
     {
       defaultConnection = false;
-      connectionName = (String) promptOption.getValue();
+      connectionName = "dbconnection";
     }
     else
     {
-      if (connectionNameOption.isFound())
-      {
-        defaultConnection = false;
-        connectionName = (String) connectionNameOption.getValue();
-      }
-      else
-      {
-        defaultConnection = true;
-      }
+      connectionName = parser.getStringOptionValue(OPTION_CONNECTION);
+      defaultConnection = connectionName == null;
     }
     if (defaultConnection)
     {
@@ -204,10 +154,11 @@ public final class Main
                                                          + ".properties",
                                                      connectionName);
       dataSource = new PropertiesDataSource(connectionProperties,
-          connectionName);
+                                            connectionName);
     }
-    else if (useJdbcConnection) {
-      dataSource = new PropertiesDataSource(driver, url, user, password);      
+    else if (useJdbcConnection)
+    {
+      dataSource = new PropertiesDataSource(driver, url, user, password);
     }
     else
     {
@@ -216,6 +167,36 @@ public final class Main
 
     return dataSource;
 
+  }
+
+  private static CommandLineParser createCommandLineParser()
+  {
+    final CommandLineParser parser = new CommandLineParser();
+
+    parser.addOption(new CommandLineParser.BooleanOption('a', OPTION_TESTALL));
+    parser.addOption(new CommandLineParser.BooleanOption('x', OPTION_PROMPT));
+    parser.addOption(new CommandLineParser.BooleanOption('d', OPTION_DEFAULT));
+    parser.addOption(new CommandLineParser.StringOption('c',
+                                                        OPTION_CONNECTION,
+                                                        null));
+    //
+    parser
+      .addOption(new CommandLineParser.StringOption(CommandLineParser.Option.NO_SHORT_FORM,
+                                                    OPTION_DRIVER,
+                                                    null));
+    parser
+      .addOption(new CommandLineParser.StringOption(CommandLineParser.Option.NO_SHORT_FORM,
+                                                    OPTION_URL,
+                                                    null));
+    parser
+      .addOption(new CommandLineParser.StringOption(CommandLineParser.Option.NO_SHORT_FORM,
+                                                    OPTION_USER,
+                                                    null));
+    parser
+      .addOption(new CommandLineParser.StringOption(CommandLineParser.Option.NO_SHORT_FORM,
+                                                    OPTION_PASSWORD,
+                                                    null));
+    return parser;
   }
 
   private static void testAllConnections(final Properties properties)
@@ -238,19 +219,13 @@ public final class Main
     }
   }
 
-  private static void printUsage()
-  {
-    System.out.println(Version.about());
-    System.out.println(info);
-  }
-
   /**
    * Prompts for a database connection.
    * 
    * @param cxnParamsFile
-   *          Connection properties file
+   *        Connection properties file
    * @param connectionName
-   *          Connection name
+   *        Connection name
    * @return Connection properties
    */
   public static Properties prompt(final String cxnParamsFile,
@@ -279,7 +254,7 @@ public final class Main
     cxnParams.setProperty("schema", "%");
 
     // prompt for driver
-    final String driver = "driver";
+    final String driver = OPTION_DRIVER;
     param = (String) prompter.getInput(driver,
                                        cxnParams.getProperty(driver),
                                        Prompter.STRING,
@@ -287,7 +262,7 @@ public final class Main
     cxnParams.setProperty(connectionName + "." + driver, param);
 
     // prompt for url
-    final String url = "url";
+    final String url = OPTION_URL;
     param = (String) prompter.getInput(url,
                                        cxnParams.getProperty(url),
                                        Prompter.STRING,
@@ -303,7 +278,7 @@ public final class Main
     cxnParams.setProperty(connectionName + "." + schema, param);
 
     // prompt for user
-    final String user = "user";
+    final String user = OPTION_USER;
     param = (String) prompter.getInput(user,
                                        cxnParams.getProperty(user),
                                        Prompter.STRING,
@@ -311,7 +286,7 @@ public final class Main
     cxnParams.setProperty(connectionName + "." + user, param);
 
     // prompt for password
-    final String password = "password";
+    final String password = OPTION_PASSWORD;
     param = (String) prompter.getInput(password, cxnParams
       .getProperty(password), Prompter.STRING, true);
     cxnParams.setProperty(connectionName + "." + password, param);
