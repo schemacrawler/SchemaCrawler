@@ -28,6 +28,7 @@ import java.util.Date;
 
 import junit.framework.TestCase;
 import sf.util.CommandLineParser;
+import sf.util.CommandLineParser.Option;
 
 public class CommandLineParserTest
   extends TestCase
@@ -43,13 +44,13 @@ public class CommandLineParserTest
   {
     final CommandLineParser parser = new CommandLineParser();
     parser.addOption(new CommandLineParser.BooleanOption('v', "verbose"));
-    parser.addOption(new CommandLineParser.NumberOption('s', "size"));
-    parser.addOption(new CommandLineParser.StringOption('n', "name"));
-    parser.addOption(new CommandLineParser.NumberOption('f', "fraction"));
+    parser.addOption(new CommandLineParser.NumberOption('s', "size", null));
+    parser.addOption(new CommandLineParser.StringOption('n', "name", null));
+    parser.addOption(new CommandLineParser.NumberOption('f', "fraction", null));
     parser.addOption(new CommandLineParser.BooleanOption('m', "missing"));
     assertNull(parser.getOption("size").getValue());
     parser.parse(new String[] {
-      "-v", "-size=100", "-n", "foo", "-f", "0.1", "rest"
+        "-v", "-size=100", "-n", "foo", "-f", "0.1", "rest"
     });
     assertTrue(!parser.getOption("missing").isFound());
     assertEquals(Boolean.TRUE, parser.getOption("verbose").getValue());
@@ -62,11 +63,113 @@ public class CommandLineParserTest
     assertEquals("rest", otherArgs[0]);
   }
 
+  public void testBooleanOption()
+    throws Exception
+  {
+    final String verbose = "verbose";
+
+    final CommandLineParser parser = new CommandLineParser();
+    parser.addOption(new CommandLineParser.BooleanOption('v', verbose));
+    parser.addOption(new CommandLineParser.StringOption('n', "name", null));
+
+    parser.parse(new String[] {
+        "-v", "-name=schemacrawler"
+    });
+    assertTrue(parser.getBooleanOptionValue(verbose));
+    assertTrue(parser.getStringOptionValue("name").equals("schemacrawler"));
+
+    parser.parse(new String[] {
+        "-v=true", "-name=schemacrawler"
+    });
+    assertTrue(parser.getBooleanOptionValue(verbose));
+    assertTrue(parser.getStringOptionValue("name").equals("schemacrawler"));
+
+    parser.parse(new String[] {
+        "-v", "true", "-name=schemacrawler"
+    });
+    assertTrue(parser.getBooleanOptionValue(verbose));
+    assertTrue(parser.getStringOptionValue("name").equals("schemacrawler"));
+
+    parser.parse(new String[] {
+      "-name=schemacrawler"
+    });
+    assertFalse(parser.getBooleanOptionValue(verbose));
+    assertTrue(parser.getStringOptionValue("name").equals("schemacrawler"));
+
+    parser.parse(new String[] {
+        "-v=false", "-name=schemacrawler"
+    });
+    assertFalse(parser.getBooleanOptionValue(verbose));
+    assertTrue(parser.getStringOptionValue("name").equals("schemacrawler"));
+
+    parser.parse(new String[] {
+        "-v", "false", "-name=schemacrawler"
+    });
+    assertFalse(parser.getBooleanOptionValue(verbose));
+    assertTrue(parser.getStringOptionValue("name").equals("schemacrawler"));
+  }
+
+  public void testStringOption()
+    throws Exception
+  {
+    final String string = "string";
+
+    final CommandLineParser parser = new CommandLineParser();
+    parser.addOption(new CommandLineParser.StringOption('s', string, null));
+    parser.addOption(new CommandLineParser.StringOption('n', "name", null));
+
+    parser.parse(new String[] {
+      "-name=schemacrawler"
+    });
+    assertFalse(parser.getOption(string).isFound());
+    assertTrue(parser.getStringOptionValue("name").equals("schemacrawler"));
+
+    parser.parse(new String[] {
+        "-s", "-name=schemacrawler"
+    });
+    assertFalse(parser.getOption(string).isFound());
+    assertTrue(parser.getStringOptionValue("name").equals("schemacrawler"));
+
+    parser.parse(new String[] {
+        "-string", "-name=schemacrawler"
+    });
+    assertFalse(parser.getOption(string).isFound());
+    assertTrue(parser.getStringOptionValue("name").equals("schemacrawler"));
+
+    parser.parse(new String[] {
+        "-s=value", "-name=schemacrawler"
+    });
+    assertTrue(parser.getOption(string).isFound());
+    assertTrue(parser.getStringOptionValue(string).equals("value"));
+    assertTrue(parser.getStringOptionValue("name").equals("schemacrawler"));
+
+    parser.parse(new String[] {
+        "-s", "value", "-name=schemacrawler"
+    });
+    assertTrue(parser.getOption(string).isFound());
+    assertTrue(parser.getStringOptionValue(string).equals("value"));
+    assertTrue(parser.getStringOptionValue("name").equals("schemacrawler"));
+
+    parser.parse(new String[] {
+        "-string=value", "-name=schemacrawler"
+    });
+    assertTrue(parser.getOption(string).isFound());
+    assertTrue(parser.getStringOptionValue(string).equals("value"));
+    assertTrue(parser.getStringOptionValue("name").equals("schemacrawler"));
+
+    parser.parse(new String[] {
+        "-string", "value", "-name=schemacrawler"
+    });
+    assertTrue(parser.getOption(string).isFound());
+    assertTrue(parser.getStringOptionValue(string).equals("value"));
+    assertTrue(parser.getStringOptionValue("name").equals("schemacrawler"));
+  }
+
   public void testBadFormat()
     throws Exception
   {
     final CommandLineParser parser = new CommandLineParser();
-    parser.addOption(new CommandLineParser.NumberOption('s', "size"));
+    parser.addOption(new CommandLineParser.NumberOption('s', "size", null));
     parser.parse(new String[] {
       "-size=blah"
     });
@@ -94,7 +197,7 @@ public class CommandLineParserTest
     final CommandLineParser parser = new CommandLineParser();
     parser.addOption(new CommandLineParserTest.ShortDateOption('d', "date"));
     parser.parse(new String[] {
-      "-d", "11/03/2003"
+        "-d", "11/03/2003"
     });
     final Calendar d = (Calendar) parser.getOption("date").getValue();
     assertEquals(11, d.get(Calendar.MONTH) + 1);
@@ -109,7 +212,7 @@ public class CommandLineParserTest
     final CommandLineParser parser = new CommandLineParser();
     parser.addOption(new CommandLineParserTest.ShortDateOption('d', "date"));
     parser.parse(new String[] {
-      "-d", "foobar"
+        "-d", "foobar"
     });
     assertNull(parser.getOption("date").getValue());
 
@@ -121,7 +224,7 @@ public class CommandLineParserTest
 
     public ShortDateOption(final char shortForm, final String longForm)
     {
-      super(shortForm, longForm, true);
+      super(shortForm, longForm, null);
     }
 
     protected Object parseValue(final String arg)

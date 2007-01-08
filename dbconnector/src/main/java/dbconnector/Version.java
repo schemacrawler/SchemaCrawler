@@ -33,7 +33,7 @@ import sf.util.Utilities;
 public final class Version
 {
 
-  private static final String PRODUCTNAME = "dbconnector";
+  private static final String PRODUCTNAME = "SchemaCrawler";
   private static final String VERSION = "4.2";
 
   private Version()

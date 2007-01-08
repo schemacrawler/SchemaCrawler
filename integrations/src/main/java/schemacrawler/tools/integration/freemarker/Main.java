@@ -21,8 +21,8 @@
 package schemacrawler.tools.integration.freemarker;
 
 
-import schemacrawler.main.CommandLineUtility;
 import schemacrawler.main.SchemaCrawlerMain;
+import sf.util.CommandLineUtility;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.

@@ -27,9 +27,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.Executor;
-import schemacrawler.Version;
 import schemacrawler.tools.ToolsExecutor;
 import sf.util.Utilities;
+import dbconnector.Version;
 import dbconnector.datasource.PropertiesDataSource;
 
 /**
@@ -41,6 +41,14 @@ public final class SchemaCrawlerMain
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerMain.class
     .getName());
 
+  /**
+   * Executes with the command line, and the standard tools executor.
+   * 
+   * @param args
+   *        Command line arguments
+   * @throws Exception
+   *         On an exception
+   */
   public static void schemacrawler(final String[] args)
     throws Exception
   {

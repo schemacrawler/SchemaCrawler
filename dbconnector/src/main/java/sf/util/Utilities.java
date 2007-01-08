@@ -468,4 +468,22 @@ public final class Utilities
     return properties;
   }
 
+  /**
+   * Loads the SchemaCrawler configuration, and override.
+   * 
+   * @param configfilename
+   *        Configuration file name.
+   * @param configoverridefilename
+   *        Configuration override file name.
+   * @return Configuration properties.
+   */
+  public static Properties loadConfig(final String configfilename,
+                                      final String configoverridefilename)
+  {
+    Properties config = new Properties();
+    config = loadProperties(config, configfilename);
+    config = loadProperties(config, configoverridefilename);
+    return config;
+  }
+
 }

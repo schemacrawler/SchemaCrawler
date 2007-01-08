@@ -64,40 +64,26 @@ public final class OptionsParser
     throws SchemaCrawlerException
   {
 
-    final CommandLineParser parser = new CommandLineParser();
-    parser
-      .addOption(new CommandLineParser.StringOption('g', OPTION_CONFIGFILE));
-    parser
-      .addOption(new CommandLineParser.StringOption('p',
-                                                    OPTION_CONFIGOVERRIDEFILE));
-    parser.addOption(new CommandLineParser.StringOption(OPTION_COMMAND));
-    parser.addOption(new CommandLineParser.StringOption(OPTION_OUTPUT_FORMAT));
-    parser.addOption(new CommandLineParser.StringOption(OPTION_OUTPUT_FILE));
-    parser.addOption(new CommandLineParser.StringOption(OPTION_OUTPUT_APPEND));
-    parser.addOption(new CommandLineParser.StringOption(OPTION_NOHEADER));
-    parser.addOption(new CommandLineParser.StringOption(OPTION_NOFOOTER));
-    parser.addOption(new CommandLineParser.StringOption(OPTION_NOINFO));
+    final CommandLineParser parser = createCommandLineParser();
     parser.parse(args);
 
-    final String cfgFile = CommandLineUtility.getStringOption(parser.getOption(OPTION_CONFIGFILE),
-                                           "schemacrawler.config.properties");
-    final String cfgOverrideFile = CommandLineUtility.getStringOption(parser
-                                                     .getOption(OPTION_CONFIGOVERRIDEFILE),
-                                                   "schemacrawler.config.override.properties");
-    final Properties config = CommandLineUtility.loadConfig(cfgFile, cfgOverrideFile);
+    final String cfgFile = parser.getStringOptionValue(OPTION_CONFIGFILE);
+    final String cfgOverrideFile = parser
+      .getStringOptionValue(OPTION_CONFIGOVERRIDEFILE);
+    final Properties config = Utilities.loadConfig(cfgFile,
+                                                            cfgOverrideFile);
 
-    final String outputFormatValue = CommandLineUtility.getStringOption(parser
-      .getOption(OPTION_OUTPUT_FORMAT), OutputFormat.TEXT.toString());
+    final String outputFormatValue = parser
+      .getStringOptionValue(OPTION_OUTPUT_FORMAT);
 
-    final String outputFile = CommandLineUtility.getStringOption(parser
-      .getOption(OPTION_OUTPUT_FILE), "");
+    final String outputFile = parser.getStringOptionValue(OPTION_OUTPUT_FILE);
 
-    final boolean appendOutput = CommandLineUtility.getBooleanOption(parser
-      .getOption(OPTION_OUTPUT_APPEND));
+    final boolean appendOutput = parser
+      .getBooleanOptionValue(OPTION_OUTPUT_APPEND);
 
-    final boolean noHeader = CommandLineUtility.getBooleanOption(parser.getOption(OPTION_NOHEADER));
-    final boolean noFooter = CommandLineUtility.getBooleanOption(parser.getOption(OPTION_NOFOOTER));
-    final boolean noInfo = CommandLineUtility.getBooleanOption(parser.getOption(OPTION_NOINFO));
+    final boolean noHeader = parser.getBooleanOptionValue(OPTION_NOHEADER);
+    final boolean noFooter = parser.getBooleanOptionValue(OPTION_NOFOOTER);
+    final boolean noInfo = parser.getBooleanOptionValue(OPTION_NOINFO);
 
     final OutputOptions masterOutputOptions = new OutputOptions(outputFormatValue,
                                                                 outputFile);
@@ -106,9 +92,7 @@ public final class OptionsParser
     masterOutputOptions.setNoFooter(noFooter);
     masterOutputOptions.setNoInfo(noInfo);
 
-    final CommandLineParser.BaseOption commandOption = parser
-      .getOption(OPTION_COMMAND);
-    String commandOptionValue = CommandLineUtility.getStringOption(commandOption, "");
+    String commandOptionValue = parser.getStringOptionValue(OPTION_COMMAND);
     if (Utilities.isBlank(commandOptionValue))
     {
       throw new SchemaCrawlerException("No SchemaCrawler command specified");
@@ -120,6 +104,45 @@ public final class OptionsParser
 
     return optionCommands;
 
+  }
+
+  private static CommandLineParser createCommandLineParser()
+  {
+    final CommandLineParser parser = new CommandLineParser();
+    parser
+      .addOption(new CommandLineParser.StringOption('g',
+                                                    OPTION_CONFIGFILE,
+                                                    "schemacrawler.config.properties"));
+    parser
+      .addOption(new CommandLineParser.StringOption('p',
+                                                    OPTION_CONFIGOVERRIDEFILE,
+                                                    "schemacrawler.config.override.properties"));
+    parser
+      .addOption(new CommandLineParser.StringOption(CommandLineParser.Option.NO_SHORT_FORM,
+                                                    OPTION_COMMAND,
+                                                    ""));
+    parser
+      .addOption(new CommandLineParser.StringOption(CommandLineParser.Option.NO_SHORT_FORM,
+                                                    OPTION_OUTPUT_FORMAT,
+                                                    OutputFormat.TEXT
+                                                      .toString()));
+    parser
+      .addOption(new CommandLineParser.StringOption(CommandLineParser.Option.NO_SHORT_FORM,
+                                                    OPTION_OUTPUT_FILE,
+                                                    ""));
+    parser
+      .addOption(new CommandLineParser.BooleanOption(CommandLineParser.Option.NO_SHORT_FORM,
+                                                     OPTION_OUTPUT_APPEND));
+    parser
+      .addOption(new CommandLineParser.BooleanOption(CommandLineParser.Option.NO_SHORT_FORM,
+                                                     OPTION_NOHEADER));
+    parser
+      .addOption(new CommandLineParser.BooleanOption(CommandLineParser.Option.NO_SHORT_FORM,
+                                                     OPTION_NOFOOTER));
+    parser
+      .addOption(new CommandLineParser.BooleanOption(CommandLineParser.Option.NO_SHORT_FORM,
+                                                     OPTION_NOINFO));
+    return parser;
   }
 
   private static Options[] createOptionsPerCommand(final String[] commandStrings,

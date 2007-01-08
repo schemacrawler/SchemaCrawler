@@ -23,13 +23,13 @@ package sf.util;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 /**
  * Command-line options parser.
@@ -38,9 +38,356 @@ import java.util.Vector;
  */
 public final class CommandLineParser
 {
+  /**
+   * Representation of a command-line option.
+   */
+  public abstract static class BaseOption
+    implements Option
+  {
+
+    protected String shortForm;
+    protected String longForm;
+    protected boolean hasShortForm;
+    protected boolean hasLongForm;
+    protected Object value;
+    protected Object defaultValue;
+
+    protected BaseOption(final char shortForm,
+                         final String longForm,
+                         final Object defaultValue)
+    {
+      setShortForm(shortForm);
+      setLongForm(longForm);
+      if (!hasLongForm && !hasShortForm)
+      {
+        throw new IllegalArgumentException("Option cannot be defined");
+      }
+      this.defaultValue = defaultValue;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see Option#getDefaultValue()
+     */
+    public Object getDefaultValue()
+    {
+      return defaultValue;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see Option#getLongForm()
+     */
+    public String getLongForm()
+    {
+      return longForm;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see Option#getShortForm()
+     */
+    public String getShortForm()
+    {
+      return shortForm;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see Option#getValue()
+     */
+    public Object getValue()
+    {
+      Object returnValue;
+      if (!isFound())
+      {
+        returnValue = defaultValue;
+      }
+      else
+      {
+        returnValue = value;
+      }
+      return returnValue;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see Option#hasLongForm()
+     */
+    public boolean hasLongForm()
+    {
+      return hasLongForm;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see Option#hasShortForm()
+     */
+    public boolean hasShortForm()
+    {
+      return hasShortForm;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see Option#isFound()
+     */
+    public boolean isFound()
+    {
+      if (value instanceof Boolean)
+      {
+        return ((Boolean) value).booleanValue();
+      }
+      return value != null;
+    }
+
+    /**
+     * Override to extract and convert an option value passed on the
+     * command-line.
+     * 
+     * @param valueString
+     * @return Parsed value
+     */
+    protected abstract Object parseValue(final String valueString);
+
+    void reset()
+    {
+      if (value instanceof Boolean)
+      {
+        value = Boolean.FALSE;
+      }
+      else
+      {
+        value = null;
+      }
+    }
+
+    void setValue(final String valueString)
+    {
+      this.value = parseValue(valueString);
+    }
+
+    private void setLongForm(final String longForm)
+    {
+      if (longForm == NO_LONG_FORM)
+      {
+        return;
+      }
+      if (longForm.length() == 0)
+      {
+        throw new IllegalArgumentException("Long form for option not specified");
+      }
+      this.longForm = longForm;
+      hasLongForm = true;
+    }
+
+    private void setShortForm(final char shortForm)
+    {
+      if (shortForm == NO_SHORT_FORM)
+      {
+        return;
+      }
+      if (!Character.isLetterOrDigit(shortForm))
+      {
+        throw new IllegalArgumentException("Illegal short form for option specified: "
+                                           + shortForm);
+      }
+      this.shortForm = new String(new char[] {
+        shortForm
+      });
+      hasShortForm = true;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#toString()
+     */
+    public String toString()
+    {
+      String optionString = (hasLongForm? longForm: "")
+                            + (hasShortForm? (" (" + shortForm + ")"): "")
+                            + "=" + value + " (" + defaultValue + ")";
+      return optionString;
+    }
+  }
+
+  /**
+   * An option that expects a boolean value.
+   */
+  public static final class BooleanOption
+    extends BaseOption
+  {
+
+    /**
+     * Constructor that takes the short form and long form of the
+     * switch.
+     * 
+     * @param shortForm
+     *        Short form of the switch
+     * @param longForm
+     *        Long form of the switch
+     */
+    public BooleanOption(final char shortForm, final String longForm)
+    {
+      super(shortForm, longForm, Boolean.FALSE);
+      value = Boolean.FALSE;
+    }
+
+    protected Object parseValue(final String valueString)
+    {
+      if (valueString == null || valueString.length() == 0)
+      {
+        return Boolean.FALSE;
+      }
+      return Boolean.valueOf(valueString);
+    }
+
+  }
+
+  /**
+   * An option that expects a floating-point value.
+   */
+  public static final class NumberOption
+    extends BaseOption
+  {
+
+    /**
+     * Constructor that takes the short form and long form of the
+     * switch.
+     * 
+     * @param shortForm
+     *        Short form of the switch
+     * @param longForm
+     *        Long form of the switch
+     * @param defaultValue
+     *        Default option value.
+     */
+    public NumberOption(final char shortForm,
+                        final String longForm,
+                        final Number defaultValue)
+    {
+      super(shortForm, longForm, defaultValue);
+    }
+
+    protected Object parseValue(final String arg)
+    {
+      try
+      {
+        return NumberFormat.getNumberInstance().parse(arg);
+      }
+      catch (final ParseException e)
+      {
+        return null;
+      }
+    }
+  }
+
+  /**
+   * Representation of a command-line option.
+   * 
+   * @author Sualeh Fatehi
+   */
+  public static interface Option
+  {
+    /** Special value when no short form is defined */
+    final char NO_SHORT_FORM = (char) 0;
+    /** Special value when no long form is defined */
+    final String NO_LONG_FORM = null;
+
+    /**
+     * Gets the default value for the option.
+     * 
+     * @return Default value.
+     */
+    Object getDefaultValue();
+
+    /**
+     * Gets the long form of the switch for the option.
+     * 
+     * @return Long form of the switch
+     */
+    String getLongForm();
+
+    /**
+     * Gets the short form of the switch for the option.
+     * 
+     * @return Short form of the switch
+     */
+    String getShortForm();
+
+    /**
+     * Gets the value for the option.
+     * 
+     * @return Option value
+     */
+    Object getValue();
+
+    /**
+     * Whether the option has the long form of the switch.
+     * 
+     * @return Whether the option has the long form of the switch
+     */
+    boolean hasLongForm();
+
+    /**
+     * Whether the option has the short form of the switch.
+     * 
+     * @return Whether the option has the short form of the switch
+     */
+    boolean hasShortForm();
+
+    /**
+     * Whether the option was found.
+     * 
+     * @return Whether the option was found
+     */
+    boolean isFound();
+
+  }
+
+  /**
+   * An option that expects a string value.
+   */
+  public static final class StringOption
+    extends BaseOption
+  {
+
+    /**
+     * Constructor that takes the short form and long form of the
+     * switch.
+     * 
+     * @param shortForm
+     *        Short form of the switch
+     * @param longForm
+     *        Long form of the switch
+     * @param defaultValue
+     *        Default option value.
+     */
+    public StringOption(final char shortForm,
+                        final String longForm,
+                        final String defaultValue)
+    {
+      super(shortForm, longForm, defaultValue);
+    }
+
+    protected Object parseValue(final String arg)
+    {
+      return arg;
+    }
+  }
 
   private static final String DASH = "-";
+
   private String[] remainingArgs;
+
   private final Map optionsMap = new HashMap();
 
   /**
@@ -49,7 +396,7 @@ public final class CommandLineParser
    * @param option
    *        Option to add
    */
-  public void addOption(final BaseOption option)
+  public void addOption(final Option option)
   {
     if (option.hasShortForm())
     {
@@ -59,6 +406,66 @@ public final class CommandLineParser
     {
       optionsMap.put(DASH + option.getLongForm(), option);
     }
+  }
+
+  /**
+   * Get an option value by name.
+   * 
+   * @param optionName
+   *        Name of the option
+   * @return Option
+   */
+  public boolean getBooleanOptionValue(final String optionName)
+  {
+    boolean optionValue = false;
+    final Option option = getOption(optionName);
+    if (option == null)
+    {
+      optionValue = false;
+    }
+    else
+    {
+      if (option.isFound())
+      {
+        optionValue = Boolean.valueOf(option.getValue().toString())
+          .booleanValue();
+      }
+    }
+    return optionValue;
+  }
+
+  /**
+   * Get an option by name.
+   * 
+   * @param optionName
+   *        Name of the option
+   * @return Option
+   */
+  public Option getOption(final String optionName)
+  {
+    return (Option) optionsMap.get(DASH + optionName);
+  }
+
+  /**
+   * Get all the command line options.
+   * 
+   * @return Command line options
+   */
+  public Option[] getOptions()
+  {
+    final Collection options = optionsMap.values();
+    final Collection uniqueOptions = new HashSet();
+
+    for (final Iterator iterator = options.iterator(); iterator.hasNext();)
+    {
+      final Option option = (Option) iterator.next();
+      if (!uniqueOptions.contains(option))
+      {
+        uniqueOptions.add(option);
+      }
+    }
+
+    return (Option[]) uniqueOptions.toArray(new Option[uniqueOptions.size()]);
   }
 
   /**
@@ -78,38 +485,20 @@ public final class CommandLineParser
   }
 
   /**
-   * Get all the command line options.
-   * 
-   * @return Command line options
-   */
-  public BaseOption[] getOptions()
-  {
-    final Collection options = optionsMap.values();
-    final Collection uniqueOptions = new HashSet();
-
-    for (final Iterator iterator = options.iterator(); iterator.hasNext();)
-    {
-      final BaseOption option = (BaseOption) iterator.next();
-      if (!uniqueOptions.contains(option))
-      {
-        uniqueOptions.add(option);
-      }
-    }
-
-    return (BaseOption[]) uniqueOptions.toArray(new BaseOption[uniqueOptions
-      .size()]);
-  }
-
-  /**
-   * Get an option by name.
+   * Get an option value by name.
    * 
    * @param optionName
    *        Name of the option
    * @return Option
    */
-  public BaseOption getOption(final String optionName)
+  public String getStringOptionValue(final String optionName)
   {
-    return (BaseOption) optionsMap.get(DASH + optionName);
+    final Option option = getOption(optionName);
+    if (option == null || option.getValue() == null)
+    {
+      return null;
+    }
+    return option.getValue().toString();
   }
 
   /**
@@ -124,13 +513,13 @@ public final class CommandLineParser
   {
 
     // clean out all options
-    final BaseOption[] options = getOptions();
+    final Option[] options = getOptions();
     for (int i = 0; i < options.length; i++)
     {
-      options[i].reset();
+      ((BaseOption) options[i]).reset();
     }
 
-    final List otherArgs = new Vector();
+    final List otherArgs = new ArrayList();
 
     int position = 0;
 
@@ -158,20 +547,43 @@ public final class CommandLineParser
         continue;
       }
 
-      if (option.wantsValue())
-      {
-        if (valueArg == null)
-        {
-          // the next argument is the value argument
-          position++;
+      // // Check if a value is needed
+      // final boolean wantsValue = !(option instanceof BooleanOption);
+      // if (wantsValue)
+      // {
+      // if (valueArg == null)
+      // {
+      // // The next argument is the value argument
+      // position++;
+      // if (position < args.length)
+      // {
+      // valueArg = args[position];
+      // }
+      // }
+      // }
+      // else
+      // {
+      // valueArg = Boolean.TRUE.toString();
+      // }
+      // Check if a value is needed
 
-          if (position < args.length)
+      if (valueArg == null)
+      {
+        // The next argument is the value argument
+        position++;
+        if (position < args.length)
+        {
+          valueArg = args[position];
+          // If this is not an argument, backtrack
+          if (valueArg.startsWith(DASH))
           {
-            valueArg = args[position];
+            position--;
+            valueArg = null;
           }
         }
       }
-      else
+      // Booleans are true, even if they have no value
+      if (valueArg == null && (option instanceof BooleanOption))
       {
         valueArg = Boolean.TRUE.toString();
       }
@@ -181,331 +593,6 @@ public final class CommandLineParser
     }
 
     remainingArgs = (String[]) otherArgs.toArray(new String[otherArgs.size()]);
-  }
-
-  /**
-   * Representation of a command-line option.
-   */
-  public abstract static class BaseOption
-  {
-
-    protected String shortForm;
-    protected String longForm;
-    protected boolean hasShortForm;
-    protected boolean hasLongForm;
-    protected boolean wantsValue;
-    protected Object value;
-
-    protected BaseOption(final char shortForm, final boolean wantsValue)
-    {
-      setShortForm(shortForm);
-
-      this.wantsValue = wantsValue;
-    }
-
-    protected BaseOption(final String longForm, final boolean wantsValue)
-    {
-      setLongForm(longForm);
-
-      this.wantsValue = wantsValue;
-    }
-
-    protected BaseOption(final char shortForm,
-                         final String longForm,
-                         final boolean wantsValue)
-    {
-      setShortForm(shortForm);
-      setLongForm(longForm);
-
-      this.wantsValue = wantsValue;
-    }
-
-    private void setShortForm(final char shortForm)
-    {
-      this.shortForm = new String(new char[] {
-        shortForm
-      });
-      hasShortForm = true;
-    }
-
-    private void setLongForm(final String longForm)
-    {
-      if (longForm == null || longForm.length() == 0)
-      {
-        throw new IllegalArgumentException("Long form for option not specified");
-      }
-      this.longForm = longForm;
-      hasLongForm = true;
-    }
-
-    /**
-     * Gets the short form of the switch for the option.
-     * 
-     * @return Short form of the switch
-     */
-    public String getShortForm()
-    {
-      return shortForm;
-    }
-
-    /**
-     * Gets the long form of the switch for the option.
-     * 
-     * @return Long form of the switch
-     */
-    public String getLongForm()
-    {
-      return longForm;
-    }
-
-    /**
-     * Whether the option has the short form of the switch.
-     * 
-     * @return Whether the option has the short form of the switch
-     */
-    public boolean hasShortForm()
-    {
-      return hasShortForm;
-    }
-
-    /**
-     * Whether the option has the long form of the switch.
-     * 
-     * @return Whether the option has the long form of the switch
-     */
-    public boolean hasLongForm()
-    {
-      return hasLongForm;
-    }
-
-    /**
-     * Whether the option was found.
-     * 
-     * @return Whether the option was found
-     */
-    public boolean isFound()
-    {
-      if (value instanceof Boolean)
-      {
-        return ((Boolean) value).booleanValue();
-      }
-      return value != null;
-    }
-
-    void reset()
-    {
-      if (value instanceof Boolean)
-      {
-        value = Boolean.FALSE;
-      }
-      else
-      {
-        value = null;
-      }
-    }
-
-    /**
-     * Whether or not this option wants a value.
-     * 
-     * @return Whether or not this option wants a value
-     */
-    public final boolean wantsValue()
-    {
-      return wantsValue;
-    }
-
-    /**
-     * Gets the value for the option.
-     * 
-     * @return Option value
-     */
-    public Object getValue()
-    {
-      return value;
-    }
-
-    protected final void setValue(final String valueString)
-    {
-      if (wantsValue && valueString == null)
-      {
-        value = null;
-      }
-      else
-      {
-        value = parseValue(valueString);
-      }
-    }
-
-    /**
-     * Override to extract and convert an option value passed on the
-     * command-line.
-     * 
-     * @param valueString
-     * @return Parsed value
-     */
-    protected abstract Object parseValue(final String valueString);
-
-  }
-
-  /**
-   * An option that expects a boolean value.
-   */
-  public static final class BooleanOption
-    extends BaseOption
-  {
-
-    /**
-     * Constructor that takes the short form of the switch only.
-     * 
-     * @param shortForm
-     *        Short form of the switch
-     */
-    public BooleanOption(final char shortForm)
-    {
-      super(shortForm, false);
-      value = Boolean.FALSE;
-    }
-
-    /**
-     * Constructor that takes the long form of the switch only.
-     * 
-     * @param longForm
-     *        Long form of the switch
-     */
-    public BooleanOption(final String longForm)
-    {
-      super(longForm, false);
-      value = Boolean.FALSE;
-    }
-
-    /**
-     * Constructor that takes the short form and long form of the
-     * switch.
-     * 
-     * @param shortForm
-     *        Short form of the switch
-     * @param longForm
-     *        Long form of the switch
-     */
-    public BooleanOption(final char shortForm, final String longForm)
-    {
-      super(shortForm, longForm, false);
-      value = Boolean.FALSE;
-    }
-
-    protected Object parseValue(final String valueString)
-    {
-      if (valueString == null || valueString.length() == 0)
-      {
-        return Boolean.FALSE;
-      }
-      return Boolean.valueOf(valueString);
-    }
-  }
-
-  /**
-   * An option that expects a floating-point value.
-   */
-  public static final class NumberOption
-    extends BaseOption
-  {
-
-    /**
-     * Constructor that takes the short form of the switch only.
-     * 
-     * @param shortForm
-     *        Short form of the switch
-     */
-    public NumberOption(final char shortForm)
-    {
-      super(shortForm, true);
-    }
-
-    /**
-     * Constructor that takes the long form of the switch only.
-     * 
-     * @param longForm
-     *        Long form of the switch
-     */
-    public NumberOption(final String longForm)
-    {
-      super(longForm, true);
-    }
-
-    /**
-     * Constructor that takes the short form and long form of the
-     * switch.
-     * 
-     * @param shortForm
-     *        Short form of the switch
-     * @param longForm
-     *        Long form of the switch
-     */
-    public NumberOption(final char shortForm, final String longForm)
-    {
-      super(shortForm, longForm, true);
-    }
-
-    protected Object parseValue(final String arg)
-    {
-      try
-      {
-        return NumberFormat.getNumberInstance().parse(arg);
-      }
-      catch (final ParseException e)
-      {
-        return null;
-      }
-    }
-  }
-
-  /**
-   * An option that expects a string value.
-   */
-  public static final class StringOption
-    extends BaseOption
-  {
-
-    /**
-     * Constructor that takes the short form of the switch only.
-     * 
-     * @param shortForm
-     *        Short form of the switch
-     */
-    public StringOption(final char shortForm)
-    {
-      super(shortForm, true);
-    }
-
-    /**
-     * Constructor that takes the long form of the switch only.
-     * 
-     * @param longForm
-     *        Long form of the switch
-     */
-    public StringOption(final String longForm)
-    {
-      super(longForm, true);
-    }
-
-    /**
-     * Constructor that takes the short form and long form of the
-     * switch.
-     * 
-     * @param shortForm
-     *        Short form of the switch
-     * @param longForm
-     *        Long form of the switch
-     */
-    public StringOption(final char shortForm, final String longForm)
-    {
-      super(shortForm, longForm, true);
-    }
-
-    protected Object parseValue(final String arg)
-    {
-      return arg;
-    }
   }
 
 }
