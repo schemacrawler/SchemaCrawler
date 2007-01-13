@@ -48,12 +48,12 @@ public final class PropertiesDataSource
 {
 
   private static final String DRIVER = "driver";
-
   private static final String URL = "url";
-
   private static final String USER = "user";
   private static final String PASSWORD = "password";
+
   private static final String DEFAULTCONNECTION = "defaultconnection";
+
   private static final Logger LOGGER = Logger
     .getLogger(PropertiesDataSource.class.getName());
 
@@ -62,18 +62,40 @@ public final class PropertiesDataSource
     Utilities.checkJavaVersion(1.4);
   }
 
-  private String url;
+  /**
+   * Checks if all the connection properties are provided.
+   * 
+   * @param jdbcDriverClassName
+   *        JDBC driver class name
+   * @param url
+   *        Database connection URL
+   * @param user
+   *        Database user name
+   * @param password
+   *        Database password
+   * @return True if all connection properties are provided
+   */
+  public static boolean connectionPropertiesProvided(final String jdbcDriverClassName,
+                                                     final String url,
+                                                     final String user,
+                                                     final String password)
+  {
+    return jdbcDriverClassName != null && url != null && user != null
+           && password != null;
+  }
 
+  private String url;
   private Properties connectionParams;
   private int loginTimeout;
   private Driver jdbcDriver;
-  private String databaseProductName;
 
+  private String databaseProductName;
   private String databaseProductVersion;
   private String driverName;
   private String driverVersion;
   private String catalogTerm;
   private String catalog;
+
   private PrintWriter logWriter;
 
   /**
@@ -114,7 +136,7 @@ public final class PropertiesDataSource
    * Creates a PropertiesDataSource from a set of connection properties,
    * using the default connection.
    * 
-   * @param jdbcDriver
+   * @param jdbcDriverClassName
    *        JDBC driver class name
    * @param url
    *        Database connection URL
@@ -125,14 +147,14 @@ public final class PropertiesDataSource
    * @throws PropertiesDataSourceException
    *         On any exception in creating the PropertiesDataSource.
    */
-  public PropertiesDataSource(final String jdbcDriver,
+  public PropertiesDataSource(final String jdbcDriverClassName,
                               final String url,
                               final String user,
                               final String password)
     throws PropertiesDataSourceException
   {
 
-    if (jdbcDriver == null || url == null || user == null || password == null)
+    if (!connectionPropertiesProvided(jdbcDriverClassName, url, user, password))
     {
       throw new PropertiesDataSourceException("All connection properties should be provided - "
                                               + "JDBC database driver class name, "
@@ -143,7 +165,7 @@ public final class PropertiesDataSource
     final String connectionName = "PropertiesDataSourceConnection";
     //
     final Properties properties = new Properties();
-    properties.setProperty(connectionName + "." + DRIVER, jdbcDriver);
+    properties.setProperty(connectionName + "." + DRIVER, jdbcDriverClassName);
     properties.setProperty(connectionName + "." + URL, url);
     properties.setProperty(connectionName + "." + USER, user);
     properties.setProperty(connectionName + "." + PASSWORD, password);

@@ -47,6 +47,7 @@ import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
+import schemacrawler.tools.grep.ColumnsGrep;
 import schemacrawler.tools.util.TextFormattingHelper;
 import sf.util.Utilities;
 
@@ -271,7 +272,9 @@ public abstract class BaseSchemaTextFormatter
     // Special case for "grep" like functionality
     // If a column inclusion rule is present, only process the
     // table if the column that matches is present in the table
-    boolean handleTable = shouldHandleTable(table);
+    boolean handleTable = ColumnsGrep.includesColumn(table,
+                                         tableColumnInclusionRule,
+                                         invertMatch);
     if (!handleTable)
     {
       return;
@@ -600,41 +603,6 @@ public abstract class BaseSchemaTextFormatter
         }
       }
     }
-  }
-
-  /**
-   * Special case for "grep" like functionality. Handle table if a table
-   * column inclusion rule is found, and at least one column matches the
-   * rule.
-   * 
-   * @param table
-   * @return
-   */
-  private boolean shouldHandleTable(final Table table)
-  {
-    if (tableColumnInclusionRule == null)
-    {
-      return true;
-    }
-
-    boolean handleTable = false;
-    final Column[] columns = table.getColumns();
-    for (int j = 0; j < columns.length; j++)
-    {
-      final Column column = columns[j];
-      if (tableColumnInclusionRule.include(column.getFullName()))
-      {
-        // We found a column that should be included, so handle the
-        // table
-        handleTable = true;
-        break;
-      }
-    }
-    if (invertMatch)
-    {
-      handleTable = !handleTable;
-    }
-    return handleTable;
   }
 
   abstract String getArrow();
