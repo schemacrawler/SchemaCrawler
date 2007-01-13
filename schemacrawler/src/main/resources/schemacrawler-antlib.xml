@@ -3,20 +3,44 @@
 
   <macrodef name="schemacrawler">
 
-    <!-- Attributes -->
     <attribute
       name="config"
-      default="schemacrawler.config.properties" />
+      default="schemacrawler.config.properties"
+      description="Path to the configuration file" />
     <attribute
       name="config-override"
-      default="schemacrawler.config.override.properties" />
+      default="schemacrawler.config.override.properties"
+      description="Path to the configuration override file" />
 
-    <attribute name="datasource" />
     <attribute
       name="db-driver-classpath"
-      default="${db-driver-classpath}" />
+      default="${db-driver-classpath}"
+      description="Database driver classpath" />
 
-    <attribute name="command" />
+    <!-- Either the datasource, or the connection properties should be
+      provided. If both sets are provided, the datasource is ignored. -->
+
+    <attribute
+      name="datasource"
+      description="Datasource defined in the configuration" />
+
+    <attribute
+      name="driver"
+      description="JDBC driver class name" />
+    <attribute
+      name="url"
+      description="Database connection string" />
+    <attribute
+      name="user"
+      description="Database connection user name" />
+    <attribute
+      name="password"
+      default=""
+      description="Database connection password" />
+
+    <attribute
+      name="command"
+      description="Comma-separated list of commands" />
 
     <attribute
       name="no-header"
@@ -30,8 +54,12 @@
 
     <attribute
       name="outputformat"
-      default="text" />
-    <attribute name="outputfile" />
+      default="text"
+      description="Output format" />
+    <attribute
+      name="outputfile"
+      description="Path to output file" />
+
     <attribute
       name="append"
       default="false" />
@@ -60,83 +88,6 @@
         <arg value="@{config-override}" />
         <arg value="-c" />
         <arg value="@{datasource}" />
-        <arg value="-command" />
-        <arg value="@{command}" />
-        <arg value="-noheader=@{no-header}" />
-        <arg value="-nofooter=@{no-footer}" />
-        <arg value="-noinfo=@{no-info}" />
-        <arg value="-outputformat" />
-        <arg value="@{outputformat}" />
-        <arg value="-outputfile" />
-        <arg value="@{outputfile}" />
-        <arg value="-append" />
-        <arg value="@{append}" />
-      </java>
-    </sequential>
-
-  </macrodef>
-
-  <macrodef name="crawl_database">
-
-    <!-- Attributes -->
-    <attribute
-      name="config"
-      default="schemacrawler.config.properties" />
-    <attribute
-      name="config-override"
-      default="schemacrawler.config.override.properties" />
-
-    <attribute
-      name="db-driver-classpath"
-      default="${db-driver-classpath}" />
-
-    <attribute name="driver" />
-    <attribute name="url" />
-    <attribute name="user" />
-    <attribute name="password" />
-
-    <attribute name="command" />
-
-    <attribute
-      name="no-header"
-      default="false" />
-    <attribute
-      name="no-footer"
-      default="false" />
-    <attribute
-      name="no-info"
-      default="false" />
-
-    <attribute
-      name="outputformat"
-      default="text" />
-    <attribute name="outputfile" />
-    <attribute
-      name="append"
-      default="false" />
-
-    <sequential>
-
-      <!-- Required properties: -->
-      <property
-        name="schemacrawler.dir"
-        value="${basedir}" />
-
-      <java
-        taskname="schemacrawler-@{command}"
-        classname="schemacrawler.Main"
-        logerror="true"
-        failonerror="true">
-        <classpath>
-          <fileset dir="${schemacrawler.dir}">
-            <include name="*.jar" />
-          </fileset>
-          <path refid="@{db-driver-classpath}" />
-        </classpath>
-        <arg value="-g" />
-        <arg value="@{config}" />
-        <arg value="-p" />
-        <arg value="@{config-override}" />
         <arg value="-driver" />
         <arg value="@{driver}" />
         <arg value="-url" />
@@ -157,6 +108,7 @@
         <arg value="-append" />
         <arg value="@{append}" />
       </java>
+
     </sequential>
 
   </macrodef>

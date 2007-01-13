@@ -50,11 +50,15 @@ public final class Main
   private static final String OPTION_USER = "user";
   private static final String OPTION_URL = "url";
   private static final String OPTION_DRIVER = "driver";
+
   private static final String OPTION_CONNECTION = "connection";
   private static final String OPTION_DEFAULT = "default";
+  
   private static final String OPTION_PROMPT = "prompt";
   private static final String OPTION_TESTALL = "testall";
+
   private static final String OPTION_CONNECTIONSFILE = "connectionsfile";
+
   private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
   private Main()

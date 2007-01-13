@@ -21,14 +21,22 @@
 package schemacrawler.tools.grep;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.logging.Level;
+
+import javax.sql.DataSource;
 
 import schemacrawler.crawl.CrawlHandler;
 import schemacrawler.crawl.InclusionRule;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
+import schemacrawler.crawl.SchemaInfoLevel;
+import schemacrawler.schema.Column;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.Table;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextFormatter;
@@ -52,8 +60,70 @@ public final class ColumnsGrep
   private static final String OPTION_CONFIGFILE = "configfile";
   private static final String OPTION_CONFIGOVERRIDEFILE = "configoverridefile";
 
-  private ColumnsGrep()
+  /**
+   * Gets the entire schema.
+   * 
+   * @param dataSource
+   *        Data source
+   * @param infoLevel
+   *        Schema info level
+   * @param options
+   *        Options
+   * @return Tables matching pattern
+   */
+  public static Table[] grep(final DataSource dataSource,
+                             final InclusionRule tableInclusionRule,
+                             final InclusionRule columnsInclusionRule,
+                             final boolean invertMatch)
   {
+    return grep(dataSource,
+                null,
+                tableInclusionRule,
+                columnsInclusionRule,
+                invertMatch);
+  }
+
+  /**
+   * Gets the entire schema.
+   * 
+   * @param dataSource
+   *        Data source
+   * @param additionalConnectionConfiguration
+   *        Additional connection configuration for INFORMATION_SCHEMA
+   * @param infoLevel
+   *        Schema info level
+   * @param options
+   *        Options
+   * @return Schema
+   */
+  public static Table[] grep(final DataSource dataSource,
+                             final Properties additionalConnectionConfiguration,
+                             final InclusionRule tableInclusionRule,
+                             final InclusionRule columnsInclusionRule,
+                             final boolean invertMatch)
+  {
+    final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
+    options.setShowStoredProcedures(false);
+    options.setTableInclusionRule(tableInclusionRule);
+
+    final Schema schema = SchemaCrawler
+      .getSchema(dataSource,
+                 additionalConnectionConfiguration,
+                 SchemaInfoLevel.BASIC,
+                 options);
+
+    final List tablesList = new ArrayList();
+    final Table[] allTables = schema.getTables();
+    for (int i = 0; i < allTables.length; i++)
+    {
+      final Table table = allTables[i];
+      if (includesColumn(table, columnsInclusionRule, invertMatch))
+      {
+        tablesList.add(table);
+      }
+    }
+
+    return (Table[]) tablesList.toArray(new Table[tablesList.size()]);
   }
 
   /**
@@ -72,15 +142,15 @@ public final class ColumnsGrep
     final CommandLineParser parser = createCommandLineParser();
     parser.parse(args);
 
-    String logLevelString = parser.getStringOptionValue(OPTION_LOG_LEVEL);
-    Level logLevel = Level.parse(logLevelString.toUpperCase(Locale.ENGLISH));
+    final String logLevelString = parser.getStringOptionValue(OPTION_LOG_LEVEL);
+    final Level logLevel = Level.parse(logLevelString
+      .toUpperCase(Locale.ENGLISH));
     Utilities.setApplicationLogLevel(logLevel);
 
     final String cfgFile = parser.getStringOptionValue(OPTION_CONFIGFILE);
     final String cfgOverrideFile = parser
       .getStringOptionValue(OPTION_CONFIGOVERRIDEFILE);
-    final Properties config = Utilities.loadConfig(cfgFile,
-                                                            cfgOverrideFile);
+    final Properties config = Utilities.loadConfig(cfgFile, cfgOverrideFile);
     final PropertiesDataSource dataSource = dbconnector.Main
       .createDataSource(args, config);
 
@@ -101,20 +171,60 @@ public final class ColumnsGrep
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
     options.setShowStoredProcedures(false);
     options.setTableInclusionRule(tableInclusionRule);
-    options.setAlphabeticalSortForTableColumns(true);
 
     final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(new Properties(),
                                                                       new OutputOptions("text",
                                                                                         null),
                                                                       SchemaTextDetailType.BASIC);
 
-    CrawlHandler formatter = new SchemaTextFormatter(schemaTextOptions,
-                                                     columnInclusionRule,
-                                                     invertMatch);
+    final CrawlHandler formatter = new SchemaTextFormatter(schemaTextOptions,
+                                                           columnInclusionRule,
+                                                           invertMatch);
 
     final SchemaCrawler crawler = new SchemaCrawler(dataSource, null, formatter);
     crawler.crawl(options);
 
+  }
+
+  /**
+   * Special case for "grep" like functionality. Handle table if a table
+   * column inclusion rule is found, and at least one column matches the
+   * rule.
+   * 
+   * @param table
+   * @param columnsInclusionRule
+   *        TODO
+   * @param invertMatch
+   *        TODO
+   * @return
+   */
+  public static boolean includesColumn(final Table table,
+                                       final InclusionRule columnsInclusionRule,
+                                       final boolean invertMatch)
+  {
+    if (columnsInclusionRule == null)
+    {
+      return true;
+    }
+
+    boolean handleTable = false;
+    final Column[] columns = table.getColumns();
+    for (int j = 0; j < columns.length; j++)
+    {
+      final Column column = columns[j];
+      if (columnsInclusionRule.include(column.getFullName()))
+      {
+        // We found a column that should be included, so handle the
+        // table
+        handleTable = true;
+        break;
+      }
+    }
+    if (invertMatch)
+    {
+      handleTable = !handleTable;
+    }
+    return handleTable;
   }
 
   private static CommandLineParser createCommandLineParser()
@@ -147,6 +257,10 @@ public final class ColumnsGrep
                                                     "OFF"));
 
     return parser;
+  }
+
+  private ColumnsGrep()
+  {
   }
 
 }
