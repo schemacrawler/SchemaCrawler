@@ -57,8 +57,11 @@ public final class SchemaHTMLFormatter
    * @param options
    *        Options
    * @param tableColumnInclusionRule
-   *        Table column inclusion rule
+   *        Inclusion rule for columns
+   * @param invertMatch
+   *        Whether to invert the table match
    * @throws SchemaCrawlerException
+   *         On an error
    */
   public SchemaHTMLFormatter(final SchemaTextOptions options,
                              final InclusionRule tableColumnInclusionRule,

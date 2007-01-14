@@ -41,6 +41,11 @@ public final class SchemaCrawlerMain
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerMain.class
     .getName());
 
+  private SchemaCrawlerMain()
+  {
+    // Prevent instantiation
+  }
+
   /**
    * Executes with the command line, and the standard tools executor.
    * 

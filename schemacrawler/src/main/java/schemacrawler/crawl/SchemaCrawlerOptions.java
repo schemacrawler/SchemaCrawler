@@ -222,7 +222,7 @@ public final class SchemaCrawlerOptions
    * example:
    * TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS,SYNONYM
    * 
-   * @param tableTypes
+   * @param tableTypesString
    *        Comma-separated list of table types.
    */
   public void setTableTypes(final String tableTypesString)
@@ -233,7 +233,7 @@ public final class SchemaCrawlerOptions
   /**
    * Sets table types from an array of table types.
    * 
-   * @param tableTypes
+   * @param tableTypesArray
    *        Array of table types.
    */
   public void setTableTypes(final TableType[] tableTypesArray)

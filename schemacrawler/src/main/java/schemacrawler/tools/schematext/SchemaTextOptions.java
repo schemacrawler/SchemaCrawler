@@ -146,37 +146,37 @@ public final class SchemaTextOptions
     return showStandardColumnTypeNames;
   }
 
-  public void setHideConstraintNames(boolean hideConstraintNames)
+  public void setHideConstraintNames(final boolean hideConstraintNames)
   {
     this.hideConstraintNames = hideConstraintNames;
   }
 
-  public void setHideForeignKeyNames(boolean hideForeignKeyNames)
+  public void setHideForeignKeyNames(final boolean hideForeignKeyNames)
   {
     this.hideForeignKeyNames = hideForeignKeyNames;
   }
 
-  public void setHideIndexNames(boolean hideIndexNames)
+  public void setHideIndexNames(final boolean hideIndexNames)
   {
     this.hideIndexNames = hideIndexNames;
   }
 
-  public void setHidePrimaryKeyNames(boolean hidePrimaryKeyNames)
+  public void setHidePrimaryKeyNames(final boolean hidePrimaryKeyNames)
   {
     this.hidePrimaryKeyNames = hidePrimaryKeyNames;
   }
 
-  public void setSchemaTextDetailType(SchemaTextDetailType schemaTextDetailType)
+  public void setSchemaTextDetailType(final SchemaTextDetailType schemaTextDetailType)
   {
     this.schemaTextDetailType = schemaTextDetailType;
   }
 
-  public void setShowOrdinalNumbers(boolean showOrdinalNumbers)
+  public void setShowOrdinalNumbers(final boolean showOrdinalNumbers)
   {
     this.showOrdinalNumbers = showOrdinalNumbers;
   }
 
-  public void setShowStandardColumnTypeNames(boolean showStandardColumnTypeNames)
+  public void setShowStandardColumnTypeNames(final boolean showStandardColumnTypeNames)
   {
     this.showStandardColumnTypeNames = showStandardColumnTypeNames;
   }

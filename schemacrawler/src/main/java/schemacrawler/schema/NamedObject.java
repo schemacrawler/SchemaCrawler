@@ -46,4 +46,23 @@ public interface NamedObject
    */
   String getRemarks();
 
+  /**
+   * Gets an attribute.
+   * 
+   * @param name
+   *        Attribute name.
+   * @return Attribute value.
+   */
+  Object getAttribute(String name);
+
+  /**
+   * Sets an attibute.
+   * 
+   * @param name
+   *        Attribute name.
+   * @param value
+   *        Attribute value.
+   */
+  void setAttribute(String name, Object value);
+
 }
