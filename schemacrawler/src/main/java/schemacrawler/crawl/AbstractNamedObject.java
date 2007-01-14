@@ -21,6 +21,9 @@
 package schemacrawler.crawl;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import schemacrawler.schema.NamedObject;
 import schemacrawler.util.AlphabeticalSortComparator;
 import schemacrawler.util.SerializableComparator;
@@ -34,24 +37,14 @@ abstract class AbstractNamedObject
   implements NamedObject
 {
 
-  private String name;
+  private final String name;
   private String remarks;
+  private final Map attributeMap = new HashMap();
   private final SerializableComparator comparator = new AlphabeticalSortComparator();
 
   AbstractNamedObject(final String name)
   {
-    super();
     this.name = name;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  public String toString()
-  {
-    return name;
   }
 
   /**
@@ -60,44 +53,6 @@ abstract class AbstractNamedObject
   public int compareTo(final Object obj)
   {
     return comparator.compare(this, obj);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.NamedObject#getName()
-   */
-  public final String getName()
-  {
-    return name;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.DatabaseObject#getRemarks()
-   */
-  public final String getRemarks()
-  {
-    return remarks;
-  }
-
-  /**
-   * Setter for property remarks.
-   * 
-   * @param remarks
-   *        New value of property remarks.
-   */
-  final void setRemarks(final String remarks)
-  {
-    if (remarks == null)
-    {
-      this.remarks = "";
-    }
-    else
-    {
-      this.remarks = remarks;
-    }
   }
 
   /**
@@ -127,6 +82,36 @@ abstract class AbstractNamedObject
   /**
    * {@inheritDoc}
    * 
+   * @see NamedObject#getAttribute(String)
+   */
+  public Object getAttribute(final String name)
+  {
+    return attributeMap.get(name);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.NamedObject#getName()
+   */
+  public final String getName()
+  {
+    return name;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.DatabaseObject#getRemarks()
+   */
+  public final String getRemarks()
+  {
+    return remarks;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see Object#hashCode()
    */
   public int hashCode()
@@ -137,6 +122,44 @@ abstract class AbstractNamedObject
       result = name.hashCode();
     }
     return result;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see NamedObject#setAttribute(String, Object)
+   */
+  public void setAttribute(final String name, final Object value)
+  {
+    attributeMap.put(name, value);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Object#toString()
+   */
+  public String toString()
+  {
+    return name;
+  }
+
+  /**
+   * Setter for property remarks.
+   * 
+   * @param remarks
+   *        New value of property remarks.
+   */
+  final void setRemarks(final String remarks)
+  {
+    if (remarks == null)
+    {
+      this.remarks = "";
+    }
+    else
+    {
+      this.remarks = remarks;
+    }
   }
 
 }

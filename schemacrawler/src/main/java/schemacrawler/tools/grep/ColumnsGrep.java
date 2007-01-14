@@ -61,45 +61,49 @@ public final class ColumnsGrep
   private static final String OPTION_CONFIGOVERRIDEFILE = "configoverridefile";
 
   /**
-   * Gets the entire schema.
+   * Gets tables that contain the specified columns.
    * 
    * @param dataSource
    *        Data source
-   * @param infoLevel
-   *        Schema info level
-   * @param options
-   *        Options
-   * @return Tables matching pattern
+   * @param tableInclusionRule
+   *        Inclusion rule for tables
+   * @param columnInclusionRule
+   *        Inclusion rule for columns
+   * @param invertMatch
+   *        Whether to invert the table match
+   * @return Matching tables
    */
   public static Table[] grep(final DataSource dataSource,
                              final InclusionRule tableInclusionRule,
-                             final InclusionRule columnsInclusionRule,
+                             final InclusionRule columnInclusionRule,
                              final boolean invertMatch)
   {
     return grep(dataSource,
                 null,
                 tableInclusionRule,
-                columnsInclusionRule,
+                columnInclusionRule,
                 invertMatch);
   }
 
   /**
-   * Gets the entire schema.
+   * Gets tables that contain the specified columns.
    * 
    * @param dataSource
    *        Data source
    * @param additionalConnectionConfiguration
    *        Additional connection configuration for INFORMATION_SCHEMA
-   * @param infoLevel
-   *        Schema info level
-   * @param options
-   *        Options
-   * @return Schema
+   * @param tableInclusionRule
+   *        Inclusion rule for tables
+   * @param columnInclusionRule
+   *        Inclusion rule for columns
+   * @param invertMatch
+   *        Whether to invert the table match
+   * @return Matching tables
    */
   public static Table[] grep(final DataSource dataSource,
                              final Properties additionalConnectionConfiguration,
                              final InclusionRule tableInclusionRule,
-                             final InclusionRule columnsInclusionRule,
+                             final InclusionRule columnInclusionRule,
                              final boolean invertMatch)
   {
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
@@ -117,7 +121,7 @@ public final class ColumnsGrep
     for (int i = 0; i < allTables.length; i++)
     {
       final Table table = allTables[i];
-      if (includesColumn(table, columnsInclusionRule, invertMatch))
+      if (includesColumn(table, columnInclusionRule, invertMatch))
       {
         tablesList.add(table);
       }
@@ -192,17 +196,22 @@ public final class ColumnsGrep
    * rule.
    * 
    * @param table
-   * @param columnsInclusionRule
-   *        TODO
+   *        Table to check
+   * @param columnInclusionRule
+   *        Inclusion rule for columns
    * @param invertMatch
-   *        TODO
+   *        Whether to invert the table match
    * @return
    */
   public static boolean includesColumn(final Table table,
-                                       final InclusionRule columnsInclusionRule,
+                                       final InclusionRule columnInclusionRule,
                                        final boolean invertMatch)
   {
-    if (columnsInclusionRule == null)
+    if (table == null)
+    {
+      return false;
+    }
+    if (columnInclusionRule == null)
     {
       return true;
     }
@@ -212,7 +221,7 @@ public final class ColumnsGrep
     for (int j = 0; j < columns.length; j++)
     {
       final Column column = columns[j];
-      if (columnsInclusionRule.include(column.getFullName()))
+      if (columnInclusionRule.include(column.getFullName()))
       {
         // We found a column that should be included, so handle the
         // table

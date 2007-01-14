@@ -239,16 +239,74 @@ schemacrawler.format.hide_constraint_names=false
         </p>
         <ul>
           <li>
-            <code>config</code>
-            (default=&quot;schemacrawler.config.properties&quot;)
+            <b>config</b>
+            Path to the configuration file (default value -
+            schemacrawler.config.properties)
           </li>
           <li>
-            <code>config-override</code>
-            (default=&quot;schemacrawler.config.override.properties&quot;)
+            <b>config-override</b>
+            Path to the configuration override file (default value -
+            schemacrawler.config.override.properties)
           </li>
           <li>
-            <code>outputformat</code>
-            (default=&quot;text&quot;)
+            <b>db-driver-classpath</b>
+            Database driver classpath (default value - value of the ant
+            property value ${db-driver-classpath})
+          </li>
+          <li>
+            <b>datasource</b>
+            Datasource defined in the configuration (either the
+            datasource, or the connection properties should be provided
+            - f both sets are provided, the datasource is ignored)
+          </li>
+          <li>
+            <b>driver</b>
+            JDBC driver class name
+          </li>
+          <li>
+            <b>url</b>
+            Database connection string
+          </li>
+          <li>
+            <b>user</b>
+            Database connection user name
+          </li>
+          <li>
+            <b>password</b>
+            Database connection password (default value is an empty
+            string)
+          </li>
+          <li>
+            <b>command</b>
+            Comma-separated list of commands
+          </li>
+          <li>
+            <b>no-header</b>
+            Whether to print the header - true or false (default value -
+            false)
+          </li>
+          <li>
+            <b>no-footer</b>
+            Whether to print the footer - true or false (default value -
+            false)
+          </li>
+          <li>
+            <b>no-info</b>
+            Whether to print information - true or false (default value
+            - false)
+          </li>
+          <li>
+            <b>outputformat</b>
+            Output format (default value - text)
+          </li>
+          <li>
+            <b>outputfile</b>
+            Path to output file
+          </li>
+          <li>
+            <b>append</b>
+            Whether to append to the output - true or false (default
+            value - false)
           </li>
         </ul>
       </answer>

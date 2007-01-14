@@ -232,7 +232,7 @@ public final class OutputOptions
     this.noInfo = noInfo;
   }
 
-  public void setOutputFormatValue(String outputFormatValue)
+  public void setOutputFormatValue(final String outputFormatValue)
   {
     this.outputFormatValue = outputFormatValue;
   }

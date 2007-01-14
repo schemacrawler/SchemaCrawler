@@ -5,17 +5,17 @@
 
     <attribute
       name="config"
-      default="schemacrawler.config.properties"
-      description="Path to the configuration file" />
+      description="Path to the configuration file"
+      default="schemacrawler.config.properties" />
     <attribute
       name="config-override"
-      default="schemacrawler.config.override.properties"
-      description="Path to the configuration override file" />
+      description="Path to the configuration override file"
+      default="schemacrawler.config.override.properties" />
 
     <attribute
       name="db-driver-classpath"
-      default="${db-driver-classpath}"
-      description="Database driver classpath" />
+      description="Database driver classpath"
+      default="${db-driver-classpath}" />
 
     <!-- Either the datasource, or the connection properties should be
       provided. If both sets are provided, the datasource is ignored. -->
@@ -35,8 +35,8 @@
       description="Database connection user name" />
     <attribute
       name="password"
-      default=""
-      description="Database connection password" />
+      description="Database connection password"
+      default="" />
 
     <attribute
       name="command"
@@ -44,24 +44,28 @@
 
     <attribute
       name="no-header"
+      description="Whether to print the header - true or false"
       default="false" />
     <attribute
       name="no-footer"
+      description="Whether to print the footer - true or false"
       default="false" />
     <attribute
       name="no-info"
+      description="Whether to print information - true or false"
       default="false" />
 
     <attribute
       name="outputformat"
-      default="text"
-      description="Output format" />
+      description="Output format"
+      default="text" />
     <attribute
       name="outputfile"
       description="Path to output file" />
 
     <attribute
       name="append"
+      description="Whether to append to the output - true or false"
       default="false" />
 
     <sequential>
@@ -82,31 +86,20 @@
           </fileset>
           <path refid="@{db-driver-classpath}" />
         </classpath>
-        <arg value="-g" />
-        <arg value="@{config}" />
-        <arg value="-p" />
-        <arg value="@{config-override}" />
-        <arg value="-c" />
-        <arg value="@{datasource}" />
-        <arg value="-driver" />
-        <arg value="@{driver}" />
-        <arg value="-url" />
-        <arg value="@{url}" />
-        <arg value="-user" />
-        <arg value="@{user}" />
-        <arg value="-password" />
-        <arg value="@{password}" />
-        <arg value="-command" />
-        <arg value="@{command}" />
+        <arg value="-g=@{config}" />
+        <arg value="-p=@{config-override}" />
+        <arg value="-c=@{datasource}" />
+        <arg value="-driver=@{driver}" />
+        <arg value="-url=@{url}" />
+        <arg value="-user=@{user}" />
+        <arg value="-password=@{password}" />
+        <arg value="-command=@{command}" />
         <arg value="-noheader=@{no-header}" />
         <arg value="-nofooter=@{no-footer}" />
         <arg value="-noinfo=@{no-info}" />
-        <arg value="-outputformat" />
-        <arg value="@{outputformat}" />
-        <arg value="-outputfile" />
-        <arg value="@{outputfile}" />
-        <arg value="-append" />
-        <arg value="@{append}" />
+        <arg value="-outputformat=@{outputformat}" />
+        <arg value="-outputfile=@{outputfile}" />
+        <arg value="-append=@{append}" />
       </java>
 
     </sequential>
