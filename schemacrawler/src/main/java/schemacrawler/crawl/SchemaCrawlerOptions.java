@@ -126,11 +126,21 @@ public final class SchemaCrawlerOptions
                                               config);
   }
 
+  /**
+   * Gets the column inclusion rule.
+   * 
+   * @return Column inclusion rule.
+   */
   public InclusionRule getColumnInclusionRule()
   {
     return columnInclusionRule;
   }
 
+  /**
+   * Gets the table inclusion rule.
+   * 
+   * @return Table inclusion rule.
+   */  
   public InclusionRule getTableInclusionRule()
   {
     return tableInclusionRule;
@@ -147,30 +157,55 @@ public final class SchemaCrawlerOptions
     return tableTypesCopy;
   }
 
+  /**
+   * Whether foreign keys are alphabetically sorted.
+   * 
+   * @return Whether foreign keys are alphabetically sorted
+   */
   public boolean isAlphabeticalSortForForeignKeys()
   {
     return tableForeignKeyComparator != null
            && tableForeignKeyComparator instanceof AlphabeticalSortComparator;
   }
 
+  /**
+   * Whether indexes are alphabetically sorted.
+   * 
+   * @return Whether indexes are alphabetically sorted
+   */  
   public boolean isAlphabeticalSortForIndexes()
   {
     return tableIndexComparator != null
            && tableIndexComparator instanceof AlphabeticalSortComparator;
   }
 
+  /**
+   * Whether procedure columns are alphabetically sorted.
+   * 
+   * @return Whether procedure columns are alphabetically sorted
+   */   
   public boolean isAlphabeticalSortForProcedureColumns()
   {
     return procedureColumnComparator != null
            && procedureColumnComparator instanceof AlphabeticalSortComparator;
   }
 
+  /**
+   * Whether table columns are alphabetically sorted.
+   * 
+   * @return Whether table columns are alphabetically sorted
+   */    
   public boolean isAlphabeticalSortForTableColumns()
   {
     return tableColumnComparator != null
            && tableColumnComparator instanceof AlphabeticalSortComparator;
   }
 
+  /**
+   * Whether stored procedures are output.
+   * 
+   * @return Whether stored procedures are output
+   */   
   public boolean isShowStoredProcedures()
   {
     return showStoredProcedures;

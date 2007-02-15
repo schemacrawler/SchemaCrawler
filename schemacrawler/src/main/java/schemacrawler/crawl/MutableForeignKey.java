@@ -147,8 +147,6 @@ class MutableForeignKey
    * databases, the sorting routine orders the foreign keys by the names
    * of the columns in the foreign keys.
    * </p>
-   * 
-   * @see AbstractNamedObject#compareTo(java.lang.Object)
    */
   public int compareTo(final Object obj)
   {

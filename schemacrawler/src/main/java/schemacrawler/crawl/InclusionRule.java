@@ -36,10 +36,15 @@ public final class InclusionRule
   implements Serializable
 {
 
+  /** Exclude nothing */
   public static final String EXCLUDE_NONE = "";
+  /** Include everything. */
   public static final String INCLUDE_ALL = ".*";
+
+  /** Exclude nothing */
   public static final Pattern EXCLUDE_NONE_PATTERN = Pattern
     .compile(EXCLUDE_NONE);
+  /** Include everything. */
   public static final Pattern INCLUDE_ALL_PATTERN = Pattern
     .compile(INCLUDE_ALL);
 

@@ -168,8 +168,6 @@ class MutableIndex
    * the sorting routine orders the indexes by the names of the columns
    * in the index.
    * </p>
-   * 
-   * @see AbstractNamedObject#compareTo(java.lang.Object)
    */
   public int compareTo(final Object obj)
   {
