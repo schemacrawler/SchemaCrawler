@@ -109,11 +109,11 @@ public final class SchemaCrawlerOptions
     showStoredProcedures = getBooleanProperty(SC_SHOW_STORED_PROCEDURES, config);
 
     tableInclusionRule = new InclusionRule(config
-      .getProperty(SC_TABLE_PATTERN_INCLUDE, ".*"), config
-      .getProperty(SC_TABLE_PATTERN_EXCLUDE, ".*"));
+      .getProperty(SC_TABLE_PATTERN_INCLUDE, InclusionRule.INCLUDE_ALL), config
+      .getProperty(SC_TABLE_PATTERN_EXCLUDE, InclusionRule.EXCLUDE_NONE));
     columnInclusionRule = new InclusionRule(config
-      .getProperty(SC_COLUMN_PATTERN_INCLUDE, ".*"), config
-      .getProperty(SC_COLUMN_PATTERN_EXCLUDE, ".*"));
+      .getProperty(SC_COLUMN_PATTERN_INCLUDE, InclusionRule.INCLUDE_ALL), config
+      .getProperty(SC_COLUMN_PATTERN_EXCLUDE, InclusionRule.EXCLUDE_NONE));
 
     // comparators
     tableColumnComparator = getComparator(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS,
