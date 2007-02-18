@@ -10,6 +10,7 @@ import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import sf.util.Utilities;
 import dbconnector.datasource.PropertiesDataSource;
 import dbconnector.datasource.PropertiesDataSourceException;
 
@@ -21,11 +22,7 @@ public class SchemaCrawlerTest1660040
   {
     DataSource dataSource = makeDataSource();
 
-    Properties props = new Properties();
-    props.setProperty("schemacrawler.table_types", "TABLE");
-    props.setProperty("schemacrawler.show_stored_procedures", "true");
-    props.setProperty("schemacrawler.table.pattern.include", ".*");
-    props.setProperty("schemacrawler.table.pattern.exclude", "(BIN|SYS).*");   
+    Properties props = Utilities.loadConfig("schemacrawler.config.1660040.properties", "");
     
     // Get the schema definition
     SchemaCrawlerOptions options = new SchemaCrawlerOptions(props);
