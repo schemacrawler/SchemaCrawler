@@ -103,20 +103,24 @@ public final class InclusionRule
   public boolean include(final String name)
   {
     boolean include = false;
-    if (!patternInclude.matcher(name).matches())
+    if (name == null && name.length() > 0)
     {
-      LOGGER.log(Level.FINE, "Excluding " + name
-                             + " since it does not match the include pattern");
-    }
-    else if (patternExclude.matcher(name).matches())
-    {
-      LOGGER.log(Level.FINE, "Excluding " + name
-                             + " since it matches the exclude pattern");
-    }
-    else
-    {
-      LOGGER.log(Level.FINE, "Including " + name);
-      include = true;
+      if (!patternInclude.matcher(name).matches())
+      {
+        LOGGER
+          .log(Level.FINE, "Excluding " + name
+                           + " since it does not match the include pattern");
+      }
+      else if (patternExclude.matcher(name).matches())
+      {
+        LOGGER.log(Level.FINE, "Excluding " + name
+                               + " since it matches the exclude pattern");
+      }
+      else
+      {
+        LOGGER.log(Level.FINE, "Including " + name);
+        include = true;
+      }
     }
     return include;
   }
