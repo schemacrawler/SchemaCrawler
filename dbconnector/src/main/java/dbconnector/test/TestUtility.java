@@ -29,10 +29,6 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import junit.framework.TestCase;
-
-import org.hsqldb.Server;
-
 import sf.util.Utilities;
 import dbconnector.datasource.PropertiesDataSource;
 import dbconnector.datasource.PropertiesDataSourceException;
@@ -40,43 +36,29 @@ import dbconnector.datasource.PropertiesDataSourceException;
 /**
  * Based on org.hsqldb.test.TestBase by boucherb@users
  */
-public abstract class TestBase
-  extends TestCase
+public class TestUtility
 {
 
   private static final String HSQLDB_JDBC_DRIVER = "org.hsqldb.jdbcDriver";
 
-  private static final Logger LOGGER = Logger.getLogger(TestBase.class
+  private static final Logger LOGGER = Logger.getLogger(TestUtility.class
     .getName());
 
   private static final String HSQLDB_FILE_URL = "jdbc:hsqldb:file:_distrib/dbserver/schemacrawler;shutdown=true";
   private static final String HSQLDB_SERVER_URL = "jdbc:hsqldb:hsql://localhost/schemacrawler";
 
   private static final boolean IS_SERVER = true;
-  private static final boolean START_SERVER = false;
   private static final boolean DEBUG = false;
 
   protected String serverProps;
   protected String url;
   protected String user = "sa";
   protected String password = "";
-  protected Server server;
 
   protected PropertiesDataSource dataSource;
   protected PrintWriter out;
 
-  /**
-   * Creates a new test case.
-   * 
-   * @param name
-   *        Name of the test.
-   */
-  public TestBase(final String name)
-  {
-    super(name);
-  }
-
-  protected void setUp()
+  public void setUp()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
 
@@ -95,13 +77,6 @@ public abstract class TestBase
     if (IS_SERVER)
     {
       url = HSQLDB_SERVER_URL;
-      if (START_SERVER)
-      {
-        server = new Server();
-        server.setDatabaseName(0, "schemacrawler");
-        server.setDatabasePath(0, "_distrib/dbserver/schemacrawler");
-        server.start();
-      }
     }
     else
     {
@@ -114,14 +89,15 @@ public abstract class TestBase
 
   }
 
-  protected void tearDown()
+  public void tearDown()
   {
     LOGGER.log(Level.FINE, toString() + " - Tearing down unit tests");
     closeDataSource();
-    if (IS_SERVER && START_SERVER)
-    {
-      server.shutdown();
-    }
+  }
+
+  public PropertiesDataSource getDataSource()
+  {
+    return dataSource;
   }
 
   private synchronized void makeDataSource(final String url)
