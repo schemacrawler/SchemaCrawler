@@ -29,11 +29,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import junit.framework.Test;
+import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.custommonkey.xmlunit.Validator;
 
-import dbconnector.test.TestBase;
+import dbconnector.datasource.PropertiesDataSourceException;
+import dbconnector.test.TestUtility;
 
 import schemacrawler.crawl.CrawlHandler;
 import schemacrawler.crawl.SchemaCrawler;
@@ -53,8 +55,22 @@ import schemacrawler.tools.schematext.SchemaTextFormatterLoader;
 import schemacrawler.tools.schematext.SchemaTextOptions;
 
 public class SchemaCrawlerOutputTest
-  extends TestBase
+  extends TestCase
 {
+
+  private TestUtility testUtility = new TestUtility();
+
+  public void setUp()
+    throws PropertiesDataSourceException, ClassNotFoundException
+  {
+    testUtility.setUp();
+  }
+
+  public void tearDown()
+    throws PropertiesDataSourceException, ClassNotFoundException
+  {
+    testUtility.tearDown();
+  }
 
   private static final Logger LOGGER = Logger
     .getLogger(SchemaCrawlerOutputTest.class.getName());
@@ -92,9 +108,8 @@ public class SchemaCrawlerOutputTest
     {
       final SchemaTextFormatter formatter = (SchemaTextFormatter) SchemaTextFormatterLoader
         .load(textFormatOptions);
-      final SchemaCrawler crawler = new SchemaCrawler(dataSource,
-                                                      null,
-                                                      formatter);
+      final SchemaCrawler crawler = new SchemaCrawler(testUtility
+        .getDataSource(), null, formatter);
       crawler.crawl(schemaCrawlerOptions);
       assertEquals("Table count does not match", 6, formatter.getTableCount());
     }
@@ -116,8 +131,8 @@ public class SchemaCrawlerOutputTest
   {
     try
     {
-      final String outputFilename = File.createTempFile("schemacrawler", "test")
-        .getAbsolutePath();
+      final String outputFilename = File
+        .createTempFile("schemacrawler", "test").getAbsolutePath();
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       final SchemaTextOptions textFormatOptions = new SchemaTextOptions(new Properties(),
@@ -127,9 +142,8 @@ public class SchemaCrawlerOutputTest
 
       final SchemaTextFormatter formatter = (SchemaTextFormatter) SchemaTextFormatterLoader
         .load(textFormatOptions);
-      final SchemaCrawler crawler = new SchemaCrawler(dataSource,
-                                                      null,
-                                                      formatter);
+      final SchemaCrawler crawler = new SchemaCrawler(testUtility
+        .getDataSource(), null, formatter);
       crawler.crawl(schemaCrawlerOptions);
 
       final File outputFile = new File(outputFilename);
@@ -149,8 +163,8 @@ public class SchemaCrawlerOutputTest
   {
     try
     {
-      final String outputFilename = File.createTempFile("schemacrawler", "test")
-        .getAbsolutePath();
+      final String outputFilename = File
+        .createTempFile("schemacrawler", "test").getAbsolutePath();
 
       final DataTextFormatOptions textFormatOptions = new DataTextFormatOptions(new Properties(),
                                                                                 new OutputOptions("text",
@@ -158,7 +172,8 @@ public class SchemaCrawlerOutputTest
 
       final DataHandler dataHandler = DataTextFormatterLoader
         .load(textFormatOptions);
-      final QueryExecutor executor = new QueryExecutor(dataSource, dataHandler);
+      final QueryExecutor executor = new QueryExecutor(testUtility
+        .getDataSource(), dataHandler);
       executor.executeSQL("SELECT COUNT(*) FROM CUSTOMER");
 
       final File outputFile = new File(outputFilename);
@@ -178,8 +193,8 @@ public class SchemaCrawlerOutputTest
   {
     try
     {
-      final String outputFilename = File.createTempFile("schemacrawler", "test")
-        .getAbsolutePath();
+      final String outputFilename = File
+        .createTempFile("schemacrawler", "test").getAbsolutePath();
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       final OutputOptions outputOptions = new OutputOptions("text",
@@ -193,12 +208,12 @@ public class SchemaCrawlerOutputTest
       final DataHandler dataHandler = DataTextFormatterLoader
         .load(textFormatOptions);
       final CrawlHandler formatter = OperatorLoader.load(operatorOptions,
-                                                         dataSource
+                                                         testUtility
+                                                           .getDataSource()
                                                            .getConnection(),
                                                          dataHandler);
-      final SchemaCrawler crawler = new SchemaCrawler(dataSource,
-                                                      null,
-                                                      formatter);
+      final SchemaCrawler crawler = new SchemaCrawler(testUtility
+        .getDataSource(), null, formatter);
       crawler.crawl(schemaCrawlerOptions);
 
       final File outputFile = new File(outputFilename);
@@ -240,9 +255,8 @@ public class SchemaCrawlerOutputTest
     {
       final CrawlHandler formatter = SchemaTextFormatterLoader
         .load(textFormatOptions);
-      final SchemaCrawler crawler = new SchemaCrawler(dataSource,
-                                                      null,
-                                                      formatter);
+      final SchemaCrawler crawler = new SchemaCrawler(testUtility
+        .getDataSource(), null, formatter);
       crawler.crawl(schemaCrawlerOptions);
     }
     catch (final SchemaCrawlerException e)
@@ -291,12 +305,12 @@ public class SchemaCrawlerOutputTest
     try
     {
       final CrawlHandler formatter = OperatorLoader.load(operatorOptions,
-                                                         dataSource
+                                                         testUtility
+                                                           .getDataSource()
                                                            .getConnection(),
                                                          null);
-      final SchemaCrawler crawler = new SchemaCrawler(dataSource,
-                                                      null,
-                                                      formatter);
+      final SchemaCrawler crawler = new SchemaCrawler(testUtility
+        .getDataSource(), null, formatter);
       crawler.crawl(schemaCrawlerOptions);
     }
     catch (final Exception e)
@@ -349,12 +363,12 @@ public class SchemaCrawlerOutputTest
       final DataHandler dataHandler = DataTextFormatterLoader
         .load(textFormatOptions);
       final CrawlHandler formatter = OperatorLoader.load(operatorOptions,
-                                                         dataSource
+                                                         testUtility
+                                                           .getDataSource()
                                                            .getConnection(),
                                                          dataHandler);
-      final SchemaCrawler crawler = new SchemaCrawler(dataSource,
-                                                      null,
-                                                      formatter);
+      final SchemaCrawler crawler = new SchemaCrawler(testUtility
+        .getDataSource(), null, formatter);
       crawler.crawl(schemaCrawlerOptions);
     }
     catch (final Exception e)

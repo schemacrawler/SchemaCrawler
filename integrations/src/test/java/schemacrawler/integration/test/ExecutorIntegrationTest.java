@@ -23,9 +23,11 @@ package schemacrawler.integration.test;
 
 import java.io.File;
 
-import dbconnector.test.TestBase;
+import dbconnector.datasource.PropertiesDataSourceException;
+import dbconnector.test.TestUtility;
 
 import junit.framework.Test;
+import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.tools.OutputOptions;
@@ -37,8 +39,22 @@ import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextOptions;
 
 public class ExecutorIntegrationTest
-  extends TestBase
+extends TestCase
 {
+
+  private TestUtility testUtility = new TestUtility();
+
+  public void setUp()
+    throws PropertiesDataSourceException, ClassNotFoundException
+  {
+    testUtility.setUp();
+  }
+
+  public void tearDown()
+    throws PropertiesDataSourceException, ClassNotFoundException
+  {
+    testUtility.tearDown();
+  }
 
   public static Test suite()
   {
@@ -61,7 +77,7 @@ public class ExecutorIntegrationTest
                                                                   SchemaTextDetailType.BASIC);
 
       executor.execute(new SchemaCrawlerOptions(), schemaTextOptions,
-                       dataSource);
+                       testUtility.getDataSource());
 
       // Check post-conditions
       final File outputFile = outputOptions.getOutputFile();
