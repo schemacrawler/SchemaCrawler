@@ -25,9 +25,11 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import dbconnector.test.TestBase;
+import dbconnector.datasource.PropertiesDataSourceException;
+import dbconnector.test.TestUtility;
 
 import junit.framework.Test;
+import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
@@ -43,8 +45,22 @@ import schemacrawler.schema.View;
 import sf.util.Utilities;
 
 public class SchemaCrawlerTest
-  extends TestBase
+extends TestCase
 {
+
+  private TestUtility testUtility = new TestUtility();
+
+  public void setUp()
+    throws PropertiesDataSourceException, ClassNotFoundException
+  {
+    testUtility.setUp();
+  }
+
+  public void tearDown()
+    throws PropertiesDataSourceException, ClassNotFoundException
+  {
+    testUtility.tearDown();
+  }
 
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerTest.class
     .getName());
@@ -61,13 +77,13 @@ public class SchemaCrawlerTest
 
   public void testTableCount()
   {
-    LOGGER.log(Level.FINE, dataSource.toString());
+    LOGGER.log(Level.FINE, testUtility.getDataSource().toString());
     LOGGER.log(Level.FINE, "schemapattern="
-                           + dataSource.getSourceProperties()
+                           + testUtility.getDataSource().getSourceProperties()
                              .getProperty("schemapattern"));
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     LOGGER.log(Level.FINE, schemaCrawlerOptions.toString());
-    final Schema schema = SchemaCrawler.getSchema(dataSource,
+    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
                                                   null,
                                                   SchemaInfoLevel.MINIMUM,
                                                   schemaCrawlerOptions);
@@ -89,7 +105,7 @@ public class SchemaCrawlerTest
         "TABLE", "VIEW", "TABLE", "TABLE", "TABLE", "TABLE"
     };
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    final Schema schema = SchemaCrawler.getSchema(dataSource,
+    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
                                                   null,
                                                   SchemaInfoLevel.MINIMUM,
                                                   schemaCrawlerOptions);
@@ -126,7 +142,7 @@ public class SchemaCrawlerTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setShowStoredProcedures(true);
-    final Schema schema = SchemaCrawler.getSchema(dataSource,
+    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
                                                   informationSchemaProperties,
                                                   SchemaInfoLevel.MAXIMUM,
                                                   schemaCrawlerOptions);
@@ -170,7 +186,7 @@ public class SchemaCrawlerTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setShowStoredProcedures(true);
-    final Schema schema = SchemaCrawler.getSchema(dataSource,
+    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
                                                   informationSchemaProperties,
                                                   SchemaInfoLevel.MAXIMUM,
                                                   schemaCrawlerOptions);
@@ -206,7 +222,7 @@ public class SchemaCrawlerTest
                    "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_VIEWS");
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    final Schema schema = SchemaCrawler.getSchema(dataSource,
+    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
                                                   informationSchemaProperties,
                                                   SchemaInfoLevel.MAXIMUM,
                                                   schemaCrawlerOptions);
@@ -285,7 +301,7 @@ public class SchemaCrawlerTest
     };
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    final Schema schema = SchemaCrawler.getSchema(dataSource,
+    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
                                                   null,
                                                   SchemaInfoLevel.BASIC,
                                                   schemaCrawlerOptions);

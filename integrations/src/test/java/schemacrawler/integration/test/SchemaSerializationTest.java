@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 import junit.framework.Test;
+import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
@@ -35,11 +36,26 @@ import schemacrawler.schema.Schema;
 
 import com.thoughtworks.xstream.XStream;
 
-import dbconnector.test.TestBase;
+import dbconnector.datasource.PropertiesDataSourceException;
+import dbconnector.test.TestUtility;
 
 public class SchemaSerializationTest
-  extends TestBase
+extends TestCase
 {
+
+  private TestUtility testUtility = new TestUtility();
+
+  public void setUp()
+    throws PropertiesDataSourceException, ClassNotFoundException
+  {
+    testUtility.setUp();
+  }
+
+  public void tearDown()
+    throws PropertiesDataSourceException, ClassNotFoundException
+  {
+    testUtility.tearDown();
+  }
 
   private static final int CONTEXT = 50;
 
@@ -58,7 +74,7 @@ public class SchemaSerializationTest
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
     options.setShowStoredProcedures(true);
 
-    final Schema schema = SchemaCrawler.getSchema(dataSource, null,
+    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(), null,
                                                   SchemaInfoLevel.MAXIMUM,
                                                   options);
     final XStream xStream = new XStream();

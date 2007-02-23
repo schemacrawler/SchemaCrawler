@@ -22,11 +22,27 @@ package dbconnector.test;
 
 
 import junit.framework.Test;
+import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import dbconnector.datasource.PropertiesDataSourceException;
 
 public class PropertiesDataSourceTest
-  extends TestBase
+  extends TestCase
 {
+
+  private TestUtility testUtility = new TestUtility();
+
+  public void setUp()
+    throws PropertiesDataSourceException, ClassNotFoundException
+  {
+    testUtility.setUp();
+  }
+
+  public void tearDown()
+    throws PropertiesDataSourceException, ClassNotFoundException
+  {
+    testUtility.tearDown();
+  }
 
   public static Test suite()
   {
@@ -40,7 +56,7 @@ public class PropertiesDataSourceTest
 
   public void testConnection()
   {
-    assertNotNull(dataSource);
+    assertNotNull(testUtility.getDataSource());
   }
 
 }
