@@ -1,0 +1,1 @@
+@ant -f graphing.xml %*

@@ -1,0 +1,8 @@
+$schema.databaseInfo
+
+#foreach($table in $schema.tables)
+- $table.name ($table.type)
+#foreach($column in $table.columns)
+  - $column.name ($column.type)
+#end
+#end
