@@ -6,44 +6,46 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-	<section name="SchemaCrawler - API Example">
-		<subsection name="Description">
-			<p>The API example demonstrates the use of the SchemaCrawler API to create a data
-				source, and obtain database metadata. The SchemaCrawler API is a much
-				simpler alternative to using JDBC metadata.</p>
-		</subsection>
-		<subsection name="How to Run">
-			<ol>
-				<li>Copy the SchemaCrawler jar file into the
-					<span>
-						<em>api</em>
-					</span> example directory.</li>
-				<li>Copy the hsqldb jar file from dbserver directory into the
-					<span>
-						<em>api</em>
-					</span> example directory.</li>
-				<li>Start the hsqldb server by running
-					<span class="code">runServer.cmd</span> (
-					<span class="code">runServer.sh</span> on Unix) from the
-					<span class="code">dbserver</span> directory.</li>
-				<li>Make sure that java and javac are on your PATH.</li>
-				<li>Run
-					<span class="code">api.cmd</span> (
-					<span class="code">api.sh</span> on Unix) to compile and run the
-					program.</li>
-			</ol>
-		</subsection>
-		<subsection name="How to Experiment">
-			<ol>
-				<li>Try modifying the <span class="code">schemacrawler.config.properties</span> with regular
-					expressions, logging, and so on.</li>
-				<li>Try using different SchemaCrawler commands. (For a complete list of
-					SchemaCrawler commands, run <span class="code">java -jar
-					&lt;schemacrawler-jar&gt;</span>.)</li>
-				<li>Try defining a new database connection, using your favorite database
-					and driver.</li>
-			</ol>
-		</subsection>
-	</section>
+    <section name="SchemaCrawler - API Example">
+      <subsection name="Description">
+        <p>The API example demonstrates the use of the SchemaCrawler API to create a data
+          source, and obtain database metadata. The SchemaCrawler API is a much simpler
+          alternative to using JDBC metadata.</p>
+      </subsection>
+      <subsection name="How to Run">
+        <ol>
+          <li>Copy the SchemaCrawler jar file into the
+            <span>
+              <em>api</em>
+            </span> example directory.</li>
+          <li>Copy the hsqldb jar file from dbserver directory into the
+            <span>
+              <em>api</em>
+            </span> example directory.</li>
+          <li>Start the hsqldb server by running
+            <span class="code">runServer.cmd</span> (
+            <span class="code">runServer.sh</span> on Unix) from the
+            <span class="code">dbserver</span> directory.</li>
+          <li>Make sure that java and javac are on your PATH.</li>
+          <li>Run
+            <span class="code">api.cmd</span> (
+            <span class="code">api.sh</span> on Unix) to compile and run the
+            program.</li>
+        </ol>
+      </subsection>
+      <subsection name="How to Experiment">
+        <ol>
+          <li>Try modifying the
+            <span class="code">schemacrawler.config.properties</span> with regular
+            expressions, logging, and so on.</li>
+          <li>Try using different SchemaCrawler commands. (For a complete list of
+            SchemaCrawler commands, run
+            <span class="code">java -jar
+              &lt;schemacrawler-jar&gt;</span>.)</li>
+          <li>Try defining a new database connection, using your favorite database and
+            driver.</li>
+        </ol>
+      </subsection>
+    </section>
   </body>
 </document>
