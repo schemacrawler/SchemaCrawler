@@ -1,0 +1,38 @@
+<!DOCTYPE document PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+  "http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+  <properties>
+    <title>SchemaCrawler - Advanced API Example</title>
+    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
+  </properties>
+	<body>
+		<section name="SchemaCrawler - Advanced API Example">
+			<subsection name="Description">
+        <p>The advanced API example demonstrates the use of the SchemaCrawler API to create a
+          data source, and obtain database metadata. The SchemaCrawler API is a much simpler
+          alternative to using JDBC metadata.</p>
+			</subsection>
+      <subsection name="How to Run">
+        <ol>
+          <li> Try modifying the
+            <span class="code">schemacrawler.config.properties</span> with regular
+            expressions, logging, and so on. </li>
+          <li> Try using different SchemaCrawler commands in the Maven test project's
+            pom.xml file. (For a complete list of SchemaCrawler commands, run
+            <span class="code">java -jar &lt;schemacrawler-jar&gt;</span>.) </li>
+          <li>
+            Try defining a new database connection, using your favorite
+              database and driver.
+          </li>
+        </ol>
+      </subsection>
+			<subsection name="How to Experiment">
+				<ol>
+          <li>Try modifying the
+            <span class="code">APIExample class</span>, to explore all of the database
+            metadata that is available via the SchemaCrawler API.</li>
+				</ol>
+			</subsection>
+		</section>
+	</body>
+</document>

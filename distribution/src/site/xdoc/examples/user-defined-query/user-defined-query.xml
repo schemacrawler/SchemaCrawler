@@ -1,0 +1,46 @@
+<!DOCTYPE document PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+  "http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+  <properties>
+    <title>SchemaCrawler - User Defined Queries Example</title>
+    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
+  </properties>
+  <body>
+    <section name="SchemaCrawler - User Defined Queries Example">
+      <subsection name="Description">
+        <p>SchemaCrawler has the capability to execute any arbitrary SQL, per table. The
+          following variables are available to aid in the construction of queries -
+          ${tabletype}, ${table}, and ${columns}. This example demonstrates how to
+          execute arbitrary SQL, per table.</p>
+      </subsection>
+      <subsection name="How to Run">
+        <ol>
+          <li> Make sure that the Java executable is on your path.</li>
+          <li> Copy the SchemaCrawler jar file and
+            <span class="code">schemacrawler.config.properties</span> into the
+            <span class="code">user-defined-query</span> example directory. </li>
+          <li> Copy the hsqldb jar file from dbserver directory into the
+            <span class="code">user-defined-query</span> example directory. </li>
+          <li> Start the hsqldb server by running
+            <span class="code">runServer.cmd</span> (
+            <span class="code">runServer.sh</span> on Unix) from the
+            <span class="code">dbserver</span> directory. </li>
+          <li> Start a command shell in the
+            <span class="code">user-defined-query</span> example directory. </li>
+          <li> Run
+            <span class="code">user-defined-query.cmd</span>
+            (<span class="code">user-defined-query.sh</span> on Unix). </li>
+        </ol>
+      </subsection>
+      <subsection name="How to Experiment">
+        <ol>
+          <li> Try modifying the
+            <span class="code">schemacrawler.config.properties</span> with
+            different queries. </li>
+          <li> Redirect the output of SchemaCrawler into a file, by running
+            <span class="code">user-defined-query.cmd &gt; file.txt</span>. </li>
+        </ol>
+      </subsection>
+    </section>
+  </body>
+</document>
