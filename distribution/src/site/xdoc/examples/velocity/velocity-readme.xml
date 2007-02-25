@@ -1,0 +1,58 @@
+<!DOCTYPE document PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+  "http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+  <properties>
+    <title>SchemaCrawler - Velocity Example</title>
+    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
+  </properties>
+	<body>
+		<section name="SchemaCrawler - Velocity Example">
+			<subsection name="Description">
+        <p>The command example demonstrates the integration of SchemaCrawler with Apache
+          Jakarta Velocity.</p>
+			</subsection>
+      <subsection name="How to Run">
+        <ol>
+          <li>
+            Install 
+            <a href="http://ant.apache.org/">
+              ant
+            </a>
+            , and make sure that ant is on your path.
+          </li>
+          <li>
+            Copy the SchemaCrawler jar file and
+              <span class="code">schemacrawler.config.properties</span> into the
+              <span class="code">velocity</span> example directory.
+          </li>
+          <li>
+            Download 
+            <a href="http://jakarta.apache.org/velocity/">
+              Velocity
+            </a>
+            , and copy all of the jar files required by Velocity (at least
+              commons collections and log4j) into the
+              <span class="code">velocity</span> example directory.
+          </li>
+          <li> Start the hsqldb server by running
+            <span class="code">runServer.cmd</span> (
+            <span class="code">runServer.sh</span> on Unix) from the dbserver
+            directory. </li>
+          <li>
+            Start a command shell in the
+              <span class="code">velocity</span> example directory.
+          </li>
+          <li> Run
+            <span class="code">velocity.cmd</span> (
+            <span class="code">velocity.sh</span> on Unix). </li>
+        </ol>
+      </subsection>
+			<subsection name="How to Experiment">
+				<ol>
+          <li>Try modifying the Velocity template,
+            <span class="code">tables.vm</span> to modify the output produced.</li>
+				</ol>
+			</subsection>
+		</section>
+	</body>
+</document>
