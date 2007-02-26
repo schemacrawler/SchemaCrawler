@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project
-  xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
@@ -62,41 +61,36 @@
             <phase>package</phase>
             <configuration>
               <tasks>
-
-               <property
-                 name="distribution.dir"
-                 value="../_distrib"/>
-
-               <property
-                 name="distributable.jar"
-                 value="${distribution.dir}/schemacrawler-${pom.version}.jar"/>
-
-               <delete file="{distributable.jar}"/>
-               <jar
-                 destfile="${distributable.jar}"
-                 duplicate="preserve"
-                 index="true">
-                 <manifest>
-                   <attribute name="Product" value="SchemaCrawler"/>
-                   <attribute name="Version" value="${pom.version}"/>
-                   <attribute name="Author" value="Sualeh Fatehi"/>
-                   <attribute name="Copyright" value="(c) 2003-2007, Sualeh Fatehi"/>
-                   <attribute name="Main-Class" value="schemacrawler.Main"/>
-                 </manifest>
+                <property name="distribution.dir" value="../_distrib"/>
+                <property name="distributable.jar"
+                  value="${distribution.dir}/schemacrawler-${pom.version}.jar"/>
+                
+                <delete file="{distributable.jar}"/>
+                <jar destfile="${distributable.jar}" duplicate="preserve"
+                  index="true">
+                  <manifest>
+                    <attribute name="Product" value="SchemaCrawler"/>
+                    <attribute name="Version" value="${pom.version}"/>
+                    <attribute name="Author" value="Sualeh Fatehi"/>
+                    <attribute name="Copyright"
+                      value="(c) 2003-2007, Sualeh Fatehi"/>
+                    <attribute name="Main-Class" value="schemacrawler.Main"/>
+                  </manifest>
                   <zipfileset dir="../dbconnector/target/classes"/>
                   <zipfileset dir="../schemacrawler/target/classes"/>
                   <zipfileset dir="../integrations/target/classes"/>
-                  <zipfileset dir="../schemacrawler-maven-plugin/target/classes"/>
-               </jar>
-
-               <copy
-                 file="../schemacrawler/src/site/resources/config/schemacrawler.config.properties"
-                 todir="${distribution.dir}"/>
-
-              <copy todir="${distribution.dir}/examples">
-                <fileset dir="target/site/examples"/>
-              </copy>
-
+                  <zipfileset
+                    dir="../schemacrawler-maven-plugin/target/classes"/>
+                </jar>
+                
+                <copy
+                  file="../schemacrawler/src/site/resources/config/schemacrawler.config.properties"
+                  todir="${distribution.dir}"/>
+                
+                <copy todir="${distribution.dir}/examples">
+                  <fileset dir="target/site/examples"/>
+                </copy>
+                
               </tasks>
             </configuration>
             <goals>
