@@ -39,24 +39,6 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>assembly</id>
-            <phase>package</phase>
-            <goals>
-              <goal>assembly</goal>
-            </goals>
-            <configuration>
-              <descriptorRefs>
-                <descriptorRef>jar-with-dependencies</descriptorRef>
-              </descriptorRefs>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
         <executions>
           <execution>
@@ -101,7 +83,10 @@
                    <attribute name="Copyright" value="(c) 2003-2007, Sualeh Fatehi"/>
                    <attribute name="Main-Class" value="schemacrawler.Main"/>
                  </manifest>
-                 <zipfileset src="target/distribution-${pom.version}-jar-with-dependencies.jar"/>
+                  <zipfileset dir="../dbconnector/target/classes"/>
+                  <zipfileset dir="../schemacrawler/target/classes"/>
+                  <zipfileset dir="../integrations/target/classes"/>
+                  <zipfileset dir="../schemacrawler-maven-plugin/target/classes"/>
                </jar>
 
                <copy
