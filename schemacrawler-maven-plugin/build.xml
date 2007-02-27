@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="schemacrawler-maven-plugin" default="build" basedir=".">
 
-  <property name="SchemaCrawlerHome" value=".." />
+  <property environment="env"/>
+  <property name="SchemaCrawlerHome" location=".." />
 	<property name="dbconnector.location" value="${SchemaCrawlerHome}/dbconnector" />
 	<property name="schemacrawler.location" value="${SchemaCrawlerHome}/schemacrawler" />
 
@@ -9,6 +10,7 @@
 		<path refid="mainproject.classpath" />
 		<path refid="dbconnector.classpath" />
 		<path refid="schemacrawler.classpath" />
+		<path refid="schemacrawler-maven-plugin.classpath" />
 	</path>
 
 	<path id="mainproject.classpath">
@@ -21,6 +23,19 @@
 
 	<path id="schemacrawler.classpath">
 		<pathelement location="${schemacrawler.location}/target/classes" />
+	</path>
+	
+	<path id="schemacrawler-maven-plugin.classpath">
+    <fileset dir="${env.M2_REPO}">
+      <include name="**/commons-lang*.jar"/>
+      <include name="**/plexus-archiver*.jar"/>
+      <include name="**/doxia-sink-api*.jar"/>
+      <include name="**/maven-plugin-api*.jar"/>
+      <include name="**/maven-project*.jar"/>
+      <include name="**/maven-reporting*.jar"/>
+      <include name="**/maven-artifact*.jar"/>
+      <include name="**/maven-plugin-testing-harness*.jar"/>
+    </fileset>
 	</path>
 
 	<target name="init">

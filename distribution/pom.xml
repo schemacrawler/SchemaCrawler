@@ -62,41 +62,48 @@
             <configuration>
               <tasks>
 
+                <property name="main.project.dir"
+                  value=".."/>
+
                 <property name="distribution.dir"
-                  value="target/_distribution"/>
+                  value="${main.project.dir}/distribution/target/_distribution"/>
                 <property name="distributable.jar"
                   value="${distribution.dir}/schemacrawler-${pom.version}.jar"/>
 
                 <delete dir="${distribution.dir}"/>
                 <mkdir dir="${distribution.dir}"/>
 
-                <jar destfile="${distributable.jar}" duplicate="preserve"
+                <jar
+                  destfile="${distributable.jar}"
+                  duplicate="preserve"
                   index="true">
                   <manifest>
                     <attribute name="Product" value="SchemaCrawler"/>
                     <attribute name="Version" value="${pom.version}"/>
                     <attribute name="Author" value="Sualeh Fatehi"/>
-                    <attribute name="Copyright"
-                      value="(c) 2003-2007, Sualeh Fatehi"/>
+                    <attribute name="Copyright" value="(c) 2003-2007, Sualeh Fatehi"/>
                     <attribute name="Main-Class" value="schemacrawler.Main"/>
                   </manifest>
-                  <zipfileset dir="../dbconnector/target/classes"/>
-                  <zipfileset dir="../schemacrawler/target/classes"/>
-                  <zipfileset dir="../integrations/target/classes"/>
                   <zipfileset
-                    dir="../schemacrawler-maven-plugin/target/classes"/>
+                    dir="${main.project.dir}/dbconnector/target/classes"/>
+                  <zipfileset
+                    dir="${main.project.dir}/schemacrawler/target/classes"/>
+                  <zipfileset
+                    dir="${main.project.dir}/integrations/target/classes"/>
+                  <zipfileset
+                    dir="${main.project.dir}/schemacrawler-maven-plugin/target/classes"/>
                 </jar>
 
                 <copy
-                  file="../schemacrawler/src/site/resources/config/schemacrawler.config.properties"
+                  file="${main.project.dir}/schemacrawler/src/site/resources/config/schemacrawler.config.properties"
                   todir="${distribution.dir}"/>
 
                 <copy todir="${distribution.dir}/examples">
-                  <fileset dir="target/site/examples"/>
+                  <fileset dir="${main.project.dir}/distribution/target/site/examples"/>
                 </copy>
 
                 <copy todir="${distribution.dir}/dbserver">
-                  <fileset dir="../_dbserver">
+                  <fileset dir="${main.project.dir}/_dbserver">
                     <exclude name="*.log"/>
                     <exclude name="*.lck"/>
                     <exclude name="*.properties"/>
