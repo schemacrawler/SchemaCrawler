@@ -96,14 +96,14 @@ One of:
 
 -c <connection_name> (short for -connection <connection_name>)
     Uses a named connection
-    
+
 -d (short for -default)
     Uses the default connection
-    
+
 -x <connection_name> (short for -prompt <connection_name>)
     Prompts for connection information, which is saved
     into <connection_name>.properties
-    
+
 -a (short for -testall)
     Tests all the connections defined in the configuration properties file,
     but does not execute any commands
@@ -112,16 +112,16 @@ Or, all of the following:
 
 -driver=<driver-class-name>
 	Fully qualified name of the JDBC driver class.
-	
+
 -url=<url>
 	JDBC connection URL to the database.
-	
+
 -user=<user>
 	Database user name.
 
 -password=<password>
 	Database password.
-	
+
 --- Command Options ---
 
 -command=<command>
@@ -129,11 +129,11 @@ Or, all of the following:
     brief_schema
         If you only want to see table, view and procedure names
     basic_schema
-        For more details of tables, views and procedures, 
+        For more details of tables, views and procedures,
         including columns and primary keys
     verbose_schema
-        For the most detail of the schema, including data 
-        types, indexes, foreign keys, and view and 
+        For the most detail of the schema, including data
+        types, indexes, foreign keys, and view and
         procedure definitions
     maximum_schema
         For maximum possible detail of the schema, including
@@ -312,6 +312,126 @@ Or, all of the following:
           There is also integration with
           <a href="http://jung.sourceforge.net/">JUNG</a>
           for creating graph JPEG files.
+        </p>
+      </answer>
+    </faq>
+  </part>
+  <part id="grep">
+    <title>SchemaCrawler Grep</title>
+    <faq id="whats-schemacrawler-grep">
+      <question>
+        <span>What is SchemaCrawler Grep?</span>
+      </question>
+      <answer>
+        <p>
+          SchemaCrawler is a command-line tool that allows you to search your database for tables and columns
+          that match a regular expression, much like the standard
+          <a href="http://en.wikipedia.org/wiki/Grep">grep</a> tool.
+        </p>
+      </answer>
+    </faq>
+    <faq id="grep-output">
+      <question>
+        <span>What does SchemaCrawler output look like?</span>
+      </question>
+      <answer>
+        <p>
+          SchemaCrawler Grep output is the same as the SchemaCrawler text output.
+        </p>
+      </answer>
+    </faq>
+    <faq id="commands">
+      <question>
+        <span>What are the SchemaCrawler Grep commands?</span>
+      </question>
+      <answer>
+        <source>
+          <![CDATA[
+SchemaCrawler Grep is a command-line tool to search for tables that contain
+columns matching regular expressions in your database schema.
+
+To use SchemaCrawler Grep:
+1. Create a working directory, and copy the program jar file to that
+   directory.
+2. Copy your database driver jar or zip files to the same directory.
+3. Modify schemacrawler.config.properties to point to your database.
+4. Try not to give your database user DBA permissions - at least when you
+   are running SchemaCrawler Grep.
+5. Start a command shell, and cd to the working directory.
+
+
+java -cp <schemacrawler-jar> schemacrawler.Grep [options]
+
+--- Optional Configuration Options ---
+
+-g <config-file> (short for -configfile <config-file>)
+    Reads SchemaCrawler configuration properties from <config-file> instead
+    of the default schemacrawler.config.properties
+
+-p <config-override-file> (short for -configoverridefile <config-override-file>)
+    Reads SchemaCrawler configuration properties from <config-override-file>
+    and overrides the properties from the configuration file
+
+--- Required Connection Options ---
+
+One of:
+
+-c <connection_name> (short for -connection <connection_name>)
+    Uses a named connection
+
+-d (short for -default)
+    Uses the default connection
+
+-x <connection_name> (short for -prompt <connection_name>)
+    Prompts for connection information, which is saved
+    into <connection_name>.properties
+
+Or, all of the following:
+
+-driver=<driver-class-name>
+	Fully qualified name of the JDBC driver class.
+
+-url=<url>
+	JDBC connection URL to the database.
+
+-user=<user>
+	Database user name.
+
+-password=<password>
+	Database password.
+
+
+--- Grep Options ---
+
+-tables=<regular-expression>
+	Optional, where <regular-expression> is a regular expression to match table
+	names.
+	For example,
+	-tables C.*|P.*
+	matches any table whose names start with C or P.
+
+-columns=<regular-expression>
+	Optional, where <regular-expression> is a regular expression to match column
+	names in the form "TABLENAME.COLUMNNAME".
+	For example,
+	-columns .*\.STREET|.*\.PRICE
+	matches columns named STREET or PRICE in any table.
+
+-v (short for -invert-match)
+	Inverts the match, and shows non-matching tables and columns.
+]]>
+        </source>
+      </answer>
+    </faq>
+    <faq id="config">
+      <question>
+        <span>
+          What does a SchemaCrawler configuration file look like?
+        </span>
+      </question>
+      <answer>
+        <p>
+          The SchemaCrawler Grep configuration file is the same as the SchemaCrawler configuration file.
         </p>
       </answer>
     </faq>

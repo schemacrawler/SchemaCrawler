@@ -11,7 +11,7 @@
     <name>SchemaCrawler</name>
     <href>http://sourceforge.net/projects/schemacrawler</href>
   </bannerRight>
-  <body>      
+  <body>
     <links>
       <item
         name="Donations"
@@ -26,7 +26,7 @@
         href="index.html" />
       <item
         name="Readme"
-        href="readme.html" />        
+        href="readme.html" />
       <item
         name="FAQS"
         href="faq.html" />
@@ -37,6 +37,9 @@
         name="Using INFORMATION_SCHEMA Views"
         href="INFORMATION_SCHEMA.html" />
       <item
+        name="SchemaCrawler Grep"
+        href="schemacrawler_grep.html" />
+      <item
         name="Donations"
         href="http://sourceforge.net/donate/index.php?group_id=148383" />
       <item
@@ -44,14 +47,14 @@
         href="http://sourceforge.net/project/showfiles.php?group_id=148383" />
       <item
         name="Change History"
-        href="changes-report.html" />                
+        href="changes-report.html" />
       <item
         name="Source Code"
         href="http://sourceforge.net/svn/?group_id=148383" />
       <item
         name="Project Page on SourceForge"
-        href="http://sourceforge.net/projects/schemacrawler/" />        
+        href="http://sourceforge.net/projects/schemacrawler/" />
     </menu>
-    ${reports}   
+    ${reports}
   </body>
 </project>
