@@ -70,8 +70,7 @@ public final class OptionsParser
     final String cfgFile = parser.getStringOptionValue(OPTION_CONFIGFILE);
     final String cfgOverrideFile = parser
       .getStringOptionValue(OPTION_CONFIGOVERRIDEFILE);
-    final Properties config = Utilities.loadConfig(cfgFile,
-                                                            cfgOverrideFile);
+    final Properties config = Utilities.loadConfig(cfgFile, cfgOverrideFile);
 
     final String outputFormatValue = parser
       .getStringOptionValue(OPTION_OUTPUT_FORMAT);
