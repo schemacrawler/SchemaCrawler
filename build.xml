@@ -7,21 +7,21 @@
   <property name="pom.version" value="4.2" />
 
 	<property name="dbconnector.source"
-    location="dbconnector/src/main"/>
+    location="${SchemaCrawlerHome}/dbconnector/src/main"/>
 	<property name="dbconnector.classes"
-    location="dbconnector/target/classes"/>
+    location="${SchemaCrawlerHome}/dbconnector/target/classes"/>
   <property name="schemacrawler.source"
-    location="schemacrawler/src/main"/>
+    location="${SchemaCrawlerHome}/schemacrawler/src/main"/>
 	<property name="schemacrawler.classes"
-    location="schemacrawler/target/classes"/>
+    location="${SchemaCrawlerHome}/schemacrawler/target/classes"/>
   <property name="integrations.source"
-    location="integrations/src/main"/>
+    location="${SchemaCrawlerHome}/integrations/src/main"/>
 	<property name="integrations.classes"
-    location="integrations/target/classes"/>
+    location="${SchemaCrawlerHome}/integrations/target/classes"/>
   <property name="schemacrawler-maven-plugin.source"
-    location="schemacrawler-maven-plugin/src/main"/>
+    location="${SchemaCrawlerHome}/schemacrawler-maven-plugin/src/main"/>
 	<property name="schemacrawler-maven-plugin.classes"
-    location="schemacrawler-maven-plugin/target/classes"/>
+    location="${SchemaCrawlerHome}/schemacrawler-maven-plugin/target/classes"/>
     
 	<available
     property="have.dependencies.classpath"
@@ -147,11 +147,8 @@
     description="Package all sub-project jars into the distributable jar"
     depends="all.build">
 
-    <property name="main.project.dir"
-      value="."/>
-
     <property name="distribution.dir"
-      value="${main.project.dir}/distribution/target/_distribution"/>
+      value="${SchemaCrawlerHome}/distribution/target/_distribution"/>
     <property name="distributable.jar"
       value="${distribution.dir}/schemacrawler-${pom.version}.jar"/>
 
@@ -170,26 +167,28 @@
         <attribute name="Main-Class" value="schemacrawler.Main"/>
       </manifest>
       <zipfileset
-        dir="${main.project.dir}/dbconnector/target/classes"/>
+        dir="${dbconnector.classes}"/>
       <zipfileset
-        dir="${main.project.dir}/schemacrawler/target/classes"/>
+        dir="${schemacrawler.classes}"/>
       <zipfileset
-        dir="${main.project.dir}/integrations/target/classes"/>
+        dir="${integrations.classes}"/>
       <zipfileset
-        dir="${main.project.dir}/schemacrawler-maven-plugin/target/classes"/>
+        dir="${schemacrawler-maven-plugin.classes}"/>
     </jar>
 
-    <copy
-      file="${main.project.dir}/schemacrawler/src/site/resources/config/schemacrawler.config.properties"
-      todir="${distribution.dir}"/>
+    <copy todir="${distribution.dir}">
+      <fileset dir="${SchemaCrawlerHome}/schemacrawler/src/site/resources/config">
+        <include name="*.properties"/>
+      </fileset>
+    </copy>
 
-    <mkdir dir="${main.project.dir}/distribution/target/site/examples"/>
+    <mkdir dir="${SchemaCrawlerHome}/distribution/target/site/examples"/>
     <copy todir="${distribution.dir}/examples">
-      <fileset dir="${main.project.dir}/distribution/target/site/examples"/>
+      <fileset dir="${SchemaCrawlerHome}/distribution/target/site/examples"/>
     </copy>
 
     <copy todir="${distribution.dir}/dbserver">
-      <fileset dir="${main.project.dir}/_dbserver">
+      <fileset dir="${SchemaCrawlerHome}/_dbserver">
         <exclude name="*.log"/>
         <exclude name="*.lck"/>
         <exclude name="*.properties"/>
@@ -205,7 +204,7 @@
 
     <zip destfile="_backups/SchemaCrawler-${pom.version}-distrib.zip">
       <zipfileset
-        dir="_distrib"
+        dir="${distribution.dir}"
         prefix="SchemaCrawler-${pom.version}-distrib">
         <exclude name="**/CVS/**/*"/>
         <exclude name="**/.cvsignore"/>
@@ -215,9 +214,8 @@
 
     <zip destfile="_backups/SchemaCrawler-${pom.version}-src.zip">
       <zipfileset
-        dir="."
+        dir="${SchemaCrawlerHome}"
         prefix="SchemaCrawler-${pom.version}-src">
-        <exclude name="setm2.cmd"/>
         <exclude name="_backups/*"/>
         <exclude name="**/target/**/*"/>
         <exclude name="**/CVS/**/*"/>
