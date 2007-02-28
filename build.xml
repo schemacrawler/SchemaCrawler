@@ -28,7 +28,8 @@
     file="${env.M2_REPO}" type="dir"/>
     
 
-  <target name="all.clean">
+  <target name="all.clean"
+    description="Clean all sub-projects">
 
     <delete dir="schemacrawler-maven-plugin/target" />
     <delete dir="integrations/target" />
@@ -38,6 +39,7 @@
 	</target>
 
   <target name="all.build"
+    description="Compile all sub-projects"
     depends="build.dbconnector,
              build.schemacrawler,
              build.integrations,
@@ -143,10 +145,7 @@
 	
   <target name="package"
     description="Package all sub-project jars into the distributable jar"
-    depends="all.build,make_distributable"
-  />
-
-  <target name="make_distributable" depends="all.build" if="compiled">
+    depends="all.build">
 
     <property name="main.project.dir"
       value="."/>
