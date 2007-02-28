@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="schemacrawler" default="all.build" basedir=".">
+<project name="schemacrawler" default="package" basedir=".">
 
   <property name="SchemaCrawlerHome" location="." />
   <property name="pom.version" value="4.2" />
@@ -27,8 +27,18 @@
 
   <target name="all.build">
 
-		<ant antfile="integrations/build.xml" inheritAll="false" />
-		<ant antfile="schemacrawler-maven-plugin/build.xml" inheritAll="false" />
+    <ant
+      antfile="dbconnector/build.xml"
+      inheritAll="false" />
+    <ant
+      antfile="schemacrawler/build.xml"
+      inheritAll="false" />
+		<ant
+      antfile="integrations/build.xml"
+      inheritAll="false" />
+		<ant
+      antfile="schemacrawler-maven-plugin/build.xml"
+      inheritAll="false" />
 
     <condition property="compiled">
       <and>
@@ -39,16 +49,14 @@
       </and>
     </condition>
 
-    <antcall target="package"/>
-
 	</target>
 
   <target name="package"
     description="Package all sub-project jars into the distributable jar"
-    depends="check_compiled,make_distributable"
+    depends="all.build,make_distributable"
   />
 
-  <target name="make_distributable" if="compiled">
+  <target name="make_distributable" depends="all.build" if="compiled">
 
     <property name="main.project.dir"
       value="."/>
@@ -86,6 +94,7 @@
       file="${main.project.dir}/schemacrawler/src/site/resources/config/schemacrawler.config.properties"
       todir="${distribution.dir}"/>
 
+    <mkdir dir="${main.project.dir}/distribution/target/site/examples"/>
     <copy todir="${distribution.dir}/examples">
       <fileset dir="${main.project.dir}/distribution/target/site/examples"/>
     </copy>
@@ -97,19 +106,6 @@
         <exclude name="*.properties"/>
       </fileset>
     </copy>
-
-	</target>
-
-  <target name="check_compiled">
-
-    <condition property="compiled">
-      <and>
-        <available file="dbconnector/target/classes" type="dir"/>
-        <available file="schemacrawler/target/classes" type="dir"/>
-        <available file="integrations/target/classes" type="dir"/>
-        <available file="schemacrawler-maven-plugin/target/classes" type="dir"/>
-      </and>
-    </condition>
 
 	</target>
 

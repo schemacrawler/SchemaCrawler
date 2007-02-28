@@ -10,7 +10,6 @@
 		<path refid="mainproject.classpath" />
 		<path refid="dbconnector.classpath" />
 		<path refid="schemacrawler.classpath" />
-		<path refid="schemacrawler-maven-plugin.classpath" />
 	</path>
 
 	<path id="mainproject.classpath">
@@ -25,18 +24,11 @@
 		<pathelement location="${schemacrawler.location}/target/classes" />
 	</path>
 	
-	<path id="schemacrawler-maven-plugin.classpath">
-    <fileset dir="${env.M2_REPO}">
-      <include name="**/commons-lang*.jar"/>
-      <include name="**/plexus-archiver*.jar"/>
-      <include name="**/doxia-sink-api*.jar"/>
-      <include name="**/maven-plugin-api*.jar"/>
-      <include name="**/maven-project*.jar"/>
-      <include name="**/maven-reporting*.jar"/>
-      <include name="**/maven-artifact*.jar"/>
-      <include name="**/maven-plugin-testing-harness*.jar"/>
-    </fileset>
-	</path>
+	<available
+    property="have.dependencies.classpath"
+    file="${env.M2_REPO}" type="dir"/>
+    
+
 
 	<target name="init">
 		<mkdir dir="target/classes" />
@@ -46,7 +38,7 @@
 		<delete dir="target" />
 	</target>
 
-	<target name="build" depends="init">
+	<target name="build" depends="init" if="have.dependencies.classpath">
 
 		<ant antfile="${dbconnector.location}/build.xml" inheritAll="false" />
 		<ant antfile="${schemacrawler.location}/build.xml" inheritAll="false" />
@@ -56,6 +48,18 @@
 		<javac destdir="target/classes">
 			<src path="src/main/java" />
 			<classpath refid="project.classpath" />
+    	<classpath id="schemacrawler-maven-plugin.classpath">
+        <fileset dir="${env.M2_REPO}">
+          <include name="**/commons-lang*.jar"/>
+          <include name="**/plexus-archiver*.jar"/>
+          <include name="**/doxia*1.0-alpha-7.jar"/>
+          <include name="**/maven-plugin-api*.jar"/>
+          <include name="**/maven-project*.jar"/>
+          <include name="**/maven-reporting*-2.0.2.jar"/>
+          <include name="**/maven-artifact*.jar"/>
+          <include name="**/maven-plugin-testing-harness*.jar"/>
+        </fileset>
+    	</classpath>
 		</javac>
 
     <copy todir="target/classes">
