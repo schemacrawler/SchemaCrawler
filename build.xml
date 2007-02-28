@@ -1,56 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="schemacrawler" default="package" basedir=".">
 
+  <property environment="env"/>
   <property name="SchemaCrawlerHome" location="." />
+  
   <property name="pom.version" value="4.2" />
+
+	<property name="dbconnector.source"
+    location="dbconnector/src/main"/>
+	<property name="dbconnector.classes"
+    location="dbconnector/target/classes"/>
+  <property name="schemacrawler.source"
+    location="schemacrawler/src/main"/>
+	<property name="schemacrawler.classes"
+    location="schemacrawler/target/classes"/>
+  <property name="integrations.source"
+    location="integrations/src/main"/>
+	<property name="integrations.classes"
+    location="integrations/target/classes"/>
+  <property name="schemacrawler-maven-plugin.source"
+    location="schemacrawler-maven-plugin/src/main"/>
+	<property name="schemacrawler-maven-plugin.classes"
+    location="schemacrawler-maven-plugin/target/classes"/>
+    
+	<available
+    property="have.dependencies.classpath"
+    file="${env.M2_REPO}" type="dir"/>
+    
 
   <target name="all.clean">
 
-		<ant
-		  antfile="build.xml"
-      dir="schemacrawler-maven-plugin"
-      target="clean"/>
-		<ant
-		  antfile="build.xml"
-      dir="integrations"
-      target="clean"/>
-		<ant
-		  antfile="build.xml"
-      dir="schemacrawler"
-      target="clean"/>
-		<ant
-		  antfile="build.xml"
-      dir="dbconnector"
-      target="clean"/>
+    <delete dir="schemacrawler-maven-plugin/target" />
+    <delete dir="integrations/target" />
+    <delete dir="schemacrawler/target" />
+    <delete dir="dbconnector/target" />
 
 	</target>
 
-  <target name="all.build">
+  <target name="all.build"
+    depends="build.dbconnector,
+             build.schemacrawler,
+             build.integrations,
+             build.schemacrawler-maven-plugin"
+  />
 
-    <ant
-      antfile="dbconnector/build.xml"
-      inheritAll="false" />
-    <ant
-      antfile="schemacrawler/build.xml"
-      inheritAll="false" />
-		<ant
-      antfile="integrations/build.xml"
-      inheritAll="false" />
-		<ant
-      antfile="schemacrawler-maven-plugin/build.xml"
-      inheritAll="false" />
+	<target name="build.dbconnector">
 
-    <condition property="compiled">
-      <and>
-        <available file="dbconnector/target/classes" type="dir"/>
-        <available file="schemacrawler/target/classes" type="dir"/>
-        <available file="integrations/target/classes" type="dir"/>
-        <available file="schemacrawler-maven-plugin/target/classes" type="dir"/>
-      </and>
-    </condition>
+		<echo message="Compiling: dbconnector" />
+		
+    <mkdir dir="${dbconnector.classes}" />
+    
+		<javac destdir="${dbconnector.classes}">
+			<src path="${dbconnector.source}/java" />
+		</javac>
+
+    <copy todir="${dbconnector.classes}">
+       <fileset dir="${dbconnector.source}/resources"/>
+    </copy>
 
 	</target>
+	
+	<target name="build.schemacrawler">
 
+		<echo message="Compiling: schemacrawler" />
+
+    <mkdir dir="${schemacrawler.classes}" />
+
+		<javac destdir="${schemacrawler.classes}">
+			<src path="${schemacrawler.source}/java" />
+    	<classpath id="schemacrawler.classpath">
+    		<pathelement location="${dbconnector.classes}" />
+    	</classpath>
+		</javac>
+
+    <copy todir="${schemacrawler.classes}">
+       <fileset dir="${schemacrawler.source}/resources"/>
+    </copy>
+
+	</target>
+	
+	<target name="build.integrations" if="have.dependencies.classpath">
+
+		<echo message="Compiling: integrations" />
+
+    <mkdir dir="${integrations.classes}" />
+
+		<javac destdir="${integrations.classes}">
+			<src path="${integrations.source}/java" />
+    	<classpath id="integrations.classpath">
+    		<pathelement location="${dbconnector.classes}" />
+    		<pathelement location="${schemacrawler.classes}" />
+        <fileset dir="${env.M2_REPO}">
+          <include name="**/commons-collections*.jar"/>
+          <include name="**/commons-logging*.jar"/>
+          <include name="**/velocity*.jar"/>
+          <include name="**/jung*.jar"/>
+          <include name="**/colt*.jar"/>
+          <include name="**/log4j*.jar"/>
+          <include name="**/xstream*.jar"/>
+          <include name="**/xpp3_min*.jar"/>
+          <include name="**/freemarker*.jar"/>
+        </fileset>
+    	</classpath>
+		</javac>
+
+    <copy todir="${integrations.classes}">
+       <fileset dir="${integrations.source}/resources"/>
+    </copy>
+
+	</target>
+	
+	<target name="build.schemacrawler-maven-plugin" if="have.dependencies.classpath">
+
+		<echo message="Compiling: schemacrawler-maven-plugin" />
+
+    <mkdir dir="${schemacrawler-maven-plugin.classes}" />
+
+		<javac destdir="${schemacrawler-maven-plugin.classes}">
+			<src path="${schemacrawler-maven-plugin.source}/java" />
+    	<classpath id="schemacrawler-maven-plugin.classpath">
+    		<pathelement location="${dbconnector.classes}" />
+    		<pathelement location="${schemacrawler.classes}" />
+        <fileset dir="${env.M2_REPO}">
+          <include name="**/commons-lang*.jar"/>
+          <include name="**/plexus-archiver*.jar"/>
+          <include name="**/doxia*1.0-alpha-7.jar"/>
+          <include name="**/maven-plugin-api*.jar"/>
+          <include name="**/maven-project*.jar"/>
+          <include name="**/maven-reporting*-2.0.2.jar"/>
+          <include name="**/maven-artifact*.jar"/>
+          <include name="**/maven-plugin-testing-harness*.jar"/>
+        </fileset>
+    	</classpath>
+		</javac>
+
+    <copy todir="${schemacrawler-maven-plugin.classes}">
+       <fileset dir="${schemacrawler-maven-plugin.source}/resources"/>
+    </copy>
+
+	</target>
+	
+	
   <target name="package"
     description="Package all sub-project jars into the distributable jar"
     depends="all.build,make_distributable"

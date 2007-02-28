@@ -41,7 +41,6 @@ import schemacrawler.schema.Schema;
 import schemacrawler.tools.ToolType;
 import schemacrawler.tools.datatext.DataTextFormatterLoader;
 import schemacrawler.tools.integration.SchemaCrawlerExecutor;
-import schemacrawler.tools.integration.velocity.VelocityExecutor;
 import schemacrawler.tools.operation.OperatorLoader;
 import schemacrawler.tools.schematext.SchemaTextOptions;
 import edu.uci.ics.jung.graph.Graph;
@@ -140,7 +139,6 @@ public final class JungExecutor
   /**
    * Executes main functionality.
    * 
-   * @see {@link VelocityExecutor#execute(Options, DataSource)}
    * @param schemaCrawlerOptions
    *        SchemaCrawler options
    * @param schemaTextOptions

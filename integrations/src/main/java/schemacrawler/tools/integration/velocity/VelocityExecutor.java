@@ -129,7 +129,6 @@ public class VelocityExecutor
   /**
    * Executes main functionality.
    * 
-   * @see {@link VelocityExecutor#execute(Options, DataSource)}
    * @param schemaCrawlerOptions
    *        SchemaCrawler options
    * @param schemaTextOptions
