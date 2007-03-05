@@ -43,12 +43,6 @@
       <version>1.8.0.1</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>net.sourceforge.jtds</groupId>
-      <artifactId>jtds</artifactId>
-      <version>1.2</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
   <scm>
     <connection>scm:svn:https://svn.sourceforge.net/svnroot/schemacrawler</connection>
