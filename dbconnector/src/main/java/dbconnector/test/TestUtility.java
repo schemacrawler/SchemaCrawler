@@ -29,8 +29,6 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.hsqldb.Server;
-
 import sf.util.Utilities;
 import dbconnector.datasource.PropertiesDataSource;
 import dbconnector.datasource.PropertiesDataSourceException;
@@ -41,81 +39,24 @@ import dbconnector.datasource.PropertiesDataSourceException;
 public class TestUtility
 {
 
-  private class NullWriter
-    extends Writer
-  {
-
-    private NullWriter()
-    {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void close()
-      throws IOException
-    {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void flush()
-      throws IOException
-    {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void write(final char cbuf[], final int off, final int len)
-      throws IOException
-    {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void write(final int c)
-      throws IOException
-    {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void write(final String str, final int off, final int len)
-      throws IOException
-    {
-    }
-
-  }
-
   private static final String HSQLDB_JDBC_DRIVER = "org.hsqldb.jdbcDriver";
 
   private static final Logger LOGGER = Logger.getLogger(TestUtility.class
     .getName());
+
   private static final String HSQLDB_FILE_URL = "jdbc:hsqldb:file:_distrib/dbserver/schemacrawler;shutdown=true";
-
   private static final String HSQLDB_SERVER_URL = "jdbc:hsqldb:hsql://localhost/schemacrawler";
-  private static final boolean IS_SERVER = true;
-  private static final boolean START_SERVER = false;
 
+  private static final boolean IS_SERVER = true;
   private static final boolean DEBUG = false;
+
   protected String serverProps;
   protected String url;
   protected String user = "sa";
   protected String password = "";
 
-  protected Server server;
   protected PropertiesDataSource dataSource;
-
   protected PrintWriter out;
-
-  public synchronized PropertiesDataSource getDataSource()
-  {
-    return dataSource;
-  }
 
   public void setUp()
     throws PropertiesDataSourceException, ClassNotFoundException
@@ -136,13 +77,6 @@ public class TestUtility
     if (IS_SERVER)
     {
       url = HSQLDB_SERVER_URL;
-      if (START_SERVER)
-      {
-        server = new Server();
-        server.setDatabaseName(0, "schemacrawler");
-        server.setDatabasePath(0, "_dbserver/schemacrawler");
-        server.start();
-      }
     }
     else
     {
@@ -158,18 +92,27 @@ public class TestUtility
   public void tearDown()
   {
     LOGGER.log(Level.FINE, toString() + " - Tearing down unit tests");
-    try
-    {
-      closeDataSource();
-      if (IS_SERVER && START_SERVER)
-      {
-        server.shutdown();
-      }
-    }
-    catch (Exception e)
-    {
-      e.printStackTrace();
-    }
+    closeDataSource();
+  }
+
+  public PropertiesDataSource getDataSource()
+  {
+    return dataSource;
+  }
+
+  private synchronized void makeDataSource(final String url)
+    throws PropertiesDataSourceException
+  {
+    final String DATASOURCE_NAME = "schemacrawler";
+
+    final Properties connectionProperties = new Properties();
+    connectionProperties.setProperty(DATASOURCE_NAME + ".driver",
+                                     HSQLDB_JDBC_DRIVER);
+    connectionProperties.setProperty(DATASOURCE_NAME + ".url", url);
+    connectionProperties.setProperty(DATASOURCE_NAME + ".user", "sa");
+    connectionProperties.setProperty(DATASOURCE_NAME + ".password", "");
+
+    dataSource = new PropertiesDataSource(connectionProperties, DATASOURCE_NAME);
   }
 
   private synchronized void closeDataSource()
@@ -192,19 +135,54 @@ public class TestUtility
     }
   }
 
-  private synchronized void makeDataSource(final String url)
-    throws PropertiesDataSourceException
+  private class NullWriter
+    extends Writer
   {
-    final String DATASOURCE_NAME = "schemacrawler";
 
-    final Properties connectionProperties = new Properties();
-    connectionProperties.setProperty(DATASOURCE_NAME + ".driver",
-                                     HSQLDB_JDBC_DRIVER);
-    connectionProperties.setProperty(DATASOURCE_NAME + ".url", url);
-    connectionProperties.setProperty(DATASOURCE_NAME + ".user", "sa");
-    connectionProperties.setProperty(DATASOURCE_NAME + ".password", "");
+    private NullWriter()
+    {
+    }
 
-    dataSource = new PropertiesDataSource(connectionProperties, DATASOURCE_NAME);
+    /**
+     * {@inheritDoc}
+     */
+    public void write(final int c)
+      throws IOException
+    {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void write(final char cbuf[], final int off, final int len)
+      throws IOException
+    {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void write(final String str, final int off, final int len)
+      throws IOException
+    {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void flush()
+      throws IOException
+    {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void close()
+      throws IOException
+    {
+    }
+
   }
 
 }
