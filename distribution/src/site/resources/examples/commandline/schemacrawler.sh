@@ -1,1 +1,1 @@
-java -classpath schemacrawler-4.1.jar schemacrawler.Main $*
+java -classpath schemacrawler-4.2.jar schemacrawler.Main $*

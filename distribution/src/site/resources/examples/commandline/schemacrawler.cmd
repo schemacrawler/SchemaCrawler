@@ -1,1 +1,1 @@
-@java -jar schemacrawler-4.1.jar %*
+@java -jar schemacrawler-4.2.jar %*
