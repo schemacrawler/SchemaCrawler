@@ -1,7 +1,9 @@
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 import javax.sql.DataSource;
 
+import schemacrawler.crawl.InclusionRule;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
@@ -21,10 +23,24 @@ public final class ApiExample
     // Create a database connection
     final DataSource dataSource = makeDataSource();
 
+    // Create the options
+    final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
+    /*
+    options.setShowStoredProcedures(false);
+    options
+      .setTableInclusionRule(new InclusionRule("C.*",
+                                               InclusionRule.EXCLUDE_NONE));
+    options
+      .setColumnInclusionRule(new InclusionRule(InclusionRule.INCLUDE_ALL_PATTERN,
+                                               Pattern.compile(".*ID")));
+    options.setTableTypes("TABLE");
+    options.setAlphabeticalSortForTableColumns(true);
+    */
+
     // Get the schema definition
     final Schema schema = SchemaCrawler.getSchema(dataSource,
                                                   SchemaInfoLevel.BASIC,
-                                                  new SchemaCrawlerOptions());
+                                                  options);
 
     final Table[] tables = schema.getTables();
     for (int i = 0; i < tables.length; i++)

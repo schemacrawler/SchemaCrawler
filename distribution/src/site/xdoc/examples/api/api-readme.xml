@@ -18,10 +18,6 @@
             <span>
               <em>api</em>
             </span> example directory.</li>
-          <li>Copy the hsqldb jar file from dbserver directory into the
-            <span>
-              <em>api</em>
-            </span> example directory.</li>
           <li>Start the hsqldb server by running
             <span class="code">runServer.cmd</span> (
             <span class="code">runServer.sh</span> on Unix) from the
@@ -38,12 +34,8 @@
           <li>Try modifying the
             <span class="code">schemacrawler.config.properties</span> with regular
             expressions, logging, and so on.</li>
-          <li>Try using different SchemaCrawler commands. (For a complete list of
-            SchemaCrawler commands, run
-            <span class="code">java -jar
-              &lt;schemacrawler-jar&gt;</span>.)</li>
-          <li>Try defining a new database connection, using your favorite database and
-            driver.</li>
+          <li>Try uncommenting the code block in <span class="code">ApiExample.java</span> that
+            modifies the default options .</li>
         </ol>
       </subsection>
     </section>

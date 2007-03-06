@@ -130,7 +130,7 @@ public final class Main
     String url = parser.getStringOptionValue(OPTION_URL);
     String user = parser.getStringOptionValue(OPTION_USER);
     String password = parser.getStringOptionValue(OPTION_PASSWORD);
-    boolean useJdbcConnection = url != null;
+    boolean useJdbcConnection = !Utilities.isBlank(driver) && !Utilities.isBlank(url);
 
     String connectionName = null;
     if (prompt)
@@ -141,7 +141,8 @@ public final class Main
     else
     {
       connectionName = parser.getStringOptionValue(OPTION_CONNECTION);
-      defaultConnection = connectionName == null;
+      // Use default connection if no connection is specified
+      defaultConnection = Utilities.isBlank(connectionName);
     }
     if (defaultConnection)
     {

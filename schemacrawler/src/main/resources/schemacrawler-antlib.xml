@@ -22,17 +22,21 @@
 
     <attribute
       name="datasource"
-      description="Datasource defined in the configuration" />
+      description="Datasource defined in the configuration"
+      default="" />
 
     <attribute
       name="driver"
-      description="JDBC driver class name" />
+      description="JDBC driver class name"
+      default="" />
     <attribute
       name="url"
-      description="Database connection string" />
+      description="Database connection string"
+      default="" />
     <attribute
       name="user"
-      description="Database connection user name" />
+      description="Database connection user name"
+      default="" />
     <attribute
       name="password"
       description="Database connection password"
