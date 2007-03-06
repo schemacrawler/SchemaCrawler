@@ -25,6 +25,22 @@
         Added new schema grep functionality, that can search for tables
         and columns usng regular expressions.
       </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Added new example for setting options programatically.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Added documentation for provding database connection options directly on the command line.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="update">
+        Updated ant task to optionally take database connection options as arguments, instead of
+        from the configuration file.
+      </action>
     </release>
     <release
       version="4.1"
