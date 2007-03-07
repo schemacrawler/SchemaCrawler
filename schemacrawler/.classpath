@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry excluding=".svn/**/*" kind="src" path="src/main/java"/>
-	<classpathentry excluding=".svn/**/*" kind="src" output="target/misc" path="src/changes"/>
 	<classpathentry excluding="**/.svn/**/*" kind="src" output="target/misc" path="src/site"/>
 	<classpathentry excluding="**/.svn/**/*" kind="src" output="target/test-classes" path="src/test/java"/>
 	<classpathentry excluding="**/.svn/**/*" kind="src" path="src/main/resources"/>
