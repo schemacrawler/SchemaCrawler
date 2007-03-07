@@ -3,7 +3,7 @@
 
   <property environment="env"/>
   <property name="SchemaCrawlerHome" location="." />
-  
+
   <property name="pom.version" value="4.2" />
 
 	<property name="dbconnector.source"
@@ -21,15 +21,15 @@
   <property name="schemacrawler-maven-plugin.source"
     location="${SchemaCrawlerHome}/schemacrawler-maven-plugin/src/main"/>
 	<property name="schemacrawler-maven-plugin.classes"
-    location="${SchemaCrawlerHome}/schemacrawler-maven-plugin/target/classes"/>    
+    location="${SchemaCrawlerHome}/schemacrawler-maven-plugin/target/classes"/>
 
   <property name="distribution.dir"
     value="${SchemaCrawlerHome}/distribution/target/_distribution"/>
-          
+
 	<available
     property="have.dependencies.classpath"
     file="${env.M2_REPO}" type="dir"/>
-    
+
 
   <target name="all.clean"
     description="Clean all sub-projects">
@@ -52,9 +52,9 @@
 	<target name="build.dbconnector">
 
 		<echo message="Compiling: dbconnector" />
-		
+
     <mkdir dir="${dbconnector.classes}" />
-    
+
 		<javac destdir="${dbconnector.classes}">
 			<src path="${dbconnector.source}/java" />
 		</javac>
@@ -64,7 +64,7 @@
     </copy>
 
 	</target>
-	
+
 	<target name="build.schemacrawler">
 
 		<echo message="Compiling: schemacrawler" />
@@ -83,7 +83,7 @@
     </copy>
 
 	</target>
-	
+
 	<target name="build.integrations" if="have.dependencies.classpath">
 
 		<echo message="Compiling: integrations" />
@@ -114,7 +114,7 @@
     </copy>
 
 	</target>
-	
+
 	<target name="build.schemacrawler-maven-plugin" if="have.dependencies.classpath">
 
 		<echo message="Compiling: schemacrawler-maven-plugin" />
@@ -144,8 +144,8 @@
     </copy>
 
 	</target>
-	
-	
+
+
   <target name="package"
     description="Package all sub-project jars into the distributable jar"
     depends="all.build">
@@ -154,7 +154,7 @@
       value="${distribution.dir}/schemacrawler-${pom.version}.jar"/>
     <property name="site.dir"
       value="${SchemaCrawlerHome}/distribution/target/_site"/>
-      
+
     <delete dir="${distribution.dir}"/>
     <mkdir dir="${distribution.dir}"/>
 
@@ -198,7 +198,7 @@
         <exclude name="*.properties"/>
       </fileset>
     </copy>
-    
+
     <!-- Copy site -->
     <mkdir dir="${SchemaCrawlerHome}/schemacrawler/target/site"/>
     <copy todir="${site.dir}">
@@ -212,8 +212,8 @@
 
     <mkdir dir="_backups"/>
 
-    <property 
-    	name="distribution.zip.prefix" 
+    <property
+    	name="distribution.zip.prefix"
     	value="SchemaCrawler-${pom.version}-distrib" />
     <delete file="_backups/${distribution.zip.prefix}.zip"/>
     <zip destfile="_backups/${distribution.zip.prefix}.zip">
@@ -223,8 +223,8 @@
         defaultexcludes="yes"/>
     </zip>
 
-		<property 
-			name="source.zip.prefix" 
+		<property
+			name="source.zip.prefix"
 			value="SchemaCrawler-${pom.version}-src"/>
     <delete file="_backups/${source.zip.prefix}.zip"/>
     <zip destfile="_backups/${source.zip.prefix}.zip">
@@ -242,6 +242,8 @@
         <exclude name="schemacrawler-test/**/*"/>
         <exclude name="**/*.launch"/>
         <exclude name="**/*.log"/>
+        <exclude name="**/*.lck"/>
+        <exclude name="**/*.ser"/>
         <exclude name="*.html"/>
         <exclude name="*.txt"/>
       </zipfileset>
