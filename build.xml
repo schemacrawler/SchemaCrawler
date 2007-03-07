@@ -21,8 +21,11 @@
   <property name="schemacrawler-maven-plugin.source"
     location="${SchemaCrawlerHome}/schemacrawler-maven-plugin/src/main"/>
 	<property name="schemacrawler-maven-plugin.classes"
-    location="${SchemaCrawlerHome}/schemacrawler-maven-plugin/target/classes"/>
-    
+    location="${SchemaCrawlerHome}/schemacrawler-maven-plugin/target/classes"/>    
+
+  <property name="distribution.dir"
+    value="${SchemaCrawlerHome}/distribution/target/_distribution"/>
+          
 	<available
     property="have.dependencies.classpath"
     file="${env.M2_REPO}" type="dir"/>
@@ -147,8 +150,6 @@
     description="Package all sub-project jars into the distributable jar"
     depends="all.build">
 
-    <property name="distribution.dir"
-      value="${SchemaCrawlerHome}/distribution/target/_distribution"/>
     <property name="distributable.jar"
       value="${distribution.dir}/schemacrawler-${pom.version}.jar"/>
     <property name="site.dir"
@@ -211,28 +212,42 @@
 
     <mkdir dir="_backups"/>
 
-    <zip destfile="_backups/SchemaCrawler-${pom.version}-distrib.zip">
+    <property 
+    	name="distribution.zip.prefix" 
+    	value="SchemaCrawler-${pom.version}-distrib" />
+    <delete file="_backups/${distribution.zip.prefix}.zip"/>
+    <zip destfile="_backups/${distribution.zip.prefix}.zip">
       <zipfileset
         dir="${distribution.dir}"
-        prefix="SchemaCrawler-${pom.version}-distrib">
-        <exclude name="**/CVS/**/*"/>
-        <exclude name="**/.cvsignore"/>
-        <exclude name="**/.svn/**/*"/>
-      </zipfileset>
+        prefix="${distribution.zip.prefix}"
+        defaultexcludes="yes"/>
     </zip>
 
-    <zip destfile="_backups/SchemaCrawler-${pom.version}-src.zip">
+		<property 
+			name="source.zip.prefix" 
+			value="SchemaCrawler-${pom.version}-src"/>
+    <delete file="_backups/${source.zip.prefix}.zip"/>
+    <zip destfile="_backups/${source.zip.prefix}.zip">
       <zipfileset
         dir="${SchemaCrawlerHome}"
-        prefix="SchemaCrawler-${pom.version}-src">
+        prefix="${source.zip.prefix}"
+        defaultexcludes="yes">
+        <exclude name="_backups"/>
         <exclude name="_backups/*"/>
+        <exclude name="**/target"/>
         <exclude name="**/target/**/*"/>
-        <exclude name="**/CVS/**/*"/>
-        <exclude name="**/.cvsignore"/>
-        <exclude name="**/.svn/**/*"/>
+        <exclude name="differencer"/>
+        <exclude name="differencer/**/*"/>
+        <exclude name="schemacrawler-test"/>
+        <exclude name="schemacrawler-test/**/*"/>
+        <exclude name="**/*.launch"/>
+        <exclude name="**/*.log"/>
+        <exclude name="*.html"/>
+        <exclude name="*.txt"/>
       </zipfileset>
     </zip>
 
 	</target>
 
 </project>
+
