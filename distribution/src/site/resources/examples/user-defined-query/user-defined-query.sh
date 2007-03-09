@@ -1,1 +1,1 @@
-java -jar schemacrawler-4.2.jar -c hsqldb -command=tables.select -outputformat=csv
+java -jar schemacrawler-5.0.jar -c hsqldb -command=tables.select -outputformat=csv

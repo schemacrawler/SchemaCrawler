@@ -1,1 +1,1 @@
-java -jar schemacrawler-4.2.jar -c hsqldb -command=hsqldb.tables
+java -jar schemacrawler-5.0.jar -c hsqldb -command=hsqldb.tables
