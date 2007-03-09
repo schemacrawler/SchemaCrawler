@@ -1,4 +1,4 @@
 @echo off
 del /f /q *.class
-javac -classpath schemacrawler-4.2.jar ApiExample.java
-java -classpath schemacrawler-4.2.jar;../../dbserver/hsqldb.jar;. ApiExample
+javac -classpath schemacrawler-5.0.jar ApiExample.java
+java -classpath schemacrawler-5.0.jar;../../dbserver/hsqldb.jar;. ApiExample

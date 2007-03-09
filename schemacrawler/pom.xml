@@ -6,7 +6,7 @@
   <parent>
     <artifactId>schemacrawler-all</artifactId>
     <groupId>schemacrawler</groupId>
-    <version>4.2</version>
+    <version>5.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>schemacrawler</groupId>
@@ -48,7 +48,7 @@
           <quiet>true</quiet>
           <public>true</public>
           <linksource>true</linksource>
-          <link>http://java.sun.com/j2se/1.4.2/docs/api</link>
+          <link>http://java.sun.com/j2se/1.5.0/docs/api</link>
         </configuration>
       </plugin>
       <plugin>

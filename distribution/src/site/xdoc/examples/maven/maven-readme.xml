@@ -34,7 +34,7 @@
               (<span class="code">runServer.sh</span> on Unix) from the dbserver directory.
           </li>
           <li> Install the SchemaCrawler Maven plug-in by running
-            <span class="code">java -cp schemacrawler-4.2.jar
+            <span class="code">java -cp schemacrawler-5.0.jar
               schemacrawler.tools.integration.maven.Main</span> and following the
             instructions. </li>
           <li>
