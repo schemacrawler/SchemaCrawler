@@ -190,7 +190,7 @@ final class TableRetriever
             && table.getName().equals(tableName))
         {
           LOGGER.log(Level.FINEST, "Retrieving column: " + columnName);
-          final int oridinalPosition = results.getInt(ORDINAL_POSITION);
+          final int ordinalPosition = results.getInt(ORDINAL_POSITION);
           final int dataType = results.getInt(DATA_TYPE);
           final String typeName = results.getString(TYPE_NAME);
           final int size = results.getInt("COLUMN_SIZE");
@@ -198,7 +198,7 @@ final class TableRetriever
           final boolean isNullable = results.getInt(NULLABLE) == DatabaseMetaData.columnNullable;
           final String remarks = results.getString(REMARKS);
 
-          column.setOrdinalPosition(oridinalPosition);
+          column.setOrdinalPosition(ordinalPosition);
           column.lookupAndSetDataType(dataType, typeName, columnDataTypes);
           column.setSize(size);
           column.setDecimalDigits(decimalDigits);
