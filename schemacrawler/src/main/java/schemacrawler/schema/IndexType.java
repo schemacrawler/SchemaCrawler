@@ -21,80 +21,25 @@
 package schemacrawler.schema;
 
 
-import java.io.ObjectStreamException;
 import java.sql.DatabaseMetaData;
+import java.util.EnumSet;
 
 /**
  * An enumeration wrapper around index types.
  */
-public final class IndexType
-  implements EnumType
+public enum IndexType
 {
 
-  private static final long serialVersionUID = 3258693221411599160L;
+  tableIndexStatistic(DatabaseMetaData.tableIndexStatistic, "statistic"),
+  tableIndexClustered(DatabaseMetaData.tableIndexClustered, "clustered"),
+  tableIndexHashed(DatabaseMetaData.tableIndexHashed, "hashed"),
+  tableIndexOther(DatabaseMetaData.tableIndexOther, "other");
 
-  private static final IndexType[] ALL = {
-      new IndexType(DatabaseMetaData.tableIndexStatistic, "statistic"),
-      new IndexType(DatabaseMetaData.tableIndexClustered, "clustered"),
-      new IndexType(DatabaseMetaData.tableIndexHashed, "hashed"),
-      new IndexType(DatabaseMetaData.tableIndexOther, "other"),
-  };
-
-  // The 4 declarations below are necessary for serialization
-  private static int nextOrdinal;
-  private static final IndexType[] VALUES = ALL;
-
-  /**
-   * Find the enumeration value corresponding to the string.
-   * 
-   * @param id
-   *        int value of type
-   * @return Enumeration value
-   */
-  public static IndexType valueOf(final int id)
-  {
-    IndexType type = null;
-    for (final IndexType element: ALL)
-    {
-      if (element.getId() == id)
-      {
-        type = element;
-        break;
-      }
-    }
-    return type;
-  }
-
-  /**
-   * Value of the enumeration from the code.
-   * 
-   * @param name
-   *        Code
-   * @return Enumeration value
-   */
-  public static IndexType valueOf(final String name)
-  {
-    IndexType type = null;
-    for (final IndexType element: ALL)
-    {
-      if (element.getName().equalsIgnoreCase(name))
-      {
-        type = element;
-        break;
-      }
-    }
-    return type;
-  }
-
-  private final transient int id;
-
-  private final transient String name;
-
-  private final int ordinal;
+  private final int id;
+  private final String name;
 
   private IndexType(final int id, final String name)
   {
-    ordinal = nextOrdinal++;
     this.id = id;
     this.name = name;
   }
@@ -112,16 +57,6 @@ public final class IndexType
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.EnumType#getName()
-   */
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see Object#toString()
    */
   @Override
@@ -130,9 +65,17 @@ public final class IndexType
     return name;
   }
 
-  Object readResolve()
-    throws ObjectStreamException
+  public static IndexType valueOf(int id)
   {
-    return VALUES[ordinal]; // Canonicalize
-  }
+    EnumSet<IndexType> allOf = EnumSet
+      .allOf(IndexType.class);
+    for (IndexType type: allOf)
+    {
+      if (type.getId() == id)
+      {
+        return type;
+      }
+    }
+    return null;
+  }  
 }

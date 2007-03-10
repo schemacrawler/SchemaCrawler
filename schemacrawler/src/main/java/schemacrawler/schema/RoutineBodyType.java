@@ -21,84 +21,19 @@
 package schemacrawler.schema;
 
 
-import java.io.ObjectStreamException;
 
 /**
  * Routine body.
  */
-public final class RoutineBodyType
-  implements EnumType
+public enum RoutineBodyType
 {
-
-  private static final long serialVersionUID = 6162604444140905085L;
-
-  private static final RoutineBodyType SQL = new RoutineBodyType("SQL");
-  private static final RoutineBodyType EXTERNAL = new RoutineBodyType("EXTERNAL");
-
-  private static final RoutineBodyType[] ALL = {
-      SQL, EXTERNAL,
-  };
-
-  // The 4 declarations below are necessary for serialization
-  private static int nextOrdinal;
-  private static final RoutineBodyType[] VALUES = ALL;
-
-  /**
-   * Find the enumeration value corresponding to the string.
-   * 
-   * @param typeString
-   *        String value of table type
-   * @return Enumeration value
-   */
-  public static RoutineBodyType valueOf(final String typeString)
-  {
-
-    RoutineBodyType checkOptionType = ALL[0];
-
-    for (final RoutineBodyType element: ALL)
-    {
-      if (element.toString().equalsIgnoreCase(typeString))
-      {
-        checkOptionType = element;
-        break;
-      }
-    }
-
-    return checkOptionType;
-
-  }
-
-  private final int id;
+  SQL("SQL"), EXTERNAL("EXTERNAL");
 
   private final String name;
 
-  private final int ordinal;
-
   private RoutineBodyType(final String typeName)
   {
-    ordinal = nextOrdinal++;
-    id = ordinal;
     name = typeName;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.EnumType#getId()
-   */
-  public int getId()
-  {
-    return id;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.EnumType#getName()
-   */
-  public String getName()
-  {
-    return name;
   }
 
   /**
@@ -111,10 +46,5 @@ public final class RoutineBodyType
   {
     return name;
   }
-
-  Object readResolve()
-    throws ObjectStreamException
-  {
-    return VALUES[ordinal]; // Canonicalize
-  }
+  
 }

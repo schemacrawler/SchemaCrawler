@@ -103,11 +103,11 @@ final class TableRetriever
                                                             fkColumnName);
         foreignKey.addColumnPair(keySequence, pkColumn, fkColumn);
         foreignKey
-          .setUpdateRule(ForeignKeyUpdateRule.valueOfFromId(updateRule));
+          .setUpdateRule(ForeignKeyUpdateRule.valueOf(updateRule));
         foreignKey
-          .setDeleteRule(ForeignKeyUpdateRule.valueOfFromId(deleteRule));
+          .setDeleteRule(ForeignKeyUpdateRule.valueOf(deleteRule));
         foreignKey.setDeferrability(ForeignKeyDeferrability
-          .valueOfFromId(deferrability));
+          .valueOf(deferrability));
       }
     }
     finally

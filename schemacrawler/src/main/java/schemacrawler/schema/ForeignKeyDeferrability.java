@@ -21,27 +21,25 @@
 package schemacrawler.schema;
 
 
-import java.io.ObjectStreamException;
 import java.sql.DatabaseMetaData;
+import java.util.EnumSet;
+import java.util.Iterator;
 
 /**
  * The deferrability value for foreign keys.
  */
-public final class ForeignKeyDeferrability
-  implements EnumType
+public enum ForeignKeyDeferrability
 {
 
-  private static final ForeignKeyDeferrability[] FOREIGN_KEY_DEFERRABILITY_ALL = {
-      new ForeignKeyDeferrability(DatabaseMetaData.importedKeyInitiallyDeferred,
-                                  "initially deferred"),
-      new ForeignKeyDeferrability(DatabaseMetaData.importedKeyInitiallyImmediate,
-                                  "initially immediate"),
-      new ForeignKeyDeferrability(DatabaseMetaData.importedKeyNotDeferrable,
-                                  "not deferrable"),
-  };
+  importedKeyInitiallyDeferred(DatabaseMetaData.importedKeyInitiallyDeferred,
+    "initially deferred"),
+  importedKeyInitiallyImmediate(DatabaseMetaData.importedKeyInitiallyImmediate,
+    "initially immediate"),
+  importedKeyNotDeferrable(DatabaseMetaData.importedKeyNotDeferrable,
+    "not deferrable");
 
-  private final transient String name;
-  private final transient int id;
+  private final String name;
+  private final int id;
 
   private ForeignKeyDeferrability(final int id, final String name)
   {
@@ -62,33 +60,26 @@ public final class ForeignKeyDeferrability
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.EnumType#getName()
-   */
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see Object#toString()
    */
   @Override
   public String toString()
   {
-    return getName();
+    return name;
   }
 
-  Object readResolve()
-    throws ObjectStreamException
+  public static ForeignKeyDeferrability valueOf(int id)
   {
-    return VALUES[ordinal]; // Canonicalize
-  }
-
-  private int getForeignKeyDeferrabilityId()
-  {
-    return id;
+    EnumSet<ForeignKeyDeferrability> allOf = EnumSet
+      .allOf(ForeignKeyDeferrability.class);
+    for (ForeignKeyDeferrability fkDeferrability: allOf)
+    {
+      if (fkDeferrability.getId() == id)
+      {
+        return fkDeferrability;
+      }
+    }
+    return null;
   }
 
 }

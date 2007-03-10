@@ -21,85 +21,27 @@
 package schemacrawler.schema;
 
 
-import java.io.ObjectStreamException;
 import java.sql.DatabaseMetaData;
+import java.util.EnumSet;
 
 /**
  * Foreign key update and delete rules.
  */
-public final class ForeignKeyUpdateRule
-  implements EnumType
+public enum ForeignKeyUpdateRule
 {
 
-  private static final long serialVersionUID = 3256728394182833712L;
+  importedKeyNoAction(DatabaseMetaData.importedKeyNoAction, "no action"),
+  importedKeyCascade(DatabaseMetaData.importedKeyCascade, "cascade"),
+  importedKeySetNull(DatabaseMetaData.importedKeySetNull, "set null"),
+  importedKeySetDefault(DatabaseMetaData.importedKeySetDefault, "set default"),
+  importedKeyRestrict(DatabaseMetaData.importedKeyRestrict, "restrict");
 
-  private static final ForeignKeyUpdateRule[] FK_UPDATE_RULE_ALL = {
-      new ForeignKeyUpdateRule(DatabaseMetaData.importedKeyNoAction,
-                               "no action"),
-      new ForeignKeyUpdateRule(DatabaseMetaData.importedKeyCascade, "cascade"),
-      new ForeignKeyUpdateRule(DatabaseMetaData.importedKeySetNull, "set null"),
-      new ForeignKeyUpdateRule(DatabaseMetaData.importedKeySetDefault,
-                               "set default"),
-      new ForeignKeyUpdateRule(DatabaseMetaData.importedKeyRestrict, "restrict"),
-  };
-
-  // The 4 declarations below are necessary for serialization
-  private static int nextOrdinal;
-
-  private static final ForeignKeyUpdateRule[] VALUES = FK_UPDATE_RULE_ALL;
-
-  /**
-   * Value of the enumeration from the code.
-   * 
-   * @param fkUpdateRuleName
-   *        Code
-   * @return Enumeration value
-   */
-  public static ForeignKeyUpdateRule valueOf(final String fkUpdateRuleName)
-  {
-    ForeignKeyUpdateRule fkUpdateRule = null;
-    for (final ForeignKeyUpdateRule element: FK_UPDATE_RULE_ALL)
-    {
-      if (element.getName().equalsIgnoreCase(fkUpdateRuleName))
-      {
-        fkUpdateRule = element;
-        break;
-      }
-    }
-    return fkUpdateRule;
-  }
-
-  /**
-   * Find the enumeration value corresponding to the string.
-   * 
-   * @param fkUpdateRuleId
-   *        Id
-   * @return Enumeration value
-   */
-  public static ForeignKeyUpdateRule valueOfFromId(final int fkUpdateRuleId)
-  {
-    ForeignKeyUpdateRule fkUpdateRule = null;
-    for (final ForeignKeyUpdateRule element: FK_UPDATE_RULE_ALL)
-    {
-      if (element.getId() == fkUpdateRuleId)
-      {
-        fkUpdateRule = element;
-        break;
-      }
-    }
-    return fkUpdateRule;
-  }
-
-  private final transient String name;
-
-  private final transient int id;
-
-  private final int ordinal;
+  private final String name;
+  private final int id;
 
   private ForeignKeyUpdateRule(final int foreignKeyUpdateRuleId,
                                final String foreignKeyUpdateRuleName)
   {
-    ordinal = nextOrdinal++;
     id = foreignKeyUpdateRuleId;
     name = foreignKeyUpdateRuleName;
   }
@@ -117,27 +59,26 @@ public final class ForeignKeyUpdateRule
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.EnumType#getName()
-   */
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see Object#toString()
    */
   @Override
   public String toString()
   {
-    return getName();
+    return name;
   }
 
-  Object readResolve()
-    throws ObjectStreamException
+  public static ForeignKeyUpdateRule valueOf(int id)
   {
-    return VALUES[ordinal]; // Canonicalize
+    EnumSet<ForeignKeyUpdateRule> allOf = EnumSet
+      .allOf(ForeignKeyUpdateRule.class);
+    for (ForeignKeyUpdateRule type: allOf)
+    {
+      if (type.getId() == id)
+      {
+        return type;
+      }
+    }
+    return null;
   }
+
 }

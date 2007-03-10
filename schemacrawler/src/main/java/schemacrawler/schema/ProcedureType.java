@@ -21,82 +21,27 @@
 package schemacrawler.schema;
 
 
-import java.io.ObjectStreamException;
 import java.sql.DatabaseMetaData;
+import java.util.EnumSet;
 
 /**
  * An enumeration wrapper around JDBC procedure types.
  */
-public final class ProcedureType
-  implements EnumType
+public enum ProcedureType
 {
 
-  private static final long serialVersionUID = 3545517287747366960L;
+  unknown(0, "<unknown>"),
+  procedureResultUnknown(DatabaseMetaData.procedureResultUnknown,
+    "result unknown"),
+  procedureNoResult(DatabaseMetaData.procedureNoResult, "no result"),
+  procedureReturnsResult(DatabaseMetaData.procedureReturnsResult,
+    "returns result");
 
-  private static final ProcedureType[] ALL = {
-      new ProcedureType(DatabaseMetaData.procedureResultUnknown, "<unknown>"),
-      new ProcedureType(DatabaseMetaData.procedureResultUnknown,
-                        "result unknown"),
-      new ProcedureType(DatabaseMetaData.procedureNoResult, "no result"),
-      new ProcedureType(DatabaseMetaData.procedureReturnsResult,
-                        "returns result"),
-  };
-
-  // The 4 declarations below are necessary for serialization
-  private static int nextOrdinal;
-  private static final ProcedureType[] VALUES = ALL;
-
-  /**
-   * Find the enumeration value corresponding to the string.
-   * 
-   * @param id
-   *        int value of procedure type
-   * @return Enumeration value
-   */
-  public static ProcedureType valueOf(final int id)
-  {
-    ProcedureType type = ALL[0];
-    for (final ProcedureType element: ALL)
-    {
-      if (element.getId() == id)
-      {
-        type = element;
-        break;
-      }
-    }
-    return type;
-  }
-
-  /**
-   * Value of the enumeration from the code.
-   * 
-   * @param name
-   *        Code
-   * @return Enumeration value
-   */
-  public static ProcedureType valueOf(final String name)
-  {
-    ProcedureType type = ALL[0];
-    for (final ProcedureType element: ALL)
-    {
-      if (element.getName().equalsIgnoreCase(name))
-      {
-        type = element;
-        break;
-      }
-    }
-    return type;
-  }
-
-  private final transient int id;
-
-  private final transient String name;
-
-  private final int ordinal;
+  private final int id;
+  private final String name;
 
   private ProcedureType(final int id, final String name)
   {
-    ordinal = nextOrdinal++;
     this.id = id;
     this.name = name;
   }
@@ -114,28 +59,25 @@ public final class ProcedureType
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.EnumType#getName()
-   */
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see Object#toString()
    */
   @Override
   public String toString()
   {
-    return getName();
+    return name;
   }
 
-  Object readResolve()
-    throws ObjectStreamException
+  public static ProcedureType valueOf(int id)
   {
-    return VALUES[ordinal]; // Canonicalize
+    EnumSet<ProcedureType> allOf = EnumSet.allOf(ProcedureType.class);
+    for (ProcedureType type: allOf)
+    {
+      if (type.getId() == id)
+      {
+        return type;
+      }
+    }
+    return null;
   }
 
 }
