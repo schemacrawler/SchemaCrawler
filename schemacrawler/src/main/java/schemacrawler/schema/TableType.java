@@ -21,50 +21,31 @@
 package schemacrawler.schema;
 
 
-import java.io.ObjectStreamException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * An enumeration wrapper around JDBC table types.
  */
-public final class TableType
-  implements EnumType
+public enum TableType
 {
 
   /** Unknown */
-  public static final TableType UNKNOWN = new TableType("UNKNOWN");
+  UNKNOWN("UNKNOWN"),
   /** Table */
-  public static final TableType TABLE = new TableType("TABLE");
+  TABLE("TABLE"),
   /** View */
-  public static final TableType VIEW = new TableType("VIEW");
+  VIEW("VIEW"),
   /** System table */
-  public static final TableType SYSTEM_TABLE = new TableType("SYSTEM_TABLE");
+  SYSTEM_TABLE("SYSTEM_TABLE"),
   /** Global temporary */
-  public static final TableType GLOBAL_TEMPORARY = new TableType("GLOBAL_TEMPORARY");
+  GLOBAL_TEMPORARY("GLOBAL_TEMPORARY"),
   /** Local temporary */
-  public static final TableType LOCAL_TEMPORARY = new TableType("LOCAL_TEMPORARY");
+  LOCAL_TEMPORARY("LOCAL_TEMPORARY"),
   /** Alias */
-  public static final TableType ALIAS = new TableType("ALIAS");
+  ALIAS("ALIAS"),
   /** Synonym */
-  public static final TableType SYNONYM = new TableType("SYNONYM");
-
-  private static final long serialVersionUID = 3546925783735220534L;
-
-  private static final TableType[] ALL = {
-      UNKNOWN,
-      TABLE,
-      VIEW,
-      SYSTEM_TABLE,
-      GLOBAL_TEMPORARY,
-      LOCAL_TEMPORARY,
-      ALIAS,
-      SYNONYM,
-  };
-
-  // The 4 declarations below are necessary for serialization
-  private static int nextOrdinal;
-  private static final TableType[] VALUES = ALL;
+  SYNONYM("SYNONYM");
 
   /**
    * Converts an array of table types to an array of their corresponding
@@ -95,27 +76,6 @@ public final class TableType
   }
 
   /**
-   * Find the enumeration value corresponding to the string.
-   * 
-   * @param tableTypeString
-   *        String value of table type
-   * @return Enumeration value
-   */
-  public static TableType valueOf(final String tableTypeString)
-  {
-    TableType tableType = ALL[0];
-    for (final TableType element: ALL)
-    {
-      if (element.toString().equalsIgnoreCase(tableTypeString.trim()))
-      {
-        tableType = element;
-        break;
-      }
-    }
-    return tableType;
-  }
-
-  /**
    * Converts an array of string table types to an array of their
    * corresponding enumeration values.
    * 
@@ -139,37 +99,11 @@ public final class TableType
     return (TableType[]) tableTypes.toArray(new TableType[tableTypes.size()]);
   }
 
-  private final int id;
-
   private final String name;
-
-  private final int ordinal;
 
   private TableType(final String tableType)
   {
-    ordinal = nextOrdinal++;
-    id = ordinal;
     name = tableType;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.EnumType#getId()
-   */
-  public int getId()
-  {
-    return id;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.EnumType#getName()
-   */
-  public String getName()
-  {
-    return name;
   }
 
   /**
@@ -179,7 +113,7 @@ public final class TableType
    */
   public boolean isTable()
   {
-    return id == TABLE.getId();
+    return name.equals(TABLE.name);
   }
 
   /**
@@ -189,7 +123,7 @@ public final class TableType
    */
   public boolean isView()
   {
-    return id == VIEW.getId();
+    return name.equals(VIEW.name);
   }
 
   /**
@@ -201,11 +135,5 @@ public final class TableType
   public String toString()
   {
     return name;
-  }
-
-  Object readResolve()
-    throws ObjectStreamException
-  {
-    return VALUES[ordinal]; // Canonicalize
   }
 }
