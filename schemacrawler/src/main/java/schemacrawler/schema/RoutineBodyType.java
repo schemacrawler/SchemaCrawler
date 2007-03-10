@@ -39,8 +39,40 @@ public final class RoutineBodyType
       SQL, EXTERNAL,
   };
 
+  // The 4 declarations below are necessary for serialization
+  private static int nextOrdinal;
+  private static final RoutineBodyType[] VALUES = ALL;
+
+  /**
+   * Find the enumeration value corresponding to the string.
+   * 
+   * @param typeString
+   *        String value of table type
+   * @return Enumeration value
+   */
+  public static RoutineBodyType valueOf(final String typeString)
+  {
+
+    RoutineBodyType checkOptionType = ALL[0];
+
+    for (final RoutineBodyType element: ALL)
+    {
+      if (element.toString().equalsIgnoreCase(typeString))
+      {
+        checkOptionType = element;
+        break;
+      }
+    }
+
+    return checkOptionType;
+
+  }
+
   private final int id;
+
   private final String name;
+
+  private final int ordinal;
 
   private RoutineBodyType(final String typeName)
   {
@@ -74,41 +106,11 @@ public final class RoutineBodyType
    * 
    * @see Object#toString()
    */
+  @Override
   public String toString()
   {
     return name;
   }
-
-  /**
-   * Find the enumeration value corresponding to the string.
-   * 
-   * @param typeString
-   *        String value of table type
-   * @return Enumeration value
-   */
-  public static RoutineBodyType valueOf(final String typeString)
-  {
-
-    RoutineBodyType checkOptionType = ALL[0];
-
-    for (int i = 0; i < ALL.length; i++)
-    {
-      if (ALL[i].toString().equalsIgnoreCase(typeString))
-      {
-        checkOptionType = ALL[i];
-        break;
-      }
-    }
-
-    return checkOptionType;
-
-  }
-
-  // The 4 declarations below are necessary for serialization
-  private static int nextOrdinal;
-  private final int ordinal;
-
-  private static final RoutineBodyType[] VALUES = ALL;
 
   Object readResolve()
     throws ObjectStreamException

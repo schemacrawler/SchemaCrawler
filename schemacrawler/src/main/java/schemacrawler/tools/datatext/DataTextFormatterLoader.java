@@ -32,22 +32,6 @@ import schemacrawler.tools.OutputOptions;
 public final class DataTextFormatterLoader
 {
 
-  private DataTextFormatterLoader()
-  {
-  }
-
-  /**
-   * Checks if the CrawlHandler mnemonic is valid.
-   * 
-   * @param printFormatterName
-   *        Mnemonic name for a CrawlHandler
-   * @return True if the mnemonic is known
-   */
-  private static boolean canLoad(final DataTextFormatOptions options)
-  {
-    return options.getOutputOptions().getOutputFormat() != null;
-  }
-
   /**
    * Instantiates a text formatter type of DataHandler from the mnemonic
    * string.
@@ -85,6 +69,22 @@ public final class DataTextFormatterLoader
 
     return handler;
 
+  }
+
+  /**
+   * Checks if the CrawlHandler mnemonic is valid.
+   * 
+   * @param printFormatterName
+   *        Mnemonic name for a CrawlHandler
+   * @return True if the mnemonic is known
+   */
+  private static boolean canLoad(final DataTextFormatOptions options)
+  {
+    return options.getOutputOptions().getOutputFormat() != null;
+  }
+
+  private DataTextFormatterLoader()
+  {
   }
 
 }

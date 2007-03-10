@@ -75,21 +75,12 @@ public final class OperatorOptions
     // Config is not read
   }
 
-  String getQuery()
-  {
-    return query;
-  }
-
-  Operation getOperation()
-  {
-    return operation;
-  }
-
   /**
    * {@inheritDoc}
    * 
    * @see Object#toString()
    */
+  @Override
   public String toString()
   {
     final StringBuffer buffer = new StringBuffer();
@@ -99,6 +90,16 @@ public final class OperatorOptions
     buffer.append(", outputOptions=").append(getOutputOptions());
     buffer.append("]");
     return buffer.toString();
+  }
+
+  Operation getOperation()
+  {
+    return operation;
+  }
+
+  String getQuery()
+  {
+    return query;
   }
 
 }

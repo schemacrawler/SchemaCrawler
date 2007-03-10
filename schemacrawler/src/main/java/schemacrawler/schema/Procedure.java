@@ -31,18 +31,18 @@ public interface Procedure
 {
 
   /**
-   * Procedure type.
-   * 
-   * @return Procedure type
-   */
-  ProcedureType getType();
-
-  /**
    * List of columns in ordinal order.
    * 
    * @return Columns of the procedure.
    */
   ProcedureColumn[] getColumns();
+
+  /**
+   * Gets the definition.
+   * 
+   * @return Definition
+   */
+  String getDefinition();
 
   /**
    * Gets the type of the routine body.
@@ -52,10 +52,10 @@ public interface Procedure
   RoutineBodyType getRoutineBodyType();
 
   /**
-   * Gets the definition.
+   * Procedure type.
    * 
-   * @return Definition
+   * @return Procedure type
    */
-  String getDefinition();
+  ProcedureType getType();
 
 }

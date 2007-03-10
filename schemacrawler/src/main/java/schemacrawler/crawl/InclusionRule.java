@@ -132,6 +132,7 @@ public final class InclusionRule
    * 
    * @see java.lang.Object#toString()
    */
+  @Override
   public String toString()
   {
     final StringBuffer buffer = new StringBuffer();

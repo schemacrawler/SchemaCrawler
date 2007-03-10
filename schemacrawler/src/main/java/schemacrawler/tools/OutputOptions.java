@@ -242,6 +242,7 @@ public final class OutputOptions
    * 
    * @see Object#toString()
    */
+  @Override
   public String toString()
   {
     final StringBuffer buffer = new StringBuffer();

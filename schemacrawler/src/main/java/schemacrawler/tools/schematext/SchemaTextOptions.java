@@ -186,6 +186,7 @@ public final class SchemaTextOptions
    * 
    * @see Object#toString()
    */
+  @Override
   public String toString()
   {
     final StringBuffer buffer = new StringBuffer();

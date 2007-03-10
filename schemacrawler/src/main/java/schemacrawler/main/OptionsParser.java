@@ -91,7 +91,8 @@ public final class OptionsParser
     masterOutputOptions.setNoFooter(noFooter);
     masterOutputOptions.setNoInfo(noInfo);
 
-    String commandOptionValue = parser.getStringOptionValue(OPTION_COMMAND);
+    final String commandOptionValue = parser
+      .getStringOptionValue(OPTION_COMMAND);
     if (Utilities.isBlank(commandOptionValue))
     {
       throw new SchemaCrawlerException("No SchemaCrawler command specified");
@@ -194,9 +195,9 @@ public final class OptionsParser
     final String[] queryOverKeys = {
         "table", "table_type"
     };
-    for (int i = 0; i < queryOverKeys.length; i++)
+    for (final String element: queryOverKeys)
     {
-      if (keys.contains(queryOverKeys[i]))
+      if (keys.contains(element))
       {
         isQueryOver = true;
         break;

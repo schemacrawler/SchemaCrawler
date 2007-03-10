@@ -56,6 +56,7 @@ final class OperatorHTMLOutput
   /**
    * @see BaseOperator#begin()
    */
+  @Override
   public void begin()
     throws SchemaCrawlerException
   {
@@ -69,6 +70,7 @@ final class OperatorHTMLOutput
   /**
    * @see BaseOperator#end()
    */
+  @Override
   public void end()
     throws SchemaCrawlerException
   {
@@ -85,6 +87,7 @@ final class OperatorHTMLOutput
   /**
    * @see BaseOperator#handle(DatabaseInfo)
    */
+  @Override
   public void handle(final DatabaseInfo databaseInfo)
   {
     if (!getNoInfo())
@@ -96,15 +99,7 @@ final class OperatorHTMLOutput
     }
   }
 
-  private void handleEndTables()
-  {
-    if (operation.isAggregateOperation())
-    {
-      out.print("</table>");
-      out.println("<p>&nbsp;</p>");
-    }
-  }
-
+  @Override
   protected void handleStartTables()
   {
     if (operation.isAggregateOperation())
@@ -112,6 +107,15 @@ final class OperatorHTMLOutput
       out.print("<table>");
       out.println("  <caption>" + getOperation().getOperationDescription()
                   + "</caption>");
+    }
+  }
+
+  private void handleEndTables()
+  {
+    if (operation.isAggregateOperation())
+    {
+      out.print("</table>");
+      out.println("<p>&nbsp;</p>");
     }
   }
 

@@ -34,7 +34,7 @@ abstract class AbstractDependantNamedObject
   implements DependantNamedObject
 {
 
-  private NamedObject parent;
+  private final NamedObject parent;
 
   AbstractDependantNamedObject(final String name, final NamedObject parent)
   {
@@ -44,6 +44,30 @@ abstract class AbstractDependantNamedObject
       throw new IllegalArgumentException("Parent object not specified");
     }
     this.parent = parent;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Object#equals(java.lang.Object)
+   */
+  @Override
+  public boolean equals(final Object o)
+  {
+    if (o == null)
+    {
+      return false;
+    }
+    final DependantNamedObject childObject = (DependantNamedObject) o;
+    if (!super.equals(childObject))
+    {
+      return false;
+    }
+    if (parent == null || !parent.equals(childObject.getParent()))
+    {
+      return false;
+    }
+    return true;
   }
 
   /**
@@ -68,16 +92,6 @@ abstract class AbstractDependantNamedObject
   /**
    * {@inheritDoc}
    * 
-   * @see Object#toString()
-   */
-  public String toString()
-  {
-    return getFullName();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see schemacrawler.schema.DependantNamedObject#getParent()
    */
   public final NamedObject getParent()
@@ -88,31 +102,9 @@ abstract class AbstractDependantNamedObject
   /**
    * {@inheritDoc}
    * 
-   * @see Object#equals(java.lang.Object)
-   */
-  public boolean equals(final Object o)
-  {
-    if (o == null)
-    {
-      return false;
-    }
-    final DependantNamedObject childObject = (DependantNamedObject) o;
-    if (!super.equals(childObject))
-    {
-      return false;
-    }
-    if (parent == null || !parent.equals(childObject.getParent()))
-    {
-      return false;
-    }
-    return true;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see Object#hashCode()
    */
+  @Override
   public int hashCode()
   {
     int result;
@@ -122,6 +114,17 @@ abstract class AbstractDependantNamedObject
       result = 29 * result + parent.hashCode();
     }
     return result;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    return getFullName();
   }
 
 }

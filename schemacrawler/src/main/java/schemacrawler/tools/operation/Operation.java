@@ -31,8 +31,6 @@ public final class Operation
   implements Serializable
 {
 
-  private static final long serialVersionUID = -5097434654628745480L;
-
   /** Count operation */
   public static final Operation COUNT = new Operation("COUNT",
                                                       "Row Count",
@@ -63,14 +61,60 @@ public final class Operation
                                                           "Query Over Table",
                                                           "{0,choice,0#-|0<{0,number,integer}}");
 
+  private static final long serialVersionUID = -5097434654628745480L;
+
   private static final Operation[] OPERATION_ALL = new Operation[] {
       COUNT, DROP, TRUNCATE, DUMP, QUERYOVER
   };
 
+  // The 4 declarations below are necessary for serialization
+  private static int nextOrdinal;
+  private static final Operation[] VALUES = OPERATION_ALL;
+
+  /**
+   * Gets the enumeration value for the query over operation.
+   * 
+   * @return Query over operation
+   */
+  public static Operation queryOverOperation()
+  {
+    return QUERYOVER;
+  }
+
+  /**
+   * Find the enumeration value corresponding to the string.
+   * 
+   * @param operationString
+   *        String value of table type
+   * @return Enumeration value
+   */
+  public static Operation valueOf(final String operationString)
+  {
+
+    Operation operation = null;
+
+    for (final Operation element: OPERATION_ALL)
+    {
+      if (element.toString().equalsIgnoreCase(operationString))
+      {
+        operation = element;
+        break;
+      }
+    }
+
+    return operation;
+
+  }
+
   private final transient String operation;
+
   private final transient String operationDescription;
+
   private final transient String query;
+
   private final transient String countMessageFormat;
+
+  private final int ordinal;
 
   private Operation(final String name,
                     final String description,
@@ -84,9 +128,14 @@ public final class Operation
     this.countMessageFormat = countMessageFormat;
   }
 
-  private String getOperation()
+  /**
+   * Message format for the counts.
+   * 
+   * @return Message format for the counts
+   */
+  public String getCountMessageFormat()
   {
-    return operation;
+    return countMessageFormat;
   }
 
   /**
@@ -110,23 +159,13 @@ public final class Operation
   }
 
   /**
-   * Message format for the counts.
+   * If this operation is an aggregate operation.
    * 
-   * @return Message format for the counts
+   * @return If this operation is an aggregate operation
    */
-  public String getCountMessageFormat()
+  public boolean isAggregateOperation()
   {
-    return countMessageFormat;
-  }
-
-  /**
-   * If this operation is a select operation.
-   * 
-   * @return If this operation is a select operation
-   */
-  public boolean isSelectOperation()
-  {
-    return this == QUERYOVER || this == DUMP || this == COUNT;
+    return this == COUNT;
   }
 
   /**
@@ -140,23 +179,13 @@ public final class Operation
   }
 
   /**
-   * If this operation is an aggregate operation.
+   * If this operation is a select operation.
    * 
-   * @return If this operation is an aggregate operation
+   * @return If this operation is a select operation
    */
-  public boolean isAggregateOperation()
+  public boolean isSelectOperation()
   {
-    return this == COUNT;
-  }
-
-  /**
-   * Gets the enumeration value for the query over operation.
-   * 
-   * @return Query over operation
-   */
-  public static Operation queryOverOperation()
-  {
-    return QUERYOVER;
+    return this == QUERYOVER || this == DUMP || this == COUNT;
   }
 
   /**
@@ -164,46 +193,21 @@ public final class Operation
    * 
    * @see Object#toString()
    */
+  @Override
   public String toString()
   {
     return operation;
   }
 
-  /**
-   * Find the enumeration value corresponding to the string.
-   * 
-   * @param operationString
-   *        String value of table type
-   * @return Enumeration value
-   */
-  public static Operation valueOf(final String operationString)
-  {
-
-    Operation operation = null;
-
-    for (int i = 0; i < OPERATION_ALL.length; i++)
-    {
-      if (OPERATION_ALL[i].toString().equalsIgnoreCase(operationString))
-      {
-        operation = OPERATION_ALL[i];
-        break;
-      }
-    }
-
-    return operation;
-
-  }
-
-  // The 4 declarations below are necessary for serialization
-  private static int nextOrdinal;
-  private final int ordinal;
-
-  private static final Operation[] VALUES = OPERATION_ALL;
-
   Object readResolve()
     throws ObjectStreamException
   {
     return VALUES[ordinal]; // Canonicalize
+  }
+
+  private String getOperation()
+  {
+    return operation;
   }
 
 }

@@ -75,6 +75,11 @@ final class MutablePrivilege
     return isGrantable;
   }
 
+  void setGrantable(final boolean grantable)
+  {
+    isGrantable = grantable;
+  }
+
   void setGrantee(final String grantee)
   {
     this.grantee = grantee;
@@ -83,11 +88,6 @@ final class MutablePrivilege
   void setGrantor(final String grantor)
   {
     this.grantor = grantor;
-  }
-
-  void setGrantable(final boolean grantable)
-  {
-    isGrantable = grantable;
   }
 
 }

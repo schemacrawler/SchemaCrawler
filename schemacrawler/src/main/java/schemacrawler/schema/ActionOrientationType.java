@@ -21,56 +21,24 @@
 package schemacrawler.schema;
 
 
-import java.io.ObjectStreamException;
-
 /**
  * Action orientation type.
  */
-public final class ActionOrientationType
-  implements EnumType
+public enum ActionOrientationType
 {
 
-  private static final long serialVersionUID = 4767973714560552564L;
-
   /** Unknown */
-  public static final ActionOrientationType UNKNOWN = new ActionOrientationType("unknown");
+  UNKNOWN("unknown"),
   /** Row */
-  public static final ActionOrientationType ROW = new ActionOrientationType("ROW");
+  ROW("ROW"),
   /** Statement */
-  public static final ActionOrientationType STATEMENT = new ActionOrientationType("STATEMENT");
+  STATEMENT("STATEMENT");
 
-  private static final ActionOrientationType[] ALL = {
-      UNKNOWN, ROW, STATEMENT,
-  };
-
-  private final int id;
   private final String name;
 
   private ActionOrientationType(final String typeName)
   {
-    ordinal = nextOrdinal++;
-    id = ordinal;
     name = typeName;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.EnumType#getId()
-   */
-  public int getId()
-  {
-    return id;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.EnumType#getName()
-   */
-  public String getName()
-  {
-    return name;
   }
 
   /**
@@ -78,46 +46,10 @@ public final class ActionOrientationType
    * 
    * @see Object#toString()
    */
+  @Override
   public String toString()
   {
     return name;
-  }
-
-  /**
-   * Find the enumeration value corresponding to the string.
-   * 
-   * @param typeString
-   *        String value of table type
-   * @return Enumeration value
-   */
-  public static ActionOrientationType valueOf(final String typeString)
-  {
-
-    ActionOrientationType checkOptionType = ALL[0];
-
-    for (int i = 0; i < ALL.length; i++)
-    {
-      if (ALL[i].toString().equalsIgnoreCase(typeString))
-      {
-        checkOptionType = ALL[i];
-        break;
-      }
-    }
-
-    return checkOptionType;
-
-  }
-
-  // The 4 declarations below are necessary for serialization
-  private static int nextOrdinal;
-  private final int ordinal;
-
-  private static final ActionOrientationType[] VALUES = ALL;
-
-  Object readResolve()
-    throws ObjectStreamException
-  {
-    return VALUES[ordinal]; // Canonicalize
   }
 
 }

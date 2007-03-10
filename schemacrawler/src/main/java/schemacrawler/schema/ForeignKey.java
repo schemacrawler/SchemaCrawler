@@ -31,6 +31,13 @@ public interface ForeignKey
 {
 
   /**
+   * List of column pairs.
+   * 
+   * @return Column pairs
+   */
+  ForeignKeyColumnMap[] getColumnPairs();
+
+  /**
    * Deferrability.
    * 
    * @return Deferrability
@@ -50,12 +57,5 @@ public interface ForeignKey
    * @return Update rule
    */
   ForeignKeyUpdateRule getUpdateRule();
-
-  /**
-   * List of column pairs.
-   * 
-   * @return Column pairs
-   */
-  ForeignKeyColumnMap[] getColumnPairs();
 
 }

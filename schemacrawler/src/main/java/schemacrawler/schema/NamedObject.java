@@ -33,6 +33,15 @@ public interface NamedObject
 {
 
   /**
+   * Gets an attribute.
+   * 
+   * @param name
+   *        Attribute name.
+   * @return Attribute value.
+   */
+  Object getAttribute(String name);
+
+  /**
    * Getter for name.
    * 
    * @return Value of property name.
@@ -45,15 +54,6 @@ public interface NamedObject
    * @return Value of property remarks.
    */
   String getRemarks();
-
-  /**
-   * Gets an attribute.
-   * 
-   * @param name
-   *        Attribute name.
-   * @return Attribute value.
-   */
-  Object getAttribute(String name);
 
   /**
    * Sets an attibute.

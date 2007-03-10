@@ -58,82 +58,23 @@ final class MutableDatabaseInfo
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.DatabaseInfo#getDriverName()
+   * @see schemacrawler.schema.DatabaseInfo#getCatalog()
    */
-  public String getDriverName()
+  public String getCatalog()
   {
-    return driverName;
-  }
-
-  /**
-   * Sets name of the driver.
-   * 
-   * @param driverName
-   *        Driver name
-   */
-  public void setDriverName(final String driverName)
-  {
-    this.driverName = driverName;
+    return catalog;
   }
 
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.DatabaseInfo#getDriverVersion()
+   * @see schemacrawler.schema.DatabaseInfo#getColumnDataTypes()
    */
-  public String getDriverVersion()
+  public ColumnDataType[] getColumnDataTypes()
   {
-    return driverVersion;
-  }
-
-  void setDriverVersion(final String driverVersion)
-  {
-    this.driverVersion = driverVersion;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.DatabaseInfo#getJdbcDriverClassName()
-   */
-  public String getJdbcDriverClassName()
-  {
-    return jdbcDriverClassName;
-  }
-
-  void setJdbcDriverClassName(final String jdbcDriverClassName)
-  {
-    this.jdbcDriverClassName = jdbcDriverClassName;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.DatabaseInfo#getProductName()
-   */
-  public String getProductName()
-  {
-    return productName;
-  }
-
-  void setProductName(final String productName)
-  {
-    this.productName = productName;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.DatabaseInfo#getProductVersion()
-   */
-  public String getProductVersion()
-  {
-    return productVersion;
-  }
-
-  void setProductVersion(final String productVersion)
-  {
-    this.productVersion = productVersion;
+    final List allColumnDataTypes = columnDataTypes.getAll();
+    return (ColumnDataType[]) allColumnDataTypes
+      .toArray(new ColumnDataType[allColumnDataTypes.size()]);
   }
 
   /**
@@ -146,57 +87,54 @@ final class MutableDatabaseInfo
     return connectionUrl;
   }
 
-  void setConnectionUrl(final String connectionUrl)
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.DatabaseInfo#getDriverName()
+   */
+  public String getDriverName()
   {
-    this.connectionUrl = connectionUrl;
+    return driverName;
   }
 
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.DatabaseInfo#getSchemaPattern()
+   * @see schemacrawler.schema.DatabaseInfo#getDriverVersion()
    */
-  public String getSchemaPattern()
+  public String getDriverVersion()
   {
-    return schemaPattern;
-  }
-
-  void setSchemaPattern(final String schemaPattern)
-  {
-    this.schemaPattern = schemaPattern;
+    return driverVersion;
   }
 
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.DatabaseInfo#getCatalog()
+   * @see schemacrawler.schema.DatabaseInfo#getJdbcDriverClassName()
    */
-  public String getCatalog()
+  public String getJdbcDriverClassName()
   {
-    return catalog;
+    return jdbcDriverClassName;
   }
 
   /**
-   * Sets the catalog.
+   * {@inheritDoc}
    * 
-   * @param catalog
-   *        Catalog
+   * @see schemacrawler.schema.DatabaseInfo#getProductName()
    */
-  public void setCatalog(final String catalog)
+  public String getProductName()
   {
-    if (catalog == null)
-    {
-      this.catalog = "";
-    }
-    else
-    {
-      this.catalog = catalog;
-    }
+    return productName;
   }
 
-  void setProperties(final SortedMap properties)
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.DatabaseInfo#getProductVersion()
+   */
+  public String getProductVersion()
   {
-    dbProperties = properties;
+    return productVersion;
   }
 
   /**
@@ -229,8 +167,48 @@ final class MutableDatabaseInfo
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schema.DatabaseInfo#getSchemaPattern()
+   */
+  public String getSchemaPattern()
+  {
+    return schemaPattern;
+  }
+
+  /**
+   * Sets the catalog.
+   * 
+   * @param catalog
+   *        Catalog
+   */
+  public void setCatalog(final String catalog)
+  {
+    if (catalog == null)
+    {
+      this.catalog = "";
+    }
+    else
+    {
+      this.catalog = catalog;
+    }
+  }
+
+  /**
+   * Sets name of the driver.
+   * 
+   * @param driverName
+   *        Driver name
+   */
+  public void setDriverName(final String driverName)
+  {
+    this.driverName = driverName;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see Object#toString()
    */
+  @Override
   public String toString()
   {
 
@@ -249,15 +227,14 @@ final class MutableDatabaseInfo
   }
 
   /**
-   * {@inheritDoc}
+   * Adds a table.
    * 
-   * @see schemacrawler.schema.DatabaseInfo#getColumnDataTypes()
+   * @param table
+   *        Table
    */
-  public ColumnDataType[] getColumnDataTypes()
+  void addColumnDataType(final ColumnDataType columnDataType)
   {
-    final List allColumnDataTypes = columnDataTypes.getAll();
-    return (ColumnDataType[]) allColumnDataTypes
-      .toArray(new ColumnDataType[allColumnDataTypes.size()]);
+    columnDataTypes.add(columnDataType);
   }
 
   NamedObjectList getColumnDataTypesList()
@@ -281,15 +258,39 @@ final class MutableDatabaseInfo
     return columnDataType;
   }
 
-  /**
-   * Adds a table.
-   * 
-   * @param table
-   *        Table
-   */
-  void addColumnDataType(final ColumnDataType columnDataType)
+  void setConnectionUrl(final String connectionUrl)
   {
-    columnDataTypes.add(columnDataType);
+    this.connectionUrl = connectionUrl;
+  }
+
+  void setDriverVersion(final String driverVersion)
+  {
+    this.driverVersion = driverVersion;
+  }
+
+  void setJdbcDriverClassName(final String jdbcDriverClassName)
+  {
+    this.jdbcDriverClassName = jdbcDriverClassName;
+  }
+
+  void setProductName(final String productName)
+  {
+    this.productName = productName;
+  }
+
+  void setProductVersion(final String productVersion)
+  {
+    this.productVersion = productVersion;
+  }
+
+  void setProperties(final SortedMap properties)
+  {
+    dbProperties = properties;
+  }
+
+  void setSchemaPattern(final String schemaPattern)
+  {
+    this.schemaPattern = schemaPattern;
   }
 
 }

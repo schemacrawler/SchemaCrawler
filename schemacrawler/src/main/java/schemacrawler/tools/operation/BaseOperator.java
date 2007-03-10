@@ -311,13 +311,13 @@ public abstract class BaseOperator
 
   }
 
-  protected void handleStartTables()
-  {
-  }
-
   protected Operation getOperation()
   {
     return operation;
+  }
+
+  protected void handleStartTables()
+  {
   }
 
   boolean getNoFooter()

@@ -63,11 +63,11 @@ public abstract class BaseSchemaTextFormatter
   private static final Logger LOGGER = Logger
     .getLogger(BaseSchemaTextFormatter.class.getName());
 
-  private final SchemaTextOptions options;
-  private int tableCount;
   protected final PrintWriter out;
-
   protected final TextFormattingHelper formattingHelper;
+  private final SchemaTextOptions options;
+
+  private int tableCount;
 
   private InclusionRule tableColumnInclusionRule;
   private boolean invertMatch;
@@ -189,9 +189,8 @@ public abstract class BaseSchemaTextFormatter
 
     handleColumnDataTypesStart();
     final ColumnDataType[] columnDataTypes = databaseInfo.getColumnDataTypes();
-    for (int i = 0; i < columnDataTypes.length; i++)
+    for (final ColumnDataType columnDataType: columnDataTypes)
     {
-      final ColumnDataType columnDataType = columnDataTypes[i];
       handleColumnDataTypeStart();
       printColumnDataType(columnDataType);
       handleColumnDataTypeEnd();
@@ -224,9 +223,8 @@ public abstract class BaseSchemaTextFormatter
       out.println(formattingHelper.createSeparatorRow());
 
       final ProcedureColumn[] columns = procedure.getColumns();
-      for (int i = 0; i < columns.length; i++)
+      for (final ProcedureColumn column: columns)
       {
-        final ProcedureColumn column = columns[i];
         String columnTypeName = column.getType().getDatabaseSpecificTypeName();
         if (options.isShowStandardColumnTypeNames())
         {
@@ -273,8 +271,8 @@ public abstract class BaseSchemaTextFormatter
     // If a column inclusion rule is present, only process the
     // table if the column that matches is present in the table
     boolean handleTable = ColumnsGrep.includesColumn(table,
-                                         tableColumnInclusionRule,
-                                         invertMatch);
+                                                     tableColumnInclusionRule,
+                                                     invertMatch);
     if (!handleTable)
     {
       return;
@@ -327,6 +325,57 @@ public abstract class BaseSchemaTextFormatter
 
   }
 
+  abstract String getArrow();
+
+  final boolean getNoFooter()
+  {
+    return options.getOutputOptions().isNoFooter();
+  }
+
+  final boolean getNoHeader()
+  {
+    return options.getOutputOptions().isNoHeader();
+  }
+
+  final SchemaTextDetailType getSchemaTextDetailType()
+  {
+    return options.getSchemaTextDetailType();
+  }
+
+  abstract void handleColumnDataTypeEnd();
+
+  abstract void handleColumnDataTypesEnd();
+
+  abstract void handleColumnDataTypesStart();
+
+  abstract void handleColumnDataTypeStart();
+
+  abstract void handleDatabaseInfo(final DatabaseInfo databaseInfo);
+
+  abstract void handleDatabasePropertiesEnd();
+
+  abstract void handleDatabasePropertiesStart();
+
+  /**
+   * Handles the end of output for a procedure.
+   */
+  abstract void handleProcedureEnd();
+
+  /**
+   * Handles the start of output for a procedure.
+   */
+  abstract void handleProcedureStart();
+
+  /**
+   * Handles the end of output for a table.
+   */
+  abstract void handleTableEnd();
+
+  /**
+   * Handles the start of output for a table.
+   */
+  abstract void handleTableStart();
+
   private String negate(final boolean positive, final String text)
   {
     String textValue = text;
@@ -340,9 +389,8 @@ public abstract class BaseSchemaTextFormatter
   private void printCheckConstraints(final CheckConstraint[] constraints)
   {
 
-    for (int i = 0; i < constraints.length; i++)
+    for (final CheckConstraint constraint: constraints)
     {
-      final CheckConstraint constraint = constraints[i];
       if (constraint != null)
       {
         String constraintName = "";
@@ -397,9 +445,8 @@ public abstract class BaseSchemaTextFormatter
   private void printColumnPairs(final String tableName,
                                 final ForeignKeyColumnMap[] columnPairs)
   {
-    for (int j = 0; j < columnPairs.length; j++)
+    for (final ForeignKeyColumnMap columnPair: columnPairs)
     {
-      final ForeignKeyColumnMap columnPair = columnPairs[j];
       final Column pkColumn;
       final Column fkColumn;
       final String pkColumnName;
@@ -481,9 +528,8 @@ public abstract class BaseSchemaTextFormatter
   private void printForeignKeys(final String tableName,
                                 final ForeignKey[] foreignKeys)
   {
-    for (int i = 0; i < foreignKeys.length; i++)
+    for (final ForeignKey foreignKey: foreignKeys)
     {
-      final ForeignKey foreignKey = foreignKeys[i];
       if (foreignKey != null)
       {
         final String name = foreignKey.getName();
@@ -506,9 +552,8 @@ public abstract class BaseSchemaTextFormatter
 
   private void printIndices(final Index[] indices)
   {
-    for (int i = 0; i < indices.length; i++)
+    for (final Index index: indices)
     {
-      final Index index = indices[i];
       if (index != null)
       {
         out.println(formattingHelper.createEmptyRow());
@@ -549,9 +594,8 @@ public abstract class BaseSchemaTextFormatter
   private void printPrivileges(final Privilege[] privileges)
   {
 
-    for (int i = 0; i < privileges.length; i++)
+    for (final Privilege privilege: privileges)
     {
-      final Privilege privilege = privileges[i];
       if (privilege != null)
       {
         String privilegeType = "privilege";
@@ -563,7 +607,7 @@ public abstract class BaseSchemaTextFormatter
                                    + privilege.getGrantee();
         out.println(formattingHelper.createEmptyRow());
 
-        String privilegeName = privilege.getName();
+        final String privilegeName = privilege.getName();
         final String privilegeDetails = "[" + privilegeType + "]";
         out.println(formattingHelper.createNameRow(privilegeName,
                                                    privilegeDetails));
@@ -576,21 +620,20 @@ public abstract class BaseSchemaTextFormatter
   private void printTriggers(final Trigger[] triggers)
   {
 
-    for (int i = 0; i < triggers.length; i++)
+    for (final Trigger trigger: triggers)
     {
-      final Trigger trigger = triggers[i];
       if (trigger != null)
       {
         String triggerType = "[trigger, "
-                             + trigger.getConditionTiming().getName() + " "
-                             + trigger.getEventManipulationType().getName()
+                             + trigger.getConditionTiming() + " "
+                             + trigger.getEventManipulationType()
                              + ", per " + trigger.getActionOrientation() + "]";
         triggerType = triggerType.toLowerCase();
         final String actionCondition = trigger.getActionCondition();
         final String actionStatement = trigger.getActionStatement();
         out.println(formattingHelper.createEmptyRow());
 
-        String triggerName = trigger.getName();
+        final String triggerName = trigger.getName();
         out.println(formattingHelper.createNameRow(triggerName, triggerType));
 
         if (!Utilities.isBlank(actionCondition))
@@ -604,56 +647,5 @@ public abstract class BaseSchemaTextFormatter
       }
     }
   }
-
-  abstract String getArrow();
-
-  final boolean getNoFooter()
-  {
-    return options.getOutputOptions().isNoFooter();
-  }
-
-  final boolean getNoHeader()
-  {
-    return options.getOutputOptions().isNoHeader();
-  }
-
-  final SchemaTextDetailType getSchemaTextDetailType()
-  {
-    return options.getSchemaTextDetailType();
-  }
-
-  abstract void handleColumnDataTypeEnd();
-
-  abstract void handleColumnDataTypesEnd();
-
-  abstract void handleColumnDataTypesStart();
-
-  abstract void handleColumnDataTypeStart();
-
-  abstract void handleDatabaseInfo(final DatabaseInfo databaseInfo);
-
-  abstract void handleDatabasePropertiesEnd();
-
-  abstract void handleDatabasePropertiesStart();
-
-  /**
-   * Handles the end of output for a procedure.
-   */
-  abstract void handleProcedureEnd();
-
-  /**
-   * Handles the start of output for a procedure.
-   */
-  abstract void handleProcedureStart();
-
-  /**
-   * Handles the end of output for a table.
-   */
-  abstract void handleTableEnd();
-
-  /**
-   * Handles the start of output for a table.
-   */
-  abstract void handleTableStart();
 
 }

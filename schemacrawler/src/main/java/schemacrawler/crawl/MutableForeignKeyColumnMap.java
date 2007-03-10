@@ -46,52 +46,8 @@ final class MutableForeignKeyColumnMap
 
   /**
    * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.ForeignKeyColumnMap#getForeignKeyColumn()
    */
-  public Column getForeignKeyColumn()
-  {
-    return foreignKeyColumn;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.ForeignKeyColumnMap#getPrimaryKeyColumn()
-   */
-  public Column getPrimaryKeyColumn()
-  {
-    return primaryKeyColumn;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.ForeignKeyColumnMap#getKeySequence()
-   */
-  public int getKeySequence()
-  {
-    return keySequence;
-  }
-
-  void setForeignKeyColumn(final Column foreignKeyColumn)
-  {
-    this.foreignKeyColumn = foreignKeyColumn;
-  }
-
-  void setKeySequence(final int keySequence)
-  {
-    this.keySequence = keySequence;
-  }
-
-  void setPrimaryKeyColumn(final Column primaryKeyColumn)
-  {
-    this.primaryKeyColumn = primaryKeyColumn;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
+  @Override
   public int compareTo(final Object obj)
   {
     final ForeignKeyColumnMap other = (ForeignKeyColumnMap) obj;
@@ -107,6 +63,51 @@ final class MutableForeignKeyColumnMap
     }
 
     return comparison;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ForeignKeyColumnMap#getForeignKeyColumn()
+   */
+  public Column getForeignKeyColumn()
+  {
+    return foreignKeyColumn;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ForeignKeyColumnMap#getKeySequence()
+   */
+  public int getKeySequence()
+  {
+    return keySequence;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ForeignKeyColumnMap#getPrimaryKeyColumn()
+   */
+  public Column getPrimaryKeyColumn()
+  {
+    return primaryKeyColumn;
+  }
+
+  void setForeignKeyColumn(final Column foreignKeyColumn)
+  {
+    this.foreignKeyColumn = foreignKeyColumn;
+  }
+
+  void setKeySequence(final int keySequence)
+  {
+    this.keySequence = keySequence;
+  }
+
+  void setPrimaryKeyColumn(final Column primaryKeyColumn)
+  {
+    this.primaryKeyColumn = primaryKeyColumn;
   }
 
 }

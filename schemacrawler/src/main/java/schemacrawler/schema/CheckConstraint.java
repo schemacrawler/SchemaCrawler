@@ -31,6 +31,13 @@ public interface CheckConstraint
 {
 
   /**
+   * Gets the definition.
+   * 
+   * @return Definition
+   */
+  String getDefinition();
+
+  /**
    * Whether the constraint is deferrable.
    * 
    * @return Whether the constraint is deferrable
@@ -43,12 +50,5 @@ public interface CheckConstraint
    * @return Whether the constraint is initially deferred
    */
   boolean isInitiallyDeferred();
-
-  /**
-   * Gets the definition.
-   * 
-   * @return Definition
-   */
-  String getDefinition();
 
 }

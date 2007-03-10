@@ -79,11 +79,11 @@ public final class SchemaTextDetailType
 
     SchemaTextDetailType columnInfoLevel = null;
 
-    for (int i = 0; i < TEXT_FORMAT_TYPE_ALL.length; i++)
+    for (final SchemaTextDetailType element: TEXT_FORMAT_TYPE_ALL)
     {
-      if (TEXT_FORMAT_TYPE_ALL[i].toString().equalsIgnoreCase(type))
+      if (element.toString().equalsIgnoreCase(type))
       {
-        columnInfoLevel = TEXT_FORMAT_TYPE_ALL[i];
+        columnInfoLevel = element;
         break;
       }
     }
@@ -128,6 +128,7 @@ public final class SchemaTextDetailType
   {
     return id >= schemaTextDetailType.id;
   }
+
   /**
    * Find the enumeration value corresponding to the string.
    * 
@@ -164,6 +165,7 @@ public final class SchemaTextDetailType
    * 
    * @see Object#toString()
    */
+  @Override
   public String toString()
   {
     return name;

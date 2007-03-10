@@ -44,11 +44,11 @@ final class RetrieverConnection
   private static final Logger LOGGER = Logger
     .getLogger(RetrieverConnection.class.getName());
 
-  private DatabaseMetaData metaData;
+  private final DatabaseMetaData metaData;
   private String catalog;
   private String schemaPattern;
   private String jdbcDriverClassName;
-  private InformationSchemaViews informationSchemaViews;
+  private final InformationSchemaViews informationSchemaViews;
 
   RetrieverConnection(final DataSource dataSource,
                       final Properties additionalConfiguration)
@@ -88,26 +88,6 @@ final class RetrieverConnection
     informationSchemaViews = new InformationSchemaViews(additionalConfiguration);
   }
 
-  String getCatalog()
-  {
-    return catalog;
-  }
-
-  DatabaseMetaData getMetaData()
-  {
-    return metaData;
-  }
-
-  String getSchemaPattern()
-  {
-    return schemaPattern;
-  }
-
-  String getJdbcDriverClassName()
-  {
-    return jdbcDriverClassName;
-  }
-
   /**
    * Gets the INFORMATION_SCHEMA views select SQL statements.
    * 
@@ -116,6 +96,22 @@ final class RetrieverConnection
   public InformationSchemaViews getInformationSchemaViews()
   {
     return informationSchemaViews;
+  }
+
+  /**
+   * @see java.lang.Object#finalize()
+   */
+  @Override
+  protected void finalize()
+    throws Throwable
+  {
+    super.finalize();
+    // Release database resources
+    if (metaData != null)
+    {
+      final Connection connection = metaData.getConnection();
+      connection.close();
+    }
   }
 
   void close()
@@ -132,19 +128,24 @@ final class RetrieverConnection
     }
   }
 
-  /**
-   * @see java.lang.Object#finalize()
-   */
-  protected void finalize()
-    throws Throwable
+  String getCatalog()
   {
-    super.finalize();
-    // Release database resources
-    if (metaData != null)
-    {
-      final Connection connection = metaData.getConnection();
-      connection.close();
-    }
+    return catalog;
+  }
+
+  String getJdbcDriverClassName()
+  {
+    return jdbcDriverClassName;
+  }
+
+  DatabaseMetaData getMetaData()
+  {
+    return metaData;
+  }
+
+  String getSchemaPattern()
+  {
+    return schemaPattern;
   }
 
 }

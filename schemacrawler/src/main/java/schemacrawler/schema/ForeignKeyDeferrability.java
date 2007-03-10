@@ -40,67 +40,21 @@ public final class ForeignKeyDeferrability
                                   "not deferrable"),
   };
 
-  // The declarations below are necessary for serialization
-  private static int nextOrdinal;
-  private static final long serialVersionUID = 3617290108341334582L;
-
-  private static final ForeignKeyDeferrability[] VALUES = FOREIGN_KEY_DEFERRABILITY_ALL;
-
-  /**
-   * Find the enumeration value corresponding to the string.
-   * 
-   * @param id
-   *        Id
-   * @return Enumeration value
-   */
-  public static ForeignKeyDeferrability valueOfFromId(final int id)
-  {
-    ForeignKeyDeferrability fkDeferrability = null;
-    for (int i = 0; i < FOREIGN_KEY_DEFERRABILITY_ALL.length; i++)
-    {
-      if (FOREIGN_KEY_DEFERRABILITY_ALL[i].getForeignKeyDeferrabilityId() == id)
-      {
-        fkDeferrability = FOREIGN_KEY_DEFERRABILITY_ALL[i];
-        break;
-      }
-    }
-    return fkDeferrability;
-  }
-
-  /**
-   * Value of the enumeration from the code.
-   * 
-   * @param fkDeferrabilityName
-   *        Code
-   * @return Enumeration value
-   */
-  public static ForeignKeyDeferrability valueOf(final String fkDeferrabilityName)
-  {
-    ForeignKeyDeferrability fkDeferrability = null;
-    for (int i = 0; i < FOREIGN_KEY_DEFERRABILITY_ALL.length; i++)
-    {
-      if (FOREIGN_KEY_DEFERRABILITY_ALL[i].getName()
-        .equalsIgnoreCase(fkDeferrabilityName))
-      {
-        fkDeferrability = FOREIGN_KEY_DEFERRABILITY_ALL[i];
-        break;
-      }
-    }
-    return fkDeferrability;
-  }
-
   private final transient String name;
   private final transient int id;
-  private final int ordinal;
 
   private ForeignKeyDeferrability(final int id, final String name)
   {
-    ordinal = nextOrdinal++;
     this.id = id;
     this.name = name;
   }
 
-  private int getForeignKeyDeferrabilityId()
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.EnumType#getId()
+   */
+  public int getId()
   {
     return id;
   }
@@ -118,18 +72,9 @@ public final class ForeignKeyDeferrability
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.EnumType#getId()
-   */
-  public int getId()
-  {
-    return id;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see Object#toString()
    */
+  @Override
   public String toString()
   {
     return getName();
@@ -139,6 +84,11 @@ public final class ForeignKeyDeferrability
     throws ObjectStreamException
   {
     return VALUES[ordinal]; // Canonicalize
+  }
+
+  private int getForeignKeyDeferrabilityId()
+  {
+    return id;
   }
 
 }

@@ -75,21 +75,12 @@ public final class DataTextFormatOptions
     }
   }
 
-  boolean isMergeRows()
-  {
-    return mergeRows;
-  }
-
-  boolean isShowLobs()
-  {
-    return showLobs;
-  }
-
   /**
    * {@inheritDoc}
    * 
    * @see Object#toString()
    */
+  @Override
   public String toString()
   {
     final StringBuffer buffer = new StringBuffer();
@@ -99,6 +90,16 @@ public final class DataTextFormatOptions
     buffer.append(", outputOptions=").append(getOutputOptions());
     buffer.append("]");
     return buffer.toString();
+  }
+
+  boolean isMergeRows()
+  {
+    return mergeRows;
+  }
+
+  boolean isShowLobs()
+  {
+    return showLobs;
   }
 
 }

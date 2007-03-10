@@ -60,6 +60,7 @@ final class OperatorTextOutput
   /**
    * @see BaseOperator#end()
    */
+  @Override
   public void end()
     throws SchemaCrawlerException
   {

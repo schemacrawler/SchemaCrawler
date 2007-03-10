@@ -42,8 +42,57 @@ public final class ProcedureType
                         "returns result"),
   };
 
+  // The 4 declarations below are necessary for serialization
+  private static int nextOrdinal;
+  private static final ProcedureType[] VALUES = ALL;
+
+  /**
+   * Find the enumeration value corresponding to the string.
+   * 
+   * @param id
+   *        int value of procedure type
+   * @return Enumeration value
+   */
+  public static ProcedureType valueOf(final int id)
+  {
+    ProcedureType type = ALL[0];
+    for (final ProcedureType element: ALL)
+    {
+      if (element.getId() == id)
+      {
+        type = element;
+        break;
+      }
+    }
+    return type;
+  }
+
+  /**
+   * Value of the enumeration from the code.
+   * 
+   * @param name
+   *        Code
+   * @return Enumeration value
+   */
+  public static ProcedureType valueOf(final String name)
+  {
+    ProcedureType type = ALL[0];
+    for (final ProcedureType element: ALL)
+    {
+      if (element.getName().equalsIgnoreCase(name))
+      {
+        type = element;
+        break;
+      }
+    }
+    return type;
+  }
+
   private final transient int id;
+
   private final transient String name;
+
+  private final int ordinal;
 
   private ProcedureType(final int id, final String name)
   {
@@ -77,58 +126,11 @@ public final class ProcedureType
    * 
    * @see Object#toString()
    */
+  @Override
   public String toString()
   {
     return getName();
   }
-
-  /**
-   * Find the enumeration value corresponding to the string.
-   * 
-   * @param id
-   *        int value of procedure type
-   * @return Enumeration value
-   */
-  public static ProcedureType valueOf(final int id)
-  {
-    ProcedureType type = ALL[0];
-    for (int i = 0; i < ALL.length; i++)
-    {
-      if (ALL[i].getId() == id)
-      {
-        type = ALL[i];
-        break;
-      }
-    }
-    return type;
-  }
-
-  /**
-   * Value of the enumeration from the code.
-   * 
-   * @param name
-   *        Code
-   * @return Enumeration value
-   */
-  public static ProcedureType valueOf(final String name)
-  {
-    ProcedureType type = ALL[0];
-    for (int i = 0; i < ALL.length; i++)
-    {
-      if (ALL[i].getName().equalsIgnoreCase(name))
-      {
-        type = ALL[i];
-        break;
-      }
-    }
-    return type;
-  }
-
-  // The 4 declarations below are necessary for serialization
-  private static int nextOrdinal;
-  private final int ordinal;
-
-  private static final ProcedureType[] VALUES = ALL;
 
   Object readResolve()
     throws ObjectStreamException

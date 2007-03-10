@@ -57,18 +57,35 @@ final class MutableProcedure
   }
 
   /**
-   * Sets the procedure type.
+   * {@inheritDoc}
    * 
-   * @param type
-   *        Procedure type.
+   * @see Procedure#getColumns()
    */
-  void setType(final ProcedureType type)
+  public ProcedureColumn[] getColumns()
   {
-    if (type == null)
-    {
-      throw new IllegalArgumentException("Null procedure type");
-    }
-    procedureType = type;
+    final List allColumns = columns.getAll();
+    return (ProcedureColumn[]) allColumns
+      .toArray(new ProcedureColumn[allColumns.size()]);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Procedure#getDefinition()
+   */
+  public String getDefinition()
+  {
+    return definition;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Procedure#getRoutineBodyType()
+   */
+  public RoutineBodyType getRoutineBodyType()
+  {
+    return routineBodyType;
   }
 
   /**
@@ -79,18 +96,6 @@ final class MutableProcedure
   public ProcedureType getType()
   {
     return procedureType;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Procedure#getColumns()
-   */
-  public ProcedureColumn[] getColumns()
-  {
-    final List allColumns = columns.getAll();
-    return (ProcedureColumn[]) allColumns
-      .toArray(new ProcedureColumn[allColumns.size()]);
   }
 
   /**
@@ -109,14 +114,9 @@ final class MutableProcedure
     columns.setComparator(comparator);
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Procedure#getRoutineBodyType()
-   */
-  public RoutineBodyType getRoutineBodyType()
+  void setDefinition(final String definition)
   {
-    return routineBodyType;
+    this.definition = definition;
   }
 
   void setRoutineBodyType(final RoutineBodyType routineBodyType)
@@ -125,18 +125,18 @@ final class MutableProcedure
   }
 
   /**
-   * {@inheritDoc}
+   * Sets the procedure type.
    * 
-   * @see Procedure#getDefinition()
+   * @param type
+   *        Procedure type.
    */
-  public String getDefinition()
+  void setType(final ProcedureType type)
   {
-    return definition;
-  }
-
-  void setDefinition(final String definition)
-  {
-    this.definition = definition;
+    if (type == null)
+    {
+      throw new IllegalArgumentException("Null procedure type");
+    }
+    procedureType = type;
   }
 
 }

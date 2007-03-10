@@ -88,11 +88,6 @@ public final class Options
     setLogLevel(config.getProperty(SCHEMACRAWLER_LOG_LEVEL, "OFF"));
   }
 
-  void setLogLevel(final String logLevelString)
-  {
-    logLevel = Level.parse(logLevelString.toUpperCase(Locale.ENGLISH));
-  }
-
   /**
    * Gets the configuration properties.
    * 
@@ -104,13 +99,23 @@ public final class Options
   }
 
   /**
-   * Gets the tool type.
+   * Gets the data text format options.
    * 
-   * @return Tool type
+   * @return Data text format options
    */
-  public ToolType getToolType()
+  public DataTextFormatOptions getDataTextFormatOptions()
   {
-    return toolType;
+    return dataTextFormatOptions;
+  }
+
+  /**
+   * Log level.
+   * 
+   * @return Log level
+   */
+  public Level getLogLevel()
+  {
+    return logLevel;
   }
 
   /**
@@ -124,13 +129,13 @@ public final class Options
   }
 
   /**
-   * Gets the data text format options.
+   * Query.
    * 
-   * @return Data text format options
+   * @return Query
    */
-  public DataTextFormatOptions getDataTextFormatOptions()
+  public String getQuery()
   {
-    return dataTextFormatOptions;
+    return query;
   }
 
   /**
@@ -154,23 +159,13 @@ public final class Options
   }
 
   /**
-   * Query.
+   * Gets the tool type.
    * 
-   * @return Query
+   * @return Tool type
    */
-  public String getQuery()
+  public ToolType getToolType()
   {
-    return query;
-  }
-
-  /**
-   * Log level.
-   * 
-   * @return Log level
-   */
-  public Level getLogLevel()
-  {
-    return logLevel;
+    return toolType;
   }
 
   /**
@@ -178,6 +173,7 @@ public final class Options
    * 
    * @see Object#toString()
    */
+  @Override
   public String toString()
   {
     final StringBuffer buffer = new StringBuffer();
@@ -190,6 +186,11 @@ public final class Options
     buffer.append("; ").append(operatorOptions);
     buffer.append("]");
     return buffer.toString();
+  }
+
+  void setLogLevel(final String logLevelString)
+  {
+    logLevel = Level.parse(logLevelString.toUpperCase(Locale.ENGLISH));
   }
 
 }

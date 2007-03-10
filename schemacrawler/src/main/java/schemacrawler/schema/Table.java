@@ -31,18 +31,11 @@ public interface Table
 {
 
   /**
-   * Table type.
+   * List of check constraints.
    * 
-   * @return Table type.
+   * @return Check constraints for the table.
    */
-  TableType getType();
-
-  /**
-   * Primary key.
-   * 
-   * @return Primary key
-   */
-  PrimaryKey getPrimaryKey();
+  CheckConstraint[] getCheckConstraints();
 
   /**
    * List of columns in ordinal order.
@@ -73,11 +66,18 @@ public interface Table
   Index[] getIndices();
 
   /**
-   * List of check constraints.
+   * Primary key.
    * 
-   * @return Check constraints for the table.
+   * @return Primary key
    */
-  CheckConstraint[] getCheckConstraints();
+  PrimaryKey getPrimaryKey();
+
+  /**
+   * List of privileges.
+   * 
+   * @return Privileges for the table.
+   */
+  Privilege[] getPrivileges();
 
   /**
    * List of triggers.
@@ -87,10 +87,10 @@ public interface Table
   Trigger[] getTriggers();
 
   /**
-   * List of privileges.
+   * Table type.
    * 
-   * @return Privileges for the table.
+   * @return Table type.
    */
-  Privilege[] getPrivileges();
+  TableType getType();
 
 }

@@ -39,17 +39,17 @@ public interface ForeignKeyColumnMap
   Column getForeignKeyColumn();
 
   /**
-   * Gets the primary key column.
-   * 
-   * @return Primary key column
-   */
-  Column getPrimaryKeyColumn();
-
-  /**
    * Sequence in the foreign key.
    * 
    * @return Foreign key sequence
    */
   int getKeySequence();
+
+  /**
+   * Gets the primary key column.
+   * 
+   * @return Primary key column
+   */
+  Column getPrimaryKeyColumn();
 
 }

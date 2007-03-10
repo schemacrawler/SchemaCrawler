@@ -46,6 +46,7 @@ final class DataHTMLFormatter
   /**
    * Handles the begin of the execution.
    */
+  @Override
   public void begin()
   {
     if (!getNoHeader())
@@ -56,11 +57,25 @@ final class DataHTMLFormatter
   }
 
   /**
+   * Handles the end of the execution.
+   */
+  @Override
+  public void end()
+  {
+    if (!getNoFooter())
+    {
+      out.println(FormatUtils.HTML_FOOTER);
+    }
+    super.end();
+  }
+
+  /**
    * Handles metadata information.
    * 
    * @param databaseInfo
    *        Database info.
    */
+  @Override
   public void handleMetadata(final String databaseInfo)
   {
     if (!getNoInfo())
@@ -73,57 +88,6 @@ final class DataHTMLFormatter
   }
 
   /**
-   * Handles metadata information.
-   * 
-   * @param title
-   *        Execution title.
-   */
-  public void handleTitle(final String title)
-  {
-    out.println("<p></p>");
-    out.println("<table>");
-    out.println("  <caption>" + title + "</caption>");
-  }
-
-  /**
-   * Handles the end of the execution.
-   */
-  public void end()
-  {
-    if (!getNoFooter())
-    {
-      out.println(FormatUtils.HTML_FOOTER);
-    }
-    super.end();
-  }
-
-  /**
-   *
-   */
-  public void handleRowsBegin()
-  {
-    out.println("  <tbody>");
-    out.flush();
-  }
-
-  /**
-   * @param columnNames
-   *        Names of the columns.
-   */
-  public void handleRowsHeader(final String[] columnNames)
-  {
-    out.println(" <thead>");
-    out.println(" <tr>");
-    final int count = columnNames.length;
-    for (int i = 0; i < count; i++)
-    {
-      out.println(" <th>" + columnNames[i] + "</th>");
-    }
-    out.println(" </tr>");
-    out.println(" </thead>");
-  }
-
-  /**
    * Handles a row output.
    * 
    * @param columnNames
@@ -131,6 +95,7 @@ final class DataHTMLFormatter
    * @param columnData
    *        Column data.
    */
+  @Override
   public void handleRow(final String[] columnNames, final String[] columnData)
   {
     out.println("    <tr>");
@@ -153,11 +118,53 @@ final class DataHTMLFormatter
   /**
    *
    */
+  @Override
+  public void handleRowsBegin()
+  {
+    out.println("  <tbody>");
+    out.flush();
+  }
+
+  /**
+   *
+   */
+  @Override
   public void handleRowsEnd()
   {
     out.println("  </tbody>");
     out.println("  </table>");
     out.flush();
+  }
+
+  /**
+   * @param columnNames
+   *        Names of the columns.
+   */
+  @Override
+  public void handleRowsHeader(final String[] columnNames)
+  {
+    out.println(" <thead>");
+    out.println(" <tr>");
+    final int count = columnNames.length;
+    for (int i = 0; i < count; i++)
+    {
+      out.println(" <th>" + columnNames[i] + "</th>");
+    }
+    out.println(" </tr>");
+    out.println(" </thead>");
+  }
+
+  /**
+   * Handles metadata information.
+   * 
+   * @param title
+   *        Execution title.
+   */
+  public void handleTitle(final String title)
+  {
+    out.println("<p></p>");
+    out.println("<table>");
+    out.println("  <caption>" + title + "</caption>");
   }
 
 }

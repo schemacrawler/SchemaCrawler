@@ -43,26 +43,10 @@ public final class ForeignKeyUpdateRule
       new ForeignKeyUpdateRule(DatabaseMetaData.importedKeyRestrict, "restrict"),
   };
 
-  /**
-   * Find the enumeration value corresponding to the string.
-   * 
-   * @param fkUpdateRuleId
-   *        Id
-   * @return Enumeration value
-   */
-  public static ForeignKeyUpdateRule valueOfFromId(final int fkUpdateRuleId)
-  {
-    ForeignKeyUpdateRule fkUpdateRule = null;
-    for (int i = 0; i < FK_UPDATE_RULE_ALL.length; i++)
-    {
-      if (FK_UPDATE_RULE_ALL[i].getId() == fkUpdateRuleId)
-      {
-        fkUpdateRule = FK_UPDATE_RULE_ALL[i];
-        break;
-      }
-    }
-    return fkUpdateRule;
-  }
+  // The 4 declarations below are necessary for serialization
+  private static int nextOrdinal;
+
+  private static final ForeignKeyUpdateRule[] VALUES = FK_UPDATE_RULE_ALL;
 
   /**
    * Value of the enumeration from the code.
@@ -74,11 +58,32 @@ public final class ForeignKeyUpdateRule
   public static ForeignKeyUpdateRule valueOf(final String fkUpdateRuleName)
   {
     ForeignKeyUpdateRule fkUpdateRule = null;
-    for (int i = 0; i < FK_UPDATE_RULE_ALL.length; i++)
+    for (final ForeignKeyUpdateRule element: FK_UPDATE_RULE_ALL)
     {
-      if (FK_UPDATE_RULE_ALL[i].getName().equalsIgnoreCase(fkUpdateRuleName))
+      if (element.getName().equalsIgnoreCase(fkUpdateRuleName))
       {
-        fkUpdateRule = FK_UPDATE_RULE_ALL[i];
+        fkUpdateRule = element;
+        break;
+      }
+    }
+    return fkUpdateRule;
+  }
+
+  /**
+   * Find the enumeration value corresponding to the string.
+   * 
+   * @param fkUpdateRuleId
+   *        Id
+   * @return Enumeration value
+   */
+  public static ForeignKeyUpdateRule valueOfFromId(final int fkUpdateRuleId)
+  {
+    ForeignKeyUpdateRule fkUpdateRule = null;
+    for (final ForeignKeyUpdateRule element: FK_UPDATE_RULE_ALL)
+    {
+      if (element.getId() == fkUpdateRuleId)
+      {
+        fkUpdateRule = element;
         break;
       }
     }
@@ -86,7 +91,10 @@ public final class ForeignKeyUpdateRule
   }
 
   private final transient String name;
+
   private final transient int id;
+
+  private final int ordinal;
 
   private ForeignKeyUpdateRule(final int foreignKeyUpdateRuleId,
                                final String foreignKeyUpdateRuleName)
@@ -121,15 +129,11 @@ public final class ForeignKeyUpdateRule
    * 
    * @see Object#toString()
    */
+  @Override
   public String toString()
   {
     return getName();
   }
-
-  // The 4 declarations below are necessary for serialization
-  private static int nextOrdinal;
-  private final int ordinal;
-  private static final ForeignKeyUpdateRule[] VALUES = FK_UPDATE_RULE_ALL;
 
   Object readResolve()
     throws ObjectStreamException

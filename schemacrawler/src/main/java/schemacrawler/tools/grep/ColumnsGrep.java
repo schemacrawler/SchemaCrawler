@@ -118,9 +118,8 @@ public final class ColumnsGrep
 
     final List tablesList = new ArrayList();
     final Table[] allTables = schema.getTables();
-    for (int i = 0; i < allTables.length; i++)
+    for (final Table table: allTables)
     {
-      final Table table = allTables[i];
       if (includesColumn(table, columnInclusionRule, invertMatch))
       {
         tablesList.add(table);
@@ -218,9 +217,8 @@ public final class ColumnsGrep
 
     boolean handleTable = false;
     final Column[] columns = table.getColumns();
-    for (int j = 0; j < columns.length; j++)
+    for (final Column column: columns)
     {
-      final Column column = columns[j];
       if (columnInclusionRule.include(column.getFullName()))
       {
         // We found a column that should be included, so handle the

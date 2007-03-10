@@ -30,8 +30,6 @@ public final class OutputFormat
   implements Serializable
 {
 
-  private static final long serialVersionUID = 7312561736857867298L;
-
   /**
    * Text formatting.
    */
@@ -52,26 +50,11 @@ public final class OutputFormat
    */
   public static final OutputFormat OTHER = new OutputFormat("other");
 
+  private static final long serialVersionUID = 7312561736857867298L;
+
   private static final OutputFormat[] TEXT_FORMAT_TYPE_ALL = {
       TEXT, HTML, CSV, OTHER
   };
-
-  private final String name;
-
-  private OutputFormat(final String name)
-  {
-    this.name = name;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  public String toString()
-  {
-    return name;
-  }
 
   /**
    * Find the enumeration value corresponding to the string.
@@ -85,18 +68,35 @@ public final class OutputFormat
 
     OutputFormat outputFormatType = OTHER;
 
-    for (int i = 0; i < TEXT_FORMAT_TYPE_ALL.length; i++)
+    for (final OutputFormat element: TEXT_FORMAT_TYPE_ALL)
     {
-      if (TEXT_FORMAT_TYPE_ALL[i].toString()
-        .equalsIgnoreCase(outputFormatTypeString))
+      if (element.toString().equalsIgnoreCase(outputFormatTypeString))
       {
-        outputFormatType = TEXT_FORMAT_TYPE_ALL[i];
+        outputFormatType = element;
         break;
       }
     }
 
     return outputFormatType;
 
+  }
+
+  private final String name;
+
+  private OutputFormat(final String name)
+  {
+    this.name = name;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    return name;
   }
 
 }

@@ -31,10 +31,6 @@ import sf.util.CommandLineUtility;
 public final class Grep
 {
 
-  private Grep()
-  {
-  }
-
   /**
    * Get connection parameters, and creates a connection, and crawls the
    * schema.
@@ -49,6 +45,10 @@ public final class Grep
   {
     CommandLineUtility.checkForHelp(args, "/schemacrawler-grep-readme.txt");
     ColumnsGrep.grep(args);
+  }
+
+  private Grep()
+  {
   }
 
 }

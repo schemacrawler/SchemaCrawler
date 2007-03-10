@@ -143,6 +143,7 @@ public final class QueryExecutor
    * 
    * @see Object#toString()
    */
+  @Override
   public String toString()
   {
     return "QueryExecutor{" + "dataSource=" + dataSource + ", handler="

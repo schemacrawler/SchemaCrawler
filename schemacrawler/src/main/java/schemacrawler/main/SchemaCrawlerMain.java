@@ -41,11 +41,6 @@ public final class SchemaCrawlerMain
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerMain.class
     .getName());
 
-  private SchemaCrawlerMain()
-  {
-    // Prevent instantiation
-  }
-
   /**
    * Executes with the command line, and the standard tools executor.
    * 
@@ -87,9 +82,8 @@ public final class SchemaCrawlerMain
       LOGGER.log(Level.CONFIG, "Commandline: " + Arrays.asList(args));
       final Properties config = firstOption.getConfig();
 
-      for (int i = 0; i < optionCommands.length; i++)
+      for (final Options options: optionCommands)
       {
-        final Options options = optionCommands[i];
         LOGGER.log(Level.CONFIG, options.toString());
         final PropertiesDataSource dataSource = dbconnector.Main
           .createDataSource(args, config);
@@ -102,6 +96,11 @@ public final class SchemaCrawlerMain
         executor.execute(options, dataSource);
       }
     }
+  }
+
+  private SchemaCrawlerMain()
+  {
+    // Prevent instantiation
   }
 
 }

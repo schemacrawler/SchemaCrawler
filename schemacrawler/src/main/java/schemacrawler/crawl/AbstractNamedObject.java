@@ -60,6 +60,7 @@ abstract class AbstractNamedObject
    * 
    * @see Object#equals(java.lang.Object)
    */
+  @Override
   public boolean equals(final Object o)
   {
     if (this == o)
@@ -114,6 +115,7 @@ abstract class AbstractNamedObject
    * 
    * @see Object#hashCode()
    */
+  @Override
   public int hashCode()
   {
     int result = super.hashCode();
@@ -139,6 +141,7 @@ abstract class AbstractNamedObject
    * 
    * @see Object#toString()
    */
+  @Override
   public String toString()
   {
     return name;

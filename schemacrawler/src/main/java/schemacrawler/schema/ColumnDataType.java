@@ -30,6 +30,13 @@ public interface ColumnDataType
 {
 
   /**
+   * The base type of the data type.
+   * 
+   * @return Base type
+   */
+  ColumnDataType getBaseType();
+
+  /**
    * Parameters needed when using this data type.
    * 
    * @return Parameters needed when using this data type
@@ -107,6 +114,13 @@ public interface ColumnDataType
   int getType();
 
   /**
+   * Get the Java class for the type.
+   * 
+   * @return The Java class for the type
+   */
+  String getTypeClassName();
+
+  /**
    * The java.sql.Types type name.
    * 
    * @return java.sql.Types type name
@@ -128,13 +142,6 @@ public interface ColumnDataType
   boolean isBinaryType();
 
   /**
-   * If the type is a character type.
-   * 
-   * @return If the type is a character type
-   */
-  boolean isCharacterType();
-
-  /**
    * Whether the data type is case-sensitive.
    * 
    * @return Whether the data type is case-sensitive
@@ -142,26 +149,19 @@ public interface ColumnDataType
   boolean isCaseSensitive();
 
   /**
+   * If the type is a character type.
+   * 
+   * @return If the type is a character type
+   */
+  boolean isCharacterType();
+
+  /**
    * If the type is a date type.
    * 
    * @return If the type is a date type
    */
   boolean isDateType();
-  
-  /**
-   * The base type of the data type. 
-   * 
-   * @return Base type
-   */
-  ColumnDataType getBaseType(); 
 
-  /**
-   * Get the Java class for the type.
-   * 
-   * @return The Java class for the type
-   */
-  String getTypeClassName();
-  
   /**
    * Whether the data type has a fixed precision scale.
    * 

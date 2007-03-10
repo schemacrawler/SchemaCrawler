@@ -49,9 +49,7 @@ public interface TextFormattingHelper
    *        Type
    * @return Row as a string
    */
-  String createDetailRow(String ordinal,
-                         final String subName,
-                         final String type);
+  String createDetailRow(String ordinal, final String subName, final String type);
 
   /**
    * Create an empty row.

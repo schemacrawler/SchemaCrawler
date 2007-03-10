@@ -41,8 +41,92 @@ public final class SchemaCrawler
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawler.class
     .getName());
 
+  /**
+   * Gets the entire schema.
+   * 
+   * @param dataSource
+   *        Data source
+   * @param additionalConnectionConfiguration
+   *        Additional connection configuration for INFORMATION_SCHEMA
+   * @param infoLevel
+   *        Schema info level
+   * @param options
+   *        Options
+   * @return Schema
+   */
+  public static Schema getSchema(final DataSource dataSource,
+                                 final Properties additionalConnectionConfiguration,
+                                 final SchemaInfoLevel infoLevel,
+                                 final SchemaCrawlerOptions options)
+  {
+
+    Connection connection = null;
+    String catalog = null;
+    try
+    {
+      connection = dataSource.getConnection();
+      catalog = connection.getCatalog();
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, e.getMessage(), e);
+      // NOTE: catalog remains null, which is ok for JDBC
+    }
+    finally
+    {
+      try
+      {
+        if (connection != null)
+        {
+          connection.close();
+        }
+      }
+      catch (final SQLException e)
+      {
+        LOGGER.log(Level.WARNING, "Could not close connection", e);
+      }
+    }
+
+    final CachingCrawlerHandler schemaMaker = new CachingCrawlerHandler(catalog,
+                                                                        infoLevel);
+    try
+    {
+      final SchemaCrawler crawler = new SchemaCrawler(dataSource,
+                                                      additionalConnectionConfiguration,
+                                                      schemaMaker);
+      crawler.crawl(options);
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      LOGGER.log(Level.WARNING, e.getMessage(), e);
+    }
+
+    return schemaMaker.getSchema();
+
+  }
+
+  /**
+   * Gets the entire schema.
+   * 
+   * @param dataSource
+   *        Data source
+   * @param infoLevel
+   *        Schema info level
+   * @param options
+   *        Options
+   * @return Schema
+   */
+  public static Schema getSchema(final DataSource dataSource,
+                                 final SchemaInfoLevel infoLevel,
+                                 final SchemaCrawlerOptions options)
+  {
+    return getSchema(dataSource, null, infoLevel, options);
+  }
+
   private final DataSource dataSource;
+
   private final Properties additionalConnectionConfiguration;
+
   private final CrawlHandler handler;
 
   /**
@@ -304,88 +388,6 @@ public final class SchemaCrawler
       // handle table
       handler.handle(table);
     }
-  }
-
-  /**
-   * Gets the entire schema.
-   * 
-   * @param dataSource
-   *        Data source
-   * @param infoLevel
-   *        Schema info level
-   * @param options
-   *        Options
-   * @return Schema
-   */
-  public static Schema getSchema(final DataSource dataSource,
-                                 final SchemaInfoLevel infoLevel,
-                                 final SchemaCrawlerOptions options)
-  {
-    return getSchema(dataSource, null, infoLevel, options);
-  }
-
-  /**
-   * Gets the entire schema.
-   * 
-   * @param dataSource
-   *        Data source
-   * @param additionalConnectionConfiguration
-   *        Additional connection configuration for INFORMATION_SCHEMA
-   * @param infoLevel
-   *        Schema info level
-   * @param options
-   *        Options
-   * @return Schema
-   */
-  public static Schema getSchema(final DataSource dataSource,
-                                 final Properties additionalConnectionConfiguration,
-                                 final SchemaInfoLevel infoLevel,
-                                 final SchemaCrawlerOptions options)
-  {
-
-    Connection connection = null;
-    String catalog = null;
-    try
-    {
-      connection = dataSource.getConnection();
-      catalog = connection.getCatalog();
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, e.getMessage(), e);
-      // NOTE: catalog remains null, which is ok for JDBC
-    }
-    finally
-    {
-      try
-      {
-        if (connection != null)
-        {
-          connection.close();
-        }
-      }
-      catch (final SQLException e)
-      {
-        LOGGER.log(Level.WARNING, "Could not close connection", e);
-      }
-    }
-
-    final CachingCrawlerHandler schemaMaker = new CachingCrawlerHandler(catalog,
-                                                                        infoLevel);
-    try
-    {
-      final SchemaCrawler crawler = new SchemaCrawler(dataSource,
-                                                      additionalConnectionConfiguration,
-                                                      schemaMaker);
-      crawler.crawl(options);
-    }
-    catch (final SchemaCrawlerException e)
-    {
-      LOGGER.log(Level.WARNING, e.getMessage(), e);
-    }
-
-    return schemaMaker.getSchema();
-
   }
 
 }

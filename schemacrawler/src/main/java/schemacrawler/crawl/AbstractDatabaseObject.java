@@ -34,8 +34,8 @@ abstract class AbstractDatabaseObject
   implements DatabaseObject
 {
 
-  private String schemaName;
-  private String catalogName;
+  private final String schemaName;
+  private final String catalogName;
 
   AbstractDatabaseObject(final String catalogName,
                          final String schemaName,
@@ -49,63 +49,9 @@ abstract class AbstractDatabaseObject
   /**
    * {@inheritDoc}
    * 
-   * @see Object#toString()
-   */
-  public String toString()
-  {
-    String toString = "";
-    if (!Utilities.isBlank(schemaName))
-    {
-      toString = schemaName + ".";
-    }
-    toString = toString + getName();
-    return toString;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.DatabaseObject#getSchemaName()
-   */
-  public final String getSchemaName()
-  {
-    return schemaName;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.DatabaseObject#getCatalogName()
-   */
-  public final String getCatalogName()
-  {
-    return catalogName;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  public String getFullName()
-  {
-    final StringBuffer buffer = new StringBuffer();
-    if (schemaName != null && schemaName.length() > 0)
-    {
-      buffer.append(schemaName).append(".");
-    }
-    if (getName() != null)
-    {
-      buffer.append(getName());
-    }
-    return buffer.toString();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see Object#equals(java.lang.Object)
    */
+  @Override
   public boolean equals(final Object o)
   {
     if (this == o)
@@ -140,8 +86,48 @@ abstract class AbstractDatabaseObject
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schema.DatabaseObject#getCatalogName()
+   */
+  public final String getCatalogName()
+  {
+    return catalogName;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Object#toString()
+   */
+  public String getFullName()
+  {
+    final StringBuffer buffer = new StringBuffer();
+    if (schemaName != null && schemaName.length() > 0)
+    {
+      buffer.append(schemaName).append(".");
+    }
+    if (getName() != null)
+    {
+      buffer.append(getName());
+    }
+    return buffer.toString();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.DatabaseObject#getSchemaName()
+   */
+  public final String getSchemaName()
+  {
+    return schemaName;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see Object#hashCode()
    */
+  @Override
   public int hashCode()
   {
     int result;
@@ -155,6 +141,23 @@ abstract class AbstractDatabaseObject
       result = 29 * result + catalogName.hashCode();
     }
     return result;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    String toString = "";
+    if (!Utilities.isBlank(schemaName))
+    {
+      toString = schemaName + ".";
+    }
+    toString = toString + getName();
+    return toString;
   }
 
 }

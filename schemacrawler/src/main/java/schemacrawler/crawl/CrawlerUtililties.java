@@ -32,11 +32,6 @@ import sf.util.Utilities;
  */
 public final class CrawlerUtililties
 {
-  private CrawlerUtililties()
-  {
-    // Prevent instantiation
-  }
-
   /**
    * Expands placeholders in the template SQL from the table properties.
    * 
@@ -66,6 +61,11 @@ public final class CrawlerUtililties
 
     return sql;
 
+  }
+
+  private CrawlerUtililties()
+  {
+    // Prevent instantiation
   }
 
 }

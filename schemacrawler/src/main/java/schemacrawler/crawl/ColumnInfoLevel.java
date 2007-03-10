@@ -46,23 +46,6 @@ public final class ColumnInfoLevel
       NONE, BASIC, VERBOSE
   };
 
-  private final String levelName;
-
-  private ColumnInfoLevel(final String name)
-  {
-    levelName = name;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  public String toString()
-  {
-    return levelName;
-  }
-
   /**
    * Find the enumeration value corresponding to the string.
    * 
@@ -75,18 +58,35 @@ public final class ColumnInfoLevel
 
     ColumnInfoLevel columnInfoLevel = null;
 
-    for (int i = 0; i < COLUMN_INFO_LEVEL_ALL.length; i++)
+    for (final ColumnInfoLevel element: COLUMN_INFO_LEVEL_ALL)
     {
-      if (COLUMN_INFO_LEVEL_ALL[i].toString()
-        .equalsIgnoreCase(columnInfoLevelString))
+      if (element.toString().equalsIgnoreCase(columnInfoLevelString))
       {
-        columnInfoLevel = COLUMN_INFO_LEVEL_ALL[i];
+        columnInfoLevel = element;
         break;
       }
     }
 
     return columnInfoLevel;
 
+  }
+
+  private final String levelName;
+
+  private ColumnInfoLevel(final String name)
+  {
+    levelName = name;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    return levelName;
   }
 
 }

@@ -56,6 +56,16 @@ final class MutableProcedureColumn
   }
 
   /**
+   * {@inheritDoc}
+   * 
+   * @see ProcedureColumn#getProcedureColumnType()
+   */
+  public ProcedureColumnType getProcedureColumnType()
+  {
+    return procedureColumnType;
+  }
+
+  /**
    * Sets the precision.
    * 
    * @param precision
@@ -64,16 +74,6 @@ final class MutableProcedureColumn
   void setPrecision(final int precision)
   {
     setDecimalDigits(precision);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see ProcedureColumn#getProcedureColumnType()
-   */
-  public ProcedureColumnType getProcedureColumnType()
-  {
-    return procedureColumnType;
   }
 
   /**

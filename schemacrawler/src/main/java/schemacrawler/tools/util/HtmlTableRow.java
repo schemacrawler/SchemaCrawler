@@ -34,7 +34,12 @@ import java.util.List;
 final class HtmlTableRow
 {
 
-  private List cells;
+  private final List cells;
+
+  HtmlTableRow()
+  {
+    cells = new ArrayList();
+  }
 
   HtmlTableRow(final int colSpan)
   {
@@ -43,21 +48,12 @@ final class HtmlTableRow
     });
   }
 
-  HtmlTableRow()
-  {
-    cells = new ArrayList();
-  }
-
-  void addCell(final HtmlTableCell cell)
-  {
-    cells.add(cell);
-  }
-
   /**
    * Converts the table row to HTML.
    * 
    * @return HTML
    */
+  @Override
   public String toString()
   {
     final StringBuffer buffer = new StringBuffer();
@@ -70,6 +66,11 @@ final class HtmlTableRow
     buffer.append("\t</tr>");
 
     return buffer.toString();
+  }
+
+  void addCell(final HtmlTableCell cell)
+  {
+    cells.add(cell);
   }
 
 }

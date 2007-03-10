@@ -38,6 +38,13 @@ public interface Column
   String getDefaultValue();
 
   /**
+   * List of privileges.
+   * 
+   * @return Privileges for the table.
+   */
+  Privilege[] getPrivileges();
+
+  /**
    * True if this column is a part of primary key.
    * 
    * @return If the column is a part of primary key
@@ -50,12 +57,5 @@ public interface Column
    * @return If the column is a unique index
    */
   boolean isPartOfUniqueIndex();
-
-  /**
-   * List of privileges.
-   * 
-   * @return Privileges for the table.
-   */
-  Privilege[] getPrivileges();
 
 }
