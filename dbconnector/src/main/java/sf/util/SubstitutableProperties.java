@@ -25,9 +25,9 @@ import java.util.Properties;
 
 /**
  * Properties map that looks like an ordinary java.util.Properties, but
- * substitutes values such as ${propertykey}, where 'propertykey' is another
- * property. Property subsitution is not done on the value of 'propertykey'
- * itself.
+ * substitutes values such as ${propertykey}, where 'propertykey' is
+ * another property. Property subsitution is not done on the value of
+ * 'propertykey' itself.
  */
 public final class SubstitutableProperties
   extends Properties
@@ -42,7 +42,7 @@ public final class SubstitutableProperties
    * Creates a new Properties object with property substituion enabled.
    * 
    * @param properties
-   *          The source Properties object
+   *        The source Properties object
    */
   public SubstitutableProperties(final Properties properties)
   {
@@ -53,9 +53,10 @@ public final class SubstitutableProperties
    * Gets a property with the value substituted.
    * 
    * @param key
-   *          The property key
+   *        The property key
    * @return Substituted property
    */
+  @Override
   public String getProperty(final String key)
   {
 

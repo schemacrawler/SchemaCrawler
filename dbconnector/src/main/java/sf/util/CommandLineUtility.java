@@ -30,11 +30,6 @@ import dbconnector.Version;
 public class CommandLineUtility
 {
 
-  private CommandLineUtility()
-  {
-    // Prevent instantiation
-  }
-
   /**
    * Does a quick check of the command line arguments to find any
    * commonly used help options.
@@ -51,9 +46,8 @@ public class CommandLineUtility
     {
       printUsage = true;
     }
-    for (int i = 0; i < args.length; i++)
+    for (final String arg: args)
     {
-      final String arg = args[i];
       if (arg.equalsIgnoreCase("-help") || arg.equalsIgnoreCase("-?")
           || arg.equalsIgnoreCase("--help"))
       {
@@ -71,6 +65,11 @@ public class CommandLineUtility
       System.out.println(info);
       System.exit(0);
     }
+  }
+
+  private CommandLineUtility()
+  {
+    // Prevent instantiation
   }
 
 }

@@ -59,7 +59,7 @@ public final class PropertiesDataSource
 
   static
   {
-    Utilities.checkJavaVersion(1.4);
+    Utilities.checkJavaVersion(1.5);
   }
 
   /**
@@ -361,6 +361,7 @@ public final class PropertiesDataSource
    * 
    * @see Object#toString()
    */
+  @Override
   public String toString()
   {
 
@@ -419,8 +420,14 @@ public final class PropertiesDataSource
 
       // load driver
       final String driver = connectionParams.getProperty(DRIVER);
-      final Class jdbcDriverClass = Class.forName(driver, true, classLoader);
-      jdbcDriver = (Driver) jdbcDriverClass.newInstance();
+      final Class<Driver> jdbcDriverClass = (Class<Driver>) Class
+        .forName(driver, true, classLoader);
+      jdbcDriver = jdbcDriverClass.newInstance();
+    }
+    catch (final ClassCastException e)
+    {
+      throw new PropertiesDataSourceException("Driver class not found - "
+                                              + e.getLocalizedMessage(), e);
     }
     catch (final ClassNotFoundException e)
     {
