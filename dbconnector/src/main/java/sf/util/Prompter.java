@@ -32,16 +32,39 @@ import java.io.PrintWriter;
 public class Prompter
 {
 
+  private static final class InputType
+  {
+
+    private final String inputType; // for debug only
+
+    private InputType(final String name)
+    {
+      inputType = name;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+      return inputType;
+    }
+  }
+
   /**
    * String input type.
    */
   public static final InputType STRING = new InputType("STRING");
+
   /**
    * Number input type.
    */
   public static final InputType NUMBER = new InputType("NUMBER");
-
   private final PrintWriter out;
+
   private final BufferedReader in;
 
   /**
@@ -57,17 +80,19 @@ public class Prompter
    * Primpts, and gets the input for a datum.
    * 
    * @param prompt
-   *          Prompt
+   *        Prompt
    * @param defaultValue
-   *          Default value
+   *        Default value
    * @param type
-   *          Expected type of value
+   *        Expected type of value
    * @param allowEmptyStrings
-   *          Whether to allow empty strings
+   *        Whether to allow empty strings
    * @return The input
    */
-  public Object getInput(final String prompt, final Object defaultValue,
-                         final InputType type, final boolean allowEmptyStrings)
+  public Object getInput(final String prompt,
+                         final Object defaultValue,
+                         final InputType type,
+                         final boolean allowEmptyStrings)
   {
 
     Object answer = defaultValue;
@@ -97,15 +122,15 @@ public class Prompter
       {
         answer = defaultValue;
       }
-      if (answer == null
-          || answer.toString().length() == 0 && defaultValue != null)
+      if (answer == null || answer.toString().length() == 0
+          && defaultValue != null)
       {
         answer = defaultValue;
       }
 
       // test input type
-      if (type == Prompter.STRING
-          && answer.toString().length() == 0 && !allowEmptyStrings)
+      if (type == Prompter.STRING && answer.toString().length() == 0
+          && !allowEmptyStrings)
       {
         isValid = false;
       }
@@ -124,8 +149,8 @@ public class Prompter
 
     }
 
-    if (type == Prompter.STRING
-        && answer.toString().length() == 0 && !allowEmptyStrings)
+    if (type == Prompter.STRING && answer.toString().length() == 0
+        && !allowEmptyStrings)
     {
       answer = answer.toString();
     }
@@ -150,16 +175,17 @@ public class Prompter
    * Display a menu of options to choose from.
    * 
    * @param prompt
-   *          Prompt
+   *        Prompt
    * @param menu
-   *          List of menu display values
+   *        List of menu display values
    * @param values
-   *          List of menu display values
+   *        List of menu display values
    * @param defaultValue
-   *          Default value
+   *        Default value
    * @return Selected value
    */
-  public String getInputWithMenu(final String prompt, final String[] menu,
+  public String getInputWithMenu(final String prompt,
+                                 final String[] menu,
                                  final String[] values,
                                  final String defaultValue)
   {
@@ -230,27 +256,6 @@ public class Prompter
 
     return answer;
 
-  }
-
-  private static final class InputType
-  {
-
-    private final String inputType; // for debug only
-
-    private InputType(final String name)
-    {
-      inputType = name;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see Object#toString()
-     */
-    public String toString()
-    {
-      return inputType;
-    }
   }
 
 }

@@ -149,6 +149,20 @@ public final class CommandLineParser
     }
 
     /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+      final String optionString = (hasLongForm? longForm: "")
+                                  + (hasShortForm? " (" + shortForm + ")": "")
+                                  + "=" + value + " (" + defaultValue + ")";
+      return optionString;
+    }
+
+    /**
      * Override to extract and convert an option value passed on the
      * command-line.
      * 
@@ -171,7 +185,7 @@ public final class CommandLineParser
 
     void setValue(final String valueString)
     {
-      this.value = parseValue(valueString);
+      value = parseValue(valueString);
     }
 
     private void setLongForm(final String longForm)
@@ -204,19 +218,6 @@ public final class CommandLineParser
       });
       hasShortForm = true;
     }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see java.lang.Object#toString()
-     */
-    public String toString()
-    {
-      String optionString = (hasLongForm? longForm: "")
-                            + (hasShortForm? (" (" + shortForm + ")"): "")
-                            + "=" + value + " (" + defaultValue + ")";
-      return optionString;
-    }
   }
 
   /**
@@ -241,6 +242,7 @@ public final class CommandLineParser
       value = Boolean.FALSE;
     }
 
+    @Override
     protected Object parseValue(final String valueString)
     {
       if (valueString == null || valueString.length() == 0)
@@ -277,6 +279,7 @@ public final class CommandLineParser
       super(shortForm, longForm, defaultValue);
     }
 
+    @Override
     protected Object parseValue(final String arg)
     {
       try
@@ -378,6 +381,7 @@ public final class CommandLineParser
       super(shortForm, longForm, defaultValue);
     }
 
+    @Override
     protected Object parseValue(final String arg)
     {
       return arg;
@@ -388,7 +392,7 @@ public final class CommandLineParser
 
   private String[] remainingArgs;
 
-  private final Map optionsMap = new HashMap();
+  private final Map<String, Option> optionsMap = new HashMap<String, Option>();
 
   /**
    * Add the specified Option to the list of accepted options.
@@ -443,7 +447,7 @@ public final class CommandLineParser
    */
   public Option getOption(final String optionName)
   {
-    return (Option) optionsMap.get(DASH + optionName);
+    return optionsMap.get(DASH + optionName);
   }
 
   /**
@@ -514,9 +518,9 @@ public final class CommandLineParser
 
     // clean out all options
     final Option[] options = getOptions();
-    for (int i = 0; i < options.length; i++)
+    for (final Option element: options)
     {
-      ((BaseOption) options[i]).reset();
+      ((BaseOption) element).reset();
     }
 
     final List otherArgs = new ArrayList();
@@ -583,7 +587,7 @@ public final class CommandLineParser
         }
       }
       // Booleans are true, even if they have no value
-      if (valueArg == null && (option instanceof BooleanOption))
+      if (valueArg == null && option instanceof BooleanOption)
       {
         valueArg = Boolean.TRUE.toString();
       }

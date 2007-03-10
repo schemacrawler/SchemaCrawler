@@ -27,10 +27,11 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * Partitions properties by grouping properties with a given prefix. The prefix
- * is removed in the result.
+ * Partitions properties by grouping properties with a given prefix. The
+ * prefix is removed in the result.
  * 
- * @author <a href='mailto:sualeh85@yahoo.com?subject=QuestionBank'>Sualeh
+ * @author <a
+ *         href='mailto:sualeh85@yahoo.com?subject=QuestionBank'>Sualeh
  *         Fatehi</a>
  * @version Version 0.1
  */
@@ -52,7 +53,7 @@ public final class GroupedProperties
    * Constructs a new group from the given properties.
    * 
    * @param properties
-   *          Base properties properties
+   *        Base properties properties
    */
   public GroupedProperties(final Properties properties)
   {
@@ -64,38 +65,6 @@ public final class GroupedProperties
       final String value = properties.getProperty(key);
       setProperty(key, value);
     }
-  }
-
-  /**
-   * Gets a sub-group of properties - those that start with a given prefix. The
-   * prefix is removed in the result.
-   * 
-   * @param prefix
-   *          Prefix to group by.
-   * @return Group of properties.
-   */
-  public Properties subgroup(final String prefix)
-  {
-    if (prefix == null || prefix.length() == 0)
-    {
-      return this;
-    }
-
-    final String dottedPrefix = prefix + ".";
-    final Properties subgroup = new Properties();
-
-    final Enumeration enumProperties = keys();
-    while (enumProperties.hasMoreElements())
-    {
-      final String key = (String) enumProperties.nextElement();
-      if (key.startsWith(dottedPrefix))
-      {
-        final String unprefixed = key.substring(dottedPrefix.length());
-        subgroup.setProperty(unprefixed, getProperty(key));
-      }
-    }
-
-    return subgroup;
   }
 
   /**
@@ -125,7 +94,7 @@ public final class GroupedProperties
    * Checks if the provided group name is a valid group.
    * 
    * @param prefix
-   *          Group name
+   *        Group name
    * @return True if the group is valid
    */
   public boolean isGroup(final String prefix)
@@ -136,10 +105,8 @@ public final class GroupedProperties
     {
       final String[] groups = groups();
 
-      for (int i = 0; i < groups.length; i++)
+      for (final String group: groups)
       {
-        final String group = groups[i];
-
         if (group.equals(prefix))
         {
           foundGroup = true;
@@ -150,5 +117,37 @@ public final class GroupedProperties
     }
 
     return foundGroup;
+  }
+
+  /**
+   * Gets a sub-group of properties - those that start with a given
+   * prefix. The prefix is removed in the result.
+   * 
+   * @param prefix
+   *        Prefix to group by.
+   * @return Group of properties.
+   */
+  public Properties subgroup(final String prefix)
+  {
+    if (prefix == null || prefix.length() == 0)
+    {
+      return this;
+    }
+
+    final String dottedPrefix = prefix + ".";
+    final Properties subgroup = new Properties();
+
+    final Enumeration enumProperties = keys();
+    while (enumProperties.hasMoreElements())
+    {
+      final String key = (String) enumProperties.nextElement();
+      if (key.startsWith(dottedPrefix))
+      {
+        final String unprefixed = key.substring(dottedPrefix.length());
+        subgroup.setProperty(unprefixed, getProperty(key));
+      }
+    }
+
+    return subgroup;
   }
 }

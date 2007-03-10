@@ -45,147 +45,18 @@ import java.util.logging.Logger;
 public final class Utilities
 {
 
-  private static final Logger LOGGER = Logger.getLogger(Utilities.class
-    .getName());
-
   /**
    * System specific file separator character.
    */
   public static final char FILE_SEPARATOR = System
     .getProperty("file.separator").charAt(0);
+
   /**
    * System specific line separator character.
    */
   public static final String NEWLINE = System.getProperty("line.separator");
-
-  /**
-   * Confound instantiation.
-   */
-  private Utilities()
-  {
-    // intentionally left blank
-  }
-
-  /**
-   * Left justifies the string in given field length.
-   * 
-   * @param string
-   *        String to right justify
-   * @param len
-   *        Length of the field
-   * @return Justified string
-   */
-  public static String padRight(final String string, final int len)
-  {
-    final StringBuffer buffer = new StringBuffer();
-    if (string != null)
-    {
-      buffer.append(string);
-    }
-    while (buffer.length() < len)
-    {
-      buffer.append(' ');
-    }
-    return buffer.toString();
-  }
-
-  /**
-   * Right justifies the string in given field length.
-   * 
-   * @param string
-   *        String to right justify
-   * @param len
-   *        Length of the field
-   * @return Justified string
-   */
-  public static String padLeft(final String string, final int len)
-  {
-    final StringBuffer buffer = new StringBuffer();
-    if (string != null)
-    {
-      buffer.append(string);
-    }
-    while (buffer.length() < len)
-    {
-      buffer.insert(0, ' ');
-    }
-    return buffer.toString();
-  }
-
-  /**
-   * Repeats a string.
-   * 
-   * @param string
-   *        String to repeat
-   * @param count
-   *        Number of times to repeat
-   * @return String with repetitions
-   */
-  public static String repeat(final String string, final int count)
-  {
-
-    String repeated = "";
-
-    if (string != null && count >= 1)
-    {
-      final StringBuffer stringbuffer = new StringBuffer(string.length()
-                                                         * count);
-      for (int i = 0; i < count; i++)
-      {
-        stringbuffer.append(string);
-      }
-      repeated = stringbuffer.toString();
-    }
-
-    return repeated;
-
-  }
-
-  /**
-   * Reads the stream fully, and returns a byte array of data.
-   * 
-   * @param stream
-   *        Stream to read.
-   * @return Byte array
-   */
-  public static byte[] readFully(final InputStream stream)
-  {
-    final int bufferSize = 2048;
-    final ByteArrayOutputStream output = new ByteArrayOutputStream();
-    final BufferedInputStream input = new BufferedInputStream(stream);
-    byte[] byteCode = new byte[0];
-
-    try
-    {
-      int length;
-      final byte[] copyBuffer = new byte[bufferSize];
-
-      while (-1 != (length = input.read(copyBuffer)))
-      {
-        output.write(copyBuffer, 0, length);
-      }
-      output.flush();
-      byteCode = output.toByteArray();
-    }
-    catch (final IOException e)
-    {
-      LOGGER.log(Level.WARNING, "Error reading input stream", e);
-    }
-    finally
-    {
-      try
-      {
-        output.close();
-        input.close();
-      }
-      catch (final IOException e)
-      {
-        LOGGER.log(Level.WARNING, "Error closing stream", e);
-      }
-    }
-
-    return byteCode;
-  }
+  private static final Logger LOGGER = Logger.getLogger(Utilities.class
+    .getName());
 
   /**
    * Checks the Java version, and throw an exception if it does not
@@ -203,6 +74,24 @@ public final class Utilities
       throw new IllegalArgumentException("Needs Java " + minVersion
                                          + " or greater");
     }
+  }
+
+  /**
+   * Interpolate substrings into system property values. Substrings of
+   * the form ${<i>propname</i>} are interpolated into the text of the
+   * system property whose key matches <i>propname</i>. For example,
+   * expandProperties("hello.${user.name}.world") is "hello.foo.world"
+   * when called by a user named "foo". Property substrings can be
+   * nested. References to nonexistent system properties are
+   * interpolated to an empty string.
+   * 
+   * @param template
+   *        Template
+   * @return Expanded template
+   */
+  public static String expandTemplateFromProperties(final String template)
+  {
+    return expandTemplateFromProperties(template, System.getProperties());
   }
 
   /**
@@ -265,24 +154,6 @@ public final class Utilities
   }
 
   /**
-   * Interpolate substrings into system property values. Substrings of
-   * the form ${<i>propname</i>} are interpolated into the text of the
-   * system property whose key matches <i>propname</i>. For example,
-   * expandProperties("hello.${user.name}.world") is "hello.foo.world"
-   * when called by a user named "foo". Property substrings can be
-   * nested. References to nonexistent system properties are
-   * interpolated to an empty string.
-   * 
-   * @param template
-   *        Template
-   * @return Expanded template
-   */
-  public static String expandTemplateFromProperties(final String template)
-  {
-    return expandTemplateFromProperties(template, System.getProperties());
-  }
-
-  /**
    * Gets a list of template variables.
    * 
    * @param template
@@ -316,31 +187,15 @@ public final class Utilities
   }
 
   /**
-   * Sets the application-wide log level.
+   * Checks if the text is null or empty.
    * 
-   * @param logLevel
-   *        Log level to set
+   * @param text
+   *        Text to check.
+   * @return Whether the string is blank.
    */
-  public static void setApplicationLogLevel(final Level logLevel)
+  public static boolean isBlank(final String text)
   {
-    final LogManager logManager = LogManager.getLogManager();
-    for (final Enumeration loggerNames = logManager.getLoggerNames(); loggerNames
-      .hasMoreElements();)
-    {
-      final String loggerName = (String) loggerNames.nextElement();
-      final Logger logger = logManager.getLogger(loggerName);
-      logger.setLevel(null);
-    }
-
-    final Logger rootLogger = Logger.getLogger("");
-    rootLogger.setLevel(logLevel);
-
-    final Handler[] handlers = rootLogger.getHandlers();
-    for (int index = 0; index < handlers.length; index++)
-    {
-      handlers[index].setLevel(logLevel);
-    }
-
+    return text == null || text.trim().length() == 0;
   }
 
   /**
@@ -357,65 +212,34 @@ public final class Utilities
   }
 
   /**
-   * Writes a string to a file.
-   * 
-   * @param fileName
-   *        Name of the file to write.
-   * @param fileContents
-   *        Contents of the file.
-   * @return The file.
-   * @throws IOException
-   *         On an exception.
-   */
-  public static File writeStringToFile(String fileName, String fileContents)
-    throws IOException
-  {
-
-    File pomFile = new File(fileName);
-    FileWriter writer = new FileWriter(pomFile);
-    writer.write(fileContents);
-    writer.flush();
-    writer.close();
-
-    return pomFile;
-  }
-
-  /**
    * Returns true if the current operating system is Windows.
    * 
    * @return True is the current operating system is Windows.
    */
   public static boolean isWindowsOS()
   {
-    String osName = System.getProperty("os.name");
-    boolean isWindowsOS = osName == null
-                          || osName.toLowerCase().indexOf("windows") != -1;
+    final String osName = System.getProperty("os.name");
+    final boolean isWindowsOS = osName == null
+                                || osName.toLowerCase().indexOf("windows") != -1;
     return isWindowsOS;
   }
 
   /**
-   * Checks if the text is null or empty.
+   * Loads the SchemaCrawler configuration, and override.
    * 
-   * @param text
-   *        Text to check.
-   * @return Whether the string is blank.
+   * @param configfilename
+   *        Configuration file name.
+   * @param configoverridefilename
+   *        Configuration override file name.
+   * @return Configuration properties.
    */
-  public static boolean isBlank(String text)
+  public static Properties loadConfig(final String configfilename,
+                                      final String configoverridefilename)
   {
-    return text == null || text.trim().length() == 0;
-  }
-
-  /**
-   * Checks if the text is true.
-   * 
-   * @param text
-   *        Text to check.
-   * @return Whether the string is true or yes.
-   */
-  public static boolean parseBoolean(String text)
-  {
-    return (!isBlank(text) && text.equalsIgnoreCase("YES"))
-           || Boolean.valueOf(text).booleanValue();
+    Properties config = new Properties();
+    config = loadProperties(config, configfilename);
+    config = loadProperties(config, configoverridefilename);
+    return config;
   }
 
   /**
@@ -427,7 +251,7 @@ public final class Utilities
    *        Properties file name.
    * @return Properties
    */
-  public static Properties loadProperties(Properties properties,
+  public static Properties loadProperties(final Properties properties,
                                           final String propertiesFileName)
   {
     InputStream propertiesStream = null;
@@ -469,21 +293,198 @@ public final class Utilities
   }
 
   /**
-   * Loads the SchemaCrawler configuration, and override.
+   * Right justifies the string in given field length.
    * 
-   * @param configfilename
-   *        Configuration file name.
-   * @param configoverridefilename
-   *        Configuration override file name.
-   * @return Configuration properties.
+   * @param string
+   *        String to right justify
+   * @param len
+   *        Length of the field
+   * @return Justified string
    */
-  public static Properties loadConfig(final String configfilename,
-                                      final String configoverridefilename)
+  public static String padLeft(final String string, final int len)
   {
-    Properties config = new Properties();
-    config = loadProperties(config, configfilename);
-    config = loadProperties(config, configoverridefilename);
-    return config;
+    final StringBuffer buffer = new StringBuffer();
+    if (string != null)
+    {
+      buffer.append(string);
+    }
+    while (buffer.length() < len)
+    {
+      buffer.insert(0, ' ');
+    }
+    return buffer.toString();
+  }
+
+  /**
+   * Left justifies the string in given field length.
+   * 
+   * @param string
+   *        String to right justify
+   * @param len
+   *        Length of the field
+   * @return Justified string
+   */
+  public static String padRight(final String string, final int len)
+  {
+    final StringBuffer buffer = new StringBuffer();
+    if (string != null)
+    {
+      buffer.append(string);
+    }
+    while (buffer.length() < len)
+    {
+      buffer.append(' ');
+    }
+    return buffer.toString();
+  }
+
+  /**
+   * Checks if the text is true.
+   * 
+   * @param text
+   *        Text to check.
+   * @return Whether the string is true or yes.
+   */
+  public static boolean parseBoolean(final String text)
+  {
+    return !isBlank(text) && text.equalsIgnoreCase("YES")
+           || Boolean.valueOf(text).booleanValue();
+  }
+
+  /**
+   * Reads the stream fully, and returns a byte array of data.
+   * 
+   * @param stream
+   *        Stream to read.
+   * @return Byte array
+   */
+  public static byte[] readFully(final InputStream stream)
+  {
+    final int bufferSize = 2048;
+    final ByteArrayOutputStream output = new ByteArrayOutputStream();
+    final BufferedInputStream input = new BufferedInputStream(stream);
+    byte[] byteCode = new byte[0];
+
+    try
+    {
+      int length;
+      final byte[] copyBuffer = new byte[bufferSize];
+
+      while (-1 != (length = input.read(copyBuffer)))
+      {
+        output.write(copyBuffer, 0, length);
+      }
+      output.flush();
+      byteCode = output.toByteArray();
+    }
+    catch (final IOException e)
+    {
+      LOGGER.log(Level.WARNING, "Error reading input stream", e);
+    }
+    finally
+    {
+      try
+      {
+        output.close();
+        input.close();
+      }
+      catch (final IOException e)
+      {
+        LOGGER.log(Level.WARNING, "Error closing stream", e);
+      }
+    }
+
+    return byteCode;
+  }
+
+  /**
+   * Repeats a string.
+   * 
+   * @param string
+   *        String to repeat
+   * @param count
+   *        Number of times to repeat
+   * @return String with repetitions
+   */
+  public static String repeat(final String string, final int count)
+  {
+
+    String repeated = "";
+
+    if (string != null && count >= 1)
+    {
+      final StringBuffer stringbuffer = new StringBuffer(string.length()
+                                                         * count);
+      for (int i = 0; i < count; i++)
+      {
+        stringbuffer.append(string);
+      }
+      repeated = stringbuffer.toString();
+    }
+
+    return repeated;
+
+  }
+
+  /**
+   * Sets the application-wide log level.
+   * 
+   * @param logLevel
+   *        Log level to set
+   */
+  public static void setApplicationLogLevel(final Level logLevel)
+  {
+    final LogManager logManager = LogManager.getLogManager();
+    for (final Enumeration loggerNames = logManager.getLoggerNames(); loggerNames
+      .hasMoreElements();)
+    {
+      final String loggerName = (String) loggerNames.nextElement();
+      final Logger logger = logManager.getLogger(loggerName);
+      logger.setLevel(null);
+    }
+
+    final Logger rootLogger = Logger.getLogger("");
+    rootLogger.setLevel(logLevel);
+
+    final Handler[] handlers = rootLogger.getHandlers();
+    for (final Handler element: handlers)
+    {
+      element.setLevel(logLevel);
+    }
+
+  }
+
+  /**
+   * Writes a string to a file.
+   * 
+   * @param fileName
+   *        Name of the file to write.
+   * @param fileContents
+   *        Contents of the file.
+   * @return The file.
+   * @throws IOException
+   *         On an exception.
+   */
+  public static File writeStringToFile(final String fileName,
+                                       final String fileContents)
+    throws IOException
+  {
+
+    final File pomFile = new File(fileName);
+    final FileWriter writer = new FileWriter(pomFile);
+    writer.write(fileContents);
+    writer.flush();
+    writer.close();
+
+    return pomFile;
+  }
+
+  /**
+   * Confound instantiation.
+   */
+  private Utilities()
+  {
+    // intentionally left blank
   }
 
 }
