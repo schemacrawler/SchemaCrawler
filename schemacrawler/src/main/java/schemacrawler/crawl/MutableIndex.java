@@ -53,122 +53,13 @@ class MutableIndex
 
   /**
    * {@inheritDoc}
-   * 
-   * @see Index#getCardinality()
-   */
-  public final int getCardinality()
-  {
-    return cardinality;
-  }
-
-  final void setCardinality(final int cardinality)
-  {
-    this.cardinality = cardinality;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Index#isUnique()
-   */
-  public final boolean isUnique()
-  {
-    return isUnique;
-  }
-
-  final void setUnique(final boolean unique)
-  {
-    isUnique = unique;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Index#getPages()
-   */
-  public final int getPages()
-  {
-    return pages;
-  }
-
-  final void setPages(final int pages)
-  {
-    this.pages = pages;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Index#getSortSequence()
-   */
-  public final IndexSortSequence getSortSequence()
-  {
-    return sortSequence;
-  }
-
-  final void setSortSequence(final IndexSortSequence sortSequence)
-  {
-    this.sortSequence = sortSequence;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Index#getType()
-   */
-  public final IndexType getType()
-  {
-    return type;
-  }
-
-  final void setType(final IndexType type)
-  {
-    this.type = type;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Index#getColumns()
-   */
-  public Column[] getColumns()
-  {
-    final List allColumns = columns.getAll();
-    return (Column[]) allColumns.toArray(new Column[allColumns.size()]);
-  }
-
-  /**
-   * Adds a column.
-   * 
-   * @param column
-   *        Column
-   */
-  void addColumn(final Column column)
-  {
-    columns.add(column);
-  }
-
-  /**
-   * Adds a column at an ordinal position.
-   * 
-   * @param ordinalPosition
-   *        Oridinal position
-   * @param column
-   *        Column
-   */
-  void addColumn(final int ordinalPosition, final Column column)
-  {
-    columns.add(ordinalPosition, column);
-  }
-
-  /**
-   * {@inheritDoc}
    * <p>
    * Note: Since indexes are not always explicitly named in databases,
    * the sorting routine orders the indexes by the names of the columns
    * in the index.
    * </p>
    */
+  @Override
   public int compareTo(final Object obj)
   {
     final Index other = (Index) obj;
@@ -196,6 +87,116 @@ class MutableIndex
     }
 
     return comparison;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Index#getCardinality()
+   */
+  public final int getCardinality()
+  {
+    return cardinality;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Index#getColumns()
+   */
+  public Column[] getColumns()
+  {
+    final List allColumns = columns.getAll();
+    return (Column[]) allColumns.toArray(new Column[allColumns.size()]);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Index#getPages()
+   */
+  public final int getPages()
+  {
+    return pages;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Index#getSortSequence()
+   */
+  public final IndexSortSequence getSortSequence()
+  {
+    return sortSequence;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Index#getType()
+   */
+  public final IndexType getType()
+  {
+    return type;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Index#isUnique()
+   */
+  public final boolean isUnique()
+  {
+    return isUnique;
+  }
+
+  /**
+   * Adds a column.
+   * 
+   * @param column
+   *        Column
+   */
+  void addColumn(final Column column)
+  {
+    columns.add(column);
+  }
+
+  /**
+   * Adds a column at an ordinal position.
+   * 
+   * @param ordinalPosition
+   *        Oridinal position
+   * @param column
+   *        Column
+   */
+  void addColumn(final int ordinalPosition, final Column column)
+  {
+    columns.add(ordinalPosition, column);
+  }
+
+  final void setCardinality(final int cardinality)
+  {
+    this.cardinality = cardinality;
+  }
+
+  final void setPages(final int pages)
+  {
+    this.pages = pages;
+  }
+
+  final void setSortSequence(final IndexSortSequence sortSequence)
+  {
+    this.sortSequence = sortSequence;
+  }
+
+  final void setType(final IndexType type)
+  {
+    this.type = type;
+  }
+
+  final void setUnique(final boolean unique)
+  {
+    isUnique = unique;
   }
 
 }

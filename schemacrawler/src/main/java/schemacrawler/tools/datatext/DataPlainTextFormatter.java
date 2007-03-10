@@ -49,31 +49,6 @@ public final class DataPlainTextFormatter
   }
 
   /**
-   * Handles metadata information.
-   * 
-   * @param title
-   *        Execution title.
-   */
-  public void handleTitle(final String title)
-  {
-    out.println();
-    out.println(title);
-    out.println();
-    out.println(Utilities.repeat("-", FormatUtils.MAX_LINE_LENGTH));
-    out.flush();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see BaseDataTextFormatter#handleRowsHeader(String[])
-   */
-  public void handleRowsHeader(final String[] columnNames)
-  {
-
-  }
-
-  /**
    * Handles a row output.
    * 
    * @param columnNames
@@ -81,6 +56,7 @@ public final class DataPlainTextFormatter
    * @param columnData
    *        Column data.
    */
+  @Override
   public void handleRow(final String[] columnNames, final String[] columnData)
   {
     for (int i = 0; i < columnData.length; i++)
@@ -99,8 +75,20 @@ public final class DataPlainTextFormatter
   /**
    * {@inheritDoc}
    * 
+   * @see BaseDataTextFormatter#handleRowsBegin()
+   */
+  @Override
+  public void handleRowsBegin()
+  {
+
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see BaseDataTextFormatter#handleRowsEnd()
    */
+  @Override
   public void handleRowsEnd()
   {
 
@@ -109,11 +97,27 @@ public final class DataPlainTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see BaseDataTextFormatter#handleRowsBegin()
+   * @see BaseDataTextFormatter#handleRowsHeader(String[])
    */
-  public void handleRowsBegin()
+  @Override
+  public void handleRowsHeader(final String[] columnNames)
   {
 
+  }
+
+  /**
+   * Handles metadata information.
+   * 
+   * @param title
+   *        Execution title.
+   */
+  public void handleTitle(final String title)
+  {
+    out.println();
+    out.println(title);
+    out.println();
+    out.println(Utilities.repeat("-", FormatUtils.MAX_LINE_LENGTH));
+    out.flush();
   }
 
 }

@@ -55,68 +55,9 @@ class MutableSchema
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.Schema#getDatabaseInfo()
-   */
-  public DatabaseInfo getDatabaseInfo()
-  {
-    return databaseInfo;
-  }
-
-  void setDatabaseInfo(final DatabaseInfo databaseInfo)
-  {
-    this.databaseInfo = databaseInfo;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.Schema#getProcedures()
-   */
-  public Procedure[] getProcedures()
-  {
-    final List allProcedures = procedures.getAll();
-    return (Procedure[]) allProcedures.toArray(new Procedure[allProcedures
-      .size()]);
-  }
-
-  /**
-   * Adds a procedure.
-   * 
-   * @param procedure
-   *        Procedure
-   */
-  void addProcedure(final Procedure procedure)
-  {
-    procedures.add(procedure);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.Schema#getTables()
-   */
-  public Table[] getTables()
-  {
-    final List allTables = tables.getAll();
-    return (Table[]) allTables.toArray(new Table[allTables.size()]);
-  }
-
-  /**
-   * Adds a table.
-   * 
-   * @param table
-   *        Table
-   */
-  void addTable(final Table table)
-  {
-    tables.add(table);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see Object#equals(java.lang.Object)
    */
+  @Override
   public boolean equals(final Object o)
   {
     if (this == o)
@@ -154,8 +95,42 @@ class MutableSchema
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schema.Schema#getDatabaseInfo()
+   */
+  public DatabaseInfo getDatabaseInfo()
+  {
+    return databaseInfo;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Schema#getProcedures()
+   */
+  public Procedure[] getProcedures()
+  {
+    final List allProcedures = procedures.getAll();
+    return (Procedure[]) allProcedures.toArray(new Procedure[allProcedures
+      .size()]);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Schema#getTables()
+   */
+  public Table[] getTables()
+  {
+    final List allTables = tables.getAll();
+    return (Table[]) allTables.toArray(new Table[allTables.size()]);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see Object#hashCode()
    */
+  @Override
   public int hashCode()
   {
     int result = super.hashCode();
@@ -172,5 +147,32 @@ class MutableSchema
       result = 29 * result + procedures.hashCode();
     }
     return result;
+  }
+
+  /**
+   * Adds a procedure.
+   * 
+   * @param procedure
+   *        Procedure
+   */
+  void addProcedure(final Procedure procedure)
+  {
+    procedures.add(procedure);
+  }
+
+  /**
+   * Adds a table.
+   * 
+   * @param table
+   *        Table
+   */
+  void addTable(final Table table)
+  {
+    tables.add(table);
+  }
+
+  void setDatabaseInfo(final DatabaseInfo databaseInfo)
+  {
+    this.databaseInfo = databaseInfo;
   }
 }

@@ -36,20 +36,6 @@ public final class SchemaHTMLFormatter
   extends BaseSchemaTextFormatter
 {
   /**
-   * Formats the schema as HTML for output.
-   * 
-   * @param options
-   *        Options
-   * @param writer
-   *        Writer to output to
-   */
-  SchemaHTMLFormatter(final SchemaTextOptions options)
-    throws SchemaCrawlerException
-  {
-    super(options, new HtmlFormattingHelper());
-  }
-
-  /**
    * Formats the schema as plain text for output. Contains a table
    * column inclusion rule as a special case for "grep" like
    * functionality.
@@ -75,10 +61,25 @@ public final class SchemaHTMLFormatter
   }
 
   /**
+   * Formats the schema as HTML for output.
+   * 
+   * @param options
+   *        Options
+   * @param writer
+   *        Writer to output to
+   */
+  SchemaHTMLFormatter(final SchemaTextOptions options)
+    throws SchemaCrawlerException
+  {
+    super(options, new HtmlFormattingHelper());
+  }
+
+  /**
    * {@inheritDoc}
    * 
    * @see schemacrawler.crawl.CrawlHandler#begin()
    */
+  @Override
   public void begin()
     throws SchemaCrawlerException
   {
@@ -94,6 +95,7 @@ public final class SchemaHTMLFormatter
    * 
    * @see schemacrawler.crawl.CrawlHandler#end()
    */
+  @Override
   public void end()
     throws SchemaCrawlerException
   {
@@ -106,32 +108,38 @@ public final class SchemaHTMLFormatter
     super.end();
   }
 
+  @Override
   String getArrow()
   {
     return " &rarr; ";
   }
 
+  @Override
   void handleColumnDataTypeEnd()
   {
     out.println("</table>");
     out.println("<p></p>");
   }
 
+  @Override
   void handleColumnDataTypesEnd()
   {
 
   }
 
+  @Override
   void handleColumnDataTypesStart()
   {
 
   }
 
+  @Override
   void handleColumnDataTypeStart()
   {
     out.println("<table>");
   }
 
+  @Override
   void handleDatabaseInfo(final DatabaseInfo databaseInfo)
   {
     out.println("<pre id=\'databaseInfo\'>");
@@ -139,6 +147,7 @@ public final class SchemaHTMLFormatter
     out.println("</pre>");
   }
 
+  @Override
   void handleDatabasePropertiesEnd()
   {
     out.println("</table>");
@@ -146,6 +155,7 @@ public final class SchemaHTMLFormatter
     out.println();
   }
 
+  @Override
   void handleDatabasePropertiesStart()
   {
     out.println("<table>");
@@ -156,6 +166,7 @@ public final class SchemaHTMLFormatter
    * 
    * @see BaseSchemaTextFormatter#handleProcedureEnd()
    */
+  @Override
   void handleProcedureEnd()
   {
     out.println("</table>");
@@ -168,6 +179,7 @@ public final class SchemaHTMLFormatter
    * 
    * @see BaseSchemaTextFormatter#handleProcedureStart()
    */
+  @Override
   void handleProcedureStart()
   {
     out.println("<table>");
@@ -178,6 +190,7 @@ public final class SchemaHTMLFormatter
    * 
    * @see BaseSchemaTextFormatter#handleTableEnd()
    */
+  @Override
   void handleTableEnd()
   {
     out.println("</table>");
@@ -190,6 +203,7 @@ public final class SchemaHTMLFormatter
    * 
    * @see BaseSchemaTextFormatter#handleTableStart()
    */
+  @Override
   void handleTableStart()
   {
     out.println("<table>");

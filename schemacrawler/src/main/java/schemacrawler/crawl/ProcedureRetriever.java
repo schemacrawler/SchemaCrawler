@@ -63,6 +63,67 @@ final class ProcedureRetriever
   }
 
   /**
+   * Retrieves a list of columns from the database, for the table
+   * specified.
+   * 
+   * @param procedure
+   *        Table for which data is required.
+   * @throws SQLException
+   *         On a SQL exception
+   */
+  void retrieveProcedureColumns(final MutableProcedure procedure,
+                                final InclusionRule columnInclusionRule,
+                                final NamedObjectList columnDataTypes)
+    throws SQLException
+  {
+
+    final ResultSet results;
+
+    results = getRetrieverConnection().getMetaData()
+      .getProcedureColumns(getRetrieverConnection().getCatalog(),
+                           procedure.getSchemaName(),
+                           procedure.getName(),
+                           null);
+    int ordinalNumber = 0;
+    while (results.next())
+    {
+
+      final String procedureName = results.getString("PROCEDURE_NAME");
+      final String columnName = results.getString(COLUMN_NAME);
+      LOGGER.log(Level.FINEST, "Retrieving procedure column: " + columnName);
+      final short columnType = results.getShort("COLUMN_TYPE");
+      final int dataType = results.getInt(DATA_TYPE);
+      final String typeName = results.getString(TYPE_NAME);
+      final int length = results.getInt("LENGTH");
+      final int precision = results.getInt("PRECISION");
+      final boolean isNullable = results.getShort(NULLABLE) == DatabaseMetaData.procedureNullable;
+      final String remarks = results.getString(REMARKS);
+      // Note: If the procedure name contains an underscore character,
+      // this is a
+      // wildcard character. We need to do another check to see if the
+      // procedure
+      // name matches.
+      if (columnInclusionRule.include(columnName)
+          && procedure.getName().equals(procedureName))
+      {
+        final MutableProcedureColumn column = new MutableProcedureColumn(columnName,
+                                                                         procedure);
+        column.setOrdinalPosition(ordinalNumber++);
+        column.setProcedureColumnType(ProcedureColumnType.valueOf(columnType));
+        column.lookupAndSetDataType(dataType, typeName, columnDataTypes);
+        column.setSize(length);
+        column.setPrecision(precision);
+        column.setNullable(isNullable);
+        column.setRemarks(remarks);
+
+        procedure.addColumn(column);
+      }
+    }
+    results.close();
+
+  }
+
+  /**
    * Retrieves procedure metadata according to the parameters specified.
    * No column metadata is retrieved, for reasons of efficiency.
    * 
@@ -121,65 +182,6 @@ final class ProcedureRetriever
     results.close();
 
     return procedures;
-
-  }
-
-  /**
-   * Retrieves a list of columns from the database, for the table
-   * specified.
-   * 
-   * @param procedure
-   *        Table for which data is required.
-   * @throws SQLException
-   *         On a SQL exception
-   */
-  void retrieveProcedureColumns(final MutableProcedure procedure,
-                                final InclusionRule columnInclusionRule,
-                                final NamedObjectList columnDataTypes)
-    throws SQLException
-  {
-
-    final ResultSet results;
-
-    results = getRetrieverConnection().getMetaData()
-      .getProcedureColumns(getRetrieverConnection().getCatalog(),
-                           procedure.getSchemaName(),
-                           procedure.getName(),
-                           null);
-    int ordinalNumber = 0;
-    while (results.next())
-    {
-
-      final String procedureName = results.getString("PROCEDURE_NAME");
-      final String columnName = results.getString(COLUMN_NAME);
-      LOGGER.log(Level.FINEST, "Retrieving procedure column: " + columnName);
-      final short columnType = results.getShort("COLUMN_TYPE");
-      final int dataType = results.getInt(DATA_TYPE);
-      final String typeName = results.getString(TYPE_NAME);
-      final int length = results.getInt("LENGTH");
-      final int precision = results.getInt("PRECISION");
-      final boolean isNullable = results.getShort(NULLABLE) == DatabaseMetaData.procedureNullable;
-      final String remarks = results.getString(REMARKS);
-      // Note: If the procedure name contains an underscore character, this is a
-      // wildcard character. We need to do another check to see if the procedure
-      // name matches.
-      if (columnInclusionRule.include(columnName)
-          && procedure.getName().equals(procedureName))
-      {
-        final MutableProcedureColumn column = new MutableProcedureColumn(columnName,
-                                                                         procedure);
-        column.setOrdinalPosition(ordinalNumber++);
-        column.setProcedureColumnType(ProcedureColumnType.valueOf(columnType));
-        column.lookupAndSetDataType(dataType, typeName, columnDataTypes);
-        column.setSize(length);
-        column.setPrecision(precision);
-        column.setNullable(isNullable);
-        column.setRemarks(remarks);
-
-        procedure.addColumn(column);
-      }
-    }
-    results.close();
 
   }
 

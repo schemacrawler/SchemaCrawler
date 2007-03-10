@@ -53,18 +53,39 @@ public final class SchemaInfoLevel
       MINIMUM, BASIC, VERBOSE, MAXIMUM
   };
 
+  /**
+   * Find the enumeration value corresponding to the string.
+   * 
+   * @param infoLevelString
+   *        String value of table type
+   * @return Enumeration value
+   */
+  public static SchemaInfoLevel valueOf(final String infoLevelString)
+  {
+
+    SchemaInfoLevel schemaInfoLevel = null;
+
+    for (final SchemaInfoLevel element: SCHEMA_INFO_LEVEL_ALL)
+    {
+      if (element.toString().equalsIgnoreCase(infoLevelString))
+      {
+        schemaInfoLevel = element;
+        break;
+      }
+    }
+
+    return schemaInfoLevel;
+
+  }
+
   private final int infoLevelId;
+
   private final String infoLevelName;
 
   private SchemaInfoLevel(final int infoLevelId, final String infoLevelName)
   {
     this.infoLevelId = infoLevelId;
     this.infoLevelName = infoLevelName;
-  }
-
-  private int getInfoLevelId()
-  {
-    return infoLevelId;
   }
 
   /**
@@ -96,34 +117,15 @@ public final class SchemaInfoLevel
    * 
    * @see Object#toString()
    */
+  @Override
   public String toString()
   {
     return infoLevelName;
   }
 
-  /**
-   * Find the enumeration value corresponding to the string.
-   * 
-   * @param infoLevelString
-   *        String value of table type
-   * @return Enumeration value
-   */
-  public static SchemaInfoLevel valueOf(final String infoLevelString)
+  private int getInfoLevelId()
   {
-
-    SchemaInfoLevel schemaInfoLevel = null;
-
-    for (int i = 0; i < SCHEMA_INFO_LEVEL_ALL.length; i++)
-    {
-      if (SCHEMA_INFO_LEVEL_ALL[i].toString().equalsIgnoreCase(infoLevelString))
-      {
-        schemaInfoLevel = SCHEMA_INFO_LEVEL_ALL[i];
-        break;
-      }
-    }
-
-    return schemaInfoLevel;
-
+    return infoLevelId;
   }
 
 }

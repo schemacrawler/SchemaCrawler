@@ -48,17 +48,6 @@ final class CachingCrawlerHandler
   }
 
   /**
-   * Column info level.
-   * 
-   * @return Column info level
-   * @see CrawlHandler#getInfoLevelHint()
-   */
-  public SchemaInfoLevel getInfoLevelHint()
-  {
-    return infoLevel;
-  }
-
-  /**
    * @see CrawlHandler#begin()
    */
   public void begin()
@@ -77,22 +66,32 @@ final class CachingCrawlerHandler
   }
 
   /**
+   * Column info level.
+   * 
+   * @return Column info level
+   * @see CrawlHandler#getInfoLevelHint()
+   */
+  public SchemaInfoLevel getInfoLevelHint()
+  {
+    return infoLevel;
+  }
+
+  /**
+   * Gets the entire schema.
+   * 
+   * @return Schema
+   */
+  public Schema getSchema()
+  {
+    return schema;
+  }
+
+  /**
    * @see CrawlHandler#handle(DatabaseInfo)
    */
   public void handle(final DatabaseInfo databaseInfo)
   {
     schema.setDatabaseInfo(databaseInfo);
-  }
-
-  /**
-   * Provides information on the database schema.
-   * 
-   * @param table
-   *        Table metadata.
-   */
-  public void handle(final Table table)
-  {
-    schema.addTable(table);
   }
 
   /**
@@ -107,13 +106,14 @@ final class CachingCrawlerHandler
   }
 
   /**
-   * Gets the entire schema.
+   * Provides information on the database schema.
    * 
-   * @return Schema
+   * @param table
+   *        Table metadata.
    */
-  public Schema getSchema()
+  public void handle(final Table table)
   {
-    return schema;
+    schema.addTable(table);
   }
 
 }

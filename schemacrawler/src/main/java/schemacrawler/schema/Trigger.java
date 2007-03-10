@@ -31,12 +31,11 @@ public interface Trigger
 {
 
   /**
-   * Gets the event manipulation type. The trigger event - INSERT,
-   * DELETE, or UPDATE.
+   * The WHEN clause of the trigger.
    * 
-   * @return Event manipulation type
+   * @return Action condition.
    */
-  EventManipulationType getEventManipulationType();
+  String getActionCondition();
 
   /**
    * Gets the action order.
@@ -46,11 +45,11 @@ public interface Trigger
   int getActionOrder();
 
   /**
-   * The WHEN clause of the trigger.
+   * Get whether the trigger is a row trigger or a statement trigger.
    * 
-   * @return Action condition.
+   * @return Action orientation.
    */
-  String getActionCondition();
+  ActionOrientationType getActionOrientation();
 
   /**
    * Get the body of the trigger.
@@ -58,13 +57,6 @@ public interface Trigger
    * @return Body of the trigger.
    */
   String getActionStatement();
-
-  /**
-   * Get whether the trigger is a row trigger or a statement trigger.
-   * 
-   * @return Action orientation.
-   */
-  ActionOrientationType getActionOrientation();
 
   /**
    * Gets the condition timing. BEFORE = the trigger is executed before
@@ -76,5 +68,13 @@ public interface Trigger
    * @return Condition timing.
    */
   ConditionTimingType getConditionTiming();
+
+  /**
+   * Gets the event manipulation type. The trigger event - INSERT,
+   * DELETE, or UPDATE.
+   * 
+   * @return Event manipulation type
+   */
+  EventManipulationType getEventManipulationType();
 
 }

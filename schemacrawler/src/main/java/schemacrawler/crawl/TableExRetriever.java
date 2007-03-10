@@ -72,250 +72,6 @@ final class TableExRetriever
   }
 
   /**
-   * Retrieves table metadata according to the parameters specified. No
-   * column metadata is retrieved, for reasons of efficiency.
-   * 
-   * @param tableTypes
-   *        Array of table types
-   * @param tablePatternInclude
-   *        Table name pattern for table
-   * @param useRegExpPattern
-   *        True is the table name pattern is a regular expression;
-   *        false if the table name pattern is the JDBC pattern
-   * @throws SQLException
-   *         On a SQL exception
-   */
-  void retrievePrivileges(final DatabaseObject parent,
-                          final NamedObjectList namedObjectList)
-    throws SQLException
-  {
-    final ResultSet results;
-
-    final boolean privilegesForTable = parent == null;
-    if (privilegesForTable)
-    {
-      results = getRetrieverConnection().getMetaData()
-        .getTablePrivileges(getRetrieverConnection().getCatalog(),
-                            getRetrieverConnection().getSchemaPattern(),
-                            "%");
-    }
-    else
-    {
-      results = getRetrieverConnection().getMetaData()
-        .getColumnPrivileges(getRetrieverConnection().getCatalog(),
-                             getRetrieverConnection().getSchemaPattern(),
-                             parent.getName(),
-                             "%");
-    }
-    try
-    {
-      createPrivileges(results, namedObjectList, privilegesForTable);
-    }
-    finally
-    {
-      results.close();
-    }
-
-  }
-
-  private void createPrivileges(final ResultSet results,
-                                final NamedObjectList namedObjectList,
-                                final boolean privilegesForTable)
-    throws SQLException
-  {
-    while (results.next())
-    {
-      final String name;
-      if (privilegesForTable)
-      {
-        name = results.getString(TABLE_NAME);
-      }
-      else
-      {
-        name = results.getString(COLUMN_NAME);
-      }
-      final NamedObject namedObject = namedObjectList.lookup(name);
-      if (namedObject != null)
-      {
-        final String privilegeName = results.getString("PRIVILEGE");
-        final String grantor = results.getString("GRANTOR");
-        final String grantee = results.getString("GRANTEE");
-        final String isGrantableString = results.getString("IS_GRANTABLE");
-        boolean isGrantable = false;
-        if (isGrantableString != null
-            && isGrantableString.equalsIgnoreCase("YES"))
-        {
-          isGrantable = true;
-        }
-
-        final MutablePrivilege privilege = new MutablePrivilege(privilegeName,
-                                                                namedObject);
-        privilege.setGrantor(grantor);
-        privilege.setGrantee(grantee);
-        privilege.setGrantable(isGrantable);
-        if (privilegesForTable)
-        {
-          final MutableTable table = (MutableTable) namedObject;
-          table.addPrivilege(privilege);
-        }
-        else
-        {
-          final MutableColumn column = (MutableColumn) namedObject;
-          column.addPrivilege(privilege);
-        }
-      }
-    }
-  }
-
-  /**
-   * Retrieves a view information from the database, in the
-   * INFORMATION_SCHEMA format.
-   * 
-   * @param tables
-   *        List of tables and views.
-   * @throws SQLException
-   *         On a SQL exception
-   */
-  void retrieveViewInformation(final NamedObjectList tables)
-    throws SQLException
-  {
-    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-      .getInformationSchemaViews();
-
-    if (!informationSchemaViews.hasViewsSql())
-    {
-      LOGGER.log(Level.FINE, "Views SQL statement was not provided");
-      return;
-    }
-    final String viewInformationSql = informationSchemaViews.getViewsSql();
-
-    final Connection connection = getRetrieverConnection().getMetaData()
-      .getConnection();
-    final Statement statement = connection.createStatement();
-    final ResultSet results = statement.executeQuery(viewInformationSql);
-    try
-    {
-      while (results.next())
-      {
-        final String catalog = results.getString("TABLE_CATALOG");
-        final String schema = results.getString("TABLE_SCHEMA");
-        final String viewName = results.getString("TABLE_NAME");
-
-        final MutableView view = (MutableView) tables.lookup(viewName);
-        if (!belongsToSchema(view, catalog, schema))
-        {
-          LOGGER.log(Level.FINEST, "Skipping definition for view " + viewName);
-          continue;
-        }
-
-        LOGGER.log(Level.FINEST, "Retrieving view information for " + viewName);
-        String definition = results.getString("VIEW_DEFINITION");
-        final CheckOptionType checkOption = CheckOptionType.valueOf(results
-          .getString("CHECK_OPTION"));
-        final boolean updatable = Utilities.parseBoolean(results
-          .getString("IS_UPDATABLE"));
-
-        if (!Utilities.isBlank(view.getDefinition()))
-        {
-          definition = view.getDefinition() + definition;
-        }
-
-        view.setDefinition(definition);
-        view.setCheckOption(checkOption);
-        view.setUpdatable(updatable);
-      }
-    }
-    finally
-    {
-      statement.close();
-      results.close();
-    }
-
-  }
-
-  /**
-   * Retrieves a trigger information from the database, in the
-   * INFORMATION_SCHEMA format.
-   * 
-   * @param tables
-   *        List of tables and views.
-   * @throws SQLException
-   *         On a SQL exception
-   */
-  void retrieveTriggerInformation(final NamedObjectList tables)
-    throws SQLException
-  {
-    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-      .getInformationSchemaViews();
-    final String triggerInformationSql = informationSchemaViews
-      .getTriggersSql();
-    if (Utilities.isBlank(triggerInformationSql))
-    {
-      LOGGER.log(Level.FINE,
-                 "Trigger definition SQL statement was not provided");
-      return;
-    }
-
-    final Connection connection = getRetrieverConnection().getMetaData()
-      .getConnection();
-    final Statement statement = connection.createStatement();
-    final ResultSet results = statement.executeQuery(triggerInformationSql);
-    try
-    {
-      while (results.next())
-      {
-        final String catalog = results.getString("TRIGGER_CATALOG");
-        final String schema = results.getString("TRIGGER_SCHEMA");
-        final String triggerName = results.getString("TRIGGER_NAME");
-        LOGGER.log(Level.FINEST, "Retrieving trigger information for "
-                                 + triggerName);
-
-        final EventManipulationType eventManipulationType = EventManipulationType
-          .valueOf(results.getString("EVENT_MANIPULATION"));
-
-        // final String eventObjectCatalog = results
-        // .getString("EVENT_OBJECT_CATALOG");
-        // final String eventObjectSchema = results
-        // .getString("EVENT_OBJECT_SCHEMA");
-        final String tableName = results.getString("EVENT_OBJECT_TABLE");
-
-        final MutableTable table = (MutableTable) tables.lookup(tableName);
-        if (!belongsToSchema(table, catalog, schema))
-        {
-          LOGGER.log(Level.FINEST, "Skipping trigger " + triggerName
-                                   + " for table " + tableName);
-          continue;
-        }
-
-        final int actionOrder = results.getInt("ACTION_ORDER");
-        final String actionCondition = results.getString("ACTION_CONDITION");
-        final String actionStatement = results.getString("ACTION_STATEMENT");
-        final ActionOrientationType actionOrientation = ActionOrientationType
-          .valueOf(results.getString("ACTION_ORIENTATION"));
-        final ConditionTimingType conditionTiming = ConditionTimingType
-          .valueOf(results.getString("CONDITION_TIMING"));
-
-        final MutableTrigger trigger = new MutableTrigger(triggerName, table);
-        trigger.setEventManipulationType(eventManipulationType);
-        trigger.setActionOrder(actionOrder);
-        trigger.setActionCondition(actionCondition);
-        trigger.setActionStatement(actionStatement);
-        trigger.setActionOrientation(actionOrientation);
-        trigger.setConditionTiming(conditionTiming);
-        // Add trigger to the table
-        table.addTrigger(trigger);
-
-      }
-    }
-    finally
-    {
-      results.close();
-      statement.close();
-    }
-
-  }
-
-  /**
    * Retrieves a check constraint information from the database, in the
    * INFORMATION_SCHEMA format.
    * 
@@ -448,6 +204,250 @@ final class TableExRetriever
       table.addCheckConstraint(checkConstraint);
     }
 
+  }
+
+  /**
+   * Retrieves table metadata according to the parameters specified. No
+   * column metadata is retrieved, for reasons of efficiency.
+   * 
+   * @param tableTypes
+   *        Array of table types
+   * @param tablePatternInclude
+   *        Table name pattern for table
+   * @param useRegExpPattern
+   *        True is the table name pattern is a regular expression;
+   *        false if the table name pattern is the JDBC pattern
+   * @throws SQLException
+   *         On a SQL exception
+   */
+  void retrievePrivileges(final DatabaseObject parent,
+                          final NamedObjectList namedObjectList)
+    throws SQLException
+  {
+    final ResultSet results;
+
+    final boolean privilegesForTable = parent == null;
+    if (privilegesForTable)
+    {
+      results = getRetrieverConnection().getMetaData()
+        .getTablePrivileges(getRetrieverConnection().getCatalog(),
+                            getRetrieverConnection().getSchemaPattern(),
+                            "%");
+    }
+    else
+    {
+      results = getRetrieverConnection().getMetaData()
+        .getColumnPrivileges(getRetrieverConnection().getCatalog(),
+                             getRetrieverConnection().getSchemaPattern(),
+                             parent.getName(),
+                             "%");
+    }
+    try
+    {
+      createPrivileges(results, namedObjectList, privilegesForTable);
+    }
+    finally
+    {
+      results.close();
+    }
+
+  }
+
+  /**
+   * Retrieves a trigger information from the database, in the
+   * INFORMATION_SCHEMA format.
+   * 
+   * @param tables
+   *        List of tables and views.
+   * @throws SQLException
+   *         On a SQL exception
+   */
+  void retrieveTriggerInformation(final NamedObjectList tables)
+    throws SQLException
+  {
+    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
+      .getInformationSchemaViews();
+    final String triggerInformationSql = informationSchemaViews
+      .getTriggersSql();
+    if (Utilities.isBlank(triggerInformationSql))
+    {
+      LOGGER.log(Level.FINE,
+                 "Trigger definition SQL statement was not provided");
+      return;
+    }
+
+    final Connection connection = getRetrieverConnection().getMetaData()
+      .getConnection();
+    final Statement statement = connection.createStatement();
+    final ResultSet results = statement.executeQuery(triggerInformationSql);
+    try
+    {
+      while (results.next())
+      {
+        final String catalog = results.getString("TRIGGER_CATALOG");
+        final String schema = results.getString("TRIGGER_SCHEMA");
+        final String triggerName = results.getString("TRIGGER_NAME");
+        LOGGER.log(Level.FINEST, "Retrieving trigger information for "
+                                 + triggerName);
+
+        final EventManipulationType eventManipulationType = EventManipulationType
+          .valueOf(results.getString("EVENT_MANIPULATION"));
+
+        // final String eventObjectCatalog = results
+        // .getString("EVENT_OBJECT_CATALOG");
+        // final String eventObjectSchema = results
+        // .getString("EVENT_OBJECT_SCHEMA");
+        final String tableName = results.getString("EVENT_OBJECT_TABLE");
+
+        final MutableTable table = (MutableTable) tables.lookup(tableName);
+        if (!belongsToSchema(table, catalog, schema))
+        {
+          LOGGER.log(Level.FINEST, "Skipping trigger " + triggerName
+                                   + " for table " + tableName);
+          continue;
+        }
+
+        final int actionOrder = results.getInt("ACTION_ORDER");
+        final String actionCondition = results.getString("ACTION_CONDITION");
+        final String actionStatement = results.getString("ACTION_STATEMENT");
+        final ActionOrientationType actionOrientation = ActionOrientationType
+          .valueOf(results.getString("ACTION_ORIENTATION"));
+        final ConditionTimingType conditionTiming = ConditionTimingType
+          .valueOf(results.getString("CONDITION_TIMING"));
+
+        final MutableTrigger trigger = new MutableTrigger(triggerName, table);
+        trigger.setEventManipulationType(eventManipulationType);
+        trigger.setActionOrder(actionOrder);
+        trigger.setActionCondition(actionCondition);
+        trigger.setActionStatement(actionStatement);
+        trigger.setActionOrientation(actionOrientation);
+        trigger.setConditionTiming(conditionTiming);
+        // Add trigger to the table
+        table.addTrigger(trigger);
+
+      }
+    }
+    finally
+    {
+      results.close();
+      statement.close();
+    }
+
+  }
+
+  /**
+   * Retrieves a view information from the database, in the
+   * INFORMATION_SCHEMA format.
+   * 
+   * @param tables
+   *        List of tables and views.
+   * @throws SQLException
+   *         On a SQL exception
+   */
+  void retrieveViewInformation(final NamedObjectList tables)
+    throws SQLException
+  {
+    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
+      .getInformationSchemaViews();
+
+    if (!informationSchemaViews.hasViewsSql())
+    {
+      LOGGER.log(Level.FINE, "Views SQL statement was not provided");
+      return;
+    }
+    final String viewInformationSql = informationSchemaViews.getViewsSql();
+
+    final Connection connection = getRetrieverConnection().getMetaData()
+      .getConnection();
+    final Statement statement = connection.createStatement();
+    final ResultSet results = statement.executeQuery(viewInformationSql);
+    try
+    {
+      while (results.next())
+      {
+        final String catalog = results.getString("TABLE_CATALOG");
+        final String schema = results.getString("TABLE_SCHEMA");
+        final String viewName = results.getString("TABLE_NAME");
+
+        final MutableView view = (MutableView) tables.lookup(viewName);
+        if (!belongsToSchema(view, catalog, schema))
+        {
+          LOGGER.log(Level.FINEST, "Skipping definition for view " + viewName);
+          continue;
+        }
+
+        LOGGER.log(Level.FINEST, "Retrieving view information for " + viewName);
+        String definition = results.getString("VIEW_DEFINITION");
+        final CheckOptionType checkOption = CheckOptionType.valueOf(results
+          .getString("CHECK_OPTION"));
+        final boolean updatable = Utilities.parseBoolean(results
+          .getString("IS_UPDATABLE"));
+
+        if (!Utilities.isBlank(view.getDefinition()))
+        {
+          definition = view.getDefinition() + definition;
+        }
+
+        view.setDefinition(definition);
+        view.setCheckOption(checkOption);
+        view.setUpdatable(updatable);
+      }
+    }
+    finally
+    {
+      statement.close();
+      results.close();
+    }
+
+  }
+
+  private void createPrivileges(final ResultSet results,
+                                final NamedObjectList namedObjectList,
+                                final boolean privilegesForTable)
+    throws SQLException
+  {
+    while (results.next())
+    {
+      final String name;
+      if (privilegesForTable)
+      {
+        name = results.getString(TABLE_NAME);
+      }
+      else
+      {
+        name = results.getString(COLUMN_NAME);
+      }
+      final NamedObject namedObject = namedObjectList.lookup(name);
+      if (namedObject != null)
+      {
+        final String privilegeName = results.getString("PRIVILEGE");
+        final String grantor = results.getString("GRANTOR");
+        final String grantee = results.getString("GRANTEE");
+        final String isGrantableString = results.getString("IS_GRANTABLE");
+        boolean isGrantable = false;
+        if (isGrantableString != null
+            && isGrantableString.equalsIgnoreCase("YES"))
+        {
+          isGrantable = true;
+        }
+
+        final MutablePrivilege privilege = new MutablePrivilege(privilegeName,
+                                                                namedObject);
+        privilege.setGrantor(grantor);
+        privilege.setGrantee(grantee);
+        privilege.setGrantable(isGrantable);
+        if (privilegesForTable)
+        {
+          final MutableTable table = (MutableTable) namedObject;
+          table.addPrivilege(privilege);
+        }
+        else
+        {
+          final MutableColumn column = (MutableColumn) namedObject;
+          column.addPrivilege(privilege);
+        }
+      }
+    }
   }
 
 }

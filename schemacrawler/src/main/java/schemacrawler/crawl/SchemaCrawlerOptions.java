@@ -112,8 +112,11 @@ public final class SchemaCrawlerOptions
       .getProperty(SC_TABLE_PATTERN_INCLUDE, InclusionRule.INCLUDE_ALL), config
       .getProperty(SC_TABLE_PATTERN_EXCLUDE, InclusionRule.EXCLUDE_NONE));
     columnInclusionRule = new InclusionRule(config
-      .getProperty(SC_COLUMN_PATTERN_INCLUDE, InclusionRule.INCLUDE_ALL), config
-      .getProperty(SC_COLUMN_PATTERN_EXCLUDE, InclusionRule.EXCLUDE_NONE));
+                                              .getProperty(SC_COLUMN_PATTERN_INCLUDE,
+                                                           InclusionRule.INCLUDE_ALL),
+                                            config
+                                              .getProperty(SC_COLUMN_PATTERN_EXCLUDE,
+                                                           InclusionRule.EXCLUDE_NONE));
 
     // comparators
     tableColumnComparator = getComparator(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS,
@@ -140,7 +143,7 @@ public final class SchemaCrawlerOptions
    * Gets the table inclusion rule.
    * 
    * @return Table inclusion rule.
-   */  
+   */
   public InclusionRule getTableInclusionRule()
   {
     return tableInclusionRule;
@@ -172,7 +175,7 @@ public final class SchemaCrawlerOptions
    * Whether indexes are alphabetically sorted.
    * 
    * @return Whether indexes are alphabetically sorted
-   */  
+   */
   public boolean isAlphabeticalSortForIndexes()
   {
     return tableIndexComparator != null
@@ -183,7 +186,7 @@ public final class SchemaCrawlerOptions
    * Whether procedure columns are alphabetically sorted.
    * 
    * @return Whether procedure columns are alphabetically sorted
-   */   
+   */
   public boolean isAlphabeticalSortForProcedureColumns()
   {
     return procedureColumnComparator != null
@@ -194,7 +197,7 @@ public final class SchemaCrawlerOptions
    * Whether table columns are alphabetically sorted.
    * 
    * @return Whether table columns are alphabetically sorted
-   */    
+   */
   public boolean isAlphabeticalSortForTableColumns()
   {
     return tableColumnComparator != null
@@ -205,7 +208,7 @@ public final class SchemaCrawlerOptions
    * Whether stored procedures are output.
    * 
    * @return Whether stored procedures are output
-   */   
+   */
   public boolean isShowStoredProcedures()
   {
     return showStoredProcedures;
@@ -281,6 +284,7 @@ public final class SchemaCrawlerOptions
    * 
    * @see Object#toString()
    */
+  @Override
   public String toString()
   {
     final StringBuffer buffer = new StringBuffer();
@@ -301,24 +305,6 @@ public final class SchemaCrawlerOptions
     return buffer.toString();
   }
 
-  private SerializableComparator getComparator(final boolean alphabeticalSort)
-  {
-    if (alphabeticalSort)
-    {
-      return new AlphabeticalSortComparator();
-    }
-    else
-    {
-      return new NaturalSortComparator();
-    }
-  }
-
-  private SerializableComparator getComparator(final String propertyName,
-                                               final Properties config)
-  {
-    return getComparator(getBooleanProperty(propertyName, config));
-  }
-
   SerializableComparator getProcedureColumnComparator()
   {
     return procedureColumnComparator;
@@ -337,6 +323,24 @@ public final class SchemaCrawlerOptions
   SerializableComparator getTableIndexComparator()
   {
     return tableIndexComparator;
+  }
+
+  private SerializableComparator getComparator(final boolean alphabeticalSort)
+  {
+    if (alphabeticalSort)
+    {
+      return new AlphabeticalSortComparator();
+    }
+    else
+    {
+      return new NaturalSortComparator();
+    }
+  }
+
+  private SerializableComparator getComparator(final String propertyName,
+                                               final Properties config)
+  {
+    return getComparator(getBooleanProperty(propertyName, config));
   }
 
 }

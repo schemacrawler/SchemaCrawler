@@ -42,8 +42,57 @@ public final class SearchableType
       new SearchableType(DatabaseMetaData.typeSearchable, "searchable"),
   };
 
+  // The 4 declarations below are necessary for serialization
+  private static int nextOrdinal;
+  private static final SearchableType[] VALUES = ALL;
+
+  /**
+   * Find the enumeration value corresponding to the string.
+   * 
+   * @param id
+   *        int value of type
+   * @return Enumeration value
+   */
+  public static SearchableType valueOf(final int id)
+  {
+    SearchableType type = ALL[0];
+    for (final SearchableType element: ALL)
+    {
+      if (element.getId() == id)
+      {
+        type = element;
+        break;
+      }
+    }
+    return type;
+  }
+
+  /**
+   * Value of the enumeration from the code.
+   * 
+   * @param name
+   *        Code
+   * @return Enumeration value
+   */
+  public static EnumType valueOf(final String name)
+  {
+    EnumType type = ALL[0];
+    for (final SearchableType element: ALL)
+    {
+      if (element.getName().equalsIgnoreCase(name))
+      {
+        type = element;
+        break;
+      }
+    }
+    return type;
+  }
+
   private final transient int id;
+
   private final transient String name;
+
+  private final int ordinal;
 
   private SearchableType(final int id, final String name)
   {
@@ -77,58 +126,11 @@ public final class SearchableType
    * 
    * @see Object#toString()
    */
+  @Override
   public String toString()
   {
     return getName();
   }
-
-  /**
-   * Find the enumeration value corresponding to the string.
-   * 
-   * @param id
-   *        int value of type
-   * @return Enumeration value
-   */
-  public static SearchableType valueOf(final int id)
-  {
-    SearchableType type = ALL[0];
-    for (int i = 0; i < ALL.length; i++)
-    {
-      if (ALL[i].getId() == id)
-      {
-        type = ALL[i];
-        break;
-      }
-    }
-    return type;
-  }
-
-  /**
-   * Value of the enumeration from the code.
-   * 
-   * @param name
-   *        Code
-   * @return Enumeration value
-   */
-  public static EnumType valueOf(final String name)
-  {
-    EnumType type = ALL[0];
-    for (int i = 0; i < ALL.length; i++)
-    {
-      if (ALL[i].getName().equalsIgnoreCase(name))
-      {
-        type = ALL[i];
-        break;
-      }
-    }
-    return type;
-  }
-
-  // The 4 declarations below are necessary for serialization
-  private static int nextOrdinal;
-  private final int ordinal;
-
-  private static final SearchableType[] VALUES = ALL;
 
   Object readResolve()
     throws ObjectStreamException

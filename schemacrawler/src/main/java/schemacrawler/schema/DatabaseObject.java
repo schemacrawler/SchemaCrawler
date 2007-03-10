@@ -31,13 +31,6 @@ public interface DatabaseObject
 {
 
   /**
-   * Schema name.
-   * 
-   * @return the schema name
-   */
-  String getSchemaName();
-
-  /**
    * Catalog name.
    * 
    * @return the catalog name
@@ -50,5 +43,12 @@ public interface DatabaseObject
    * @return Full name
    */
   String getFullName();
+
+  /**
+   * Schema name.
+   * 
+   * @return the schema name
+   */
+  String getSchemaName();
 
 }

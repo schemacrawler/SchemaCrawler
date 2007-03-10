@@ -40,11 +40,11 @@ public interface Index
   int getCardinality();
 
   /**
-   * Is the index unique.
+   * List of columns in ordinal order.
    * 
-   * @return Is the index unique
+   * @return Columns of the table.
    */
-  boolean isUnique();
+  Column[] getColumns();
 
   /**
    * Pages. When the index type is statistic, then this is the number of
@@ -70,10 +70,10 @@ public interface Index
   IndexType getType();
 
   /**
-   * List of columns in ordinal order.
+   * Is the index unique.
    * 
-   * @return Columns of the table.
+   * @return Is the index unique
    */
-  Column[] getColumns();
+  boolean isUnique();
 
 }

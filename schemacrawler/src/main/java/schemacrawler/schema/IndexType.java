@@ -40,8 +40,57 @@ public final class IndexType
       new IndexType(DatabaseMetaData.tableIndexOther, "other"),
   };
 
+  // The 4 declarations below are necessary for serialization
+  private static int nextOrdinal;
+  private static final IndexType[] VALUES = ALL;
+
+  /**
+   * Find the enumeration value corresponding to the string.
+   * 
+   * @param id
+   *        int value of type
+   * @return Enumeration value
+   */
+  public static IndexType valueOf(final int id)
+  {
+    IndexType type = null;
+    for (final IndexType element: ALL)
+    {
+      if (element.getId() == id)
+      {
+        type = element;
+        break;
+      }
+    }
+    return type;
+  }
+
+  /**
+   * Value of the enumeration from the code.
+   * 
+   * @param name
+   *        Code
+   * @return Enumeration value
+   */
+  public static IndexType valueOf(final String name)
+  {
+    IndexType type = null;
+    for (final IndexType element: ALL)
+    {
+      if (element.getName().equalsIgnoreCase(name))
+      {
+        type = element;
+        break;
+      }
+    }
+    return type;
+  }
+
   private final transient int id;
+
   private final transient String name;
+
+  private final int ordinal;
 
   private IndexType(final int id, final String name)
   {
@@ -75,58 +124,11 @@ public final class IndexType
    * 
    * @see Object#toString()
    */
+  @Override
   public String toString()
   {
     return name;
   }
-
-  /**
-   * Find the enumeration value corresponding to the string.
-   * 
-   * @param id
-   *        int value of type
-   * @return Enumeration value
-   */
-  public static IndexType valueOf(final int id)
-  {
-    IndexType type = null;
-    for (int i = 0; i < ALL.length; i++)
-    {
-      if (ALL[i].getId() == id)
-      {
-        type = ALL[i];
-        break;
-      }
-    }
-    return type;
-  }
-
-  /**
-   * Value of the enumeration from the code.
-   * 
-   * @param name
-   *        Code
-   * @return Enumeration value
-   */
-  public static IndexType valueOf(final String name)
-  {
-    IndexType type = null;
-    for (int i = 0; i < ALL.length; i++)
-    {
-      if (ALL[i].getName().equalsIgnoreCase(name))
-      {
-        type = ALL[i];
-        break;
-      }
-    }
-    return type;
-  }
-
-  // The 4 declarations below are necessary for serialization
-  private static int nextOrdinal;
-  private final int ordinal;
-
-  private static final IndexType[] VALUES = ALL;
 
   Object readResolve()
     throws ObjectStreamException

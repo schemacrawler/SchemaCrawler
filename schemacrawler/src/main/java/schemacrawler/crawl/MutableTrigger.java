@@ -57,22 +57,12 @@ class MutableTrigger
     return actionCondition;
   }
 
-  void setActionCondition(final String actionCondition)
-  {
-    this.actionCondition = actionCondition;
-  }
-
   /**
    * {@inheritDoc}
    */
   public int getActionOrder()
   {
     return actionOrder;
-  }
-
-  void setActionOrder(final int actionOrder)
-  {
-    this.actionOrder = actionOrder;
   }
 
   /**
@@ -83,22 +73,12 @@ class MutableTrigger
     return actionOrientation;
   }
 
-  void setActionOrientation(final ActionOrientationType actionOrientation)
-  {
-    this.actionOrientation = actionOrientation;
-  }
-
   /**
    * {@inheritDoc}
    */
   public String getActionStatement()
   {
     return actionStatement;
-  }
-
-  void setActionStatement(final String actionStatement)
-  {
-    this.actionStatement = actionStatement;
   }
 
   /**
@@ -109,17 +89,37 @@ class MutableTrigger
     return conditionTiming;
   }
 
-  void setConditionTiming(final ConditionTimingType conditionTiming)
-  {
-    this.conditionTiming = conditionTiming;
-  }
-
   /**
    * {@inheritDoc}
    */
   public EventManipulationType getEventManipulationType()
   {
     return eventManipulationType;
+  }
+
+  void setActionCondition(final String actionCondition)
+  {
+    this.actionCondition = actionCondition;
+  }
+
+  void setActionOrder(final int actionOrder)
+  {
+    this.actionOrder = actionOrder;
+  }
+
+  void setActionOrientation(final ActionOrientationType actionOrientation)
+  {
+    this.actionOrientation = actionOrientation;
+  }
+
+  void setActionStatement(final String actionStatement)
+  {
+    this.actionStatement = actionStatement;
+  }
+
+  void setConditionTiming(final ConditionTimingType conditionTiming)
+  {
+    this.conditionTiming = conditionTiming;
   }
 
   void setEventManipulationType(final EventManipulationType eventManipulationType)

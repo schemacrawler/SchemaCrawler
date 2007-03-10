@@ -32,15 +32,6 @@ public interface CrawlHandler
 {
 
   /**
-   * Hint for the level detail requires. Helps SchemaCrawler optimize
-   * the metadata queries. One of the level constants defined in
-   * SchemaCrawler.
-   * 
-   * @return Level hint
-   */
-  SchemaInfoLevel getInfoLevelHint();
-
-  /**
    * Handles the begin of the crawl.
    * 
    * @throws SchemaCrawlerException
@@ -59,14 +50,23 @@ public interface CrawlHandler
     throws SchemaCrawlerException;
 
   /**
+   * Hint for the level detail requires. Helps SchemaCrawler optimize
+   * the metadata queries. One of the level constants defined in
+   * SchemaCrawler.
+   * 
+   * @return Level hint
+   */
+  SchemaInfoLevel getInfoLevelHint();
+
+  /**
    * Provides information on the database schema.
    * 
-   * @param table
-   *        Table information
+   * @param databaseInfo
+   *        Database information
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  void handle(final Table table)
+  void handle(final DatabaseInfo databaseInfo)
     throws SchemaCrawlerException;
 
   /**
@@ -83,12 +83,12 @@ public interface CrawlHandler
   /**
    * Provides information on the database schema.
    * 
-   * @param databaseInfo
-   *        Database information
+   * @param table
+   *        Table information
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  void handle(final DatabaseInfo databaseInfo)
+  void handle(final Table table)
     throws SchemaCrawlerException;
 
 }

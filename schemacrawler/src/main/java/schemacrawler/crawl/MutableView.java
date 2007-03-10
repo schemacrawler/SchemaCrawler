@@ -48,22 +48,12 @@ class MutableView
     super(catalogName, schemaName, name);
   }
 
-  void setType(final TableType type)
-  {
-    if (type != TableType.VIEW)
-    {
-      throw new UnsupportedOperationException("Cannot reset view type");
-    }
-  }
-
   /**
    * {@inheritDoc}
-   * 
-   * @see View#getType()
    */
-  public TableType getType()
+  public CheckOptionType getCheckOption()
   {
-    return TableType.VIEW;
+    return checkOption;
   }
 
   /**
@@ -76,22 +66,15 @@ class MutableView
     return definition;
   }
 
-  void setDefinition(final String definition)
-  {
-    this.definition = definition;
-  }
-
   /**
    * {@inheritDoc}
+   * 
+   * @see View#getType()
    */
-  public CheckOptionType getCheckOption()
+  @Override
+  public TableType getType()
   {
-    return checkOption;
-  }
-
-  void setCheckOption(final CheckOptionType checkOption)
-  {
-    this.checkOption = checkOption;
+    return TableType.VIEW;
   }
 
   /**
@@ -100,6 +83,25 @@ class MutableView
   public boolean isUpdatable()
   {
     return updatable;
+  }
+
+  void setCheckOption(final CheckOptionType checkOption)
+  {
+    this.checkOption = checkOption;
+  }
+
+  void setDefinition(final String definition)
+  {
+    this.definition = definition;
+  }
+
+  @Override
+  void setType(final TableType type)
+  {
+    if (type != TableType.VIEW)
+    {
+      throw new UnsupportedOperationException("Cannot reset view type");
+    }
   }
 
   void setUpdatable(final boolean updatable)

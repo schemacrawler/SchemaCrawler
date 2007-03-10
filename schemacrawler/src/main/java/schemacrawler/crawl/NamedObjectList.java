@@ -68,29 +68,6 @@ public final class NamedObjectList
   }
 
   /**
-   * Gets the map of named objects.
-   * 
-   * @return Map
-   */
-  public Map getMap()
-  {
-    return new HashMap(map);
-  }
-
-  /**
-   * Gets the object at a given index.
-   * 
-   * @see java.util.List#get(int)
-   * @param index
-   *        Index of the requested object
-   * @return Named object
-   */
-  public NamedObject get(final int index)
-  {
-    return (NamedObject) sortedList.get(index);
-  }
-
-  /**
    * Add a named object to the list.
    * 
    * @param namedObject
@@ -116,6 +93,122 @@ public final class NamedObjectList
     {
       sortedList.add(namedObject);
     }
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#equals(java.lang.Object)
+   */
+  @Override
+  public boolean equals(final Object o)
+  {
+    if (this == o)
+    {
+      return true;
+    }
+
+    if (o == null)
+    {
+      return false;
+    }
+
+    if (o.getClass() != getClass())
+    {
+      return false;
+    }
+
+    final NamedObjectList other = (NamedObjectList) o;
+    if (sortedList == null)
+    {
+      if (other.sortedList != null)
+      {
+        return false;
+      }
+    }
+    else
+    {
+      if (!sortedList.equals(other.sortedList))
+      {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Gets the object at a given index.
+   * 
+   * @see java.util.List#get(int)
+   * @param index
+   *        Index of the requested object
+   * @return Named object
+   */
+  public NamedObject get(final int index)
+  {
+    return (NamedObject) sortedList.get(index);
+  }
+
+  /**
+   * Gets the map of named objects.
+   * 
+   * @return Map
+   */
+  public Map getMap()
+  {
+    return new HashMap(map);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#hashCode()
+   */
+  @Override
+  public int hashCode()
+  {
+    final int prime = 1000003;
+    int result = 0;
+    if (sortedList != null)
+    {
+      result = prime * result + sortedList.hashCode();
+    }
+
+    return result;
+  }
+
+  /**
+   * Looks up a named object by name.
+   * 
+   * @param name
+   *        Name
+   * @return Named object
+   */
+  public NamedObject lookup(final String name)
+  {
+    return (NamedObject) map.get(name);
+  }
+
+  /**
+   * Returns the number of elements in this list.
+   * 
+   * @return Number of elements in this list.
+   */
+  public int size()
+  {
+    return sortedList.size();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    return sortedList.toString();
   }
 
   /**
@@ -161,6 +254,16 @@ public final class NamedObjectList
   }
 
   /**
+   * Gets all named objects in the list, in sorted order.
+   * 
+   * @return All named objects
+   */
+  List getAll()
+  {
+    return new ArrayList(sortedList);
+  }
+
+  /**
    * Remove a named object by name.
    * 
    * @param name
@@ -179,38 +282,6 @@ public final class NamedObjectList
   }
 
   /**
-   * Gets all named objects in the list, in sorted order.
-   * 
-   * @return All named objects
-   */
-  List getAll()
-  {
-    return new ArrayList(sortedList);
-  }
-
-  /**
-   * Looks up a named object by name.
-   * 
-   * @param name
-   *        Name
-   * @return Named object
-   */
-  public NamedObject lookup(final String name)
-  {
-    return (NamedObject) map.get(name);
-  }
-
-  /**
-   * Returns the number of elements in this list.
-   * 
-   * @return Number of elements in this list.
-   */
-  public int size()
-  {
-    return sortedList.size();
-  }
-
-  /**
    * Sets the comparator, and re-sorts the list.
    * 
    * @param comparator
@@ -220,74 +291,6 @@ public final class NamedObjectList
   {
     this.comparator = comparator;
     Collections.sort(sortedList, comparator);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#toString()
-   */
-  public String toString()
-  {
-    return sortedList.toString();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#hashCode()
-   */
-  public int hashCode()
-  {
-    final int prime = 1000003;
-    int result = 0;
-    if (sortedList != null)
-    {
-      result = prime * result + sortedList.hashCode();
-    }
-
-    return result;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#equals(java.lang.Object)
-   */
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
-      return true;
-    }
-
-    if (o == null)
-    {
-      return false;
-    }
-
-    if (o.getClass() != getClass())
-    {
-      return false;
-    }
-
-    final NamedObjectList other = (NamedObjectList) o;
-    if (sortedList == null)
-    {
-      if (other.sortedList != null)
-      {
-        return false;
-      }
-    }
-    else
-    {
-      if (!sortedList.equals(other.sortedList))
-      {
-        return false;
-      }
-    }
-
-    return true;
   }
 
 }

@@ -31,13 +31,6 @@ public interface View
 {
 
   /**
-   * Specifies whether the view is updatable.
-   * 
-   * @return Whether the view is updatable.
-   */
-  boolean isUpdatable();
-
-  /**
    * Type of WITH CHECK OPTION. Is CASCADE if the original view was
    * created by using the WITH CHECK OPTION. Otherwise, NONE is
    * returned.
@@ -52,5 +45,12 @@ public interface View
    * @return Definition
    */
   String getDefinition();
+
+  /**
+   * Specifies whether the view is updatable.
+   * 
+   * @return Whether the view is updatable.
+   */
+  boolean isUpdatable();
 
 }

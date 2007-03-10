@@ -46,30 +46,25 @@ final class InformationSchemaViews
   }
 
   /**
-   * Gets the view definitions SQL from the additional configuration.
+   * Gets the table check constraints SQL from the additional
+   * configuration.
    * 
-   * @return View defnitions SQL.
+   * @return Table check constraints SQL.
    */
-  String getViewsSql()
+  String getCheckConstraintsSql()
   {
     return informationSchemaViewsSql
-      .getProperty("select.INFORMATION_SCHEMA.VIEWS");
-  }
-
-  boolean hasViewsSql()
-  {
-    return !Utilities.isBlank(getViewsSql());
+      .getProperty("select.INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
   }
 
   /**
-   * Gets the trigger definitions SQL from the additional configuration.
+   * Gets the index info SQL from the additional configuration.
    * 
-   * @return Trigger defnitions SQL.
+   * @return Index info constraints SQL.
    */
-  String getTriggersSql()
+  String getIndexInfoSql()
   {
-    return informationSchemaViewsSql
-      .getProperty("select.INFORMATION_SCHEMA.TRIGGERS");
+    return informationSchemaViewsSql.getProperty("getIndexInfo");
   }
 
   /**
@@ -84,11 +79,6 @@ final class InformationSchemaViews
       .getProperty("select.INFORMATION_SCHEMA.ROUTINES");
   }
 
-  boolean hasRoutinesSql()
-  {
-    return !Utilities.isBlank(getRoutinesSql());
-  }
-
   /**
    * Gets the table constraints SQL from the additional configuration.
    * 
@@ -100,21 +90,26 @@ final class InformationSchemaViews
       .getProperty("select.INFORMATION_SCHEMA.TABLE_CONSTRAINTS");
   }
 
-  boolean hasTableConstraintsSql()
+  /**
+   * Gets the trigger definitions SQL from the additional configuration.
+   * 
+   * @return Trigger defnitions SQL.
+   */
+  String getTriggersSql()
   {
-    return !Utilities.isBlank(getTableConstraintsSql());
+    return informationSchemaViewsSql
+      .getProperty("select.INFORMATION_SCHEMA.TRIGGERS");
   }
 
   /**
-   * Gets the table check constraints SQL from the additional
-   * configuration.
+   * Gets the view definitions SQL from the additional configuration.
    * 
-   * @return Table check constraints SQL.
+   * @return View defnitions SQL.
    */
-  String getCheckConstraintsSql()
+  String getViewsSql()
   {
     return informationSchemaViewsSql
-      .getProperty("select.INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
+      .getProperty("select.INFORMATION_SCHEMA.VIEWS");
   }
 
   boolean hasCheckConstraintsSql()
@@ -122,19 +117,24 @@ final class InformationSchemaViews
     return !Utilities.isBlank(getCheckConstraintsSql());
   }
 
-  /**
-   * Gets the index info SQL from the additional configuration.
-   * 
-   * @return Index info constraints SQL.
-   */
-  String getIndexInfoSql()
-  {
-    return informationSchemaViewsSql.getProperty("getIndexInfo");
-  }
-
   boolean hasIndexInfoSql()
   {
     return !Utilities.isBlank(getIndexInfoSql());
+  }
+
+  boolean hasRoutinesSql()
+  {
+    return !Utilities.isBlank(getRoutinesSql());
+  }
+
+  boolean hasTableConstraintsSql()
+  {
+    return !Utilities.isBlank(getTableConstraintsSql());
+  }
+
+  boolean hasViewsSql()
+  {
+    return !Utilities.isBlank(getViewsSql());
   }
 
 }

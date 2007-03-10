@@ -33,11 +33,6 @@ import schemacrawler.tools.schematext.SchemaTextDetailType;
 final class Command
 {
 
-  private final ToolType toolType;
-  private final SchemaTextDetailType schemaTextDetailType;
-  private final Operation operation;
-  private final String query;
-
   /**
    * Creates a command.
    * 
@@ -76,6 +71,12 @@ final class Command
 
     return new Command(toolType, schemaTextDetailType, operation, query);
   }
+
+  private final ToolType toolType;
+  private final SchemaTextDetailType schemaTextDetailType;
+  private final Operation operation;
+
+  private final String query;
 
   /**
    * Constructor.

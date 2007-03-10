@@ -55,21 +55,6 @@ public class ToolsExecutor
   private Properties additionalConnectionConfiguration = new Properties();
 
   /**
-   * Set additional connection (data source) specific configuration, if
-   * needed.
-   * 
-   * @param additionalConnectionConfiguration
-   *        Additional connection configuration.
-   */
-  public void setAdditionalConnectionConfiguration(final Properties additionalConnectionConfiguration)
-  {
-    if (additionalConnectionConfiguration != null)
-    {
-      this.additionalConnectionConfiguration = additionalConnectionConfiguration;
-    }
-  }
-
-  /**
    * {@inheritDoc}
    * 
    * @see schemacrawler.Executor#execute(schemacrawler.main.Options,
@@ -124,6 +109,21 @@ public class ToolsExecutor
                                                       additionalConnectionConfiguration,
                                                       crawlHandler);
       crawler.crawl(options.getSchemaCrawlerOptions());
+    }
+  }
+
+  /**
+   * Set additional connection (data source) specific configuration, if
+   * needed.
+   * 
+   * @param additionalConnectionConfiguration
+   *        Additional connection configuration.
+   */
+  public void setAdditionalConnectionConfiguration(final Properties additionalConnectionConfiguration)
+  {
+    if (additionalConnectionConfiguration != null)
+    {
+      this.additionalConnectionConfiguration = additionalConnectionConfiguration;
     }
   }
 

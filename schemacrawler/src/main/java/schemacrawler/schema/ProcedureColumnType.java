@@ -42,8 +42,57 @@ public final class ProcedureColumnType
       new ProcedureColumnType(DatabaseMetaData.procedureColumnResult, "result")
   };
 
+  // The declarations below are necessary for serialization
+  private static int nextOrdinal;
+  private static final ProcedureColumnType[] VALUES = ALL;
+
+  /**
+   * Find the enumeration value corresponding to the string.
+   * 
+   * @param id
+   *        int value of type
+   * @return Enumeration value
+   */
+  public static ProcedureColumnType valueOf(final int id)
+  {
+    ProcedureColumnType type = null;
+    for (final ProcedureColumnType element: ALL)
+    {
+      if (element.getId() == id)
+      {
+        type = element;
+        break;
+      }
+    }
+    return type;
+  }
+
+  /**
+   * Value of the enumeration from the code.
+   * 
+   * @param name
+   *        Code
+   * @return Enumeration value
+   */
+  public static ProcedureColumnType valueOf(final String name)
+  {
+    ProcedureColumnType type = null;
+    for (final ProcedureColumnType element: ALL)
+    {
+      if (element.getName().equalsIgnoreCase(name))
+      {
+        type = element;
+        break;
+      }
+    }
+    return type;
+  }
+
   private final transient int id;
+
   private final transient String name;
+
+  private final int ordinal;
 
   private ProcedureColumnType(final int id, final String name)
   {
@@ -77,58 +126,11 @@ public final class ProcedureColumnType
    * 
    * @see Object#toString()
    */
+  @Override
   public String toString()
   {
     return getName();
   }
-
-  /**
-   * Find the enumeration value corresponding to the string.
-   * 
-   * @param id
-   *        int value of type
-   * @return Enumeration value
-   */
-  public static ProcedureColumnType valueOf(final int id)
-  {
-    ProcedureColumnType type = null;
-    for (int i = 0; i < ALL.length; i++)
-    {
-      if (ALL[i].getId() == id)
-      {
-        type = ALL[i];
-        break;
-      }
-    }
-    return type;
-  }
-
-  /**
-   * Value of the enumeration from the code.
-   * 
-   * @param name
-   *        Code
-   * @return Enumeration value
-   */
-  public static ProcedureColumnType valueOf(final String name)
-  {
-    ProcedureColumnType type = null;
-    for (int i = 0; i < ALL.length; i++)
-    {
-      if (ALL[i].getName().equalsIgnoreCase(name))
-      {
-        type = ALL[i];
-        break;
-      }
-    }
-    return type;
-  }
-
-  // The declarations below are necessary for serialization
-  private static int nextOrdinal;
-  private final int ordinal;
-
-  private static final ProcedureColumnType[] VALUES = ALL;
 
   Object readResolve()
     throws ObjectStreamException

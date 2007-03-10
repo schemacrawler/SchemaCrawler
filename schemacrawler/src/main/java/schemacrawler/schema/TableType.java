@@ -62,8 +62,88 @@ public final class TableType
       SYNONYM,
   };
 
+  // The 4 declarations below are necessary for serialization
+  private static int nextOrdinal;
+  private static final TableType[] VALUES = ALL;
+
+  /**
+   * Converts an array of table types to an array of their corresponding
+   * string values.
+   * 
+   * @param tableTypes
+   *        Array of table types
+   * @return Array of string table types
+   */
+  public static String[] toStringArray(final TableType[] tableTypes)
+  {
+
+    if (tableTypes == null)
+    {
+      return new String[0];
+    }
+
+    final List tableTypeStrings = new ArrayList(tableTypes.length);
+    for (final TableType tableType: tableTypes)
+    {
+      if (tableType != null)
+      {
+        tableTypeStrings.add(tableType.toString());
+      }
+    }
+    return (String[]) tableTypeStrings.toArray(new String[tableTypeStrings
+      .size()]);
+  }
+
+  /**
+   * Find the enumeration value corresponding to the string.
+   * 
+   * @param tableTypeString
+   *        String value of table type
+   * @return Enumeration value
+   */
+  public static TableType valueOf(final String tableTypeString)
+  {
+    TableType tableType = ALL[0];
+    for (final TableType element: ALL)
+    {
+      if (element.toString().equalsIgnoreCase(tableTypeString.trim()))
+      {
+        tableType = element;
+        break;
+      }
+    }
+    return tableType;
+  }
+
+  /**
+   * Converts an array of string table types to an array of their
+   * corresponding enumeration values.
+   * 
+   * @param tableTypeStrings
+   *        Array of string table types
+   * @return Array of table types
+   */
+  public static TableType[] valueOf(final String[] tableTypeStrings)
+  {
+
+    if (tableTypeStrings == null || tableTypeStrings.length == 0)
+    {
+      return new TableType[0];
+    }
+
+    final List tableTypes = new ArrayList(tableTypeStrings.length);
+    for (final String tableTypeString: tableTypeStrings)
+    {
+      tableTypes.add(valueOf(tableTypeString));
+    }
+    return (TableType[]) tableTypes.toArray(new TableType[tableTypes.size()]);
+  }
+
   private final int id;
+
   private final String name;
+
+  private final int ordinal;
 
   private TableType(final String tableType)
   {
@@ -93,16 +173,6 @@ public final class TableType
   }
 
   /**
-   * Returns whether this table type represents a view.
-   * 
-   * @return Whether this table type represents a view
-   */
-  public boolean isView()
-  {
-    return id == VIEW.getId();
-  }
-
-  /**
    * Returns whether this table type represents a table.
    * 
    * @return Whether this table type represents a table
@@ -113,95 +183,25 @@ public final class TableType
   }
 
   /**
+   * Returns whether this table type represents a view.
+   * 
+   * @return Whether this table type represents a view
+   */
+  public boolean isView()
+  {
+    return id == VIEW.getId();
+  }
+
+  /**
    * {@inheritDoc}
    * 
    * @see Object#toString()
    */
+  @Override
   public String toString()
   {
     return name;
   }
-
-  /**
-   * Find the enumeration value corresponding to the string.
-   * 
-   * @param tableTypeString
-   *        String value of table type
-   * @return Enumeration value
-   */
-  public static TableType valueOf(final String tableTypeString)
-  {
-    TableType tableType = ALL[0];
-    for (int i = 0; i < ALL.length; i++)
-    {
-      if (ALL[i].toString().equalsIgnoreCase(tableTypeString.trim()))
-      {
-        tableType = ALL[i];
-        break;
-      }
-    }
-    return tableType;
-  }
-
-  /**
-   * Converts an array of string table types to an array of their
-   * corresponding enumeration values.
-   * 
-   * @param tableTypeStrings
-   *        Array of string table types
-   * @return Array of table types
-   */
-  public static TableType[] valueOf(final String[] tableTypeStrings)
-  {
-
-    if (tableTypeStrings == null || tableTypeStrings.length == 0)
-    {
-      return new TableType[0];
-    }
-
-    final List tableTypes = new ArrayList(tableTypeStrings.length);
-    for (int i = 0; i < tableTypeStrings.length; i++)
-    {
-      final String tableTypeString = tableTypeStrings[i];
-      tableTypes.add(valueOf(tableTypeString));
-    }
-    return (TableType[]) tableTypes.toArray(new TableType[tableTypes.size()]);
-  }
-
-  /**
-   * Converts an array of table types to an array of their corresponding
-   * string values.
-   * 
-   * @param tableTypes
-   *        Array of table types
-   * @return Array of string table types
-   */
-  public static String[] toStringArray(final TableType[] tableTypes)
-  {
-
-    if (tableTypes == null)
-    {
-      return new String[0];
-    }
-
-    final List tableTypeStrings = new ArrayList(tableTypes.length);
-    for (int i = 0; i < tableTypes.length; i++)
-    {
-      final TableType tableType = tableTypes[i];
-      if (tableType != null)
-      {
-        tableTypeStrings.add(tableType.toString());
-      }
-    }
-    return (String[]) tableTypeStrings.toArray(new String[tableTypeStrings
-      .size()]);
-  }
-
-  // The 4 declarations below are necessary for serialization
-  private static int nextOrdinal;
-  private final int ordinal;
-
-  private static final TableType[] VALUES = ALL;
 
   Object readResolve()
     throws ObjectStreamException

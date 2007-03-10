@@ -21,105 +21,26 @@
 package schemacrawler.schema;
 
 
-import java.io.ObjectStreamException;
-
 /**
  * Constraint type.
  */
-public final class ConditionTimingType
-  implements EnumType
+public enum ConditionTimingType
 {
 
-  private static final long serialVersionUID = -3033092069397416072L;
-
   /** Unknown */
-  public static final ConditionTimingType UNKNOWN = new ConditionTimingType("unknown");
+  UNKNOWN("unknown"),
   /** Before */
-  public static final ConditionTimingType BEFORE = new ConditionTimingType("BEFORE");
+  BEFORE("BEFORE"),
   /** Instead of */
-  public static final ConditionTimingType INSTEAD_OF = new ConditionTimingType("INSTEAD OF");
+  INSTEAD_OF("INSTEAD OF"),
   /** After */
-  public static final ConditionTimingType AFTER = new ConditionTimingType("AFTER");
+  AFTER("AFTER");
 
-  private static final ConditionTimingType[] ALL = {
-      UNKNOWN, BEFORE, INSTEAD_OF, AFTER,
-  };
-
-  private final int id;
   private final String name;
 
   private ConditionTimingType(final String typeName)
   {
-    ordinal = nextOrdinal++;
-    id = ordinal;
     name = typeName;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.EnumType#getId()
-   */
-  public int getId()
-  {
-    return id;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.EnumType#getName()
-   */
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  public String toString()
-  {
-    return name;
-  }
-
-  /**
-   * Find the enumeration value corresponding to the string.
-   * 
-   * @param typeString
-   *        String value of table type
-   * @return Enumeration value
-   */
-  public static ConditionTimingType valueOf(final String typeString)
-  {
-
-    ConditionTimingType checkOptionType = ALL[0];
-
-    for (int i = 0; i < ALL.length; i++)
-    {
-      if (ALL[i].toString().equalsIgnoreCase(typeString))
-      {
-        checkOptionType = ALL[i];
-        break;
-      }
-    }
-
-    return checkOptionType;
-
-  }
-
-  // The 4 declarations below are necessary for serialization
-  private static int nextOrdinal;
-  private final int ordinal;
-
-  private static final ConditionTimingType[] VALUES = ALL;
-
-  Object readResolve()
-    throws ObjectStreamException
-  {
-    return VALUES[ordinal]; // Canonicalize
   }
 
 }

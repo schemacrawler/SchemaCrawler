@@ -37,19 +37,6 @@ public final class SchemaTextFormatter
 {
 
   /**
-   * Formats the schema as plain text for output.
-   * 
-   * @param options
-   *        Options
-   */
-  SchemaTextFormatter(final SchemaTextOptions options)
-    throws SchemaCrawlerException
-  {
-    super(options, new PlainTextFormattingHelper(options.getOutputOptions()
-      .getOutputFormat()));
-  }
-
-  /**
    * Formats the schema as plain text for output. Contains a table
    * column inclusion rule as a special case for "grep" like
    * functionality.
@@ -73,10 +60,24 @@ public final class SchemaTextFormatter
   }
 
   /**
+   * Formats the schema as plain text for output.
+   * 
+   * @param options
+   *        Options
+   */
+  SchemaTextFormatter(final SchemaTextOptions options)
+    throws SchemaCrawlerException
+  {
+    super(options, new PlainTextFormattingHelper(options.getOutputOptions()
+      .getOutputFormat()));
+  }
+
+  /**
    * {@inheritDoc}
    * 
    * @see schemacrawler.crawl.CrawlHandler#end()
    */
+  @Override
   public void end()
     throws SchemaCrawlerException
   {
@@ -88,41 +89,49 @@ public final class SchemaTextFormatter
     super.end();
   }
 
+  @Override
   String getArrow()
   {
     return " --> ";
   }
 
+  @Override
   void handleColumnDataTypeEnd()
   {
     out.println();
   }
 
+  @Override
   void handleColumnDataTypesEnd()
   {
     out.println();
     out.println();
   }
 
+  @Override
   void handleColumnDataTypesStart()
   {
   }
 
+  @Override
   void handleColumnDataTypeStart()
   {
   }
 
+  @Override
   void handleDatabaseInfo(final DatabaseInfo databaseInfo)
   {
     FormatUtils.printDatabaseInfo(databaseInfo, out);
   }
 
+  @Override
   void handleDatabasePropertiesEnd()
   {
     out.println();
     out.println();
   }
 
+  @Override
   void handleDatabasePropertiesStart()
   {
   }
@@ -132,6 +141,7 @@ public final class SchemaTextFormatter
    * 
    * @see BaseSchemaTextFormatter#handleProcedureEnd()
    */
+  @Override
   void handleProcedureEnd()
   {
     out.println();
@@ -143,6 +153,7 @@ public final class SchemaTextFormatter
    * 
    * @see BaseSchemaTextFormatter#handleProcedureStart()
    */
+  @Override
   void handleProcedureStart()
   {
   }
@@ -152,6 +163,7 @@ public final class SchemaTextFormatter
    * 
    * @see BaseSchemaTextFormatter#handleTableEnd()
    */
+  @Override
   void handleTableEnd()
   {
     if (getSchemaTextDetailType() != SchemaTextDetailType.BRIEF)
@@ -166,6 +178,7 @@ public final class SchemaTextFormatter
    * 
    * @see BaseSchemaTextFormatter#handleTableStart()
    */
+  @Override
   void handleTableStart()
   {
   }

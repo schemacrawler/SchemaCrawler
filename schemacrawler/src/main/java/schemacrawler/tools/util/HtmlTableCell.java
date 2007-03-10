@@ -30,19 +30,13 @@ import sf.util.Utilities;
 final class HtmlTableCell
 {
 
-  private String styleClass;
+  private final String styleClass;
   private int colSpan = 1;
-  private String innerHtml;
+  private final String innerHtml;
 
   HtmlTableCell()
   {
     this(0, null, null);
-  }
-
-  HtmlTableCell(final String styleClass, final String innerHtml)
-  {
-    this.styleClass = styleClass;
-    this.innerHtml = innerHtml;
   }
 
   HtmlTableCell(final int colSpan,
@@ -54,11 +48,18 @@ final class HtmlTableCell
     this.innerHtml = innerHtml;
   }
 
+  HtmlTableCell(final String styleClass, final String innerHtml)
+  {
+    this.styleClass = styleClass;
+    this.innerHtml = innerHtml;
+  }
+
   /**
    * Converts the table cell to HTML.
    * 
    * @return HTML
    */
+  @Override
   public String toString()
   {
     final StringBuffer buffer = new StringBuffer();

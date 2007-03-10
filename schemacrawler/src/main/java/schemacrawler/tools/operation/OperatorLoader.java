@@ -34,22 +34,6 @@ import schemacrawler.tools.OutputFormat;
 public final class OperatorLoader
 {
 
-  private OperatorLoader()
-  {
-  }
-
-  /**
-   * Checks if the CrawlHandler mnemonic is valid.
-   * 
-   * @param operation
-   *        Mnemonic name for a CrawlHandler
-   * @return True if the mnemonic is known
-   */
-  private static boolean canLoad(final OperatorOptions options)
-  {
-    return options.getOperation() != null;
-  }
-
   /**
    * Instantiates a text formatter type of CrawlHandler from the
    * mnemonic string.
@@ -100,6 +84,22 @@ public final class OperatorLoader
 
     return handler;
 
+  }
+
+  /**
+   * Checks if the CrawlHandler mnemonic is valid.
+   * 
+   * @param operation
+   *        Mnemonic name for a CrawlHandler
+   * @return True if the mnemonic is known
+   */
+  private static boolean canLoad(final OperatorOptions options)
+  {
+    return options.getOperation() != null;
+  }
+
+  private OperatorLoader()
+  {
   }
 
 }

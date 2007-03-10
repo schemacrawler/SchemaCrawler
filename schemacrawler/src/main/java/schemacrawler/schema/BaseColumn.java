@@ -31,6 +31,20 @@ public interface BaseColumn
 {
 
   /**
+   * The number of fractional digits.
+   * 
+   * @return Number of fractional digits
+   */
+  int getDecimalDigits();
+
+  /**
+   * Ordinal position of the column in the table, starting at 1.
+   * 
+   * @return Ordinal position, starting at 1
+   */
+  int getOrdinalPosition();
+
+  /**
    * Column size. For char or date types this is the maximum number of
    * characters, for numeric or decimal types this is precision.
    * 
@@ -46,27 +60,6 @@ public interface BaseColumn
   ColumnDataType getType();
 
   /**
-   * The number of fractional digits.
-   * 
-   * @return Number of fractional digits
-   */
-  int getDecimalDigits();
-
-  /**
-   * Whether the column is nullable.
-   * 
-   * @return Whether the column is nullable
-   */
-  boolean isNullable();
-
-  /**
-   * Ordinal position of the column in the table, starting at 1.
-   * 
-   * @return Ordinal position, starting at 1
-   */
-  int getOrdinalPosition();
-
-  /**
    * Gets the width of the column, if the column width is required.
    * (Column width is not siginificant for column types such as TIME and
    * DATE.)
@@ -74,5 +67,12 @@ public interface BaseColumn
    * @return Column width as a String
    */
   String getWidth();
+
+  /**
+   * Whether the column is nullable.
+   * 
+   * @return Whether the column is nullable
+   */
+  boolean isNullable();
 
 }

@@ -31,6 +31,24 @@ public interface DataHandler
 {
 
   /**
+   * Handles the begin of the execution.
+   * 
+   * @throws QueryExecutorException
+   *         On an exception
+   */
+  void begin()
+    throws QueryExecutorException;
+
+  /**
+   * Handles the end of the execution.
+   * 
+   * @throws QueryExecutorException
+   *         On an exception
+   */
+  void end()
+    throws QueryExecutorException;
+
+  /**
    * Gets the output print writer.
    * 
    * @return Print writer
@@ -38,12 +56,14 @@ public interface DataHandler
   PrintWriter getPrintWriter();
 
   /**
-   * Handles the begin of the execution.
+   * Handles actual data.
    * 
+   * @param rows
+   *        Data from the execution.
    * @throws QueryExecutorException
    *         On an exception
    */
-  void begin()
+  void handleData(final ResultSet rows)
     throws QueryExecutorException;
 
   /**
@@ -66,26 +86,6 @@ public interface DataHandler
    *         On an exception
    */
   void handleTitle(final String title)
-    throws QueryExecutorException;
-
-  /**
-   * Handles actual data.
-   * 
-   * @param rows
-   *        Data from the execution.
-   * @throws QueryExecutorException
-   *         On an exception
-   */
-  void handleData(final ResultSet rows)
-    throws QueryExecutorException;
-
-  /**
-   * Handles the end of the execution.
-   * 
-   * @throws QueryExecutorException
-   *         On an exception
-   */
-  void end()
     throws QueryExecutorException;
 
 }

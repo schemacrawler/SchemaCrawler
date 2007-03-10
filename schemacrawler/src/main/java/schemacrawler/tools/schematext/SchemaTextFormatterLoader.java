@@ -32,22 +32,6 @@ import schemacrawler.tools.OutputOptions;
 public final class SchemaTextFormatterLoader
 {
 
-  private SchemaTextFormatterLoader()
-  {
-  }
-
-  /**
-   * Checks if the text formatter mnemonic is valid.
-   * 
-   * @param textFormatterName
-   *        Mnemonic name for a text formatter
-   * @return True if the mnemonic is known
-   */
-  private static boolean canLoad(final SchemaTextOptions options)
-  {
-    return options.getSchemaTextDetailType() != null;
-  }
-
   /**
    * Instantiates a text formatter from the mnemonic string.
    * 
@@ -80,6 +64,22 @@ public final class SchemaTextFormatterLoader
 
     return handler;
 
+  }
+
+  /**
+   * Checks if the text formatter mnemonic is valid.
+   * 
+   * @param textFormatterName
+   *        Mnemonic name for a text formatter
+   * @return True if the mnemonic is known
+   */
+  private static boolean canLoad(final SchemaTextOptions options)
+  {
+    return options.getSchemaTextDetailType() != null;
+  }
+
+  private SchemaTextFormatterLoader()
+  {
   }
 
 }

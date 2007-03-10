@@ -162,18 +162,6 @@ public class PlainTextFormattingHelper
     return Utilities.repeat("-", FormatUtils.MAX_LINE_LENGTH);
   }
 
-  private String getFieldSeparator()
-  {
-    if (outputFormat == OutputFormat.CSV)
-    {
-      return ",";
-    }
-    else
-    {
-      return "  ";
-    }
-  }
-
   private String format(final String text,
                         final int maxWidth,
                         final boolean alignLeft)
@@ -192,6 +180,18 @@ public class PlainTextFormattingHelper
       {
         return Utilities.padLeft(text, maxWidth);
       }
+    }
+  }
+
+  private String getFieldSeparator()
+  {
+    if (outputFormat == OutputFormat.CSV)
+    {
+      return ",";
+    }
+    else
+    {
+      return "  ";
     }
   }
 

@@ -63,14 +63,15 @@ final class MutableColumn
   }
 
   /**
-   * Setter for property default value.
+   * {@inheritDoc}
    * 
-   * @param defaultValue
-   *        New value of property default value.
+   * @see Column#getPrivileges()
    */
-  void setDefaultValue(final String defaultValue)
+  public Privilege[] getPrivileges()
   {
-    this.defaultValue = defaultValue;
+    final List allPrivileges = privileges.getAll();
+    return (Privilege[]) allPrivileges.toArray(new Privilege[allPrivileges
+      .size()]);
   }
 
   /**
@@ -81,6 +82,38 @@ final class MutableColumn
   public boolean isPartOfPrimaryKey()
   {
     return isPartOfPrimaryKey;
+  }
+
+  /**
+   * If the column has unique index.
+   * 
+   * @return If the column has a unique index.
+   */
+  public boolean isPartOfUniqueIndex()
+  {
+    return isPartOfUniqueIndex;
+  }
+
+  /**
+   * Adds a privilege to the collection.
+   * 
+   * @param privilege
+   *        Privilege
+   */
+  void addPrivilege(final Privilege privilege)
+  {
+    privileges.add(privilege);
+  }
+
+  /**
+   * Setter for property default value.
+   * 
+   * @param defaultValue
+   *        New value of property default value.
+   */
+  void setDefaultValue(final String defaultValue)
+  {
+    this.defaultValue = defaultValue;
   }
 
   /**
@@ -95,16 +128,6 @@ final class MutableColumn
   }
 
   /**
-   * If the column has unique index.
-   * 
-   * @return If the column has a unique index.
-   */
-  public boolean isPartOfUniqueIndex()
-  {
-    return isPartOfUniqueIndex;
-  }
-
-  /**
    * Sets true if this column is a unique index.
    * 
    * @param partOfUniqueIndex
@@ -113,29 +136,6 @@ final class MutableColumn
   void setPartOfUniqueIndex(final boolean partOfUniqueIndex)
   {
     isPartOfUniqueIndex = partOfUniqueIndex;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Column#getPrivileges()
-   */
-  public Privilege[] getPrivileges()
-  {
-    final List allPrivileges = privileges.getAll();
-    return (Privilege[]) allPrivileges.toArray(new Privilege[allPrivileges
-      .size()]);
-  }
-
-  /**
-   * Adds a privilege to the collection.
-   * 
-   * @param privilege
-   *        Privilege
-   */
-  void addPrivilege(final Privilege privilege)
-  {
-    privileges.add(privilege);
   }
 
 }

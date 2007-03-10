@@ -54,47 +54,40 @@ class MutableForeignKey
 
   /**
    * {@inheritDoc}
-   * 
-   * @see ForeignKey#getDeferrability()
+   * <p>
+   * Note: Since foreign keys are not always explicitly named in
+   * databases, the sorting routine orders the foreign keys by the names
+   * of the columns in the foreign keys.
+   * </p>
    */
-  public final ForeignKeyDeferrability getDeferrability()
+  @Override
+  public int compareTo(final Object obj)
   {
-    return deferrability;
-  }
+    final ForeignKey other = (ForeignKey) obj;
+    int comparison = 0;
+    final ForeignKeyColumnMap[] thisColumnPairs = getColumnPairs();
+    final ForeignKeyColumnMap[] otherColumnPairs = other.getColumnPairs();
 
-  final void setDeferrability(final ForeignKeyDeferrability deferrability)
-  {
-    this.deferrability = deferrability;
-  }
+    if (comparison == 0)
+    {
+      comparison = thisColumnPairs.length - otherColumnPairs.length;
+    }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see ForeignKey#getDeleteRule()
-   */
-  public final ForeignKeyUpdateRule getDeleteRule()
-  {
-    return deleteRule;
-  }
+    for (int i = 0; i < thisColumnPairs.length; i++)
+    {
+      final ForeignKeyColumnMap thisColumnPair = thisColumnPairs[i];
+      final ForeignKeyColumnMap otherColumnPair = otherColumnPairs[i];
+      if (comparison == 0)
+      {
+        comparison = thisColumnPair.compareTo(otherColumnPair);
+      }
+      else
+      {
+        break;
+      }
+    }
 
-  final void setDeleteRule(final ForeignKeyUpdateRule deleteRule)
-  {
-    this.deleteRule = deleteRule;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see ForeignKey#getUpdateRule()
-   */
-  public final ForeignKeyUpdateRule getUpdateRule()
-  {
-    return updateRule;
-  }
-
-  final void setUpdateRule(final ForeignKeyUpdateRule updateRule)
-  {
-    this.updateRule = updateRule;
+    return comparison;
   }
 
   /**
@@ -107,6 +100,36 @@ class MutableForeignKey
     final List allColumnPairs = columnPairs.getAll();
     return (ForeignKeyColumnMap[]) allColumnPairs
       .toArray(new ForeignKeyColumnMap[allColumnPairs.size()]);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see ForeignKey#getDeferrability()
+   */
+  public final ForeignKeyDeferrability getDeferrability()
+  {
+    return deferrability;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see ForeignKey#getDeleteRule()
+   */
+  public final ForeignKeyUpdateRule getDeleteRule()
+  {
+    return deleteRule;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see ForeignKey#getUpdateRule()
+   */
+  public final ForeignKeyUpdateRule getUpdateRule()
+  {
+    return updateRule;
   }
 
   /**
@@ -140,41 +163,19 @@ class MutableForeignKey
     addColumnPair(fkColumnPair);
   }
 
-  /**
-   * {@inheritDoc}
-   * <p>
-   * Note: Since foreign keys are not always explicitly named in
-   * databases, the sorting routine orders the foreign keys by the names
-   * of the columns in the foreign keys.
-   * </p>
-   */
-  public int compareTo(final Object obj)
+  final void setDeferrability(final ForeignKeyDeferrability deferrability)
   {
-    final ForeignKey other = (ForeignKey) obj;
-    int comparison = 0;
-    final ForeignKeyColumnMap[] thisColumnPairs = getColumnPairs();
-    final ForeignKeyColumnMap[] otherColumnPairs = other.getColumnPairs();
+    this.deferrability = deferrability;
+  }
 
-    if (comparison == 0)
-    {
-      comparison = thisColumnPairs.length - otherColumnPairs.length;
-    }
+  final void setDeleteRule(final ForeignKeyUpdateRule deleteRule)
+  {
+    this.deleteRule = deleteRule;
+  }
 
-    for (int i = 0; i < thisColumnPairs.length; i++)
-    {
-      final ForeignKeyColumnMap thisColumnPair = thisColumnPairs[i];
-      final ForeignKeyColumnMap otherColumnPair = otherColumnPairs[i];
-      if (comparison == 0)
-      {
-        comparison = thisColumnPair.compareTo(otherColumnPair);
-      }
-      else
-      {
-        break;
-      }
-    }
-
-    return comparison;
+  final void setUpdateRule(final ForeignKeyUpdateRule updateRule)
+  {
+    this.updateRule = updateRule;
   }
 
 }

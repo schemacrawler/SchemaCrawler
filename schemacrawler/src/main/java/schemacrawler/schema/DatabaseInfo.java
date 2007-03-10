@@ -34,6 +34,27 @@ public interface DatabaseInfo
 {
 
   /**
+   * Catalog name.
+   * 
+   * @return Catalog name
+   */
+  String getCatalog();
+
+  /**
+   * ColumnDataTypes.
+   * 
+   * @return ColumnDataType
+   */
+  ColumnDataType[] getColumnDataTypes();
+
+  /**
+   * Database connection URL.
+   * 
+   * @return Database connection URL.
+   */
+  String getConnectionUrl();
+
+  /**
    * Name of the driver.
    * 
    * @return Driver name
@@ -69,25 +90,11 @@ public interface DatabaseInfo
   String getProductVersion();
 
   /**
-   * Database connection URL.
+   * Gets all database properties.
    * 
-   * @return Database connection URL.
+   * @return Map of properties
    */
-  String getConnectionUrl();
-
-  /**
-   * Schema pattern.
-   * 
-   * @return Schema pattern.
-   */
-  String getSchemaPattern();
-
-  /**
-   * Catalog name.
-   * 
-   * @return Catalog name
-   */
-  String getCatalog();
+  Map getProperties();
 
   /**
    * Gets a database property.
@@ -99,17 +106,10 @@ public interface DatabaseInfo
   Object getProperty(String name);
 
   /**
-   * Gets all database properties.
+   * Schema pattern.
    * 
-   * @return Map of properties
+   * @return Schema pattern.
    */
-  Map getProperties();
-
-  /**
-   * ColumnDataTypes.
-   * 
-   * @return ColumnDataType
-   */
-  ColumnDataType[] getColumnDataTypes();
+  String getSchemaPattern();
 
 }

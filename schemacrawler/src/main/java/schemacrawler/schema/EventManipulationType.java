@@ -21,105 +21,26 @@
 package schemacrawler.schema;
 
 
-import java.io.ObjectStreamException;
-
 /**
  * Constraint type.
  */
-public final class EventManipulationType
-  implements EnumType
+public enum EventManipulationType
 {
 
-  private static final long serialVersionUID = 4767973714560552564L;
-
   /** Unknown */
-  public static final EventManipulationType UNKNOWN = new EventManipulationType("unknown");
+  UNKNOWN("unknown"),
   /** Insert */
-  public static final EventManipulationType INSERT = new EventManipulationType("INSERT");
+  INSERT("INSERT"),
   /** Delete */
-  public static final EventManipulationType DELETE = new EventManipulationType("DELETE");
+  DELETE("DELETE"),
   /** Update */
-  public static final EventManipulationType UPDATE = new EventManipulationType("UPDATE");
+  UPDATE("UPDATE");
 
-  private static final EventManipulationType[] ALL = {
-      UNKNOWN, INSERT, DELETE, UPDATE,
-  };
-
-  private final int id;
   private final String name;
 
   private EventManipulationType(final String typeName)
   {
-    ordinal = nextOrdinal++;
-    id = ordinal;
     name = typeName;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.EnumType#getId()
-   */
-  public int getId()
-  {
-    return id;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.EnumType#getName()
-   */
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  public String toString()
-  {
-    return name;
-  }
-
-  /**
-   * Find the enumeration value corresponding to the string.
-   * 
-   * @param typeString
-   *        String value of table type
-   * @return Enumeration value
-   */
-  public static EventManipulationType valueOf(final String typeString)
-  {
-
-    EventManipulationType checkOptionType = ALL[0];
-
-    for (int i = 0; i < ALL.length; i++)
-    {
-      if (ALL[i].toString().equalsIgnoreCase(typeString))
-      {
-        checkOptionType = ALL[i];
-        break;
-      }
-    }
-
-    return checkOptionType;
-
-  }
-
-  // The 4 declarations below are necessary for serialization
-  private static int nextOrdinal;
-  private final int ordinal;
-
-  private static final EventManipulationType[] VALUES = ALL;
-
-  Object readResolve()
-    throws ObjectStreamException
-  {
-    return VALUES[ordinal]; // Canonicalize
   }
 
 }

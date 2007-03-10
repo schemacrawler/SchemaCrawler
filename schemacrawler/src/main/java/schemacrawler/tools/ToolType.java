@@ -31,12 +31,11 @@ public final class ToolType
   implements Serializable
 {
 
-  private static final long serialVersionUID = 4049642278194655797L;
-
   /**
    * 
    */
   public static final ToolType SCHEMA_TEXT = new ToolType("text");
+
   /**
    * 
    */
@@ -45,18 +44,16 @@ public final class ToolType
    * 
    */
   public static final ToolType DATA_TEXT = new ToolType("datatext");
+  private static final long serialVersionUID = 4049642278194655797L;
 
   private static final ToolType[] TOOL_TYPE_ALL = {
       SCHEMA_TEXT, OPERATION, DATA_TEXT,
   };
 
-  private final transient String toolType;
+  // The 4 declarations below are necessary for serialization
+  private static int nextOrdinal;
 
-  private ToolType(final String indexType)
-  {
-    ordinal = nextOrdinal++;
-    toolType = indexType;
-  }
+  private static final ToolType[] VALUES = TOOL_TYPE_ALL;
 
   /**
    * Find the enumeration value corresponding to the string.
@@ -68,15 +65,25 @@ public final class ToolType
   public static ToolType valueOf(final String toolTypeString)
   {
     ToolType toolType = null;
-    for (int i = 0; i < TOOL_TYPE_ALL.length; i++)
+    for (final ToolType element: TOOL_TYPE_ALL)
     {
-      if (TOOL_TYPE_ALL[i].toolType.equalsIgnoreCase(toolTypeString))
+      if (element.toolType.equalsIgnoreCase(toolTypeString))
       {
-        toolType = TOOL_TYPE_ALL[i];
+        toolType = element;
         break;
       }
     }
     return toolType;
+  }
+
+  private final transient String toolType;
+
+  private final int ordinal;
+
+  private ToolType(final String indexType)
+  {
+    ordinal = nextOrdinal++;
+    toolType = indexType;
   }
 
   /**
@@ -84,16 +91,11 @@ public final class ToolType
    * 
    * @see Object#toString()
    */
+  @Override
   public String toString()
   {
     return toolType;
   }
-
-  // The 4 declarations below are necessary for serialization
-  private static int nextOrdinal;
-  private final int ordinal;
-
-  private static final ToolType[] VALUES = TOOL_TYPE_ALL;
 
   Object readResolve()
     throws ObjectStreamException

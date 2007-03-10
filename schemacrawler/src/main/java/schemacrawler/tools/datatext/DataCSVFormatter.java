@@ -44,6 +44,49 @@ final class DataCSVFormatter
   }
 
   /**
+   * Handles a row output.
+   * 
+   * @param columnNames
+   *        Names of the columns.
+   * @param columnData
+   *        Column data.
+   */
+  @Override
+  public void handleRow(final String[] columnNames, final String[] columnData)
+  {
+    printRowCsv(columnData);
+    out.flush();
+  }
+
+  /**
+   *
+   */
+  @Override
+  public void handleRowsBegin()
+  {
+
+  }
+
+  /**
+   *
+   */
+  @Override
+  public void handleRowsEnd()
+  {
+    out.println();
+  }
+
+  /**
+   * @param columnNames
+   *        Names of the columns.
+   */
+  @Override
+  public void handleRowsHeader(final String[] columnNames)
+  {
+    printRowCsv(columnNames);
+  }
+
+  /**
    * Handles metadata information.
    * 
    * @param title
@@ -55,45 +98,6 @@ final class DataCSVFormatter
     out.println(title);
     out.println(Utilities.repeat("-", FormatUtils.MAX_LINE_LENGTH));
     out.flush();
-  }
-
-  /**
-   * @param columnNames
-   *        Names of the columns.
-   */
-  public void handleRowsHeader(final String[] columnNames)
-  {
-    printRowCsv(columnNames);
-  }
-
-  /**
-   * Handles a row output.
-   * 
-   * @param columnNames
-   *        Names of the columns.
-   * @param columnData
-   *        Column data.
-   */
-  public void handleRow(final String[] columnNames, final String[] columnData)
-  {
-    printRowCsv(columnData);
-    out.flush();
-  }
-
-  /**
-   *
-   */
-  public void handleRowsEnd()
-  {
-    out.println();
-  }
-
-  /**
-   *
-   */
-  public void handleRowsBegin()
-  {
-
   }
 
   /**

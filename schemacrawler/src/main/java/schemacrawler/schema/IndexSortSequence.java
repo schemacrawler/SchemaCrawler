@@ -39,8 +39,57 @@ public final class IndexSortSequence
       new IndexSortSequence("descending", "D")
   };
 
+  // The 4 declarations below are necessary for serialization
+  private static int nextOrdinal;
+  private static final IndexSortSequence[] VALUES = INDEX_SORT_SEQUENCE_ALL;
+
+  /**
+   * Value of the enumeration from the code.
+   * 
+   * @param sortSequenceCode
+   *        Code
+   * @return Enumeration value
+   */
+  public static IndexSortSequence valueOf(final String sortSequenceCode)
+  {
+    IndexSortSequence indexSortSequence = INDEX_SORT_SEQUENCE_ALL[0];
+    for (final IndexSortSequence element: INDEX_SORT_SEQUENCE_ALL)
+    {
+      if (element.getIndexSortSequence().equalsIgnoreCase(sortSequenceCode))
+      {
+        indexSortSequence = element;
+        break;
+      }
+    }
+    return indexSortSequence;
+  }
+
+  /**
+   * Find the enumeration value corresponding to the string.
+   * 
+   * @param sortSequenceCode
+   *        String value of sort sequence
+   * @return Enumeration value
+   */
+  public static IndexSortSequence valueOfFromCode(final String sortSequenceCode)
+  {
+    IndexSortSequence indexSortSequence = INDEX_SORT_SEQUENCE_ALL[0];
+    for (final IndexSortSequence element: INDEX_SORT_SEQUENCE_ALL)
+    {
+      if (element.getIndexSortSequenceCode().equalsIgnoreCase(sortSequenceCode))
+      {
+        indexSortSequence = element;
+        break;
+      }
+    }
+    return indexSortSequence;
+  }
+
   private final transient String indexSortSequence;
+
   private final transient String indexSortSequenceCode;
+
+  private final int ordinal;
 
   private IndexSortSequence(final String indexSortSequence,
                             final String indexSortSequenceCode)
@@ -75,60 +124,11 @@ public final class IndexSortSequence
    * 
    * @see Object#toString()
    */
+  @Override
   public String toString()
   {
     return indexSortSequence;
   }
-
-  /**
-   * Find the enumeration value corresponding to the string.
-   * 
-   * @param sortSequenceCode
-   *        String value of sort sequence
-   * @return Enumeration value
-   */
-  public static IndexSortSequence valueOfFromCode(final String sortSequenceCode)
-  {
-    IndexSortSequence indexSortSequence = INDEX_SORT_SEQUENCE_ALL[0];
-    for (int i = 0; i < INDEX_SORT_SEQUENCE_ALL.length; i++)
-    {
-      if (INDEX_SORT_SEQUENCE_ALL[i].getIndexSortSequenceCode()
-        .equalsIgnoreCase(sortSequenceCode))
-      {
-        indexSortSequence = INDEX_SORT_SEQUENCE_ALL[i];
-        break;
-      }
-    }
-    return indexSortSequence;
-  }
-
-  /**
-   * Value of the enumeration from the code.
-   * 
-   * @param sortSequenceCode
-   *        Code
-   * @return Enumeration value
-   */
-  public static IndexSortSequence valueOf(final String sortSequenceCode)
-  {
-    IndexSortSequence indexSortSequence = INDEX_SORT_SEQUENCE_ALL[0];
-    for (int i = 0; i < INDEX_SORT_SEQUENCE_ALL.length; i++)
-    {
-      if (INDEX_SORT_SEQUENCE_ALL[i].getIndexSortSequence()
-        .equalsIgnoreCase(sortSequenceCode))
-      {
-        indexSortSequence = INDEX_SORT_SEQUENCE_ALL[i];
-        break;
-      }
-    }
-    return indexSortSequence;
-  }
-
-  // The 4 declarations below are necessary for serialization
-  private static int nextOrdinal;
-  private final int ordinal;
-
-  private static final IndexSortSequence[] VALUES = INDEX_SORT_SEQUENCE_ALL;
 
   Object readResolve()
     throws ObjectStreamException

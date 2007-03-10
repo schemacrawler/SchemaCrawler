@@ -48,11 +48,10 @@ final class MutableColumnDataType
 
     final Map javaSqlTypes = new HashMap();
     final Field[] staticFields = Types.class.getFields();
-    for (int i = 0; i < staticFields.length; i++)
+    for (final Field field: staticFields)
     {
       try
       {
-        final Field field = staticFields[i];
         final String fieldName = field.getName();
         final Integer fieldValue = (Integer) field.get(null);
         javaSqlTypes.put(fieldValue, fieldName);
@@ -100,76 +99,11 @@ final class MutableColumnDataType
   }
 
   /**
-   * @return Returns the userDefined.
-   */
-  public boolean isUserDefined()
-  {
-    return userDefined;
-  }
-
-  /**
-   * @param userDefined
-   *        The userDefined to set.
-   */
-  void setUserDefined(final boolean userDefined)
-  {
-    this.userDefined = userDefined;
-  }
-
-  void setType(final int type)
-  {
-    this.type = type;
-  }
-
-  /**
    * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.ColumnDataType#getType()
    */
-  public int getType()
+  public ColumnDataType getBaseType()
   {
-    return type;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.ColumnDataType#getTypeName()
-   */
-  public String getTypeName()
-  {
-    String typeName = (String) JAVA_SQL_TYPES.get(new Integer(type));
-    if (typeName == null)
-    {
-      typeName = "<UNKNOWN>";
-    }
-    return typeName;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.ColumnDataType#getDatabaseSpecificTypeName()
-   */
-  public String getDatabaseSpecificTypeName()
-  {
-    return getName();
-  }
-
-  /**
-   * @return Returns the autoIncremented.
-   */
-  public boolean isAutoIncrementable()
-  {
-    return autoIncrementable;
-  }
-
-  /**
-   * @return Returns the caseSensitive.
-   */
-  public boolean isCaseSensitive()
-  {
-    return caseSensitive;
+    return baseType;
   }
 
   /**
@@ -181,11 +115,13 @@ final class MutableColumnDataType
   }
 
   /**
-   * @return Returns the fixedPrecisionScale.
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ColumnDataType#getDatabaseSpecificTypeName()
    */
-  public boolean isFixedPrecisionScale()
+  public String getDatabaseSpecificTypeName()
   {
-    return fixedPrecisionScale;
+    return getName();
   }
 
   /**
@@ -229,14 +165,6 @@ final class MutableColumnDataType
   }
 
   /**
-   * @return Returns the nullable.
-   */
-  public boolean isNullable()
-  {
-    return nullable;
-  }
-
-  /**
    * @return Returns the numPrecisionRadix.
    */
   public int getNumPrecisionRadix()
@@ -261,11 +189,128 @@ final class MutableColumnDataType
   }
 
   /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ColumnDataType#getType()
+   */
+  public int getType()
+  {
+    return type;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public String getTypeClassName()
+  {
+    return typeClassName;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ColumnDataType#getTypeName()
+   */
+  public String getTypeName()
+  {
+    String typeName = (String) JAVA_SQL_TYPES.get(new Integer(type));
+    if (typeName == null)
+    {
+      typeName = "<UNKNOWN>";
+    }
+    return typeName;
+  }
+
+  /**
+   * @return Returns the autoIncremented.
+   */
+  public boolean isAutoIncrementable()
+  {
+    return autoIncrementable;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean isBinaryType()
+  {
+    return type == Types.CLOB || type == Types.BLOB
+           || type == Types.LONGVARBINARY || type == Types.OTHER;
+  }
+
+  /**
+   * @return Returns the caseSensitive.
+   */
+  public boolean isCaseSensitive()
+  {
+    return caseSensitive;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean isCharacterType()
+  {
+    return type == Types.CHAR || type == Types.LONGVARCHAR
+           || type == Types.VARCHAR || type == Types.CLOB;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean isDateType()
+  {
+    return type == Types.TIMESTAMP || type == Types.TIME || type == Types.DATE;
+  }
+
+  /**
+   * @return Returns the fixedPrecisionScale.
+   */
+  public boolean isFixedPrecisionScale()
+  {
+    return fixedPrecisionScale;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean isIntegralType()
+  {
+    return type == Types.INTEGER || type == Types.BIGINT
+           || type == Types.SMALLINT || type == Types.TINYINT;
+  }
+
+  /**
+   * @return Returns the nullable.
+   */
+  public boolean isNullable()
+  {
+    return nullable;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean isRealType()
+  {
+    return type == Types.DECIMAL || type == Types.FLOAT || type == Types.REAL
+           || type == Types.DOUBLE || type == Types.NUMERIC;
+  }
+
+  /**
    * @return Returns the unsignedAttribute.
    */
   public boolean isUnsigned()
   {
     return unsigned;
+  }
+
+  /**
+   * @return Returns the userDefined.
+   */
+  public boolean isUserDefined()
+  {
+    return userDefined;
   }
 
   /**
@@ -275,6 +320,11 @@ final class MutableColumnDataType
   void setAutoIncrementable(final boolean autoIncrementable)
   {
     this.autoIncrementable = autoIncrementable;
+  }
+
+  void setBaseType(final ColumnDataType baseType)
+  {
+    this.baseType = baseType;
   }
 
   /**
@@ -385,6 +435,16 @@ final class MutableColumnDataType
     this.searchable = SearchableType.valueOf(searchable);
   }
 
+  void setType(final int type)
+  {
+    this.type = type;
+  }
+
+  void setTypeClassName(final String typeClassName)
+  {
+    this.typeClassName = typeClassName;
+  }
+
   /**
    * @param unsignedAttribute
    *        The unsignedAttribute to set.
@@ -395,73 +455,12 @@ final class MutableColumnDataType
   }
 
   /**
-   * {@inheritDoc}
+   * @param userDefined
+   *        The userDefined to set.
    */
-  public boolean isCharacterType()
+  void setUserDefined(final boolean userDefined)
   {
-    return type == Types.CHAR || type == Types.LONGVARCHAR
-           || type == Types.VARCHAR || type == Types.CLOB;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public boolean isRealType()
-  {
-    return type == Types.DECIMAL || type == Types.FLOAT || type == Types.REAL
-           || type == Types.DOUBLE || type == Types.NUMERIC;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public boolean isBinaryType()
-  {
-    return type == Types.CLOB || type == Types.BLOB
-           || type == Types.LONGVARBINARY || type == Types.OTHER;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public boolean isIntegralType()
-  {
-    return type == Types.INTEGER || type == Types.BIGINT
-           || type == Types.SMALLINT || type == Types.TINYINT;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public boolean isDateType()
-  {
-    return type == Types.TIMESTAMP || type == Types.TIME || type == Types.DATE;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public ColumnDataType getBaseType()
-  {
-    return baseType;
-  }
-
-  void setBaseType(final ColumnDataType baseType)
-  {
-    this.baseType = baseType;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public String getTypeClassName()
-  {
-    return typeClassName;
-  }
-
-  void setTypeClassName(final String typeClassName)
-  {
-    this.typeClassName = typeClassName;
+    this.userDefined = userDefined;
   }
 
 }

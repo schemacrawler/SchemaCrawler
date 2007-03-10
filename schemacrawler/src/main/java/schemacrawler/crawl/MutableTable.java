@@ -64,43 +64,15 @@ class MutableTable
   }
 
   /**
-   * Sets the table type.
-   * 
-   * @param type
-   *        Table type
-   */
-  void setType(final TableType type)
-  {
-    if (type == null)
-    {
-      throw new IllegalArgumentException("Null table type");
-    }
-    this.type = type;
-  }
-
-  /**
    * {@inheritDoc}
    * 
-   * @see Table#getType()
+   * @see Table#getCheckConstraints()
    */
-  public TableType getType()
+  public CheckConstraint[] getCheckConstraints()
   {
-    return type;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Table#getPrimaryKey()
-   */
-  public PrimaryKey getPrimaryKey()
-  {
-    return primaryKey;
-  }
-
-  void setPrimaryKey(final PrimaryKey primaryKey)
-  {
-    this.primaryKey = primaryKey;
+    final List allCheckConstraints = checkConstraints.getAll();
+    return (CheckConstraint[]) allCheckConstraints
+      .toArray(new CheckConstraint[allCheckConstraints.size()]);
   }
 
   /**
@@ -112,11 +84,6 @@ class MutableTable
   {
     final List allColumns = columns.getAll();
     return (Column[]) allColumns.toArray(new Column[allColumns.size()]);
-  }
-
-  NamedObjectList getColumnsList()
-  {
-    return columns;
   }
 
   /**
@@ -146,34 +113,6 @@ class MutableTable
   }
 
   /**
-   * Adds a column.
-   * 
-   * @param column
-   *        Column
-   */
-  void addColumn(final Column column)
-  {
-    columns.add(column);
-  }
-
-  /**
-   * Looks up a column by name.
-   * 
-   * @param columnName
-   *        Column name
-   * @return Column, if found, or null
-   */
-  Column lookupColumn(final String columnName)
-  {
-    return (Column) columns.lookup(columnName);
-  }
-
-  void setColumnComparator(final SerializableComparator comparator)
-  {
-    columns.setComparator(comparator);
-  }
-
-  /**
    * {@inheritDoc}
    * 
    * @see Table#getForeignKeys()
@@ -183,22 +122,6 @@ class MutableTable
     final List allForeignKeys = foreignKeys.getAll();
     return (ForeignKey[]) allForeignKeys.toArray(new ForeignKey[allForeignKeys
       .size()]);
-  }
-
-  /**
-   * Adds a foreign key.
-   * 
-   * @param foreignKey
-   *        Foreign key
-   */
-  void addForeignKey(final ForeignKey foreignKey)
-  {
-    foreignKeys.add(foreignKey);
-  }
-
-  void setForeignKeyComparator(final SerializableComparator comparator)
-  {
-    foreignKeys.setComparator(comparator);
   }
 
   /**
@@ -222,74 +145,13 @@ class MutableTable
   }
 
   /**
-   * Adds an index.
-   * 
-   * @param index
-   *        Index
-   */
-  void addIndex(final Index index)
-  {
-    indices.add(index);
-  }
-
-  void setIndexComparator(final SerializableComparator comparator)
-  {
-    indices.setComparator(comparator);
-  }
-
-  /**
    * {@inheritDoc}
    * 
-   * @see Table#getCheckConstraints()
+   * @see Table#getPrimaryKey()
    */
-  public CheckConstraint[] getCheckConstraints()
+  public PrimaryKey getPrimaryKey()
   {
-    final List allCheckConstraints = checkConstraints.getAll();
-    return (CheckConstraint[]) allCheckConstraints
-      .toArray(new CheckConstraint[allCheckConstraints.size()]);
-  }
-
-  /**
-   * Adds an check constraints.
-   * 
-   * @param checkConstraints
-   *        Check constraints
-   */
-  void addCheckConstraint(final CheckConstraint checkConstraint)
-  {
-    checkConstraints.add(checkConstraint);
-  }
-
-  void setCheckConstraintComparator(final SerializableComparator comparator)
-  {
-    checkConstraints.setComparator(comparator);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Table#getTriggers()
-   */
-  public Trigger[] getTriggers()
-  {
-    final List allTriggers = triggers.getAll();
-    return (Trigger[]) allTriggers.toArray(new Trigger[allTriggers.size()]);
-  }
-
-  /**
-   * Adds an trigger.
-   * 
-   * @param trigger
-   *        Trigger
-   */
-  void addTrigger(final Trigger trigger)
-  {
-    triggers.add(trigger);
-  }
-
-  void setTriggerComparator(final SerializableComparator comparator)
-  {
-    triggers.setComparator(comparator);
+    return primaryKey;
   }
 
   /**
@@ -305,6 +167,71 @@ class MutableTable
   }
 
   /**
+   * {@inheritDoc}
+   * 
+   * @see Table#getTriggers()
+   */
+  public Trigger[] getTriggers()
+  {
+    final List allTriggers = triggers.getAll();
+    return (Trigger[]) allTriggers.toArray(new Trigger[allTriggers.size()]);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Table#getType()
+   */
+  public TableType getType()
+  {
+    return type;
+  }
+
+  /**
+   * Adds an check constraints.
+   * 
+   * @param checkConstraints
+   *        Check constraints
+   */
+  void addCheckConstraint(final CheckConstraint checkConstraint)
+  {
+    checkConstraints.add(checkConstraint);
+  }
+
+  /**
+   * Adds a column.
+   * 
+   * @param column
+   *        Column
+   */
+  void addColumn(final Column column)
+  {
+    columns.add(column);
+  }
+
+  /**
+   * Adds a foreign key.
+   * 
+   * @param foreignKey
+   *        Foreign key
+   */
+  void addForeignKey(final ForeignKey foreignKey)
+  {
+    foreignKeys.add(foreignKey);
+  }
+
+  /**
+   * Adds an index.
+   * 
+   * @param index
+   *        Index
+   */
+  void addIndex(final Index index)
+  {
+    indices.add(index);
+  }
+
+  /**
    * Adds a privilege.
    * 
    * @param privilege
@@ -313,6 +240,79 @@ class MutableTable
   void addPrivilege(final Privilege privilege)
   {
     privileges.add(privilege);
+  }
+
+  /**
+   * Adds an trigger.
+   * 
+   * @param trigger
+   *        Trigger
+   */
+  void addTrigger(final Trigger trigger)
+  {
+    triggers.add(trigger);
+  }
+
+  NamedObjectList getColumnsList()
+  {
+    return columns;
+  }
+
+  /**
+   * Looks up a column by name.
+   * 
+   * @param columnName
+   *        Column name
+   * @return Column, if found, or null
+   */
+  Column lookupColumn(final String columnName)
+  {
+    return (Column) columns.lookup(columnName);
+  }
+
+  void setCheckConstraintComparator(final SerializableComparator comparator)
+  {
+    checkConstraints.setComparator(comparator);
+  }
+
+  void setColumnComparator(final SerializableComparator comparator)
+  {
+    columns.setComparator(comparator);
+  }
+
+  void setForeignKeyComparator(final SerializableComparator comparator)
+  {
+    foreignKeys.setComparator(comparator);
+  }
+
+  void setIndexComparator(final SerializableComparator comparator)
+  {
+    indices.setComparator(comparator);
+  }
+
+  void setPrimaryKey(final PrimaryKey primaryKey)
+  {
+    this.primaryKey = primaryKey;
+  }
+
+  void setTriggerComparator(final SerializableComparator comparator)
+  {
+    triggers.setComparator(comparator);
+  }
+
+  /**
+   * Sets the table type.
+   * 
+   * @param type
+   *        Table type
+   */
+  void setType(final TableType type)
+  {
+    if (type == null)
+    {
+      throw new IllegalArgumentException("Null table type");
+    }
+    this.type = type;
   }
 
 }

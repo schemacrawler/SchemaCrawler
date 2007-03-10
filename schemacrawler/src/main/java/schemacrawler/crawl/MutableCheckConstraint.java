@@ -46,16 +46,21 @@ class MutableCheckConstraint
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schema.CheckConstraint#getDefinition()
+   */
+  public String getDefinition()
+  {
+    return definition;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see schemacrawler.schema.CheckConstraint#isDeferrable()
    */
   public boolean isDeferrable()
   {
     return deferrable;
-  }
-
-  void setDeferrable(final boolean deferrable)
-  {
-    this.deferrable = deferrable;
   }
 
   /**
@@ -68,24 +73,19 @@ class MutableCheckConstraint
     return initiallyDeferred;
   }
 
-  void setInitiallyDeferred(final boolean initiallyDeferred)
+  void setDeferrable(final boolean deferrable)
   {
-    this.initiallyDeferred = initiallyDeferred;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.CheckConstraint#getDefinition()
-   */
-  public String getDefinition()
-  {
-    return definition;
+    this.deferrable = deferrable;
   }
 
   void setDefinition(final String definition)
   {
     this.definition = definition;
+  }
+
+  void setInitiallyDeferred(final boolean initiallyDeferred)
+  {
+    this.initiallyDeferred = initiallyDeferred;
   }
 
 }

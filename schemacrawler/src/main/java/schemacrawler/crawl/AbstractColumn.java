@@ -49,67 +49,23 @@ abstract class AbstractColumn
 
   /**
    * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.BaseColumn#getSize()
    */
-  public final int getSize()
+  @Override
+  public int compareTo(final Object obj)
   {
-    return size;
-  }
+    final BaseColumn other = (BaseColumn) obj;
+    int comparison = 0;
 
-  /**
-   * Sets the column size.
-   * 
-   * @param size
-   *        Size of the column
-   */
-  final void setSize(final int size)
-  {
-    this.size = size;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.BaseColumn#getType()
-   */
-  public final ColumnDataType getType()
-  {
-    return dataType;
-  }
-
-  /**
-   * Sets the column's data type.
-   * 
-   * @param columnDataType
-   *        Column data type
-   */
-  final void setType(final ColumnDataType columnDataType)
-  {
-    dataType = columnDataType;
-  }
-
-  /**
-   * Creates a data type from the JDBC data type id, and the database
-   * specific type name.
-   * 
-   * @param jdbcDataType
-   *        JDBC data type
-   * @param databaseSpecificTypeName
-   *        Database specific type name
-   */
-  final void lookupAndSetDataType(final int jdbcDataType,
-                                  final String databaseSpecificTypeName,
-                                  final NamedObjectList columnDataTypes)
-  {
-    MutableColumnDataType columnDataType = (MutableColumnDataType) columnDataTypes
-      .lookup(databaseSpecificTypeName);
-    if (columnDataType == null)
+    if (comparison == 0)
     {
-      columnDataType = new MutableColumnDataType(databaseSpecificTypeName);
-      columnDataType.setType(jdbcDataType);
+      comparison = ordinalPosition - other.getOrdinalPosition();
     }
-    dataType = columnDataType;
+    if (comparison == 0)
+    {
+      comparison = super.compareTo(other);
+    }
+
+    return comparison;
   }
 
   /**
@@ -122,26 +78,6 @@ abstract class AbstractColumn
     return decimalDigits;
   }
 
-  final void setDecimalDigits(final int decimalDigits)
-  {
-    this.decimalDigits = decimalDigits;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.BaseColumn#isNullable()
-   */
-  public final boolean isNullable()
-  {
-    return nullable;
-  }
-
-  final void setNullable(final boolean nullable)
-  {
-    this.nullable = nullable;
-  }
-
   /**
    * {@inheritDoc}
    * 
@@ -152,9 +88,24 @@ abstract class AbstractColumn
     return ordinalPosition;
   }
 
-  final void setOrdinalPosition(final int ordinalPosition)
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.BaseColumn#getSize()
+   */
+  public final int getSize()
   {
-    this.ordinalPosition = ordinalPosition;
+    return size;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.BaseColumn#getType()
+   */
+  public final ColumnDataType getType()
+  {
+    return dataType;
   }
 
   /**
@@ -201,22 +152,72 @@ abstract class AbstractColumn
 
   /**
    * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.BaseColumn#isNullable()
    */
-  public int compareTo(final Object obj)
+  public final boolean isNullable()
   {
-    final BaseColumn other = (BaseColumn) obj;
-    int comparison = 0;
+    return nullable;
+  }
 
-    if (comparison == 0)
+  /**
+   * Creates a data type from the JDBC data type id, and the database
+   * specific type name.
+   * 
+   * @param jdbcDataType
+   *        JDBC data type
+   * @param databaseSpecificTypeName
+   *        Database specific type name
+   */
+  final void lookupAndSetDataType(final int jdbcDataType,
+                                  final String databaseSpecificTypeName,
+                                  final NamedObjectList columnDataTypes)
+  {
+    MutableColumnDataType columnDataType = (MutableColumnDataType) columnDataTypes
+      .lookup(databaseSpecificTypeName);
+    if (columnDataType == null)
     {
-      comparison = ordinalPosition - other.getOrdinalPosition();
+      columnDataType = new MutableColumnDataType(databaseSpecificTypeName);
+      columnDataType.setType(jdbcDataType);
     }
-    if (comparison == 0)
-    {
-      comparison = super.compareTo(other);
-    }
+    dataType = columnDataType;
+  }
 
-    return comparison;
+  final void setDecimalDigits(final int decimalDigits)
+  {
+    this.decimalDigits = decimalDigits;
+  }
+
+  final void setNullable(final boolean nullable)
+  {
+    this.nullable = nullable;
+  }
+
+  final void setOrdinalPosition(final int ordinalPosition)
+  {
+    this.ordinalPosition = ordinalPosition;
+  }
+
+  /**
+   * Sets the column size.
+   * 
+   * @param size
+   *        Size of the column
+   */
+  final void setSize(final int size)
+  {
+    this.size = size;
+  }
+
+  /**
+   * Sets the column's data type.
+   * 
+   * @param columnDataType
+   *        Column data type
+   */
+  final void setType(final ColumnDataType columnDataType)
+  {
+    dataType = columnDataType;
   }
 
 }

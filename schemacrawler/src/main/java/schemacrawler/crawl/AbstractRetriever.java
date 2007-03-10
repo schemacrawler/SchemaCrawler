@@ -67,11 +67,6 @@ abstract class AbstractRetriever
     this.retrieverConnection = retrieverConnection;
   }
 
-  protected RetrieverConnection getRetrieverConnection()
-  {
-    return retrieverConnection;
-  }
-
   protected boolean belongsToSchema(final DatabaseObject dbObject,
                                     final String catalog,
                                     final String schema)
@@ -96,6 +91,11 @@ abstract class AbstractRetriever
       belongsToSchema = false;
     }
     return belongsToCatalog && belongsToSchema;
+  }
+
+  protected RetrieverConnection getRetrieverConnection()
+  {
+    return retrieverConnection;
   }
 
 }
