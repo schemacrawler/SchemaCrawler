@@ -8,9 +8,9 @@ import javax.sql.DataSource;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
+import schemacrawler.main.Config;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import sf.util.Utilities;
 import dbconnector.datasource.PropertiesDataSource;
 import dbconnector.datasource.PropertiesDataSourceException;
 
@@ -22,10 +22,10 @@ public class SchemaCrawlerTest1660040
   {
     DataSource dataSource = makeDataSource();
 
-    Properties props = Utilities.loadConfig("schemacrawler.config.1660040.properties", "");
+    Config config = Config.load("schemacrawler.config.1660040.properties", "");
     
     // Get the schema definition
-    SchemaCrawlerOptions options = new SchemaCrawlerOptions(props);
+    SchemaCrawlerOptions options = new SchemaCrawlerOptions(config);
     final Schema schema = SchemaCrawler.getSchema(dataSource,
                                                   SchemaInfoLevel.MAXIMUM,
                                                   options);
