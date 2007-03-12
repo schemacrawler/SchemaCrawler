@@ -21,7 +21,7 @@
 package sf.util;
 
 
-import java.util.Enumeration;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -57,12 +57,11 @@ public final class GroupedProperties
    */
   public GroupedProperties(final Properties properties)
   {
-    // copy properties
-    final Enumeration enumProperties = properties.keys();
-    while (enumProperties.hasMoreElements())
+    final Set<Map.Entry<Object, Object>> entrySet = properties.entrySet();
+    for (final Map.Entry<Object, Object> entry: entrySet)
     {
-      final String key = (String) enumProperties.nextElement();
-      final String value = properties.getProperty(key);
+      final String key = (String) entry.getKey();
+      final String value = (String) entry.getValue();
       setProperty(key, value);
     }
   }
@@ -74,12 +73,12 @@ public final class GroupedProperties
    */
   public String[] groups()
   {
-    final Set groups = new TreeSet();
+    final Set<String> groups = new TreeSet<String>();
 
-    final Enumeration enumProperties = keys();
-    while (enumProperties.hasMoreElements())
+    final Set<Object> keys = keySet();
+    for (final Object object: keys)
     {
-      final String key = (String) enumProperties.nextElement();
+      final String key = (String) object;
       if (key.indexOf('.') > -1)
       {
         final String group = key.substring(0, key.indexOf('.'));
@@ -87,7 +86,7 @@ public final class GroupedProperties
       }
     }
 
-    return (String[]) groups.toArray(new String[groups.size()]);
+    return groups.toArray(new String[groups.size()]);
   }
 
   /**
@@ -137,10 +136,10 @@ public final class GroupedProperties
     final String dottedPrefix = prefix + ".";
     final Properties subgroup = new Properties();
 
-    final Enumeration enumProperties = keys();
-    while (enumProperties.hasMoreElements())
+    final Set<Object> keys = keySet();
+    for (final Object object: keys)
     {
-      final String key = (String) enumProperties.nextElement();
+      final String key = (String) object;
       if (key.startsWith(dottedPrefix))
       {
         final String unprefixed = key.substring(dottedPrefix.length());
