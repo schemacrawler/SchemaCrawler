@@ -244,7 +244,7 @@ final class MutableDatabaseInfo
     MutableColumnDataType columnDataType = null;
     final MutableColumnDataType[] allColumnDataTypes = columnDataTypes.getAll()
       .toArray(new MutableColumnDataType[0]);
-    for (MutableColumnDataType currentColumnDataType: allColumnDataTypes)
+    for (final MutableColumnDataType currentColumnDataType: allColumnDataTypes)
     {
       if (type == currentColumnDataType.getType())
       {

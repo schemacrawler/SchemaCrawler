@@ -21,8 +21,7 @@
 package schemacrawler.tools.datatext;
 
 
-import java.util.Properties;
-
+import schemacrawler.main.Config;
 import schemacrawler.tools.BaseToolOptions;
 import schemacrawler.tools.OutputOptions;
 
@@ -58,7 +57,7 @@ public final class DataTextFormatOptions
    * @param outputOptions
    *        Page options
    */
-  public DataTextFormatOptions(final Properties config,
+  public DataTextFormatOptions(final Config config,
                                final OutputOptions outputOptions)
   {
     super(outputOptions);
@@ -70,8 +69,8 @@ public final class DataTextFormatOptions
     }
     else
     {
-      mergeRows = getBooleanProperty(MERGE_ROWS, config);
-      showLobs = getBooleanProperty(SHOW_LOBS, config);
+      mergeRows = config.getBooleanValue(MERGE_ROWS);
+      showLobs = config.getBooleanValue(SHOW_LOBS);
     }
   }
 

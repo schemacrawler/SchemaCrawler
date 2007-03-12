@@ -37,7 +37,21 @@ public enum SearchableType
     "searchable except with where .. like"),
   typeSearchable(DatabaseMetaData.typeSearchable, "searchable");
 
+  public static SearchableType valueOf(final int id)
+  {
+    final EnumSet<SearchableType> allOf = EnumSet.allOf(SearchableType.class);
+    for (final SearchableType type: allOf)
+    {
+      if (type.getId() == id)
+      {
+        return type;
+      }
+    }
+    return null;
+  }
+
   private final int id;
+
   private final transient String name;
 
   private SearchableType(final int id, final String name)
@@ -65,19 +79,6 @@ public enum SearchableType
   public String toString()
   {
     return name;
-  }
-
-  public static SearchableType valueOf(int id)
-  {
-    EnumSet<SearchableType> allOf = EnumSet.allOf(SearchableType.class);
-    for (SearchableType type: allOf)
-    {
-      if (type.getId() == id)
-      {
-        return type;
-      }
-    }
-    return null;
   }
 
 }

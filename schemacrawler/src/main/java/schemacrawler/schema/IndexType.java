@@ -35,7 +35,21 @@ public enum IndexType
   tableIndexHashed(DatabaseMetaData.tableIndexHashed, "hashed"),
   tableIndexOther(DatabaseMetaData.tableIndexOther, "other");
 
+  public static IndexType valueOf(final int id)
+  {
+    final EnumSet<IndexType> allOf = EnumSet.allOf(IndexType.class);
+    for (final IndexType type: allOf)
+    {
+      if (type.getId() == id)
+      {
+        return type;
+      }
+    }
+    return null;
+  }
+
   private final int id;
+
   private final String name;
 
   private IndexType(final int id, final String name)
@@ -63,18 +77,5 @@ public enum IndexType
   public String toString()
   {
     return name;
-  }
-
-  public static IndexType valueOf(int id)
-  {
-    EnumSet<IndexType> allOf = EnumSet.allOf(IndexType.class);
-    for (IndexType type: allOf)
-    {
-      if (type.getId() == id)
-      {
-        return type;
-      }
-    }
-    return null;
   }
 }

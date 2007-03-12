@@ -37,7 +37,21 @@ public enum ProcedureType
   procedureReturnsResult(DatabaseMetaData.procedureReturnsResult,
     "returns result");
 
+  public static ProcedureType valueOf(final int id)
+  {
+    final EnumSet<ProcedureType> allOf = EnumSet.allOf(ProcedureType.class);
+    for (final ProcedureType type: allOf)
+    {
+      if (type.getId() == id)
+      {
+        return type;
+      }
+    }
+    return null;
+  }
+
   private final int id;
+
   private final String name;
 
   private ProcedureType(final int id, final String name)
@@ -65,19 +79,6 @@ public enum ProcedureType
   public String toString()
   {
     return name;
-  }
-
-  public static ProcedureType valueOf(int id)
-  {
-    EnumSet<ProcedureType> allOf = EnumSet.allOf(ProcedureType.class);
-    for (ProcedureType type: allOf)
-    {
-      if (type.getId() == id)
-      {
-        return type;
-      }
-    }
-    return null;
   }
 
 }

@@ -20,9 +20,11 @@
 package schemacrawler.crawl;
 
 
-import java.util.Properties;
+import java.util.HashMap;
+import java.util.Map;
 
 import schemacrawler.main.BaseOptions;
+import schemacrawler.main.Config;
 import sf.util.Utilities;
 
 final class InformationSchemaViews
@@ -31,18 +33,11 @@ final class InformationSchemaViews
 
   private static final long serialVersionUID = 3587581365346059044L;
 
-  private Properties informationSchemaViewsSql;
+  private final Map<String, String> informationSchemaViewsSql;
 
-  InformationSchemaViews(final Properties informationSchemaViewsSql)
+  InformationSchemaViews(final Config informationSchemaViewsSql)
   {
-    if (informationSchemaViewsSql != null)
-    {
-      this.informationSchemaViewsSql = informationSchemaViewsSql;
-    }
-    else
-    {
-      this.informationSchemaViewsSql = new Properties();
-    }
+    this.informationSchemaViewsSql = new HashMap<String, String>(informationSchemaViewsSql);
   }
 
   /**
@@ -54,7 +49,7 @@ final class InformationSchemaViews
   String getCheckConstraintsSql()
   {
     return informationSchemaViewsSql
-      .getProperty("select.INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
+      .get("select.INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
   }
 
   /**
@@ -64,7 +59,7 @@ final class InformationSchemaViews
    */
   String getIndexInfoSql()
   {
-    return informationSchemaViewsSql.getProperty("getIndexInfo");
+    return informationSchemaViewsSql.get("getIndexInfo");
   }
 
   /**
@@ -75,8 +70,7 @@ final class InformationSchemaViews
    */
   String getRoutinesSql()
   {
-    return informationSchemaViewsSql
-      .getProperty("select.INFORMATION_SCHEMA.ROUTINES");
+    return informationSchemaViewsSql.get("select.INFORMATION_SCHEMA.ROUTINES");
   }
 
   /**
@@ -87,7 +81,7 @@ final class InformationSchemaViews
   String getTableConstraintsSql()
   {
     return informationSchemaViewsSql
-      .getProperty("select.INFORMATION_SCHEMA.TABLE_CONSTRAINTS");
+      .get("select.INFORMATION_SCHEMA.TABLE_CONSTRAINTS");
   }
 
   /**
@@ -97,8 +91,7 @@ final class InformationSchemaViews
    */
   String getTriggersSql()
   {
-    return informationSchemaViewsSql
-      .getProperty("select.INFORMATION_SCHEMA.TRIGGERS");
+    return informationSchemaViewsSql.get("select.INFORMATION_SCHEMA.TRIGGERS");
   }
 
   /**
@@ -108,8 +101,7 @@ final class InformationSchemaViews
    */
   String getViewsSql()
   {
-    return informationSchemaViewsSql
-      .getProperty("select.INFORMATION_SCHEMA.VIEWS");
+    return informationSchemaViewsSql.get("select.INFORMATION_SCHEMA.VIEWS");
   }
 
   boolean hasCheckConstraintsSql()

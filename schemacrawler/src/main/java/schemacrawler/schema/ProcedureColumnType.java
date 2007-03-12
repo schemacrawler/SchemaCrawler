@@ -37,7 +37,22 @@ public enum ProcedureColumnType
   procedureColumnReturn(DatabaseMetaData.procedureColumnReturn, "return"),
   procedureColumnResult(DatabaseMetaData.procedureColumnResult, "result");
 
+  public static ProcedureColumnType valueOf(final int id)
+  {
+    final EnumSet<ProcedureColumnType> allOf = EnumSet
+      .allOf(ProcedureColumnType.class);
+    for (final ProcedureColumnType type: allOf)
+    {
+      if (type.getId() == id)
+      {
+        return type;
+      }
+    }
+    return null;
+  }
+
   private final int id;
+
   private final String name;
 
   private ProcedureColumnType(final int id, final String name)
@@ -65,19 +80,5 @@ public enum ProcedureColumnType
   public String toString()
   {
     return name;
-  }
-
-  public static ProcedureColumnType valueOf(int id)
-  {
-    EnumSet<ProcedureColumnType> allOf = EnumSet
-      .allOf(ProcedureColumnType.class);
-    for (ProcedureColumnType type: allOf)
-    {
-      if (type.getId() == id)
-      {
-        return type;
-      }
-    }
-    return null;
   }
 }

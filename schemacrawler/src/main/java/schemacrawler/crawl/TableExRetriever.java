@@ -195,7 +195,7 @@ final class TableExRetriever
     // Add check constraints to tables
     final Collection<MutableCheckConstraint> checkConstraintsCollection = checkConstraintsMap
       .values();
-    for (MutableCheckConstraint checkConstraint: checkConstraintsCollection)
+    for (final MutableCheckConstraint checkConstraint: checkConstraintsCollection)
     {
       final MutableTable table = (MutableTable) checkConstraint.getParent();
       table.addCheckConstraint(checkConstraint);

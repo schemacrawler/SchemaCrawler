@@ -24,7 +24,6 @@ package schemacrawler.test;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,15 +33,13 @@ import junit.framework.TestSuite;
 
 import org.custommonkey.xmlunit.Validator;
 
-import dbconnector.datasource.PropertiesDataSourceException;
-import dbconnector.test.TestUtility;
-
 import schemacrawler.crawl.CrawlHandler;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutor;
+import schemacrawler.main.Config;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.datatext.DataTextFormatOptions;
 import schemacrawler.tools.datatext.DataTextFormatterLoader;
@@ -53,12 +50,27 @@ import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextFormatter;
 import schemacrawler.tools.schematext.SchemaTextFormatterLoader;
 import schemacrawler.tools.schematext.SchemaTextOptions;
+import dbconnector.datasource.PropertiesDataSourceException;
+import dbconnector.test.TestUtility;
 
 public class SchemaCrawlerOutputTest
   extends TestCase
 {
 
-  private TestUtility testUtility = new TestUtility();
+  private static final Logger LOGGER = Logger
+    .getLogger(SchemaCrawlerOutputTest.class.getName());
+
+  public static Test suite()
+  {
+    return new TestSuite(SchemaCrawlerOutputTest.class);
+  }
+
+  private final TestUtility testUtility = new TestUtility();
+
+  public SchemaCrawlerOutputTest(final String name)
+  {
+    super(name);
+  }
 
   @Override
   public void setUp()
@@ -74,123 +86,6 @@ public class SchemaCrawlerOutputTest
     testUtility.tearDown();
   }
 
-  private static final Logger LOGGER = Logger
-    .getLogger(SchemaCrawlerOutputTest.class.getName());
-
-  public static Test suite()
-  {
-    return new TestSuite(SchemaCrawlerOutputTest.class);
-  }
-
-  public SchemaCrawlerOutputTest(final String name)
-  {
-    super(name);
-  }
-
-  public void testTableCountFromPlainTextFormatter()
-  {
-    String outputFilename = "";
-    try
-    {
-      outputFilename = File.createTempFile("schemacrawler", "test")
-        .getAbsolutePath();
-    }
-    catch (final IOException e)
-    {
-      fail(e.getMessage());
-    }
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    final SchemaTextOptions textFormatOptions = new SchemaTextOptions(new Properties(),
-                                                                      new OutputOptions("text",
-                                                                                        outputFilename),
-                                                                      SchemaTextDetailType.VERBOSE);
-
-    try
-    {
-      final SchemaTextFormatter formatter = (SchemaTextFormatter) SchemaTextFormatterLoader
-        .load(textFormatOptions);
-      final SchemaCrawler crawler = new SchemaCrawler(testUtility
-        .getDataSource(), null, formatter);
-      crawler.crawl(schemaCrawlerOptions);
-      assertEquals("Table count does not match", 6, formatter.getTableCount());
-    }
-    catch (final SchemaCrawlerException e)
-    {
-      LOGGER.log(Level.SEVERE, e.getMessage(), e);
-      fail("SchemaCrawlerException getting table count: " + e.getMessage());
-    }
-
-    final File outputFile = new File(outputFilename);
-    if (!outputFile.delete())
-    {
-      fail("Cannot delete output file");
-    }
-
-  }
-
-  public void testSchemaOutput()
-  {
-    try
-    {
-      final String outputFilename = File
-        .createTempFile("schemacrawler", "test").getAbsolutePath();
-
-      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      final SchemaTextOptions textFormatOptions = new SchemaTextOptions(new Properties(),
-                                                                        new OutputOptions("text",
-                                                                                          outputFilename),
-                                                                        SchemaTextDetailType.BRIEF);
-
-      final SchemaTextFormatter formatter = (SchemaTextFormatter) SchemaTextFormatterLoader
-        .load(textFormatOptions);
-      final SchemaCrawler crawler = new SchemaCrawler(testUtility
-        .getDataSource(), null, formatter);
-      crawler.crawl(schemaCrawlerOptions);
-
-      final File outputFile = new File(outputFilename);
-      if (!outputFile.delete())
-      {
-        fail("Cannot delete output file");
-      }
-    }
-    catch (final Exception e)
-    {
-      fail(e.getMessage());
-    }
-
-  }
-
-  public void testDataOutput()
-  {
-    try
-    {
-      final String outputFilename = File
-        .createTempFile("schemacrawler", "test").getAbsolutePath();
-
-      final DataTextFormatOptions textFormatOptions = new DataTextFormatOptions(new Properties(),
-                                                                                new OutputOptions("text",
-                                                                                                  outputFilename));
-
-      final DataHandler dataHandler = DataTextFormatterLoader
-        .load(textFormatOptions);
-      final QueryExecutor executor = new QueryExecutor(testUtility
-        .getDataSource(), dataHandler);
-      executor.executeSQL("SELECT COUNT(*) FROM CUSTOMER");
-
-      final File outputFile = new File(outputFilename);
-      if (!outputFile.delete())
-      {
-        fail("Cannot delete output file");
-      }
-    }
-    catch (final Exception e)
-    {
-      fail(e.getMessage());
-    }
-
-  }
-
   public void testCountOperatorOutput()
   {
     try
@@ -201,7 +96,7 @@ public class SchemaCrawlerOutputTest
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       final OutputOptions outputOptions = new OutputOptions("text",
                                                             outputFilename);
-      final DataTextFormatOptions textFormatOptions = new DataTextFormatOptions(new Properties(),
+      final DataTextFormatOptions textFormatOptions = new DataTextFormatOptions(new Config(),
                                                                                 outputOptions);
       final OperatorOptions operatorOptions = new OperatorOptions(outputOptions,
                                                                   Operation.COUNT,
@@ -227,56 +122,6 @@ public class SchemaCrawlerOutputTest
     catch (final Exception e)
     {
       fail(e.getMessage());
-    }
-
-  }
-
-  public void testSchemaValidXMLOutput()
-  {
-    String outputFilename = "";
-    try
-    {
-      outputFilename = File.createTempFile("schemacrawler", ".test.html")
-        .getAbsolutePath();
-    }
-    catch (final IOException e)
-    {
-      fail(e.getMessage());
-    }
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    final OutputOptions outputOptions = new OutputOptions("html",
-                                                          outputFilename);
-    outputOptions.setNoHeader(false);
-    outputOptions.setNoFooter(false);
-    outputOptions.setNoInfo(false);
-    final SchemaTextOptions textFormatOptions = new SchemaTextOptions(new Properties(),
-                                                                      outputOptions,
-                                                                      SchemaTextDetailType.MAXIMUM);
-    try
-    {
-      final CrawlHandler formatter = SchemaTextFormatterLoader
-        .load(textFormatOptions);
-      final SchemaCrawler crawler = new SchemaCrawler(testUtility
-        .getDataSource(), null, formatter);
-      crawler.crawl(schemaCrawlerOptions);
-    }
-    catch (final SchemaCrawlerException e)
-    {
-      LOGGER.log(Level.SEVERE, e.getMessage(), e);
-      fail("SchemaCrawlerException getting table count: " + e.getMessage());
-    }
-
-    try
-    {
-      final Validator validator = new Validator(new FileReader(outputFilename));
-      validator.assertIsValid();
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.SEVERE, e.getMessage(), e);
-      e.printStackTrace();
-      fail("" + e.getMessage());
     }
 
   }
@@ -335,6 +180,36 @@ public class SchemaCrawlerOutputTest
 
   }
 
+  public void testDataOutput()
+  {
+    try
+    {
+      final String outputFilename = File
+        .createTempFile("schemacrawler", "test").getAbsolutePath();
+
+      final DataTextFormatOptions textFormatOptions = new DataTextFormatOptions(new Config(),
+                                                                                new OutputOptions("text",
+                                                                                                  outputFilename));
+
+      final DataHandler dataHandler = DataTextFormatterLoader
+        .load(textFormatOptions);
+      final QueryExecutor executor = new QueryExecutor(testUtility
+        .getDataSource(), dataHandler);
+      executor.executeSQL("SELECT COUNT(*) FROM CUSTOMER");
+
+      final File outputFile = new File(outputFilename);
+      if (!outputFile.delete())
+      {
+        fail("Cannot delete output file");
+      }
+    }
+    catch (final Exception e)
+    {
+      fail(e.getMessage());
+    }
+
+  }
+
   public void testDumpOperatorValidXMLOutput()
   {
     String outputFilename = "";
@@ -354,7 +229,7 @@ public class SchemaCrawlerOutputTest
     outputOptions.setNoHeader(false);
     outputOptions.setNoFooter(false);
     outputOptions.setNoInfo(false);
-    final DataTextFormatOptions textFormatOptions = new DataTextFormatOptions(new Properties(),
+    final DataTextFormatOptions textFormatOptions = new DataTextFormatOptions(new Config(),
                                                                               outputOptions);
     final OperatorOptions operatorOptions = new OperatorOptions(outputOptions,
                                                                 Operation.DUMP,
@@ -389,6 +264,130 @@ public class SchemaCrawlerOutputTest
       LOGGER.log(Level.SEVERE, e.getMessage(), e);
       e.printStackTrace();
       fail("" + e.getMessage());
+    }
+
+  }
+
+  public void testSchemaOutput()
+  {
+    try
+    {
+      final String outputFilename = File
+        .createTempFile("schemacrawler", "test").getAbsolutePath();
+
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      final SchemaTextOptions textFormatOptions = new SchemaTextOptions(new Config(),
+                                                                        new OutputOptions("text",
+                                                                                          outputFilename),
+                                                                        SchemaTextDetailType.BRIEF);
+
+      final SchemaTextFormatter formatter = (SchemaTextFormatter) SchemaTextFormatterLoader
+        .load(textFormatOptions);
+      final SchemaCrawler crawler = new SchemaCrawler(testUtility
+        .getDataSource(), null, formatter);
+      crawler.crawl(schemaCrawlerOptions);
+
+      final File outputFile = new File(outputFilename);
+      if (!outputFile.delete())
+      {
+        fail("Cannot delete output file");
+      }
+    }
+    catch (final Exception e)
+    {
+      fail(e.getMessage());
+    }
+
+  }
+
+  public void testSchemaValidXMLOutput()
+  {
+    String outputFilename = "";
+    try
+    {
+      outputFilename = File.createTempFile("schemacrawler", ".test.html")
+        .getAbsolutePath();
+    }
+    catch (final IOException e)
+    {
+      fail(e.getMessage());
+    }
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    final OutputOptions outputOptions = new OutputOptions("html",
+                                                          outputFilename);
+    outputOptions.setNoHeader(false);
+    outputOptions.setNoFooter(false);
+    outputOptions.setNoInfo(false);
+    final SchemaTextOptions textFormatOptions = new SchemaTextOptions(new Config(),
+                                                                      outputOptions,
+                                                                      SchemaTextDetailType.MAXIMUM);
+    try
+    {
+      final CrawlHandler formatter = SchemaTextFormatterLoader
+        .load(textFormatOptions);
+      final SchemaCrawler crawler = new SchemaCrawler(testUtility
+        .getDataSource(), null, formatter);
+      crawler.crawl(schemaCrawlerOptions);
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      LOGGER.log(Level.SEVERE, e.getMessage(), e);
+      fail("SchemaCrawlerException getting table count: " + e.getMessage());
+    }
+
+    try
+    {
+      final Validator validator = new Validator(new FileReader(outputFilename));
+      validator.assertIsValid();
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.SEVERE, e.getMessage(), e);
+      e.printStackTrace();
+      fail("" + e.getMessage());
+    }
+
+  }
+
+  public void testTableCountFromPlainTextFormatter()
+  {
+    String outputFilename = "";
+    try
+    {
+      outputFilename = File.createTempFile("schemacrawler", "test")
+        .getAbsolutePath();
+    }
+    catch (final IOException e)
+    {
+      fail(e.getMessage());
+    }
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    final SchemaTextOptions textFormatOptions = new SchemaTextOptions(new Config(),
+                                                                      new OutputOptions("text",
+                                                                                        outputFilename),
+                                                                      SchemaTextDetailType.VERBOSE);
+
+    try
+    {
+      final SchemaTextFormatter formatter = (SchemaTextFormatter) SchemaTextFormatterLoader
+        .load(textFormatOptions);
+      final SchemaCrawler crawler = new SchemaCrawler(testUtility
+        .getDataSource(), null, formatter);
+      crawler.crawl(schemaCrawlerOptions);
+      assertEquals("Table count does not match", 6, formatter.getTableCount());
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      LOGGER.log(Level.SEVERE, e.getMessage(), e);
+      fail("SchemaCrawlerException getting table count: " + e.getMessage());
+    }
+
+    final File outputFile = new File(outputFilename);
+    if (!outputFile.delete())
+    {
+      fail("Cannot delete output file");
     }
 
   }

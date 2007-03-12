@@ -35,22 +35,10 @@ public final class FormatUtils
 {
 
   /**
-   * Internal storage for information. Read from text file.
-   */
-  private static String styleSheet = "";
-  static
-  {
-    final byte[] text = Utilities.readFully(FormatUtils.class
-      .getResourceAsStream("/schemacrawler-output.css"));
-    styleSheet = new String(text);
-  }
-
-  /**
    * HTML footer.
    */
   public static final String HTML_FOOTER = "</body>" + Utilities.NEWLINE
                                            + "</html>";
-
   /**
    * HTML header.
    */
@@ -71,19 +59,20 @@ public final class FormatUtils
                                            + Utilities.NEWLINE
                                            + "  <style type='text/css'>"
                                            + Utilities.NEWLINE
-                                           + styleSheet
+                                           + styleSheet()
                                            + Utilities.NEWLINE
-                                           + "  "
-                                           + "</style>"
+                                           + "  </style>"
                                            + Utilities.NEWLINE
                                            + "</head>"
                                            + Utilities.NEWLINE
-                                           + "<body>" + Utilities.NEWLINE;
+                                           + "<body>"
+                                           + Utilities.NEWLINE;
 
   /** Maximum output line length */
   public static final int MAX_LINE_LENGTH = 72;
 
   private static final char QUOTE = '\"';
+
   private static final char SEPARATOR = ',';
 
   /**
@@ -200,6 +189,13 @@ public final class FormatUtils
     out.println();
     out.println();
     out.flush();
+  }
+
+  private static String styleSheet()
+  {
+    final byte[] text = Utilities.readFully(FormatUtils.class
+      .getResourceAsStream("/schemacrawler-output.css"));
+    return new String(text);
   }
 
   private FormatUtils()

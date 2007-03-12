@@ -24,7 +24,6 @@ package schemacrawler.tools.grep;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Properties;
 import java.util.logging.Level;
 
 import javax.sql.DataSource;
@@ -34,6 +33,7 @@ import schemacrawler.crawl.InclusionRule;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
+import schemacrawler.main.Config;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -65,31 +65,6 @@ public final class ColumnsGrep
    * 
    * @param dataSource
    *        Data source
-   * @param tableInclusionRule
-   *        Inclusion rule for tables
-   * @param columnInclusionRule
-   *        Inclusion rule for columns
-   * @param invertMatch
-   *        Whether to invert the table match
-   * @return Matching tables
-   */
-  public static Table[] grep(final DataSource dataSource,
-                             final InclusionRule tableInclusionRule,
-                             final InclusionRule columnInclusionRule,
-                             final boolean invertMatch)
-  {
-    return grep(dataSource,
-                null,
-                tableInclusionRule,
-                columnInclusionRule,
-                invertMatch);
-  }
-
-  /**
-   * Gets tables that contain the specified columns.
-   * 
-   * @param dataSource
-   *        Data source
    * @param additionalConnectionConfiguration
    *        Additional connection configuration for INFORMATION_SCHEMA
    * @param tableInclusionRule
@@ -101,7 +76,7 @@ public final class ColumnsGrep
    * @return Matching tables
    */
   public static Table[] grep(final DataSource dataSource,
-                             final Properties additionalConnectionConfiguration,
+                             final Config additionalConnectionConfiguration,
                              final InclusionRule tableInclusionRule,
                              final InclusionRule columnInclusionRule,
                              final boolean invertMatch)
@@ -130,6 +105,31 @@ public final class ColumnsGrep
   }
 
   /**
+   * Gets tables that contain the specified columns.
+   * 
+   * @param dataSource
+   *        Data source
+   * @param tableInclusionRule
+   *        Inclusion rule for tables
+   * @param columnInclusionRule
+   *        Inclusion rule for columns
+   * @param invertMatch
+   *        Whether to invert the table match
+   * @return Matching tables
+   */
+  public static Table[] grep(final DataSource dataSource,
+                             final InclusionRule tableInclusionRule,
+                             final InclusionRule columnInclusionRule,
+                             final boolean invertMatch)
+  {
+    return grep(dataSource,
+                null,
+                tableInclusionRule,
+                columnInclusionRule,
+                invertMatch);
+  }
+
+  /**
    * Get connection parameters, and creates a connection, and crawls the
    * schema.
    * 
@@ -153,9 +153,9 @@ public final class ColumnsGrep
     final String cfgFile = parser.getStringOptionValue(OPTION_CONFIGFILE);
     final String cfgOverrideFile = parser
       .getStringOptionValue(OPTION_CONFIGOVERRIDEFILE);
-    final Properties config = Utilities.loadConfig(cfgFile, cfgOverrideFile);
+    final Config config = Config.load(cfgFile, cfgOverrideFile);
     final PropertiesDataSource dataSource = dbconnector.Main
-      .createDataSource(args, config);
+      .createDataSource(args, config.toProperties());
 
     final String includeTables = parser
       .getStringOptionValue(OPTION_INCLUDE_TABLES);
@@ -175,7 +175,7 @@ public final class ColumnsGrep
     options.setShowStoredProcedures(false);
     options.setTableInclusionRule(tableInclusionRule);
 
-    final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(new Properties(),
+    final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(new Config(),
                                                                       new OutputOptions("text",
                                                                                         null),
                                                                       SchemaTextDetailType.BASIC);

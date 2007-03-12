@@ -22,7 +22,6 @@ package schemacrawler.main;
 
 
 import java.util.Locale;
-import java.util.Properties;
 import java.util.logging.Level;
 
 import schemacrawler.crawl.SchemaCrawlerOptions;
@@ -42,7 +41,7 @@ public final class Options
 
   private static final String SCHEMACRAWLER_LOG_LEVEL = "schemacrawler.log_level";
 
-  private final Properties config;
+  private final Config config;
   private final SchemaCrawlerOptions schemaCrawlerOptions;
   private final ToolType toolType;
   private final SchemaTextOptions schemaTextOptions;
@@ -61,7 +60,7 @@ public final class Options
    * @param pageOptions
    *        Page options
    */
-  Options(final Properties config,
+  Options(final Config config,
           final Command command,
           final OutputOptions outputOptions)
   {
@@ -85,7 +84,7 @@ public final class Options
     query = command.getQuery();
 
     // Set additional options from the config
-    setLogLevel(config.getProperty(SCHEMACRAWLER_LOG_LEVEL, "OFF"));
+    setLogLevel(config.getStringValue(SCHEMACRAWLER_LOG_LEVEL, "OFF"));
   }
 
   /**
@@ -93,9 +92,9 @@ public final class Options
    * 
    * @return Configuration properties
    */
-  public Properties getConfig()
+  public Config getConfig()
   {
-    return config;
+    return new Config(config);
   }
 
   /**

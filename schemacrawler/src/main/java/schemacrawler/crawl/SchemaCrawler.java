@@ -23,12 +23,12 @@ package schemacrawler.crawl;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
+import schemacrawler.main.Config;
 import schemacrawler.schema.Schema;
 
 /**
@@ -55,7 +55,7 @@ public final class SchemaCrawler
    * @return Schema
    */
   public static Schema getSchema(final DataSource dataSource,
-                                 final Properties additionalConnectionConfiguration,
+                                 final Config additionalConnectionConfiguration,
                                  final SchemaInfoLevel infoLevel,
                                  final SchemaCrawlerOptions options)
   {
@@ -124,10 +124,48 @@ public final class SchemaCrawler
   }
 
   private final DataSource dataSource;
-
-  private final Properties additionalConnectionConfiguration;
-
+  private final Config additionalConnectionConfiguration;
   private final CrawlHandler handler;
+
+  /**
+   * Constructs a SchemaCrawler object, from a connection.
+   * 
+   * @param dataSource
+   *        An data source.
+   * @param crawlHandler
+   *        A crawl handler instance
+   * @param additionalConnectionConfiguration
+   *        Additional connection configuration for INFORMATION_SCHEMA
+   * @throws SchemaCrawlerException
+   *         On a crawler exception
+   */
+  public SchemaCrawler(final DataSource dataSource,
+                       final Config additionalConnectionConfiguration,
+                       final CrawlHandler crawlHandler)
+    throws SchemaCrawlerException
+  {
+
+    if (dataSource == null)
+    {
+      throw new SchemaCrawlerException("No data source specified");
+    }
+    this.dataSource = dataSource;
+
+    if (additionalConnectionConfiguration == null)
+    {
+      this.additionalConnectionConfiguration = new Config();
+    }
+    else
+    {
+      this.additionalConnectionConfiguration = additionalConnectionConfiguration;
+    }
+    if (crawlHandler == null)
+    {
+      throw new SchemaCrawlerException("No crawl handler specified");
+    }
+    handler = crawlHandler;
+
+  }
 
   /**
    * Constructs a SchemaCrawler object, from a connection.
@@ -144,46 +182,6 @@ public final class SchemaCrawler
     throws SchemaCrawlerException
   {
     this(dataSource, null, crawlHandler);
-  }
-
-  /**
-   * Constructs a SchemaCrawler object, from a connection.
-   * 
-   * @param dataSource
-   *        An data source.
-   * @param crawlHandler
-   *        A crawl handler instance
-   * @param additionalConnectionConfiguration
-   *        Additional connection configuration for INFORMATION_SCHEMA
-   * @throws SchemaCrawlerException
-   *         On a crawler exception
-   */
-  public SchemaCrawler(final DataSource dataSource,
-                       final Properties additionalConnectionConfiguration,
-                       final CrawlHandler crawlHandler)
-    throws SchemaCrawlerException
-  {
-
-    if (dataSource == null)
-    {
-      throw new SchemaCrawlerException("No data source specified");
-    }
-    this.dataSource = dataSource;
-
-    if (additionalConnectionConfiguration == null)
-    {
-      this.additionalConnectionConfiguration = new Properties();
-    }
-    else
-    {
-      this.additionalConnectionConfiguration = additionalConnectionConfiguration;
-    }
-    if (crawlHandler == null)
-    {
-      throw new SchemaCrawlerException("No crawl handler specified");
-    }
-    handler = crawlHandler;
-
   }
 
   /**

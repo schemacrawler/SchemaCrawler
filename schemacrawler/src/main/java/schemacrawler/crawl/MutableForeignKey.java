@@ -130,14 +130,6 @@ class MutableForeignKey
   }
 
   /**
-   * @see schemacrawler.crawl.ForeignKey#getColumnPairsList()
-   */
-  void addColumnPair(final MutableForeignKeyColumnMap columnPair)
-  {
-    columnPairs.add(columnPair);
-  }
-
-  /**
    * Adds a column pair.
    * 
    * @param keySequence
@@ -158,6 +150,14 @@ class MutableForeignKey
     fkColumnPair.setPrimaryKeyColumn(pkColumn);
     fkColumnPair.setForeignKeyColumn(fkColumn);
     addColumnPair(fkColumnPair);
+  }
+
+  /**
+   * @see schemacrawler.crawl.ForeignKey#getColumnPairsList()
+   */
+  void addColumnPair(final MutableForeignKeyColumnMap columnPair)
+  {
+    columnPairs.add(columnPair);
   }
 
   final void setDeferrability(final ForeignKeyDeferrability deferrability)

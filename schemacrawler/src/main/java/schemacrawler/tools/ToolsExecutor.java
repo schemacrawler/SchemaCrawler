@@ -23,7 +23,6 @@ package schemacrawler.tools;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,6 +34,7 @@ import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutor;
+import schemacrawler.main.Config;
 import schemacrawler.main.Options;
 import schemacrawler.tools.datatext.DataTextFormatterLoader;
 import schemacrawler.tools.operation.OperatorLoader;
@@ -52,7 +52,7 @@ public class ToolsExecutor
   private static final Logger LOGGER = Logger.getLogger(ToolsExecutor.class
     .getName());
 
-  private Properties additionalConnectionConfiguration = new Properties();
+  private Config additionalConnectionConfiguration = new Config();
 
   /**
    * {@inheritDoc}
@@ -119,7 +119,7 @@ public class ToolsExecutor
    * @param additionalConnectionConfiguration
    *        Additional connection configuration.
    */
-  public void setAdditionalConnectionConfiguration(final Properties additionalConnectionConfiguration)
+  public void setAdditionalConnectionConfiguration(final Config additionalConnectionConfiguration)
   {
     if (additionalConnectionConfiguration != null)
     {

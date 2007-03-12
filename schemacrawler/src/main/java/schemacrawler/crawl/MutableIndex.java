@@ -148,17 +148,6 @@ class MutableIndex
   }
 
   /**
-   * Adds a column.
-   * 
-   * @param column
-   *        Column
-   */
-  void addColumn(final MutableColumn column)
-  {
-    columns.add(column);
-  }
-
-  /**
    * Adds a column at an ordinal position.
    * 
    * @param ordinalPosition
@@ -169,6 +158,17 @@ class MutableIndex
   void addColumn(final int ordinalPosition, final MutableColumn column)
   {
     columns.add(ordinalPosition, column);
+  }
+
+  /**
+   * Adds a column.
+   * 
+   * @param column
+   *        Column
+   */
+  void addColumn(final MutableColumn column)
+  {
+    columns.add(column);
   }
 
   final void setCardinality(final int cardinality)

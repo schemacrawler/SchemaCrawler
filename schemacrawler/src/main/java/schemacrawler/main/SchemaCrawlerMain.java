@@ -22,7 +22,6 @@ package schemacrawler.main;
 
 
 import java.util.Arrays;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -80,18 +79,18 @@ public final class SchemaCrawlerMain
       Utilities.setApplicationLogLevel(firstOption.getLogLevel());
       LOGGER.log(Level.CONFIG, Version.about());
       LOGGER.log(Level.CONFIG, "Commandline: " + Arrays.asList(args));
-      final Properties config = firstOption.getConfig();
+      final Config config = firstOption.getConfig();
 
       for (final Options options: optionCommands)
       {
         LOGGER.log(Level.CONFIG, options.toString());
         final PropertiesDataSource dataSource = dbconnector.Main
-          .createDataSource(args, config);
+          .createDataSource(args, config.toProperties());
         if (executor instanceof ToolsExecutor)
         {
           ((ToolsExecutor) executor)
-            .setAdditionalConnectionConfiguration(dataSource
-              .getSourceProperties());
+            .setAdditionalConnectionConfiguration(new Config(dataSource
+              .getSourceProperties()));
         }
         executor.execute(options, dataSource);
       }
