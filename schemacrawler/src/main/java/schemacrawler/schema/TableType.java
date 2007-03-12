@@ -55,15 +55,14 @@ public enum TableType
    *        Array of table types
    * @return Array of string table types
    */
-  public static String[] toStringArray(final TableType[] tableTypes)
+  public static String[] toStrings(final TableType[] tableTypes)
   {
-
-    if (tableTypes == null)
+    if (tableTypes == null || tableTypes.length == 0)
     {
       return new String[0];
     }
 
-    final List tableTypeStrings = new ArrayList(tableTypes.length);
+    final List<String> tableTypeStrings = new ArrayList<String>(tableTypes.length);
     for (final TableType tableType: tableTypes)
     {
       if (tableType != null)
@@ -71,8 +70,7 @@ public enum TableType
         tableTypeStrings.add(tableType.toString());
       }
     }
-    return (String[]) tableTypeStrings.toArray(new String[tableTypeStrings
-      .size()]);
+    return tableTypeStrings.toArray(new String[0]);
   }
 
   /**
@@ -85,18 +83,17 @@ public enum TableType
    */
   public static TableType[] valueOf(final String[] tableTypeStrings)
   {
-
     if (tableTypeStrings == null || tableTypeStrings.length == 0)
     {
       return new TableType[0];
     }
 
-    final List tableTypes = new ArrayList(tableTypeStrings.length);
+    final List<TableType> tableTypes = new ArrayList<TableType>(tableTypeStrings.length);
     for (final String tableTypeString: tableTypeStrings)
     {
       tableTypes.add(valueOf(tableTypeString));
     }
-    return (TableType[]) tableTypes.toArray(new TableType[tableTypes.size()]);
+    return tableTypes.toArray(new TableType[0]);
   }
 
   private final String name;

@@ -149,7 +149,7 @@ public final class OptionsParser
                                                    final Properties config,
                                                    final OutputOptions masterOutputOptions)
   {
-    final List optionCommandsList = new ArrayList();
+    final List<Options> optionCommandsList = new ArrayList<Options>();
     for (int i = 0; i < commandStrings.length; i++)
     {
       final Command command = parseCommand(config, commandStrings[i]);
@@ -182,7 +182,7 @@ public final class OptionsParser
       //
       optionCommandsList.add(options);
     }
-    final Options[] optionCommands = (Options[]) optionCommandsList
+    final Options[] optionCommands = optionCommandsList
       .toArray(new Options[optionCommandsList.size()]);
 
     return optionCommands;
@@ -191,7 +191,7 @@ public final class OptionsParser
   private static boolean isQueryOver(final String query)
   {
     boolean isQueryOver = false;
-    final Set keys = Utilities.extractTemplateVariables(query);
+    final Set<String> keys = Utilities.extractTemplateVariables(query);
     final String[] queryOverKeys = {
         "table", "table_type"
     };

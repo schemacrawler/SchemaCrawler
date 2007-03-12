@@ -44,7 +44,7 @@ public final class FormatUtils
       .getResourceAsStream("/schemacrawler-output.css"));
     styleSheet = new String(text);
   }
-  
+
   /**
    * HTML footer.
    */

@@ -21,7 +21,6 @@
 package schemacrawler.schema;
 
 
-
 /**
  * Routine body.
  */
@@ -46,5 +45,5 @@ public enum RoutineBodyType
   {
     return name;
   }
-  
+
 }

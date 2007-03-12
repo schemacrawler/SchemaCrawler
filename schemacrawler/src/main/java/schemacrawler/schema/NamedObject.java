@@ -29,7 +29,7 @@ import java.io.Serializable;
  * @author sfatehi
  */
 public interface NamedObject
-  extends Serializable, Comparable
+  extends Serializable, Comparable<NamedObject>
 {
 
   /**

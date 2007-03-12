@@ -73,7 +73,7 @@ final class ProcedureRetriever
    */
   void retrieveProcedureColumns(final MutableProcedure procedure,
                                 final InclusionRule columnInclusionRule,
-                                final NamedObjectList columnDataTypes)
+                                final NamedObjectList<MutableColumnDataType> columnDataTypes)
     throws SQLException
   {
 
@@ -136,12 +136,12 @@ final class ProcedureRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  NamedObjectList retrieveProcedures(final boolean retrieveProcedures,
-                                     final InclusionRule procedureInclusionRule)
+  NamedObjectList<MutableProcedure> retrieveProcedures(final boolean retrieveProcedures,
+                                                       final InclusionRule procedureInclusionRule)
     throws SQLException
   {
 
-    final NamedObjectList procedures = new NamedObjectList(new AlphabeticalSortComparator());
+    final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>(new AlphabeticalSortComparator());
 
     if (!retrieveProcedures)
     {

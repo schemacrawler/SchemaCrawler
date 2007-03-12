@@ -116,7 +116,7 @@ public final class ColumnsGrep
                  SchemaInfoLevel.BASIC,
                  options);
 
-    final List tablesList = new ArrayList();
+    final List<Table> tablesList = new ArrayList<Table>();
     final Table[] allTables = schema.getTables();
     for (final Table table: allTables)
     {
@@ -126,7 +126,7 @@ public final class ColumnsGrep
       }
     }
 
-    return (Table[]) tablesList.toArray(new Table[tablesList.size()]);
+    return tablesList.toArray(new Table[tablesList.size()]);
   }
 
   /**
@@ -200,7 +200,7 @@ public final class ColumnsGrep
    *        Inclusion rule for columns
    * @param invertMatch
    *        Whether to invert the table match
-   * @return
+   * @return Whether the column should be included
    */
   public static boolean includesColumn(final Table table,
                                        final InclusionRule columnInclusionRule,

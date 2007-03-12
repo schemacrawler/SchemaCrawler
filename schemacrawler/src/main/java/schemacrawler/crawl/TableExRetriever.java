@@ -27,7 +27,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -80,10 +79,10 @@ final class TableExRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveCheckConstraintInformation(final NamedObjectList tables)
+  void retrieveCheckConstraintInformation(final NamedObjectList<MutableTable> tables)
     throws SQLException
   {
-    final Map checkConstraintsMap = new HashMap();
+    final Map<String, MutableCheckConstraint> checkConstraintsMap = new HashMap<String, MutableCheckConstraint>();
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
@@ -116,7 +115,7 @@ final class TableExRetriever
         // final String tableSchema = results.getString("TABLE_SCHEMA");
         final String tableName = results.getString("TABLE_NAME");
 
-        final MutableTable table = (MutableTable) tables.lookup(tableName);
+        final MutableTable table = tables.lookup(tableName);
         if (!belongsToSchema(table, catalog, schema))
         {
           LOGGER.log(Level.FINEST, "Table not found: " + tableName);
@@ -170,7 +169,7 @@ final class TableExRetriever
                                  + constraintName);
         String definition = results.getString("CHECK_CLAUSE");
 
-        final MutableCheckConstraint checkConstraint = (MutableCheckConstraint) checkConstraintsMap
+        final MutableCheckConstraint checkConstraint = checkConstraintsMap
           .get(constraintName);
         if (checkConstraint == null)
         {
@@ -194,12 +193,10 @@ final class TableExRetriever
     }
 
     // Add check constraints to tables
-    final Collection checkConstraintsCollection = checkConstraintsMap.values();
-    for (final Iterator iter = checkConstraintsCollection.iterator(); iter
-      .hasNext();)
+    final Collection<MutableCheckConstraint> checkConstraintsCollection = checkConstraintsMap
+      .values();
+    for (MutableCheckConstraint checkConstraint: checkConstraintsCollection)
     {
-      final MutableCheckConstraint checkConstraint = (MutableCheckConstraint) iter
-        .next();
       final MutableTable table = (MutableTable) checkConstraint.getParent();
       table.addCheckConstraint(checkConstraint);
     }
@@ -221,7 +218,7 @@ final class TableExRetriever
    *         On a SQL exception
    */
   void retrievePrivileges(final DatabaseObject parent,
-                          final NamedObjectList namedObjectList)
+                          final NamedObjectList<?> namedObjectList)
     throws SQLException
   {
     final ResultSet results;
@@ -262,7 +259,7 @@ final class TableExRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveTriggerInformation(final NamedObjectList tables)
+  void retrieveTriggerInformation(final NamedObjectList<MutableTable> tables)
     throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
@@ -299,7 +296,7 @@ final class TableExRetriever
         // .getString("EVENT_OBJECT_SCHEMA");
         final String tableName = results.getString("EVENT_OBJECT_TABLE");
 
-        final MutableTable table = (MutableTable) tables.lookup(tableName);
+        final MutableTable table = tables.lookup(tableName);
         if (!belongsToSchema(table, catalog, schema))
         {
           LOGGER.log(Level.FINEST, "Skipping trigger " + triggerName
@@ -344,7 +341,7 @@ final class TableExRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveViewInformation(final NamedObjectList tables)
+  void retrieveViewInformation(final NamedObjectList<MutableTable> tables)
     throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
@@ -402,7 +399,7 @@ final class TableExRetriever
   }
 
   private void createPrivileges(final ResultSet results,
-                                final NamedObjectList namedObjectList,
+                                final NamedObjectList<?> namedObjectList,
                                 final boolean privilegesForTable)
     throws SQLException
   {

@@ -21,8 +21,6 @@
 package schemacrawler.crawl;
 
 
-import java.util.List;
-
 import schemacrawler.schema.Column;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Privilege;
@@ -45,7 +43,7 @@ final class MutableColumn
   private String defaultValue;
   private boolean isPartOfPrimaryKey;
   private boolean isPartOfUniqueIndex;
-  private final NamedObjectList privileges = new NamedObjectList(new NaturalSortComparator());
+  private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>(new NaturalSortComparator());
 
   MutableColumn(final String name, final NamedObject parent)
   {
@@ -69,9 +67,7 @@ final class MutableColumn
    */
   public Privilege[] getPrivileges()
   {
-    final List allPrivileges = privileges.getAll();
-    return (Privilege[]) allPrivileges.toArray(new Privilege[allPrivileges
-      .size()]);
+    return privileges.getAll().toArray(new Privilege[0]);
   }
 
   /**
@@ -100,7 +96,7 @@ final class MutableColumn
    * @param privilege
    *        Privilege
    */
-  void addPrivilege(final Privilege privilege)
+  void addPrivilege(final MutablePrivilege privilege)
   {
     privileges.add(privilege);
   }

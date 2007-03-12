@@ -20,7 +20,8 @@
 package schemacrawler.crawl;
 
 
-import java.util.Properties;
+import java.util.HashMap;
+import java.util.Map;
 
 import schemacrawler.schema.Table;
 import sf.util.Utilities;
@@ -45,14 +46,14 @@ public final class CrawlerUtililties
                                          final Table table)
   {
 
-    final Properties tableProperties = new Properties();
+    final Map<String, String> tableProperties = new HashMap<String, String>();
     if (table != null)
     {
-      tableProperties.setProperty("catalog", table.getCatalogName());
-      tableProperties.setProperty("schema", table.getSchemaName());
-      tableProperties.setProperty("table", table.getFullName());
-      tableProperties.setProperty("columns", table.getColumnsListAsString());
-      tableProperties.setProperty("tabletype", table.getType().toString());
+      tableProperties.put("catalog", table.getCatalogName());
+      tableProperties.put("schema", table.getSchemaName());
+      tableProperties.put("table", table.getFullName());
+      tableProperties.put("columns", table.getColumnsListAsString());
+      tableProperties.put("tabletype", table.getType().toString());
     }
 
     String sql = templateSql;

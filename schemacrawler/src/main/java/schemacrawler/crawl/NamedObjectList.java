@@ -22,7 +22,6 @@ package schemacrawler.crawl;
 
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -40,7 +39,7 @@ import schemacrawler.util.SerializableComparator;
  * 
  * @author sfatehi
  */
-public final class NamedObjectList
+final class NamedObjectList<N extends AbstractNamedObject>
   implements Serializable
 {
 
@@ -50,8 +49,8 @@ public final class NamedObjectList
     .getName());
 
   private SerializableComparator comparator;
-  private final List sortedList;
-  private final Map map;
+  private final List<N> sortedList;
+  private final Map<String, N> map;
 
   /**
    * Construct an initially empty ordered list of named objects, that
@@ -60,11 +59,11 @@ public final class NamedObjectList
    * @param serializableComparator
    *        Comparator for named objects, or null for no sorting
    */
-  public NamedObjectList(final SerializableComparator serializableComparator)
+  NamedObjectList(final SerializableComparator serializableComparator)
   {
     comparator = serializableComparator;
-    sortedList = new LinkedList();
-    map = new TreeMap();
+    sortedList = new LinkedList<N>();
+    map = new TreeMap<String, N>();
   }
 
   /**
@@ -73,7 +72,7 @@ public final class NamedObjectList
    * @param namedObject
    *        Named object
    */
-  public void add(final NamedObject namedObject)
+  void add(final N namedObject)
   {
     if (namedObject == null || namedObject.getName() == null)
     {
@@ -118,7 +117,7 @@ public final class NamedObjectList
       return false;
     }
 
-    final NamedObjectList other = (NamedObjectList) o;
+    final NamedObjectList<N> other = (NamedObjectList<N>) o;
     if (sortedList == null)
     {
       if (other.sortedList != null)
@@ -145,9 +144,9 @@ public final class NamedObjectList
    *        Index of the requested object
    * @return Named object
    */
-  public NamedObject get(final int index)
+  N get(final int index)
   {
-    return (NamedObject) sortedList.get(index);
+    return sortedList.get(index);
   }
 
   /**
@@ -155,9 +154,9 @@ public final class NamedObjectList
    * 
    * @return Map
    */
-  public Map getMap()
+  Map<String, N> getMap()
   {
-    return new HashMap(map);
+    return new HashMap<String, N>(map);
   }
 
   /**
@@ -185,9 +184,9 @@ public final class NamedObjectList
    *        Name
    * @return Named object
    */
-  public NamedObject lookup(final String name)
+  N lookup(final String name)
   {
-    return (NamedObject) map.get(name);
+    return map.get(name);
   }
 
   /**
@@ -195,7 +194,7 @@ public final class NamedObjectList
    * 
    * @return Number of elements in this list.
    */
-  public int size()
+  int size()
   {
     return sortedList.size();
   }
@@ -220,7 +219,7 @@ public final class NamedObjectList
    * @param namedObject
    *        Named object to add
    */
-  void add(final int ordinalPosition, final NamedObject namedObject)
+  void add(final int ordinalPosition, final N namedObject)
   {
     if (namedObject == null || namedObject.getName() == null)
     {
@@ -258,9 +257,9 @@ public final class NamedObjectList
    * 
    * @return All named objects
    */
-  List getAll()
+  List<N> getAll()
   {
-    return new ArrayList(sortedList);
+    return Collections.unmodifiableList(sortedList);
   }
 
   /**
@@ -274,7 +273,7 @@ public final class NamedObjectList
   {
     if (map.containsKey(name))
     {
-      final NamedObject namedObject = (NamedObject) map.remove(name);
+      final NamedObject namedObject = map.remove(name);
       sortedList.remove(namedObject);
       return namedObject;
     }

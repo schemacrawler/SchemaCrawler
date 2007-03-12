@@ -23,7 +23,6 @@ package schemacrawler.tools.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -34,11 +33,11 @@ import java.util.List;
 final class HtmlTableRow
 {
 
-  private final List cells;
+  private final List<HtmlTableCell> cells;
 
   HtmlTableRow()
   {
-    cells = new ArrayList();
+    cells = new ArrayList<HtmlTableCell>();
   }
 
   HtmlTableRow(final int colSpan)
@@ -58,9 +57,8 @@ final class HtmlTableRow
   {
     final StringBuffer buffer = new StringBuffer();
     buffer.append("\t<tr>\n");
-    for (final Iterator iter = cells.iterator(); iter.hasNext();)
+    for (HtmlTableCell cell: cells)
     {
-      final HtmlTableCell cell = (HtmlTableCell) iter.next();
       buffer.append("\t\t").append(cell).append("\n");
     }
     buffer.append("\t</tr>");

@@ -94,7 +94,7 @@ public interface DatabaseInfo
    * 
    * @return Map of properties
    */
-  Map getProperties();
+  Map<String, Object> getProperties();
 
   /**
    * Gets a database property.

@@ -82,7 +82,7 @@ final class DatabaseInfoRetriever
     throws SQLException
   {
     final DatabaseMetaData dbMetaData = getRetrieverConnection().getMetaData();
-    final SortedMap dbProperties = new TreeMap();
+    final SortedMap<String, Object> dbProperties = new TreeMap<String, Object>();
     try
     {
       final Method[] methods = DatabaseMetaData.class.getMethods();
@@ -347,7 +347,7 @@ final class DatabaseInfoRetriever
    */
   private boolean isDatabasePropertyResultSetType(final Method method)
   {
-    final List resultSetTypeMethods = Arrays.asList(new String[] {
+    final List<String> resultSetTypeMethods = Arrays.asList(new String[] {
         "deletesAreDetected",
         "insertsAreDetected",
         "updatesAreDetected",
@@ -372,10 +372,10 @@ final class DatabaseInfoRetriever
    * @return List
    * @throws SQLException
    */
-  private List readResultsVector(final ResultSet results)
+  private List<String> readResultsVector(final ResultSet results)
     throws SQLException
   {
-    final List values = new ArrayList();
+    final List<String> values = new ArrayList<String>();
     try
     {
       while (results.next())
@@ -392,7 +392,7 @@ final class DatabaseInfoRetriever
   }
 
   private void retrieveResultSetTypeProperty(final DatabaseMetaData dbMetaData,
-                                             final SortedMap dbProperties,
+                                             final SortedMap<String, Object> dbProperties,
                                              final Method method,
                                              final int resultSetType,
                                              final String resultSetTypeName)
