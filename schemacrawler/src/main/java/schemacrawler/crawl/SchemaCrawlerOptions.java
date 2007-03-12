@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.Properties;
 
 import schemacrawler.main.BaseOptions;
+import schemacrawler.main.Config;
 import schemacrawler.schema.TableType;
 import schemacrawler.util.AlphabeticalSortComparator;
 import schemacrawler.util.NaturalSortComparator;
@@ -99,24 +100,27 @@ public final class SchemaCrawlerOptions
    * @param config
    *        Configuration properties
    */
-  public SchemaCrawlerOptions(final Properties config)
+  public SchemaCrawlerOptions(final Config config)
   {
 
-    final String tableTypesString = config.getProperty(SC_TABLE_TYPES,
-                                                       DEFAULT_TABLE_TYPES);
+    final String tableTypesString = config.getStringValue(SC_TABLE_TYPES,
+                                                          DEFAULT_TABLE_TYPES);
     tableTypes = TableType.valueOf(tableTypesString.split(","));
 
-    showStoredProcedures = getBooleanProperty(SC_SHOW_STORED_PROCEDURES, config);
+    showStoredProcedures = config.getBooleanValue(SC_SHOW_STORED_PROCEDURES);
 
     tableInclusionRule = new InclusionRule(config
-      .getProperty(SC_TABLE_PATTERN_INCLUDE, InclusionRule.INCLUDE_ALL), config
-      .getProperty(SC_TABLE_PATTERN_EXCLUDE, InclusionRule.EXCLUDE_NONE));
+                                             .getStringValue(SC_TABLE_PATTERN_INCLUDE,
+                                                             InclusionRule.INCLUDE_ALL),
+                                           config
+                                             .getStringValue(SC_TABLE_PATTERN_EXCLUDE,
+                                                             InclusionRule.EXCLUDE_NONE));
     columnInclusionRule = new InclusionRule(config
-                                              .getProperty(SC_COLUMN_PATTERN_INCLUDE,
-                                                           InclusionRule.INCLUDE_ALL),
+                                              .getStringValue(SC_COLUMN_PATTERN_INCLUDE,
+                                                              InclusionRule.INCLUDE_ALL),
                                             config
-                                              .getProperty(SC_COLUMN_PATTERN_EXCLUDE,
-                                                           InclusionRule.EXCLUDE_NONE));
+                                              .getStringValue(SC_COLUMN_PATTERN_EXCLUDE,
+                                                              InclusionRule.EXCLUDE_NONE));
 
     // comparators
     tableColumnComparator = getComparator(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS,
@@ -127,6 +131,17 @@ public final class SchemaCrawlerOptions
                                          config);
     procedureColumnComparator = getComparator(SC_SORT_ALPHABETICALLY_PROCEDURE_COLUMNS,
                                               config);
+  }
+
+  /**
+   * Options from properties.
+   * 
+   * @param properties
+   *        Configuration properties
+   */
+  public SchemaCrawlerOptions(final Properties properties)
+  {
+    this(new Config(properties));
   }
 
   /**
@@ -338,9 +353,9 @@ public final class SchemaCrawlerOptions
   }
 
   private SerializableComparator getComparator(final String propertyName,
-                                               final Properties config)
+                                               final Config config)
   {
-    return getComparator(getBooleanProperty(propertyName, config));
+    return getComparator(config.getBooleanValue(propertyName));
   }
 
 }

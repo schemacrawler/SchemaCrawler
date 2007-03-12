@@ -37,7 +37,22 @@ public enum ForeignKeyDeferrability
   importedKeyNotDeferrable(DatabaseMetaData.importedKeyNotDeferrable,
     "not deferrable");
 
+  public static ForeignKeyDeferrability valueOf(final int id)
+  {
+    final EnumSet<ForeignKeyDeferrability> allOf = EnumSet
+      .allOf(ForeignKeyDeferrability.class);
+    for (final ForeignKeyDeferrability fkDeferrability: allOf)
+    {
+      if (fkDeferrability.getId() == id)
+      {
+        return fkDeferrability;
+      }
+    }
+    return null;
+  }
+
   private final String name;
+
   private final int id;
 
   private ForeignKeyDeferrability(final int id, final String name)
@@ -65,20 +80,6 @@ public enum ForeignKeyDeferrability
   public String toString()
   {
     return name;
-  }
-
-  public static ForeignKeyDeferrability valueOf(int id)
-  {
-    EnumSet<ForeignKeyDeferrability> allOf = EnumSet
-      .allOf(ForeignKeyDeferrability.class);
-    for (ForeignKeyDeferrability fkDeferrability: allOf)
-    {
-      if (fkDeferrability.getId() == id)
-      {
-        return fkDeferrability;
-      }
-    }
-    return null;
   }
 
 }

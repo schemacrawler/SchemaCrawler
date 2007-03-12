@@ -306,7 +306,7 @@ final class TableRetriever
 
     final Collection<MutableForeignKey> foreignKeyCollection = foreignKeysMap
       .values();
-    for (MutableForeignKey foreignKey: foreignKeyCollection)
+    for (final MutableForeignKey foreignKey: foreignKeyCollection)
     {
       table.addForeignKey(foreignKey);
     }
@@ -349,7 +349,7 @@ final class TableRetriever
     createIndices(results, table, indicesMap);
 
     final Collection<MutableIndex> indexCollection = indicesMap.values();
-    for (MutableIndex index: indexCollection)
+    for (final MutableIndex index: indexCollection)
     {
       if (index.getColumns().length > 0)
       {

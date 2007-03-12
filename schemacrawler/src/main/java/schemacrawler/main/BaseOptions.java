@@ -22,7 +22,6 @@ package schemacrawler.main;
 
 
 import java.io.Serializable;
-import java.util.Properties;
 
 /**
  * Options.
@@ -32,12 +31,5 @@ import java.util.Properties;
 public abstract class BaseOptions
   implements Serializable
 {
-
-  protected boolean getBooleanProperty(final String propertyName,
-                                       final Properties config)
-  {
-    return Boolean.valueOf(config.getProperty(propertyName, "false"))
-      .booleanValue();
-  }
 
 }

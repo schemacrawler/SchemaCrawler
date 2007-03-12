@@ -173,7 +173,7 @@ public abstract class BaseSchemaTextFormatter
     if (propertySet.size() > 0)
     {
       handleDatabasePropertiesStart();
-      for (Map.Entry<String, Object> property: propertySet)
+      for (final Map.Entry<String, Object> property: propertySet)
       {
         final String key = property.getKey();
         Object value = property.getValue();

@@ -21,12 +21,8 @@
 package schemacrawler.test;
 
 
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import dbconnector.datasource.PropertiesDataSourceException;
-import dbconnector.test.TestUtility;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -34,6 +30,7 @@ import junit.framework.TestSuite;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
+import schemacrawler.main.Config;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.Procedure;
@@ -43,12 +40,27 @@ import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import sf.util.Utilities;
+import dbconnector.datasource.PropertiesDataSourceException;
+import dbconnector.test.TestUtility;
 
 public class SchemaCrawlerTest
-extends TestCase
+  extends TestCase
 {
 
-  private TestUtility testUtility = new TestUtility();
+  private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerTest.class
+    .getName());
+
+  public static Test suite()
+  {
+    return new TestSuite(SchemaCrawlerTest.class);
+  }
+
+  private final TestUtility testUtility = new TestUtility();
+
+  public SchemaCrawlerTest(final String name)
+  {
+    super(name);
+  }
 
   public void setUp()
     throws PropertiesDataSourceException, ClassNotFoundException
@@ -60,194 +72,6 @@ extends TestCase
     throws PropertiesDataSourceException, ClassNotFoundException
   {
     testUtility.tearDown();
-  }
-
-  private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerTest.class
-    .getName());
-
-  public static Test suite()
-  {
-    return new TestSuite(SchemaCrawlerTest.class);
-  }
-
-  public SchemaCrawlerTest(final String name)
-  {
-    super(name);
-  }
-
-  public void testTableCount()
-  {
-    LOGGER.log(Level.FINE, testUtility.getDataSource().toString());
-    LOGGER.log(Level.FINE, "schemapattern="
-                           + testUtility.getDataSource().getSourceProperties()
-                             .getProperty("schemapattern"));
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    LOGGER.log(Level.FINE, schemaCrawlerOptions.toString());
-    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  null,
-                                                  SchemaInfoLevel.MINIMUM,
-                                                  schemaCrawlerOptions);
-    final Table[] tables = schema.getTables();
-    final int numTables = tables.length;
-    assertNotNull("Could not obtain schema", schema);
-    assertEquals("Table count does not match", 6, numTables);
-
-  }
-
-  public void testTableNames()
-  {
-
-    final String schemaName = "PUBLIC";
-    final String[] tableNames = {
-        "CUSTOMER", "CUSTOMERLIST", "INVOICE", "ITEM", "PRODUCT", "SUPPLIER"
-    };
-    final String[] tableTypes = {
-        "TABLE", "VIEW", "TABLE", "TABLE", "TABLE", "TABLE"
-    };
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  null,
-                                                  SchemaInfoLevel.MINIMUM,
-                                                  schemaCrawlerOptions);
-    assertNotNull("Could not obtain schema", schema);
-    final Table[] tables = schema.getTables();
-    assertEquals("Table count does not match", 6, tables.length);
-    for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
-    {
-      final Table table = tables[tableIdx];
-      assertEquals("Table name does not match", tableNames[tableIdx], table
-        .getName());
-      assertEquals("Full table name does not match",
-                   schemaName + "." + tableNames[tableIdx],
-                   table.getFullName());
-      assertEquals("Table type does not match", tableTypes[tableIdx], table
-        .getType().toString());
-    }
-
-  }
-
-  public void testProcedureDefinitions()
-  {
-
-    // Set up information schema properties
-    final Properties informationSchemaProperties = new Properties();
-    informationSchemaProperties
-      .setProperty("select.INFORMATION_SCHEMA.ROUTINES",
-                   "SELECT " + "PROCEDURE_CAT AS ROUTINE_CATALOG, "
-                       + "PROCEDURE_SCHEM AS ROUTINE_SCHEMA, "
-                       + "PROCEDURE_NAME AS ROUTINE_NAME, "
-                       + "\'EXTERNAL\' AS ROUTINE_BODY, "
-                       + "SPECIFIC_NAME  AS ROUTINE_DEFINITION "
-                       + "FROM INFORMATION_SCHEMA.SYSTEM_PROCEDURES");
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setShowStoredProcedures(true);
-    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  informationSchemaProperties,
-                                                  SchemaInfoLevel.MAXIMUM,
-                                                  schemaCrawlerOptions);
-    assertNotNull("Could not obtain schema", schema);
-    final Procedure[] procedures = schema.getProcedures();
-    // assertEquals("Procedure count does not match", 173,
-    // procedures.length);
-    for (int i = 0; i < procedures.length; i++)
-    {
-      final Procedure procedure = procedures[i];
-      if (Utilities.isBlank(procedure.getDefinition()))
-      {
-        fail("Procedure definition not found");
-      }
-    }
-
-  }
-
-  public void testTriggers()
-  {
-
-    // Set up information schema properties
-    final Properties informationSchemaProperties = new Properties();
-    informationSchemaProperties
-      .setProperty("select.INFORMATION_SCHEMA.TRIGGERS",
-                   "SELECT "
-                       + "TRIGGER_CAT AS TRIGGER_CATALOG, "
-                       + "TRIGGER_SCHEM AS TRIGGER_SCHEMA, "
-                       + "TRIGGER_NAME, "
-                       + "TRIGGERING_EVENT AS EVENT_MANIPULATION, "
-                       + "TABLE_CAT AS EVENT_OBJECT_CATALOG, "
-                       + "TABLE_SCHEM AS EVENT_OBJECT_SCHEMA, "
-                       + "TABLE_NAME AS EVENT_OBJECT_TABLE, "
-                       + "1 AS ACTION_ORDER, "
-                       + "WHEN_CLAUSE AS ACTION_CONDITION, "
-                       + "REFERENCING_NAMES AS ACTION_ORIENTATION, "
-                       + "DESCRIPTION AS ACTION_STATEMENT, "
-                       + "CASE WHEN TRIGGER_TYPE LIKE \'BEFORE%\' THEN \'BEFORE\' ELSE \'\' END AS CONDITION_TIMING, "
-                       + "TRIGGER_BODY AS DEFINITION "
-                       + "FROM INFORMATION_SCHEMA.SYSTEM_TRIGGERS");
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setShowStoredProcedures(true);
-    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  informationSchemaProperties,
-                                                  SchemaInfoLevel.MAXIMUM,
-                                                  schemaCrawlerOptions);
-    assertNotNull("Could not obtain schema", schema);
-    final Table[] tables = schema.getTables();
-    boolean foundTrigger = false;
-    for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
-    {
-      final Table table = tables[tableIdx];
-      final Trigger[] triggers = table.getTriggers();
-      for (int i = 0; i < triggers.length; i++)
-      {
-        foundTrigger = true;
-        final Trigger trigger = triggers[i];
-        assertEquals("Triggers full name does not match",
-                     "CUSTOMER.SCTRIGGER",
-                     trigger.getFullName());
-        assertEquals("Trigger EventManipulationType does not match",
-                     EventManipulationType.DELETE,
-                     trigger.getEventManipulationType());
-      }
-    }
-    assertTrue("No triggers found", foundTrigger);
-  }
-
-  public void testViewDefinitions()
-  {
-
-    // Set up information schema properties
-    final Properties informationSchemaProperties = new Properties();
-    informationSchemaProperties
-      .setProperty("select.INFORMATION_SCHEMA.VIEWS",
-                   "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_VIEWS");
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  informationSchemaProperties,
-                                                  SchemaInfoLevel.MAXIMUM,
-                                                  schemaCrawlerOptions);
-    assertNotNull("Could not obtain schema", schema);
-    final Table[] tables = schema.getTables();
-    assertEquals("Table count does not match", 6, tables.length);
-    boolean foundView = false;
-    for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
-    {
-      final Table table = tables[tableIdx];
-      if (table.getType() == TableType.VIEW)
-      {
-        foundView = true;
-        final View view = (View) table;
-        if (Utilities.isBlank(view.getDefinition()))
-        {
-          fail("View definition not found");
-        }
-      }
-    }
-    if (!foundView)
-    {
-      fail("No views found");
-    }
-
   }
 
   public void testColumns()
@@ -330,6 +154,177 @@ extends TestCase
                      columnDataTypes[tableIdx][columnIdx],
                      column.getType().getTypeName());
       }
+    }
+
+  }
+
+  public void testProcedureDefinitions()
+  {
+
+    // Set up information schema properties
+    final Config informationSchemaProperties = new Config();
+    informationSchemaProperties
+      .put("select.INFORMATION_SCHEMA.ROUTINES",
+           "SELECT " + "PROCEDURE_CAT AS ROUTINE_CATALOG, "
+               + "PROCEDURE_SCHEM AS ROUTINE_SCHEMA, "
+               + "PROCEDURE_NAME AS ROUTINE_NAME, "
+               + "\'EXTERNAL\' AS ROUTINE_BODY, "
+               + "SPECIFIC_NAME  AS ROUTINE_DEFINITION "
+               + "FROM INFORMATION_SCHEMA.SYSTEM_PROCEDURES");
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setShowStoredProcedures(true);
+    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
+                                                  informationSchemaProperties,
+                                                  SchemaInfoLevel.MAXIMUM,
+                                                  schemaCrawlerOptions);
+    assertNotNull("Could not obtain schema", schema);
+    final Procedure[] procedures = schema.getProcedures();
+    // assertEquals("Procedure count does not match", 173,
+    // procedures.length);
+    for (final Procedure procedure: procedures)
+    {
+      if (Utilities.isBlank(procedure.getDefinition()))
+      {
+        fail("Procedure definition not found");
+      }
+    }
+
+  }
+
+  public void testTableCount()
+  {
+    LOGGER.log(Level.FINE, testUtility.getDataSource().toString());
+    LOGGER.log(Level.FINE, "schemapattern="
+                           + testUtility.getDataSource().getSourceProperties()
+                             .getProperty("schemapattern"));
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    LOGGER.log(Level.FINE, schemaCrawlerOptions.toString());
+    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
+                                                  null,
+                                                  SchemaInfoLevel.MINIMUM,
+                                                  schemaCrawlerOptions);
+    final Table[] tables = schema.getTables();
+    final int numTables = tables.length;
+    assertNotNull("Could not obtain schema", schema);
+    assertEquals("Table count does not match", 6, numTables);
+
+  }
+
+  public void testTableNames()
+  {
+
+    final String schemaName = "PUBLIC";
+    final String[] tableNames = {
+        "CUSTOMER", "CUSTOMERLIST", "INVOICE", "ITEM", "PRODUCT", "SUPPLIER"
+    };
+    final String[] tableTypes = {
+        "TABLE", "VIEW", "TABLE", "TABLE", "TABLE", "TABLE"
+    };
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
+                                                  null,
+                                                  SchemaInfoLevel.MINIMUM,
+                                                  schemaCrawlerOptions);
+    assertNotNull("Could not obtain schema", schema);
+    final Table[] tables = schema.getTables();
+    assertEquals("Table count does not match", 6, tables.length);
+    for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
+    {
+      final Table table = tables[tableIdx];
+      assertEquals("Table name does not match", tableNames[tableIdx], table
+        .getName());
+      assertEquals("Full table name does not match",
+                   schemaName + "." + tableNames[tableIdx],
+                   table.getFullName());
+      assertEquals("Table type does not match", tableTypes[tableIdx], table
+        .getType().toString());
+    }
+
+  }
+
+  public void testTriggers()
+  {
+
+    // Set up information schema properties
+    final Config informationSchemaProperties = new Config();
+    informationSchemaProperties
+      .put("select.INFORMATION_SCHEMA.TRIGGERS",
+           "SELECT "
+               + "TRIGGER_CAT AS TRIGGER_CATALOG, "
+               + "TRIGGER_SCHEM AS TRIGGER_SCHEMA, "
+               + "TRIGGER_NAME, "
+               + "TRIGGERING_EVENT AS EVENT_MANIPULATION, "
+               + "TABLE_CAT AS EVENT_OBJECT_CATALOG, "
+               + "TABLE_SCHEM AS EVENT_OBJECT_SCHEMA, "
+               + "TABLE_NAME AS EVENT_OBJECT_TABLE, "
+               + "1 AS ACTION_ORDER, "
+               + "WHEN_CLAUSE AS ACTION_CONDITION, "
+               + "REFERENCING_NAMES AS ACTION_ORIENTATION, "
+               + "DESCRIPTION AS ACTION_STATEMENT, "
+               + "CASE WHEN TRIGGER_TYPE LIKE \'BEFORE%\' THEN \'BEFORE\' ELSE \'\' END AS CONDITION_TIMING, "
+               + "TRIGGER_BODY AS DEFINITION "
+               + "FROM INFORMATION_SCHEMA.SYSTEM_TRIGGERS");
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setShowStoredProcedures(true);
+    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
+                                                  informationSchemaProperties,
+                                                  SchemaInfoLevel.MAXIMUM,
+                                                  schemaCrawlerOptions);
+    assertNotNull("Could not obtain schema", schema);
+    final Table[] tables = schema.getTables();
+    boolean foundTrigger = false;
+    for (final Table table: tables)
+    {
+      final Trigger[] triggers = table.getTriggers();
+      for (final Trigger trigger: triggers)
+      {
+        foundTrigger = true;
+        assertEquals("Triggers full name does not match",
+                     "CUSTOMER.SCTRIGGER",
+                     trigger.getFullName());
+        assertEquals("Trigger EventManipulationType does not match",
+                     EventManipulationType.DELETE,
+                     trigger.getEventManipulationType());
+      }
+    }
+    assertTrue("No triggers found", foundTrigger);
+  }
+
+  public void testViewDefinitions()
+  {
+
+    // Set up information schema properties
+    final Config informationSchemaProperties = new Config();
+    informationSchemaProperties
+      .put("select.INFORMATION_SCHEMA.VIEWS",
+           "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_VIEWS");
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
+                                                  informationSchemaProperties,
+                                                  SchemaInfoLevel.MAXIMUM,
+                                                  schemaCrawlerOptions);
+    assertNotNull("Could not obtain schema", schema);
+    final Table[] tables = schema.getTables();
+    assertEquals("Table count does not match", 6, tables.length);
+    boolean foundView = false;
+    for (final Table table: tables)
+    {
+      if (table.getType() == TableType.VIEW)
+      {
+        foundView = true;
+        final View view = (View) table;
+        if (Utilities.isBlank(view.getDefinition()))
+        {
+          fail("View definition not found");
+        }
+      }
+    }
+    if (!foundView)
+    {
+      fail("No views found");
     }
 
   }

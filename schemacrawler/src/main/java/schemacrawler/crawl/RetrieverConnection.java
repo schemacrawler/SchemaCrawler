@@ -25,12 +25,12 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
+import schemacrawler.main.Config;
 import dbconnector.datasource.PropertiesDataSource;
 
 /**
@@ -51,7 +51,7 @@ final class RetrieverConnection
   private final InformationSchemaViews informationSchemaViews;
 
   RetrieverConnection(final DataSource dataSource,
-                      final Properties additionalConfiguration)
+                      final Config additionalConfiguration)
     throws SchemaCrawlerException, SQLException
   {
     if (dataSource == null)

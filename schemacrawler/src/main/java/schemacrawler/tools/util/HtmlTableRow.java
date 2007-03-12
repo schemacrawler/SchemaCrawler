@@ -57,7 +57,7 @@ final class HtmlTableRow
   {
     final StringBuffer buffer = new StringBuffer();
     buffer.append("\t<tr>\n");
-    for (HtmlTableCell cell: cells)
+    for (final HtmlTableCell cell: cells)
     {
       buffer.append("\t\t").append(cell).append("\n");
     }

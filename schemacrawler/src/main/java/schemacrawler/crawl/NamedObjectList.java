@@ -67,34 +67,6 @@ final class NamedObjectList<N extends AbstractNamedObject>
   }
 
   /**
-   * Add a named object to the list.
-   * 
-   * @param namedObject
-   *        Named object
-   */
-  void add(final N namedObject)
-  {
-    if (namedObject == null || namedObject.getName() == null)
-    {
-      throw new IllegalArgumentException("Cannot add an object to the list");
-    }
-
-    remove(namedObject.getName());
-
-    map.put(namedObject.getName(), namedObject);
-    int index = Collections.binarySearch(sortedList, namedObject, comparator);
-    if (index < 0)
-    {
-      index = -index - 1;
-      sortedList.add(index, namedObject);
-    }
-    else
-    {
-      sortedList.add(namedObject);
-    }
-  }
-
-  /**
    * {@inheritDoc}
    * 
    * @see java.lang.Object#equals(java.lang.Object)
@@ -137,29 +109,6 @@ final class NamedObjectList<N extends AbstractNamedObject>
   }
 
   /**
-   * Gets the object at a given index.
-   * 
-   * @see java.util.List#get(int)
-   * @param index
-   *        Index of the requested object
-   * @return Named object
-   */
-  N get(final int index)
-  {
-    return sortedList.get(index);
-  }
-
-  /**
-   * Gets the map of named objects.
-   * 
-   * @return Map
-   */
-  Map<String, N> getMap()
-  {
-    return new HashMap<String, N>(map);
-  }
-
-  /**
    * {@inheritDoc}
    * 
    * @see java.lang.Object#hashCode()
@@ -175,28 +124,6 @@ final class NamedObjectList<N extends AbstractNamedObject>
     }
 
     return result;
-  }
-
-  /**
-   * Looks up a named object by name.
-   * 
-   * @param name
-   *        Name
-   * @return Named object
-   */
-  N lookup(final String name)
-  {
-    return map.get(name);
-  }
-
-  /**
-   * Returns the number of elements in this list.
-   * 
-   * @return Number of elements in this list.
-   */
-  int size()
-  {
-    return sortedList.size();
   }
 
   /**
@@ -253,6 +180,47 @@ final class NamedObjectList<N extends AbstractNamedObject>
   }
 
   /**
+   * Add a named object to the list.
+   * 
+   * @param namedObject
+   *        Named object
+   */
+  void add(final N namedObject)
+  {
+    if (namedObject == null || namedObject.getName() == null)
+    {
+      throw new IllegalArgumentException("Cannot add an object to the list");
+    }
+
+    remove(namedObject.getName());
+
+    map.put(namedObject.getName(), namedObject);
+    int index = Collections.binarySearch(sortedList, namedObject, comparator);
+    if (index < 0)
+    {
+      index = -index - 1;
+      sortedList.add(index, namedObject);
+    }
+    else
+    {
+      sortedList.add(namedObject);
+    }
+  }
+
+  /**
+   * Gets the object at a given index.
+   * 
+   * @see java.util.List#get(int)
+   * @param index
+   *        Index of the requested object
+   * @return Named object
+   */
+  N get(final int index)
+  {
+    return sortedList.get(index);
+  }
+
+  /**
    * Gets all named objects in the list, in sorted order.
    * 
    * @return All named objects
@@ -260,6 +228,28 @@ final class NamedObjectList<N extends AbstractNamedObject>
   List<N> getAll()
   {
     return Collections.unmodifiableList(sortedList);
+  }
+
+  /**
+   * Gets the map of named objects.
+   * 
+   * @return Map
+   */
+  Map<String, N> getMap()
+  {
+    return new HashMap<String, N>(map);
+  }
+
+  /**
+   * Looks up a named object by name.
+   * 
+   * @param name
+   *        Name
+   * @return Named object
+   */
+  N lookup(final String name)
+  {
+    return map.get(name);
   }
 
   /**
@@ -290,6 +280,16 @@ final class NamedObjectList<N extends AbstractNamedObject>
   {
     this.comparator = comparator;
     Collections.sort(sortedList, comparator);
+  }
+
+  /**
+   * Returns the number of elements in this list.
+   * 
+   * @return Number of elements in this list.
+   */
+  int size()
+  {
+    return sortedList.size();
   }
 
 }

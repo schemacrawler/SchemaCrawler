@@ -21,8 +21,7 @@
 package schemacrawler.tools.schematext;
 
 
-import java.util.Properties;
-
+import schemacrawler.main.Config;
 import schemacrawler.tools.BaseToolOptions;
 import schemacrawler.tools.OutputOptions;
 
@@ -66,7 +65,7 @@ public final class SchemaTextOptions
    * @param outputOptions
    *        Output options
    */
-  public SchemaTextOptions(final Properties config,
+  public SchemaTextOptions(final Config config,
                            final OutputOptions outputOptions,
                            final SchemaTextDetailType schemaTextDetailType)
   {
@@ -93,16 +92,16 @@ public final class SchemaTextOptions
     }
     else
     {
-      showStandardColumnTypeNames = getBooleanProperty(SHOW_JDBC_COLUMN_TYPE_NAMES,
-                                                       config)
-                                    || getBooleanProperty(SHOW_STANDARD_COLUMN_TYPE_NAMES,
-                                                          config);
-      showOrdinalNumbers = getBooleanProperty(SHOW_ORDINAL_NUMBERS, config);
+      showStandardColumnTypeNames = config
+        .getBooleanValue(SHOW_JDBC_COLUMN_TYPE_NAMES)
+                                    || config
+                                      .getBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES);
+      showOrdinalNumbers = config.getBooleanValue(SHOW_ORDINAL_NUMBERS);
 
-      hideForeignKeyNames = getBooleanProperty(HIDE_FOREIGN_KEY_NAMES, config);
-      hidePrimaryKeyNames = getBooleanProperty(HIDE_PRIMARY_KEY_NAMES, config);
-      hideIndexNames = getBooleanProperty(HIDE_INDEX_NAMES, config);
-      hideConstraintNames = getBooleanProperty(HIDE_CONSTRAINT_NAMES, config);
+      hideForeignKeyNames = config.getBooleanValue(HIDE_FOREIGN_KEY_NAMES);
+      hidePrimaryKeyNames = config.getBooleanValue(HIDE_PRIMARY_KEY_NAMES);
+      hideIndexNames = config.getBooleanValue(HIDE_INDEX_NAMES);
+      hideConstraintNames = config.getBooleanValue(HIDE_CONSTRAINT_NAMES);
     }
   }
 

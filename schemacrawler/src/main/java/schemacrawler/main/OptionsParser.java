@@ -23,7 +23,6 @@ package schemacrawler.main;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 
 import schemacrawler.crawl.SchemaCrawlerException;
@@ -70,7 +69,7 @@ public final class OptionsParser
     final String cfgFile = parser.getStringOptionValue(OPTION_CONFIGFILE);
     final String cfgOverrideFile = parser
       .getStringOptionValue(OPTION_CONFIGOVERRIDEFILE);
-    final Properties config = Utilities.loadConfig(cfgFile, cfgOverrideFile);
+    final Config config = Config.load(cfgFile, cfgOverrideFile);
 
     final String outputFormatValue = parser
       .getStringOptionValue(OPTION_OUTPUT_FORMAT);
@@ -146,7 +145,7 @@ public final class OptionsParser
   }
 
   private static Options[] createOptionsPerCommand(final String[] commandStrings,
-                                                   final Properties config,
+                                                   final Config config,
                                                    final OutputOptions masterOutputOptions)
   {
     final List<Options> optionCommandsList = new ArrayList<Options>();
@@ -206,7 +205,7 @@ public final class OptionsParser
     return isQueryOver;
   }
 
-  private static Command parseCommand(final Properties config,
+  private static Command parseCommand(final Config config,
                                       final String commandString)
   {
     final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType
@@ -216,7 +215,7 @@ public final class OptionsParser
     if (schemaTextDetailType == null && operation == null)
     {
       // Assume that the command is a query
-      query = config.getProperty(commandString);
+      query = config.get(commandString);
       if (query == null)
       {
         throw new IllegalArgumentException("Invalid command - " + commandString);
