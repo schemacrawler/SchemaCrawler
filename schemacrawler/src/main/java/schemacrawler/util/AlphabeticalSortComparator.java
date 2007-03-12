@@ -35,20 +35,14 @@ public class AlphabeticalSortComparator
   private static final long serialVersionUID = 3545518387326628405L;
 
   /**
-   * Compare.
+   * {@inheritDoc}
    * 
    * @see java.util.Comparator#compare(java.lang.Object,
    *      java.lang.Object)
-   * @param o1
-   *        First object to compare
-   * @param o2
-   *        Second object to compare
-   * @return Comparision
    */
-  public int compare(final Object o1, final Object o2)
+  public int compare(final NamedObject namedObject1,
+                     final NamedObject namedObject2)
   {
-    final NamedObject namedObject1 = (NamedObject) o1;
-    final NamedObject namedObject2 = (NamedObject) o2;
     return namedObject1.toString().compareToIgnoreCase(namedObject2.toString());
   }
 

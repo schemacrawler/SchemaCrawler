@@ -23,7 +23,6 @@ package schemacrawler.tools.schematext;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -169,14 +168,14 @@ public abstract class BaseSchemaTextFormatter
       handleDatabaseInfo(databaseInfo);
     }
 
-    final Set propertySet = databaseInfo.getProperties().entrySet();
+    final Set<Map.Entry<String, Object>> propertySet = databaseInfo
+      .getProperties().entrySet();
     if (propertySet.size() > 0)
     {
       handleDatabasePropertiesStart();
-      for (final Iterator iter = propertySet.iterator(); iter.hasNext();)
+      for (Map.Entry<String, Object> property: propertySet)
       {
-        final Map.Entry property = (Map.Entry) iter.next();
-        final String key = (String) property.getKey();
+        final String key = property.getKey();
         Object value = property.getValue();
         if (value == null)
         {
@@ -624,10 +623,9 @@ public abstract class BaseSchemaTextFormatter
     {
       if (trigger != null)
       {
-        String triggerType = "[trigger, "
-                             + trigger.getConditionTiming() + " "
-                             + trigger.getEventManipulationType()
-                             + ", per " + trigger.getActionOrientation() + "]";
+        String triggerType = "[trigger, " + trigger.getConditionTiming() + " "
+                             + trigger.getEventManipulationType() + ", per "
+                             + trigger.getActionOrientation() + "]";
         triggerType = triggerType.toLowerCase();
         final String actionCondition = trigger.getActionCondition();
         final String actionStatement = trigger.getActionStatement();

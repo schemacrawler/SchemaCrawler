@@ -29,7 +29,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -64,9 +63,9 @@ final class TableRetriever
    * @throws SQLException
    */
   private static void createForeignKeys(final ResultSet results,
-                                        final Map tablesMap,
+                                        final Map<String, MutableTable> tablesMap,
                                         final MutableTable table,
-                                        final Map foreignKeysMap)
+                                        final Map<String, MutableForeignKey> foreignKeysMap)
     throws SQLException
   {
 
@@ -79,8 +78,7 @@ final class TableRetriever
         {
           foreignKeyName = UNKNOWN;
         }
-        MutableForeignKey foreignKey = (MutableForeignKey) foreignKeysMap
-          .get(foreignKeyName);
+        MutableForeignKey foreignKey = foreignKeysMap.get(foreignKeyName);
         if (foreignKey == null)
         {
           foreignKey = new MutableForeignKey(table.getCatalogName(), table
@@ -102,10 +100,8 @@ final class TableRetriever
                                                             fkTableName,
                                                             fkColumnName);
         foreignKey.addColumnPair(keySequence, pkColumn, fkColumn);
-        foreignKey
-          .setUpdateRule(ForeignKeyUpdateRule.valueOf(updateRule));
-        foreignKey
-          .setDeleteRule(ForeignKeyUpdateRule.valueOf(deleteRule));
+        foreignKey.setUpdateRule(ForeignKeyUpdateRule.valueOf(updateRule));
+        foreignKey.setDeleteRule(ForeignKeyUpdateRule.valueOf(deleteRule));
         foreignKey.setDeferrability(ForeignKeyDeferrability
           .valueOf(deferrability));
       }
@@ -119,7 +115,7 @@ final class TableRetriever
 
   private static void createIndices(final ResultSet results,
                                     final MutableTable table,
-                                    final Map indicesMap)
+                                    final Map<String, MutableIndex> indicesMap)
     throws SQLException
   {
     try
@@ -131,7 +127,7 @@ final class TableRetriever
         {
           indexName = UNKNOWN;
         }
-        MutableIndex index = (MutableIndex) indicesMap.get(indexName);
+        MutableIndex index = indicesMap.get(indexName);
         if (index == null)
         {
           index = new MutableIndex(indexName, table);
@@ -170,21 +166,22 @@ final class TableRetriever
     }
   }
 
-  private static MutableColumn lookupOrCreateColumn(final Map tablesMap,
+  private static MutableColumn lookupOrCreateColumn(final Map<String, MutableTable> tablesMap,
                                                     final String tableName,
                                                     final String columnName)
   {
 
     MutableColumn column = null;
-    MutableTable table = (MutableTable) tablesMap.get(tableName);
+    MutableTable table = tablesMap.get(tableName);
     if (table != null)
     {
       column = (MutableColumn) table.lookupColumn(columnName);
     }
     if (column == null)
     {
-      final List tables = new ArrayList(tablesMap.values());
-      final MutableTable firstTable = (MutableTable) tables.get(0);
+      final List<MutableTable> tables = new ArrayList<MutableTable>(tablesMap
+        .values());
+      final MutableTable firstTable = tables.get(0);
       final String catalog = firstTable.getCatalogName();
       final String schema = firstTable.getSchemaName();
       table = new MutableTable(catalog, schema, tableName);
@@ -222,7 +219,7 @@ final class TableRetriever
    */
   void retrieveColumns(final MutableTable table,
                        final InclusionRule columnInclusionRule,
-                       final NamedObjectList columnDataTypes)
+                       final NamedObjectList<MutableColumnDataType> columnDataTypes)
     throws SQLException
   {
     final ResultSet results = getRetrieverConnection().getMetaData()
@@ -283,17 +280,18 @@ final class TableRetriever
 
   }
 
-  void retrieveForeignKeys(final NamedObjectList tables, final int index)
+  void retrieveForeignKeys(final NamedObjectList<MutableTable> tables,
+                           final int index)
     throws SQLException
   {
 
-    final Map tablesMap = tables.getMap();
-    final MutableTable table = (MutableTable) tables.get(index);
+    final Map<String, MutableTable> tablesMap = tables.getMap();
+    final MutableTable table = tables.get(index);
 
     final String tableName = table.getName();
     final String schema = table.getSchemaName();
 
-    final Map foreignKeysMap = new HashMap();
+    final Map<String, MutableForeignKey> foreignKeysMap = new HashMap<String, MutableForeignKey>();
 
     ResultSet results;
 
@@ -306,10 +304,10 @@ final class TableRetriever
     results = metaData.getExportedKeys(catalog, schema, tableName);
     createForeignKeys(results, tablesMap, table, foreignKeysMap);
 
-    final Collection foreignKeyCollection = foreignKeysMap.values();
-    for (final Iterator iter = foreignKeyCollection.iterator(); iter.hasNext();)
+    final Collection<MutableForeignKey> foreignKeyCollection = foreignKeysMap
+      .values();
+    for (MutableForeignKey foreignKey: foreignKeyCollection)
     {
-      final MutableForeignKey foreignKey = (MutableForeignKey) iter.next();
       table.addForeignKey(foreignKey);
     }
 
@@ -321,7 +319,7 @@ final class TableRetriever
     throws SQLException
   {
 
-    final Map indicesMap = new HashMap();
+    final Map<String, MutableIndex> indicesMap = new HashMap<String, MutableIndex>();
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
@@ -350,10 +348,9 @@ final class TableRetriever
     }
     createIndices(results, table, indicesMap);
 
-    final Collection indexCollection = indicesMap.values();
-    for (final Iterator iter = indexCollection.iterator(); iter.hasNext();)
+    final Collection<MutableIndex> indexCollection = indicesMap.values();
+    for (MutableIndex index: indexCollection)
     {
-      final MutableIndex index = (MutableIndex) iter.next();
       if (index.getColumns().length > 0)
       {
         table.addIndex(index);
@@ -423,17 +420,17 @@ final class TableRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  NamedObjectList retrieveTables(final TableType[] tableTypes,
-                                 final InclusionRule tableInclusionRule)
+  NamedObjectList<MutableTable> retrieveTables(final TableType[] tableTypes,
+                                               final InclusionRule tableInclusionRule)
     throws SQLException
   {
-    final NamedObjectList tables = new NamedObjectList(new AlphabeticalSortComparator());
+    final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>(new AlphabeticalSortComparator());
     final String catalog = getRetrieverConnection().getCatalog();
     final ResultSet results = getRetrieverConnection().getMetaData()
       .getTables(catalog,
                  getRetrieverConnection().getSchemaPattern(),
                  "%",
-                 TableType.toStringArray(tableTypes));
+                 TableType.toStrings(tableTypes));
     try
     {
       results.setFetchSize(FETCHSIZE);

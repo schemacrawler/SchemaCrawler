@@ -41,12 +41,12 @@ final class MutableColumnDataType
 
   private static final long serialVersionUID = 3688503281676530744L;
 
-  private static final Map JAVA_SQL_TYPES = getJavaSqlTypes();
+  private static final Map<Integer, String> JAVA_SQL_TYPES = getJavaSqlTypes();
 
-  private static Map getJavaSqlTypes()
+  private static Map<Integer, String> getJavaSqlTypes()
   {
 
-    final Map javaSqlTypes = new HashMap();
+    final Map<Integer, String> javaSqlTypes = new HashMap<Integer, String>();
     final Field[] staticFields = Types.class.getFields();
     for (final Field field: staticFields)
     {
@@ -213,7 +213,7 @@ final class MutableColumnDataType
    */
   public String getTypeName()
   {
-    String typeName = (String) JAVA_SQL_TYPES.get(new Integer(type));
+    String typeName = JAVA_SQL_TYPES.get(new Integer(type));
     if (typeName == null)
     {
       typeName = "<UNKNOWN>";

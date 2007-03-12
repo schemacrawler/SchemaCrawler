@@ -214,7 +214,7 @@ public final class SchemaCrawler
       handler.begin();
       final MutableDatabaseInfo databaseInfo = crawlDatabaseInfo(retrieverConnection,
                                                                  infoLevel);
-      final NamedObjectList columnDataTypes = databaseInfo
+      final NamedObjectList<MutableColumnDataType> columnDataTypes = databaseInfo
         .getColumnDataTypesList();
 
       crawlTables(retrieverConnection,
@@ -275,11 +275,11 @@ public final class SchemaCrawler
   private void crawlProcedures(final RetrieverConnection retrieverConnection,
                                final SchemaInfoLevel infoLevel,
                                final SchemaCrawlerOptions options,
-                               final NamedObjectList columnDataTypes)
+                               final NamedObjectList<MutableColumnDataType> columnDataTypes)
     throws SchemaCrawlerException
   {
     ProcedureRetriever retriever;
-    NamedObjectList procedures;
+    NamedObjectList<MutableProcedure> procedures;
     try
     {
       retriever = new ProcedureRetriever(retrieverConnection);
@@ -298,7 +298,7 @@ public final class SchemaCrawler
 
     for (int i = 0; i < procedures.size(); i++)
     {
-      final MutableProcedure procedure = (MutableProcedure) procedures.get(i);
+      final MutableProcedure procedure = procedures.get(i);
       if (infoLevel != SchemaInfoLevel.MINIMUM)
       {
         try
@@ -323,12 +323,12 @@ public final class SchemaCrawler
   private void crawlTables(final RetrieverConnection retrieverConnection,
                            final SchemaInfoLevel infoLevel,
                            final SchemaCrawlerOptions options,
-                           final NamedObjectList columnDataTypes)
+                           final NamedObjectList<MutableColumnDataType> columnDataTypes)
     throws SchemaCrawlerException
   {
     TableRetriever retriever;
     TableExRetriever retrieverExtra;
-    NamedObjectList tables;
+    NamedObjectList<MutableTable> tables;
     try
     {
       retriever = new TableRetriever(retrieverConnection);
@@ -353,7 +353,7 @@ public final class SchemaCrawler
 
     for (int i = 0; i < tables.size(); i++)
     {
-      final MutableTable table = (MutableTable) tables.get(i);
+      final MutableTable table = tables.get(i);
       if (infoLevel.isGreaterThan(SchemaInfoLevel.MINIMUM))
       {
         try

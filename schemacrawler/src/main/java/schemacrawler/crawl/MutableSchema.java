@@ -21,8 +21,6 @@
 package schemacrawler.crawl;
 
 
-import java.util.List;
-
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
@@ -42,8 +40,8 @@ class MutableSchema
   private static final long serialVersionUID = 3258128063743931187L;
 
   private DatabaseInfo databaseInfo;
-  private final NamedObjectList tables = new NamedObjectList(new NaturalSortComparator());
-  private final NamedObjectList procedures = new NamedObjectList(new NaturalSortComparator());
+  private final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>(new NaturalSortComparator());
+  private final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>(new NaturalSortComparator());
 
   MutableSchema(final String catalogName,
                 final String schemaName,
@@ -109,9 +107,7 @@ class MutableSchema
    */
   public Procedure[] getProcedures()
   {
-    final List allProcedures = procedures.getAll();
-    return (Procedure[]) allProcedures.toArray(new Procedure[allProcedures
-      .size()]);
+    return procedures.getAll().toArray(new Procedure[0]);
   }
 
   /**
@@ -121,8 +117,7 @@ class MutableSchema
    */
   public Table[] getTables()
   {
-    final List allTables = tables.getAll();
-    return (Table[]) allTables.toArray(new Table[allTables.size()]);
+    return tables.getAll().toArray(new Table[0]);
   }
 
   /**
@@ -155,7 +150,7 @@ class MutableSchema
    * @param procedure
    *        Procedure
    */
-  void addProcedure(final Procedure procedure)
+  void addProcedure(final MutableProcedure procedure)
   {
     procedures.add(procedure);
   }
@@ -166,7 +161,7 @@ class MutableSchema
    * @param table
    *        Table
    */
-  void addTable(final Table table)
+  void addTable(final MutableTable table)
   {
     tables.add(table);
   }

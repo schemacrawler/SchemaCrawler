@@ -23,7 +23,6 @@ package schemacrawler.schema;
 
 import java.sql.DatabaseMetaData;
 import java.util.EnumSet;
-import java.util.Iterator;
 
 /**
  * The deferrability value for foreign keys.

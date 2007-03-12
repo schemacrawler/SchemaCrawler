@@ -22,8 +22,7 @@ package schemacrawler.crawl;
 
 
 import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedMap;
 
@@ -52,8 +51,8 @@ final class MutableDatabaseInfo
   private String connectionUrl;
   private String schemaPattern;
   private String catalog;
-  private SortedMap dbProperties;
-  private final NamedObjectList columnDataTypes = new NamedObjectList(new AlphabeticalSortComparator());
+  private SortedMap<String, Object> dbProperties;
+  private final NamedObjectList<MutableColumnDataType> columnDataTypes = new NamedObjectList<MutableColumnDataType>(new AlphabeticalSortComparator());
 
   /**
    * {@inheritDoc}
@@ -72,9 +71,7 @@ final class MutableDatabaseInfo
    */
   public ColumnDataType[] getColumnDataTypes()
   {
-    final List allColumnDataTypes = columnDataTypes.getAll();
-    return (ColumnDataType[]) allColumnDataTypes
-      .toArray(new ColumnDataType[allColumnDataTypes.size()]);
+    return columnDataTypes.getAll().toArray(new ColumnDataType[0]);
   }
 
   /**
@@ -142,11 +139,11 @@ final class MutableDatabaseInfo
    * 
    * @see schemacrawler.schema.DatabaseInfo#getProperties()
    */
-  public Map getProperties()
+  public Map<String, Object> getProperties()
   {
     if (dbProperties == null)
     {
-      return Collections.EMPTY_MAP;
+      return Collections.unmodifiableMap(new HashMap<String, Object>());
     }
     else
     {
@@ -232,23 +229,23 @@ final class MutableDatabaseInfo
    * @param table
    *        Table
    */
-  void addColumnDataType(final ColumnDataType columnDataType)
+  void addColumnDataType(final MutableColumnDataType columnDataType)
   {
     columnDataTypes.add(columnDataType);
   }
 
-  NamedObjectList getColumnDataTypesList()
+  NamedObjectList<MutableColumnDataType> getColumnDataTypesList()
   {
     return columnDataTypes;
   }
 
-  ColumnDataType lookupByType(final int type)
+  MutableColumnDataType lookupByType(final int type)
   {
-    ColumnDataType columnDataType = null;
-    final List allColumnDataTypes = columnDataTypes.getAll();
-    for (final Iterator iter = allColumnDataTypes.iterator(); iter.hasNext();)
+    MutableColumnDataType columnDataType = null;
+    final MutableColumnDataType[] allColumnDataTypes = columnDataTypes.getAll()
+      .toArray(new MutableColumnDataType[0]);
+    for (MutableColumnDataType currentColumnDataType: allColumnDataTypes)
     {
-      final ColumnDataType currentColumnDataType = (ColumnDataType) iter.next();
       if (type == currentColumnDataType.getType())
       {
         columnDataType = currentColumnDataType;
@@ -283,7 +280,7 @@ final class MutableDatabaseInfo
     this.productVersion = productVersion;
   }
 
-  void setProperties(final SortedMap properties)
+  void setProperties(final SortedMap<String, Object> properties)
   {
     dbProperties = properties;
   }

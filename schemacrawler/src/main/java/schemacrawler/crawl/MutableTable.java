@@ -21,8 +21,6 @@
 package schemacrawler.crawl;
 
 
-import java.util.List;
-
 import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
@@ -49,12 +47,12 @@ class MutableTable
 
   private TableType type;
   private PrimaryKey primaryKey;
-  private final NamedObjectList columns = new NamedObjectList(new NaturalSortComparator());
-  private final NamedObjectList foreignKeys = new NamedObjectList(new NaturalSortComparator());
-  private final NamedObjectList indices = new NamedObjectList(new NaturalSortComparator());
-  private final NamedObjectList checkConstraints = new NamedObjectList(new NaturalSortComparator());
-  private final NamedObjectList triggers = new NamedObjectList(new NaturalSortComparator());
-  private final NamedObjectList privileges = new NamedObjectList(new NaturalSortComparator());
+  private final NamedObjectList<MutableColumn> columns = new NamedObjectList<MutableColumn>(new NaturalSortComparator());
+  private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<MutableForeignKey>(new NaturalSortComparator());
+  private final NamedObjectList<MutableIndex> indices = new NamedObjectList<MutableIndex>(new NaturalSortComparator());
+  private final NamedObjectList<MutableCheckConstraint> checkConstraints = new NamedObjectList<MutableCheckConstraint>(new NaturalSortComparator());
+  private final NamedObjectList<MutableTrigger> triggers = new NamedObjectList<MutableTrigger>(new NaturalSortComparator());
+  private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>(new NaturalSortComparator());
 
   MutableTable(final String catalogName,
                final String schemaName,
@@ -70,9 +68,7 @@ class MutableTable
    */
   public CheckConstraint[] getCheckConstraints()
   {
-    final List allCheckConstraints = checkConstraints.getAll();
-    return (CheckConstraint[]) allCheckConstraints
-      .toArray(new CheckConstraint[allCheckConstraints.size()]);
+    return checkConstraints.getAll().toArray(new CheckConstraint[0]);
   }
 
   /**
@@ -82,8 +78,7 @@ class MutableTable
    */
   public Column[] getColumns()
   {
-    final List allColumns = columns.getAll();
-    return (Column[]) allColumns.toArray(new Column[allColumns.size()]);
+    return columns.getAll().toArray(new Column[0]);
   }
 
   /**
@@ -119,9 +114,7 @@ class MutableTable
    */
   public ForeignKey[] getForeignKeys()
   {
-    final List allForeignKeys = foreignKeys.getAll();
-    return (ForeignKey[]) allForeignKeys.toArray(new ForeignKey[allForeignKeys
-      .size()]);
+    return foreignKeys.getAll().toArray(new ForeignKey[0]);
   }
 
   /**
@@ -140,8 +133,7 @@ class MutableTable
         setPrimaryKey(MutablePrimaryKey.fromIndex(index));
       }
     }
-    final List allIndices = indices.getAll();
-    return (Index[]) allIndices.toArray(new Index[allIndices.size()]);
+    return indices.getAll().toArray(new Index[0]);
   }
 
   /**
@@ -161,9 +153,7 @@ class MutableTable
    */
   public Privilege[] getPrivileges()
   {
-    final List allPrivileges = privileges.getAll();
-    return (Privilege[]) allPrivileges.toArray(new Privilege[allPrivileges
-      .size()]);
+    return privileges.getAll().toArray(new Privilege[0]);
   }
 
   /**
@@ -173,8 +163,7 @@ class MutableTable
    */
   public Trigger[] getTriggers()
   {
-    final List allTriggers = triggers.getAll();
-    return (Trigger[]) allTriggers.toArray(new Trigger[allTriggers.size()]);
+    return triggers.getAll().toArray(new Trigger[0]);
   }
 
   /**
@@ -193,7 +182,7 @@ class MutableTable
    * @param checkConstraints
    *        Check constraints
    */
-  void addCheckConstraint(final CheckConstraint checkConstraint)
+  void addCheckConstraint(final MutableCheckConstraint checkConstraint)
   {
     checkConstraints.add(checkConstraint);
   }
@@ -204,7 +193,7 @@ class MutableTable
    * @param column
    *        Column
    */
-  void addColumn(final Column column)
+  void addColumn(final MutableColumn column)
   {
     columns.add(column);
   }
@@ -215,7 +204,7 @@ class MutableTable
    * @param foreignKey
    *        Foreign key
    */
-  void addForeignKey(final ForeignKey foreignKey)
+  void addForeignKey(final MutableForeignKey foreignKey)
   {
     foreignKeys.add(foreignKey);
   }
@@ -226,7 +215,7 @@ class MutableTable
    * @param index
    *        Index
    */
-  void addIndex(final Index index)
+  void addIndex(final MutableIndex index)
   {
     indices.add(index);
   }
@@ -237,7 +226,7 @@ class MutableTable
    * @param privilege
    *        Privilege
    */
-  void addPrivilege(final Privilege privilege)
+  void addPrivilege(final MutablePrivilege privilege)
   {
     privileges.add(privilege);
   }
@@ -248,12 +237,12 @@ class MutableTable
    * @param trigger
    *        Trigger
    */
-  void addTrigger(final Trigger trigger)
+  void addTrigger(final MutableTrigger trigger)
   {
     triggers.add(trigger);
   }
 
-  NamedObjectList getColumnsList()
+  NamedObjectList<MutableColumn> getColumnsList()
   {
     return columns;
   }
@@ -267,7 +256,7 @@ class MutableTable
    */
   Column lookupColumn(final String columnName)
   {
-    return (Column) columns.lookup(columnName);
+    return columns.lookup(columnName);
   }
 
   void setCheckConstraintComparator(final SerializableComparator comparator)

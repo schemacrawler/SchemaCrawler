@@ -252,7 +252,7 @@ public abstract class BaseDataTextFormatter
   }
 
   private void doHandleOneRow(final String[] columnNames,
-                              final List row,
+                              final List<String> row,
                               final String lastColumnData)
     throws QueryExecutorException
   {
@@ -260,12 +260,11 @@ public abstract class BaseDataTextFormatter
     {
       return;
     }
-    final List outputRow = new ArrayList();
+    final List<String> outputRow = new ArrayList<String>();
     // output
     outputRow.addAll(row);
     outputRow.add(lastColumnData);
-    final String[] columnData = (String[]) outputRow
-      .toArray(new String[outputRow.size()]);
+    final String[] columnData = outputRow.toArray(new String[outputRow.size()]);
     handleRow(columnNames, columnData);
   }
 
@@ -273,10 +272,10 @@ public abstract class BaseDataTextFormatter
     throws SQLException, QueryExecutorException
   {
     final int columnCount = columnNames.length;
-    List currentRow;
+    List<String> currentRow;
     while (rows.next())
     {
-      currentRow = new ArrayList(columnCount);
+      currentRow = new ArrayList<String>(columnCount);
       for (int i = 0; i < columnCount; i++)
       {
         final int columnIndex = i + 1;
@@ -284,8 +283,8 @@ public abstract class BaseDataTextFormatter
         final String columnDataString = convertColumnDataToString(columnData);
         currentRow.add(columnDataString);
       }
-      final String[] columnData = (String[]) currentRow
-        .toArray(new String[currentRow.size()]);
+      final String[] columnData = currentRow.toArray(new String[currentRow
+        .size()]);
       handleRow(columnNames, columnData);
     }
   }
@@ -302,13 +301,13 @@ public abstract class BaseDataTextFormatter
     throws SQLException, QueryExecutorException
   {
     final int columnCount = columnNames.length;
-    List previousRow = new ArrayList();
-    List currentRow;
+    List<String> previousRow = new ArrayList<String>();
+    List<String> currentRow;
     StringBuffer currentRowLastColumn = new StringBuffer();
     // write out the data
     while (rows.next())
     {
-      currentRow = new ArrayList(columnCount - 1);
+      currentRow = new ArrayList<String>(columnCount - 1);
       for (int i = 0; i < columnCount - 1; i++)
       {
         final Object columnData = rows.getObject(i + 1);

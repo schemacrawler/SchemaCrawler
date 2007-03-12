@@ -39,7 +39,7 @@ abstract class AbstractNamedObject
 
   private final String name;
   private String remarks;
-  private final Map attributeMap = new HashMap();
+  private final Map<String, Object> attributeMap = new HashMap<String, Object>();
   private final SerializableComparator comparator = new AlphabeticalSortComparator();
 
   AbstractNamedObject(final String name)
@@ -50,7 +50,7 @@ abstract class AbstractNamedObject
   /**
    * {@inheritDoc}
    */
-  public int compareTo(final Object obj)
+  public int compareTo(final NamedObject obj)
   {
     return comparator.compare(this, obj);
   }

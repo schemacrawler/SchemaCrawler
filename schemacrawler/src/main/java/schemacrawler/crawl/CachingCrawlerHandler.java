@@ -102,7 +102,7 @@ final class CachingCrawlerHandler
    */
   public void handle(final Procedure procedure)
   {
-    schema.addProcedure(procedure);
+    schema.addProcedure((MutableProcedure) procedure);
   }
 
   /**
@@ -113,7 +113,7 @@ final class CachingCrawlerHandler
    */
   public void handle(final Table table)
   {
-    schema.addTable(table);
+    schema.addTable((MutableTable) table);
   }
 
 }

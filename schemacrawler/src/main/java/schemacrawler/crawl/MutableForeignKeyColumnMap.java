@@ -48,7 +48,7 @@ final class MutableForeignKeyColumnMap
    * {@inheritDoc}
    */
   @Override
-  public int compareTo(final Object obj)
+  public int compareTo(final NamedObject obj)
   {
     final ForeignKeyColumnMap other = (ForeignKeyColumnMap) obj;
     int comparison = 0;

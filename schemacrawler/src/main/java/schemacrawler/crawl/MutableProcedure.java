@@ -21,8 +21,6 @@
 package schemacrawler.crawl;
 
 
-import java.util.List;
-
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.ProcedureType;
@@ -45,7 +43,7 @@ final class MutableProcedure
   private static final long serialVersionUID = 3906925686089134130L;
 
   private ProcedureType procedureType;
-  private final NamedObjectList columns = new NamedObjectList(new NaturalSortComparator());
+  private final NamedObjectList<MutableProcedureColumn> columns = new NamedObjectList<MutableProcedureColumn>(new NaturalSortComparator());
   private RoutineBodyType routineBodyType;
   private String definition;
 
@@ -63,9 +61,7 @@ final class MutableProcedure
    */
   public ProcedureColumn[] getColumns()
   {
-    final List allColumns = columns.getAll();
-    return (ProcedureColumn[]) allColumns
-      .toArray(new ProcedureColumn[allColumns.size()]);
+    return columns.getAll().toArray(new ProcedureColumn[0]);
   }
 
   /**
@@ -104,7 +100,7 @@ final class MutableProcedure
    * @param column
    *        Column
    */
-  void addColumn(final ProcedureColumn column)
+  void addColumn(final MutableProcedureColumn column)
   {
     columns.add(column);
   }

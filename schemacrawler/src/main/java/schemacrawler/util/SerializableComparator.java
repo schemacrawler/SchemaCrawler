@@ -24,13 +24,15 @@ package schemacrawler.util;
 import java.io.Serializable;
 import java.util.Comparator;
 
+import schemacrawler.schema.NamedObject;
+
 /**
  * A comparator for serializable database objects.
  * 
  * @author sfatehi
  */
 public interface SerializableComparator
-  extends Serializable, Comparator
+  extends Serializable, Comparator<NamedObject>
 {
 
 }

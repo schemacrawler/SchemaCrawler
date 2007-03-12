@@ -21,8 +21,6 @@
 package schemacrawler.crawl;
 
 
-import java.util.List;
-
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexSortSequence;
@@ -39,7 +37,7 @@ class MutableIndex
 
   private static final long serialVersionUID = 4051326747138079028L;
 
-  private final NamedObjectList columns = new NamedObjectList(null);
+  private final NamedObjectList<MutableColumn> columns = new NamedObjectList<MutableColumn>(null);
   private boolean isUnique;
   private IndexType type;
   private IndexSortSequence sortSequence;
@@ -60,7 +58,7 @@ class MutableIndex
    * </p>
    */
   @Override
-  public int compareTo(final Object obj)
+  public int compareTo(final NamedObject obj)
   {
     final Index other = (Index) obj;
     int comparison = 0;
@@ -106,8 +104,7 @@ class MutableIndex
    */
   public Column[] getColumns()
   {
-    final List allColumns = columns.getAll();
-    return (Column[]) allColumns.toArray(new Column[allColumns.size()]);
+    return columns.getAll().toArray(new Column[0]);
   }
 
   /**
@@ -156,7 +153,7 @@ class MutableIndex
    * @param column
    *        Column
    */
-  void addColumn(final Column column)
+  void addColumn(final MutableColumn column)
   {
     columns.add(column);
   }
@@ -169,7 +166,7 @@ class MutableIndex
    * @param column
    *        Column
    */
-  void addColumn(final int ordinalPosition, final Column column)
+  void addColumn(final int ordinalPosition, final MutableColumn column)
   {
     columns.add(ordinalPosition, column);
   }

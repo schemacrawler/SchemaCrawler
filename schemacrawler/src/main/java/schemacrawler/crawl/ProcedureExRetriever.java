@@ -70,7 +70,7 @@ final class ProcedureExRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveProcedureInformation(final NamedObjectList procedures)
+  void retrieveProcedureInformation(final NamedObjectList<MutableProcedure> procedures)
     throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
@@ -98,8 +98,7 @@ final class ProcedureExRetriever
         final String schema = results.getString("ROUTINE_SCHEMA");
         final String procedureName = results.getString("ROUTINE_NAME");
 
-        final MutableProcedure procedure = (MutableProcedure) procedures
-          .lookup(procedureName);
+        final MutableProcedure procedure = procedures.lookup(procedureName);
         if (!belongsToSchema(procedure, catalog, schema))
         {
           LOGGER.log(Level.FINEST, "Procedure not found: " + procedureName);

@@ -51,7 +51,7 @@ abstract class AbstractColumn
    * {@inheritDoc}
    */
   @Override
-  public int compareTo(final Object obj)
+  public int compareTo(final NamedObject obj)
   {
     final BaseColumn other = (BaseColumn) obj;
     int comparison = 0;
@@ -171,9 +171,9 @@ abstract class AbstractColumn
    */
   final void lookupAndSetDataType(final int jdbcDataType,
                                   final String databaseSpecificTypeName,
-                                  final NamedObjectList columnDataTypes)
+                                  final NamedObjectList<MutableColumnDataType> columnDataTypes)
   {
-    MutableColumnDataType columnDataType = (MutableColumnDataType) columnDataTypes
+    MutableColumnDataType columnDataType = columnDataTypes
       .lookup(databaseSpecificTypeName);
     if (columnDataType == null)
     {

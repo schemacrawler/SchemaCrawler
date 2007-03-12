@@ -21,13 +21,12 @@
 package schemacrawler.crawl;
 
 
-import java.util.List;
-
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
+import schemacrawler.schema.NamedObject;
 import schemacrawler.util.NaturalSortComparator;
 
 /**
@@ -40,7 +39,7 @@ class MutableForeignKey
 
   private static final long serialVersionUID = 4121411795974895671L;
 
-  private final NamedObjectList columnPairs = new NamedObjectList(new NaturalSortComparator());
+  private final NamedObjectList<MutableForeignKeyColumnMap> columnPairs = new NamedObjectList<MutableForeignKeyColumnMap>(new NaturalSortComparator());
   private ForeignKeyUpdateRule updateRule;
   private ForeignKeyUpdateRule deleteRule;
   private ForeignKeyDeferrability deferrability;
@@ -61,7 +60,7 @@ class MutableForeignKey
    * </p>
    */
   @Override
-  public int compareTo(final Object obj)
+  public int compareTo(final NamedObject obj)
   {
     final ForeignKey other = (ForeignKey) obj;
     int comparison = 0;
@@ -97,9 +96,7 @@ class MutableForeignKey
    */
   public ForeignKeyColumnMap[] getColumnPairs()
   {
-    final List allColumnPairs = columnPairs.getAll();
-    return (ForeignKeyColumnMap[]) allColumnPairs
-      .toArray(new ForeignKeyColumnMap[allColumnPairs.size()]);
+    return columnPairs.getAll().toArray(new ForeignKeyColumnMap[0]);
   }
 
   /**
@@ -135,7 +132,7 @@ class MutableForeignKey
   /**
    * @see schemacrawler.crawl.ForeignKey#getColumnPairsList()
    */
-  void addColumnPair(final ForeignKeyColumnMap columnPair)
+  void addColumnPair(final MutableForeignKeyColumnMap columnPair)
   {
     columnPairs.add(columnPair);
   }

@@ -60,12 +60,14 @@ public class SchemaCrawlerOutputTest
 
   private TestUtility testUtility = new TestUtility();
 
+  @Override
   public void setUp()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
     testUtility.setUp();
   }
 
+  @Override
   public void tearDown()
     throws PropertiesDataSourceException, ClassNotFoundException
   {

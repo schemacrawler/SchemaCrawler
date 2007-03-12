@@ -67,8 +67,7 @@ public enum IndexType
 
   public static IndexType valueOf(int id)
   {
-    EnumSet<IndexType> allOf = EnumSet
-      .allOf(IndexType.class);
+    EnumSet<IndexType> allOf = EnumSet.allOf(IndexType.class);
     for (IndexType type: allOf)
     {
       if (type.getId() == id)
@@ -77,5 +76,5 @@ public enum IndexType
       }
     }
     return null;
-  }  
+  }
 }
