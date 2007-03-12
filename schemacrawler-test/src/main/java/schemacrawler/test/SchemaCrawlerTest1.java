@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
+import schemacrawler.main.Config;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import dbconnector.datasource.PropertiesDataSource;
@@ -31,7 +32,7 @@ public class SchemaCrawlerTest1
     SchemaCrawlerOptions options = new SchemaCrawlerOptions(properties);
 
     Schema schema = SchemaCrawler.getSchema(dataSource,
-                                            properties,
+                                            new Config(properties),
                                             SchemaInfoLevel.BASIC,
                                             options);
     Table[] tableArray = schema.getTables();
