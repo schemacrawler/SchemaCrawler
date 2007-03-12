@@ -28,9 +28,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.Map.Entry;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
@@ -221,24 +224,6 @@ public final class Utilities
     final boolean isWindowsOS = osName == null
                                 || osName.toLowerCase().indexOf("windows") != -1;
     return isWindowsOS;
-  }
-
-  /**
-   * Loads the SchemaCrawler configuration, and override.
-   * 
-   * @param configfilename
-   *        Configuration file name.
-   * @param configoverridefilename
-   *        Configuration override file name.
-   * @return Configuration properties.
-   */
-  public static Properties loadConfig(final String configfilename,
-                                      final String configoverridefilename)
-  {
-    Properties config = new Properties();
-    config = loadProperties(config, configfilename);
-    config = loadProperties(config, configoverridefilename);
-    return config;
   }
 
   /**
@@ -476,6 +461,27 @@ public final class Utilities
     writer.close();
 
     return pomFile;
+  }
+
+  /**
+   * Copies properties into a map.
+   * 
+   * @param properties
+   *        Properties to copy
+   * @return Map
+   */
+  public static Map<String, String> propertiesMap(Properties properties)
+  {
+    Map<String, String> propertiesMap = new HashMap<String, String>();
+    if (properties != null)
+    {
+      Set<Entry<Object, Object>> entries = properties.entrySet();
+      for (Entry<Object, Object> entry: entries)
+      {
+        propertiesMap.put((String) entry.getKey(), (String) entry.getValue());
+      }
+    }
+    return propertiesMap;
   }
 
   /**
