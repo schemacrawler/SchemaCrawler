@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -457,19 +456,18 @@ public final class CommandLineParser
    */
   public Option[] getOptions()
   {
-    final Collection options = optionsMap.values();
-    final Collection uniqueOptions = new HashSet();
+    final Collection<Option> options = optionsMap.values();
+    final Collection<Option> uniqueOptions = new HashSet<Option>();
 
-    for (final Iterator iterator = options.iterator(); iterator.hasNext();)
+    for (final Option option: options)
     {
-      final Option option = (Option) iterator.next();
       if (!uniqueOptions.contains(option))
       {
         uniqueOptions.add(option);
       }
     }
 
-    return (Option[]) uniqueOptions.toArray(new Option[uniqueOptions.size()]);
+    return uniqueOptions.toArray(new Option[0]);
   }
 
   /**
@@ -523,7 +521,7 @@ public final class CommandLineParser
       ((BaseOption) element).reset();
     }
 
-    final List otherArgs = new ArrayList();
+    final List<String> otherArgs = new ArrayList<String>();
 
     int position = 0;
 
@@ -596,7 +594,7 @@ public final class CommandLineParser
       position++;
     }
 
-    remainingArgs = (String[]) otherArgs.toArray(new String[otherArgs.size()]);
+    remainingArgs = otherArgs.toArray(new String[otherArgs.size()]);
   }
 
 }

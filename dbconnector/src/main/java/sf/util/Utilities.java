@@ -29,7 +29,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Handler;
@@ -110,7 +109,7 @@ public final class Utilities
    * @return Expanded template
    */
   public static String expandTemplateFromProperties(final String template,
-                                                    final Map properties)
+                                                    final Properties properties)
   {
 
     if (template == null)
@@ -160,16 +159,16 @@ public final class Utilities
    *        Template to extract variables from
    * @return Set of variables
    */
-  public static Set extractTemplateVariables(final String template)
+  public static Set<String> extractTemplateVariables(final String template)
   {
 
     if (template == null)
     {
-      return new HashSet();
+      return new HashSet<String>();
     }
 
     String shrunkTemplate = template;
-    final Set keys = new HashSet();
+    final Set<String> keys = new HashSet<String>();
     for (int left; (left = shrunkTemplate.indexOf("${")) >= 0;)
     {
       final int right = shrunkTemplate.indexOf("}", left + 2);
@@ -435,10 +434,10 @@ public final class Utilities
   public static void setApplicationLogLevel(final Level logLevel)
   {
     final LogManager logManager = LogManager.getLogManager();
-    for (final Enumeration loggerNames = logManager.getLoggerNames(); loggerNames
+    for (final Enumeration<String> loggerNames = logManager.getLoggerNames(); loggerNames
       .hasMoreElements();)
     {
-      final String loggerName = (String) loggerNames.nextElement();
+      final String loggerName = loggerNames.nextElement();
       final Logger logger = logManager.getLogger(loggerName);
       logger.setLevel(null);
     }

@@ -26,8 +26,9 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.Driver;
 import java.sql.SQLException;
-import java.util.Enumeration;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -452,13 +453,12 @@ public final class PropertiesDataSource
   {
 
     final StringBuffer buffer = new StringBuffer();
-    final Enumeration connectionParamsKeys = connectionParams.propertyNames();
-
     buffer.append("Connection parameters:");
-    while (connectionParamsKeys.hasMoreElements())
+    final Set<Map.Entry<Object, Object>> entries = connectionParams.entrySet();
+    for (final Map.Entry<Object, Object> entry: entries)
     {
-      final String key = (String) connectionParamsKeys.nextElement();
-      final String value = connectionParams.getProperty(key);
+      final String key = (String) entry.getKey();
+      final String value = (String) entry.getValue();
       if (!key.equalsIgnoreCase(PASSWORD))
       {
         buffer.append(Utilities.NEWLINE).append("-- ").append(key).append(": ")

@@ -137,10 +137,10 @@ public class Entities
       if (insertAt > 0)
       {
         return; // note: this means you can't insert the same value
-                // twice
+        // twice
       }
       insertAt = -(insertAt + 1); // binarySearch returns it negative
-                                  // and
+      // and
       // off-by-one
       System.arraycopy(values, insertAt, values, insertAt + 1, size - insertAt);
       values[insertAt] = value;
@@ -365,7 +365,7 @@ public class Entities
       {
           "laquo", "171"
       }, // left-pointing double angle quotation mark = left pointing
-        // guillemet
+      // guillemet
       {
           "not", "172"
       }, // not sign
@@ -414,7 +414,7 @@ public class Entities
       {
           "raquo", "187"
       }, // right-pointing double angle quotation mark = right pointing
-        // guillemet
+      // guillemet
       {
           "frac14", "188"
       }, // vulgar fraction one quarter = fraction one quarter
@@ -628,7 +628,7 @@ public class Entities
       {
           "fnof", "402"
       }, // latin small f with hook = function= florin, U+0192 ISOtech
-        // -->
+      // -->
       // <!-- Greek -->
       {
           "Alpha", "913"
@@ -811,7 +811,7 @@ public class Entities
       {
           "weierp", "8472"
       }, // script capital P = power set= Weierstrass p, U+2118 ISOamso
-        // -->
+      // -->
       {
           "image", "8465"
       }, // blackletter capital I = imaginary part,U+2111 ISOamso -->
@@ -825,7 +825,7 @@ public class Entities
           "alefsym", "8501"
       }, // alef symbol = first transfinite cardinal,U+2135 NEW -->
       // <!-- alef symbol is NOT the same as hebrew letter alef,U+05D0
-    // although
+      // although
       // the same glyph could be used to depict both characters -->
       // <!-- Arrows -->
       {
@@ -846,15 +846,15 @@ public class Entities
       {
           "crarr", "8629"
       }, // downwards arrow with corner leftwards= carriage return,
-        // U+21B5 NEW
+      // U+21B5 NEW
       // -->
       {
           "lArr", "8656"
       }, // leftwards double arrow, U+21D0 ISOtech -->
       // <!-- ISO 10646 does not say that lArr is the same as the 'is
-    // implied by'
+      // implied by'
       // arrowbut also does not have any other character for that
-    // function. So ?
+      // function. So ?
       // lArr canbe used for 'is implied by' as ISOtech suggests -->
       {
           "uArr", "8657"
@@ -863,9 +863,9 @@ public class Entities
           "rArr", "8658"
       }, // rightwards double arrow,U+21D2 ISOtech -->
       // <!-- ISO 10646 does not say this is the 'implies' character but
-    // does not
+      // does not
       // have another character with this function so ?rArr can be used
-    // for
+      // for
       // 'implies' as ISOtech suggests -->
       {
           "dArr", "8659"
@@ -903,13 +903,13 @@ public class Entities
           "prod", "8719"
       }, // n-ary product = product sign,U+220F ISOamsb -->
       // <!-- prod is NOT the same character as U+03A0 'greek capital
-    // letter pi'
+      // letter pi'
       // though the same glyph might be used for both -->
       {
           "sum", "8721"
       }, // n-ary summation, U+2211 ISOamsb -->
       // <!-- sum is NOT the same character as U+03A3 'greek capital
-    // letter sigma'
+      // letter sigma'
       // though the same glyph might be used for both -->
       {
           "minus", "8722"
@@ -949,10 +949,11 @@ public class Entities
       }, // therefore, U+2234 ISOtech -->
       {
           "sim", "8764"
-      }, // tilde operator = varies with = similar to,U+223C ISOtech -->
+      }, // tilde operator = varies with = similar to,U+223C ISOtech
+      // -->
       // <!-- tilde operator is NOT the same character as the tilde,
       // U+007E,although the same glyph might be used to represent both
-    // -->
+      // -->
       {
           "cong", "8773"
       }, // approximately equal to, U+2245 ISOtech -->
@@ -978,11 +979,11 @@ public class Entities
           "sup", "8835"
       }, // superset of, U+2283 ISOtech -->
       // <!-- note that nsup, 'not a superset of, U+2283' is not covered
-    // by the
+      // by the
       // Symbol font encoding and is not included. Should it be, for
-    // symmetry?It
+      // symmetry?It
       // is in ISOamsn --> <!ENTITY nsub", "8836"}, //not a subset of,
-    // U+2284
+      // U+2284
       // ISOamsn -->
       {
           "sube", "8838"
@@ -1002,8 +1003,9 @@ public class Entities
       {
           "sdot", "8901"
       }, // dot operator, U+22C5 ISOamsb -->
-      // <!-- dot operator is NOT the same character as U+00B7 middle dot
-    // -->
+      // <!-- dot operator is NOT the same character as U+00B7 middle
+      // dot
+      // -->
       // <!-- Miscellaneous Technical -->
       {
           "lceil", "8968"
@@ -1021,13 +1023,13 @@ public class Entities
           "lang", "9001"
       }, // left-pointing angle bracket = bra,U+2329 ISOtech -->
       // <!-- lang is NOT the same character as U+003C 'less than' or
-    // U+2039
+      // U+2039
       // 'single left-pointing angle quotation mark' -->
       {
           "rang", "9002"
       }, // right-pointing angle bracket = ket,U+232A ISOtech -->
       // <!-- rang is NOT the same character as U+003E 'greater than' or
-    // U+203A
+      // U+203A
       // 'single right-pointing angle quotation mark' -->
       // <!-- Geometric Shapes -->
       {
@@ -1055,7 +1057,8 @@ public class Entities
       {
           "oelig", "339"
       }, // -- latin small ligature oe, U+0153 ISOlat2 -->
-      // <!-- ligature is a misnomer, this is a separate character in some
+      // <!-- ligature is a misnomer, this is a separate character in
+      // some
       // languages -->
       {
           "Scaron", "352"
@@ -1130,13 +1133,14 @@ public class Entities
       }, // per mille sign, U+2030 ISOtech -->
       {
           "lsaquo", "8249"
-      }, // single left-pointing angle quotation mark,U+2039 ISO proposed
-        // -->
+      }, // single left-pointing angle quotation mark,U+2039 ISO
+      // proposed
+      // -->
       // <!-- lsaquo is proposed but not yet ISO standardized -->
       {
           "rsaquo", "8250"
       }, // single right-pointing angle quotation mark,U+203A ISO
-        // proposed -->
+      // proposed -->
       // <!-- rsaquo is proposed but not yet ISO standardized -->
       {
           "euro", "8364"
