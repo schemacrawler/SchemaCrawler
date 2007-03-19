@@ -21,26 +21,25 @@
 package dbconnector.test;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+
 import sf.util.CommandLineParser;
-import sf.util.CommandLineParser.Option;
 
 public class CommandLineParserTest
-  extends TestCase
 {
 
-  public CommandLineParserTest(final String name)
-  {
-    super(name);
-  }
-
-  public void testStandardOptions()
-    throws Exception
+  @Test
+  public void standardOptions()
   {
     final CommandLineParser parser = new CommandLineParser();
     parser.addOption(new CommandLineParser.BooleanOption('v', "verbose"));
@@ -63,8 +62,8 @@ public class CommandLineParserTest
     assertEquals("rest", otherArgs[0]);
   }
 
-  public void testBooleanOption()
-    throws Exception
+  @Test
+  public void booleanOptions()
   {
     final String verbose = "verbose";
 
@@ -109,8 +108,8 @@ public class CommandLineParserTest
     assertTrue(parser.getStringOptionValue("name").equals("schemacrawler"));
   }
 
-  public void testStringOption()
-    throws Exception
+  @Test
+  public void stringOptions()
   {
     final String string = "string";
 
@@ -165,8 +164,8 @@ public class CommandLineParserTest
     assertTrue(parser.getStringOptionValue("name").equals("schemacrawler"));
   }
 
-  public void testBadFormat()
-    throws Exception
+  @Test
+  public void badFormat()
   {
     final CommandLineParser parser = new CommandLineParser();
     parser.addOption(new CommandLineParser.NumberOption('s', "size", null));
@@ -176,8 +175,8 @@ public class CommandLineParserTest
     assertTrue(!parser.getOption("size").isFound());
   }
 
-  public void testResetBetweenParse()
-    throws Exception
+  @Test
+  public void resetBetweenParse()
   {
     final CommandLineParser parser = new CommandLineParser();
     parser.addOption(new CommandLineParser.BooleanOption('v', "verbose"));
@@ -191,8 +190,8 @@ public class CommandLineParserTest
     assertTrue(!parser.getOption("verbose").isFound());
   }
 
+  @Test
   public void testCustomOption()
-    throws Exception
   {
     final CommandLineParser parser = new CommandLineParser();
     parser.addOption(new CommandLineParserTest.ShortDateOption('d', "date"));
@@ -205,8 +204,8 @@ public class CommandLineParserTest
     assertEquals(2003, d.get(Calendar.YEAR));
   }
 
-  public void testIllegalCustomOption()
-    throws Exception
+  @Test
+  public void illegalCustomOption()
   {
 
     final CommandLineParser parser = new CommandLineParser();
@@ -218,11 +217,11 @@ public class CommandLineParserTest
 
   }
 
-  public static class ShortDateOption
+  private static class ShortDateOption
     extends CommandLineParser.BaseOption
   {
 
-    public ShortDateOption(final char shortForm, final String longForm)
+    ShortDateOption(final char shortForm, final String longForm)
     {
       super(shortForm, longForm, null);
     }
