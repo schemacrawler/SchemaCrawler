@@ -193,7 +193,7 @@ public class FreeMarkerExecutor
     LOGGER.log(Level.INFO, "FreeMarker configuration properties - " + cfg);
 
     // Create the root hash
-    final Map objectMap = new HashMap();
+    final Map<String, Object> objectMap = new HashMap<String, Object>();
     objectMap.put("schema", schema);
 
     // Evaluate the template

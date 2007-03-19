@@ -21,14 +21,14 @@
 package schemacrawler.integration.test;
 
 
+import static org.junit.Assert.fail;
+
 import java.io.File;
 
-import dbconnector.datasource.PropertiesDataSourceException;
-import dbconnector.test.TestUtility;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.integration.SchemaCrawlerExecutor;
@@ -37,33 +37,26 @@ import schemacrawler.tools.integration.jung.JungExecutor;
 import schemacrawler.tools.integration.velocity.VelocityExecutor;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextOptions;
+import dbconnector.datasource.PropertiesDataSourceException;
+import dbconnector.test.TestUtility;
 
 public class ExecutorIntegrationTest
-extends TestCase
 {
 
-  private TestUtility testUtility = new TestUtility();
+  private final TestUtility testUtility = new TestUtility();
 
-  public void setUp()
+  @Before
+  public void before()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
     testUtility.setUp();
   }
 
-  public void tearDown()
+  @After
+  public void after()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
     testUtility.tearDown();
-  }
-
-  public static Test suite()
-  {
-    return new TestSuite(ExecutorIntegrationTest.class);
-  }
-
-  public ExecutorIntegrationTest(final String name)
-  {
-    super(name);
   }
 
   private void executorIntegrationTest(final SchemaCrawlerExecutor executor,
@@ -71,12 +64,12 @@ extends TestCase
   {
     try
     {
-      final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(
-                                                                  null,
-                                                                  outputOptions,
-                                                                  SchemaTextDetailType.BASIC);
+      final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(null,
+                                                                        outputOptions,
+                                                                        SchemaTextDetailType.BASIC);
 
-      executor.execute(new SchemaCrawlerOptions(), schemaTextOptions,
+      executor.execute(new SchemaCrawlerOptions(),
+                       schemaTextOptions,
                        testUtility.getDataSource());
 
       // Check post-conditions
@@ -94,13 +87,15 @@ extends TestCase
 
   }
 
-  public void testSchemaGraphingWithJung()
+  @Test
+  public void schemaGraphingWithJung()
   {
     try
     {
-      final String outputFilename = File.createTempFile("schemacrawler", ".jpg")
-        .getAbsolutePath();
-      final OutputOptions outputOptions = new OutputOptions("800x600", outputFilename);
+      final String outputFilename = File
+        .createTempFile("schemacrawler", ".jpg").getAbsolutePath();
+      final OutputOptions outputOptions = new OutputOptions("800x600",
+                                                            outputFilename);
       executorIntegrationTest(new JungExecutor(), outputOptions);
     }
     catch (final Exception e)
@@ -109,14 +104,15 @@ extends TestCase
     }
   }
 
-  public void testTemplatingWithVelocity()
+  @Test
+  public void templatingWithVelocity()
   {
     try
     {
-      final String outputFilename = File.createTempFile("schemacrawler", ".txt")
-        .getAbsolutePath();
+      final String outputFilename = File
+        .createTempFile("schemacrawler", ".txt").getAbsolutePath();
       final OutputOptions outputOptions = new OutputOptions("plaintextschema.vm",
-                                                      outputFilename);
+                                                            outputFilename);
       executorIntegrationTest(new VelocityExecutor(), outputOptions);
     }
     catch (final Exception e)
@@ -125,14 +121,15 @@ extends TestCase
     }
   }
 
-  public void testTemplatingWithFreeMarker()
+  @Test
+  public void templatingWithFreeMarker()
   {
     try
     {
-      final String outputFilename = File.createTempFile("schemacrawler", ".txt")
-        .getAbsolutePath();
+      final String outputFilename = File
+        .createTempFile("schemacrawler", ".txt").getAbsolutePath();
       final OutputOptions outputOptions = new OutputOptions("plaintextschema.ftl",
-                                                      outputFilename);
+                                                            outputFilename);
       executorIntegrationTest(new FreeMarkerExecutor(), outputOptions);
     }
     catch (final Exception e)
