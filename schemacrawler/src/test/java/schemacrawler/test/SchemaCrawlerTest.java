@@ -21,12 +21,18 @@
 package schemacrawler.test;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
@@ -44,37 +50,29 @@ import dbconnector.datasource.PropertiesDataSourceException;
 import dbconnector.test.TestUtility;
 
 public class SchemaCrawlerTest
-  extends TestCase
 {
 
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerTest.class
     .getName());
 
-  public static Test suite()
-  {
-    return new TestSuite(SchemaCrawlerTest.class);
-  }
-
   private final TestUtility testUtility = new TestUtility();
 
-  public SchemaCrawlerTest(final String name)
-  {
-    super(name);
-  }
-
-  public void setUp()
+  @Before
+  public void before()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
     testUtility.setUp();
   }
 
-  public void tearDown()
+  @After
+  public void after()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
     testUtility.tearDown();
   }
 
-  public void testColumns()
+  @Test
+  public void columns()
   {
 
     final String[][] columnNames = {
@@ -158,7 +156,8 @@ public class SchemaCrawlerTest
 
   }
 
-  public void testProcedureDefinitions()
+  @Test
+  public void procedureDefinitions()
   {
 
     // Set up information schema properties
@@ -192,7 +191,8 @@ public class SchemaCrawlerTest
 
   }
 
-  public void testTableCount()
+  @Test
+  public void tableCount()
   {
     LOGGER.log(Level.FINE, testUtility.getDataSource().toString());
     LOGGER.log(Level.FINE, "schemapattern="
@@ -211,7 +211,8 @@ public class SchemaCrawlerTest
 
   }
 
-  public void testTableNames()
+  @Test
+  public void tableNames()
   {
 
     final String schemaName = "PUBLIC";
@@ -243,7 +244,8 @@ public class SchemaCrawlerTest
 
   }
 
-  public void testTriggers()
+  @Test
+  public void triggers()
   {
 
     // Set up information schema properties
@@ -292,7 +294,8 @@ public class SchemaCrawlerTest
     assertTrue("No triggers found", foundTrigger);
   }
 
-  public void testViewDefinitions()
+  @Test
+  public void viewDefinitions()
   {
 
     // Set up information schema properties

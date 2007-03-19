@@ -21,17 +21,19 @@
 package schemacrawler.test;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import org.custommonkey.xmlunit.Validator;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import schemacrawler.crawl.CrawlHandler;
 import schemacrawler.crawl.SchemaCrawler;
@@ -54,39 +56,29 @@ import dbconnector.datasource.PropertiesDataSourceException;
 import dbconnector.test.TestUtility;
 
 public class SchemaCrawlerOutputTest
-  extends TestCase
 {
 
   private static final Logger LOGGER = Logger
     .getLogger(SchemaCrawlerOutputTest.class.getName());
 
-  public static Test suite()
-  {
-    return new TestSuite(SchemaCrawlerOutputTest.class);
-  }
-
   private final TestUtility testUtility = new TestUtility();
 
-  public SchemaCrawlerOutputTest(final String name)
-  {
-    super(name);
-  }
-
-  @Override
-  public void setUp()
+  @Before
+  public void before()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
     testUtility.setUp();
   }
 
-  @Override
-  public void tearDown()
+  @After
+  public void after()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
     testUtility.tearDown();
   }
 
-  public void testCountOperatorOutput()
+  @Test
+  public void countOperatorOutput()
   {
     try
     {
@@ -126,7 +118,8 @@ public class SchemaCrawlerOutputTest
 
   }
 
-  public void testCountOperatorValidXMLOutput()
+  @Test
+  public void countOperatorValidXMLOutput()
   {
     String outputFilename = "";
     try
@@ -180,7 +173,8 @@ public class SchemaCrawlerOutputTest
 
   }
 
-  public void testDataOutput()
+  @Test
+  public void dataOutput()
   {
     try
     {
@@ -210,7 +204,8 @@ public class SchemaCrawlerOutputTest
 
   }
 
-  public void testDumpOperatorValidXMLOutput()
+  @Test
+  public void dumpOperatorValidXMLOutput()
   {
     String outputFilename = "";
     try
@@ -268,7 +263,8 @@ public class SchemaCrawlerOutputTest
 
   }
 
-  public void testSchemaOutput()
+  @Test
+  public void schemaOutput()
   {
     try
     {
@@ -300,7 +296,8 @@ public class SchemaCrawlerOutputTest
 
   }
 
-  public void testSchemaValidXMLOutput()
+  @Test
+  public void schemaValidXMLOutput()
   {
     String outputFilename = "";
     try
@@ -350,7 +347,8 @@ public class SchemaCrawlerOutputTest
 
   }
 
-  public void testTableCountFromPlainTextFormatter()
+  @Test
+  public void tableCountFromPlainTextFormatter()
   {
     String outputFilename = "";
     try
