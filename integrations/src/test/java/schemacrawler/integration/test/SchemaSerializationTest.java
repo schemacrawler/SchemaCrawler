@@ -21,14 +21,17 @@
 package schemacrawler.integration.test;
 
 
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
@@ -40,41 +43,32 @@ import dbconnector.datasource.PropertiesDataSourceException;
 import dbconnector.test.TestUtility;
 
 public class SchemaSerializationTest
-extends TestCase
 {
+  private static final int CONTEXT = 50;
+  private final TestUtility testUtility = new TestUtility();
 
-  private TestUtility testUtility = new TestUtility();
-
-  public void setUp()
+  @Before
+  public void before()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
     testUtility.setUp();
   }
 
-  public void tearDown()
+  @After
+  public void after()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
     testUtility.tearDown();
   }
 
-  private static final int CONTEXT = 50;
-
-  public static Test suite()
-  {
-    return new TestSuite(SchemaSerializationTest.class);
-  }
-
-  public SchemaSerializationTest(final String name)
-  {
-    super(name);
-  }
-
-  public void testSchemaSerializationWithXStream()
+  @Test
+  public void schemaSerializationWithXStream()
   {
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
     options.setShowStoredProcedures(true);
 
-    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(), null,
+    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
+                                                  null,
                                                   SchemaInfoLevel.MAXIMUM,
                                                   options);
     final XStream xStream = new XStream();
@@ -109,9 +103,11 @@ extends TestCase
       if (index <= minLength)
       {
         final int expectedStartPos = Math.max(0, (index - CONTEXT));
-        final int expectedEndPos = Math.min((index + CONTEXT), expectedXml.length());
+        final int expectedEndPos = Math.min((index + CONTEXT), expectedXml
+          .length());
         final int actualStartPos = Math.max(0, (index - CONTEXT));
-        final int actualEndPos = Math.min((index + CONTEXT), actualXml.length());
+        final int actualEndPos = Math
+          .min((index + CONTEXT), actualXml.length());
         System.out.println("expected: "
                            + expectedXml.substring(expectedStartPos,
                                                    expectedEndPos));

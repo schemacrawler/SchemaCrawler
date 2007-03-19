@@ -30,6 +30,7 @@ import java.util.Map;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import edu.uci.ics.jung.graph.Graph;
@@ -85,7 +86,7 @@ public final class JungUtil
   public static Graph makeSchemaGraph(final Schema schema)
   {
     final Graph graph = new DirectedSparseGraph();
-    final Map verticesMap = new HashMap();
+    final Map<NamedObject, SchemaGraphVertex> verticesMap = new HashMap<NamedObject, SchemaGraphVertex>();
     final Table[] tables = schema.getTables();
     mapTablesAndColumns(graph, tables, verticesMap);
     mapForeignKeys(graph, tables, verticesMap);
@@ -94,10 +95,10 @@ public final class JungUtil
 
   private static void mapForeignKeys(final Graph graph,
                                      final Table[] tables,
-                                     final Map verticesMap)
+                                     final Map<NamedObject, SchemaGraphVertex> verticesMap)
   {
     // Make edges for each foreign key
-    final Map columnPairMap = new HashMap();
+    final Map<String, ForeignKeyColumnMap> columnPairMap = new HashMap<String, ForeignKeyColumnMap>();
     for (int i = 0; i < tables.length; i++)
     {
       final Table table = tables[i];
@@ -129,7 +130,7 @@ public final class JungUtil
 
   private static void mapTablesAndColumns(final Graph graph,
                                           final Table[] tables,
-                                          final Map verticesMap)
+                                          final Map<NamedObject, SchemaGraphVertex> verticesMap)
   {
     for (int i = 0; i < tables.length; i++)
     {
