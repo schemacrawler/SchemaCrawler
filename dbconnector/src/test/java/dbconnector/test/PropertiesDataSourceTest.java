@@ -35,14 +35,14 @@ public class PropertiesDataSourceTest
   private TestUtility testUtility = new TestUtility();
 
   @Before
-  public void setUp()
+  public void before()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
     testUtility.setUp();
   }
 
   @After
-  public void tearDown()
+  public void after()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
     testUtility.tearDown();

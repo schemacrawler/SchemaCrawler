@@ -43,9 +43,9 @@ public class CommandLineParserTest
   {
     final CommandLineParser parser = new CommandLineParser();
     parser.addOption(new CommandLineParser.BooleanOption('v', "verbose"));
-    parser.addOption(new CommandLineParser.NumberOption('s', "size", null));
+    parser.addOption(new CommandLineParser.NumberOption<Integer>('s', "size", null));
     parser.addOption(new CommandLineParser.StringOption('n', "name", null));
-    parser.addOption(new CommandLineParser.NumberOption('f', "fraction", null));
+    parser.addOption(new CommandLineParser.NumberOption<Double>('f', "fraction", null));
     parser.addOption(new CommandLineParser.BooleanOption('m', "missing"));
     assertNull(parser.getOption("size").getValue());
     parser.parse(new String[] {
@@ -168,7 +168,7 @@ public class CommandLineParserTest
   public void badFormat()
   {
     final CommandLineParser parser = new CommandLineParser();
-    parser.addOption(new CommandLineParser.NumberOption('s', "size", null));
+    parser.addOption(new CommandLineParser.NumberOption<Integer>('s', "size", null));
     parser.parse(new String[] {
       "-size=blah"
     });
@@ -218,7 +218,7 @@ public class CommandLineParserTest
   }
 
   private static class ShortDateOption
-    extends CommandLineParser.BaseOption
+    extends CommandLineParser.BaseOption<Calendar>
   {
 
     ShortDateOption(final char shortForm, final String longForm)
@@ -226,7 +226,7 @@ public class CommandLineParserTest
       super(shortForm, longForm, null);
     }
 
-    protected Object parseValue(final String arg)
+    protected Calendar parseValue(final String arg)
     {
       try
       {
