@@ -3,7 +3,6 @@
 	<classpathentry excluding=".svn/**/*" kind="src" path="src/main/java"/>
 	<classpathentry excluding="**/.svn/**/*" kind="src" output="target/misc" path="src/site"/>
 	<classpathentry excluding="**/.svn/**/*" kind="src" output="target/test-classes" path="src/test/java"/>
-	<classpathentry excluding="**/.svn/**/*" kind="src" path="resources"/>
 	<classpathentry kind="var" path="M2_REPO/junit/junit/4.2/junit-4.2.jar"/>
 	<classpathentry kind="var" path="M2_REPO/hsqldb/hsqldb/1.8.0.1/hsqldb-1.8.0.1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/xmlunit/xmlunit/1.0/xmlunit-1.0.jar"/>
