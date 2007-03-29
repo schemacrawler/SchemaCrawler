@@ -61,81 +61,54 @@ public class ExecutorIntegrationTest
 
   private void executorIntegrationTest(final SchemaCrawlerExecutor executor,
                                        final OutputOptions outputOptions)
+    throws Exception
   {
-    try
+    final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(null,
+                                                                      outputOptions,
+                                                                      SchemaTextDetailType.BASIC);
+
+    executor.execute(new SchemaCrawlerOptions(), schemaTextOptions, testUtility
+      .getDataSource());
+
+    // Check post-conditions
+    final File outputFile = outputOptions.getOutputFile();
+    if (!outputFile.exists())
     {
-      final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(null,
-                                                                        outputOptions,
-                                                                        SchemaTextDetailType.BASIC);
-
-      executor.execute(new SchemaCrawlerOptions(),
-                       schemaTextOptions,
-                       testUtility.getDataSource());
-
-      // Check post-conditions
-      final File outputFile = outputOptions.getOutputFile();
-      if (!outputFile.exists())
-      {
-        fail("Output file '" + outputFile.getName() + "' was not created");
-      }
-
+      fail("Output file '" + outputFile.getName() + "' was not created");
     }
-    catch (final Exception e)
-    {
-      fail(e.getMessage());
-    }
-
   }
 
   @Test
   public void schemaGraphingWithJung()
+    throws Exception
   {
-    try
-    {
-      final String outputFilename = File
-        .createTempFile("schemacrawler", ".jpg").getAbsolutePath();
-      final OutputOptions outputOptions = new OutputOptions("800x600",
-                                                            outputFilename);
-      executorIntegrationTest(new JungExecutor(), outputOptions);
-    }
-    catch (final Exception e)
-    {
-      fail(e.getMessage());
-    }
+    final String outputFilename = File.createTempFile("schemacrawler", ".jpg")
+      .getAbsolutePath();
+    final OutputOptions outputOptions = new OutputOptions("800x600",
+                                                          outputFilename);
+    executorIntegrationTest(new JungExecutor(), outputOptions);
   }
 
   @Test
   public void templatingWithVelocity()
+    throws Exception
   {
-    try
-    {
-      final String outputFilename = File
-        .createTempFile("schemacrawler", ".txt").getAbsolutePath();
-      final OutputOptions outputOptions = new OutputOptions("plaintextschema.vm",
-                                                            outputFilename);
-      executorIntegrationTest(new VelocityExecutor(), outputOptions);
-    }
-    catch (final Exception e)
-    {
-      fail(e.getMessage());
-    }
+    final String outputFilename = File.createTempFile("schemacrawler", ".txt")
+      .getAbsolutePath();
+    final OutputOptions outputOptions = new OutputOptions("plaintextschema.vm",
+                                                          outputFilename);
+    executorIntegrationTest(new VelocityExecutor(), outputOptions);
   }
 
   @Test
   public void templatingWithFreeMarker()
+    throws Exception
   {
-    try
-    {
-      final String outputFilename = File
-        .createTempFile("schemacrawler", ".txt").getAbsolutePath();
-      final OutputOptions outputOptions = new OutputOptions("plaintextschema.ftl",
-                                                            outputFilename);
-      executorIntegrationTest(new FreeMarkerExecutor(), outputOptions);
-    }
-    catch (final Exception e)
-    {
-      fail(e.getMessage());
-    }
+    final String outputFilename = File.createTempFile("schemacrawler", ".txt")
+      .getAbsolutePath();
+    final OutputOptions outputOptions = new OutputOptions("plaintextschema.ftl",
+                                                          outputFilename);
+    executorIntegrationTest(new FreeMarkerExecutor(), outputOptions);
   }
 
 }
