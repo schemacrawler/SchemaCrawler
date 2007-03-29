@@ -58,25 +58,35 @@ abstract class AbstractNamedObject
   /**
    * {@inheritDoc}
    * 
-   * @see Object#equals(java.lang.Object)
+   * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
-  public boolean equals(final Object o)
+  public boolean equals(final Object obj)
   {
-    if (this == o)
+    if (this == obj)
     {
       return true;
     }
-    if (!(o instanceof NamedObject))
+    if (!super.equals(obj))
     {
       return false;
     }
-    final NamedObject namedObject = (NamedObject) o;
-    if (!name.equals(namedObject.getName()))
+    if (getClass() != obj.getClass())
     {
       return false;
     }
-
+    final AbstractNamedObject other = (AbstractNamedObject) obj;
+    if (name == null)
+    {
+      if (other.name != null)
+      {
+        return false;
+      }
+    }
+    else if (!name.equals(other.name))
+    {
+      return false;
+    }
     return true;
   }
 
@@ -113,16 +123,14 @@ abstract class AbstractNamedObject
   /**
    * {@inheritDoc}
    * 
-   * @see Object#hashCode()
+   * @see java.lang.Object#hashCode()
    */
   @Override
   public int hashCode()
   {
+    final int prime = 31;
     int result = super.hashCode();
-    if (name != null)
-    {
-      result = name.hashCode();
-    }
+    result = prime * result + (name == null? 0: name.hashCode());
     return result;
   }
 
