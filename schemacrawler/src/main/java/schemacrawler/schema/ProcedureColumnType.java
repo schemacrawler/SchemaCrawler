@@ -30,13 +30,26 @@ import java.util.EnumSet;
 public enum ProcedureColumnType
 {
 
+  /** Unknown. */
   procedureColumnUnknown(DatabaseMetaData.procedureColumnUnknown, "?"),
+  /** In. */
   procedureColumnIn(DatabaseMetaData.procedureColumnIn, "in"),
+  /** In/ out. */
   procedureColumnInOut(DatabaseMetaData.procedureColumnInOut, "in/ out"),
+  /** Out. */
   procedureColumnOut(DatabaseMetaData.procedureColumnOut, "out"),
+  /** Return. */
   procedureColumnReturn(DatabaseMetaData.procedureColumnReturn, "return"),
+  /** Return. */
   procedureColumnResult(DatabaseMetaData.procedureColumnResult, "result");
 
+  /**
+   * Gets the enum value from the integer.
+   * 
+   * @param id
+   *        Id of the integer
+   * @return ForeignKeyDeferrability
+   */
   public static ProcedureColumnType valueOf(final int id)
   {
     final EnumSet<ProcedureColumnType> allOf = EnumSet
@@ -52,7 +65,6 @@ public enum ProcedureColumnType
   }
 
   private final int id;
-
   private final String name;
 
   private ProcedureColumnType(final int id, final String name)
@@ -62,9 +74,9 @@ public enum ProcedureColumnType
   }
 
   /**
-   * {@inheritDoc}
+   * Gets the id.
    * 
-   * @see schemacrawler.schema.EnumType#getId()
+   * @return id
    */
   public int getId()
   {

@@ -229,26 +229,56 @@ public final class SchemaCrawlerOptions
     return showStoredProcedures;
   }
 
+  /**
+   * Sets whether foriegn keys should be alphabetically sorted.
+   * 
+   * @param alphabeticalSort
+   *        Alphabetical sort
+   */
   public void setAlphabeticalSortForForeignKeys(final boolean alphabeticalSort)
   {
     tableForeignKeyComparator = getComparator(alphabeticalSort);
   }
 
+  /**
+   * Sets whether indexes should be alphabetically sorted.
+   * 
+   * @param alphabeticalSort
+   *        Alphabetical sort
+   */
   public void setAlphabeticalSortForIndexes(final boolean alphabeticalSort)
   {
     tableIndexComparator = getComparator(alphabeticalSort);
   }
 
+  /**
+   * Sets whether procedure columns should be alphabetically sorted.
+   * 
+   * @param alphabeticalSort
+   *        Alphabetical sort
+   */
   public void setAlphabeticalSortForProcedureColumns(final boolean alphabeticalSort)
   {
     procedureColumnComparator = getComparator(alphabeticalSort);
   }
 
+  /**
+   * Sets whether table columns should be alphabetically sorted.
+   * 
+   * @param alphabeticalSort
+   *        Alphabetical sort
+   */
   public void setAlphabeticalSortForTableColumns(final boolean alphabeticalSort)
   {
     tableColumnComparator = getComparator(alphabeticalSort);
   }
 
+  /**
+   * Sets the column inclusion rule.
+   * 
+   * @param columnInclusionRule
+   *        Column inclusion rule
+   */
   public void setColumnInclusionRule(final InclusionRule columnInclusionRule)
   {
     this.columnInclusionRule = columnInclusionRule;
@@ -265,6 +295,12 @@ public final class SchemaCrawlerOptions
     this.showStoredProcedures = showStoredProcedures;
   }
 
+  /**
+   * Sets the table inclusion rule.
+   * 
+   * @param tableInclusionRule
+   *        Table inclusion rule
+   */
   public void setTableInclusionRule(final InclusionRule tableInclusionRule)
   {
     this.tableInclusionRule = tableInclusionRule;

@@ -30,10 +30,15 @@ import java.util.EnumSet;
 public enum ForeignKeyUpdateRule
 {
 
+  /** No action. */
   importedKeyNoAction(DatabaseMetaData.importedKeyNoAction, "no action"),
+  /** Cascade. */
   importedKeyCascade(DatabaseMetaData.importedKeyCascade, "cascade"),
+  /** Set null. */
   importedKeySetNull(DatabaseMetaData.importedKeySetNull, "set null"),
+  /** Set default. */
   importedKeySetDefault(DatabaseMetaData.importedKeySetDefault, "set default"),
+  /** Restrict. */
   importedKeyRestrict(DatabaseMetaData.importedKeyRestrict, "restrict");
 
   private final String name;
@@ -47,9 +52,9 @@ public enum ForeignKeyUpdateRule
   }
 
   /**
-   * {@inheritDoc}
+   * Gets the id.
    * 
-   * @see schemacrawler.schema.EnumType#getId()
+   * @return id
    */
   public int getId()
   {
@@ -57,16 +62,12 @@ public enum ForeignKeyUpdateRule
   }
 
   /**
-   * {@inheritDoc}
+   * Gets the enum value from the integer.
    * 
-   * @see Object#toString()
+   * @param id
+   *        Id of the integer
+   * @return ForeignKeyUpdateRule
    */
-  @Override
-  public String toString()
-  {
-    return name;
-  }
-
   public static ForeignKeyUpdateRule valueOf(int id)
   {
     EnumSet<ForeignKeyUpdateRule> allOf = EnumSet
@@ -79,6 +80,17 @@ public enum ForeignKeyUpdateRule
       }
     }
     return null;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    return name;
   }
 
 }

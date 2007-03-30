@@ -26,13 +26,16 @@ package schemacrawler.schema;
  */
 public enum RoutineBodyType
 {
-  SQL("SQL"), EXTERNAL("EXTERNAL");
+  /** SQL. */
+  SQL("SQL"),
+  /** External. */
+  EXTERNAL("EXTERNAL");
 
   private final String name;
 
-  private RoutineBodyType(final String typeName)
+  private RoutineBodyType(final String name)
   {
-    name = typeName;
+    this.name = name;
   }
 
   /**
@@ -45,5 +48,5 @@ public enum RoutineBodyType
   {
     return name;
   }
-
+  
 }

@@ -103,7 +103,10 @@ public class Config
   }
 
   /**
-   * Creates an empty config.
+   * Clones a config.
+   * 
+   * @param config
+   *        Config to clone
    */
   public Config(final Config config)
   {
@@ -129,16 +132,39 @@ public class Config
     }
   }
 
+  /**
+   * Gets the value of a property as a boolean.
+   * 
+   * @param propertyName
+   *        Property name
+   * @return Boolean value
+   */
   public boolean getBooleanValue(final String propertyName)
   {
     return Boolean.valueOf(getStringValue(propertyName, "false"));
   }
 
+  /**
+   * Gets the value of a property as an integer.
+   * 
+   * @param propertyName
+   *        Property name
+   * @return Integer value
+   */
   public boolean getIntegerValue(final String propertyName)
   {
     return Boolean.valueOf(getStringValue(propertyName, "false"));
   }
 
+  /**
+   * Gets the value of a property as a string.
+   * 
+   * @param propertyName
+   *        Property name
+   * @param defaultValue
+   *        Default value
+   * @return String value
+   */
   public String getStringValue(final String propertyName,
                                final String defaultValue)
   {

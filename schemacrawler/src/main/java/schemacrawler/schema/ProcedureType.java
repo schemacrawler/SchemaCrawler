@@ -30,13 +30,24 @@ import java.util.EnumSet;
 public enum ProcedureType
 {
 
+  /** Unknown. */
   unknown(0, "<unknown>"),
+  /** Result unknown. */
   procedureResultUnknown(DatabaseMetaData.procedureResultUnknown,
     "result unknown"),
+  /** No result. */
   procedureNoResult(DatabaseMetaData.procedureNoResult, "no result"),
+  /** Returns result. */
   procedureReturnsResult(DatabaseMetaData.procedureReturnsResult,
     "returns result");
 
+  /**
+   * Gets the enum value from the integer.
+   * 
+   * @param id
+   *        Id of the integer
+   * @return ForeignKeyDeferrability
+   */
   public static ProcedureType valueOf(final int id)
   {
     final EnumSet<ProcedureType> allOf = EnumSet.allOf(ProcedureType.class);
@@ -51,7 +62,6 @@ public enum ProcedureType
   }
 
   private final int id;
-
   private final String name;
 
   private ProcedureType(final int id, final String name)
@@ -61,9 +71,9 @@ public enum ProcedureType
   }
 
   /**
-   * {@inheritDoc}
+   * Gets the id.
    * 
-   * @see schemacrawler.schema.EnumType#getId()
+   * @return id
    */
   public int getId()
   {
