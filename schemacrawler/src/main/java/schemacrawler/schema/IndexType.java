@@ -30,11 +30,22 @@ import java.util.EnumSet;
 public enum IndexType
 {
 
+  /** Statistic. */
   tableIndexStatistic(DatabaseMetaData.tableIndexStatistic, "statistic"),
+  /** Clustered. */
   tableIndexClustered(DatabaseMetaData.tableIndexClustered, "clustered"),
+  /** Hashed. */
   tableIndexHashed(DatabaseMetaData.tableIndexHashed, "hashed"),
+  /** Other. */
   tableIndexOther(DatabaseMetaData.tableIndexOther, "other");
 
+  /**
+   * Gets the enum value from the integer.
+   * 
+   * @param id
+   *        Id of the integer
+   * @return IndexType
+   */
   public static IndexType valueOf(final int id)
   {
     final EnumSet<IndexType> allOf = EnumSet.allOf(IndexType.class);
@@ -49,7 +60,6 @@ public enum IndexType
   }
 
   private final int id;
-
   private final String name;
 
   private IndexType(final int id, final String name)
@@ -59,9 +69,9 @@ public enum IndexType
   }
 
   /**
-   * {@inheritDoc}
+   * Gets the id.
    * 
-   * @see schemacrawler.schema.EnumType#getId()
+   * @return id
    */
   public int getId()
   {

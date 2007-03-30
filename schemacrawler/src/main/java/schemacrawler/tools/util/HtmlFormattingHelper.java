@@ -47,7 +47,7 @@ public final class HtmlFormattingHelper
    * {@inheritDoc}
    * 
    * @see schemacrawler.tools.util.TextFormattingHelper#createDetailRow(java.lang.String,
-   *      java.lang.String, java.lang.String, java.lang.String)
+   *      java.lang.String, java.lang.String)
    */
   public String createDetailRow(final String ordinal,
                                 final String subName,

@@ -30,13 +30,24 @@ import java.util.EnumSet;
 public enum SearchableType
 {
 
+  /** Not searchable. */
   typePredNone(DatabaseMetaData.typePredNone, "not searchable"),
+  /** Only searchable with where .. like. */
   typePredChar(DatabaseMetaData.typePredChar,
     "only searchable with where .. like"),
+  /** Searchable except with where .. like. */
   typePredBasic(DatabaseMetaData.typePredBasic,
     "searchable except with where .. like"),
+  /** Searchable. */
   typeSearchable(DatabaseMetaData.typeSearchable, "searchable");
 
+  /**
+   * Gets the enum value from the integer.
+   * 
+   * @param id
+   *        Id of the integer
+   * @return SearchableType
+   */
   public static SearchableType valueOf(final int id)
   {
     final EnumSet<SearchableType> allOf = EnumSet.allOf(SearchableType.class);
@@ -51,8 +62,7 @@ public enum SearchableType
   }
 
   private final int id;
-
-  private final transient String name;
+  private final String name;
 
   private SearchableType(final int id, final String name)
   {
@@ -61,9 +71,9 @@ public enum SearchableType
   }
 
   /**
-   * {@inheritDoc}
+   * Gets the id.
    * 
-   * @see schemacrawler.schema.EnumType#getId()
+   * @return id
    */
   public int getId()
   {

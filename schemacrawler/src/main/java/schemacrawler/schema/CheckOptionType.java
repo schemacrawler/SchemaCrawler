@@ -27,7 +27,10 @@ package schemacrawler.schema;
 public enum CheckOptionType
 {
 
-  NONE("none"), CASCADE("cascade");
+  /** Check option none. */
+  NONE("none"), 
+  /** Check option cascade. */
+  CASCADE("cascade");
 
   private final String name;
 

@@ -30,13 +30,23 @@ import java.util.EnumSet;
 public enum ForeignKeyDeferrability
 {
 
+  /** Initially deferred. */
   importedKeyInitiallyDeferred(DatabaseMetaData.importedKeyInitiallyDeferred,
     "initially deferred"),
+  /** Initially immediate. */
   importedKeyInitiallyImmediate(DatabaseMetaData.importedKeyInitiallyImmediate,
     "initially immediate"),
+  /** Not deferrable. */
   importedKeyNotDeferrable(DatabaseMetaData.importedKeyNotDeferrable,
     "not deferrable");
 
+  /**
+   * Gets the enum value from the integer.
+   * 
+   * @param id
+   *        Id of the integer
+   * @return ForeignKeyDeferrability
+   */
   public static ForeignKeyDeferrability valueOf(final int id)
   {
     final EnumSet<ForeignKeyDeferrability> allOf = EnumSet
@@ -50,11 +60,10 @@ public enum ForeignKeyDeferrability
     }
     return null;
   }
-
-  private final String name;
-
+  
   private final int id;
-
+  private final String name;
+  
   private ForeignKeyDeferrability(final int id, final String name)
   {
     this.id = id;
@@ -62,9 +71,9 @@ public enum ForeignKeyDeferrability
   }
 
   /**
-   * {@inheritDoc}
+   * Gets the id.
    * 
-   * @see schemacrawler.schema.EnumType#getId()
+   * @return id
    */
   public int getId()
   {

@@ -120,6 +120,11 @@ public final class OutputOptions
     return OutputFormat.valueOf(outputFormatValue);
   }
 
+  /**
+   * Gets the output format value.
+   * 
+   * @return Output format value.s
+   */
   public String getOutputFormatValue()
   {
     return outputFormatValue;
@@ -232,6 +237,12 @@ public final class OutputOptions
     this.noInfo = noInfo;
   }
 
+  /**
+   * Sets output format value.
+   * 
+   * @param outputFormatValue
+   *        Output format value
+   */
   public void setOutputFormatValue(final String outputFormatValue)
   {
     this.outputFormatValue = outputFormatValue;
