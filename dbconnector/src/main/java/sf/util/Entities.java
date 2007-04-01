@@ -34,12 +34,12 @@ public class Entities
 
   private final static Map<Integer, String> BASIC_ENTITIES_MAP;
   private final static Map<Integer, String> APOS_ENTITIES_MAP;
+
   private final static Map<Integer, String> ISO8859_1_ENTITIES_MAP;
   private final static Map<Integer, String> HTML40_ENTITIES_MAP;
-
   static
   {
-    Map<Integer, String> map = new HashMap<Integer, String>();
+    final Map<Integer, String> map = new HashMap<Integer, String>();
 
     map.clear();
     map.put(34, "quot");
@@ -405,40 +405,41 @@ public class Entities
   /** XML character entities. */
   public final static Entities XML = new Entities(BASIC_ENTITIES_MAP,
                                                   APOS_ENTITIES_MAP);
+
   /** HTML 3.2 character entities. */
   public final static Entities HTML32 = new Entities(BASIC_ENTITIES_MAP,
                                                      ISO8859_1_ENTITIES_MAP);
+
   /** HTML 4.0 character entities. */
   public final static Entities HTML40 = new Entities(BASIC_ENTITIES_MAP,
                                                      ISO8859_1_ENTITIES_MAP,
                                                      HTML40_ENTITIES_MAP);
 
-  private final Map<Integer, String> charEntityMap;
-  private final Map<String, Integer> entityCharMap;
-
-  private Entities(Map<Integer, String>... maps)
+  private static Map<String, Integer> flipMap(final Map<Integer, String> charEntityMap)
   {
-    Map<Integer, String> workingCharEntityMap = new HashMap<Integer, String>();
-    for (Map<Integer, String> map: maps)
-    {
-      workingCharEntityMap.putAll(map);
-    }
-    charEntityMap = Collections.unmodifiableMap(workingCharEntityMap);
-    entityCharMap = flipMap();
-  }
-
-  private Map<String, Integer> flipMap()
-  {
-    Map<String, Integer> workingEntityCharMap = new HashMap<String, Integer>();
-    for (Map.Entry<Integer, String> charEntity: charEntityMap.entrySet())
+    final Map<String, Integer> workingEntityCharMap = new HashMap<String, Integer>();
+    for (final Map.Entry<Integer, String> charEntity: charEntityMap.entrySet())
     {
       workingEntityCharMap.put(charEntity.getValue(), charEntity.getKey());
     }
     return Collections.unmodifiableMap(workingEntityCharMap);
   }
 
+  private final Map<Integer, String> charEntityMap;
+  private final Map<String, Integer> entityCharMap;
+
+  private Entities(final Map<Integer, String>... maps)
+  {
+    final Map<Integer, String> workingCharEntityMap = new HashMap<Integer, String>();
+    for (final Map<Integer, String> map: maps)
+    {
+      workingCharEntityMap.putAll(map);
+    }
+    charEntityMap = Collections.unmodifiableMap(workingCharEntityMap);
+    entityCharMap = flipMap(charEntityMap);
+  }
+
   /**
-   * <p>
    * Escapes the characters in a <code>String</code>.
    * 
    * @param str
