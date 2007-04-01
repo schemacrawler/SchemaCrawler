@@ -34,9 +34,9 @@ public class Entities
 
   private final static Map<Integer, String> BASIC_ENTITIES_MAP;
   private final static Map<Integer, String> APOS_ENTITIES_MAP;
-
   private final static Map<Integer, String> ISO8859_1_ENTITIES_MAP;
   private final static Map<Integer, String> HTML40_ENTITIES_MAP;
+  
   static
   {
     final Map<Integer, String> map = new HashMap<Integer, String>();
