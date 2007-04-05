@@ -28,8 +28,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.crawl.SchemaCrawler;
@@ -45,20 +45,22 @@ import dbconnector.test.TestUtility;
 public class SchemaSerializationTest
 {
   private static final int CONTEXT = 50;
-  private final TestUtility testUtility = new TestUtility();
 
-  @Before
-  public void before()
+  private static TestUtility testUtility = new TestUtility();
+
+  @BeforeClass
+  public static void beforeAllTests()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
-    testUtility.setUp();
+    testUtility.setApplicationLogLevel();
+    testUtility.createMemoryDatabase();
   }
 
-  @After
-  public void after()
+  @AfterClass
+  public static void afterAllTests()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
-    testUtility.tearDown();
+    testUtility.shutdownDatabase();
   }
 
   @Test

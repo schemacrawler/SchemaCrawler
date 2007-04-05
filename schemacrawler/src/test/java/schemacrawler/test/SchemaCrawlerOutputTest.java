@@ -33,8 +33,8 @@ import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.custommonkey.xmlunit.Validator;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
@@ -65,20 +65,21 @@ public class SchemaCrawlerOutputTest
   private static final Logger LOGGER = Logger
     .getLogger(SchemaCrawlerOutputTest.class.getName());
 
-  private final TestUtility testUtility = new TestUtility();
+  private static TestUtility testUtility = new TestUtility();
 
-  @After
-  public void after()
+  @BeforeClass
+  public static void beforeAllTests()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
-    testUtility.tearDown();
+    testUtility.setApplicationLogLevel();
+    testUtility.createMemoryDatabase();
   }
 
-  @Before
-  public void before()
+  @AfterClass
+  public static void afterAllTests()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
-    testUtility.setUp();
+    testUtility.shutdownDatabase();
   }
 
   @Test
@@ -164,7 +165,7 @@ public class SchemaCrawlerOutputTest
       .load(textFormatOptions);
     final QueryExecutor executor = new QueryExecutor(testUtility
       .getDataSource(), dataHandler);
-    executor.executeSQL("SELECT COUNT(*) FROM CUSTOMER");
+    executor.executeSQL("SELECT COUNT(*) FROM SCHEMACRAWLER.CUSTOMER");
 
     final File outputFile = new File(outputFilename);
     if (!outputFile.delete())

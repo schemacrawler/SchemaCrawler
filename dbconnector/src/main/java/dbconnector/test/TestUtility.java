@@ -24,17 +24,23 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.hsqldb.Server;
 
 import sf.util.Utilities;
 import dbconnector.datasource.PropertiesDataSource;
 import dbconnector.datasource.PropertiesDataSourceException;
 
 /**
- * Based on org.hsqldb.test.TestBase by boucherb@users
+ * Sets up a database schema for tests and examples.
+ * 
+ * @author sfatehi
  */
 public class TestUtility
 {
@@ -94,35 +100,99 @@ public class TestUtility
 
   }
 
-  private static final String HSQLDB_JDBC_DRIVER = "org.hsqldb.jdbcDriver";
-
   private static final Logger LOGGER = Logger.getLogger(TestUtility.class
     .getName());
-  private static final String HSQLDB_FILE_URL = "jdbc:hsqldb:file:_distrib/dbserver/schemacrawler;shutdown=true";
-
-  private static final String HSQLDB_SERVER_URL = "jdbc:hsqldb:hsql://localhost/schemacrawler";
-  private static final boolean IS_SERVER = true;
 
   private static final boolean DEBUG = false;
-  protected String serverProps;
-  protected String url;
-  protected String user = "sa";
 
-  protected String password = "";
+  private static final Class<Driver> driver;
+  static
+  {
+    driver = loadJdbcDriver();
+  }
+
+  /**
+   * Starts up a test database in server mode.
+   * 
+   * @param args
+   *        Command line arguments
+   * @throws Exception
+   *         Exception
+   */
+  public static void main(final String[] args)
+    throws Exception
+  {
+    final TestUtility testUtility = new TestUtility();
+    testUtility.createDatabase();
+  }
+
+  private static Class<Driver> loadJdbcDriver()
+  {
+    Class<Driver> driver = null;
+    try
+    {
+      driver = (Class<Driver>) Class.forName("org.hsqldb.jdbcDriver");
+    }
+    catch (final ClassNotFoundException e)
+    {
+      e.printStackTrace();
+      System.exit(1);
+    }
+    return driver;
+  }
+
   protected PropertiesDataSource dataSource;
 
   protected PrintWriter out;
 
+  /**
+   * Load driver, and create database, schema and data
+   * 
+   * @throws PropertiesDataSourceException
+   */
+  public void createDatabase()
+    throws PropertiesDataSourceException
+  {
+    LOGGER.log(Level.FINE, toString() + " - Setting up database");
+    // Start the server
+    Server.main(new String[] {
+        // -database.0 file:schemacrawler -dbname.0 schemacrawler
+        // -silent false
+        "-dbname.0",
+        "schemacrawler",
+        "-silent",
+        "false"
+    });
+    createDatabase("jdbc:hsqldb:hsql://localhost/schemacrawler");
+  }
+
+  /**
+   * Load driver, and create database, schema and data
+   * 
+   * @throws PropertiesDataSourceException
+   */
+  public void createMemoryDatabase()
+    throws PropertiesDataSourceException
+  {
+    LOGGER.log(Level.FINE, toString() + " - Setting up in-memory database");
+    createDatabase("jdbc:hsqldb:mem:schemacrawler");
+  }
+
+  /**
+   * Gets the datasource.
+   * 
+   * @return Datasource
+   */
   public PropertiesDataSource getDataSource()
   {
     return dataSource;
   }
 
-  public void setUp()
-    throws PropertiesDataSourceException, ClassNotFoundException
+  /**
+   * Globally sets the application log level.
+   */
+  public void setApplicationLogLevel()
   {
-
-    LOGGER.log(Level.FINE, toString() + " - Setting up unit tests");
     if (DEBUG)
     {
       Utilities.setApplicationLogLevel(Level.FINEST);
@@ -134,28 +204,12 @@ public class TestUtility
       out = new PrintWriter(this.new NullWriter(), true);
     }
 
-    if (IS_SERVER)
-    {
-      url = HSQLDB_SERVER_URL;
-    }
-    else
-    {
-      url = HSQLDB_FILE_URL;
-    }
-
-    Class.forName(HSQLDB_JDBC_DRIVER);
-    makeDataSource(url);
-    dataSource.setLogWriter(out);
-
   }
 
-  public void tearDown()
-  {
-    LOGGER.log(Level.FINE, toString() + " - Tearing down unit tests");
-    closeDataSource();
-  }
-
-  private synchronized void closeDataSource()
+  /**
+   * Suts down the database server.
+   */
+  public synchronized void shutdownDatabase()
   {
     try
     {
@@ -164,6 +218,8 @@ public class TestUtility
         final Connection connection = dataSource.getConnection();
         if (connection != null)
         {
+          final Statement st = connection.createStatement();
+          st.execute("SHUTDOWN");
           connection.close();
         }
         dataSource = null;
@@ -175,19 +231,51 @@ public class TestUtility
     }
   }
 
+  private void createDatabase(final String url)
+    throws PropertiesDataSourceException
+  {
+    makeDataSource(url);
+    dataSource.setLogWriter(out);
+    setupSchema();
+  }
+
   private synchronized void makeDataSource(final String url)
     throws PropertiesDataSourceException
   {
     final String DATASOURCE_NAME = "schemacrawler";
 
     final Properties connectionProperties = new Properties();
-    connectionProperties.setProperty(DATASOURCE_NAME + ".driver",
-                                     HSQLDB_JDBC_DRIVER);
+    connectionProperties.setProperty(DATASOURCE_NAME + ".driver", driver
+      .getName());
     connectionProperties.setProperty(DATASOURCE_NAME + ".url", url);
     connectionProperties.setProperty(DATASOURCE_NAME + ".user", "sa");
     connectionProperties.setProperty(DATASOURCE_NAME + ".password", "");
 
     dataSource = new PropertiesDataSource(connectionProperties, DATASOURCE_NAME);
+  }
+
+  private synchronized void setupSchema()
+  {
+    try
+    {
+      // Load schema script file
+      final String script = new String(Utilities.readFully(TestUtility.class
+        .getResourceAsStream("/schemacrawler.test.sql")));
+      if (dataSource != null)
+      {
+        final Connection connection = dataSource.getConnection();
+        if (connection != null)
+        {
+          final Statement st = connection.createStatement();
+          st.execute(script);
+          connection.close();
+        }
+      }
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "", e);
+    }
   }
 
 }
