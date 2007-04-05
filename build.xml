@@ -179,6 +179,7 @@
         dir="${schemacrawler-maven-plugin.classes}"/>
     </jar>
 
+    <!-- Copy config file -->
     <copy todir="${distribution.dir}">
       <fileset dir="${SchemaCrawlerHome}/schemacrawler/src/site/resources/config">
         <include name="*.properties"/>
@@ -191,12 +192,9 @@
       <fileset dir="${SchemaCrawlerHome}/distribution/target/site/examples"/>
     </copy>
 
-    <copy todir="${distribution.dir}/dbserver">
-      <fileset dir="${SchemaCrawlerHome}/_dbserver">
-        <exclude name="*.log"/>
-        <exclude name="*.lck"/>
-        <exclude name="*.properties"/>
-      </fileset>
+		<!-- Copy database server -->
+    <copy todir="${distribution.dir}">
+      <fileset dir="${SchemaCrawlerHome}/distribution/src/other"/>
     </copy>
 
     <!-- Copy site -->
