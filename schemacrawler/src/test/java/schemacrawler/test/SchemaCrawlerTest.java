@@ -29,8 +29,8 @@ import static org.junit.Assert.fail;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.crawl.SchemaCrawler;
@@ -55,20 +55,21 @@ public class SchemaCrawlerTest
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerTest.class
     .getName());
 
-  private final TestUtility testUtility = new TestUtility();
+  private static TestUtility testUtility = new TestUtility();
 
-  @Before
-  public void before()
+  @BeforeClass
+  public static void beforeAllTests()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
-    testUtility.setUp();
+    testUtility.setApplicationLogLevel();
+    testUtility.createMemoryDatabase();
   }
 
-  @After
-  public void after()
+  @AfterClass
+  public static void afterAllTests()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
-    testUtility.tearDown();
+    testUtility.shutdownDatabase();
   }
 
   @Test
@@ -215,7 +216,7 @@ public class SchemaCrawlerTest
   public void tableNames()
   {
 
-    final String schemaName = "PUBLIC";
+    final String schemaName = "SCHEMACRAWLER";
     final String[] tableNames = {
         "CUSTOMER", "CUSTOMERLIST", "INVOICE", "ITEM", "PRODUCT", "SUPPLIER"
     };

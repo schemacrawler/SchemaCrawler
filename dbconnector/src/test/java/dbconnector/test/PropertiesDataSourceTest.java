@@ -23,8 +23,8 @@ package dbconnector.test;
 
 import static org.junit.Assert.assertNotNull;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import dbconnector.datasource.PropertiesDataSourceException;
@@ -32,20 +32,21 @@ import dbconnector.datasource.PropertiesDataSourceException;
 public class PropertiesDataSourceTest
 {
 
-  private TestUtility testUtility = new TestUtility();
+  private static TestUtility testUtility = new TestUtility();
 
-  @Before
-  public void before()
+  @BeforeClass
+  public static void beforeAllTests()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
-    testUtility.setUp();
+    testUtility.setApplicationLogLevel();
+    testUtility.createMemoryDatabase();
   }
 
-  @After
-  public void after()
+  @AfterClass
+  public static void afterAllTests()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
-    testUtility.tearDown();
+    testUtility.shutdownDatabase();
   }
 
   @Test

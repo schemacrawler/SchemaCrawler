@@ -25,8 +25,8 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.crawl.SchemaCrawlerOptions;
@@ -43,20 +43,21 @@ import dbconnector.test.TestUtility;
 public class ExecutorIntegrationTest
 {
 
-  private final TestUtility testUtility = new TestUtility();
+  private static TestUtility testUtility = new TestUtility();
 
-  @Before
-  public void before()
+  @BeforeClass
+  public static void beforeAllTests()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
-    testUtility.setUp();
+    testUtility.setApplicationLogLevel();
+    testUtility.createMemoryDatabase();
   }
 
-  @After
-  public void after()
+  @AfterClass
+  public static void afterAllTests()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
-    testUtility.tearDown();
+    testUtility.shutdownDatabase();
   }
 
   private void executorIntegrationTest(final SchemaCrawlerExecutor executor,
