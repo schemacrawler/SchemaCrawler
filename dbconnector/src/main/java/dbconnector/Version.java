@@ -80,6 +80,7 @@ public final class Version
 
   private Version()
   {
+    // Prevent external instantiation
   }
 
   /**
