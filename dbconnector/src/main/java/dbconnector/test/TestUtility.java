@@ -51,6 +51,7 @@ public class TestUtility
 
     private NullWriter()
     {
+      // Prevent external instantiation
     }
 
     /**
@@ -60,6 +61,7 @@ public class TestUtility
     public void close()
       throws IOException
     {
+      // No-op
     }
 
     /**
@@ -69,6 +71,7 @@ public class TestUtility
     public void flush()
       throws IOException
     {
+      // No-op
     }
 
     /**
@@ -78,6 +81,7 @@ public class TestUtility
     public void write(final char cbuf[], final int off, final int len)
       throws IOException
     {
+      // No-op
     }
 
     /**
@@ -87,6 +91,7 @@ public class TestUtility
     public void write(final int c)
       throws IOException
     {
+      // No-op
     }
 
     /**
@@ -96,6 +101,7 @@ public class TestUtility
     public void write(final String str, final int off, final int len)
       throws IOException
     {
+      // No-op
     }
 
   }
