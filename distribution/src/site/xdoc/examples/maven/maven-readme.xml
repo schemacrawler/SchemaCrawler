@@ -14,7 +14,7 @@
       <subsection name="How to Run">
         <ol>
           <li>
-            Install 
+            Install
             <a href="http://maven.apache.org/">
               maven
             </a>
@@ -26,13 +26,11 @@
               <span class="code">maven</span> example directory.
           </li>
           <li>
-            Copy the hsqldb jar file from <span class="code">dbserver</span> directory into the
+            Copy the hsqldb jar file from distribution directory into the
               <span class="code">maven</span> example directory.
           </li>
-          <li>
-            Start the hsqldb server by running <span class="code">runServer.cmd</span>
-              (<span class="code">runServer.sh</span> on Unix) from the dbserver directory.
-          </li>
+          <li>Start the database server by running StartDatabaseServer script from the
+            distribution directory.</li>
           <li> Install the SchemaCrawler Maven plug-in by running
             <span class="code">java -cp schemacrawler-5.0.jar
               schemacrawler.tools.integration.maven.Main</span> and following the

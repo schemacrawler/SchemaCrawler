@@ -23,14 +23,12 @@
             <a href="http://jung.sourceforge.net/"> JUNG </a> , and copy all of the jar
             files required by JUNG (at least commons collections and colt) into the
             <span class="code">graphing</span> example directory. </li>
-          <li> Start the hsqldb server by running
-            <span class="code">runServer.cmd</span> (
-            <span class="code">runServer.sh</span> on Unix) from the dbserver
-            directory. </li>
+          <li>Start the database server by running StartDatabaseServer script from the
+            distribution directory.</li>
           <li> Start a command shell in the
             <span class="code">graphing</span> example directory. </li>
           <li> Run
-            <span class="code">graphing.cmd</span> (
+            <span class="code">graphing.cmd</span> (or
             <span class="code">graphing.sh</span> on Unix). </li>
         </ol>
       </subsection>

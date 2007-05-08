@@ -19,17 +19,15 @@
           <li> Copy the SchemaCrawler jar file and
             <span class="code">schemacrawler.config.properties</span> into the
             <span class="code">user-defined-query</span> example directory. </li>
-          <li> Copy the hsqldb jar file from dbserver directory into the
+          <li> Copy the hsqldb jar file from distribution directory into the
             <span class="code">user-defined-query</span> example directory. </li>
-          <li> Start the hsqldb server by running
-            <span class="code">runServer.cmd</span> (
-            <span class="code">runServer.sh</span> on Unix) from the
-            <span class="code">dbserver</span> directory. </li>
+          <li>Start the database server by running StartDatabaseServer script from the
+            distribution directory.</li>
           <li> Start a command shell in the
             <span class="code">user-defined-query</span> example directory. </li>
           <li> Run
-            <span class="code">user-defined-query.cmd</span>
-            (<span class="code">user-defined-query.sh</span> on Unix). </li>
+            <span class="code">user-defined-query.cmd</span> (or
+            <span class="code">user-defined-query.sh</span> on Unix). </li>
         </ol>
       </subsection>
       <subsection name="How to Experiment">

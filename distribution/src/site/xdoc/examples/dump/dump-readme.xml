@@ -20,17 +20,16 @@
             <span class="code">schemacrawler.config.properties</span> into the
             <span class="code">dump</span> example directory. </li>
           <li>
-            Copy the hsqldb jar file from dbserver directory into the
+            Copy the hsqldb jar file from distribution directory into the
               <span class="code">dump</span> example directory.
           </li>
-          <li>
-            Start the hsqldb server by running <span class="code">runServer.cmd</span>
-              (<span class="code">runServer.sh</span> on Unix) from the <span class="code">dbserver</span> directory.
-          </li>
+          <li>Start the database server by running StartDatabaseServer script from the
+            distribution directory.</li>
           <li> Start a command shell in the
             <span class="code">dump</span> example directory. </li>
           <li>
-            Run <span class="code">dump.cmd</span> (<span class="code">dump.sh</span> on Unix).
+            Run <span class="code">dump.cmd</span> (or
+            <span class="code">dump.sh</span> on Unix).
           </li>
         </ol>
       </subsection>

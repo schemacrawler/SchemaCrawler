@@ -22,20 +22,19 @@
               <span class="code">db-specific-query</span> example directory.
           </li>
           <li>
-            Copy the hsqldb jar file from dbserver directory into the
+            Copy the hsqldb jar file from distribution directory into the
               <span class="code">db-specific-query</span> example directory.
           </li>
-          <li> Start the hsqldb server by running
-            <span class="code"> runServer.cmd</span> (
-            <span class="code">runServer.sh</span> on Unix) from the dbserver
-            directory. </li>
+          <li>Start the database server by running StartDatabaseServer script from the
+            distribution directory.</li>
           <li>
             Start a command shell in the
               <span class="code">db-specific-query</span> example directory.
           </li>
           <li> Run
-            <span class="code">db-specific-query.cmd (db-specific-query.cmd on
-              Unix)</span>. </li>
+            <span class="code">db-specific-query.cmd</span> (or
+            <span class="code">db-specific-query.cmd</span> on
+              Unix). </li>
         </ol>
       </subsection>
       <subsection name="How to Experiment">

@@ -19,17 +19,15 @@
 						into the
 						<span class="code">commandline</span> example
 						directory.</li>
-					<li>Copy the hsqldb jar file from dbserver directory into the
+					<li>Copy the hsqldb jar file from distribution directory into the
 						<span class="code">commandline</span> example
 						directory.</li>
-          <li>Start the hsqldb server by running
-            <span class="code">runServer.cmd</span> (
-            <span class="code">runServer.sh</span> on Unix) from the
-            <span class="code">dbserver</span> directory.</li>
+          <li>Start the database server by running StartDatabaseServer script from the
+            distribution directory.</li>
 					<li>Start a command shell in the
 						<em>commandline</em> example directory.</li>
 					<li>Run
-						<span class="code">schemacrawler.cmd</span> (
+						<span class="code">schemacrawler.cmd</span> (or
 						<span class="code">schemacrawler.sh</span> on Unix). This
 						will give you a list of available command line options.</li>
 					<li>To start with, run

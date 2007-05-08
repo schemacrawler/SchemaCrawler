@@ -15,16 +15,12 @@
       <subsection name="How to Run">
         <ol>
           <li>Copy the SchemaCrawler jar file into the
-            <span>
-              <em>api</em>
-            </span> example directory.</li>
-          <li>Start the hsqldb server by running
-            <span class="code">runServer.cmd</span> (
-            <span class="code">runServer.sh</span> on Unix) from the
-            <span class="code">dbserver</span> directory.</li>
+            <span class="code">api</span> example directory.</li>
+          <li>Start the database server by running StartDatabaseServer script from the
+            distribution directory.</li>
           <li>Make sure that java and javac are on your PATH.</li>
           <li>Run
-            <span class="code">api.cmd</span> (
+            <span class="code">api.cmd</span> (or
             <span class="code">api.sh</span> on Unix) to compile and run the
             program.</li>
         </ol>

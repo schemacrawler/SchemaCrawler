@@ -1,0 +1,80 @@
+/* Javadoc style sheet */
+/* Define colors, fonts and other style attributes here to override the defaults  */
+
+body {
+    font-family: Helvetica,Tahoma,Arial,Verdana;
+    font-size: 10pt;
+    background-color:#FFFFFF;
+}
+h2 {
+    font-family: Verdana,Helvetica,Tahoma,Arial;
+    font-size: 14pt;
+}
+h3 {
+    font-family: Verdana,Helvetica,Tahoma,Arial;
+    font-size: 12pt;
+}
+font {
+    font-family: Verdana,Helvetica,Tahoma,Arial;
+    font-size: 9pt;
+}
+
+.TableHeadingColor     {
+    background: #FAFAD2;
+    font-family: Verdana,Helvetica,Tahoma,Arial;
+    font-size: 10pt;
+} 
+.TableSubHeadingColor  {
+    background: #FFFFF0;
+    font-family: Verdana,Helvetica,Tahoma,Arial;
+    font-size: 10pt;
+} 
+.TableRowColor         {
+    background: #FFFFFF;
+    font-family: Verdana,Helvetica,Tahoma,Arial;
+    font-size: 10pt;
+} 
+
+.FrameTitleFont   {
+    font-family: Verdana,Helvetica,Tahoma,Arial;
+    font-size: 10pt;
+}
+.FrameHeadingFont {
+    font-family: Verdana,Helvetica,Tahoma,Arial;
+    font-size: 10pt;
+}
+.FrameItemFont  {
+    font-family: Verdana,Helvetica,Tahoma,Arial;
+    font-size: 10pt;
+}
+
+.NavBarCell1    {
+    background-color: #FAFAD2;
+    font-family: Verdana,Helvetica,Tahoma,Arial;
+    font-size: 10pt;
+}
+.NavBarCell1Rev {
+    background-color: Purple;
+    font : 10pt;
+}
+.NavBarFont1    {
+    font-family: Verdana,Helvetica,Tahoma,Arial;
+    font-size: 10pt;
+    color:#000000;
+}
+.NavBarFont1Rev {
+    font-family: Verdana,Helvetica,Tahoma,Arial;
+    font-size: 10pt;
+    color:#FFFFFF;
+}
+.NavBarCell2    {
+    font-family: Verdana,Helvetica,Tahoma,Arial;
+    font-size: 8pt;
+    background-color:#FFFFFF;
+}
+.NavBarCell3    {
+    font-family: Verdana,Helvetica,Tahoma,Arial;
+    font-size: 10pt;
+    background-color:#FFFFFF;
+}
+
