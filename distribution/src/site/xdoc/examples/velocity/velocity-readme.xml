@@ -21,8 +21,8 @@
             , and make sure that ant is on your path.
           </li>
           <li>
-            Copy the SchemaCrawler jar file and
-              <span class="code">schemacrawler.config.properties</span> into the
+            Copy the
+              <span class="code">schemacrawler.config.properties</span> file into the
               <span class="code">velocity</span> example directory.
           </li>
           <li>

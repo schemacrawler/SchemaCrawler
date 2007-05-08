@@ -14,8 +14,6 @@
       </subsection>
       <subsection name="How to Run">
         <ol>
-          <li>Copy the SchemaCrawler jar file into the
-            <span class="code">api</span> example directory.</li>
           <li>Start the database server by running StartDatabaseServer script from the
             distribution directory.</li>
           <li>Make sure that java and javac are on your PATH.</li>
