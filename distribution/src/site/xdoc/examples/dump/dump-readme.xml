@@ -16,13 +16,9 @@
           <li>
             Make sure that the Java executable is on your path.
           </li>
-          <li> Copy the SchemaCrawler jar file and
-            <span class="code">schemacrawler.config.properties</span> into the
+          <li> Copy the
+            <span class="code">schemacrawler.config.properties</span> file into the
             <span class="code">dump</span> example directory. </li>
-          <li>
-            Copy the hsqldb jar file from distribution directory into the
-              <span class="code">dump</span> example directory.
-          </li>
           <li>Start the database server by running StartDatabaseServer script from the
             distribution directory.</li>
           <li> Start a command shell in the

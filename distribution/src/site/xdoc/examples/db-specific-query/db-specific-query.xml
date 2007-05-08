@@ -17,12 +17,7 @@
             Make sure that the Java executable is on your path.
           </li>
           <li>
-            Copy the SchemaCrawler jar file and
-              schemacrawler.config.properties into the
-              <span class="code">db-specific-query</span> example directory.
-          </li>
-          <li>
-            Copy the hsqldb jar file from distribution directory into the
+            Copy the <span class="code">schemacrawler.config.properties</span> file into the
               <span class="code">db-specific-query</span> example directory.
           </li>
           <li>Start the database server by running StartDatabaseServer script from the
