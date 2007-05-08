@@ -16,16 +16,15 @@
           <li>Install
             <a href="http://ant.apache.org/">ant</a>, and make sure that ant is on your
             path.</li>
-          <li>Copy the SchemaCrawler jar file and schemacrawler.config.properties into
-            the snapshot example directory.</li>
-          <li>Start the hsqldb server by running
-            <span class="code">runServer.cmd</span> (
-            <span class="code">runServer.sh</span> on Unix) from the
-            <span class="code">dbserver</span> directory.</li>
+          <li>Copy the SchemaCrawler jar file and
+            <span class="code">schemacrawler.config.properties</span> into
+            the <span class="code">snapshot</span> example directory.</li>
+          <li>Start the database server by running StartDatabaseServer script from the
+            distribution directory.</li>
           <li>Run
-            <span class="code">snapshot.cmd</span> (
+            <span class="code">snapshot.cmd</span> (or
             <span class="code">snapshot.sh</span> on Unix).</li>
-          <li>See the output produced in the snapshot.txt file.</li>
+          <li>See the output produced in the <span class="code">snapshot.txt</span> file.</li>
         </ol>
       </subsection>
       <subsection name="How to Experiment">

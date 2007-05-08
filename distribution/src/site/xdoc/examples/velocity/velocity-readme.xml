@@ -14,7 +14,7 @@
       <subsection name="How to Run">
         <ol>
           <li>
-            Install 
+            Install
             <a href="http://ant.apache.org/">
               ant
             </a>
@@ -26,7 +26,7 @@
               <span class="code">velocity</span> example directory.
           </li>
           <li>
-            Download 
+            Download
             <a href="http://jakarta.apache.org/velocity/">
               Velocity
             </a>
@@ -34,16 +34,14 @@
               commons collections and log4j) into the
               <span class="code">velocity</span> example directory.
           </li>
-          <li> Start the hsqldb server by running
-            <span class="code">runServer.cmd</span> (
-            <span class="code">runServer.sh</span> on Unix) from the dbserver
-            directory. </li>
+          <li>Start the database server by running StartDatabaseServer script from the
+            distribution directory.</li>
           <li>
             Start a command shell in the
               <span class="code">velocity</span> example directory.
           </li>
           <li> Run
-            <span class="code">velocity.cmd</span> (
+            <span class="code">velocity.cmd</span> (or
             <span class="code">velocity.sh</span> on Unix). </li>
         </ol>
       </subsection>
