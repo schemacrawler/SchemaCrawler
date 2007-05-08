@@ -16,10 +16,9 @@
           <li>Install
             <a href="http://ant.apache.org/">ant</a>, and make sure that ant is on your
             path.</li>
-          <li>Copy the SchemaCrawler jar file and
-            <span class="code">schemacrawler.config.properties</span> into
+          <li>Copy the <span class="code">schemacrawler.config.properties</span> into
             the <span class="code">snapshot</span> example directory.</li>
-          <li>Start the database server by running StartDatabaseServer script from the
+          <li>Start the database server by running the <span class="code">StartDatabaseServer</span> script from the
             distribution directory.</li>
           <li>Run
             <span class="code">snapshot.cmd</span> (or
