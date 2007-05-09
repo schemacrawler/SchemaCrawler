@@ -17,7 +17,7 @@
             <a href="http://ant.apache.org/">ant</a>, and make sure that ant is on your
             path.</li>
           <li>Copy the <span class="code">schemacrawler.config.properties</span> into
-            the <span class="code">snapshot</span> example directory.</li>
+            the <span class="code">ant-task</span> example directory.</li>
           <li>Start the database server by running the <span class="code">StartDatabaseServer</span> script from the
             distribution directory.</li>
           <li>Run
