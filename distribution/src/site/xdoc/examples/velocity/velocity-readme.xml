@@ -16,9 +16,9 @@
           <li>
             Install
             <a href="http://ant.apache.org/">
-              ant
+              ant,
             </a>
-            , and make sure that ant is on your path.
+            and make sure that ant is on your path.
           </li>
           <li>
             Copy the
@@ -27,10 +27,10 @@
           </li>
           <li>
             Download
-            <a href="http://jakarta.apache.org/velocity/">
-              Velocity
+            <a href="http://velocity.apache.org/">
+              Velocity,
             </a>
-            , and copy all of the jar files required by Velocity (at least
+              and copy all of the jar files required by Velocity (at least
               commons collections and log4j) into the
               <span class="code">velocity</span> example directory.
           </li>
