@@ -16,9 +16,9 @@
           <li>
             Install
             <a href="http://maven.apache.org/">
-              maven
+              Maven,
             </a>
-            , and make sure that maven is on your path.
+            and make sure that Maven is on your path.
           </li>
           <li>
             Copy the SchemaCrawler jar file and
