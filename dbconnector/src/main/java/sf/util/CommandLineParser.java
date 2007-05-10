@@ -244,7 +244,7 @@ public final class CommandLineParser
     {
       if (value != null)
       {
-        return (value).booleanValue();
+        return value.booleanValue();
       }
       else
       {
