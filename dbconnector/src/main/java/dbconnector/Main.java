@@ -34,6 +34,9 @@ import sf.util.CommandLineUtility;
 import sf.util.GroupedProperties;
 import sf.util.Prompter;
 import sf.util.Utilities;
+import sf.util.CommandLineParser.BooleanOption;
+import sf.util.CommandLineParser.Option;
+import sf.util.CommandLineParser.StringOption;
 import dbconnector.datasource.PropertiesDataSource;
 import dbconnector.datasource.PropertiesDataSourceException;
 
@@ -153,10 +156,9 @@ public final class Main
 
     final CommandLineParser parser = new CommandLineParser();
 
-    parser
-      .addOption(new CommandLineParser.StringOption('f',
-                                                    OPTION_CONNECTIONSFILE,
-                                                    "connection.properties"));
+    parser.addOption(new StringOption('f',
+                                      OPTION_CONNECTIONSFILE,
+                                      "connection.properties"));
 
     parser.parse(args);
 
@@ -264,29 +266,18 @@ public final class Main
   {
     final CommandLineParser parser = new CommandLineParser();
 
-    parser.addOption(new CommandLineParser.BooleanOption('a', OPTION_TESTALL));
-    parser.addOption(new CommandLineParser.BooleanOption('x', OPTION_PROMPT));
-    parser.addOption(new CommandLineParser.BooleanOption('d', OPTION_DEFAULT));
-    parser.addOption(new CommandLineParser.StringOption('c',
-                                                        OPTION_CONNECTION,
-                                                        null));
+    parser.addOption(new BooleanOption('a', OPTION_TESTALL));
+    parser.addOption(new BooleanOption('x', OPTION_PROMPT));
+    parser.addOption(new BooleanOption('d', OPTION_DEFAULT));
+    parser.addOption(new StringOption('c', OPTION_CONNECTION, null));
     //
     parser
-      .addOption(new CommandLineParser.StringOption(CommandLineParser.Option.NO_SHORT_FORM,
-                                                    OPTION_DRIVER,
-                                                    null));
-    parser
-      .addOption(new CommandLineParser.StringOption(CommandLineParser.Option.NO_SHORT_FORM,
-                                                    OPTION_URL,
-                                                    null));
-    parser
-      .addOption(new CommandLineParser.StringOption(CommandLineParser.Option.NO_SHORT_FORM,
-                                                    OPTION_USER,
-                                                    null));
-    parser
-      .addOption(new CommandLineParser.StringOption(CommandLineParser.Option.NO_SHORT_FORM,
-                                                    OPTION_PASSWORD,
-                                                    null));
+      .addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_DRIVER, null));
+    parser.addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_URL, null));
+    parser.addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_USER, null));
+    parser.addOption(new StringOption(Option.NO_SHORT_FORM,
+                                      OPTION_PASSWORD,
+                                      null));
     return parser;
   }
 

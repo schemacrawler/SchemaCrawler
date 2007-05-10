@@ -32,6 +32,9 @@ import schemacrawler.tools.operation.Operation;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import sf.util.CommandLineParser;
 import sf.util.Utilities;
+import sf.util.CommandLineParser.BooleanOption;
+import sf.util.CommandLineParser.Option;
+import sf.util.CommandLineParser.StringOption;
 
 /**
  * Parses the command line.
@@ -108,39 +111,26 @@ public final class OptionsParser
   private static CommandLineParser createCommandLineParser()
   {
     final CommandLineParser parser = new CommandLineParser();
+    parser.addOption(new StringOption('g',
+                                      OPTION_CONFIGFILE,
+                                      "schemacrawler.config.properties"));
     parser
-      .addOption(new CommandLineParser.StringOption('g',
-                                                    OPTION_CONFIGFILE,
-                                                    "schemacrawler.config.properties"));
+      .addOption(new StringOption('p',
+                                  OPTION_CONFIGOVERRIDEFILE,
+                                  "schemacrawler.config.override.properties"));
     parser
-      .addOption(new CommandLineParser.StringOption('p',
-                                                    OPTION_CONFIGOVERRIDEFILE,
-                                                    "schemacrawler.config.override.properties"));
-    parser
-      .addOption(new CommandLineParser.StringOption(CommandLineParser.Option.NO_SHORT_FORM,
-                                                    OPTION_COMMAND,
-                                                    ""));
-    parser
-      .addOption(new CommandLineParser.StringOption(CommandLineParser.Option.NO_SHORT_FORM,
-                                                    OPTION_OUTPUT_FORMAT,
-                                                    OutputFormat.TEXT
-                                                      .toString()));
-    parser
-      .addOption(new CommandLineParser.StringOption(CommandLineParser.Option.NO_SHORT_FORM,
-                                                    OPTION_OUTPUT_FILE,
-                                                    ""));
-    parser
-      .addOption(new CommandLineParser.BooleanOption(CommandLineParser.Option.NO_SHORT_FORM,
-                                                     OPTION_OUTPUT_APPEND));
-    parser
-      .addOption(new CommandLineParser.BooleanOption(CommandLineParser.Option.NO_SHORT_FORM,
-                                                     OPTION_NOHEADER));
-    parser
-      .addOption(new CommandLineParser.BooleanOption(CommandLineParser.Option.NO_SHORT_FORM,
-                                                     OPTION_NOFOOTER));
-    parser
-      .addOption(new CommandLineParser.BooleanOption(CommandLineParser.Option.NO_SHORT_FORM,
-                                                     OPTION_NOINFO));
+      .addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_COMMAND, ""));
+    parser.addOption(new StringOption(Option.NO_SHORT_FORM,
+                                      OPTION_OUTPUT_FORMAT,
+                                      OutputFormat.TEXT.toString()));
+    parser.addOption(new StringOption(Option.NO_SHORT_FORM,
+                                      OPTION_OUTPUT_FILE,
+                                      ""));
+    parser.addOption(new BooleanOption(Option.NO_SHORT_FORM,
+                                       OPTION_OUTPUT_APPEND));
+    parser.addOption(new BooleanOption(Option.NO_SHORT_FORM, OPTION_NOHEADER));
+    parser.addOption(new BooleanOption(Option.NO_SHORT_FORM, OPTION_NOFOOTER));
+    parser.addOption(new BooleanOption(Option.NO_SHORT_FORM, OPTION_NOINFO));
     return parser;
   }
 
