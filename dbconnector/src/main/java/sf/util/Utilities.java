@@ -24,6 +24,7 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -229,43 +230,61 @@ public final class Utilities
   /**
    * Loads a properties file.
    * 
-   * @param properties
-   *        Properties object.
-   * @param propertiesFileName
-   *        Properties file name.
+   * @param propertiesFile
+   *        Properties file.
    * @return Properties
    */
-  public static Properties loadProperties(final Properties properties,
-                                          final String propertiesFileName)
+  public static Properties loadProperties(final File propertiesFile)
   {
-    InputStream propertiesStream = null;
+
+    if (propertiesFile != null && propertiesFile.exists()
+        && propertiesFile.canRead())
+    {
+      try
+      {
+        return loadProperties(new FileInputStream(propertiesFile));
+      }
+      catch (final FileNotFoundException e)
+      {
+        // Fall through
+      }
+    }
+
+    // On an error, return empty properties
+    LOGGER.log(Level.CONFIG, "Cannot find properties file " + propertiesFile);
+    return new Properties();
+
+  }
+
+  /**
+   * Loads a properties file.
+   * 
+   * @param stream
+   *        Properties stream.
+   * @return Properties
+   */
+  public static Properties loadProperties(final InputStream stream)
+  {
+    final Properties properties = new Properties();
     try
     {
-      final File propertiesFile = new File(propertiesFileName);
-      if (propertiesFile.exists())
+      if (stream != null)
       {
-        propertiesStream = new BufferedInputStream(new FileInputStream(propertiesFile));
-        properties.load(propertiesStream);
-        propertiesStream.close();
-      }
-      else
-      {
-        LOGGER.log(Level.CONFIG, "Cannot find properties file "
-                                 + propertiesFileName);
+        properties.load(new BufferedInputStream(stream));
+        stream.close();
       }
     }
     catch (final IOException e)
     {
-      LOGGER.log(Level.WARNING, "Error loading properties file "
-                                + propertiesFileName, e);
+      LOGGER.log(Level.WARNING, "Error loading properties file", e);
     }
     finally
     {
       try
       {
-        if (propertiesStream != null)
+        if (stream != null)
         {
-          propertiesStream.close();
+          stream.close();
         }
       }
       catch (final IOException e)
@@ -333,6 +352,27 @@ public final class Utilities
   {
     return !isBlank(text) && text.equalsIgnoreCase("YES")
            || Boolean.valueOf(text).booleanValue();
+  }
+
+  /**
+   * Copies properties into a map.
+   * 
+   * @param properties
+   *        Properties to copy
+   * @return Map
+   */
+  public static Map<String, String> propertiesMap(final Properties properties)
+  {
+    final Map<String, String> propertiesMap = new HashMap<String, String>();
+    if (properties != null)
+    {
+      final Set<Entry<Object, Object>> entries = properties.entrySet();
+      for (final Entry<Object, Object> entry: entries)
+      {
+        propertiesMap.put((String) entry.getKey(), (String) entry.getValue());
+      }
+    }
+    return propertiesMap;
   }
 
   /**
@@ -461,27 +501,6 @@ public final class Utilities
     writer.close();
 
     return pomFile;
-  }
-
-  /**
-   * Copies properties into a map.
-   * 
-   * @param properties
-   *        Properties to copy
-   * @return Map
-   */
-  public static Map<String, String> propertiesMap(Properties properties)
-  {
-    Map<String, String> propertiesMap = new HashMap<String, String>();
-    if (properties != null)
-    {
-      Set<Entry<Object, Object>> entries = properties.entrySet();
-      for (Entry<Object, Object> entry: entries)
-      {
-        propertiesMap.put((String) entry.getKey(), (String) entry.getValue());
-      }
-    }
-    return propertiesMap;
   }
 
   /**

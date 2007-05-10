@@ -162,8 +162,8 @@ public final class Main
 
     final String connectionsFileName = parser
       .getStringOptionValue(OPTION_CONNECTIONSFILE);
-    final Properties config = Utilities.loadProperties(new Properties(),
-                                                       connectionsFileName);
+    final Properties config = Utilities
+      .loadProperties(new File(connectionsFileName));
     if (createDataSource(args, config) == null)
     {
       System.exit(2);
