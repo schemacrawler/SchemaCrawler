@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry excluding="**/*.java" kind="src" path="src/main/resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="var" path="M2_REPO/hsqldb/hsqldb/1.8.0.1/hsqldb-1.8.0.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/net/sourceforge/jtds/jtds/1.2/jtds-1.2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/junit/junit/4.2/junit-4.2.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SchemaCrawler - Database Connector"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SchemaCrawler - Main"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

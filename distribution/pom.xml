@@ -33,6 +33,11 @@
       <artifactId>schemacrawler-maven-plugin</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>schemacrawler</groupId>
+      <artifactId>sqlserver</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
