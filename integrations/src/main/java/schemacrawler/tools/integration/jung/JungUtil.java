@@ -47,11 +47,20 @@ public final class JungUtil
 {
 
   /**
-   * Prevent instantiation.
+   * Turns the schema into a directed graph.
+   * 
+   * @param schema
+   *        Schema
+   * @return Graph
    */
-  private JungUtil()
+  public static Graph makeSchemaGraph(final Schema schema)
   {
-
+    final Graph graph = new DirectedSparseGraph();
+    final Map<NamedObject, SchemaGraphVertex> verticesMap = new HashMap<NamedObject, SchemaGraphVertex>();
+    final Table[] tables = schema.getTables();
+    mapTablesAndColumns(graph, tables, verticesMap);
+    mapForeignKeys(graph, tables, verticesMap);
+    return graph;
   }
 
   /**
@@ -76,40 +85,17 @@ public final class JungUtil
     vv.save(file, size);
   }
 
-  /**
-   * Turns the schema into a directed graph.
-   * 
-   * @param schema
-   *        Schema
-   * @return Graph
-   */
-  public static Graph makeSchemaGraph(final Schema schema)
-  {
-    final Graph graph = new DirectedSparseGraph();
-    final Map<NamedObject, SchemaGraphVertex> verticesMap = new HashMap<NamedObject, SchemaGraphVertex>();
-    final Table[] tables = schema.getTables();
-    mapTablesAndColumns(graph, tables, verticesMap);
-    mapForeignKeys(graph, tables, verticesMap);
-    return graph;
-  }
-
   private static void mapForeignKeys(final Graph graph,
                                      final Table[] tables,
                                      final Map<NamedObject, SchemaGraphVertex> verticesMap)
   {
-    // Make edges for each foreign key
     final Map<String, ForeignKeyColumnMap> columnPairMap = new HashMap<String, ForeignKeyColumnMap>();
-    for (int i = 0; i < tables.length; i++)
+    for (final Table table: tables)
     {
-      final Table table = tables[i];
-      final ForeignKey[] foreignKeys = table.getForeignKeys();
-      for (int j = 0; j < foreignKeys.length; j++)
+      for (final ForeignKey foreignKey: table.getForeignKeys())
       {
-        final ForeignKey foreignKey = foreignKeys[j];
-        final ForeignKeyColumnMap[] columnPairs = foreignKey.getColumnPairs();
-        for (int k = 0; k < columnPairs.length; k++)
+        for (final ForeignKeyColumnMap columnPair: foreignKey.getColumnPairs())
         {
-          final ForeignKeyColumnMap columnPair = columnPairs[k];
           if (!columnPairMap.containsKey(columnPair.getFullName()))
           {
             columnPairMap.put(columnPair.getFullName(), columnPair);
@@ -132,16 +118,13 @@ public final class JungUtil
                                           final Table[] tables,
                                           final Map<NamedObject, SchemaGraphVertex> verticesMap)
   {
-    for (int i = 0; i < tables.length; i++)
+    for (final Table table: tables)
     {
-      final Table table = tables[i];
       final TableVertex tableVertex = new TableVertex(table);
       graph.addVertex(tableVertex);
       verticesMap.put(table, tableVertex);
-      final Column[] columns = table.getColumns();
-      for (int j = 0; j < columns.length; j++)
+      for (final Column column: table.getColumns())
       {
-        final Column column = columns[j];
         final ColumnVertex columnVertex = new ColumnVertex(column);
         graph.addVertex(columnVertex);
         verticesMap.put(column, columnVertex);
@@ -149,6 +132,14 @@ public final class JungUtil
         graph.addEdge(columnEdge);
       }
     }
+  }
+
+  /**
+   * Prevent instantiation.
+   */
+  private JungUtil()
+  {
+
   }
 
 }
