@@ -64,6 +64,74 @@ public class VelocityExecutor
   private static final Logger LOGGER = Logger.getLogger(VelocityExecutor.class
     .getName());
 
+  private static void renderTemplate(final String templateName,
+                                     final Schema schema,
+                                     final Writer writer)
+    throws Exception
+  {
+    // Set the file path, in case the template is a file template
+    // This allows Velocity to load templates from any directory
+    String templateLocation = templateName;
+    String templatePath = ".";
+    final File templateFilePath = new File(templateLocation);
+    if (templateFilePath.exists())
+    {
+      templatePath = templatePath + ","
+                     + templateFilePath.getAbsoluteFile().getParent();
+      templateLocation = templateFilePath.getName();
+    }
+
+    // Create a new instance of the engine
+    final VelocityEngine ve = new VelocityEngine();
+
+    // Set up Velocity resource loaders for loading from the classpath,
+    // as well as the file system
+    // http://jakarta.apache.org/velocity/docs/developer-guide.html#Configuring%20Resource%20Loaders
+    final String fileResourceLoader = "file";
+    final String classpathResourceLoader = "classpath";
+    final Properties p = new Properties();
+    p.setProperty(RuntimeConstants.RESOURCE_LOADER, fileResourceLoader + ","
+                                                    + classpathResourceLoader);
+    setVelocityResourceLoaderProperty(p,
+                                      classpathResourceLoader,
+                                      "class",
+                                      ClasspathResourceLoader.class.getName());
+    setVelocityResourceLoaderProperty(p,
+                                      fileResourceLoader,
+                                      "class",
+                                      FileResourceLoader.class.getName());
+    setVelocityResourceLoaderProperty(p,
+                                      fileResourceLoader,
+                                      "path",
+                                      templatePath);
+
+    LOGGER.log(Level.INFO, "Velocity configuration properties - "
+                           + p.toString());
+
+    // Initialize the engine
+    ve.init(p);
+
+    // Set the context
+    final VelocityContext context = new VelocityContext();
+    context.put("schema", schema);
+
+    // Evaluate the template
+    final Template template = ve.getTemplate(templateLocation);
+    template.merge(context, writer);
+
+    writer.flush();
+  }
+
+  private static void setVelocityResourceLoaderProperty(final Properties p,
+                                                        final String resourceLoaderName,
+                                                        final String resourceLoaderPropertyName,
+                                                        final String resourceLoaderPropertyValue)
+  {
+    p.setProperty(resourceLoaderName + "." + RuntimeConstants.RESOURCE_LOADER
+                      + "." + resourceLoaderPropertyName,
+                  resourceLoaderPropertyValue);
+  }
+
   /**
    * {@inheritDoc}
    * 
@@ -153,74 +221,6 @@ public class VelocityExecutor
     final String templateName = schemaTextOptions.getOutputOptions()
       .getOutputFormatValue();
     renderTemplate(templateName, schema, writer);
-  }
-
-  private static void renderTemplate(final String templateName,
-                                     final Schema schema,
-                                     final Writer writer)
-    throws Exception
-  {
-    // Set the file path, in case the template is a file template
-    // This allows Velocity to load templates from any directory
-    String templateLocation = templateName;
-    String templatePath = ".";
-    final File templateFilePath = new File(templateLocation);
-    if (templateFilePath.exists())
-    {
-      templatePath = templatePath + ","
-                     + templateFilePath.getAbsoluteFile().getParent();
-      templateLocation = templateFilePath.getName();
-    }
-
-    // Create a new instance of the engine
-    final VelocityEngine ve = new VelocityEngine();
-
-    // Set up Velocity resource loaders for loading from the classpath,
-    // as well as the file system
-    // http://jakarta.apache.org/velocity/docs/developer-guide.html#Configuring%20Resource%20Loaders
-    final String fileResourceLoader = "file";
-    final String classpathResourceLoader = "classpath";
-    final Properties p = new Properties();
-    p.setProperty(RuntimeConstants.RESOURCE_LOADER, fileResourceLoader + ","
-                                                    + classpathResourceLoader);
-    setVelocityResourceLoaderProperty(p,
-                                      classpathResourceLoader,
-                                      "class",
-                                      ClasspathResourceLoader.class.getName());
-    setVelocityResourceLoaderProperty(p,
-                                      fileResourceLoader,
-                                      "class",
-                                      FileResourceLoader.class.getName());
-    setVelocityResourceLoaderProperty(p,
-                                      fileResourceLoader,
-                                      "path",
-                                      templatePath);
-
-    LOGGER.log(Level.INFO, "Velocity configuration properties - "
-                           + p.toString());
-
-    // Initialize the engine
-    ve.init(p);
-
-    // Set the context
-    final VelocityContext context = new VelocityContext();
-    context.put("schema", schema);
-
-    // Evaluate the template
-    final Template template = ve.getTemplate(templateLocation);
-    template.merge(context, writer);
-
-    writer.flush();
-  }
-
-  private static void setVelocityResourceLoaderProperty(final Properties p,
-                                                        final String resourceLoaderName,
-                                                        final String resourceLoaderPropertyName,
-                                                        final String resourceLoaderPropertyValue)
-  {
-    p.setProperty(resourceLoaderName + "." + RuntimeConstants.RESOURCE_LOADER
-                      + "." + resourceLoaderPropertyName,
-                  resourceLoaderPropertyValue);
   }
 
 }

@@ -59,21 +59,6 @@ public final class JungExecutor
 
   private static final int DEFAULT_IMAGE_WIDTH = 600;
 
-  private Dimension getSize(final String dimensions)
-  {
-    final String[] sizes = dimensions.split("x");
-    try
-    {
-      final int width = Integer.parseInt(sizes[0]);
-      final int height = Integer.parseInt(sizes[1]);
-      return new Dimension(width, height);
-    }
-    catch (final NumberFormatException e)
-    {
-      return new Dimension(DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_WIDTH);
-    }
-  }
-
   /**
    * {@inheritDoc}
    * 
@@ -164,6 +149,21 @@ public final class JungExecutor
       .getSchemaTextDetailType().mapToInfoLevel(), schemaCrawlerOptions);
     final Graph graph = JungUtil.makeSchemaGraph(schema);
     JungUtil.saveGraphJpeg(graph, outputFile, size);
+  }
+
+  private Dimension getSize(final String dimensions)
+  {
+    final String[] sizes = dimensions.split("x");
+    try
+    {
+      final int width = Integer.parseInt(sizes[0]);
+      final int height = Integer.parseInt(sizes[1]);
+      return new Dimension(width, height);
+    }
+    catch (final NumberFormatException e)
+    {
+      return new Dimension(DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_WIDTH);
+    }
   }
 
 }

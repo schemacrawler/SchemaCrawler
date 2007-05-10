@@ -30,10 +30,6 @@ import sf.util.CommandLineUtility;
 public final class Main
 {
 
-  private Main()
-  {
-  }
-
   /**
    * s Get connection parameters, and creates a connection, and crawls
    * the schema.
@@ -49,6 +45,10 @@ public final class Main
     CommandLineUtility.checkForHelp(args,
                                     "/schemacrawler-templating-readme.txt");
     SchemaCrawlerMain.schemacrawler(args, new VelocityExecutor());
+  }
+
+  private Main()
+  {
   }
 
 }

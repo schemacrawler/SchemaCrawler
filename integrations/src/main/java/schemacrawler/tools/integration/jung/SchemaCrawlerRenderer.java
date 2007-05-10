@@ -39,8 +39,6 @@ final class SchemaCrawlerRenderer
   extends PluggableRenderer
 {
 
-  private static final int FONT_SIZE = 9;
-
   private final class SchemaCrawlerEdgePaintFunction
     implements EdgePaintFunction
   {
@@ -61,6 +59,26 @@ final class SchemaCrawlerRenderer
     }
   }
 
+  private final class SchemaCrawlerVertexPaintFunction
+    implements VertexPaintFunction
+  {
+    /**
+     * {@inheritDoc}
+     */
+    public Paint getDrawPaint(final Vertex vertex)
+    {
+      return ((SchemaGraphVertex) vertex).getDrawPaint();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Paint getFillPaint(final Vertex vertex)
+    {
+      return ((SchemaGraphVertex) vertex).getFillPaint();
+    }
+  }
+
   private final class SchemaCrawlerVertexShapeFunction
     implements VertexShapeFunction
   {
@@ -70,26 +88,6 @@ final class SchemaCrawlerRenderer
     public Shape getShape(final Vertex vertex)
     {
       return ((SchemaGraphVertex) vertex).getShape();
-    }
-  }
-
-  private final class SchemaCrawlerVertexPaintFunction
-    implements VertexPaintFunction
-  {
-    /**
-     * {@inheritDoc}
-     */
-    public Paint getFillPaint(final Vertex vertex)
-    {
-      return ((SchemaGraphVertex) vertex).getFillPaint();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Paint getDrawPaint(final Vertex vertex)
-    {
-      return ((SchemaGraphVertex) vertex).getDrawPaint();
     }
   }
 
@@ -104,6 +102,8 @@ final class SchemaCrawlerRenderer
       return ((SchemaGraphVertex) vertex).getLabel();
     }
   }
+
+  private static final int FONT_SIZE = 9;
 
   /**
    * Constructs a new SchemaCrawler renderer, with customizations.

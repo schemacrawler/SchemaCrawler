@@ -43,9 +43,9 @@ final class ColumnVertex
   /**
    * {@inheritDoc}
    */
-  public String getLabel()
+  public Paint getDrawPaint()
   {
-    return column.getName();
+    return Color.GRAY;
   }
 
   /**
@@ -66,9 +66,9 @@ final class ColumnVertex
   /**
    * {@inheritDoc}
    */
-  public Paint getDrawPaint()
+  public String getLabel()
   {
-    return Color.GRAY;
+    return column.getName();
   }
 
   /**

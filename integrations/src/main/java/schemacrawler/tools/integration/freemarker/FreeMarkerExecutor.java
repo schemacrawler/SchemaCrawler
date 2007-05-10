@@ -65,6 +65,54 @@ public class FreeMarkerExecutor
   private static final Logger LOGGER = Logger
     .getLogger(FreeMarkerExecutor.class.getName());
 
+  private static void renderTemplate(final String templateName,
+                                     final Schema schema,
+                                     final Writer writer)
+    throws Exception
+  {
+    // Set the file path, in case the template is a file template
+    // This allows Velocity to load templates from any directory
+    String templateLocation = templateName;
+    String templatePath = ".";
+    final File templateFilePath = new File(templateLocation);
+    if (templateFilePath.exists())
+    {
+      templatePath = templateFilePath.getAbsoluteFile().getParent();
+      templateLocation = templateFilePath.getName();
+    }
+
+    // Create a new instance of the configuration
+    final Configuration cfg = new Configuration();
+
+    final ClassTemplateLoader ctl = new ClassTemplateLoader(FreeMarkerExecutor.class,
+                                                            "/");
+    final FileTemplateLoader ftl = new FileTemplateLoader(new File(templatePath));
+    final TemplateLoader[] loaders = new TemplateLoader[] {
+        ctl, ftl
+    };
+    final MultiTemplateLoader mtl = new MultiTemplateLoader(loaders);
+    cfg.setTemplateLoader(mtl);
+
+    cfg.setStrictSyntaxMode(true);
+    cfg.setWhitespaceStripping(true);
+
+    cfg.setObjectWrapper(new DefaultObjectWrapper());
+
+    LOGGER.log(Level.INFO, Configuration.getVersionNumber());
+    LOGGER.log(Level.INFO, "FreeMarker configuration properties - " + cfg);
+
+    // Create the root hash
+    final Map<String, Object> objectMap = new HashMap<String, Object>();
+    objectMap.put("schema", schema);
+
+    // Evaluate the template
+    final Template template = cfg.getTemplate(templateLocation);
+    template.process(objectMap, writer);
+
+    writer.flush();
+
+  }
+
   /**
    * {@inheritDoc}
    * 
@@ -154,54 +202,6 @@ public class FreeMarkerExecutor
     final String templateName = schemaTextOptions.getOutputOptions()
       .getOutputFormatValue();
     renderTemplate(templateName, schema, writer);
-  }
-
-  private static void renderTemplate(final String templateName,
-                                     final Schema schema,
-                                     final Writer writer)
-    throws Exception
-  {
-    // Set the file path, in case the template is a file template
-    // This allows Velocity to load templates from any directory
-    String templateLocation = templateName;
-    String templatePath = ".";
-    final File templateFilePath = new File(templateLocation);
-    if (templateFilePath.exists())
-    {
-      templatePath = templateFilePath.getAbsoluteFile().getParent();
-      templateLocation = templateFilePath.getName();
-    }
-
-    // Create a new instance of the configuration
-    final Configuration cfg = new Configuration();
-
-    final ClassTemplateLoader ctl = new ClassTemplateLoader(FreeMarkerExecutor.class,
-                                                            "/");
-    final FileTemplateLoader ftl = new FileTemplateLoader(new File(templatePath));
-    final TemplateLoader[] loaders = new TemplateLoader[] {
-        ctl, ftl
-    };
-    final MultiTemplateLoader mtl = new MultiTemplateLoader(loaders);
-    cfg.setTemplateLoader(mtl);
-
-    cfg.setStrictSyntaxMode(true);
-    cfg.setWhitespaceStripping(true);
-
-    cfg.setObjectWrapper(new DefaultObjectWrapper());
-
-    LOGGER.log(Level.INFO, Configuration.getVersionNumber());
-    LOGGER.log(Level.INFO, "FreeMarker configuration properties - " + cfg);
-
-    // Create the root hash
-    final Map<String, Object> objectMap = new HashMap<String, Object>();
-    objectMap.put("schema", schema);
-
-    // Evaluate the template
-    final Template template = cfg.getTemplate(templateLocation);
-    template.process(objectMap, writer);
-
-    writer.flush();
-
   }
 
 }

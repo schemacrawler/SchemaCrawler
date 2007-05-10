@@ -38,11 +38,11 @@ interface SchemaGraphVertex
                                                                    new ConstantVertexAspectRatioFunction(0.8f));
 
   /**
-   * Gets the label.
+   * Gets the drawing paint object.
    * 
-   * @return Label
+   * @return Drawing paint object
    */
-  String getLabel();
+  Paint getDrawPaint();
 
   /**
    * Gets the fill paint object.
@@ -52,11 +52,11 @@ interface SchemaGraphVertex
   Paint getFillPaint();
 
   /**
-   * Gets the drawing paint object.
+   * Gets the label.
    * 
-   * @return Drawing paint object
+   * @return Label
    */
-  Paint getDrawPaint();
+  String getLabel();
 
   /**
    * Gets the shape.

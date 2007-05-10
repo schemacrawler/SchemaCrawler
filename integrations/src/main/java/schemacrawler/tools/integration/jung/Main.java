@@ -30,10 +30,6 @@ import sf.util.CommandLineUtility;
 public final class Main
 {
 
-  private Main()
-  {
-  }
-
   /**
    * Get connection parameters, and creates a connection, and crawls the
    * schema.
@@ -48,6 +44,10 @@ public final class Main
   {
     CommandLineUtility.checkForHelp(args, "/schemacrawler-jung-readme.txt");
     SchemaCrawlerMain.schemacrawler(args, new JungExecutor());
+  }
+
+  private Main()
+  {
   }
 
 }

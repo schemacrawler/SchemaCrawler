@@ -41,13 +41,13 @@ final class TableVertex
   }
 
   /**
-   * Gets the label.
+   * Gets the drawing paint object.
    * 
-   * @return Label.
+   * @return Drawing paint object
    */
-  public String getLabel()
+  public Paint getDrawPaint()
   {
-    return table.getName();
+    return Color.GRAY;
   }
 
   /**
@@ -68,13 +68,13 @@ final class TableVertex
   }
 
   /**
-   * Gets the drawing paint object.
+   * Gets the label.
    * 
-   * @return Drawing paint object
+   * @return Label.
    */
-  public Paint getDrawPaint()
+  public String getLabel()
   {
-    return Color.GRAY;
+    return table.getName();
   }
 
   /**
