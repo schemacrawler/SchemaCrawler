@@ -42,6 +42,20 @@ One of:
     Tests all the connections defined in the configuration properties file,
     but does not execute any commands
 
+Or, all of the following:
+
+-driver=<driver-class-name>
+	Fully qualified name of the JDBC driver class.
+	
+-url=<url>
+	JDBC connection URL to the database.
+	
+-user=<user>
+	Database user name.
+
+-password=<password>
+	Database password.
+	
 --- Command Options ---
 
 -command=<command>
