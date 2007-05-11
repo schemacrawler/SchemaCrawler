@@ -64,7 +64,7 @@ public final class OperatorOptions
 
     if (operation == null)
     {
-      this.operation = Operation.valueOf("count");
+      this.operation = Operation.COUNT;
     }
     else
     {

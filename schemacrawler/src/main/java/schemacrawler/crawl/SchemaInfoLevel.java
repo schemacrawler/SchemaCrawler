@@ -24,68 +24,23 @@ package schemacrawler.crawl;
 /**
  * Enumeration for level of schema detail.
  */
-public final class SchemaInfoLevel
+public enum SchemaInfoLevel
 {
 
-  /**
-   * No schema detail.
-   */
-  public static final SchemaInfoLevel MINIMUM = new SchemaInfoLevel(0, "NONE");
+  /** No schema detail. */
+  MINIMUM("NONE"),
+  /** Basic schema detail. */
+  BASIC("BASIC"),
+  /** Verbose schema detail. */
+  VERBOSE("VERBOSE"),
+  /** Maximum schema detail. */
+  MAXIMUM("MAXIMUM");
 
-  /**
-   * Basic schema detail.
-   */
-  public static final SchemaInfoLevel BASIC = new SchemaInfoLevel(1, "BASIC");
+  private final String name;
 
-  /**
-   * Verbose schema detail.
-   */
-  public static final SchemaInfoLevel VERBOSE = new SchemaInfoLevel(2,
-                                                                    "VERBOSE");
-
-  /**
-   * Maximum schema detail.
-   */
-  public static final SchemaInfoLevel MAXIMUM = new SchemaInfoLevel(3,
-                                                                    "MAXIMUM");
-
-  private static final SchemaInfoLevel[] SCHEMA_INFO_LEVEL_ALL = {
-      MINIMUM, BASIC, VERBOSE, MAXIMUM
-  };
-
-  /**
-   * Find the enumeration value corresponding to the string.
-   * 
-   * @param infoLevelString
-   *        String value of table type
-   * @return Enumeration value
-   */
-  public static SchemaInfoLevel valueOf(final String infoLevelString)
+  private SchemaInfoLevel(final String name)
   {
-
-    SchemaInfoLevel schemaInfoLevel = null;
-
-    for (final SchemaInfoLevel element: SCHEMA_INFO_LEVEL_ALL)
-    {
-      if (element.toString().equalsIgnoreCase(infoLevelString))
-      {
-        schemaInfoLevel = element;
-        break;
-      }
-    }
-
-    return schemaInfoLevel;
-
-  }
-
-  private final int infoLevelId;
-
-  private final String infoLevelName;
-
-  private SchemaInfoLevel(final int infoLevelId, final String infoLevelName)
-  {
-    this.infoLevelId = infoLevelId;
-    this.infoLevelName = infoLevelName;
+    this.name = name;
   }
 
   /**
@@ -97,7 +52,7 @@ public final class SchemaInfoLevel
    */
   public boolean isGreaterThan(final SchemaInfoLevel infoLevel)
   {
-    return getInfoLevelId() > infoLevel.getInfoLevelId();
+    return ordinal() > infoLevel.ordinal();
   }
 
   /**
@@ -109,7 +64,7 @@ public final class SchemaInfoLevel
    */
   public boolean isGreaterThanOrEqualTo(final SchemaInfoLevel infoLevel)
   {
-    return getInfoLevelId() >= infoLevel.getInfoLevelId();
+    return ordinal() >= infoLevel.ordinal();
   }
 
   /**
@@ -120,12 +75,7 @@ public final class SchemaInfoLevel
   @Override
   public String toString()
   {
-    return infoLevelName;
-  }
-
-  private int getInfoLevelId()
-  {
-    return infoLevelId;
+    return name;
   }
 
 }

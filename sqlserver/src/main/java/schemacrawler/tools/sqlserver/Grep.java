@@ -50,6 +50,7 @@ import dbconnector.datasource.PropertiesDataSourceException;
  */
 public final class Grep
 {
+  
   private static final Logger LOGGER = Logger.getLogger(Grep.class.getName());
 
   private static final String OPTION_LOG_LEVEL = "log-level";
@@ -76,7 +77,7 @@ public final class Grep
   public static void main(final String[] args)
     throws Exception
   {
-    CommandLineUtility.checkForHelp(args, "/schemacrawler-grep-readme.txt");
+    CommandLineUtility.checkForHelp(args, "/sqlserver-grep-readme.txt");
     grep(args);
   }
 
@@ -89,9 +90,8 @@ public final class Grep
                                       "localhost"));
     parser
       .addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_PORT, "1433"));
-    parser.addOption(new StringOption(Option.NO_SHORT_FORM,
-                                      OPTION_DATABASE,
-                                      null));
+    parser
+      .addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_DATABASE, ""));
     parser.addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_USER, null));
     parser.addOption(new StringOption(Option.NO_SHORT_FORM,
                                       OPTION_PASSWORD,
@@ -126,11 +126,14 @@ public final class Grep
     final String user = parser.getStringOptionValue(OPTION_USER);
     final String password = parser.getStringOptionValue(OPTION_PASSWORD);
 
-    config.setProperty(connectionName + ".host", host);
-    config.setProperty(connectionName + ".port", port);
-    config.setProperty(connectionName + ".database", database);
-    config.setProperty(connectionName + ".user", user);
-    config.setProperty(connectionName + ".password", password);
+    if (user != null && password != null)
+    {
+      config.setProperty(connectionName + ".host", host);
+      config.setProperty(connectionName + ".port", port);
+      config.setProperty(connectionName + ".database", database);
+      config.setProperty(connectionName + ".user", user);
+      config.setProperty(connectionName + ".password", password);
+    }
 
     PropertiesDataSource dataSource;
     try
@@ -164,6 +167,7 @@ public final class Grep
     final String logLevelString = parser.getStringOptionValue(OPTION_LOG_LEVEL);
     final Level logLevel = Level.parse(logLevelString
       .toUpperCase(Locale.ENGLISH));
+    Utilities.setApplicationSysOutLogHandler();
     Utilities.setApplicationLogLevel(logLevel);
 
     final PropertiesDataSource dataSource = createDataSource(parser);
@@ -189,7 +193,7 @@ public final class Grep
     final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(new Config(),
                                                                       new OutputOptions("text",
                                                                                         null),
-                                                                      SchemaTextDetailType.MAXIMUM);
+                                                                      SchemaTextDetailType.VERBOSE);
 
     final CrawlHandler formatter = new SchemaTextFormatter(schemaTextOptions,
                                                            columnInclusionRule,

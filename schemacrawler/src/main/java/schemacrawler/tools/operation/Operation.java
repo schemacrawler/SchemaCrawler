@@ -21,109 +21,39 @@
 package schemacrawler.tools.operation;
 
 
-import java.io.ObjectStreamException;
-import java.io.Serializable;
-
 /**
  * Database operations.
  */
-public final class Operation
-  implements Serializable
+public enum Operation
 {
 
   /** Count operation */
-  public static final Operation COUNT = new Operation("COUNT",
-                                                      "Row Count",
-                                                      "SELECT COUNT(*) FROM ${table}",
-                                                      "{0,choice,0#empty|0<{0,number,integer} rows}");
-
+  COUNT("COUNT", "Row Count", "SELECT COUNT(*) FROM ${table}",
+    "{0,choice,0#empty|0<{0,number,integer} rows}"),
   /** Drop operation */
-  public static final Operation DROP = new Operation("DROP",
-                                                     "Drop Table",
-                                                     "DROP ${tabletype} ${table}",
-                                                     "dropped");
-
+  DROP("DROP", "Drop Table", "DROP ${tabletype} ${table}", "dropped"),
   /** Truncate operation */
-  public static final Operation TRUNCATE = new Operation("TRUNCATE",
-                                                         "Truncate Table",
-                                                         "DELETE FROM ${table}",
-                                                         "truncated; {0,choice,0#was already empty|0<had {0,number,integer} rows}");
-
+  TRUNCATE("TRUNCATE", "Truncate Table", "DELETE FROM ${table}",
+    "truncated; {0,choice,0#was already empty|0<had {0,number,integer} rows}"),
   /** Dump operation */
-  public static final Operation DUMP = new Operation("DUMP",
-                                                     "Dump",
-                                                     "SELECT ${columns} FROM ${table} ORDER BY ${columns}",
-                                                     "");
-
+  DUMP("DUMP", "Dump", "SELECT ${columns} FROM ${table} ORDER BY ${columns}",
+    ""),
   /** Query-over operation */
-  public static final Operation QUERYOVER = new Operation("QUERYOVER",
-                                                          "",
-                                                          "Query Over Table",
-                                                          "{0,choice,0#-|0<{0,number,integer}}");
+  QUERYOVER("QUERYOVER", "", "Query Over Table",
+    "{0,choice,0#-|0<{0,number,integer}}");
 
-  private static final long serialVersionUID = -5097434654628745480L;
-
-  private static final Operation[] OPERATION_ALL = new Operation[] {
-      COUNT, DROP, TRUNCATE, DUMP, QUERYOVER
-  };
-
-  // The 4 declarations below are necessary for serialization
-  private static int nextOrdinal;
-  private static final Operation[] VALUES = OPERATION_ALL;
-
-  /**
-   * Gets the enumeration value for the query over operation.
-   * 
-   * @return Query over operation
-   */
-  public static Operation queryOverOperation()
-  {
-    return QUERYOVER;
-  }
-
-  /**
-   * Find the enumeration value corresponding to the string.
-   * 
-   * @param operationString
-   *        String value of table type
-   * @return Enumeration value
-   */
-  public static Operation valueOf(final String operationString)
-  {
-
-    Operation operation = null;
-
-    for (final Operation element: OPERATION_ALL)
-    {
-      if (element.toString().equalsIgnoreCase(operationString))
-      {
-        operation = element;
-        break;
-      }
-    }
-
-    return operation;
-
-  }
-
-  private final transient String operation;
-
-  private final transient String operationDescription;
-
-  private final transient String query;
-
-  private final transient String countMessageFormat;
-
-  private final int ordinal;
+  private final String operation;
+  private final String description;
+  private final String query;
+  private final String countMessageFormat;
 
   private Operation(final String name,
                     final String description,
                     final String query,
                     final String countMessageFormat)
   {
-    ordinal = nextOrdinal++;
     operation = name;
-    operationDescription = description;
+    this.description = description;
     this.query = query;
     this.countMessageFormat = countMessageFormat;
   }
@@ -143,9 +73,9 @@ public final class Operation
    * 
    * @return Operation description
    */
-  public String getOperationDescription()
+  public String getDescription()
   {
-    return operationDescription;
+    return description;
   }
 
   /**
@@ -156,26 +86,6 @@ public final class Operation
   public String getQuery()
   {
     return query;
-  }
-
-  /**
-   * If this operation is an aggregate operation.
-   * 
-   * @return If this operation is an aggregate operation
-   */
-  public boolean isAggregateOperation()
-  {
-    return this == COUNT;
-  }
-
-  /**
-   * If this operation is a query-over operation.
-   * 
-   * @return If this operation is a query-over operation
-   */
-  public boolean isQueryOver()
-  {
-    return getOperation().equals(QUERYOVER.getOperation());
   }
 
   /**
@@ -195,17 +105,6 @@ public final class Operation
    */
   @Override
   public String toString()
-  {
-    return operation;
-  }
-
-  Object readResolve()
-    throws ObjectStreamException
-  {
-    return VALUES[ordinal]; // Canonicalize
-  }
-
-  private String getOperation()
   {
     return operation;
   }

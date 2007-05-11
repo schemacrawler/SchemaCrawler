@@ -39,6 +39,8 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+import java.util.logging.StreamHandler;
 
 /**
  * Utility methods.
@@ -465,17 +467,35 @@ public final class Utilities
       final String loggerName = loggerNames.nextElement();
       final Logger logger = logManager.getLogger(loggerName);
       logger.setLevel(null);
+      final Handler[] handlers = logger.getHandlers();
+      for (final Handler handler: handlers)
+      {
+        handler.setLevel(logLevel);
+      }
     }
 
     final Logger rootLogger = Logger.getLogger("");
     rootLogger.setLevel(logLevel);
+  }
 
-    final Handler[] handlers = rootLogger.getHandlers();
-    for (final Handler element: handlers)
+  /**
+   * Sets the application-wide log level.
+   */
+  public static void setApplicationSysOutLogHandler()
+  {
+    final LogManager logManager = LogManager.getLogManager();
+    for (final Enumeration<String> loggerNames = logManager.getLoggerNames(); loggerNames
+      .hasMoreElements();)
     {
-      element.setLevel(logLevel);
+      final String loggerName = loggerNames.nextElement();
+      final Logger logger = logManager.getLogger(loggerName);
+      final Handler[] handlers = logger.getHandlers();
+      for (final Handler handler: handlers)
+      {
+        logger.removeHandler(handler);
+        logger.addHandler(new StreamHandler(System.out, new SimpleFormatter()));
+      }
     }
-
   }
 
   /**
