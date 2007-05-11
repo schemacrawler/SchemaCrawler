@@ -32,37 +32,17 @@ import java.io.PrintWriter;
 public class Prompter
 {
 
-  private static final class InputType
+  /**
+   * Input data types.
+   */
+  public enum InputType
   {
-
-    private final String inputType; // for debug only
-
-    private InputType(final String name)
-    {
-      inputType = name;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see Object#toString()
-     */
-    @Override
-    public String toString()
-    {
-      return inputType;
-    }
+    /** String input type. */
+    STRING,
+    /** Number input type. */
+    NUMBER;
   }
 
-  /**
-   * String input type.
-   */
-  public static final InputType STRING = new InputType("STRING");
-
-  /**
-   * Number input type.
-   */
-  public static final InputType NUMBER = new InputType("NUMBER");
   private final PrintWriter out;
 
   private final BufferedReader in;
@@ -129,12 +109,12 @@ public class Prompter
       }
 
       // test input type
-      if (type == Prompter.STRING && answer.toString().length() == 0
+      if (type == InputType.STRING && answer.toString().length() == 0
           && !allowEmptyStrings)
       {
         isValid = false;
       }
-      else if (type == Prompter.NUMBER)
+      else if (type == InputType.NUMBER)
       {
         // test that this is an number
         try
@@ -149,12 +129,12 @@ public class Prompter
 
     }
 
-    if (type == Prompter.STRING && answer.toString().length() == 0
+    if (type == InputType.STRING && answer.toString().length() == 0
         && !allowEmptyStrings)
     {
       answer = answer.toString();
     }
-    else if (type == Prompter.NUMBER)
+    else if (type == InputType.NUMBER)
     {
       // test that this is an number
       try

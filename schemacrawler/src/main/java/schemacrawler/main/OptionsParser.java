@@ -200,7 +200,7 @@ public final class OptionsParser
   {
     final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType
       .valueOf(commandString);
-    Operation operation = Operation.valueOf(commandString);
+    Operation operation = Operation.valueOf(commandString.toUpperCase());
     String query = "";
     if (schemaTextDetailType == null && operation == null)
     {
@@ -212,7 +212,7 @@ public final class OptionsParser
       }
       if (isQueryOver(query))
       {
-        operation = Operation.queryOverOperation();
+        operation = Operation.QUERYOVER;
       }
     }
 

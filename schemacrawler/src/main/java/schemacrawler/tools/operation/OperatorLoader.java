@@ -62,7 +62,7 @@ public final class OperatorLoader
     final Operation operation = options.getOperation();
     CrawlHandler handler = null;
     String query;
-    if (operation.isQueryOver())
+    if (operation == Operation.QUERYOVER)
     {
       query = options.getQuery();
     }

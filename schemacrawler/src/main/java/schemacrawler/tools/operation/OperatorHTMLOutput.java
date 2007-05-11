@@ -102,17 +102,17 @@ final class OperatorHTMLOutput
   @Override
   protected void handleStartTables()
   {
-    if (operation.isAggregateOperation())
+    if (operation == Operation.COUNT)
     {
       out.print("<table>");
-      out.println("  <caption>" + getOperation().getOperationDescription()
+      out.println("  <caption>" + getOperation().getDescription()
                   + "</caption>");
     }
   }
 
   private void handleEndTables()
   {
-    if (operation.isAggregateOperation())
+    if (operation == Operation.COUNT)
     {
       out.print("</table>");
       out.println("<p>&nbsp;</p>");

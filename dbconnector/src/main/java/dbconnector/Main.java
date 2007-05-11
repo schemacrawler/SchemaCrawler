@@ -33,6 +33,7 @@ import sf.util.CommandLineParser;
 import sf.util.CommandLineUtility;
 import sf.util.GroupedProperties;
 import sf.util.Prompter;
+import sf.util.Prompter.InputType;
 import sf.util.Utilities;
 import sf.util.CommandLineParser.BooleanOption;
 import sf.util.CommandLineParser.Option;
@@ -211,7 +212,7 @@ public final class Main
     final String driver = OPTION_DRIVER;
     param = (String) prompter.getInput(driver,
                                        cxnParams.getProperty(driver),
-                                       Prompter.STRING,
+                                       InputType.STRING,
                                        false);
     cxnParams.setProperty(connectionName + "." + driver, param);
 
@@ -219,7 +220,7 @@ public final class Main
     final String url = OPTION_URL;
     param = (String) prompter.getInput(url,
                                        cxnParams.getProperty(url),
-                                       Prompter.STRING,
+                                       InputType.STRING,
                                        false);
     cxnParams.setProperty(connectionName + "." + url, param);
 
@@ -227,7 +228,7 @@ public final class Main
     final String schema = "schema";
     param = (String) prompter.getInput(schema,
                                        cxnParams.getProperty(schema),
-                                       Prompter.STRING,
+                                       InputType.STRING,
                                        false);
     cxnParams.setProperty(connectionName + "." + schema, param);
 
@@ -235,14 +236,14 @@ public final class Main
     final String user = OPTION_USER;
     param = (String) prompter.getInput(user,
                                        cxnParams.getProperty(user),
-                                       Prompter.STRING,
+                                       InputType.STRING,
                                        false);
     cxnParams.setProperty(connectionName + "." + user, param);
 
     // prompt for password
     final String password = OPTION_PASSWORD;
     param = (String) prompter.getInput(password, cxnParams
-      .getProperty(password), Prompter.STRING, true);
+      .getProperty(password), InputType.STRING, true);
     cxnParams.setProperty(connectionName + "." + password, param);
 
     // make the user defined connection the default

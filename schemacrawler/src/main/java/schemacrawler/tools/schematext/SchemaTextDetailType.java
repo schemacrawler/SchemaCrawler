@@ -21,100 +21,28 @@
 package schemacrawler.tools.schematext;
 
 
-import java.io.ObjectStreamException;
-import java.io.Serializable;
-
 import schemacrawler.crawl.SchemaInfoLevel;
 
 /**
- * Enumeration for level of column detail.
+ * Enumeration for level of schema text output detail.
  */
-public final class SchemaTextDetailType
-  implements Serializable
+public enum SchemaTextDetailType
 {
 
-  /**
-   * No column detail.
-   */
-  public static final SchemaTextDetailType BRIEF = new SchemaTextDetailType(0,
-                                                                            "brief_schema");
+  /** No column detail. */
+  BRIEF("brief_schema"),
+  /** Basic column detail. */
+  BASIC("basic_schema"),
+  /** Verbose column detail. */
+  VERBOSE("verbose_schema"),
+  /** Maximum column detail, everything supported by SchemaCrawler. */
+  MAXIMUM("maximum_schema");
 
-  /**
-   * Basic column detail.
-   */
-  public static final SchemaTextDetailType BASIC = new SchemaTextDetailType(1,
-                                                                            "basic_schema");
+  private final String name;
 
-  /**
-   * Verbose column detail, without table and column numbers.
-   */
-  public static final SchemaTextDetailType VERBOSE = new SchemaTextDetailType(2,
-                                                                              "verbose_schema");
-
-  /**
-   * Verbose column detail, without table and column numbers.
-   */
-  public static final SchemaTextDetailType MAXIMUM = new SchemaTextDetailType(3,
-                                                                              "maximum_schema");
-
-  private static final long serialVersionUID = 6740850596238696478L;
-
-  private static final SchemaTextDetailType[] TEXT_FORMAT_TYPE_ALL = {
-      BRIEF, BASIC, VERBOSE, MAXIMUM,
-  };
-
-  // The 4 declarations below are necessary for serialization
-  private static int nextOrdinal;
-  private static final SchemaTextDetailType[] VALUES = TEXT_FORMAT_TYPE_ALL;
-
-  /**
-   * Find the enumeration value corresponding to the string.
-   * 
-   * @param type
-   *        String value of table type
-   * @return Enumeration value
-   */
-  public static SchemaTextDetailType valueOf(final String type)
+  private SchemaTextDetailType(final String name)
   {
-
-    SchemaTextDetailType columnInfoLevel = null;
-
-    for (final SchemaTextDetailType element: TEXT_FORMAT_TYPE_ALL)
-    {
-      if (element.toString().equalsIgnoreCase(type))
-      {
-        columnInfoLevel = element;
-        break;
-      }
-    }
-
-    return columnInfoLevel;
-
-  }
-
-  private final transient int id;
-
-  private final transient String name;
-
-  private final int ordinal;
-
-  private SchemaTextDetailType(final int id, final String name)
-  {
-    ordinal = nextOrdinal++;
-    this.id = id;
     this.name = name;
-  }
-
-  /**
-   * Checks if this is greater than the provided info level.
-   * 
-   * @param schemaTextDetailType
-   *        SchemaTextDetailType to check against
-   * @return Yes if this is greater
-   */
-  public boolean isGreaterThan(final SchemaTextDetailType schemaTextDetailType)
-  {
-    return id > schemaTextDetailType.id;
   }
 
   /**
@@ -126,7 +54,7 @@ public final class SchemaTextDetailType
    */
   public boolean isGreaterThanOrEqualTo(final SchemaTextDetailType schemaTextDetailType)
   {
-    return id >= schemaTextDetailType.id;
+    return ordinal() >= schemaTextDetailType.ordinal();
   }
 
   /**
@@ -136,28 +64,26 @@ public final class SchemaTextDetailType
    */
   public SchemaInfoLevel mapToInfoLevel()
   {
-
-    SchemaInfoLevel columnInfoLevel = SchemaInfoLevel.BASIC;
-
-    if (this == BRIEF)
+    SchemaInfoLevel columnInfoLevel;
+    switch (this)
     {
-      columnInfoLevel = SchemaInfoLevel.MINIMUM;
+      case BRIEF:
+        columnInfoLevel = SchemaInfoLevel.MINIMUM;
+        break;
+      case BASIC:
+        columnInfoLevel = SchemaInfoLevel.BASIC;
+        break;
+      case VERBOSE:
+        columnInfoLevel = SchemaInfoLevel.VERBOSE;
+        break;
+      case MAXIMUM:
+        columnInfoLevel = SchemaInfoLevel.MAXIMUM;
+        break;
+      default:
+        columnInfoLevel = SchemaInfoLevel.BASIC;
+        break;
     }
-    else if (this == BASIC)
-    {
-      columnInfoLevel = SchemaInfoLevel.BASIC;
-    }
-    else if (this == VERBOSE)
-    {
-      columnInfoLevel = SchemaInfoLevel.VERBOSE;
-    }
-    else if (this == MAXIMUM)
-    {
-      columnInfoLevel = SchemaInfoLevel.MAXIMUM;
-    }
-
     return columnInfoLevel;
-
   }
 
   /**
@@ -169,12 +95,6 @@ public final class SchemaTextDetailType
   public String toString()
   {
     return name;
-  }
-
-  Object readResolve()
-    throws ObjectStreamException
-  {
-    return VALUES[ordinal]; // Canonicalize
   }
 
 }
