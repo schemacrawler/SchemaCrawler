@@ -21,7 +21,10 @@
 package schemacrawler.tools.schematext;
 
 
+import java.util.EnumSet;
+
 import schemacrawler.crawl.SchemaInfoLevel;
+import schemacrawler.schema.IndexType;
 
 /**
  * Enumeration for level of schema text output detail.
@@ -38,11 +41,11 @@ public enum SchemaTextDetailType
   /** Maximum column detail, everything supported by SchemaCrawler. */
   MAXIMUM("maximum_schema");
 
-  private final String name;
+  private final String command;
 
-  private SchemaTextDetailType(final String name)
+  private SchemaTextDetailType(final String command)
   {
-    this.name = name;
+    this.command = command;
   }
 
   /**
@@ -87,6 +90,32 @@ public enum SchemaTextDetailType
   }
 
   /**
+   * Gets the enum value from the integer.
+   * 
+   * @param command
+   *        Command
+   * @return IndexType
+   */
+  public static SchemaTextDetailType fromCommand(final String command)
+  {
+    final EnumSet<SchemaTextDetailType> allOf = EnumSet
+      .allOf(SchemaTextDetailType.class);
+    for (final SchemaTextDetailType type: allOf)
+    {
+      if (type.getCommand().equals(command))
+      {
+        return type;
+      }
+    }
+    return null;
+  }
+
+  public String getCommand()
+  {
+    return command;
+  }
+
+  /**
    * {@inheritDoc}
    * 
    * @see Object#toString()
@@ -94,7 +123,7 @@ public enum SchemaTextDetailType
   @Override
   public String toString()
   {
-    return name;
+    return command;
   }
 
 }
