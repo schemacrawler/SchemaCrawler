@@ -83,10 +83,10 @@ final class DatabaseInfoRetriever
   {
     final DatabaseMetaData dbMetaData = getRetrieverConnection().getMetaData();
     final SortedMap<String, Object> dbProperties = new TreeMap<String, Object>();
-    try
+    final Method[] methods = DatabaseMetaData.class.getMethods();
+    for (final Method method: methods)
     {
-      final Method[] methods = DatabaseMetaData.class.getMethods();
-      for (final Method method: methods)
+      try
       {
         if (isDatabasePropertyMethod(method))
         {
@@ -127,18 +127,22 @@ final class DatabaseInfoRetriever
                                         "TypeScrollSensitive");
         }
       }
-    }
-    catch (final IllegalAccessException e)
-    {
-      LOGGER.log(Level.WARNING, e.getMessage(), e);
-    }
-    catch (final IllegalArgumentException e)
-    {
-      LOGGER.log(Level.WARNING, e.getMessage(), e);
-    }
-    catch (final InvocationTargetException e)
-    {
-      LOGGER.log(Level.WARNING, e.getMessage(), e);
+      catch (final IllegalAccessException e)
+      {
+        LOGGER.log(Level.WARNING, e.getMessage(), e);
+      }
+      catch (final IllegalArgumentException e)
+      {
+        LOGGER.log(Level.WARNING, e.getMessage(), e);
+      }
+      catch (final InvocationTargetException e)
+      {
+        LOGGER.log(Level.WARNING, e.getMessage(), e);
+      }
+      catch (final AbstractMethodError e)
+      {
+        LOGGER.log(Level.WARNING, e.getMessage(), e);
+      }
     }
 
     dbInfo.setProperties(dbProperties);
