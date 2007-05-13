@@ -24,7 +24,6 @@ package schemacrawler.tools.schematext;
 import java.util.EnumSet;
 
 import schemacrawler.crawl.SchemaInfoLevel;
-import schemacrawler.schema.IndexType;
 
 /**
  * Enumeration for level of schema text output detail.
