@@ -198,9 +198,24 @@ public final class OptionsParser
   private static Command parseCommand(final Config config,
                                       final String commandString)
   {
-    final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType
-      .valueOf(commandString);
-    Operation operation = Operation.valueOf(commandString.toUpperCase());
+    SchemaTextDetailType schemaTextDetailType;
+    try
+    {
+      schemaTextDetailType = SchemaTextDetailType.fromCommand(commandString);
+    }
+    catch (RuntimeException e1)
+    {
+      schemaTextDetailType = null;
+    }
+    Operation operation;
+    try
+    {
+      operation = Operation.valueOf(commandString.toUpperCase());
+    }
+    catch (IllegalArgumentException e)
+    {
+      operation = null;
+    }
     String query = "";
     if (schemaTextDetailType == null && operation == null)
     {
