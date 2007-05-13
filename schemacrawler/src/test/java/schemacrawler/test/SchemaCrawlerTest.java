@@ -113,11 +113,11 @@ public class SchemaCrawlerTest
         }, {
             "INTEGER", "VARCHAR", "VARCHAR"
         }, {
-            "INTEGER", "INTEGER", "DECIMAL"
+            "INTEGER", "INTEGER", "FLOAT"
         }, {
-            "INTEGER", "INTEGER", "INTEGER", "INTEGER", "DECIMAL"
+            "INTEGER", "INTEGER", "INTEGER", "INTEGER", "FLOAT"
         }, {
-            "INTEGER", "VARCHAR", "DECIMAL"
+            "INTEGER", "VARCHAR", "FLOAT"
         }, {
             "INTEGER", "VARCHAR"
         }
