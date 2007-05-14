@@ -24,69 +24,14 @@ package schemacrawler.crawl;
 /**
  * Enumeration for level of column detail.
  */
-public final class ColumnInfoLevel
+public enum ColumnInfoLevel
 {
 
-  /**
-   * No column detail.
-   */
-  public static final ColumnInfoLevel NONE = new ColumnInfoLevel("NONE");
-
-  /**
-   * Basic column detail.
-   */
-  public static final ColumnInfoLevel BASIC = new ColumnInfoLevel("BASIC");
-
-  /**
-   * Verbose column detail.
-   */
-  public static final ColumnInfoLevel VERBOSE = new ColumnInfoLevel("VERBOSE");
-
-  private static final ColumnInfoLevel[] COLUMN_INFO_LEVEL_ALL = {
-      NONE, BASIC, VERBOSE
-  };
-
-  /**
-   * Find the enumeration value corresponding to the string.
-   * 
-   * @param columnInfoLevelString
-   *        String value of table type
-   * @return Enumeration value
-   */
-  public static ColumnInfoLevel valueOf(final String columnInfoLevelString)
-  {
-
-    ColumnInfoLevel columnInfoLevel = null;
-
-    for (final ColumnInfoLevel element: COLUMN_INFO_LEVEL_ALL)
-    {
-      if (element.toString().equalsIgnoreCase(columnInfoLevelString))
-      {
-        columnInfoLevel = element;
-        break;
-      }
-    }
-
-    return columnInfoLevel;
-
-  }
-
-  private final String levelName;
-
-  private ColumnInfoLevel(final String name)
-  {
-    levelName = name;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return levelName;
-  }
+  /** No column detail. */
+  NONE,
+  /** Basic column detail. */
+  BASIC,
+  /** Verbose column detail. */
+  VERBOSE;
 
 }

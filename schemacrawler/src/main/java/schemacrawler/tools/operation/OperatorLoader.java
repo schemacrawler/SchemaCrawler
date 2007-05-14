@@ -73,7 +73,7 @@ public final class OperatorLoader
 
     final OutputFormat outputFormatType = options.getOutputOptions()
       .getOutputFormat();
-    if (outputFormatType == OutputFormat.HTML)
+    if (outputFormatType == OutputFormat.html)
     {
       handler = new OperatorHTMLOutput(options, query, connection, dataHandler);
     }

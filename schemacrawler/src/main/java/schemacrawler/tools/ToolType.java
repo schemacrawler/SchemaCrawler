@@ -21,85 +21,17 @@
 package schemacrawler.tools;
 
 
-import java.io.ObjectStreamException;
-import java.io.Serializable;
-
 /**
- * An enumeration wrapper around index types.
+ * An enumeration of available tools.
  */
-public final class ToolType
-  implements Serializable
+public enum ToolType
 {
 
-  /**
-   * 
-   */
-  public static final ToolType SCHEMA_TEXT = new ToolType("text");
+  /** Schema metadata to text. */
+  SCHEMA_TEXT,
+  /** Operation. */
+  OPERATION,
+  /** Data to text. */
+  DATA_TEXT;
 
-  /**
-   * 
-   */
-  public static final ToolType OPERATION = new ToolType("operation");
-  /**
-   * 
-   */
-  public static final ToolType DATA_TEXT = new ToolType("datatext");
-  private static final long serialVersionUID = 4049642278194655797L;
-
-  private static final ToolType[] TOOL_TYPE_ALL = {
-      SCHEMA_TEXT, OPERATION, DATA_TEXT,
-  };
-
-  // The 4 declarations below are necessary for serialization
-  private static int nextOrdinal;
-
-  private static final ToolType[] VALUES = TOOL_TYPE_ALL;
-
-  /**
-   * Find the enumeration value corresponding to the string.
-   * 
-   * @param toolTypeString
-   *        Value of tool type
-   * @return Enumeration value
-   */
-  public static ToolType valueOf(final String toolTypeString)
-  {
-    ToolType toolType = null;
-    for (final ToolType element: TOOL_TYPE_ALL)
-    {
-      if (element.toolType.equalsIgnoreCase(toolTypeString))
-      {
-        toolType = element;
-        break;
-      }
-    }
-    return toolType;
-  }
-
-  private final transient String toolType;
-
-  private final int ordinal;
-
-  private ToolType(final String indexType)
-  {
-    ordinal = nextOrdinal++;
-    toolType = indexType;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return toolType;
-  }
-
-  Object readResolve()
-    throws ObjectStreamException
-  {
-    return VALUES[ordinal]; // Canonicalize
-  }
 }

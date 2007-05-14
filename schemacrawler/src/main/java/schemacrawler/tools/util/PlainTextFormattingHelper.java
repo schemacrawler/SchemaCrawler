@@ -166,7 +166,7 @@ public class PlainTextFormattingHelper
                         final int maxWidth,
                         final boolean alignLeft)
   {
-    if (outputFormat == OutputFormat.CSV)
+    if (outputFormat == OutputFormat.csv)
     {
       return FormatUtils.escapeAndQuoteForExcelCsv(text);
     }
@@ -185,7 +185,7 @@ public class PlainTextFormattingHelper
 
   private String getFieldSeparator()
   {
-    if (outputFormat == OutputFormat.CSV)
+    if (outputFormat == OutputFormat.csv)
     {
       return ",";
     }

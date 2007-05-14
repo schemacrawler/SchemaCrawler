@@ -23,6 +23,8 @@ package schemacrawler.schema;
 
 import java.sql.DatabaseMetaData;
 import java.util.EnumSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * An enumeration wrapper around JDBC procedure types.
@@ -30,8 +32,8 @@ import java.util.EnumSet;
 public enum ProcedureType
 {
 
-  /** Unknown. */
-  unknown(0, "<unknown>"),
+  /** Unknown */
+  unknown(-1, "unknown"),
   /** Result unknown. */
   procedureResultUnknown(DatabaseMetaData.procedureResultUnknown,
     "result unknown"),
@@ -41,6 +43,9 @@ public enum ProcedureType
   procedureReturnsResult(DatabaseMetaData.procedureReturnsResult,
     "returns result");
 
+  private static final Logger LOGGER = Logger.getLogger(ProcedureType.class
+                                                        .getName());
+  
   /**
    * Gets the enum value from the integer.
    * 
@@ -58,7 +63,8 @@ public enum ProcedureType
         return type;
       }
     }
-    return null;
+    LOGGER.log(Level.FINE, "Unknown id " + id);
+    return unknown;
   }
 
   private final int id;

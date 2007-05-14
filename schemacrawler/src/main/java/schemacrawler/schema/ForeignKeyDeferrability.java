@@ -23,6 +23,8 @@ package schemacrawler.schema;
 
 import java.sql.DatabaseMetaData;
 import java.util.EnumSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The deferrability value for foreign keys.
@@ -30,6 +32,8 @@ import java.util.EnumSet;
 public enum ForeignKeyDeferrability
 {
 
+  /** Unknown */
+  unknown(-1, "unknown"),
   /** Initially deferred. */
   importedKeyInitiallyDeferred(DatabaseMetaData.importedKeyInitiallyDeferred,
     "initially deferred"),
@@ -39,6 +43,9 @@ public enum ForeignKeyDeferrability
   /** Not deferrable. */
   importedKeyNotDeferrable(DatabaseMetaData.importedKeyNotDeferrable,
     "not deferrable");
+
+  private static final Logger LOGGER = Logger
+    .getLogger(ForeignKeyDeferrability.class.getName());
 
   /**
    * Gets the enum value from the integer.
@@ -58,12 +65,13 @@ public enum ForeignKeyDeferrability
         return fkDeferrability;
       }
     }
-    return null;
+    LOGGER.log(Level.FINE, "Unknown id " + id);
+    return unknown;
   }
-  
+
   private final int id;
   private final String name;
-  
+
   private ForeignKeyDeferrability(final int id, final String name)
   {
     this.id = id;
