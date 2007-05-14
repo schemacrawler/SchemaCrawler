@@ -23,6 +23,8 @@ package schemacrawler.schema;
 
 import java.sql.DatabaseMetaData;
 import java.util.EnumSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * An enumeration wrapper around procedure column types.
@@ -30,8 +32,10 @@ import java.util.EnumSet;
 public enum ProcedureColumnType
 {
 
+  /** Unknown */
+  unknown(-1, "unknown"),  
   /** Unknown. */
-  procedureColumnUnknown(DatabaseMetaData.procedureColumnUnknown, "?"),
+  procedureColumnUnknown(DatabaseMetaData.procedureColumnUnknown, "unknown"),
   /** In. */
   procedureColumnIn(DatabaseMetaData.procedureColumnIn, "in"),
   /** In/ out. */
@@ -43,6 +47,9 @@ public enum ProcedureColumnType
   /** Return. */
   procedureColumnResult(DatabaseMetaData.procedureColumnResult, "result");
 
+  private static final Logger LOGGER = Logger.getLogger(ProcedureColumnType.class
+                                                        .getName());
+  
   /**
    * Gets the enum value from the integer.
    * 
@@ -61,7 +68,8 @@ public enum ProcedureColumnType
         return type;
       }
     }
-    return null;
+    LOGGER.log(Level.FINE, "Unknown id " + id);
+    return unknown;
   }
 
   private final int id;

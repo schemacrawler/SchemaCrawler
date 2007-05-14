@@ -23,6 +23,8 @@ package schemacrawler.schema;
 
 import java.sql.DatabaseMetaData;
 import java.util.EnumSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * An enumeration wrapper around index types.
@@ -30,6 +32,8 @@ import java.util.EnumSet;
 public enum IndexType
 {
 
+  /** Unknown */
+  unknown(-1, "unknown"),  
   /** Statistic. */
   tableIndexStatistic(DatabaseMetaData.tableIndexStatistic, "statistic"),
   /** Clustered. */
@@ -39,6 +43,9 @@ public enum IndexType
   /** Other. */
   tableIndexOther(DatabaseMetaData.tableIndexOther, "other");
 
+  private static final Logger LOGGER = Logger.getLogger(IndexType.class
+                                                        .getName());
+  
   /**
    * Gets the enum value from the integer.
    * 
@@ -56,7 +63,8 @@ public enum IndexType
         return type;
       }
     }
-    return null;
+    LOGGER.log(Level.FINE, "Unknown id " + id);
+    return unknown;
   }
 
   private final int id;

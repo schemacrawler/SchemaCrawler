@@ -21,92 +21,53 @@
 package schemacrawler.schema;
 
 
-import java.io.ObjectStreamException;
-import java.io.Serializable;
+import java.util.EnumSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * An enumeration wrapper around index sort sequences.
  */
-public final class IndexSortSequence
-  implements Serializable
+public enum IndexSortSequence
 {
 
-  private static final long serialVersionUID = 4048790182419837238L;
+  /** Unknown */
+  unknown("unknown"),
+  /** Ascending. */
+  ascending("A"),
+  /** Descending. */
+  descending("D");
 
-  private static final IndexSortSequence[] INDEX_SORT_SEQUENCE_ALL = {
-      new IndexSortSequence("", ""),
-      new IndexSortSequence("ascending", "A"),
-      new IndexSortSequence("descending", "D")
-  };
-
-  // The 4 declarations below are necessary for serialization
-  private static int nextOrdinal;
-  private static final IndexSortSequence[] VALUES = INDEX_SORT_SEQUENCE_ALL;
-
-  /**
-   * Value of the enumeration from the code.
-   * 
-   * @param sortSequenceCode
-   *        Code
-   * @return Enumeration value
-   */
-  public static IndexSortSequence valueOf(final String sortSequenceCode)
-  {
-    IndexSortSequence indexSortSequence = INDEX_SORT_SEQUENCE_ALL[0];
-    for (final IndexSortSequence element: INDEX_SORT_SEQUENCE_ALL)
-    {
-      if (element.getIndexSortSequence().equalsIgnoreCase(sortSequenceCode))
-      {
-        indexSortSequence = element;
-        break;
-      }
-    }
-    return indexSortSequence;
-  }
+  private static final Logger LOGGER = Logger.getLogger(IndexSortSequence.class
+    .getName());
 
   /**
    * Find the enumeration value corresponding to the string.
    * 
-   * @param sortSequenceCode
-   *        String value of sort sequence
+   * @param code
+   *        Sort sequence code.
    * @return Enumeration value
    */
-  public static IndexSortSequence valueOfFromCode(final String sortSequenceCode)
+  public static IndexSortSequence valueOfFromCode(final String code)
   {
-    IndexSortSequence indexSortSequence = INDEX_SORT_SEQUENCE_ALL[0];
-    for (final IndexSortSequence element: INDEX_SORT_SEQUENCE_ALL)
+    final EnumSet<IndexSortSequence> allOf = EnumSet
+      .allOf(IndexSortSequence.class);
+    for (final IndexSortSequence type: allOf)
     {
-      if (element.getIndexSortSequenceCode().equalsIgnoreCase(sortSequenceCode))
+      if (type.getCode().equalsIgnoreCase(code))
       {
-        indexSortSequence = element;
-        break;
+        return type;
       }
     }
-    return indexSortSequence;
+    LOGGER.log(Level.FINE, "Unknown code  " + code);
+    return unknown;
   }
 
-  private final transient String indexSortSequence;
+  private final String code;
 
-  private final transient String indexSortSequenceCode;
-
-  private final int ordinal;
-
-  private IndexSortSequence(final String indexSortSequence,
-                            final String indexSortSequenceCode)
+  private IndexSortSequence(final String code)
   {
-    ordinal = nextOrdinal++;
-    this.indexSortSequence = indexSortSequence;
-    this.indexSortSequenceCode = indexSortSequenceCode;
-  }
-
-  /**
-   * Index sort sequence name.
-   * 
-   * @return Index sort sequence name
-   */
-  public String getIndexSortSequence()
-  {
-    return indexSortSequence;
+    this.code = code;
   }
 
   /**
@@ -114,25 +75,9 @@ public final class IndexSortSequence
    * 
    * @return Index sort sequence code
    */
-  public String getIndexSortSequenceCode()
+  public String getCode()
   {
-    return indexSortSequenceCode;
+    return code;
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return indexSortSequence;
-  }
-
-  Object readResolve()
-    throws ObjectStreamException
-  {
-    return VALUES[ordinal]; // Canonicalize
-  }
 }

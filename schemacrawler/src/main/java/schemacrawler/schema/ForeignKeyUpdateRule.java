@@ -23,6 +23,8 @@ package schemacrawler.schema;
 
 import java.sql.DatabaseMetaData;
 import java.util.EnumSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Foreign key update and delete rules.
@@ -30,6 +32,8 @@ import java.util.EnumSet;
 public enum ForeignKeyUpdateRule
 {
 
+  /** Unknown */
+  unknown(-1, "unknown"),  
   /** No action. */
   importedKeyNoAction(DatabaseMetaData.importedKeyNoAction, "no action"),
   /** Cascade. */
@@ -41,6 +45,9 @@ public enum ForeignKeyUpdateRule
   /** Restrict. */
   importedKeyRestrict(DatabaseMetaData.importedKeyRestrict, "restrict");
 
+  private static final Logger LOGGER = Logger.getLogger(ForeignKeyUpdateRule.class
+                                                        .getName());
+  
   private final String name;
   private final int id;
 
@@ -79,7 +86,8 @@ public enum ForeignKeyUpdateRule
         return type;
       }
     }
-    return null;
+    LOGGER.log(Level.FINE, "Unknown id " + id);
+    return unknown;
   }
 
   /**

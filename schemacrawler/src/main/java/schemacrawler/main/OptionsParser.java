@@ -122,7 +122,7 @@ public final class OptionsParser
       .addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_COMMAND, ""));
     parser.addOption(new StringOption(Option.NO_SHORT_FORM,
                                       OPTION_OUTPUT_FORMAT,
-                                      OutputFormat.TEXT.toString()));
+                                      OutputFormat.text.toString()));
     parser.addOption(new StringOption(Option.NO_SHORT_FORM,
                                       OPTION_OUTPUT_FILE,
                                       ""));

@@ -53,7 +53,7 @@ public final class SchemaTextFormatterLoader
     CrawlHandler handler = null;
     final OutputOptions outputOptions = options.getOutputOptions();
     final OutputFormat outputFormatType = outputOptions.getOutputFormat();
-    if (outputFormatType == OutputFormat.HTML)
+    if (outputFormatType == OutputFormat.html)
     {
       handler = new SchemaHTMLFormatter(options);
     }

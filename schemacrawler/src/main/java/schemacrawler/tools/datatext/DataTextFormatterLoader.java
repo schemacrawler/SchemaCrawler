@@ -23,7 +23,6 @@ package schemacrawler.tools.datatext;
 
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.execute.DataHandler;
-import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
 
 /**
@@ -53,18 +52,17 @@ public final class DataTextFormatterLoader
 
     DataHandler handler = null;
     final OutputOptions outputOptions = options.getOutputOptions();
-    final OutputFormat outputFormatType = outputOptions.getOutputFormat();
-    if (outputFormatType == OutputFormat.TEXT)
+    switch (outputOptions.getOutputFormat())
     {
-      handler = new DataPlainTextFormatter(options);
-    }
-    else if (outputFormatType == OutputFormat.HTML)
-    {
-      handler = new DataHTMLFormatter(options);
-    }
-    else if (outputFormatType == OutputFormat.CSV)
-    {
-      handler = new DataCSVFormatter(options);
+      case text:
+        handler = new DataPlainTextFormatter(options);
+        break;
+      case html:
+        handler = new DataHTMLFormatter(options);
+        break;
+      case csv:
+        handler = new DataCSVFormatter(options);
+        break;
     }
 
     return handler;

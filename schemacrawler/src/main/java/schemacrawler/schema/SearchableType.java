@@ -23,6 +23,8 @@ package schemacrawler.schema;
 
 import java.sql.DatabaseMetaData;
 import java.util.EnumSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * An enumeration wrapper around JDBC procedure types.
@@ -30,6 +32,8 @@ import java.util.EnumSet;
 public enum SearchableType
 {
 
+  /** Unknown */
+  unknown(-1, "unknown"),
   /** Not searchable. */
   typePredNone(DatabaseMetaData.typePredNone, "not searchable"),
   /** Only searchable with where .. like. */
@@ -40,6 +44,9 @@ public enum SearchableType
     "searchable except with where .. like"),
   /** Searchable. */
   typeSearchable(DatabaseMetaData.typeSearchable, "searchable");
+
+  private static final Logger LOGGER = Logger.getLogger(SearchableType.class
+    .getName());
 
   /**
    * Gets the enum value from the integer.
@@ -58,7 +65,8 @@ public enum SearchableType
         return type;
       }
     }
-    return null;
+    LOGGER.log(Level.FINE, "Unknown id " + id);
+    return unknown;
   }
 
   private final int id;
