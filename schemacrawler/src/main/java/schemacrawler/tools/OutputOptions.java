@@ -117,7 +117,16 @@ public final class OutputOptions
    */
   public OutputFormat getOutputFormat()
   {
-    return OutputFormat.valueOf(outputFormatValue);
+    OutputFormat outputFormat;
+    try
+    {
+      outputFormat = OutputFormat.valueOf(outputFormatValue);
+    }
+    catch (IllegalArgumentException e)
+    {
+      outputFormat = OutputFormat.other;
+    }
+    return outputFormat;
   }
 
   /**
