@@ -141,8 +141,7 @@ final class TableRetriever
         final boolean uniqueIndex = !results.getBoolean("NON_UNIQUE");
         final int type = results.getInt("TYPE");
         final int ordinalPosition = results.getInt(ORDINAL_POSITION);
-        final String sortSequence = results.getString("ASC_OR_DESC")
-          .toUpperCase();
+        final String sortSequence = results.getString("ASC_OR_DESC");
         final int cardinality = results.getInt("CARDINALITY");
         final int pages = results.getInt("PAGES");
 
