@@ -74,7 +74,7 @@ class MutableView
   @Override
   public TableType getType()
   {
-    return TableType.VIEW;
+    return TableType.view;
   }
 
   /**
@@ -98,7 +98,7 @@ class MutableView
   @Override
   void setType(final TableType type)
   {
-    if (type != TableType.VIEW)
+    if (type != TableType.view)
     {
       throw new UnsupportedOperationException("Cannot reset view type");
     }

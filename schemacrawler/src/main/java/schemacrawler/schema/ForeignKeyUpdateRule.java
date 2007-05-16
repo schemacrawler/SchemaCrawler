@@ -33,7 +33,7 @@ public enum ForeignKeyUpdateRule
 {
 
   /** Unknown */
-  unknown(-1, "unknown"),  
+  unknown(-1, "unknown"),
   /** No action. */
   importedKeyNoAction(DatabaseMetaData.importedKeyNoAction, "no action"),
   /** Cascade. */
@@ -45,10 +45,33 @@ public enum ForeignKeyUpdateRule
   /** Restrict. */
   importedKeyRestrict(DatabaseMetaData.importedKeyRestrict, "restrict");
 
-  private static final Logger LOGGER = Logger.getLogger(ForeignKeyUpdateRule.class
-                                                        .getName());
-  
+  private static final Logger LOGGER = Logger
+    .getLogger(ForeignKeyUpdateRule.class.getName());
+
+  /**
+   * Gets the enum value from the integer.
+   * 
+   * @param id
+   *        Id of the integer
+   * @return ForeignKeyUpdateRule
+   */
+  public static ForeignKeyUpdateRule valueOf(final int id)
+  {
+    final EnumSet<ForeignKeyUpdateRule> allOf = EnumSet
+      .allOf(ForeignKeyUpdateRule.class);
+    for (final ForeignKeyUpdateRule type: allOf)
+    {
+      if (type.getId() == id)
+      {
+        return type;
+      }
+    }
+    LOGGER.log(Level.FINE, "Unknown id " + id);
+    return unknown;
+  }
+
   private final String name;
+
   private final int id;
 
   private ForeignKeyUpdateRule(final int foreignKeyUpdateRuleId,
@@ -66,28 +89,6 @@ public enum ForeignKeyUpdateRule
   public int getId()
   {
     return id;
-  }
-
-  /**
-   * Gets the enum value from the integer.
-   * 
-   * @param id
-   *        Id of the integer
-   * @return ForeignKeyUpdateRule
-   */
-  public static ForeignKeyUpdateRule valueOf(int id)
-  {
-    EnumSet<ForeignKeyUpdateRule> allOf = EnumSet
-      .allOf(ForeignKeyUpdateRule.class);
-    for (ForeignKeyUpdateRule type: allOf)
-    {
-      if (type.getId() == id)
-      {
-        return type;
-      }
-    }
-    LOGGER.log(Level.FINE, "Unknown id " + id);
-    return unknown;
   }
 
   /**

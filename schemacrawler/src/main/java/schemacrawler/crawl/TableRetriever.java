@@ -141,7 +141,8 @@ final class TableRetriever
         final boolean uniqueIndex = !results.getBoolean("NON_UNIQUE");
         final int type = results.getInt("TYPE");
         final int ordinalPosition = results.getInt(ORDINAL_POSITION);
-        final String sortSequence = results.getString("ASC_OR_DESC");
+        final String sortSequence = results.getString("ASC_OR_DESC")
+          .toUpperCase();
         final int cardinality = results.getInt("CARDINALITY");
         final int pages = results.getInt("PAGES");
 
@@ -450,13 +451,13 @@ final class TableRetriever
         final String tableName = results.getString(TABLE_NAME);
         LOGGER.log(Level.FINEST, "Retrieving table: " + tableName);
         final TableType tableType = TableType.valueOf(results
-          .getString("TABLE_TYPE"));
+          .getString("TABLE_TYPE").toLowerCase());
         final String remarks = results.getString(REMARKS);
 
         if (tableInclusionRule.include(tableName))
         {
           final MutableTable table;
-          if (tableType.isView())
+          if (tableType == TableType.view)
           {
             table = new MutableView(catalog, schema, tableName);
           }

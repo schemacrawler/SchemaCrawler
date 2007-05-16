@@ -21,7 +21,6 @@
 package schemacrawler.main;
 
 
-import java.util.Locale;
 import java.util.logging.Level;
 
 import schemacrawler.crawl.SchemaCrawlerOptions;
@@ -189,7 +188,7 @@ public final class Options
 
   void setLogLevel(final String logLevelString)
   {
-    logLevel = Level.parse(logLevelString.toUpperCase(Locale.ENGLISH));
+    logLevel = Level.parse(logLevelString.toUpperCase());
   }
 
 }

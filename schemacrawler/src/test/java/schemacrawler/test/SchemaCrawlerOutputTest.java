@@ -28,7 +28,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Logger;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -62,10 +61,14 @@ import dbconnector.test.TestUtility;
 public class SchemaCrawlerOutputTest
 {
 
-  private static final Logger LOGGER = Logger
-    .getLogger(SchemaCrawlerOutputTest.class.getName());
-
   private static TestUtility testUtility = new TestUtility();
+
+  @AfterClass
+  public static void afterAllTests()
+    throws PropertiesDataSourceException, ClassNotFoundException
+  {
+    testUtility.shutdownDatabase();
+  }
 
   @BeforeClass
   public static void beforeAllTests()
@@ -73,13 +76,6 @@ public class SchemaCrawlerOutputTest
   {
     testUtility.setApplicationLogLevel();
     testUtility.createMemoryDatabase();
-  }
-
-  @AfterClass
-  public static void afterAllTests()
-    throws PropertiesDataSourceException, ClassNotFoundException
-  {
-    testUtility.shutdownDatabase();
   }
 
   @Test
@@ -95,7 +91,7 @@ public class SchemaCrawlerOutputTest
     final DataTextFormatOptions textFormatOptions = new DataTextFormatOptions(new Config(),
                                                                               outputOptions);
     final OperatorOptions operatorOptions = new OperatorOptions(outputOptions,
-                                                                Operation.COUNT,
+                                                                Operation.count,
                                                                 null);
 
     final DataHandler dataHandler = DataTextFormatterLoader
@@ -133,7 +129,7 @@ public class SchemaCrawlerOutputTest
     outputOptions.setNoFooter(false);
     outputOptions.setNoInfo(false);
     final OperatorOptions operatorOptions = new OperatorOptions(outputOptions,
-                                                                Operation.COUNT,
+                                                                Operation.count,
                                                                 null);
 
     final CrawlHandler formatter = OperatorLoader.load(operatorOptions,
@@ -192,7 +188,7 @@ public class SchemaCrawlerOutputTest
     final DataTextFormatOptions textFormatOptions = new DataTextFormatOptions(new Config(),
                                                                               outputOptions);
     final OperatorOptions operatorOptions = new OperatorOptions(outputOptions,
-                                                                Operation.DUMP,
+                                                                Operation.dump,
                                                                 null);
 
     final DataHandler dataHandler = DataTextFormatterLoader
@@ -268,6 +264,7 @@ public class SchemaCrawlerOutputTest
     validator.assertIsValid();
   }
 
+  @SuppressWarnings("boxing")
   @Test
   public void tableCountFromPlainTextFormatter()
     throws IOException, SchemaCrawlerException

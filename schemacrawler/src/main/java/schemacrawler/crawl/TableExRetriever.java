@@ -288,7 +288,7 @@ final class TableExRetriever
                                  + triggerName);
 
         final EventManipulationType eventManipulationType = EventManipulationType
-          .valueOf(results.getString("EVENT_MANIPULATION"));
+          .valueOf(results.getString("EVENT_MANIPULATION").toLowerCase());
 
         // final String eventObjectCatalog = results
         // .getString("EVENT_OBJECT_CATALOG");
@@ -308,9 +308,9 @@ final class TableExRetriever
         final String actionCondition = results.getString("ACTION_CONDITION");
         final String actionStatement = results.getString("ACTION_STATEMENT");
         final ActionOrientationType actionOrientation = ActionOrientationType
-          .valueOf(results.getString("ACTION_ORIENTATION"));
+          .valueOf(results.getString("ACTION_ORIENTATION").toLowerCase());
         final ConditionTimingType conditionTiming = ConditionTimingType
-          .valueOf(results.getString("CONDITION_TIMING"));
+          .valueOfFromValue(results.getString("CONDITION_TIMING").toLowerCase());
 
         final MutableTrigger trigger = new MutableTrigger(triggerName, table);
         trigger.setEventManipulationType(eventManipulationType);
@@ -376,7 +376,7 @@ final class TableExRetriever
         LOGGER.log(Level.FINEST, "Retrieving view information for " + viewName);
         String definition = results.getString("VIEW_DEFINITION");
         final CheckOptionType checkOption = CheckOptionType.valueOf(results
-          .getString("CHECK_OPTION"));
+          .getString("CHECK_OPTION").toLowerCase());
         final boolean updatable = Utilities.parseBoolean(results
           .getString("IS_UPDATABLE"));
 

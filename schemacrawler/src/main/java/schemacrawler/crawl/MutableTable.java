@@ -59,6 +59,8 @@ class MutableTable
                final String name)
   {
     super(catalogName, schemaName, name);
+    // Default values
+    type = TableType.unknown;
   }
 
   /**

@@ -28,29 +28,12 @@ public enum EventManipulationType
 {
 
   /** Unknown */
-  UNKNOWN("unknown"),
+  unknown,
   /** Insert */
-  INSERT("INSERT"),
+  insert,
   /** Delete */
-  DELETE("DELETE"),
+  delete,
   /** Update */
-  UPDATE("UPDATE");
+  update;
 
-  private final String name;
-
-  private EventManipulationType(final String typeName)
-  {
-    name = typeName;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Enum#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return name;
-  }
 }

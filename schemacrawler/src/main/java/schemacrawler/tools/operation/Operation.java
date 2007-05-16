@@ -28,31 +28,26 @@ public enum Operation
 {
 
   /** Count operation */
-  COUNT("COUNT", "Row Count", "SELECT COUNT(*) FROM ${table}",
+  count("Row Count", "SELECT COUNT(*) FROM ${table}",
     "{0,choice,0#empty|0<{0,number,integer} rows}"),
   /** Drop operation */
-  DROP("DROP", "Drop Table", "DROP ${tabletype} ${table}", "dropped"),
+  drop("Drop Table", "DROP ${tabletype} ${table}", "dropped"),
   /** Truncate operation */
-  TRUNCATE("TRUNCATE", "Truncate Table", "DELETE FROM ${table}",
+  truncate("Truncate Table", "DELETE FROM ${table}",
     "truncated; {0,choice,0#was already empty|0<had {0,number,integer} rows}"),
   /** Dump operation */
-  DUMP("DUMP", "Dump", "SELECT ${columns} FROM ${table} ORDER BY ${columns}",
-    ""),
+  dump("Dump", "SELECT ${columns} FROM ${table} ORDER BY ${columns}", ""),
   /** Query-over operation */
-  QUERYOVER("QUERYOVER", "", "Query Over Table",
-    "{0,choice,0#-|0<{0,number,integer}}");
+  queryover("", "Query Over Table", "{0,choice,0#-|0<{0,number,integer}}");
 
-  private final String operation;
   private final String description;
   private final String query;
   private final String countMessageFormat;
 
-  private Operation(final String name,
-                    final String description,
+  private Operation(final String description,
                     final String query,
                     final String countMessageFormat)
   {
-    operation = name;
     this.description = description;
     this.query = query;
     this.countMessageFormat = countMessageFormat;
@@ -95,18 +90,7 @@ public enum Operation
    */
   public boolean isSelectOperation()
   {
-    return this == QUERYOVER || this == DUMP || this == COUNT;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return operation;
+    return this == queryover || this == dump || this == count;
   }
 
 }

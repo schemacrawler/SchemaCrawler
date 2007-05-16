@@ -102,7 +102,7 @@ final class OperatorHTMLOutput
   @Override
   protected void handleStartTables()
   {
-    if (operation == Operation.COUNT)
+    if (operation == Operation.count)
     {
       out.print("<table>");
       out.println("  <caption>" + getOperation().getDescription()
@@ -112,7 +112,7 @@ final class OperatorHTMLOutput
 
   private void handleEndTables()
   {
-    if (operation == Operation.COUNT)
+    if (operation == Operation.count)
     {
       out.print("</table>");
       out.println("<p>&nbsp;</p>");

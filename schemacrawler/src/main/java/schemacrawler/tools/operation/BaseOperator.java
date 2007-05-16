@@ -93,7 +93,7 @@ public abstract class BaseOperator
       throw new SchemaCrawlerException("Cannot perform null operation");
     }
 
-    if (dataHandler == null && !(operation == Operation.COUNT))
+    if (dataHandler == null && !(operation == Operation.count))
     {
       throw new SchemaCrawlerException("No data handler provided");
     }
@@ -129,7 +129,7 @@ public abstract class BaseOperator
     this.query = query;
     try
     {
-      if (operation == Operation.COUNT)
+      if (operation == Operation.count)
       {
         out = options.getOutputOptions().openOutputWriter();
       }
@@ -246,7 +246,8 @@ public abstract class BaseOperator
    * 
    * @see CrawlHandler#handle(Procedure)
    */
-  public final void handle(final Procedure procedure)
+  public final void handle(@SuppressWarnings("unused")
+  final Procedure procedure)
   {
   }
 
@@ -275,7 +276,7 @@ public abstract class BaseOperator
       if (hasResults)
       {
         results = statement.getResultSet();
-        if (operation == Operation.COUNT)
+        if (operation == Operation.count)
         {
           handleAggregateOperationForTable(table, results);
         }

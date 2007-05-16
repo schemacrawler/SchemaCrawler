@@ -52,7 +52,8 @@ final class DataCSVFormatter
    *        Column data.
    */
   @Override
-  public void handleRow(final String[] columnNames, final String[] columnData)
+  public void handleRow(@SuppressWarnings("unused")
+  final String[] columnNames, final String[] columnData)
   {
     printRowCsv(columnData);
     out.flush();

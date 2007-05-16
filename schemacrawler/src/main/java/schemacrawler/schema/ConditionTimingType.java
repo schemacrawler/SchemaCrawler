@@ -21,6 +21,10 @@
 package schemacrawler.schema;
 
 
+import java.util.EnumSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Constraint type.
  */
@@ -28,29 +32,54 @@ public enum ConditionTimingType
 {
 
   /** Unknown */
-  UNKNOWN("unknown"),
+  unknown("unknown"),
   /** Before */
-  BEFORE("BEFORE"),
+  before("BEFORE"),
   /** Instead of */
-  INSTEAD_OF("INSTEAD OF"),
+  instead_of("INSTEAD OF"),
   /** After */
-  AFTER("AFTER");
+  after("AFTER");
 
-  private final String name;
+  private static final Logger LOGGER = Logger
+    .getLogger(ConditionTimingType.class.getName());
 
-  private ConditionTimingType(final String typeName)
+  /**
+   * Find the enumeration value corresponding to the string.
+   * 
+   * @param value
+   *        Sort sequence code.
+   * @return Enumeration value
+   */
+  public static ConditionTimingType valueOfFromValue(final String value)
   {
-    name = typeName;
+    final EnumSet<ConditionTimingType> allOf = EnumSet
+      .allOf(ConditionTimingType.class);
+    for (final ConditionTimingType type: allOf)
+    {
+      if (type.getValue().equalsIgnoreCase(value))
+      {
+        return type;
+      }
+    }
+    LOGGER.log(Level.FINE, "Unknown value  " + value);
+    return unknown;
+  }
+
+  private final String value;
+
+  private ConditionTimingType(final String value)
+  {
+    this.value = value;
   }
 
   /**
-   * {@inheritDoc}
+   * Gets the value.
    * 
-   * @see java.lang.Enum#toString()
+   * @return Value
    */
-  @Override
-  public String toString()
+  public final String getValue()
   {
-    return name;
+    return value;
   }
+
 }

@@ -203,16 +203,16 @@ public final class OptionsParser
     {
       schemaTextDetailType = SchemaTextDetailType.fromCommand(commandString);
     }
-    catch (RuntimeException e1)
+    catch (final RuntimeException e1)
     {
       schemaTextDetailType = null;
     }
     Operation operation;
     try
     {
-      operation = Operation.valueOf(commandString.toUpperCase());
+      operation = Operation.valueOf(commandString.toLowerCase());
     }
-    catch (IllegalArgumentException e)
+    catch (final IllegalArgumentException e)
     {
       operation = null;
     }
@@ -227,7 +227,7 @@ public final class OptionsParser
       }
       if (isQueryOver(query))
       {
-        operation = Operation.QUERYOVER;
+        operation = Operation.queryover;
       }
     }
 

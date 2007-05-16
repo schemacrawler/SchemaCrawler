@@ -23,7 +23,6 @@ package schemacrawler.tools.grep;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.logging.Level;
 
 import javax.sql.DataSource;
@@ -146,8 +145,7 @@ public final class ColumnsGrep
     parser.parse(args);
 
     final String logLevelString = parser.getStringOptionValue(OPTION_LOG_LEVEL);
-    final Level logLevel = Level.parse(logLevelString
-      .toUpperCase(Locale.ENGLISH));
+    final Level logLevel = Level.parse(logLevelString.toUpperCase());
     Utilities.setApplicationLogLevel(logLevel);
 
     final String cfgFile = parser.getStringOptionValue(OPTION_CONFIGFILE);
