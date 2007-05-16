@@ -71,24 +71,19 @@ final class MutableColumnDataType
 
   private boolean userDefined;
   private int type;
-  private long precision; // maximum precision, long to account for the
-  // Oracle driver
-  private String literalPrefix; // prefix used to quote a literal
-  private String literalSuffix; // suffix used to quote a literal
-  private String createParameters; // parameters used in creating the
-  // type
-  private boolean nullable; // can you use null for this type
-  private boolean caseSensitive; // is it case sensitive
-  private SearchableType searchable; // can you use "where" based on
-  // this type
-  private boolean unsigned; // is it unsigned
-  private boolean fixedPrecisionScale; // can it be a money value
-  private boolean autoIncrementable; // can it be used for
-  // auto-increment
-  private String localTypeName; // localized version of type name (may
-  // be null)
-  private int minimumScale; // minimum scale supported
-  private int maximumScale; // maximum scale supported
+  private long precision;
+  private String literalPrefix;
+  private String literalSuffix;
+  private String createParameters;
+  private boolean nullable;
+  private boolean caseSensitive;
+  private SearchableType searchable;
+  private boolean unsigned;
+  private boolean fixedPrecisionScale;
+  private boolean autoIncrementable;
+  private String localizedTypeName;
+  private int minimumScale;
+  private int maximumScale;
   private int numPrecisionRadix; // usually 2 or 10
   private ColumnDataType baseType;
   private String typeClassName;
@@ -96,6 +91,9 @@ final class MutableColumnDataType
   MutableColumnDataType(final String name)
   {
     super(name);
+    // Default values
+    searchable = SearchableType.unknown;
+    createParameters = "";
   }
 
   /**
@@ -107,7 +105,9 @@ final class MutableColumnDataType
   }
 
   /**
-   * @return Returns the createParams.
+   * Parameters used in type creation.
+   * 
+   * @return Parameters used in type creation.
    */
   public String getCreateParameters()
   {
@@ -145,7 +145,7 @@ final class MutableColumnDataType
    */
   public String getLocalTypeName()
   {
-    return localTypeName;
+    return localizedTypeName;
   }
 
   /**
@@ -378,7 +378,7 @@ final class MutableColumnDataType
    */
   void setLocalTypeName(final String localTypeName)
   {
-    this.localTypeName = localTypeName;
+    localizedTypeName = localTypeName;
   }
 
   /**
