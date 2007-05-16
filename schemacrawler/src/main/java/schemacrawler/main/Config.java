@@ -141,7 +141,7 @@ public class Config
    */
   public boolean getBooleanValue(final String propertyName)
   {
-    return Boolean.valueOf(getStringValue(propertyName, "false"));
+    return Boolean.parseBoolean(getStringValue(propertyName, "false"));
   }
 
   /**
@@ -153,7 +153,7 @@ public class Config
    */
   public boolean getIntegerValue(final String propertyName)
   {
-    return Boolean.valueOf(getStringValue(propertyName, "false"));
+    return Boolean.parseBoolean(getStringValue(propertyName, "false"));
   }
 
   /**

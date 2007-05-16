@@ -27,27 +27,11 @@ package schemacrawler.schema;
 public enum CheckOptionType
 {
 
+  /** Unknown. */
+  unknown,
   /** Check option none. */
-  NONE("none"), 
+  none,
   /** Check option cascade. */
-  CASCADE("cascade");
-
-  private final String name;
-
-  private CheckOptionType(final String typeName)
-  {
-    name = typeName;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Enum#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return name;
-  }
+  cascade;
 
 }

@@ -40,11 +40,42 @@ public enum SchemaTextDetailType
   /** Maximum column detail, everything supported by SchemaCrawler. */
   MAXIMUM("maximum_schema");
 
+  /**
+   * Gets the enum value from the integer.
+   * 
+   * @param command
+   *        Command
+   * @return IndexType
+   */
+  public static SchemaTextDetailType fromCommand(final String command)
+  {
+    final EnumSet<SchemaTextDetailType> allOf = EnumSet
+      .allOf(SchemaTextDetailType.class);
+    for (final SchemaTextDetailType type: allOf)
+    {
+      if (type.getCommand().equals(command))
+      {
+        return type;
+      }
+    }
+    return null;
+  }
+
   private final String command;
 
   private SchemaTextDetailType(final String command)
   {
     this.command = command;
+  }
+
+  /**
+   * Gets the command for this detail type.
+   * 
+   * @return Command.
+   */
+  public String getCommand()
+  {
+    return command;
   }
 
   /**
@@ -86,32 +117,6 @@ public enum SchemaTextDetailType
         break;
     }
     return columnInfoLevel;
-  }
-
-  /**
-   * Gets the enum value from the integer.
-   * 
-   * @param command
-   *        Command
-   * @return IndexType
-   */
-  public static SchemaTextDetailType fromCommand(final String command)
-  {
-    final EnumSet<SchemaTextDetailType> allOf = EnumSet
-      .allOf(SchemaTextDetailType.class);
-    for (final SchemaTextDetailType type: allOf)
-    {
-      if (type.getCommand().equals(command))
-      {
-        return type;
-      }
-    }
-    return null;
-  }
-
-  public String getCommand()
-  {
-    return command;
   }
 
   /**

@@ -28,28 +28,10 @@ public enum ActionOrientationType
 {
 
   /** Unknown */
-  UNKNOWN("unknown"),
+  unknown,
   /** Row */
-  ROW("ROW"),
+  row,
   /** Statement */
-  STATEMENT("STATEMENT");
-
-  private final String name;
-
-  private ActionOrientationType(final String typeName)
-  {
-    name = typeName;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return name;
-  }
+  statement;
 
 }

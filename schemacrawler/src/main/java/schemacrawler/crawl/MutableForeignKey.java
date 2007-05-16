@@ -49,6 +49,11 @@ class MutableForeignKey
                     final String name)
   {
     super(catalogName, schemaName, name);
+
+    // Default values
+    updateRule = ForeignKeyUpdateRule.unknown;
+    deleteRule = ForeignKeyUpdateRule.unknown;
+    deferrability = ForeignKeyDeferrability.unknown;
   }
 
   /**

@@ -44,8 +44,8 @@ public enum ProcedureType
     "returns result");
 
   private static final Logger LOGGER = Logger.getLogger(ProcedureType.class
-                                                        .getName());
-  
+    .getName());
+
   /**
    * Gets the enum value from the integer.
    * 

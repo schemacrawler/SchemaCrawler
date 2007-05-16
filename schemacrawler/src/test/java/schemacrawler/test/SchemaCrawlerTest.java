@@ -57,19 +57,19 @@ public class SchemaCrawlerTest
 
   private static TestUtility testUtility = new TestUtility();
 
+  @AfterClass
+  public static void afterAllTests()
+    throws PropertiesDataSourceException, ClassNotFoundException
+  {
+    testUtility.shutdownDatabase();
+  }
+
   @BeforeClass
   public static void beforeAllTests()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
     testUtility.setApplicationLogLevel();
     testUtility.createMemoryDatabase();
-  }
-
-  @AfterClass
-  public static void afterAllTests()
-    throws PropertiesDataSourceException, ClassNotFoundException
-  {
-    testUtility.shutdownDatabase();
   }
 
   @Test
@@ -240,7 +240,7 @@ public class SchemaCrawlerTest
                    schemaName + "." + tableNames[tableIdx],
                    table.getFullName());
       assertEquals("Table type does not match", tableTypes[tableIdx], table
-        .getType().toString());
+        .getType().toString().toUpperCase());
     }
 
   }
@@ -288,7 +288,7 @@ public class SchemaCrawlerTest
                      "CUSTOMER.SCTRIGGER",
                      trigger.getFullName());
         assertEquals("Trigger EventManipulationType does not match",
-                     EventManipulationType.DELETE,
+                     EventManipulationType.delete,
                      trigger.getEventManipulationType());
       }
     }
@@ -316,7 +316,7 @@ public class SchemaCrawlerTest
     boolean foundView = false;
     for (final Table table: tables)
     {
-      if (table.getType() == TableType.VIEW)
+      if (table.getType() == TableType.view)
       {
         foundView = true;
         final View view = (View) table;

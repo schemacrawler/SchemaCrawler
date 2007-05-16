@@ -52,6 +52,9 @@ final class MutableProcedure
                    final String name)
   {
     super(catalogName, schemaName, name);
+    // Default values
+    procedureType = ProcedureType.unknown;
+    routineBodyType = RoutineBodyType.unknown;
   }
 
   /**

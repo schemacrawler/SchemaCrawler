@@ -122,7 +122,7 @@ public final class OutputOptions
     {
       outputFormat = OutputFormat.valueOf(outputFormatValue);
     }
-    catch (IllegalArgumentException e)
+    catch (final IllegalArgumentException e)
     {
       outputFormat = OutputFormat.other;
     }

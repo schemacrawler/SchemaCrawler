@@ -100,7 +100,8 @@ public final class DataPlainTextFormatter
    * @see BaseDataTextFormatter#handleRowsHeader(String[])
    */
   @Override
-  public void handleRowsHeader(final String[] columnNames)
+  public void handleRowsHeader(@SuppressWarnings("unused")
+  final String[] columnNames)
   {
 
   }

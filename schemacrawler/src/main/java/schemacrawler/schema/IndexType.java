@@ -33,24 +33,24 @@ public enum IndexType
 {
 
   /** Unknown */
-  unknown(-1, "unknown"),  
+  unknown(-1),
   /** Statistic. */
-  tableIndexStatistic(DatabaseMetaData.tableIndexStatistic, "statistic"),
+  statistic(DatabaseMetaData.tableIndexStatistic),
   /** Clustered. */
-  tableIndexClustered(DatabaseMetaData.tableIndexClustered, "clustered"),
+  clustered(DatabaseMetaData.tableIndexClustered),
   /** Hashed. */
-  tableIndexHashed(DatabaseMetaData.tableIndexHashed, "hashed"),
+  hashed(DatabaseMetaData.tableIndexHashed),
   /** Other. */
-  tableIndexOther(DatabaseMetaData.tableIndexOther, "other");
+  other(DatabaseMetaData.tableIndexOther);
 
   private static final Logger LOGGER = Logger.getLogger(IndexType.class
-                                                        .getName());
-  
+    .getName());
+
   /**
-   * Gets the enum value from the integer.
+   * Gets the value from the id.
    * 
    * @param id
-   *        Id of the integer
+   *        Id of the enumeration.
    * @return IndexType
    */
   public static IndexType valueOf(final int id)
@@ -68,12 +68,10 @@ public enum IndexType
   }
 
   private final int id;
-  private final String name;
 
-  private IndexType(final int id, final String name)
+  private IndexType(final int id)
   {
     this.id = id;
-    this.name = name;
   }
 
   /**
@@ -86,14 +84,4 @@ public enum IndexType
     return id;
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return name;
-  }
 }

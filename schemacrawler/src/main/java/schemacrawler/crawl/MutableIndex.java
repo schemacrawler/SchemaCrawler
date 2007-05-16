@@ -47,6 +47,9 @@ class MutableIndex
   MutableIndex(final String name, final NamedObject parent)
   {
     super(name, parent);
+    // Default values
+    type = IndexType.unknown;
+    sortSequence = IndexSortSequence.unknown;
   }
 
   /**

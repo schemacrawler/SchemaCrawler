@@ -31,21 +31,21 @@ public enum TableType
 {
 
   /** Unknown */
-  UNKNOWN("UNKNOWN"),
+  unknown,
   /** Table */
-  TABLE("TABLE"),
+  table,
   /** View */
-  VIEW("VIEW"),
+  view,
   /** System table */
-  SYSTEM_TABLE("SYSTEM_TABLE"),
+  system_table,
   /** Global temporary */
-  GLOBAL_TEMPORARY("GLOBAL_TEMPORARY"),
+  global_temporary,
   /** Local temporary */
-  LOCAL_TEMPORARY("LOCAL_TEMPORARY"),
+  local_temporary,
   /** Alias */
-  ALIAS("ALIAS"),
+  alias,
   /** Synonym */
-  SYNONYM("SYNONYM");
+  synonym;
 
   /**
    * Converts an array of table types to an array of their corresponding
@@ -67,10 +67,10 @@ public enum TableType
     {
       if (tableType != null)
       {
-        tableTypeStrings.add(tableType.toString());
+        tableTypeStrings.add(tableType.toString().toUpperCase());
       }
     }
-    return tableTypeStrings.toArray(new String[0]);
+    return tableTypeStrings.toArray(new String[tableTypeStrings.size()]);
   }
 
   /**
@@ -91,46 +91,9 @@ public enum TableType
     final List<TableType> tableTypes = new ArrayList<TableType>(tableTypeStrings.length);
     for (final String tableTypeString: tableTypeStrings)
     {
-      tableTypes.add(valueOf(tableTypeString));
+      tableTypes.add(valueOf(tableTypeString.toLowerCase()));
     }
     return tableTypes.toArray(new TableType[0]);
   }
 
-  private final String name;
-
-  private TableType(final String tableType)
-  {
-    name = tableType;
-  }
-
-  /**
-   * Returns whether this table type represents a table.
-   * 
-   * @return Whether this table type represents a table
-   */
-  public boolean isTable()
-  {
-    return name.equals(TABLE.name);
-  }
-
-  /**
-   * Returns whether this table type represents a view.
-   * 
-   * @return Whether this table type represents a view
-   */
-  public boolean isView()
-  {
-    return name.equals(VIEW.name);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return name;
-  }
 }

@@ -30,6 +30,7 @@ import javax.sql.DataSource;
 
 import schemacrawler.main.Config;
 import schemacrawler.schema.Schema;
+import schemacrawler.schema.TableType;
 
 /**
  * SchemaCrawler uses database metadata to get the details about the
@@ -364,7 +365,7 @@ public final class SchemaCrawler
             retrieverExtra.retrievePrivileges(table, table.getColumnsList());
           }
           retriever.retrievePrimaryKeys(table);
-          if (!table.getType().isView()
+          if (table.getType() != TableType.view
               && infoLevel.isGreaterThanOrEqualTo(SchemaInfoLevel.VERBOSE))
           {
             retriever.retrieveForeignKeys(tables, i);

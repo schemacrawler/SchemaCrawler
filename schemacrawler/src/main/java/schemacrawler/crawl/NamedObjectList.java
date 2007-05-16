@@ -54,7 +54,7 @@ final class NamedObjectList<N extends AbstractNamedObject>
 
   /**
    * Construct an initially empty ordered list of named objects, that
-   * can be searched associately.
+   * can be searched associatively.
    * 
    * @param serializableComparator
    *        Comparator for named objects, or null for no sorting
@@ -71,6 +71,7 @@ final class NamedObjectList<N extends AbstractNamedObject>
    * 
    * @see java.lang.Object#equals(java.lang.Object)
    */
+  @SuppressWarnings("unchecked")
   @Override
   public boolean equals(final Object o)
   {

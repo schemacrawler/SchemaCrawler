@@ -33,7 +33,7 @@ public enum ProcedureColumnType
 {
 
   /** Unknown */
-  unknown(-1, "unknown"),  
+  unknown(-1, "unknown"),
   /** Unknown. */
   procedureColumnUnknown(DatabaseMetaData.procedureColumnUnknown, "unknown"),
   /** In. */
@@ -47,9 +47,9 @@ public enum ProcedureColumnType
   /** Return. */
   procedureColumnResult(DatabaseMetaData.procedureColumnResult, "result");
 
-  private static final Logger LOGGER = Logger.getLogger(ProcedureColumnType.class
-                                                        .getName());
-  
+  private static final Logger LOGGER = Logger
+    .getLogger(ProcedureColumnType.class.getName());
+
   /**
    * Gets the enum value from the integer.
    * 

@@ -26,27 +26,12 @@ package schemacrawler.schema;
  */
 public enum RoutineBodyType
 {
+
+  /** Unknown */
+  unknown,
   /** SQL. */
-  SQL("SQL"),
+  sql,
   /** External. */
-  EXTERNAL("EXTERNAL");
+  external;
 
-  private final String name;
-
-  private RoutineBodyType(final String name)
-  {
-    this.name = name;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return name;
-  }
-  
 }

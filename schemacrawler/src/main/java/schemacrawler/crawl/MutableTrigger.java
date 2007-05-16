@@ -47,6 +47,10 @@ class MutableTrigger
   MutableTrigger(final String name, final NamedObject parent)
   {
     super(name, parent);
+    // Default values
+    eventManipulationType = EventManipulationType.unknown;
+    actionOrientation = ActionOrientationType.unknown;
+    conditionTiming = ConditionTimingType.unknown;
   }
 
   /**
