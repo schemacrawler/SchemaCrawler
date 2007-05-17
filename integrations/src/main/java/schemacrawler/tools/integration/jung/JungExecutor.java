@@ -76,7 +76,7 @@ public final class JungExecutor
       .getSchemaCrawlerOptions();
     final SchemaTextOptions schemaTextOptions = options.getSchemaTextOptions();
 
-    if (toolType == ToolType.SCHEMA_TEXT)
+    if (toolType == ToolType.schema_text)
     {
       execute(schemaCrawlerOptions, schemaTextOptions, dataSource);
     }
@@ -86,7 +86,7 @@ public final class JungExecutor
       // For operations and single queries
       dataHandler = DataTextFormatterLoader.load(options
         .getDataTextFormatOptions());
-      if (toolType == ToolType.OPERATION)
+      if (toolType == ToolType.operation)
       {
         // Operations are crawl handlers that rely on
         // query execution and result set formatting
@@ -106,13 +106,13 @@ public final class JungExecutor
                                            connection,
                                            dataHandler);
       }
-      if (toolType == ToolType.DATA_TEXT)
+      if (toolType == ToolType.schema_text)
       {
         final QueryExecutor executor = new QueryExecutor(dataSource,
                                                          dataHandler);
         executor.executeSQL(options.getQuery());
       }
-      else if (toolType == ToolType.OPERATION)
+      else if (toolType == ToolType.operation)
       {
         final SchemaCrawler crawler = new SchemaCrawler(dataSource,
                                                         crawlHandler);
