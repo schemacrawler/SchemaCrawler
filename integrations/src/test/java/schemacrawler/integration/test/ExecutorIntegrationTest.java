@@ -66,7 +66,7 @@ public class ExecutorIntegrationTest
   {
     final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(null,
                                                                       outputOptions,
-                                                                      SchemaTextDetailType.BASIC);
+                                                                      SchemaTextDetailType.basic_schema);
 
     executor.execute(new SchemaCrawlerOptions(), schemaTextOptions, testUtility
       .getDataSource());

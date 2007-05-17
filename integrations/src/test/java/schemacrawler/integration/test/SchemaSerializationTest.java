@@ -71,7 +71,7 @@ public class SchemaSerializationTest
 
     final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
                                                   null,
-                                                  SchemaInfoLevel.MAXIMUM,
+                                                  SchemaInfoLevel.maximum,
                                                   options);
     final XStream xStream = new XStream();
 
