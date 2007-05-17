@@ -21,7 +21,6 @@
 package schemacrawler.schema;
 
 
-import java.util.EnumSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,9 +49,7 @@ public enum IndexSortSequence
    */
   public static IndexSortSequence valueOfFromCode(final String code)
   {
-    final EnumSet<IndexSortSequence> allOf = EnumSet
-      .allOf(IndexSortSequence.class);
-    for (final IndexSortSequence type: allOf)
+    for (final IndexSortSequence type: IndexSortSequence.values())
     {
       if (type.getCode().equalsIgnoreCase(code))
       {

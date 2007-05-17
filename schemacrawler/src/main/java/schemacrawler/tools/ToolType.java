@@ -28,10 +28,10 @@ public enum ToolType
 {
 
   /** Schema metadata to text. */
-  SCHEMA_TEXT,
+  schema_text,
   /** Operation. */
-  OPERATION,
+  operation,
   /** Data to text. */
-  DATA_TEXT;
+  data_text;
 
 }

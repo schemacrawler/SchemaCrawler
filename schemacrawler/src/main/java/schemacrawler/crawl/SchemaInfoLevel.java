@@ -28,20 +28,13 @@ public enum SchemaInfoLevel
 {
 
   /** No schema detail. */
-  MINIMUM("NONE"),
+  minimum,
   /** Basic schema detail. */
-  BASIC("BASIC"),
+  basic,
   /** Verbose schema detail. */
-  VERBOSE("VERBOSE"),
+  verbose,
   /** Maximum schema detail. */
-  MAXIMUM("MAXIMUM");
-
-  private final String name;
-
-  private SchemaInfoLevel(final String name)
-  {
-    this.name = name;
-  }
+  maximum;
 
   /**
    * Checks if this is greater than the provided info level.
@@ -52,7 +45,14 @@ public enum SchemaInfoLevel
    */
   public boolean isGreaterThan(final SchemaInfoLevel infoLevel)
   {
-    return ordinal() > infoLevel.ordinal();
+    if (infoLevel != null)
+    {
+      return ordinal() > infoLevel.ordinal();
+    }
+    else
+    {
+      return false;
+    }
   }
 
   /**
@@ -64,18 +64,14 @@ public enum SchemaInfoLevel
    */
   public boolean isGreaterThanOrEqualTo(final SchemaInfoLevel infoLevel)
   {
-    return ordinal() >= infoLevel.ordinal();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return name;
+    if (infoLevel != null)
+    {
+      return ordinal() >= infoLevel.ordinal();
+    }
+    else
+    {
+      return false;
+    }
   }
 
 }

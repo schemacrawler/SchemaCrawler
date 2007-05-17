@@ -73,7 +73,7 @@ public final class SchemaTextOptions
 
     if (schemaTextDetailType == null)
     {
-      this.schemaTextDetailType = SchemaTextDetailType.BRIEF;
+      this.schemaTextDetailType = SchemaTextDetailType.brief_schema;
     }
     else
     {

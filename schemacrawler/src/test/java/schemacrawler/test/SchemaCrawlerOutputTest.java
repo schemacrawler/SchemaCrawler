@@ -218,7 +218,7 @@ public class SchemaCrawlerOutputTest
     final SchemaTextOptions textFormatOptions = new SchemaTextOptions(new Config(),
                                                                       new OutputOptions("text",
                                                                                         outputFilename),
-                                                                      SchemaTextDetailType.BRIEF);
+                                                                      SchemaTextDetailType.brief_schema);
 
     final SchemaTextFormatter formatter = (SchemaTextFormatter) SchemaTextFormatterLoader
       .load(textFormatOptions);
@@ -251,7 +251,7 @@ public class SchemaCrawlerOutputTest
     outputOptions.setNoInfo(false);
     final SchemaTextOptions textFormatOptions = new SchemaTextOptions(new Config(),
                                                                       outputOptions,
-                                                                      SchemaTextDetailType.MAXIMUM);
+                                                                      SchemaTextDetailType.maximum_schema);
 
     final CrawlHandler formatter = SchemaTextFormatterLoader
       .load(textFormatOptions);
@@ -276,7 +276,7 @@ public class SchemaCrawlerOutputTest
     final SchemaTextOptions textFormatOptions = new SchemaTextOptions(new Config(),
                                                                       new OutputOptions("text",
                                                                                         outputFilename),
-                                                                      SchemaTextDetailType.VERBOSE);
+                                                                      SchemaTextDetailType.verbose_schema);
 
     final SchemaTextFormatter formatter = (SchemaTextFormatter) SchemaTextFormatterLoader
       .load(textFormatOptions);

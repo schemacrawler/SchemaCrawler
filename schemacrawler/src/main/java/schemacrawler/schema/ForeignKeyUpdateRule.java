@@ -22,7 +22,6 @@ package schemacrawler.schema;
 
 
 import java.sql.DatabaseMetaData;
-import java.util.EnumSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,15 +34,15 @@ public enum ForeignKeyUpdateRule
   /** Unknown */
   unknown(-1, "unknown"),
   /** No action. */
-  importedKeyNoAction(DatabaseMetaData.importedKeyNoAction, "no action"),
+  noAction(DatabaseMetaData.importedKeyNoAction, "no action"),
   /** Cascade. */
-  importedKeyCascade(DatabaseMetaData.importedKeyCascade, "cascade"),
+  cascade(DatabaseMetaData.importedKeyCascade, "cascade"),
   /** Set null. */
-  importedKeySetNull(DatabaseMetaData.importedKeySetNull, "set null"),
+  setNull(DatabaseMetaData.importedKeySetNull, "set null"),
   /** Set default. */
-  importedKeySetDefault(DatabaseMetaData.importedKeySetDefault, "set default"),
+  setDefault(DatabaseMetaData.importedKeySetDefault, "set default"),
   /** Restrict. */
-  importedKeyRestrict(DatabaseMetaData.importedKeyRestrict, "restrict");
+  restrict(DatabaseMetaData.importedKeyRestrict, "restrict");
 
   private static final Logger LOGGER = Logger
     .getLogger(ForeignKeyUpdateRule.class.getName());
@@ -57,9 +56,7 @@ public enum ForeignKeyUpdateRule
    */
   public static ForeignKeyUpdateRule valueOf(final int id)
   {
-    final EnumSet<ForeignKeyUpdateRule> allOf = EnumSet
-      .allOf(ForeignKeyUpdateRule.class);
-    for (final ForeignKeyUpdateRule type: allOf)
+    for (final ForeignKeyUpdateRule type: ForeignKeyUpdateRule.values())
     {
       if (type.getId() == id)
       {
@@ -70,15 +67,14 @@ public enum ForeignKeyUpdateRule
     return unknown;
   }
 
-  private final String name;
-
+  private final String text;
   private final int id;
 
-  private ForeignKeyUpdateRule(final int foreignKeyUpdateRuleId,
-                               final String foreignKeyUpdateRuleName)
+  private ForeignKeyUpdateRule(final int id,
+                               final String text)
   {
-    id = foreignKeyUpdateRuleId;
-    name = foreignKeyUpdateRuleName;
+    this.id = id;
+    this.text = text;
   }
 
   /**
@@ -99,7 +95,7 @@ public enum ForeignKeyUpdateRule
   @Override
   public String toString()
   {
-    return name;
+    return text;
   }
 
 }

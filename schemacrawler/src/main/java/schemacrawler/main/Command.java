@@ -56,17 +56,17 @@ final class Command
     if (schemaTextDetailType == null && operation == null)
     {
       // Single query
-      toolType = ToolType.DATA_TEXT;
+      toolType = ToolType.data_text;
     }
     else if (schemaTextDetailType != null)
     {
       // Crawl schema
-      toolType = ToolType.SCHEMA_TEXT;
+      toolType = ToolType.schema_text;
     }
     else if (operation != null)
     {
       // Operation
-      toolType = ToolType.OPERATION;
+      toolType = ToolType.operation;
     }
 
     return new Command(toolType, schemaTextDetailType, operation, query);

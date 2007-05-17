@@ -141,7 +141,13 @@ public final class OptionsParser
     final List<Options> optionCommandsList = new ArrayList<Options>();
     for (int i = 0; i < commandStrings.length; i++)
     {
-      final Command command = parseCommand(config, commandStrings[i]);
+      String commandString = commandStrings[i];
+      if (commandString == null || commandString.length() == 0)
+      {
+        continue;
+      }
+      commandString = commandString.trim().toLowerCase();
+      final Command command = parseCommand(config, commandString);
       //
       final OutputOptions outputOptions = masterOutputOptions.duplicate();
       if (i == 0)
@@ -201,7 +207,7 @@ public final class OptionsParser
     SchemaTextDetailType schemaTextDetailType;
     try
     {
-      schemaTextDetailType = SchemaTextDetailType.fromCommand(commandString);
+      schemaTextDetailType = SchemaTextDetailType.valueOf(commandString);
     }
     catch (final RuntimeException e1)
     {

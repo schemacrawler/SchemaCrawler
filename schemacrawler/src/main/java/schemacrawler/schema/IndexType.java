@@ -22,7 +22,6 @@ package schemacrawler.schema;
 
 
 import java.sql.DatabaseMetaData;
-import java.util.EnumSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -55,8 +54,7 @@ public enum IndexType
    */
   public static IndexType valueOf(final int id)
   {
-    final EnumSet<IndexType> allOf = EnumSet.allOf(IndexType.class);
-    for (final IndexType type: allOf)
+    for (final IndexType type: IndexType.values())
     {
       if (type.getId() == id)
       {

@@ -22,7 +22,6 @@ package schemacrawler.schema;
 
 
 import java.sql.DatabaseMetaData;
-import java.util.EnumSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,15 +34,15 @@ public enum SearchableType
   /** Unknown */
   unknown(-1, "unknown"),
   /** Not searchable. */
-  typePredNone(DatabaseMetaData.typePredNone, "not searchable"),
+  predNone(DatabaseMetaData.typePredNone, "not searchable"),
   /** Only searchable with where .. like. */
-  typePredChar(DatabaseMetaData.typePredChar,
+  predChar(DatabaseMetaData.typePredChar,
     "only searchable with where .. like"),
   /** Searchable except with where .. like. */
-  typePredBasic(DatabaseMetaData.typePredBasic,
+  predBasic(DatabaseMetaData.typePredBasic,
     "searchable except with where .. like"),
   /** Searchable. */
-  typeSearchable(DatabaseMetaData.typeSearchable, "searchable");
+  searchable(DatabaseMetaData.typeSearchable, "searchable");
 
   private static final Logger LOGGER = Logger.getLogger(SearchableType.class
     .getName());
@@ -57,8 +56,7 @@ public enum SearchableType
    */
   public static SearchableType valueOf(final int id)
   {
-    final EnumSet<SearchableType> allOf = EnumSet.allOf(SearchableType.class);
-    for (final SearchableType type: allOf)
+    for (final SearchableType type: SearchableType.values())
     {
       if (type.getId() == id)
       {
@@ -70,12 +68,12 @@ public enum SearchableType
   }
 
   private final int id;
-  private final String name;
+  private final String text;
 
-  private SearchableType(final int id, final String name)
+  private SearchableType(final int id, final String text)
   {
     this.id = id;
-    this.name = name;
+    this.text = text;
   }
 
   /**
@@ -96,7 +94,7 @@ public enum SearchableType
   @Override
   public String toString()
   {
-    return name;
+    return text;
   }
 
 }

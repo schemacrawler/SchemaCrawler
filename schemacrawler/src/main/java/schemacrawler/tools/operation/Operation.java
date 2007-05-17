@@ -21,6 +21,8 @@
 package schemacrawler.tools.operation;
 
 
+import java.util.EnumSet;
+
 /**
  * Database operations.
  */
@@ -90,7 +92,8 @@ public enum Operation
    */
   public boolean isSelectOperation()
   {
-    return this == queryover || this == dump || this == count;
+    EnumSet<Operation> selectOperations = EnumSet.of(queryover, dump, count);
+    return selectOperations.contains(this);
   }
 
 }
