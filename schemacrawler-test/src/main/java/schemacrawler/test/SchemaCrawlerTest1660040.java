@@ -27,7 +27,7 @@ public class SchemaCrawlerTest1660040
     // Get the schema definition
     SchemaCrawlerOptions options = new SchemaCrawlerOptions(config);
     final Schema schema = SchemaCrawler.getSchema(dataSource,
-                                                  SchemaInfoLevel.MAXIMUM,
+                                                  SchemaInfoLevel.maximum,
                                                   options);
 
     final Table[] tables = schema.getTables();

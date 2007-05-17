@@ -33,7 +33,7 @@ public class SchemaCrawlerTest1
 
     Schema schema = SchemaCrawler.getSchema(dataSource,
                                             new Config(properties),
-                                            SchemaInfoLevel.BASIC,
+                                            SchemaInfoLevel.basic,
                                             options);
     Table[] tableArray = schema.getTables();
 
