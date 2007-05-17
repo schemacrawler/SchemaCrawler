@@ -23,7 +23,6 @@ package schemacrawler.tools.sqlserver;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.crawl.CrawlHandler;
 import schemacrawler.crawl.InclusionRule;
@@ -50,8 +49,6 @@ import dbconnector.datasource.PropertiesDataSourceException;
  */
 public final class Grep
 {
-  
-  private static final Logger LOGGER = Logger.getLogger(Grep.class.getName());
 
   private static final String OPTION_LOG_LEVEL = "log-level";
 
@@ -193,7 +190,7 @@ public final class Grep
     final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(new Config(),
                                                                       new OutputOptions("text",
                                                                                         null),
-                                                                      SchemaTextDetailType.VERBOSE);
+                                                                      SchemaTextDetailType.verbose_schema);
 
     final CrawlHandler formatter = new SchemaTextFormatter(schemaTextOptions,
                                                            columnInclusionRule,
