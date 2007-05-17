@@ -251,11 +251,11 @@ public final class SchemaCrawler
     {
       final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection);
       dbInfo = retriever.retrieveDatabaseInfo();
-      if (infoLevel.isGreaterThan(SchemaInfoLevel.BASIC))
+      if (infoLevel.isGreaterThan(SchemaInfoLevel.basic))
       {
         retriever.retrieveColumnDataTypes(dbInfo);
       }
-      if (infoLevel.isGreaterThan(SchemaInfoLevel.VERBOSE))
+      if (infoLevel.isGreaterThan(SchemaInfoLevel.verbose))
       {
         retriever.retrieveAdditionalDatabaseInfo(dbInfo);
         retriever.retrieveUserDefinedColumnDataTypes(dbInfo);
@@ -285,7 +285,7 @@ public final class SchemaCrawler
       final ProcedureExRetriever retrieverExtra = new ProcedureExRetriever(retrieverConnection);
       procedures = retriever.retrieveProcedures(options
         .isShowStoredProcedures(), options.getTableInclusionRule());
-      if (infoLevel.isGreaterThanOrEqualTo(SchemaInfoLevel.VERBOSE))
+      if (infoLevel.isGreaterThanOrEqualTo(SchemaInfoLevel.verbose))
       {
         retrieverExtra.retrieveProcedureInformation(procedures);
       }
@@ -298,7 +298,7 @@ public final class SchemaCrawler
     for (int i = 0; i < procedures.size(); i++)
     {
       final MutableProcedure procedure = procedures.get(i);
-      if (infoLevel != SchemaInfoLevel.MINIMUM)
+      if (infoLevel != SchemaInfoLevel.minimum)
       {
         try
         {
@@ -334,12 +334,12 @@ public final class SchemaCrawler
       retrieverExtra = new TableExRetriever(retrieverConnection);
       tables = retriever.retrieveTables(options.getTableTypes(), options
         .getTableInclusionRule());
-      if (infoLevel.isGreaterThanOrEqualTo(SchemaInfoLevel.VERBOSE))
+      if (infoLevel.isGreaterThanOrEqualTo(SchemaInfoLevel.verbose))
       {
         retrieverExtra.retrieveCheckConstraintInformation(tables);
         retrieverExtra.retrieveViewInformation(tables);
       }
-      if (infoLevel == SchemaInfoLevel.MAXIMUM)
+      if (infoLevel == SchemaInfoLevel.maximum)
       {
         retrieverExtra.retrievePrivileges(null, tables);
         retrieverExtra.retrieveTriggerInformation(tables);
@@ -353,20 +353,20 @@ public final class SchemaCrawler
     for (int i = 0; i < tables.size(); i++)
     {
       final MutableTable table = tables.get(i);
-      if (infoLevel.isGreaterThan(SchemaInfoLevel.MINIMUM))
+      if (infoLevel.isGreaterThan(SchemaInfoLevel.minimum))
       {
         try
         {
           retriever.retrieveColumns(table,
                                     options.getColumnInclusionRule(),
                                     columnDataTypes);
-          if (infoLevel == SchemaInfoLevel.MAXIMUM)
+          if (infoLevel == SchemaInfoLevel.maximum)
           {
             retrieverExtra.retrievePrivileges(table, table.getColumnsList());
           }
           retriever.retrievePrimaryKeys(table);
           if (table.getType() != TableType.view
-              && infoLevel.isGreaterThanOrEqualTo(SchemaInfoLevel.VERBOSE))
+              && infoLevel.isGreaterThanOrEqualTo(SchemaInfoLevel.verbose))
           {
             retriever.retrieveForeignKeys(tables, i);
             retriever.retrieveIndices(table, true, false);

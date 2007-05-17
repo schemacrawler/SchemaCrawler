@@ -166,7 +166,7 @@ public final class SchemaTextFormatter
   @Override
   void handleTableEnd()
   {
-    if (getSchemaTextDetailType() != SchemaTextDetailType.BRIEF)
+    if (getSchemaTextDetailType() != SchemaTextDetailType.brief_schema)
     {
       out.println();
       out.println();

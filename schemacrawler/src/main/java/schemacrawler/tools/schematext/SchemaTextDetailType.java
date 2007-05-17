@@ -21,8 +21,6 @@
 package schemacrawler.tools.schematext;
 
 
-import java.util.EnumSet;
-
 import schemacrawler.crawl.SchemaInfoLevel;
 
 /**
@@ -32,51 +30,13 @@ public enum SchemaTextDetailType
 {
 
   /** No column detail. */
-  BRIEF("brief_schema"),
+  brief_schema,
   /** Basic column detail. */
-  BASIC("basic_schema"),
+  basic_schema,
   /** Verbose column detail. */
-  VERBOSE("verbose_schema"),
+  verbose_schema,
   /** Maximum column detail, everything supported by SchemaCrawler. */
-  MAXIMUM("maximum_schema");
-
-  /**
-   * Gets the enum value from the integer.
-   * 
-   * @param command
-   *        Command
-   * @return IndexType
-   */
-  public static SchemaTextDetailType fromCommand(final String command)
-  {
-    final EnumSet<SchemaTextDetailType> allOf = EnumSet
-      .allOf(SchemaTextDetailType.class);
-    for (final SchemaTextDetailType type: allOf)
-    {
-      if (type.getCommand().equals(command))
-      {
-        return type;
-      }
-    }
-    return null;
-  }
-
-  private final String command;
-
-  private SchemaTextDetailType(final String command)
-  {
-    this.command = command;
-  }
-
-  /**
-   * Gets the command for this detail type.
-   * 
-   * @return Command.
-   */
-  public String getCommand()
-  {
-    return command;
-  }
+  maximum_schema;
 
   /**
    * Checks if this is greater than or equal to the provided info level.
@@ -87,7 +47,14 @@ public enum SchemaTextDetailType
    */
   public boolean isGreaterThanOrEqualTo(final SchemaTextDetailType schemaTextDetailType)
   {
-    return ordinal() >= schemaTextDetailType.ordinal();
+    if (schemaTextDetailType != null)
+    {
+      return ordinal() >= schemaTextDetailType.ordinal();
+    }
+    else
+    {
+      return false;
+    }
   }
 
   /**
@@ -100,34 +67,23 @@ public enum SchemaTextDetailType
     SchemaInfoLevel columnInfoLevel;
     switch (this)
     {
-      case BRIEF:
-        columnInfoLevel = SchemaInfoLevel.MINIMUM;
+      case brief_schema:
+        columnInfoLevel = SchemaInfoLevel.minimum;
         break;
-      case BASIC:
-        columnInfoLevel = SchemaInfoLevel.BASIC;
+      case basic_schema:
+        columnInfoLevel = SchemaInfoLevel.basic;
         break;
-      case VERBOSE:
-        columnInfoLevel = SchemaInfoLevel.VERBOSE;
+      case verbose_schema:
+        columnInfoLevel = SchemaInfoLevel.verbose;
         break;
-      case MAXIMUM:
-        columnInfoLevel = SchemaInfoLevel.MAXIMUM;
+      case maximum_schema:
+        columnInfoLevel = SchemaInfoLevel.maximum;
         break;
       default:
-        columnInfoLevel = SchemaInfoLevel.BASIC;
+        columnInfoLevel = SchemaInfoLevel.basic;
         break;
     }
     return columnInfoLevel;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return command;
   }
 
 }

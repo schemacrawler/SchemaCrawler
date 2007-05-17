@@ -22,7 +22,6 @@ package schemacrawler.schema;
 
 
 import java.sql.DatabaseMetaData;
-import java.util.EnumSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,20 +31,18 @@ import java.util.logging.Logger;
 public enum ProcedureColumnType
 {
 
-  /** Unknown */
-  unknown(-1, "unknown"),
   /** Unknown. */
-  procedureColumnUnknown(DatabaseMetaData.procedureColumnUnknown, "unknown"),
+  unknown(DatabaseMetaData.procedureColumnUnknown, "unknown"),
   /** In. */
-  procedureColumnIn(DatabaseMetaData.procedureColumnIn, "in"),
+  in(DatabaseMetaData.procedureColumnIn, "in"),
   /** In/ out. */
-  procedureColumnInOut(DatabaseMetaData.procedureColumnInOut, "in/ out"),
+  inOut(DatabaseMetaData.procedureColumnInOut, "in/ out"),
   /** Out. */
-  procedureColumnOut(DatabaseMetaData.procedureColumnOut, "out"),
+  out(DatabaseMetaData.procedureColumnOut, "out"),
   /** Return. */
-  procedureColumnReturn(DatabaseMetaData.procedureColumnReturn, "return"),
+  returnValue(DatabaseMetaData.procedureColumnReturn, "return"),
   /** Return. */
-  procedureColumnResult(DatabaseMetaData.procedureColumnResult, "result");
+  result(DatabaseMetaData.procedureColumnResult, "result");
 
   private static final Logger LOGGER = Logger
     .getLogger(ProcedureColumnType.class.getName());
@@ -59,9 +56,7 @@ public enum ProcedureColumnType
    */
   public static ProcedureColumnType valueOf(final int id)
   {
-    final EnumSet<ProcedureColumnType> allOf = EnumSet
-      .allOf(ProcedureColumnType.class);
-    for (final ProcedureColumnType type: allOf)
+    for (final ProcedureColumnType type: ProcedureColumnType.values())
     {
       if (type.getId() == id)
       {
@@ -73,12 +68,12 @@ public enum ProcedureColumnType
   }
 
   private final int id;
-  private final String name;
+  private final String text;
 
-  private ProcedureColumnType(final int id, final String name)
+  private ProcedureColumnType(final int id, final String text)
   {
     this.id = id;
-    this.name = name;
+    this.text = text;
   }
 
   /**
@@ -99,6 +94,6 @@ public enum ProcedureColumnType
   @Override
   public String toString()
   {
-    return name;
+    return text;
   }
 }

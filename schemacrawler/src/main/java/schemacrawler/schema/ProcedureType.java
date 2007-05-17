@@ -22,7 +22,6 @@ package schemacrawler.schema;
 
 
 import java.sql.DatabaseMetaData;
-import java.util.EnumSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,16 +31,12 @@ import java.util.logging.Logger;
 public enum ProcedureType
 {
 
-  /** Unknown */
-  unknown(-1, "unknown"),
   /** Result unknown. */
-  procedureResultUnknown(DatabaseMetaData.procedureResultUnknown,
-    "result unknown"),
+  unknown(DatabaseMetaData.procedureResultUnknown, "result unknown"),
   /** No result. */
-  procedureNoResult(DatabaseMetaData.procedureNoResult, "no result"),
+  noResult(DatabaseMetaData.procedureNoResult, "no result"),
   /** Returns result. */
-  procedureReturnsResult(DatabaseMetaData.procedureReturnsResult,
-    "returns result");
+  returnsResult(DatabaseMetaData.procedureReturnsResult, "returns result");
 
   private static final Logger LOGGER = Logger.getLogger(ProcedureType.class
     .getName());
@@ -55,8 +50,7 @@ public enum ProcedureType
    */
   public static ProcedureType valueOf(final int id)
   {
-    final EnumSet<ProcedureType> allOf = EnumSet.allOf(ProcedureType.class);
-    for (final ProcedureType type: allOf)
+    for (final ProcedureType type: ProcedureType.values())
     {
       if (type.getId() == id)
       {
@@ -68,12 +62,12 @@ public enum ProcedureType
   }
 
   private final int id;
-  private final String name;
+  private final String text;
 
-  private ProcedureType(final int id, final String name)
+  private ProcedureType(final int id, final String text)
   {
     this.id = id;
-    this.name = name;
+    this.text = text;
   }
 
   /**
@@ -94,7 +88,7 @@ public enum ProcedureType
   @Override
   public String toString()
   {
-    return name;
+    return text;
   }
 
 }

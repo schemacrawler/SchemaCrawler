@@ -216,7 +216,7 @@ public abstract class BaseSchemaTextFormatter
 
     final SchemaTextDetailType schemaTextDetailType = options
       .getSchemaTextDetailType();
-    if (schemaTextDetailType != SchemaTextDetailType.BRIEF)
+    if (schemaTextDetailType != SchemaTextDetailType.brief_schema)
     {
 
       out.println(formattingHelper.createSeparatorRow());
@@ -246,7 +246,7 @@ public abstract class BaseSchemaTextFormatter
                                                      columnType));
       }
       if (schemaTextDetailType
-        .isGreaterThanOrEqualTo(SchemaTextDetailType.VERBOSE))
+        .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
       {
         printDefinition(procedure.getDefinition());
       }
@@ -286,25 +286,25 @@ public abstract class BaseSchemaTextFormatter
     final SchemaTextDetailType schemaTextDetailType = options
       .getSchemaTextDetailType();
 
-    if (schemaTextDetailType != SchemaTextDetailType.BRIEF)
+    if (schemaTextDetailType != SchemaTextDetailType.brief_schema)
     {
       out.println(formattingHelper.createSeparatorRow());
       printColumns(table.getColumns());
     }
 
-    if (schemaTextDetailType.isGreaterThanOrEqualTo(SchemaTextDetailType.BASIC))
+    if (schemaTextDetailType.isGreaterThanOrEqualTo(SchemaTextDetailType.basic_schema))
     {
       printPrimaryKey(table.getPrimaryKey());
     }
 
     if (schemaTextDetailType
-      .isGreaterThanOrEqualTo(SchemaTextDetailType.VERBOSE))
+      .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
     {
       printForeignKeys(table.getName(), table.getForeignKeys());
       printIndices(table.getIndices());
       printCheckConstraints(table.getCheckConstraints());
       if (schemaTextDetailType
-        .isGreaterThanOrEqualTo(SchemaTextDetailType.MAXIMUM))
+        .isGreaterThanOrEqualTo(SchemaTextDetailType.maximum_schema))
       {
         printPrivileges(table.getPrivileges());
         printTriggers(table.getTriggers());

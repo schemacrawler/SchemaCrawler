@@ -67,7 +67,7 @@ public class ToolsExecutor
     CrawlHandler crawlHandler = null;
 
     final ToolType toolType = options.getToolType();
-    if (toolType == ToolType.SCHEMA_TEXT)
+    if (toolType == ToolType.schema_text)
     {
       crawlHandler = SchemaTextFormatterLoader.load(options
         .getSchemaTextOptions());
@@ -77,7 +77,7 @@ public class ToolsExecutor
       // For operations and single queries
       dataHandler = DataTextFormatterLoader.load(options
         .getDataTextFormatOptions());
-      if (toolType == ToolType.OPERATION)
+      if (toolType == ToolType.operation)
       {
         // Operations are crawl handlers that rely on
         // query execution and result set formatting
@@ -98,7 +98,7 @@ public class ToolsExecutor
                                            dataHandler);
       }
     }
-    if (toolType == ToolType.DATA_TEXT)
+    if (toolType == ToolType.data_text)
     {
       final QueryExecutor executor = new QueryExecutor(dataSource, dataHandler);
       executor.executeSQL(options.getQuery());

@@ -87,7 +87,7 @@ public final class ColumnsGrep
     final Schema schema = SchemaCrawler
       .getSchema(dataSource,
                  additionalConnectionConfiguration,
-                 SchemaInfoLevel.BASIC,
+                 SchemaInfoLevel.basic,
                  options);
 
     final List<Table> tablesList = new ArrayList<Table>();
@@ -176,7 +176,7 @@ public final class ColumnsGrep
     final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(new Config(),
                                                                       new OutputOptions("text",
                                                                                         null),
-                                                                      SchemaTextDetailType.BASIC);
+                                                                      SchemaTextDetailType.basic_schema);
 
     final CrawlHandler formatter = new SchemaTextFormatter(schemaTextOptions,
                                                            columnInclusionRule,

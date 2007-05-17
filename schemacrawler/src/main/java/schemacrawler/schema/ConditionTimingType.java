@@ -21,7 +21,6 @@
 package schemacrawler.schema;
 
 
-import java.util.EnumSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -52,9 +51,7 @@ public enum ConditionTimingType
    */
   public static ConditionTimingType valueOfFromValue(final String value)
   {
-    final EnumSet<ConditionTimingType> allOf = EnumSet
-      .allOf(ConditionTimingType.class);
-    for (final ConditionTimingType type: allOf)
+    for (final ConditionTimingType type: ConditionTimingType.values())
     {
       if (type.getValue().equalsIgnoreCase(value))
       {
