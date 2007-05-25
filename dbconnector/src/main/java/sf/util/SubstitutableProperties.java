@@ -22,6 +22,8 @@ package sf.util;
 
 
 import java.util.Properties;
+import java.util.Set;
+import java.util.Map.Entry;
 
 /**
  * Properties map that looks like an ordinary java.util.Properties, but
@@ -39,14 +41,24 @@ public final class SubstitutableProperties
   private static final String DELIMITER_END = "}";
 
   /**
-   * Creates a new Properties object with property substituion enabled.
+   * Creates a new Properties object with property substitution enabled.
    * 
    * @param properties
    *        The source Properties object
    */
   public SubstitutableProperties(final Properties properties)
   {
-    super(properties);
+    super();
+    // Copy properties over one by one, so that there are no default
+    // properties
+    if (properties != null)
+    {
+      final Set<Entry<Object, Object>> entries = properties.entrySet();
+      for (final Entry<Object, Object> entry: entries)
+      {
+        setProperty((String) entry.getKey(), (String) entry.getValue());
+      }
+    }
   }
 
   /**

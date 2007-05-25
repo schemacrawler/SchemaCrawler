@@ -288,9 +288,9 @@ public final class PropertiesDataSource
    * 
    * @return Source properties
    */
-  public Properties getSourceProperties()
+  public Map<String, String> getSourceConfiguration()
   {
-    return new Properties(connectionParams);
+    return Utilities.propertiesMap(connectionParams);
   }
 
   /**

@@ -90,7 +90,7 @@ public final class SchemaCrawlerMain
         {
           ((ToolsExecutor) executor)
             .setAdditionalConnectionConfiguration(new Config(dataSource
-              .getSourceProperties()));
+              .getSourceConfiguration()));
         }
         executor.execute(options, dataSource);
       }

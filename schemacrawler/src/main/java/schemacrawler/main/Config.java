@@ -7,11 +7,13 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import sf.util.Utilities;
 
 /**
  * Configuration properties.
@@ -108,7 +110,7 @@ public class Config
    * @param config
    *        Config to clone
    */
-  public Config(final Config config)
+  public Config(final Map<String, String> config)
   {
     super(config);
   }
@@ -121,15 +123,7 @@ public class Config
    */
   public Config(final Properties properties)
   {
-    super();
-    if (properties != null)
-    {
-      final Set<Entry<Object, Object>> entries = properties.entrySet();
-      for (final Entry<Object, Object> entry: entries)
-      {
-        put((String) entry.getKey(), (String) entry.getValue());
-      }
-    }
+    super(Utilities.propertiesMap(properties));
   }
 
   /**

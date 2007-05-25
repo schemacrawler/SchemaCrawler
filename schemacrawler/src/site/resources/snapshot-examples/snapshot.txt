@@ -344,15 +344,15 @@ VARCHAR_IGNORECASE                                           [data type]
 CUSTOMER                                                         [table]
 ------------------------------------------------------------------------
   ID                                INTEGER, not null           
-  FIRSTNAME                         VARCHAR                     
-  LASTNAME                          VARCHAR                     
-  STREET                            VARCHAR                     
-  CITY                              VARCHAR                     
+  FIRSTNAME                         VARCHAR(255)                
+  LASTNAME                          VARCHAR(255)                
+  STREET                            VARCHAR(255)                
+  CITY                              VARCHAR(255)                
 
 SYS_PK_48                                                  [primary key]
   ID                                INTEGER, not null           
 
-SYS_FK_1                              [foreign key, on update no action]
+FK_CUSTOMER                           [foreign key, on update no action]
   ID --> INVOICE.CUSTOMERID                                     
 
 DELETE                                             [grantable privilege]
@@ -374,8 +374,8 @@ SCTRIGGER                              [trigger, before delete, per row]
 CUSTOMERLIST                                                      [view]
 ------------------------------------------------------------------------
   ID                                INTEGER                     
-  FIRSTNAME                         VARCHAR                     
-  LASTNAME                          VARCHAR                     
+  FIRSTNAME                         VARCHAR(255)                
+  LASTNAME                          VARCHAR(255)                
 
 DELETE                                             [grantable privilege]
   DBA --> SA                                                    
@@ -397,21 +397,21 @@ INVOICE                                                          [table]
 ------------------------------------------------------------------------
   ID                                INTEGER, not null           
   CUSTOMERID                        INTEGER                     
-  TOTAL                             DECIMAL(646456993, 0)       
+  TOTAL                             FLOAT(17, 0)                
 
 SYS_PK_49                                                  [primary key]
   ID                                INTEGER, not null           
 
-SYS_FK_1                              [foreign key, on update no action]
+FK_CUSTOMER                           [foreign key, on update no action]
   CUSTOMER.ID --> CUSTOMERID                                    
 
-SYS_FK_4                              [foreign key, on update no action]
+FK_ITEM_B                             [foreign key, on update no action]
   ID --> ITEM.INVOICEID                                         
 
-SYS_USER_SYS_IDX_2_9                  [non-unique ascending other index]
+INDEX_ITEM_CUSTOMER                   [non-unique ascending other index]
   CUSTOMERID                        INTEGER                     
 
-SYS_IDX_50                            [non-unique ascending other index]
+SYS_IDX_56                            [non-unique ascending other index]
   CUSTOMERID                        INTEGER                     
 
 DELETE                                             [grantable privilege]
@@ -433,28 +433,28 @@ ITEM                                                             [table]
   ITEM                              INTEGER, not null           
   PRODUCTID                         INTEGER                     
   QUANTITY                          INTEGER                     
-  COST                              DECIMAL(646456993, 0)       
+  COST                              FLOAT(17, 0)                
 
 SYS_PK_46                                                  [primary key]
   INVOICEID                         INTEGER, not null           
   ITEM                              INTEGER, not null           
 
-SYS_FK_5                              [foreign key, on update no action]
+FK_ITEM_A                             [foreign key, on update no action]
   PRODUCT.ID --> PRODUCTID                                      
 
-SYS_FK_4                              [foreign key, on update no action]
+FK_ITEM_B                             [foreign key, on update no action]
   INVOICE.ID --> INVOICEID                                      
 
-SYS_USER_SYS_IDX_6_1                  [non-unique ascending other index]
+INDEX_ITEM_INVOICE                    [non-unique ascending other index]
   INVOICEID                         INTEGER, not null           
 
-SYS_IDX_53                            [non-unique ascending other index]
+SYS_IDX_52                            [non-unique ascending other index]
   INVOICEID                         INTEGER, not null           
 
-SYS_IDX_55                            [non-unique ascending other index]
+INDEX_ITEM_PRODUCT                    [non-unique ascending other index]
   PRODUCTID                         INTEGER                     
 
-SYS_USER_SYS_IDX_8_2                  [non-unique ascending other index]
+SYS_IDX_54                            [non-unique ascending other index]
   PRODUCTID                         INTEGER                     
 
 DELETE                                             [grantable privilege]
@@ -473,13 +473,13 @@ UPDATE                                             [grantable privilege]
 PRODUCT                                                          [table]
 ------------------------------------------------------------------------
   ID                                INTEGER, not null           
-  NAME                              VARCHAR                     
-  PRICE                             DECIMAL(646456993, 0)       
+  NAME                              VARCHAR(255)                
+  PRICE                             FLOAT(17, 0)                
 
 SYS_PK_47                                                  [primary key]
   ID                                INTEGER, not null           
 
-SYS_FK_5                              [foreign key, on update no action]
+FK_ITEM_A                             [foreign key, on update no action]
   ID --> ITEM.PRODUCTID                                         
 
 DELETE                                             [grantable privilege]
@@ -498,7 +498,15 @@ UPDATE                                             [grantable privilege]
 SUPPLIER                                                         [table]
 ------------------------------------------------------------------------
   SUPPLIER_ID                       INTEGER                     
-  SUPPLIER_NAME                     VARCHAR(50)                 
+  SUPPLIER_NAME                     VARCHAR(255)                
+
+INDEX_SUPPLIER_B                      [non-unique ascending other index]
+  SUPPLIER_ID                       INTEGER                     
+  SUPPLIER_NAME                     VARCHAR(255)                
+
+INDEX_SUPPLIER_A                      [non-unique ascending other index]
+  SUPPLIER_NAME                     VARCHAR(255)                
+  SUPPLIER_ID                       INTEGER                     
 
 CHECK_UPPERCASE_SUPPLIER_NAME                         [check constraint]
   SUPPLIER.SUPPLIER_NAME=UPPER(SUPPLIER.SUPPLIER_NAME)
@@ -875,6 +883,15 @@ java.lang.Math.atan2                         [procedure, returns result]
   java.lang.Math.atan2(double,double)
 
 
+java.lang.Math.cbrt                          [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17), in           
+  @p0                               DOUBLE(8, 17), result       
+
+                                                            [definition]
+  java.lang.Math.cbrt(double)
+
+
 java.lang.Math.ceil                          [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               DOUBLE(8, 17), in           
@@ -893,6 +910,15 @@ java.lang.Math.cos                           [procedure, returns result]
   java.lang.Math.cos(double)
 
 
+java.lang.Math.cosh                          [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17), in           
+  @p0                               DOUBLE(8, 17), result       
+
+                                                            [definition]
+  java.lang.Math.cosh(double)
+
+
 java.lang.Math.exp                           [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               DOUBLE(8, 17), in           
@@ -902,6 +928,15 @@ java.lang.Math.exp                           [procedure, returns result]
   java.lang.Math.exp(double)
 
 
+java.lang.Math.expm1                         [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17), in           
+  @p0                               DOUBLE(8, 17), result       
+
+                                                            [definition]
+  java.lang.Math.expm1(double)
+
+
 java.lang.Math.floor                         [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               DOUBLE(8, 17), in           
@@ -909,6 +944,16 @@ java.lang.Math.floor                         [procedure, returns result]
 
                                                             [definition]
   java.lang.Math.floor(double)
+
+
+java.lang.Math.hypot                         [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17), in           
+  @p2                               DOUBLE(8, 17), in           
+  @p0                               DOUBLE(8, 17), result       
+
+                                                            [definition]
+  java.lang.Math.hypot(double,double)
 
 
 java.lang.Math.IEEEremainder                 [procedure, returns result]
@@ -928,6 +973,24 @@ java.lang.Math.log                           [procedure, returns result]
 
                                                             [definition]
   java.lang.Math.log(double)
+
+
+java.lang.Math.log10                         [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17), in           
+  @p0                               DOUBLE(8, 17), result       
+
+                                                            [definition]
+  java.lang.Math.log10(double)
+
+
+java.lang.Math.log1p                         [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17), in           
+  @p0                               DOUBLE(8, 17), result       
+
+                                                            [definition]
+  java.lang.Math.log1p(double)
 
 
 java.lang.Math.max                           [procedure, returns result]
@@ -986,6 +1049,15 @@ java.lang.Math.round                         [procedure, returns result]
   java.lang.Math.round(double)java.lang.Math.round(float)
 
 
+java.lang.Math.signum                        [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               FLOAT(8, 17), in            
+  @p0                               FLOAT(8, 17), result        
+
+                                                            [definition]
+  java.lang.Math.signum(double)java.lang.Math.signum(float)
+
+
 java.lang.Math.sin                           [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               DOUBLE(8, 17), in           
@@ -993,6 +1065,15 @@ java.lang.Math.sin                           [procedure, returns result]
 
                                                             [definition]
   java.lang.Math.sin(double)
+
+
+java.lang.Math.sinh                          [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17), in           
+  @p0                               DOUBLE(8, 17), result       
+
+                                                            [definition]
+  java.lang.Math.sinh(double)
 
 
 java.lang.Math.sqrt                          [procedure, returns result]
@@ -1013,6 +1094,15 @@ java.lang.Math.tan                           [procedure, returns result]
   java.lang.Math.tan(double)
 
 
+java.lang.Math.tanh                          [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17), in           
+  @p0                               DOUBLE(8, 17), result       
+
+                                                            [definition]
+  java.lang.Math.tanh(double)
+
+
 java.lang.Math.toDegrees                     [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               DOUBLE(8, 17), in           
@@ -1029,6 +1119,15 @@ java.lang.Math.toRadians                     [procedure, returns result]
 
                                                             [definition]
   java.lang.Math.toRadians(double)
+
+
+java.lang.Math.ulp                           [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               FLOAT(8, 17), in            
+  @p0                               FLOAT(8, 17), result        
+
+                                                            [definition]
+  java.lang.Math.ulp(double)java.lang.Math.ulp(float)
 
 
 LCASE                                        [procedure, returns result]
@@ -2538,203 +2637,203 @@ INVOICE
 ------------------------------------------------------------------------
 ID: 0
 CUSTOMERID: 0
-TOTAL: 2607.60
+TOTAL: 2607.6
 ------------------------------------------------------------------------
 ID: 1
 CUSTOMERID: 33
-TOTAL: 1610.70
+TOTAL: 1610.7
 ------------------------------------------------------------------------
 ID: 2
 CUSTOMERID: 23
-TOTAL: 3789.00
+TOTAL: 3789.0
 ------------------------------------------------------------------------
 ID: 3
 CUSTOMERID: 21
-TOTAL: 5974.50
+TOTAL: 5974.5
 ------------------------------------------------------------------------
 ID: 4
 CUSTOMERID: 30
-TOTAL: 1953.00
+TOTAL: 1953.0
 ------------------------------------------------------------------------
 ID: 5
 CUSTOMERID: 34
-TOTAL: 4182.90
+TOTAL: 4182.9
 ------------------------------------------------------------------------
 ID: 6
 CUSTOMERID: 19
-TOTAL: 3340.20
+TOTAL: 3340.2
 ------------------------------------------------------------------------
 ID: 7
 CUSTOMERID: 26
-TOTAL: 5328.60
+TOTAL: 5328.6
 ------------------------------------------------------------------------
 ID: 8
 CUSTOMERID: 29
-TOTAL: 2675.10
+TOTAL: 2675.1
 ------------------------------------------------------------------------
 ID: 9
 CUSTOMERID: 38
-TOTAL: 6982.20
+TOTAL: 6982.2
 ------------------------------------------------------------------------
 ID: 10
 CUSTOMERID: 24
-TOTAL: 3274.50
+TOTAL: 3274.5
 ------------------------------------------------------------------------
 ID: 11
 CUSTOMERID: 24
-TOTAL: 2532.30
+TOTAL: 2532.3
 ------------------------------------------------------------------------
 ID: 12
 CUSTOMERID: 23
-TOTAL: 4578.30
+TOTAL: 4578.3
 ------------------------------------------------------------------------
 ID: 13
 CUSTOMERID: 39
-TOTAL: 7001.70
+TOTAL: 7001.7
 ------------------------------------------------------------------------
 ID: 14
 CUSTOMERID: 35
-TOTAL: 4940.40
+TOTAL: 4940.4
 ------------------------------------------------------------------------
 ID: 15
 CUSTOMERID: 39
-TOTAL: 1027.80
+TOTAL: 1027.8
 ------------------------------------------------------------------------
 ID: 16
 CUSTOMERID: 45
-TOTAL: 3657.30
+TOTAL: 3657.3
 ------------------------------------------------------------------------
 ID: 17
 CUSTOMERID: 46
-TOTAL: 3776.40
+TOTAL: 3776.4
 ------------------------------------------------------------------------
 ID: 18
 CUSTOMERID: 4
-TOTAL: 3772.80
+TOTAL: 3772.8
 ------------------------------------------------------------------------
 ID: 19
 CUSTOMERID: 9
-TOTAL: 804.30
+TOTAL: 804.3
 ------------------------------------------------------------------------
 ID: 20
 CUSTOMERID: 19
-TOTAL: 3139.20
+TOTAL: 3139.2
 ------------------------------------------------------------------------
 ID: 21
 CUSTOMERID: 8
-TOTAL: 3740.10
+TOTAL: 3740.1
 ------------------------------------------------------------------------
 ID: 22
 CUSTOMERID: 40
-TOTAL: 2289.90
+TOTAL: 2289.9
 ------------------------------------------------------------------------
 ID: 23
 CUSTOMERID: 36
-TOTAL: 5166.60
+TOTAL: 5166.6
 ------------------------------------------------------------------------
 ID: 24
 CUSTOMERID: 15
-TOTAL: 4344.30
+TOTAL: 4344.3
 ------------------------------------------------------------------------
 ID: 25
 CUSTOMERID: 31
-TOTAL: 2054.10
+TOTAL: 2054.1
 ------------------------------------------------------------------------
 ID: 26
 CUSTOMERID: 27
-TOTAL: 4972.80
+TOTAL: 4972.8
 ------------------------------------------------------------------------
 ID: 27
 CUSTOMERID: 24
-TOTAL: 583.50
+TOTAL: 583.5
 ------------------------------------------------------------------------
 ID: 28
 CUSTOMERID: 35
-TOTAL: 1664.40
+TOTAL: 1664.4
 ------------------------------------------------------------------------
 ID: 29
 CUSTOMERID: 46
-TOTAL: 2515.50
+TOTAL: 2515.5
 ------------------------------------------------------------------------
 ID: 30
 CUSTOMERID: 13
-TOTAL: 2117.40
+TOTAL: 2117.4
 ------------------------------------------------------------------------
 ID: 31
 CUSTOMERID: 22
-TOTAL: 2715.90
+TOTAL: 2715.9
 ------------------------------------------------------------------------
 ID: 32
 CUSTOMERID: 20
-TOTAL: 1098.60
+TOTAL: 1098.6
 ------------------------------------------------------------------------
 ID: 33
 CUSTOMERID: 40
-TOTAL: 4300.20
+TOTAL: 4300.2
 ------------------------------------------------------------------------
 ID: 34
 CUSTOMERID: 33
-TOTAL: 4290.60
+TOTAL: 4290.6
 ------------------------------------------------------------------------
 ID: 35
 CUSTOMERID: 4
-TOTAL: 3102.60
+TOTAL: 3102.6
 ------------------------------------------------------------------------
 ID: 36
 CUSTOMERID: 42
-TOTAL: 3200.10
+TOTAL: 3200.1
 ------------------------------------------------------------------------
 ID: 37
 CUSTOMERID: 39
-TOTAL: 7331.10
+TOTAL: 7331.1
 ------------------------------------------------------------------------
 ID: 38
 CUSTOMERID: 46
-TOTAL: 6373.80
+TOTAL: 6373.8
 ------------------------------------------------------------------------
 ID: 39
 CUSTOMERID: 5
-TOTAL: 1311.60
+TOTAL: 1311.6
 ------------------------------------------------------------------------
 ID: 40
 CUSTOMERID: 4
-TOTAL: 5288.40
+TOTAL: 5288.4
 ------------------------------------------------------------------------
 ID: 41
 CUSTOMERID: 19
-TOTAL: 5475.60
+TOTAL: 5475.6
 ------------------------------------------------------------------------
 ID: 42
 CUSTOMERID: 38
-TOTAL: 1436.40
+TOTAL: 1436.4
 ------------------------------------------------------------------------
 ID: 43
 CUSTOMERID: 13
-TOTAL: 4827.60
+TOTAL: 4827.6
 ------------------------------------------------------------------------
 ID: 44
 CUSTOMERID: 32
-TOTAL: 3388.20
+TOTAL: 3388.2
 ------------------------------------------------------------------------
 ID: 45
 CUSTOMERID: 42
-TOTAL: 4731.00
+TOTAL: 4731.0
 ------------------------------------------------------------------------
 ID: 46
 CUSTOMERID: 24
-TOTAL: 5827.20
+TOTAL: 5827.2
 ------------------------------------------------------------------------
 ID: 47
 CUSTOMERID: 45
-TOTAL: 2320.80
+TOTAL: 2320.8
 ------------------------------------------------------------------------
 ID: 48
 CUSTOMERID: 22
-TOTAL: 3494.70
+TOTAL: 3494.7
 ------------------------------------------------------------------------
 ID: 49
 CUSTOMERID: 32
-TOTAL: 4944.30
+TOTAL: 4944.3
 ------------------------------------------------------------------------
 
 ITEM
@@ -2744,3901 +2843,3901 @@ INVOICEID: 0
 ITEM: 0
 PRODUCTID: 7
 QUANTITY: 12
-COST: 12.60
+COST: 12.6
 ------------------------------------------------------------------------
 INVOICEID: 0
 ITEM: 1
 PRODUCTID: 14
 QUANTITY: 19
-COST: 18.60
+COST: 18.6
 ------------------------------------------------------------------------
 INVOICEID: 0
 ITEM: 2
 PRODUCTID: 47
 QUANTITY: 3
-COST: 26.70
+COST: 26.7
 ------------------------------------------------------------------------
 INVOICEID: 0
 ITEM: 3
 PRODUCTID: 1
 QUANTITY: 9
-COST: 37.20
+COST: 37.2
 ------------------------------------------------------------------------
 INVOICEID: 0
 ITEM: 4
 PRODUCTID: 47
 QUANTITY: 1
-COST: 26.70
+COST: 26.7
 ------------------------------------------------------------------------
 INVOICEID: 0
 ITEM: 5
 PRODUCTID: 12
 QUANTITY: 15
-COST: 25.20
+COST: 25.2
 ------------------------------------------------------------------------
 INVOICEID: 0
 ITEM: 6
 PRODUCTID: 16
 QUANTITY: 9
-COST: 29.10
+COST: 29.1
 ------------------------------------------------------------------------
 INVOICEID: 0
 ITEM: 7
 PRODUCTID: 7
 QUANTITY: 10
-COST: 12.60
+COST: 12.6
 ------------------------------------------------------------------------
 INVOICEID: 0
 ITEM: 8
 PRODUCTID: 0
 QUANTITY: 23
-COST: 8.10
+COST: 8.1
 ------------------------------------------------------------------------
 INVOICEID: 0
 ITEM: 9
 PRODUCTID: 35
 QUANTITY: 4
-COST: 11.40
+COST: 11.4
 ------------------------------------------------------------------------
 INVOICEID: 0
 ITEM: 10
 PRODUCTID: 4
 QUANTITY: 8
-COST: 19.20
+COST: 19.2
 ------------------------------------------------------------------------
 INVOICEID: 0
 ITEM: 11
 PRODUCTID: 12
 QUANTITY: 4
-COST: 25.20
+COST: 25.2
 ------------------------------------------------------------------------
 INVOICEID: 0
 ITEM: 12
 PRODUCTID: 1
 QUANTITY: 11
-COST: 37.20
+COST: 37.2
 ------------------------------------------------------------------------
 INVOICEID: 1
 ITEM: 0
 PRODUCTID: 40
 QUANTITY: 8
-COST: 4.20
+COST: 4.2
 ------------------------------------------------------------------------
 INVOICEID: 1
 ITEM: 1
 PRODUCTID: 0
 QUANTITY: 9
-COST: 8.10
+COST: 8.1
 ------------------------------------------------------------------------
 INVOICEID: 1
 ITEM: 2
 PRODUCTID: 19
 QUANTITY: 6
-COST: 16.50
+COST: 16.5
 ------------------------------------------------------------------------
 INVOICEID: 1
 ITEM: 3
 PRODUCTID: 38
 QUANTITY: 8
-COST: 32.40
+COST: 32.4
 ------------------------------------------------------------------------
 INVOICEID: 1
 ITEM: 4
 PRODUCTID: 16
 QUANTITY: 16
-COST: 29.10
+COST: 29.1
 ------------------------------------------------------------------------
 INVOICEID: 1
 ITEM: 5
 PRODUCTID: 25
 QUANTITY: 9
-COST: 24.30
+COST: 24.3
 ------------------------------------------------------------------------
 INVOICEID: 1
 ITEM: 6
 PRODUCTID: 25
 QUANTITY: 19
-COST: 24.30
+COST: 24.3
 ------------------------------------------------------------------------
 INVOICEID: 2
 ITEM: 0
 PRODUCTID: 4
 QUANTITY: 18
-COST: 19.20
+COST: 19.2
 ------------------------------------------------------------------------
 INVOICEID: 2
 ITEM: 1
 PRODUCTID: 25
 QUANTITY: 3
-COST: 24.30
+COST: 24.3
 ------------------------------------------------------------------------
 INVOICEID: 2
 ITEM: 2
 PRODUCTID: 11
 QUANTITY: 9
-COST: 13.20
+COST: 13.2
 ------------------------------------------------------------------------
 INVOICEID: 2
 ITEM: 3
 PRODUCTID: 19
 QUANTITY: 13
-COST: 16.50
+COST: 16.5
 ------------------------------------------------------------------------
 INVOICEID: 2
 ITEM: 4
 PRODUCTID: 38
 QUANTITY: 18
-COST: 32.40
+COST: 32.4
 ------------------------------------------------------------------------
 INVOICEID: 2
 ITEM: 5
 PRODUCTID: 30
 QUANTITY: 4
-COST: 34.80
+COST: 34.8
 ------------------------------------------------------------------------
 INVOICEID: 2
 ITEM: 6
 PRODUCTID: 43
 QUANTITY: 8
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 2
 ITEM: 7
 PRODUCTID: 30
 QUANTITY: 5
-COST: 34.80
+COST: 34.8
 ------------------------------------------------------------------------
 INVOICEID: 2
 ITEM: 8
 PRODUCTID: 39
 QUANTITY: 2
-COST: 23.10
+COST: 23.1
 ------------------------------------------------------------------------
 INVOICEID: 2
 ITEM: 9
 PRODUCTID: 18
 QUANTITY: 7
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 2
 ITEM: 10
 PRODUCTID: 49
 QUANTITY: 11
-COST: 3.30
+COST: 3.3
 ------------------------------------------------------------------------
 INVOICEID: 2
 ITEM: 11
 PRODUCTID: 42
 QUANTITY: 21
-COST: 29.70
+COST: 29.7
 ------------------------------------------------------------------------
 INVOICEID: 2
 ITEM: 12
 PRODUCTID: 21
 QUANTITY: 15
-COST: 17.10
+COST: 17.1
 ------------------------------------------------------------------------
 INVOICEID: 2
 ITEM: 13
 PRODUCTID: 12
 QUANTITY: 1
-COST: 25.20
+COST: 25.2
 ------------------------------------------------------------------------
 INVOICEID: 2
 ITEM: 14
 PRODUCTID: 48
 QUANTITY: 19
-COST: 31.50
+COST: 31.5
 ------------------------------------------------------------------------
 INVOICEID: 2
 ITEM: 15
 PRODUCTID: 0
 QUANTITY: 18
-COST: 8.10
+COST: 8.1
 ------------------------------------------------------------------------
 INVOICEID: 2
 ITEM: 16
 PRODUCTID: 36
 QUANTITY: 24
-COST: 4.80
+COST: 4.8
 ------------------------------------------------------------------------
 INVOICEID: 3
 ITEM: 0
 PRODUCTID: 11
 QUANTITY: 21
-COST: 13.20
+COST: 13.2
 ------------------------------------------------------------------------
 INVOICEID: 3
 ITEM: 1
 PRODUCTID: 1
 QUANTITY: 20
-COST: 37.20
+COST: 37.2
 ------------------------------------------------------------------------
 INVOICEID: 3
 ITEM: 2
 PRODUCTID: 49
 QUANTITY: 3
-COST: 3.30
+COST: 3.3
 ------------------------------------------------------------------------
 INVOICEID: 3
 ITEM: 3
 PRODUCTID: 0
 QUANTITY: 22
-COST: 8.10
+COST: 8.1
 ------------------------------------------------------------------------
 INVOICEID: 3
 ITEM: 4
 PRODUCTID: 20
 QUANTITY: 12
-COST: 30.00
+COST: 30.0
 ------------------------------------------------------------------------
 INVOICEID: 3
 ITEM: 5
 PRODUCTID: 30
 QUANTITY: 10
-COST: 34.80
+COST: 34.8
 ------------------------------------------------------------------------
 INVOICEID: 3
 ITEM: 6
 PRODUCTID: 13
 QUANTITY: 18
-COST: 27.00
+COST: 27.0
 ------------------------------------------------------------------------
 INVOICEID: 3
 ITEM: 7
 PRODUCTID: 26
 QUANTITY: 4
-COST: 37.80
+COST: 37.8
 ------------------------------------------------------------------------
 INVOICEID: 3
 ITEM: 8
 PRODUCTID: 49
 QUANTITY: 9
-COST: 3.30
+COST: 3.3
 ------------------------------------------------------------------------
 INVOICEID: 3
 ITEM: 9
 PRODUCTID: 29
 QUANTITY: 17
-COST: 16.80
+COST: 16.8
 ------------------------------------------------------------------------
 INVOICEID: 3
 ITEM: 10
 PRODUCTID: 10
 QUANTITY: 17
-COST: 30.60
+COST: 30.6
 ------------------------------------------------------------------------
 INVOICEID: 3
 ITEM: 11
 PRODUCTID: 7
 QUANTITY: 11
-COST: 12.60
+COST: 12.6
 ------------------------------------------------------------------------
 INVOICEID: 3
 ITEM: 12
 PRODUCTID: 41
 QUANTITY: 22
-COST: 30.90
+COST: 30.9
 ------------------------------------------------------------------------
 INVOICEID: 3
 ITEM: 13
 PRODUCTID: 41
 QUANTITY: 2
-COST: 30.90
+COST: 30.9
 ------------------------------------------------------------------------
 INVOICEID: 3
 ITEM: 14
 PRODUCTID: 17
 QUANTITY: 22
-COST: 33.00
+COST: 33.0
 ------------------------------------------------------------------------
 INVOICEID: 3
 ITEM: 15
 PRODUCTID: 23
 QUANTITY: 18
-COST: 11.40
+COST: 11.4
 ------------------------------------------------------------------------
 INVOICEID: 3
 ITEM: 16
 PRODUCTID: 19
 QUANTITY: 11
-COST: 16.50
+COST: 16.5
 ------------------------------------------------------------------------
 INVOICEID: 3
 ITEM: 17
 PRODUCTID: 30
 QUANTITY: 17
-COST: 34.80
+COST: 34.8
 ------------------------------------------------------------------------
 INVOICEID: 4
 ITEM: 0
 PRODUCTID: 28
 QUANTITY: 9
-COST: 4.50
+COST: 4.5
 ------------------------------------------------------------------------
 INVOICEID: 4
 ITEM: 1
 PRODUCTID: 35
 QUANTITY: 15
-COST: 11.40
+COST: 11.4
 ------------------------------------------------------------------------
 INVOICEID: 4
 ITEM: 2
 PRODUCTID: 41
 QUANTITY: 23
-COST: 30.90
+COST: 30.9
 ------------------------------------------------------------------------
 INVOICEID: 4
 ITEM: 3
 PRODUCTID: 23
 QUANTITY: 20
-COST: 11.40
+COST: 11.4
 ------------------------------------------------------------------------
 INVOICEID: 4
 ITEM: 4
 PRODUCTID: 9
 QUANTITY: 18
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 4
 ITEM: 5
 PRODUCTID: 37
 QUANTITY: 24
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 5
 ITEM: 0
 PRODUCTID: 9
 QUANTITY: 5
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 5
 ITEM: 1
 PRODUCTID: 9
 QUANTITY: 23
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 5
 ITEM: 2
 PRODUCTID: 20
 QUANTITY: 18
-COST: 30.00
+COST: 30.0
 ------------------------------------------------------------------------
 INVOICEID: 5
 ITEM: 3
 PRODUCTID: 24
 QUANTITY: 12
-COST: 10.80
+COST: 10.8
 ------------------------------------------------------------------------
 INVOICEID: 5
 ITEM: 4
 PRODUCTID: 32
 QUANTITY: 14
-COST: 28.50
+COST: 28.5
 ------------------------------------------------------------------------
 INVOICEID: 5
 ITEM: 5
 PRODUCTID: 46
 QUANTITY: 15
-COST: 9.30
+COST: 9.3
 ------------------------------------------------------------------------
 INVOICEID: 5
 ITEM: 6
 PRODUCTID: 7
 QUANTITY: 9
-COST: 12.60
+COST: 12.6
 ------------------------------------------------------------------------
 INVOICEID: 5
 ITEM: 7
 PRODUCTID: 2
 QUANTITY: 4
-COST: 37.20
+COST: 37.2
 ------------------------------------------------------------------------
 INVOICEID: 5
 ITEM: 8
 PRODUCTID: 20
 QUANTITY: 3
-COST: 30.00
+COST: 30.0
 ------------------------------------------------------------------------
 INVOICEID: 5
 ITEM: 9
 PRODUCTID: 37
 QUANTITY: 9
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 5
 ITEM: 10
 PRODUCTID: 28
 QUANTITY: 18
-COST: 4.50
+COST: 4.5
 ------------------------------------------------------------------------
 INVOICEID: 5
 ITEM: 11
 PRODUCTID: 38
 QUANTITY: 23
-COST: 32.40
+COST: 32.4
 ------------------------------------------------------------------------
 INVOICEID: 5
 ITEM: 12
 PRODUCTID: 8
 QUANTITY: 15
-COST: 33.90
+COST: 33.9
 ------------------------------------------------------------------------
 INVOICEID: 5
 ITEM: 13
 PRODUCTID: 18
 QUANTITY: 17
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 6
 ITEM: 0
 PRODUCTID: 15
 QUANTITY: 20
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 6
 ITEM: 1
 PRODUCTID: 38
 QUANTITY: 21
-COST: 32.40
+COST: 32.4
 ------------------------------------------------------------------------
 INVOICEID: 6
 ITEM: 2
 PRODUCTID: 23
 QUANTITY: 8
-COST: 11.40
+COST: 11.4
 ------------------------------------------------------------------------
 INVOICEID: 6
 ITEM: 3
 PRODUCTID: 30
 QUANTITY: 2
-COST: 34.80
+COST: 34.8
 ------------------------------------------------------------------------
 INVOICEID: 6
 ITEM: 4
 PRODUCTID: 31
 QUANTITY: 20
-COST: 7.20
+COST: 7.2
 ------------------------------------------------------------------------
 INVOICEID: 6
 ITEM: 5
 PRODUCTID: 14
 QUANTITY: 20
-COST: 18.60
+COST: 18.6
 ------------------------------------------------------------------------
 INVOICEID: 6
 ITEM: 6
 PRODUCTID: 37
 QUANTITY: 22
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 6
 ITEM: 7
 PRODUCTID: 26
 QUANTITY: 10
-COST: 37.80
+COST: 37.8
 ------------------------------------------------------------------------
 INVOICEID: 6
 ITEM: 8
 PRODUCTID: 41
 QUANTITY: 19
-COST: 30.90
+COST: 30.9
 ------------------------------------------------------------------------
 INVOICEID: 6
 ITEM: 9
 PRODUCTID: 19
 QUANTITY: 2
-COST: 16.50
+COST: 16.5
 ------------------------------------------------------------------------
 INVOICEID: 6
 ITEM: 10
 PRODUCTID: 16
 QUANTITY: 13
-COST: 29.10
+COST: 29.1
 ------------------------------------------------------------------------
 INVOICEID: 6
 ITEM: 11
 PRODUCTID: 44
 QUANTITY: 1
-COST: 14.40
+COST: 14.4
 ------------------------------------------------------------------------
 INVOICEID: 7
 ITEM: 0
 PRODUCTID: 43
 QUANTITY: 16
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 7
 ITEM: 1
 PRODUCTID: 23
 QUANTITY: 12
-COST: 11.40
+COST: 11.4
 ------------------------------------------------------------------------
 INVOICEID: 7
 ITEM: 2
 PRODUCTID: 27
 QUANTITY: 17
-COST: 34.50
+COST: 34.5
 ------------------------------------------------------------------------
 INVOICEID: 7
 ITEM: 3
 PRODUCTID: 30
 QUANTITY: 2
-COST: 34.80
+COST: 34.8
 ------------------------------------------------------------------------
 INVOICEID: 7
 ITEM: 4
 PRODUCTID: 2
 QUANTITY: 13
-COST: 37.20
+COST: 37.2
 ------------------------------------------------------------------------
 INVOICEID: 7
 ITEM: 5
 PRODUCTID: 24
 QUANTITY: 10
-COST: 10.80
+COST: 10.8
 ------------------------------------------------------------------------
 INVOICEID: 7
 ITEM: 6
 PRODUCTID: 14
 QUANTITY: 4
-COST: 18.60
+COST: 18.6
 ------------------------------------------------------------------------
 INVOICEID: 7
 ITEM: 7
 PRODUCTID: 2
 QUANTITY: 22
-COST: 37.20
+COST: 37.2
 ------------------------------------------------------------------------
 INVOICEID: 7
 ITEM: 8
 PRODUCTID: 42
 QUANTITY: 19
-COST: 29.70
+COST: 29.7
 ------------------------------------------------------------------------
 INVOICEID: 7
 ITEM: 9
 PRODUCTID: 9
 QUANTITY: 21
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 7
 ITEM: 10
 PRODUCTID: 7
 QUANTITY: 1
-COST: 12.60
+COST: 12.6
 ------------------------------------------------------------------------
 INVOICEID: 7
 ITEM: 11
 PRODUCTID: 19
 QUANTITY: 13
-COST: 16.50
+COST: 16.5
 ------------------------------------------------------------------------
 INVOICEID: 7
 ITEM: 12
 PRODUCTID: 40
 QUANTITY: 16
-COST: 4.20
+COST: 4.2
 ------------------------------------------------------------------------
 INVOICEID: 7
 ITEM: 13
 PRODUCTID: 32
 QUANTITY: 23
-COST: 28.50
+COST: 28.5
 ------------------------------------------------------------------------
 INVOICEID: 7
 ITEM: 14
 PRODUCTID: 47
 QUANTITY: 14
-COST: 26.70
+COST: 26.7
 ------------------------------------------------------------------------
 INVOICEID: 7
 ITEM: 15
 PRODUCTID: 24
 QUANTITY: 17
-COST: 10.80
+COST: 10.8
 ------------------------------------------------------------------------
 INVOICEID: 7
 ITEM: 16
 PRODUCTID: 7
 QUANTITY: 12
-COST: 12.60
+COST: 12.6
 ------------------------------------------------------------------------
 INVOICEID: 7
 ITEM: 17
 PRODUCTID: 40
 QUANTITY: 1
-COST: 4.20
+COST: 4.2
 ------------------------------------------------------------------------
 INVOICEID: 7
 ITEM: 18
 PRODUCTID: 23
 QUANTITY: 5
-COST: 11.40
+COST: 11.4
 ------------------------------------------------------------------------
 INVOICEID: 8
 ITEM: 0
 PRODUCTID: 34
 QUANTITY: 15
-COST: 38.40
+COST: 38.4
 ------------------------------------------------------------------------
 INVOICEID: 8
 ITEM: 1
 PRODUCTID: 44
 QUANTITY: 16
-COST: 14.40
+COST: 14.4
 ------------------------------------------------------------------------
 INVOICEID: 8
 ITEM: 2
 PRODUCTID: 11
 QUANTITY: 8
-COST: 13.20
+COST: 13.2
 ------------------------------------------------------------------------
 INVOICEID: 8
 ITEM: 3
 PRODUCTID: 41
 QUANTITY: 16
-COST: 30.90
+COST: 30.9
 ------------------------------------------------------------------------
 INVOICEID: 8
 ITEM: 4
 PRODUCTID: 15
 QUANTITY: 8
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 8
 ITEM: 5
 PRODUCTID: 24
 QUANTITY: 18
-COST: 10.80
+COST: 10.8
 ------------------------------------------------------------------------
 INVOICEID: 8
 ITEM: 6
 PRODUCTID: 15
 QUANTITY: 19
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 8
 ITEM: 7
 PRODUCTID: 6
 QUANTITY: 5
-COST: 14.70
+COST: 14.7
 ------------------------------------------------------------------------
 INVOICEID: 8
 ITEM: 8
 PRODUCTID: 38
 QUANTITY: 7
-COST: 32.40
+COST: 32.4
 ------------------------------------------------------------------------
 INVOICEID: 8
 ITEM: 9
 PRODUCTID: 21
 QUANTITY: 23
-COST: 17.10
+COST: 17.1
 ------------------------------------------------------------------------
 INVOICEID: 9
 ITEM: 0
 PRODUCTID: 45
 QUANTITY: 8
-COST: 27.00
+COST: 27.0
 ------------------------------------------------------------------------
 INVOICEID: 9
 ITEM: 1
 PRODUCTID: 18
 QUANTITY: 21
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 9
 ITEM: 2
 PRODUCTID: 29
 QUANTITY: 12
-COST: 16.80
+COST: 16.8
 ------------------------------------------------------------------------
 INVOICEID: 9
 ITEM: 3
 PRODUCTID: 4
 QUANTITY: 14
-COST: 19.20
+COST: 19.2
 ------------------------------------------------------------------------
 INVOICEID: 9
 ITEM: 4
 PRODUCTID: 36
 QUANTITY: 16
-COST: 4.80
+COST: 4.8
 ------------------------------------------------------------------------
 INVOICEID: 9
 ITEM: 5
 PRODUCTID: 6
 QUANTITY: 2
-COST: 14.70
+COST: 14.7
 ------------------------------------------------------------------------
 INVOICEID: 9
 ITEM: 6
 PRODUCTID: 18
 QUANTITY: 10
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 9
 ITEM: 7
 PRODUCTID: 2
 QUANTITY: 22
-COST: 37.20
+COST: 37.2
 ------------------------------------------------------------------------
 INVOICEID: 9
 ITEM: 8
 PRODUCTID: 24
 QUANTITY: 11
-COST: 10.80
+COST: 10.8
 ------------------------------------------------------------------------
 INVOICEID: 9
 ITEM: 9
 PRODUCTID: 13
 QUANTITY: 6
-COST: 27.00
+COST: 27.0
 ------------------------------------------------------------------------
 INVOICEID: 9
 ITEM: 10
 PRODUCTID: 38
 QUANTITY: 11
-COST: 32.40
+COST: 32.4
 ------------------------------------------------------------------------
 INVOICEID: 9
 ITEM: 11
 PRODUCTID: 12
 QUANTITY: 16
-COST: 25.20
+COST: 25.2
 ------------------------------------------------------------------------
 INVOICEID: 9
 ITEM: 12
 PRODUCTID: 25
 QUANTITY: 23
-COST: 24.30
+COST: 24.3
 ------------------------------------------------------------------------
 INVOICEID: 9
 ITEM: 13
 PRODUCTID: 42
 QUANTITY: 13
-COST: 29.70
+COST: 29.7
 ------------------------------------------------------------------------
 INVOICEID: 9
 ITEM: 14
 PRODUCTID: 15
 QUANTITY: 8
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 9
 ITEM: 15
 PRODUCTID: 48
 QUANTITY: 23
-COST: 31.50
+COST: 31.5
 ------------------------------------------------------------------------
 INVOICEID: 9
 ITEM: 16
 PRODUCTID: 24
 QUANTITY: 10
-COST: 10.80
+COST: 10.8
 ------------------------------------------------------------------------
 INVOICEID: 9
 ITEM: 17
 PRODUCTID: 13
 QUANTITY: 17
-COST: 27.00
+COST: 27.0
 ------------------------------------------------------------------------
 INVOICEID: 9
 ITEM: 18
 PRODUCTID: 3
 QUANTITY: 12
-COST: 38.10
+COST: 38.1
 ------------------------------------------------------------------------
 INVOICEID: 9
 ITEM: 19
 PRODUCTID: 48
 QUANTITY: 23
-COST: 31.50
+COST: 31.5
 ------------------------------------------------------------------------
 INVOICEID: 10
 ITEM: 0
 PRODUCTID: 20
 QUANTITY: 1
-COST: 30.00
+COST: 30.0
 ------------------------------------------------------------------------
 INVOICEID: 10
 ITEM: 1
 PRODUCTID: 33
 QUANTITY: 17
-COST: 27.30
+COST: 27.3
 ------------------------------------------------------------------------
 INVOICEID: 10
 ITEM: 2
 PRODUCTID: 7
 QUANTITY: 9
-COST: 12.60
+COST: 12.6
 ------------------------------------------------------------------------
 INVOICEID: 10
 ITEM: 3
 PRODUCTID: 46
 QUANTITY: 1
-COST: 9.30
+COST: 9.3
 ------------------------------------------------------------------------
 INVOICEID: 10
 ITEM: 4
 PRODUCTID: 10
 QUANTITY: 24
-COST: 30.60
+COST: 30.6
 ------------------------------------------------------------------------
 INVOICEID: 10
 ITEM: 5
 PRODUCTID: 5
 QUANTITY: 24
-COST: 35.40
+COST: 35.4
 ------------------------------------------------------------------------
 INVOICEID: 10
 ITEM: 6
 PRODUCTID: 18
 QUANTITY: 14
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 10
 ITEM: 7
 PRODUCTID: 4
 QUANTITY: 13
-COST: 19.20
+COST: 19.2
 ------------------------------------------------------------------------
 INVOICEID: 10
 ITEM: 8
 PRODUCTID: 22
 QUANTITY: 11
-COST: 9.90
+COST: 9.9
 ------------------------------------------------------------------------
 INVOICEID: 10
 ITEM: 9
 PRODUCTID: 5
 QUANTITY: 10
-COST: 35.40
+COST: 35.4
 ------------------------------------------------------------------------
 INVOICEID: 11
 ITEM: 0
 PRODUCTID: 45
 QUANTITY: 10
-COST: 27.00
+COST: 27.0
 ------------------------------------------------------------------------
 INVOICEID: 11
 ITEM: 1
 PRODUCTID: 21
 QUANTITY: 21
-COST: 17.10
+COST: 17.1
 ------------------------------------------------------------------------
 INVOICEID: 11
 ITEM: 2
 PRODUCTID: 0
 QUANTITY: 3
-COST: 8.10
+COST: 8.1
 ------------------------------------------------------------------------
 INVOICEID: 11
 ITEM: 3
 PRODUCTID: 32
 QUANTITY: 21
-COST: 28.50
+COST: 28.5
 ------------------------------------------------------------------------
 INVOICEID: 11
 ITEM: 4
 PRODUCTID: 47
 QUANTITY: 16
-COST: 26.70
+COST: 26.7
 ------------------------------------------------------------------------
 INVOICEID: 11
 ITEM: 5
 PRODUCTID: 19
 QUANTITY: 2
-COST: 16.50
+COST: 16.5
 ------------------------------------------------------------------------
 INVOICEID: 11
 ITEM: 6
 PRODUCTID: 0
 QUANTITY: 12
-COST: 8.10
+COST: 8.1
 ------------------------------------------------------------------------
 INVOICEID: 11
 ITEM: 7
 PRODUCTID: 48
 QUANTITY: 22
-COST: 31.50
+COST: 31.5
 ------------------------------------------------------------------------
 INVOICEID: 11
 ITEM: 8
 PRODUCTID: 20
 QUANTITY: 1
-COST: 30.00
+COST: 30.0
 ------------------------------------------------------------------------
 INVOICEID: 12
 ITEM: 0
 PRODUCTID: 1
 QUANTITY: 24
-COST: 37.20
+COST: 37.2
 ------------------------------------------------------------------------
 INVOICEID: 12
 ITEM: 1
 PRODUCTID: 41
 QUANTITY: 19
-COST: 30.90
+COST: 30.9
 ------------------------------------------------------------------------
 INVOICEID: 12
 ITEM: 2
 PRODUCTID: 6
 QUANTITY: 5
-COST: 14.70
+COST: 14.7
 ------------------------------------------------------------------------
 INVOICEID: 12
 ITEM: 3
 PRODUCTID: 0
 QUANTITY: 18
-COST: 8.10
+COST: 8.1
 ------------------------------------------------------------------------
 INVOICEID: 12
 ITEM: 4
 PRODUCTID: 20
 QUANTITY: 11
-COST: 30.00
+COST: 30.0
 ------------------------------------------------------------------------
 INVOICEID: 12
 ITEM: 5
 PRODUCTID: 37
 QUANTITY: 17
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 12
 ITEM: 6
 PRODUCTID: 31
 QUANTITY: 15
-COST: 7.20
+COST: 7.2
 ------------------------------------------------------------------------
 INVOICEID: 12
 ITEM: 7
 PRODUCTID: 48
 QUANTITY: 7
-COST: 31.50
+COST: 31.5
 ------------------------------------------------------------------------
 INVOICEID: 12
 ITEM: 8
 PRODUCTID: 48
 QUANTITY: 2
-COST: 31.50
+COST: 31.5
 ------------------------------------------------------------------------
 INVOICEID: 12
 ITEM: 9
 PRODUCTID: 25
 QUANTITY: 22
-COST: 24.30
+COST: 24.3
 ------------------------------------------------------------------------
 INVOICEID: 12
 ITEM: 10
 PRODUCTID: 46
 QUANTITY: 19
-COST: 9.30
+COST: 9.3
 ------------------------------------------------------------------------
 INVOICEID: 12
 ITEM: 11
 PRODUCTID: 28
 QUANTITY: 16
-COST: 4.50
+COST: 4.5
 ------------------------------------------------------------------------
 INVOICEID: 12
 ITEM: 12
 PRODUCTID: 13
 QUANTITY: 12
-COST: 27.00
+COST: 27.0
 ------------------------------------------------------------------------
 INVOICEID: 12
 ITEM: 13
 PRODUCTID: 36
 QUANTITY: 21
-COST: 4.80
+COST: 4.8
 ------------------------------------------------------------------------
 INVOICEID: 12
 ITEM: 14
 PRODUCTID: 25
 QUANTITY: 11
-COST: 24.30
+COST: 24.3
 ------------------------------------------------------------------------
 INVOICEID: 12
 ITEM: 15
 PRODUCTID: 22
 QUANTITY: 16
-COST: 9.90
+COST: 9.9
 ------------------------------------------------------------------------
 INVOICEID: 12
 ITEM: 16
 PRODUCTID: 0
 QUANTITY: 9
-COST: 8.10
+COST: 8.1
 ------------------------------------------------------------------------
 INVOICEID: 12
 ITEM: 17
 PRODUCTID: 31
 QUANTITY: 15
-COST: 7.20
+COST: 7.2
 ------------------------------------------------------------------------
 INVOICEID: 12
 ITEM: 18
 PRODUCTID: 9
 QUANTITY: 4
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 13
 ITEM: 0
 PRODUCTID: 16
 QUANTITY: 10
-COST: 29.10
+COST: 29.1
 ------------------------------------------------------------------------
 INVOICEID: 13
 ITEM: 1
 PRODUCTID: 1
 QUANTITY: 1
-COST: 37.20
+COST: 37.2
 ------------------------------------------------------------------------
 INVOICEID: 13
 ITEM: 2
 PRODUCTID: 13
 QUANTITY: 20
-COST: 27.00
+COST: 27.0
 ------------------------------------------------------------------------
 INVOICEID: 13
 ITEM: 3
 PRODUCTID: 32
 QUANTITY: 2
-COST: 28.50
+COST: 28.5
 ------------------------------------------------------------------------
 INVOICEID: 13
 ITEM: 4
 PRODUCTID: 26
 QUANTITY: 21
-COST: 37.80
+COST: 37.8
 ------------------------------------------------------------------------
 INVOICEID: 13
 ITEM: 5
 PRODUCTID: 22
 QUANTITY: 19
-COST: 9.90
+COST: 9.9
 ------------------------------------------------------------------------
 INVOICEID: 13
 ITEM: 6
 PRODUCTID: 19
 QUANTITY: 8
-COST: 16.50
+COST: 16.5
 ------------------------------------------------------------------------
 INVOICEID: 13
 ITEM: 7
 PRODUCTID: 29
 QUANTITY: 24
-COST: 16.80
+COST: 16.8
 ------------------------------------------------------------------------
 INVOICEID: 13
 ITEM: 8
 PRODUCTID: 48
 QUANTITY: 11
-COST: 31.50
+COST: 31.5
 ------------------------------------------------------------------------
 INVOICEID: 13
 ITEM: 9
 PRODUCTID: 24
 QUANTITY: 10
-COST: 10.80
+COST: 10.8
 ------------------------------------------------------------------------
 INVOICEID: 13
 ITEM: 10
 PRODUCTID: 45
 QUANTITY: 24
-COST: 27.00
+COST: 27.0
 ------------------------------------------------------------------------
 INVOICEID: 13
 ITEM: 11
 PRODUCTID: 14
 QUANTITY: 3
-COST: 18.60
+COST: 18.6
 ------------------------------------------------------------------------
 INVOICEID: 13
 ITEM: 12
 PRODUCTID: 17
 QUANTITY: 3
-COST: 33.00
+COST: 33.0
 ------------------------------------------------------------------------
 INVOICEID: 13
 ITEM: 13
 PRODUCTID: 10
 QUANTITY: 20
-COST: 30.60
+COST: 30.6
 ------------------------------------------------------------------------
 INVOICEID: 13
 ITEM: 14
 PRODUCTID: 1
 QUANTITY: 12
-COST: 37.20
+COST: 37.2
 ------------------------------------------------------------------------
 INVOICEID: 13
 ITEM: 15
 PRODUCTID: 0
 QUANTITY: 20
-COST: 8.10
+COST: 8.1
 ------------------------------------------------------------------------
 INVOICEID: 13
 ITEM: 16
 PRODUCTID: 22
 QUANTITY: 23
-COST: 9.90
+COST: 9.9
 ------------------------------------------------------------------------
 INVOICEID: 13
 ITEM: 17
 PRODUCTID: 32
 QUANTITY: 18
-COST: 28.50
+COST: 28.5
 ------------------------------------------------------------------------
 INVOICEID: 13
 ITEM: 18
 PRODUCTID: 0
 QUANTITY: 16
-COST: 8.10
+COST: 8.1
 ------------------------------------------------------------------------
 INVOICEID: 13
 ITEM: 19
 PRODUCTID: 42
 QUANTITY: 18
-COST: 29.70
+COST: 29.7
 ------------------------------------------------------------------------
 INVOICEID: 13
 ITEM: 20
 PRODUCTID: 5
 QUANTITY: 19
-COST: 35.40
+COST: 35.4
 ------------------------------------------------------------------------
 INVOICEID: 13
 ITEM: 21
 PRODUCTID: 40
 QUANTITY: 1
-COST: 4.20
+COST: 4.2
 ------------------------------------------------------------------------
 INVOICEID: 14
 ITEM: 0
 PRODUCTID: 42
 QUANTITY: 18
-COST: 29.70
+COST: 29.7
 ------------------------------------------------------------------------
 INVOICEID: 14
 ITEM: 1
 PRODUCTID: 9
 QUANTITY: 22
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 14
 ITEM: 2
 PRODUCTID: 15
 QUANTITY: 18
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 14
 ITEM: 3
 PRODUCTID: 34
 QUANTITY: 11
-COST: 38.40
+COST: 38.4
 ------------------------------------------------------------------------
 INVOICEID: 14
 ITEM: 4
 PRODUCTID: 41
 QUANTITY: 17
-COST: 30.90
+COST: 30.9
 ------------------------------------------------------------------------
 INVOICEID: 14
 ITEM: 5
 PRODUCTID: 11
 QUANTITY: 8
-COST: 13.20
+COST: 13.2
 ------------------------------------------------------------------------
 INVOICEID: 14
 ITEM: 6
 PRODUCTID: 26
 QUANTITY: 18
-COST: 37.80
+COST: 37.8
 ------------------------------------------------------------------------
 INVOICEID: 14
 ITEM: 7
 PRODUCTID: 43
 QUANTITY: 4
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 14
 ITEM: 8
 PRODUCTID: 23
 QUANTITY: 7
-COST: 11.40
+COST: 11.4
 ------------------------------------------------------------------------
 INVOICEID: 14
 ITEM: 9
 PRODUCTID: 13
 QUANTITY: 16
-COST: 27.00
+COST: 27.0
 ------------------------------------------------------------------------
 INVOICEID: 14
 ITEM: 10
 PRODUCTID: 44
 QUANTITY: 16
-COST: 14.40
+COST: 14.4
 ------------------------------------------------------------------------
 INVOICEID: 14
 ITEM: 11
 PRODUCTID: 25
 QUANTITY: 15
-COST: 24.30
+COST: 24.3
 ------------------------------------------------------------------------
 INVOICEID: 14
 ITEM: 12
 PRODUCTID: 4
 QUANTITY: 20
-COST: 19.20
+COST: 19.2
 ------------------------------------------------------------------------
 INVOICEID: 14
 ITEM: 13
 PRODUCTID: 11
 QUANTITY: 23
-COST: 13.20
+COST: 13.2
 ------------------------------------------------------------------------
 INVOICEID: 15
 ITEM: 0
 PRODUCTID: 17
 QUANTITY: 12
-COST: 33.00
+COST: 33.0
 ------------------------------------------------------------------------
 INVOICEID: 15
 ITEM: 1
 PRODUCTID: 13
 QUANTITY: 21
-COST: 27.00
+COST: 27.0
 ------------------------------------------------------------------------
 INVOICEID: 15
 ITEM: 2
 PRODUCTID: 24
 QUANTITY: 6
-COST: 10.80
+COST: 10.8
 ------------------------------------------------------------------------
 INVOICEID: 16
 ITEM: 0
 PRODUCTID: 18
 QUANTITY: 15
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 16
 ITEM: 1
 PRODUCTID: 36
 QUANTITY: 20
-COST: 4.80
+COST: 4.8
 ------------------------------------------------------------------------
 INVOICEID: 16
 ITEM: 2
 PRODUCTID: 20
 QUANTITY: 15
-COST: 30.00
+COST: 30.0
 ------------------------------------------------------------------------
 INVOICEID: 16
 ITEM: 3
 PRODUCTID: 0
 QUANTITY: 3
-COST: 8.10
+COST: 8.1
 ------------------------------------------------------------------------
 INVOICEID: 16
 ITEM: 4
 PRODUCTID: 10
 QUANTITY: 24
-COST: 30.60
+COST: 30.6
 ------------------------------------------------------------------------
 INVOICEID: 16
 ITEM: 5
 PRODUCTID: 11
 QUANTITY: 15
-COST: 13.20
+COST: 13.2
 ------------------------------------------------------------------------
 INVOICEID: 16
 ITEM: 6
 PRODUCTID: 44
 QUANTITY: 7
-COST: 14.40
+COST: 14.4
 ------------------------------------------------------------------------
 INVOICEID: 16
 ITEM: 7
 PRODUCTID: 8
 QUANTITY: 17
-COST: 33.90
+COST: 33.9
 ------------------------------------------------------------------------
 INVOICEID: 16
 ITEM: 8
 PRODUCTID: 13
 QUANTITY: 17
-COST: 27.00
+COST: 27.0
 ------------------------------------------------------------------------
 INVOICEID: 16
 ITEM: 9
 PRODUCTID: 11
 QUANTITY: 10
-COST: 13.20
+COST: 13.2
 ------------------------------------------------------------------------
 INVOICEID: 16
 ITEM: 10
 PRODUCTID: 43
 QUANTITY: 8
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 16
 ITEM: 11
 PRODUCTID: 24
 QUANTITY: 7
-COST: 10.80
+COST: 10.8
 ------------------------------------------------------------------------
 INVOICEID: 16
 ITEM: 12
 PRODUCTID: 18
 QUANTITY: 2
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 16
 ITEM: 13
 PRODUCTID: 20
 QUANTITY: 1
-COST: 30.00
+COST: 30.0
 ------------------------------------------------------------------------
 INVOICEID: 16
 ITEM: 14
 PRODUCTID: 0
 QUANTITY: 19
-COST: 8.10
+COST: 8.1
 ------------------------------------------------------------------------
 INVOICEID: 16
 ITEM: 15
 PRODUCTID: 12
 QUANTITY: 3
-COST: 25.20
+COST: 25.2
 ------------------------------------------------------------------------
 INVOICEID: 17
 ITEM: 0
 PRODUCTID: 16
 QUANTITY: 8
-COST: 29.10
+COST: 29.1
 ------------------------------------------------------------------------
 INVOICEID: 17
 ITEM: 1
 PRODUCTID: 19
 QUANTITY: 19
-COST: 16.50
+COST: 16.5
 ------------------------------------------------------------------------
 INVOICEID: 17
 ITEM: 2
 PRODUCTID: 44
 QUANTITY: 11
-COST: 14.40
+COST: 14.4
 ------------------------------------------------------------------------
 INVOICEID: 17
 ITEM: 3
 PRODUCTID: 24
 QUANTITY: 4
-COST: 10.80
+COST: 10.8
 ------------------------------------------------------------------------
 INVOICEID: 17
 ITEM: 4
 PRODUCTID: 23
 QUANTITY: 2
-COST: 11.40
+COST: 11.4
 ------------------------------------------------------------------------
 INVOICEID: 17
 ITEM: 5
 PRODUCTID: 44
 QUANTITY: 1
-COST: 14.40
+COST: 14.4
 ------------------------------------------------------------------------
 INVOICEID: 17
 ITEM: 6
 PRODUCTID: 43
 QUANTITY: 6
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 17
 ITEM: 7
 PRODUCTID: 6
 QUANTITY: 15
-COST: 14.70
+COST: 14.7
 ------------------------------------------------------------------------
 INVOICEID: 17
 ITEM: 8
 PRODUCTID: 49
 QUANTITY: 8
-COST: 3.30
+COST: 3.3
 ------------------------------------------------------------------------
 INVOICEID: 17
 ITEM: 9
 PRODUCTID: 8
 QUANTITY: 15
-COST: 33.90
+COST: 33.9
 ------------------------------------------------------------------------
 INVOICEID: 17
 ITEM: 10
 PRODUCTID: 10
 QUANTITY: 12
-COST: 30.60
+COST: 30.6
 ------------------------------------------------------------------------
 INVOICEID: 17
 ITEM: 11
 PRODUCTID: 45
 QUANTITY: 10
-COST: 27.00
+COST: 27.0
 ------------------------------------------------------------------------
 INVOICEID: 17
 ITEM: 12
 PRODUCTID: 22
 QUANTITY: 16
-COST: 9.90
+COST: 9.9
 ------------------------------------------------------------------------
 INVOICEID: 17
 ITEM: 13
 PRODUCTID: 41
 QUANTITY: 5
-COST: 30.90
+COST: 30.9
 ------------------------------------------------------------------------
 INVOICEID: 17
 ITEM: 14
 PRODUCTID: 18
 QUANTITY: 2
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 17
 ITEM: 15
 PRODUCTID: 35
 QUANTITY: 10
-COST: 11.40
+COST: 11.4
 ------------------------------------------------------------------------
 INVOICEID: 17
 ITEM: 16
 PRODUCTID: 8
 QUANTITY: 16
-COST: 33.90
+COST: 33.9
 ------------------------------------------------------------------------
 INVOICEID: 17
 ITEM: 17
 PRODUCTID: 7
 QUANTITY: 5
-COST: 12.60
+COST: 12.6
 ------------------------------------------------------------------------
 INVOICEID: 17
 ITEM: 18
 PRODUCTID: 5
 QUANTITY: 9
-COST: 35.40
+COST: 35.4
 ------------------------------------------------------------------------
 INVOICEID: 17
 ITEM: 19
 PRODUCTID: 46
 QUANTITY: 12
-COST: 9.30
+COST: 9.3
 ------------------------------------------------------------------------
 INVOICEID: 18
 ITEM: 0
 PRODUCTID: 32
 QUANTITY: 1
-COST: 28.50
+COST: 28.5
 ------------------------------------------------------------------------
 INVOICEID: 18
 ITEM: 1
 PRODUCTID: 33
 QUANTITY: 12
-COST: 27.30
+COST: 27.3
 ------------------------------------------------------------------------
 INVOICEID: 18
 ITEM: 2
 PRODUCTID: 40
 QUANTITY: 12
-COST: 4.20
+COST: 4.2
 ------------------------------------------------------------------------
 INVOICEID: 18
 ITEM: 3
 PRODUCTID: 19
 QUANTITY: 8
-COST: 16.50
+COST: 16.5
 ------------------------------------------------------------------------
 INVOICEID: 18
 ITEM: 4
 PRODUCTID: 28
 QUANTITY: 6
-COST: 4.50
+COST: 4.5
 ------------------------------------------------------------------------
 INVOICEID: 18
 ITEM: 5
 PRODUCTID: 15
 QUANTITY: 6
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 18
 ITEM: 6
 PRODUCTID: 29
 QUANTITY: 4
-COST: 16.80
+COST: 16.8
 ------------------------------------------------------------------------
 INVOICEID: 18
 ITEM: 7
 PRODUCTID: 15
 QUANTITY: 14
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 18
 ITEM: 8
 PRODUCTID: 1
 QUANTITY: 24
-COST: 37.20
+COST: 37.2
 ------------------------------------------------------------------------
 INVOICEID: 18
 ITEM: 9
 PRODUCTID: 2
 QUANTITY: 2
-COST: 37.20
+COST: 37.2
 ------------------------------------------------------------------------
 INVOICEID: 18
 ITEM: 10
 PRODUCTID: 34
 QUANTITY: 18
-COST: 38.40
+COST: 38.4
 ------------------------------------------------------------------------
 INVOICEID: 18
 ITEM: 11
 PRODUCTID: 30
 QUANTITY: 8
-COST: 34.80
+COST: 34.8
 ------------------------------------------------------------------------
 INVOICEID: 18
 ITEM: 12
 PRODUCTID: 37
 QUANTITY: 12
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 18
 ITEM: 13
 PRODUCTID: 14
 QUANTITY: 12
-COST: 18.60
+COST: 18.6
 ------------------------------------------------------------------------
 INVOICEID: 18
 ITEM: 14
 PRODUCTID: 28
 QUANTITY: 20
-COST: 4.50
+COST: 4.5
 ------------------------------------------------------------------------
 INVOICEID: 18
 ITEM: 15
 PRODUCTID: 44
 QUANTITY: 20
-COST: 14.40
+COST: 14.4
 ------------------------------------------------------------------------
 INVOICEID: 18
 ITEM: 16
 PRODUCTID: 31
 QUANTITY: 12
-COST: 7.20
+COST: 7.2
 ------------------------------------------------------------------------
 INVOICEID: 18
 ITEM: 17
 PRODUCTID: 8
 QUANTITY: 1
-COST: 33.90
+COST: 33.9
 ------------------------------------------------------------------------
 INVOICEID: 18
 ITEM: 18
 PRODUCTID: 10
 QUANTITY: 1
-COST: 30.60
+COST: 30.6
 ------------------------------------------------------------------------
 INVOICEID: 19
 ITEM: 0
 PRODUCTID: 12
 QUANTITY: 7
-COST: 25.20
+COST: 25.2
 ------------------------------------------------------------------------
 INVOICEID: 19
 ITEM: 1
 PRODUCTID: 31
 QUANTITY: 2
-COST: 7.20
+COST: 7.2
 ------------------------------------------------------------------------
 INVOICEID: 19
 ITEM: 2
 PRODUCTID: 4
 QUANTITY: 22
-COST: 19.20
+COST: 19.2
 ------------------------------------------------------------------------
 INVOICEID: 19
 ITEM: 3
 PRODUCTID: 49
 QUANTITY: 23
-COST: 3.30
+COST: 3.3
 ------------------------------------------------------------------------
 INVOICEID: 19
 ITEM: 4
 PRODUCTID: 36
 QUANTITY: 24
-COST: 4.80
+COST: 4.8
 ------------------------------------------------------------------------
 INVOICEID: 20
 ITEM: 0
 PRODUCTID: 47
 QUANTITY: 15
-COST: 26.70
+COST: 26.7
 ------------------------------------------------------------------------
 INVOICEID: 20
 ITEM: 1
 PRODUCTID: 29
 QUANTITY: 6
-COST: 16.80
+COST: 16.8
 ------------------------------------------------------------------------
 INVOICEID: 20
 ITEM: 2
 PRODUCTID: 24
 QUANTITY: 22
-COST: 10.80
+COST: 10.8
 ------------------------------------------------------------------------
 INVOICEID: 20
 ITEM: 3
 PRODUCTID: 25
 QUANTITY: 14
-COST: 24.30
+COST: 24.3
 ------------------------------------------------------------------------
 INVOICEID: 20
 ITEM: 4
 PRODUCTID: 30
 QUANTITY: 13
-COST: 34.80
+COST: 34.8
 ------------------------------------------------------------------------
 INVOICEID: 20
 ITEM: 5
 PRODUCTID: 8
 QUANTITY: 14
-COST: 33.90
+COST: 33.9
 ------------------------------------------------------------------------
 INVOICEID: 20
 ITEM: 6
 PRODUCTID: 20
 QUANTITY: 2
-COST: 30.00
+COST: 30.0
 ------------------------------------------------------------------------
 INVOICEID: 20
 ITEM: 7
 PRODUCTID: 9
 QUANTITY: 9
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 20
 ITEM: 8
 PRODUCTID: 44
 QUANTITY: 18
-COST: 14.40
+COST: 14.4
 ------------------------------------------------------------------------
 INVOICEID: 20
 ITEM: 9
 PRODUCTID: 12
 QUANTITY: 8
-COST: 25.20
+COST: 25.2
 ------------------------------------------------------------------------
 INVOICEID: 20
 ITEM: 10
 PRODUCTID: 25
 QUANTITY: 11
-COST: 24.30
+COST: 24.3
 ------------------------------------------------------------------------
 INVOICEID: 20
 ITEM: 11
 PRODUCTID: 15
 QUANTITY: 8
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 21
 ITEM: 0
 PRODUCTID: 9
 QUANTITY: 10
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 21
 ITEM: 1
 PRODUCTID: 38
 QUANTITY: 19
-COST: 32.40
+COST: 32.4
 ------------------------------------------------------------------------
 INVOICEID: 21
 ITEM: 2
 PRODUCTID: 31
 QUANTITY: 17
-COST: 7.20
+COST: 7.2
 ------------------------------------------------------------------------
 INVOICEID: 21
 ITEM: 3
 PRODUCTID: 30
 QUANTITY: 13
-COST: 34.80
+COST: 34.8
 ------------------------------------------------------------------------
 INVOICEID: 21
 ITEM: 4
 PRODUCTID: 49
 QUANTITY: 22
-COST: 3.30
+COST: 3.3
 ------------------------------------------------------------------------
 INVOICEID: 21
 ITEM: 5
 PRODUCTID: 27
 QUANTITY: 18
-COST: 34.50
+COST: 34.5
 ------------------------------------------------------------------------
 INVOICEID: 21
 ITEM: 6
 PRODUCTID: 26
 QUANTITY: 7
-COST: 37.80
+COST: 37.8
 ------------------------------------------------------------------------
 INVOICEID: 21
 ITEM: 7
 PRODUCTID: 8
 QUANTITY: 9
-COST: 33.90
+COST: 33.9
 ------------------------------------------------------------------------
 INVOICEID: 21
 ITEM: 8
 PRODUCTID: 44
 QUANTITY: 19
-COST: 14.40
+COST: 14.4
 ------------------------------------------------------------------------
 INVOICEID: 21
 ITEM: 9
 PRODUCTID: 35
 QUANTITY: 17
-COST: 11.40
+COST: 11.4
 ------------------------------------------------------------------------
 INVOICEID: 21
 ITEM: 10
 PRODUCTID: 19
 QUANTITY: 14
-COST: 16.50
+COST: 16.5
 ------------------------------------------------------------------------
 INVOICEID: 21
 ITEM: 11
 PRODUCTID: 20
 QUANTITY: 11
-COST: 30.00
+COST: 30.0
 ------------------------------------------------------------------------
 INVOICEID: 22
 ITEM: 0
 PRODUCTID: 9
 QUANTITY: 6
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 22
 ITEM: 1
 PRODUCTID: 30
 QUANTITY: 11
-COST: 34.80
+COST: 34.8
 ------------------------------------------------------------------------
 INVOICEID: 22
 ITEM: 2
 PRODUCTID: 12
 QUANTITY: 20
-COST: 25.20
+COST: 25.2
 ------------------------------------------------------------------------
 INVOICEID: 22
 ITEM: 3
 PRODUCTID: 22
 QUANTITY: 5
-COST: 9.90
+COST: 9.9
 ------------------------------------------------------------------------
 INVOICEID: 22
 ITEM: 4
 PRODUCTID: 5
 QUANTITY: 21
-COST: 35.40
+COST: 35.4
 ------------------------------------------------------------------------
 INVOICEID: 22
 ITEM: 5
 PRODUCTID: 24
 QUANTITY: 5
-COST: 10.80
+COST: 10.8
 ------------------------------------------------------------------------
 INVOICEID: 22
 ITEM: 6
 PRODUCTID: 4
 QUANTITY: 11
-COST: 19.20
+COST: 19.2
 ------------------------------------------------------------------------
 INVOICEID: 22
 ITEM: 7
 PRODUCTID: 21
 QUANTITY: 6
-COST: 17.10
+COST: 17.1
 ------------------------------------------------------------------------
 INVOICEID: 22
 ITEM: 8
 PRODUCTID: 3
 QUANTITY: 2
-COST: 38.10
+COST: 38.1
 ------------------------------------------------------------------------
 INVOICEID: 22
 ITEM: 9
 PRODUCTID: 23
 QUANTITY: 1
-COST: 11.40
+COST: 11.4
 ------------------------------------------------------------------------
 INVOICEID: 23
 ITEM: 0
 PRODUCTID: 48
 QUANTITY: 22
-COST: 31.50
+COST: 31.5
 ------------------------------------------------------------------------
 INVOICEID: 23
 ITEM: 1
 PRODUCTID: 26
 QUANTITY: 8
-COST: 37.80
+COST: 37.8
 ------------------------------------------------------------------------
 INVOICEID: 23
 ITEM: 2
 PRODUCTID: 33
 QUANTITY: 18
-COST: 27.30
+COST: 27.3
 ------------------------------------------------------------------------
 INVOICEID: 23
 ITEM: 3
 PRODUCTID: 40
 QUANTITY: 19
-COST: 4.20
+COST: 4.2
 ------------------------------------------------------------------------
 INVOICEID: 23
 ITEM: 4
 PRODUCTID: 23
 QUANTITY: 19
-COST: 11.40
+COST: 11.4
 ------------------------------------------------------------------------
 INVOICEID: 23
 ITEM: 5
 PRODUCTID: 32
 QUANTITY: 14
-COST: 28.50
+COST: 28.5
 ------------------------------------------------------------------------
 INVOICEID: 23
 ITEM: 6
 PRODUCTID: 16
 QUANTITY: 1
-COST: 29.10
+COST: 29.1
 ------------------------------------------------------------------------
 INVOICEID: 23
 ITEM: 7
 PRODUCTID: 39
 QUANTITY: 3
-COST: 23.10
+COST: 23.1
 ------------------------------------------------------------------------
 INVOICEID: 23
 ITEM: 8
 PRODUCTID: 6
 QUANTITY: 17
-COST: 14.70
+COST: 14.7
 ------------------------------------------------------------------------
 INVOICEID: 23
 ITEM: 9
 PRODUCTID: 20
 QUANTITY: 18
-COST: 30.00
+COST: 30.0
 ------------------------------------------------------------------------
 INVOICEID: 23
 ITEM: 10
 PRODUCTID: 4
 QUANTITY: 18
-COST: 19.20
+COST: 19.2
 ------------------------------------------------------------------------
 INVOICEID: 23
 ITEM: 11
 PRODUCTID: 41
 QUANTITY: 8
-COST: 30.90
+COST: 30.9
 ------------------------------------------------------------------------
 INVOICEID: 23
 ITEM: 12
 PRODUCTID: 4
 QUANTITY: 17
-COST: 19.20
+COST: 19.2
 ------------------------------------------------------------------------
 INVOICEID: 23
 ITEM: 13
 PRODUCTID: 14
 QUANTITY: 17
-COST: 18.60
+COST: 18.6
 ------------------------------------------------------------------------
 INVOICEID: 23
 ITEM: 14
 PRODUCTID: 44
 QUANTITY: 2
-COST: 14.40
+COST: 14.4
 ------------------------------------------------------------------------
 INVOICEID: 23
 ITEM: 15
 PRODUCTID: 13
 QUANTITY: 17
-COST: 27.00
+COST: 27.0
 ------------------------------------------------------------------------
 INVOICEID: 23
 ITEM: 16
 PRODUCTID: 8
 QUANTITY: 11
-COST: 33.90
+COST: 33.9
 ------------------------------------------------------------------------
 INVOICEID: 24
 ITEM: 0
 PRODUCTID: 43
 QUANTITY: 14
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 24
 ITEM: 1
 PRODUCTID: 46
 QUANTITY: 18
-COST: 9.30
+COST: 9.3
 ------------------------------------------------------------------------
 INVOICEID: 24
 ITEM: 2
 PRODUCTID: 38
 QUANTITY: 10
-COST: 32.40
+COST: 32.4
 ------------------------------------------------------------------------
 INVOICEID: 24
 ITEM: 3
 PRODUCTID: 17
 QUANTITY: 23
-COST: 33.00
+COST: 33.0
 ------------------------------------------------------------------------
 INVOICEID: 24
 ITEM: 4
 PRODUCTID: 15
 QUANTITY: 17
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 24
 ITEM: 5
 PRODUCTID: 35
 QUANTITY: 16
-COST: 11.40
+COST: 11.4
 ------------------------------------------------------------------------
 INVOICEID: 24
 ITEM: 6
 PRODUCTID: 40
 QUANTITY: 3
-COST: 4.20
+COST: 4.2
 ------------------------------------------------------------------------
 INVOICEID: 24
 ITEM: 7
 PRODUCTID: 7
 QUANTITY: 13
-COST: 12.60
+COST: 12.6
 ------------------------------------------------------------------------
 INVOICEID: 24
 ITEM: 8
 PRODUCTID: 5
 QUANTITY: 18
-COST: 35.40
+COST: 35.4
 ------------------------------------------------------------------------
 INVOICEID: 24
 ITEM: 9
 PRODUCTID: 21
 QUANTITY: 8
-COST: 17.10
+COST: 17.1
 ------------------------------------------------------------------------
 INVOICEID: 24
 ITEM: 10
 PRODUCTID: 27
 QUANTITY: 4
-COST: 34.50
+COST: 34.5
 ------------------------------------------------------------------------
 INVOICEID: 24
 ITEM: 11
 PRODUCTID: 1
 QUANTITY: 4
-COST: 37.20
+COST: 37.2
 ------------------------------------------------------------------------
 INVOICEID: 24
 ITEM: 12
 PRODUCTID: 0
 QUANTITY: 8
-COST: 8.10
+COST: 8.1
 ------------------------------------------------------------------------
 INVOICEID: 24
 ITEM: 13
 PRODUCTID: 15
 QUANTITY: 21
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 24
 ITEM: 14
 PRODUCTID: 1
 QUANTITY: 13
-COST: 37.20
+COST: 37.2
 ------------------------------------------------------------------------
 INVOICEID: 24
 ITEM: 15
 PRODUCTID: 39
 QUANTITY: 17
-COST: 23.10
+COST: 23.1
 ------------------------------------------------------------------------
 INVOICEID: 25
 ITEM: 0
 PRODUCTID: 5
 QUANTITY: 15
-COST: 35.40
+COST: 35.4
 ------------------------------------------------------------------------
 INVOICEID: 25
 ITEM: 1
 PRODUCTID: 43
 QUANTITY: 13
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 25
 ITEM: 2
 PRODUCTID: 13
 QUANTITY: 8
-COST: 27.00
+COST: 27.0
 ------------------------------------------------------------------------
 INVOICEID: 25
 ITEM: 3
 PRODUCTID: 19
 QUANTITY: 4
-COST: 16.50
+COST: 16.5
 ------------------------------------------------------------------------
 INVOICEID: 25
 ITEM: 4
 PRODUCTID: 47
 QUANTITY: 10
-COST: 26.70
+COST: 26.7
 ------------------------------------------------------------------------
 INVOICEID: 25
 ITEM: 5
 PRODUCTID: 10
 QUANTITY: 5
-COST: 30.60
+COST: 30.6
 ------------------------------------------------------------------------
 INVOICEID: 25
 ITEM: 6
 PRODUCTID: 21
 QUANTITY: 18
-COST: 17.10
+COST: 17.1
 ------------------------------------------------------------------------
 INVOICEID: 25
 ITEM: 7
 PRODUCTID: 16
 QUANTITY: 8
-COST: 29.10
+COST: 29.1
 ------------------------------------------------------------------------
 INVOICEID: 25
 ITEM: 8
 PRODUCTID: 38
 QUANTITY: 3
-COST: 32.40
+COST: 32.4
 ------------------------------------------------------------------------
 INVOICEID: 26
 ITEM: 0
 PRODUCTID: 42
 QUANTITY: 16
-COST: 29.70
+COST: 29.7
 ------------------------------------------------------------------------
 INVOICEID: 26
 ITEM: 1
 PRODUCTID: 43
 QUANTITY: 21
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 26
 ITEM: 2
 PRODUCTID: 33
 QUANTITY: 7
-COST: 27.30
+COST: 27.3
 ------------------------------------------------------------------------
 INVOICEID: 26
 ITEM: 3
 PRODUCTID: 16
 QUANTITY: 3
-COST: 29.10
+COST: 29.1
 ------------------------------------------------------------------------
 INVOICEID: 26
 ITEM: 4
 PRODUCTID: 46
 QUANTITY: 7
-COST: 9.30
+COST: 9.3
 ------------------------------------------------------------------------
 INVOICEID: 26
 ITEM: 5
 PRODUCTID: 38
 QUANTITY: 4
-COST: 32.40
+COST: 32.4
 ------------------------------------------------------------------------
 INVOICEID: 26
 ITEM: 6
 PRODUCTID: 7
 QUANTITY: 23
-COST: 12.60
+COST: 12.6
 ------------------------------------------------------------------------
 INVOICEID: 26
 ITEM: 7
 PRODUCTID: 4
 QUANTITY: 16
-COST: 19.20
+COST: 19.2
 ------------------------------------------------------------------------
 INVOICEID: 26
 ITEM: 8
 PRODUCTID: 40
 QUANTITY: 13
-COST: 4.20
+COST: 4.2
 ------------------------------------------------------------------------
 INVOICEID: 26
 ITEM: 9
 PRODUCTID: 1
 QUANTITY: 23
-COST: 37.20
+COST: 37.2
 ------------------------------------------------------------------------
 INVOICEID: 26
 ITEM: 10
 PRODUCTID: 34
 QUANTITY: 16
-COST: 38.40
+COST: 38.4
 ------------------------------------------------------------------------
 INVOICEID: 26
 ITEM: 11
 PRODUCTID: 18
 QUANTITY: 3
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 26
 ITEM: 12
 PRODUCTID: 27
 QUANTITY: 20
-COST: 34.50
+COST: 34.5
 ------------------------------------------------------------------------
 INVOICEID: 26
 ITEM: 13
 PRODUCTID: 13
 QUANTITY: 10
-COST: 27.00
+COST: 27.0
 ------------------------------------------------------------------------
 INVOICEID: 26
 ITEM: 14
 PRODUCTID: 26
 QUANTITY: 6
-COST: 37.80
+COST: 37.8
 ------------------------------------------------------------------------
 INVOICEID: 26
 ITEM: 15
 PRODUCTID: 8
 QUANTITY: 6
-COST: 33.90
+COST: 33.9
 ------------------------------------------------------------------------
 INVOICEID: 26
 ITEM: 16
 PRODUCTID: 30
 QUANTITY: 4
-COST: 34.80
+COST: 34.8
 ------------------------------------------------------------------------
 INVOICEID: 27
 ITEM: 0
 PRODUCTID: 24
 QUANTITY: 15
-COST: 10.80
+COST: 10.8
 ------------------------------------------------------------------------
 INVOICEID: 27
 ITEM: 1
 PRODUCTID: 45
 QUANTITY: 15
-COST: 27.00
+COST: 27.0
 ------------------------------------------------------------------------
 INVOICEID: 27
 ITEM: 2
 PRODUCTID: 19
 QUANTITY: 1
-COST: 16.50
+COST: 16.5
 ------------------------------------------------------------------------
 INVOICEID: 28
 ITEM: 0
 PRODUCTID: 35
 QUANTITY: 13
-COST: 11.40
+COST: 11.4
 ------------------------------------------------------------------------
 INVOICEID: 28
 ITEM: 1
 PRODUCTID: 15
 QUANTITY: 13
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 28
 ITEM: 2
 PRODUCTID: 44
 QUANTITY: 22
-COST: 14.40
+COST: 14.4
 ------------------------------------------------------------------------
 INVOICEID: 28
 ITEM: 3
 PRODUCTID: 6
 QUANTITY: 3
-COST: 14.70
+COST: 14.7
 ------------------------------------------------------------------------
 INVOICEID: 28
 ITEM: 4
 PRODUCTID: 45
 QUANTITY: 17
-COST: 27.00
+COST: 27.0
 ------------------------------------------------------------------------
 INVOICEID: 28
 ITEM: 5
 PRODUCTID: 49
 QUANTITY: 4
-COST: 3.30
+COST: 3.3
 ------------------------------------------------------------------------
 INVOICEID: 28
 ITEM: 6
 PRODUCTID: 33
 QUANTITY: 16
-COST: 27.30
+COST: 27.3
 ------------------------------------------------------------------------
 INVOICEID: 28
 ITEM: 7
 PRODUCTID: 28
 QUANTITY: 8
-COST: 4.50
+COST: 4.5
 ------------------------------------------------------------------------
 INVOICEID: 28
 ITEM: 8
 PRODUCTID: 28
 QUANTITY: 6
-COST: 4.50
+COST: 4.5
 ------------------------------------------------------------------------
 INVOICEID: 29
 ITEM: 0
 PRODUCTID: 33
 QUANTITY: 17
-COST: 27.30
+COST: 27.3
 ------------------------------------------------------------------------
 INVOICEID: 29
 ITEM: 1
 PRODUCTID: 38
 QUANTITY: 12
-COST: 32.40
+COST: 32.4
 ------------------------------------------------------------------------
 INVOICEID: 29
 ITEM: 2
 PRODUCTID: 17
 QUANTITY: 23
-COST: 33.00
+COST: 33.0
 ------------------------------------------------------------------------
 INVOICEID: 29
 ITEM: 3
 PRODUCTID: 7
 QUANTITY: 21
-COST: 12.60
+COST: 12.6
 ------------------------------------------------------------------------
 INVOICEID: 29
 ITEM: 4
 PRODUCTID: 4
 QUANTITY: 7
-COST: 19.20
+COST: 19.2
 ------------------------------------------------------------------------
 INVOICEID: 29
 ITEM: 5
 PRODUCTID: 31
 QUANTITY: 13
-COST: 7.20
+COST: 7.2
 ------------------------------------------------------------------------
 INVOICEID: 29
 ITEM: 6
 PRODUCTID: 4
 QUANTITY: 16
-COST: 19.20
+COST: 19.2
 ------------------------------------------------------------------------
 INVOICEID: 29
 ITEM: 7
 PRODUCTID: 5
 QUANTITY: 1
-COST: 35.40
+COST: 35.4
 ------------------------------------------------------------------------
 INVOICEID: 29
 ITEM: 8
 PRODUCTID: 35
 QUANTITY: 6
-COST: 11.40
+COST: 11.4
 ------------------------------------------------------------------------
 INVOICEID: 30
 ITEM: 0
 PRODUCTID: 14
 QUANTITY: 7
-COST: 18.60
+COST: 18.6
 ------------------------------------------------------------------------
 INVOICEID: 30
 ITEM: 1
 PRODUCTID: 16
 QUANTITY: 19
-COST: 29.10
+COST: 29.1
 ------------------------------------------------------------------------
 INVOICEID: 30
 ITEM: 2
 PRODUCTID: 10
 QUANTITY: 18
-COST: 30.60
+COST: 30.6
 ------------------------------------------------------------------------
 INVOICEID: 30
 ITEM: 3
 PRODUCTID: 33
 QUANTITY: 2
-COST: 27.30
+COST: 27.3
 ------------------------------------------------------------------------
 INVOICEID: 30
 ITEM: 4
 PRODUCTID: 34
 QUANTITY: 2
-COST: 38.40
+COST: 38.4
 ------------------------------------------------------------------------
 INVOICEID: 30
 ITEM: 5
 PRODUCTID: 43
 QUANTITY: 23
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 30
 ITEM: 6
 PRODUCTID: 14
 QUANTITY: 23
-COST: 18.60
+COST: 18.6
 ------------------------------------------------------------------------
 INVOICEID: 31
 ITEM: 0
 PRODUCTID: 33
 QUANTITY: 10
-COST: 27.30
+COST: 27.3
 ------------------------------------------------------------------------
 INVOICEID: 31
 ITEM: 1
 PRODUCTID: 4
 QUANTITY: 23
-COST: 19.20
+COST: 19.2
 ------------------------------------------------------------------------
 INVOICEID: 31
 ITEM: 2
 PRODUCTID: 4
 QUANTITY: 3
-COST: 19.20
+COST: 19.2
 ------------------------------------------------------------------------
 INVOICEID: 31
 ITEM: 3
 PRODUCTID: 12
 QUANTITY: 10
-COST: 25.20
+COST: 25.2
 ------------------------------------------------------------------------
 INVOICEID: 31
 ITEM: 4
 PRODUCTID: 8
 QUANTITY: 14
-COST: 33.90
+COST: 33.9
 ------------------------------------------------------------------------
 INVOICEID: 31
 ITEM: 5
 PRODUCTID: 1
 QUANTITY: 4
-COST: 37.20
+COST: 37.2
 ------------------------------------------------------------------------
 INVOICEID: 31
 ITEM: 6
 PRODUCTID: 26
 QUANTITY: 16
-COST: 37.80
+COST: 37.8
 ------------------------------------------------------------------------
 INVOICEID: 31
 ITEM: 7
 PRODUCTID: 38
 QUANTITY: 3
-COST: 32.40
+COST: 32.4
 ------------------------------------------------------------------------
 INVOICEID: 31
 ITEM: 8
 PRODUCTID: 7
 QUANTITY: 5
-COST: 12.60
+COST: 12.6
 ------------------------------------------------------------------------
 INVOICEID: 31
 ITEM: 9
 PRODUCTID: 14
 QUANTITY: 15
-COST: 18.60
+COST: 18.6
 ------------------------------------------------------------------------
 INVOICEID: 31
 ITEM: 10
 PRODUCTID: 0
 QUANTITY: 3
-COST: 8.10
+COST: 8.1
 ------------------------------------------------------------------------
 INVOICEID: 32
 ITEM: 0
 PRODUCTID: 35
 QUANTITY: 11
-COST: 11.40
+COST: 11.4
 ------------------------------------------------------------------------
 INVOICEID: 32
 ITEM: 1
 PRODUCTID: 30
 QUANTITY: 13
-COST: 34.80
+COST: 34.8
 ------------------------------------------------------------------------
 INVOICEID: 32
 ITEM: 2
 PRODUCTID: 1
 QUANTITY: 14
-COST: 37.20
+COST: 37.2
 ------------------------------------------------------------------------
 INVOICEID: 33
 ITEM: 0
 PRODUCTID: 36
 QUANTITY: 5
-COST: 4.80
+COST: 4.8
 ------------------------------------------------------------------------
 INVOICEID: 33
 ITEM: 1
 PRODUCTID: 10
 QUANTITY: 21
-COST: 30.60
+COST: 30.6
 ------------------------------------------------------------------------
 INVOICEID: 33
 ITEM: 2
 PRODUCTID: 36
 QUANTITY: 16
-COST: 4.80
+COST: 4.8
 ------------------------------------------------------------------------
 INVOICEID: 33
 ITEM: 3
 PRODUCTID: 48
 QUANTITY: 1
-COST: 31.50
+COST: 31.5
 ------------------------------------------------------------------------
 INVOICEID: 33
 ITEM: 4
 PRODUCTID: 24
 QUANTITY: 1
-COST: 10.80
+COST: 10.8
 ------------------------------------------------------------------------
 INVOICEID: 33
 ITEM: 5
 PRODUCTID: 8
 QUANTITY: 11
-COST: 33.90
+COST: 33.9
 ------------------------------------------------------------------------
 INVOICEID: 33
 ITEM: 6
 PRODUCTID: 17
 QUANTITY: 16
-COST: 33.00
+COST: 33.0
 ------------------------------------------------------------------------
 INVOICEID: 33
 ITEM: 7
 PRODUCTID: 43
 QUANTITY: 10
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 33
 ITEM: 8
 PRODUCTID: 3
 QUANTITY: 15
-COST: 38.10
+COST: 38.1
 ------------------------------------------------------------------------
 INVOICEID: 33
 ITEM: 9
 PRODUCTID: 29
 QUANTITY: 5
-COST: 16.80
+COST: 16.8
 ------------------------------------------------------------------------
 INVOICEID: 33
 ITEM: 10
 PRODUCTID: 24
 QUANTITY: 9
-COST: 10.80
+COST: 10.8
 ------------------------------------------------------------------------
 INVOICEID: 33
 ITEM: 11
 PRODUCTID: 5
 QUANTITY: 7
-COST: 35.40
+COST: 35.4
 ------------------------------------------------------------------------
 INVOICEID: 33
 ITEM: 12
 PRODUCTID: 16
 QUANTITY: 23
-COST: 29.10
+COST: 29.1
 ------------------------------------------------------------------------
 INVOICEID: 33
 ITEM: 13
 PRODUCTID: 25
 QUANTITY: 16
-COST: 24.30
+COST: 24.3
 ------------------------------------------------------------------------
 INVOICEID: 33
 ITEM: 14
 PRODUCTID: 44
 QUANTITY: 13
-COST: 14.40
+COST: 14.4
 ------------------------------------------------------------------------
 INVOICEID: 33
 ITEM: 15
 PRODUCTID: 38
 QUANTITY: 7
-COST: 32.40
+COST: 32.4
 ------------------------------------------------------------------------
 INVOICEID: 34
 ITEM: 0
 PRODUCTID: 10
 QUANTITY: 22
-COST: 30.60
+COST: 30.6
 ------------------------------------------------------------------------
 INVOICEID: 34
 ITEM: 1
 PRODUCTID: 4
 QUANTITY: 3
-COST: 19.20
+COST: 19.2
 ------------------------------------------------------------------------
 INVOICEID: 34
 ITEM: 2
 PRODUCTID: 28
 QUANTITY: 22
-COST: 4.50
+COST: 4.5
 ------------------------------------------------------------------------
 INVOICEID: 34
 ITEM: 3
 PRODUCTID: 44
 QUANTITY: 15
-COST: 14.40
+COST: 14.4
 ------------------------------------------------------------------------
 INVOICEID: 34
 ITEM: 4
 PRODUCTID: 27
 QUANTITY: 1
-COST: 34.50
+COST: 34.5
 ------------------------------------------------------------------------
 INVOICEID: 34
 ITEM: 5
 PRODUCTID: 45
 QUANTITY: 13
-COST: 27.00
+COST: 27.0
 ------------------------------------------------------------------------
 INVOICEID: 34
 ITEM: 6
 PRODUCTID: 32
 QUANTITY: 7
-COST: 28.50
+COST: 28.5
 ------------------------------------------------------------------------
 INVOICEID: 34
 ITEM: 7
 PRODUCTID: 21
 QUANTITY: 22
-COST: 17.10
+COST: 17.1
 ------------------------------------------------------------------------
 INVOICEID: 34
 ITEM: 8
 PRODUCTID: 3
 QUANTITY: 1
-COST: 38.10
+COST: 38.1
 ------------------------------------------------------------------------
 INVOICEID: 34
 ITEM: 9
 PRODUCTID: 8
 QUANTITY: 17
-COST: 33.90
+COST: 33.9
 ------------------------------------------------------------------------
 INVOICEID: 34
 ITEM: 10
 PRODUCTID: 41
 QUANTITY: 16
-COST: 30.90
+COST: 30.9
 ------------------------------------------------------------------------
 INVOICEID: 34
 ITEM: 11
 PRODUCTID: 4
 QUANTITY: 17
-COST: 19.20
+COST: 19.2
 ------------------------------------------------------------------------
 INVOICEID: 34
 ITEM: 12
 PRODUCTID: 43
 QUANTITY: 21
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 34
 ITEM: 13
 PRODUCTID: 30
 QUANTITY: 14
-COST: 34.80
+COST: 34.8
 ------------------------------------------------------------------------
 INVOICEID: 34
 ITEM: 14
 PRODUCTID: 46
 QUANTITY: 7
-COST: 9.30
+COST: 9.3
 ------------------------------------------------------------------------
 INVOICEID: 35
 ITEM: 0
 PRODUCTID: 20
 QUANTITY: 17
-COST: 30.00
+COST: 30.0
 ------------------------------------------------------------------------
 INVOICEID: 35
 ITEM: 1
 PRODUCTID: 3
 QUANTITY: 9
-COST: 38.10
+COST: 38.1
 ------------------------------------------------------------------------
 INVOICEID: 35
 ITEM: 2
 PRODUCTID: 14
 QUANTITY: 4
-COST: 18.60
+COST: 18.6
 ------------------------------------------------------------------------
 INVOICEID: 35
 ITEM: 3
 PRODUCTID: 27
 QUANTITY: 10
-COST: 34.50
+COST: 34.5
 ------------------------------------------------------------------------
 INVOICEID: 35
 ITEM: 4
 PRODUCTID: 14
 QUANTITY: 17
-COST: 18.60
+COST: 18.6
 ------------------------------------------------------------------------
 INVOICEID: 35
 ITEM: 5
 PRODUCTID: 33
 QUANTITY: 5
-COST: 27.30
+COST: 27.3
 ------------------------------------------------------------------------
 INVOICEID: 35
 ITEM: 6
 PRODUCTID: 5
 QUANTITY: 4
-COST: 35.40
+COST: 35.4
 ------------------------------------------------------------------------
 INVOICEID: 35
 ITEM: 7
 PRODUCTID: 22
 QUANTITY: 15
-COST: 9.90
+COST: 9.9
 ------------------------------------------------------------------------
 INVOICEID: 35
 ITEM: 8
 PRODUCTID: 0
 QUANTITY: 1
-COST: 8.10
+COST: 8.1
 ------------------------------------------------------------------------
 INVOICEID: 35
 ITEM: 9
 PRODUCTID: 19
 QUANTITY: 1
-COST: 16.50
+COST: 16.5
 ------------------------------------------------------------------------
 INVOICEID: 35
 ITEM: 10
 PRODUCTID: 17
 QUANTITY: 11
-COST: 33.00
+COST: 33.0
 ------------------------------------------------------------------------
 INVOICEID: 35
 ITEM: 11
 PRODUCTID: 44
 QUANTITY: 9
-COST: 14.40
+COST: 14.4
 ------------------------------------------------------------------------
 INVOICEID: 35
 ITEM: 12
 PRODUCTID: 7
 QUANTITY: 23
-COST: 12.60
+COST: 12.6
 ------------------------------------------------------------------------
 INVOICEID: 35
 ITEM: 13
 PRODUCTID: 19
 QUANTITY: 17
-COST: 16.50
+COST: 16.5
 ------------------------------------------------------------------------
 INVOICEID: 36
 ITEM: 0
 PRODUCTID: 18
 QUANTITY: 13
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 36
 ITEM: 1
 PRODUCTID: 15
 QUANTITY: 23
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 36
 ITEM: 2
 PRODUCTID: 1
 QUANTITY: 6
-COST: 37.20
+COST: 37.2
 ------------------------------------------------------------------------
 INVOICEID: 36
 ITEM: 3
 PRODUCTID: 10
 QUANTITY: 8
-COST: 30.60
+COST: 30.6
 ------------------------------------------------------------------------
 INVOICEID: 36
 ITEM: 4
 PRODUCTID: 40
 QUANTITY: 5
-COST: 4.20
+COST: 4.2
 ------------------------------------------------------------------------
 INVOICEID: 36
 ITEM: 5
 PRODUCTID: 25
 QUANTITY: 8
-COST: 24.30
+COST: 24.3
 ------------------------------------------------------------------------
 INVOICEID: 36
 ITEM: 6
 PRODUCTID: 39
 QUANTITY: 20
-COST: 23.10
+COST: 23.1
 ------------------------------------------------------------------------
 INVOICEID: 36
 ITEM: 7
 PRODUCTID: 39
 QUANTITY: 19
-COST: 23.10
+COST: 23.1
 ------------------------------------------------------------------------
 INVOICEID: 36
 ITEM: 8
 PRODUCTID: 4
 QUANTITY: 21
-COST: 19.20
+COST: 19.2
 ------------------------------------------------------------------------
 INVOICEID: 36
 ITEM: 9
 PRODUCTID: 31
 QUANTITY: 18
-COST: 7.20
+COST: 7.2
 ------------------------------------------------------------------------
 INVOICEID: 36
 ITEM: 10
 PRODUCTID: 47
 QUANTITY: 11
-COST: 26.70
+COST: 26.7
 ------------------------------------------------------------------------
 INVOICEID: 36
 ITEM: 11
 PRODUCTID: 44
 QUANTITY: 9
-COST: 14.40
+COST: 14.4
 ------------------------------------------------------------------------
 INVOICEID: 37
 ITEM: 0
 PRODUCTID: 41
 QUANTITY: 24
-COST: 30.90
+COST: 30.9
 ------------------------------------------------------------------------
 INVOICEID: 37
 ITEM: 1
 PRODUCTID: 15
 QUANTITY: 20
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 37
 ITEM: 2
 PRODUCTID: 36
 QUANTITY: 8
-COST: 4.80
+COST: 4.8
 ------------------------------------------------------------------------
 INVOICEID: 37
 ITEM: 3
 PRODUCTID: 26
 QUANTITY: 7
-COST: 37.80
+COST: 37.8
 ------------------------------------------------------------------------
 INVOICEID: 37
 ITEM: 4
 PRODUCTID: 13
 QUANTITY: 20
-COST: 27.00
+COST: 27.0
 ------------------------------------------------------------------------
 INVOICEID: 37
 ITEM: 5
 PRODUCTID: 1
 QUANTITY: 14
-COST: 37.20
+COST: 37.2
 ------------------------------------------------------------------------
 INVOICEID: 37
 ITEM: 6
 PRODUCTID: 34
 QUANTITY: 12
-COST: 38.40
+COST: 38.4
 ------------------------------------------------------------------------
 INVOICEID: 37
 ITEM: 7
 PRODUCTID: 24
 QUANTITY: 19
-COST: 10.80
+COST: 10.8
 ------------------------------------------------------------------------
 INVOICEID: 37
 ITEM: 8
 PRODUCTID: 46
 QUANTITY: 9
-COST: 9.30
+COST: 9.3
 ------------------------------------------------------------------------
 INVOICEID: 37
 ITEM: 9
 PRODUCTID: 47
 QUANTITY: 16
-COST: 26.70
+COST: 26.7
 ------------------------------------------------------------------------
 INVOICEID: 37
 ITEM: 10
 PRODUCTID: 1
 QUANTITY: 18
-COST: 37.20
+COST: 37.2
 ------------------------------------------------------------------------
 INVOICEID: 37
 ITEM: 11
 PRODUCTID: 30
 QUANTITY: 5
-COST: 34.80
+COST: 34.8
 ------------------------------------------------------------------------
 INVOICEID: 37
 ITEM: 12
 PRODUCTID: 24
 QUANTITY: 23
-COST: 10.80
+COST: 10.8
 ------------------------------------------------------------------------
 INVOICEID: 37
 ITEM: 13
 PRODUCTID: 32
 QUANTITY: 3
-COST: 28.50
+COST: 28.5
 ------------------------------------------------------------------------
 INVOICEID: 37
 ITEM: 14
 PRODUCTID: 12
 QUANTITY: 3
-COST: 25.20
+COST: 25.2
 ------------------------------------------------------------------------
 INVOICEID: 37
 ITEM: 15
 PRODUCTID: 32
 QUANTITY: 12
-COST: 28.50
+COST: 28.5
 ------------------------------------------------------------------------
 INVOICEID: 37
 ITEM: 16
 PRODUCTID: 27
 QUANTITY: 8
-COST: 34.50
+COST: 34.5
 ------------------------------------------------------------------------
 INVOICEID: 37
 ITEM: 17
 PRODUCTID: 38
 QUANTITY: 18
-COST: 32.40
+COST: 32.4
 ------------------------------------------------------------------------
 INVOICEID: 37
 ITEM: 18
 PRODUCTID: 26
 QUANTITY: 22
-COST: 37.80
+COST: 37.8
 ------------------------------------------------------------------------
 INVOICEID: 37
 ITEM: 19
 PRODUCTID: 19
 QUANTITY: 20
-COST: 16.50
+COST: 16.5
 ------------------------------------------------------------------------
 INVOICEID: 37
 ITEM: 20
 PRODUCTID: 14
 QUANTITY: 1
-COST: 18.60
+COST: 18.6
 ------------------------------------------------------------------------
 INVOICEID: 37
 ITEM: 21
 PRODUCTID: 6
 QUANTITY: 9
-COST: 14.70
+COST: 14.7
 ------------------------------------------------------------------------
 INVOICEID: 38
 ITEM: 0
 PRODUCTID: 48
 QUANTITY: 14
-COST: 31.50
+COST: 31.5
 ------------------------------------------------------------------------
 INVOICEID: 38
 ITEM: 1
 PRODUCTID: 45
 QUANTITY: 13
-COST: 27.00
+COST: 27.0
 ------------------------------------------------------------------------
 INVOICEID: 38
 ITEM: 2
 PRODUCTID: 4
 QUANTITY: 8
-COST: 19.20
+COST: 19.2
 ------------------------------------------------------------------------
 INVOICEID: 38
 ITEM: 3
 PRODUCTID: 27
 QUANTITY: 19
-COST: 34.50
+COST: 34.5
 ------------------------------------------------------------------------
 INVOICEID: 38
 ITEM: 4
 PRODUCTID: 45
 QUANTITY: 14
-COST: 27.00
+COST: 27.0
 ------------------------------------------------------------------------
 INVOICEID: 38
 ITEM: 5
 PRODUCTID: 48
 QUANTITY: 17
-COST: 31.50
+COST: 31.5
 ------------------------------------------------------------------------
 INVOICEID: 38
 ITEM: 6
 PRODUCTID: 5
 QUANTITY: 19
-COST: 35.40
+COST: 35.4
 ------------------------------------------------------------------------
 INVOICEID: 38
 ITEM: 7
 PRODUCTID: 15
 QUANTITY: 1
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 38
 ITEM: 8
 PRODUCTID: 40
 QUANTITY: 10
-COST: 4.20
+COST: 4.2
 ------------------------------------------------------------------------
 INVOICEID: 38
 ITEM: 9
 PRODUCTID: 27
 QUANTITY: 20
-COST: 34.50
+COST: 34.5
 ------------------------------------------------------------------------
 INVOICEID: 38
 ITEM: 10
 PRODUCTID: 4
 QUANTITY: 18
-COST: 19.20
+COST: 19.2
 ------------------------------------------------------------------------
 INVOICEID: 38
 ITEM: 11
 PRODUCTID: 19
 QUANTITY: 18
-COST: 16.50
+COST: 16.5
 ------------------------------------------------------------------------
 INVOICEID: 38
 ITEM: 12
 PRODUCTID: 1
 QUANTITY: 18
-COST: 37.20
+COST: 37.2
 ------------------------------------------------------------------------
 INVOICEID: 38
 ITEM: 13
 PRODUCTID: 8
 QUANTITY: 7
-COST: 33.90
+COST: 33.9
 ------------------------------------------------------------------------
 INVOICEID: 38
 ITEM: 14
 PRODUCTID: 20
 QUANTITY: 7
-COST: 30.00
+COST: 30.0
 ------------------------------------------------------------------------
 INVOICEID: 38
 ITEM: 15
 PRODUCTID: 47
 QUANTITY: 10
-COST: 26.70
+COST: 26.7
 ------------------------------------------------------------------------
 INVOICEID: 38
 ITEM: 16
 PRODUCTID: 40
 QUANTITY: 18
-COST: 4.20
+COST: 4.2
 ------------------------------------------------------------------------
 INVOICEID: 38
 ITEM: 17
 PRODUCTID: 32
 QUANTITY: 4
-COST: 28.50
+COST: 28.5
 ------------------------------------------------------------------------
 INVOICEID: 38
 ITEM: 18
 PRODUCTID: 28
 QUANTITY: 20
-COST: 4.50
+COST: 4.5
 ------------------------------------------------------------------------
 INVOICEID: 38
 ITEM: 19
 PRODUCTID: 4
 QUANTITY: 7
-COST: 19.20
+COST: 19.2
 ------------------------------------------------------------------------
 INVOICEID: 39
 ITEM: 0
 PRODUCTID: 10
 QUANTITY: 12
-COST: 30.60
+COST: 30.6
 ------------------------------------------------------------------------
 INVOICEID: 39
 ITEM: 1
 PRODUCTID: 24
 QUANTITY: 6
-COST: 10.80
+COST: 10.8
 ------------------------------------------------------------------------
 INVOICEID: 39
 ITEM: 2
 PRODUCTID: 39
 QUANTITY: 16
-COST: 23.10
+COST: 23.1
 ------------------------------------------------------------------------
 INVOICEID: 39
 ITEM: 3
 PRODUCTID: 20
 QUANTITY: 17
-COST: 30.00
+COST: 30.0
 ------------------------------------------------------------------------
 INVOICEID: 40
 ITEM: 0
 PRODUCTID: 46
 QUANTITY: 24
-COST: 9.30
+COST: 9.3
 ------------------------------------------------------------------------
 INVOICEID: 40
 ITEM: 1
 PRODUCTID: 45
 QUANTITY: 24
-COST: 27.00
+COST: 27.0
 ------------------------------------------------------------------------
 INVOICEID: 40
 ITEM: 2
 PRODUCTID: 4
 QUANTITY: 5
-COST: 19.20
+COST: 19.2
 ------------------------------------------------------------------------
 INVOICEID: 40
 ITEM: 3
 PRODUCTID: 26
 QUANTITY: 10
-COST: 37.80
+COST: 37.8
 ------------------------------------------------------------------------
 INVOICEID: 40
 ITEM: 4
 PRODUCTID: 18
 QUANTITY: 13
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 40
 ITEM: 5
 PRODUCTID: 32
 QUANTITY: 18
-COST: 28.50
+COST: 28.5
 ------------------------------------------------------------------------
 INVOICEID: 40
 ITEM: 6
 PRODUCTID: 28
 QUANTITY: 12
-COST: 4.50
+COST: 4.5
 ------------------------------------------------------------------------
 INVOICEID: 40
 ITEM: 7
 PRODUCTID: 31
 QUANTITY: 1
-COST: 7.20
+COST: 7.2
 ------------------------------------------------------------------------
 INVOICEID: 40
 ITEM: 8
 PRODUCTID: 11
 QUANTITY: 4
-COST: 13.20
+COST: 13.2
 ------------------------------------------------------------------------
 INVOICEID: 40
 ITEM: 9
 PRODUCTID: 40
 QUANTITY: 17
-COST: 4.20
+COST: 4.2
 ------------------------------------------------------------------------
 INVOICEID: 40
 ITEM: 10
 PRODUCTID: 6
 QUANTITY: 11
-COST: 14.70
+COST: 14.7
 ------------------------------------------------------------------------
 INVOICEID: 40
 ITEM: 11
 PRODUCTID: 27
 QUANTITY: 2
-COST: 34.50
+COST: 34.5
 ------------------------------------------------------------------------
 INVOICEID: 40
 ITEM: 12
 PRODUCTID: 35
 QUANTITY: 13
-COST: 11.40
+COST: 11.4
 ------------------------------------------------------------------------
 INVOICEID: 40
 ITEM: 13
 PRODUCTID: 6
 QUANTITY: 8
-COST: 14.70
+COST: 14.7
 ------------------------------------------------------------------------
 INVOICEID: 40
 ITEM: 14
 PRODUCTID: 4
 QUANTITY: 24
-COST: 19.20
+COST: 19.2
 ------------------------------------------------------------------------
 INVOICEID: 40
 ITEM: 15
 PRODUCTID: 22
 QUANTITY: 12
-COST: 9.90
+COST: 9.9
 ------------------------------------------------------------------------
 INVOICEID: 40
 ITEM: 16
 PRODUCTID: 27
 QUANTITY: 16
-COST: 34.50
+COST: 34.5
 ------------------------------------------------------------------------
 INVOICEID: 40
 ITEM: 17
 PRODUCTID: 4
 QUANTITY: 20
-COST: 19.20
+COST: 19.2
 ------------------------------------------------------------------------
 INVOICEID: 40
 ITEM: 18
 PRODUCTID: 33
 QUANTITY: 11
-COST: 27.30
+COST: 27.3
 ------------------------------------------------------------------------
 INVOICEID: 40
 ITEM: 19
 PRODUCTID: 7
 QUANTITY: 23
-COST: 12.60
+COST: 12.6
 ------------------------------------------------------------------------
 INVOICEID: 40
 ITEM: 20
 PRODUCTID: 4
 QUANTITY: 16
-COST: 19.20
+COST: 19.2
 ------------------------------------------------------------------------
 INVOICEID: 41
 ITEM: 0
 PRODUCTID: 5
 QUANTITY: 24
-COST: 35.40
+COST: 35.4
 ------------------------------------------------------------------------
 INVOICEID: 41
 ITEM: 1
 PRODUCTID: 47
 QUANTITY: 19
-COST: 26.70
+COST: 26.7
 ------------------------------------------------------------------------
 INVOICEID: 41
 ITEM: 2
 PRODUCTID: 36
 QUANTITY: 2
-COST: 4.80
+COST: 4.8
 ------------------------------------------------------------------------
 INVOICEID: 41
 ITEM: 3
 PRODUCTID: 29
 QUANTITY: 20
-COST: 16.80
+COST: 16.8
 ------------------------------------------------------------------------
 INVOICEID: 41
 ITEM: 4
 PRODUCTID: 16
 QUANTITY: 22
-COST: 29.10
+COST: 29.1
 ------------------------------------------------------------------------
 INVOICEID: 41
 ITEM: 5
 PRODUCTID: 9
 QUANTITY: 21
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 41
 ITEM: 6
 PRODUCTID: 17
 QUANTITY: 11
-COST: 33.00
+COST: 33.0
 ------------------------------------------------------------------------
 INVOICEID: 41
 ITEM: 7
 PRODUCTID: 22
 QUANTITY: 18
-COST: 9.90
+COST: 9.9
 ------------------------------------------------------------------------
 INVOICEID: 41
 ITEM: 8
 PRODUCTID: 9
 QUANTITY: 22
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 41
 ITEM: 9
 PRODUCTID: 26
 QUANTITY: 21
-COST: 37.80
+COST: 37.8
 ------------------------------------------------------------------------
 INVOICEID: 41
 ITEM: 10
 PRODUCTID: 24
 QUANTITY: 20
-COST: 10.80
+COST: 10.8
 ------------------------------------------------------------------------
 INVOICEID: 41
 ITEM: 11
 PRODUCTID: 48
 QUANTITY: 15
-COST: 31.50
+COST: 31.5
 ------------------------------------------------------------------------
 INVOICEID: 42
 ITEM: 0
 PRODUCTID: 48
 QUANTITY: 9
-COST: 31.50
+COST: 31.5
 ------------------------------------------------------------------------
 INVOICEID: 42
 ITEM: 1
 PRODUCTID: 18
 QUANTITY: 21
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 42
 ITEM: 2
 PRODUCTID: 40
 QUANTITY: 19
-COST: 4.20
+COST: 4.2
 ------------------------------------------------------------------------
 INVOICEID: 42
 ITEM: 3
 PRODUCTID: 40
 QUANTITY: 14
-COST: 4.20
+COST: 4.2
 ------------------------------------------------------------------------
 INVOICEID: 42
 ITEM: 4
 PRODUCTID: 48
 QUANTITY: 15
-COST: 31.50
+COST: 31.5
 ------------------------------------------------------------------------
 INVOICEID: 43
 ITEM: 0
 PRODUCTID: 15
 QUANTITY: 22
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 43
 ITEM: 1
 PRODUCTID: 18
 QUANTITY: 19
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 43
 ITEM: 2
 PRODUCTID: 2
 QUANTITY: 15
-COST: 37.20
+COST: 37.2
 ------------------------------------------------------------------------
 INVOICEID: 43
 ITEM: 3
 PRODUCTID: 6
 QUANTITY: 18
-COST: 14.70
+COST: 14.7
 ------------------------------------------------------------------------
 INVOICEID: 43
 ITEM: 4
 PRODUCTID: 32
 QUANTITY: 22
-COST: 28.50
+COST: 28.5
 ------------------------------------------------------------------------
 INVOICEID: 43
 ITEM: 5
 PRODUCTID: 33
 QUANTITY: 6
-COST: 27.30
+COST: 27.3
 ------------------------------------------------------------------------
 INVOICEID: 43
 ITEM: 6
 PRODUCTID: 24
 QUANTITY: 1
-COST: 10.80
+COST: 10.8
 ------------------------------------------------------------------------
 INVOICEID: 43
 ITEM: 7
 PRODUCTID: 11
 QUANTITY: 15
-COST: 13.20
+COST: 13.2
 ------------------------------------------------------------------------
 INVOICEID: 43
 ITEM: 8
 PRODUCTID: 44
 QUANTITY: 8
-COST: 14.40
+COST: 14.4
 ------------------------------------------------------------------------
 INVOICEID: 43
 ITEM: 9
 PRODUCTID: 7
 QUANTITY: 23
-COST: 12.60
+COST: 12.6
 ------------------------------------------------------------------------
 INVOICEID: 43
 ITEM: 10
 PRODUCTID: 35
 QUANTITY: 1
-COST: 11.40
+COST: 11.4
 ------------------------------------------------------------------------
 INVOICEID: 43
 ITEM: 11
 PRODUCTID: 49
 QUANTITY: 23
-COST: 3.30
+COST: 3.3
 ------------------------------------------------------------------------
 INVOICEID: 43
 ITEM: 12
 PRODUCTID: 40
 QUANTITY: 24
-COST: 4.20
+COST: 4.2
 ------------------------------------------------------------------------
 INVOICEID: 43
 ITEM: 13
 PRODUCTID: 44
 QUANTITY: 22
-COST: 14.40
+COST: 14.4
 ------------------------------------------------------------------------
 INVOICEID: 43
 ITEM: 14
 PRODUCTID: 3
 QUANTITY: 18
-COST: 38.10
+COST: 38.1
 ------------------------------------------------------------------------
 INVOICEID: 43
 ITEM: 15
 PRODUCTID: 48
 QUANTITY: 7
-COST: 31.50
+COST: 31.5
 ------------------------------------------------------------------------
 INVOICEID: 43
 ITEM: 16
 PRODUCTID: 38
 QUANTITY: 12
-COST: 32.40
+COST: 32.4
 ------------------------------------------------------------------------
 INVOICEID: 44
 ITEM: 0
 PRODUCTID: 33
 QUANTITY: 20
-COST: 27.30
+COST: 27.3
 ------------------------------------------------------------------------
 INVOICEID: 44
 ITEM: 1
 PRODUCTID: 34
 QUANTITY: 17
-COST: 38.40
+COST: 38.4
 ------------------------------------------------------------------------
 INVOICEID: 44
 ITEM: 2
 PRODUCTID: 17
 QUANTITY: 14
-COST: 33.00
+COST: 33.0
 ------------------------------------------------------------------------
 INVOICEID: 44
 ITEM: 3
 PRODUCTID: 3
 QUANTITY: 14
-COST: 38.10
+COST: 38.1
 ------------------------------------------------------------------------
 INVOICEID: 44
 ITEM: 4
 PRODUCTID: 12
 QUANTITY: 3
-COST: 25.20
+COST: 25.2
 ------------------------------------------------------------------------
 INVOICEID: 44
 ITEM: 5
 PRODUCTID: 41
 QUANTITY: 22
-COST: 30.90
+COST: 30.9
 ------------------------------------------------------------------------
 INVOICEID: 44
 ITEM: 6
 PRODUCTID: 14
 QUANTITY: 15
-COST: 18.60
+COST: 18.6
 ------------------------------------------------------------------------
 INVOICEID: 44
 ITEM: 7
 PRODUCTID: 49
 QUANTITY: 17
-COST: 3.30
+COST: 3.3
 ------------------------------------------------------------------------
 INVOICEID: 44
 ITEM: 8
 PRODUCTID: 28
 QUANTITY: 23
-COST: 4.50
+COST: 4.5
 ------------------------------------------------------------------------
 INVOICEID: 45
 ITEM: 0
 PRODUCTID: 44
 QUANTITY: 6
-COST: 14.40
+COST: 14.4
 ------------------------------------------------------------------------
 INVOICEID: 45
 ITEM: 1
 PRODUCTID: 11
 QUANTITY: 6
-COST: 13.20
+COST: 13.2
 ------------------------------------------------------------------------
 INVOICEID: 45
 ITEM: 2
 PRODUCTID: 46
 QUANTITY: 8
-COST: 9.30
+COST: 9.3
 ------------------------------------------------------------------------
 INVOICEID: 45
 ITEM: 3
 PRODUCTID: 14
 QUANTITY: 11
-COST: 18.60
+COST: 18.6
 ------------------------------------------------------------------------
 INVOICEID: 45
 ITEM: 4
 PRODUCTID: 3
 QUANTITY: 14
-COST: 38.10
+COST: 38.1
 ------------------------------------------------------------------------
 INVOICEID: 45
 ITEM: 5
 PRODUCTID: 45
 QUANTITY: 17
-COST: 27.00
+COST: 27.0
 ------------------------------------------------------------------------
 INVOICEID: 45
 ITEM: 6
 PRODUCTID: 39
 QUANTITY: 5
-COST: 23.10
+COST: 23.1
 ------------------------------------------------------------------------
 INVOICEID: 45
 ITEM: 7
 PRODUCTID: 6
 QUANTITY: 24
-COST: 14.70
+COST: 14.7
 ------------------------------------------------------------------------
 INVOICEID: 45
 ITEM: 8
 PRODUCTID: 9
 QUANTITY: 2
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 45
 ITEM: 9
 PRODUCTID: 26
 QUANTITY: 18
-COST: 37.80
+COST: 37.8
 ------------------------------------------------------------------------
 INVOICEID: 45
 ITEM: 10
 PRODUCTID: 41
 QUANTITY: 24
-COST: 30.90
+COST: 30.9
 ------------------------------------------------------------------------
 INVOICEID: 45
 ITEM: 11
 PRODUCTID: 31
 QUANTITY: 22
-COST: 7.20
+COST: 7.2
 ------------------------------------------------------------------------
 INVOICEID: 45
 ITEM: 12
 PRODUCTID: 32
 QUANTITY: 13
-COST: 28.50
+COST: 28.5
 ------------------------------------------------------------------------
 INVOICEID: 45
 ITEM: 13
 PRODUCTID: 47
 QUANTITY: 8
-COST: 26.70
+COST: 26.7
 ------------------------------------------------------------------------
 INVOICEID: 45
 ITEM: 14
 PRODUCTID: 3
 QUANTITY: 16
-COST: 38.10
+COST: 38.1
 ------------------------------------------------------------------------
 INVOICEID: 46
 ITEM: 0
 PRODUCTID: 5
 QUANTITY: 21
-COST: 35.40
+COST: 35.4
 ------------------------------------------------------------------------
 INVOICEID: 46
 ITEM: 1
 PRODUCTID: 12
 QUANTITY: 24
-COST: 25.20
+COST: 25.2
 ------------------------------------------------------------------------
 INVOICEID: 46
 ITEM: 2
 PRODUCTID: 30
 QUANTITY: 14
-COST: 34.80
+COST: 34.8
 ------------------------------------------------------------------------
 INVOICEID: 46
 ITEM: 3
 PRODUCTID: 21
 QUANTITY: 19
-COST: 17.10
+COST: 17.1
 ------------------------------------------------------------------------
 INVOICEID: 46
 ITEM: 4
 PRODUCTID: 17
 QUANTITY: 5
-COST: 33.00
+COST: 33.0
 ------------------------------------------------------------------------
 INVOICEID: 46
 ITEM: 5
 PRODUCTID: 25
 QUANTITY: 9
-COST: 24.30
+COST: 24.3
 ------------------------------------------------------------------------
 INVOICEID: 46
 ITEM: 6
 PRODUCTID: 41
 QUANTITY: 18
-COST: 30.90
+COST: 30.9
 ------------------------------------------------------------------------
 INVOICEID: 46
 ITEM: 7
 PRODUCTID: 49
 QUANTITY: 9
-COST: 3.30
+COST: 3.3
 ------------------------------------------------------------------------
 INVOICEID: 46
 ITEM: 8
 PRODUCTID: 8
 QUANTITY: 22
-COST: 33.90
+COST: 33.9
 ------------------------------------------------------------------------
 INVOICEID: 46
 ITEM: 9
 PRODUCTID: 7
 QUANTITY: 4
-COST: 12.60
+COST: 12.6
 ------------------------------------------------------------------------
 INVOICEID: 46
 ITEM: 10
 PRODUCTID: 11
 QUANTITY: 24
-COST: 13.20
+COST: 13.2
 ------------------------------------------------------------------------
 INVOICEID: 46
 ITEM: 11
 PRODUCTID: 1
 QUANTITY: 4
-COST: 37.20
+COST: 37.2
 ------------------------------------------------------------------------
 INVOICEID: 46
 ITEM: 12
 PRODUCTID: 21
 QUANTITY: 24
-COST: 17.10
+COST: 17.1
 ------------------------------------------------------------------------
 INVOICEID: 46
 ITEM: 13
 PRODUCTID: 36
 QUANTITY: 20
-COST: 4.80
+COST: 4.8
 ------------------------------------------------------------------------
 INVOICEID: 46
 ITEM: 14
 PRODUCTID: 24
 QUANTITY: 10
-COST: 10.80
+COST: 10.8
 ------------------------------------------------------------------------
 INVOICEID: 46
 ITEM: 15
 PRODUCTID: 40
 QUANTITY: 11
-COST: 4.20
+COST: 4.2
 ------------------------------------------------------------------------
 INVOICEID: 46
 ITEM: 16
 PRODUCTID: 46
 QUANTITY: 21
-COST: 9.30
+COST: 9.3
 ------------------------------------------------------------------------
 INVOICEID: 46
 ITEM: 17
 PRODUCTID: 12
 QUANTITY: 23
-COST: 25.20
+COST: 25.2
 ------------------------------------------------------------------------
 INVOICEID: 47
 ITEM: 0
 PRODUCTID: 23
 QUANTITY: 15
-COST: 11.40
+COST: 11.4
 ------------------------------------------------------------------------
 INVOICEID: 47
 ITEM: 1
 PRODUCTID: 23
 QUANTITY: 13
-COST: 11.40
+COST: 11.4
 ------------------------------------------------------------------------
 INVOICEID: 47
 ITEM: 2
 PRODUCTID: 17
 QUANTITY: 6
-COST: 33.00
+COST: 33.0
 ------------------------------------------------------------------------
 INVOICEID: 47
 ITEM: 3
 PRODUCTID: 1
 QUANTITY: 4
-COST: 37.20
+COST: 37.2
 ------------------------------------------------------------------------
 INVOICEID: 47
 ITEM: 4
 PRODUCTID: 15
 QUANTITY: 1
-COST: 14.10
+COST: 14.1
 ------------------------------------------------------------------------
 INVOICEID: 47
 ITEM: 5
 PRODUCTID: 40
 QUANTITY: 8
-COST: 4.20
+COST: 4.2
 ------------------------------------------------------------------------
 INVOICEID: 47
 ITEM: 6
 PRODUCTID: 8
 QUANTITY: 10
-COST: 33.90
+COST: 33.9
 ------------------------------------------------------------------------
 INVOICEID: 47
 ITEM: 7
 PRODUCTID: 28
 QUANTITY: 14
-COST: 4.50
+COST: 4.5
 ------------------------------------------------------------------------
 INVOICEID: 47
 ITEM: 8
 PRODUCTID: 16
 QUANTITY: 2
-COST: 29.10
+COST: 29.1
 ------------------------------------------------------------------------
 INVOICEID: 47
 ITEM: 9
 PRODUCTID: 32
 QUANTITY: 9
-COST: 28.50
+COST: 28.5
 ------------------------------------------------------------------------
 INVOICEID: 47
 ITEM: 10
 PRODUCTID: 45
 QUANTITY: 2
-COST: 27.00
+COST: 27.0
 ------------------------------------------------------------------------
 INVOICEID: 47
 ITEM: 11
 PRODUCTID: 35
 QUANTITY: 10
-COST: 11.40
+COST: 11.4
 ------------------------------------------------------------------------
 INVOICEID: 47
 ITEM: 12
 PRODUCTID: 12
 QUANTITY: 20
-COST: 25.20
+COST: 25.2
 ------------------------------------------------------------------------
 INVOICEID: 47
 ITEM: 13
 PRODUCTID: 33
 QUANTITY: 8
-COST: 27.30
+COST: 27.3
 ------------------------------------------------------------------------
 INVOICEID: 48
 ITEM: 0
 PRODUCTID: 6
 QUANTITY: 23
-COST: 14.70
+COST: 14.7
 ------------------------------------------------------------------------
 INVOICEID: 48
 ITEM: 1
 PRODUCTID: 26
 QUANTITY: 23
-COST: 37.80
+COST: 37.8
 ------------------------------------------------------------------------
 INVOICEID: 48
 ITEM: 2
 PRODUCTID: 23
 QUANTITY: 10
-COST: 11.40
+COST: 11.4
 ------------------------------------------------------------------------
 INVOICEID: 48
 ITEM: 3
 PRODUCTID: 10
 QUANTITY: 2
-COST: 30.60
+COST: 30.6
 ------------------------------------------------------------------------
 INVOICEID: 48
 ITEM: 4
 PRODUCTID: 48
 QUANTITY: 4
-COST: 31.50
+COST: 31.5
 ------------------------------------------------------------------------
 INVOICEID: 48
 ITEM: 5
 PRODUCTID: 24
 QUANTITY: 16
-COST: 10.80
+COST: 10.8
 ------------------------------------------------------------------------
 INVOICEID: 48
 ITEM: 6
 PRODUCTID: 11
 QUANTITY: 17
-COST: 13.20
+COST: 13.2
 ------------------------------------------------------------------------
 INVOICEID: 48
 ITEM: 7
 PRODUCTID: 30
 QUANTITY: 19
-COST: 34.80
+COST: 34.8
 ------------------------------------------------------------------------
 INVOICEID: 48
 ITEM: 8
 PRODUCTID: 5
 QUANTITY: 12
-COST: 35.40
+COST: 35.4
 ------------------------------------------------------------------------
 INVOICEID: 48
 ITEM: 9
 PRODUCTID: 35
 QUANTITY: 17
-COST: 11.40
+COST: 11.4
 ------------------------------------------------------------------------
 INVOICEID: 48
 ITEM: 10
 PRODUCTID: 41
 QUANTITY: 10
-COST: 30.90
+COST: 30.9
 ------------------------------------------------------------------------
 INVOICEID: 49
 ITEM: 0
 PRODUCTID: 18
 QUANTITY: 6
-COST: 25.80
+COST: 25.8
 ------------------------------------------------------------------------
 INVOICEID: 49
 ITEM: 1
 PRODUCTID: 22
 QUANTITY: 16
-COST: 9.90
+COST: 9.9
 ------------------------------------------------------------------------
 INVOICEID: 49
 ITEM: 2
 PRODUCTID: 29
 QUANTITY: 6
-COST: 16.80
+COST: 16.8
 ------------------------------------------------------------------------
 INVOICEID: 49
 ITEM: 3
 PRODUCTID: 17
 QUANTITY: 19
-COST: 33.00
+COST: 33.0
 ------------------------------------------------------------------------
 INVOICEID: 49
 ITEM: 4
 PRODUCTID: 47
 QUANTITY: 14
-COST: 26.70
+COST: 26.7
 ------------------------------------------------------------------------
 INVOICEID: 49
 ITEM: 5
 PRODUCTID: 16
 QUANTITY: 1
-COST: 29.10
+COST: 29.1
 ------------------------------------------------------------------------
 INVOICEID: 49
 ITEM: 6
 PRODUCTID: 29
 QUANTITY: 15
-COST: 16.80
+COST: 16.8
 ------------------------------------------------------------------------
 INVOICEID: 49
 ITEM: 7
 PRODUCTID: 6
 QUANTITY: 21
-COST: 14.70
+COST: 14.7
 ------------------------------------------------------------------------
 INVOICEID: 49
 ITEM: 8
 PRODUCTID: 48
 QUANTITY: 24
-COST: 31.50
+COST: 31.5
 ------------------------------------------------------------------------
 INVOICEID: 49
 ITEM: 9
 PRODUCTID: 7
 QUANTITY: 24
-COST: 12.60
+COST: 12.6
 ------------------------------------------------------------------------
 INVOICEID: 49
 ITEM: 10
 PRODUCTID: 30
 QUANTITY: 16
-COST: 34.80
+COST: 34.8
 ------------------------------------------------------------------------
 INVOICEID: 49
 ITEM: 11
 PRODUCTID: 40
 QUANTITY: 15
-COST: 4.20
+COST: 4.2
 ------------------------------------------------------------------------
 INVOICEID: 49
 ITEM: 12
 PRODUCTID: 21
 QUANTITY: 17
-COST: 17.10
+COST: 17.1
 ------------------------------------------------------------------------
 INVOICEID: 49
 ITEM: 13
 PRODUCTID: 6
 QUANTITY: 22
-COST: 14.70
+COST: 14.7
 ------------------------------------------------------------------------
 INVOICEID: 49
 ITEM: 14
 PRODUCTID: 23
 QUANTITY: 5
-COST: 11.40
+COST: 11.4
 ------------------------------------------------------------------------
 INVOICEID: 49
 ITEM: 15
 PRODUCTID: 19
 QUANTITY: 24
-COST: 16.50
+COST: 16.5
 ------------------------------------------------------------------------
 INVOICEID: 49
 ITEM: 16
 PRODUCTID: 24
 QUANTITY: 18
-COST: 10.80
+COST: 10.8
 ------------------------------------------------------------------------
 
 PRODUCT

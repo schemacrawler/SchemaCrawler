@@ -65,8 +65,8 @@ final class RetrieverConnection
     {
       final PropertiesDataSource propertiesDataSource = (PropertiesDataSource) dataSource;
       catalog = propertiesDataSource.getCatalog();
-      schemaPattern = propertiesDataSource.getSourceProperties()
-        .getProperty("schemapattern");
+      schemaPattern = propertiesDataSource.getSourceConfiguration()
+        .get("schemapattern");
       jdbcDriverClassName = propertiesDataSource.getJdbcDriverClass();
     }
     else
