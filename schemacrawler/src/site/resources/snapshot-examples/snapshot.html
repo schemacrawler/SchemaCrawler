@@ -1394,22 +1394,22 @@ hr {
 	<tr>
 		<td class='ordinal'>&nbsp;</td>
 		<td class='subname'>FIRSTNAME</td>
-		<td class='type'>VARCHAR</td>
+		<td class='type'>VARCHAR(255)</td>
 	</tr>
 	<tr>
 		<td class='ordinal'>&nbsp;</td>
 		<td class='subname'>LASTNAME</td>
-		<td class='type'>VARCHAR</td>
+		<td class='type'>VARCHAR(255)</td>
 	</tr>
 	<tr>
 		<td class='ordinal'>&nbsp;</td>
 		<td class='subname'>STREET</td>
-		<td class='type'>VARCHAR</td>
+		<td class='type'>VARCHAR(255)</td>
 	</tr>
 	<tr>
 		<td class='ordinal'>&nbsp;</td>
 		<td class='subname'>CITY</td>
-		<td class='type'>VARCHAR</td>
+		<td class='type'>VARCHAR(255)</td>
 	</tr>
 	<tr>
 		<td colspan='4'>&nbsp;</td>
@@ -1427,7 +1427,7 @@ hr {
 		<td colspan='4'>&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_FK_1</td>
+		<td colspan='2' class='name'>FK_CUSTOMER</td>
 		<td class='description'>[foreign key, on update no action]</td>
 	</tr>
 	<tr>
@@ -1513,12 +1513,12 @@ hr {
 	<tr>
 		<td class='ordinal'>&nbsp;</td>
 		<td class='subname'>FIRSTNAME</td>
-		<td class='type'>VARCHAR</td>
+		<td class='type'>VARCHAR(255)</td>
 	</tr>
 	<tr>
 		<td class='ordinal'>&nbsp;</td>
 		<td class='subname'>LASTNAME</td>
-		<td class='type'>VARCHAR</td>
+		<td class='type'>VARCHAR(255)</td>
 	</tr>
 	<tr>
 		<td colspan='4'>&nbsp;</td>
@@ -1603,7 +1603,7 @@ hr {
 	<tr>
 		<td class='ordinal'>&nbsp;</td>
 		<td class='subname'>TOTAL</td>
-		<td class='type'>DECIMAL(646456993, 0)</td>
+		<td class='type'>FLOAT(17, 0)</td>
 	</tr>
 	<tr>
 		<td colspan='4'>&nbsp;</td>
@@ -1621,7 +1621,7 @@ hr {
 		<td colspan='4'>&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_FK_1</td>
+		<td colspan='2' class='name'>FK_CUSTOMER</td>
 		<td class='description'>[foreign key, on update no action]</td>
 	</tr>
 	<tr>
@@ -1633,7 +1633,7 @@ hr {
 		<td colspan='4'>&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_FK_4</td>
+		<td colspan='2' class='name'>FK_ITEM_B</td>
 		<td class='description'>[foreign key, on update no action]</td>
 	</tr>
 	<tr>
@@ -1645,7 +1645,7 @@ hr {
 		<td colspan='4'>&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_USER_SYS_IDX_2_9</td>
+		<td colspan='2' class='name'>INDEX_ITEM_CUSTOMER</td>
 		<td class='description'>[non-unique ascending other index]</td>
 	</tr>
 	<tr>
@@ -1657,7 +1657,7 @@ hr {
 		<td colspan='4'>&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_50</td>
+		<td colspan='2' class='name'>SYS_IDX_56</td>
 		<td class='description'>[non-unique ascending other index]</td>
 	</tr>
 	<tr>
@@ -1747,7 +1747,7 @@ hr {
 	<tr>
 		<td class='ordinal'>&nbsp;</td>
 		<td class='subname'>COST</td>
-		<td class='type'>DECIMAL(646456993, 0)</td>
+		<td class='type'>FLOAT(17, 0)</td>
 	</tr>
 	<tr>
 		<td colspan='4'>&nbsp;</td>
@@ -1770,7 +1770,7 @@ hr {
 		<td colspan='4'>&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_FK_5</td>
+		<td colspan='2' class='name'>FK_ITEM_A</td>
 		<td class='description'>[foreign key, on update no action]</td>
 	</tr>
 	<tr>
@@ -1782,7 +1782,7 @@ hr {
 		<td colspan='4'>&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_FK_4</td>
+		<td colspan='2' class='name'>FK_ITEM_B</td>
 		<td class='description'>[foreign key, on update no action]</td>
 	</tr>
 	<tr>
@@ -1794,7 +1794,7 @@ hr {
 		<td colspan='4'>&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_USER_SYS_IDX_6_1</td>
+		<td colspan='2' class='name'>INDEX_ITEM_INVOICE</td>
 		<td class='description'>[non-unique ascending other index]</td>
 	</tr>
 	<tr>
@@ -1806,7 +1806,7 @@ hr {
 		<td colspan='4'>&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_53</td>
+		<td colspan='2' class='name'>SYS_IDX_52</td>
 		<td class='description'>[non-unique ascending other index]</td>
 	</tr>
 	<tr>
@@ -1818,7 +1818,7 @@ hr {
 		<td colspan='4'>&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_55</td>
+		<td colspan='2' class='name'>INDEX_ITEM_PRODUCT</td>
 		<td class='description'>[non-unique ascending other index]</td>
 	</tr>
 	<tr>
@@ -1830,7 +1830,7 @@ hr {
 		<td colspan='4'>&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_USER_SYS_IDX_8_2</td>
+		<td colspan='2' class='name'>SYS_IDX_54</td>
 		<td class='description'>[non-unique ascending other index]</td>
 	</tr>
 	<tr>
@@ -1905,12 +1905,12 @@ hr {
 	<tr>
 		<td class='ordinal'>&nbsp;</td>
 		<td class='subname'>NAME</td>
-		<td class='type'>VARCHAR</td>
+		<td class='type'>VARCHAR(255)</td>
 	</tr>
 	<tr>
 		<td class='ordinal'>&nbsp;</td>
 		<td class='subname'>PRICE</td>
-		<td class='type'>DECIMAL(646456993, 0)</td>
+		<td class='type'>FLOAT(17, 0)</td>
 	</tr>
 	<tr>
 		<td colspan='4'>&nbsp;</td>
@@ -1928,7 +1928,7 @@ hr {
 		<td colspan='4'>&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_FK_5</td>
+		<td colspan='2' class='name'>FK_ITEM_A</td>
 		<td class='description'>[foreign key, on update no action]</td>
 	</tr>
 	<tr>
@@ -2003,7 +2003,41 @@ hr {
 	<tr>
 		<td class='ordinal'>&nbsp;</td>
 		<td class='subname'>SUPPLIER_NAME</td>
-		<td class='type'>VARCHAR(50)</td>
+		<td class='type'>VARCHAR(255)</td>
+	</tr>
+	<tr>
+		<td colspan='4'>&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INDEX_SUPPLIER_B</td>
+		<td class='description'>[non-unique ascending other index]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td class='subname'>SUPPLIER_ID</td>
+		<td class='type'>INTEGER</td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td class='subname'>SUPPLIER_NAME</td>
+		<td class='type'>VARCHAR(255)</td>
+	</tr>
+	<tr>
+		<td colspan='4'>&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INDEX_SUPPLIER_A</td>
+		<td class='description'>[non-unique ascending other index]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td class='subname'>SUPPLIER_NAME</td>
+		<td class='type'>VARCHAR(255)</td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td class='subname'>SUPPLIER_ID</td>
+		<td class='type'>INTEGER</td>
 	</tr>
 	<tr>
 		<td colspan='4'>&nbsp;</td>
@@ -3357,6 +3391,38 @@ hr {
 
 <table>
 	<tr>
+		<td colspan='2' class='name'>java.lang.Math.cbrt</td>
+		<td class='description'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td colspan='3'><hr/></td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td class='subname'>@p1</td>
+		<td class='type'>DOUBLE(8, 17), in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td class='subname'>@p0</td>
+		<td class='type'>DOUBLE(8, 17), result</td>
+	</tr>
+	<tr>
+		<td colspan='4'>&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>&nbsp;</td>
+		<td class='description'>[definition]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td colspan='2' class='definition'>java.lang.Math.cbrt(double)</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
 		<td colspan='2' class='name'>java.lang.Math.ceil</td>
 		<td class='description'>[procedure, returns result]</td>
 	</tr>
@@ -3421,6 +3487,38 @@ hr {
 
 <table>
 	<tr>
+		<td colspan='2' class='name'>java.lang.Math.cosh</td>
+		<td class='description'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td colspan='3'><hr/></td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td class='subname'>@p1</td>
+		<td class='type'>DOUBLE(8, 17), in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td class='subname'>@p0</td>
+		<td class='type'>DOUBLE(8, 17), result</td>
+	</tr>
+	<tr>
+		<td colspan='4'>&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>&nbsp;</td>
+		<td class='description'>[definition]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td colspan='2' class='definition'>java.lang.Math.cosh(double)</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
 		<td colspan='2' class='name'>java.lang.Math.exp</td>
 		<td class='description'>[procedure, returns result]</td>
 	</tr>
@@ -3453,6 +3551,38 @@ hr {
 
 <table>
 	<tr>
+		<td colspan='2' class='name'>java.lang.Math.expm1</td>
+		<td class='description'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td colspan='3'><hr/></td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td class='subname'>@p1</td>
+		<td class='type'>DOUBLE(8, 17), in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td class='subname'>@p0</td>
+		<td class='type'>DOUBLE(8, 17), result</td>
+	</tr>
+	<tr>
+		<td colspan='4'>&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>&nbsp;</td>
+		<td class='description'>[definition]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td colspan='2' class='definition'>java.lang.Math.expm1(double)</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
 		<td colspan='2' class='name'>java.lang.Math.floor</td>
 		<td class='description'>[procedure, returns result]</td>
 	</tr>
@@ -3479,6 +3609,43 @@ hr {
 	<tr>
 		<td class='ordinal'>&nbsp;</td>
 		<td colspan='2' class='definition'>java.lang.Math.floor(double)</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name'>java.lang.Math.hypot</td>
+		<td class='description'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td colspan='3'><hr/></td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td class='subname'>@p1</td>
+		<td class='type'>DOUBLE(8, 17), in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td class='subname'>@p2</td>
+		<td class='type'>DOUBLE(8, 17), in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td class='subname'>@p0</td>
+		<td class='type'>DOUBLE(8, 17), result</td>
+	</tr>
+	<tr>
+		<td colspan='4'>&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>&nbsp;</td>
+		<td class='description'>[definition]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td colspan='2' class='definition'>java.lang.Math.hypot(double,double)</td>
 	</tr>
 </table>
 <p></p>
@@ -3548,6 +3715,70 @@ hr {
 	<tr>
 		<td class='ordinal'>&nbsp;</td>
 		<td colspan='2' class='definition'>java.lang.Math.log(double)</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name'>java.lang.Math.log10</td>
+		<td class='description'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td colspan='3'><hr/></td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td class='subname'>@p1</td>
+		<td class='type'>DOUBLE(8, 17), in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td class='subname'>@p0</td>
+		<td class='type'>DOUBLE(8, 17), result</td>
+	</tr>
+	<tr>
+		<td colspan='4'>&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>&nbsp;</td>
+		<td class='description'>[definition]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td colspan='2' class='definition'>java.lang.Math.log10(double)</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name'>java.lang.Math.log1p</td>
+		<td class='description'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td colspan='3'><hr/></td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td class='subname'>@p1</td>
+		<td class='type'>DOUBLE(8, 17), in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td class='subname'>@p0</td>
+		<td class='type'>DOUBLE(8, 17), result</td>
+	</tr>
+	<tr>
+		<td colspan='4'>&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>&nbsp;</td>
+		<td class='description'>[definition]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td colspan='2' class='definition'>java.lang.Math.log1p(double)</td>
 	</tr>
 </table>
 <p></p>
@@ -3756,6 +3987,38 @@ hr {
 
 <table>
 	<tr>
+		<td colspan='2' class='name'>java.lang.Math.signum</td>
+		<td class='description'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td colspan='3'><hr/></td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td class='subname'>@p1</td>
+		<td class='type'>FLOAT(8, 17), in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td class='subname'>@p0</td>
+		<td class='type'>FLOAT(8, 17), result</td>
+	</tr>
+	<tr>
+		<td colspan='4'>&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>&nbsp;</td>
+		<td class='description'>[definition]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td colspan='2' class='definition'>java.lang.Math.signum(double)java.lang.Math.signum(float)</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
 		<td colspan='2' class='name'>java.lang.Math.sin</td>
 		<td class='description'>[procedure, returns result]</td>
 	</tr>
@@ -3782,6 +4045,38 @@ hr {
 	<tr>
 		<td class='ordinal'>&nbsp;</td>
 		<td colspan='2' class='definition'>java.lang.Math.sin(double)</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name'>java.lang.Math.sinh</td>
+		<td class='description'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td colspan='3'><hr/></td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td class='subname'>@p1</td>
+		<td class='type'>DOUBLE(8, 17), in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td class='subname'>@p0</td>
+		<td class='type'>DOUBLE(8, 17), result</td>
+	</tr>
+	<tr>
+		<td colspan='4'>&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>&nbsp;</td>
+		<td class='description'>[definition]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td colspan='2' class='definition'>java.lang.Math.sinh(double)</td>
 	</tr>
 </table>
 <p></p>
@@ -3852,6 +4147,38 @@ hr {
 
 <table>
 	<tr>
+		<td colspan='2' class='name'>java.lang.Math.tanh</td>
+		<td class='description'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td colspan='3'><hr/></td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td class='subname'>@p1</td>
+		<td class='type'>DOUBLE(8, 17), in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td class='subname'>@p0</td>
+		<td class='type'>DOUBLE(8, 17), result</td>
+	</tr>
+	<tr>
+		<td colspan='4'>&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>&nbsp;</td>
+		<td class='description'>[definition]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td colspan='2' class='definition'>java.lang.Math.tanh(double)</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
 		<td colspan='2' class='name'>java.lang.Math.toDegrees</td>
 		<td class='description'>[procedure, returns result]</td>
 	</tr>
@@ -3910,6 +4237,38 @@ hr {
 	<tr>
 		<td class='ordinal'>&nbsp;</td>
 		<td colspan='2' class='definition'>java.lang.Math.toRadians(double)</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name'>java.lang.Math.ulp</td>
+		<td class='description'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td colspan='3'><hr/></td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td class='subname'>@p1</td>
+		<td class='type'>FLOAT(8, 17), in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td class='subname'>@p0</td>
+		<td class='type'>FLOAT(8, 17), result</td>
+	</tr>
+	<tr>
+		<td colspan='4'>&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>&nbsp;</td>
+		<td class='description'>[definition]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'>&nbsp;</td>
+		<td colspan='2' class='definition'>java.lang.Math.ulp(double)java.lang.Math.ulp(float)</td>
 	</tr>
 </table>
 <p></p>
@@ -8128,252 +8487,252 @@ hr {
     <tr>
       <td title="ID">0</td>
       <td title="CUSTOMERID">0</td>
-      <td title="TOTAL">2607.60</td>
+      <td title="TOTAL">2607.6</td>
     </tr>
     <tr>
       <td title="ID">1</td>
       <td title="CUSTOMERID">33</td>
-      <td title="TOTAL">1610.70</td>
+      <td title="TOTAL">1610.7</td>
     </tr>
     <tr>
       <td title="ID">2</td>
       <td title="CUSTOMERID">23</td>
-      <td title="TOTAL">3789.00</td>
+      <td title="TOTAL">3789.0</td>
     </tr>
     <tr>
       <td title="ID">3</td>
       <td title="CUSTOMERID">21</td>
-      <td title="TOTAL">5974.50</td>
+      <td title="TOTAL">5974.5</td>
     </tr>
     <tr>
       <td title="ID">4</td>
       <td title="CUSTOMERID">30</td>
-      <td title="TOTAL">1953.00</td>
+      <td title="TOTAL">1953.0</td>
     </tr>
     <tr>
       <td title="ID">5</td>
       <td title="CUSTOMERID">34</td>
-      <td title="TOTAL">4182.90</td>
+      <td title="TOTAL">4182.9</td>
     </tr>
     <tr>
       <td title="ID">6</td>
       <td title="CUSTOMERID">19</td>
-      <td title="TOTAL">3340.20</td>
+      <td title="TOTAL">3340.2</td>
     </tr>
     <tr>
       <td title="ID">7</td>
       <td title="CUSTOMERID">26</td>
-      <td title="TOTAL">5328.60</td>
+      <td title="TOTAL">5328.6</td>
     </tr>
     <tr>
       <td title="ID">8</td>
       <td title="CUSTOMERID">29</td>
-      <td title="TOTAL">2675.10</td>
+      <td title="TOTAL">2675.1</td>
     </tr>
     <tr>
       <td title="ID">9</td>
       <td title="CUSTOMERID">38</td>
-      <td title="TOTAL">6982.20</td>
+      <td title="TOTAL">6982.2</td>
     </tr>
     <tr>
       <td title="ID">10</td>
       <td title="CUSTOMERID">24</td>
-      <td title="TOTAL">3274.50</td>
+      <td title="TOTAL">3274.5</td>
     </tr>
     <tr>
       <td title="ID">11</td>
       <td title="CUSTOMERID">24</td>
-      <td title="TOTAL">2532.30</td>
+      <td title="TOTAL">2532.3</td>
     </tr>
     <tr>
       <td title="ID">12</td>
       <td title="CUSTOMERID">23</td>
-      <td title="TOTAL">4578.30</td>
+      <td title="TOTAL">4578.3</td>
     </tr>
     <tr>
       <td title="ID">13</td>
       <td title="CUSTOMERID">39</td>
-      <td title="TOTAL">7001.70</td>
+      <td title="TOTAL">7001.7</td>
     </tr>
     <tr>
       <td title="ID">14</td>
       <td title="CUSTOMERID">35</td>
-      <td title="TOTAL">4940.40</td>
+      <td title="TOTAL">4940.4</td>
     </tr>
     <tr>
       <td title="ID">15</td>
       <td title="CUSTOMERID">39</td>
-      <td title="TOTAL">1027.80</td>
+      <td title="TOTAL">1027.8</td>
     </tr>
     <tr>
       <td title="ID">16</td>
       <td title="CUSTOMERID">45</td>
-      <td title="TOTAL">3657.30</td>
+      <td title="TOTAL">3657.3</td>
     </tr>
     <tr>
       <td title="ID">17</td>
       <td title="CUSTOMERID">46</td>
-      <td title="TOTAL">3776.40</td>
+      <td title="TOTAL">3776.4</td>
     </tr>
     <tr>
       <td title="ID">18</td>
       <td title="CUSTOMERID">4</td>
-      <td title="TOTAL">3772.80</td>
+      <td title="TOTAL">3772.8</td>
     </tr>
     <tr>
       <td title="ID">19</td>
       <td title="CUSTOMERID">9</td>
-      <td title="TOTAL">804.30</td>
+      <td title="TOTAL">804.3</td>
     </tr>
     <tr>
       <td title="ID">20</td>
       <td title="CUSTOMERID">19</td>
-      <td title="TOTAL">3139.20</td>
+      <td title="TOTAL">3139.2</td>
     </tr>
     <tr>
       <td title="ID">21</td>
       <td title="CUSTOMERID">8</td>
-      <td title="TOTAL">3740.10</td>
+      <td title="TOTAL">3740.1</td>
     </tr>
     <tr>
       <td title="ID">22</td>
       <td title="CUSTOMERID">40</td>
-      <td title="TOTAL">2289.90</td>
+      <td title="TOTAL">2289.9</td>
     </tr>
     <tr>
       <td title="ID">23</td>
       <td title="CUSTOMERID">36</td>
-      <td title="TOTAL">5166.60</td>
+      <td title="TOTAL">5166.6</td>
     </tr>
     <tr>
       <td title="ID">24</td>
       <td title="CUSTOMERID">15</td>
-      <td title="TOTAL">4344.30</td>
+      <td title="TOTAL">4344.3</td>
     </tr>
     <tr>
       <td title="ID">25</td>
       <td title="CUSTOMERID">31</td>
-      <td title="TOTAL">2054.10</td>
+      <td title="TOTAL">2054.1</td>
     </tr>
     <tr>
       <td title="ID">26</td>
       <td title="CUSTOMERID">27</td>
-      <td title="TOTAL">4972.80</td>
+      <td title="TOTAL">4972.8</td>
     </tr>
     <tr>
       <td title="ID">27</td>
       <td title="CUSTOMERID">24</td>
-      <td title="TOTAL">583.50</td>
+      <td title="TOTAL">583.5</td>
     </tr>
     <tr>
       <td title="ID">28</td>
       <td title="CUSTOMERID">35</td>
-      <td title="TOTAL">1664.40</td>
+      <td title="TOTAL">1664.4</td>
     </tr>
     <tr>
       <td title="ID">29</td>
       <td title="CUSTOMERID">46</td>
-      <td title="TOTAL">2515.50</td>
+      <td title="TOTAL">2515.5</td>
     </tr>
     <tr>
       <td title="ID">30</td>
       <td title="CUSTOMERID">13</td>
-      <td title="TOTAL">2117.40</td>
+      <td title="TOTAL">2117.4</td>
     </tr>
     <tr>
       <td title="ID">31</td>
       <td title="CUSTOMERID">22</td>
-      <td title="TOTAL">2715.90</td>
+      <td title="TOTAL">2715.9</td>
     </tr>
     <tr>
       <td title="ID">32</td>
       <td title="CUSTOMERID">20</td>
-      <td title="TOTAL">1098.60</td>
+      <td title="TOTAL">1098.6</td>
     </tr>
     <tr>
       <td title="ID">33</td>
       <td title="CUSTOMERID">40</td>
-      <td title="TOTAL">4300.20</td>
+      <td title="TOTAL">4300.2</td>
     </tr>
     <tr>
       <td title="ID">34</td>
       <td title="CUSTOMERID">33</td>
-      <td title="TOTAL">4290.60</td>
+      <td title="TOTAL">4290.6</td>
     </tr>
     <tr>
       <td title="ID">35</td>
       <td title="CUSTOMERID">4</td>
-      <td title="TOTAL">3102.60</td>
+      <td title="TOTAL">3102.6</td>
     </tr>
     <tr>
       <td title="ID">36</td>
       <td title="CUSTOMERID">42</td>
-      <td title="TOTAL">3200.10</td>
+      <td title="TOTAL">3200.1</td>
     </tr>
     <tr>
       <td title="ID">37</td>
       <td title="CUSTOMERID">39</td>
-      <td title="TOTAL">7331.10</td>
+      <td title="TOTAL">7331.1</td>
     </tr>
     <tr>
       <td title="ID">38</td>
       <td title="CUSTOMERID">46</td>
-      <td title="TOTAL">6373.80</td>
+      <td title="TOTAL">6373.8</td>
     </tr>
     <tr>
       <td title="ID">39</td>
       <td title="CUSTOMERID">5</td>
-      <td title="TOTAL">1311.60</td>
+      <td title="TOTAL">1311.6</td>
     </tr>
     <tr>
       <td title="ID">40</td>
       <td title="CUSTOMERID">4</td>
-      <td title="TOTAL">5288.40</td>
+      <td title="TOTAL">5288.4</td>
     </tr>
     <tr>
       <td title="ID">41</td>
       <td title="CUSTOMERID">19</td>
-      <td title="TOTAL">5475.60</td>
+      <td title="TOTAL">5475.6</td>
     </tr>
     <tr>
       <td title="ID">42</td>
       <td title="CUSTOMERID">38</td>
-      <td title="TOTAL">1436.40</td>
+      <td title="TOTAL">1436.4</td>
     </tr>
     <tr>
       <td title="ID">43</td>
       <td title="CUSTOMERID">13</td>
-      <td title="TOTAL">4827.60</td>
+      <td title="TOTAL">4827.6</td>
     </tr>
     <tr>
       <td title="ID">44</td>
       <td title="CUSTOMERID">32</td>
-      <td title="TOTAL">3388.20</td>
+      <td title="TOTAL">3388.2</td>
     </tr>
     <tr>
       <td title="ID">45</td>
       <td title="CUSTOMERID">42</td>
-      <td title="TOTAL">4731.00</td>
+      <td title="TOTAL">4731.0</td>
     </tr>
     <tr>
       <td title="ID">46</td>
       <td title="CUSTOMERID">24</td>
-      <td title="TOTAL">5827.20</td>
+      <td title="TOTAL">5827.2</td>
     </tr>
     <tr>
       <td title="ID">47</td>
       <td title="CUSTOMERID">45</td>
-      <td title="TOTAL">2320.80</td>
+      <td title="TOTAL">2320.8</td>
     </tr>
     <tr>
       <td title="ID">48</td>
       <td title="CUSTOMERID">22</td>
-      <td title="TOTAL">3494.70</td>
+      <td title="TOTAL">3494.7</td>
     </tr>
     <tr>
       <td title="ID">49</td>
       <td title="CUSTOMERID">32</td>
-      <td title="TOTAL">4944.30</td>
+      <td title="TOTAL">4944.3</td>
     </tr>
   </tbody>
   </table>
@@ -8395,4550 +8754,4550 @@ hr {
       <td title="ITEM">0</td>
       <td title="PRODUCTID">7</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">12.60</td>
+      <td title="COST">12.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">0</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">14</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">18.60</td>
+      <td title="COST">18.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">0</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">47</td>
       <td title="QUANTITY">3</td>
-      <td title="COST">26.70</td>
+      <td title="COST">26.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">0</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">1</td>
       <td title="QUANTITY">9</td>
-      <td title="COST">37.20</td>
+      <td title="COST">37.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">0</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">47</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">26.70</td>
+      <td title="COST">26.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">0</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">12</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">25.20</td>
+      <td title="COST">25.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">0</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">16</td>
       <td title="QUANTITY">9</td>
-      <td title="COST">29.10</td>
+      <td title="COST">29.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">0</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">7</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">12.60</td>
+      <td title="COST">12.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">0</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">0</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">8.10</td>
+      <td title="COST">8.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">0</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">35</td>
       <td title="QUANTITY">4</td>
-      <td title="COST">11.40</td>
+      <td title="COST">11.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">0</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">4</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">19.20</td>
+      <td title="COST">19.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">0</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">12</td>
       <td title="QUANTITY">4</td>
-      <td title="COST">25.20</td>
+      <td title="COST">25.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">0</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">1</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">37.20</td>
+      <td title="COST">37.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">1</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">40</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">4.20</td>
+      <td title="COST">4.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">1</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">0</td>
       <td title="QUANTITY">9</td>
-      <td title="COST">8.10</td>
+      <td title="COST">8.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">1</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">19</td>
       <td title="QUANTITY">6</td>
-      <td title="COST">16.50</td>
+      <td title="COST">16.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">1</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">38</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">32.40</td>
+      <td title="COST">32.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">1</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">16</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">29.10</td>
+      <td title="COST">29.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">1</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">25</td>
       <td title="QUANTITY">9</td>
-      <td title="COST">24.30</td>
+      <td title="COST">24.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">1</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">25</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">24.30</td>
+      <td title="COST">24.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">2</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">4</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">19.20</td>
+      <td title="COST">19.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">2</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">25</td>
       <td title="QUANTITY">3</td>
-      <td title="COST">24.30</td>
+      <td title="COST">24.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">2</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">11</td>
       <td title="QUANTITY">9</td>
-      <td title="COST">13.20</td>
+      <td title="COST">13.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">2</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">19</td>
       <td title="QUANTITY">13</td>
-      <td title="COST">16.50</td>
+      <td title="COST">16.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">2</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">38</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">32.40</td>
+      <td title="COST">32.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">2</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">30</td>
       <td title="QUANTITY">4</td>
-      <td title="COST">34.80</td>
+      <td title="COST">34.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">2</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">43</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">2</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">30</td>
       <td title="QUANTITY">5</td>
-      <td title="COST">34.80</td>
+      <td title="COST">34.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">2</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">39</td>
       <td title="QUANTITY">2</td>
-      <td title="COST">23.10</td>
+      <td title="COST">23.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">2</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">18</td>
       <td title="QUANTITY">7</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">2</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">49</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">3.30</td>
+      <td title="COST">3.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">2</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">42</td>
       <td title="QUANTITY">21</td>
-      <td title="COST">29.70</td>
+      <td title="COST">29.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">2</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">21</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">17.10</td>
+      <td title="COST">17.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">2</td>
       <td title="ITEM">13</td>
       <td title="PRODUCTID">12</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">25.20</td>
+      <td title="COST">25.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">2</td>
       <td title="ITEM">14</td>
       <td title="PRODUCTID">48</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">31.50</td>
+      <td title="COST">31.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">2</td>
       <td title="ITEM">15</td>
       <td title="PRODUCTID">0</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">8.10</td>
+      <td title="COST">8.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">2</td>
       <td title="ITEM">16</td>
       <td title="PRODUCTID">36</td>
       <td title="QUANTITY">24</td>
-      <td title="COST">4.80</td>
+      <td title="COST">4.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">3</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">11</td>
       <td title="QUANTITY">21</td>
-      <td title="COST">13.20</td>
+      <td title="COST">13.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">3</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">1</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">37.20</td>
+      <td title="COST">37.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">3</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">49</td>
       <td title="QUANTITY">3</td>
-      <td title="COST">3.30</td>
+      <td title="COST">3.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">3</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">0</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">8.10</td>
+      <td title="COST">8.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">3</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">20</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">30.00</td>
+      <td title="COST">30.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">3</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">30</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">34.80</td>
+      <td title="COST">34.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">3</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">13</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">27.00</td>
+      <td title="COST">27.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">3</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">26</td>
       <td title="QUANTITY">4</td>
-      <td title="COST">37.80</td>
+      <td title="COST">37.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">3</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">49</td>
       <td title="QUANTITY">9</td>
-      <td title="COST">3.30</td>
+      <td title="COST">3.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">3</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">29</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">16.80</td>
+      <td title="COST">16.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">3</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">10</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">30.60</td>
+      <td title="COST">30.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">3</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">7</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">12.60</td>
+      <td title="COST">12.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">3</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">41</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">30.90</td>
+      <td title="COST">30.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">3</td>
       <td title="ITEM">13</td>
       <td title="PRODUCTID">41</td>
       <td title="QUANTITY">2</td>
-      <td title="COST">30.90</td>
+      <td title="COST">30.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">3</td>
       <td title="ITEM">14</td>
       <td title="PRODUCTID">17</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">33.00</td>
+      <td title="COST">33.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">3</td>
       <td title="ITEM">15</td>
       <td title="PRODUCTID">23</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">11.40</td>
+      <td title="COST">11.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">3</td>
       <td title="ITEM">16</td>
       <td title="PRODUCTID">19</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">16.50</td>
+      <td title="COST">16.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">3</td>
       <td title="ITEM">17</td>
       <td title="PRODUCTID">30</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">34.80</td>
+      <td title="COST">34.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">4</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">28</td>
       <td title="QUANTITY">9</td>
-      <td title="COST">4.50</td>
+      <td title="COST">4.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">4</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">35</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">11.40</td>
+      <td title="COST">11.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">4</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">41</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">30.90</td>
+      <td title="COST">30.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">4</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">23</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">11.40</td>
+      <td title="COST">11.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">4</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">9</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">4</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">37</td>
       <td title="QUANTITY">24</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">5</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">9</td>
       <td title="QUANTITY">5</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">5</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">9</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">5</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">20</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">30.00</td>
+      <td title="COST">30.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">5</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">24</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">10.80</td>
+      <td title="COST">10.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">5</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">32</td>
       <td title="QUANTITY">14</td>
-      <td title="COST">28.50</td>
+      <td title="COST">28.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">5</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">46</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">9.30</td>
+      <td title="COST">9.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">5</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">7</td>
       <td title="QUANTITY">9</td>
-      <td title="COST">12.60</td>
+      <td title="COST">12.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">5</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">2</td>
       <td title="QUANTITY">4</td>
-      <td title="COST">37.20</td>
+      <td title="COST">37.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">5</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">20</td>
       <td title="QUANTITY">3</td>
-      <td title="COST">30.00</td>
+      <td title="COST">30.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">5</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">37</td>
       <td title="QUANTITY">9</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">5</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">28</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">4.50</td>
+      <td title="COST">4.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">5</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">38</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">32.40</td>
+      <td title="COST">32.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">5</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">8</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">33.90</td>
+      <td title="COST">33.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">5</td>
       <td title="ITEM">13</td>
       <td title="PRODUCTID">18</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">6</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">15</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">6</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">38</td>
       <td title="QUANTITY">21</td>
-      <td title="COST">32.40</td>
+      <td title="COST">32.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">6</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">23</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">11.40</td>
+      <td title="COST">11.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">6</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">30</td>
       <td title="QUANTITY">2</td>
-      <td title="COST">34.80</td>
+      <td title="COST">34.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">6</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">31</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">7.20</td>
+      <td title="COST">7.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">6</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">14</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">18.60</td>
+      <td title="COST">18.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">6</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">37</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">6</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">26</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">37.80</td>
+      <td title="COST">37.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">6</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">41</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">30.90</td>
+      <td title="COST">30.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">6</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">19</td>
       <td title="QUANTITY">2</td>
-      <td title="COST">16.50</td>
+      <td title="COST">16.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">6</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">16</td>
       <td title="QUANTITY">13</td>
-      <td title="COST">29.10</td>
+      <td title="COST">29.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">6</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">44</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">14.40</td>
+      <td title="COST">14.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">7</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">43</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">7</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">23</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">11.40</td>
+      <td title="COST">11.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">7</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">27</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">34.50</td>
+      <td title="COST">34.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">7</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">30</td>
       <td title="QUANTITY">2</td>
-      <td title="COST">34.80</td>
+      <td title="COST">34.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">7</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">2</td>
       <td title="QUANTITY">13</td>
-      <td title="COST">37.20</td>
+      <td title="COST">37.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">7</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">24</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">10.80</td>
+      <td title="COST">10.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">7</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">14</td>
       <td title="QUANTITY">4</td>
-      <td title="COST">18.60</td>
+      <td title="COST">18.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">7</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">2</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">37.20</td>
+      <td title="COST">37.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">7</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">42</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">29.70</td>
+      <td title="COST">29.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">7</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">9</td>
       <td title="QUANTITY">21</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">7</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">7</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">12.60</td>
+      <td title="COST">12.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">7</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">19</td>
       <td title="QUANTITY">13</td>
-      <td title="COST">16.50</td>
+      <td title="COST">16.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">7</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">40</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">4.20</td>
+      <td title="COST">4.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">7</td>
       <td title="ITEM">13</td>
       <td title="PRODUCTID">32</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">28.50</td>
+      <td title="COST">28.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">7</td>
       <td title="ITEM">14</td>
       <td title="PRODUCTID">47</td>
       <td title="QUANTITY">14</td>
-      <td title="COST">26.70</td>
+      <td title="COST">26.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">7</td>
       <td title="ITEM">15</td>
       <td title="PRODUCTID">24</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">10.80</td>
+      <td title="COST">10.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">7</td>
       <td title="ITEM">16</td>
       <td title="PRODUCTID">7</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">12.60</td>
+      <td title="COST">12.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">7</td>
       <td title="ITEM">17</td>
       <td title="PRODUCTID">40</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">4.20</td>
+      <td title="COST">4.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">7</td>
       <td title="ITEM">18</td>
       <td title="PRODUCTID">23</td>
       <td title="QUANTITY">5</td>
-      <td title="COST">11.40</td>
+      <td title="COST">11.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">8</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">34</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">38.40</td>
+      <td title="COST">38.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">8</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">44</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">14.40</td>
+      <td title="COST">14.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">8</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">11</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">13.20</td>
+      <td title="COST">13.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">8</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">41</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">30.90</td>
+      <td title="COST">30.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">8</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">15</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">8</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">24</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">10.80</td>
+      <td title="COST">10.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">8</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">15</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">8</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">6</td>
       <td title="QUANTITY">5</td>
-      <td title="COST">14.70</td>
+      <td title="COST">14.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">8</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">38</td>
       <td title="QUANTITY">7</td>
-      <td title="COST">32.40</td>
+      <td title="COST">32.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">8</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">21</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">17.10</td>
+      <td title="COST">17.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">9</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">45</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">27.00</td>
+      <td title="COST">27.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">9</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">18</td>
       <td title="QUANTITY">21</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">9</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">29</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">16.80</td>
+      <td title="COST">16.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">9</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">4</td>
       <td title="QUANTITY">14</td>
-      <td title="COST">19.20</td>
+      <td title="COST">19.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">9</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">36</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">4.80</td>
+      <td title="COST">4.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">9</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">6</td>
       <td title="QUANTITY">2</td>
-      <td title="COST">14.70</td>
+      <td title="COST">14.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">9</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">18</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">9</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">2</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">37.20</td>
+      <td title="COST">37.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">9</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">24</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">10.80</td>
+      <td title="COST">10.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">9</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">13</td>
       <td title="QUANTITY">6</td>
-      <td title="COST">27.00</td>
+      <td title="COST">27.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">9</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">38</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">32.40</td>
+      <td title="COST">32.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">9</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">12</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">25.20</td>
+      <td title="COST">25.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">9</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">25</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">24.30</td>
+      <td title="COST">24.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">9</td>
       <td title="ITEM">13</td>
       <td title="PRODUCTID">42</td>
       <td title="QUANTITY">13</td>
-      <td title="COST">29.70</td>
+      <td title="COST">29.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">9</td>
       <td title="ITEM">14</td>
       <td title="PRODUCTID">15</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">9</td>
       <td title="ITEM">15</td>
       <td title="PRODUCTID">48</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">31.50</td>
+      <td title="COST">31.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">9</td>
       <td title="ITEM">16</td>
       <td title="PRODUCTID">24</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">10.80</td>
+      <td title="COST">10.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">9</td>
       <td title="ITEM">17</td>
       <td title="PRODUCTID">13</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">27.00</td>
+      <td title="COST">27.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">9</td>
       <td title="ITEM">18</td>
       <td title="PRODUCTID">3</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">38.10</td>
+      <td title="COST">38.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">9</td>
       <td title="ITEM">19</td>
       <td title="PRODUCTID">48</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">31.50</td>
+      <td title="COST">31.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">10</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">20</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">30.00</td>
+      <td title="COST">30.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">10</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">33</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">27.30</td>
+      <td title="COST">27.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">10</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">7</td>
       <td title="QUANTITY">9</td>
-      <td title="COST">12.60</td>
+      <td title="COST">12.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">10</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">46</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">9.30</td>
+      <td title="COST">9.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">10</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">10</td>
       <td title="QUANTITY">24</td>
-      <td title="COST">30.60</td>
+      <td title="COST">30.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">10</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">5</td>
       <td title="QUANTITY">24</td>
-      <td title="COST">35.40</td>
+      <td title="COST">35.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">10</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">18</td>
       <td title="QUANTITY">14</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">10</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">4</td>
       <td title="QUANTITY">13</td>
-      <td title="COST">19.20</td>
+      <td title="COST">19.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">10</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">22</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">9.90</td>
+      <td title="COST">9.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">10</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">5</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">35.40</td>
+      <td title="COST">35.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">11</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">45</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">27.00</td>
+      <td title="COST">27.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">11</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">21</td>
       <td title="QUANTITY">21</td>
-      <td title="COST">17.10</td>
+      <td title="COST">17.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">11</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">0</td>
       <td title="QUANTITY">3</td>
-      <td title="COST">8.10</td>
+      <td title="COST">8.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">11</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">32</td>
       <td title="QUANTITY">21</td>
-      <td title="COST">28.50</td>
+      <td title="COST">28.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">11</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">47</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">26.70</td>
+      <td title="COST">26.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">11</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">19</td>
       <td title="QUANTITY">2</td>
-      <td title="COST">16.50</td>
+      <td title="COST">16.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">11</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">0</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">8.10</td>
+      <td title="COST">8.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">11</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">48</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">31.50</td>
+      <td title="COST">31.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">11</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">20</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">30.00</td>
+      <td title="COST">30.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">12</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">1</td>
       <td title="QUANTITY">24</td>
-      <td title="COST">37.20</td>
+      <td title="COST">37.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">12</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">41</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">30.90</td>
+      <td title="COST">30.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">12</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">6</td>
       <td title="QUANTITY">5</td>
-      <td title="COST">14.70</td>
+      <td title="COST">14.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">12</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">0</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">8.10</td>
+      <td title="COST">8.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">12</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">20</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">30.00</td>
+      <td title="COST">30.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">12</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">37</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">12</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">31</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">7.20</td>
+      <td title="COST">7.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">12</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">48</td>
       <td title="QUANTITY">7</td>
-      <td title="COST">31.50</td>
+      <td title="COST">31.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">12</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">48</td>
       <td title="QUANTITY">2</td>
-      <td title="COST">31.50</td>
+      <td title="COST">31.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">12</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">25</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">24.30</td>
+      <td title="COST">24.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">12</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">46</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">9.30</td>
+      <td title="COST">9.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">12</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">28</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">4.50</td>
+      <td title="COST">4.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">12</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">13</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">27.00</td>
+      <td title="COST">27.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">12</td>
       <td title="ITEM">13</td>
       <td title="PRODUCTID">36</td>
       <td title="QUANTITY">21</td>
-      <td title="COST">4.80</td>
+      <td title="COST">4.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">12</td>
       <td title="ITEM">14</td>
       <td title="PRODUCTID">25</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">24.30</td>
+      <td title="COST">24.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">12</td>
       <td title="ITEM">15</td>
       <td title="PRODUCTID">22</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">9.90</td>
+      <td title="COST">9.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">12</td>
       <td title="ITEM">16</td>
       <td title="PRODUCTID">0</td>
       <td title="QUANTITY">9</td>
-      <td title="COST">8.10</td>
+      <td title="COST">8.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">12</td>
       <td title="ITEM">17</td>
       <td title="PRODUCTID">31</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">7.20</td>
+      <td title="COST">7.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">12</td>
       <td title="ITEM">18</td>
       <td title="PRODUCTID">9</td>
       <td title="QUANTITY">4</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">13</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">16</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">29.10</td>
+      <td title="COST">29.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">13</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">1</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">37.20</td>
+      <td title="COST">37.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">13</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">13</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">27.00</td>
+      <td title="COST">27.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">13</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">32</td>
       <td title="QUANTITY">2</td>
-      <td title="COST">28.50</td>
+      <td title="COST">28.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">13</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">26</td>
       <td title="QUANTITY">21</td>
-      <td title="COST">37.80</td>
+      <td title="COST">37.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">13</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">22</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">9.90</td>
+      <td title="COST">9.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">13</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">19</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">16.50</td>
+      <td title="COST">16.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">13</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">29</td>
       <td title="QUANTITY">24</td>
-      <td title="COST">16.80</td>
+      <td title="COST">16.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">13</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">48</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">31.50</td>
+      <td title="COST">31.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">13</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">24</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">10.80</td>
+      <td title="COST">10.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">13</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">45</td>
       <td title="QUANTITY">24</td>
-      <td title="COST">27.00</td>
+      <td title="COST">27.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">13</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">14</td>
       <td title="QUANTITY">3</td>
-      <td title="COST">18.60</td>
+      <td title="COST">18.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">13</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">17</td>
       <td title="QUANTITY">3</td>
-      <td title="COST">33.00</td>
+      <td title="COST">33.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">13</td>
       <td title="ITEM">13</td>
       <td title="PRODUCTID">10</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">30.60</td>
+      <td title="COST">30.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">13</td>
       <td title="ITEM">14</td>
       <td title="PRODUCTID">1</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">37.20</td>
+      <td title="COST">37.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">13</td>
       <td title="ITEM">15</td>
       <td title="PRODUCTID">0</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">8.10</td>
+      <td title="COST">8.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">13</td>
       <td title="ITEM">16</td>
       <td title="PRODUCTID">22</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">9.90</td>
+      <td title="COST">9.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">13</td>
       <td title="ITEM">17</td>
       <td title="PRODUCTID">32</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">28.50</td>
+      <td title="COST">28.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">13</td>
       <td title="ITEM">18</td>
       <td title="PRODUCTID">0</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">8.10</td>
+      <td title="COST">8.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">13</td>
       <td title="ITEM">19</td>
       <td title="PRODUCTID">42</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">29.70</td>
+      <td title="COST">29.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">13</td>
       <td title="ITEM">20</td>
       <td title="PRODUCTID">5</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">35.40</td>
+      <td title="COST">35.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">13</td>
       <td title="ITEM">21</td>
       <td title="PRODUCTID">40</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">4.20</td>
+      <td title="COST">4.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">14</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">42</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">29.70</td>
+      <td title="COST">29.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">14</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">9</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">14</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">15</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">14</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">34</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">38.40</td>
+      <td title="COST">38.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">14</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">41</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">30.90</td>
+      <td title="COST">30.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">14</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">11</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">13.20</td>
+      <td title="COST">13.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">14</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">26</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">37.80</td>
+      <td title="COST">37.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">14</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">43</td>
       <td title="QUANTITY">4</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">14</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">23</td>
       <td title="QUANTITY">7</td>
-      <td title="COST">11.40</td>
+      <td title="COST">11.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">14</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">13</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">27.00</td>
+      <td title="COST">27.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">14</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">44</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">14.40</td>
+      <td title="COST">14.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">14</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">25</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">24.30</td>
+      <td title="COST">24.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">14</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">4</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">19.20</td>
+      <td title="COST">19.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">14</td>
       <td title="ITEM">13</td>
       <td title="PRODUCTID">11</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">13.20</td>
+      <td title="COST">13.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">15</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">17</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">33.00</td>
+      <td title="COST">33.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">15</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">13</td>
       <td title="QUANTITY">21</td>
-      <td title="COST">27.00</td>
+      <td title="COST">27.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">15</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">24</td>
       <td title="QUANTITY">6</td>
-      <td title="COST">10.80</td>
+      <td title="COST">10.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">16</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">18</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">16</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">36</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">4.80</td>
+      <td title="COST">4.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">16</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">20</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">30.00</td>
+      <td title="COST">30.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">16</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">0</td>
       <td title="QUANTITY">3</td>
-      <td title="COST">8.10</td>
+      <td title="COST">8.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">16</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">10</td>
       <td title="QUANTITY">24</td>
-      <td title="COST">30.60</td>
+      <td title="COST">30.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">16</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">11</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">13.20</td>
+      <td title="COST">13.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">16</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">44</td>
       <td title="QUANTITY">7</td>
-      <td title="COST">14.40</td>
+      <td title="COST">14.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">16</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">8</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">33.90</td>
+      <td title="COST">33.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">16</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">13</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">27.00</td>
+      <td title="COST">27.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">16</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">11</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">13.20</td>
+      <td title="COST">13.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">16</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">43</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">16</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">24</td>
       <td title="QUANTITY">7</td>
-      <td title="COST">10.80</td>
+      <td title="COST">10.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">16</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">18</td>
       <td title="QUANTITY">2</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">16</td>
       <td title="ITEM">13</td>
       <td title="PRODUCTID">20</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">30.00</td>
+      <td title="COST">30.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">16</td>
       <td title="ITEM">14</td>
       <td title="PRODUCTID">0</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">8.10</td>
+      <td title="COST">8.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">16</td>
       <td title="ITEM">15</td>
       <td title="PRODUCTID">12</td>
       <td title="QUANTITY">3</td>
-      <td title="COST">25.20</td>
+      <td title="COST">25.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">17</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">16</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">29.10</td>
+      <td title="COST">29.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">17</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">19</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">16.50</td>
+      <td title="COST">16.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">17</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">44</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">14.40</td>
+      <td title="COST">14.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">17</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">24</td>
       <td title="QUANTITY">4</td>
-      <td title="COST">10.80</td>
+      <td title="COST">10.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">17</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">23</td>
       <td title="QUANTITY">2</td>
-      <td title="COST">11.40</td>
+      <td title="COST">11.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">17</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">44</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">14.40</td>
+      <td title="COST">14.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">17</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">43</td>
       <td title="QUANTITY">6</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">17</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">6</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">14.70</td>
+      <td title="COST">14.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">17</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">49</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">3.30</td>
+      <td title="COST">3.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">17</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">8</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">33.90</td>
+      <td title="COST">33.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">17</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">10</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">30.60</td>
+      <td title="COST">30.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">17</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">45</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">27.00</td>
+      <td title="COST">27.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">17</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">22</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">9.90</td>
+      <td title="COST">9.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">17</td>
       <td title="ITEM">13</td>
       <td title="PRODUCTID">41</td>
       <td title="QUANTITY">5</td>
-      <td title="COST">30.90</td>
+      <td title="COST">30.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">17</td>
       <td title="ITEM">14</td>
       <td title="PRODUCTID">18</td>
       <td title="QUANTITY">2</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">17</td>
       <td title="ITEM">15</td>
       <td title="PRODUCTID">35</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">11.40</td>
+      <td title="COST">11.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">17</td>
       <td title="ITEM">16</td>
       <td title="PRODUCTID">8</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">33.90</td>
+      <td title="COST">33.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">17</td>
       <td title="ITEM">17</td>
       <td title="PRODUCTID">7</td>
       <td title="QUANTITY">5</td>
-      <td title="COST">12.60</td>
+      <td title="COST">12.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">17</td>
       <td title="ITEM">18</td>
       <td title="PRODUCTID">5</td>
       <td title="QUANTITY">9</td>
-      <td title="COST">35.40</td>
+      <td title="COST">35.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">17</td>
       <td title="ITEM">19</td>
       <td title="PRODUCTID">46</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">9.30</td>
+      <td title="COST">9.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">18</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">32</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">28.50</td>
+      <td title="COST">28.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">18</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">33</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">27.30</td>
+      <td title="COST">27.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">18</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">40</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">4.20</td>
+      <td title="COST">4.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">18</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">19</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">16.50</td>
+      <td title="COST">16.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">18</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">28</td>
       <td title="QUANTITY">6</td>
-      <td title="COST">4.50</td>
+      <td title="COST">4.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">18</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">15</td>
       <td title="QUANTITY">6</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">18</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">29</td>
       <td title="QUANTITY">4</td>
-      <td title="COST">16.80</td>
+      <td title="COST">16.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">18</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">15</td>
       <td title="QUANTITY">14</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">18</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">1</td>
       <td title="QUANTITY">24</td>
-      <td title="COST">37.20</td>
+      <td title="COST">37.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">18</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">2</td>
       <td title="QUANTITY">2</td>
-      <td title="COST">37.20</td>
+      <td title="COST">37.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">18</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">34</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">38.40</td>
+      <td title="COST">38.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">18</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">30</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">34.80</td>
+      <td title="COST">34.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">18</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">37</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">18</td>
       <td title="ITEM">13</td>
       <td title="PRODUCTID">14</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">18.60</td>
+      <td title="COST">18.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">18</td>
       <td title="ITEM">14</td>
       <td title="PRODUCTID">28</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">4.50</td>
+      <td title="COST">4.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">18</td>
       <td title="ITEM">15</td>
       <td title="PRODUCTID">44</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">14.40</td>
+      <td title="COST">14.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">18</td>
       <td title="ITEM">16</td>
       <td title="PRODUCTID">31</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">7.20</td>
+      <td title="COST">7.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">18</td>
       <td title="ITEM">17</td>
       <td title="PRODUCTID">8</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">33.90</td>
+      <td title="COST">33.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">18</td>
       <td title="ITEM">18</td>
       <td title="PRODUCTID">10</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">30.60</td>
+      <td title="COST">30.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">19</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">12</td>
       <td title="QUANTITY">7</td>
-      <td title="COST">25.20</td>
+      <td title="COST">25.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">19</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">31</td>
       <td title="QUANTITY">2</td>
-      <td title="COST">7.20</td>
+      <td title="COST">7.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">19</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">4</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">19.20</td>
+      <td title="COST">19.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">19</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">49</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">3.30</td>
+      <td title="COST">3.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">19</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">36</td>
       <td title="QUANTITY">24</td>
-      <td title="COST">4.80</td>
+      <td title="COST">4.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">20</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">47</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">26.70</td>
+      <td title="COST">26.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">20</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">29</td>
       <td title="QUANTITY">6</td>
-      <td title="COST">16.80</td>
+      <td title="COST">16.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">20</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">24</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">10.80</td>
+      <td title="COST">10.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">20</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">25</td>
       <td title="QUANTITY">14</td>
-      <td title="COST">24.30</td>
+      <td title="COST">24.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">20</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">30</td>
       <td title="QUANTITY">13</td>
-      <td title="COST">34.80</td>
+      <td title="COST">34.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">20</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">8</td>
       <td title="QUANTITY">14</td>
-      <td title="COST">33.90</td>
+      <td title="COST">33.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">20</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">20</td>
       <td title="QUANTITY">2</td>
-      <td title="COST">30.00</td>
+      <td title="COST">30.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">20</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">9</td>
       <td title="QUANTITY">9</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">20</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">44</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">14.40</td>
+      <td title="COST">14.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">20</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">12</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">25.20</td>
+      <td title="COST">25.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">20</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">25</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">24.30</td>
+      <td title="COST">24.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">20</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">15</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">21</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">9</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">21</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">38</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">32.40</td>
+      <td title="COST">32.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">21</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">31</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">7.20</td>
+      <td title="COST">7.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">21</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">30</td>
       <td title="QUANTITY">13</td>
-      <td title="COST">34.80</td>
+      <td title="COST">34.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">21</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">49</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">3.30</td>
+      <td title="COST">3.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">21</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">27</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">34.50</td>
+      <td title="COST">34.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">21</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">26</td>
       <td title="QUANTITY">7</td>
-      <td title="COST">37.80</td>
+      <td title="COST">37.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">21</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">8</td>
       <td title="QUANTITY">9</td>
-      <td title="COST">33.90</td>
+      <td title="COST">33.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">21</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">44</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">14.40</td>
+      <td title="COST">14.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">21</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">35</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">11.40</td>
+      <td title="COST">11.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">21</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">19</td>
       <td title="QUANTITY">14</td>
-      <td title="COST">16.50</td>
+      <td title="COST">16.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">21</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">20</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">30.00</td>
+      <td title="COST">30.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">22</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">9</td>
       <td title="QUANTITY">6</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">22</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">30</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">34.80</td>
+      <td title="COST">34.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">22</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">12</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">25.20</td>
+      <td title="COST">25.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">22</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">22</td>
       <td title="QUANTITY">5</td>
-      <td title="COST">9.90</td>
+      <td title="COST">9.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">22</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">5</td>
       <td title="QUANTITY">21</td>
-      <td title="COST">35.40</td>
+      <td title="COST">35.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">22</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">24</td>
       <td title="QUANTITY">5</td>
-      <td title="COST">10.80</td>
+      <td title="COST">10.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">22</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">4</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">19.20</td>
+      <td title="COST">19.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">22</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">21</td>
       <td title="QUANTITY">6</td>
-      <td title="COST">17.10</td>
+      <td title="COST">17.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">22</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">3</td>
       <td title="QUANTITY">2</td>
-      <td title="COST">38.10</td>
+      <td title="COST">38.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">22</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">23</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">11.40</td>
+      <td title="COST">11.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">23</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">48</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">31.50</td>
+      <td title="COST">31.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">23</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">26</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">37.80</td>
+      <td title="COST">37.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">23</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">33</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">27.30</td>
+      <td title="COST">27.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">23</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">40</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">4.20</td>
+      <td title="COST">4.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">23</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">23</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">11.40</td>
+      <td title="COST">11.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">23</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">32</td>
       <td title="QUANTITY">14</td>
-      <td title="COST">28.50</td>
+      <td title="COST">28.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">23</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">16</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">29.10</td>
+      <td title="COST">29.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">23</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">39</td>
       <td title="QUANTITY">3</td>
-      <td title="COST">23.10</td>
+      <td title="COST">23.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">23</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">6</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">14.70</td>
+      <td title="COST">14.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">23</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">20</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">30.00</td>
+      <td title="COST">30.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">23</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">4</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">19.20</td>
+      <td title="COST">19.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">23</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">41</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">30.90</td>
+      <td title="COST">30.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">23</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">4</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">19.20</td>
+      <td title="COST">19.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">23</td>
       <td title="ITEM">13</td>
       <td title="PRODUCTID">14</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">18.60</td>
+      <td title="COST">18.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">23</td>
       <td title="ITEM">14</td>
       <td title="PRODUCTID">44</td>
       <td title="QUANTITY">2</td>
-      <td title="COST">14.40</td>
+      <td title="COST">14.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">23</td>
       <td title="ITEM">15</td>
       <td title="PRODUCTID">13</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">27.00</td>
+      <td title="COST">27.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">23</td>
       <td title="ITEM">16</td>
       <td title="PRODUCTID">8</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">33.90</td>
+      <td title="COST">33.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">24</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">43</td>
       <td title="QUANTITY">14</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">24</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">46</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">9.30</td>
+      <td title="COST">9.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">24</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">38</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">32.40</td>
+      <td title="COST">32.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">24</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">17</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">33.00</td>
+      <td title="COST">33.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">24</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">15</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">24</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">35</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">11.40</td>
+      <td title="COST">11.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">24</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">40</td>
       <td title="QUANTITY">3</td>
-      <td title="COST">4.20</td>
+      <td title="COST">4.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">24</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">7</td>
       <td title="QUANTITY">13</td>
-      <td title="COST">12.60</td>
+      <td title="COST">12.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">24</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">5</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">35.40</td>
+      <td title="COST">35.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">24</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">21</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">17.10</td>
+      <td title="COST">17.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">24</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">27</td>
       <td title="QUANTITY">4</td>
-      <td title="COST">34.50</td>
+      <td title="COST">34.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">24</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">1</td>
       <td title="QUANTITY">4</td>
-      <td title="COST">37.20</td>
+      <td title="COST">37.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">24</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">0</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">8.10</td>
+      <td title="COST">8.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">24</td>
       <td title="ITEM">13</td>
       <td title="PRODUCTID">15</td>
       <td title="QUANTITY">21</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">24</td>
       <td title="ITEM">14</td>
       <td title="PRODUCTID">1</td>
       <td title="QUANTITY">13</td>
-      <td title="COST">37.20</td>
+      <td title="COST">37.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">24</td>
       <td title="ITEM">15</td>
       <td title="PRODUCTID">39</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">23.10</td>
+      <td title="COST">23.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">25</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">5</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">35.40</td>
+      <td title="COST">35.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">25</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">43</td>
       <td title="QUANTITY">13</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">25</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">13</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">27.00</td>
+      <td title="COST">27.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">25</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">19</td>
       <td title="QUANTITY">4</td>
-      <td title="COST">16.50</td>
+      <td title="COST">16.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">25</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">47</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">26.70</td>
+      <td title="COST">26.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">25</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">10</td>
       <td title="QUANTITY">5</td>
-      <td title="COST">30.60</td>
+      <td title="COST">30.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">25</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">21</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">17.10</td>
+      <td title="COST">17.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">25</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">16</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">29.10</td>
+      <td title="COST">29.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">25</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">38</td>
       <td title="QUANTITY">3</td>
-      <td title="COST">32.40</td>
+      <td title="COST">32.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">26</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">42</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">29.70</td>
+      <td title="COST">29.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">26</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">43</td>
       <td title="QUANTITY">21</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">26</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">33</td>
       <td title="QUANTITY">7</td>
-      <td title="COST">27.30</td>
+      <td title="COST">27.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">26</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">16</td>
       <td title="QUANTITY">3</td>
-      <td title="COST">29.10</td>
+      <td title="COST">29.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">26</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">46</td>
       <td title="QUANTITY">7</td>
-      <td title="COST">9.30</td>
+      <td title="COST">9.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">26</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">38</td>
       <td title="QUANTITY">4</td>
-      <td title="COST">32.40</td>
+      <td title="COST">32.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">26</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">7</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">12.60</td>
+      <td title="COST">12.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">26</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">4</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">19.20</td>
+      <td title="COST">19.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">26</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">40</td>
       <td title="QUANTITY">13</td>
-      <td title="COST">4.20</td>
+      <td title="COST">4.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">26</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">1</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">37.20</td>
+      <td title="COST">37.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">26</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">34</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">38.40</td>
+      <td title="COST">38.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">26</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">18</td>
       <td title="QUANTITY">3</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">26</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">27</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">34.50</td>
+      <td title="COST">34.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">26</td>
       <td title="ITEM">13</td>
       <td title="PRODUCTID">13</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">27.00</td>
+      <td title="COST">27.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">26</td>
       <td title="ITEM">14</td>
       <td title="PRODUCTID">26</td>
       <td title="QUANTITY">6</td>
-      <td title="COST">37.80</td>
+      <td title="COST">37.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">26</td>
       <td title="ITEM">15</td>
       <td title="PRODUCTID">8</td>
       <td title="QUANTITY">6</td>
-      <td title="COST">33.90</td>
+      <td title="COST">33.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">26</td>
       <td title="ITEM">16</td>
       <td title="PRODUCTID">30</td>
       <td title="QUANTITY">4</td>
-      <td title="COST">34.80</td>
+      <td title="COST">34.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">27</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">24</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">10.80</td>
+      <td title="COST">10.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">27</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">45</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">27.00</td>
+      <td title="COST">27.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">27</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">19</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">16.50</td>
+      <td title="COST">16.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">28</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">35</td>
       <td title="QUANTITY">13</td>
-      <td title="COST">11.40</td>
+      <td title="COST">11.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">28</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">15</td>
       <td title="QUANTITY">13</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">28</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">44</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">14.40</td>
+      <td title="COST">14.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">28</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">6</td>
       <td title="QUANTITY">3</td>
-      <td title="COST">14.70</td>
+      <td title="COST">14.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">28</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">45</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">27.00</td>
+      <td title="COST">27.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">28</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">49</td>
       <td title="QUANTITY">4</td>
-      <td title="COST">3.30</td>
+      <td title="COST">3.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">28</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">33</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">27.30</td>
+      <td title="COST">27.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">28</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">28</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">4.50</td>
+      <td title="COST">4.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">28</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">28</td>
       <td title="QUANTITY">6</td>
-      <td title="COST">4.50</td>
+      <td title="COST">4.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">29</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">33</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">27.30</td>
+      <td title="COST">27.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">29</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">38</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">32.40</td>
+      <td title="COST">32.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">29</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">17</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">33.00</td>
+      <td title="COST">33.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">29</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">7</td>
       <td title="QUANTITY">21</td>
-      <td title="COST">12.60</td>
+      <td title="COST">12.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">29</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">4</td>
       <td title="QUANTITY">7</td>
-      <td title="COST">19.20</td>
+      <td title="COST">19.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">29</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">31</td>
       <td title="QUANTITY">13</td>
-      <td title="COST">7.20</td>
+      <td title="COST">7.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">29</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">4</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">19.20</td>
+      <td title="COST">19.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">29</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">5</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">35.40</td>
+      <td title="COST">35.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">29</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">35</td>
       <td title="QUANTITY">6</td>
-      <td title="COST">11.40</td>
+      <td title="COST">11.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">30</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">14</td>
       <td title="QUANTITY">7</td>
-      <td title="COST">18.60</td>
+      <td title="COST">18.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">30</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">16</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">29.10</td>
+      <td title="COST">29.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">30</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">10</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">30.60</td>
+      <td title="COST">30.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">30</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">33</td>
       <td title="QUANTITY">2</td>
-      <td title="COST">27.30</td>
+      <td title="COST">27.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">30</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">34</td>
       <td title="QUANTITY">2</td>
-      <td title="COST">38.40</td>
+      <td title="COST">38.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">30</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">43</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">30</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">14</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">18.60</td>
+      <td title="COST">18.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">31</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">33</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">27.30</td>
+      <td title="COST">27.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">31</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">4</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">19.20</td>
+      <td title="COST">19.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">31</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">4</td>
       <td title="QUANTITY">3</td>
-      <td title="COST">19.20</td>
+      <td title="COST">19.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">31</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">12</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">25.20</td>
+      <td title="COST">25.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">31</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">8</td>
       <td title="QUANTITY">14</td>
-      <td title="COST">33.90</td>
+      <td title="COST">33.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">31</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">1</td>
       <td title="QUANTITY">4</td>
-      <td title="COST">37.20</td>
+      <td title="COST">37.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">31</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">26</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">37.80</td>
+      <td title="COST">37.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">31</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">38</td>
       <td title="QUANTITY">3</td>
-      <td title="COST">32.40</td>
+      <td title="COST">32.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">31</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">7</td>
       <td title="QUANTITY">5</td>
-      <td title="COST">12.60</td>
+      <td title="COST">12.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">31</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">14</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">18.60</td>
+      <td title="COST">18.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">31</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">0</td>
       <td title="QUANTITY">3</td>
-      <td title="COST">8.10</td>
+      <td title="COST">8.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">32</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">35</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">11.40</td>
+      <td title="COST">11.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">32</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">30</td>
       <td title="QUANTITY">13</td>
-      <td title="COST">34.80</td>
+      <td title="COST">34.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">32</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">1</td>
       <td title="QUANTITY">14</td>
-      <td title="COST">37.20</td>
+      <td title="COST">37.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">33</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">36</td>
       <td title="QUANTITY">5</td>
-      <td title="COST">4.80</td>
+      <td title="COST">4.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">33</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">10</td>
       <td title="QUANTITY">21</td>
-      <td title="COST">30.60</td>
+      <td title="COST">30.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">33</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">36</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">4.80</td>
+      <td title="COST">4.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">33</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">48</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">31.50</td>
+      <td title="COST">31.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">33</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">24</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">10.80</td>
+      <td title="COST">10.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">33</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">8</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">33.90</td>
+      <td title="COST">33.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">33</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">17</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">33.00</td>
+      <td title="COST">33.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">33</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">43</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">33</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">3</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">38.10</td>
+      <td title="COST">38.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">33</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">29</td>
       <td title="QUANTITY">5</td>
-      <td title="COST">16.80</td>
+      <td title="COST">16.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">33</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">24</td>
       <td title="QUANTITY">9</td>
-      <td title="COST">10.80</td>
+      <td title="COST">10.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">33</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">5</td>
       <td title="QUANTITY">7</td>
-      <td title="COST">35.40</td>
+      <td title="COST">35.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">33</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">16</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">29.10</td>
+      <td title="COST">29.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">33</td>
       <td title="ITEM">13</td>
       <td title="PRODUCTID">25</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">24.30</td>
+      <td title="COST">24.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">33</td>
       <td title="ITEM">14</td>
       <td title="PRODUCTID">44</td>
       <td title="QUANTITY">13</td>
-      <td title="COST">14.40</td>
+      <td title="COST">14.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">33</td>
       <td title="ITEM">15</td>
       <td title="PRODUCTID">38</td>
       <td title="QUANTITY">7</td>
-      <td title="COST">32.40</td>
+      <td title="COST">32.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">34</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">10</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">30.60</td>
+      <td title="COST">30.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">34</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">4</td>
       <td title="QUANTITY">3</td>
-      <td title="COST">19.20</td>
+      <td title="COST">19.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">34</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">28</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">4.50</td>
+      <td title="COST">4.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">34</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">44</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">14.40</td>
+      <td title="COST">14.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">34</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">27</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">34.50</td>
+      <td title="COST">34.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">34</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">45</td>
       <td title="QUANTITY">13</td>
-      <td title="COST">27.00</td>
+      <td title="COST">27.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">34</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">32</td>
       <td title="QUANTITY">7</td>
-      <td title="COST">28.50</td>
+      <td title="COST">28.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">34</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">21</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">17.10</td>
+      <td title="COST">17.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">34</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">3</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">38.10</td>
+      <td title="COST">38.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">34</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">8</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">33.90</td>
+      <td title="COST">33.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">34</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">41</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">30.90</td>
+      <td title="COST">30.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">34</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">4</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">19.20</td>
+      <td title="COST">19.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">34</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">43</td>
       <td title="QUANTITY">21</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">34</td>
       <td title="ITEM">13</td>
       <td title="PRODUCTID">30</td>
       <td title="QUANTITY">14</td>
-      <td title="COST">34.80</td>
+      <td title="COST">34.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">34</td>
       <td title="ITEM">14</td>
       <td title="PRODUCTID">46</td>
       <td title="QUANTITY">7</td>
-      <td title="COST">9.30</td>
+      <td title="COST">9.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">35</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">20</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">30.00</td>
+      <td title="COST">30.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">35</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">3</td>
       <td title="QUANTITY">9</td>
-      <td title="COST">38.10</td>
+      <td title="COST">38.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">35</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">14</td>
       <td title="QUANTITY">4</td>
-      <td title="COST">18.60</td>
+      <td title="COST">18.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">35</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">27</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">34.50</td>
+      <td title="COST">34.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">35</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">14</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">18.60</td>
+      <td title="COST">18.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">35</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">33</td>
       <td title="QUANTITY">5</td>
-      <td title="COST">27.30</td>
+      <td title="COST">27.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">35</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">5</td>
       <td title="QUANTITY">4</td>
-      <td title="COST">35.40</td>
+      <td title="COST">35.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">35</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">22</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">9.90</td>
+      <td title="COST">9.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">35</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">0</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">8.10</td>
+      <td title="COST">8.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">35</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">19</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">16.50</td>
+      <td title="COST">16.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">35</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">17</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">33.00</td>
+      <td title="COST">33.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">35</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">44</td>
       <td title="QUANTITY">9</td>
-      <td title="COST">14.40</td>
+      <td title="COST">14.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">35</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">7</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">12.60</td>
+      <td title="COST">12.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">35</td>
       <td title="ITEM">13</td>
       <td title="PRODUCTID">19</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">16.50</td>
+      <td title="COST">16.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">36</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">18</td>
       <td title="QUANTITY">13</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">36</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">15</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">36</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">1</td>
       <td title="QUANTITY">6</td>
-      <td title="COST">37.20</td>
+      <td title="COST">37.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">36</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">10</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">30.60</td>
+      <td title="COST">30.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">36</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">40</td>
       <td title="QUANTITY">5</td>
-      <td title="COST">4.20</td>
+      <td title="COST">4.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">36</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">25</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">24.30</td>
+      <td title="COST">24.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">36</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">39</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">23.10</td>
+      <td title="COST">23.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">36</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">39</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">23.10</td>
+      <td title="COST">23.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">36</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">4</td>
       <td title="QUANTITY">21</td>
-      <td title="COST">19.20</td>
+      <td title="COST">19.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">36</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">31</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">7.20</td>
+      <td title="COST">7.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">36</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">47</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">26.70</td>
+      <td title="COST">26.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">36</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">44</td>
       <td title="QUANTITY">9</td>
-      <td title="COST">14.40</td>
+      <td title="COST">14.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">37</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">41</td>
       <td title="QUANTITY">24</td>
-      <td title="COST">30.90</td>
+      <td title="COST">30.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">37</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">15</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">37</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">36</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">4.80</td>
+      <td title="COST">4.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">37</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">26</td>
       <td title="QUANTITY">7</td>
-      <td title="COST">37.80</td>
+      <td title="COST">37.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">37</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">13</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">27.00</td>
+      <td title="COST">27.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">37</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">1</td>
       <td title="QUANTITY">14</td>
-      <td title="COST">37.20</td>
+      <td title="COST">37.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">37</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">34</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">38.40</td>
+      <td title="COST">38.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">37</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">24</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">10.80</td>
+      <td title="COST">10.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">37</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">46</td>
       <td title="QUANTITY">9</td>
-      <td title="COST">9.30</td>
+      <td title="COST">9.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">37</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">47</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">26.70</td>
+      <td title="COST">26.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">37</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">1</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">37.20</td>
+      <td title="COST">37.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">37</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">30</td>
       <td title="QUANTITY">5</td>
-      <td title="COST">34.80</td>
+      <td title="COST">34.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">37</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">24</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">10.80</td>
+      <td title="COST">10.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">37</td>
       <td title="ITEM">13</td>
       <td title="PRODUCTID">32</td>
       <td title="QUANTITY">3</td>
-      <td title="COST">28.50</td>
+      <td title="COST">28.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">37</td>
       <td title="ITEM">14</td>
       <td title="PRODUCTID">12</td>
       <td title="QUANTITY">3</td>
-      <td title="COST">25.20</td>
+      <td title="COST">25.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">37</td>
       <td title="ITEM">15</td>
       <td title="PRODUCTID">32</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">28.50</td>
+      <td title="COST">28.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">37</td>
       <td title="ITEM">16</td>
       <td title="PRODUCTID">27</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">34.50</td>
+      <td title="COST">34.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">37</td>
       <td title="ITEM">17</td>
       <td title="PRODUCTID">38</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">32.40</td>
+      <td title="COST">32.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">37</td>
       <td title="ITEM">18</td>
       <td title="PRODUCTID">26</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">37.80</td>
+      <td title="COST">37.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">37</td>
       <td title="ITEM">19</td>
       <td title="PRODUCTID">19</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">16.50</td>
+      <td title="COST">16.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">37</td>
       <td title="ITEM">20</td>
       <td title="PRODUCTID">14</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">18.60</td>
+      <td title="COST">18.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">37</td>
       <td title="ITEM">21</td>
       <td title="PRODUCTID">6</td>
       <td title="QUANTITY">9</td>
-      <td title="COST">14.70</td>
+      <td title="COST">14.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">38</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">48</td>
       <td title="QUANTITY">14</td>
-      <td title="COST">31.50</td>
+      <td title="COST">31.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">38</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">45</td>
       <td title="QUANTITY">13</td>
-      <td title="COST">27.00</td>
+      <td title="COST">27.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">38</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">4</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">19.20</td>
+      <td title="COST">19.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">38</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">27</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">34.50</td>
+      <td title="COST">34.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">38</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">45</td>
       <td title="QUANTITY">14</td>
-      <td title="COST">27.00</td>
+      <td title="COST">27.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">38</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">48</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">31.50</td>
+      <td title="COST">31.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">38</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">5</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">35.40</td>
+      <td title="COST">35.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">38</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">15</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">38</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">40</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">4.20</td>
+      <td title="COST">4.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">38</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">27</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">34.50</td>
+      <td title="COST">34.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">38</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">4</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">19.20</td>
+      <td title="COST">19.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">38</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">19</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">16.50</td>
+      <td title="COST">16.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">38</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">1</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">37.20</td>
+      <td title="COST">37.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">38</td>
       <td title="ITEM">13</td>
       <td title="PRODUCTID">8</td>
       <td title="QUANTITY">7</td>
-      <td title="COST">33.90</td>
+      <td title="COST">33.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">38</td>
       <td title="ITEM">14</td>
       <td title="PRODUCTID">20</td>
       <td title="QUANTITY">7</td>
-      <td title="COST">30.00</td>
+      <td title="COST">30.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">38</td>
       <td title="ITEM">15</td>
       <td title="PRODUCTID">47</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">26.70</td>
+      <td title="COST">26.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">38</td>
       <td title="ITEM">16</td>
       <td title="PRODUCTID">40</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">4.20</td>
+      <td title="COST">4.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">38</td>
       <td title="ITEM">17</td>
       <td title="PRODUCTID">32</td>
       <td title="QUANTITY">4</td>
-      <td title="COST">28.50</td>
+      <td title="COST">28.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">38</td>
       <td title="ITEM">18</td>
       <td title="PRODUCTID">28</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">4.50</td>
+      <td title="COST">4.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">38</td>
       <td title="ITEM">19</td>
       <td title="PRODUCTID">4</td>
       <td title="QUANTITY">7</td>
-      <td title="COST">19.20</td>
+      <td title="COST">19.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">39</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">10</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">30.60</td>
+      <td title="COST">30.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">39</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">24</td>
       <td title="QUANTITY">6</td>
-      <td title="COST">10.80</td>
+      <td title="COST">10.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">39</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">39</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">23.10</td>
+      <td title="COST">23.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">39</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">20</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">30.00</td>
+      <td title="COST">30.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">40</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">46</td>
       <td title="QUANTITY">24</td>
-      <td title="COST">9.30</td>
+      <td title="COST">9.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">40</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">45</td>
       <td title="QUANTITY">24</td>
-      <td title="COST">27.00</td>
+      <td title="COST">27.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">40</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">4</td>
       <td title="QUANTITY">5</td>
-      <td title="COST">19.20</td>
+      <td title="COST">19.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">40</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">26</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">37.80</td>
+      <td title="COST">37.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">40</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">18</td>
       <td title="QUANTITY">13</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">40</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">32</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">28.50</td>
+      <td title="COST">28.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">40</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">28</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">4.50</td>
+      <td title="COST">4.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">40</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">31</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">7.20</td>
+      <td title="COST">7.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">40</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">11</td>
       <td title="QUANTITY">4</td>
-      <td title="COST">13.20</td>
+      <td title="COST">13.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">40</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">40</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">4.20</td>
+      <td title="COST">4.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">40</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">6</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">14.70</td>
+      <td title="COST">14.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">40</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">27</td>
       <td title="QUANTITY">2</td>
-      <td title="COST">34.50</td>
+      <td title="COST">34.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">40</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">35</td>
       <td title="QUANTITY">13</td>
-      <td title="COST">11.40</td>
+      <td title="COST">11.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">40</td>
       <td title="ITEM">13</td>
       <td title="PRODUCTID">6</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">14.70</td>
+      <td title="COST">14.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">40</td>
       <td title="ITEM">14</td>
       <td title="PRODUCTID">4</td>
       <td title="QUANTITY">24</td>
-      <td title="COST">19.20</td>
+      <td title="COST">19.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">40</td>
       <td title="ITEM">15</td>
       <td title="PRODUCTID">22</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">9.90</td>
+      <td title="COST">9.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">40</td>
       <td title="ITEM">16</td>
       <td title="PRODUCTID">27</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">34.50</td>
+      <td title="COST">34.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">40</td>
       <td title="ITEM">17</td>
       <td title="PRODUCTID">4</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">19.20</td>
+      <td title="COST">19.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">40</td>
       <td title="ITEM">18</td>
       <td title="PRODUCTID">33</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">27.30</td>
+      <td title="COST">27.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">40</td>
       <td title="ITEM">19</td>
       <td title="PRODUCTID">7</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">12.60</td>
+      <td title="COST">12.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">40</td>
       <td title="ITEM">20</td>
       <td title="PRODUCTID">4</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">19.20</td>
+      <td title="COST">19.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">41</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">5</td>
       <td title="QUANTITY">24</td>
-      <td title="COST">35.40</td>
+      <td title="COST">35.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">41</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">47</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">26.70</td>
+      <td title="COST">26.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">41</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">36</td>
       <td title="QUANTITY">2</td>
-      <td title="COST">4.80</td>
+      <td title="COST">4.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">41</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">29</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">16.80</td>
+      <td title="COST">16.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">41</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">16</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">29.10</td>
+      <td title="COST">29.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">41</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">9</td>
       <td title="QUANTITY">21</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">41</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">17</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">33.00</td>
+      <td title="COST">33.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">41</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">22</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">9.90</td>
+      <td title="COST">9.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">41</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">9</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">41</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">26</td>
       <td title="QUANTITY">21</td>
-      <td title="COST">37.80</td>
+      <td title="COST">37.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">41</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">24</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">10.80</td>
+      <td title="COST">10.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">41</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">48</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">31.50</td>
+      <td title="COST">31.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">42</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">48</td>
       <td title="QUANTITY">9</td>
-      <td title="COST">31.50</td>
+      <td title="COST">31.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">42</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">18</td>
       <td title="QUANTITY">21</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">42</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">40</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">4.20</td>
+      <td title="COST">4.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">42</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">40</td>
       <td title="QUANTITY">14</td>
-      <td title="COST">4.20</td>
+      <td title="COST">4.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">42</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">48</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">31.50</td>
+      <td title="COST">31.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">43</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">15</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">43</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">18</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">43</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">2</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">37.20</td>
+      <td title="COST">37.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">43</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">6</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">14.70</td>
+      <td title="COST">14.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">43</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">32</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">28.50</td>
+      <td title="COST">28.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">43</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">33</td>
       <td title="QUANTITY">6</td>
-      <td title="COST">27.30</td>
+      <td title="COST">27.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">43</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">24</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">10.80</td>
+      <td title="COST">10.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">43</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">11</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">13.20</td>
+      <td title="COST">13.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">43</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">44</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">14.40</td>
+      <td title="COST">14.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">43</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">7</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">12.60</td>
+      <td title="COST">12.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">43</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">35</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">11.40</td>
+      <td title="COST">11.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">43</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">49</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">3.30</td>
+      <td title="COST">3.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">43</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">40</td>
       <td title="QUANTITY">24</td>
-      <td title="COST">4.20</td>
+      <td title="COST">4.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">43</td>
       <td title="ITEM">13</td>
       <td title="PRODUCTID">44</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">14.40</td>
+      <td title="COST">14.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">43</td>
       <td title="ITEM">14</td>
       <td title="PRODUCTID">3</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">38.10</td>
+      <td title="COST">38.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">43</td>
       <td title="ITEM">15</td>
       <td title="PRODUCTID">48</td>
       <td title="QUANTITY">7</td>
-      <td title="COST">31.50</td>
+      <td title="COST">31.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">43</td>
       <td title="ITEM">16</td>
       <td title="PRODUCTID">38</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">32.40</td>
+      <td title="COST">32.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">44</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">33</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">27.30</td>
+      <td title="COST">27.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">44</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">34</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">38.40</td>
+      <td title="COST">38.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">44</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">17</td>
       <td title="QUANTITY">14</td>
-      <td title="COST">33.00</td>
+      <td title="COST">33.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">44</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">3</td>
       <td title="QUANTITY">14</td>
-      <td title="COST">38.10</td>
+      <td title="COST">38.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">44</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">12</td>
       <td title="QUANTITY">3</td>
-      <td title="COST">25.20</td>
+      <td title="COST">25.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">44</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">41</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">30.90</td>
+      <td title="COST">30.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">44</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">14</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">18.60</td>
+      <td title="COST">18.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">44</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">49</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">3.30</td>
+      <td title="COST">3.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">44</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">28</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">4.50</td>
+      <td title="COST">4.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">45</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">44</td>
       <td title="QUANTITY">6</td>
-      <td title="COST">14.40</td>
+      <td title="COST">14.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">45</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">11</td>
       <td title="QUANTITY">6</td>
-      <td title="COST">13.20</td>
+      <td title="COST">13.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">45</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">46</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">9.30</td>
+      <td title="COST">9.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">45</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">14</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">18.60</td>
+      <td title="COST">18.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">45</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">3</td>
       <td title="QUANTITY">14</td>
-      <td title="COST">38.10</td>
+      <td title="COST">38.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">45</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">45</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">27.00</td>
+      <td title="COST">27.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">45</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">39</td>
       <td title="QUANTITY">5</td>
-      <td title="COST">23.10</td>
+      <td title="COST">23.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">45</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">6</td>
       <td title="QUANTITY">24</td>
-      <td title="COST">14.70</td>
+      <td title="COST">14.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">45</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">9</td>
       <td title="QUANTITY">2</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">45</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">26</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">37.80</td>
+      <td title="COST">37.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">45</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">41</td>
       <td title="QUANTITY">24</td>
-      <td title="COST">30.90</td>
+      <td title="COST">30.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">45</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">31</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">7.20</td>
+      <td title="COST">7.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">45</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">32</td>
       <td title="QUANTITY">13</td>
-      <td title="COST">28.50</td>
+      <td title="COST">28.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">45</td>
       <td title="ITEM">13</td>
       <td title="PRODUCTID">47</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">26.70</td>
+      <td title="COST">26.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">45</td>
       <td title="ITEM">14</td>
       <td title="PRODUCTID">3</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">38.10</td>
+      <td title="COST">38.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">46</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">5</td>
       <td title="QUANTITY">21</td>
-      <td title="COST">35.40</td>
+      <td title="COST">35.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">46</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">12</td>
       <td title="QUANTITY">24</td>
-      <td title="COST">25.20</td>
+      <td title="COST">25.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">46</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">30</td>
       <td title="QUANTITY">14</td>
-      <td title="COST">34.80</td>
+      <td title="COST">34.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">46</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">21</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">17.10</td>
+      <td title="COST">17.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">46</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">17</td>
       <td title="QUANTITY">5</td>
-      <td title="COST">33.00</td>
+      <td title="COST">33.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">46</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">25</td>
       <td title="QUANTITY">9</td>
-      <td title="COST">24.30</td>
+      <td title="COST">24.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">46</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">41</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">30.90</td>
+      <td title="COST">30.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">46</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">49</td>
       <td title="QUANTITY">9</td>
-      <td title="COST">3.30</td>
+      <td title="COST">3.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">46</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">8</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">33.90</td>
+      <td title="COST">33.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">46</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">7</td>
       <td title="QUANTITY">4</td>
-      <td title="COST">12.60</td>
+      <td title="COST">12.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">46</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">11</td>
       <td title="QUANTITY">24</td>
-      <td title="COST">13.20</td>
+      <td title="COST">13.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">46</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">1</td>
       <td title="QUANTITY">4</td>
-      <td title="COST">37.20</td>
+      <td title="COST">37.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">46</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">21</td>
       <td title="QUANTITY">24</td>
-      <td title="COST">17.10</td>
+      <td title="COST">17.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">46</td>
       <td title="ITEM">13</td>
       <td title="PRODUCTID">36</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">4.80</td>
+      <td title="COST">4.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">46</td>
       <td title="ITEM">14</td>
       <td title="PRODUCTID">24</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">10.80</td>
+      <td title="COST">10.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">46</td>
       <td title="ITEM">15</td>
       <td title="PRODUCTID">40</td>
       <td title="QUANTITY">11</td>
-      <td title="COST">4.20</td>
+      <td title="COST">4.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">46</td>
       <td title="ITEM">16</td>
       <td title="PRODUCTID">46</td>
       <td title="QUANTITY">21</td>
-      <td title="COST">9.30</td>
+      <td title="COST">9.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">46</td>
       <td title="ITEM">17</td>
       <td title="PRODUCTID">12</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">25.20</td>
+      <td title="COST">25.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">47</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">23</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">11.40</td>
+      <td title="COST">11.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">47</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">23</td>
       <td title="QUANTITY">13</td>
-      <td title="COST">11.40</td>
+      <td title="COST">11.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">47</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">17</td>
       <td title="QUANTITY">6</td>
-      <td title="COST">33.00</td>
+      <td title="COST">33.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">47</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">1</td>
       <td title="QUANTITY">4</td>
-      <td title="COST">37.20</td>
+      <td title="COST">37.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">47</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">15</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">14.10</td>
+      <td title="COST">14.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">47</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">40</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">4.20</td>
+      <td title="COST">4.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">47</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">8</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">33.90</td>
+      <td title="COST">33.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">47</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">28</td>
       <td title="QUANTITY">14</td>
-      <td title="COST">4.50</td>
+      <td title="COST">4.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">47</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">16</td>
       <td title="QUANTITY">2</td>
-      <td title="COST">29.10</td>
+      <td title="COST">29.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">47</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">32</td>
       <td title="QUANTITY">9</td>
-      <td title="COST">28.50</td>
+      <td title="COST">28.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">47</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">45</td>
       <td title="QUANTITY">2</td>
-      <td title="COST">27.00</td>
+      <td title="COST">27.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">47</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">35</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">11.40</td>
+      <td title="COST">11.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">47</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">12</td>
       <td title="QUANTITY">20</td>
-      <td title="COST">25.20</td>
+      <td title="COST">25.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">47</td>
       <td title="ITEM">13</td>
       <td title="PRODUCTID">33</td>
       <td title="QUANTITY">8</td>
-      <td title="COST">27.30</td>
+      <td title="COST">27.3</td>
     </tr>
     <tr>
       <td title="INVOICEID">48</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">6</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">14.70</td>
+      <td title="COST">14.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">48</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">26</td>
       <td title="QUANTITY">23</td>
-      <td title="COST">37.80</td>
+      <td title="COST">37.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">48</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">23</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">11.40</td>
+      <td title="COST">11.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">48</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">10</td>
       <td title="QUANTITY">2</td>
-      <td title="COST">30.60</td>
+      <td title="COST">30.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">48</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">48</td>
       <td title="QUANTITY">4</td>
-      <td title="COST">31.50</td>
+      <td title="COST">31.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">48</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">24</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">10.80</td>
+      <td title="COST">10.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">48</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">11</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">13.20</td>
+      <td title="COST">13.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">48</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">30</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">34.80</td>
+      <td title="COST">34.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">48</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">5</td>
       <td title="QUANTITY">12</td>
-      <td title="COST">35.40</td>
+      <td title="COST">35.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">48</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">35</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">11.40</td>
+      <td title="COST">11.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">48</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">41</td>
       <td title="QUANTITY">10</td>
-      <td title="COST">30.90</td>
+      <td title="COST">30.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">49</td>
       <td title="ITEM">0</td>
       <td title="PRODUCTID">18</td>
       <td title="QUANTITY">6</td>
-      <td title="COST">25.80</td>
+      <td title="COST">25.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">49</td>
       <td title="ITEM">1</td>
       <td title="PRODUCTID">22</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">9.90</td>
+      <td title="COST">9.9</td>
     </tr>
     <tr>
       <td title="INVOICEID">49</td>
       <td title="ITEM">2</td>
       <td title="PRODUCTID">29</td>
       <td title="QUANTITY">6</td>
-      <td title="COST">16.80</td>
+      <td title="COST">16.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">49</td>
       <td title="ITEM">3</td>
       <td title="PRODUCTID">17</td>
       <td title="QUANTITY">19</td>
-      <td title="COST">33.00</td>
+      <td title="COST">33.0</td>
     </tr>
     <tr>
       <td title="INVOICEID">49</td>
       <td title="ITEM">4</td>
       <td title="PRODUCTID">47</td>
       <td title="QUANTITY">14</td>
-      <td title="COST">26.70</td>
+      <td title="COST">26.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">49</td>
       <td title="ITEM">5</td>
       <td title="PRODUCTID">16</td>
       <td title="QUANTITY">1</td>
-      <td title="COST">29.10</td>
+      <td title="COST">29.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">49</td>
       <td title="ITEM">6</td>
       <td title="PRODUCTID">29</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">16.80</td>
+      <td title="COST">16.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">49</td>
       <td title="ITEM">7</td>
       <td title="PRODUCTID">6</td>
       <td title="QUANTITY">21</td>
-      <td title="COST">14.70</td>
+      <td title="COST">14.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">49</td>
       <td title="ITEM">8</td>
       <td title="PRODUCTID">48</td>
       <td title="QUANTITY">24</td>
-      <td title="COST">31.50</td>
+      <td title="COST">31.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">49</td>
       <td title="ITEM">9</td>
       <td title="PRODUCTID">7</td>
       <td title="QUANTITY">24</td>
-      <td title="COST">12.60</td>
+      <td title="COST">12.6</td>
     </tr>
     <tr>
       <td title="INVOICEID">49</td>
       <td title="ITEM">10</td>
       <td title="PRODUCTID">30</td>
       <td title="QUANTITY">16</td>
-      <td title="COST">34.80</td>
+      <td title="COST">34.8</td>
     </tr>
     <tr>
       <td title="INVOICEID">49</td>
       <td title="ITEM">11</td>
       <td title="PRODUCTID">40</td>
       <td title="QUANTITY">15</td>
-      <td title="COST">4.20</td>
+      <td title="COST">4.2</td>
     </tr>
     <tr>
       <td title="INVOICEID">49</td>
       <td title="ITEM">12</td>
       <td title="PRODUCTID">21</td>
       <td title="QUANTITY">17</td>
-      <td title="COST">17.10</td>
+      <td title="COST">17.1</td>
     </tr>
     <tr>
       <td title="INVOICEID">49</td>
       <td title="ITEM">13</td>
       <td title="PRODUCTID">6</td>
       <td title="QUANTITY">22</td>
-      <td title="COST">14.70</td>
+      <td title="COST">14.7</td>
     </tr>
     <tr>
       <td title="INVOICEID">49</td>
       <td title="ITEM">14</td>
       <td title="PRODUCTID">23</td>
       <td title="QUANTITY">5</td>
-      <td title="COST">11.40</td>
+      <td title="COST">11.4</td>
     </tr>
     <tr>
       <td title="INVOICEID">49</td>
       <td title="ITEM">15</td>
       <td title="PRODUCTID">19</td>
       <td title="QUANTITY">24</td>
-      <td title="COST">16.50</td>
+      <td title="COST">16.5</td>
     </tr>
     <tr>
       <td title="INVOICEID">49</td>
       <td title="ITEM">16</td>
       <td title="PRODUCTID">24</td>
       <td title="QUANTITY">18</td>
-      <td title="COST">10.80</td>
+      <td title="COST">10.8</td>
     </tr>
   </tbody>
   </table>
