@@ -92,7 +92,9 @@ public enum Operation
    */
   public boolean isSelectOperation()
   {
-    EnumSet<Operation> selectOperations = EnumSet.of(queryover, dump, count);
+    final EnumSet<Operation> selectOperations = EnumSet.of(queryover,
+                                                           dump,
+                                                           count);
     return selectOperations.contains(this);
   }
 

@@ -292,7 +292,8 @@ public abstract class BaseSchemaTextFormatter
       printColumns(table.getColumns());
     }
 
-    if (schemaTextDetailType.isGreaterThanOrEqualTo(SchemaTextDetailType.basic_schema))
+    if (schemaTextDetailType
+      .isGreaterThanOrEqualTo(SchemaTextDetailType.basic_schema))
     {
       printPrimaryKey(table.getPrimaryKey());
     }

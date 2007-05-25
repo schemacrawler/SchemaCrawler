@@ -70,8 +70,7 @@ public enum ForeignKeyUpdateRule
   private final String text;
   private final int id;
 
-  private ForeignKeyUpdateRule(final int id,
-                               final String text)
+  private ForeignKeyUpdateRule(final int id, final String text)
   {
     this.id = id;
     this.text = text;
