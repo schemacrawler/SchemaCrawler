@@ -36,8 +36,7 @@ public enum SearchableType
   /** Not searchable. */
   predNone(DatabaseMetaData.typePredNone, "not searchable"),
   /** Only searchable with where .. like. */
-  predChar(DatabaseMetaData.typePredChar,
-    "only searchable with where .. like"),
+  predChar(DatabaseMetaData.typePredChar, "only searchable with where .. like"),
   /** Searchable except with where .. like. */
   predBasic(DatabaseMetaData.typePredBasic,
     "searchable except with where .. like"),

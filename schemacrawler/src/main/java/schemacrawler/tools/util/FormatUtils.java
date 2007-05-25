@@ -42,31 +42,7 @@ public final class FormatUtils
   /**
    * HTML header.
    */
-  public static final String HTML_HEADER = ""
-                                           + "<?xml version='1.0' encoding='UTF-8'?>"
-                                           + Utilities.NEWLINE
-                                           + "<!DOCTYPE html"
-                                           + Utilities.NEWLINE
-                                           + "     PUBLIC \"-//W3C//DTD HTML 4.01 Strict//EN\""
-                                           + Utilities.NEWLINE
-                                           + "    \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"
-                                           + Utilities.NEWLINE
-                                           + "<html xmlns='http://www.w3.org/1999/xhtml'>"
-                                           + Utilities.NEWLINE
-                                           + "<head>"
-                                           + Utilities.NEWLINE
-                                           + "  <title>SchemaCrawler Output</title>"
-                                           + Utilities.NEWLINE
-                                           + "  <style type='text/css'>"
-                                           + Utilities.NEWLINE
-                                           + styleSheet()
-                                           + Utilities.NEWLINE
-                                           + "  </style>"
-                                           + Utilities.NEWLINE
-                                           + "</head>"
-                                           + Utilities.NEWLINE
-                                           + "<body>"
-                                           + Utilities.NEWLINE;
+  public static final String HTML_HEADER = htmlHeader();
 
   /** Maximum output line length */
   public static final int MAX_LINE_LENGTH = 72;
@@ -191,11 +167,28 @@ public final class FormatUtils
     out.flush();
   }
 
-  private static String styleSheet()
+  private static String htmlHeader()
   {
     final byte[] text = Utilities.readFully(FormatUtils.class
       .getResourceAsStream("/schemacrawler-output.css"));
-    return new String(text);
+    final String styleSheet = new String(text);
+
+    final String header = "" + "<?xml version='1.0' encoding='UTF-8'?>"
+                          + Utilities.NEWLINE
+                          + "<!DOCTYPE html"
+                          + Utilities.NEWLINE
+                          + "     PUBLIC \"-//W3C//DTD HTML 4.01 Strict//EN\""
+                          + Utilities.NEWLINE
+                          + "    \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"
+                          + Utilities.NEWLINE
+                          + "<html xmlns='http://www.w3.org/1999/xhtml'>"
+                          + Utilities.NEWLINE + "<head>" + Utilities.NEWLINE
+                          + "  <title>SchemaCrawler Output</title>"
+                          + Utilities.NEWLINE + "  <style type='text/css'>"
+                          + Utilities.NEWLINE + styleSheet + Utilities.NEWLINE
+                          + "  </style>" + Utilities.NEWLINE + "</head>"
+                          + Utilities.NEWLINE + "<body>" + Utilities.NEWLINE;
+    return header;
   }
 
   private FormatUtils()
