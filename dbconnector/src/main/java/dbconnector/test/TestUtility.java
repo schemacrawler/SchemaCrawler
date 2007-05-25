@@ -162,12 +162,7 @@ public class TestUtility
     LOGGER.log(Level.FINE, toString() + " - Setting up database");
     // Start the server
     Server.main(new String[] {
-        // -database.0 file:schemacrawler -dbname.0 schemacrawler
-        // -silent false
-        "-dbname.0",
-        "schemacrawler",
-        "-silent",
-        "false"
+        "-dbname.0", "schemacrawler", "-silent", "false"
     });
     createDatabase("jdbc:hsqldb:hsql://localhost/schemacrawler");
   }

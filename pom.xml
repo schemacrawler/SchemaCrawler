@@ -34,13 +34,13 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.2</version>
+      <version>4.3.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>hsqldb</groupId>
       <artifactId>hsqldb</artifactId>
-      <version>1.8.0.1</version>
+      <version>1.8.0.7</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>

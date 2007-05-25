@@ -161,7 +161,7 @@ public class SchemaCrawlerOutputTest
       .load(textFormatOptions);
     final QueryExecutor executor = new QueryExecutor(testUtility
       .getDataSource(), dataHandler);
-    executor.executeSQL("SELECT COUNT(*) FROM SCHEMACRAWLER.CUSTOMER");
+    executor.executeSQL("SELECT COUNT(*) FROM CUSTOMER");
 
     final File outputFile = new File(outputFilename);
     if (!outputFile.delete())

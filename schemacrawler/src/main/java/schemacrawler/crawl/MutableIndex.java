@@ -72,19 +72,25 @@ class MutableIndex
     {
       comparison = thisColumns.length - otherColumns.length;
     }
-
-    for (int i = 0; i < thisColumns.length; i++)
+    if (comparison == 0)
     {
-      final Column thisColumn = thisColumns[i];
-      final Column otherColumn = otherColumns[i];
-      if (comparison == 0)
+      for (int i = 0; i < thisColumns.length; i++)
       {
-        comparison = thisColumn.compareTo(otherColumn);
+        final Column thisColumn = thisColumns[i];
+        final Column otherColumn = otherColumns[i];
+        if (comparison == 0)
+        {
+          comparison = thisColumn.compareTo(otherColumn);
+        }
+        else
+        {
+          break;
+        }
       }
-      else
-      {
-        break;
-      }
+    }
+    if (comparison == 0)
+    {
+      comparison = super.compareTo(other);
     }
 
     return comparison;
