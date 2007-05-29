@@ -24,8 +24,6 @@ package schemacrawler.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.util.logging.Logger;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -33,31 +31,28 @@ import org.junit.Test;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import dbconnector.datasource.PropertiesDataSourceException;
 import dbconnector.test.TestUtility;
 
 public class SortingTest
 {
 
-  private static final Logger LOGGER = Logger.getLogger(SortingTest.class
-    .getName());
-
   private static TestUtility testUtility = new TestUtility();
 
   @AfterClass
   public static void afterAllTests()
-    throws PropertiesDataSourceException, ClassNotFoundException
+    throws Exception
   {
     testUtility.shutdownDatabase();
   }
 
   @BeforeClass
   public static void beforeAllTests()
-    throws PropertiesDataSourceException, ClassNotFoundException
+    throws Exception
   {
     testUtility.setApplicationLogLevel();
     testUtility.createMemoryDatabase();
@@ -67,17 +62,18 @@ public class SortingTest
   public void indexSort()
   {
 
-    final String[] sortedAlphaIndexes = new String[] {
+    final String[] sortedAlpha = new String[] {
         "INDEX_A_SUPPLIER", "INDEX_B_SUPPLIER"
     };
-    final String[] sortedNonAlphaIndexes = new String[] {
+    final String[] sortedNatural = new String[] {
         "INDEX_B_SUPPLIER", "INDEX_A_SUPPLIER"
     };
-    checkIndexSort(sortedAlphaIndexes, true);
-    checkIndexSort(sortedNonAlphaIndexes, false);
+    checkIndexSort(sortedAlpha, true);
+    checkIndexSort(sortedNatural, false);
 
   }
 
+  @SuppressWarnings("boxing")
   private void checkIndexSort(final String[] sortedIndexes,
                               boolean sortAlphbetically)
   {
@@ -109,20 +105,67 @@ public class SortingTest
   }
 
   @Test
-  public void fkSort()
+  public void columnSort()
   {
 
-    final String[] sortedAlphaFks = new String[] {
-        "FK_A_ITEM_PRODUCT", "FK_B_ITEM_INVOICE"
+    final String[] sortedAlpha = new String[] {
+        "CUSTOMERID", "ID", "TOTAL"
     };
-    final String[] sortedNonAlphaFks = new String[] {
-        "FK_B_ITEM_INVOICE", "FK_A_ITEM_PRODUCT"
+    final String[] sortedNatural = new String[] {
+        "ID", "CUSTOMERID", "TOTAL"
     };
-    checkFkSort(sortedAlphaFks, true);
-    checkFkSort(sortedNonAlphaFks, false);
+    checkColumnSort(sortedAlpha, true);
+    checkColumnSort(sortedNatural, false);
 
   }
 
+  @SuppressWarnings("boxing")
+  private void checkColumnSort(final String[] sortedIndexes,
+                               boolean sortAlphbetically)
+  {
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setAlphabeticalSortForIndexes(sortAlphbetically);
+
+    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
+                                                  SchemaInfoLevel.maximum,
+                                                  schemaCrawlerOptions);
+    assertNotNull("Could not obtain schema", schema);
+
+    final Table[] tables = schema.getTables();
+    assertEquals("Table count does not match", 6, tables.length);
+    for (final Table table: tables)
+    {
+      if (table.getName().equals("INVOICE"))
+      {
+        Column[] columns = table.getColumns();
+        assertEquals("Column count does not match", 3, columns.length);
+        for (int i = 0; i < columns.length; i++)
+        {
+          Column column = columns[i];
+          assertEquals("Columns not "
+                       + (sortAlphbetically? "alphabetically": "naturally")
+                       + " sorted", sortedIndexes[i], column.getName());
+        }
+      }
+    }
+  }
+
+  @Test
+  public void fkSort()
+  {
+
+    final String[] sortedAlpha = new String[] {
+        "FK_A_ITEM_PRODUCT", "FK_B_ITEM_INVOICE"
+    };
+    final String[] sortedNatural = new String[] {
+        "FK_B_ITEM_INVOICE", "FK_A_ITEM_PRODUCT"
+    };
+    checkFkSort(sortedAlpha, true);
+    checkFkSort(sortedNatural, false);
+
+  }
+
+  @SuppressWarnings("boxing")
   private void checkFkSort(final String[] sortedFks, boolean sortAlphbetically)
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
