@@ -34,19 +34,19 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.crawl.NamedObjectList.NamedObjectSort;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.IndexSortSequence;
 import schemacrawler.schema.IndexType;
 import schemacrawler.schema.TableType;
-import schemacrawler.util.AlphabeticalSortComparator;
 import sf.util.Utilities;
 
 /**
  * TableRetriever uses database metadata to get the details about the
  * schema.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 final class TableRetriever
   extends AbstractRetriever
@@ -424,7 +424,7 @@ final class TableRetriever
                                                final InclusionRule tableInclusionRule)
     throws SQLException
   {
-    final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>(new AlphabeticalSortComparator());
+    final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>(NamedObjectSort.alphabetical);
     final String catalog = getRetrieverConnection().getCatalog();
     final ResultSet results = getRetrieverConnection().getMetaData()
       .getTables(catalog,

@@ -28,7 +28,6 @@ import java.util.logging.Logger;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import schemacrawler.crawl.SchemaCrawler;
@@ -109,7 +108,6 @@ public class SortingTest
     }
   }
 
-  @Ignore("Under development")
   @Test
   public void fkSort()
   {

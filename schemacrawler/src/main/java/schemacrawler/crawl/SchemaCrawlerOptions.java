@@ -24,17 +24,15 @@ package schemacrawler.crawl;
 import java.util.Arrays;
 import java.util.Properties;
 
+import schemacrawler.crawl.NamedObjectList.NamedObjectSort;
 import schemacrawler.main.BaseOptions;
 import schemacrawler.main.Config;
 import schemacrawler.schema.TableType;
-import schemacrawler.util.AlphabeticalSortComparator;
-import schemacrawler.util.NaturalSortComparator;
-import schemacrawler.util.SerializableComparator;
 
 /**
  * SchemaCrarlwe options.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public final class SchemaCrawlerOptions
   extends BaseOptions
@@ -69,11 +67,11 @@ public final class SchemaCrawlerOptions
   private InclusionRule tableInclusionRule;
   private InclusionRule columnInclusionRule;
 
-  private SerializableComparator tableColumnComparator;
-  private SerializableComparator tableForeignKeyComparator;
-  private SerializableComparator tableIndexComparator;
+  private NamedObjectSort tableColumnComparator;
+  private NamedObjectSort tableForeignKeyComparator;
+  private NamedObjectSort tableIndexComparator;
 
-  private SerializableComparator procedureColumnComparator;
+  private NamedObjectSort procedureColumnComparator;
 
   /**
    * Default options.
@@ -87,10 +85,10 @@ public final class SchemaCrawlerOptions
     tableInclusionRule = new InclusionRule();
     columnInclusionRule = new InclusionRule();
 
-    tableColumnComparator = new NaturalSortComparator();
-    tableForeignKeyComparator = new NaturalSortComparator();
-    tableIndexComparator = new NaturalSortComparator();
-    procedureColumnComparator = new NaturalSortComparator();
+    tableColumnComparator = NamedObjectSort.natural;
+    tableForeignKeyComparator = NamedObjectSort.natural;
+    tableIndexComparator = NamedObjectSort.natural;
+    procedureColumnComparator = NamedObjectSort.natural;
 
   }
 
@@ -183,7 +181,7 @@ public final class SchemaCrawlerOptions
   public boolean isAlphabeticalSortForForeignKeys()
   {
     return tableForeignKeyComparator != null
-           && tableForeignKeyComparator instanceof AlphabeticalSortComparator;
+           && tableForeignKeyComparator == NamedObjectSort.alphabetical;
   }
 
   /**
@@ -194,7 +192,7 @@ public final class SchemaCrawlerOptions
   public boolean isAlphabeticalSortForIndexes()
   {
     return tableIndexComparator != null
-           && tableIndexComparator instanceof AlphabeticalSortComparator;
+           && tableIndexComparator == NamedObjectSort.alphabetical;
   }
 
   /**
@@ -205,7 +203,7 @@ public final class SchemaCrawlerOptions
   public boolean isAlphabeticalSortForProcedureColumns()
   {
     return procedureColumnComparator != null
-           && procedureColumnComparator instanceof AlphabeticalSortComparator;
+           && procedureColumnComparator == NamedObjectSort.alphabetical;
   }
 
   /**
@@ -216,7 +214,7 @@ public final class SchemaCrawlerOptions
   public boolean isAlphabeticalSortForTableColumns()
   {
     return tableColumnComparator != null
-           && tableColumnComparator instanceof AlphabeticalSortComparator;
+           && tableColumnComparator == NamedObjectSort.alphabetical;
   }
 
   /**
@@ -356,40 +354,40 @@ public final class SchemaCrawlerOptions
     return buffer.toString();
   }
 
-  SerializableComparator getProcedureColumnComparator()
+  NamedObjectSort getProcedureColumnComparator()
   {
     return procedureColumnComparator;
   }
 
-  SerializableComparator getTableColumnComparator()
+  NamedObjectSort getTableColumnComparator()
   {
     return tableColumnComparator;
   }
 
-  SerializableComparator getTableForeignKeyComparator()
+  NamedObjectSort getTableForeignKeyComparator()
   {
     return tableForeignKeyComparator;
   }
 
-  SerializableComparator getTableIndexComparator()
+  NamedObjectSort getTableIndexComparator()
   {
     return tableIndexComparator;
   }
 
-  private SerializableComparator getComparator(final boolean alphabeticalSort)
+  private NamedObjectSort getComparator(final boolean alphabeticalSort)
   {
     if (alphabeticalSort)
     {
-      return new AlphabeticalSortComparator();
+      return NamedObjectSort.alphabetical;
     }
     else
     {
-      return new NaturalSortComparator();
+      return NamedObjectSort.natural;
     }
   }
 
-  private SerializableComparator getComparator(final String propertyName,
-                                               final Config config)
+  private NamedObjectSort getComparator(final String propertyName,
+                                        final Config config)
   {
     return getComparator(config.getBooleanValue(propertyName));
   }

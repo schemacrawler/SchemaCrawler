@@ -43,7 +43,7 @@ import schemacrawler.schema.ColumnDataType;
  * SchemaRetriever uses database metadata to get the details about the
  * schema.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 final class DatabaseInfoRetriever
   extends AbstractRetriever

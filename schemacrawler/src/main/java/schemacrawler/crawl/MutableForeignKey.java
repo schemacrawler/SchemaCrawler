@@ -21,13 +21,13 @@
 package schemacrawler.crawl;
 
 
+import schemacrawler.crawl.NamedObjectList.NamedObjectSort;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.NamedObject;
-import schemacrawler.util.NaturalSortComparator;
 
 /**
  * Represents a foreign-key mapping to a private key in another table.
@@ -39,7 +39,7 @@ class MutableForeignKey
 
   private static final long serialVersionUID = 4121411795974895671L;
 
-  private final NamedObjectList<MutableForeignKeyColumnMap> columnPairs = new NamedObjectList<MutableForeignKeyColumnMap>(new NaturalSortComparator());
+  private final NamedObjectList<MutableForeignKeyColumnMap> columnPairs = new NamedObjectList<MutableForeignKeyColumnMap>(NamedObjectSort.natural);
   private ForeignKeyUpdateRule updateRule;
   private ForeignKeyUpdateRule deleteRule;
   private ForeignKeyDeferrability deferrability;

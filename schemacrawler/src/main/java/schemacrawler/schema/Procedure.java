@@ -24,7 +24,7 @@ package schemacrawler.schema;
 /**
  * Represents a procedure.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public interface Procedure
   extends DatabaseObject

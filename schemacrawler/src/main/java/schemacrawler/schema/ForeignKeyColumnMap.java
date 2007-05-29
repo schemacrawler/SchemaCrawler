@@ -25,7 +25,7 @@ package schemacrawler.schema;
  * A single column mapping from a primary key column to a foreign key
  * column.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public interface ForeignKeyColumnMap
   extends DependantNamedObject

@@ -35,7 +35,7 @@ import sf.util.Utilities;
 /**
  * Executes SQL.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public final class QueryExecutor
 {

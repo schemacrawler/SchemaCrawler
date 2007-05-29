@@ -33,7 +33,7 @@ import schemacrawler.tools.schematext.SchemaTextOptions;
 /**
  * Program options.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public final class Options
 {

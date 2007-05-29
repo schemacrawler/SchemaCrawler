@@ -24,7 +24,7 @@ package schemacrawler.schema;
 /**
  * Privilege of a table or column.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public interface Privilege
   extends DependantNamedObject

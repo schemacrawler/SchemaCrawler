@@ -24,7 +24,7 @@ package schemacrawler.schema;
 /**
  * {@inheritDoc}
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public interface ProcedureColumn
   extends BaseColumn

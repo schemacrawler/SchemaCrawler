@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * Database and connection information.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public interface DatabaseInfo
   extends Serializable

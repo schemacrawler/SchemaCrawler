@@ -28,7 +28,7 @@ import sf.util.Utilities;
 /**
  * Formats data as plain text for output.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public final class DataPlainTextFormatter
   extends BaseDataTextFormatter

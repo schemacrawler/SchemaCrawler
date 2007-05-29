@@ -24,7 +24,7 @@ package schemacrawler.schema;
 /**
  * Represents a foreign key in a table.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public interface ForeignKey
   extends DatabaseObject

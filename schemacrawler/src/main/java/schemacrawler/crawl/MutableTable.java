@@ -21,6 +21,7 @@
 package schemacrawler.crawl;
 
 
+import schemacrawler.crawl.NamedObjectList.NamedObjectSort;
 import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
@@ -30,13 +31,11 @@ import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
-import schemacrawler.util.NaturalSortComparator;
-import schemacrawler.util.SerializableComparator;
 
 /**
  * {@inheritDoc}
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 class MutableTable
   extends AbstractDatabaseObject
@@ -47,12 +46,12 @@ class MutableTable
 
   private TableType type;
   private PrimaryKey primaryKey;
-  private final NamedObjectList<MutableColumn> columns = new NamedObjectList<MutableColumn>(new NaturalSortComparator());
-  private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<MutableForeignKey>(new NaturalSortComparator());
-  private final NamedObjectList<MutableIndex> indices = new NamedObjectList<MutableIndex>(new NaturalSortComparator());
-  private final NamedObjectList<MutableCheckConstraint> checkConstraints = new NamedObjectList<MutableCheckConstraint>(new NaturalSortComparator());
-  private final NamedObjectList<MutableTrigger> triggers = new NamedObjectList<MutableTrigger>(new NaturalSortComparator());
-  private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>(new NaturalSortComparator());
+  private final NamedObjectList<MutableColumn> columns = new NamedObjectList<MutableColumn>(NamedObjectSort.natural);
+  private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<MutableForeignKey>(NamedObjectSort.natural);
+  private final NamedObjectList<MutableIndex> indices = new NamedObjectList<MutableIndex>(NamedObjectSort.natural);
+  private final NamedObjectList<MutableCheckConstraint> checkConstraints = new NamedObjectList<MutableCheckConstraint>(NamedObjectSort.natural);
+  private final NamedObjectList<MutableTrigger> triggers = new NamedObjectList<MutableTrigger>(NamedObjectSort.natural);
+  private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>(NamedObjectSort.natural);
 
   MutableTable(final String catalogName,
                final String schemaName,
@@ -261,22 +260,22 @@ class MutableTable
     return columns.lookup(columnName);
   }
 
-  void setCheckConstraintComparator(final SerializableComparator comparator)
+  void setCheckConstraintComparator(final NamedObjectSort comparator)
   {
     checkConstraints.setComparator(comparator);
   }
 
-  void setColumnComparator(final SerializableComparator comparator)
+  void setColumnComparator(final NamedObjectSort comparator)
   {
     columns.setComparator(comparator);
   }
 
-  void setForeignKeyComparator(final SerializableComparator comparator)
+  void setForeignKeyComparator(final NamedObjectSort comparator)
   {
     foreignKeys.setComparator(comparator);
   }
 
-  void setIndexComparator(final SerializableComparator comparator)
+  void setIndexComparator(final NamedObjectSort comparator)
   {
     indices.setComparator(comparator);
   }
@@ -286,7 +285,7 @@ class MutableTable
     this.primaryKey = primaryKey;
   }
 
-  void setTriggerComparator(final SerializableComparator comparator)
+  void setTriggerComparator(final NamedObjectSort comparator)
   {
     triggers.setComparator(comparator);
   }

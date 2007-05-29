@@ -28,7 +28,7 @@ import sf.util.Utilities;
 /**
  * Formats data as CSV for output.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 final class DataCSVFormatter
   extends BaseDataTextFormatter

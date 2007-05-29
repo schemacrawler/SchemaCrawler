@@ -24,7 +24,7 @@ package schemacrawler.schema;
 /**
  * Represents a table in the database.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public interface Table
   extends DatabaseObject

@@ -30,7 +30,7 @@ import schemacrawler.tools.util.PlainTextFormattingHelper;
 /**
  * Formats the schema as plain text for output.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public final class SchemaTextFormatter
   extends BaseSchemaTextFormatter

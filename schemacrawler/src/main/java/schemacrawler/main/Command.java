@@ -28,7 +28,7 @@ import schemacrawler.tools.schematext.SchemaTextDetailType;
 /**
  * A single command from the command line.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 final class Command
 {

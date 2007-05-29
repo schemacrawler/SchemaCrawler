@@ -21,16 +21,16 @@
 package schemacrawler.crawl;
 
 
+import schemacrawler.crawl.NamedObjectList.NamedObjectSort;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Privilege;
-import schemacrawler.util.NaturalSortComparator;
 
 /**
  * Represents a column in a database table. Created from metadata
  * returned by a JDBC call.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  * @version 0.1
  */
 final class MutableColumn
@@ -43,7 +43,7 @@ final class MutableColumn
   private String defaultValue;
   private boolean isPartOfPrimaryKey;
   private boolean isPartOfUniqueIndex;
-  private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>(new NaturalSortComparator());
+  private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>(NamedObjectSort.natural);
 
   MutableColumn(final String name, final NamedObject parent)
   {

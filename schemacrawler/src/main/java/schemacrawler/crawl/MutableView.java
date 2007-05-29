@@ -28,7 +28,7 @@ import schemacrawler.schema.View;
 /**
  * {@inheritDoc}
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 class MutableView
   extends MutableTable

@@ -43,7 +43,7 @@ import sf.util.Utilities;
  * TableRetriever uses database metadata to get the details about the
  * schema.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 final class TableExRetriever
   extends AbstractRetriever

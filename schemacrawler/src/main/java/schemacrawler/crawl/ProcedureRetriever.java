@@ -27,15 +27,15 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.crawl.NamedObjectList.NamedObjectSort;
 import schemacrawler.schema.ProcedureColumnType;
 import schemacrawler.schema.ProcedureType;
-import schemacrawler.util.AlphabeticalSortComparator;
 
 /**
  * SchemaRetriever uses database metadata to get the details about the
  * schema.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 final class ProcedureRetriever
   extends AbstractRetriever
@@ -141,7 +141,7 @@ final class ProcedureRetriever
     throws SQLException
   {
 
-    final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>(new AlphabeticalSortComparator());
+    final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>(NamedObjectSort.alphabetical);
 
     if (!retrieveProcedures)
     {

@@ -29,7 +29,7 @@ import schemacrawler.schema.ProcedureColumnType;
  * Represents a column in a database table. Created from metadata
  * returned by a JDBC call.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 final class MutableProcedureColumn
   extends AbstractColumn

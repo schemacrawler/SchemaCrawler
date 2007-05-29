@@ -36,7 +36,7 @@ import dbconnector.datasource.PropertiesDataSource;
 /**
  * A connection for the retriever.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 final class RetrieverConnection
 {

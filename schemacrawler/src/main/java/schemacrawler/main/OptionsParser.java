@@ -39,7 +39,7 @@ import sf.util.CommandLineParser.StringOption;
 /**
  * Parses the command line.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public final class OptionsParser
 {

@@ -27,7 +27,7 @@ import schemacrawler.schema.NamedObject;
 /**
  * Represents a database object.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 abstract class AbstractDependantNamedObject
   extends AbstractNamedObject

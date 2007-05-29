@@ -30,7 +30,7 @@ import schemacrawler.tools.util.HtmlFormattingHelper;
 /**
  * Formats the schema as HTML for output.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public final class SchemaHTMLFormatter
   extends BaseSchemaTextFormatter

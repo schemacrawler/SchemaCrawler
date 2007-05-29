@@ -26,9 +26,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedMap;
 
+import schemacrawler.crawl.NamedObjectList.NamedObjectSort;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.util.AlphabeticalSortComparator;
 import sf.util.Utilities;
 
 /**
@@ -52,7 +52,7 @@ final class MutableDatabaseInfo
   private String schemaPattern;
   private String catalog;
   private SortedMap<String, Object> dbProperties;
-  private final NamedObjectList<MutableColumnDataType> columnDataTypes = new NamedObjectList<MutableColumnDataType>(new AlphabeticalSortComparator());
+  private final NamedObjectList<MutableColumnDataType> columnDataTypes = new NamedObjectList<MutableColumnDataType>(NamedObjectSort.alphabetical);
 
   /**
    * {@inheritDoc}

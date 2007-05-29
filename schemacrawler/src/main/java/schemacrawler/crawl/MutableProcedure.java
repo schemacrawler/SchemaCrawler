@@ -21,18 +21,17 @@
 package schemacrawler.crawl;
 
 
+import schemacrawler.crawl.NamedObjectList.NamedObjectSort;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.ProcedureType;
 import schemacrawler.schema.RoutineBodyType;
-import schemacrawler.util.NaturalSortComparator;
-import schemacrawler.util.SerializableComparator;
 
 /**
  * Represents a database procedure. Created from metadata returned by a
  * JDBC call.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  * @version 0.1
  */
 final class MutableProcedure
@@ -43,7 +42,7 @@ final class MutableProcedure
   private static final long serialVersionUID = 3906925686089134130L;
 
   private ProcedureType procedureType;
-  private final NamedObjectList<MutableProcedureColumn> columns = new NamedObjectList<MutableProcedureColumn>(new NaturalSortComparator());
+  private final NamedObjectList<MutableProcedureColumn> columns = new NamedObjectList<MutableProcedureColumn>(NamedObjectSort.natural);
   private RoutineBodyType routineBodyType;
   private String definition;
 
@@ -108,7 +107,7 @@ final class MutableProcedure
     columns.add(column);
   }
 
-  void setColumnComparator(final SerializableComparator comparator)
+  void setColumnComparator(final NamedObjectSort comparator)
   {
     columns.setComparator(comparator);
   }

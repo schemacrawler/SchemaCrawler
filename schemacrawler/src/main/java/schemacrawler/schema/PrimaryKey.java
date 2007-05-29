@@ -24,7 +24,7 @@ package schemacrawler.schema;
 /**
  * Represents a primary key in a table.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public interface PrimaryKey
   extends Index

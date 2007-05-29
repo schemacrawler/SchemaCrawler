@@ -21,16 +21,16 @@
 package schemacrawler.crawl;
 
 
+import schemacrawler.crawl.NamedObjectList.NamedObjectSort;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.util.NaturalSortComparator;
 
 /**
  * {@inheritDoc}
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 class MutableSchema
   extends AbstractDatabaseObject
@@ -40,8 +40,8 @@ class MutableSchema
   private static final long serialVersionUID = 3258128063743931187L;
 
   private DatabaseInfo databaseInfo;
-  private final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>(new NaturalSortComparator());
-  private final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>(new NaturalSortComparator());
+  private final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>(NamedObjectSort.natural);
+  private final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>(NamedObjectSort.natural);
 
   MutableSchema(final String catalogName,
                 final String schemaName,

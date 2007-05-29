@@ -28,7 +28,7 @@ import schemacrawler.schema.PrimaryKey;
 /**
  * Primary key.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 class MutablePrimaryKey
   extends MutableIndex
