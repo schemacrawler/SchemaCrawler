@@ -158,44 +158,6 @@ public class SchemaCrawlerTest
   }
 
   @Test
-  public void indexSort()
-  {
-
-    // Set up information schema properties
-    final Config informationSchemaProperties = new Config();
-    informationSchemaProperties
-      .put("select.INFORMATION_SCHEMA.VIEWS",
-           "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_VIEWS");
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  informationSchemaProperties,
-                                                  SchemaInfoLevel.maximum,
-                                                  schemaCrawlerOptions);
-    assertNotNull("Could not obtain schema", schema);
-    final Table[] tables = schema.getTables();
-    assertEquals("Table count does not match", 6, tables.length);
-    boolean foundView = false;
-    for (final Table table: tables)
-    {
-      if (table.getType() == TableType.view)
-      {
-        foundView = true;
-        final View view = (View) table;
-        if (Utilities.isBlank(view.getDefinition()))
-        {
-          fail("View definition not found");
-        }
-      }
-    }
-    if (!foundView)
-    {
-      fail("No views found");
-    }
-
-  }
-
-  @Test
   public void procedureDefinitions()
   {
 

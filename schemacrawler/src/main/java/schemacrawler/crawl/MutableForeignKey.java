@@ -77,17 +77,20 @@ class MutableForeignKey
       comparison = thisColumnPairs.length - otherColumnPairs.length;
     }
 
-    for (int i = 0; i < thisColumnPairs.length; i++)
+    if (comparison == 0)
     {
-      final ForeignKeyColumnMap thisColumnPair = thisColumnPairs[i];
-      final ForeignKeyColumnMap otherColumnPair = otherColumnPairs[i];
-      if (comparison == 0)
+      for (int i = 0; i < thisColumnPairs.length; i++)
       {
-        comparison = thisColumnPair.compareTo(otherColumnPair);
-      }
-      else
-      {
-        break;
+        final ForeignKeyColumnMap thisColumnPair = thisColumnPairs[i];
+        final ForeignKeyColumnMap otherColumnPair = otherColumnPairs[i];
+        if (comparison == 0)
+        {
+          comparison = thisColumnPair.compareTo(otherColumnPair);
+        }
+        else
+        {
+          break;
+        }
       }
     }
 
