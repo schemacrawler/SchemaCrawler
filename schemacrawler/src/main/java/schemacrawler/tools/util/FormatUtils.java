@@ -29,7 +29,7 @@ import sf.util.Utilities;
 /**
  * Utility.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public final class FormatUtils
 {

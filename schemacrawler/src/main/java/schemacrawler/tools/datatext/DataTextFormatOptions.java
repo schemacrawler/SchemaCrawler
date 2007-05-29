@@ -28,7 +28,7 @@ import schemacrawler.tools.OutputOptions;
 /**
  * Data text formatting options.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public final class DataTextFormatOptions
   extends BaseToolOptions

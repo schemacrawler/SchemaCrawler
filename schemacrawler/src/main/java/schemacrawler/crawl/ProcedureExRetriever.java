@@ -35,7 +35,7 @@ import sf.util.Utilities;
  * ProcedureExRetriever uses database metadata to get the details about
  * the schema.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 final class ProcedureExRetriever
   extends AbstractRetriever

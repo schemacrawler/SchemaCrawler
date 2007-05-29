@@ -26,7 +26,7 @@ import java.io.Serializable;
 /**
  * Named object.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public interface NamedObject
   extends Serializable, Comparable<NamedObject>

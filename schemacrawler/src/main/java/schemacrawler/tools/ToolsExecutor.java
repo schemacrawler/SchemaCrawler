@@ -43,7 +43,7 @@ import schemacrawler.tools.schematext.SchemaTextFormatterLoader;
 /**
  * Basic SchemaCrawler executor.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public class ToolsExecutor
   implements Executor

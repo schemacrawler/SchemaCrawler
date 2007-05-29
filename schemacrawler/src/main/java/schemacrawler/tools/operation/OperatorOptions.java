@@ -27,7 +27,7 @@ import schemacrawler.tools.OutputOptions;
 /**
  * Operator options.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public final class OperatorOptions
   extends BaseToolOptions

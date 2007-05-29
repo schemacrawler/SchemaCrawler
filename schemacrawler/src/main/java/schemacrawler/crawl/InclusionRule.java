@@ -32,7 +32,7 @@ import sf.util.Utilities;
  * Specifies inclusion and exclusion patterns that can be applied to the
  * names of database objects.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public final class InclusionRule
   implements Serializable

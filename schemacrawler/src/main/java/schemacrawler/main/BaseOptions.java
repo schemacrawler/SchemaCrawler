@@ -26,7 +26,7 @@ import java.io.Serializable;
 /**
  * Options.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public abstract class BaseOptions
   implements Serializable

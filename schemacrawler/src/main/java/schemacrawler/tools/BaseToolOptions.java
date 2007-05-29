@@ -26,7 +26,7 @@ import schemacrawler.main.BaseOptions;
 /**
  * Tool options.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public abstract class BaseToolOptions
   extends BaseOptions

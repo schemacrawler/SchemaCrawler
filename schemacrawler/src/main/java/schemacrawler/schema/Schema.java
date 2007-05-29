@@ -24,7 +24,7 @@ package schemacrawler.schema;
 /**
  * Represents the database schema.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public interface Schema
   extends DatabaseObject

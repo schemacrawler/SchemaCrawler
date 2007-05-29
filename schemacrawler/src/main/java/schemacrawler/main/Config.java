@@ -18,7 +18,7 @@ import sf.util.Utilities;
 /**
  * Configuration properties.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public class Config
   extends HashMap<String, String>

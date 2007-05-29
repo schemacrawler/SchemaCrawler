@@ -24,7 +24,7 @@ package schemacrawler.schema;
 /**
  * Describes a database object.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public interface DatabaseObject
   extends NamedObject

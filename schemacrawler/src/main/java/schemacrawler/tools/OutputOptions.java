@@ -32,7 +32,7 @@ import sf.util.Utilities;
 /**
  * Contains output options.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public final class OutputOptions
   extends BaseOptions

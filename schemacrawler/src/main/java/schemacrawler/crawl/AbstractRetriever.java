@@ -30,7 +30,7 @@ import sf.util.Utilities;
  * SchemaRetriever uses database metadata to get the details about the
  * schema.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 abstract class AbstractRetriever
 {

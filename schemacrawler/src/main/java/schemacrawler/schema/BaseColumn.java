@@ -24,7 +24,7 @@ package schemacrawler.schema;
 /**
  * Column for tables and procedures.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public interface BaseColumn
   extends DependantNamedObject

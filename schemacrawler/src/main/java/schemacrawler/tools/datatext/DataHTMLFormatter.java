@@ -28,7 +28,7 @@ import sf.util.Entities;
 /**
  * Formats data as HTML for output.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 final class DataHTMLFormatter
   extends BaseDataTextFormatter

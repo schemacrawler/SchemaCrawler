@@ -24,7 +24,7 @@ package schemacrawler.schema;
 /**
  * Represents a view in the database.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public interface View
   extends Table

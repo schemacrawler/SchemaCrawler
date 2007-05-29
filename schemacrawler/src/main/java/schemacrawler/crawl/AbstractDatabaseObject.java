@@ -27,7 +27,7 @@ import sf.util.Utilities;
 /**
  * Represents a database object.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 abstract class AbstractDatabaseObject
   extends AbstractNamedObject

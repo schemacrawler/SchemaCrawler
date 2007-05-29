@@ -29,7 +29,7 @@ import schemacrawler.schema.NamedObject;
  * Represents a column in a database table. Created from metadata
  * returned by a JDBC call.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 abstract class AbstractColumn
   extends AbstractDependantNamedObject

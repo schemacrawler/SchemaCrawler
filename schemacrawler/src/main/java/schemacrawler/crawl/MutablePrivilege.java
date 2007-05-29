@@ -27,7 +27,7 @@ import schemacrawler.schema.Privilege;
 /**
  * Table or column privilege.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 final class MutablePrivilege
   extends AbstractDependantNamedObject

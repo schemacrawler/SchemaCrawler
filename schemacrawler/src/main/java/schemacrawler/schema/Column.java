@@ -24,7 +24,7 @@ package schemacrawler.schema;
 /**
  * A table or procedure column.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public interface Column
   extends BaseColumn

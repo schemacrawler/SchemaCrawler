@@ -25,7 +25,7 @@ package schemacrawler.schema;
  * Represents the child of a database object, such as a column or an
  * index.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public interface DependantNamedObject
   extends NamedObject

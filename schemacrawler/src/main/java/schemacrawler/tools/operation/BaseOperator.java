@@ -47,7 +47,7 @@ import sf.util.Utilities;
 /**
  * Base functionality for operations.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public abstract class BaseOperator
   implements CrawlHandler

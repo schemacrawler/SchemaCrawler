@@ -24,14 +24,13 @@ package schemacrawler.crawl;
 import java.util.HashMap;
 import java.util.Map;
 
+import schemacrawler.crawl.NamedObjectList.NamedObjectSort;
 import schemacrawler.schema.NamedObject;
-import schemacrawler.util.AlphabeticalSortComparator;
-import schemacrawler.util.SerializableComparator;
 
 /**
  * Represents a named object.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 abstract class AbstractNamedObject
   implements NamedObject
@@ -40,7 +39,7 @@ abstract class AbstractNamedObject
   private final String name;
   private String remarks;
   private final Map<String, Object> attributeMap = new HashMap<String, Object>();
-  private final SerializableComparator comparator = new AlphabeticalSortComparator();
+  private final NamedObjectSort comparator = NamedObjectSort.alphabetical;
 
   AbstractNamedObject(final String name)
   {

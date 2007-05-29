@@ -23,6 +23,7 @@ package schemacrawler.crawl;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,23 +33,53 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.NamedObject;
-import schemacrawler.util.SerializableComparator;
 
 /**
  * Ordered list of named objects, that can be searched associatively.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 final class NamedObjectList<N extends AbstractNamedObject>
   implements Serializable
 {
+
+  enum NamedObjectSort
+    implements Comparator<NamedObject>
+  {
+
+    /** Alphabetical sort. */
+    alphabetical,
+    /** Natural sort. */
+    natural;
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see Comparator#compare(Object, Object)
+     */
+    public int compare(final NamedObject namedObject1,
+                       final NamedObject namedObject2)
+    {
+      switch (this)
+      {
+        case alphabetical:
+          return namedObject1.toString().compareToIgnoreCase(namedObject2
+            .toString());
+        case natural:
+          return namedObject1.compareTo(namedObject2);
+        default:
+          return 0;
+      }
+    }
+
+  }
 
   private static final long serialVersionUID = 3257847666804142128L;
 
   private static final Logger LOGGER = Logger.getLogger(NamedObjectList.class
     .getName());
 
-  private SerializableComparator comparator;
+  private NamedObjectSort comparator;
   private final List<N> sortedList;
   private final Map<String, N> map;
 
@@ -56,14 +87,14 @@ final class NamedObjectList<N extends AbstractNamedObject>
    * Construct an initially empty ordered list of named objects, that
    * can be searched associatively.
    * 
-   * @param serializableComparator
+   * @param comparator
    *        Comparator for named objects, or null for no sorting
    */
-  NamedObjectList(final SerializableComparator serializableComparator)
+  NamedObjectList(final NamedObjectSort comparator)
   {
-    comparator = serializableComparator;
-    sortedList = new LinkedList<N>();
-    map = new TreeMap<String, N>();
+    this.comparator = comparator;
+    this.sortedList = new LinkedList<N>();
+    this.map = new TreeMap<String, N>();
   }
 
   /**
@@ -277,7 +308,7 @@ final class NamedObjectList<N extends AbstractNamedObject>
    * @param comparator
    *        Comparator
    */
-  void setComparator(final SerializableComparator comparator)
+  void setComparator(final NamedObjectSort comparator)
   {
     this.comparator = comparator;
     Collections.sort(sortedList, comparator);

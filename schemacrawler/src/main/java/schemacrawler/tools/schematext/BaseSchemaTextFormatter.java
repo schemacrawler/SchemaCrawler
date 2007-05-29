@@ -53,7 +53,7 @@ import sf.util.Utilities;
 /**
  * Base functionality for the text formatting of schema.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public abstract class BaseSchemaTextFormatter
   implements CrawlHandler

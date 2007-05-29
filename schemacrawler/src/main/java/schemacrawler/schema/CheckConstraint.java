@@ -24,7 +24,7 @@ package schemacrawler.schema;
 /**
  * Represents an table constraint.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public interface CheckConstraint
   extends DependantNamedObject
