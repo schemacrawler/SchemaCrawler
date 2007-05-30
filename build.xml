@@ -194,6 +194,23 @@
 
 		<!-- Copy database server -->
     <copy todir="${distribution.dir}">
+      <first>
+        <sort>
+          <reverse xmlns="antlib:org.apache.tools.ant.types.resources.comparators"/>
+          <name xmlns="antlib:org.apache.tools.ant.types.resources.comparators"/>
+          <resources>
+            <fileset dir="${env.M2_REPO}">
+              <include name="**/hsqldb*.jar"/>
+            </fileset>
+          </resources>
+        </sort>
+      </first>
+      <chainedmapper>
+        <flattenmapper/>
+        <regexpmapper from="hsqldb.*\.jar" to="hsqldb\.jar"/>
+      </chainedmapper>
+    </copy>
+    <copy todir="${distribution.dir}">
       <fileset dir="${SchemaCrawlerHome}/distribution/src/other"/>
     </copy>
 
