@@ -75,6 +75,13 @@
             </goals>
           </execution>
         </executions>
+        <dependencies>
+          <dependency>
+              <groupId>org.apache.ant</groupId>
+              <artifactId>ant-nodeps</artifactId>
+              <version>1.7.0</version>
+          </dependency>
+        </dependencies>
       </plugin>
     </plugins>
   </build>
