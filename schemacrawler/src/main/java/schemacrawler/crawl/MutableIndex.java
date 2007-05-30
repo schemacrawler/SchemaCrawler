@@ -21,6 +21,11 @@
 package schemacrawler.crawl;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexSortSequence;
@@ -37,7 +42,10 @@ class MutableIndex
 
   private static final long serialVersionUID = 4051326747138079028L;
 
-  private final NamedObjectList<MutableColumn> columns = new NamedObjectList<MutableColumn>(null);
+  private static final Logger LOGGER = Logger.getLogger(MutableIndex.class
+    .getName());
+
+  private final List<MutableColumn> columns = new ArrayList<MutableColumn>();
   private boolean isUnique;
   private IndexType type;
   private IndexSortSequence sortSequence;
@@ -50,6 +58,46 @@ class MutableIndex
     // Default values
     type = IndexType.unknown;
     sortSequence = IndexSortSequence.unknown;
+  }
+
+  /**
+   * Add a named object at a given ordinal position. If the ordinal
+   * position is beyond the end of the list, add the object to the end.
+   * 
+   * @param ordinalPosition
+   *        Position to add at, starting from 1
+   * @param namedObject
+   *        Named object to add
+   */
+  void addColumn(final int ordinalPosition, final MutableColumn column)
+  {
+    if (column == null || column.getName() == null)
+    {
+      throw new IllegalArgumentException("Cannot add a column to the index");
+    }
+
+    final int size = columns.size();
+    int index = ordinalPosition - 1;
+    if (index < 0)
+    {
+      index = 0;
+    }
+    else if (index > size)
+    {
+      index = size;
+    }
+    // Add the object in a new position
+    if (LOGGER.isLoggable(Level.FINEST))
+    {
+      String message = "Adding \"" + column + "\" at position #" + index;
+      if (index != ordinalPosition - 1)
+      {
+        message = message + " (instead of at position #"
+                  + (ordinalPosition - 1) + ")";
+      }
+      LOGGER.log(Level.FINEST, message);
+    }
+    columns.add(index, column);
   }
 
   /**
@@ -113,7 +161,7 @@ class MutableIndex
    */
   public Column[] getColumns()
   {
-    return columns.getAll().toArray(new Column[0]);
+    return columns.toArray(new Column[0]);
   }
 
   /**
@@ -154,30 +202,6 @@ class MutableIndex
   public final boolean isUnique()
   {
     return isUnique;
-  }
-
-  /**
-   * Adds a column at an ordinal position.
-   * 
-   * @param ordinalPosition
-   *        Oridinal position
-   * @param column
-   *        Column
-   */
-  void addColumn(final int ordinalPosition, final MutableColumn column)
-  {
-    columns.add(ordinalPosition, column);
-  }
-
-  /**
-   * Adds a column.
-   * 
-   * @param column
-   *        Column
-   */
-  void addColumn(final MutableColumn column)
-  {
-    columns.add(column);
   }
 
   final void setCardinality(final int cardinality)

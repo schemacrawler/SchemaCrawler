@@ -295,9 +295,8 @@ public final class SchemaCrawler
       throw new SchemaCrawlerException("Exception retrieving procedures", e);
     }
 
-    for (int i = 0; i < procedures.size(); i++)
+    for (MutableProcedure procedure: procedures)
     {
-      final MutableProcedure procedure = procedures.get(i);
       if (infoLevel != SchemaInfoLevel.minimum)
       {
         try
@@ -350,9 +349,8 @@ public final class SchemaCrawler
       throw new SchemaCrawlerException("Exception retrieving tables", e);
     }
 
-    for (int i = 0; i < tables.size(); i++)
+    for (MutableTable table: tables)
     {
-      final MutableTable table = tables.get(i);
       if (infoLevel.isGreaterThan(SchemaInfoLevel.minimum))
       {
         try
@@ -368,7 +366,7 @@ public final class SchemaCrawler
           if (table.getType() != TableType.view
               && infoLevel.isGreaterThanOrEqualTo(SchemaInfoLevel.verbose))
           {
-            retriever.retrieveForeignKeys(tables, i);
+            retriever.retrieveForeignKeys(tables, table.getName());
             retriever.retrieveIndices(table, true, false);
             retriever.retrieveIndices(table, false, false);
           }

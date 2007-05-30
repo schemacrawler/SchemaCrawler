@@ -128,7 +128,7 @@ class MutableTable
     if (primaryKey != null)
     {
       final String primaryKeyName = primaryKey.getName();
-      final MutableIndex index = (MutableIndex) indices.remove(primaryKeyName);
+      final MutableIndex index = indices.remove(primaryKeyName);
       if (index != null)
       {
         setPrimaryKey(MutablePrimaryKey.fromIndex(index));
