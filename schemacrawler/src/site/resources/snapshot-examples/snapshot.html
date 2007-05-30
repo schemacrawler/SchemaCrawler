@@ -1427,7 +1427,7 @@ hr {
 		<td colspan='4'>&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_CUSTOMER</td>
+		<td colspan='2' class='name'>FK_INVOICE_CUSTOMER</td>
 		<td class='description'>[foreign key, on update no action]</td>
 	</tr>
 	<tr>
@@ -1621,7 +1621,7 @@ hr {
 		<td colspan='4'>&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_CUSTOMER</td>
+		<td colspan='2' class='name'>FK_INVOICE_CUSTOMER</td>
 		<td class='description'>[foreign key, on update no action]</td>
 	</tr>
 	<tr>
@@ -1633,7 +1633,7 @@ hr {
 		<td colspan='4'>&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_ITEM_B</td>
+		<td colspan='2' class='name'>FK_B_ITEM_INVOICE</td>
 		<td class='description'>[foreign key, on update no action]</td>
 	</tr>
 	<tr>
@@ -1645,7 +1645,7 @@ hr {
 		<td colspan='4'>&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>INDEX_ITEM_CUSTOMER</td>
+		<td colspan='2' class='name'>INDEX_INVOICE_CUSTOMER</td>
 		<td class='description'>[non-unique ascending other index]</td>
 	</tr>
 	<tr>
@@ -1770,24 +1770,24 @@ hr {
 		<td colspan='4'>&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_ITEM_A</td>
+		<td colspan='2' class='name'>FK_B_ITEM_INVOICE</td>
 		<td class='description'>[foreign key, on update no action]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'>&nbsp;</td>
-		<td class='subname'>PRODUCT.ID &rarr; PRODUCTID</td>
+		<td class='subname'>INVOICE.ID &rarr; INVOICEID</td>
 		<td class='type'>&nbsp;</td>
 	</tr>
 	<tr>
 		<td colspan='4'>&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_ITEM_B</td>
+		<td colspan='2' class='name'>FK_A_ITEM_PRODUCT</td>
 		<td class='description'>[foreign key, on update no action]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'>&nbsp;</td>
-		<td class='subname'>INVOICE.ID &rarr; INVOICEID</td>
+		<td class='subname'>PRODUCT.ID &rarr; PRODUCTID</td>
 		<td class='type'>&nbsp;</td>
 	</tr>
 	<tr>
@@ -1928,7 +1928,7 @@ hr {
 		<td colspan='4'>&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_ITEM_A</td>
+		<td colspan='2' class='name'>FK_A_ITEM_PRODUCT</td>
 		<td class='description'>[foreign key, on update no action]</td>
 	</tr>
 	<tr>
@@ -2009,7 +2009,7 @@ hr {
 		<td colspan='4'>&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>INDEX_SUPPLIER_B</td>
+		<td colspan='2' class='name'>INDEX_B_SUPPLIER</td>
 		<td class='description'>[non-unique ascending other index]</td>
 	</tr>
 	<tr>
@@ -2026,7 +2026,7 @@ hr {
 		<td colspan='4'>&nbsp;</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>INDEX_SUPPLIER_A</td>
+		<td colspan='2' class='name'>INDEX_A_SUPPLIER</td>
 		<td class='description'>[non-unique ascending other index]</td>
 	</tr>
 	<tr>

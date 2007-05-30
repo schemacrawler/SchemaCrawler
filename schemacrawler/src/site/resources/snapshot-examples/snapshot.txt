@@ -352,7 +352,7 @@ CUSTOMER                                                         [table]
 SYS_PK_48                                                  [primary key]
   ID                                INTEGER, not null           
 
-FK_CUSTOMER                           [foreign key, on update no action]
+FK_INVOICE_CUSTOMER                   [foreign key, on update no action]
   ID --> INVOICE.CUSTOMERID                                     
 
 DELETE                                             [grantable privilege]
@@ -402,13 +402,13 @@ INVOICE                                                          [table]
 SYS_PK_49                                                  [primary key]
   ID                                INTEGER, not null           
 
-FK_CUSTOMER                           [foreign key, on update no action]
+FK_INVOICE_CUSTOMER                   [foreign key, on update no action]
   CUSTOMER.ID --> CUSTOMERID                                    
 
-FK_ITEM_B                             [foreign key, on update no action]
+FK_B_ITEM_INVOICE                     [foreign key, on update no action]
   ID --> ITEM.INVOICEID                                         
 
-INDEX_ITEM_CUSTOMER                   [non-unique ascending other index]
+INDEX_INVOICE_CUSTOMER                [non-unique ascending other index]
   CUSTOMERID                        INTEGER                     
 
 SYS_IDX_56                            [non-unique ascending other index]
@@ -439,11 +439,11 @@ SYS_PK_46                                                  [primary key]
   INVOICEID                         INTEGER, not null           
   ITEM                              INTEGER, not null           
 
-FK_ITEM_A                             [foreign key, on update no action]
-  PRODUCT.ID --> PRODUCTID                                      
-
-FK_ITEM_B                             [foreign key, on update no action]
+FK_B_ITEM_INVOICE                     [foreign key, on update no action]
   INVOICE.ID --> INVOICEID                                      
+
+FK_A_ITEM_PRODUCT                     [foreign key, on update no action]
+  PRODUCT.ID --> PRODUCTID                                      
 
 INDEX_ITEM_INVOICE                    [non-unique ascending other index]
   INVOICEID                         INTEGER, not null           
@@ -479,7 +479,7 @@ PRODUCT                                                          [table]
 SYS_PK_47                                                  [primary key]
   ID                                INTEGER, not null           
 
-FK_ITEM_A                             [foreign key, on update no action]
+FK_A_ITEM_PRODUCT                     [foreign key, on update no action]
   ID --> ITEM.PRODUCTID                                         
 
 DELETE                                             [grantable privilege]
@@ -500,11 +500,11 @@ SUPPLIER                                                         [table]
   SUPPLIER_ID                       INTEGER                     
   SUPPLIER_NAME                     VARCHAR(255)                
 
-INDEX_SUPPLIER_B                      [non-unique ascending other index]
+INDEX_B_SUPPLIER                      [non-unique ascending other index]
   SUPPLIER_ID                       INTEGER                     
   SUPPLIER_NAME                     VARCHAR(255)                
 
-INDEX_SUPPLIER_A                      [non-unique ascending other index]
+INDEX_A_SUPPLIER                      [non-unique ascending other index]
   SUPPLIER_NAME                     VARCHAR(255)                
   SUPPLIER_ID                       INTEGER                     
 
