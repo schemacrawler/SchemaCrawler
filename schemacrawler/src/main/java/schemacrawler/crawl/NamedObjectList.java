@@ -78,16 +78,6 @@ final class NamedObjectList<N extends AbstractNamedObject>
   private final Map<String, N> map;
 
   /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Iterable#iterator()
-   */
-  public Iterator<N> iterator()
-  {
-    return getAll().iterator();
-  }
-
-  /**
    * Construct an initially empty ordered list of named objects, that
    * can be searched associatively.
    * 
@@ -138,6 +128,16 @@ final class NamedObjectList<N extends AbstractNamedObject>
   /**
    * {@inheritDoc}
    * 
+   * @see java.lang.Iterable#iterator()
+   */
+  public Iterator<N> iterator()
+  {
+    return getAll().iterator();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see java.lang.Object#toString()
    */
   @Override
@@ -161,11 +161,6 @@ final class NamedObjectList<N extends AbstractNamedObject>
     map.put(namedObject.getName(), namedObject);
   }
 
-  N remove(final String namedObjectName)
-  {
-    return map.remove(namedObjectName);
-  }
-
   /**
    * Gets all named objects in the list, in sorted order.
    * 
@@ -178,11 +173,6 @@ final class NamedObjectList<N extends AbstractNamedObject>
     return Collections.unmodifiableList(all);
   }
 
-  void setComparator(NamedObjectSort sort)
-  {
-    this.sort = sort;
-  }
-
   /**
    * Looks up a named object by name.
    * 
@@ -193,6 +183,16 @@ final class NamedObjectList<N extends AbstractNamedObject>
   N lookup(final String name)
   {
     return map.get(name);
+  }
+
+  N remove(final String namedObjectName)
+  {
+    return map.remove(namedObjectName);
+  }
+
+  void setComparator(NamedObjectSort sort)
+  {
+    this.sort = sort;
   }
 
   /**
