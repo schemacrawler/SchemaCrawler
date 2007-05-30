@@ -26,10 +26,8 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -62,10 +60,10 @@ final class TableRetriever
    * @param foreignKeysMap
    * @throws SQLException
    */
-  private static void createForeignKeys(final ResultSet results,
-                                        final Map<String, MutableTable> tablesMap,
-                                        final MutableTable table,
-                                        final Map<String, MutableForeignKey> foreignKeysMap)
+  private void createForeignKeys(final ResultSet results,
+                                 final NamedObjectList<MutableTable> tables,
+                                 final MutableTable table,
+                                 final Map<String, MutableForeignKey> foreignKeysMap)
     throws SQLException
   {
 
@@ -85,6 +83,7 @@ final class TableRetriever
             .getSchemaName(), foreignKeyName);
           foreignKeysMap.put(foreignKeyName, foreignKey);
         }
+        final String pkTableSchema = results.getString("PKTABLE_SCHEM");
         final String pkTableName = results.getString("PKTABLE_NAME");
         final String pkColumnName = results.getString("PKCOLUMN_NAME");
         final String fkTableName = results.getString("FKTABLE_NAME");
@@ -93,10 +92,12 @@ final class TableRetriever
         final int updateRule = results.getInt("UPDATE_RULE");
         final int deleteRule = results.getInt("DELETE_RULE");
         final int deferrability = results.getInt("DEFERRABILITY");
-        final MutableColumn pkColumn = lookupOrCreateColumn(tablesMap,
+        final MutableColumn pkColumn = lookupOrCreateColumn(tables,
+                                                            pkTableSchema,
                                                             pkTableName,
                                                             pkColumnName);
-        final MutableColumn fkColumn = lookupOrCreateColumn(tablesMap,
+        final MutableColumn fkColumn = lookupOrCreateColumn(tables,
+                                                            pkTableSchema,
                                                             fkTableName,
                                                             fkColumnName);
         foreignKey.addColumnPair(keySequence, pkColumn, fkColumn);
@@ -166,24 +167,21 @@ final class TableRetriever
     }
   }
 
-  private static MutableColumn lookupOrCreateColumn(final Map<String, MutableTable> tablesMap,
-                                                    final String tableName,
-                                                    final String columnName)
+  private MutableColumn lookupOrCreateColumn(final NamedObjectList<MutableTable> tables,
+                                             final String schema,
+                                             final String tableName,
+                                             final String columnName)
   {
 
     MutableColumn column = null;
-    MutableTable table = tablesMap.get(tableName);
+    MutableTable table = tables.lookup(tableName);
     if (table != null)
     {
       column = (MutableColumn) table.lookupColumn(columnName);
     }
     if (column == null)
     {
-      final List<MutableTable> tables = new ArrayList<MutableTable>(tablesMap
-        .values());
-      final MutableTable firstTable = tables.get(0);
-      final String catalog = firstTable.getCatalogName();
-      final String schema = firstTable.getSchemaName();
+      final String catalog = getRetrieverConnection().getCatalog();
       table = new MutableTable(catalog, schema, tableName);
       column = new MutableColumn(columnName, table);
     }
@@ -281,14 +279,11 @@ final class TableRetriever
   }
 
   void retrieveForeignKeys(final NamedObjectList<MutableTable> tables,
-                           final int index)
+                           final String tableName)
     throws SQLException
   {
 
-    final Map<String, MutableTable> tablesMap = tables.getMap();
-    final MutableTable table = tables.get(index);
-
-    final String tableName = table.getName();
+    final MutableTable table = tables.lookup(tableName);
     final String schema = table.getSchemaName();
 
     final Map<String, MutableForeignKey> foreignKeysMap = new HashMap<String, MutableForeignKey>();
@@ -299,10 +294,10 @@ final class TableRetriever
     final DatabaseMetaData metaData = getRetrieverConnection().getMetaData();
 
     results = metaData.getImportedKeys(catalog, schema, tableName);
-    createForeignKeys(results, tablesMap, table, foreignKeysMap);
+    createForeignKeys(results, tables, table, foreignKeysMap);
 
     results = metaData.getExportedKeys(catalog, schema, tableName);
-    createForeignKeys(results, tablesMap, table, foreignKeysMap);
+    createForeignKeys(results, tables, table, foreignKeysMap);
 
     final Collection<MutableForeignKey> foreignKeyCollection = foreignKeysMap
       .values();

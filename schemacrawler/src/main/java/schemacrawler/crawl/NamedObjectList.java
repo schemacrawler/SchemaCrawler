@@ -22,15 +22,13 @@ package schemacrawler.crawl;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schema.NamedObject;
 
@@ -40,7 +38,7 @@ import schemacrawler.schema.NamedObject;
  * @author Sualeh Fatehi
  */
 final class NamedObjectList<N extends AbstractNamedObject>
-  implements Serializable
+  implements Serializable, Iterable<N>
 {
 
   enum NamedObjectSort
@@ -76,25 +74,30 @@ final class NamedObjectList<N extends AbstractNamedObject>
 
   private static final long serialVersionUID = 3257847666804142128L;
 
-  private static final Logger LOGGER = Logger.getLogger(NamedObjectList.class
-    .getName());
-
-  private NamedObjectSort comparator;
-  private final List<N> sortedList;
+  private NamedObjectSort sort;
   private final Map<String, N> map;
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Iterable#iterator()
+   */
+  public Iterator<N> iterator()
+  {
+    return getAll().iterator();
+  }
 
   /**
    * Construct an initially empty ordered list of named objects, that
    * can be searched associatively.
    * 
-   * @param comparator
+   * @param sort
    *        Comparator for named objects, or null for no sorting
    */
-  NamedObjectList(final NamedObjectSort comparator)
+  NamedObjectList(NamedObjectSort sort)
   {
-    this.comparator = comparator;
-    this.sortedList = new LinkedList<N>();
-    this.map = new TreeMap<String, N>();
+    this.sort = sort;
+    this.map = new HashMap<String, N>();
   }
 
   /**
@@ -104,39 +107,17 @@ final class NamedObjectList<N extends AbstractNamedObject>
    */
   @SuppressWarnings("unchecked")
   @Override
-  public boolean equals(final Object o)
+  public boolean equals(Object obj)
   {
-    if (this == o)
+    if (this == obj) return true;
+    if (obj == null) return false;
+    if (!(obj instanceof NamedObjectList)) return false;
+    final NamedObjectList<N> other = (NamedObjectList<N>) obj;
+    if (map == null)
     {
-      return true;
+      if (other.map != null) return false;
     }
-
-    if (o == null)
-    {
-      return false;
-    }
-
-    if (o.getClass() != getClass())
-    {
-      return false;
-    }
-
-    final NamedObjectList<N> other = (NamedObjectList<N>) o;
-    if (sortedList == null)
-    {
-      if (other.sortedList != null)
-      {
-        return false;
-      }
-    }
-    else
-    {
-      if (!sortedList.equals(other.sortedList))
-      {
-        return false;
-      }
-    }
-
+    else if (!map.equals(other.map)) return false;
     return true;
   }
 
@@ -148,13 +129,9 @@ final class NamedObjectList<N extends AbstractNamedObject>
   @Override
   public int hashCode()
   {
-    final int prime = 1000003;
-    int result = 0;
-    if (sortedList != null)
-    {
-      result = prime * result + sortedList.hashCode();
-    }
-
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((map == null)? 0: map.hashCode());
     return result;
   }
 
@@ -166,49 +143,7 @@ final class NamedObjectList<N extends AbstractNamedObject>
   @Override
   public String toString()
   {
-    return sortedList.toString();
-  }
-
-  /**
-   * Add a named object at a given ordinal position. If the ordinal
-   * position is beyond the end of the list, add the object to the end.
-   * 
-   * @param ordinalPosition
-   *        Position to add at, starting from 1
-   * @param namedObject
-   *        Named object to add
-   */
-  void add(final int ordinalPosition, final N namedObject)
-  {
-    if (namedObject == null || namedObject.getName() == null)
-    {
-      throw new IllegalArgumentException("Cannot add an object to the list");
-    }
-
-    final int size = sortedList.size();
-    int index = ordinalPosition - 1;
-    if (index < 0)
-    {
-      index = 0;
-    }
-    else if (index > size)
-    {
-      index = size;
-    }
-    // Add the object in a new position
-    if (LOGGER.isLoggable(Level.FINEST))
-    {
-      String message = "Adding \"" + namedObject + "\" at position #" + index;
-      if (index != ordinalPosition - 1)
-      {
-        message = message + " (instead of at position #"
-                  + (ordinalPosition - 1) + ")";
-      }
-      LOGGER.log(Level.FINEST, message);
-    }
-    remove(namedObject.getName());
-    sortedList.add(index, namedObject);
-    map.put(namedObject.getName(), namedObject);
+    return getAll().toString();
   }
 
   /**
@@ -223,33 +158,12 @@ final class NamedObjectList<N extends AbstractNamedObject>
     {
       throw new IllegalArgumentException("Cannot add an object to the list");
     }
-
-    remove(namedObject.getName());
-
     map.put(namedObject.getName(), namedObject);
-    int index = Collections.binarySearch(sortedList, namedObject, comparator);
-    if (index < 0)
-    {
-      index = -index - 1;
-      sortedList.add(index, namedObject);
-    }
-    else
-    {
-      sortedList.add(namedObject);
-    }
   }
 
-  /**
-   * Gets the object at a given index.
-   * 
-   * @see java.util.List#get(int)
-   * @param index
-   *        Index of the requested object
-   * @return Named object
-   */
-  N get(final int index)
+  N remove(final String namedObjectName)
   {
-    return sortedList.get(index);
+    return map.remove(namedObjectName);
   }
 
   /**
@@ -259,17 +173,14 @@ final class NamedObjectList<N extends AbstractNamedObject>
    */
   List<N> getAll()
   {
-    return Collections.unmodifiableList(sortedList);
+    List<N> all = new ArrayList<N>(map.values());
+    Collections.sort(all, sort);
+    return Collections.unmodifiableList(all);
   }
 
-  /**
-   * Gets the map of named objects.
-   * 
-   * @return Map
-   */
-  Map<String, N> getMap()
+  void setComparator(NamedObjectSort sort)
   {
-    return new HashMap<String, N>(map);
+    this.sort = sort;
   }
 
   /**
@@ -285,43 +196,13 @@ final class NamedObjectList<N extends AbstractNamedObject>
   }
 
   /**
-   * Remove a named object by name.
-   * 
-   * @param name
-   *        Name
-   * @return Object that was removed
-   */
-  NamedObject remove(final String name)
-  {
-    if (map.containsKey(name))
-    {
-      final NamedObject namedObject = map.remove(name);
-      sortedList.remove(namedObject);
-      return namedObject;
-    }
-    return null;
-  }
-
-  /**
-   * Sets the comparator, and re-sorts the list.
-   * 
-   * @param comparator
-   *        Comparator
-   */
-  void setComparator(final NamedObjectSort comparator)
-  {
-    this.comparator = comparator;
-    Collections.sort(sortedList, comparator);
-  }
-
-  /**
    * Returns the number of elements in this list.
    * 
    * @return Number of elements in this list.
    */
   int size()
   {
-    return sortedList.size();
+    return map.size();
   }
 
 }
