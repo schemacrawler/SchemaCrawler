@@ -21,13 +21,16 @@
 package schemacrawler.integration.test;
 
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.List;
 
+import org.custommonkey.xmlunit.DetailedDiff;
+import org.custommonkey.xmlunit.Diff;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -44,9 +47,14 @@ import dbconnector.test.TestUtility;
 
 public class SchemaSerializationTest
 {
-  private static final int CONTEXT = 50;
-
   private static TestUtility testUtility = new TestUtility();
+
+  @AfterClass
+  public static void afterAllTests()
+    throws PropertiesDataSourceException, ClassNotFoundException
+  {
+    testUtility.shutdownDatabase();
+  }
 
   @BeforeClass
   public static void beforeAllTests()
@@ -56,15 +64,9 @@ public class SchemaSerializationTest
     testUtility.createMemoryDatabase();
   }
 
-  @AfterClass
-  public static void afterAllTests()
-    throws PropertiesDataSourceException, ClassNotFoundException
-  {
-    testUtility.shutdownDatabase();
-  }
-
   @Test
   public void schemaSerializationWithXStream()
+    throws Exception
   {
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
     options.setShowStoredProcedures(true);
@@ -81,47 +83,15 @@ public class SchemaSerializationTest
       .fromXML(xmlSerializedSchema1);
     final String xmlSerializedSchema2 = xStream.toXML(deserializedSchema);
 
-    if (!checkXml(xmlSerializedSchema1, xmlSerializedSchema2))
+    final DetailedDiff myDiff = new DetailedDiff(new Diff(xmlSerializedSchema1,
+                                                          xmlSerializedSchema2));
+    final List allDifferences = myDiff.getAllDifferences();
+    if (!myDiff.similar())
     {
       write(xmlSerializedSchema1, "/temp/serialized-schema-1.xml");
       write(xmlSerializedSchema2, "/temp/serialized-schema-2.xml");
-      fail();
     }
-  }
-
-  private boolean checkXml(final String expectedXml, final String actualXml)
-  {
-    if (!actualXml.equals(expectedXml))
-    {
-      int index;
-      final int minLength = Math.min(expectedXml.length(), actualXml.length());
-      for (index = 0; index <= minLength; ++index)
-      {
-        if (expectedXml.charAt(index) != actualXml.charAt(index))
-        {
-          break;
-        }
-      }
-      if (index <= minLength)
-      {
-        final int expectedStartPos = Math.max(0, (index - CONTEXT));
-        final int expectedEndPos = Math.min((index + CONTEXT), expectedXml
-          .length());
-        final int actualStartPos = Math.max(0, (index - CONTEXT));
-        final int actualEndPos = Math
-          .min((index + CONTEXT), actualXml.length());
-        System.out.println("expected: "
-                           + expectedXml.substring(expectedStartPos,
-                                                   expectedEndPos));
-        System.out.println("actual: "
-                           + actualXml.substring(actualStartPos, actualEndPos));
-      }
-      return false;
-    }
-    else
-    {
-      return true;
-    }
+    assertEquals(myDiff.toString(), 0, allDifferences.size());
   }
 
   private void write(final String contents, final String filename)
@@ -129,7 +99,7 @@ public class SchemaSerializationTest
     try
     {
       final File file = new File(filename);
-      file.getAbsoluteFile().getParentFile().mkdirs();
+      file.getCanonicalFile().getParentFile().mkdirs();
       final Writer writer = new FileWriter(file);
       writer.write(contents);
       writer.close();
@@ -138,6 +108,6 @@ public class SchemaSerializationTest
     {
       e.printStackTrace();
     }
-
   }
+
 }
