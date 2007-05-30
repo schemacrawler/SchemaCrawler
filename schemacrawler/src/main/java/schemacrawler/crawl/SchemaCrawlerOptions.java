@@ -228,7 +228,7 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Sets whether foriegn keys should be alphabetically sorted.
+   * Sets whether foreign keys should be alphabetically sorted.
    * 
    * @param alphabeticalSort
    *        Alphabetical sort

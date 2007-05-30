@@ -40,8 +40,8 @@ class MutableSchema
   private static final long serialVersionUID = 3258128063743931187L;
 
   private DatabaseInfo databaseInfo;
-  private final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>(NamedObjectSort.natural);
-  private final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>(NamedObjectSort.natural);
+  private final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>(NamedObjectSort.alphabetical);
+  private final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>(NamedObjectSort.alphabetical);
 
   MutableSchema(final String catalogName,
                 final String schemaName,
