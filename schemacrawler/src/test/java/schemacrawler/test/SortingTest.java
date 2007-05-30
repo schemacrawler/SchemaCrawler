@@ -74,11 +74,11 @@ public class SortingTest
   }
 
   @SuppressWarnings("boxing")
-  private void checkIndexSort(final String[] sortedIndexes,
-                              boolean sortAlphbetically)
+  private void checkIndexSort(final String[] expectedValues,
+                              boolean sortAlphabetically)
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setAlphabeticalSortForIndexes(sortAlphbetically);
+    schemaCrawlerOptions.setAlphabeticalSortForIndexes(sortAlphabetically);
 
     final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
                                                   SchemaInfoLevel.maximum,
@@ -97,8 +97,8 @@ public class SortingTest
         {
           Index index = indices[i];
           assertEquals("Indexes not "
-                       + (sortAlphbetically? "alphabetically": "naturally")
-                       + " sorted", sortedIndexes[i], index.getName());
+                       + (sortAlphabetically? "alphabetically": "naturally")
+                       + " sorted", expectedValues[i], index.getName());
         }
       }
     }
@@ -120,11 +120,11 @@ public class SortingTest
   }
 
   @SuppressWarnings("boxing")
-  private void checkColumnSort(final String[] sortedIndexes,
-                               boolean sortAlphbetically)
+  private void checkColumnSort(final String[] expectedValues,
+                               boolean sortAlphabetically)
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setAlphabeticalSortForIndexes(sortAlphbetically);
+    schemaCrawlerOptions.setAlphabeticalSortForTableColumns(sortAlphabetically);
 
     final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
                                                   SchemaInfoLevel.maximum,
@@ -143,8 +143,8 @@ public class SortingTest
         {
           Column column = columns[i];
           assertEquals("Columns not "
-                       + (sortAlphbetically? "alphabetically": "naturally")
-                       + " sorted", sortedIndexes[i], column.getName());
+                       + (sortAlphabetically? "alphabetically": "naturally")
+                       + " sorted", expectedValues[i], column.getName());
         }
       }
     }
@@ -166,10 +166,11 @@ public class SortingTest
   }
 
   @SuppressWarnings("boxing")
-  private void checkFkSort(final String[] sortedFks, boolean sortAlphbetically)
+  private void checkFkSort(final String[] expectedValues,
+                           boolean sortAlphabetically)
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setAlphabeticalSortForIndexes(sortAlphbetically);
+    schemaCrawlerOptions.setAlphabeticalSortForForeignKeys(sortAlphabetically);
 
     final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
                                                   SchemaInfoLevel.maximum,
@@ -188,8 +189,8 @@ public class SortingTest
         {
           ForeignKey foreignKey = foreignKeys[i];
           assertEquals("Foreign keys not "
-                       + (sortAlphbetically? "alphabetically": "naturally")
-                       + " sorted", sortedFks[i], foreignKey.getName());
+                       + (sortAlphabetically? "alphabetically": "naturally")
+                       + " sorted", expectedValues[i], foreignKey.getName());
         }
       }
     }
