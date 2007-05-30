@@ -262,22 +262,22 @@ class MutableTable
 
   void setCheckConstraintComparator(final NamedObjectSort comparator)
   {
-    checkConstraints.setComparator(comparator);
+    checkConstraints.setSortOrder(comparator);
   }
 
   void setColumnComparator(final NamedObjectSort comparator)
   {
-    columns.setComparator(comparator);
+    columns.setSortOrder(comparator);
   }
 
   void setForeignKeyComparator(final NamedObjectSort comparator)
   {
-    foreignKeys.setComparator(comparator);
+    foreignKeys.setSortOrder(comparator);
   }
 
   void setIndexComparator(final NamedObjectSort comparator)
   {
-    indices.setComparator(comparator);
+    indices.setSortOrder(comparator);
   }
 
   void setPrimaryKey(final PrimaryKey primaryKey)
@@ -287,7 +287,7 @@ class MutableTable
 
   void setTriggerComparator(final NamedObjectSort comparator)
   {
-    triggers.setComparator(comparator);
+    triggers.setSortOrder(comparator);
   }
 
   /**

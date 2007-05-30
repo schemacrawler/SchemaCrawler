@@ -109,7 +109,7 @@ final class MutableProcedure
 
   void setColumnComparator(final NamedObjectSort comparator)
   {
-    columns.setComparator(comparator);
+    columns.setSortOrder(comparator);
   }
 
   void setDefinition(final String definition)

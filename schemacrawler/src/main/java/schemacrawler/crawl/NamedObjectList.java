@@ -190,7 +190,7 @@ final class NamedObjectList<N extends AbstractNamedObject>
     return map.remove(namedObjectName);
   }
 
-  void setComparator(NamedObjectSort sort)
+  void setSortOrder(NamedObjectSort sort)
   {
     this.sort = sort;
   }

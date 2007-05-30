@@ -55,11 +55,19 @@ final class MutableForeignKeyColumnMap
 
     if (comparison == 0)
     {
-      comparison = getPrimaryKeyColumn().compareTo(other.getPrimaryKeyColumn());
+      comparison = getKeySequence() - other.getKeySequence();
+    }
+    // Note: For the primary key and foreign key columns, compare by
+    // name.
+    if (comparison == 0)
+    {
+      comparison = getPrimaryKeyColumn().getName().compareTo(other
+        .getPrimaryKeyColumn().getName());
     }
     if (comparison == 0)
     {
-      comparison = getForeignKeyColumn().compareTo(other.getForeignKeyColumn());
+      comparison = getForeignKeyColumn().getName().compareTo(other
+        .getForeignKeyColumn().getName());
     }
 
     return comparison;
