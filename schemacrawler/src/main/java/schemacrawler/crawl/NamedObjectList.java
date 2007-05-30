@@ -25,10 +25,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import schemacrawler.schema.NamedObject;
 
@@ -75,7 +75,11 @@ final class NamedObjectList<N extends AbstractNamedObject>
   private static final long serialVersionUID = 3257847666804142128L;
 
   private NamedObjectSort sort;
-  private final Map<String, N> map;
+  /**
+   * Map of names and named objects. This map needs to be sorted so that
+   * schema serialization does not break.
+   */
+  private final SortedMap<String, N> map;
 
   /**
    * Construct an initially empty ordered list of named objects, that
@@ -87,7 +91,7 @@ final class NamedObjectList<N extends AbstractNamedObject>
   NamedObjectList(NamedObjectSort sort)
   {
     this.sort = sort;
-    this.map = new HashMap<String, N>();
+    this.map = new TreeMap<String, N>();
   }
 
   /**
