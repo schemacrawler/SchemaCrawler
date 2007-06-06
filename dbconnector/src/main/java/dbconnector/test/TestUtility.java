@@ -20,6 +20,8 @@
 package dbconnector.test;
 
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -160,9 +162,18 @@ public class TestUtility
     throws PropertiesDataSourceException
   {
     LOGGER.log(Level.FINE, toString() + " - Setting up database");
+    // Attempt to delete the database files
+    deleteFiles("schemacrawler");
     // Start the server
     Server.main(new String[] {
-        "-dbname.0", "schemacrawler", "-silent", "false"
+        "-database.0",
+        "schemacrawler",
+        "-dbname.0",
+        "schemacrawler",
+        "-silent",
+        "false",
+        "-trace",
+        "true"
     });
     createDatabase("jdbc:hsqldb:hsql://localhost/schemacrawler");
   }
@@ -177,6 +188,31 @@ public class TestUtility
   {
     LOGGER.log(Level.FINE, toString() + " - Setting up in-memory database");
     createDatabase("jdbc:hsqldb:mem:schemacrawler");
+  }
+
+  public void deleteFiles(final String stem)
+  {
+    try
+    {
+      final File[] files = new File(".").listFiles(new FilenameFilter()
+      {
+        public boolean accept(File dir, String name)
+        {
+          return name.startsWith(stem);
+        }
+      });
+      for (final File file: files)
+      {
+        if (!file.isDirectory() && !file.isHidden())
+        {
+          file.delete();
+        }
+      }
+    }
+    catch (final RuntimeException e)
+    {
+      LOGGER.log(Level.FINE, e.getMessage(), e);
+    }
   }
 
   /**
