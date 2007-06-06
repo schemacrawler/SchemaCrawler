@@ -49,21 +49,32 @@ abstract class AbstractDependantNamedObject
   /**
    * {@inheritDoc}
    * 
-   * @see Object#equals(java.lang.Object)
+   * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
-  public boolean equals(final Object o)
+  public boolean equals(final Object obj)
   {
-    if (o == null)
+    if (this == obj)
+    {
+      return true;
+    }
+    if (obj == null)
     {
       return false;
     }
-    final DependantNamedObject childObject = (DependantNamedObject) o;
-    if (!super.equals(childObject))
+    if (getClass() != obj.getClass())
     {
       return false;
     }
-    if (parent == null || !parent.equals(childObject.getParent()))
+    final AbstractDependantNamedObject other = (AbstractDependantNamedObject) obj;
+    if (parent == null)
+    {
+      if (other.parent != null)
+      {
+        return false;
+      }
+    }
+    else if (!parent.equals(other.parent))
     {
       return false;
     }
@@ -102,17 +113,14 @@ abstract class AbstractDependantNamedObject
   /**
    * {@inheritDoc}
    * 
-   * @see Object#hashCode()
+   * @see java.lang.Object#hashCode()
    */
   @Override
   public int hashCode()
   {
-    int result;
-    result = super.hashCode();
-    if (parent != null)
-    {
-      result = 29 * result + parent.hashCode();
-    }
+    final int prime = 31;
+    int result = super.hashCode();
+    result = prime * result + (parent == null? 0: parent.hashCode());
     return result;
   }
 

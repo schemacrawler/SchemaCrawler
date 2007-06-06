@@ -88,7 +88,7 @@ final class NamedObjectList<N extends AbstractNamedObject>
    * @param sort
    *        Comparator for named objects, or null for no sorting
    */
-  NamedObjectList(NamedObjectSort sort)
+  NamedObjectList(final NamedObjectSort sort)
   {
     this.sort = sort;
     this.map = new TreeMap<String, N>();
@@ -101,17 +101,32 @@ final class NamedObjectList<N extends AbstractNamedObject>
    */
   @SuppressWarnings("unchecked")
   @Override
-  public boolean equals(Object obj)
+  public boolean equals(final Object obj)
   {
-    if (this == obj) return true;
-    if (obj == null) return false;
-    if (!(obj instanceof NamedObjectList)) return false;
+    if (this == obj)
+    {
+      return true;
+    }
+    if (obj == null)
+    {
+      return false;
+    }
+    if (!(obj instanceof NamedObjectList))
+    {
+      return false;
+    }
     final NamedObjectList<N> other = (NamedObjectList<N>) obj;
     if (map == null)
     {
-      if (other.map != null) return false;
+      if (other.map != null)
+      {
+        return false;
+      }
     }
-    else if (!map.equals(other.map)) return false;
+    else if (!map.equals(other.map))
+    {
+      return false;
+    }
     return true;
   }
 
@@ -125,7 +140,7 @@ final class NamedObjectList<N extends AbstractNamedObject>
   {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((map == null)? 0: map.hashCode());
+    result = prime * result + (map == null? 0: map.hashCode());
     return result;
   }
 
@@ -172,7 +187,7 @@ final class NamedObjectList<N extends AbstractNamedObject>
    */
   List<N> getAll()
   {
-    List<N> all = new ArrayList<N>(map.values());
+    final List<N> all = new ArrayList<N>(map.values());
     Collections.sort(all, sort);
     return Collections.unmodifiableList(all);
   }
@@ -194,7 +209,7 @@ final class NamedObjectList<N extends AbstractNamedObject>
     return map.remove(namedObjectName);
   }
 
-  void setSortOrder(NamedObjectSort sort)
+  void setSortOrder(final NamedObjectSort sort)
   {
     this.sort = sort;
   }
