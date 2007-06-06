@@ -39,7 +39,7 @@ public final class ApiExample
 
     // Get the schema definition
     final Schema schema = SchemaCrawler.getSchema(dataSource,
-                                                  SchemaInfoLevel.BASIC,
+                                                  SchemaInfoLevel.basic,
                                                   options);
 
     final Table[] tables = schema.getTables();
