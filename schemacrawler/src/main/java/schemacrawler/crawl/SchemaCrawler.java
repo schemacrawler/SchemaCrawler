@@ -295,7 +295,7 @@ public final class SchemaCrawler
       throw new SchemaCrawlerException("Exception retrieving procedures", e);
     }
 
-    for (MutableProcedure procedure: procedures)
+    for (final MutableProcedure procedure: procedures)
     {
       if (infoLevel != SchemaInfoLevel.minimum)
       {
@@ -349,7 +349,7 @@ public final class SchemaCrawler
       throw new SchemaCrawlerException("Exception retrieving tables", e);
     }
 
-    for (MutableTable table: tables)
+    for (final MutableTable table: tables)
     {
       if (infoLevel.isGreaterThan(SchemaInfoLevel.minimum))
       {

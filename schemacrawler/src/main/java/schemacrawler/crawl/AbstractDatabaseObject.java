@@ -49,37 +49,46 @@ abstract class AbstractDatabaseObject
   /**
    * {@inheritDoc}
    * 
-   * @see Object#equals(java.lang.Object)
+   * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
-  public boolean equals(final Object o)
+  public boolean equals(final Object obj)
   {
-    if (this == o)
+    if (this == obj)
     {
       return true;
     }
-    if (!(o instanceof DatabaseObject))
+    if (obj == null)
     {
       return false;
     }
-
-    final DatabaseObject databaseObject = (DatabaseObject) o;
-
-    if (!super.equals(databaseObject))
+    if (getClass() != obj.getClass())
     {
       return false;
     }
-    if (catalogName == null
-        || !catalogName.equals(databaseObject.getCatalogName()))
+    final AbstractDatabaseObject other = (AbstractDatabaseObject) obj;
+    if (catalogName == null)
+    {
+      if (other.catalogName != null)
+      {
+        return false;
+      }
+    }
+    else if (!catalogName.equals(other.catalogName))
     {
       return false;
     }
-    if (schemaName == null
-        || !schemaName.equals(databaseObject.getSchemaName()))
+    if (schemaName == null)
+    {
+      if (other.schemaName != null)
+      {
+        return false;
+      }
+    }
+    else if (!schemaName.equals(other.schemaName))
     {
       return false;
     }
-
     return true;
   }
 
@@ -125,21 +134,16 @@ abstract class AbstractDatabaseObject
   /**
    * {@inheritDoc}
    * 
-   * @see Object#hashCode()
+   * @see java.lang.Object#hashCode()
    */
   @Override
   public int hashCode()
   {
-    int result;
-    result = super.hashCode();
-    if (schemaName != null)
-    {
-      result = 29 * result + schemaName.hashCode();
-    }
-    if (catalogName != null)
-    {
-      result = 29 * result + catalogName.hashCode();
-    }
+    final int prime = 31;
+    int result = super.hashCode();
+    result = prime * result
+             + (catalogName == null? 0: catalogName.hashCode());
+    result = prime * result + (schemaName == null? 0: schemaName.hashCode());
     return result;
   }
 

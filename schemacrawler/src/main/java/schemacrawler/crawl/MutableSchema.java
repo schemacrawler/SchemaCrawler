@@ -53,40 +53,57 @@ class MutableSchema
   /**
    * {@inheritDoc}
    * 
-   * @see Object#equals(java.lang.Object)
+   * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
-  public boolean equals(final Object o)
+  public boolean equals(final Object obj)
   {
-    if (this == o)
+    if (this == obj)
     {
       return true;
     }
-    if (!(o instanceof MutableSchema))
+    if (obj == null)
     {
       return false;
     }
-    if (!super.equals(o))
+    if (getClass() != obj.getClass())
     {
       return false;
     }
-
-    final MutableSchema mutableSchema = (MutableSchema) o;
-
-    if (!databaseInfo.equals(mutableSchema.databaseInfo))
+    final MutableSchema other = (MutableSchema) obj;
+    if (databaseInfo == null)
+    {
+      if (other.databaseInfo != null)
+      {
+        return false;
+      }
+    }
+    else if (!databaseInfo.equals(other.databaseInfo))
     {
       return false;
     }
-    if (!tables.equals(mutableSchema.tables))
+    if (procedures == null)
+    {
+      if (other.procedures != null)
+      {
+        return false;
+      }
+    }
+    else if (!procedures.equals(other.procedures))
     {
       return false;
     }
-
-    if (!procedures.equals(mutableSchema.procedures))
+    if (tables == null)
+    {
+      if (other.tables != null)
+      {
+        return false;
+      }
+    }
+    else if (!tables.equals(other.tables))
     {
       return false;
     }
-
     return true;
   }
 
@@ -123,24 +140,17 @@ class MutableSchema
   /**
    * {@inheritDoc}
    * 
-   * @see Object#hashCode()
+   * @see java.lang.Object#hashCode()
    */
   @Override
   public int hashCode()
   {
-    int result = super.hashCode();
-    if (databaseInfo != null)
-    {
-      result = 29 * result + databaseInfo.hashCode();
-    }
-    if (tables != null)
-    {
-      result = 29 * result + tables.hashCode();
-    }
-    if (procedures != null)
-    {
-      result = 29 * result + procedures.hashCode();
-    }
+    final int prime = 31;
+    int result = 1;
+    result = prime * result
+             + (databaseInfo == null? 0: databaseInfo.hashCode());
+    result = prime * result + (procedures == null? 0: procedures.hashCode());
+    result = prime * result + (tables == null? 0: tables.hashCode());
     return result;
   }
 
