@@ -190,31 +190,6 @@ public class TestUtility
     createDatabase("jdbc:hsqldb:mem:schemacrawler");
   }
 
-  public void deleteFiles(final String stem)
-  {
-    try
-    {
-      final File[] files = new File(".").listFiles(new FilenameFilter()
-      {
-        public boolean accept(File dir, String name)
-        {
-          return name.startsWith(stem);
-        }
-      });
-      for (final File file: files)
-      {
-        if (!file.isDirectory() && !file.isHidden())
-        {
-          file.delete();
-        }
-      }
-    }
-    catch (final RuntimeException e)
-    {
-      LOGGER.log(Level.FINE, e.getMessage(), e);
-    }
-  }
-
   /**
    * Gets the datasource.
    * 
@@ -274,6 +249,31 @@ public class TestUtility
     makeDataSource(url);
     dataSource.setLogWriter(out);
     setupSchema();
+  }
+
+  private void deleteFiles(final String stem)
+  {
+    try
+    {
+      final File[] files = new File(".").listFiles(new FilenameFilter()
+      {
+        public boolean accept(File dir, String name)
+        {
+          return name.startsWith(stem);
+        }
+      });
+      for (final File file: files)
+      {
+        if (!file.isDirectory() && !file.isHidden())
+        {
+          file.delete();
+        }
+      }
+    }
+    catch (final RuntimeException e)
+    {
+      LOGGER.log(Level.FINE, e.getMessage(), e);
+    }
   }
 
   private synchronized void makeDataSource(final String url)
