@@ -72,10 +72,16 @@ public final class Grep
    *         On an exception
    */
   public static void main(final String[] args)
-    throws Exception
   {
     CommandLineUtility.checkForHelp(args, "/sqlserver-grep-readme.txt");
-    grep(args);
+    try
+    {
+      grep(args);
+    }
+    catch (final Exception e)
+    {
+      e.printStackTrace();
+    }
   }
 
   private static CommandLineParser createCommandLineParser()
