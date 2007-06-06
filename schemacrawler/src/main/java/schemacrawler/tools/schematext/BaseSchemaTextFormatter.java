@@ -163,9 +163,17 @@ public abstract class BaseSchemaTextFormatter
    */
   public void handle(final DatabaseInfo databaseInfo)
   {
+
     if (!options.getOutputOptions().isNoInfo())
     {
       handleDatabaseInfo(databaseInfo);
+    }
+
+    final SchemaTextDetailType schemaTextDetailType = options
+      .getSchemaTextDetailType();
+    if (schemaTextDetailType != SchemaTextDetailType.maximum_schema)
+    {
+      return;
     }
 
     final Set<Map.Entry<String, Object>> propertySet = databaseInfo
