@@ -29,6 +29,8 @@ import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -163,11 +165,12 @@ public class TestUtility
   {
     LOGGER.log(Level.FINE, toString() + " - Setting up database");
     // Attempt to delete the database files
-    deleteFiles("schemacrawler");
+    final String serverFileStem = "hsqldb.schemacrawler";
+    deleteServerFiles(serverFileStem);
     // Start the server
     Server.main(new String[] {
         "-database.0",
-        "schemacrawler",
+        serverFileStem,
         "-dbname.0",
         "schemacrawler",
         "-silent",
@@ -251,15 +254,20 @@ public class TestUtility
     setupSchema();
   }
 
-  private void deleteFiles(final String stem)
+  private void deleteServerFiles(final String stem)
   {
     try
     {
       final File[] files = new File(".").listFiles(new FilenameFilter()
       {
-        public boolean accept(File dir, String name)
+        private List<String> serverFiles = Arrays.asList(new String[] {
+            stem + ".lck", stem + ".log", stem + ".properties",
+        });
+
+        public boolean accept(@SuppressWarnings("unused")
+        File dir, String name)
         {
-          return name.startsWith(stem);
+          return serverFiles.contains(name);
         }
       });
       for (final File file: files)
