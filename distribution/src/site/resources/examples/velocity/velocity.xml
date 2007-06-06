@@ -2,6 +2,7 @@
 <project name="Velocity" default="velocity">
 
   <description>Velocity - Integration of SchemaCrawler with Apache Jakarta Velocity. </description>
+  <property environment="env"/>
 
   <!-- Step 1.
        Define the ant tasks (macros) that come with SchemaCrawler
@@ -25,6 +26,11 @@
   <path id="velocity-classpath">
     <fileset dir=".">
       <include name="*.jar"/>
+    </fileset>
+    <fileset dir="${env.M2_REPO}">
+      <include name="**/commons-collections-*.jar"/>
+      <include name="**/log4j-*.jar"/>
+      <include name="**/velocity-*.jar"/>
     </fileset>
   </path>
 
