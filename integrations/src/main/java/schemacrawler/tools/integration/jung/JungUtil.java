@@ -103,10 +103,10 @@ public final class JungUtil
             final Column toColumn = columnPair.getForeignKeyColumn();
             final ColumnVertex fromColumnVertex = (ColumnVertex) verticesMap
               .get(fromColumn);
-            final ColumnVertex toColumnVeretx = (ColumnVertex) verticesMap
+            final ColumnVertex toColumnVertex = (ColumnVertex) verticesMap
               .get(toColumn);
             final ForeignKeyEdge foreignKeyEdge = new ForeignKeyEdge(fromColumnVertex,
-                                                                     toColumnVeretx);
+                                                                     toColumnVertex);
             graph.addEdge(foreignKeyEdge);
           }
         }
