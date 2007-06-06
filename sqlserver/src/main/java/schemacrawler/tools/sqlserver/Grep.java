@@ -104,7 +104,7 @@ public final class Grep
 
     parser.addOption(new StringOption(Option.NO_SHORT_FORM,
                                       OPTION_LOG_LEVEL,
-                                      "OFF"));
+                                      "SEVERE"));
 
     return parser;
   }
