@@ -44,6 +44,7 @@ public final class Main
   {
     CommandLineUtility.checkForHelp(args, "/schemacrawler-jung-readme.txt");
     SchemaCrawlerMain.schemacrawler(args, new JungExecutor());
+    System.exit(0);
   }
 
   private Main()
