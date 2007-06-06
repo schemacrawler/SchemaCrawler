@@ -2,6 +2,7 @@
 <project name="Graphing" default="graphing">
 
   <description>Graphing - Integration of SchemaCrawler with JUNG. </description>
+  <property environment="env"/>
 
   <!-- Step 1.
        Define the ant tasks (macros) that come with SchemaCrawler
@@ -25,6 +26,11 @@
   <path id="graphing-classpath">
     <fileset dir=".">
       <include name="*.jar"/>
+    </fileset>
+    <fileset dir="${env.M2_REPO}">
+      <include name="**/commons-collections-*.jar"/>
+      <include name="**/jung-*.jar"/>
+      <include name="**/colt-*.jar"/>
     </fileset>
   </path>
 
