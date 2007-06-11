@@ -6,10 +6,10 @@ SchemaCrawlerGrep [options]
 --- Connection Options ---
 
 -host=<host>
-	Host name.
+	Host name. Optional, defaults to localhost.
 	
 -port=<port>
-	Database name.	
+	Port number. Optional, defaults to 1433.	
 
 -database=<database>
 	Database name.
