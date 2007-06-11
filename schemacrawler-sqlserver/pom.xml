@@ -6,7 +6,7 @@
     <version>5.0</version>
   </parent>
   <groupId>schemacrawler</groupId>
-  <artifactId>sqlserver</artifactId>
+  <artifactId>schemacrawler-sqlserver</artifactId>
   <packaging>jar</packaging>
   <name>SchemaCrawler for Microsoft SQL Server</name>
   <dependencies>
