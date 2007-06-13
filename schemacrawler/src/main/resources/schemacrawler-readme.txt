@@ -61,24 +61,22 @@ Or, all of the following:
 -command=<command>
 	Required, where <command> is a comma-separated list of:
     brief_schema
-        If you only want to see table, view and procedure names
+      If you only want to see table, view and procedure names
     basic_schema
-        For more details of tables, views and procedures, 
-        including columns and primary keys
+      For more details of tables, views and procedures, including columns 
+      and primary keys
     verbose_schema
-        For the most detail of the schema, including data 
-        types, indexes, foreign keys, and view and 
-        procedure definitions
+      For the most detail of the schema, including data types, indexes, 
+      foreign keys, and view and procedure definitions
     maximum_schema
-        For maximum possible detail of the schema, including
-        privileges, and details of privileges, triggers,
-        and check constraints
+      For maximum possible detail of the schema, including privileges, and 
+      details of privileges, triggers, and check constraints
     count
-        To count rows in the tables
+      To count rows in the tables
     truncate
-        To truncate the tables
+      To truncate the tables
     drop
-        To drop the tables
+      To drop the tables
     dump
     	To select all rows from the tables, and output the data
     <query_name>
@@ -94,11 +92,11 @@ Or, all of the following:
 -outputformat=<outputformat>
 	Optional, where <outputformat> is one of:
     text
-        For text output (default)
+      For text output (default)
     html
-        For XHTML output
+      For XHTML output
     csv
-        For CSV output
+      For CSV output
 
 -outputfile=<outputfile>
 	Optional - <outputfile> is the path to the output file
