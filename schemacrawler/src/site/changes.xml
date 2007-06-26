@@ -7,6 +7,25 @@
   <body>
     <release
       version="5.0"
+      date="2007-06-25">
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        API changed to use Java 5 constructs. Tested with Java 6. API is no longer Java 1.4 compatible.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Started SchemaCrawler Grep for MS SQL Server.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        Fixed java.lang.AbstractMethodError with Java 6.
+      </action>
+    </release>
+    <release
+      version="4.2"
       date="2007-01-07">
       <action
         dev="Sualeh Fatehi"
