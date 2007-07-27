@@ -27,8 +27,8 @@ import java.util.logging.Level;
 import schemacrawler.crawl.CrawlHandler;
 import schemacrawler.crawl.InclusionRule;
 import schemacrawler.crawl.SchemaCrawler;
-import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.crawl.SchemaCrawlerOptions;
+import schemacrawler.main.BundledDriverDataSourceParser;
 import schemacrawler.main.Config;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
@@ -41,7 +41,6 @@ import sf.util.CommandLineParser.BooleanOption;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
 import dbconnector.datasource.PropertiesDataSource;
-import dbconnector.datasource.PropertiesDataSourceException;
 
 /**
  * Main class that takes arguments for grep-ping table and columns in a
@@ -51,12 +50,6 @@ public final class Grep
 {
 
   private static final String OPTION_LOG_LEVEL = "log-level";
-
-  private static final String OPTION_HOST = "host";
-  private static final String OPTION_PORT = "port";
-  private static final String OPTION_DATABASE = "database";
-  private static final String OPTION_USER = "user";
-  private static final String OPTION_PASSWORD = "password";
 
   private static final String OPTION_INCLUDE_TABLES = "tables";
   private static final String OPTION_INCLUDE_COLUMNS = "columns";
@@ -87,18 +80,6 @@ public final class Grep
     final CommandLineParser parser = new CommandLineParser();
 
     parser.addOption(new StringOption(Option.NO_SHORT_FORM,
-                                      OPTION_HOST,
-                                      "localhost"));
-    parser
-      .addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_PORT, "1433"));
-    parser
-      .addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_DATABASE, ""));
-    parser.addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_USER, null));
-    parser.addOption(new StringOption(Option.NO_SHORT_FORM,
-                                      OPTION_PASSWORD,
-                                      null));
-
-    parser.addOption(new StringOption(Option.NO_SHORT_FORM,
                                       OPTION_INCLUDE_TABLES,
                                       InclusionRule.INCLUDE_ALL));
     parser.addOption(new StringOption(Option.NO_SHORT_FORM,
@@ -111,42 +92,6 @@ public final class Grep
                                       "SEVERE"));
 
     return parser;
-  }
-
-  private static PropertiesDataSource createDataSource(final CommandLineParser parser)
-    throws SchemaCrawlerException
-  {
-
-    final Properties config = Utilities.loadProperties(Grep.class
-      .getResourceAsStream("/schemacrawler.config.properties"));
-    final String connectionName = config.getProperty("defaultconnection");
-
-    final String host = parser.getStringOptionValue(OPTION_HOST);
-    final String port = parser.getStringOptionValue(OPTION_PORT);
-    final String database = parser.getStringOptionValue(OPTION_DATABASE);
-    final String user = parser.getStringOptionValue(OPTION_USER);
-    final String password = parser.getStringOptionValue(OPTION_PASSWORD);
-
-    if (user != null && password != null)
-    {
-      config.setProperty(connectionName + ".host", host);
-      config.setProperty(connectionName + ".port", port);
-      config.setProperty(connectionName + ".database", database);
-      config.setProperty(connectionName + ".user", user);
-      config.setProperty(connectionName + ".password", password);
-    }
-
-    PropertiesDataSource dataSource;
-    try
-    {
-      dataSource = new PropertiesDataSource(config);
-    }
-    catch (final PropertiesDataSourceException e)
-    {
-      throw new SchemaCrawlerException(e.getMessage(), e);
-    }
-
-    return dataSource;
   }
 
   /**
@@ -171,7 +116,11 @@ public final class Grep
     Utilities.setApplicationSysOutLogHandler();
     Utilities.setApplicationLogLevel(logLevel);
 
-    final PropertiesDataSource dataSource = createDataSource(parser);
+    final Properties driverConfiguration = Utilities.loadProperties(Grep.class
+      .getResourceAsStream("/schemacrawler.config.properties"));
+    final BundledDriverDataSourceParser dataSourceParser = new BundledDriverDataSourceParser(args,
+                                                                                             driverConfiguration);
+    final PropertiesDataSource dataSource = dataSourceParser.createDataSource();
 
     final String includeTables = parser
       .getStringOptionValue(OPTION_INCLUDE_TABLES);

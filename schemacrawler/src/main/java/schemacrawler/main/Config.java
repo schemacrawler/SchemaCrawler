@@ -31,18 +31,20 @@ public class Config
   /**
    * Loads the SchemaCrawler configuration, and override.
    * 
-   * @param configfilename
+   * @param configFilenames
    *        Configuration file name.
-   * @param configoverridefilename
-   *        Configuration override file name.
    * @return Configuration properties.
    */
-  public static Config load(final String configfilename,
-                            final String configoverridefilename)
+  public static Config load(final String... configFilenames)
   {
     Properties configProperties = new Properties();
-    configProperties = loadProperties(configProperties, configfilename);
-    configProperties = loadProperties(configProperties, configoverridefilename);
+    if (configFilenames != null)
+    {
+      for (final String configFilename: configFilenames)
+      {
+        configProperties = loadProperties(configProperties, configFilename);
+      }
+    }
     return new Config(configProperties);
   }
 
@@ -55,8 +57,8 @@ public class Config
    *        Properties file name.
    * @return Properties
    */
-  static Properties loadProperties(final Properties properties,
-                                   final String propertiesFileName)
+  private static Properties loadProperties(final Properties properties,
+                                           final String propertiesFileName)
   {
     InputStream propertiesStream = null;
     try
@@ -145,9 +147,9 @@ public class Config
    *        Property name
    * @return Integer value
    */
-  public boolean getIntegerValue(final String propertyName)
+  public int getIntegerValue(final String propertyName)
   {
-    return Boolean.parseBoolean(getStringValue(propertyName, "false"));
+    return Integer.parseInt(getStringValue(propertyName, null));
   }
 
   /**
