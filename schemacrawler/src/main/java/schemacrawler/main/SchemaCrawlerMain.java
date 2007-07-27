@@ -57,7 +57,7 @@ public final class SchemaCrawlerMain
   /**
    * Executes with the command line, and a given executor. The executor
    * allows for the command line to be parsed independently of the
-   * excution. The execution can integrate with other software, such as
+   * execution. The execution can integrate with other software, such as
    * Velocity.
    * 
    * @param args
@@ -71,16 +71,15 @@ public final class SchemaCrawlerMain
     throws Exception
   {
 
-    final Options[] optionCommands = OptionsParser.parseCommandLine(args);
-
+    final Config config = ConfigParser.parseCommandLine(args);
+    final Options[] optionCommands = OptionsParser.parseCommandLine(args,
+                                                                    config);
     if (optionCommands.length > 0)
     {
       final Options firstOption = optionCommands[0];
       Utilities.setApplicationLogLevel(firstOption.getLogLevel());
       LOGGER.log(Level.CONFIG, Version.about());
       LOGGER.log(Level.CONFIG, "Commandline: " + Arrays.asList(args));
-      final Config config = firstOption.getConfig();
-
       for (final Options options: optionCommands)
       {
         LOGGER.log(Level.CONFIG, options.toString());

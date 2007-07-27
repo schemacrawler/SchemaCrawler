@@ -44,8 +44,6 @@ import sf.util.CommandLineParser.StringOption;
 public final class OptionsParser
 {
 
-  private static final String OPTION_CONFIGFILE = "configfile";
-  private static final String OPTION_CONFIGOVERRIDEFILE = "configoverridefile";
   private static final String OPTION_NOINFO = "noinfo";
   private static final String OPTION_NOFOOTER = "nofooter";
   private static final String OPTION_NOHEADER = "noheader";
@@ -59,20 +57,17 @@ public final class OptionsParser
    * 
    * @param args
    *        Command line arguments
+   * @param config
+   *        Configuration
    * @return Command line options
    * @throws SchemaCrawlerException
    */
-  static Options[] parseCommandLine(final String[] args)
+  static Options[] parseCommandLine(final String[] args, final Config config)
     throws SchemaCrawlerException
   {
 
     final CommandLineParser parser = createCommandLineParser();
     parser.parse(args);
-
-    final String cfgFile = parser.getStringOptionValue(OPTION_CONFIGFILE);
-    final String cfgOverrideFile = parser
-      .getStringOptionValue(OPTION_CONFIGOVERRIDEFILE);
-    final Config config = Config.load(cfgFile, cfgOverrideFile);
 
     final String outputFormatValue = parser
       .getStringOptionValue(OPTION_OUTPUT_FORMAT);
@@ -111,13 +106,6 @@ public final class OptionsParser
   private static CommandLineParser createCommandLineParser()
   {
     final CommandLineParser parser = new CommandLineParser();
-    parser.addOption(new StringOption('g',
-                                      OPTION_CONFIGFILE,
-                                      "schemacrawler.config.properties"));
-    parser
-      .addOption(new StringOption('p',
-                                  OPTION_CONFIGOVERRIDEFILE,
-                                  "schemacrawler.config.override.properties"));
     parser
       .addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_COMMAND, ""));
     parser.addOption(new StringOption(Option.NO_SHORT_FORM,
