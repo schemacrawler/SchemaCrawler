@@ -40,11 +40,8 @@ public final class Main
    * 
    * @param args
    *        Arguments passed into the program from the command line.
-   * @throws Exception
-   *         On an exception
    */
   public static void main(final String[] args)
-    throws Exception
   {
     CommandLineUtility
       .checkForHelp(args, "/schemacrawler-sqlserver-readme.txt");
@@ -52,7 +49,7 @@ public final class Main
 
     try
     {
-      final Config driverConfiguration = Config.load(Grep.class
+      final Config driverConfiguration = Config.load(Main.class
         .getResourceAsStream("/schemacrawler.config.properties"));
       final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
         .createBundledDriverDataSourceParser(args, driverConfiguration);

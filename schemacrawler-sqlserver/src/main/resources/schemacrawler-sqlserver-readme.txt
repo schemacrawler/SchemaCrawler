@@ -1,58 +1,19 @@
 SchemaCrawler is a platform (OS and DB) independent command-line tool to output
 your database schema and data in a readable form. The output is designed to be
 diff-ed with previous versions of your database schema.
-
-To use SchemaCrawler:
-1. Create a working directory, and copy the program jar file to that
-   directory.
-2. Copy your database driver jar or zip files to the same directory.
-3. Modify schemacrawler.config.properties to point to your database.
-4. Try not to give your database user DBA permissions - at least when you
-   are running SchemaCrawler.
-5. Start a command shell, and cd to the working directory.
-
-
-java -jar <schemacrawler-jar> [options]
-
---- Optional Configuration Options ---
-
--g <config-file> (short for -configfile <config-file>)
-    Reads SchemaCrawler configuration properties from <config-file> instead
-    of the default schemacrawler.config.properties
-
--p <config-override-file> (short for -configoverridefile <config-override-file>)
-    Reads SchemaCrawler configuration properties from <config-override-file>
-    and overrides the properties from the configuration file
-
--log_level <log_level>
-		Log level - may be one of: 
-		OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL
 		
---- Required Connection Options ---
+SchemaCrawler [options]
 
-One of:
+--- Connection Options ---
 
--c <connection_name> (short for -connection <connection_name>)
-    Uses a named connection
-    
--d (short for -default)
-    Uses the default connection
-    
--x <connection_name> (short for -prompt <connection_name>)
-    Prompts for connection information, which is saved
-    into <connection_name>.properties
-    
--a (short for -testall)
-    Tests all the connections defined in the configuration properties file,
-    but does not execute any commands
-
-Or, all of the following:
-
--driver=<driver-class-name>
-	Fully qualified name of the JDBC driver class.
+-host=<host>
+	Host name. Optional, defaults to localhost.
 	
--url=<url>
-	JDBC connection URL to the database.
+-port=<port>
+	Port number. Optional, defaults to 1433.	
+
+-database=<database>
+	Database name.
 	
 -user=<user>
 	Database user name.
@@ -77,19 +38,8 @@ Or, all of the following:
       details of privileges, triggers, and check constraints
     count
       To count rows in the tables
-    truncate
-      To truncate the tables
-    drop
-      To drop the tables
     dump
     	To select all rows from the tables, and output the data
-    <query_name>
-	    Query name, as specified in the configuration properties file
-			The query itself can contain the variables ${table} and ${tabletype}
-			or system properties referenced as ${<system-property-name>}.
-			Queries without any variables are executed exactly once. Queries
-			with variables are executed once for each table, with the variables
-			substituted.
 
 --- Output Options ---
 
