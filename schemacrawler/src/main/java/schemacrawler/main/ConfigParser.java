@@ -23,6 +23,7 @@ package schemacrawler.main;
 
 import schemacrawler.crawl.SchemaCrawlerException;
 import sf.util.CommandLineParser;
+import sf.util.Config;
 import sf.util.CommandLineParser.StringOption;
 
 /**
@@ -44,7 +45,7 @@ public final class ConfigParser
    * @return Command line options
    * @throws SchemaCrawlerException
    */
-  static Config parseCommandLine(final String[] args)
+  public static Config parseCommandLine(final String[] args)
     throws SchemaCrawlerException
   {
 

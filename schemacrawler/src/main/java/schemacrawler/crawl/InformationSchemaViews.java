@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import schemacrawler.main.BaseOptions;
-import schemacrawler.main.Config;
+import sf.util.Config;
 import sf.util.Utilities;
 
 final class InformationSchemaViews

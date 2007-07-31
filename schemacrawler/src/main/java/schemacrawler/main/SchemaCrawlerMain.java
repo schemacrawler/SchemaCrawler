@@ -25,11 +25,15 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.sql.DataSource;
+
 import schemacrawler.Executor;
 import schemacrawler.tools.ToolsExecutor;
-import sf.util.Utilities;
+import sf.util.Config;
 import dbconnector.Version;
 import dbconnector.datasource.PropertiesDataSource;
+import dbconnector.dbconnector.DatabaseConnector;
+import dbconnector.dbconnector.DatabaseConnectorFactory;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -70,25 +74,48 @@ public final class SchemaCrawlerMain
   public static void schemacrawler(final String[] args, final Executor executor)
     throws Exception
   {
+    final Config config = ConfigParser.parseCommandLine(args);
+    final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
+      .createPropertiesDriverDataSourceParser(args, config);
+    schemacrawler(args, executor, dataSourceParser);
+  }
+
+  /**
+   * Executes with the command line, and a given executor. The executor
+   * allows for the command line to be parsed independently of the
+   * execution. The execution can integrate with other software, such as
+   * Velocity.
+   * 
+   * @param args
+   *        Command line arguments
+   * @param executor
+   *        Executor
+   * @param dataSourceParser
+   *        Datasource parser
+   * @throws Exception
+   *         On an exception
+   */
+  public static void schemacrawler(final String[] args,
+                                   final Executor executor,
+                                   final DatabaseConnector dataSourceParser)
+    throws Exception
+  {
 
     final Config config = ConfigParser.parseCommandLine(args);
     final Options[] optionCommands = OptionsParser.parseCommandLine(args,
                                                                     config);
     if (optionCommands.length > 0)
     {
-      final Options firstOption = optionCommands[0];
-      Utilities.setApplicationLogLevel(firstOption.getLogLevel());
       LOGGER.log(Level.CONFIG, Version.about());
       LOGGER.log(Level.CONFIG, "Commandline: " + Arrays.asList(args));
       for (final Options options: optionCommands)
       {
         LOGGER.log(Level.CONFIG, options.toString());
-        final PropertiesDataSource dataSource = dbconnector.Main
-          .createDataSource(args, config.toProperties());
+        final DataSource dataSource = dataSourceParser.createDataSource();
         if (executor instanceof ToolsExecutor)
         {
           ((ToolsExecutor) executor)
-            .setAdditionalConnectionConfiguration(new Config(dataSource
+            .setAdditionalConnectionConfiguration(new Config(((PropertiesDataSource) dataSource)
               .getSourceConfiguration()));
         }
         executor.execute(options, dataSource);

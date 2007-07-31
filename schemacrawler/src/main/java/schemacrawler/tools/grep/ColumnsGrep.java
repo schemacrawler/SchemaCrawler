@@ -23,7 +23,6 @@ package schemacrawler.tools.grep;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 import javax.sql.DataSource;
 
@@ -32,7 +31,6 @@ import schemacrawler.crawl.InclusionRule;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
-import schemacrawler.main.Config;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -41,23 +39,18 @@ import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextFormatter;
 import schemacrawler.tools.schematext.SchemaTextOptions;
 import sf.util.CommandLineParser;
-import sf.util.Utilities;
-import dbconnector.datasource.PropertiesDataSource;
+import sf.util.Config;
+import dbconnector.dbconnector.DatabaseConnector;
 
 /**
- * Main class that takes arguments for a database for crawling a schema.
+ * Provides functionality for grep-ping table and columns in a schema.
  */
 public final class ColumnsGrep
 {
 
-  private static final String OPTION_LOG_LEVEL = "log-level";
-
   private static final String OPTION_INCLUDE_TABLES = "tables";
   private static final String OPTION_INCLUDE_COLUMNS = "columns";
   private static final String OPTION_INVERT_MATCH = "invert-match";
-
-  private static final String OPTION_CONFIGFILE = "configfile";
-  private static final String OPTION_CONFIGOVERRIDEFILE = "configoverridefile";
 
   /**
    * Gets tables that contain the specified columns.
@@ -134,26 +127,18 @@ public final class ColumnsGrep
    * 
    * @param args
    *        Arguments passed into the program from the command line.
+   * @param dataSourceParser
+   *        Datasource parser
    * @throws Exception
    *         On an exception
    */
-  public static void grep(final String[] args)
+  public static void grep(final String[] args,
+                          final DatabaseConnector dataSourceParser)
     throws Exception
   {
 
     final CommandLineParser parser = createCommandLineParser();
     parser.parse(args);
-
-    final String logLevelString = parser.getStringOptionValue(OPTION_LOG_LEVEL);
-    final Level logLevel = Level.parse(logLevelString.toUpperCase());
-    Utilities.setApplicationLogLevel(logLevel);
-
-    final String cfgFile = parser.getStringOptionValue(OPTION_CONFIGFILE);
-    final String cfgOverrideFile = parser
-      .getStringOptionValue(OPTION_CONFIGOVERRIDEFILE);
-    final Config config = Config.load(cfgFile, cfgOverrideFile);
-    final PropertiesDataSource dataSource = dbconnector.Main
-      .createDataSource(args, config.toProperties());
 
     final String includeTables = parser
       .getStringOptionValue(OPTION_INCLUDE_TABLES);
@@ -181,6 +166,7 @@ public final class ColumnsGrep
     final CrawlHandler formatter = new SchemaTextFormatter(schemaTextOptions,
                                                            columnInclusionRule,
                                                            invertMatch);
+    final DataSource dataSource = dataSourceParser.createDataSource();
 
     final SchemaCrawler crawler = new SchemaCrawler(dataSource, null, formatter);
     crawler.crawl(options);
@@ -237,15 +223,6 @@ public final class ColumnsGrep
     final CommandLineParser parser = new CommandLineParser();
 
     parser
-      .addOption(new CommandLineParser.StringOption('g',
-                                                    OPTION_CONFIGFILE,
-                                                    "schemacrawler.config.properties"));
-    parser
-      .addOption(new CommandLineParser.StringOption('p',
-                                                    OPTION_CONFIGOVERRIDEFILE,
-                                                    "schemacrawler.config.override.properties"));
-
-    parser
       .addOption(new CommandLineParser.StringOption(CommandLineParser.Option.NO_SHORT_FORM,
                                                     OPTION_INCLUDE_TABLES,
                                                     InclusionRule.INCLUDE_ALL));
@@ -256,16 +233,12 @@ public final class ColumnsGrep
     parser.addOption(new CommandLineParser.BooleanOption('v',
                                                          OPTION_INVERT_MATCH));
 
-    parser
-      .addOption(new CommandLineParser.StringOption(CommandLineParser.Option.NO_SHORT_FORM,
-                                                    OPTION_LOG_LEVEL,
-                                                    "OFF"));
-
     return parser;
   }
 
   private ColumnsGrep()
   {
+    // Prevent instantiation
   }
 
 }

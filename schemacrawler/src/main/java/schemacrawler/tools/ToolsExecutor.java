@@ -34,11 +34,11 @@ import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutor;
-import schemacrawler.main.Config;
 import schemacrawler.main.Options;
 import schemacrawler.tools.datatext.DataTextFormatterLoader;
 import schemacrawler.tools.operation.OperatorLoader;
 import schemacrawler.tools.schematext.SchemaTextFormatterLoader;
+import sf.util.Config;
 
 /**
  * Basic SchemaCrawler executor.
@@ -63,6 +63,7 @@ public class ToolsExecutor
   public void execute(final Options options, final DataSource dataSource)
     throws Exception
   {
+
     DataHandler dataHandler = null;
     CrawlHandler crawlHandler = null;
 

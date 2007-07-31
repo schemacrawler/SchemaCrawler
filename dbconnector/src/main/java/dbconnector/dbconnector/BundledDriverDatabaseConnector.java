@@ -17,22 +17,20 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.main;
+package dbconnector.dbconnector;
 
 
-import java.util.Properties;
-
-import schemacrawler.crawl.SchemaCrawlerException;
 import sf.util.CommandLineParser;
+import sf.util.Config;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
 import dbconnector.datasource.PropertiesDataSource;
-import dbconnector.datasource.PropertiesDataSourceException;
 
 /**
  * Parses a command line, and create a data-source.
  */
-public final class BundledDriverDataSourceParser
+final class BundledDriverDatabaseConnector
+  implements DatabaseConnector
 {
 
   private static final String OPTION_HOST = "host";
@@ -41,22 +39,24 @@ public final class BundledDriverDataSourceParser
   private static final String OPTION_USER = "user";
   private static final String OPTION_PASSWORD = "password";
 
-  private final Properties configResource;
+  private final Config configResource;
 
   /**
    * Creates the command line parser, and stored the .
    * 
    * @param args
+   *        Command line arguments
    * @param baseConfigResource
-   * @throws SchemaCrawlerException
+   *        Base resource
+   * @throws DatabaseConnectorException
    */
-  public BundledDriverDataSourceParser(final String[] args,
-                                       final Properties baseConfigResource)
-    throws SchemaCrawlerException
+  BundledDriverDatabaseConnector(final String[] args,
+                                final Config baseConfigResource)
+    throws DatabaseConnectorException
   {
     if (baseConfigResource == null)
     {
-      throw new SchemaCrawlerException("Bundled driver needs configuration");
+      throw new DatabaseConnectorException("Bundled driver needs configuration");
     }
     configResource = baseConfigResource;
 
@@ -69,40 +69,26 @@ public final class BundledDriverDataSourceParser
     final String user = parser.getStringOptionValue(OPTION_USER);
     final String password = parser.getStringOptionValue(OPTION_PASSWORD);
 
-    final String connectionName = configResource
-      .getProperty("defaultconnection");
+    final String connectionName = configResource.get("defaultconnection");
     if (user != null && password != null)
     {
-      configResource.setProperty(connectionName + ".host", host);
-      configResource.setProperty(connectionName + ".port", port);
-      configResource.setProperty(connectionName + ".database", database);
-      configResource.setProperty(connectionName + ".user", user);
-      configResource.setProperty(connectionName + ".password", password);
+      configResource.put(connectionName + ".host", host);
+      configResource.put(connectionName + ".port", port);
+      configResource.put(connectionName + ".database", database);
+      configResource.put(connectionName + ".user", user);
+      configResource.put(connectionName + ".password", password);
     }
   }
 
   /**
-   * Creates a new bundled data source from the bundled driver
-   * properties.
+   * {@inheritDoc}
    * 
-   * @return Data source
-   * @throws SchemaCrawlerException
-   *         On an exception
+   * @see dbconnector.dbconnector.DatabaseConnector#createDataSource()
    */
   public PropertiesDataSource createDataSource()
-    throws SchemaCrawlerException
+    throws DatabaseConnectorException
   {
-    PropertiesDataSource dataSource;
-    try
-    {
-      dataSource = new PropertiesDataSource(configResource);
-    }
-    catch (final PropertiesDataSourceException e)
-    {
-      throw new SchemaCrawlerException(e.getMessage(), e);
-    }
-
-    return dataSource;
+    return new PropertiesDataSource(configResource.toProperties());
   }
 
   private CommandLineParser createCommandLineParser()

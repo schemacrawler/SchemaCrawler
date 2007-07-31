@@ -8,32 +8,32 @@ import javax.sql.DataSource;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
-import schemacrawler.main.Config;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import sf.util.Config;
 import dbconnector.datasource.PropertiesDataSource;
 import dbconnector.datasource.PropertiesDataSourceException;
 
 public class SchemaCrawlerTest1660040
 {
 
-  public static void main(String[] args)
+  public static void main(final String[] args)
     throws Exception
   {
-    DataSource dataSource = makeDataSource();
+    final DataSource dataSource = makeDataSource();
 
-    Config config = Config.load("schemacrawler.config.1660040.properties", "");
-    
+    final Config config = Config
+      .load("schemacrawler.config.1660040.properties", "");
+
     // Get the schema definition
-    SchemaCrawlerOptions options = new SchemaCrawlerOptions(config);
+    final SchemaCrawlerOptions options = new SchemaCrawlerOptions(config);
     final Schema schema = SchemaCrawler.getSchema(dataSource,
                                                   SchemaInfoLevel.maximum,
                                                   options);
 
     final Table[] tables = schema.getTables();
-    for (int i = 0; i < tables.length; i++)
+    for (final Table table: tables)
     {
-      final Table table = tables[i];
       System.out.println(table);
     }
 

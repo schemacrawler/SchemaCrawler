@@ -20,6 +20,12 @@
 package sf.util;
 
 
+import java.util.Enumeration;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
+
 import dbconnector.Version;
 
 /**
@@ -65,6 +71,54 @@ public class CommandLineUtility
       System.out.println(info);
       System.exit(0);
     }
+  }
+
+  /**
+   * Parses the command line, and sets the application log level.
+   * 
+   * @param args
+   *        Command line arguments
+   */
+  public static void setLogLevel(final String[] args)
+  {
+    final String OPTION_LOG_LEVEL = "log-level";
+
+    final CommandLineParser parser = new CommandLineParser();
+    parser
+      .addOption(new CommandLineParser.StringOption(CommandLineParser.Option.NO_SHORT_FORM,
+                                                    OPTION_LOG_LEVEL,
+                                                    "OFF"));
+    parser.parse(args);
+
+    final String logLevelString = parser.getStringOptionValue(OPTION_LOG_LEVEL);
+    final Level logLevel = Level.parse(logLevelString.toUpperCase());
+    setApplicationLogLevel(logLevel);
+  }
+
+  /**
+   * Sets the application-wide log level.
+   * 
+   * @param logLevel
+   *        Log level to set
+   */
+  public static void setApplicationLogLevel(final Level logLevel)
+  {
+    final LogManager logManager = LogManager.getLogManager();
+    for (final Enumeration<String> loggerNames = logManager.getLoggerNames(); loggerNames
+      .hasMoreElements();)
+    {
+      final String loggerName = loggerNames.nextElement();
+      final Logger logger = logManager.getLogger(loggerName);
+      logger.setLevel(null);
+      final Handler[] handlers = logger.getHandlers();
+      for (final Handler handler: handlers)
+      {
+        handler.setLevel(logLevel);
+      }
+    }
+
+    final Logger rootLogger = Logger.getLogger("");
+    rootLogger.setLevel(logLevel);
   }
 
   private CommandLineUtility()

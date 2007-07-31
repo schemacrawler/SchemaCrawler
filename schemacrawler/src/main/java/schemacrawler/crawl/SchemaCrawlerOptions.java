@@ -26,8 +26,8 @@ import java.util.Properties;
 
 import schemacrawler.crawl.NamedObjectList.NamedObjectSort;
 import schemacrawler.main.BaseOptions;
-import schemacrawler.main.Config;
 import schemacrawler.schema.TableType;
+import sf.util.Config;
 
 /**
  * SchemaCrarlwe options.

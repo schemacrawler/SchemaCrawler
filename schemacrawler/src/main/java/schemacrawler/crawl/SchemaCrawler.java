@@ -28,9 +28,9 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
-import schemacrawler.main.Config;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.TableType;
+import sf.util.Config;
 
 /**
  * SchemaCrawler uses database metadata to get the details about the

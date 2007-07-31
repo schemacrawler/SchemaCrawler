@@ -37,6 +37,7 @@ import java.util.logging.Logger;
 
 import org.hsqldb.Server;
 
+import sf.util.CommandLineUtility;
 import sf.util.Utilities;
 import dbconnector.datasource.PropertiesDataSource;
 import dbconnector.datasource.PropertiesDataSourceException;
@@ -210,12 +211,12 @@ public class TestUtility
   {
     if (DEBUG)
     {
-      Utilities.setApplicationLogLevel(Level.FINEST);
+      CommandLineUtility.setApplicationLogLevel(Level.FINEST);
       out = new PrintWriter(System.out, true);
     }
     else
     {
-      Utilities.setApplicationLogLevel(Level.OFF);
+      CommandLineUtility.setApplicationLogLevel(Level.OFF);
       out = new PrintWriter(this.new NullWriter(), true);
     }
 

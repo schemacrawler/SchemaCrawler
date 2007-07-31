@@ -21,9 +21,9 @@
 package schemacrawler.tools.datatext;
 
 
-import schemacrawler.main.Config;
 import schemacrawler.tools.BaseToolOptions;
 import schemacrawler.tools.OutputOptions;
+import sf.util.Config;
 
 /**
  * Data text formatting options.

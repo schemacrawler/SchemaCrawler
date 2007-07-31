@@ -18,27 +18,21 @@
  *
  */
 
-package dbconnector;
+package schemacrawler.tools.sqlserver;
 
 
-import sf.util.CommandLineParser;
-import sf.util.CommandLineUtility;
-import sf.util.Config;
-import sf.util.CommandLineParser.StringOption;
 import dbconnector.dbconnector.DatabaseConnector;
 import dbconnector.dbconnector.DatabaseConnectorFactory;
-import dbconnector.dbconnector.DatabaseConnectorException;
+import schemacrawler.main.SchemaCrawlerMain;
+import schemacrawler.tools.ToolsExecutor;
+import sf.util.CommandLineUtility;
+import sf.util.Config;
 
 /**
- * Main class that reads a properties file for database connection
- * information, and tests the database connections.
- * 
- * @author Sualeh Fatehi sualeh@hotmail.com
+ * Main class that takes arguments for a database for crawling a schema.
  */
 public final class Main
 {
-
-  private static final String OPTION_CONNECTIONSFILE = "connectionsfile";
 
   /**
    * Get connection parameters, and creates a connection, and crawls the
@@ -46,31 +40,30 @@ public final class Main
    * 
    * @param args
    *        Arguments passed into the program from the command line.
-   * @throws DatabaseConnectorException
+   * @throws Exception
+   *         On an exception
    */
   public static void main(final String[] args)
-    throws DatabaseConnectorException
+    throws Exception
   {
-    CommandLineUtility.checkForHelp(args, "/dbconnector-readme.txt");
+    CommandLineUtility
+      .checkForHelp(args, "/schemacrawler-sqlserver-readme.txt");
     CommandLineUtility.setLogLevel(args);
 
-    final CommandLineParser parser = new CommandLineParser();
-    parser.addOption(new StringOption('f',
-                                      OPTION_CONNECTIONSFILE,
-                                      "connection.properties"));
-    parser.parse(args);
-
-    final String connectionsFileName = parser
-      .getStringOptionValue(OPTION_CONNECTIONSFILE);
-    final Config config = Config.load(connectionsFileName);
-
-    final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
-      .createPropertiesDriverDataSourceParser(args, config);
-    if (dataSourceParser.createDataSource() == null)
+    try
     {
-      System.exit(2);
+      final Config driverConfiguration = Config.load(Grep.class
+        .getResourceAsStream("/schemacrawler.config.properties"));
+      final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
+        .createBundledDriverDataSourceParser(args, driverConfiguration);
+      SchemaCrawlerMain.schemacrawler(args,
+                                      new ToolsExecutor(),
+                                      dataSourceParser);
     }
-
+    catch (final Exception e)
+    {
+      e.printStackTrace();
+    }
   }
 
   private Main()
