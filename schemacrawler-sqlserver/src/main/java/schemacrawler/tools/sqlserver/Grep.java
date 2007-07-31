@@ -20,27 +20,11 @@
 package schemacrawler.tools.sqlserver;
 
 
-import java.util.Locale;
-import java.util.Properties;
-import java.util.logging.Level;
-
-import schemacrawler.crawl.CrawlHandler;
-import schemacrawler.crawl.InclusionRule;
-import schemacrawler.crawl.SchemaCrawler;
-import schemacrawler.crawl.SchemaCrawlerOptions;
-import schemacrawler.main.BundledDriverDataSourceParser;
-import schemacrawler.main.Config;
-import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.schematext.SchemaTextDetailType;
-import schemacrawler.tools.schematext.SchemaTextFormatter;
-import schemacrawler.tools.schematext.SchemaTextOptions;
-import sf.util.CommandLineParser;
+import schemacrawler.tools.grep.ColumnsGrep;
 import sf.util.CommandLineUtility;
-import sf.util.Utilities;
-import sf.util.CommandLineParser.BooleanOption;
-import sf.util.CommandLineParser.Option;
-import sf.util.CommandLineParser.StringOption;
-import dbconnector.datasource.PropertiesDataSource;
+import sf.util.Config;
+import dbconnector.dbconnector.DatabaseConnector;
+import dbconnector.dbconnector.DatabaseConnectorFactory;
 
 /**
  * Main class that takes arguments for grep-ping table and columns in a
@@ -48,12 +32,6 @@ import dbconnector.datasource.PropertiesDataSource;
  */
 public final class Grep
 {
-
-  private static final String OPTION_LOG_LEVEL = "log-level";
-
-  private static final String OPTION_INCLUDE_TABLES = "tables";
-  private static final String OPTION_INCLUDE_COLUMNS = "columns";
-  private static final String OPTION_INVERT_MATCH = "invert-match";
 
   /**
    * Get connection parameters, and creates a connection, and crawls the
@@ -64,94 +42,22 @@ public final class Grep
    */
   public static void main(final String[] args)
   {
-    CommandLineUtility.checkForHelp(args, "/sqlserver-grep-readme.txt");
+    CommandLineUtility.checkForHelp(args,
+                                    "/schemacrawler-sqlserver-grep-readme.txt");
+    CommandLineUtility.setLogLevel(args);
+
     try
     {
-      grep(args);
+      final Config driverConfiguration = Config.load(Grep.class
+        .getResourceAsStream("/schemacrawler.config.properties"));
+      final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
+        .createBundledDriverDataSourceParser(args, driverConfiguration);
+      ColumnsGrep.grep(args, dataSourceParser);
     }
     catch (final Exception e)
     {
       e.printStackTrace();
     }
-  }
-
-  private static CommandLineParser createCommandLineParser()
-  {
-    final CommandLineParser parser = new CommandLineParser();
-
-    parser.addOption(new StringOption(Option.NO_SHORT_FORM,
-                                      OPTION_INCLUDE_TABLES,
-                                      InclusionRule.INCLUDE_ALL));
-    parser.addOption(new StringOption(Option.NO_SHORT_FORM,
-                                      OPTION_INCLUDE_COLUMNS,
-                                      InclusionRule.INCLUDE_ALL));
-    parser.addOption(new BooleanOption('v', OPTION_INVERT_MATCH));
-
-    parser.addOption(new StringOption(Option.NO_SHORT_FORM,
-                                      OPTION_LOG_LEVEL,
-                                      "SEVERE"));
-
-    return parser;
-  }
-
-  /**
-   * Get connection parameters, and creates a connection, and crawls the
-   * schema.
-   * 
-   * @param args
-   *        Arguments passed into the program from the command line.
-   * @throws Exception
-   *         On an exception
-   */
-  private static void grep(final String[] args)
-    throws Exception
-  {
-
-    final CommandLineParser parser = createCommandLineParser();
-    parser.parse(args);
-
-    final String logLevelString = parser.getStringOptionValue(OPTION_LOG_LEVEL);
-    final Level logLevel = Level.parse(logLevelString
-      .toUpperCase(Locale.ENGLISH));
-    Utilities.setApplicationSysOutLogHandler();
-    Utilities.setApplicationLogLevel(logLevel);
-
-    final Properties driverConfiguration = Utilities.loadProperties(Grep.class
-      .getResourceAsStream("/schemacrawler.config.properties"));
-    final BundledDriverDataSourceParser dataSourceParser = new BundledDriverDataSourceParser(args,
-                                                                                             driverConfiguration);
-    final PropertiesDataSource dataSource = dataSourceParser.createDataSource();
-
-    final String includeTables = parser
-      .getStringOptionValue(OPTION_INCLUDE_TABLES);
-    final InclusionRule tableInclusionRule = new InclusionRule(includeTables,
-                                                               InclusionRule.EXCLUDE_NONE);
-
-    final String includeColumns = parser
-      .getStringOptionValue(OPTION_INCLUDE_COLUMNS);
-    final InclusionRule columnInclusionRule = new InclusionRule(includeColumns,
-                                                                InclusionRule.EXCLUDE_NONE);
-
-    final boolean invertMatch = parser
-      .getBooleanOptionValue(OPTION_INVERT_MATCH);
-
-    // Create the options
-    final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
-    options.setShowStoredProcedures(false);
-    options.setTableInclusionRule(tableInclusionRule);
-
-    final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(new Config(),
-                                                                      new OutputOptions("text",
-                                                                                        null),
-                                                                      SchemaTextDetailType.verbose_schema);
-
-    final CrawlHandler formatter = new SchemaTextFormatter(schemaTextOptions,
-                                                           columnInclusionRule,
-                                                           invertMatch);
-
-    final SchemaCrawler crawler = new SchemaCrawler(dataSource, null, formatter);
-    crawler.crawl(options);
-
   }
 
   private Grep()

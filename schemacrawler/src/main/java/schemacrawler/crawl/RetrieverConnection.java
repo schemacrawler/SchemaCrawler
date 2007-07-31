@@ -30,7 +30,8 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
-import schemacrawler.main.Config;
+import sf.util.Config;
+
 import dbconnector.datasource.PropertiesDataSource;
 
 /**

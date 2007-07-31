@@ -18,18 +18,16 @@
  *
  */
 
-package dbconnector.datasource;
+package dbconnector.dbconnector;
 
-
-import dbconnector.dbconnector.DatabaseConnectorException;
 
 /**
  * Error creating or accessing a PropertiesDataSource.
  * 
  * @author Sualeh Fatehi
  */
-public final class PropertiesDataSourceException
-  extends DatabaseConnectorException
+public class DatabaseConnectorException
+  extends Exception
 {
 
   private static final long serialVersionUID = 4050761594017165621L;
@@ -41,7 +39,7 @@ public final class PropertiesDataSourceException
    *        the detail message. The detail message is saved for later
    *        retrieval by the {@link #getMessage()} method.
    */
-  public PropertiesDataSourceException(final String message)
+  public DatabaseConnectorException(final String message)
   {
     super(message);
   }
@@ -61,8 +59,7 @@ public final class PropertiesDataSourceException
    *        permitted, and indicates that the cause is nonexistent or
    *        unknown.)
    */
-  public PropertiesDataSourceException(final String message,
-                                       final Throwable cause)
+  public DatabaseConnectorException(final String message, final Throwable cause)
   {
     super(message, cause);
   }

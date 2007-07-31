@@ -6,6 +6,20 @@
   </properties>
   <body>
     <release
+      version="5.1"
+      date="2007-08-05">
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Executable for SchemaCrawler for Microsoft SQL Server.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Commonly available SchemaCrawler command line argument for setting the log level.
+      </action>
+    </release>
+    <release
       version="5.0"
       date="2007-06-25">
       <action

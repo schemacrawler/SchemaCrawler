@@ -9,33 +9,33 @@ import javax.sql.DataSource;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
-import schemacrawler.main.Config;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import sf.util.Config;
 import dbconnector.datasource.PropertiesDataSource;
 import dbconnector.datasource.PropertiesDataSourceException;
 
 public class SchemaCrawlerTest1
 {
 
-  public static void main(String[] args)
+  public static void main(final String[] args)
     throws Exception
   {
-    DataSource dataSource = makeDataSource();
+    final DataSource dataSource = makeDataSource();
 
-    Properties properties = new Properties();
+    final Properties properties = new Properties();
     properties.setProperty("schemacrawler.table_types", "TABLE");
     properties.setProperty("schemacrawler.show_stored_procedures", "false");
     properties.setProperty("schemacrawler.table.pattern.include", ".*");
     properties.setProperty("schemacrawler.table.pattern.exclude", "");
-    
-    SchemaCrawlerOptions options = new SchemaCrawlerOptions(properties);
 
-    Schema schema = SchemaCrawler.getSchema(dataSource,
-                                            new Config(properties),
-                                            SchemaInfoLevel.basic,
-                                            options);
-    Table[] tableArray = schema.getTables();
+    final SchemaCrawlerOptions options = new SchemaCrawlerOptions(properties);
+
+    final Schema schema = SchemaCrawler.getSchema(dataSource,
+                                                  new Config(properties),
+                                                  SchemaInfoLevel.basic,
+                                                  options);
+    final Table[] tableArray = schema.getTables();
 
     System.out.println(Arrays.asList(tableArray));
     System.out.println(Arrays.asList(schema.getProcedures()));

@@ -76,10 +76,10 @@ public final class PropertiesDataSource
    *        Database password
    * @return True if all connection properties are provided
    */
-  public static boolean connectionPropertiesProvided(final String jdbcDriverClassName,
-                                                     final String url,
-                                                     final String user,
-                                                     final String password)
+  private static boolean connectionPropertiesProvided(final String jdbcDriverClassName,
+                                                      final String url,
+                                                      final String user,
+                                                      final String password)
   {
     return jdbcDriverClassName != null && url != null && user != null
            && password != null;

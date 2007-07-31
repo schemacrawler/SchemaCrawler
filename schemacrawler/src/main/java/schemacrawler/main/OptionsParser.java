@@ -31,6 +31,7 @@ import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.operation.Operation;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import sf.util.CommandLineParser;
+import sf.util.Config;
 import sf.util.Utilities;
 import sf.util.CommandLineParser.BooleanOption;
 import sf.util.CommandLineParser.Option;

@@ -21,8 +21,12 @@
 package schemacrawler;
 
 
+import dbconnector.dbconnector.DatabaseConnector;
+import dbconnector.dbconnector.DatabaseConnectorFactory;
+import schemacrawler.main.ConfigParser;
 import schemacrawler.tools.grep.ColumnsGrep;
 import sf.util.CommandLineUtility;
+import sf.util.Config;
 
 /**
  * Main class that takes arguments for grep-ping table and columns in a
@@ -44,7 +48,12 @@ public final class Grep
     throws Exception
   {
     CommandLineUtility.checkForHelp(args, "/schemacrawler-grep-readme.txt");
-    ColumnsGrep.grep(args);
+    CommandLineUtility.setLogLevel(args);
+
+    final Config config = ConfigParser.parseCommandLine(args);
+    final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
+      .createPropertiesDriverDataSourceParser(args, config);
+    ColumnsGrep.grep(args, dataSourceParser);
   }
 
   private Grep()

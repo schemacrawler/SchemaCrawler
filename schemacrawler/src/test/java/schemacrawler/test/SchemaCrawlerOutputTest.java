@@ -44,7 +44,6 @@ import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutor;
 import schemacrawler.execute.QueryExecutorException;
-import schemacrawler.main.Config;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.datatext.DataTextFormatOptions;
 import schemacrawler.tools.datatext.DataTextFormatterLoader;
@@ -55,6 +54,7 @@ import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextFormatter;
 import schemacrawler.tools.schematext.SchemaTextFormatterLoader;
 import schemacrawler.tools.schematext.SchemaTextOptions;
+import sf.util.Config;
 import dbconnector.datasource.PropertiesDataSourceException;
 import dbconnector.test.TestUtility;
 

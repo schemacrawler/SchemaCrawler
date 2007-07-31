@@ -44,6 +44,8 @@ public final class Main
   {
     CommandLineUtility.checkForHelp(args,
                                     "/schemacrawler-templating-readme.txt");
+    CommandLineUtility.setLogLevel(args);
+
     SchemaCrawlerMain.schemacrawler(args, new FreeMarkerExecutor());
   }
 

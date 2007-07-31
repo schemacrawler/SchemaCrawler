@@ -1,9 +1,10 @@
-package schemacrawler.main;
+package sf.util;
 
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -12,8 +13,6 @@ import java.util.Properties;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import sf.util.Utilities;
 
 /**
  * Configuration properties.
@@ -31,6 +30,23 @@ public class Config
   /**
    * Loads the SchemaCrawler configuration, and override.
    * 
+   * @param configStream
+   *        Configuration stream.
+   * @return Configuration properties.
+   */
+  public static Config load(final InputStream configStream)
+  {
+    Properties configProperties = new Properties();
+    if (configStream != null)
+    {
+      configProperties = loadProperties(configProperties, configStream);
+    }
+    return new Config(configProperties);
+  }
+
+  /**
+   * Loads the SchemaCrawler configuration, and override.
+   * 
    * @param configFilenames
    *        Configuration file name.
    * @return Configuration properties.
@@ -42,7 +58,8 @@ public class Config
     {
       for (final String configFilename: configFilenames)
       {
-        configProperties = loadProperties(configProperties, configFilename);
+        configProperties = loadProperties(configProperties,
+                                          new File(configFilename));
       }
     }
     return new Config(configProperties);
@@ -58,28 +75,50 @@ public class Config
    * @return Properties
    */
   private static Properties loadProperties(final Properties properties,
-                                           final String propertiesFileName)
+                                           final File propertiesFile)
   {
-    InputStream propertiesStream = null;
     try
     {
-      final File propertiesFile = new File(propertiesFileName);
       if (propertiesFile.exists())
       {
-        propertiesStream = new BufferedInputStream(new FileInputStream(propertiesFile));
-        properties.load(propertiesStream);
-        propertiesStream.close();
+        final InputStream propertiesStream = new BufferedInputStream(new FileInputStream(propertiesFile));
+        loadProperties(properties, propertiesStream);
       }
       else
       {
-        LOGGER.log(Level.CONFIG, "Cannot find properties file "
-                                 + propertiesFileName);
+        LOGGER.log(Level.CONFIG, "Cannot load properties file "
+                                 + propertiesFile);
       }
+    }
+    catch (final FileNotFoundException e)
+    {
+      LOGGER.log(Level.WARNING,
+                 "Cannot find properties file " + propertiesFile,
+                 e);
+    }
+    return properties;
+  }
+
+  /**
+   * Loads a properties file.
+   * 
+   * @param properties
+   *        Properties object.
+   * @param propertiesFileName
+   *        Properties file name.
+   * @return Properties
+   */
+  private static Properties loadProperties(final Properties properties,
+                                           final InputStream propertiesStream)
+  {
+    try
+    {
+      properties.load(propertiesStream);
+      propertiesStream.close();
     }
     catch (final IOException e)
     {
-      LOGGER.log(Level.WARNING, "Error loading properties file "
-                                + propertiesFileName, e);
+      LOGGER.log(Level.WARNING, "Error loading properties", e);
     }
     finally
     {

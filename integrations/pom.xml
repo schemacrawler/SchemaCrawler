@@ -7,7 +7,7 @@
   <parent>
     <groupId>schemacrawler</groupId>
     <artifactId>schemacrawler-all</artifactId>
-    <version>5.0</version>
+    <version>5.1</version>
   </parent>
   <groupId>schemacrawler</groupId>
   <artifactId>integrations</artifactId>

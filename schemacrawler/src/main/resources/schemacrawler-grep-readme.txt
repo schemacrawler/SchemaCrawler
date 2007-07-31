@@ -23,6 +23,10 @@ java -cp <schemacrawler-jar> schemacrawler.Grep [options]
     Reads SchemaCrawler configuration properties from <config-override-file>
     and overrides the properties from the configuration file
 
+-log_level <log_level>
+		Log level - may be one of: 
+		OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL
+		
 --- Required Connection Options ---
 
 One of:

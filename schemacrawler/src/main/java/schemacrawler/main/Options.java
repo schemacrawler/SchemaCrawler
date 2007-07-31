@@ -21,14 +21,13 @@
 package schemacrawler.main;
 
 
-import java.util.logging.Level;
-
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.ToolType;
 import schemacrawler.tools.datatext.DataTextFormatOptions;
 import schemacrawler.tools.operation.OperatorOptions;
 import schemacrawler.tools.schematext.SchemaTextOptions;
+import sf.util.Config;
 
 /**
  * Program options.
@@ -38,8 +37,6 @@ import schemacrawler.tools.schematext.SchemaTextOptions;
 public final class Options
 {
 
-  private static final String SCHEMACRAWLER_LOG_LEVEL = "schemacrawler.log_level";
-
   private final Config config;
   private final SchemaCrawlerOptions schemaCrawlerOptions;
   private final ToolType toolType;
@@ -47,7 +44,6 @@ public final class Options
   private final DataTextFormatOptions dataTextFormatOptions;
   private final OperatorOptions operatorOptions;
   private final String query;
-  private Level logLevel;
 
   /**
    * Parses options from a properties file.
@@ -81,9 +77,6 @@ public final class Options
 
     toolType = command.getToolType();
     query = command.getQuery();
-
-    // Set additional options from the config
-    setLogLevel(config.getStringValue(SCHEMACRAWLER_LOG_LEVEL, "OFF"));
   }
 
   /**
@@ -104,16 +97,6 @@ public final class Options
   public DataTextFormatOptions getDataTextFormatOptions()
   {
     return dataTextFormatOptions;
-  }
-
-  /**
-   * Log level.
-   * 
-   * @return Log level
-   */
-  public Level getLogLevel()
-  {
-    return logLevel;
   }
 
   /**
@@ -177,18 +160,12 @@ public final class Options
     final StringBuffer buffer = new StringBuffer();
     buffer.append("Options[");
     buffer.append("query=").append(query);
-    buffer.append("; log level=").append(logLevel.getName());
     buffer.append("; ").append(schemaCrawlerOptions);
     buffer.append("; ").append(schemaTextOptions);
     buffer.append("; ").append(dataTextFormatOptions);
     buffer.append("; ").append(operatorOptions);
     buffer.append("]");
     return buffer.toString();
-  }
-
-  void setLogLevel(final String logLevelString)
-  {
-    logLevel = Level.parse(logLevelString.toUpperCase());
   }
 
 }

@@ -23,8 +23,6 @@ package sf.util;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -230,74 +228,6 @@ public final class Utilities
   }
 
   /**
-   * Loads a properties file.
-   * 
-   * @param propertiesFile
-   *        Properties file.
-   * @return Properties
-   */
-  public static Properties loadProperties(final File propertiesFile)
-  {
-
-    if (propertiesFile != null && propertiesFile.exists()
-        && propertiesFile.canRead())
-    {
-      try
-      {
-        return loadProperties(new FileInputStream(propertiesFile));
-      }
-      catch (final FileNotFoundException e)
-      {
-        // Fall through
-      }
-    }
-
-    // On an error, return empty properties
-    LOGGER.log(Level.CONFIG, "Cannot find properties file " + propertiesFile);
-    return new Properties();
-
-  }
-
-  /**
-   * Loads a properties file.
-   * 
-   * @param stream
-   *        Properties stream.
-   * @return Properties
-   */
-  public static Properties loadProperties(final InputStream stream)
-  {
-    final Properties properties = new Properties();
-    try
-    {
-      if (stream != null)
-      {
-        properties.load(new BufferedInputStream(stream));
-        stream.close();
-      }
-    }
-    catch (final IOException e)
-    {
-      LOGGER.log(Level.WARNING, "Error loading properties file", e);
-    }
-    finally
-    {
-      try
-      {
-        if (stream != null)
-        {
-          stream.close();
-        }
-      }
-      catch (final IOException e)
-      {
-        LOGGER.log(Level.WARNING, "Error closing stream", e);
-      }
-    }
-    return properties;
-  }
-
-  /**
    * Right justifies the string in given field length.
    * 
    * @param string
@@ -450,32 +380,6 @@ public final class Utilities
 
     return repeated;
 
-  }
-
-  /**
-   * Sets the application-wide log level.
-   * 
-   * @param logLevel
-   *        Log level to set
-   */
-  public static void setApplicationLogLevel(final Level logLevel)
-  {
-    final LogManager logManager = LogManager.getLogManager();
-    for (final Enumeration<String> loggerNames = logManager.getLoggerNames(); loggerNames
-      .hasMoreElements();)
-    {
-      final String loggerName = loggerNames.nextElement();
-      final Logger logger = logManager.getLogger(loggerName);
-      logger.setLevel(null);
-      final Handler[] handlers = logger.getHandlers();
-      for (final Handler handler: handlers)
-      {
-        handler.setLevel(logLevel);
-      }
-    }
-
-    final Logger rootLogger = Logger.getLogger("");
-    rootLogger.setLevel(logLevel);
   }
 
   /**

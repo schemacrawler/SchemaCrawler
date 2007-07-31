@@ -43,6 +43,8 @@ public final class Main
     throws Exception
   {
     CommandLineUtility.checkForHelp(args, "/schemacrawler-jung-readme.txt");
+    CommandLineUtility.setLogLevel(args);
+
     SchemaCrawlerMain.schemacrawler(args, new JungExecutor());
     System.exit(0);
   }
