@@ -1,5 +1,5 @@
 <projectDescription>
-  <name>schemacrawler-mysql</name>
+  <name>SchemaCrawler for MySQL</name>
   <comment>SchemaCrawler is a command-line tool to output your database schema and data in a readable form. The output is designed to be diff-ed with previous versions of your database schema. SchemaCrawler is also an API that improves on the standard JDBC metadata.</comment>
   <projects/>
   <buildSpec>
