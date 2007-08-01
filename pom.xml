@@ -54,6 +54,7 @@
     <module>integrations</module>
     <module>schemacrawler-maven-plugin</module>
     <module>schemacrawler-sqlserver</module>
+    <module>schemacrawler-mysql</module>
     <module>distribution</module>
   </modules>
   <build>

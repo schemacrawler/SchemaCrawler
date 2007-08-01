@@ -38,6 +38,11 @@
       <artifactId>schemacrawler-sqlserver</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>schemacrawler</groupId>
+      <artifactId>schemacrawler-mysql</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
