@@ -2,7 +2,7 @@ SchemaCrawler is a platform (OS and DB) independent command-line tool to output
 your database schema and data in a readable form. The output is designed to be
 diff-ed with previous versions of your database schema.
 		
-SchemaCrawler [options]
+sc [options]
 
 --- Connection Options ---
 

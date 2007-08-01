@@ -1,7 +1,7 @@
 SchemaCrawler Grep is a command-line tool to search for tables that contain
 columns matching regular expressions in your database schema.
 
-SchemaCrawlerGrep [options]
+scgrep [options]
 
 --- Connection Options ---
 
