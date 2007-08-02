@@ -17,6 +17,11 @@
     <attribute name="template"/>
     <attribute name="outputfile"/>
 
+    <attribute
+      name="log-level"
+      description="Log level - may be one of: OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL"
+      default="SEVERE" />
+      
     <sequential>
 
       <!-- Required properties: -->
@@ -45,7 +50,8 @@
         <arg value="-outputformat"/>
         <arg value="@{template}"/>
         <arg value="-outputfile"/>
-        <arg value="@{outputfile}"/>              
+        <arg value="@{outputfile}"/>   
+        <arg value="-log-level=@{log-level}" />           
       </java>
     </sequential>
 
@@ -67,6 +73,11 @@
     <attribute name="graph-size"/>
     <attribute name="outputfile"/>
 
+    <attribute
+      name="log-level"
+      description="Log level - may be one of: OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL"
+      default="SEVERE" />
+      
     <sequential>
 
       <!-- Required properties: -->
@@ -95,7 +106,8 @@
         <arg value="-outputformat"/>
         <arg value="@{graph-size}"/>
         <arg value="-outputfile"/>
-        <arg value="@{outputfile}"/>              
+        <arg value="@{outputfile}"/>  
+        <arg value="-log-level=@{log-level}" />            
       </java>
     </sequential>
 
