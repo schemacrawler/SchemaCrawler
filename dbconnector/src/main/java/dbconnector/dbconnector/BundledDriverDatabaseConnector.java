@@ -51,7 +51,7 @@ final class BundledDriverDatabaseConnector
    * @throws DatabaseConnectorException
    */
   BundledDriverDatabaseConnector(final String[] args,
-                                final Config baseConfigResource)
+                                 final Config baseConfigResource)
     throws DatabaseConnectorException
   {
     if (baseConfigResource == null)
@@ -72,8 +72,14 @@ final class BundledDriverDatabaseConnector
     final String connectionName = configResource.get("defaultconnection");
     if (user != null && password != null)
     {
-      configResource.put(connectionName + ".host", host);
-      configResource.put(connectionName + ".port", port);
+      if (host != null)
+      {
+        configResource.put(connectionName + ".host", host);
+      }
+      if (port != null)
+      {
+        configResource.put(connectionName + ".port", port);
+      }
       configResource.put(connectionName + ".database", database);
       configResource.put(connectionName + ".user", user);
       configResource.put(connectionName + ".password", password);
@@ -95,11 +101,8 @@ final class BundledDriverDatabaseConnector
   {
     final CommandLineParser parser = new CommandLineParser();
 
-    parser.addOption(new StringOption(Option.NO_SHORT_FORM,
-                                      OPTION_HOST,
-                                      "localhost"));
-    parser
-      .addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_PORT, "1433"));
+    parser.addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_HOST, null));
+    parser.addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_PORT, null));
     parser
       .addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_DATABASE, ""));
     parser.addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_USER, null));
