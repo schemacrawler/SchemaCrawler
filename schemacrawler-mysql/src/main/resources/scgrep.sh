@@ -1,0 +1,1 @@
+java -classpath lib/dbconnector-5.1.jar:lib/mysql-connector-java-5.0.5.jar:lib/schemacrawler-5.1.jar:lib/schemacrawler-mysql-5.1.jar schemacrawler.tools.mysql.Grep $*
