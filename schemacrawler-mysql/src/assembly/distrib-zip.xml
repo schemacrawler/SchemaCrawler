@@ -29,6 +29,7 @@
       <includes>
         <include>mysql.*</include>
         <include>*.exe</include>
+        <include>*.sh</include>
       </includes>
      </fileSet>
   </fileSets>
