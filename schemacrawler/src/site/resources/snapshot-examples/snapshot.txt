@@ -230,7 +230,7 @@ DOUBLE                                                       [data type]
 FLOAT                                                        [data type]
   based on FLOAT
   not user defined
-  defined with no parameters
+  defined with PRECISION
   nullable
   not auto-incrementable
   searchable
@@ -302,7 +302,7 @@ TIME                                                         [data type]
 TIMESTAMP                                                    [data type]
   based on TIMESTAMP
   not user defined
-  defined with no parameters
+  defined with PRECISION
   nullable
   not auto-incrementable
   searchable
@@ -349,7 +349,7 @@ CUSTOMER                                                         [table]
   STREET                            VARCHAR(255)                
   CITY                              VARCHAR(255)                
 
-SYS_PK_48                                                  [primary key]
+SYS_IDX_50                                                 [primary key]
   ID                                INTEGER, not null           
 
 FK_INVOICE_CUSTOMER                   [foreign key, on update no action]
@@ -399,7 +399,7 @@ INVOICE                                                          [table]
   CUSTOMERID                        INTEGER                     
   TOTAL                             FLOAT(17, 0)                
 
-SYS_PK_49                                                  [primary key]
+SYS_IDX_52                                                 [primary key]
   ID                                INTEGER, not null           
 
 FK_INVOICE_CUSTOMER                   [foreign key, on update no action]
@@ -411,7 +411,7 @@ FK_B_ITEM_INVOICE                     [foreign key, on update no action]
 INDEX_INVOICE_CUSTOMER                [non-unique ascending other index]
   CUSTOMERID                        INTEGER                     
 
-SYS_IDX_56                            [non-unique ascending other index]
+SYS_IDX_60                            [non-unique ascending other index]
   CUSTOMERID                        INTEGER                     
 
 DELETE                                             [grantable privilege]
@@ -435,7 +435,7 @@ ITEM                                                             [table]
   QUANTITY                          INTEGER                     
   COST                              FLOAT(17, 0)                
 
-SYS_PK_46                                                  [primary key]
+SYS_IDX_46                                                 [primary key]
   INVOICEID                         INTEGER, not null           
   ITEM                              INTEGER, not null           
 
@@ -448,13 +448,13 @@ FK_A_ITEM_PRODUCT                     [foreign key, on update no action]
 INDEX_ITEM_INVOICE                    [non-unique ascending other index]
   INVOICEID                         INTEGER, not null           
 
-SYS_IDX_52                            [non-unique ascending other index]
+SYS_IDX_56                            [non-unique ascending other index]
   INVOICEID                         INTEGER, not null           
 
 INDEX_ITEM_PRODUCT                    [non-unique ascending other index]
   PRODUCTID                         INTEGER                     
 
-SYS_IDX_54                            [non-unique ascending other index]
+SYS_IDX_58                            [non-unique ascending other index]
   PRODUCTID                         INTEGER                     
 
 DELETE                                             [grantable privilege]
@@ -476,7 +476,7 @@ PRODUCT                                                          [table]
   NAME                              VARCHAR(255)                
   PRICE                             FLOAT(17, 0)                
 
-SYS_PK_47                                                  [primary key]
+SYS_IDX_48                                                 [primary key]
   ID                                INTEGER, not null           
 
 FK_A_ITEM_PRODUCT                     [foreign key, on update no action]
@@ -1431,6 +1431,14 @@ org.hsqldb.Library.getAutoCommit             [procedure, returns result]
 
                                                             [definition]
   org.hsqldb.Library.getAutoCommit(java.sql.Connection)
+
+
+org.hsqldb.Library.getDatabaseFullProductVersion  [procedure, returns result]
+------------------------------------------------------------------------
+  @p0                               LONGVARCHAR, result         
+
+                                                            [definition]
+  org.hsqldb.Library.getDatabaseFullProductVersion()
 
 
 org.hsqldb.Library.getDatabaseMajorVersion   [procedure, returns result]
