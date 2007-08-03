@@ -27,14 +27,29 @@
     <fileset dir=".">
       <include name="*.jar"/>
     </fileset>
-    <fileset dir="${env.M2_REPO}">
-      <include name="**/commons-collections-*.jar"/>
-      <include name="**/log4j-*.jar"/>
-      <include name="**/velocity-*.jar"/>
-    </fileset>
   </path>
 
   <!-- Step 4.
+    Get Velocity and dependencies
+  -->
+  <get
+    src="http://www.ibiblio.org/maven/velocity/jars/velocity-1.5.jar"
+    dest="velocity-1.5.jar"
+    usetimestamp="true" />
+  <get
+    src="http://www.ibiblio.org/maven/log4j/jars/log4j-1.2.9.jar"
+    dest="log4j-1.2.9.jar"
+    usetimestamp="true" />
+  <get
+    src="http://www.ibiblio.org/maven/commons-collections/jars/commons-collections-3.2.jar"
+    dest="commons-collections-3.2.jar"
+    usetimestamp="true" />
+  <get
+    src="http://www.ibiblio.org/maven/commons-lang/jars/commons-lang-2.3.jar"
+    dest="commons-lang-2.3.jar"
+    usetimestamp="true" />
+        
+  <!-- Step 5.
        Define an ant task that uses the <schemacrawler-velocity> macro
   -->
   <target name="velocity">

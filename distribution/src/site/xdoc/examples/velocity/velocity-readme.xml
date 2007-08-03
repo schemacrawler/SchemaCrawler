@@ -25,15 +25,6 @@
               <span class="code">schemacrawler.config.properties</span> file into the
               <span class="code">velocity</span> example directory.
           </li>
-          <li>
-            Download
-            <a href="http://velocity.apache.org/">
-              Velocity,
-            </a>
-              and copy all of the jar files required by Velocity (at least
-              commons collections and log4j) into the
-              <span class="code">velocity</span> example directory.
-          </li>
           <li>Start the database server by running StartDatabaseServer script from the
             distribution directory.</li>
           <li>
