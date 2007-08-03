@@ -166,8 +166,9 @@ final class DatabaseInfoRetriever
       while (results.next())
       {
         final String typeName = results.getString("TYPE_NAME");
-        LOGGER.log(Level.FINEST, "Retrieving data type: " + typeName);
         final int type = results.getInt("DATA_TYPE");
+        LOGGER.log(Level.FINEST, "Retrieving data type: " + typeName
+                                 + ", with type id: " + type);
         final long precision = results.getLong("PRECISION");
         final String literalPrefix = results.getString("LITERAL_PREFIX");
         final String literalSuffix = results.getString("LITERAL_SUFFIX");
