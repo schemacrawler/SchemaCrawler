@@ -1,48 +1,66 @@
 <?xml version="1.0"?>
-<project name="Graphing" default="graphing">
+<project
+  name="Graphing"
+  default="graphing"
+  xmlns:ivy="antlib:fr.jayasoft.ivy.ant">
 
-  <description>Graphing - Integration of SchemaCrawler with JUNG. </description>
-  <property environment="env"/>
+  <description>Graphing - Integration of SchemaCrawler with JUNG.</description>
+  <property environment="env" />
 
   <!-- Step 1.
-       Define the ant tasks (macros) that come with SchemaCrawler
+    Define the ant tasks (macros) that come with SchemaCrawler
   -->
   <typedef
     resource="schemacrawler-integrations-antlib.xml"
-    classpath="../../schemacrawler-5.1.jar"/>
+    classpath="../../schemacrawler-5.1.jar" />
 
   <!-- Step 2.
-       Define the classpath to the database driver
+    Define the classpath to the database driver
   -->
   <path id="db-driver-classpath">
     <fileset dir="../..">
-      <include name="*.jar"/>
+      <include name="*.jar" />
     </fileset>
   </path>
 
   <!-- Step 3.
-       Define the classpath to JUNG
+    Define the classpath to JUNG
   -->
   <path id="graphing-classpath">
     <fileset dir=".">
-      <include name="*.jar"/>
-    </fileset>
-    <fileset dir="${env.M2_REPO}">
-      <include name="**/commons-collections-*.jar"/>
-      <include name="**/jung-*.jar"/>
-      <include name="**/colt-*.jar"/>
+      <include name="*.jar" />
     </fileset>
   </path>
 
   <!-- Step 4.
-       Define an ant task that uses the <schemacrawler-graphing> macro
+    Get JUNG and dependencies
+  -->
+  <get
+    src="http://www.ibiblio.org/maven/jung/jars/jung-1.7.6.jar"
+    dest="jung-1.7.6.jar"
+    usetimestamp="true" />
+  <get
+    src="http://www.ibiblio.org/maven/colt/jars/colt-1.2.0.jar"
+    dest="colt-1.2.0.jar"
+    usetimestamp="true" />
+  <get
+    src="http://www.ibiblio.org/maven/commons-collections/jars/commons-collections-3.2.jar"
+    dest="commons-collections-3.2.jar"
+    usetimestamp="true" />
+
+  <!-- Step 4.
+    Define an ant task that uses the <schemacrawler-graphing> macro
   -->
   <target name="graphing">
 
-    <property name="graph-size" value="800x600"/>
-    <property name="outputfile" value="schema-graph.jpg"/>
+    <property
+      name="graph-size"
+      value="800x600" />
+    <property
+      name="outputfile"
+      value="schema-graph.jpg" />
 
-    <delete file="${outputfile}"/>
+    <delete file="${outputfile}" />
 
     <schemacrawler-graphing
       datasource="hsqldb"
@@ -50,9 +68,9 @@
       graphing-classpath="graphing-classpath"
       command="verbose_schema"
       graph-size="${graph-size}"
-      outputfile="${outputfile}"/>
+      outputfile="${outputfile}" />
 
-    <echo message="Graph is in ${outputfile}"/>
+    <echo message="Graph is in ${outputfile}" />
 
   </target>
 

@@ -19,10 +19,6 @@
           <li> Copy the
             <span class="code">schemacrawler.config.properties</span> file into the
             <span class="code">graphing</span> example directory. </li>
-          <li> Download
-            <a href="http://jung.sourceforge.net/"> JUNG </a> , and copy all of the jar
-            files required by JUNG (at least commons collections and colt) into the
-            <span class="code">graphing</span> example directory. </li>
           <li>Start the database server by running StartDatabaseServer script from the
             distribution directory.</li>
           <li> Start a command shell in the
