@@ -11,7 +11,12 @@
       <action
         dev="Sualeh Fatehi"
         type="add">
-        Executable for SchemaCrawler for Microsoft SQL Server.
+        Simlpified examples.
+      </action>      
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Executable for SchemaCrawler for Microsoft SQL Server and MySQL.
       </action>
       <action
         dev="Sualeh Fatehi"
