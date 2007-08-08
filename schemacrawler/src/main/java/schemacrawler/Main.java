@@ -22,6 +22,7 @@ package schemacrawler;
 
 
 import schemacrawler.main.SchemaCrawlerMain;
+import schemacrawler.tools.ToolsExecutor;
 import sf.util.CommandLineUtility;
 
 /**
@@ -45,7 +46,7 @@ public final class Main
     CommandLineUtility.checkForHelp(args, "/schemacrawler-readme.txt");
     CommandLineUtility.setLogLevel(args);
 
-    SchemaCrawlerMain.schemacrawler(args);
+    SchemaCrawlerMain.schemacrawler(args, new ToolsExecutor());
   }
 
   private Main()
