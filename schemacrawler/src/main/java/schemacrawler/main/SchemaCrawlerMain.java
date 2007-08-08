@@ -45,20 +45,6 @@ public final class SchemaCrawlerMain
     .getName());
 
   /**
-   * Executes with the command line, and the standard tools executor.
-   * 
-   * @param args
-   *        Command line arguments
-   * @throws Exception
-   *         On an exception
-   */
-  public static void schemacrawler(final String[] args)
-    throws Exception
-  {
-    schemacrawler(args, new ToolsExecutor());
-  }
-
-  /**
    * Executes with the command line, and a given executor. The executor
    * allows for the command line to be parsed independently of the
    * execution. The execution can integrate with other software, such as
@@ -77,7 +63,7 @@ public final class SchemaCrawlerMain
     final Config config = ConfigParser.parseCommandLine(args);
     final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
       .createPropertiesDriverDataSourceParser(args, config);
-    schemacrawler(args, executor, dataSourceParser);
+    schemacrawler(args, config, executor, dataSourceParser);
   }
 
   /**
@@ -88,6 +74,8 @@ public final class SchemaCrawlerMain
    * 
    * @param args
    *        Command line arguments
+   * @param config
+   *        Configuration
    * @param executor
    *        Executor
    * @param dataSourceParser
@@ -96,12 +84,12 @@ public final class SchemaCrawlerMain
    *         On an exception
    */
   public static void schemacrawler(final String[] args,
+                                   Config config,
                                    final Executor executor,
                                    final DatabaseConnector dataSourceParser)
     throws Exception
   {
 
-    final Config config = ConfigParser.parseCommandLine(args);
     final Options[] optionCommands = OptionsParser.parseCommandLine(args,
                                                                     config);
     if (optionCommands.length > 0)

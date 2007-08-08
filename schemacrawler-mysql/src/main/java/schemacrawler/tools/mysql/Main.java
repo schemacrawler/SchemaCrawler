@@ -53,6 +53,7 @@ public final class Main
       final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
         .createBundledDriverDataSourceParser(args, driverConfiguration);
       SchemaCrawlerMain.schemacrawler(args,
+                                      driverConfiguration,
                                       new ToolsExecutor(),
                                       dataSourceParser);
     }
