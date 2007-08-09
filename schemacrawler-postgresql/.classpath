@@ -3,10 +3,6 @@
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry excluding="**/*.java" kind="src" path="src/main/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="var" path="M2_REPO/hsqldb/hsqldb/1.8.0.7/hsqldb-1.8.0.7.jar"/>
-	<classpathentry kind="var" path="M2_REPO/junit/junit/4.3.1/junit-4.3.1.jar" sourcepath="M2_REPO/junit/junit/4.3.1/junit-4.3.1-sources.jar"/>
-	<classpathentry exported="true" kind="var" path="M2_REPO/postgresql/postgresql/8.2-504.jdbc3/postgresql-8.2-504.jdbc3.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/SchemaCrawler - Database Connector"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/SchemaCrawler - Main"/>
+	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
