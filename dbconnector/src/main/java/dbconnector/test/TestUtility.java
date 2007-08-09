@@ -54,9 +54,9 @@ public class TestUtility
     extends Writer
   {
 
-    private NullWriter()
+    NullWriter()
     {
-      // Prevent external instantiation
+      super();
     }
 
     /**
@@ -66,7 +66,7 @@ public class TestUtility
     public void close()
       throws IOException
     {
-      // No-op
+      throw new UnsupportedOperationException();
     }
 
     /**
@@ -83,7 +83,10 @@ public class TestUtility
      * {@inheritDoc}
      */
     @Override
-    public void write(final char cbuf[], final int off, final int len)
+    public void write(@SuppressWarnings("unused")
+    final char cbuf[], @SuppressWarnings("unused")
+    final int off, @SuppressWarnings("unused")
+    final int len)
       throws IOException
     {
       // No-op
@@ -93,7 +96,8 @@ public class TestUtility
      * {@inheritDoc}
      */
     @Override
-    public void write(final int c)
+    public void write(@SuppressWarnings("unused")
+    final int c)
       throws IOException
     {
       // No-op
@@ -103,7 +107,10 @@ public class TestUtility
      * {@inheritDoc}
      */
     @Override
-    public void write(final String str, final int off, final int len)
+    public void write(@SuppressWarnings("unused")
+    final String str, @SuppressWarnings("unused")
+    final int off, @SuppressWarnings("unused")
+    final int len)
       throws IOException
     {
       // No-op

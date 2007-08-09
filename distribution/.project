@@ -3,6 +3,15 @@
 	<name>SchemaCrawler - Distribution</name>
 	<comment>SchemaCrawler is a command-line tool to output your database schema and data in a readable form. The output is designed to be diff-ed with previous versions of your database schema. SchemaCrawler is also an API that improves on the standard JDBC metadata.</comment>
 	<projects>
+		<project>SchemaCrawler - Database Connector</project>
+		<project>SchemaCrawler - Differencer</project>
+		<project>SchemaCrawler for Microsoft SQL Server</project>
+		<project>SchemaCrawler for MySQL</project>
+		<project>SchemaCrawler for PostgreSQL</project>
+		<project>SchemaCrawler - Integrations</project>
+		<project>SchemaCrawler - Main</project>
+		<project>SchemaCrawler - Maven Plugin</project>
+		<project>SchemaCrawler - Test</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
