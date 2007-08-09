@@ -161,7 +161,7 @@ public final class ColumnsGrep
     final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(new Config(),
                                                                       new OutputOptions("text",
                                                                                         null),
-                                                                      SchemaTextDetailType.basic_schema);
+                                                                      SchemaTextDetailType.verbose_schema);
 
     final CrawlHandler formatter = new SchemaTextFormatter(schemaTextOptions,
                                                            columnInclusionRule,
