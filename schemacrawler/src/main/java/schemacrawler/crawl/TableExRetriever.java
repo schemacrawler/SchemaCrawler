@@ -99,7 +99,25 @@ final class TableExRetriever
     final Connection connection = getRetrieverConnection().getMetaData()
       .getConnection();
     Statement statement = connection.createStatement();
-    ResultSet results = statement.executeQuery(tableConstraintsInformationSql);
+    ResultSet results = null;
+    try
+    {
+      results = statement.executeQuery(tableConstraintsInformationSql);
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING,
+                 "Could not retrieve check constraint information",
+                 e);
+      return;
+    }
+    finally
+    {
+      if (results != null)
+      {
+        results.close();
+      }
+    }
 
     try
     {
@@ -276,7 +294,23 @@ final class TableExRetriever
     final Connection connection = getRetrieverConnection().getMetaData()
       .getConnection();
     final Statement statement = connection.createStatement();
-    final ResultSet results = statement.executeQuery(triggerInformationSql);
+    ResultSet results = null;
+    try
+    {
+      results = statement.executeQuery(triggerInformationSql);
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not retrieve trigger information", e);
+      return;
+    }
+    finally
+    {
+      if (results != null)
+      {
+        results.close();
+      }
+    }
     try
     {
       while (results.next())
@@ -357,7 +391,23 @@ final class TableExRetriever
     final Connection connection = getRetrieverConnection().getMetaData()
       .getConnection();
     final Statement statement = connection.createStatement();
-    final ResultSet results = statement.executeQuery(viewInformationSql);
+    ResultSet results = null;
+    try
+    {
+      results = statement.executeQuery(viewInformationSql);
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not retrieve view information", e);
+      return;
+    }
+    finally
+    {
+      if (results != null)
+      {
+        results.close();
+      }
+    }
     try
     {
       while (results.next())

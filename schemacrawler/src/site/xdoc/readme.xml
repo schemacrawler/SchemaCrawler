@@ -16,18 +16,17 @@
         <p>
           The first thing to try after downloading the SchemaCrawler
           distribution is the examples. Several examples on how to use
-          SchemaCrawler on the command line, as an ant task or Maven
-          plugin, as an API, as well as how to use the Velocity
-          (templating) and JUNG (graphing) integrations are provided in
-          the
+          SchemaCrawler on the command line, as an ant task or Maven plugin, as
+          an API, as well as how to use the Velocity (templating) and JUNG
+          (graphing) integrations are provided in the
           <code>_distrib/examples</code>
           directory.
         </p>
       </subsection>
       <subsection name="How-tos">
         <p>
-          Once you start getting comfortable with SchemaCrawler, and
-          need to know more about how to do things, read the
+          Once you start getting comfortable with SchemaCrawler, and need to
+          know more about how to do things, read the
           <a href="how-to.html">how-tos</a>
           section.
         </p>
@@ -37,8 +36,7 @@
         <ul>
           <li>
             <a href="http://www.devx.com/Java/Article/32443">
-              Java API Makes Database Metadata as Easily Accessible as
-              POJOs
+              Java API Makes Database Metadata as Easily Accessible as POJOs
             </a>
             for an introduction to the SchemaCrawler API.
           </li>
@@ -49,70 +47,28 @@
           </li>
         </ul>
       </subsection>
-      <subsection name="JDBC Drivers">
-        <p>
-          Here are some links to JDBC drivers for commonly used database
-          systems:
-        </p>
-        <table>
-          <tr>
-            <td>Microsoft SQL Server</td>
-            <td>
-              <a href="http://sourceforge.net/projects/jtds/">
-                <span>jTDS driver</span>
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>MySQL</td>
-            <td>
-              <a href="http://sourceforge.net/projects/mmmysql/">
-                <span>MM.MySQL driver</span>
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>CSV Files</td>
-            <td>
-              <a href="http://csvjdbc.sourceforge.net/">
-                <span>CsvJdbc driver</span>
-              </a>
-            </td>
-          </tr>
-          <tr>
-            <td>Oracle</td>
-            <td>
-              <a
-                href="http://www.oracle.com/technology/software/tech/java/sqlj_jdbc/index.html">
-                <span>Oracle driver</span>
-              </a>
-            </td>
-          </tr>
-        </table>
-      </subsection>
     </section>
     <section name="Building From the Source Code">
       <subsection name="ant Build">
         <p>
-          The ant build is a quick build that builds the SchemaCrawler
-          jar without running unit tests. Download
+          The ant build is a quick build that builds the SchemaCrawler jar
+          without running unit tests. Download
           <a href="http://ant.apache.org/">ant</a>
-          , and run it from the SchemaCrawler directory. The
-          SchemaCrawler jar file will be created in the
+          and run it from the SchemaCrawler directory. The SchemaCrawler jar
+          file will be created in the
           <code>_distrib</code>
           directory. The main targets are
           <code>all.build</code>
           and
-          <code>all.clean</code>
-          .
+          <code>all.clean.</code>
         </p>
       </subsection>
       <subsection name="Maven Build">
         <p>
-          The Maven build is a more comprehensive build that runs unit
-          tests, and can also create the project web-site. Download
-          <a href="http://maven.apache.org/">Maven 2.0</a>
-          . Start the hsqldb server by running
+          The Maven build is a more comprehensive build that runs unit tests,
+          and can also create the project web-site. Download
+          <a href="http://maven.apache.org/">Maven 2.0.</a>
+          Start the hsqldb server by running
           <code>runServer.cmd</code>
           (
           <code>runServer.sh</code>
@@ -120,8 +76,8 @@
           <code>package</code>
           goal (
           <code>mvn site</code>
-          ) from the SchemaCrawler directory. The SchemaCrawler jar file
-          will be created in the
+          ) from the SchemaCrawler directory. The SchemaCrawler jar file will be
+          created in the
           <code>_distrib</code>
           directory.
         </p>
@@ -136,12 +92,15 @@
           <li>SchemaCrawler - Distribution</li>
         </ul>
         <p>
-          Before importing these projects into Eclipse, make sure that
-          you have a successful Maven build. Maven will download all the
-          dependencies needed to build SchemaCrawler. Since each Eclipse
-          project depends on the other before it, you will need to
-          import all the projects into Eclipse. You will need to define
-          one Eclipse Java Classpath Variables,
+          Before importing these projects into Eclipse, make sure that you have
+          a successful Maven build. Maven will download all the dependencies
+          needed to build SchemaCrawler. Also, install the
+          <a href="http://m2eclipse.codehaus.org/">
+            Maven Integration for Eclipse
+          </a>
+          plugin. Since each Eclipse project depends on the other before it, you
+          will need to import all the projects into Eclipse. You may need to
+          define one Eclipse Java Classpath Variables,
           <code>MAVEN_REPO</code>
           to point to the Maven 2.0 repository.
         </p>

@@ -7,17 +7,13 @@
     <title>Include and Exclude Stuff from the Output</title>
     <faq id="excluded-tables">
       <question>
-        <span>
-          How to see why certain tables or columns for excluded
-        </span>
+        <span>How to see why certain tables or columns for excluded</span>
       </question>
       <answer>
         <p>
-          Change the configuration for the SchemaCrawler log level to
-          <code>schemacrawler.log_level=ALL</code>
-          in the
-          <code>schemacrawler.config.properties</code>
-          file.
+          Re-run SchemaCrawler with
+          <code>-log-level=ALL</code>
+          on the command-line.
         </p>
       </answer>
     </faq>
@@ -27,16 +23,16 @@
       </question>
       <answer>
         <p>
-          Change the configuration for the SchemaCrawler the table or
-          column include and exclude patterns in the
+          Change the configuration for the SchemaCrawler the table or column
+          include and exclude patterns in the
           <code>schemacrawler.config.properties</code>
           file. The include or exclude specification is a
           <a
             href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/regex/Pattern.html">
             Java regular expression
           </a>
-          . The include pattern is evaluated first, and the exclusions
-          are made from the included tables or columns list.
+          . The include pattern is evaluated first, and the exclusions are made
+          from the included tables or columns list.
         </p>
       </answer>
     </faq>
@@ -60,8 +56,7 @@
       </question>
       <answer>
         <p>
-          Change the configuration for the SchemaCrawler stored
-          procedures to
+          Change the configuration for the SchemaCrawler stored procedures to
           <code>schemacrawler.show_stored_procedures=false</code>
           in the
           <code>schemacrawler.config.properties</code>
@@ -80,8 +75,8 @@
       </question>
       <answer>
         <p>
-          Change the configuration for the SchemaCrawler "sort
-          alphabetically" properties in the
+          Change the configuration for the SchemaCrawler "sort alphabetically"
+          properties in the
           <code>schemacrawler.config.properties</code>
           file.
         </p>
@@ -94,51 +89,44 @@
       <answer>
         <p>
           Change the configuration for the SchemaCrawler
-          <code>
-            schemacrawler.format.show_standard_column_type_names=true
-          </code>
+          <code>schemacrawler.format.show_standard_column_type_names=true</code>
           in the
           <code>schemacrawler.config.properties</code>
-          file. This setting will show standard data types across
-          different database systems. On the other hand, if you want to
-          see the real database specific data types, change the setting
-          to a value of true.
+          file. This setting will show standard data types across different
+          database systems. On the other hand, if you want to see the real
+          database specific data types, change the setting to a value of true.
         </p>
       </answer>
     </faq>
     <faq id="ordinal-numbers">
       <question>
         <span>
-          How to allow diffs of tables that have columns added in
-          between
+          How to allow diffs of tables that have columns added in between
         </span>
       </question>
       <answer>
         <p>
-          When columns are added into a table, they can change the
-          column ordinal number. This can mess up the diffs. Change the
-          configuration for the SchemaCrawler
+          When columns are added into a table, they can change the column
+          ordinal number. This can mess up the diffs. Change the configuration
+          for the SchemaCrawler
           <code>schemacrawler.format.show_ordinal_numbers=false</code>
           in the
           <code>schemacrawler.config.properties</code>
-          file. You can combine this setting with the setting to sort
-          columns alphabetically to produce diff friendly output.
+          file. You can combine this setting with the setting to sort columns
+          alphabetically to produce diff friendly output.
         </p>
       </answer>
     </faq>
     <faq id="index-names">
       <question>
-        <span>
-          How to hide primary key, foreign key and index names
-        </span>
+        <span>How to hide primary key, foreign key and index names</span>
       </question>
       <answer>
         <p>
           If primary key, foreign key and index names are not explicitly
-          provided while creating a schema, most database system assign
-          default names. These names can show up as spurious diffs in
-          SchemaCrawler output. Change the configuration for the
-          following properties in your
+          provided while creating a schema, most database system assign default
+          names. These names can show up as spurious diffs in SchemaCrawler
+          output. Change the configuration for the following properties in your
           <code>schemacrawler.config.properties</code>
           file.
         </p>
@@ -165,8 +153,8 @@ schemacrawler.format.hide_constraint_names=false
           <a href="http://jakarta.apache.org/velocity/">
             Apache Jakarta Velocity
           </a>
-          to allow for templated ouput. Put Velocity on your classpath,
-          and create your template, and run
+          to allow for templated ouput. Put Velocity on your classpath, and
+          create your template, and run
           <code>schemacrawler.tools.integration.velocity.Main</code>
           , with the correct options. See the Velocity example in the
           <code>_distrib\velocity</code>
@@ -203,11 +191,9 @@ schemacrawler.format.hide_constraint_names=false
         <p>
           Read
           <a href="http://www.devx.com/Java/Article/32443">
-            Java API Makes Database Metadata as Easily Accessible as
-            POJOs
+            Java API Makes Database Metadata as Easily Accessible as POJOs
           </a>
-          for an introduction to the SchemaCrawler API. You can also
-          browse the
+          for an introduction to the SchemaCrawler API. You can also browse the
           <a href="apidocs/index.html">javadocs</a>
           .
         </p>
@@ -234,8 +220,8 @@ schemacrawler.format.hide_constraint_names=false
           </i>
         </p>
         <p>
-          In addition to the ant task parameters mentioned in the
-          example, you may find the following parameters useful.
+          In addition to the ant task parameters mentioned in the example, you
+          may find the following parameters useful.
         </p>
         <ul>
           <li>
@@ -250,14 +236,14 @@ schemacrawler.format.hide_constraint_names=false
           </li>
           <li>
             <b>db-driver-classpath</b>
-            Database driver classpath (default value - value of the ant
-            property value ${db-driver-classpath})
+            Database driver classpath (default value - value of the ant property
+            value ${db-driver-classpath})
           </li>
           <li>
             <b>datasource</b>
-            Datasource defined in the configuration (either the
-            datasource, or the connection properties should be provided
-            - f both sets are provided, the datasource is ignored)
+            Datasource defined in the configuration (either the datasource, or
+            the connection properties should be provided - f both sets are
+            provided, the datasource is ignored)
           </li>
           <li>
             <b>driver</b>
@@ -273,8 +259,7 @@ schemacrawler.format.hide_constraint_names=false
           </li>
           <li>
             <b>password</b>
-            Database connection password (default value is an empty
-            string)
+            Database connection password (default value is an empty string)
           </li>
           <li>
             <b>command</b>
@@ -282,18 +267,15 @@ schemacrawler.format.hide_constraint_names=false
           </li>
           <li>
             <b>no-header</b>
-            Whether to print the header - true or false (default value -
-            false)
+            Whether to print the header - true or false (default value - false)
           </li>
           <li>
             <b>no-footer</b>
-            Whether to print the footer - true or false (default value -
-            false)
+            Whether to print the footer - true or false (default value - false)
           </li>
           <li>
             <b>no-info</b>
-            Whether to print information - true or false (default value
-            - false)
+            Whether to print information - true or false (default value - false)
           </li>
           <li>
             <b>outputformat</b>
@@ -305,8 +287,8 @@ schemacrawler.format.hide_constraint_names=false
           </li>
           <li>
             <b>append</b>
-            Whether to append to the output - true or false (default
-            value - false)
+            Whether to append to the output - true or false (default value -
+            false)
           </li>
         </ul>
       </answer>
@@ -317,9 +299,9 @@ schemacrawler.format.hide_constraint_names=false
       </question>
       <answer>
         <p>
-          SchemaCrawler comes with a Maven reports plug-in. You can
-          generate a SchemaCrawler report along with other reports for
-          your Maven generated site.
+          SchemaCrawler comes with a Maven reports plug-in. You can generate a
+          SchemaCrawler report along with other reports for your Maven generated
+          site.
         </p>
         <p>
           <i>
@@ -329,16 +311,15 @@ schemacrawler.format.hide_constraint_names=false
           </i>
         </p>
         <p>
-          Install the SchemaCrawler Maven plug-in by running the
-          following command, and following the instructions that are
-          printed out.
+          Install the SchemaCrawler Maven plug-in by running the following
+          command, and following the instructions that are printed out.
           <pre>
             <![CDATA[java -cp schemacrawler-4.0.jar schemacrawler.tools.integration.maven.Main]]>
           </pre>
         </p>
         <p>
-          Next, add a section to your Maven 2.0 project's pom.xml file,
-          similar to that below, changing what needs to be changed:
+          Next, add a section to your Maven 2.0 project's pom.xml file, similar
+          to that below, changing what needs to be changed:
         </p>
         <source>
           <![CDATA[
@@ -380,9 +361,7 @@ schemacrawler.format.hide_constraint_names=false
         <p>
           <i>
             See the documentation in
-            <a href="INFORMATION_SCHEMA.html">
-              INFORMATION_SCHEMA Views
-            </a>
+            <a href="INFORMATION_SCHEMA.html">INFORMATION_SCHEMA Views</a>
             .
           </i>
         </p>
@@ -396,9 +375,7 @@ schemacrawler.format.hide_constraint_names=false
         <p>
           <i>
             See the documentation in
-            <a href="INFORMATION_SCHEMA.html">
-              INFORMATION_SCHEMA Views
-            </a>
+            <a href="INFORMATION_SCHEMA.html">INFORMATION_SCHEMA Views</a>
             .
           </i>
         </p>
