@@ -87,7 +87,23 @@ final class ProcedureExRetriever
     final Connection connection = getRetrieverConnection().getMetaData()
       .getConnection();
     final Statement statement = connection.createStatement();
-    final ResultSet results = statement.executeQuery(procedureDefinitionsSql);
+    ResultSet results = null;
+    try
+    {
+      results = statement.executeQuery(procedureDefinitionsSql);
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not retrieve procedure information", e);
+      return;
+    }
+    finally
+    {
+      if (results != null)
+      {
+        results.close();
+      }
+    }
 
     try
     {
