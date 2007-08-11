@@ -48,8 +48,14 @@ public final class CrawlerUtililties
     final Properties tableProperties = new Properties();
     if (table != null)
     {
-      tableProperties.setProperty("catalog", table.getCatalogName());
-      tableProperties.setProperty("schema", table.getSchemaName());
+      if (table.getCatalogName() != null)
+      {
+        tableProperties.setProperty("catalog", table.getCatalogName());
+      }
+      if (table.getSchemaName() != null)
+      {
+        tableProperties.setProperty("schema", table.getSchemaName());
+      }
       tableProperties.setProperty("table", table.getFullName());
       tableProperties.setProperty("columns", table.getColumnsListAsString());
       tableProperties.setProperty("tabletype", table.getType().toString());
