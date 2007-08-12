@@ -111,13 +111,6 @@ final class TableExRetriever
                  e);
       return;
     }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
-      }
-    }
 
     try
     {
@@ -304,13 +297,7 @@ final class TableExRetriever
       LOGGER.log(Level.WARNING, "Could not retrieve trigger information", e);
       return;
     }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
-      }
-    }
+
     try
     {
       while (results.next())
@@ -401,13 +388,7 @@ final class TableExRetriever
       LOGGER.log(Level.WARNING, "Could not retrieve view information", e);
       return;
     }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
-      }
-    }
+
     try
     {
       while (results.next())

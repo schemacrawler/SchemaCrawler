@@ -97,13 +97,6 @@ final class ProcedureExRetriever
       LOGGER.log(Level.WARNING, "Could not retrieve procedure information", e);
       return;
     }
-    finally
-    {
-      if (results != null)
-      {
-        results.close();
-      }
-    }
 
     try
     {
