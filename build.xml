@@ -4,7 +4,7 @@
   <property environment="env"/>
   <property name="SchemaCrawlerHome" location="." />
 
-  <property name="pom.version" value="5.1" />
+  <property name="pom.version" value="5.2" />
 
 	<property name="dbconnector.source"
     location="${SchemaCrawlerHome}/dbconnector/src/main"/>
