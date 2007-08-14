@@ -6,13 +6,27 @@
   </properties>
   <body>
     <release
+      version="5.2"
+      date="2007-08-14">
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        Pre-packaged releases do not load config file, even if available.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        Fixed Unix shell script for PostgreSQL.
+      </action>
+    </release>
+    <release
       version="5.1"
       date="2007-08-05">
       <action
         dev="Sualeh Fatehi"
         type="add">
         Simplified examples.
-      </action>      
+      </action>
       <action
         dev="Sualeh Fatehi"
         type="add">
@@ -21,7 +35,8 @@
       <action
         dev="Sualeh Fatehi"
         type="add">
-        Commonly available SchemaCrawler command line argument for setting the log level.
+        Commonly available SchemaCrawler command line argument for setting the
+        log level.
       </action>
     </release>
     <release
@@ -30,7 +45,8 @@
       <action
         dev="Sualeh Fatehi"
         type="fix">
-        API changed to use Java 5 constructs. Tested with Java 6. API is no longer Java 1.4 compatible.
+        API changed to use Java 5 constructs. Tested with Java 6. API is no
+        longer Java 1.4 compatible.
       </action>
       <action
         dev="Sualeh Fatehi"
@@ -54,14 +70,13 @@
       <action
         dev="Sualeh Fatehi"
         type="fix">
-        Fixed error message on a bad command line. Added a general -help
-        option.
+        Fixed error message on a bad command line. Added a general -help option.
       </action>
       <action
         dev="Sualeh Fatehi"
         type="add">
-        Added new schema grep functionality, that can search for tables
-        and columns usng regular expressions.
+        Added new schema grep functionality, that can search for tables and
+        columns usng regular expressions.
       </action>
       <action
         dev="Sualeh Fatehi"
@@ -71,13 +86,14 @@
       <action
         dev="Sualeh Fatehi"
         type="add">
-        Added documentation for provding database connection options directly on the command line.
+        Added documentation for provding database connection options directly on
+        the command line.
       </action>
       <action
         dev="Sualeh Fatehi"
         type="update">
-        Updated ant task to optionally take database connection options as arguments, instead of
-        from the configuration file.
+        Updated ant task to optionally take database connection options as
+        arguments, instead of from the configuration file.
       </action>
     </release>
     <release
@@ -91,15 +107,14 @@
       <action
         dev="Sualeh Fatehi"
         type="fix">
-        Fixed output of standard data types. Also changed the
-        configuration option name.
+        Fixed output of standard data types. Also changed the configuration
+        option name.
       </action>
       <action
         dev="Sualeh Fatehi"
         type="fix">
-        Fixed column output for tables and procedures that contain an
-        underscore in their name. JDBC matches the underscore to a
-        wildcard character.
+        Fixed column output for tables and procedures that contain an underscore
+        in their name. JDBC matches the underscore to a wildcard character.
       </action>
     </release>
     <release
@@ -108,19 +123,17 @@
       <action
         dev="Sualeh Fatehi"
         type="add">
-        Added support for SQL standard INFORMATION_SCHEMA views. If
-        equivalent SQL for the standard INFORMATION_SCHEMA view is
-        specified, it is used to provide additional schema information
-        such as check constraints, triggers, and view and procedure
-        definitions.
+        Added support for SQL standard INFORMATION_SCHEMA views. If equivalent
+        SQL for the standard INFORMATION_SCHEMA view is specified, it is used to
+        provide additional schema information such as check constraints,
+        triggers, and view and procedure definitions.
       </action>
       <action
         dev="Sualeh Fatehi"
         type="add">
-        Added support for get index information views. This SQL will be
-        used in preference to the getIndexInfo JDBC method to allow for
-        databases and drivers that do not support getIndexInfo due to
-        permissioning issues.
+        Added support for get index information views. This SQL will be used in
+        preference to the getIndexInfo JDBC method to allow for databases and
+        drivers that do not support getIndexInfo due to permissioning issues.
       </action>
       <action
         dev="Sualeh Fatehi"
@@ -154,8 +167,7 @@
       <action
         dev="Sualeh Fatehi"
         type="add">
-        Added command line option to provide database connection
-        information
+        Added command line option to provide database connection information
       </action>
       <action
         dev="Sualeh Fatehi"
@@ -175,8 +187,7 @@
       <action
         dev="Sualeh Fatehi"
         type="add">
-        Added retrieval of column data types, both system datatypes and
-        UDTs
+        Added retrieval of column data types, both system datatypes and UDTs
       </action>
       <action
         dev="Sualeh Fatehi"
@@ -191,32 +202,31 @@
       <action
         dev="Sualeh Fatehi"
         type="fix">
-        Fixed bug with appending output when multiple runs of
-        SchemaCrawler append to the same output file
+        Fixed bug with appending output when multiple runs of SchemaCrawler
+        append to the same output file
       </action>
       <action
         dev="Sualeh Fatehi"
         type="fix">
-        Fixed SQLException with Oracle Database 10g Express Edition
-        driver on outputting views
+        Fixed SQLException with Oracle Database 10g Express Edition driver on
+        outputting views
       </action>
       <action
         dev="Sualeh Fatehi"
         type="add">
-        Added XStream integration for XML serialization and
-        deserialization
+        Added XStream integration for XML serialization and deserialization
       </action>
       <action
         dev="Sualeh Fatehi"
         type="add">
-        Added new command, maximum_schema, that can give all possible
-        details of the schema
+        Added new command, maximum_schema, that can give all possible details of
+        the schema
       </action>
       <action
         dev="Sualeh Fatehi"
         type="add">
-        Obtain database system properties when the maximum schema
-        command is used
+        Obtain database system properties when the maximum schema command is
+        used
       </action>
       <action
         dev="Sualeh Fatehi"
@@ -236,14 +246,13 @@
       <action
         dev="Sualeh Fatehi"
         type="add">
-        Added integrations with Velocity for templated output, and with
-        JUNG for JPEG graph generation
+        Added integrations with Velocity for templated output, and with JUNG for
+        JPEG graph generation
       </action>
       <action
         dev="Sualeh Fatehi"
         type="add">
-        Added new examples to demonstrate Velocity templating, and JUNG
-        graphs
+        Added new examples to demonstrate Velocity templating, and JUNG graphs
       </action>
       <action
         dev="Sualeh Fatehi"
@@ -262,8 +271,7 @@
       <action
         dev="Sualeh Fatehi"
         type="add">
-        Added Betwixt mappings for XML serialization and
-        de-serialization
+        Added Betwixt mappings for XML serialization and de-serialization
       </action>
       <action
         dev="Sualeh Fatehi"
@@ -297,9 +305,8 @@
       <action
         dev="Sualeh Fatehi"
         type="update">
-        Refactoring of inhertance hierarchy of database objects,
-        resulting in fewer equals, hashCode and compareTo
-        implementations
+        Refactoring of inhertance hierarchy of database objects, resulting in
+        fewer equals, hashCode and compareTo implementations
       </action>
       <action
         dev="Sualeh Fatehi"
@@ -345,20 +352,19 @@
       <action
         dev="Sualeh Fatehi"
         type="add">
-        A new substitution variable, ${columns}, for use in database
-        queries that iterate over tables.
+        A new substitution variable, ${columns}, for use in database queries
+        that iterate over tables.
       </action>
       <action
         dev="Sualeh Fatehi"
         type="add">
-        New examples for executing database-specific and user-defined
-        queries have been added.
+        New examples for executing database-specific and user-defined queries
+        have been added.
       </action>
       <action
         dev="Sualeh Fatehi"
         type="add">
-        Better output formatting for HTML dumps, and counts in text
-        format.
+        Better output formatting for HTML dumps, and counts in text format.
       </action>
       <action
         dev="Sualeh Fatehi"
@@ -368,14 +374,14 @@
       <action
         dev="Sualeh Fatehi"
         type="fix">
-        Worked around an issue with the Sybase driver, that provides
-        primary keys in a different order than most other drivers.
+        Worked around an issue with the Sybase driver, that provides primary
+        keys in a different order than most other drivers.
       </action>
       <action
         dev="Sualeh Fatehi"
         type="fix">
-        Improved logging, and made the log level in the configuration
-        really work.
+        Improved logging, and made the log level in the configuration really
+        work.
       </action>
     </release>
   </body>

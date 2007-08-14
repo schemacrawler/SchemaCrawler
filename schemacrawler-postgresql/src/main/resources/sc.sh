@@ -1,1 +1,1 @@
-java -classpath lib/dbconnector-5.1.jar:lib/postgresql-8.2-504.jdbc3.jar:lib/schemacrawler-5.1.jar:lib/schemacrawler-postgresql-5.1.jar schemacrawler.tools.postgresql.Main $*
+java -classpath lib/dbconnector-5.2.jar:lib/postgresql-8.2-504.jdbc3.jar:lib/schemacrawler-5.2.jar:lib/schemacrawler-postgresql-5.2.jar schemacrawler.tools.postgresql.Main $*

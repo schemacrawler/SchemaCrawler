@@ -1,1 +1,1 @@
-@java -cp hsqldb.jar;schemacrawler-5.1.jar dbconnector.test.TestUtility
+@java -cp hsqldb.jar;schemacrawler-5.2.jar dbconnector.test.TestUtility
