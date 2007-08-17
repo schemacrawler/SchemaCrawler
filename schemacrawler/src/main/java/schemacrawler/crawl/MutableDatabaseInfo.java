@@ -22,9 +22,9 @@ package schemacrawler.crawl;
 
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedMap;
+import java.util.TreeMap;
 
 import schemacrawler.crawl.NamedObjectList.NamedObjectSort;
 import schemacrawler.schema.ColumnDataType;
@@ -51,7 +51,7 @@ final class MutableDatabaseInfo
   private String connectionUrl;
   private String schemaPattern;
   private String catalog;
-  private SortedMap<String, Object> dbProperties;
+  private final SortedMap<String, Object> dbProperties = new TreeMap<String, Object>();
   private final NamedObjectList<MutableColumnDataType> columnDataTypes = new NamedObjectList<MutableColumnDataType>(NamedObjectSort.alphabetical);
 
   /**
@@ -71,7 +71,8 @@ final class MutableDatabaseInfo
    */
   public ColumnDataType[] getColumnDataTypes()
   {
-    return columnDataTypes.getAll().toArray(new ColumnDataType[0]);
+    return columnDataTypes.getAll().toArray(new ColumnDataType[columnDataTypes
+      .size()]);
   }
 
   /**
@@ -141,14 +142,7 @@ final class MutableDatabaseInfo
    */
   public Map<String, Object> getProperties()
   {
-    if (dbProperties == null)
-    {
-      return Collections.unmodifiableMap(new HashMap<String, Object>());
-    }
-    else
-    {
-      return Collections.unmodifiableSortedMap(dbProperties);
-    }
+    return Collections.unmodifiableSortedMap(dbProperties);
   }
 
   /**
@@ -243,7 +237,7 @@ final class MutableDatabaseInfo
   {
     MutableColumnDataType columnDataType = null;
     final MutableColumnDataType[] allColumnDataTypes = columnDataTypes.getAll()
-      .toArray(new MutableColumnDataType[0]);
+      .toArray(new MutableColumnDataType[columnDataTypes.size()]);
     for (final MutableColumnDataType currentColumnDataType: allColumnDataTypes)
     {
       if (type == currentColumnDataType.getType())
@@ -280,9 +274,9 @@ final class MutableDatabaseInfo
     this.productVersion = productVersion;
   }
 
-  void setProperties(final SortedMap<String, Object> properties)
+  void putProperty(String name, Object value)
   {
-    dbProperties = properties;
+    dbProperties.put(name, value);
   }
 
   void setSchemaPattern(final String schemaPattern)

@@ -124,7 +124,7 @@ class MutableSchema
    */
   public Procedure[] getProcedures()
   {
-    return procedures.getAll().toArray(new Procedure[0]);
+    return procedures.getAll().toArray(new Procedure[procedures.size()]);
   }
 
   /**
@@ -134,7 +134,7 @@ class MutableSchema
    */
   public Table[] getTables()
   {
-    return tables.getAll().toArray(new Table[0]);
+    return tables.getAll().toArray(new Table[tables.size()]);
   }
 
   /**

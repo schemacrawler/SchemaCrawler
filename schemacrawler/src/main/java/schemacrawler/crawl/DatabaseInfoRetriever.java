@@ -32,8 +32,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -82,7 +80,6 @@ final class DatabaseInfoRetriever
     throws SQLException
   {
     final DatabaseMetaData dbMetaData = getRetrieverConnection().getMetaData();
-    final SortedMap<String, Object> dbProperties = new TreeMap<String, Object>();
     final Method[] methods = DatabaseMetaData.class.getMethods();
     for (final Method method: methods)
     {
@@ -99,29 +96,29 @@ final class DatabaseInfoRetriever
               .split(",")));
           }
           // Add to the properties map
-          dbProperties.put(name, value);
+          dbInfo.putProperty(name, value);
         }
         else if (isDatabasePropertiesResultSetMethod(method))
         {
           final String name = derivePropertyName(method);
           final ResultSet results = (ResultSet) method.invoke(dbMetaData,
                                                               new Object[0]);
-          dbProperties.put(name, readResultsVector(results));
+          dbInfo.putProperty(name, readResultsVector(results));
         }
         else if (isDatabasePropertyResultSetType(method))
         {
           retrieveResultSetTypeProperty(dbMetaData,
-                                        dbProperties,
+                                        dbInfo,
                                         method,
                                         ResultSet.TYPE_FORWARD_ONLY,
                                         "TypeForwardOnly");
           retrieveResultSetTypeProperty(dbMetaData,
-                                        dbProperties,
+                                        dbInfo,
                                         method,
                                         ResultSet.TYPE_SCROLL_INSENSITIVE,
                                         "TypeScrollInsensitive");
           retrieveResultSetTypeProperty(dbMetaData,
-                                        dbProperties,
+                                        dbInfo,
                                         method,
                                         ResultSet.TYPE_SCROLL_SENSITIVE,
                                         "TypeScrollSensitive");
@@ -144,8 +141,6 @@ final class DatabaseInfoRetriever
         LOGGER.log(Level.WARNING, e.getMessage(), e);
       }
     }
-
-    dbInfo.setProperties(dbProperties);
   }
 
   /**
@@ -397,7 +392,7 @@ final class DatabaseInfoRetriever
   }
 
   private void retrieveResultSetTypeProperty(final DatabaseMetaData dbMetaData,
-                                             final SortedMap<String, Object> dbProperties,
+                                             final MutableDatabaseInfo dbInfo,
                                              final Method method,
                                              final int resultSetType,
                                              final String resultSetTypeName)
@@ -407,8 +402,8 @@ final class DatabaseInfoRetriever
                         + resultSetTypeName;
     Boolean propertyValue = null;
     propertyValue = (Boolean) method.invoke(dbMetaData, new Object[] {
-      new Integer(resultSetType)
+      Integer.valueOf(resultSetType)
     });
-    dbProperties.put(name, propertyValue);
+    dbInfo.putProperty(name, propertyValue);
   }
 }
