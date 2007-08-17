@@ -139,11 +139,11 @@ public class Prompter
       // test that this is an number
       try
       {
-        answer = new Double(Double.parseDouble(answer.toString()));
+        answer = Double.valueOf(answer.toString());
       }
       catch (final NumberFormatException e)
       {
-        answer = new Double(0);
+        answer = Double.valueOf(0);
       }
     }
 
