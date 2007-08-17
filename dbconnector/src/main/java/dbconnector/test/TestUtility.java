@@ -157,19 +157,21 @@ public class TestUtility
   }
 
   /**
-   * Suts down the database server.
+   * Shuts down the database server.
    */
-  public synchronized void shutdownDatabase()
+  public void shutdownDatabase()
   {
+    Connection connection = null;
+    Statement statement = null;
     try
     {
       if (dataSource != null)
       {
-        final Connection connection = dataSource.getConnection();
+        connection = dataSource.getConnection();
         if (connection != null)
         {
-          final Statement st = connection.createStatement();
-          st.execute("SHUTDOWN");
+          statement = connection.createStatement();
+          statement.execute("SHUTDOWN");
           connection.close();
         }
         dataSource = null;
@@ -178,6 +180,31 @@ public class TestUtility
     catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING, "", e);
+    }
+    finally
+    {
+      if (statement != null)
+      {
+        try
+        {
+          statement.close();
+        }
+        catch (final SQLException e)
+        {
+          LOGGER.log(Level.WARNING, "", e);
+        }
+      }
+      if (connection != null)
+      {
+        try
+        {
+          connection.close();
+        }
+        catch (final SQLException e)
+        {
+          LOGGER.log(Level.WARNING, "", e);
+        }
+      }
     }
   }
 
