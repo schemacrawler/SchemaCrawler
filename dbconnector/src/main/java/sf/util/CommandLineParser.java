@@ -182,7 +182,7 @@ public final class CommandLineParser
 
     private void setLongForm(final String longForm)
     {
-      if (longForm == NO_LONG_FORM)
+      if (longForm.equals(NO_LONG_FORM))
       {
         return;
       }
@@ -469,7 +469,7 @@ public final class CommandLineParser
    * 
    * @return Command line options
    */
-  public Option<?>[] getOptions()
+  public Collection<Option<?>> getOptions()
   {
     final Collection<Option<?>> options = optionsMap.values();
     final Collection<Option<?>> uniqueOptions = new HashSet<Option<?>>();
@@ -481,7 +481,7 @@ public final class CommandLineParser
         uniqueOptions.add(option);
       }
     }
-    return uniqueOptions.toArray(new Option[0]);
+    return uniqueOptions;
   }
 
   /**
@@ -528,7 +528,7 @@ public final class CommandLineParser
   public void parse(final String[] args)
   {
     // Reset all options
-    final Option<?>[] options = getOptions();
+    final Collection<Option<?>> options = getOptions();
     for (final Option<?> element: options)
     {
       ((BaseOption<?>) element).reset();

@@ -21,16 +21,11 @@ package dbconnector.test;
 
 
 import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Writer;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,74 +44,6 @@ import dbconnector.datasource.PropertiesDataSourceException;
  */
 public class TestUtility
 {
-
-  private class NullWriter
-    extends Writer
-  {
-
-    NullWriter()
-    {
-      super();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void close()
-      throws IOException
-    {
-      throw new UnsupportedOperationException();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void flush()
-      throws IOException
-    {
-      // No-op
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void write(@SuppressWarnings("unused")
-    final char cbuf[], @SuppressWarnings("unused")
-    final int off, @SuppressWarnings("unused")
-    final int len)
-      throws IOException
-    {
-      // No-op
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void write(@SuppressWarnings("unused")
-    final int c)
-      throws IOException
-    {
-      // No-op
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void write(@SuppressWarnings("unused")
-    final String str, @SuppressWarnings("unused")
-    final int off, @SuppressWarnings("unused")
-    final int len)
-      throws IOException
-    {
-      // No-op
-    }
-
-  }
 
   private static final Logger LOGGER = Logger.getLogger(TestUtility.class
     .getName());
@@ -224,7 +151,7 @@ public class TestUtility
     else
     {
       CommandLineUtility.setApplicationLogLevel(Level.OFF);
-      out = new PrintWriter(this.new NullWriter(), true);
+      out = new PrintWriter(new NullWriter(), true);
     }
 
   }
@@ -266,18 +193,8 @@ public class TestUtility
   {
     try
     {
-      final File[] files = new File(".").listFiles(new FilenameFilter()
-      {
-        private List<String> serverFiles = Arrays.asList(new String[] {
-            stem + ".lck", stem + ".log", stem + ".properties",
-        });
-
-        public boolean accept(@SuppressWarnings("unused")
-        File dir, String name)
-        {
-          return serverFiles.contains(name);
-        }
-      });
+      final File[] files = new File(".")
+        .listFiles(new HSQLDBServerFilesFilter(stem));
       for (final File file: files)
       {
         if (!file.isDirectory() && !file.isHidden())
@@ -292,7 +209,7 @@ public class TestUtility
     }
   }
 
-  private synchronized void makeDataSource(final String url)
+  private void makeDataSource(final String url)
     throws PropertiesDataSourceException
   {
     final String DATASOURCE_NAME = "schemacrawler";
@@ -309,6 +226,8 @@ public class TestUtility
 
   private synchronized void setupSchema()
   {
+    Connection connection = null;
+    Statement statement = null;
     try
     {
       // Load schema script file
@@ -316,18 +235,40 @@ public class TestUtility
         .getResourceAsStream("/schemacrawler.test.sql")));
       if (dataSource != null)
       {
-        final Connection connection = dataSource.getConnection();
-        if (connection != null)
-        {
-          final Statement st = connection.createStatement();
-          st.execute(script);
-          connection.close();
-        }
+        connection = dataSource.getConnection();
+        statement = connection.createStatement();
+        statement.execute(script);
+        connection.close();
       }
     }
     catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING, "", e);
+    }
+    finally
+    {
+      if (statement != null)
+      {
+        try
+        {
+          statement.close();
+        }
+        catch (final SQLException e)
+        {
+          LOGGER.log(Level.WARNING, "", e);
+        }
+      }
+      if (connection != null)
+      {
+        try
+        {
+          connection.close();
+        }
+        catch (final SQLException e)
+        {
+          LOGGER.log(Level.WARNING, "", e);
+        }
+      }
     }
   }
 
