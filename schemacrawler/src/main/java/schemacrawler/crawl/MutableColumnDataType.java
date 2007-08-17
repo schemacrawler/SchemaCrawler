@@ -213,7 +213,7 @@ final class MutableColumnDataType
    */
   public String getTypeName()
   {
-    String typeName = JAVA_SQL_TYPES.get(new Integer(type));
+    String typeName = JAVA_SQL_TYPES.get(Integer.valueOf(type));
     if (typeName == null)
     {
       typeName = "<UNKNOWN>";

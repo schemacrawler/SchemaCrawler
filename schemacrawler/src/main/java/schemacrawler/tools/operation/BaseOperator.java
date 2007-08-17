@@ -342,11 +342,11 @@ public abstract class BaseOperator
     Number number;
     if (Utilities.isIntegral(aggregate))
     {
-      number = new Integer((int) aggregate);
+      number = Integer.valueOf((int) aggregate);
     }
     else
     {
-      number = new Double(aggregate);
+      number = Double.valueOf(aggregate);
     }
     final String message = MessageFormat.format(operation
       .getCountMessageFormat(), new Object[] {

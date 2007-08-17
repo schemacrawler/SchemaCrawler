@@ -93,7 +93,7 @@ public enum TableType
     {
       tableTypes.add(valueOf(tableTypeString.toLowerCase()));
     }
-    return tableTypes.toArray(new TableType[0]);
+    return tableTypes.toArray(new TableType[tableTypes.size()]);
   }
 
 }

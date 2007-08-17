@@ -104,7 +104,8 @@ class MutableForeignKey
    */
   public ForeignKeyColumnMap[] getColumnPairs()
   {
-    return columnPairs.getAll().toArray(new ForeignKeyColumnMap[0]);
+    return columnPairs.getAll().toArray(new ForeignKeyColumnMap[columnPairs
+      .size()]);
   }
 
   /**
