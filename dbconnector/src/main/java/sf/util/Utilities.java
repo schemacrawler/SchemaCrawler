@@ -417,14 +417,23 @@ public final class Utilities
                                        final String fileContents)
     throws IOException
   {
+    FileWriter writer = null;
+    try
+    {
+      final File pomFile = new File(fileName);
+      writer = new FileWriter(pomFile);
+      writer.write(fileContents);
+      writer.flush();
 
-    final File pomFile = new File(fileName);
-    final FileWriter writer = new FileWriter(pomFile);
-    writer.write(fileContents);
-    writer.flush();
-    writer.close();
-
-    return pomFile;
+      return pomFile;
+    }
+    finally
+    {
+      if (writer != null)
+      {
+        writer.close();
+      }
+    }
   }
 
   /**
