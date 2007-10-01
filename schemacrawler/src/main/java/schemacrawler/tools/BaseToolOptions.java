@@ -32,7 +32,7 @@ public abstract class BaseToolOptions
   extends BaseOptions
 {
 
-  private final OutputOptions outputOptions;
+  private OutputOptions outputOptions;
 
   /**
    * Data text formatting options from properties.
@@ -42,7 +42,14 @@ public abstract class BaseToolOptions
    */
   public BaseToolOptions(final OutputOptions outputOptions)
   {
-    this.outputOptions = outputOptions;
+    if (outputOptions != null)
+    {
+      this.outputOptions = outputOptions;
+    }
+    else
+    {
+      this.outputOptions = new OutputOptions();
+    }
   }
 
   /**
@@ -53,6 +60,11 @@ public abstract class BaseToolOptions
   public OutputOptions getOutputOptions()
   {
     return outputOptions;
+  }
+
+  public void setOutputOptions(OutputOptions outputOptions)
+  {
+    this.outputOptions = outputOptions;
   }
 
 }

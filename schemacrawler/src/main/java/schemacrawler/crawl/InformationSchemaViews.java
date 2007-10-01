@@ -24,10 +24,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import schemacrawler.main.BaseOptions;
-import sf.util.Config;
 import sf.util.Utilities;
 
-final class InformationSchemaViews
+/**
+ * The database specific views to get additional database metadata in a
+ * standard format.
+ * 
+ * @author Sualeh Fatehi
+ */
+public final class InformationSchemaViews
   extends BaseOptions
 {
 
@@ -35,9 +40,16 @@ final class InformationSchemaViews
 
   private final Map<String, String> informationSchemaViewsSql;
 
-  InformationSchemaViews(final Config informationSchemaViewsSql)
+  public InformationSchemaViews(final Map<String, String> informationSchemaViewsSql)
   {
-    this.informationSchemaViewsSql = new HashMap<String, String>(informationSchemaViewsSql);
+    if (informationSchemaViewsSql != null)
+    {
+      this.informationSchemaViewsSql = new HashMap<String, String>(informationSchemaViewsSql);
+    }
+    else
+    {
+      this.informationSchemaViewsSql = new HashMap<String, String>();
+    }
   }
 
   /**
@@ -129,4 +141,9 @@ final class InformationSchemaViews
     return !Utilities.isBlank(getViewsSql());
   }
 
+  @Override
+  public String toString()
+  {
+    return informationSchemaViewsSql.toString();
+  }
 }

@@ -54,6 +54,7 @@ public final class SchemaCrawler
    * @param options
    *        Options
    * @return Schema
+   * @throws SQLException
    */
   public static Schema getSchema(final DataSource dataSource,
                                  final Config additionalConnectionConfiguration,
@@ -61,11 +62,20 @@ public final class SchemaCrawler
                                  final SchemaCrawlerOptions options)
   {
 
-    Connection connection = null;
-    String catalog = null;
+    Connection connection;
     try
     {
       connection = dataSource.getConnection();
+    }
+    catch (SQLException e)
+    {
+      LOGGER.log(Level.WARNING, e.getMessage(), e);
+      return null;
+    }
+
+    String catalog = null;
+    try
+    {
       catalog = connection.getCatalog();
     }
     catch (final SQLException e)
