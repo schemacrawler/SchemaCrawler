@@ -30,6 +30,8 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.sql.DataSource;
+
 import org.hsqldb.Server;
 
 import sf.util.CommandLineUtility;
@@ -86,7 +88,7 @@ public class TestUtility
     return driver;
   }
 
-  protected PropertiesDataSource dataSource;
+  protected DataSource dataSource;
 
   protected PrintWriter out;
 
@@ -133,7 +135,7 @@ public class TestUtility
    * 
    * @return Datasource
    */
-  public PropertiesDataSource getDataSource()
+  public DataSource getDataSource()
   {
     return dataSource;
   }
@@ -212,8 +214,15 @@ public class TestUtility
     throws PropertiesDataSourceException
   {
     makeDataSource(url);
-    dataSource.setLogWriter(out);
-    setupSchema();
+    try
+    {
+      dataSource.setLogWriter(out);
+    }
+    catch (SQLException e)
+    {
+      LOGGER.log(Level.FINE, "Could not set log writer", e);
+    }
+    setupSchema(dataSource);
   }
 
   private void deleteServerFiles(final String stem)
@@ -251,7 +260,7 @@ public class TestUtility
     dataSource = new PropertiesDataSource(connectionProperties, DATASOURCE_NAME);
   }
 
-  private synchronized void setupSchema()
+  public static synchronized void setupSchema(final DataSource dataSource)
   {
     Connection connection = null;
     Statement statement = null;

@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project
-  xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
-    <groupId>schemacrawler</groupId>
     <artifactId>schemacrawler-all</artifactId>
+    <groupId>schemacrawler</groupId>
     <version>5.2</version>
   </parent>
+  <modelVersion>4.0.0</modelVersion>
   <groupId>schemacrawler</groupId>
   <artifactId>integrations</artifactId>
-  <packaging>jar</packaging>
   <name>SchemaCrawler Integrations</name>
   <dependencies>
     <dependency>
@@ -89,6 +85,17 @@
       <artifactId>xerces</artifactId>
       <version>2.4.0</version>
       <scope>test</scope>
-    </dependency>    
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>2.0.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <version>2.0.6</version>
+    </dependency>
   </dependencies>
 </project>
+
