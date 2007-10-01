@@ -55,6 +55,11 @@ public final class SchemaTextOptions
 
   private SchemaTextDetailType schemaTextDetailType;
 
+  public SchemaTextOptions()
+  {
+    this(null, null, null);
+  }
+
   /**
    * Options from properties. Constructor.
    * 
@@ -227,6 +232,10 @@ public final class SchemaTextOptions
    */
   public void setSchemaTextDetailType(final SchemaTextDetailType schemaTextDetailType)
   {
+    if (schemaTextDetailType == null)
+    {
+      throw new IllegalArgumentException("Cannot use null value in a setter");
+    }
     this.schemaTextDetailType = schemaTextDetailType;
   }
 

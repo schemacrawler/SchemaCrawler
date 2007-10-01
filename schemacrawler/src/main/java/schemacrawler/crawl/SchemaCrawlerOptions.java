@@ -279,6 +279,10 @@ public final class SchemaCrawlerOptions
    */
   public void setColumnInclusionRule(final InclusionRule columnInclusionRule)
   {
+    if (columnInclusionRule == null)
+    {
+      throw new IllegalArgumentException("Cannot use null value in a setter");
+    }
     this.columnInclusionRule = columnInclusionRule;
   }
 
@@ -301,7 +305,24 @@ public final class SchemaCrawlerOptions
    */
   public void setTableInclusionRule(final InclusionRule tableInclusionRule)
   {
+    if (tableInclusionRule == null)
+    {
+      throw new IllegalArgumentException("Cannot use null value in a setter");
+    }
     this.tableInclusionRule = tableInclusionRule;
+  }
+
+  /**
+   * Sets table types from a comma-separated list of table types. For
+   * example:
+   * TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS,SYNONYM
+   * 
+   * @param tableTypesString
+   *        Comma-separated list of table types.
+   */
+  public void setTableTypesString(final String tableTypesString)
+  {
+    setTableTypes(tableTypesString);
   }
 
   /**
@@ -314,6 +335,10 @@ public final class SchemaCrawlerOptions
    */
   public void setTableTypes(final String tableTypesString)
   {
+    if (tableTypesString == null)
+    {
+      throw new IllegalArgumentException("Cannot use null value in a setter");
+    }
     tableTypes = TableType.valueOf(tableTypesString.split(","));
   }
 
@@ -325,6 +350,10 @@ public final class SchemaCrawlerOptions
    */
   public void setTableTypes(final TableType[] tableTypesArray)
   {
+    if (tableTypesArray == null)
+    {
+      throw new IllegalArgumentException("Cannot use null value in a setter");
+    }
     tableTypes = copyTableTypes(tableTypesArray);
   }
 

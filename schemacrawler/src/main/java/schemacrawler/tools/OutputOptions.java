@@ -73,7 +73,7 @@ public final class OutputOptions
     noInfo = true;
   }
 
-  private OutputOptions()
+  public OutputOptions()
   {
     this("", "");
   }
@@ -254,6 +254,10 @@ public final class OutputOptions
    */
   public void setOutputFormatValue(final String outputFormatValue)
   {
+    if (outputFormatValue == null)
+    {
+      throw new IllegalArgumentException("Cannot use null value in a setter");
+    }
     this.outputFormatValue = outputFormatValue;
   }
 

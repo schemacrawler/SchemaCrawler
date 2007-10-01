@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  Copyright 2007, Sualeh Fatehi <sualeh@hotmail.com>
+  
+  This work is licensed under the Creative Commons Attribution 3.0 License. 
+  To view a copy of this license, visit 
+  http://creativecommons.org/licenses/by/3.0/ 
+  or send a letter to 
+  Creative Commons
+  171 Second Street, Suite 300, San Francisco, California, 94105, USA.
+-->
+<beans
+  xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean
+    id="dataSource"
+    class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <property
+      name="driverClassName"
+      value="com.mysql.jdbc.Driver" />
+    <property
+      name="url"
+      value="jdbc:mysql://localhost:3306/test" />
+    <property
+      name="username"
+      value="root" />
+    <property
+      name="password"
+      value="root" />
+  </bean>
+
+  <bean
+    id="schemaCrawlerOptions"
+    class="schemacrawler.crawl.SchemaCrawlerOptions">
+    <property
+      name="alphabeticalSortForTableColumns"
+      value="true" />
+    <property
+      name="alphabeticalSortForProcedureColumns"
+      value="true" />
+    <property
+      name="alphabeticalSortForIndexes"
+      value="true" />
+    <property
+      name="alphabeticalSortForForeignKeys"
+      value="true" />
+    <property
+      name="showStoredProcedures"
+      value="true" />
+    <property name="tableInclusionRule">
+      <bean class="schemacrawler.crawl.InclusionRule">
+        <constructor-arg value=".*" />
+        <constructor-arg value="" />
+      </bean>
+    </property>
+    <property name="columnInclusionRule">
+      <bean class="schemacrawler.crawl.InclusionRule">
+        <constructor-arg value=".*" />
+        <constructor-arg value="" />
+      </bean>
+    </property>
+    <property name="tableTypesString">
+      <value>TABLE,VIEW</value>
+    </property>
+  </bean>
+
+  <bean
+    id="schemaTextOptions"
+    class="schemacrawler.tools.schematext.SchemaTextOptions">
+    <property
+      name="showOrdinalNumbers"
+      value="false" />
+    <property
+      name="showStandardColumnTypeNames"
+      value="true" />
+    <property
+      name="hidePrimaryKeyNames"
+      value="true" />
+    <property
+      name="hideIndexNames"
+      value="true" />
+    <property
+      name="hideForeignKeyNames"
+      value="true" />
+    <property
+      name="hideConstraintNames"
+      value="true" />
+    <property
+      name="schemaTextDetailType"
+      value="basic_schema" />
+  </bean>
+
+  <bean
+    id="informationSchemaViews"
+    class="schemacrawler.crawl.InformationSchemaViews">
+    <constructor-arg>
+      <map>
+        <entry key="select.INFORMATION_SCHEMA.ROUTINES">
+          <value>
+            <![CDATA[
+            SELECT 
+              ROUTINE_CATALOG, 
+              ROUTINE_SCHEMA, 
+              ROUTINE_NAME, 
+              ROUTINE_BODY, 
+              ROUTINE_DEFINITION 
+            FROM 
+              INFORMATION_SCHEMA.ROUTINES 
+            WHERE 
+              ROUTINE_TYPE='PROCEDURE' 
+            ORDER BY 
+              ROUTINE_CATALOG, 
+              ROUTINE_SCHEMA, 
+              ROUTINE_NAME
+            ]]>
+          </value>
+        </entry>
+        <entry key="select.INFORMATION_SCHEMA.VIEWS">
+          <value>
+            <![CDATA[
+            SELECT 
+              * 
+            FROM 
+              INFORMATION_SCHEMA.VIEWS 
+            ORDER BY 
+              TABLE_CATALOG, 
+              TABLE_SCHEMA, 
+              TABLE_NAME
+            ]]>
+          </value>
+        </entry>
+        <entry key="select.INFORMATION_SCHEMA.TABLE_CONSTRAINTS">
+          <value>
+            <![CDATA[
+            SELECT 
+              * 
+            FROM 
+              INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+            ]]>
+          </value>
+        </entry>
+      </map>
+    </constructor-arg>
+  </bean>
+
+  <bean
+    id="outputOptions"
+    class="schemacrawler.tools.OutputOptions">
+    <property
+      name="appendOutput"
+      value="false" />
+    <property
+      name="noFooter"
+      value="true" />
+    <property
+      name="noHeader"
+      value="true" />
+    <property
+      name="noInfo"
+      value="true" />
+  </bean>
+
+  <bean
+    id="schemaCrawler"
+    class="schemacrawler.tools.integration.spring.SchemaCrawlerBean">
+    <property
+      name="dataSource"
+      ref="dataSource" />
+    <property
+      name="schemaCrawlerOptions"
+      ref="schemaCrawlerOptions" />
+    <property
+      name="schemaTextOptions"
+      ref="schemaTextOptions" />
+    <property
+      name="informationSchemaViews"
+      ref="informationSchemaViews" />
+  </bean>
+
+</beans>
