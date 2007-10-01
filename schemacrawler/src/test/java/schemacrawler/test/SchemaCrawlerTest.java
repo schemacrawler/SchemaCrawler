@@ -196,9 +196,6 @@ public class SchemaCrawlerTest
   public void tableCount()
   {
     LOGGER.log(Level.FINE, testUtility.getDataSource().toString());
-    LOGGER.log(Level.FINE, "schemapattern="
-                           + testUtility.getDataSource()
-                             .getSourceConfiguration().get("schemapattern"));
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     LOGGER.log(Level.FINE, schemaCrawlerOptions.toString());
     final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),

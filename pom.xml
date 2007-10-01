@@ -52,7 +52,6 @@
     <module>dbconnector</module>
     <module>schemacrawler</module>
     <module>integrations</module>
-    <module>schemacrawler-spring</module>
     <module>schemacrawler-maven-plugin</module>
     <module>schemacrawler-sqlserver</module>
     <module>schemacrawler-mysql</module>
