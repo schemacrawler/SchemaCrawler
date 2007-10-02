@@ -22,7 +22,6 @@ package schemacrawler.tools;
 
 import javax.sql.DataSource;
 
-
 /**
  * Executor for main functionality.
  * 
@@ -34,14 +33,15 @@ public interface Executor
   /**
    * Executes main functionality for SchemaCrawler.
    * 
-   * @param options
-   *        Options
+   * @param executionContext
+   *        Execution context
    * @param dataSource
    *        Datasource
    * @throws Exception
    *         On an exception
    */
-  void execute(final ExecutionContext options, final DataSource dataSource)
+  void execute(final ExecutionContext executionContext,
+               final DataSource dataSource)
     throws Exception;
 
 }

@@ -75,7 +75,7 @@ public class SortingTest
 
   @SuppressWarnings("boxing")
   private void checkIndexSort(final String[] expectedValues,
-                              boolean sortAlphabetically)
+                              final boolean sortAlphabetically)
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setAlphabeticalSortForIndexes(sortAlphabetically);
@@ -91,11 +91,11 @@ public class SortingTest
     {
       if (table.getName().equals("SUPPLIER"))
       {
-        Index[] indices = table.getIndices();
+        final Index[] indices = table.getIndices();
         assertEquals("Index count does not match", 2, indices.length);
         for (int i = 0; i < indices.length; i++)
         {
-          Index index = indices[i];
+          final Index index = indices[i];
           assertEquals("Indexes not "
                        + (sortAlphabetically? "alphabetically": "naturally")
                        + " sorted", expectedValues[i], index.getName());
@@ -121,7 +121,7 @@ public class SortingTest
 
   @SuppressWarnings("boxing")
   private void checkColumnSort(final String[] expectedValues,
-                               boolean sortAlphabetically)
+                               final boolean sortAlphabetically)
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setAlphabeticalSortForTableColumns(sortAlphabetically);
@@ -137,11 +137,11 @@ public class SortingTest
     {
       if (table.getName().equals("INVOICE"))
       {
-        Column[] columns = table.getColumns();
+        final Column[] columns = table.getColumns();
         assertEquals("Column count does not match", 3, columns.length);
         for (int i = 0; i < columns.length; i++)
         {
-          Column column = columns[i];
+          final Column column = columns[i];
           assertEquals("Columns not "
                        + (sortAlphabetically? "alphabetically": "naturally")
                        + " sorted", expectedValues[i], column.getName());
@@ -167,7 +167,7 @@ public class SortingTest
 
   @SuppressWarnings("boxing")
   private void checkFkSort(final String[] expectedValues,
-                           boolean sortAlphabetically)
+                           final boolean sortAlphabetically)
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setAlphabeticalSortForForeignKeys(sortAlphabetically);
@@ -183,11 +183,11 @@ public class SortingTest
     {
       if (table.getName().equals("ITEM"))
       {
-        ForeignKey[] foreignKeys = table.getForeignKeys();
+        final ForeignKey[] foreignKeys = table.getForeignKeys();
         assertEquals("Foreign key count does not match", 2, foreignKeys.length);
         for (int i = 0; i < foreignKeys.length; i++)
         {
-          ForeignKey foreignKey = foreignKeys[i];
+          final ForeignKey foreignKey = foreignKeys[i];
           assertEquals("Foreign keys not "
                        + (sortAlphabetically? "alphabetically": "naturally")
                        + " sorted", expectedValues[i], foreignKey.getName());

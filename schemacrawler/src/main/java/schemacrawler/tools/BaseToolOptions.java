@@ -62,7 +62,7 @@ public abstract class BaseToolOptions
     return outputOptions;
   }
 
-  public void setOutputOptions(OutputOptions outputOptions)
+  public void setOutputOptions(final OutputOptions outputOptions)
   {
     this.outputOptions = outputOptions;
   }
