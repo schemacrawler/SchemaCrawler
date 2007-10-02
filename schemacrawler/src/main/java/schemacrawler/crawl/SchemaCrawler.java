@@ -67,7 +67,7 @@ public final class SchemaCrawler
     {
       connection = dataSource.getConnection();
     }
-    catch (SQLException e)
+    catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING, e.getMessage(), e);
       return null;

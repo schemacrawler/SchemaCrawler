@@ -274,7 +274,7 @@ final class MutableDatabaseInfo
     this.productVersion = productVersion;
   }
 
-  void putProperty(String name, Object value)
+  void putProperty(final String name, final Object value)
   {
     dbProperties.put(name, value);
   }

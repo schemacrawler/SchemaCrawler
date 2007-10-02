@@ -85,7 +85,7 @@ public final class SchemaCrawlerMain
    *         On an exception
    */
   public static void schemacrawler(final String[] args,
-                                   Config config,
+                                   final Config config,
                                    final Executor executor,
                                    final DatabaseConnector dataSourceParser)
     throws Exception

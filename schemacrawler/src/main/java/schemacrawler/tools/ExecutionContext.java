@@ -120,7 +120,7 @@ public final class ExecutionContext
       }
       if (operation == null)
       {
-        Query query = new Query(command.getName(), config
+        final Query query = new Query(command.getName(), config
           .get(command.getName()));
         if (query.isQueryOver())
         {

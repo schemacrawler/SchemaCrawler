@@ -72,7 +72,7 @@ public class ToolsExecutor
     switch (toolType)
     {
       case schema_text:
-        SchemaTextOptions schemaTextOptions = (SchemaTextOptions) executionContext
+        final SchemaTextOptions schemaTextOptions = (SchemaTextOptions) executionContext
           .getToolOptions();
         crawlHandler = SchemaTextFormatterLoader.load(schemaTextOptions);
         break;
@@ -94,10 +94,10 @@ public class ToolsExecutor
                                     + errorMessage);
           throw new SchemaCrawlerException(errorMessage, e);
         }
-        OperatorOptions operatorOptions = (OperatorOptions) executionContext
+        final OperatorOptions operatorOptions = (OperatorOptions) executionContext
           .getToolOptions();
-        DataHandler operationDataHandler = DataTextFormatterLoader
-          .load((DataTextFormatOptions) operatorOptions);
+        final DataHandler operationDataHandler = DataTextFormatterLoader
+          .load(operatorOptions);
         crawlHandler = OperatorLoader.load(operatorOptions,
                                            connection,
                                            operationDataHandler);
@@ -107,7 +107,7 @@ public class ToolsExecutor
         // schema. No variable substitutions are made in the query.
         final DataTextFormatOptions dataTextFormatOptions = (DataTextFormatOptions) executionContext
           .getToolOptions();
-        DataHandler dataHandler = DataTextFormatterLoader
+        final DataHandler dataHandler = DataTextFormatterLoader
           .load(dataTextFormatOptions);
         final QueryExecutor executor = new QueryExecutor(dataSource,
                                                          dataHandler);

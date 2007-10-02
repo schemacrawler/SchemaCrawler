@@ -13,7 +13,7 @@ public class Query
   private final String name;
   private final String query;
 
-  public Query(String name, String query)
+  public Query(final String name, final String query)
   {
     this.name = name;
     this.query = query;
