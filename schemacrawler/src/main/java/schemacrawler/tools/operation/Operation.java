@@ -32,11 +32,6 @@ public enum Operation
   /** Count operation */
   count("Row Count", "SELECT COUNT(*) FROM ${table}",
     "{0,choice,0#empty|0<{0,number,integer} rows}"),
-  /** Drop operation */
-  drop("Drop Table", "DROP ${tabletype} ${table}", "dropped"),
-  /** Truncate operation */
-  truncate("Truncate Table", "DELETE FROM ${table}",
-    "truncated; {0,choice,0#was already empty|0<had {0,number,integer} rows}"),
   /** Dump operation */
   dump("Dump", "SELECT ${columns} FROM ${table} ORDER BY ${columns}", ""),
   /** Query-over operation */

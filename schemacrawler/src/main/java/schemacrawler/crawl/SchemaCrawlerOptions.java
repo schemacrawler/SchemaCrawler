@@ -25,7 +25,7 @@ import java.util.Arrays;
 import java.util.Properties;
 
 import schemacrawler.crawl.NamedObjectList.NamedObjectSort;
-import schemacrawler.main.BaseOptions;
+import schemacrawler.main.Options;
 import schemacrawler.schema.TableType;
 import sf.util.Config;
 
@@ -35,7 +35,7 @@ import sf.util.Config;
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawlerOptions
-  extends BaseOptions
+  implements Options
 {
 
   private static final String DEFAULT_TABLE_TYPES = "TABLE,VIEW";

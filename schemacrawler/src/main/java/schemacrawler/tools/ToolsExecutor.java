@@ -28,16 +28,17 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
-import schemacrawler.Executor;
 import schemacrawler.crawl.CrawlHandler;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutor;
-import schemacrawler.main.Options;
+import schemacrawler.tools.datatext.DataTextFormatOptions;
 import schemacrawler.tools.datatext.DataTextFormatterLoader;
 import schemacrawler.tools.operation.OperatorLoader;
+import schemacrawler.tools.operation.OperatorOptions;
 import schemacrawler.tools.schematext.SchemaTextFormatterLoader;
+import schemacrawler.tools.schematext.SchemaTextOptions;
 import sf.util.Config;
 
 /**
@@ -57,31 +58,30 @@ public class ToolsExecutor
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.Executor#execute(schemacrawler.main.Options,
+   * @see schemacrawler.tools.Executor#execute(schemacrawler.tools.ExecutionContext,
    *      javax.sql.DataSource)
    */
-  public void execute(final Options options, final DataSource dataSource)
+  public void execute(final ExecutionContext executionContext,
+                      final DataSource dataSource)
     throws Exception
   {
 
-    DataHandler dataHandler = null;
     CrawlHandler crawlHandler = null;
 
-    final ToolType toolType = options.getToolType();
-    if (toolType == ToolType.schema_text)
+    final ToolType toolType = executionContext.getToolType();
+    switch (toolType)
     {
-      crawlHandler = SchemaTextFormatterLoader.load(options
-        .getSchemaTextOptions());
-    }
-    else
-    {
-      // For operations and single queries
-      dataHandler = DataTextFormatterLoader.load(options
-        .getDataTextFormatOptions());
-      if (toolType == ToolType.operation)
-      {
-        // Operations are crawl handlers that rely on
-        // query execution and result set formatting
+      case schema_text:
+        SchemaTextOptions schemaTextOptions = (SchemaTextOptions) executionContext
+          .getToolOptions();
+        crawlHandler = SchemaTextFormatterLoader.load(schemaTextOptions);
+        break;
+      case operation:
+        // Operations are crawl handlers that rely on query execution
+        // and result set formatting. Two connections are needed - one
+        // for the schema crawling, and another one for exeuting the
+        // query. The query is executed once per table, after variables
+        // are substituted.
         final Connection connection;
         try
         {
@@ -94,22 +94,33 @@ public class ToolsExecutor
                                     + errorMessage);
           throw new SchemaCrawlerException(errorMessage, e);
         }
-        crawlHandler = OperatorLoader.load(options.getOperatorOptions(),
+        OperatorOptions operatorOptions = (OperatorOptions) executionContext
+          .getToolOptions();
+        DataHandler operationDataHandler = DataTextFormatterLoader
+          .load((DataTextFormatOptions) operatorOptions);
+        crawlHandler = OperatorLoader.load(operatorOptions,
                                            connection,
-                                           dataHandler);
-      }
+                                           operationDataHandler);
+        break;
+      case data_text:
+        // For data text, the query is executed just once, for the
+        // schema. No variable substitutions are made in the query.
+        final DataTextFormatOptions dataTextFormatOptions = (DataTextFormatOptions) executionContext
+          .getToolOptions();
+        DataHandler dataHandler = DataTextFormatterLoader
+          .load(dataTextFormatOptions);
+        final QueryExecutor executor = new QueryExecutor(dataSource,
+                                                         dataHandler);
+        executor.executeSQL(dataTextFormatOptions.getQuery().getQuery());
+        break;
     }
-    if (toolType == ToolType.data_text)
-    {
-      final QueryExecutor executor = new QueryExecutor(dataSource, dataHandler);
-      executor.executeSQL(options.getQuery());
-    }
-    else
+
+    if (toolType != ToolType.data_text)
     {
       final SchemaCrawler crawler = new SchemaCrawler(dataSource,
                                                       additionalConnectionConfiguration,
                                                       crawlHandler);
-      crawler.crawl(options.getSchemaCrawlerOptions());
+      crawler.crawl(executionContext.getSchemaCrawlerOptions());
     }
   }
 

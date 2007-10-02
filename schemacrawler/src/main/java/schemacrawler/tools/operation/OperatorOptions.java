@@ -21,8 +21,9 @@
 package schemacrawler.tools.operation;
 
 
-import schemacrawler.tools.BaseToolOptions;
 import schemacrawler.tools.OutputOptions;
+import schemacrawler.tools.datatext.DataTextFormatOptions;
+import sf.util.Config;
 
 /**
  * Operator options.
@@ -30,20 +31,19 @@ import schemacrawler.tools.OutputOptions;
  * @author Sualeh Fatehi
  */
 public final class OperatorOptions
-  extends BaseToolOptions
+  extends DataTextFormatOptions
 {
 
   private static final long serialVersionUID = -7977434852526746391L;
 
   private final Operation operation;
-  private final String query;
 
   /**
    * Operator options, defaults.
    */
   public OperatorOptions()
   {
-    this(null, null, null);
+    this(null, null, (Operation) null);
   }
 
   /**
@@ -53,26 +53,46 @@ public final class OperatorOptions
    *        Output options
    * @param operation
    *        Operation
-   * @param query
-   *        Query
+   * @param config
+   *        Config
    */
-  public OperatorOptions(final OutputOptions outputOptions,
-                         final Operation operation,
-                         final String query)
+  public OperatorOptions(final Config config,
+                         final OutputOptions outputOptions,
+                         final Operation operation)
   {
-    super(outputOptions);
+    super(config, outputOptions, null);
 
     if (operation == null)
     {
       this.operation = Operation.count;
     }
-    else
+    else if (operation != Operation.queryover)
     {
       this.operation = operation;
     }
-    this.query = query;
+    else
+    {
+      throw new IllegalArgumentException("No query specified for query over");
+    }
+  }
 
-    // Config is not read
+  /**
+   * Operator options from properties. Constructor.
+   * 
+   * @param outputOptions
+   *        Output options
+   * @param queryName
+   *        Query name
+   * @param config
+   *        Config
+   */
+  public OperatorOptions(final Config config,
+                         final OutputOptions outputOptions,
+                         final String queryName)
+  {
+    super(config, outputOptions, queryName);
+
+    this.operation = Operation.queryover;
   }
 
   /**
@@ -86,7 +106,6 @@ public final class OperatorOptions
     final StringBuffer buffer = new StringBuffer();
     buffer.append("OperatorOptions[");
     buffer.append("operation=").append(operation);
-    buffer.append(", query=").append(query);
     buffer.append(", outputOptions=").append(getOutputOptions());
     buffer.append("]");
     return buffer.toString();
@@ -95,11 +114,6 @@ public final class OperatorOptions
   Operation getOperation()
   {
     return operation;
-  }
-
-  String getQuery()
-  {
-    return query;
   }
 
 }
