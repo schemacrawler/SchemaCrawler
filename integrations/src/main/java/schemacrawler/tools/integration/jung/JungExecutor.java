@@ -23,25 +23,14 @@ package schemacrawler.tools.integration.jung;
 
 import java.awt.Dimension;
 import java.io.File;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
-import schemacrawler.crawl.CrawlHandler;
 import schemacrawler.crawl.SchemaCrawler;
-import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.crawl.SchemaCrawlerOptions;
-import schemacrawler.execute.DataHandler;
-import schemacrawler.execute.QueryExecutor;
-import schemacrawler.main.Options;
 import schemacrawler.schema.Schema;
-import schemacrawler.tools.ToolType;
-import schemacrawler.tools.datatext.DataTextFormatterLoader;
 import schemacrawler.tools.integration.SchemaCrawlerExecutor;
-import schemacrawler.tools.operation.OperatorLoader;
 import schemacrawler.tools.schematext.SchemaTextOptions;
 import edu.uci.ics.jung.graph.Graph;
 
@@ -58,68 +47,6 @@ public final class JungExecutor
     .getName());
 
   private static final int DEFAULT_IMAGE_WIDTH = 600;
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.Executor#execute(schemacrawler.main.Options,
-   *      javax.sql.DataSource)
-   */
-  public void execute(final Options options, final DataSource dataSource)
-    throws Exception
-  {
-    DataHandler dataHandler = null;
-    CrawlHandler crawlHandler = null;
-
-    final ToolType toolType = options.getToolType();
-    final SchemaCrawlerOptions schemaCrawlerOptions = options
-      .getSchemaCrawlerOptions();
-    final SchemaTextOptions schemaTextOptions = options.getSchemaTextOptions();
-
-    if (toolType == ToolType.schema_text)
-    {
-      execute(schemaCrawlerOptions, schemaTextOptions, dataSource);
-    }
-    else
-    {
-
-      // For operations and single queries
-      dataHandler = DataTextFormatterLoader.load(options
-        .getDataTextFormatOptions());
-      if (toolType == ToolType.operation)
-      {
-        // Operations are crawl handlers that rely on
-        // query execution and result set formatting
-        final Connection connection;
-        try
-        {
-          connection = dataSource.getConnection();
-        }
-        catch (final SQLException e)
-        {
-          final String errorMessage = e.getMessage();
-          LOGGER.log(Level.WARNING, "Cannot obtain a connection: "
-                                    + errorMessage);
-          throw new SchemaCrawlerException(errorMessage, e);
-        }
-        crawlHandler = OperatorLoader.load(options.getOperatorOptions(),
-                                           connection,
-                                           dataHandler);
-      }
-      if (toolType == ToolType.schema_text)
-      {
-        final QueryExecutor executor = new QueryExecutor(dataSource,
-                                                         dataHandler);
-        executor.executeSQL(options.getQuery());
-      }
-      else if (toolType == ToolType.operation)
-      {
-        final SchemaCrawler crawler = new SchemaCrawler(dataSource,
-                                                        crawlHandler);
-        crawler.crawl(schemaCrawlerOptions);
-      }
-    }
-  }
 
   /**
    * Executes main functionality.
