@@ -23,13 +23,12 @@ package schemacrawler.main;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import schemacrawler.crawl.SchemaCrawlerException;
+import schemacrawler.tools.Command;
+import schemacrawler.tools.ExecutionContext;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.operation.Operation;
-import schemacrawler.tools.schematext.SchemaTextDetailType;
 import sf.util.CommandLineParser;
 import sf.util.Config;
 import sf.util.Utilities;
@@ -42,7 +41,7 @@ import sf.util.CommandLineParser.StringOption;
  * 
  * @author Sualeh Fatehi
  */
-public final class OptionsParser
+public final class ExecutionContextFactory
 {
 
   private static final String OPTION_NOINFO = "noinfo";
@@ -63,7 +62,8 @@ public final class OptionsParser
    * @return Command line options
    * @throws SchemaCrawlerException
    */
-  static Options[] parseCommandLine(final String[] args, final Config config)
+  static ExecutionContext[] createExecutionContexts(final String[] args,
+                                             final Config config)
     throws SchemaCrawlerException
   {
 
@@ -96,9 +96,9 @@ public final class OptionsParser
       throw new SchemaCrawlerException("No SchemaCrawler command specified");
     }
     final String[] commandStrings = commandOptionValue.split(",");
-    final Options[] optionCommands = createOptionsPerCommand(commandStrings,
-                                                             config,
-                                                             masterOutputOptions);
+    final ExecutionContext[] optionCommands = createExecutionContextsPerCommand(commandStrings,
+                                                                                config,
+                                                                                masterOutputOptions);
 
     return optionCommands;
 
@@ -123,11 +123,11 @@ public final class OptionsParser
     return parser;
   }
 
-  private static Options[] createOptionsPerCommand(final String[] commandStrings,
-                                                   final Config config,
-                                                   final OutputOptions masterOutputOptions)
+  private static ExecutionContext[] createExecutionContextsPerCommand(final String[] commandStrings,
+                                                                      final Config config,
+                                                                      final OutputOptions masterOutputOptions)
   {
-    final List<Options> optionCommandsList = new ArrayList<Options>();
+    final List<ExecutionContext> executionContextsList = new ArrayList<ExecutionContext>();
     for (int i = 0; i < commandStrings.length; i++)
     {
       String commandString = commandStrings[i];
@@ -136,7 +136,7 @@ public final class OptionsParser
         continue;
       }
       commandString = commandString.trim().toLowerCase();
-      final Command command = parseCommand(config, commandString);
+      final Command command = new Command(commandString);
       //
       final OutputOptions outputOptions = masterOutputOptions.duplicate();
       if (i == 0)
@@ -162,77 +162,19 @@ public final class OptionsParser
         outputOptions.setAppendOutput(true);
       }
       //
-      final Options options = new Options(config, command, outputOptions);
+      final ExecutionContext executionContext = new ExecutionContext(command,
+                                                                     config,
+                                                                     outputOptions);
       //
-      optionCommandsList.add(options);
+      executionContextsList.add(executionContext);
     }
-    final Options[] optionCommands = optionCommandsList
-      .toArray(new Options[optionCommandsList.size()]);
+    final ExecutionContext[] executionContexts = executionContextsList
+      .toArray(new ExecutionContext[executionContextsList.size()]);
 
-    return optionCommands;
+    return executionContexts;
   }
 
-  private static boolean isQueryOver(final String query)
-  {
-    boolean isQueryOver = false;
-    final Set<String> keys = Utilities.extractTemplateVariables(query);
-    final String[] queryOverKeys = {
-        "table", "table_type"
-    };
-    for (final String element: queryOverKeys)
-    {
-      if (keys.contains(element))
-      {
-        isQueryOver = true;
-        break;
-      }
-    }
-    return isQueryOver;
-  }
-
-  private static Command parseCommand(final Config config,
-                                      final String commandString)
-  {
-    SchemaTextDetailType schemaTextDetailType;
-    try
-    {
-      schemaTextDetailType = SchemaTextDetailType.valueOf(commandString);
-    }
-    catch (final RuntimeException e1)
-    {
-      schemaTextDetailType = null;
-    }
-    Operation operation;
-    try
-    {
-      operation = Operation.valueOf(commandString.toLowerCase());
-    }
-    catch (final IllegalArgumentException e)
-    {
-      operation = null;
-    }
-    String query = "";
-    if (schemaTextDetailType == null && operation == null)
-    {
-      // Assume that the command is a query
-      query = config.get(commandString);
-      if (query == null)
-      {
-        throw new IllegalArgumentException("Invalid command - " + commandString);
-      }
-      if (isQueryOver(query))
-      {
-        operation = Operation.queryover;
-      }
-    }
-
-    final Command command = Command.createCommand(schemaTextDetailType,
-                                                  operation,
-                                                  query);
-    return command;
-  }
-
-  private OptionsParser()
+  private ExecutionContextFactory()
   {
 
   }

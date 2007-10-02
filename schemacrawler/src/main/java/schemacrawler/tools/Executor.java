@@ -17,12 +17,11 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler;
+package schemacrawler.tools;
 
 
 import javax.sql.DataSource;
 
-import schemacrawler.main.Options;
 
 /**
  * Executor for main functionality.
@@ -42,7 +41,7 @@ public interface Executor
    * @throws Exception
    *         On an exception
    */
-  void execute(final Options options, final DataSource dataSource)
+  void execute(final ExecutionContext options, final DataSource dataSource)
     throws Exception;
 
 }

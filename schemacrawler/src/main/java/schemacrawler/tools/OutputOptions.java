@@ -26,7 +26,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import schemacrawler.main.BaseOptions;
+import schemacrawler.main.Options;
 import sf.util.Utilities;
 
 /**
@@ -35,7 +35,7 @@ import sf.util.Utilities;
  * @author Sualeh Fatehi
  */
 public final class OutputOptions
-  extends BaseOptions
+  implements Options
 {
 
   private static final long serialVersionUID = 7018337388923813055L;

@@ -23,6 +23,7 @@ package schemacrawler.tools.datatext;
 
 import schemacrawler.tools.BaseToolOptions;
 import schemacrawler.tools.OutputOptions;
+import schemacrawler.tools.Query;
 import sf.util.Config;
 
 /**
@@ -30,7 +31,7 @@ import sf.util.Config;
  * 
  * @author Sualeh Fatehi
  */
-public final class DataTextFormatOptions
+public class DataTextFormatOptions
   extends BaseToolOptions
 {
 
@@ -40,13 +41,14 @@ public final class DataTextFormatOptions
   private static final String MERGE_ROWS = "schemacrawler.data.merge_rows";
   private final boolean mergeRows;
   private final boolean showLobs;
+  private final Query query;
 
   /**
    * Data text formatting options, defaults.
    */
   public DataTextFormatOptions()
   {
-    this(null, null);
+    this(null, null, null);
   }
 
   /**
@@ -58,7 +60,8 @@ public final class DataTextFormatOptions
    *        Page options
    */
   public DataTextFormatOptions(final Config config,
-                               final OutputOptions outputOptions)
+                               final OutputOptions outputOptions,
+                               final String queryName)
   {
     super(outputOptions);
 
@@ -66,12 +69,22 @@ public final class DataTextFormatOptions
     {
       mergeRows = false;
       showLobs = false;
+      query = null;
     }
     else
     {
       mergeRows = config.getBooleanValue(MERGE_ROWS);
       showLobs = config.getBooleanValue(SHOW_LOBS);
+      if (queryName != null && queryName.length() > 0)
+      {
+        query = new Query(queryName, config.get(queryName));
+      }
+      else
+      {
+        query = null;
+      }
     }
+
   }
 
   /**
@@ -99,6 +112,14 @@ public final class DataTextFormatOptions
   boolean isShowLobs()
   {
     return showLobs;
+  }
+
+  /**
+   * @return the query
+   */
+  public Query getQuery()
+  {
+    return query;
   }
 
 }

@@ -23,7 +23,7 @@ package schemacrawler.crawl;
 import java.util.HashMap;
 import java.util.Map;
 
-import schemacrawler.main.BaseOptions;
+import schemacrawler.main.Options;
 import sf.util.Utilities;
 
 /**
@@ -33,7 +33,7 @@ import sf.util.Utilities;
  * @author Sualeh Fatehi
  */
 public final class InformationSchemaViews
-  extends BaseOptions
+  implements Options
 {
 
   private static final long serialVersionUID = 3587581365346059044L;

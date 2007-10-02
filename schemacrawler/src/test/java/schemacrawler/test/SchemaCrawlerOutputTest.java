@@ -89,10 +89,11 @@ public class SchemaCrawlerOutputTest
     final OutputOptions outputOptions = new OutputOptions("text",
                                                           outputFilename);
     final DataTextFormatOptions textFormatOptions = new DataTextFormatOptions(new Config(),
-                                                                              outputOptions);
-    final OperatorOptions operatorOptions = new OperatorOptions(outputOptions,
-                                                                Operation.count,
-                                                                null);
+                                                                              outputOptions,
+                                                                              null);
+    final OperatorOptions operatorOptions = new OperatorOptions(new Config(),
+                                                                outputOptions,
+                                                                Operation.count);
 
     final DataHandler dataHandler = DataTextFormatterLoader
       .load(textFormatOptions);
@@ -128,9 +129,9 @@ public class SchemaCrawlerOutputTest
     outputOptions.setNoHeader(false);
     outputOptions.setNoFooter(false);
     outputOptions.setNoInfo(false);
-    final OperatorOptions operatorOptions = new OperatorOptions(outputOptions,
-                                                                Operation.count,
-                                                                null);
+    final OperatorOptions operatorOptions = new OperatorOptions(new Config(),
+                                                                outputOptions,
+                                                                Operation.count);
 
     final CrawlHandler formatter = OperatorLoader.load(operatorOptions,
                                                        testUtility
@@ -155,7 +156,8 @@ public class SchemaCrawlerOutputTest
 
     final DataTextFormatOptions textFormatOptions = new DataTextFormatOptions(new Config(),
                                                                               new OutputOptions("text",
-                                                                                                outputFilename));
+                                                                                                outputFilename),
+                                                                              null);
 
     final DataHandler dataHandler = DataTextFormatterLoader
       .load(textFormatOptions);
@@ -186,10 +188,11 @@ public class SchemaCrawlerOutputTest
     outputOptions.setNoFooter(false);
     outputOptions.setNoInfo(false);
     final DataTextFormatOptions textFormatOptions = new DataTextFormatOptions(new Config(),
-                                                                              outputOptions);
-    final OperatorOptions operatorOptions = new OperatorOptions(outputOptions,
-                                                                Operation.dump,
-                                                                null);
+                                                                              outputOptions,
+                                                                              null);
+    final OperatorOptions operatorOptions = new OperatorOptions(new Config(),
+                                                                outputOptions,
+                                                                Operation.dump);
 
     final DataHandler dataHandler = DataTextFormatterLoader
       .load(textFormatOptions);

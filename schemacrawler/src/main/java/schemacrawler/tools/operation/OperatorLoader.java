@@ -64,7 +64,7 @@ public final class OperatorLoader
     String query;
     if (operation == Operation.queryover)
     {
-      query = options.getQuery();
+      query = options.getQuery().getQuery();
     }
     else
     {

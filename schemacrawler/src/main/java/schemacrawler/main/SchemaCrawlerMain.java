@@ -27,7 +27,8 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
-import schemacrawler.Executor;
+import schemacrawler.tools.ExecutionContext;
+import schemacrawler.tools.Executor;
 import schemacrawler.tools.ToolsExecutor;
 import sf.util.Config;
 import dbconnector.Version;
@@ -90,13 +91,13 @@ public final class SchemaCrawlerMain
     throws Exception
   {
 
-    final Options[] optionCommands = OptionsParser.parseCommandLine(args,
+    final ExecutionContext[] optionCommands = ExecutionContextFactory.createExecutionContexts(args,
                                                                     config);
     if (optionCommands.length > 0)
     {
       LOGGER.log(Level.CONFIG, Version.about());
       LOGGER.log(Level.CONFIG, "Commandline: " + Arrays.asList(args));
-      for (final Options options: optionCommands)
+      for (final ExecutionContext options: optionCommands)
       {
         LOGGER.log(Level.CONFIG, options.toString());
         final DataSource dataSource = dataSourceParser.createDataSource();
