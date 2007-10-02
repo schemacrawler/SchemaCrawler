@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
+import schemacrawler.crawl.InformationSchemaViews;
 import schemacrawler.tools.ExecutionContext;
 import schemacrawler.tools.Executor;
 import schemacrawler.tools.ToolsExecutor;
@@ -91,8 +92,8 @@ public final class SchemaCrawlerMain
     throws Exception
   {
 
-    final ExecutionContext[] optionCommands = ExecutionContextFactory.createExecutionContexts(args,
-                                                                    config);
+    final ExecutionContext[] optionCommands = ExecutionContextFactory
+      .createExecutionContexts(args, config);
     if (optionCommands.length > 0)
     {
       LOGGER.log(Level.CONFIG, Version.about());
@@ -104,7 +105,7 @@ public final class SchemaCrawlerMain
         if (executor instanceof ToolsExecutor)
         {
           ((ToolsExecutor) executor)
-            .setAdditionalConnectionConfiguration(new Config(((PropertiesDataSource) dataSource)
+            .setInformationSchemaViews(new InformationSchemaViews(((PropertiesDataSource) dataSource)
               .getSourceConfiguration()));
         }
         executor.execute(options, dataSource);

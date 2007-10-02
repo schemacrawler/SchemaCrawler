@@ -28,6 +28,7 @@ import javax.sql.DataSource;
 
 import schemacrawler.crawl.CrawlHandler;
 import schemacrawler.crawl.InclusionRule;
+import schemacrawler.crawl.InformationSchemaViews;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
@@ -57,7 +58,7 @@ public final class ColumnsGrep
    * 
    * @param dataSource
    *        Data source
-   * @param additionalConnectionConfiguration
+   * @param informationSchemaViews
    *        Additional connection configuration for INFORMATION_SCHEMA
    * @param tableInclusionRule
    *        Inclusion rule for tables
@@ -68,7 +69,7 @@ public final class ColumnsGrep
    * @return Matching tables
    */
   public static Table[] grep(final DataSource dataSource,
-                             final Config additionalConnectionConfiguration,
+                             final InformationSchemaViews informationSchemaViews,
                              final InclusionRule tableInclusionRule,
                              final InclusionRule columnInclusionRule,
                              final boolean invertMatch)
@@ -79,7 +80,7 @@ public final class ColumnsGrep
 
     final Schema schema = SchemaCrawler
       .getSchema(dataSource,
-                 additionalConnectionConfiguration,
+                 informationSchemaViews,
                  SchemaInfoLevel.basic,
                  options);
 

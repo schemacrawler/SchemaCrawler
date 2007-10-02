@@ -29,6 +29,7 @@ import java.util.logging.Logger;
 import javax.sql.DataSource;
 
 import schemacrawler.crawl.CrawlHandler;
+import schemacrawler.crawl.InformationSchemaViews;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.execute.DataHandler;
@@ -39,7 +40,6 @@ import schemacrawler.tools.operation.OperatorLoader;
 import schemacrawler.tools.operation.OperatorOptions;
 import schemacrawler.tools.schematext.SchemaTextFormatterLoader;
 import schemacrawler.tools.schematext.SchemaTextOptions;
-import sf.util.Config;
 
 /**
  * Basic SchemaCrawler executor.
@@ -53,7 +53,7 @@ public class ToolsExecutor
   private static final Logger LOGGER = Logger.getLogger(ToolsExecutor.class
     .getName());
 
-  private Config additionalConnectionConfiguration = new Config();
+  private InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
 
   /**
    * {@inheritDoc}
@@ -118,7 +118,7 @@ public class ToolsExecutor
     if (toolType != ToolType.data_text)
     {
       final SchemaCrawler crawler = new SchemaCrawler(dataSource,
-                                                      additionalConnectionConfiguration,
+                                                      informationSchemaViews,
                                                       crawlHandler);
       crawler.crawl(executionContext.getSchemaCrawlerOptions());
     }
@@ -128,14 +128,14 @@ public class ToolsExecutor
    * Set additional connection (data source) specific configuration, if
    * needed.
    * 
-   * @param additionalConnectionConfiguration
+   * @param informationSchemaViews
    *        Additional connection configuration.
    */
-  public void setAdditionalConnectionConfiguration(final Config additionalConnectionConfiguration)
+  public void setInformationSchemaViews(final InformationSchemaViews informationSchemaViews)
   {
-    if (additionalConnectionConfiguration != null)
+    if (informationSchemaViews != null)
     {
-      this.additionalConnectionConfiguration = additionalConnectionConfiguration;
+      this.informationSchemaViews = informationSchemaViews;
     }
   }
 

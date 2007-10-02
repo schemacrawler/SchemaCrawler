@@ -33,6 +33,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import schemacrawler.crawl.InformationSchemaViews;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
@@ -44,7 +45,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
-import sf.util.Config;
 import sf.util.Utilities;
 import dbconnector.datasource.PropertiesDataSourceException;
 import dbconnector.test.TestUtility;
@@ -162,15 +162,14 @@ public class SchemaCrawlerTest
   {
 
     // Set up information schema properties
-    final Config informationSchemaProperties = new Config();
+    final InformationSchemaViews informationSchemaProperties = new InformationSchemaViews();
     informationSchemaProperties
-      .put("select.INFORMATION_SCHEMA.ROUTINES",
-           "SELECT " + "PROCEDURE_CAT AS ROUTINE_CATALOG, "
-               + "PROCEDURE_SCHEM AS ROUTINE_SCHEMA, "
-               + "PROCEDURE_NAME AS ROUTINE_NAME, "
-               + "\'EXTERNAL\' AS ROUTINE_BODY, "
-               + "SPECIFIC_NAME  AS ROUTINE_DEFINITION "
-               + "FROM INFORMATION_SCHEMA.SYSTEM_PROCEDURES");
+      .setRoutinesSql("SELECT " + "PROCEDURE_CAT AS ROUTINE_CATALOG, "
+                      + "PROCEDURE_SCHEM AS ROUTINE_SCHEMA, "
+                      + "PROCEDURE_NAME AS ROUTINE_NAME, "
+                      + "\'EXTERNAL\' AS ROUTINE_BODY, "
+                      + "SPECIFIC_NAME  AS ROUTINE_DEFINITION "
+                      + "FROM INFORMATION_SCHEMA.SYSTEM_PROCEDURES");
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setShowStoredProcedures(true);
@@ -247,24 +246,23 @@ public class SchemaCrawlerTest
   {
 
     // Set up information schema properties
-    final Config informationSchemaProperties = new Config();
+    final InformationSchemaViews informationSchemaProperties = new InformationSchemaViews();
     informationSchemaProperties
-      .put("select.INFORMATION_SCHEMA.TRIGGERS",
-           "SELECT "
-               + "TRIGGER_CAT AS TRIGGER_CATALOG, "
-               + "TRIGGER_SCHEM AS TRIGGER_SCHEMA, "
-               + "TRIGGER_NAME, "
-               + "TRIGGERING_EVENT AS EVENT_MANIPULATION, "
-               + "TABLE_CAT AS EVENT_OBJECT_CATALOG, "
-               + "TABLE_SCHEM AS EVENT_OBJECT_SCHEMA, "
-               + "TABLE_NAME AS EVENT_OBJECT_TABLE, "
-               + "1 AS ACTION_ORDER, "
-               + "WHEN_CLAUSE AS ACTION_CONDITION, "
-               + "REFERENCING_NAMES AS ACTION_ORIENTATION, "
-               + "DESCRIPTION AS ACTION_STATEMENT, "
-               + "CASE WHEN TRIGGER_TYPE LIKE \'BEFORE%\' THEN \'BEFORE\' ELSE \'\' END AS CONDITION_TIMING, "
-               + "TRIGGER_BODY AS DEFINITION "
-               + "FROM INFORMATION_SCHEMA.SYSTEM_TRIGGERS");
+      .setTriggersSql("SELECT "
+                      + "TRIGGER_CAT AS TRIGGER_CATALOG, "
+                      + "TRIGGER_SCHEM AS TRIGGER_SCHEMA, "
+                      + "TRIGGER_NAME, "
+                      + "TRIGGERING_EVENT AS EVENT_MANIPULATION, "
+                      + "TABLE_CAT AS EVENT_OBJECT_CATALOG, "
+                      + "TABLE_SCHEM AS EVENT_OBJECT_SCHEMA, "
+                      + "TABLE_NAME AS EVENT_OBJECT_TABLE, "
+                      + "1 AS ACTION_ORDER, "
+                      + "WHEN_CLAUSE AS ACTION_CONDITION, "
+                      + "REFERENCING_NAMES AS ACTION_ORIENTATION, "
+                      + "DESCRIPTION AS ACTION_STATEMENT, "
+                      + "CASE WHEN TRIGGER_TYPE LIKE \'BEFORE%\' THEN \'BEFORE\' ELSE \'\' END AS CONDITION_TIMING, "
+                      + "TRIGGER_BODY AS DEFINITION "
+                      + "FROM INFORMATION_SCHEMA.SYSTEM_TRIGGERS");
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setShowStoredProcedures(true);
@@ -297,10 +295,9 @@ public class SchemaCrawlerTest
   {
 
     // Set up information schema properties
-    final Config informationSchemaProperties = new Config();
+    final InformationSchemaViews informationSchemaProperties = new InformationSchemaViews();
     informationSchemaProperties
-      .put("select.INFORMATION_SCHEMA.VIEWS",
-           "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_VIEWS");
+      .setViewsSql("SELECT * FROM INFORMATION_SCHEMA.SYSTEM_VIEWS");
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),

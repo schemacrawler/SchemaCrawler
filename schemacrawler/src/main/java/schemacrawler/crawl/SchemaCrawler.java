@@ -30,7 +30,6 @@ import javax.sql.DataSource;
 
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.TableType;
-import sf.util.Config;
 
 /**
  * SchemaCrawler uses database metadata to get the details about the
@@ -47,7 +46,7 @@ public final class SchemaCrawler
    * 
    * @param dataSource
    *        Data source
-   * @param additionalConnectionConfiguration
+   * @param informationSchemaViews
    *        Additional connection configuration for INFORMATION_SCHEMA
    * @param infoLevel
    *        Schema info level
@@ -57,7 +56,7 @@ public final class SchemaCrawler
    * @throws SQLException
    */
   public static Schema getSchema(final DataSource dataSource,
-                                 final Config additionalConnectionConfiguration,
+                                 final InformationSchemaViews informationSchemaViews,
                                  final SchemaInfoLevel infoLevel,
                                  final SchemaCrawlerOptions options)
   {
@@ -103,7 +102,7 @@ public final class SchemaCrawler
     try
     {
       final SchemaCrawler crawler = new SchemaCrawler(dataSource,
-                                                      additionalConnectionConfiguration,
+                                                      informationSchemaViews,
                                                       schemaMaker);
       crawler.crawl(options);
     }
@@ -135,7 +134,7 @@ public final class SchemaCrawler
   }
 
   private final DataSource dataSource;
-  private final Config additionalConnectionConfiguration;
+  private final InformationSchemaViews informationSchemaViews;
   private final CrawlHandler handler;
 
   /**
@@ -145,13 +144,13 @@ public final class SchemaCrawler
    *        An data source.
    * @param crawlHandler
    *        A crawl handler instance
-   * @param additionalConnectionConfiguration
+   * @param informationSchemaViews
    *        Additional connection configuration for INFORMATION_SCHEMA
    * @throws SchemaCrawlerException
    *         On a crawler exception
    */
   public SchemaCrawler(final DataSource dataSource,
-                       final Config additionalConnectionConfiguration,
+                       final InformationSchemaViews informationSchemaViews,
                        final CrawlHandler crawlHandler)
     throws SchemaCrawlerException
   {
@@ -162,13 +161,13 @@ public final class SchemaCrawler
     }
     this.dataSource = dataSource;
 
-    if (additionalConnectionConfiguration == null)
+    if (informationSchemaViews == null)
     {
-      this.additionalConnectionConfiguration = new Config();
+      this.informationSchemaViews = new InformationSchemaViews();
     }
     else
     {
-      this.additionalConnectionConfiguration = additionalConnectionConfiguration;
+      this.informationSchemaViews = informationSchemaViews;
     }
     if (crawlHandler == null)
     {
@@ -211,7 +210,7 @@ public final class SchemaCrawler
     {
 
       retrieverConnection = new RetrieverConnection(dataSource,
-                                                    additionalConnectionConfiguration);
+                                                    informationSchemaViews);
 
       final SchemaInfoLevel infoLevel = handler.getInfoLevelHint();
       SchemaCrawlerOptions schemaCrawlerOptions = options;

@@ -100,7 +100,7 @@ public final class ExecutionContext
 
   }
 
-  public ToolType determineToolType(final Command command, final Config config)
+  private ToolType determineToolType(final Command command, final Config config)
   {
     ToolType toolType;
     if (!command.isQuery())
@@ -120,8 +120,8 @@ public final class ExecutionContext
       }
       if (operation == null)
       {
-        final Query query = new Query(command.getName(), config
-          .get(command.getName()));
+        final Query query = new Query(command.getName(), config.get(command
+          .getName()));
         if (query.isQueryOver())
         {
           toolType = ToolType.data_text;
