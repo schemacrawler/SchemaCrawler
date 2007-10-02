@@ -23,7 +23,6 @@ package schemacrawler.tools.integration;
 
 import javax.sql.DataSource;
 
-import schemacrawler.Executor;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.tools.schematext.SchemaTextOptions;
 
@@ -33,7 +32,6 @@ import schemacrawler.tools.schematext.SchemaTextOptions;
  * @author Sualeh Fatehi
  */
 public interface SchemaCrawlerExecutor
-  extends Executor
 {
 
   /**

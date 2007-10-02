@@ -21,8 +21,7 @@
 package schemacrawler.tools.integration.freemarker;
 
 
-import schemacrawler.main.SchemaCrawlerMain;
-import sf.util.CommandLineUtility;
+import schemacrawler.tools.integration.IntegrationUtility;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -42,11 +41,10 @@ public final class Main
   public static void main(final String[] args)
     throws Exception
   {
-    CommandLineUtility.checkForHelp(args,
-                                    "/schemacrawler-templating-readme.txt");
-    CommandLineUtility.setLogLevel(args);
-
-    SchemaCrawlerMain.schemacrawler(args, new FreeMarkerExecutor());
+    IntegrationUtility
+      .integrationToolMain(args,
+                           "/schemacrawler-templating-readme.txt",
+                           new FreeMarkerExecutor());
   }
 
   private Main()

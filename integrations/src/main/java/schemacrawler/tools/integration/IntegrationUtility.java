@@ -18,36 +18,42 @@
  *
  */
 
-package schemacrawler.tools.integration.velocity;
+package schemacrawler.tools.integration;
 
 
-import schemacrawler.tools.integration.IntegrationUtility;
+import schemacrawler.main.SchemaCrawlerMain;
+import sf.util.CommandLineUtility;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
  */
-public final class Main
+public final class IntegrationUtility
 {
 
   /**
-   * s Get connection parameters, and creates a connection, and crawls
-   * the schema.
+   * Get connection parameters, and creates a connection, and crawls the
+   * schema.
    * 
    * @param args
    *        Arguments passed into the program from the command line.
+   * @param readmeResource
+   *        Resource location for readme file.
    * @throws Exception
    *         On an exception
    */
-  public static void main(final String[] args)
+  public static void integrationToolMain(final String[] args,
+                                         String readmeResource,
+                                         SchemaCrawlerExecutor schemaCrawlerExecutor)
     throws Exception
   {
-    IntegrationUtility
-      .integrationToolMain(args,
-                           "/schemacrawler-templating-readme.txt",
-                           new VelocityExecutor());
+    CommandLineUtility.checkForHelp(args, readmeResource);
+    CommandLineUtility.setLogLevel(args);
+
+    SchemaCrawlerMain
+      .schemacrawler(args, new ToolsExecutorAdapter(schemaCrawlerExecutor));
   }
 
-  private Main()
+  private IntegrationUtility()
   {
   }
 
