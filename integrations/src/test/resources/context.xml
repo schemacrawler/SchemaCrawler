@@ -163,21 +163,4 @@
       value="true" />
   </bean>
 
-  <bean
-    id="schemaCrawler"
-    class="schemacrawler.tools.integration.spring.SchemaCrawlerBean">
-    <property
-      name="dataSource"
-      ref="dataSource" />
-    <property
-      name="schemaCrawlerOptions"
-      ref="schemaCrawlerOptions" />
-    <property
-      name="schemaTextOptions"
-      ref="schemaTextOptions" />
-    <property
-      name="informationSchemaViews"
-      ref="informationSchemaViews" />
-  </bean>
-
 </beans>

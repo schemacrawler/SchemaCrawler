@@ -24,9 +24,7 @@ package schemacrawler.tools.integration.spring;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-import schemacrawler.crawl.SchemaInfoLevel;
-import schemacrawler.schema.Schema;
-import schemacrawler.tools.OutputFormat;
+import schemacrawler.tools.ExecutionContext;
 import sf.util.CommandLineUtility;
 
 /**
@@ -51,10 +49,8 @@ public final class Main
     try
     {
       final ApplicationContext appContext = new FileSystemXmlApplicationContext("context.xml");
-      SchemaCrawlerBean schemaCrawler = (SchemaCrawlerBean) appContext
-        .getBean("schemaCrawler");
-      Schema schema = schemaCrawler.printSchema(SchemaInfoLevel.maximum,
-                                                OutputFormat.text);
+      ExecutionContext executionContext = (ExecutionContext) appContext
+        .getBean("executionContext");
     }
     catch (final Exception e)
     {

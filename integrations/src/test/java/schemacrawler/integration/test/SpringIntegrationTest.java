@@ -10,9 +10,10 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import schemacrawler.crawl.SchemaCrawler;
+import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
 import schemacrawler.schema.Schema;
-import schemacrawler.tools.integration.spring.SchemaCrawlerBean;
 import dbconnector.test.TestUtility;
 
 public class SpringIntegrationTest
@@ -32,9 +33,12 @@ public class SpringIntegrationTest
   @Test
   public void testSchema()
   {
-    final SchemaCrawlerBean schemaCrawler = (SchemaCrawlerBean) appContext
-      .getBean("schemaCrawler");
-    final Schema schema = schemaCrawler.getSchema(SchemaInfoLevel.maximum);
+    SchemaCrawlerOptions schemaCrawlerOptions = (SchemaCrawlerOptions) appContext
+      .getBean("schemaCrawlerOptions");
+    DataSource dataSource = (DataSource) appContext.getBean("dataSource");
+    final Schema schema = SchemaCrawler.getSchema(dataSource,
+                                                  SchemaInfoLevel.maximum,
+                                                  schemaCrawlerOptions);
     assertEquals(6, schema.getTables().length);
   }
 
