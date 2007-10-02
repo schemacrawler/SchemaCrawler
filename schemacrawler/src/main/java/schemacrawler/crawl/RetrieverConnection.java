@@ -30,8 +30,6 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
-import sf.util.Config;
-
 import dbconnector.datasource.PropertiesDataSource;
 
 /**
@@ -52,7 +50,7 @@ final class RetrieverConnection
   private final InformationSchemaViews informationSchemaViews;
 
   RetrieverConnection(final DataSource dataSource,
-                      final Config additionalConfiguration)
+                      final InformationSchemaViews informationSchemaViews)
     throws SchemaCrawlerException, SQLException
   {
     if (dataSource == null)
@@ -86,7 +84,7 @@ final class RetrieverConnection
       }
     }
 
-    informationSchemaViews = new InformationSchemaViews(additionalConfiguration);
+    this.informationSchemaViews = informationSchemaViews;
   }
 
   /**

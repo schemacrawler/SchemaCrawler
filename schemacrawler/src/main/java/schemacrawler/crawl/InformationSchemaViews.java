@@ -40,6 +40,11 @@ public final class InformationSchemaViews
 
   private final Map<String, String> informationSchemaViewsSql;
 
+  public InformationSchemaViews()
+  {
+    this(null);
+  }
+
   public InformationSchemaViews(final Map<String, String> informationSchemaViewsSql)
   {
     if (informationSchemaViewsSql != null)
@@ -58,7 +63,7 @@ public final class InformationSchemaViews
    * 
    * @return Table check constraints SQL.
    */
-  String getCheckConstraintsSql()
+  public String getCheckConstraintsSql()
   {
     return informationSchemaViewsSql
       .get("select.INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
@@ -69,7 +74,7 @@ public final class InformationSchemaViews
    * 
    * @return Index info constraints SQL.
    */
-  String getIndexInfoSql()
+  public String getIndexInfoSql()
   {
     return informationSchemaViewsSql.get("getIndexInfo");
   }
@@ -80,9 +85,79 @@ public final class InformationSchemaViews
    * 
    * @return Procedure defnitions SQL.
    */
-  String getRoutinesSql()
+  public String getRoutinesSql()
   {
     return informationSchemaViewsSql.get("select.INFORMATION_SCHEMA.ROUTINES");
+  }
+
+  /**
+   * Sets the table check constraints SQL from the additional
+   * configuration.
+   * 
+   * @param sql
+   *        Table check constraints SQL.
+   */
+  public void setCheckConstraintsSql(final String sql)
+  {
+    informationSchemaViewsSql
+      .put("select.INFORMATION_SCHEMA.CHECK_CONSTRAINTS", sql);
+  }
+
+  /**
+   * Sets the index info SQL from the additional configuration.
+   * 
+   * @param sql
+   *        Index info constraints SQL.
+   */
+  public void setIndexInfoSql(final String sql)
+  {
+    informationSchemaViewsSql.put("getIndexInfo", sql);
+  }
+
+  /**
+   * Sets the procedure definitions SQL from the additional
+   * configuration.
+   * 
+   * @param sql
+   *        Procedure defnitions SQL.
+   */
+  public void setRoutinesSql(final String sql)
+  {
+    informationSchemaViewsSql.put("select.INFORMATION_SCHEMA.ROUTINES", sql);
+  }
+
+  /**
+   * Sets the table constraints SQL from the additional configuration.
+   * 
+   * @param sql
+   *        Table constraints SQL.
+   */
+  public void setTableConstraintsSql(final String sql)
+  {
+    informationSchemaViewsSql
+      .put("select.INFORMATION_SCHEMA.TABLE_CONSTRAINTS", sql);
+  }
+
+  /**
+   * Sets the trigger definitions SQL from the additional configuration.
+   * 
+   * @param sql
+   *        Trigger defnitions SQL.
+   */
+  public void setTriggersSql(final String sql)
+  {
+    informationSchemaViewsSql.put("select.INFORMATION_SCHEMA.TRIGGERS", sql);
+  }
+
+  /**
+   * Sets the view definitions SQL from the additional configuration.
+   * 
+   * @param sql
+   *        View defnitions SQL.
+   */
+  public void setViewsSql(final String sql)
+  {
+    informationSchemaViewsSql.put("select.INFORMATION_SCHEMA.VIEWS", sql);
   }
 
   /**
@@ -90,7 +165,7 @@ public final class InformationSchemaViews
    * 
    * @return Table constraints SQL.
    */
-  String getTableConstraintsSql()
+  public String getTableConstraintsSql()
   {
     return informationSchemaViewsSql
       .get("select.INFORMATION_SCHEMA.TABLE_CONSTRAINTS");
@@ -101,7 +176,7 @@ public final class InformationSchemaViews
    * 
    * @return Trigger defnitions SQL.
    */
-  String getTriggersSql()
+  public String getTriggersSql()
   {
     return informationSchemaViewsSql.get("select.INFORMATION_SCHEMA.TRIGGERS");
   }
@@ -111,7 +186,7 @@ public final class InformationSchemaViews
    * 
    * @return View defnitions SQL.
    */
-  String getViewsSql()
+  public String getViewsSql()
   {
     return informationSchemaViewsSql.get("select.INFORMATION_SCHEMA.VIEWS");
   }
