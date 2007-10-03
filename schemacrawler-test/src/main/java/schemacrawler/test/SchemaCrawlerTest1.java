@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import schemacrawler.crawl.InformationSchemaViews;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
@@ -31,10 +32,11 @@ public class SchemaCrawlerTest1
 
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions(properties);
 
-    final Schema schema = SchemaCrawler.getSchema(dataSource,
-                                                  new Config(properties),
-                                                  SchemaInfoLevel.basic,
-                                                  options);
+    final Schema schema = SchemaCrawler
+      .getSchema(dataSource,
+                 new InformationSchemaViews(new Config(properties)),
+                 SchemaInfoLevel.basic,
+                 options);
     final Table[] tableArray = schema.getTables();
 
     System.out.println(Arrays.asList(tableArray));
