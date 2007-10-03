@@ -43,6 +43,48 @@ public final class ExecutionContext
   private final InformationSchemaViews informationSchemaViews;
   private final BaseToolOptions toolOptions;
 
+  public ExecutionContext(SchemaCrawlerOptions schemaCrawlerOptions,
+                          InformationSchemaViews informationSchemaViews,
+                          BaseToolOptions toolOptions)
+  {
+    if (toolOptions == null)
+    {
+      throw new IllegalArgumentException("No tool options provided");
+    }
+
+    if (schemaCrawlerOptions == null)
+    {
+      this.schemaCrawlerOptions = new SchemaCrawlerOptions();
+    }
+    else
+    {
+      this.schemaCrawlerOptions = schemaCrawlerOptions;
+    }
+
+    if (informationSchemaViews == null)
+    {
+      this.informationSchemaViews = new InformationSchemaViews();
+    }
+    else
+    {
+      this.informationSchemaViews = informationSchemaViews;
+    }
+
+    this.toolOptions = toolOptions;
+    if (toolOptions instanceof SchemaTextOptions)
+    {
+      toolType = ToolType.schema_text;
+    }
+    else if (toolOptions instanceof OperatorOptions)
+    {
+      toolType = ToolType.operation;
+    }
+    else
+    {
+      toolType = ToolType.data_text;
+    }
+  }
+
   /**
    * Parses options from a properties file.
    * 
