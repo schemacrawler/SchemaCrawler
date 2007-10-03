@@ -81,8 +81,8 @@ final class ProcedureExRetriever
                  "Procedure definition SQL statement was not provided");
       return;
     }
-    final String procedureDefinitionsSql = informationSchemaViews
-      .getRoutinesSql();
+    final String procedureDefinitionsSql = informationSchemaViews.getRoutines()
+      .getQuery();
 
     final Connection connection = getRetrieverConnection().getMetaData()
       .getConnection();

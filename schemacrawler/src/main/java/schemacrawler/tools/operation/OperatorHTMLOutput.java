@@ -23,6 +23,7 @@ package schemacrawler.tools.operation;
 
 import java.sql.Connection;
 
+import schemacrawler.crawl.Query;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.schema.DatabaseInfo;
@@ -45,7 +46,7 @@ final class OperatorHTMLOutput
    *        Database connection to use
    */
   OperatorHTMLOutput(final OperatorOptions options,
-                     final String query,
+                     final Query query,
                      final Connection connection,
                      final DataHandler dataHandler)
     throws SchemaCrawlerException

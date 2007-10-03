@@ -322,8 +322,8 @@ final class TableRetriever
     ResultSet results = null;
     if (informationSchemaViews.hasIndexInfoSql())
     {
-      String indexInfoSql = informationSchemaViews.getIndexInfoSql();
-      indexInfoSql = CrawlerUtililties.expandSqlForTable(indexInfoSql, table);
+      String indexInfoSql = informationSchemaViews.getIndexInfo()
+        .getQueryForTable(table);
       LOGGER.log(Level.FINE, "Using getIndexInfo SQL:" + Utilities.NEWLINE
                              + indexInfoSql);
       final Connection connection = getRetrieverConnection().getMetaData()

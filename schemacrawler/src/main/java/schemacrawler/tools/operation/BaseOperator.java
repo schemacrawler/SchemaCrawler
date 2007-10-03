@@ -32,7 +32,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.crawl.CrawlHandler;
-import schemacrawler.crawl.CrawlerUtililties;
+import schemacrawler.crawl.Query;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.crawl.SchemaInfoLevel;
 import schemacrawler.execute.DataHandler;
@@ -60,7 +60,7 @@ public abstract class BaseOperator
   protected final PrintWriter out;
   private final Connection connection;
   private final DataHandler dataHandler;
-  private final String query;
+  private final Query query;
   private final Statement statement;
   private int tableCount;
   private final OperatorOptions options;
@@ -75,7 +75,7 @@ public abstract class BaseOperator
    *        Database connection to use
    */
   BaseOperator(final OperatorOptions options,
-               final String query,
+               final Query query,
                final Connection connection,
                final DataHandler dataHandler,
                final TextFormattingHelper formattingHelper)
@@ -265,7 +265,7 @@ public abstract class BaseOperator
     }
     tableCount++;
 
-    final String sql = CrawlerUtililties.expandSqlForTable(query, table);
+    final String sql = query.getQueryForTable(table);
     LOGGER.fine("Executing: " + sql);
 
     ResultSet results = null;
