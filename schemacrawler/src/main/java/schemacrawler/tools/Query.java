@@ -17,7 +17,15 @@ public class Query
 
   public Query(final String name, final String query)
   {
+    if (name == null || name.length() == 0)
+    {
+      throw new IllegalArgumentException("No name provided for the query");
+    }
     this.name = name;
+    if (query == null || query.length() == 0)
+    {
+      throw new IllegalArgumentException("No SQL provided for query " + name);
+    }
     this.query = query;
   }
 
