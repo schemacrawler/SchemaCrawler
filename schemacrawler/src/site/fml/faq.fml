@@ -59,10 +59,9 @@
         </p>
         <p>
           SchemaCrawler can also manipulate your data. You can get counts of the
-          rows in tables and views, or you can truncate or drop tables and
-          views. SchemaCrawler can output all the data in your tables and views,
-          or run specific SQL statements against table and views. SchemaCrawler
-          can be fine-tuned using configuration files.
+          rows in tables and views. SchemaCrawler can output all the data in 
+          your tables and views, or run specific SQL statements against table 
+          and views. SchemaCrawler can be fine-tuned using configuration files.
         </p>
         <source>
           <![CDATA[

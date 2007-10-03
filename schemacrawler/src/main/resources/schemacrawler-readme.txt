@@ -77,10 +77,6 @@ Or, all of the following:
       details of privileges, triggers, and check constraints
     count
       To count rows in the tables
-    truncate
-      To truncate the tables
-    drop
-      To drop the tables
     dump
     	To select all rows from the tables, and output the data
     <query_name>
