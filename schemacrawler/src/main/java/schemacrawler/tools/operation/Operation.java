@@ -23,6 +23,8 @@ package schemacrawler.tools.operation;
 
 import java.util.EnumSet;
 
+import schemacrawler.crawl.Query;
+
 /**
  * Database operations.
  */
@@ -75,9 +77,9 @@ public enum Operation
    * 
    * @return Query
    */
-  public String getQuery()
+  public Query getQuery()
   {
-    return query;
+    return new Query(name(), query);
   }
 
   /**

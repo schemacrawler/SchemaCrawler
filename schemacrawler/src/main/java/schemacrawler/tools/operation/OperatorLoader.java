@@ -24,6 +24,7 @@ package schemacrawler.tools.operation;
 import java.sql.Connection;
 
 import schemacrawler.crawl.CrawlHandler;
+import schemacrawler.crawl.Query;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.tools.OutputFormat;
@@ -61,10 +62,10 @@ public final class OperatorLoader
 
     final Operation operation = options.getOperation();
     CrawlHandler handler = null;
-    String query;
+    Query query;
     if (operation == Operation.queryover)
     {
-      query = options.getQuery().getQuery();
+      query = options.getQuery();
     }
     else
     {

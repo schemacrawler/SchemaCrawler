@@ -22,6 +22,7 @@ package schemacrawler.tools;
 
 
 import schemacrawler.crawl.InformationSchemaViews;
+import schemacrawler.crawl.Query;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.tools.datatext.DataTextFormatOptions;
 import schemacrawler.tools.operation.Operation;

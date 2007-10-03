@@ -20,31 +20,69 @@
 package schemacrawler.crawl;
 
 
+import java.io.Serializable;
 import java.util.Properties;
+import java.util.Set;
 
 import schemacrawler.schema.Table;
 import sf.util.Utilities;
 
 /**
- * Utilities.
+ * A SQL query. May be parameterized with ant-like variable references.
  * 
- * @author Sualeh Fatehi
+ * @author sfatehi
  */
-public final class CrawlerUtililties
+public class Query
+  implements Serializable
 {
-  /**
-   * Expands placeholders in the template SQL from the table properties.
-   * 
-   * @param templateSql
-   *        Template SQL
-   * @param table
-   *        Table
-   * @return Expanded SQL
-   */
-  public static String expandSqlForTable(final String templateSql,
-                                         final Table table)
-  {
 
+  private static final long serialVersionUID = 2820769346069413473L;
+
+  private final String name;
+  private final String query;
+
+  /**
+   * Definition of a query, including a name, and parameterized or
+   * regular SQL.
+   * 
+   * @param name
+   *        Query name.
+   * @param query
+   *        Query SQL.
+   */
+  public Query(final String name, final String query)
+  {
+    if (name == null || name.length() == 0)
+    {
+      throw new IllegalArgumentException("No name provided for the query");
+    }
+    this.name = name;
+    if (query == null || query.length() == 0)
+    {
+      throw new IllegalArgumentException("No SQL provided for query '" + name
+                                         + "'");
+    }
+    this.query = query;
+  }
+
+  /**
+   * @return the name
+   */
+  public String getName()
+  {
+    return name;
+  }
+
+  /**
+   * @return the query
+   */
+  public String getQuery()
+  {
+    return query;
+  }
+
+  public String getQueryForTable(Table table)
+  {
     final Properties tableProperties = new Properties();
     if (table != null)
     {
@@ -61,17 +99,29 @@ public final class CrawlerUtililties
       tableProperties.setProperty("tabletype", table.getType().toString());
     }
 
-    String sql = templateSql;
+    String sql = query;
     sql = Utilities.expandTemplateFromProperties(sql, tableProperties);
     sql = Utilities.expandTemplateFromProperties(sql);
 
     return sql;
-
   }
 
-  private CrawlerUtililties()
+  public boolean isQueryOver()
   {
-    // Prevent instantiation
+    boolean isQueryOver = false;
+    final Set<String> keys = Utilities.extractTemplateVariables(query);
+    final String[] queryOverKeys = {
+        "table", "table_type"
+    };
+    for (final String element: queryOverKeys)
+    {
+      if (keys.contains(element))
+      {
+        isQueryOver = true;
+        break;
+      }
+    }
+    return isQueryOver;
   }
 
 }
