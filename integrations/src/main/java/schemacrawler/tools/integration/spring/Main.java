@@ -42,8 +42,7 @@ public final class Main
    */
   public static void main(final String[] args)
   {
-    // CommandLineUtility
-    // .checkForHelp(args, "/schemacrawler-sqlserver-readme.txt");
+    CommandLineUtility.checkForHelp(args, "/schemacrawler-spring-readme.txt");
     CommandLineUtility.setLogLevel(args);
 
     try
