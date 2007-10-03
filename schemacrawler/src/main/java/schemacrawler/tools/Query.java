@@ -57,7 +57,8 @@ public class Query
     this.name = name;
     if (query == null || query.length() == 0)
     {
-      throw new IllegalArgumentException("No SQL provided for query " + name);
+      throw new IllegalArgumentException("No SQL provided for query '" + name
+                                         + "'");
     }
     this.query = query;
   }
