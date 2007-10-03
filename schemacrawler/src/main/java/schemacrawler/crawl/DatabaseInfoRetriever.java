@@ -317,7 +317,7 @@ final class DatabaseInfoRetriever
    */
   private boolean isDatabasePropertiesResultSetMethod(final Method method)
   {
-    final Class returnType = method.getReturnType();
+    final Class<?> returnType = method.getReturnType();
     final boolean isPropertiesResultSetMethod = returnType
       .equals(ResultSet.class)
                                                 && method.getParameterTypes().length == 0;
@@ -332,7 +332,7 @@ final class DatabaseInfoRetriever
    */
   private boolean isDatabasePropertyMethod(final Method method)
   {
-    final Class returnType = method.getReturnType();
+    final Class<?> returnType = method.getReturnType();
     boolean notPropertyMethod = returnType.equals(ResultSet.class)
                                 || returnType.equals(Connection.class)
                                 || method.getParameterTypes().length > 0;

@@ -10,6 +10,8 @@ public class Query
   implements Serializable
 {
 
+  private static final long serialVersionUID = 2820769346069413473L;
+
   private final String name;
   private final String query;
 
