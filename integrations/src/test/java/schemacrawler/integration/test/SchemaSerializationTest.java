@@ -85,7 +85,7 @@ public class SchemaSerializationTest
 
     final DetailedDiff myDiff = new DetailedDiff(new Diff(xmlSerializedSchema1,
                                                           xmlSerializedSchema2));
-    final List allDifferences = myDiff.getAllDifferences();
+    final List<?> allDifferences = myDiff.getAllDifferences();
     if (!myDiff.similar())
     {
       write(xmlSerializedSchema1, "/temp/serialized-schema-1.xml");
