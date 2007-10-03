@@ -262,6 +262,26 @@ public final class OutputOptions
   }
 
   /**
+   * Sets the name of the output file.
+   * 
+   * @param outputFileName
+   *        Output file name.
+   */
+  public void setOutputFileName(String outputFileName)
+  {
+    if (outputFileName == null)
+    {
+      throw new IllegalArgumentException("Cannot use null value in a setter");
+    }
+    outputFile = new File(outputFileName);
+    if (!outputFile.canWrite())
+    {
+      throw new IllegalArgumentException("Cannot write to "
+                                         + outputFile.getAbsolutePath());
+    }
+  }
+
+  /**
    * {@inheritDoc}
    * 
    * @see Object#toString()
