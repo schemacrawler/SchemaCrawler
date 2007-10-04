@@ -275,14 +275,14 @@ final class TableExRetriever
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
-    final String triggerInformationSql = informationSchemaViews.getTriggers()
-      .getQuery();
-    if (Utilities.isBlank(triggerInformationSql))
+    if (!informationSchemaViews.hasTriggerSql())
     {
       LOGGER.log(Level.FINE,
                  "Trigger definition SQL statement was not provided");
       return;
     }
+    final String triggerInformationSql = informationSchemaViews.getTriggers()
+      .getQuery();
 
     final Connection connection = getRetrieverConnection().getMetaData()
       .getConnection();
