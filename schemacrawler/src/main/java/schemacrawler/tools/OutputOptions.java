@@ -25,6 +25,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.main.Options;
 import sf.util.Utilities;
@@ -40,8 +42,10 @@ public final class OutputOptions
 
   private static final long serialVersionUID = 7018337388923813055L;
 
-  private String outputFormatValue;
+  private static final Logger LOGGER = Logger.getLogger(OutputOptions.class
+    .getName());
 
+  private String outputFormatValue;
   private File outputFile;
 
   private boolean appendOutput;
@@ -200,6 +204,29 @@ public final class OutputOptions
       writer = new PrintWriter(fileWriter, /* autoFlush = */true);
     }
     return writer;
+  }
+
+  /**
+   * Close the output writer.
+   * 
+   * @param writer
+   *        Output writer
+   */
+  public void closeOutputWriter(PrintWriter writer)
+  {
+    if (outputFile != null)
+    {
+      if (writer != null)
+      {
+        writer.close();
+        LOGGER.log(Level.FINER, "Output writer closed");
+      }
+    }
+    else
+    {
+      LOGGER.log(Level.FINER,
+                 "Not closing output writer, since output is to console");
+    }
   }
 
   /**

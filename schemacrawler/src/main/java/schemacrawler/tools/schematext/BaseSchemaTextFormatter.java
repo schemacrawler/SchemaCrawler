@@ -26,7 +26,6 @@ import java.io.PrintWriter;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.crawl.CrawlHandler;
@@ -132,8 +131,7 @@ public abstract class BaseSchemaTextFormatter
   public void end()
     throws SchemaCrawlerException
   {
-    out.close();
-    LOGGER.log(Level.FINER, "Output writer closed");
+    options.getOutputOptions().closeOutputWriter(out);
   }
 
   /**
