@@ -167,11 +167,11 @@ public final class ExecutionContext
           .getName()));
         if (query.isQueryOver())
         {
-          toolType = ToolType.data_text;
+          toolType = ToolType.operation;
         }
         else
         {
-          toolType = ToolType.operation;
+          toolType = ToolType.data_text;
         }
       }
       else
