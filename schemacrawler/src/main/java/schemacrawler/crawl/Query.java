@@ -124,4 +124,15 @@ public class Query
     return isQueryOver;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    return name + ":" + Utilities.NEWLINE + query;
+  }
+
 }
