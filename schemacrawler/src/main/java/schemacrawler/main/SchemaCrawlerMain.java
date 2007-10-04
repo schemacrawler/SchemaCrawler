@@ -92,15 +92,15 @@ public final class SchemaCrawlerMain
     throws Exception
   {
 
-    final ExecutionContext[] optionCommands = ExecutionContextFactory
+    final ExecutionContext[] executionContexts = ExecutionContextFactory
       .createExecutionContexts(args, config);
-    if (optionCommands.length > 0)
+    if (executionContexts.length > 0)
     {
       LOGGER.log(Level.CONFIG, Version.about());
       LOGGER.log(Level.CONFIG, "Commandline: " + Arrays.asList(args));
-      for (final ExecutionContext options: optionCommands)
+      for (final ExecutionContext executionContext: executionContexts)
       {
-        LOGGER.log(Level.CONFIG, options.toString());
+        LOGGER.log(Level.CONFIG, executionContext.toString());
         final DataSource dataSource = dataSourceParser.createDataSource();
         if (executor instanceof ToolsExecutor)
         {
@@ -108,7 +108,7 @@ public final class SchemaCrawlerMain
             .setInformationSchemaViews(new InformationSchemaViews(((PropertiesDataSource) dataSource)
               .getSourceConfiguration()));
         }
-        executor.execute(options, dataSource);
+        executor.execute(executionContext, dataSource);
       }
     }
   }
