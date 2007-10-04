@@ -31,7 +31,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.crawl.SchemaCrawlerException;
@@ -99,8 +98,7 @@ public abstract class BaseDataTextFormatter
    */
   public void end()
   {
-    out.close();
-    LOGGER.log(Level.FINER, "Output writer closed");
+    options.getOutputOptions().closeOutputWriter(out);
   }
 
   /**

@@ -178,8 +178,7 @@ public abstract class BaseOperator
     throws SchemaCrawlerException
   {
 
-    out.close();
-    LOGGER.log(Level.FINER, "Output writer closed");
+    options.getOutputOptions().closeOutputWriter(out);
     try
     {
       if (dataHandler != null)
