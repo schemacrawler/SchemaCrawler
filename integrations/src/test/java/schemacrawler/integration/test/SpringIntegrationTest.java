@@ -2,9 +2,13 @@ package schemacrawler.integration.test;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import java.io.File;
 
 import javax.sql.DataSource;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -14,6 +18,8 @@ import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
 import schemacrawler.schema.Schema;
+import schemacrawler.tools.ExecutionContext;
+import schemacrawler.tools.ToolsExecutor;
 import dbconnector.test.TestUtility;
 
 public class SpringIntegrationTest
@@ -33,13 +39,38 @@ public class SpringIntegrationTest
   @Test
   public void testSchema()
   {
-    SchemaCrawlerOptions schemaCrawlerOptions = (SchemaCrawlerOptions) appContext
+    final SchemaCrawlerOptions schemaCrawlerOptions = (SchemaCrawlerOptions) appContext
       .getBean("schemaCrawlerOptions");
-    DataSource dataSource = (DataSource) appContext.getBean("dataSource");
+    final DataSource dataSource = (DataSource) appContext.getBean("dataSource");
     final Schema schema = SchemaCrawler.getSchema(dataSource,
                                                   SchemaInfoLevel.maximum,
                                                   schemaCrawlerOptions);
     assertEquals(6, schema.getTables().length);
+  }
+
+  @Test
+  public void testToolsExecutorSchemaText()
+    throws Exception
+  {
+    final String outputFilename = File.createTempFile("schemacrawler", "test")
+      .getAbsolutePath();
+
+    final ExecutionContext executionContext = (ExecutionContext) appContext
+      .getBean("executionContextForSchema");
+    final DataSource dataSource = (DataSource) appContext.getBean("dataSource");
+
+    executionContext.getToolOptions().getOutputOptions()
+      .setOutputFileName(outputFilename);
+
+    new ToolsExecutor().execute(executionContext, dataSource);
+
+    final File outputFile = new File(outputFilename);
+    Assert.assertTrue(outputFile.exists());
+    Assert.assertTrue(outputFile.length() > 0);
+    if (!outputFile.delete())
+    {
+      fail("Cannot delete output file");
+    }
   }
 
 }
