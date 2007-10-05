@@ -68,32 +68,20 @@
   </bean>
 
   <bean
-    id="schemaTextOptions"
-    class="schemacrawler.tools.schematext.SchemaTextOptions">
+    id="outputOptions"
+    class="schemacrawler.tools.OutputOptions">
     <property
-      name="showOrdinalNumbers"
+      name="appendOutput"
       value="false" />
     <property
-      name="showStandardColumnTypeNames"
+      name="noFooter"
       value="true" />
     <property
-      name="hidePrimaryKeyNames"
+      name="noHeader"
       value="true" />
     <property
-      name="hideIndexNames"
+      name="noInfo"
       value="true" />
-    <property
-      name="hideForeignKeyNames"
-      value="true" />
-    <property
-      name="hideConstraintNames"
-      value="true" />
-    <property
-      name="schemaTextDetailType"
-      value="basic_schema" />
-    <property
-      name="outputOptions"
-      ref="outputOptions" />
   </bean>
 
   <bean
@@ -146,22 +134,39 @@
   </bean>
 
   <bean
-    id="outputOptions"
-    class="schemacrawler.tools.OutputOptions">
+    id="schemaTextOptions"
+    class="schemacrawler.tools.schematext.SchemaTextOptions">
     <property
-      name="appendOutput"
+      name="showOrdinalNumbers"
       value="false" />
     <property
-      name="noFooter"
+      name="showStandardColumnTypeNames"
       value="true" />
     <property
-      name="noHeader"
+      name="hidePrimaryKeyNames"
       value="true" />
     <property
-      name="noInfo"
+      name="hideIndexNames"
       value="true" />
+    <property
+      name="hideForeignKeyNames"
+      value="true" />
+    <property
+      name="hideConstraintNames"
+      value="true" />
+    <property
+      name="schemaTextDetailType"
+      value="basic_schema" />
+    <property
+      name="outputOptions"
+      ref="outputOptions" />
   </bean>
-
+  
+  <bean
+    id="operatorOptions"
+    class="OperatorOptions">
+  </bean>
+  
   <bean
     id="executionContextForSchema"
     class="schemacrawler.tools.ExecutionContext">
