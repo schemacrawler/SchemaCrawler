@@ -73,4 +73,28 @@ public class SpringIntegrationTest
     }
   }
 
+  @Test
+  public void testToolsExecutorCountText()
+    throws Exception
+  {
+    final String outputFilename = File.createTempFile("schemacrawler", "test")
+      .getAbsolutePath();
+
+    final ExecutionContext executionContext = (ExecutionContext) appContext
+      .getBean("executionContextForCount");
+    final DataSource dataSource = (DataSource) appContext.getBean("dataSource");
+
+    executionContext.getToolOptions().getOutputOptions()
+      .setOutputFileName(outputFilename);
+
+    new ToolsExecutor().execute(executionContext, dataSource);
+
+    final File outputFile = new File(outputFilename);
+    Assert.assertTrue(outputFile.exists());
+    Assert.assertTrue(outputFile.length() > 0);
+    if (!outputFile.delete())
+    {
+      fail("Cannot delete output file");
+    }
+  }
 }

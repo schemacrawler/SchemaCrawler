@@ -161,18 +161,32 @@
       name="outputOptions"
       ref="outputOptions" />
   </bean>
-  
+
   <bean
     id="operatorOptions"
-    class="OperatorOptions">
+    class="schemacrawler.tools.operation.OperatorOptions">
+    <property
+      name="operation"
+      value="count" />
+    <property
+      name="outputOptions"
+      ref="outputOptions" />
   </bean>
-  
+
   <bean
     id="executionContextForSchema"
     class="schemacrawler.tools.ExecutionContext">
     <constructor-arg ref="schemaCrawlerOptions" />
     <constructor-arg ref="informationSchemaViews" />
     <constructor-arg ref="schemaTextOptions" />
+  </bean>
+
+  <bean
+    id="executionContextForCount"
+    class="schemacrawler.tools.ExecutionContext">
+    <constructor-arg ref="schemaCrawlerOptions" />
+    <constructor-arg ref="informationSchemaViews" />
+    <constructor-arg ref="operatorOptions" />
   </bean>
 
 </beans>
