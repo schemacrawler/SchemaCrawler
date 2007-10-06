@@ -36,7 +36,7 @@ public final class OperatorOptions
 
   private static final long serialVersionUID = -7977434852526746391L;
 
-  private final Operation operation;
+  private Operation operation;
 
   /**
    * Operator options, defaults.
@@ -96,6 +96,21 @@ public final class OperatorOptions
   }
 
   /**
+   * Sets the operation.
+   * 
+   * @param operation
+   *        Operation
+   */
+  public void setOperation(Operation operation)
+  {
+    if (operation == null)
+    {
+      throw new IllegalArgumentException("Cannot set null operation");
+    }
+    this.operation = operation;
+  }
+
+  /**
    * {@inheritDoc}
    * 
    * @see Object#toString()
@@ -111,7 +126,7 @@ public final class OperatorOptions
     return buffer.toString();
   }
 
-  Operation getOperation()
+  public Operation getOperation()
   {
     return operation;
   }
