@@ -187,7 +187,7 @@
       value="true" />
     <property name="query">
       <bean class="schemacrawler.crawl.Query">
-        <constructor-arg value="query" />
+        <constructor-arg value="select.tables" />
         <constructor-arg>
           <value>
             <![CDATA[
