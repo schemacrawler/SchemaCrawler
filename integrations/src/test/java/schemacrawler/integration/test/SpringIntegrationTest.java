@@ -49,7 +49,57 @@ public class SpringIntegrationTest
   }
 
   @Test
-  public void testToolsExecutorSchemaText()
+  public void testToolsExecutorForCount()
+    throws Exception
+  {
+    final String outputFilename = File.createTempFile("schemacrawler", "test")
+      .getAbsolutePath();
+
+    final ExecutionContext executionContext = (ExecutionContext) appContext
+      .getBean("executionContextForCount");
+    final DataSource dataSource = (DataSource) appContext.getBean("dataSource");
+
+    executionContext.getToolOptions().getOutputOptions()
+      .setOutputFileName(outputFilename);
+
+    new ToolsExecutor().execute(executionContext, dataSource);
+
+    final File outputFile = new File(outputFilename);
+    Assert.assertTrue(outputFile.exists());
+    Assert.assertTrue(outputFile.length() > 0);
+    if (!outputFile.delete())
+    {
+      fail("Cannot delete output file");
+    }
+  }
+
+  @Test
+  public void testToolsExecutorForQuery()
+    throws Exception
+  {
+    final String outputFilename = File.createTempFile("schemacrawler", "test")
+      .getAbsolutePath();
+
+    final ExecutionContext executionContext = (ExecutionContext) appContext
+      .getBean("executionContextForQuery");
+    final DataSource dataSource = (DataSource) appContext.getBean("dataSource");
+
+    executionContext.getToolOptions().getOutputOptions()
+      .setOutputFileName(outputFilename);
+
+    new ToolsExecutor().execute(executionContext, dataSource);
+
+    final File outputFile = new File(outputFilename);
+    Assert.assertTrue(outputFile.exists());
+    Assert.assertTrue(outputFile.length() > 0);
+    if (!outputFile.delete())
+    {
+      fail("Cannot delete output file");
+    }
+  }
+
+  @Test
+  public void testToolsExecutorForSchema()
     throws Exception
   {
     final String outputFilename = File.createTempFile("schemacrawler", "test")
@@ -73,28 +123,4 @@ public class SpringIntegrationTest
     }
   }
 
-  @Test
-  public void testToolsExecutorCountText()
-    throws Exception
-  {
-    final String outputFilename = File.createTempFile("schemacrawler", "test")
-      .getAbsolutePath();
-
-    final ExecutionContext executionContext = (ExecutionContext) appContext
-      .getBean("executionContextForCount");
-    final DataSource dataSource = (DataSource) appContext.getBean("dataSource");
-
-    executionContext.getToolOptions().getOutputOptions()
-      .setOutputFileName(outputFilename);
-
-    new ToolsExecutor().execute(executionContext, dataSource);
-
-    final File outputFile = new File(outputFilename);
-    Assert.assertTrue(outputFile.exists());
-    Assert.assertTrue(outputFile.length() > 0);
-    if (!outputFile.delete())
-    {
-      fail("Cannot delete output file");
-    }
-  }
 }

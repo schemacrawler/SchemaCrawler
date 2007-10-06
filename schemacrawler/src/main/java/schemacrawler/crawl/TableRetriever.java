@@ -53,67 +53,6 @@ final class TableRetriever
   private static final Logger LOGGER = Logger.getLogger(TableRetriever.class
     .getName());
 
-  /**
-   * @param results
-   * @param tablesMap
-   * @param table
-   * @param foreignKeysMap
-   * @throws SQLException
-   */
-  private void createForeignKeys(final ResultSet results,
-                                 final NamedObjectList<MutableTable> tables,
-                                 final MutableTable table,
-                                 final Map<String, MutableForeignKey> foreignKeysMap)
-    throws SQLException
-  {
-
-    try
-    {
-      while (results.next())
-      {
-        String foreignKeyName = results.getString("FK_NAME");
-        if (foreignKeyName == null || foreignKeyName.length() == 0)
-        {
-          foreignKeyName = UNKNOWN;
-        }
-        MutableForeignKey foreignKey = foreignKeysMap.get(foreignKeyName);
-        if (foreignKey == null)
-        {
-          foreignKey = new MutableForeignKey(table.getCatalogName(), table
-            .getSchemaName(), foreignKeyName);
-          foreignKeysMap.put(foreignKeyName, foreignKey);
-        }
-        final String pkTableSchema = results.getString("PKTABLE_SCHEM");
-        final String pkTableName = results.getString("PKTABLE_NAME");
-        final String pkColumnName = results.getString("PKCOLUMN_NAME");
-        final String fkTableName = results.getString("FKTABLE_NAME");
-        final String fkColumnName = results.getString("FKCOLUMN_NAME");
-        final int keySequence = results.getInt(KEY_SEQ);
-        final int updateRule = results.getInt("UPDATE_RULE");
-        final int deleteRule = results.getInt("DELETE_RULE");
-        final int deferrability = results.getInt("DEFERRABILITY");
-        final MutableColumn pkColumn = lookupOrCreateColumn(tables,
-                                                            pkTableSchema,
-                                                            pkTableName,
-                                                            pkColumnName);
-        final MutableColumn fkColumn = lookupOrCreateColumn(tables,
-                                                            pkTableSchema,
-                                                            fkTableName,
-                                                            fkColumnName);
-        foreignKey.addColumnPair(keySequence, pkColumn, fkColumn);
-        foreignKey.setUpdateRule(ForeignKeyUpdateRule.valueOf(updateRule));
-        foreignKey.setDeleteRule(ForeignKeyUpdateRule.valueOf(deleteRule));
-        foreignKey.setDeferrability(ForeignKeyDeferrability
-          .valueOf(deferrability));
-      }
-    }
-    finally
-    {
-      results.close();
-    }
-
-  }
-
   private static void createIndices(final ResultSet results,
                                     final MutableTable table,
                                     final Map<String, MutableIndex> indicesMap)
@@ -165,27 +104,6 @@ final class TableRetriever
     {
       results.close();
     }
-  }
-
-  private MutableColumn lookupOrCreateColumn(final NamedObjectList<MutableTable> tables,
-                                             final String schema,
-                                             final String tableName,
-                                             final String columnName)
-  {
-
-    MutableColumn column = null;
-    MutableTable table = tables.lookup(tableName);
-    if (table != null)
-    {
-      column = (MutableColumn) table.lookupColumn(columnName);
-    }
-    if (column == null)
-    {
-      final String catalog = getRetrieverConnection().getCatalog();
-      table = new MutableTable(catalog, schema, tableName);
-      column = new MutableColumn(columnName, table);
-    }
-    return column;
   }
 
   /**
@@ -322,7 +240,7 @@ final class TableRetriever
     ResultSet results = null;
     if (informationSchemaViews.hasIndexInfoSql())
     {
-      String indexInfoSql = informationSchemaViews.getIndexInfo()
+      final String indexInfoSql = informationSchemaViews.getIndexInfo()
         .getQueryForTable(table);
       LOGGER.log(Level.FINE, "Using getIndexInfo SQL:" + Utilities.NEWLINE
                              + indexInfoSql);
@@ -473,6 +391,88 @@ final class TableRetriever
 
     return tables;
 
+  }
+
+  /**
+   * @param results
+   * @param tablesMap
+   * @param table
+   * @param foreignKeysMap
+   * @throws SQLException
+   */
+  private void createForeignKeys(final ResultSet results,
+                                 final NamedObjectList<MutableTable> tables,
+                                 final MutableTable table,
+                                 final Map<String, MutableForeignKey> foreignKeysMap)
+    throws SQLException
+  {
+
+    try
+    {
+      while (results.next())
+      {
+        String foreignKeyName = results.getString("FK_NAME");
+        if (foreignKeyName == null || foreignKeyName.length() == 0)
+        {
+          foreignKeyName = UNKNOWN;
+        }
+        MutableForeignKey foreignKey = foreignKeysMap.get(foreignKeyName);
+        if (foreignKey == null)
+        {
+          foreignKey = new MutableForeignKey(table.getCatalogName(), table
+            .getSchemaName(), foreignKeyName);
+          foreignKeysMap.put(foreignKeyName, foreignKey);
+        }
+        final String pkTableSchema = results.getString("PKTABLE_SCHEM");
+        final String pkTableName = results.getString("PKTABLE_NAME");
+        final String pkColumnName = results.getString("PKCOLUMN_NAME");
+        final String fkTableName = results.getString("FKTABLE_NAME");
+        final String fkColumnName = results.getString("FKCOLUMN_NAME");
+        final int keySequence = results.getInt(KEY_SEQ);
+        final int updateRule = results.getInt("UPDATE_RULE");
+        final int deleteRule = results.getInt("DELETE_RULE");
+        final int deferrability = results.getInt("DEFERRABILITY");
+        final MutableColumn pkColumn = lookupOrCreateColumn(tables,
+                                                            pkTableSchema,
+                                                            pkTableName,
+                                                            pkColumnName);
+        final MutableColumn fkColumn = lookupOrCreateColumn(tables,
+                                                            pkTableSchema,
+                                                            fkTableName,
+                                                            fkColumnName);
+        foreignKey.addColumnPair(keySequence, pkColumn, fkColumn);
+        foreignKey.setUpdateRule(ForeignKeyUpdateRule.valueOf(updateRule));
+        foreignKey.setDeleteRule(ForeignKeyUpdateRule.valueOf(deleteRule));
+        foreignKey.setDeferrability(ForeignKeyDeferrability
+          .valueOf(deferrability));
+      }
+    }
+    finally
+    {
+      results.close();
+    }
+
+  }
+
+  private MutableColumn lookupOrCreateColumn(final NamedObjectList<MutableTable> tables,
+                                             final String schema,
+                                             final String tableName,
+                                             final String columnName)
+  {
+
+    MutableColumn column = null;
+    MutableTable table = tables.lookup(tableName);
+    if (table != null)
+    {
+      column = (MutableColumn) table.lookupColumn(columnName);
+    }
+    if (column == null)
+    {
+      final String catalog = getRetrieverConnection().getCatalog();
+      table = new MutableTable(catalog, schema, tableName);
+      column = new MutableColumn(columnName, table);
+    }
+    return column;
   }
 
 }

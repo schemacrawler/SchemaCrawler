@@ -45,6 +45,13 @@ public class ExecutorIntegrationTest
 
   private static TestUtility testUtility = new TestUtility();
 
+  @AfterClass
+  public static void afterAllTests()
+    throws PropertiesDataSourceException, ClassNotFoundException
+  {
+    testUtility.shutdownDatabase();
+  }
+
   @BeforeClass
   public static void beforeAllTests()
     throws PropertiesDataSourceException, ClassNotFoundException
@@ -53,11 +60,37 @@ public class ExecutorIntegrationTest
     testUtility.createMemoryDatabase();
   }
 
-  @AfterClass
-  public static void afterAllTests()
-    throws PropertiesDataSourceException, ClassNotFoundException
+  @Test
+  public void schemaGraphingWithJung()
+    throws Exception
   {
-    testUtility.shutdownDatabase();
+    final String outputFilename = File.createTempFile("schemacrawler", ".jpg")
+      .getAbsolutePath();
+    final OutputOptions outputOptions = new OutputOptions("800x600",
+                                                          outputFilename);
+    executorIntegrationTest(new JungExecutor(), outputOptions);
+  }
+
+  @Test
+  public void templatingWithFreeMarker()
+    throws Exception
+  {
+    final String outputFilename = File.createTempFile("schemacrawler", ".txt")
+      .getAbsolutePath();
+    final OutputOptions outputOptions = new OutputOptions("plaintextschema.ftl",
+                                                          outputFilename);
+    executorIntegrationTest(new FreeMarkerExecutor(), outputOptions);
+  }
+
+  @Test
+  public void templatingWithVelocity()
+    throws Exception
+  {
+    final String outputFilename = File.createTempFile("schemacrawler", ".txt")
+      .getAbsolutePath();
+    final OutputOptions outputOptions = new OutputOptions("plaintextschema.vm",
+                                                          outputFilename);
+    executorIntegrationTest(new VelocityExecutor(), outputOptions);
   }
 
   private void executorIntegrationTest(final SchemaCrawlerExecutor executor,
@@ -77,39 +110,6 @@ public class ExecutorIntegrationTest
     {
       fail("Output file '" + outputFile.getName() + "' was not created");
     }
-  }
-
-  @Test
-  public void schemaGraphingWithJung()
-    throws Exception
-  {
-    final String outputFilename = File.createTempFile("schemacrawler", ".jpg")
-      .getAbsolutePath();
-    final OutputOptions outputOptions = new OutputOptions("800x600",
-                                                          outputFilename);
-    executorIntegrationTest(new JungExecutor(), outputOptions);
-  }
-
-  @Test
-  public void templatingWithVelocity()
-    throws Exception
-  {
-    final String outputFilename = File.createTempFile("schemacrawler", ".txt")
-      .getAbsolutePath();
-    final OutputOptions outputOptions = new OutputOptions("plaintextschema.vm",
-                                                          outputFilename);
-    executorIntegrationTest(new VelocityExecutor(), outputOptions);
-  }
-
-  @Test
-  public void templatingWithFreeMarker()
-    throws Exception
-  {
-    final String outputFilename = File.createTempFile("schemacrawler", ".txt")
-      .getAbsolutePath();
-    final OutputOptions outputOptions = new OutputOptions("plaintextschema.ftl",
-                                                          outputFilename);
-    executorIntegrationTest(new FreeMarkerExecutor(), outputOptions);
   }
 
 }

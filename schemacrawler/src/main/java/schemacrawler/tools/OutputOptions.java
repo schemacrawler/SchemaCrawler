@@ -54,6 +54,11 @@ public final class OutputOptions
   private boolean noFooter;
   private boolean noInfo;
 
+  public OutputOptions()
+  {
+    this("", "");
+  }
+
   /**
    * Output options, given the type and the output filename.
    * 
@@ -77,9 +82,27 @@ public final class OutputOptions
     noInfo = true;
   }
 
-  public OutputOptions()
+  /**
+   * Close the output writer.
+   * 
+   * @param writer
+   *        Output writer
+   */
+  public void closeOutputWriter(final PrintWriter writer)
   {
-    this("", "");
+    if (outputFile != null)
+    {
+      if (writer != null)
+      {
+        writer.close();
+        LOGGER.log(Level.FINER, "Output writer closed");
+      }
+    }
+    else
+    {
+      LOGGER.log(Level.FINER,
+                 "Not closing output writer, since output is to console");
+    }
   }
 
   /**
@@ -207,29 +230,6 @@ public final class OutputOptions
   }
 
   /**
-   * Close the output writer.
-   * 
-   * @param writer
-   *        Output writer
-   */
-  public void closeOutputWriter(PrintWriter writer)
-  {
-    if (outputFile != null)
-    {
-      if (writer != null)
-      {
-        writer.close();
-        LOGGER.log(Level.FINER, "Output writer closed");
-      }
-    }
-    else
-    {
-      LOGGER.log(Level.FINER,
-                 "Not closing output writer, since output is to console");
-    }
-  }
-
-  /**
    * Whether the output gets appended.
    * 
    * @param appendOutput
@@ -274,6 +274,26 @@ public final class OutputOptions
   }
 
   /**
+   * Sets the name of the output file.
+   * 
+   * @param outputFileName
+   *        Output file name.
+   */
+  public void setOutputFileName(final String outputFileName)
+  {
+    if (outputFileName == null)
+    {
+      throw new IllegalArgumentException("Cannot use null value in a setter");
+    }
+    outputFile = new File(outputFileName);
+    if (!outputFile.canWrite())
+    {
+      throw new IllegalArgumentException("Cannot write to "
+                                         + outputFile.getAbsolutePath());
+    }
+  }
+
+  /**
    * Sets output format value.
    * 
    * @param outputFormatValue
@@ -286,26 +306,6 @@ public final class OutputOptions
       throw new IllegalArgumentException("Cannot use null value in a setter");
     }
     this.outputFormatValue = outputFormatValue;
-  }
-
-  /**
-   * Sets the name of the output file.
-   * 
-   * @param outputFileName
-   *        Output file name.
-   */
-  public void setOutputFileName(String outputFileName)
-  {
-    if (outputFileName == null)
-    {
-      throw new IllegalArgumentException("Cannot use null value in a setter");
-    }
-    outputFile = new File(outputFileName);
-    if (!outputFile.canWrite())
-    {
-      throw new IllegalArgumentException("Cannot write to "
-                                         + outputFile.getAbsolutePath());
-    }
   }
 
   /**

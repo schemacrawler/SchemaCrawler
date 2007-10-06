@@ -58,6 +58,31 @@ public final class ColumnsGrep
    * 
    * @param dataSource
    *        Data source
+   * @param tableInclusionRule
+   *        Inclusion rule for tables
+   * @param columnInclusionRule
+   *        Inclusion rule for columns
+   * @param invertMatch
+   *        Whether to invert the table match
+   * @return Matching tables
+   */
+  public static Table[] grep(final DataSource dataSource,
+                             final InclusionRule tableInclusionRule,
+                             final InclusionRule columnInclusionRule,
+                             final boolean invertMatch)
+  {
+    return grep(dataSource,
+                null,
+                tableInclusionRule,
+                columnInclusionRule,
+                invertMatch);
+  }
+
+  /**
+   * Gets tables that contain the specified columns.
+   * 
+   * @param dataSource
+   *        Data source
    * @param informationSchemaViews
    *        Additional connection configuration for INFORMATION_SCHEMA
    * @param tableInclusionRule
@@ -95,31 +120,6 @@ public final class ColumnsGrep
     }
 
     return tablesList.toArray(new Table[tablesList.size()]);
-  }
-
-  /**
-   * Gets tables that contain the specified columns.
-   * 
-   * @param dataSource
-   *        Data source
-   * @param tableInclusionRule
-   *        Inclusion rule for tables
-   * @param columnInclusionRule
-   *        Inclusion rule for columns
-   * @param invertMatch
-   *        Whether to invert the table match
-   * @return Matching tables
-   */
-  public static Table[] grep(final DataSource dataSource,
-                             final InclusionRule tableInclusionRule,
-                             final InclusionRule columnInclusionRule,
-                             final boolean invertMatch)
-  {
-    return grep(dataSource,
-                null,
-                tableInclusionRule,
-                columnInclusionRule,
-                invertMatch);
   }
 
   /**

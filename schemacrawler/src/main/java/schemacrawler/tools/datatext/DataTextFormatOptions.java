@@ -39,9 +39,10 @@ public class DataTextFormatOptions
 
   private static final String SHOW_LOBS = "schemacrawler.data.show_lobs";
   private static final String MERGE_ROWS = "schemacrawler.data.merge_rows";
-  private final boolean mergeRows;
-  private final boolean showLobs;
-  private final Query query;
+
+  private boolean mergeRows;
+  private boolean showLobs;
+  private Query query;
 
   /**
    * Data text formatting options, defaults.
@@ -88,6 +89,57 @@ public class DataTextFormatOptions
   }
 
   /**
+   * Get the query.
+   * 
+   * @return The query
+   */
+  public Query getQuery()
+  {
+    return query;
+  }
+
+  public boolean isMergeRows()
+  {
+    return mergeRows;
+  }
+
+  public boolean isShowLobs()
+  {
+    return showLobs;
+  }
+
+  /**
+   * Whether to merge similar rows.
+   * 
+   * @param mergeRows
+   *        Whether to merge similar rows
+   */
+  public void setMergeRows(final boolean mergeRows)
+  {
+    this.mergeRows = mergeRows;
+  }
+
+  /**
+   * @param query
+   *        the query to set
+   */
+  public void setQuery(final Query query)
+  {
+    this.query = query;
+  }
+
+  /**
+   * Whether to show LOBs.
+   * 
+   * @param showLobs
+   *        Whether to show LOBs
+   */
+  public void setShowLobs(final boolean showLobs)
+  {
+    this.showLobs = showLobs;
+  }
+
+  /**
    * {@inheritDoc}
    * 
    * @see Object#toString()
@@ -102,24 +154,6 @@ public class DataTextFormatOptions
     buffer.append(", outputOptions=").append(getOutputOptions());
     buffer.append("]");
     return buffer.toString();
-  }
-
-  boolean isMergeRows()
-  {
-    return mergeRows;
-  }
-
-  boolean isShowLobs()
-  {
-    return showLobs;
-  }
-
-  /**
-   * @return the query
-   */
-  public Query getQuery()
-  {
-    return query;
   }
 
 }

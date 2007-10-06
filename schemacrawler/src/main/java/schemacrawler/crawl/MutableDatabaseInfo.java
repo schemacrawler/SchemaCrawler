@@ -249,6 +249,11 @@ final class MutableDatabaseInfo
     return columnDataType;
   }
 
+  void putProperty(final String name, final Object value)
+  {
+    dbProperties.put(name, value);
+  }
+
   void setConnectionUrl(final String connectionUrl)
   {
     this.connectionUrl = connectionUrl;
@@ -272,11 +277,6 @@ final class MutableDatabaseInfo
   void setProductVersion(final String productVersion)
   {
     this.productVersion = productVersion;
-  }
-
-  void putProperty(final String name, final Object value)
-  {
-    dbProperties.put(name, value);
   }
 
   void setSchemaPattern(final String schemaPattern)

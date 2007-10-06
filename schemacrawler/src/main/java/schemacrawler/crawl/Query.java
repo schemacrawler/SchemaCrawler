@@ -81,7 +81,7 @@ public class Query
     return query;
   }
 
-  public String getQueryForTable(Table table)
+  public String getQueryForTable(final Table table)
   {
     final Properties tableProperties = new Properties();
     if (table != null)
