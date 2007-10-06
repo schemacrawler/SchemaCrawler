@@ -121,8 +121,7 @@ public class FreeMarkerExecutor
     throws Exception
   {
     // Get the entire schema at once, since we need to use this to
-    // render
-    // the velocity template
+    // render the template
     final Schema schema = SchemaCrawler.getSchema(dataSource, schemaTextOptions
       .getSchemaTextDetailType().mapToInfoLevel(), schemaCrawlerOptions);
     final Writer writer = schemaTextOptions.getOutputOptions()
