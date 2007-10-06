@@ -62,46 +62,6 @@ public final class Command
   }
 
   /**
-   * Is this an query?
-   * 
-   * @return Tool type.
-   */
-  public boolean isQuery()
-  {
-    return isQuery;
-  }
-
-  /**
-   * Gets the command name.
-   * 
-   * @return Command name.
-   */
-  public String getName()
-  {
-    return name;
-  }
-
-  @Override
-  public String toString()
-  {
-    return name;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#hashCode()
-   */
-  @Override
-  public int hashCode()
-  {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (name == null? 0: name.hashCode());
-    return result;
-  }
-
-  /**
    * {@inheritDoc}
    * 
    * @see java.lang.Object#equals(java.lang.Object)
@@ -134,6 +94,46 @@ public final class Command
       return false;
     }
     return true;
+  }
+
+  /**
+   * Gets the command name.
+   * 
+   * @return Command name.
+   */
+  public String getName()
+  {
+    return name;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#hashCode()
+   */
+  @Override
+  public int hashCode()
+  {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (name == null? 0: name.hashCode());
+    return result;
+  }
+
+  /**
+   * Is this an query?
+   * 
+   * @return Tool type.
+   */
+  public boolean isQuery()
+  {
+    return isQuery;
+  }
+
+  @Override
+  public String toString()
+  {
+    return name;
   }
 
 }

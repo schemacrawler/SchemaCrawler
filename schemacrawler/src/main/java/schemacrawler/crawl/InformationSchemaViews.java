@@ -64,16 +64,16 @@ public final class InformationSchemaViews
           KEY_INFORMATION_SCHEMA_ROUTINES,
           KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS,
       };
-      for (String key: keys)
+      for (final String key: keys)
       {
         if (informationSchemaViewsSql.containsKey(key))
         {
           try
           {
-            Query query = new Query(key, informationSchemaViewsSql.get(key));
+            final Query query = new Query(key, informationSchemaViewsSql.get(key));
             this.informationSchemaQueries.put(key, query);
           }
-          catch (IllegalArgumentException e)
+          catch (final IllegalArgumentException e)
           {
             // Ignore
           }
@@ -113,6 +113,37 @@ public final class InformationSchemaViews
   public Query getRoutines()
   {
     return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_ROUTINES);
+  }
+
+  /**
+   * Gets the table constraints SQL from the additional configuration.
+   * 
+   * @return Table constraints SQL.
+   */
+  public Query getTableConstraints()
+  {
+    return informationSchemaQueries
+      .get(KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS);
+  }
+
+  /**
+   * Gets the trigger definitions SQL from the additional configuration.
+   * 
+   * @return Trigger defnitions SQL.
+   */
+  public Query getTriggers()
+  {
+    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_TRIGGERS);
+  }
+
+  /**
+   * Gets the view definitions SQL from the additional configuration.
+   * 
+   * @return View defnitions SQL.
+   */
+  public Query getViews()
+  {
+    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_VIEWS);
   }
 
   /**
@@ -193,35 +224,10 @@ public final class InformationSchemaViews
                                  new Query(KEY_INFORMATION_SCHEMA_VIEWS, sql));
   }
 
-  /**
-   * Gets the table constraints SQL from the additional configuration.
-   * 
-   * @return Table constraints SQL.
-   */
-  public Query getTableConstraints()
+  @Override
+  public String toString()
   {
-    return informationSchemaQueries
-      .get(KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS);
-  }
-
-  /**
-   * Gets the trigger definitions SQL from the additional configuration.
-   * 
-   * @return Trigger defnitions SQL.
-   */
-  public Query getTriggers()
-  {
-    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_TRIGGERS);
-  }
-
-  /**
-   * Gets the view definitions SQL from the additional configuration.
-   * 
-   * @return View defnitions SQL.
-   */
-  public Query getViews()
-  {
-    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_VIEWS);
+    return informationSchemaQueries.toString();
   }
 
   boolean hasCheckConstraintsSql()
@@ -247,20 +253,14 @@ public final class InformationSchemaViews
       .containsKey(KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS);
   }
 
-  boolean hasViewsSql()
-  {
-    return informationSchemaQueries.containsKey(KEY_INFORMATION_SCHEMA_VIEWS);
-  }
-
   boolean hasTriggerSql()
   {
     return informationSchemaQueries
       .containsKey(KEY_INFORMATION_SCHEMA_TRIGGERS);
   }
 
-  @Override
-  public String toString()
+  boolean hasViewsSql()
   {
-    return informationSchemaQueries.toString();
+    return informationSchemaQueries.containsKey(KEY_INFORMATION_SCHEMA_VIEWS);
   }
 }

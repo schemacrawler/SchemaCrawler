@@ -82,6 +82,9 @@
     <property
       name="noInfo"
       value="true" />
+    <property
+      name="outputFormatValue"
+      value="text" />
   </bean>
 
   <bean
@@ -174,6 +177,32 @@
   </bean>
 
   <bean
+    id="dataTextFormatOptions"
+    class="schemacrawler.tools.datatext.DataTextFormatOptions">
+    <property
+      name="showLobs"
+      value="true" />
+    <property
+      name="mergeRows"
+      value="true" />
+    <property name="query">
+      <bean class="schemacrawler.crawl.Query">
+        <constructor-arg value="query" />
+        <constructor-arg>
+          <value>
+            <![CDATA[
+          	SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES
+            ]]>
+          </value>
+        </constructor-arg>
+      </bean>
+    </property>
+    <property
+      name="outputOptions"
+      ref="outputOptions" />
+  </bean>
+
+  <bean
     id="executionContextForSchema"
     class="schemacrawler.tools.ExecutionContext">
     <constructor-arg ref="schemaCrawlerOptions" />
@@ -187,6 +216,14 @@
     <constructor-arg ref="schemaCrawlerOptions" />
     <constructor-arg ref="informationSchemaViews" />
     <constructor-arg ref="operatorOptions" />
+  </bean>
+
+  <bean
+    id="executionContextForQuery"
+    class="schemacrawler.tools.ExecutionContext">
+    <constructor-arg ref="schemaCrawlerOptions" />
+    <constructor-arg ref="informationSchemaViews" />
+    <constructor-arg ref="dataTextFormatOptions" />
   </bean>
 
 </beans>

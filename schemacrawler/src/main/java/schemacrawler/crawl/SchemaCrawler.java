@@ -144,6 +144,23 @@ public final class SchemaCrawler
    *        An data source.
    * @param crawlHandler
    *        A crawl handler instance
+   * @throws SchemaCrawlerException
+   *         On a crawler exception
+   */
+  public SchemaCrawler(final DataSource dataSource,
+                       final CrawlHandler crawlHandler)
+    throws SchemaCrawlerException
+  {
+    this(dataSource, null, crawlHandler);
+  }
+
+  /**
+   * Constructs a SchemaCrawler object, from a connection.
+   * 
+   * @param dataSource
+   *        An data source.
+   * @param crawlHandler
+   *        A crawl handler instance
    * @param informationSchemaViews
    *        Additional connection configuration for INFORMATION_SCHEMA
    * @throws SchemaCrawlerException
@@ -175,23 +192,6 @@ public final class SchemaCrawler
     }
     handler = crawlHandler;
 
-  }
-
-  /**
-   * Constructs a SchemaCrawler object, from a connection.
-   * 
-   * @param dataSource
-   *        An data source.
-   * @param crawlHandler
-   *        A crawl handler instance
-   * @throws SchemaCrawlerException
-   *         On a crawler exception
-   */
-  public SchemaCrawler(final DataSource dataSource,
-                       final CrawlHandler crawlHandler)
-    throws SchemaCrawlerException
-  {
-    this(dataSource, null, crawlHandler);
   }
 
   /**

@@ -95,13 +95,18 @@ public final class OperatorOptions
     this.operation = Operation.queryover;
   }
 
+  public Operation getOperation()
+  {
+    return operation;
+  }
+
   /**
    * Sets the operation.
    * 
    * @param operation
    *        Operation
    */
-  public void setOperation(Operation operation)
+  public void setOperation(final Operation operation)
   {
     if (operation == null)
     {
@@ -124,11 +129,6 @@ public final class OperatorOptions
     buffer.append(", outputOptions=").append(getOutputOptions());
     buffer.append("]");
     return buffer.toString();
-  }
-
-  public Operation getOperation()
-  {
-    return operation;
   }
 
 }

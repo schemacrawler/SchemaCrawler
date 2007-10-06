@@ -320,19 +320,6 @@ public final class SchemaCrawlerOptions
    * @param tableTypesString
    *        Comma-separated list of table types.
    */
-  public void setTableTypesString(final String tableTypesString)
-  {
-    setTableTypes(tableTypesString);
-  }
-
-  /**
-   * Sets table types from a comma-separated list of table types. For
-   * example:
-   * TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS,SYNONYM
-   * 
-   * @param tableTypesString
-   *        Comma-separated list of table types.
-   */
   public void setTableTypes(final String tableTypesString)
   {
     if (tableTypesString == null)
@@ -355,6 +342,19 @@ public final class SchemaCrawlerOptions
       throw new IllegalArgumentException("Cannot use null value in a setter");
     }
     tableTypes = copyTableTypes(tableTypesArray);
+  }
+
+  /**
+   * Sets table types from a comma-separated list of table types. For
+   * example:
+   * TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS,SYNONYM
+   * 
+   * @param tableTypesString
+   *        Comma-separated list of table types.
+   */
+  public void setTableTypesString(final String tableTypesString)
+  {
+    setTableTypes(tableTypesString);
   }
 
   /**

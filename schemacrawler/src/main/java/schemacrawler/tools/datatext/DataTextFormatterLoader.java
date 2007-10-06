@@ -63,6 +63,10 @@ public final class DataTextFormatterLoader
       case csv:
         handler = new DataCSVFormatter(options);
         break;
+      default:
+        throw new IllegalArgumentException("Unknown output format specified - "
+                                           + outputOptions
+                                             .getOutputFormatValue());
     }
 
     return handler;

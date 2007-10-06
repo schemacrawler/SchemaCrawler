@@ -44,48 +44,6 @@ public final class ExecutionContext
   private final InformationSchemaViews informationSchemaViews;
   private final BaseToolOptions toolOptions;
 
-  public ExecutionContext(SchemaCrawlerOptions schemaCrawlerOptions,
-                          InformationSchemaViews informationSchemaViews,
-                          BaseToolOptions toolOptions)
-  {
-    if (toolOptions == null)
-    {
-      throw new IllegalArgumentException("No tool options provided");
-    }
-
-    if (schemaCrawlerOptions == null)
-    {
-      this.schemaCrawlerOptions = new SchemaCrawlerOptions();
-    }
-    else
-    {
-      this.schemaCrawlerOptions = schemaCrawlerOptions;
-    }
-
-    if (informationSchemaViews == null)
-    {
-      this.informationSchemaViews = new InformationSchemaViews();
-    }
-    else
-    {
-      this.informationSchemaViews = informationSchemaViews;
-    }
-
-    this.toolOptions = toolOptions;
-    if (toolOptions instanceof SchemaTextOptions)
-    {
-      toolType = ToolType.schema_text;
-    }
-    else if (toolOptions instanceof OperatorOptions)
-    {
-      toolType = ToolType.operation;
-    }
-    else
-    {
-      toolType = ToolType.data_text;
-    }
-  }
-
   /**
    * Parses options from a properties file.
    * 
@@ -143,6 +101,101 @@ public final class ExecutionContext
 
   }
 
+  public ExecutionContext(final SchemaCrawlerOptions schemaCrawlerOptions,
+                          final InformationSchemaViews informationSchemaViews,
+                          final BaseToolOptions toolOptions)
+  {
+    if (toolOptions == null)
+    {
+      throw new IllegalArgumentException("No tool options provided");
+    }
+
+    if (schemaCrawlerOptions == null)
+    {
+      this.schemaCrawlerOptions = new SchemaCrawlerOptions();
+    }
+    else
+    {
+      this.schemaCrawlerOptions = schemaCrawlerOptions;
+    }
+
+    if (informationSchemaViews == null)
+    {
+      this.informationSchemaViews = new InformationSchemaViews();
+    }
+    else
+    {
+      this.informationSchemaViews = informationSchemaViews;
+    }
+
+    this.toolOptions = toolOptions;
+    if (toolOptions instanceof SchemaTextOptions)
+    {
+      toolType = ToolType.schema_text;
+    }
+    else if (toolOptions instanceof OperatorOptions)
+    {
+      toolType = ToolType.operation;
+    }
+    else
+    {
+      toolType = ToolType.data_text;
+    }
+  }
+
+  public InformationSchemaViews getInformationSchemaViews()
+  {
+    return informationSchemaViews;
+  }
+
+  /**
+   * Gets the schema crawler options.
+   * 
+   * @return SchemaCrawlerOptions
+   */
+  public SchemaCrawlerOptions getSchemaCrawlerOptions()
+  {
+    return schemaCrawlerOptions;
+  }
+
+  /**
+   * Gets the data text format options.
+   * 
+   * @return Data text format options
+   */
+  public BaseToolOptions getToolOptions()
+  {
+    return toolOptions;
+  }
+
+  /**
+   * Gets the tool type.
+   * 
+   * @return Tool type
+   */
+  public ToolType getToolType()
+  {
+    return toolType;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    final StringBuffer buffer = new StringBuffer();
+    buffer.append("ExecutionContext[");
+    buffer.append("; ").append(toolType);
+    buffer.append("; ").append(schemaCrawlerOptions);
+    buffer.append("; ").append(informationSchemaViews);
+    buffer.append("; ").append(toolOptions);
+    buffer.append("]");
+    return buffer.toString();
+  }
+
   private ToolType determineToolType(final Command command, final Config config)
   {
     ToolType toolType;
@@ -180,59 +233,6 @@ public final class ExecutionContext
       }
     }
     return toolType;
-  }
-
-  public InformationSchemaViews getInformationSchemaViews()
-  {
-    return informationSchemaViews;
-  }
-
-  /**
-   * Gets the data text format options.
-   * 
-   * @return Data text format options
-   */
-  public BaseToolOptions getToolOptions()
-  {
-    return toolOptions;
-  }
-
-  /**
-   * Gets the schema crawler options.
-   * 
-   * @return SchemaCrawlerOptions
-   */
-  public SchemaCrawlerOptions getSchemaCrawlerOptions()
-  {
-    return schemaCrawlerOptions;
-  }
-
-  /**
-   * Gets the tool type.
-   * 
-   * @return Tool type
-   */
-  public ToolType getToolType()
-  {
-    return toolType;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    final StringBuffer buffer = new StringBuffer();
-    buffer.append("ExecutionContext[");
-    buffer.append("; ").append(toolType);
-    buffer.append("; ").append(schemaCrawlerOptions);
-    buffer.append("; ").append(informationSchemaViews);
-    buffer.append("; ").append(toolOptions);
-    buffer.append("]");
-    return buffer.toString();
   }
 
 }

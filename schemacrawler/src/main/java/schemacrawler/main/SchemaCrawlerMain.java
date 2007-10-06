@@ -54,28 +54,6 @@ public final class SchemaCrawlerMain
    * 
    * @param args
    *        Command line arguments
-   * @param executor
-   *        Executor
-   * @throws Exception
-   *         On an exception
-   */
-  public static void schemacrawler(final String[] args, final Executor executor)
-    throws Exception
-  {
-    final Config config = ConfigParser.parseCommandLine(args);
-    final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
-      .createPropertiesDriverDataSourceParser(args, config);
-    schemacrawler(args, config, executor, dataSourceParser);
-  }
-
-  /**
-   * Executes with the command line, and a given executor. The executor
-   * allows for the command line to be parsed independently of the
-   * execution. The execution can integrate with other software, such as
-   * Velocity.
-   * 
-   * @param args
-   *        Command line arguments
    * @param config
    *        Configuration
    * @param executor
@@ -111,6 +89,28 @@ public final class SchemaCrawlerMain
         executor.execute(executionContext, dataSource);
       }
     }
+  }
+
+  /**
+   * Executes with the command line, and a given executor. The executor
+   * allows for the command line to be parsed independently of the
+   * execution. The execution can integrate with other software, such as
+   * Velocity.
+   * 
+   * @param args
+   *        Command line arguments
+   * @param executor
+   *        Executor
+   * @throws Exception
+   *         On an exception
+   */
+  public static void schemacrawler(final String[] args, final Executor executor)
+    throws Exception
+  {
+    final Config config = ConfigParser.parseCommandLine(args);
+    final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
+      .createPropertiesDriverDataSourceParser(args, config);
+    schemacrawler(args, config, executor, dataSourceParser);
   }
 
   private SchemaCrawlerMain()
