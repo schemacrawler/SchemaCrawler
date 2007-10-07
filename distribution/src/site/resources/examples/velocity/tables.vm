@@ -1,8 +1,17 @@
 $schema.databaseInfo
 
 #foreach($table in $schema.tables)
-- $table.name ($table.type)
+#if ($table.type == "table")
+CREATE TABLE $table.name
+(
 #foreach($column in $table.columns)
-  - $column.name ($column.type)
+#if($velocityCount > 1)
+,
+#end
+  $column.name $column.type#if(!$column.isNullable()) NOT NULL#end
+#end
+
+);
+
 #end
 #end
