@@ -56,7 +56,7 @@ public final class SchemaTextFormatter
     throws SchemaCrawlerException
   {
     super(options, new PlainTextFormattingHelper(options.getOutputOptions()
-      .getOutputFormat()), tableColumnInclusionRule, invertMatch);
+      .getOutputFormat().name()), tableColumnInclusionRule, invertMatch);
   }
 
   /**
@@ -69,7 +69,7 @@ public final class SchemaTextFormatter
     throws SchemaCrawlerException
   {
     super(options, new PlainTextFormattingHelper(options.getOutputOptions()
-      .getOutputFormat()));
+      .getOutputFormat().name()));
   }
 
   /**

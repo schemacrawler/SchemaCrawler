@@ -55,7 +55,7 @@ final class OperatorTextOutput
           connection,
           dataHandler,
           new PlainTextFormattingHelper(options.getOutputOptions()
-            .getOutputFormat()));
+            .getOutputFormat().name()));
   }
 
   /**
