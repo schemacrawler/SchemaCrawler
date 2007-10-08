@@ -29,9 +29,11 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import schemacrawler.crawl.InformationSchemaViews;
 import schemacrawler.crawl.SchemaCrawlerOptions;
+import schemacrawler.tools.ExecutionContext;
+import schemacrawler.tools.Executor;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.integration.SchemaCrawlerExecutor;
 import schemacrawler.tools.integration.TemplatedSchemaCrawlerExecutor;
 import schemacrawler.tools.integration.freemarker.FreeMarkerRenderer;
 import schemacrawler.tools.integration.jung.JungExecutor;
@@ -96,7 +98,7 @@ public class ExecutorIntegrationTest
                             outputOptions);
   }
 
-  private void executorIntegrationTest(final SchemaCrawlerExecutor executor,
+  private void executorIntegrationTest(final Executor executor,
                                        final OutputOptions outputOptions)
     throws Exception
   {
@@ -104,8 +106,11 @@ public class ExecutorIntegrationTest
                                                                       outputOptions,
                                                                       SchemaTextDetailType.basic_schema);
 
-    executor.execute(new SchemaCrawlerOptions(), schemaTextOptions, testUtility
-      .getDataSource());
+    final ExecutionContext executionContext = new ExecutionContext(new SchemaCrawlerOptions(),
+                                                                   new InformationSchemaViews(),
+                                                                   schemaTextOptions);
+
+    executor.execute(executionContext, testUtility.getDataSource());
 
     // Check post-conditions
     final File outputFile = outputOptions.getOutputFile();

@@ -43,6 +43,7 @@ public class SpringIntegrationTest
       .getBean("schemaCrawlerOptions");
     final DataSource dataSource = (DataSource) appContext.getBean("dataSource");
     final Schema schema = SchemaCrawler.getSchema(dataSource,
+                                                  null,
                                                   SchemaInfoLevel.maximum,
                                                   schemaCrawlerOptions);
     assertEquals(6, schema.getTables().length);
