@@ -53,7 +53,6 @@ public final class SchemaCrawler
    * @param options
    *        Options
    * @return Schema
-   * @throws SQLException
    */
   public static Schema getSchema(final DataSource dataSource,
                                  final InformationSchemaViews informationSchemaViews,
