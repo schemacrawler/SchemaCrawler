@@ -32,9 +32,10 @@ import org.junit.Test;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.integration.SchemaCrawlerExecutor;
-import schemacrawler.tools.integration.freemarker.FreeMarkerExecutor;
+import schemacrawler.tools.integration.TemplatedSchemaCrawlerExecutor;
+import schemacrawler.tools.integration.freemarker.FreeMarkerRenderer;
 import schemacrawler.tools.integration.jung.JungExecutor;
-import schemacrawler.tools.integration.velocity.VelocityExecutor;
+import schemacrawler.tools.integration.velocity.VelocityRenderer;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextOptions;
 import dbconnector.datasource.PropertiesDataSourceException;
@@ -79,7 +80,8 @@ public class ExecutorIntegrationTest
       .getAbsolutePath();
     final OutputOptions outputOptions = new OutputOptions("plaintextschema.ftl",
                                                           outputFilename);
-    executorIntegrationTest(new FreeMarkerExecutor(), outputOptions);
+    executorIntegrationTest(new TemplatedSchemaCrawlerExecutor(new FreeMarkerRenderer()),
+                            outputOptions);
   }
 
   @Test
@@ -90,7 +92,8 @@ public class ExecutorIntegrationTest
       .getAbsolutePath();
     final OutputOptions outputOptions = new OutputOptions("plaintextschema.vm",
                                                           outputFilename);
-    executorIntegrationTest(new VelocityExecutor(), outputOptions);
+    executorIntegrationTest(new TemplatedSchemaCrawlerExecutor(new VelocityRenderer()),
+                            outputOptions);
   }
 
   private void executorIntegrationTest(final SchemaCrawlerExecutor executor,

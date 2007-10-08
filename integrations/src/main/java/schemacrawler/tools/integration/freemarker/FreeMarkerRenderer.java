@@ -28,13 +28,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.sql.DataSource;
-
-import schemacrawler.crawl.SchemaCrawler;
-import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.schema.Schema;
-import schemacrawler.tools.integration.SchemaCrawlerExecutor;
-import schemacrawler.tools.schematext.SchemaTextOptions;
+import schemacrawler.tools.integration.TemplatedSchemaRenderer;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.MultiTemplateLoader;
@@ -48,16 +43,22 @@ import freemarker.template.Template;
  * 
  * @author Sualeh Fatehi
  */
-public class FreeMarkerExecutor
-  implements SchemaCrawlerExecutor
+public final class FreeMarkerRenderer
+  implements TemplatedSchemaRenderer
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(FreeMarkerExecutor.class.getName());
+    .getLogger(FreeMarkerRenderer.class.getName());
 
-  private static void renderTemplate(final String templateName,
-                                     final Schema schema,
-                                     final Writer writer)
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.integration.TemplatedSchemaRenderer#renderTemplate(java.lang.String,
+   *      schemacrawler.schema.Schema, java.io.Writer)
+   */
+  public void renderTemplate(final String templateName,
+                             final Schema schema,
+                             final Writer writer)
     throws Exception
   {
     // Set the file path, in case the template is a file template
@@ -74,7 +75,7 @@ public class FreeMarkerExecutor
     // Create a new instance of the configuration
     final Configuration cfg = new Configuration();
 
-    final ClassTemplateLoader ctl = new ClassTemplateLoader(FreeMarkerExecutor.class,
+    final ClassTemplateLoader ctl = new ClassTemplateLoader(FreeMarkerRenderer.class,
                                                             "/");
     final FileTemplateLoader ftl = new FileTemplateLoader(new File(templatePath));
     final TemplateLoader[] loaders = new TemplateLoader[] {
@@ -101,34 +102,6 @@ public class FreeMarkerExecutor
 
     writer.flush();
 
-  }
-
-  /**
-   * Executes main functionality.
-   * 
-   * @param schemaCrawlerOptions
-   *        SchemaCrawler options
-   * @param schemaTextOptions
-   *        Text output options
-   * @param dataSource
-   *        Datasource
-   * @throws Exception
-   *         On an exception
-   */
-  public void execute(final SchemaCrawlerOptions schemaCrawlerOptions,
-                      final SchemaTextOptions schemaTextOptions,
-                      final DataSource dataSource)
-    throws Exception
-  {
-    // Get the entire schema at once, since we need to use this to
-    // render the template
-    final Schema schema = SchemaCrawler.getSchema(dataSource, schemaTextOptions
-      .getSchemaTextDetailType().mapToInfoLevel(), schemaCrawlerOptions);
-    final Writer writer = schemaTextOptions.getOutputOptions()
-      .openOutputWriter();
-    final String templateName = schemaTextOptions.getOutputOptions()
-      .getOutputFormatValue();
-    renderTemplate(templateName, schema, writer);
   }
 
 }

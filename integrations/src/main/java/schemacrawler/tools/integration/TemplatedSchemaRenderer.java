@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -17,38 +17,30 @@
  * Boston, MA 02111-1307, USA.
  *
  */
+package schemacrawler.tools.integration;
 
-package schemacrawler.tools.integration.freemarker;
 
+import java.io.Writer;
 
-import schemacrawler.tools.integration.TemplatedSchemaCrawlerExecutor;
+import schemacrawler.schema.Schema;
 
-/**
- * Main class that takes arguments for a database for crawling a schema.
- */
-public final class Main
+public interface TemplatedSchemaRenderer
 {
 
   /**
-   * Get connection parameters, and creates a connection, and crawls the
-   * schema.
+   * Renders the schema with the given template.
    * 
-   * @param args
-   *        Arguments passed into the program from the command line.
+   * @param templateName
+   *        Name of the template
+   * @param schema
+   *        Schema
+   * @param writer
+   *        Writer
    * @throws Exception
-   *         On an exception
    */
-  public static void main(final String[] args)
-    throws Exception
-  {
-    TemplatedSchemaCrawlerExecutor
-      .templatingToolMain(args,
-                          "/schemacrawler-templating-readme.txt",
-                          new FreeMarkerRenderer());
-  }
-
-  private Main()
-  {
-  }
+  void renderTemplate(final String templateName,
+                      final Schema schema,
+                      final Writer writer)
+    throws Exception;
 
 }
