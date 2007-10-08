@@ -27,8 +27,6 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.sql.DataSource;
-
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -36,27 +34,34 @@ import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
 
-import schemacrawler.crawl.SchemaCrawler;
-import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.schema.Schema;
-import schemacrawler.tools.integration.SchemaCrawlerExecutor;
-import schemacrawler.tools.schematext.SchemaTextOptions;
+import schemacrawler.tools.integration.TemplatedSchemaRenderer;
 
 /**
  * Main executor for the Velocity integration.
  * 
  * @author Sualeh Fatehi
  */
-public class VelocityExecutor
-  implements SchemaCrawlerExecutor
+public final class VelocityRenderer
+  implements TemplatedSchemaRenderer
 {
 
-  private static final Logger LOGGER = Logger.getLogger(VelocityExecutor.class
+  private static final Logger LOGGER = Logger.getLogger(VelocityRenderer.class
     .getName());
 
-  private static void renderTemplate(final String templateName,
-                                     final Schema schema,
-                                     final Writer writer)
+  private static void setVelocityResourceLoaderProperty(final Properties p,
+                                                        final String resourceLoaderName,
+                                                        final String resourceLoaderPropertyName,
+                                                        final String resourceLoaderPropertyValue)
+  {
+    p.setProperty(resourceLoaderName + "." + RuntimeConstants.RESOURCE_LOADER
+                      + "." + resourceLoaderPropertyName,
+                  resourceLoaderPropertyValue);
+  }
+
+  public void renderTemplate(final String templateName,
+                             final Schema schema,
+                             final Writer writer)
     throws Exception
   {
     // Set the file path, in case the template is a file template
@@ -110,45 +115,6 @@ public class VelocityExecutor
     template.merge(context, writer);
 
     writer.flush();
-  }
-
-  private static void setVelocityResourceLoaderProperty(final Properties p,
-                                                        final String resourceLoaderName,
-                                                        final String resourceLoaderPropertyName,
-                                                        final String resourceLoaderPropertyValue)
-  {
-    p.setProperty(resourceLoaderName + "." + RuntimeConstants.RESOURCE_LOADER
-                      + "." + resourceLoaderPropertyName,
-                  resourceLoaderPropertyValue);
-  }
-
-  /**
-   * Executes main functionality.
-   * 
-   * @param schemaCrawlerOptions
-   *        SchemaCrawler options
-   * @param schemaTextOptions
-   *        Text output options
-   * @param dataSource
-   *        Datasource
-   * @throws Exception
-   *         On an exception
-   */
-  public void execute(final SchemaCrawlerOptions schemaCrawlerOptions,
-                      final SchemaTextOptions schemaTextOptions,
-                      final DataSource dataSource)
-    throws Exception
-  {
-    // Get the entire schema at once, since we need to use this to
-    // render
-    // the velocity template
-    final Schema schema = SchemaCrawler.getSchema(dataSource, schemaTextOptions
-      .getSchemaTextDetailType().mapToInfoLevel(), schemaCrawlerOptions);
-    final Writer writer = schemaTextOptions.getOutputOptions()
-      .openOutputWriter();
-    final String templateName = schemaTextOptions.getOutputOptions()
-      .getOutputFormatValue();
-    renderTemplate(templateName, schema, writer);
   }
 
 }
