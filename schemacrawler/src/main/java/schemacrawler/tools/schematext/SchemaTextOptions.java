@@ -55,6 +55,9 @@ public final class SchemaTextOptions
 
   private SchemaTextDetailType schemaTextDetailType;
 
+  /**
+   * Creates the default SchemaTextOptions.
+   */
   public SchemaTextOptions()
   {
     this(null, null, null);
@@ -234,7 +237,7 @@ public final class SchemaTextOptions
   {
     if (schemaTextDetailType == null)
     {
-      throw new IllegalArgumentException("Cannot use null value in a setter");
+      throw new IllegalArgumentException("Cannot set null SchemaTextDetailType");
     }
     this.schemaTextDetailType = schemaTextDetailType;
   }

@@ -62,8 +62,18 @@ public abstract class BaseToolOptions
     return outputOptions;
   }
 
+  /**
+   * Set output options.
+   * 
+   * @param outputOptions
+   *        Output options
+   */
   public void setOutputOptions(final OutputOptions outputOptions)
   {
+    if (outputOptions == null)
+    {
+      throw new IllegalArgumentException("Cannot set null OutputOptions");
+    }
     this.outputOptions = outputOptions;
   }
 

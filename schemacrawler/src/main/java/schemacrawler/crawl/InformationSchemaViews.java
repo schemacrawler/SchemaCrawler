@@ -46,11 +46,20 @@ public final class InformationSchemaViews
 
   private final Map<String, Query> informationSchemaQueries;
 
+  /**
+   * Creates empty information schema views.
+   */
   public InformationSchemaViews()
   {
     this(null);
   }
 
+  /**
+   * Information schema views from a map.
+   * 
+   * @param informationSchemaViewsSql
+   *        Map of information schema view definitions.
+   */
   public InformationSchemaViews(final Map<String, String> informationSchemaViewsSql)
   {
     this.informationSchemaQueries = new HashMap<String, Query>();
@@ -70,7 +79,8 @@ public final class InformationSchemaViews
         {
           try
           {
-            final Query query = new Query(key, informationSchemaViewsSql.get(key));
+            final Query query = new Query(key, informationSchemaViewsSql
+              .get(key));
             this.informationSchemaQueries.put(key, query);
           }
           catch (final IllegalArgumentException e)
@@ -224,6 +234,11 @@ public final class InformationSchemaViews
                                  new Query(KEY_INFORMATION_SCHEMA_VIEWS, sql));
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#toString()
+   */
   @Override
   public String toString()
   {
@@ -263,4 +278,5 @@ public final class InformationSchemaViews
   {
     return informationSchemaQueries.containsKey(KEY_INFORMATION_SCHEMA_VIEWS);
   }
+
 }
