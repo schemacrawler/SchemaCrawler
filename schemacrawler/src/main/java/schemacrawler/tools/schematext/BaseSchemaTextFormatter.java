@@ -26,7 +26,6 @@ import java.io.PrintWriter;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import schemacrawler.crawl.CrawlHandler;
 import schemacrawler.crawl.InclusionRule;
@@ -57,9 +56,6 @@ import sf.util.Utilities;
 public abstract class BaseSchemaTextFormatter
   implements CrawlHandler
 {
-
-  private static final Logger LOGGER = Logger
-    .getLogger(BaseSchemaTextFormatter.class.getName());
 
   protected final PrintWriter out;
   protected final TextFormattingHelper formattingHelper;
