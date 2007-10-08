@@ -114,24 +114,6 @@ public final class SchemaCrawler
 
   }
 
-  /**
-   * Gets the entire schema.
-   * 
-   * @param dataSource
-   *        Data source
-   * @param infoLevel
-   *        Schema info level
-   * @param options
-   *        Options
-   * @return Schema
-   */
-  public static Schema getSchema(final DataSource dataSource,
-                                 final SchemaInfoLevel infoLevel,
-                                 final SchemaCrawlerOptions options)
-  {
-    return getSchema(dataSource, null, infoLevel, options);
-  }
-
   private final DataSource dataSource;
   private final InformationSchemaViews informationSchemaViews;
   private final CrawlHandler handler;
