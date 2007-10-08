@@ -21,7 +21,12 @@
 package schemacrawler.tools.integration;
 
 
+import javax.sql.DataSource;
+
 import schemacrawler.main.SchemaCrawlerMain;
+import schemacrawler.tools.ExecutionContext;
+import schemacrawler.tools.Executor;
+import schemacrawler.tools.schematext.SchemaTextOptions;
 import sf.util.CommandLineUtility;
 
 /**
@@ -31,6 +36,40 @@ public final class IntegrationUtility
 {
 
   /**
+   * Adapts a SchemaCrawlerExecutor into an Executor.
+   * 
+   * @author sfatehi
+   */
+  private final static class ToolsExecutorAdapter
+    implements Executor
+  {
+
+    private final SchemaCrawlerExecutor schemaCrawlerExecutor;
+
+    ToolsExecutorAdapter(final SchemaCrawlerExecutor schemaCrawlerExecutor)
+    {
+      this.schemaCrawlerExecutor = schemaCrawlerExecutor;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see schemacrawler.tools.Executor#execute(schemacrawler.tools.ExecutionContext,
+     *      javax.sql.DataSource)
+     */
+    public void execute(final ExecutionContext executionContext,
+                        final DataSource dataSource)
+      throws Exception
+    {
+      schemaCrawlerExecutor.execute(executionContext.getSchemaCrawlerOptions(),
+                                    (SchemaTextOptions) executionContext
+                                      .getToolOptions(),
+                                    dataSource);
+    }
+
+  }
+
+  /**
    * Get connection parameters, and creates a connection, and crawls the
    * schema.
    * 
@@ -38,12 +77,14 @@ public final class IntegrationUtility
    *        Arguments passed into the program from the command line.
    * @param readmeResource
    *        Resource location for readme file.
+   * @param schemaCrawlerExecutor
+   *        SchemaCrawler executor
    * @throws Exception
    *         On an exception
    */
   public static void integrationToolMain(final String[] args,
-                                         String readmeResource,
-                                         SchemaCrawlerExecutor schemaCrawlerExecutor)
+                                         final String readmeResource,
+                                         final SchemaCrawlerExecutor schemaCrawlerExecutor)
     throws Exception
   {
     CommandLineUtility.checkForHelp(args, readmeResource);

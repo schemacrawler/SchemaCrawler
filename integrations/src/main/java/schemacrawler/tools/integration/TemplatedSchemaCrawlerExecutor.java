@@ -29,6 +29,11 @@ import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.schema.Schema;
 import schemacrawler.tools.schematext.SchemaTextOptions;
 
+/**
+ * An executor that uses a template renderer to render a schema.
+ * 
+ * @author sfatehi
+ */
 public final class TemplatedSchemaCrawlerExecutor
   implements SchemaCrawlerExecutor
 {
@@ -41,6 +46,8 @@ public final class TemplatedSchemaCrawlerExecutor
    *        Arguments passed into the program from the command line.
    * @param readmeResource
    *        Resource location for readme file.
+   * @param schemaRenderer
+   *        Template renderer
    * @throws Exception
    *         On an exception
    */
@@ -55,8 +62,14 @@ public final class TemplatedSchemaCrawlerExecutor
                            new TemplatedSchemaCrawlerExecutor(schemaRenderer));
   }
 
-  private TemplatedSchemaRenderer templatedRenderer;
+  private final TemplatedSchemaRenderer templatedRenderer;
 
+  /**
+   * Create a new instance of the executor for a template renderer.
+   * 
+   * @param templatedRenderer
+   *        Template renderer.
+   */
   public TemplatedSchemaCrawlerExecutor(final TemplatedSchemaRenderer templatedRenderer)
   {
     if (templatedRenderer == null)
@@ -94,17 +107,4 @@ public final class TemplatedSchemaCrawlerExecutor
     templatedRenderer.renderTemplate(templateName, schema, writer);
   }
 
-  public TemplatedSchemaRenderer getTemplatedRenderer()
-  {
-    return templatedRenderer;
-  }
-
-  public void setTemplatedRenderer(final TemplatedSchemaRenderer templatedRenderer)
-  {
-    if (templatedRenderer == null)
-    {
-      throw new IllegalArgumentException("A TemplatedSchemaRenderer is required");
-    }
-    this.templatedRenderer = templatedRenderer;
-  }
 }

@@ -24,6 +24,11 @@ import java.io.Writer;
 
 import schemacrawler.schema.Schema;
 
+/**
+ * Renderer for a schema, based on a template.
+ * 
+ * @author sfatehi
+ */
 public interface TemplatedSchemaRenderer
 {
 
