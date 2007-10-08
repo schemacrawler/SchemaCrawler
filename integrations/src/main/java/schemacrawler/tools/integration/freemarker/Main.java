@@ -41,10 +41,8 @@ public final class Main
   public static void main(final String[] args)
     throws Exception
   {
-    TemplatedSchemaCrawlerExecutor
-      .templatingToolMain(args,
-                          "/schemacrawler-templating-readme.txt",
-                          new FreeMarkerRenderer());
+    TemplatedSchemaCrawlerExecutor.templatingToolMain(args,
+                                                      new FreeMarkerRenderer());
   }
 
   private Main()

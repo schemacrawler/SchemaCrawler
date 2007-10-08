@@ -58,11 +58,11 @@ public final class TemplatedSchemaCrawlerExecutor
    *         On an exception
    */
   public static void templatingToolMain(final String[] args,
-                                        final String readmeResource,
                                         final TemplatedSchemaRenderer schemaRenderer)
     throws Exception
   {
-    CommandLineUtility.checkForHelp(args, readmeResource);
+    CommandLineUtility.checkForHelp(args,
+                                    "/schemacrawler-templating-readme.txt");
     CommandLineUtility.setLogLevel(args);
 
     SchemaCrawlerMain

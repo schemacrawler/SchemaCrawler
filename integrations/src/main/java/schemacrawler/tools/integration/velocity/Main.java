@@ -41,10 +41,8 @@ public final class Main
   public static void main(final String[] args)
     throws Exception
   {
-    TemplatedSchemaCrawlerExecutor
-      .templatingToolMain(args,
-                          "/schemacrawler-templating-readme.txt",
-                          new VelocityRenderer());
+    TemplatedSchemaCrawlerExecutor.templatingToolMain(args,
+                                                      new VelocityRenderer());
   }
 
   private Main()
