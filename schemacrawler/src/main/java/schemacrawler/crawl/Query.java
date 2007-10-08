@@ -81,6 +81,13 @@ public class Query
     return query;
   }
 
+  /**
+   * Gets the query with parameters substituted.
+   * 
+   * @param table
+   *        Table information
+   * @return Ready-to-execute quer
+   */
   public String getQueryForTable(final Table table)
   {
     final Properties tableProperties = new Properties();
@@ -106,22 +113,16 @@ public class Query
     return sql;
   }
 
+  /**
+   * Determines if this query has substitutable parameters, and whether
+   * it should be run once for each table.
+   * 
+   * @return If the query is to be run over each table
+   */
   public boolean isQueryOver()
   {
-    boolean isQueryOver = false;
     final Set<String> keys = Utilities.extractTemplateVariables(query);
-    final String[] queryOverKeys = {
-        "table", "table_type"
-    };
-    for (final String element: queryOverKeys)
-    {
-      if (keys.contains(element))
-      {
-        isQueryOver = true;
-        break;
-      }
-    }
-    return isQueryOver;
+    return keys.contains("table");
   }
 
   /**

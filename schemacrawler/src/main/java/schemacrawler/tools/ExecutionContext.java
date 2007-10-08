@@ -45,14 +45,14 @@ public final class ExecutionContext
   private final BaseToolOptions toolOptions;
 
   /**
-   * Parses options from a properties file.
+   * Parses options from a map.
    * 
    * @param config
    *        Properties
    * @param command
    *        Properties
-   * @param pageOptions
-   *        Page options
+   * @param outputOptions
+   *        Output options
    */
   public ExecutionContext(final Command command,
                           final Config config,
@@ -101,6 +101,16 @@ public final class ExecutionContext
 
   }
 
+  /**
+   * Creates an execution context from options.
+   * 
+   * @param schemaCrawlerOptions
+   *        SchemaCrawler options
+   * @param informationSchemaViews
+   *        Information schema views
+   * @param toolOptions
+   *        Tool options
+   */
   public ExecutionContext(final SchemaCrawlerOptions schemaCrawlerOptions,
                           final InformationSchemaViews informationSchemaViews,
                           final BaseToolOptions toolOptions)
@@ -143,6 +153,11 @@ public final class ExecutionContext
     }
   }
 
+  /**
+   * Gets the information schema views.
+   * 
+   * @return Information schema views.
+   */
   public InformationSchemaViews getInformationSchemaViews()
   {
     return informationSchemaViews;
