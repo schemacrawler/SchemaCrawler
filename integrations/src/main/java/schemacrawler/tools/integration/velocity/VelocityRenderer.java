@@ -59,6 +59,12 @@ public final class VelocityRenderer
                   resourceLoaderPropertyValue);
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.integration.TemplatedSchemaRenderer#renderTemplate(java.lang.String,
+   *      schemacrawler.schema.Schema, java.io.Writer)
+   */
   public void renderTemplate(final String templateName,
                              final Schema schema,
                              final Writer writer)

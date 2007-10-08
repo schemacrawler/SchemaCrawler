@@ -23,7 +23,6 @@ package schemacrawler.tools.integration.jung;
 
 import java.awt.Dimension;
 import java.io.File;
-import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
@@ -42,9 +41,6 @@ import edu.uci.ics.jung.graph.Graph;
 public final class JungExecutor
   implements SchemaCrawlerExecutor
 {
-
-  private static final Logger LOGGER = Logger.getLogger(JungExecutor.class
-    .getName());
 
   private static final int DEFAULT_IMAGE_WIDTH = 600;
 
