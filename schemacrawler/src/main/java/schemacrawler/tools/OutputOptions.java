@@ -54,6 +54,9 @@ public final class OutputOptions
   private boolean noFooter;
   private boolean noInfo;
 
+  /**
+   * Creates default OutputOptions.
+   */
   public OutputOptions()
   {
     this("", "");
@@ -283,7 +286,7 @@ public final class OutputOptions
   {
     if (outputFileName == null)
     {
-      throw new IllegalArgumentException("Cannot use null value in a setter");
+      throw new IllegalArgumentException("Cannot set null output file name");
     }
     outputFile = new File(outputFileName);
     if (!outputFile.canWrite())

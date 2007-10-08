@@ -59,6 +59,8 @@ public class DataTextFormatOptions
    *        Properties
    * @param outputOptions
    *        Page options
+   * @param queryName
+   *        Query name, in the config
    */
   public DataTextFormatOptions(final Config config,
                                final OutputOptions outputOptions,
@@ -98,11 +100,21 @@ public class DataTextFormatOptions
     return query;
   }
 
+  /**
+   * Whether to merge similar rows.
+   * 
+   * @return Whether to merge similar rows.
+   */
   public boolean isMergeRows()
   {
     return mergeRows;
   }
 
+  /**
+   * Whether to show LOBs.
+   * 
+   * @return Whether to show LOBs.
+   */
   public boolean isShowLobs()
   {
     return showLobs;
@@ -120,11 +132,17 @@ public class DataTextFormatOptions
   }
 
   /**
+   * Query.
+   * 
    * @param query
-   *        the query to set
+   *        Query
    */
   public void setQuery(final Query query)
   {
+    if (query == null)
+    {
+      throw new IllegalArgumentException("Cannot set null Query");
+    }
     this.query = query;
   }
 

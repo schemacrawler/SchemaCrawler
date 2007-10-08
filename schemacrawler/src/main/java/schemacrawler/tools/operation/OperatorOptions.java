@@ -95,6 +95,11 @@ public final class OperatorOptions
     this.operation = Operation.queryover;
   }
 
+  /**
+   * Gets the operation.
+   * 
+   * @return Operation.
+   */
   public Operation getOperation()
   {
     return operation;
