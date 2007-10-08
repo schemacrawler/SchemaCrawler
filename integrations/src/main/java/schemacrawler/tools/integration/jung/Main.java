@@ -21,7 +21,8 @@
 package schemacrawler.tools.integration.jung;
 
 
-import schemacrawler.tools.integration.IntegrationUtility;
+import schemacrawler.main.SchemaCrawlerMain;
+import sf.util.CommandLineUtility;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -41,9 +42,11 @@ public final class Main
   public static void main(final String[] args)
     throws Exception
   {
-    IntegrationUtility.integrationToolMain(args,
-                                           "/schemacrawler-jung-readme.txt",
-                                           new JungExecutor());
+    CommandLineUtility.checkForHelp(args, "/schemacrawler-jung-readme.txt");
+    CommandLineUtility.setLogLevel(args);
+
+    SchemaCrawlerMain.schemacrawler(args, new JungExecutor());
+
     System.exit(0);
   }
 

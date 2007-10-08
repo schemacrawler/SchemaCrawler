@@ -26,10 +26,13 @@ import java.io.File;
 
 import javax.sql.DataSource;
 
+import schemacrawler.crawl.InformationSchemaViews;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.schema.Schema;
-import schemacrawler.tools.integration.SchemaCrawlerExecutor;
+import schemacrawler.tools.ExecutionContext;
+import schemacrawler.tools.Executor;
+import schemacrawler.tools.ToolType;
 import schemacrawler.tools.schematext.SchemaTextOptions;
 import edu.uci.ics.jung.graph.Graph;
 
@@ -39,37 +42,41 @@ import edu.uci.ics.jung.graph.Graph;
  * @author Sualeh Fatehi
  */
 public final class JungExecutor
-  implements SchemaCrawlerExecutor
+  implements Executor
 {
 
   private static final int DEFAULT_IMAGE_WIDTH = 600;
 
-  /**
-   * Executes main functionality.
-   * 
-   * @param schemaCrawlerOptions
-   *        SchemaCrawler options
-   * @param schemaTextOptions
-   *        Text output options
-   * @param dataSource
-   *        Datasource
-   * @throws Exception
-   *         On an exception
-   */
-  public void execute(final SchemaCrawlerOptions schemaCrawlerOptions,
-                      final SchemaTextOptions schemaTextOptions,
+  public void execute(final ExecutionContext executionContext,
                       final DataSource dataSource)
     throws Exception
   {
+
+    if (executionContext == null
+        || executionContext.getToolType() != ToolType.schema_text)
+    {
+      throw new IllegalArgumentException("Bad execution context specified");
+    }
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = executionContext
+      .getSchemaCrawlerOptions();
+    final SchemaTextOptions schemaTextOptions = (SchemaTextOptions) executionContext
+      .getToolOptions();
+    final InformationSchemaViews informationSchemaViews = executionContext
+      .getInformationSchemaViews();
+
     // Get the entire schema at once, since we need to use this to
-    // render
-    // the velocity template
+    // render the velocity template
     final File outputFile = schemaTextOptions.getOutputOptions()
       .getOutputFile();
     final Dimension size = getSize(schemaTextOptions.getOutputOptions()
       .getOutputFormatValue());
-    final Schema schema = SchemaCrawler.getSchema(dataSource, schemaTextOptions
-      .getSchemaTextDetailType().mapToInfoLevel(), schemaCrawlerOptions);
+    final Schema schema = SchemaCrawler.getSchema(dataSource,
+                                                  informationSchemaViews,
+                                                  schemaTextOptions
+                                                    .getSchemaTextDetailType()
+                                                    .mapToInfoLevel(),
+                                                  schemaCrawlerOptions);
     final Graph graph = JungUtil.makeSchemaGraph(schema);
     JungUtil.saveGraphJpeg(graph, outputFile, size);
   }

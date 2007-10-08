@@ -24,10 +24,16 @@ import java.io.Writer;
 
 import javax.sql.DataSource;
 
+import schemacrawler.crawl.InformationSchemaViews;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
+import schemacrawler.main.SchemaCrawlerMain;
 import schemacrawler.schema.Schema;
+import schemacrawler.tools.ExecutionContext;
+import schemacrawler.tools.Executor;
+import schemacrawler.tools.ToolType;
 import schemacrawler.tools.schematext.SchemaTextOptions;
+import sf.util.CommandLineUtility;
 
 /**
  * An executor that uses a template renderer to render a schema.
@@ -35,7 +41,7 @@ import schemacrawler.tools.schematext.SchemaTextOptions;
  * @author sfatehi
  */
 public final class TemplatedSchemaCrawlerExecutor
-  implements SchemaCrawlerExecutor
+  implements Executor
 {
 
   /**
@@ -56,10 +62,11 @@ public final class TemplatedSchemaCrawlerExecutor
                                         final TemplatedSchemaRenderer schemaRenderer)
     throws Exception
   {
-    IntegrationUtility
-      .integrationToolMain(args,
-                           readmeResource,
-                           new TemplatedSchemaCrawlerExecutor(schemaRenderer));
+    CommandLineUtility.checkForHelp(args, readmeResource);
+    CommandLineUtility.setLogLevel(args);
+
+    SchemaCrawlerMain
+      .schemacrawler(args, new TemplatedSchemaCrawlerExecutor(schemaRenderer));
   }
 
   private final TemplatedSchemaRenderer templatedRenderer;
@@ -79,27 +86,31 @@ public final class TemplatedSchemaCrawlerExecutor
     this.templatedRenderer = templatedRenderer;
   }
 
-  /**
-   * Executes main functionality.
-   * 
-   * @param schemaCrawlerOptions
-   *        SchemaCrawler options
-   * @param schemaTextOptions
-   *        Text output options
-   * @param dataSource
-   *        Data-source
-   * @throws Exception
-   *         On an exception
-   */
-  public void execute(final SchemaCrawlerOptions schemaCrawlerOptions,
-                      final SchemaTextOptions schemaTextOptions,
+  public void execute(final ExecutionContext executionContext,
                       final DataSource dataSource)
     throws Exception
   {
+    if (executionContext == null
+        || executionContext.getToolType() != ToolType.schema_text)
+    {
+      throw new IllegalArgumentException("Bad execution context specified");
+    }
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = executionContext
+      .getSchemaCrawlerOptions();
+    final SchemaTextOptions schemaTextOptions = (SchemaTextOptions) executionContext
+      .getToolOptions();
+    final InformationSchemaViews informationSchemaViews = executionContext
+      .getInformationSchemaViews();
+
     // Get the entire schema at once, since we need to use this to
     // render the template
-    final Schema schema = SchemaCrawler.getSchema(dataSource, schemaTextOptions
-      .getSchemaTextDetailType().mapToInfoLevel(), schemaCrawlerOptions);
+    final Schema schema = SchemaCrawler.getSchema(dataSource,
+                                                  informationSchemaViews,
+                                                  schemaTextOptions
+                                                    .getSchemaTextDetailType()
+                                                    .mapToInfoLevel(),
+                                                  schemaCrawlerOptions);
     final Writer writer = schemaTextOptions.getOutputOptions()
       .openOutputWriter();
     final String templateName = schemaTextOptions.getOutputOptions()
