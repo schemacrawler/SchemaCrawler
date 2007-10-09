@@ -62,8 +62,8 @@ public final class CommandParser
     }
     final String[] commandStrings = commandOptionValue.split(",");
 
-    List<Command> commands = new ArrayList<Command>(commandStrings.length);
-    for (String commandString: commandStrings)
+    final List<Command> commands = new ArrayList<Command>(commandStrings.length);
+    for (final String commandString: commandStrings)
     {
       commands.add(new Command(commandString));
     }
