@@ -42,6 +42,11 @@ public final class JungExecutable
 
   private static final int DEFAULT_IMAGE_WIDTH = 600;
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.Executable#execute(javax.sql.DataSource)
+   */
   @Override
   public void execute(final DataSource dataSource)
     throws Exception
