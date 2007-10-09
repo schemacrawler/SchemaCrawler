@@ -21,12 +21,11 @@
 package schemacrawler.tools.mysql;
 
 
-import dbconnector.dbconnector.DatabaseConnector;
-import dbconnector.dbconnector.DatabaseConnectorFactory;
 import schemacrawler.main.SchemaCrawlerMain;
-import schemacrawler.tools.ToolsExecutor;
 import sf.util.CommandLineUtility;
 import sf.util.Config;
+import dbconnector.dbconnector.DatabaseConnector;
+import dbconnector.dbconnector.DatabaseConnectorFactory;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -54,7 +53,6 @@ public final class Main
         .createBundledDriverDataSourceParser(args, driverConfiguration);
       SchemaCrawlerMain.schemacrawler(args,
                                       driverConfiguration,
-                                      new ToolsExecutor(),
                                       dataSourceParser);
     }
     catch (final Exception e)
