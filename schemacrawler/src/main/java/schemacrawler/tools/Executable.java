@@ -26,9 +26,11 @@ import javax.sql.DataSource;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 
 /**
- * Program options.
+ * A SchemaCrawler tools executable unit.
  * 
  * @author Sualeh Fatehi
+ * @param <O>
+ *        Tool-specific options for execution.
  */
 public abstract class Executable<O extends ToolsOptions>
 {
@@ -36,6 +38,9 @@ public abstract class Executable<O extends ToolsOptions>
   protected SchemaCrawlerOptions schemaCrawlerOptions;
   protected O toolOptions;
 
+  /**
+   * Creates an executable with some default options.
+   */
   public Executable()
   {
     schemaCrawlerOptions = new SchemaCrawlerOptions();
