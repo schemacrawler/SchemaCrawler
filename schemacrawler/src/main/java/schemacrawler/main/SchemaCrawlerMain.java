@@ -52,8 +52,6 @@ public final class SchemaCrawlerMain
    *        Command line arguments
    * @param config
    *        Configuration
-   * @param executor
-   *        Executor
    * @param dataSourceParser
    *        Datasource parser
    * @throws Exception

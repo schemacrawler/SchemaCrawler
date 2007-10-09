@@ -21,8 +21,6 @@
 package schemacrawler.tools.datatext;
 
 
-import java.util.logging.Logger;
-
 import javax.sql.DataSource;
 
 import schemacrawler.crawl.SchemaCrawlerException;
@@ -39,9 +37,6 @@ import schemacrawler.tools.OutputOptions;
 public class DataToolsExecutable
   extends Executable<DataTextFormatOptions>
 {
-
-  private static final Logger LOGGER = Logger
-    .getLogger(DataToolsExecutable.class.getName());
 
   /**
    * Instantiates a text formatter type of DataHandler from the mnemonic
