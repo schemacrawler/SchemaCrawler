@@ -39,19 +39,7 @@ public class SpringIntegrationTest
   }
 
   @Test
-  public void testSchema()
-  {
-    final SchemaCrawlerOptions schemaCrawlerOptions = (SchemaCrawlerOptions) appContext
-      .getBean("schemaCrawlerOptions");
-    final DataSource dataSource = (DataSource) appContext.getBean("dataSource");
-    final Schema schema = SchemaCrawler.getSchema(dataSource,
-                                                  SchemaInfoLevel.maximum,
-                                                  schemaCrawlerOptions);
-    assertEquals(6, schema.getTables().length);
-  }
-
-  @Test
-  public void testToolsExecutorForCount()
+  public void testExecutableForCount()
     throws Exception
   {
     final String outputFilename = File.createTempFile("schemacrawler", "test")
@@ -76,7 +64,32 @@ public class SpringIntegrationTest
   }
 
   @Test
-  public void testToolsExecutorForQuery()
+  public void testExecutableForFreeMarker()
+    throws Exception
+  {
+    final String outputFilename = File.createTempFile("schemacrawler", "test")
+      .getAbsolutePath();
+
+    final Executable<SchemaTextOptions> executable = (Executable<SchemaTextOptions>) appContext
+      .getBean("executableForFreeMarker");
+    final DataSource dataSource = (DataSource) appContext.getBean("dataSource");
+
+    executable.getToolOptions().getOutputOptions()
+      .setOutputFileName(outputFilename);
+
+    executable.execute(dataSource);
+
+    final File outputFile = new File(outputFilename);
+    Assert.assertTrue(outputFile.exists());
+    Assert.assertTrue(outputFile.length() > 0);
+    if (!outputFile.delete())
+    {
+      fail("Cannot delete output file");
+    }
+  }
+
+  @Test
+  public void testExecutableForQuery()
     throws Exception
   {
     final String outputFilename = File.createTempFile("schemacrawler", "test")
@@ -101,7 +114,7 @@ public class SpringIntegrationTest
   }
 
   @Test
-  public void testToolsExecutorForSchema()
+  public void testExecutableForSchema()
     throws Exception
   {
     final String outputFilename = File.createTempFile("schemacrawler", "test")
@@ -124,4 +137,42 @@ public class SpringIntegrationTest
       fail("Cannot delete output file");
     }
   }
+
+  @Test
+  public void testExecutableForVelocity()
+    throws Exception
+  {
+    final String outputFilename = File.createTempFile("schemacrawler", "test")
+      .getAbsolutePath();
+
+    final Executable<SchemaTextOptions> executable = (Executable<SchemaTextOptions>) appContext
+      .getBean("executableForVelocity");
+    final DataSource dataSource = (DataSource) appContext.getBean("dataSource");
+
+    executable.getToolOptions().getOutputOptions()
+      .setOutputFileName(outputFilename);
+
+    executable.execute(dataSource);
+
+    final File outputFile = new File(outputFilename);
+    Assert.assertTrue(outputFile.exists());
+    Assert.assertTrue(outputFile.length() > 0);
+    if (!outputFile.delete())
+    {
+      fail("Cannot delete output file");
+    }
+  }
+
+  @Test
+  public void testSchema()
+  {
+    final SchemaCrawlerOptions schemaCrawlerOptions = (SchemaCrawlerOptions) appContext
+      .getBean("schemaCrawlerOptions");
+    final DataSource dataSource = (DataSource) appContext.getBean("dataSource");
+    final Schema schema = SchemaCrawler.getSchema(dataSource,
+                                                  SchemaInfoLevel.maximum,
+                                                  schemaCrawlerOptions);
+    assertEquals(6, schema.getTables().length);
+  }
+
 }

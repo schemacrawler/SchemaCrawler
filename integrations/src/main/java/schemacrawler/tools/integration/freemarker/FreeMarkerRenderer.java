@@ -102,7 +102,7 @@ public final class FreeMarkerRenderer
     template.process(objectMap, writer);
 
     writer.flush();
-
+    writer.close();
   }
 
 }
