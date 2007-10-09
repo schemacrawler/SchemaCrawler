@@ -32,7 +32,6 @@ import schemacrawler.tools.Executable;
 import sf.util.Config;
 import dbconnector.Version;
 import dbconnector.dbconnector.DatabaseConnector;
-import dbconnector.dbconnector.DatabaseConnectorFactory;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
