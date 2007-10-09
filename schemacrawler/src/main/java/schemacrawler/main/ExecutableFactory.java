@@ -31,7 +31,6 @@ import schemacrawler.tools.Command;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.ToolType;
 import schemacrawler.tools.datatext.DataTextFormatOptions;
 import schemacrawler.tools.datatext.DataToolsExecutable;
 import schemacrawler.tools.operation.Operation;
@@ -54,6 +53,18 @@ import sf.util.CommandLineParser.StringOption;
  */
 public final class ExecutableFactory
 {
+  /**
+   * An enumeration of available tools.
+   */
+  private enum ToolType
+  {
+    /** Schema metadata to text. */
+    schema_text,
+    /** Operation. */
+    operation,
+    /** Data to text. */
+    data_text;
+  }
 
   private static final String OPTION_NOINFO = "noinfo";
   private static final String OPTION_NOFOOTER = "nofooter";
@@ -182,8 +193,8 @@ public final class ExecutableFactory
           final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType
             .valueOf(command.getName());
           final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(config,
-                                                                      outputOptions,
-                                                                      schemaTextDetailType);
+                                                                            outputOptions,
+                                                                            schemaTextDetailType);
           final SchemaCrawlerExecutable schemaCrawlerExecutable = new SchemaCrawlerExecutable();
           schemaCrawlerExecutable.setToolOptions(schemaTextOptions);
           executable = schemaCrawlerExecutable;
@@ -212,8 +223,8 @@ public final class ExecutableFactory
         case data_text:
           final String queryName = command.getName();
           final DataTextFormatOptions dataTextFormatOptions = new DataTextFormatOptions(config,
-                                                                                  outputOptions,
-                                                                                  queryName);
+                                                                                        outputOptions,
+                                                                                        queryName);
           final DataToolsExecutable dataToolsExecutable = new DataToolsExecutable();
           dataToolsExecutable.setToolOptions(dataTextFormatOptions);
           executable = dataToolsExecutable;

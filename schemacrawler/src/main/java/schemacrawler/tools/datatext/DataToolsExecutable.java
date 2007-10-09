@@ -25,9 +25,11 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
+import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutor;
 import schemacrawler.tools.Executable;
+import schemacrawler.tools.OutputOptions;
 
 /**
  * Basic SchemaCrawler executor.
@@ -50,9 +52,50 @@ public class DataToolsExecutable
   public void execute(final DataSource dataSource)
     throws Exception
   {
-    final DataHandler dataHandler = DataTextFormatterLoader.load(toolOptions);
+    final DataHandler dataHandler = createDataHandler(toolOptions);
     final QueryExecutor executor = new QueryExecutor(dataSource, dataHandler);
     executor.executeSQL(toolOptions.getQuery().getQuery());
+  }
+
+  /**
+   * Instantiates a text formatter type of DataHandler from the mnemonic
+   * string.
+   * 
+   * @param options
+   *        Options
+   * @throws SchemaCrawlerException
+   *         On an exception
+   * @return CrawlHandler instance
+   */
+  public static DataHandler createDataHandler(final DataTextFormatOptions options)
+    throws SchemaCrawlerException
+  {
+
+    if (options.getOutputOptions().getOutputFormat() == null)
+    {
+      return null;
+    }
+
+    DataHandler handler = null;
+    final OutputOptions outputOptions = options.getOutputOptions();
+    switch (outputOptions.getOutputFormat())
+    {
+      case text:
+        handler = new DataPlainTextFormatter(options);
+        break;
+      case html:
+        handler = new DataHTMLFormatter(options);
+        break;
+      case csv:
+        handler = new DataCSVFormatter(options);
+        break;
+      default:
+        throw new IllegalArgumentException("Unknown output format specified - "
+                                           + outputOptions
+                                             .getOutputFormatValue());
+    }
+
+    return handler;
   }
 
 }

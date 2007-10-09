@@ -21,38 +21,29 @@
 package schemacrawler.test;
 
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.SQLException;
-
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.custommonkey.xmlunit.Validator;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.xml.sax.SAXException;
 
-import schemacrawler.crawl.CrawlHandler;
-import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerException;
-import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutor;
 import schemacrawler.execute.QueryExecutorException;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.datatext.DataTextFormatOptions;
-import schemacrawler.tools.datatext.DataTextFormatterLoader;
+import schemacrawler.tools.datatext.DataToolsExecutable;
 import schemacrawler.tools.operation.Operation;
-import schemacrawler.tools.operation.OperatorLoader;
+import schemacrawler.tools.operation.OperationExecutable;
 import schemacrawler.tools.operation.OperationOptions;
+import schemacrawler.tools.schematext.SchemaCrawlerExecutable;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
-import schemacrawler.tools.schematext.SchemaTextFormatter;
-import schemacrawler.tools.schematext.SchemaTextFormatterLoader;
 import schemacrawler.tools.schematext.SchemaTextOptions;
 import sf.util.Config;
 import dbconnector.datasource.PropertiesDataSourceException;
@@ -80,31 +71,20 @@ public class SchemaCrawlerOutputTest
 
   @Test
   public void countOperatorOutput()
-    throws SchemaCrawlerException, SQLException, IOException
+    throws Exception
   {
     final String outputFilename = File.createTempFile("schemacrawler", "test")
       .getAbsolutePath();
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     final OutputOptions outputOptions = new OutputOptions("text",
                                                           outputFilename);
-    final DataTextFormatOptions textFormatOptions = new DataTextFormatOptions(new Config(),
-                                                                              outputOptions,
-                                                                              null);
     final OperationOptions operatorOptions = new OperationOptions(new Config(),
                                                                   outputOptions,
                                                                   Operation.count);
 
-    final DataHandler dataHandler = DataTextFormatterLoader
-      .load(textFormatOptions);
-    final CrawlHandler formatter = OperatorLoader.load(operatorOptions,
-                                                       testUtility
-                                                         .getDataSource()
-                                                         .getConnection(),
-                                                       dataHandler);
-    final SchemaCrawler crawler = new SchemaCrawler(testUtility.getDataSource(),
-                                                    formatter);
-    crawler.crawl(schemaCrawlerOptions);
+    OperationExecutable executable = new OperationExecutable();
+    executable.setToolOptions(operatorOptions);
+    executable.execute(testUtility.getDataSource());
 
     final File outputFile = new File(outputFilename);
     if (!outputFile.delete())
@@ -115,14 +95,12 @@ public class SchemaCrawlerOutputTest
 
   @Test
   public void countOperatorValidXMLOutput()
-    throws IOException, SchemaCrawlerException, SQLException,
-    ParserConfigurationException, SAXException
+    throws Exception
   {
     final String outputFilename = File.createTempFile("schemacrawler",
                                                       ".test.html")
       .getAbsolutePath();
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     final OutputOptions outputOptions = new OutputOptions("html",
                                                           outputFilename);
     outputOptions.setNoHeader(false);
@@ -132,14 +110,9 @@ public class SchemaCrawlerOutputTest
                                                                   outputOptions,
                                                                   Operation.count);
 
-    final CrawlHandler formatter = OperatorLoader.load(operatorOptions,
-                                                       testUtility
-                                                         .getDataSource()
-                                                         .getConnection(),
-                                                       null);
-    final SchemaCrawler crawler = new SchemaCrawler(testUtility.getDataSource(),
-                                                    formatter);
-    crawler.crawl(schemaCrawlerOptions);
+    OperationExecutable executable = new OperationExecutable();
+    executable.setToolOptions(operatorOptions);
+    executable.execute(testUtility.getDataSource());
 
     final Validator validator = new Validator(new FileReader(outputFilename));
     validator.assertIsValid();
@@ -157,8 +130,8 @@ public class SchemaCrawlerOutputTest
                                                                                                 outputFilename),
                                                                               null);
 
-    final DataHandler dataHandler = DataTextFormatterLoader
-      .load(textFormatOptions);
+    final DataHandler dataHandler = DataToolsExecutable
+      .createDataHandler(textFormatOptions);
     final QueryExecutor executor = new QueryExecutor(testUtility
       .getDataSource(), dataHandler);
     executor.executeSQL("SELECT COUNT(*) FROM CUSTOMER");
@@ -172,36 +145,24 @@ public class SchemaCrawlerOutputTest
 
   @Test
   public void dumpOperatorValidXMLOutput()
-    throws IOException, SchemaCrawlerException, SQLException,
-    ParserConfigurationException, SAXException
+    throws Exception
   {
     final String outputFilename = File.createTempFile("schemacrawler",
                                                       ".test.html")
       .getAbsolutePath();
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     final OutputOptions outputOptions = new OutputOptions("html",
                                                           outputFilename);
     outputOptions.setNoHeader(false);
     outputOptions.setNoFooter(false);
     outputOptions.setNoInfo(false);
-    final DataTextFormatOptions textFormatOptions = new DataTextFormatOptions(new Config(),
-                                                                              outputOptions,
-                                                                              null);
     final OperationOptions operatorOptions = new OperationOptions(new Config(),
                                                                   outputOptions,
                                                                   Operation.dump);
 
-    final DataHandler dataHandler = DataTextFormatterLoader
-      .load(textFormatOptions);
-    final CrawlHandler formatter = OperatorLoader.load(operatorOptions,
-                                                       testUtility
-                                                         .getDataSource()
-                                                         .getConnection(),
-                                                       dataHandler);
-    final SchemaCrawler crawler = new SchemaCrawler(testUtility.getDataSource(),
-                                                    formatter);
-    crawler.crawl(schemaCrawlerOptions);
+    OperationExecutable executable = new OperationExecutable();
+    executable.setToolOptions(operatorOptions);
+    executable.execute(testUtility.getDataSource());
 
     final Validator validator = new Validator(new FileReader(outputFilename));
     validator.assertIsValid();
@@ -209,22 +170,19 @@ public class SchemaCrawlerOutputTest
 
   @Test
   public void schemaOutput()
-    throws IOException, SchemaCrawlerException
+    throws Exception
   {
     final String outputFilename = File.createTempFile("schemacrawler", "test")
       .getAbsolutePath();
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     final SchemaTextOptions textFormatOptions = new SchemaTextOptions(new Config(),
                                                                       new OutputOptions("text",
                                                                                         outputFilename),
                                                                       SchemaTextDetailType.brief_schema);
 
-    final SchemaTextFormatter formatter = (SchemaTextFormatter) SchemaTextFormatterLoader
-      .load(textFormatOptions);
-    final SchemaCrawler crawler = new SchemaCrawler(testUtility.getDataSource(),
-                                                    formatter);
-    crawler.crawl(schemaCrawlerOptions);
+    SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable();
+    executable.setToolOptions(textFormatOptions);
+    executable.execute(testUtility.getDataSource());
 
     final File outputFile = new File(outputFilename);
     if (!outputFile.delete())
@@ -235,14 +193,12 @@ public class SchemaCrawlerOutputTest
 
   @Test
   public void schemaValidXMLOutput()
-    throws SchemaCrawlerException, ParserConfigurationException, SAXException,
-    IOException
+    throws Exception
   {
     final String outputFilename = File.createTempFile("schemacrawler",
                                                       ".test.html")
       .getAbsolutePath();
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     final OutputOptions outputOptions = new OutputOptions("html",
                                                           outputFilename);
     outputOptions.setNoHeader(false);
@@ -252,42 +208,12 @@ public class SchemaCrawlerOutputTest
                                                                       outputOptions,
                                                                       SchemaTextDetailType.maximum_schema);
 
-    final CrawlHandler formatter = SchemaTextFormatterLoader
-      .load(textFormatOptions);
-    final SchemaCrawler crawler = new SchemaCrawler(testUtility.getDataSource(),
-                                                    formatter);
-    crawler.crawl(schemaCrawlerOptions);
+    SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable();
+    executable.setToolOptions(textFormatOptions);
+    executable.execute(testUtility.getDataSource());
 
     final Validator validator = new Validator(new FileReader(outputFilename));
     validator.assertIsValid();
-  }
-
-  @SuppressWarnings("boxing")
-  @Test
-  public void tableCountFromPlainTextFormatter()
-    throws IOException, SchemaCrawlerException
-  {
-    final String outputFilename = File.createTempFile("schemacrawler", "test")
-      .getAbsolutePath();
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    final SchemaTextOptions textFormatOptions = new SchemaTextOptions(new Config(),
-                                                                      new OutputOptions("text",
-                                                                                        outputFilename),
-                                                                      SchemaTextDetailType.verbose_schema);
-
-    final SchemaTextFormatter formatter = (SchemaTextFormatter) SchemaTextFormatterLoader
-      .load(textFormatOptions);
-    final SchemaCrawler crawler = new SchemaCrawler(testUtility.getDataSource(),
-                                                    formatter);
-    crawler.crawl(schemaCrawlerOptions);
-    assertEquals("Table count does not match", 6, formatter.getTableCount());
-
-    final File outputFile = new File(outputFilename);
-    if (!outputFile.delete())
-    {
-      fail("Cannot delete output file");
-    }
   }
 
 }

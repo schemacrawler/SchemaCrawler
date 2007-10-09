@@ -36,6 +36,11 @@ public abstract class Executable<O extends ToolsOptions>
   protected SchemaCrawlerOptions schemaCrawlerOptions;
   protected O toolOptions;
 
+  public Executable()
+  {
+    schemaCrawlerOptions = new SchemaCrawlerOptions();
+  }
+
   /**
    * Executes main functionality for SchemaCrawler.
    * 
