@@ -29,14 +29,10 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.crawl.InformationSchemaViews;
-import schemacrawler.crawl.SchemaCrawlerOptions;
-import schemacrawler.tools.ExecutionContext;
-import schemacrawler.tools.Executor;
+import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.integration.TemplatedSchemaCrawlerExecutor;
 import schemacrawler.tools.integration.freemarker.FreeMarkerRenderer;
-import schemacrawler.tools.integration.jung.JungExecutor;
+import schemacrawler.tools.integration.jung.JungExecutable;
 import schemacrawler.tools.integration.velocity.VelocityRenderer;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextOptions;
@@ -71,7 +67,7 @@ public class ExecutorIntegrationTest
       .getAbsolutePath();
     final OutputOptions outputOptions = new OutputOptions("800x600",
                                                           outputFilename);
-    executorIntegrationTest(new JungExecutor(), outputOptions);
+    executorIntegrationTest(new JungExecutable(), outputOptions);
   }
 
   @Test
@@ -82,8 +78,7 @@ public class ExecutorIntegrationTest
       .getAbsolutePath();
     final OutputOptions outputOptions = new OutputOptions("plaintextschema.ftl",
                                                           outputFilename);
-    executorIntegrationTest(new TemplatedSchemaCrawlerExecutor(new FreeMarkerRenderer()),
-                            outputOptions);
+    executorIntegrationTest(new FreeMarkerRenderer(), outputOptions);
   }
 
   @Test
@@ -94,23 +89,19 @@ public class ExecutorIntegrationTest
       .getAbsolutePath();
     final OutputOptions outputOptions = new OutputOptions("plaintextschema.vm",
                                                           outputFilename);
-    executorIntegrationTest(new TemplatedSchemaCrawlerExecutor(new VelocityRenderer()),
-                            outputOptions);
+    executorIntegrationTest(new VelocityRenderer(), outputOptions);
   }
 
-  private void executorIntegrationTest(final Executor executor,
+  private void executorIntegrationTest(final Executable<SchemaTextOptions> executable,
                                        final OutputOptions outputOptions)
     throws Exception
   {
     final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(null,
                                                                       outputOptions,
                                                                       SchemaTextDetailType.basic_schema);
+    executable.setToolOptions(schemaTextOptions);
 
-    final ExecutionContext executionContext = new ExecutionContext(new SchemaCrawlerOptions(),
-                                                                   new InformationSchemaViews(),
-                                                                   schemaTextOptions);
-
-    executor.execute(executionContext, testUtility.getDataSource());
+    executable.execute(testUtility.getDataSource());
 
     // Check post-conditions
     final File outputFile = outputOptions.getOutputFile();

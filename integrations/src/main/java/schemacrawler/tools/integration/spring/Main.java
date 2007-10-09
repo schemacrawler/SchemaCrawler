@@ -24,7 +24,7 @@ package schemacrawler.tools.integration.spring;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-import schemacrawler.tools.ExecutionContext;
+import schemacrawler.tools.Executable;
 import sf.util.CommandLineUtility;
 
 /**
@@ -48,7 +48,7 @@ public final class Main
     try
     {
       final ApplicationContext appContext = new FileSystemXmlApplicationContext("context.xml");
-      ExecutionContext executionContext = (ExecutionContext) appContext
+      Executable executionContext = (Executable) appContext
         .getBean("executionContext");
     }
     catch (final Exception e)

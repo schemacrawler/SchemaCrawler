@@ -21,7 +21,6 @@
 package schemacrawler.tools.integration.velocity;
 
 
-import schemacrawler.tools.integration.TemplatedSchemaCrawlerExecutor;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -41,8 +40,7 @@ public final class Main
   public static void main(final String[] args)
     throws Exception
   {
-    TemplatedSchemaCrawlerExecutor.templatingToolMain(args,
-                                                      new VelocityRenderer());
+    new VelocityRenderer().main(args);
   }
 
   private Main()

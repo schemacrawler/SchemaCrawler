@@ -29,7 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Schema;
-import schemacrawler.tools.integration.TemplatedSchemaRenderer;
+import schemacrawler.tools.integration.TemplateRenderer;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.MultiTemplateLoader;
@@ -44,7 +44,7 @@ import freemarker.template.Template;
  * @author Sualeh Fatehi
  */
 public final class FreeMarkerRenderer
-  implements TemplatedSchemaRenderer
+  extends TemplateRenderer
 {
 
   private static final Logger LOGGER = Logger
@@ -56,6 +56,7 @@ public final class FreeMarkerRenderer
    * @see schemacrawler.tools.integration.TemplatedSchemaRenderer#renderTemplate(java.lang.String,
    *      schemacrawler.schema.Schema, java.io.Writer)
    */
+  @Override
   public void renderTemplate(final String templateName,
                              final Schema schema,
                              final Writer writer)

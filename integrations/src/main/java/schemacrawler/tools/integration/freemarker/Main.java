@@ -21,7 +21,6 @@
 package schemacrawler.tools.integration.freemarker;
 
 
-import schemacrawler.tools.integration.TemplatedSchemaCrawlerExecutor;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -41,8 +40,7 @@ public final class Main
   public static void main(final String[] args)
     throws Exception
   {
-    TemplatedSchemaCrawlerExecutor.templatingToolMain(args,
-                                                      new FreeMarkerRenderer());
+    new FreeMarkerRenderer().main(args);
   }
 
   private Main()
