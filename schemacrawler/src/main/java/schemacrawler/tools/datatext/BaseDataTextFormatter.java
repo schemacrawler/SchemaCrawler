@@ -90,21 +90,21 @@ public abstract class BaseDataTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see DataHandler#end()
-   */
-  public void end()
-  {
-    close();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see DataHandler#close()
    */
   public void close()
   {
     options.getOutputOptions().closeOutputWriter(out);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see DataHandler#end()
+   */
+  public void end()
+  {
+    close();
   }
 
   /**

@@ -40,21 +40,21 @@ public interface DataHandler
     throws QueryExecutorException;
 
   /**
-   * Handles the end of the execution.
-   * 
-   * @throws QueryExecutorException
-   *         On an exception
-   */
-  void end()
-    throws QueryExecutorException;
-
-  /**
    * Closes all open resources.
    * 
    * @throws QueryExecutorException
    *         On an exception
    */
   void close()
+    throws QueryExecutorException;
+
+  /**
+   * Handles the end of the execution.
+   * 
+   * @throws QueryExecutorException
+   *         On an exception
+   */
+  void end()
     throws QueryExecutorException;
 
   /**

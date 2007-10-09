@@ -44,20 +44,6 @@ public class DataToolsExecutable
     .getLogger(DataToolsExecutable.class.getName());
 
   /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.Executable#execute(javax.sql.DataSource)
-   */
-  @Override
-  public void execute(final DataSource dataSource)
-    throws Exception
-  {
-    final DataHandler dataHandler = createDataHandler(toolOptions);
-    final QueryExecutor executor = new QueryExecutor(dataSource, dataHandler);
-    executor.executeSQL(toolOptions.getQuery().getQuery());
-  }
-
-  /**
    * Instantiates a text formatter type of DataHandler from the mnemonic
    * string.
    * 
@@ -96,6 +82,20 @@ public class DataToolsExecutable
     }
 
     return handler;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.Executable#execute(javax.sql.DataSource)
+   */
+  @Override
+  public void execute(final DataSource dataSource)
+    throws Exception
+  {
+    final DataHandler dataHandler = createDataHandler(toolOptions);
+    final QueryExecutor executor = new QueryExecutor(dataSource, dataHandler);
+    executor.executeSQL(toolOptions.getQuery().getQuery());
   }
 
 }

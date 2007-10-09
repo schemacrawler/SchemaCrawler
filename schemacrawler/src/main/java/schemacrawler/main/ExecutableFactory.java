@@ -76,13 +76,13 @@ public final class ExecutableFactory
   {
     final OutputOptions masterOutputOptions = OutputOptionsParser
       .parseOutputOptions(args);
-    Command[] commands = CommandParser.parseCommands(args)
+    final Command[] commands = CommandParser.parseCommands(args)
       .toArray(new Command[0]);
 
     final List<Executable<?>> executables = new ArrayList<Executable<?>>();
     for (int i = 0; i < commands.length; i++)
     {
-      Command command = commands[i];
+      final Command command = commands[i];
 
       final OutputOptions outputOptions = masterOutputOptions.duplicate();
       if (i == 0)
