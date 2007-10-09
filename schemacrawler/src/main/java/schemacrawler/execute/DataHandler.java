@@ -49,6 +49,15 @@ public interface DataHandler
     throws QueryExecutorException;
 
   /**
+   * Closes all open resources.
+   * 
+   * @throws QueryExecutorException
+   *         On an exception
+   */
+  void close()
+    throws QueryExecutorException;
+
+  /**
    * Gets the output print writer.
    * 
    * @return Print writer
