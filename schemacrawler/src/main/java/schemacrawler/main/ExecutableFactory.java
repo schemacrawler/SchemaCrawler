@@ -29,7 +29,6 @@ import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.tools.Command;
 import schemacrawler.tools.Executable;
-import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.datatext.DataTextFormatOptions;
 import schemacrawler.tools.datatext.DataToolsExecutable;
@@ -39,12 +38,7 @@ import schemacrawler.tools.operation.OperationOptions;
 import schemacrawler.tools.schematext.SchemaCrawlerExecutable;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextOptions;
-import sf.util.CommandLineParser;
 import sf.util.Config;
-import sf.util.Utilities;
-import sf.util.CommandLineParser.BooleanOption;
-import sf.util.CommandLineParser.Option;
-import sf.util.CommandLineParser.StringOption;
 
 /**
  * Parses the command line.
@@ -66,14 +60,6 @@ public final class ExecutableFactory
     data_text;
   }
 
-  private static final String OPTION_NOINFO = "noinfo";
-  private static final String OPTION_NOFOOTER = "nofooter";
-  private static final String OPTION_NOHEADER = "noheader";
-  private static final String OPTION_COMMAND = "command";
-  private static final String OPTION_OUTPUT_FORMAT = "outputformat";
-  private static final String OPTION_OUTPUT_FILE = "outputfile";
-  private static final String OPTION_OUTPUT_APPEND = "append";
-
   /**
    * Parses the command line.
    * 
@@ -88,85 +74,23 @@ public final class ExecutableFactory
                                                final Config config)
     throws SchemaCrawlerException
   {
+    final OutputOptions masterOutputOptions = OutputOptionsParser
+      .parseOutputOptions(args);
+    Command[] commands = CommandParser.parseCommands(args)
+      .toArray(new Command[0]);
 
-    final CommandLineParser parser = createCommandLineParser();
-    parser.parse(args);
-
-    final String outputFormatValue = parser
-      .getStringOptionValue(OPTION_OUTPUT_FORMAT);
-
-    final String outputFile = parser.getStringOptionValue(OPTION_OUTPUT_FILE);
-
-    final boolean appendOutput = parser
-      .getBooleanOptionValue(OPTION_OUTPUT_APPEND);
-
-    final boolean noHeader = parser.getBooleanOptionValue(OPTION_NOHEADER);
-    final boolean noFooter = parser.getBooleanOptionValue(OPTION_NOFOOTER);
-    final boolean noInfo = parser.getBooleanOptionValue(OPTION_NOINFO);
-
-    final OutputOptions masterOutputOptions = new OutputOptions(outputFormatValue,
-                                                                outputFile);
-    masterOutputOptions.setAppendOutput(appendOutput);
-    masterOutputOptions.setNoHeader(noHeader);
-    masterOutputOptions.setNoFooter(noFooter);
-    masterOutputOptions.setNoInfo(noInfo);
-
-    final String commandOptionValue = parser
-      .getStringOptionValue(OPTION_COMMAND);
-    if (Utilities.isBlank(commandOptionValue))
-    {
-      throw new SchemaCrawlerException("No SchemaCrawler command specified");
-    }
-    final String[] commandStrings = commandOptionValue.split(",");
-    final List<Executable<?>> executables = createExecutablesPerCommand(commandStrings,
-                                                                        config,
-                                                                        masterOutputOptions);
-
-    return executables;
-
-  }
-
-  private static CommandLineParser createCommandLineParser()
-  {
-    final CommandLineParser parser = new CommandLineParser();
-    parser
-      .addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_COMMAND, ""));
-    parser.addOption(new StringOption(Option.NO_SHORT_FORM,
-                                      OPTION_OUTPUT_FORMAT,
-                                      OutputFormat.text.toString()));
-    parser.addOption(new StringOption(Option.NO_SHORT_FORM,
-                                      OPTION_OUTPUT_FILE,
-                                      ""));
-    parser.addOption(new BooleanOption(Option.NO_SHORT_FORM,
-                                       OPTION_OUTPUT_APPEND));
-    parser.addOption(new BooleanOption(Option.NO_SHORT_FORM, OPTION_NOHEADER));
-    parser.addOption(new BooleanOption(Option.NO_SHORT_FORM, OPTION_NOFOOTER));
-    parser.addOption(new BooleanOption(Option.NO_SHORT_FORM, OPTION_NOINFO));
-    return parser;
-  }
-
-  private static List<Executable<?>> createExecutablesPerCommand(final String[] commandStrings,
-                                                                 final Config config,
-                                                                 final OutputOptions masterOutputOptions)
-  {
     final List<Executable<?>> executables = new ArrayList<Executable<?>>();
-    for (int i = 0; i < commandStrings.length; i++)
+    for (int i = 0; i < commands.length; i++)
     {
-      String commandString = commandStrings[i];
-      if (commandString == null || commandString.length() == 0)
-      {
-        continue;
-      }
-      commandString = commandString.trim().toLowerCase();
-      final Command command = new Command(commandString);
-      //
+      Command command = commands[i];
+
       final OutputOptions outputOptions = masterOutputOptions.duplicate();
       if (i == 0)
       {
         // First command - no footer
         outputOptions.setNoFooter(true);
       }
-      else if (i == commandStrings.length - 1)
+      else if (i == commands.length - 1)
       {
         // Last command - no header, or info
         outputOptions.setNoHeader(true);
