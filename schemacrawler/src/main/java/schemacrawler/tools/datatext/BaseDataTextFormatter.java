@@ -94,6 +94,16 @@ public abstract class BaseDataTextFormatter
    */
   public void end()
   {
+    close();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see DataHandler#close()
+   */
+  public void close()
+  {
     options.getOutputOptions().closeOutputWriter(out);
   }
 

@@ -183,7 +183,7 @@ public abstract class BaseOperator
     {
       if (dataHandler != null)
       {
-        dataHandler.end();
+        dataHandler.close();
       }
     }
     catch (final QueryExecutorException e)
