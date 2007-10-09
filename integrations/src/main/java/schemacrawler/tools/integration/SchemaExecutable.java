@@ -50,7 +50,7 @@ public abstract class SchemaExecutable
    * @param args
    *        Arguments passed into the program from the command line.
    * @param helpResource
-   *        TODO
+   *        A resource for help text
    * @throws Exception
    *         On an exception
    */

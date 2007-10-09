@@ -57,21 +57,6 @@ public final class JungExecutable
     JungUtil.saveGraphJpeg(graph, outputFile, size);
   }
 
-  private Dimension getSize(final String dimensions)
-  {
-    final String[] sizes = dimensions.split("x");
-    try
-    {
-      final int width = Integer.parseInt(sizes[0]);
-      final int height = Integer.parseInt(sizes[1]);
-      return new Dimension(width, height);
-    }
-    catch (final NumberFormatException e)
-    {
-      return new Dimension(DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_WIDTH);
-    }
-  }
-
   /**
    * Get connection parameters, and creates a connection, and crawls the
    * schema.
@@ -85,5 +70,20 @@ public final class JungExecutable
     throws Exception
   {
     executeOnSchema(args, "/schemacrawler-jung-readme.txt");
+  }
+
+  private Dimension getSize(final String dimensions)
+  {
+    final String[] sizes = dimensions.split("x");
+    try
+    {
+      final int width = Integer.parseInt(sizes[0]);
+      final int height = Integer.parseInt(sizes[1]);
+      return new Dimension(width, height);
+    }
+    catch (final NumberFormatException e)
+    {
+      return new Dimension(DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_WIDTH);
+    }
   }
 }
