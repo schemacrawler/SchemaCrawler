@@ -6,13 +6,11 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import schemacrawler.crawl.InformationSchemaViews;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import sf.util.Config;
 import dbconnector.datasource.PropertiesDataSource;
 import dbconnector.datasource.PropertiesDataSourceException;
 
@@ -32,11 +30,9 @@ public class SchemaCrawlerTest1
 
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions(properties);
 
-    final Schema schema = SchemaCrawler
-      .getSchema(dataSource,
-                 new InformationSchemaViews(new Config(properties)),
-                 SchemaInfoLevel.basic,
-                 options);
+    final Schema schema = SchemaCrawler.getSchema(dataSource,
+                                                  SchemaInfoLevel.basic,
+                                                  options);
     final Table[] tableArray = schema.getTables();
 
     System.out.println(Arrays.asList(tableArray));
