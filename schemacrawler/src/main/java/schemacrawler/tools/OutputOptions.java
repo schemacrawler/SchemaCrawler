@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -91,14 +92,21 @@ public final class OutputOptions
    * @param writer
    *        Output writer
    */
-  public void closeOutputWriter(final PrintWriter writer)
+  public void closeOutputWriter(final Writer writer)
   {
     if (outputFile != null)
     {
       if (writer != null)
       {
-        writer.close();
-        LOGGER.log(Level.FINER, "Output writer closed");
+        try
+        {
+          writer.close();
+          LOGGER.log(Level.FINER, "Output writer closed");
+        }
+        catch (IOException e)
+        {
+          LOGGER.log(Level.FINER, "Exception closing output writer closed", e);
+        }
       }
     }
     else
