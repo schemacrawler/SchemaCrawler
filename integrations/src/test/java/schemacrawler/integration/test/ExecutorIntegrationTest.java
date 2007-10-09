@@ -26,6 +26,7 @@ import static org.junit.Assert.fail;
 import java.io.File;
 
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -67,7 +68,7 @@ public class ExecutorIntegrationTest
       .getAbsolutePath();
     final OutputOptions outputOptions = new OutputOptions("800x600",
                                                           outputFilename);
-    executorIntegrationTest(new JungExecutable(), outputOptions);
+    executeAndCheckForOutputFile(new JungExecutable(), outputOptions);
   }
 
   @Test
@@ -78,7 +79,7 @@ public class ExecutorIntegrationTest
       .getAbsolutePath();
     final OutputOptions outputOptions = new OutputOptions("plaintextschema.ftl",
                                                           outputFilename);
-    executorIntegrationTest(new FreeMarkerRenderer(), outputOptions);
+    executeAndCheckForOutputFile(new FreeMarkerRenderer(), outputOptions);
   }
 
   @Test
@@ -89,11 +90,11 @@ public class ExecutorIntegrationTest
       .getAbsolutePath();
     final OutputOptions outputOptions = new OutputOptions("plaintextschema.vm",
                                                           outputFilename);
-    executorIntegrationTest(new VelocityRenderer(), outputOptions);
+    executeAndCheckForOutputFile(new VelocityRenderer(), outputOptions);
   }
 
-  private void executorIntegrationTest(final Executable<SchemaTextOptions> executable,
-                                       final OutputOptions outputOptions)
+  private void executeAndCheckForOutputFile(final Executable<SchemaTextOptions> executable,
+                                            final OutputOptions outputOptions)
     throws Exception
   {
     final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(null,
@@ -105,9 +106,11 @@ public class ExecutorIntegrationTest
 
     // Check post-conditions
     final File outputFile = outputOptions.getOutputFile();
-    if (!outputFile.exists())
+    Assert.assertTrue(outputFile.exists());
+    Assert.assertTrue(outputFile.length() > 0);
+    if (!outputFile.delete())
     {
-      fail("Output file '" + outputFile.getName() + "' was not created");
+      fail("Cannot delete output file");
     }
   }
 
