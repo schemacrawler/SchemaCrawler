@@ -29,11 +29,13 @@ import java.util.logging.Logger;
 import javax.sql.DataSource;
 
 import schemacrawler.crawl.CrawlHandler;
+import schemacrawler.crawl.Query;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.tools.Executable;
-import schemacrawler.tools.datatext.DataTextFormatterLoader;
+import schemacrawler.tools.OutputFormat;
+import schemacrawler.tools.datatext.DataToolsExecutable;
 
 /**
  * Basic SchemaCrawler executor.
@@ -49,6 +51,11 @@ public class OperationExecutable
 
   /**
    * {@inheritDoc}
+   * <p>
+   * Operations are crawl handlers that rely on query execution and
+   * result set formatting. Two connections are needed - one for the
+   * schema crawling, and another one for executing the query. The query
+   * is executed once per table, after variables are substituted.
    * 
    * @see schemacrawler.tools.Executable#execute(javax.sql.DataSource)
    */
@@ -56,11 +63,7 @@ public class OperationExecutable
   public void execute(final DataSource dataSource)
     throws Exception
   {
-    // Operations are crawl handlers that rely on query execution
-    // and result set formatting. Two connections are needed - one
-    // for the schema crawling, and another one for executing the
-    // query. The query is executed once per table, after variables
-    // are substituted.
+
     final Connection connection;
     try
     {
@@ -72,14 +75,39 @@ public class OperationExecutable
       LOGGER.log(Level.WARNING, "Cannot obtain a connection: " + errorMessage);
       throw new SchemaCrawlerException(errorMessage, e);
     }
-    final DataHandler operationDataHandler = DataTextFormatterLoader
-      .load(toolOptions);
-    final CrawlHandler crawlHandler = OperatorLoader.load(toolOptions,
-                                                    connection,
-                                                    operationDataHandler);
+    final DataHandler operationDataHandler = DataToolsExecutable
+      .createDataHandler(toolOptions);
 
-    final SchemaCrawler crawler = new SchemaCrawler(dataSource, crawlHandler);
+    CrawlHandler handler = null;
+    final Operation operation = toolOptions.getOperation();
+    Query query;
+    if (operation == Operation.queryover)
+    {
+      query = toolOptions.getQuery();
+    }
+    else
+    {
+      query = operation.getQuery();
+    }
+
+    final OutputFormat outputFormatType = toolOptions.getOutputOptions()
+      .getOutputFormat();
+    if (outputFormatType == OutputFormat.html)
+    {
+      handler = new OperatorHTMLOutput(toolOptions,
+                                       query,
+                                       connection,
+                                       operationDataHandler);
+    }
+    else
+    {
+      handler = new OperatorTextOutput(toolOptions,
+                                       query,
+                                       connection,
+                                       operationDataHandler);
+    }
+
+    final SchemaCrawler crawler = new SchemaCrawler(dataSource, handler);
     crawler.crawl(schemaCrawlerOptions);
   }
-
 }

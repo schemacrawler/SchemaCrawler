@@ -26,6 +26,8 @@ import javax.sql.DataSource;
 import schemacrawler.crawl.CrawlHandler;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.tools.Executable;
+import schemacrawler.tools.OutputFormat;
+import schemacrawler.tools.OutputOptions;
 
 /**
  * Basic SchemaCrawler executor.
@@ -45,8 +47,19 @@ public class SchemaCrawlerExecutable
   public void execute(final DataSource dataSource)
     throws Exception
   {
-    final CrawlHandler crawlHandler = SchemaTextFormatterLoader.load(toolOptions);
-    final SchemaCrawler crawler = new SchemaCrawler(dataSource, crawlHandler);
+    CrawlHandler handler = null;
+    final OutputOptions outputOptions = toolOptions.getOutputOptions();
+    final OutputFormat outputFormatType = outputOptions.getOutputFormat();
+    if (outputFormatType == OutputFormat.html)
+    {
+      handler = new SchemaHTMLFormatter(toolOptions);
+    }
+    else
+    {
+      handler = new SchemaTextFormatter(toolOptions);
+    }
+
+    final SchemaCrawler crawler = new SchemaCrawler(dataSource, handler);
     crawler.crawl(schemaCrawlerOptions);
   }
 
