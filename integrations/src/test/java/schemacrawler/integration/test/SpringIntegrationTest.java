@@ -18,8 +18,10 @@ import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
 import schemacrawler.schema.Schema;
-import schemacrawler.tools.ExecutionContext;
-import schemacrawler.tools.ToolsExecutor;
+import schemacrawler.tools.Executable;
+import schemacrawler.tools.datatext.DataTextFormatOptions;
+import schemacrawler.tools.operation.OperationOptions;
+import schemacrawler.tools.schematext.SchemaTextOptions;
 import dbconnector.test.TestUtility;
 
 public class SpringIntegrationTest
@@ -43,7 +45,6 @@ public class SpringIntegrationTest
       .getBean("schemaCrawlerOptions");
     final DataSource dataSource = (DataSource) appContext.getBean("dataSource");
     final Schema schema = SchemaCrawler.getSchema(dataSource,
-                                                  null,
                                                   SchemaInfoLevel.maximum,
                                                   schemaCrawlerOptions);
     assertEquals(6, schema.getTables().length);
@@ -56,14 +57,14 @@ public class SpringIntegrationTest
     final String outputFilename = File.createTempFile("schemacrawler", "test")
       .getAbsolutePath();
 
-    final ExecutionContext executionContext = (ExecutionContext) appContext
-      .getBean("executionContextForCount");
+    final Executable<OperationOptions> executable = (Executable<OperationOptions>) appContext
+      .getBean("executableForCount");
     final DataSource dataSource = (DataSource) appContext.getBean("dataSource");
 
-    executionContext.getToolOptions().getOutputOptions()
+    executable.getToolOptions().getOutputOptions()
       .setOutputFileName(outputFilename);
 
-    new ToolsExecutor().execute(executionContext, dataSource);
+    executable.execute(dataSource);
 
     final File outputFile = new File(outputFilename);
     Assert.assertTrue(outputFile.exists());
@@ -81,14 +82,14 @@ public class SpringIntegrationTest
     final String outputFilename = File.createTempFile("schemacrawler", "test")
       .getAbsolutePath();
 
-    final ExecutionContext executionContext = (ExecutionContext) appContext
-      .getBean("executionContextForQuery");
+    final Executable<DataTextFormatOptions> executable = (Executable<DataTextFormatOptions>) appContext
+      .getBean("executableForQuery");
     final DataSource dataSource = (DataSource) appContext.getBean("dataSource");
 
-    executionContext.getToolOptions().getOutputOptions()
+    executable.getToolOptions().getOutputOptions()
       .setOutputFileName(outputFilename);
 
-    new ToolsExecutor().execute(executionContext, dataSource);
+    executable.execute(dataSource);
 
     final File outputFile = new File(outputFilename);
     Assert.assertTrue(outputFile.exists());
@@ -106,14 +107,14 @@ public class SpringIntegrationTest
     final String outputFilename = File.createTempFile("schemacrawler", "test")
       .getAbsolutePath();
 
-    final ExecutionContext executionContext = (ExecutionContext) appContext
-      .getBean("executionContextForSchema");
+    final Executable<SchemaTextOptions> executable = (Executable<SchemaTextOptions>) appContext
+      .getBean("executableForSchema");
     final DataSource dataSource = (DataSource) appContext.getBean("dataSource");
 
-    executionContext.getToolOptions().getOutputOptions()
+    executable.getToolOptions().getOutputOptions()
       .setOutputFileName(outputFilename);
 
-    new ToolsExecutor().execute(executionContext, dataSource);
+    executable.execute(dataSource);
 
     final File outputFile = new File(outputFilename);
     Assert.assertTrue(outputFile.exists());
@@ -123,5 +124,4 @@ public class SpringIntegrationTest
       fail("Cannot delete output file");
     }
   }
-
 }

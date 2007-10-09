@@ -65,6 +65,9 @@
     <property name="tableTypesString">
       <value>TABLE,VIEW</value>
     </property>
+    <property
+      name="informationSchemaViews"
+      ref="informationSchemaViews" />
   </bean>
 
   <bean
@@ -166,8 +169,8 @@
   </bean>
 
   <bean
-    id="operatorOptions"
-    class="schemacrawler.tools.operation.OperatorOptions">
+    id="operationOptions"
+    class="schemacrawler.tools.operation.OperationOptions">
     <property
       name="operation"
       value="count" />
@@ -203,27 +206,36 @@
   </bean>
 
   <bean
-    id="executionContextForSchema"
-    class="schemacrawler.tools.ExecutionContext">
-    <constructor-arg ref="schemaCrawlerOptions" />
-    <constructor-arg ref="informationSchemaViews" />
-    <constructor-arg ref="schemaTextOptions" />
+    id="executableForSchema"
+    class="schemacrawler.tools.schematext.SchemaCrawlerExecutable">
+    <property
+      name="schemaCrawlerOptions"
+      ref="schemaCrawlerOptions" />
+    <property
+      name="toolOptions"
+      ref="schemaTextOptions" />
   </bean>
 
   <bean
-    id="executionContextForCount"
-    class="schemacrawler.tools.ExecutionContext">
-    <constructor-arg ref="schemaCrawlerOptions" />
-    <constructor-arg ref="informationSchemaViews" />
-    <constructor-arg ref="operatorOptions" />
+    id="executableForCount"
+    class="schemacrawler.tools.operation.OperationExecutable">
+    <property
+      name="schemaCrawlerOptions"
+      ref="schemaCrawlerOptions" />
+    <property
+      name="toolOptions"
+      ref="operationOptions" />
   </bean>
 
   <bean
-    id="executionContextForQuery"
-    class="schemacrawler.tools.ExecutionContext">
-    <constructor-arg ref="schemaCrawlerOptions" />
-    <constructor-arg ref="informationSchemaViews" />
-    <constructor-arg ref="dataTextFormatOptions" />
+    id="executableForQuery"
+    class="schemacrawler.tools.datatext.DataToolsExecutable">
+    <property
+      name="schemaCrawlerOptions"
+      ref="schemaCrawlerOptions" />
+    <property
+      name="toolOptions"
+      ref="dataTextFormatOptions" />
   </bean>
 
 </beans>

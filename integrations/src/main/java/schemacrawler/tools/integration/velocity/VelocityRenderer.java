@@ -35,7 +35,7 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
 
 import schemacrawler.schema.Schema;
-import schemacrawler.tools.integration.TemplatedSchemaRenderer;
+import schemacrawler.tools.integration.TemplateRenderer;
 
 /**
  * Main executor for the Velocity integration.
@@ -43,7 +43,7 @@ import schemacrawler.tools.integration.TemplatedSchemaRenderer;
  * @author Sualeh Fatehi
  */
 public final class VelocityRenderer
-  implements TemplatedSchemaRenderer
+  extends TemplateRenderer
 {
 
   private static final Logger LOGGER = Logger.getLogger(VelocityRenderer.class
@@ -65,6 +65,7 @@ public final class VelocityRenderer
    * @see schemacrawler.tools.integration.TemplatedSchemaRenderer#renderTemplate(java.lang.String,
    *      schemacrawler.schema.Schema, java.io.Writer)
    */
+  @Override
   public void renderTemplate(final String templateName,
                              final Schema schema,
                              final Writer writer)
