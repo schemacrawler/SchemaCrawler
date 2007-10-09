@@ -36,8 +36,9 @@ import sf.util.CommandLineParser.StringOption;
  * 
  * @author Sualeh Fatehi
  */
-public final class CommandParser
+final class CommandParser
 {
+
   private static final String OPTION_COMMAND = "command";
 
   /**
@@ -48,7 +49,7 @@ public final class CommandParser
    * @return Command line options
    * @throws SchemaCrawlerException
    */
-  public static List<Command> parseCommands(final String[] args)
+  static List<Command> parseCommands(final String[] args)
     throws SchemaCrawlerException
   {
     final CommandLineParser parser = createCommandLineParser();

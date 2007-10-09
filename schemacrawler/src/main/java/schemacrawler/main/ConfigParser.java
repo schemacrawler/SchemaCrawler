@@ -31,7 +31,7 @@ import sf.util.CommandLineParser.StringOption;
  * 
  * @author Sualeh Fatehi
  */
-public final class ConfigParser
+final class ConfigParser
 {
 
   private static final String OPTION_CONFIGFILE = "configfile";
@@ -45,10 +45,9 @@ public final class ConfigParser
    * @return Command line options
    * @throws SchemaCrawlerException
    */
-  public static Config parseCommandLine(final String[] args)
+  static Config parseConfig(final String[] args)
     throws SchemaCrawlerException
   {
-
     final CommandLineParser parser = createCommandLineParser();
     parser.parse(args);
 
@@ -58,7 +57,6 @@ public final class ConfigParser
     final Config config = Config.load(cfgFile, cfgOverrideFile);
 
     return config;
-
   }
 
   private static CommandLineParser createCommandLineParser()
