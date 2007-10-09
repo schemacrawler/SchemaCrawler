@@ -28,8 +28,7 @@ import javax.sql.DataSource;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Schema;
-import schemacrawler.tools.Executable;
-import schemacrawler.tools.schematext.SchemaTextOptions;
+import schemacrawler.tools.integration.SchemaExecutable;
 import edu.uci.ics.jung.graph.Graph;
 
 /**
@@ -38,7 +37,7 @@ import edu.uci.ics.jung.graph.Graph;
  * @author Sualeh Fatehi
  */
 public final class JungExecutable
-  extends Executable<SchemaTextOptions>
+  extends SchemaExecutable
 {
 
   private static final int DEFAULT_IMAGE_WIDTH = 600;
@@ -73,4 +72,18 @@ public final class JungExecutable
     }
   }
 
+  /**
+   * Get connection parameters, and creates a connection, and crawls the
+   * schema.
+   * 
+   * @param args
+   *        Arguments passed into the program from the command line.
+   * @throws Exception
+   *         On an exception
+   */
+  public void main(final String[] args)
+    throws Exception
+  {
+    executeOnSchema(args, "/schemacrawler-jung-readme.txt");
+  }
 }

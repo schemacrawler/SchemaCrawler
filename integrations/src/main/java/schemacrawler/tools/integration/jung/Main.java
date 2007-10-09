@@ -21,21 +21,6 @@
 package schemacrawler.tools.integration.jung;
 
 
-import java.util.List;
-
-import dbconnector.dbconnector.DatabaseConnector;
-import dbconnector.dbconnector.DatabaseConnectorFactory;
-import schemacrawler.crawl.SchemaCrawlerOptions;
-import schemacrawler.main.CommandParser;
-import schemacrawler.main.ConfigParser;
-import schemacrawler.main.OutputOptionsParser;
-import schemacrawler.tools.Command;
-import schemacrawler.tools.Executable;
-import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.schematext.SchemaTextDetailType;
-import schemacrawler.tools.schematext.SchemaTextOptions;
-import sf.util.CommandLineUtility;
-import sf.util.Config;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -55,30 +40,7 @@ public final class Main
   public static void main(final String[] args)
     throws Exception
   {
-    CommandLineUtility.checkForHelp(args, "/schemacrawler-jung-readme.txt");
-    CommandLineUtility.setLogLevel(args);
-
-    final Config config = ConfigParser.parseCommandLine(args);
-    final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
-      .createPropertiesDriverDataSourceParser(args, config);
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
-    final OutputOptions outputOptions = OutputOptionsParser
-      .parseOutputOptions(args);
-
-    final List<Command> commands = CommandParser.parseCommands(args);
-    final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType
-      .valueOf(commands.get(0).getName());
-
-    final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(config,
-                                                                      outputOptions,
-                                                                      schemaTextDetailType);
-
-    final Executable<SchemaTextOptions> executable = new JungExecutable();
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setToolOptions(schemaTextOptions);
-    executable.execute(dataSourceParser.createDataSource());
-
+    new JungExecutable().main(args);
     System.exit(0);
   }
 
