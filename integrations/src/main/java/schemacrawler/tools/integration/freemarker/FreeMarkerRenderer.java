@@ -53,13 +53,13 @@ public final class FreeMarkerRenderer
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.integration.TemplatedSchemaRenderer#renderTemplate(java.lang.String,
+   * @see schemacrawler.tools.integration.TemplateRenderer#renderTemplate(java.lang.String,
    *      schemacrawler.schema.Schema, java.io.Writer)
    */
   @Override
-  public void renderTemplate(final String templateName,
-                             final Schema schema,
-                             final Writer writer)
+  protected void renderTemplate(final String templateName,
+                                final Schema schema,
+                                final Writer writer)
     throws Exception
   {
     // Set the file path, in case the template is a file template
