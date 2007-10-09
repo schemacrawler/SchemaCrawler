@@ -122,6 +122,7 @@ public final class VelocityRenderer
     template.merge(context, writer);
 
     writer.flush();
+    writer.close();
   }
 
 }

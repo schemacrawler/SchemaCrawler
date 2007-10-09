@@ -67,6 +67,7 @@ public abstract class TemplateRenderer
     final String templateName = toolOptions.getOutputOptions()
       .getOutputFormatValue();
     renderTemplate(templateName, schema, writer);
+    toolOptions.getOutputOptions().closeOutputWriter(writer);
   }
 
   /**
