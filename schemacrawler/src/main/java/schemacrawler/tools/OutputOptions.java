@@ -103,7 +103,7 @@ public final class OutputOptions
           writer.close();
           LOGGER.log(Level.FINER, "Output writer closed");
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
           LOGGER.log(Level.FINER, "Exception closing output writer closed", e);
         }
