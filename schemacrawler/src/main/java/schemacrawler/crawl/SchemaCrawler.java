@@ -46,8 +46,6 @@ public final class SchemaCrawler
    * 
    * @param dataSource
    *        Data source
-   * @param informationSchemaViews
-   *        Additional connection configuration for INFORMATION_SCHEMA
    * @param infoLevel
    *        Schema info level
    * @param options
@@ -55,7 +53,6 @@ public final class SchemaCrawler
    * @return Schema
    */
   public static Schema getSchema(final DataSource dataSource,
-                                 final InformationSchemaViews informationSchemaViews,
                                  final SchemaInfoLevel infoLevel,
                                  final SchemaCrawlerOptions options)
   {
@@ -100,9 +97,7 @@ public final class SchemaCrawler
                                                                         infoLevel);
     try
     {
-      final SchemaCrawler crawler = new SchemaCrawler(dataSource,
-                                                      informationSchemaViews,
-                                                      schemaMaker);
+      final SchemaCrawler crawler = new SchemaCrawler(dataSource, schemaMaker);
       crawler.crawl(options);
     }
     catch (final SchemaCrawlerException e)
@@ -115,7 +110,6 @@ public final class SchemaCrawler
   }
 
   private final DataSource dataSource;
-  private final InformationSchemaViews informationSchemaViews;
   private final CrawlHandler handler;
 
   /**
@@ -132,47 +126,17 @@ public final class SchemaCrawler
                        final CrawlHandler crawlHandler)
     throws SchemaCrawlerException
   {
-    this(dataSource, null, crawlHandler);
-  }
-
-  /**
-   * Constructs a SchemaCrawler object, from a connection.
-   * 
-   * @param dataSource
-   *        An data source.
-   * @param crawlHandler
-   *        A crawl handler instance
-   * @param informationSchemaViews
-   *        Additional connection configuration for INFORMATION_SCHEMA
-   * @throws SchemaCrawlerException
-   *         On a crawler exception
-   */
-  public SchemaCrawler(final DataSource dataSource,
-                       final InformationSchemaViews informationSchemaViews,
-                       final CrawlHandler crawlHandler)
-    throws SchemaCrawlerException
-  {
-
     if (dataSource == null)
     {
       throw new SchemaCrawlerException("No data source specified");
     }
     this.dataSource = dataSource;
 
-    if (informationSchemaViews == null)
-    {
-      this.informationSchemaViews = new InformationSchemaViews();
-    }
-    else
-    {
-      this.informationSchemaViews = informationSchemaViews;
-    }
     if (crawlHandler == null)
     {
       throw new SchemaCrawlerException("No crawl handler specified");
     }
     handler = crawlHandler;
-
   }
 
   /**
@@ -189,17 +153,16 @@ public final class SchemaCrawler
     RetrieverConnection retrieverConnection = null;
     try
     {
-
-      retrieverConnection = new RetrieverConnection(dataSource,
-                                                    informationSchemaViews);
-
-      final SchemaInfoLevel infoLevel = handler.getInfoLevelHint();
       SchemaCrawlerOptions schemaCrawlerOptions = options;
       if (schemaCrawlerOptions == null)
       {
         schemaCrawlerOptions = new SchemaCrawlerOptions();
       }
+      retrieverConnection = new RetrieverConnection(dataSource,
+                                                    schemaCrawlerOptions
+                                                      .getInformationSchemaViews());
 
+      final SchemaInfoLevel infoLevel = handler.getInfoLevelHint();
       handler.begin();
       final MutableDatabaseInfo databaseInfo = crawlDatabaseInfo(retrieverConnection,
                                                                  infoLevel);

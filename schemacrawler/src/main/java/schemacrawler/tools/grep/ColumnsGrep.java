@@ -28,7 +28,6 @@ import javax.sql.DataSource;
 
 import schemacrawler.crawl.CrawlHandler;
 import schemacrawler.crawl.InclusionRule;
-import schemacrawler.crawl.InformationSchemaViews;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
@@ -71,43 +70,13 @@ public final class ColumnsGrep
                              final InclusionRule columnInclusionRule,
                              final boolean invertMatch)
   {
-    return grep(dataSource,
-                null,
-                tableInclusionRule,
-                columnInclusionRule,
-                invertMatch);
-  }
-
-  /**
-   * Gets tables that contain the specified columns.
-   * 
-   * @param dataSource
-   *        Data source
-   * @param informationSchemaViews
-   *        Additional connection configuration for INFORMATION_SCHEMA
-   * @param tableInclusionRule
-   *        Inclusion rule for tables
-   * @param columnInclusionRule
-   *        Inclusion rule for columns
-   * @param invertMatch
-   *        Whether to invert the table match
-   * @return Matching tables
-   */
-  public static Table[] grep(final DataSource dataSource,
-                             final InformationSchemaViews informationSchemaViews,
-                             final InclusionRule tableInclusionRule,
-                             final InclusionRule columnInclusionRule,
-                             final boolean invertMatch)
-  {
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
     options.setShowStoredProcedures(false);
     options.setTableInclusionRule(tableInclusionRule);
 
-    final Schema schema = SchemaCrawler
-      .getSchema(dataSource,
-                 informationSchemaViews,
-                 SchemaInfoLevel.basic,
-                 options);
+    final Schema schema = SchemaCrawler.getSchema(dataSource,
+                                                  SchemaInfoLevel.basic,
+                                                  options);
 
     final List<Table> tablesList = new ArrayList<Table>();
     final Table[] allTables = schema.getTables();
@@ -129,7 +98,7 @@ public final class ColumnsGrep
    * @param args
    *        Arguments passed into the program from the command line.
    * @param dataSourceParser
-   *        Datasource parser
+   *        Data-source parser
    * @throws Exception
    *         On an exception
    */
@@ -169,7 +138,7 @@ public final class ColumnsGrep
                                                            invertMatch);
     final DataSource dataSource = dataSourceParser.createDataSource();
 
-    final SchemaCrawler crawler = new SchemaCrawler(dataSource, null, formatter);
+    final SchemaCrawler crawler = new SchemaCrawler(dataSource, formatter);
     crawler.crawl(options);
 
   }

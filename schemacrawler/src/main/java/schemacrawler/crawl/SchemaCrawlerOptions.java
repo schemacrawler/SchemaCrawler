@@ -64,6 +64,8 @@ public final class SchemaCrawlerOptions
 
   private boolean showStoredProcedures;
 
+  private InformationSchemaViews informationSchemaViews;
+
   private InclusionRule tableInclusionRule;
   private InclusionRule columnInclusionRule;
 
@@ -81,6 +83,8 @@ public final class SchemaCrawlerOptions
     tableTypes = TableType.valueOf(DEFAULT_TABLE_TYPES.split(","));
 
     showStoredProcedures = false;
+
+    informationSchemaViews = new InformationSchemaViews();
 
     tableInclusionRule = new InclusionRule();
     columnInclusionRule = new InclusionRule();
@@ -106,6 +110,8 @@ public final class SchemaCrawlerOptions
     tableTypes = TableType.valueOf(tableTypesString.split(","));
 
     showStoredProcedures = config.getBooleanValue(SC_SHOW_STORED_PROCEDURES);
+
+    informationSchemaViews = new InformationSchemaViews(config);
 
     tableInclusionRule = new InclusionRule(config
                                              .getStringValue(SC_TABLE_PATTERN_INCLUDE,
@@ -150,6 +156,16 @@ public final class SchemaCrawlerOptions
   public InclusionRule getColumnInclusionRule()
   {
     return columnInclusionRule;
+  }
+
+  /**
+   * Gets the information schema views.
+   * 
+   * @return Information schema views.
+   */
+  public InformationSchemaViews getInformationSchemaViews()
+  {
+    return informationSchemaViews;
   }
 
   /**
@@ -284,6 +300,24 @@ public final class SchemaCrawlerOptions
       throw new IllegalArgumentException("Cannot use null value in a setter");
     }
     this.columnInclusionRule = columnInclusionRule;
+  }
+
+  /**
+   * Sets the information schema views.
+   * 
+   * @param informationSchemaViews
+   *        Information schema views.
+   */
+  public void setInformationSchemaViews(final InformationSchemaViews informationSchemaViews)
+  {
+    if (informationSchemaViews == null)
+    {
+      this.informationSchemaViews = new InformationSchemaViews();
+    }
+    else
+    {
+      this.informationSchemaViews = informationSchemaViews;
+    }
   }
 
   /**

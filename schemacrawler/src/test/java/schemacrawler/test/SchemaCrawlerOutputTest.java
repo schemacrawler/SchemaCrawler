@@ -49,7 +49,7 @@ import schemacrawler.tools.datatext.DataTextFormatOptions;
 import schemacrawler.tools.datatext.DataTextFormatterLoader;
 import schemacrawler.tools.operation.Operation;
 import schemacrawler.tools.operation.OperatorLoader;
-import schemacrawler.tools.operation.OperatorOptions;
+import schemacrawler.tools.operation.OperationOptions;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextFormatter;
 import schemacrawler.tools.schematext.SchemaTextFormatterLoader;
@@ -91,9 +91,9 @@ public class SchemaCrawlerOutputTest
     final DataTextFormatOptions textFormatOptions = new DataTextFormatOptions(new Config(),
                                                                               outputOptions,
                                                                               null);
-    final OperatorOptions operatorOptions = new OperatorOptions(new Config(),
-                                                                outputOptions,
-                                                                Operation.count);
+    final OperationOptions operatorOptions = new OperationOptions(new Config(),
+                                                                  outputOptions,
+                                                                  Operation.count);
 
     final DataHandler dataHandler = DataTextFormatterLoader
       .load(textFormatOptions);
@@ -103,7 +103,6 @@ public class SchemaCrawlerOutputTest
                                                          .getConnection(),
                                                        dataHandler);
     final SchemaCrawler crawler = new SchemaCrawler(testUtility.getDataSource(),
-                                                    null,
                                                     formatter);
     crawler.crawl(schemaCrawlerOptions);
 
@@ -129,9 +128,9 @@ public class SchemaCrawlerOutputTest
     outputOptions.setNoHeader(false);
     outputOptions.setNoFooter(false);
     outputOptions.setNoInfo(false);
-    final OperatorOptions operatorOptions = new OperatorOptions(new Config(),
-                                                                outputOptions,
-                                                                Operation.count);
+    final OperationOptions operatorOptions = new OperationOptions(new Config(),
+                                                                  outputOptions,
+                                                                  Operation.count);
 
     final CrawlHandler formatter = OperatorLoader.load(operatorOptions,
                                                        testUtility
@@ -139,7 +138,6 @@ public class SchemaCrawlerOutputTest
                                                          .getConnection(),
                                                        null);
     final SchemaCrawler crawler = new SchemaCrawler(testUtility.getDataSource(),
-                                                    null,
                                                     formatter);
     crawler.crawl(schemaCrawlerOptions);
 
@@ -190,9 +188,9 @@ public class SchemaCrawlerOutputTest
     final DataTextFormatOptions textFormatOptions = new DataTextFormatOptions(new Config(),
                                                                               outputOptions,
                                                                               null);
-    final OperatorOptions operatorOptions = new OperatorOptions(new Config(),
-                                                                outputOptions,
-                                                                Operation.dump);
+    final OperationOptions operatorOptions = new OperationOptions(new Config(),
+                                                                  outputOptions,
+                                                                  Operation.dump);
 
     final DataHandler dataHandler = DataTextFormatterLoader
       .load(textFormatOptions);
@@ -202,7 +200,6 @@ public class SchemaCrawlerOutputTest
                                                          .getConnection(),
                                                        dataHandler);
     final SchemaCrawler crawler = new SchemaCrawler(testUtility.getDataSource(),
-                                                    null,
                                                     formatter);
     crawler.crawl(schemaCrawlerOptions);
 
@@ -226,7 +223,6 @@ public class SchemaCrawlerOutputTest
     final SchemaTextFormatter formatter = (SchemaTextFormatter) SchemaTextFormatterLoader
       .load(textFormatOptions);
     final SchemaCrawler crawler = new SchemaCrawler(testUtility.getDataSource(),
-                                                    null,
                                                     formatter);
     crawler.crawl(schemaCrawlerOptions);
 
@@ -259,7 +255,6 @@ public class SchemaCrawlerOutputTest
     final CrawlHandler formatter = SchemaTextFormatterLoader
       .load(textFormatOptions);
     final SchemaCrawler crawler = new SchemaCrawler(testUtility.getDataSource(),
-                                                    null,
                                                     formatter);
     crawler.crawl(schemaCrawlerOptions);
 
@@ -284,7 +279,6 @@ public class SchemaCrawlerOutputTest
     final SchemaTextFormatter formatter = (SchemaTextFormatter) SchemaTextFormatterLoader
       .load(textFormatOptions);
     final SchemaCrawler crawler = new SchemaCrawler(testUtility.getDataSource(),
-                                                    null,
                                                     formatter);
     crawler.crawl(schemaCrawlerOptions);
     assertEquals("Table count does not match", 6, formatter.getTableCount());
