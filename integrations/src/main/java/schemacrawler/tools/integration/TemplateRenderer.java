@@ -21,25 +21,11 @@ package schemacrawler.tools.integration;
 
 
 import java.io.Writer;
-import java.util.List;
 
 import javax.sql.DataSource;
 
 import schemacrawler.crawl.SchemaCrawler;
-import schemacrawler.crawl.SchemaCrawlerOptions;
-import schemacrawler.main.CommandParser;
-import schemacrawler.main.ConfigParser;
-import schemacrawler.main.OutputOptionsParser;
 import schemacrawler.schema.Schema;
-import schemacrawler.tools.Command;
-import schemacrawler.tools.Executable;
-import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.schematext.SchemaTextDetailType;
-import schemacrawler.tools.schematext.SchemaTextOptions;
-import sf.util.CommandLineUtility;
-import sf.util.Config;
-import dbconnector.dbconnector.DatabaseConnector;
-import dbconnector.dbconnector.DatabaseConnectorFactory;
 
 /**
  * An executor that uses a template renderer to render a schema.
@@ -47,7 +33,7 @@ import dbconnector.dbconnector.DatabaseConnectorFactory;
  * @author sfatehi
  */
 public abstract class TemplateRenderer
-  extends Executable<SchemaTextOptions>
+  extends SchemaExecutable
 {
 
   /**
@@ -82,29 +68,7 @@ public abstract class TemplateRenderer
   public void main(final String[] args)
     throws Exception
   {
-    CommandLineUtility.checkForHelp(args,
-                                    "/schemacrawler-templating-readme.txt");
-    CommandLineUtility.setLogLevel(args);
-
-    final Config config = ConfigParser.parseCommandLine(args);
-    final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
-      .createPropertiesDriverDataSourceParser(args, config);
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
-    final OutputOptions outputOptions = OutputOptionsParser
-      .parseOutputOptions(args);
-
-    final List<Command> commands = CommandParser.parseCommands(args);
-    final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType
-      .valueOf(commands.get(0).getName());
-
-    final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(config,
-                                                                      outputOptions,
-                                                                      schemaTextDetailType);
-
-    setSchemaCrawlerOptions(schemaCrawlerOptions);
-    setToolOptions(schemaTextOptions);
-    execute(dataSourceParser.createDataSource());
+    executeOnSchema(args, "/schemacrawler-templating-readme.txt");
   }
 
   /**
