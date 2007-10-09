@@ -34,8 +34,9 @@ import sf.util.CommandLineParser.StringOption;
  * 
  * @author Sualeh Fatehi
  */
-public final class OutputOptionsParser
+final class OutputOptionsParser
 {
+
   private static final String OPTION_NOINFO = "noinfo";
   private static final String OPTION_NOFOOTER = "nofooter";
   private static final String OPTION_NOHEADER = "noheader";
@@ -51,7 +52,7 @@ public final class OutputOptionsParser
    * @return Command line options
    * @throws SchemaCrawlerException
    */
-  public static OutputOptions parseOutputOptions(final String[] args)
+  static OutputOptions parseOutputOptions(final String[] args)
     throws SchemaCrawlerException
   {
     final CommandLineParser parser = createCommandLineParser();
