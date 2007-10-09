@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -17,31 +17,37 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools;
+
+package schemacrawler.tools.schematext;
 
 
 import javax.sql.DataSource;
 
+import schemacrawler.crawl.CrawlHandler;
+import schemacrawler.crawl.SchemaCrawler;
+import schemacrawler.tools.Executable;
+
 /**
- * Executor for main functionality.
+ * Basic SchemaCrawler executor.
  * 
  * @author Sualeh Fatehi
  */
-public interface Executor
+public class SchemaCrawlerExecutable
+  extends Executable<SchemaTextOptions>
 {
 
   /**
-   * Executes main functionality for SchemaCrawler.
+   * {@inheritDoc}
    * 
-   * @param executionContext
-   *        Execution context
-   * @param dataSource
-   *        Datasource
-   * @throws Exception
-   *         On an exception
+   * @see schemacrawler.tools.Executable#execute(javax.sql.DataSource)
    */
-  void execute(final ExecutionContext executionContext,
-               final DataSource dataSource)
-    throws Exception;
+  @Override
+  public void execute(final DataSource dataSource)
+    throws Exception
+  {
+    final CrawlHandler crawlHandler = SchemaTextFormatterLoader.load(toolOptions);
+    final SchemaCrawler crawler = new SchemaCrawler(dataSource, crawlHandler);
+    crawler.crawl(schemaCrawlerOptions);
+  }
 
 }

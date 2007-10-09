@@ -30,7 +30,7 @@ import sf.util.Config;
  * 
  * @author Sualeh Fatehi
  */
-public final class OperatorOptions
+public final class OperationOptions
   extends DataTextFormatOptions
 {
 
@@ -41,7 +41,7 @@ public final class OperatorOptions
   /**
    * Operator options, defaults.
    */
-  public OperatorOptions()
+  public OperationOptions()
   {
     this(null, null, (Operation) null);
   }
@@ -56,7 +56,7 @@ public final class OperatorOptions
    * @param config
    *        Config
    */
-  public OperatorOptions(final Config config,
+  public OperationOptions(final Config config,
                          final OutputOptions outputOptions,
                          final Operation operation)
   {
@@ -86,7 +86,7 @@ public final class OperatorOptions
    * @param config
    *        Config
    */
-  public OperatorOptions(final Config config,
+  public OperationOptions(final Config config,
                          final OutputOptions outputOptions,
                          final String queryName)
   {

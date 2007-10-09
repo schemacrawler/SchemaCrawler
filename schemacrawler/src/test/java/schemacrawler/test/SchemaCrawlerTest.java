@@ -125,7 +125,6 @@ public class SchemaCrawlerTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  null,
                                                   SchemaInfoLevel.basic,
                                                   schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema);
@@ -162,8 +161,8 @@ public class SchemaCrawlerTest
   {
 
     // Set up information schema properties
-    final InformationSchemaViews informationSchemaProperties = new InformationSchemaViews();
-    informationSchemaProperties
+    final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
+    informationSchemaViews
       .setRoutinesSql("SELECT " + "PROCEDURE_CAT AS ROUTINE_CATALOG, "
                       + "PROCEDURE_SCHEM AS ROUTINE_SCHEMA, "
                       + "PROCEDURE_NAME AS ROUTINE_NAME, "
@@ -173,8 +172,8 @@ public class SchemaCrawlerTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setShowStoredProcedures(true);
+    schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  informationSchemaProperties,
                                                   SchemaInfoLevel.maximum,
                                                   schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema);
@@ -198,7 +197,6 @@ public class SchemaCrawlerTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     LOGGER.log(Level.FINE, schemaCrawlerOptions.toString());
     final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  null,
                                                   SchemaInfoLevel.minimum,
                                                   schemaCrawlerOptions);
     final Table[] tables = schema.getTables();
@@ -221,7 +219,6 @@ public class SchemaCrawlerTest
     };
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  null,
                                                   SchemaInfoLevel.minimum,
                                                   schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema);
@@ -246,8 +243,8 @@ public class SchemaCrawlerTest
   {
 
     // Set up information schema properties
-    final InformationSchemaViews informationSchemaProperties = new InformationSchemaViews();
-    informationSchemaProperties
+    final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
+    informationSchemaViews
       .setTriggersSql("SELECT "
                       + "TRIGGER_CAT AS TRIGGER_CATALOG, "
                       + "TRIGGER_SCHEM AS TRIGGER_SCHEMA, "
@@ -266,8 +263,8 @@ public class SchemaCrawlerTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setShowStoredProcedures(true);
+    schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  informationSchemaProperties,
                                                   SchemaInfoLevel.maximum,
                                                   schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema);
@@ -295,13 +292,13 @@ public class SchemaCrawlerTest
   {
 
     // Set up information schema properties
-    final InformationSchemaViews informationSchemaProperties = new InformationSchemaViews();
-    informationSchemaProperties
+    final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
+    informationSchemaViews
       .setViewsSql("SELECT * FROM INFORMATION_SCHEMA.SYSTEM_VIEWS");
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  informationSchemaProperties,
                                                   SchemaInfoLevel.maximum,
                                                   schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema);

@@ -24,11 +24,22 @@ package schemacrawler.main;
 import java.util.ArrayList;
 import java.util.List;
 
+import schemacrawler.crawl.Query;
 import schemacrawler.crawl.SchemaCrawlerException;
+import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.tools.Command;
-import schemacrawler.tools.ExecutionContext;
+import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
+import schemacrawler.tools.ToolType;
+import schemacrawler.tools.datatext.DataTextFormatOptions;
+import schemacrawler.tools.datatext.DataToolsExecutable;
+import schemacrawler.tools.operation.Operation;
+import schemacrawler.tools.operation.OperationExecutable;
+import schemacrawler.tools.operation.OperationOptions;
+import schemacrawler.tools.schematext.SchemaCrawlerExecutable;
+import schemacrawler.tools.schematext.SchemaTextDetailType;
+import schemacrawler.tools.schematext.SchemaTextOptions;
 import sf.util.CommandLineParser;
 import sf.util.Config;
 import sf.util.Utilities;
@@ -41,7 +52,7 @@ import sf.util.CommandLineParser.StringOption;
  * 
  * @author Sualeh Fatehi
  */
-public final class ExecutionContextFactory
+public final class ExecutableFactory
 {
 
   private static final String OPTION_NOINFO = "noinfo";
@@ -62,8 +73,8 @@ public final class ExecutionContextFactory
    * @return Command line options
    * @throws SchemaCrawlerException
    */
-  static ExecutionContext[] createExecutionContexts(final String[] args,
-                                             final Config config)
+  static List<Executable<?>> createExecutables(final String[] args,
+                                               final Config config)
     throws SchemaCrawlerException
   {
 
@@ -96,11 +107,11 @@ public final class ExecutionContextFactory
       throw new SchemaCrawlerException("No SchemaCrawler command specified");
     }
     final String[] commandStrings = commandOptionValue.split(",");
-    final ExecutionContext[] optionCommands = createExecutionContextsPerCommand(commandStrings,
-                                                                                config,
-                                                                                masterOutputOptions);
+    final List<Executable<?>> executables = createExecutablesPerCommand(commandStrings,
+                                                                        config,
+                                                                        masterOutputOptions);
 
-    return optionCommands;
+    return executables;
 
   }
 
@@ -123,11 +134,11 @@ public final class ExecutionContextFactory
     return parser;
   }
 
-  private static ExecutionContext[] createExecutionContextsPerCommand(final String[] commandStrings,
-                                                                      final Config config,
-                                                                      final OutputOptions masterOutputOptions)
+  private static List<Executable<?>> createExecutablesPerCommand(final String[] commandStrings,
+                                                                 final Config config,
+                                                                 final OutputOptions masterOutputOptions)
   {
-    final List<ExecutionContext> executionContextsList = new ArrayList<ExecutionContext>();
+    final List<Executable<?>> executables = new ArrayList<Executable<?>>();
     for (int i = 0; i < commandStrings.length; i++)
     {
       String commandString = commandStrings[i];
@@ -161,20 +172,105 @@ public final class ExecutionContextFactory
 
         outputOptions.setAppendOutput(true);
       }
-      //
-      final ExecutionContext executionContext = new ExecutionContext(command,
-                                                                     config,
-                                                                     outputOptions);
-      //
-      executionContextsList.add(executionContext);
-    }
-    final ExecutionContext[] executionContexts = executionContextsList
-      .toArray(new ExecutionContext[executionContextsList.size()]);
 
-    return executionContexts;
+      final Executable<?> executable;
+
+      final ToolType toolType = determineToolType(command, config);
+      switch (toolType)
+      {
+        case schema_text:
+          final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType
+            .valueOf(command.getName());
+          final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(config,
+                                                                      outputOptions,
+                                                                      schemaTextDetailType);
+          final SchemaCrawlerExecutable schemaCrawlerExecutable = new SchemaCrawlerExecutable();
+          schemaCrawlerExecutable.setToolOptions(schemaTextOptions);
+          executable = schemaCrawlerExecutable;
+          break;
+        case operation:
+          Operation operation;
+          OperationOptions operationOptions;
+          try
+          {
+            operation = Operation.valueOf(command.getName());
+            operationOptions = new OperationOptions(config,
+                                                    outputOptions,
+                                                    operation);
+          }
+          catch (final IllegalArgumentException e)
+          {
+            final String queryName = command.getName();
+            operationOptions = new OperationOptions(config,
+                                                    outputOptions,
+                                                    queryName);
+          }
+          final OperationExecutable operationExecutable = new OperationExecutable();
+          operationExecutable.setToolOptions(operationOptions);
+          executable = operationExecutable;
+          break;
+        case data_text:
+          final String queryName = command.getName();
+          final DataTextFormatOptions dataTextFormatOptions = new DataTextFormatOptions(config,
+                                                                                  outputOptions,
+                                                                                  queryName);
+          final DataToolsExecutable dataToolsExecutable = new DataToolsExecutable();
+          dataToolsExecutable.setToolOptions(dataTextFormatOptions);
+          executable = dataToolsExecutable;
+          break;
+        default:
+          throw new IllegalArgumentException("Could not find the tool type");
+      }
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+
+      executables.add(executable);
+    }
+
+    return executables;
   }
 
-  private ExecutionContextFactory()
+  private static ToolType determineToolType(final Command command,
+                                            final Config config)
+  {
+    ToolType toolType;
+    if (!command.isQuery())
+    {
+      toolType = ToolType.schema_text;
+    }
+    else
+    {
+      Operation operation;
+      try
+      {
+        operation = Operation.valueOf(command.getName());
+      }
+      catch (final IllegalArgumentException e)
+      {
+        operation = null;
+      }
+      if (operation == null)
+      {
+        final Query query = new Query(command.getName(), config.get(command
+          .getName()));
+        if (query.isQueryOver())
+        {
+          toolType = ToolType.operation;
+        }
+        else
+        {
+          toolType = ToolType.data_text;
+        }
+      }
+      else
+      {
+        toolType = ToolType.operation;
+      }
+    }
+    return toolType;
+  }
+
+  private ExecutableFactory()
   {
 
   }

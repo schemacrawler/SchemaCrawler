@@ -45,7 +45,7 @@ final class OperatorHTMLOutput
    * @param connection
    *        Database connection to use
    */
-  OperatorHTMLOutput(final OperatorOptions options,
+  OperatorHTMLOutput(final OperationOptions options,
                      final Query query,
                      final Connection connection,
                      final DataHandler dataHandler)

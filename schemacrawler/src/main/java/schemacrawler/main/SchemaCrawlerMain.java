@@ -22,18 +22,15 @@ package schemacrawler.main;
 
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
-import schemacrawler.crawl.InformationSchemaViews;
-import schemacrawler.tools.ExecutionContext;
-import schemacrawler.tools.Executor;
-import schemacrawler.tools.ToolsExecutor;
+import schemacrawler.tools.Executable;
 import sf.util.Config;
 import dbconnector.Version;
-import dbconnector.datasource.PropertiesDataSource;
 import dbconnector.dbconnector.DatabaseConnector;
 import dbconnector.dbconnector.DatabaseConnectorFactory;
 
@@ -54,6 +51,28 @@ public final class SchemaCrawlerMain
    * 
    * @param args
    *        Command line arguments
+   * @param executor
+   *        Executor
+   * @throws Exception
+   *         On an exception
+   */
+  public static void schemacrawler(final String[] args)
+    throws Exception
+  {
+    final Config config = ConfigParser.parseCommandLine(args);
+    final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
+      .createPropertiesDriverDataSourceParser(args, config);
+    schemacrawler(args, config, dataSourceParser);
+  }
+
+  /**
+   * Executes with the command line, and a given executor. The executor
+   * allows for the command line to be parsed independently of the
+   * execution. The execution can integrate with other software, such as
+   * Velocity.
+   * 
+   * @param args
+   *        Command line arguments
    * @param config
    *        Configuration
    * @param executor
@@ -65,52 +84,23 @@ public final class SchemaCrawlerMain
    */
   public static void schemacrawler(final String[] args,
                                    final Config config,
-                                   final Executor executor,
                                    final DatabaseConnector dataSourceParser)
     throws Exception
   {
 
-    final ExecutionContext[] executionContexts = ExecutionContextFactory
-      .createExecutionContexts(args, config);
-    if (executionContexts.length > 0)
+    final List<Executable<?>> executables = ExecutableFactory
+      .createExecutables(args, config);
+    if (executables.size() > 0)
     {
       LOGGER.log(Level.CONFIG, Version.about());
       LOGGER.log(Level.CONFIG, "Commandline: " + Arrays.asList(args));
-      for (final ExecutionContext executionContext: executionContexts)
+      for (final Executable<?> executable: executables)
       {
-        LOGGER.log(Level.CONFIG, executionContext.toString());
+        LOGGER.log(Level.CONFIG, executable.toString());
         final DataSource dataSource = dataSourceParser.createDataSource();
-        if (executor instanceof ToolsExecutor)
-        {
-          ((ToolsExecutor) executor)
-            .setInformationSchemaViews(new InformationSchemaViews(((PropertiesDataSource) dataSource)
-              .getSourceConfiguration()));
-        }
-        executor.execute(executionContext, dataSource);
+        executable.execute(dataSource);
       }
     }
-  }
-
-  /**
-   * Executes with the command line, and a given executor. The executor
-   * allows for the command line to be parsed independently of the
-   * execution. The execution can integrate with other software, such as
-   * Velocity.
-   * 
-   * @param args
-   *        Command line arguments
-   * @param executor
-   *        Executor
-   * @throws Exception
-   *         On an exception
-   */
-  public static void schemacrawler(final String[] args, final Executor executor)
-    throws Exception
-  {
-    final Config config = ConfigParser.parseCommandLine(args);
-    final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
-      .createPropertiesDriverDataSourceParser(args, config);
-    schemacrawler(args, config, executor, dataSourceParser);
   }
 
   private SchemaCrawlerMain()

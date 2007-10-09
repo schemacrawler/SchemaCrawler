@@ -21,7 +21,6 @@
 package schemacrawler.tools;
 
 
-import schemacrawler.main.Options;
 
 /**
  * Tool options.
@@ -29,7 +28,7 @@ import schemacrawler.main.Options;
  * @author Sualeh Fatehi
  */
 public abstract class BaseToolOptions
-  implements Options
+  implements ToolsOptions
 {
 
   private OutputOptions outputOptions;

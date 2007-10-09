@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
@@ -18,38 +18,41 @@
  *
  */
 
-package schemacrawler;
+package schemacrawler.tools.datatext;
 
 
-import schemacrawler.main.SchemaCrawlerMain;
-import sf.util.CommandLineUtility;
+import java.util.logging.Logger;
+
+import javax.sql.DataSource;
+
+import schemacrawler.execute.DataHandler;
+import schemacrawler.execute.QueryExecutor;
+import schemacrawler.tools.Executable;
 
 /**
- * Main class that takes arguments for a database for crawling a schema.
+ * Basic SchemaCrawler executor.
+ * 
+ * @author Sualeh Fatehi
  */
-public final class Main
+public class DataToolsExecutable
+  extends Executable<DataTextFormatOptions>
 {
 
+  private static final Logger LOGGER = Logger
+    .getLogger(DataToolsExecutable.class.getName());
+
   /**
-   * Get connection parameters, and creates a connection, and crawls the
-   * schema.
+   * {@inheritDoc}
    * 
-   * @param args
-   *        Arguments passed into the program from the command line.
-   * @throws Exception
-   *         On an exception
+   * @see schemacrawler.tools.Executable#execute(javax.sql.DataSource)
    */
-  public static void main(final String[] args)
+  @Override
+  public void execute(final DataSource dataSource)
     throws Exception
   {
-    CommandLineUtility.checkForHelp(args, "/schemacrawler-readme.txt");
-    CommandLineUtility.setLogLevel(args);
-
-    SchemaCrawlerMain.schemacrawler(args);
-  }
-
-  private Main()
-  {
+    final DataHandler dataHandler = DataTextFormatterLoader.load(toolOptions);
+    final QueryExecutor executor = new QueryExecutor(dataSource, dataHandler);
+    executor.executeSQL(toolOptions.getQuery().getQuery());
   }
 
 }

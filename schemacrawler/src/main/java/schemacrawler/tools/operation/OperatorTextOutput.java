@@ -44,7 +44,7 @@ final class OperatorTextOutput
    * @param connection
    *        Database connection to use
    */
-  OperatorTextOutput(final OperatorOptions options,
+  OperatorTextOutput(final OperationOptions options,
                      final Query query,
                      final Connection connection,
                      final DataHandler dataHandler)

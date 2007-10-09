@@ -49,7 +49,7 @@ public final class OperatorLoader
    * @throws schemacrawler.crawl.SchemaCrawlerException
    *         On an exception
    */
-  public static CrawlHandler load(final OperatorOptions options,
+  public static CrawlHandler load(final OperationOptions options,
                                   final Connection connection,
                                   final DataHandler dataHandler)
     throws SchemaCrawlerException
@@ -94,7 +94,7 @@ public final class OperatorLoader
    *        Mnemonic name for a CrawlHandler
    * @return True if the mnemonic is known
    */
-  private static boolean canLoad(final OperatorOptions options)
+  private static boolean canLoad(final OperationOptions options)
   {
     return options.getOperation() != null;
   }

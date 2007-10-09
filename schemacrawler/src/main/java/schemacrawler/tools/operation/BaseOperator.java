@@ -63,7 +63,7 @@ public abstract class BaseOperator
   private final Query query;
   private final Statement statement;
   private int tableCount;
-  private final OperatorOptions options;
+  private final OperationOptions options;
   private final TextFormattingHelper formattingHelper;
 
   /**
@@ -74,7 +74,7 @@ public abstract class BaseOperator
    * @param connection
    *        Database connection to use
    */
-  BaseOperator(final OperatorOptions options,
+  BaseOperator(final OperationOptions options,
                final Query query,
                final Connection connection,
                final DataHandler dataHandler,
