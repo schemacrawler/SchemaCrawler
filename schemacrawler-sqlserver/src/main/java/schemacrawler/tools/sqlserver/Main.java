@@ -50,8 +50,10 @@ public final class Main
     {
       final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
                                                                                 "/schemacrawler.config.properties");
+
       final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
         .createBundledDriverDataSourceParser(args, commandLine.getConfig());
+
       SchemaCrawlerMain.schemacrawler(commandLine, dataSourceParser);
     }
     catch (final Exception e)

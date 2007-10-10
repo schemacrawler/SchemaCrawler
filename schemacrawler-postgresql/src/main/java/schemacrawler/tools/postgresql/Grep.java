@@ -20,7 +20,8 @@
 package schemacrawler.tools.postgresql;
 
 
-import schemacrawler.tools.grep.ColumnsGrep;
+import schemacrawler.tools.grep.GrepCommandLine;
+import schemacrawler.tools.grep.GrepMain;
 import sf.util.CommandLineUtility;
 import sf.util.Config;
 import dbconnector.dbconnector.DatabaseConnector;
@@ -48,11 +49,14 @@ public final class Grep
 
     try
     {
-      final Config driverConfiguration = Config.load(Grep.class
-        .getResourceAsStream("/schemacrawler.config.properties"));
+      final GrepCommandLine commandLine = new GrepCommandLine(args,
+                                                              "/schemacrawler.config.properties");
+
+      final Config config = commandLine.getConfig();
       final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
-        .createBundledDriverDataSourceParser(args, driverConfiguration);
-      ColumnsGrep.grep(args, dataSourceParser);
+        .createBundledDriverDataSourceParser(args, config);
+
+      GrepMain.grep(commandLine, dataSourceParser);
     }
     catch (final Exception e)
     {

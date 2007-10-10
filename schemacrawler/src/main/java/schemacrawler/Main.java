@@ -50,9 +50,11 @@ public final class Main
     CommandLineUtility.setLogLevel(args);
 
     final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args);
+
     final Config config = commandLine.getConfig();
     final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
       .createPropertiesDriverDataSourceParser(args, config);
+
     SchemaCrawlerMain.schemacrawler(commandLine, dataSourceParser);
   }
 
