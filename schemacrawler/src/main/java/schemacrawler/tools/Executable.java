@@ -32,7 +32,7 @@ import schemacrawler.crawl.SchemaCrawlerOptions;
  * @param <O>
  *        Tool-specific options for execution.
  */
-public abstract class Executable<O extends ToolsOptions>
+public abstract class Executable<O extends ToolOptions>
 {
 
   protected SchemaCrawlerOptions schemaCrawlerOptions;

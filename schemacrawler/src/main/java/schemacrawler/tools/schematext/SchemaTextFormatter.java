@@ -21,7 +21,6 @@
 package schemacrawler.tools.schematext;
 
 
-import schemacrawler.crawl.InclusionRule;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.tools.util.FormatUtils;
@@ -37,35 +36,12 @@ public final class SchemaTextFormatter
 {
 
   /**
-   * Formats the schema as plain text for output. Contains a table
-   * column inclusion rule as a special case for "grep" like
-   * functionality.
-   * 
-   * @param options
-   *        Options
-   * @param tableColumnInclusionRule
-   *        Inclusion rule for columns
-   * @param invertMatch
-   *        Whether to invert the table match
-   * @throws SchemaCrawlerException
-   *         On an error
-   */
-  public SchemaTextFormatter(final SchemaTextOptions options,
-                             final InclusionRule tableColumnInclusionRule,
-                             final boolean invertMatch)
-    throws SchemaCrawlerException
-  {
-    super(options, new PlainTextFormattingHelper(options.getOutputOptions()
-      .getOutputFormat().name()), tableColumnInclusionRule, invertMatch);
-  }
-
-  /**
    * Formats the schema as plain text for output.
    * 
    * @param options
    *        Options
    */
-  SchemaTextFormatter(final SchemaTextOptions options)
+  public SchemaTextFormatter(final SchemaTextOptions options)
     throws SchemaCrawlerException
   {
     super(options, new PlainTextFormattingHelper(options.getOutputOptions()

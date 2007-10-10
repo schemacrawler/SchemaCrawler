@@ -8,7 +8,7 @@ import schemacrawler.main.Options;
  * 
  * @author Sualeh Fatehi
  */
-public interface ToolsOptions
+public interface ToolOptions
   extends Options
 {
 

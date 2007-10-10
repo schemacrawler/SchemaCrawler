@@ -48,7 +48,7 @@ final class CommandParser
   }
 
   @Override
-  Command[] getValue()
+  protected Command[] getValue()
   {
     parse(new Option[] {
       optionCommand

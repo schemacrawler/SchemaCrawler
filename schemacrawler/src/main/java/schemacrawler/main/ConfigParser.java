@@ -47,7 +47,7 @@ final class ConfigParser
   }
 
   @Override
-  Config getValue()
+  protected Config getValue()
   {
     parse(new Option[] {
         optionConfigFile, optionConfigOverrideFile

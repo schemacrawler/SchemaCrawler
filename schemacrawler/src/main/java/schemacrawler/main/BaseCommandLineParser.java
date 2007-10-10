@@ -29,17 +29,17 @@ import sf.util.CommandLineParser.Option;
  * 
  * @author Sualeh Fatehi
  */
-abstract class BaseCommandLineParser<O>
+public abstract class BaseCommandLineParser<O>
 {
 
   private final String[] args;
 
-  BaseCommandLineParser(final String[] args)
+  protected BaseCommandLineParser(final String[] args)
   {
     this.args = args;
   }
 
-  String[] getArgs()
+  protected String[] getArgs()
   {
     return args;
   }
@@ -49,9 +49,9 @@ abstract class BaseCommandLineParser<O>
    * 
    * @return Command line options
    */
-  abstract O getValue();
+  protected abstract O getValue();
 
-  void parse(final CommandLineParser.Option<?>[] options)
+  protected void parse(final CommandLineParser.Option<?>[] options)
   {
     final CommandLineParser parser = new CommandLineParser();
     for (final Option<?> option: options)

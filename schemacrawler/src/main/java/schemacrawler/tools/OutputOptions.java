@@ -60,7 +60,7 @@ public final class OutputOptions
    */
   public OutputOptions()
   {
-    this("", "");
+    this(OutputFormat.text.name(), null);
   }
 
   /**

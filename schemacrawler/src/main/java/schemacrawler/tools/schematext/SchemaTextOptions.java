@@ -30,7 +30,7 @@ import sf.util.Config;
  * 
  * @author Sualeh Fatehi
  */
-public final class SchemaTextOptions
+public class SchemaTextOptions
   extends BaseToolOptions
 {
 
@@ -81,7 +81,7 @@ public final class SchemaTextOptions
 
     if (schemaTextDetailType == null)
     {
-      this.schemaTextDetailType = SchemaTextDetailType.brief_schema;
+      this.schemaTextDetailType = SchemaTextDetailType.basic_schema;
     }
     else
     {
@@ -237,9 +237,12 @@ public final class SchemaTextOptions
   {
     if (schemaTextDetailType == null)
     {
-      throw new IllegalArgumentException("Cannot set null SchemaTextDetailType");
+      this.schemaTextDetailType = SchemaTextDetailType.basic_schema;
     }
-    this.schemaTextDetailType = schemaTextDetailType;
+    else
+    {
+      this.schemaTextDetailType = schemaTextDetailType;
+    }
   }
 
   /**
