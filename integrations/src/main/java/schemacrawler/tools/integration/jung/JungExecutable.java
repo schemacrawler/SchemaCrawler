@@ -51,13 +51,14 @@ public final class JungExecutable
   public void execute(final DataSource dataSource)
     throws Exception
   {
-    // Get the entire schema at once, since we need to use this to
-    // render the velocity template
+    // Get the entire schema at once
+    final Schema schema = SchemaCrawler.getSchema(dataSource, toolOptions
+      .getSchemaTextDetailType().mapToInfoLevel(), schemaCrawlerOptions);
+
+    // Executable-specific work
     final File outputFile = toolOptions.getOutputOptions().getOutputFile();
     final Dimension size = getSize(toolOptions.getOutputOptions()
       .getOutputFormatValue());
-    final Schema schema = SchemaCrawler.getSchema(dataSource, toolOptions
-      .getSchemaTextDetailType().mapToInfoLevel(), schemaCrawlerOptions);
     final Graph graph = JungUtil.makeSchemaGraph(schema);
     JungUtil.saveGraphJpeg(graph, outputFile, size);
   }
@@ -91,4 +92,5 @@ public final class JungExecutable
       return new Dimension(DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_WIDTH);
     }
   }
+
 }

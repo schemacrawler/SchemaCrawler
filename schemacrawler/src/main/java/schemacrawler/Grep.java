@@ -21,12 +21,8 @@
 package schemacrawler;
 
 
-import schemacrawler.crawl.SchemaCrawlerOptions;
-import schemacrawler.main.SchemaCrawlerCommandLine;
-import schemacrawler.tools.grep.GrepExecutable;
-import schemacrawler.tools.grep.GrepOptions;
-import schemacrawler.tools.grep.GrepOptionsParser;
-import schemacrawler.tools.schematext.SchemaTextDetailType;
+import schemacrawler.tools.grep.GrepCommandLine;
+import schemacrawler.tools.grep.GrepMain;
 import sf.util.CommandLineUtility;
 import sf.util.Config;
 import dbconnector.dbconnector.DatabaseConnector;
@@ -54,19 +50,13 @@ public final class Grep
     CommandLineUtility.checkForHelp(args, "/schemacrawler-grep-readme.txt");
     CommandLineUtility.setLogLevel(args);
 
-    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args);
+    final GrepCommandLine commandLine = new GrepCommandLine(args);
+
     final Config config = commandLine.getConfig();
     final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
       .createPropertiesDriverDataSourceParser(args, config);
 
-    GrepOptions grepOptions = new GrepOptionsParser(args).getValue();
-    grepOptions.setOutputOptions(commandLine.getOutputOptions());
-    grepOptions.setSchemaTextDetailType(SchemaTextDetailType.verbose_schema);
-
-    GrepExecutable grepExecutable = new GrepExecutable();
-    grepExecutable.setSchemaCrawlerOptions(new SchemaCrawlerOptions(config));
-    grepExecutable.setToolOptions(grepOptions);
-    grepExecutable.execute(dataSourceParser.createDataSource());
+    GrepMain.grep(commandLine, dataSourceParser);
   }
 
   private Grep()

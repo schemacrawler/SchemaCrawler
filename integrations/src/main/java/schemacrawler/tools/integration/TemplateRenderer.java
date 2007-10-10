@@ -45,10 +45,11 @@ public abstract class TemplateRenderer
   public void execute(final DataSource dataSource)
     throws Exception
   {
-    // Get the entire schema at once, since we need to use this to
-    // render the template
+    // Get the entire schema at once
     final Schema schema = SchemaCrawler.getSchema(dataSource, toolOptions
       .getSchemaTextDetailType().mapToInfoLevel(), schemaCrawlerOptions);
+
+    // Executable-specific work
     final Writer writer = toolOptions.getOutputOptions().openOutputWriter();
     final String templateName = toolOptions.getOutputOptions()
       .getOutputFormatValue();
