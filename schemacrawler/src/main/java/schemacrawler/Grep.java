@@ -21,7 +21,7 @@
 package schemacrawler;
 
 
-import schemacrawler.main.CommandLineParser;
+import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.tools.grep.ColumnsGrep;
 import sf.util.CommandLineUtility;
 import sf.util.Config;
@@ -50,7 +50,8 @@ public final class Grep
     CommandLineUtility.checkForHelp(args, "/schemacrawler-grep-readme.txt");
     CommandLineUtility.setLogLevel(args);
 
-    final Config config = CommandLineParser.parseConfig(args);
+    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args);
+    final Config config = commandLine.getConfig();
     final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
       .createPropertiesDriverDataSourceParser(args, config);
     ColumnsGrep.grep(args, dataSourceParser);

@@ -21,7 +21,6 @@
 package schemacrawler.main;
 
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +28,6 @@ import java.util.logging.Logger;
 import javax.sql.DataSource;
 
 import schemacrawler.tools.Executable;
-import sf.util.Config;
 import dbconnector.Version;
 import dbconnector.dbconnector.DatabaseConnector;
 
@@ -57,18 +55,17 @@ public final class SchemaCrawlerMain
    * @throws Exception
    *         On an exception
    */
-  public static void schemacrawler(final String[] args,
-                                   final Config config,
+  public static void schemacrawler(final SchemaCrawlerCommandLine commandLine,
                                    final DatabaseConnector dataSourceParser)
     throws Exception
   {
 
     final List<Executable<?>> executables = ExecutableFactory
-      .createExecutables(args, config);
+      .createExecutables(commandLine);
     if (executables.size() > 0)
     {
       LOGGER.log(Level.CONFIG, Version.about());
-      LOGGER.log(Level.CONFIG, "Commandline: " + Arrays.asList(args));
+      LOGGER.log(Level.CONFIG, "Commandline: " + commandLine);
       for (final Executable<?> executable: executables)
       {
         LOGGER.log(Level.CONFIG, executable.toString());

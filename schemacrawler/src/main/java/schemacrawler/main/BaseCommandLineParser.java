@@ -21,41 +21,44 @@
 package schemacrawler.main;
 
 
-import sf.util.Config;
+import sf.util.CommandLineParser;
 import sf.util.CommandLineParser.Option;
-import sf.util.CommandLineParser.StringOption;
 
 /**
  * Parses the command line.
  * 
  * @author Sualeh Fatehi
  */
-final class ConfigParser
-  extends BaseCommandLineParser<Config>
+abstract class BaseCommandLineParser<O>
 {
 
-  private final StringOption optionConfigFile = new StringOption('g',
-                                                                 "configfile",
-                                                                 "schemacrawler.config.properties");
-  private final StringOption optionConfigOverrideFile = new StringOption('p',
-                                                                         "configoverridefile",
-                                                                         "schemacrawler.config.override.properties");
+  private final String[] args;
 
-  ConfigParser(final String[] args)
+  BaseCommandLineParser(final String[] args)
   {
-    super(args);
+    this.args = args;
   }
 
-  @Override
-  Config getValue()
+  String[] getArgs()
   {
-    parse(new Option[] {
-        optionConfigFile, optionConfigOverrideFile
-    });
+    return args;
+  }
 
-    final String cfgFile = optionConfigFile.getValue();
-    final String cfgOverrideFile = optionConfigOverrideFile.getValue();
-    return Config.load(cfgFile, cfgOverrideFile);
+  /**
+   * Parses the command line.
+   * 
+   * @return Command line options
+   */
+  abstract O getValue();
+
+  void parse(final CommandLineParser.Option<?>[] options)
+  {
+    final CommandLineParser parser = new CommandLineParser();
+    for (final Option<?> option: options)
+    {
+      parser.addOption(option);
+    }
+    parser.parse(args);
   }
 
 }

@@ -59,52 +59,6 @@ public class SortingTest
   }
 
   @Test
-  public void indexSort()
-  {
-
-    final String[] sortedAlpha = new String[] {
-        "INDEX_A_SUPPLIER", "INDEX_B_SUPPLIER"
-    };
-    final String[] sortedNatural = new String[] {
-        "INDEX_B_SUPPLIER", "INDEX_A_SUPPLIER"
-    };
-    checkIndexSort(sortedAlpha, true);
-    checkIndexSort(sortedNatural, false);
-
-  }
-
-  @SuppressWarnings("boxing")
-  private void checkIndexSort(final String[] expectedValues,
-                              final boolean sortAlphabetically)
-  {
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setAlphabeticalSortForIndexes(sortAlphabetically);
-
-    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  SchemaInfoLevel.maximum,
-                                                  schemaCrawlerOptions);
-    assertNotNull("Could not obtain schema", schema);
-
-    final Table[] tables = schema.getTables();
-    assertEquals("Table count does not match", 6, tables.length);
-    for (final Table table: tables)
-    {
-      if (table.getName().equals("SUPPLIER"))
-      {
-        final Index[] indices = table.getIndices();
-        assertEquals("Index count does not match", 2, indices.length);
-        for (int i = 0; i < indices.length; i++)
-        {
-          final Index index = indices[i];
-          assertEquals("Indexes not "
-                       + (sortAlphabetically? "alphabetically": "naturally")
-                       + " sorted", expectedValues[i], index.getName());
-        }
-      }
-    }
-  }
-
-  @Test
   public void columnSort()
   {
 
@@ -116,6 +70,36 @@ public class SortingTest
     };
     checkColumnSort(sortedAlpha, true);
     checkColumnSort(sortedNatural, false);
+
+  }
+
+  @Test
+  public void fkSort()
+  {
+
+    final String[] sortedAlpha = new String[] {
+        "FK_A_ITEM_PRODUCT", "FK_B_ITEM_INVOICE"
+    };
+    final String[] sortedNatural = new String[] {
+        "FK_B_ITEM_INVOICE", "FK_A_ITEM_PRODUCT"
+    };
+    checkFkSort(sortedAlpha, true);
+    checkFkSort(sortedNatural, false);
+
+  }
+
+  @Test
+  public void indexSort()
+  {
+
+    final String[] sortedAlpha = new String[] {
+        "INDEX_A_SUPPLIER", "INDEX_B_SUPPLIER"
+    };
+    final String[] sortedNatural = new String[] {
+        "INDEX_B_SUPPLIER", "INDEX_A_SUPPLIER"
+    };
+    checkIndexSort(sortedAlpha, true);
+    checkIndexSort(sortedNatural, false);
 
   }
 
@@ -150,21 +134,6 @@ public class SortingTest
     }
   }
 
-  @Test
-  public void fkSort()
-  {
-
-    final String[] sortedAlpha = new String[] {
-        "FK_A_ITEM_PRODUCT", "FK_B_ITEM_INVOICE"
-    };
-    final String[] sortedNatural = new String[] {
-        "FK_B_ITEM_INVOICE", "FK_A_ITEM_PRODUCT"
-    };
-    checkFkSort(sortedAlpha, true);
-    checkFkSort(sortedNatural, false);
-
-  }
-
   @SuppressWarnings("boxing")
   private void checkFkSort(final String[] expectedValues,
                            final boolean sortAlphabetically)
@@ -191,6 +160,37 @@ public class SortingTest
           assertEquals("Foreign keys not "
                        + (sortAlphabetically? "alphabetically": "naturally")
                        + " sorted", expectedValues[i], foreignKey.getName());
+        }
+      }
+    }
+  }
+
+  @SuppressWarnings("boxing")
+  private void checkIndexSort(final String[] expectedValues,
+                              final boolean sortAlphabetically)
+  {
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setAlphabeticalSortForIndexes(sortAlphabetically);
+
+    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
+                                                  SchemaInfoLevel.maximum,
+                                                  schemaCrawlerOptions);
+    assertNotNull("Could not obtain schema", schema);
+
+    final Table[] tables = schema.getTables();
+    assertEquals("Table count does not match", 6, tables.length);
+    for (final Table table: tables)
+    {
+      if (table.getName().equals("SUPPLIER"))
+      {
+        final Index[] indices = table.getIndices();
+        assertEquals("Index count does not match", 2, indices.length);
+        for (int i = 0; i < indices.length; i++)
+        {
+          final Index index = indices[i];
+          assertEquals("Indexes not "
+                       + (sortAlphabetically? "alphabetically": "naturally")
+                       + " sorted", expectedValues[i], index.getName());
         }
       }
     }

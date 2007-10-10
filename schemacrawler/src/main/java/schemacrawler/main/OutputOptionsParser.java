@@ -21,10 +21,8 @@
 package schemacrawler.main;
 
 
-import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
-import sf.util.CommandLineParser;
 import sf.util.CommandLineParser.BooleanOption;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
@@ -35,71 +33,55 @@ import sf.util.CommandLineParser.StringOption;
  * @author Sualeh Fatehi
  */
 final class OutputOptionsParser
+  extends BaseCommandLineParser<OutputOptions>
 {
 
-  private static final String OPTION_NOINFO = "noinfo";
-  private static final String OPTION_NOFOOTER = "nofooter";
-  private static final String OPTION_NOHEADER = "noheader";
-  private static final String OPTION_OUTPUT_FORMAT = "outputformat";
-  private static final String OPTION_OUTPUT_FILE = "outputfile";
-  private static final String OPTION_OUTPUT_APPEND = "append";
+  private final StringOption optionOutputFormat = new StringOption(Option.NO_SHORT_FORM,
+                                                                   "outputformat",
+                                                                   OutputFormat.text
+                                                                     .toString());
+  private final StringOption optionOutputFile = new StringOption(Option.NO_SHORT_FORM,
+                                                                 "outputfile",
+                                                                 "");
+  private final BooleanOption optionAppend = new BooleanOption(Option.NO_SHORT_FORM,
+                                                               "append");
+  private final BooleanOption optionNoHeader = new BooleanOption(Option.NO_SHORT_FORM,
+                                                                 "noheader");
+  private final BooleanOption optionNoFooter = new BooleanOption(Option.NO_SHORT_FORM,
+                                                                 "nofooter");
+  private final BooleanOption optionNoInfo = new BooleanOption(Option.NO_SHORT_FORM,
+                                                               "noinfo");
 
-  /**
-   * Parses the command line.
-   * 
-   * @param args
-   *        Command line arguments
-   * @return Command line options
-   * @throws SchemaCrawlerException
-   */
-  static OutputOptions parseOutputOptions(final String[] args)
-    throws SchemaCrawlerException
+  OutputOptionsParser(final String[] args)
   {
-    final CommandLineParser parser = createCommandLineParser();
-    parser.parse(args);
+    super(args);
+  }
 
-    final String outputFormatValue = parser
-      .getStringOptionValue(OPTION_OUTPUT_FORMAT);
+  @Override
+  @SuppressWarnings("boxing")
+  OutputOptions getValue()
+  {
+    parse(new Option[] {
+        optionOutputFormat,
+        optionOutputFile,
+        optionAppend,
+        optionNoHeader,
+        optionNoFooter,
+        optionNoInfo,
+        optionNoInfo
+    });
 
-    final String outputFile = parser.getStringOptionValue(OPTION_OUTPUT_FILE);
-
-    final boolean appendOutput = parser
-      .getBooleanOptionValue(OPTION_OUTPUT_APPEND);
-
-    final boolean noHeader = parser.getBooleanOptionValue(OPTION_NOHEADER);
-    final boolean noFooter = parser.getBooleanOptionValue(OPTION_NOFOOTER);
-    final boolean noInfo = parser.getBooleanOptionValue(OPTION_NOINFO);
+    final String outputFormatValue = optionOutputFormat.getValue();
+    final String outputFile = optionOutputFile.getValue();
 
     final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
                                                           outputFile);
-    outputOptions.setAppendOutput(appendOutput);
-    outputOptions.setNoHeader(noHeader);
-    outputOptions.setNoFooter(noFooter);
-    outputOptions.setNoInfo(noInfo);
+    outputOptions.setAppendOutput(optionAppend.getValue());
+    outputOptions.setNoHeader(optionNoHeader.getValue());
+    outputOptions.setNoFooter(optionNoFooter.getValue());
+    outputOptions.setNoInfo(optionNoInfo.getValue());
 
     return outputOptions;
-  }
-
-  private static CommandLineParser createCommandLineParser()
-  {
-    final CommandLineParser parser = new CommandLineParser();
-    parser.addOption(new StringOption(Option.NO_SHORT_FORM,
-                                      OPTION_OUTPUT_FORMAT,
-                                      OutputFormat.text.toString()));
-    parser.addOption(new StringOption(Option.NO_SHORT_FORM,
-                                      OPTION_OUTPUT_FILE,
-                                      ""));
-    parser.addOption(new BooleanOption(Option.NO_SHORT_FORM,
-                                       OPTION_OUTPUT_APPEND));
-    parser.addOption(new BooleanOption(Option.NO_SHORT_FORM, OPTION_NOHEADER));
-    parser.addOption(new BooleanOption(Option.NO_SHORT_FORM, OPTION_NOFOOTER));
-    parser.addOption(new BooleanOption(Option.NO_SHORT_FORM, OPTION_NOINFO));
-    return parser;
-  }
-
-  private OutputOptionsParser()
-  {
-
   }
 
 }

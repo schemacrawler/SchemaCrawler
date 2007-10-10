@@ -1,4 +1,4 @@
-#Wed Oct 10 09:45:53 EDT 2007
+#Wed Oct 10 09:46:30 EDT 2007
 cleanup.add_default_serial_version_id=true
 cleanup.add_generated_serial_version_id=false
 cleanup.add_missing_annotations=true
@@ -49,7 +49,6 @@ cleanup_profile=_SchemaCrawler - Code Clean Up
 cleanup_settings_version=2
 eclipse.preferences.version=1
 editor_save_participant_org.eclipse.jdt.ui.postsavelistener.cleanup=true
-instance/org.eclipse.core.net/org.eclipse.core.net.hasMigrated=true
 sp_cleanup.add_default_serial_version_id=true
 sp_cleanup.add_generated_serial_version_id=false
 sp_cleanup.add_missing_annotations=true

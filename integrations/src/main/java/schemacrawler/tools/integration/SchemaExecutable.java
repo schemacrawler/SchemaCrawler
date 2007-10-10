@@ -20,10 +20,8 @@
 package schemacrawler.tools.integration;
 
 
-import java.util.List;
-
 import schemacrawler.crawl.SchemaCrawlerOptions;
-import schemacrawler.main.CommandLineParser;
+import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.tools.Command;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputOptions;
@@ -54,23 +52,23 @@ public abstract class SchemaExecutable
    * @throws Exception
    *         On an exception
    */
-  public void executeOnSchema(final String[] args, String helpResource)
+  public void executeOnSchema(final String[] args, final String helpResource)
     throws Exception
   {
     CommandLineUtility.checkForHelp(args, helpResource);
     CommandLineUtility.setLogLevel(args);
 
-    final Config config = CommandLineParser.parseConfig(args);
+    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args);
+    final Config config = commandLine.getConfig();
     final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
       .createPropertiesDriverDataSourceParser(args, config);
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
-    final OutputOptions outputOptions = CommandLineParser
-      .parseOutputOptions(args);
+    final OutputOptions outputOptions = commandLine.getOutputOptions();
 
-    final List<Command> commands = CommandLineParser.parseCommands(args);
+    final Command[] commands = commandLine.getCommands();
     final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType
-      .valueOf(commands.get(0).getName());
+      .valueOf(commands[0].getName());
 
     final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(config,
                                                                       outputOptions,
