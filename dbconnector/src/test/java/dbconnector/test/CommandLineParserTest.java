@@ -38,28 +38,44 @@ import sf.util.CommandLineParser;
 public class CommandLineParserTest
 {
 
+  private static class ShortDateOption
+    extends CommandLineParser.BaseOption<Calendar>
+  {
+
+    ShortDateOption(final char shortForm, final String longForm)
+    {
+      super(shortForm, longForm, null);
+    }
+
+    @Override
+    protected Calendar parseValue(final String arg)
+    {
+      try
+      {
+        final Date date = DateFormat.getDateInstance(DateFormat.SHORT)
+          .parse(arg);
+        final Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar;
+      }
+      catch (final ParseException e)
+      {
+        return null;
+      }
+    }
+  }
+
   @Test
-  public void standardOptions()
+  public void badFormat()
   {
     final CommandLineParser parser = new CommandLineParser();
-    parser.addOption(new CommandLineParser.BooleanOption('v', "verbose"));
-    parser.addOption(new CommandLineParser.NumberOption<Integer>('s', "size", null));
-    parser.addOption(new CommandLineParser.StringOption('n', "name", null));
-    parser.addOption(new CommandLineParser.NumberOption<Double>('f', "fraction", null));
-    parser.addOption(new CommandLineParser.BooleanOption('m', "missing"));
-    assertNull(parser.getOption("size").getValue());
+    parser.addOption(new CommandLineParser.NumberOption<Integer>('s',
+                                                                 "size",
+                                                                 null));
     parser.parse(new String[] {
-        "-v", "-size=100", "-n", "foo", "-f", "0.1", "rest"
+      "-size=blah"
     });
-    assertTrue(!parser.getOption("missing").isFound());
-    assertEquals(Boolean.TRUE, parser.getOption("verbose").getValue());
-    assertEquals(100, ((Number) parser.getOption("size").getValue()).intValue());
-    assertEquals("foo", parser.getOption("name").getValue());
-    assertEquals(0.1, ((Number) parser.getOption("fraction").getValue())
-      .doubleValue(), 0.1e-6);
-    final String[] otherArgs = parser.getRemainingArgs();
-    assertEquals(1, otherArgs.length);
-    assertEquals("rest", otherArgs[0]);
+    assertTrue(!parser.getOption("size").isFound());
   }
 
   @Test
@@ -106,6 +122,62 @@ public class CommandLineParserTest
     });
     assertFalse(parser.getBooleanOptionValue(verbose));
     assertTrue(parser.getStringOptionValue("name").equals("schemacrawler"));
+  }
+
+  @Test
+  public void illegalCustomOption()
+  {
+
+    final CommandLineParser parser = new CommandLineParser();
+    parser.addOption(new CommandLineParserTest.ShortDateOption('d', "date"));
+    parser.parse(new String[] {
+        "-d", "foobar"
+    });
+    assertNull(parser.getOption("date").getValue());
+
+  }
+
+  @Test
+  public void resetBetweenParse()
+  {
+    final CommandLineParser parser = new CommandLineParser();
+    parser.addOption(new CommandLineParser.BooleanOption('v', "verbose"));
+    parser.parse(new String[] {
+      "-v"
+    });
+    assertEquals(Boolean.TRUE, parser.getOption("verbose").getValue());
+    assertTrue(parser.getOption("verbose").isFound());
+    parser.parse(new String[] {});
+    assertEquals(Boolean.FALSE, parser.getOption("verbose").getValue());
+    assertTrue(!parser.getOption("verbose").isFound());
+  }
+
+  @Test
+  public void standardOptions()
+  {
+    final CommandLineParser parser = new CommandLineParser();
+    parser.addOption(new CommandLineParser.BooleanOption('v', "verbose"));
+    parser.addOption(new CommandLineParser.NumberOption<Integer>('s',
+                                                                 "size",
+                                                                 null));
+    parser.addOption(new CommandLineParser.StringOption('n', "name", null));
+    parser.addOption(new CommandLineParser.NumberOption<Double>('f',
+                                                                "fraction",
+                                                                null));
+    parser.addOption(new CommandLineParser.BooleanOption('m', "missing"));
+    assertNull(parser.getOption("size").getValue());
+    parser.parse(new String[] {
+        "-v", "-size=100", "-n", "foo", "-f", "0.1", "rest"
+    });
+    assertTrue(!parser.getOption("missing").isFound());
+    assertEquals(Boolean.TRUE, parser.getOption("verbose").getValue());
+    assertEquals(100, ((Number) parser.getOption("size").getValue()).intValue());
+    assertEquals("foo", parser.getOption("name").getValue());
+    assertEquals(0.1, ((Number) parser.getOption("fraction").getValue())
+      .doubleValue(), 0.1e-6);
+    final String[] otherArgs = parser.getRemainingArgs();
+    assertEquals(1, otherArgs.length);
+    assertEquals("rest", otherArgs[0]);
   }
 
   @Test
@@ -165,32 +237,6 @@ public class CommandLineParserTest
   }
 
   @Test
-  public void badFormat()
-  {
-    final CommandLineParser parser = new CommandLineParser();
-    parser.addOption(new CommandLineParser.NumberOption<Integer>('s', "size", null));
-    parser.parse(new String[] {
-      "-size=blah"
-    });
-    assertTrue(!parser.getOption("size").isFound());
-  }
-
-  @Test
-  public void resetBetweenParse()
-  {
-    final CommandLineParser parser = new CommandLineParser();
-    parser.addOption(new CommandLineParser.BooleanOption('v', "verbose"));
-    parser.parse(new String[] {
-      "-v"
-    });
-    assertEquals(Boolean.TRUE, parser.getOption("verbose").getValue());
-    assertTrue(parser.getOption("verbose").isFound());
-    parser.parse(new String[] {});
-    assertEquals(Boolean.FALSE, parser.getOption("verbose").getValue());
-    assertTrue(!parser.getOption("verbose").isFound());
-  }
-
-  @Test
   public void testCustomOption()
   {
     final CommandLineParser parser = new CommandLineParser();
@@ -202,45 +248,6 @@ public class CommandLineParserTest
     assertEquals(11, d.get(Calendar.MONTH) + 1);
     assertEquals(3, d.get(Calendar.DATE));
     assertEquals(2003, d.get(Calendar.YEAR));
-  }
-
-  @Test
-  public void illegalCustomOption()
-  {
-
-    final CommandLineParser parser = new CommandLineParser();
-    parser.addOption(new CommandLineParserTest.ShortDateOption('d', "date"));
-    parser.parse(new String[] {
-        "-d", "foobar"
-    });
-    assertNull(parser.getOption("date").getValue());
-
-  }
-
-  private static class ShortDateOption
-    extends CommandLineParser.BaseOption<Calendar>
-  {
-
-    ShortDateOption(final char shortForm, final String longForm)
-    {
-      super(shortForm, longForm, null);
-    }
-
-    protected Calendar parseValue(final String arg)
-    {
-      try
-      {
-        final Date date = DateFormat.getDateInstance(DateFormat.SHORT)
-          .parse(arg);
-        final Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        return calendar;
-      }
-      catch (final ParseException e)
-      {
-        return null;
-      }
-    }
   }
 
 }

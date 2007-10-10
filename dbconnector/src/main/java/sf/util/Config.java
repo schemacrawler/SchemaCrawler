@@ -58,8 +58,11 @@ public class Config
     {
       for (final String configFilename: configFilenames)
       {
-        configProperties = loadProperties(configProperties,
-                                          new File(configFilename));
+        if (!Utilities.isBlank(configFilename))
+        {
+          configProperties = loadProperties(configProperties,
+                                            new File(configFilename));
+        }
       }
     }
     return new Config(configProperties);

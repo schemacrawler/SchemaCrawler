@@ -70,14 +70,12 @@ public final class ExecutableFactory
    * @return Command line options
    * @throws SchemaCrawlerException
    */
-  static List<Executable<?>> createExecutables(final String[] args,
-                                               final Config config)
+  static List<Executable<?>> createExecutables(final SchemaCrawlerCommandLine commandLine)
     throws SchemaCrawlerException
   {
-    final OutputOptions masterOutputOptions = OutputOptionsParser
-      .parseOutputOptions(args);
-    final Command[] commands = CommandParser.parseCommands(args)
-      .toArray(new Command[0]);
+    final Config config = commandLine.getConfig();
+    final OutputOptions masterOutputOptions = commandLine.getOutputOptions();
+    final Command[] commands = commandLine.getCommands();
 
     final List<Executable<?>> executables = new ArrayList<Executable<?>>();
     for (int i = 0; i < commands.length; i++)

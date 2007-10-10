@@ -73,6 +73,54 @@ public class TestUtility
     testUtility.createDatabase();
   }
 
+  public static synchronized void setupSchema(final DataSource dataSource)
+  {
+    Connection connection = null;
+    Statement statement = null;
+    try
+    {
+      // Load schema script file
+      final String script = new String(Utilities.readFully(TestUtility.class
+        .getResourceAsStream("/schemacrawler.test.sql")));
+      if (dataSource != null)
+      {
+        connection = dataSource.getConnection();
+        statement = connection.createStatement();
+        statement.execute(script);
+        connection.close();
+      }
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "", e);
+    }
+    finally
+    {
+      if (statement != null)
+      {
+        try
+        {
+          statement.close();
+        }
+        catch (final SQLException e)
+        {
+          LOGGER.log(Level.WARNING, "", e);
+        }
+      }
+      if (connection != null)
+      {
+        try
+        {
+          connection.close();
+        }
+        catch (final SQLException e)
+        {
+          LOGGER.log(Level.WARNING, "", e);
+        }
+      }
+    }
+  }
+
   private static Class<Driver> loadJdbcDriver()
   {
     Class<Driver> driver = null;
@@ -218,7 +266,7 @@ public class TestUtility
     {
       dataSource.setLogWriter(out);
     }
-    catch (SQLException e)
+    catch (final SQLException e)
     {
       LOGGER.log(Level.FINE, "Could not set log writer", e);
     }
@@ -258,54 +306,6 @@ public class TestUtility
     connectionProperties.setProperty(DATASOURCE_NAME + ".password", "");
 
     dataSource = new PropertiesDataSource(connectionProperties, DATASOURCE_NAME);
-  }
-
-  public static synchronized void setupSchema(final DataSource dataSource)
-  {
-    Connection connection = null;
-    Statement statement = null;
-    try
-    {
-      // Load schema script file
-      final String script = new String(Utilities.readFully(TestUtility.class
-        .getResourceAsStream("/schemacrawler.test.sql")));
-      if (dataSource != null)
-      {
-        connection = dataSource.getConnection();
-        statement = connection.createStatement();
-        statement.execute(script);
-        connection.close();
-      }
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, "", e);
-    }
-    finally
-    {
-      if (statement != null)
-      {
-        try
-        {
-          statement.close();
-        }
-        catch (final SQLException e)
-        {
-          LOGGER.log(Level.WARNING, "", e);
-        }
-      }
-      if (connection != null)
-      {
-        try
-        {
-          connection.close();
-        }
-        catch (final SQLException e)
-        {
-          LOGGER.log(Level.WARNING, "", e);
-        }
-      }
-    }
   }
 
 }

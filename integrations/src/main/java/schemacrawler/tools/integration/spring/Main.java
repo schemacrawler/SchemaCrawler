@@ -48,7 +48,7 @@ public final class Main
     try
     {
       final ApplicationContext appContext = new FileSystemXmlApplicationContext("context.xml");
-      Executable executionContext = (Executable) appContext
+      final Executable executionContext = (Executable) appContext
         .getBean("executionContext");
     }
     catch (final Exception e)

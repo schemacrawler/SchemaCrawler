@@ -34,19 +34,19 @@ public class PropertiesDataSourceTest
 
   private static TestUtility testUtility = new TestUtility();
 
+  @AfterClass
+  public static void afterAllTests()
+    throws PropertiesDataSourceException, ClassNotFoundException
+  {
+    testUtility.shutdownDatabase();
+  }
+
   @BeforeClass
   public static void beforeAllTests()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
     testUtility.setApplicationLogLevel();
     testUtility.createMemoryDatabase();
-  }
-
-  @AfterClass
-  public static void afterAllTests()
-    throws PropertiesDataSourceException, ClassNotFoundException
-  {
-    testUtility.shutdownDatabase();
   }
 
   @Test

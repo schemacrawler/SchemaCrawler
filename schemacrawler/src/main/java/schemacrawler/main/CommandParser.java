@@ -24,9 +24,7 @@ package schemacrawler.main;
 import java.util.ArrayList;
 import java.util.List;
 
-import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.tools.Command;
-import sf.util.CommandLineParser;
 import sf.util.Utilities;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
@@ -37,29 +35,29 @@ import sf.util.CommandLineParser.StringOption;
  * @author Sualeh Fatehi
  */
 final class CommandParser
+  extends BaseCommandLineParser<Command[]>
 {
 
-  private static final String OPTION_COMMAND = "command";
+  private final StringOption optionCommand = new StringOption(Option.NO_SHORT_FORM,
+                                                              "command",
+                                                              "");
 
-  /**
-   * Parses the command line.
-   * 
-   * @param args
-   *        Command line arguments
-   * @return Command line options
-   * @throws SchemaCrawlerException
-   */
-  static List<Command> parseCommands(final String[] args)
-    throws SchemaCrawlerException
+  CommandParser(final String[] args)
   {
-    final CommandLineParser parser = createCommandLineParser();
-    parser.parse(args);
+    super(args);
+  }
 
-    final String commandOptionValue = parser
-      .getStringOptionValue(OPTION_COMMAND);
+  @Override
+  Command[] getValue()
+  {
+    parse(new Option[] {
+      optionCommand
+    });
+
+    final String commandOptionValue = optionCommand.getValue();
     if (Utilities.isBlank(commandOptionValue))
     {
-      throw new SchemaCrawlerException("No SchemaCrawler command specified");
+      return new Command[0];
     }
     final String[] commandStrings = commandOptionValue.split(",");
 
@@ -69,20 +67,7 @@ final class CommandParser
       commands.add(new Command(commandString));
     }
 
-    return commands;
-  }
-
-  private static CommandLineParser createCommandLineParser()
-  {
-    final CommandLineParser parser = new CommandLineParser();
-    parser
-      .addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_COMMAND, ""));
-    return parser;
-  }
-
-  private CommandParser()
-  {
-
+    return commands.toArray(new Command[commands.size()]);
   }
 
 }

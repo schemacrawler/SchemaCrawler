@@ -58,10 +58,6 @@ public final class Main
     instructions = new String(text);
   }
 
-  private Main()
-  {
-  }
-
   /**
    * Get connection parameters, and creates a connection, and crawls the
    * schema.
@@ -113,6 +109,10 @@ public final class Main
     // Instructions
     System.out.println(instructions);
 
+  }
+
+  private Main()
+  {
   }
 
 }

@@ -82,7 +82,7 @@ public class SchemaCrawlerOutputTest
                                                                   outputOptions,
                                                                   Operation.count);
 
-    OperationExecutable executable = new OperationExecutable();
+    final OperationExecutable executable = new OperationExecutable();
     executable.setToolOptions(operatorOptions);
     executable.execute(testUtility.getDataSource());
 
@@ -110,7 +110,7 @@ public class SchemaCrawlerOutputTest
                                                                   outputOptions,
                                                                   Operation.count);
 
-    OperationExecutable executable = new OperationExecutable();
+    final OperationExecutable executable = new OperationExecutable();
     executable.setToolOptions(operatorOptions);
     executable.execute(testUtility.getDataSource());
 
@@ -160,7 +160,7 @@ public class SchemaCrawlerOutputTest
                                                                   outputOptions,
                                                                   Operation.dump);
 
-    OperationExecutable executable = new OperationExecutable();
+    final OperationExecutable executable = new OperationExecutable();
     executable.setToolOptions(operatorOptions);
     executable.execute(testUtility.getDataSource());
 
@@ -180,7 +180,7 @@ public class SchemaCrawlerOutputTest
                                                                                         outputFilename),
                                                                       SchemaTextDetailType.brief_schema);
 
-    SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable();
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable();
     executable.setToolOptions(textFormatOptions);
     executable.execute(testUtility.getDataSource());
 
@@ -208,7 +208,7 @@ public class SchemaCrawlerOutputTest
                                                                       outputOptions,
                                                                       SchemaTextDetailType.maximum_schema);
 
-    SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable();
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable();
     executable.setToolOptions(textFormatOptions);
     executable.execute(testUtility.getDataSource());
 

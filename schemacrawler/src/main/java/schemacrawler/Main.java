@@ -21,7 +21,7 @@
 package schemacrawler;
 
 
-import schemacrawler.main.CommandLineParser;
+import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.main.SchemaCrawlerMain;
 import sf.util.CommandLineUtility;
 import sf.util.Config;
@@ -49,10 +49,11 @@ public final class Main
     CommandLineUtility.checkForHelp(args, "/schemacrawler-readme.txt");
     CommandLineUtility.setLogLevel(args);
 
-    final Config config = CommandLineParser.parseConfig(args);
+    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args);
+    final Config config = commandLine.getConfig();
     final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
       .createPropertiesDriverDataSourceParser(args, config);
-    SchemaCrawlerMain.schemacrawler(args, config, dataSourceParser);
+    SchemaCrawlerMain.schemacrawler(commandLine, dataSourceParser);
   }
 
   private Main()

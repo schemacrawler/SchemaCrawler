@@ -74,28 +74,6 @@ public class CommandLineUtility
   }
 
   /**
-   * Parses the command line, and sets the application log level.
-   * 
-   * @param args
-   *        Command line arguments
-   */
-  public static void setLogLevel(final String[] args)
-  {
-    final String OPTION_LOG_LEVEL = "log-level";
-
-    final CommandLineParser parser = new CommandLineParser();
-    parser
-      .addOption(new CommandLineParser.StringOption(CommandLineParser.Option.NO_SHORT_FORM,
-                                                    OPTION_LOG_LEVEL,
-                                                    "OFF"));
-    parser.parse(args);
-
-    final String logLevelString = parser.getStringOptionValue(OPTION_LOG_LEVEL);
-    final Level logLevel = Level.parse(logLevelString.toUpperCase());
-    setApplicationLogLevel(logLevel);
-  }
-
-  /**
    * Sets the application-wide log level.
    * 
    * @param logLevel
@@ -119,6 +97,28 @@ public class CommandLineUtility
 
     final Logger rootLogger = Logger.getLogger("");
     rootLogger.setLevel(logLevel);
+  }
+
+  /**
+   * Parses the command line, and sets the application log level.
+   * 
+   * @param args
+   *        Command line arguments
+   */
+  public static void setLogLevel(final String[] args)
+  {
+    final String OPTION_LOG_LEVEL = "log-level";
+
+    final CommandLineParser parser = new CommandLineParser();
+    parser
+      .addOption(new CommandLineParser.StringOption(CommandLineParser.Option.NO_SHORT_FORM,
+                                                    OPTION_LOG_LEVEL,
+                                                    "OFF"));
+    parser.parse(args);
+
+    final String logLevelString = parser.getStringOptionValue(OPTION_LOG_LEVEL);
+    final Level logLevel = Level.parse(logLevelString.toUpperCase());
+    setApplicationLogLevel(logLevel);
   }
 
   private CommandLineUtility()

@@ -21,9 +21,9 @@
 package schemacrawler.tools.sqlserver;
 
 
+import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.main.SchemaCrawlerMain;
 import sf.util.CommandLineUtility;
-import sf.util.Config;
 import dbconnector.dbconnector.DatabaseConnector;
 import dbconnector.dbconnector.DatabaseConnectorFactory;
 
@@ -48,13 +48,11 @@ public final class Main
 
     try
     {
-      final Config driverConfiguration = Config.load(Main.class
-        .getResourceAsStream("/schemacrawler.config.properties"));
+      final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
+                                                                                "/schemacrawler.config.properties");
       final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
-        .createBundledDriverDataSourceParser(args, driverConfiguration);
-      SchemaCrawlerMain.schemacrawler(args,
-                                      driverConfiguration,
-                                      dataSourceParser);
+        .createBundledDriverDataSourceParser(args, commandLine.getConfig());
+      SchemaCrawlerMain.schemacrawler(commandLine, dataSourceParser);
     }
     catch (final Exception e)
     {
