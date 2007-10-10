@@ -93,8 +93,7 @@ public final class SchemaCrawler
       }
     }
 
-    final CachingCrawlerHandler schemaMaker = new CachingCrawlerHandler(catalog,
-                                                                        infoLevel);
+    final CachingCrawlerHandler schemaMaker = new CachingCrawlerHandler(catalog);
     try
     {
       final SchemaCrawler crawler = new SchemaCrawler(dataSource, schemaMaker);

@@ -28,7 +28,6 @@ import java.util.Map;
 import java.util.Set;
 
 import schemacrawler.crawl.CrawlHandler;
-import schemacrawler.crawl.InclusionRule;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.crawl.SchemaInfoLevel;
 import schemacrawler.schema.CheckConstraint;
@@ -44,7 +43,6 @@ import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
-import schemacrawler.tools.grep.ColumnsGrep;
 import schemacrawler.tools.util.TextFormattingHelper;
 import sf.util.Utilities;
 
@@ -62,9 +60,6 @@ public abstract class BaseSchemaTextFormatter
   private final SchemaTextOptions options;
 
   private int tableCount;
-
-  private InclusionRule tableColumnInclusionRule;
-  private boolean invertMatch;
 
   /**
    * @param writer
@@ -91,21 +86,6 @@ public abstract class BaseSchemaTextFormatter
 
     this.formattingHelper = formattingHelper;
 
-  }
-
-  /**
-   * @param writer
-   *        Writer to output to.
-   */
-  BaseSchemaTextFormatter(final SchemaTextOptions options,
-                          final TextFormattingHelper formattingHelper,
-                          final InclusionRule tableColumnInclusionRule,
-                          final boolean invertMatch)
-    throws SchemaCrawlerException
-  {
-    this(options, formattingHelper);
-    this.tableColumnInclusionRule = tableColumnInclusionRule;
-    this.invertMatch = invertMatch;
   }
 
   /**
@@ -267,18 +247,6 @@ public abstract class BaseSchemaTextFormatter
    */
   public final void handle(final Table table)
   {
-
-    // Special case for "grep" like functionality
-    // If a column inclusion rule is present, only process the
-    // table if the column that matches is present in the table
-    boolean handleTable = ColumnsGrep.includesColumn(table,
-                                                     tableColumnInclusionRule,
-                                                     invertMatch);
-    if (!handleTable)
-    {
-      return;
-    }
-
     handleTableStart();
     final String typeBracketed = "["
                                  + table.getType().toString()

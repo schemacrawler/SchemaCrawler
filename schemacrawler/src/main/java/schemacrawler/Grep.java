@@ -21,8 +21,12 @@
 package schemacrawler;
 
 
+import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.main.SchemaCrawlerCommandLine;
-import schemacrawler.tools.grep.ColumnsGrep;
+import schemacrawler.tools.grep.GrepExecutable;
+import schemacrawler.tools.grep.GrepOptions;
+import schemacrawler.tools.grep.GrepOptionsParser;
+import schemacrawler.tools.schematext.SchemaTextDetailType;
 import sf.util.CommandLineUtility;
 import sf.util.Config;
 import dbconnector.dbconnector.DatabaseConnector;
@@ -54,7 +58,15 @@ public final class Grep
     final Config config = commandLine.getConfig();
     final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
       .createPropertiesDriverDataSourceParser(args, config);
-    ColumnsGrep.grep(args, dataSourceParser);
+
+    GrepOptions grepOptions = new GrepOptionsParser(args).getValue();
+    grepOptions.setOutputOptions(commandLine.getOutputOptions());
+    grepOptions.setSchemaTextDetailType(SchemaTextDetailType.verbose_schema);
+
+    GrepExecutable grepExecutable = new GrepExecutable();
+    grepExecutable.setSchemaCrawlerOptions(new SchemaCrawlerOptions(config));
+    grepExecutable.setToolOptions(grepOptions);
+    grepExecutable.execute(dataSourceParser.createDataSource());
   }
 
   private Grep()

@@ -28,7 +28,7 @@ package schemacrawler.tools;
  * @author Sualeh Fatehi
  */
 public abstract class BaseToolOptions
-  implements ToolsOptions
+  implements ToolOptions
 {
 
   private OutputOptions outputOptions;

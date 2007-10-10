@@ -59,7 +59,7 @@ final class OutputOptionsParser
 
   @Override
   @SuppressWarnings("boxing")
-  OutputOptions getValue()
+  protected OutputOptions getValue()
   {
     parse(new Option[] {
         optionOutputFormat,

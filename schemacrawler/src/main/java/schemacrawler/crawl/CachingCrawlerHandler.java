@@ -27,24 +27,33 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 
 /**
+ * Caches a crawled schema internally.
  * 
+ * @author sfatehi
  */
-final class CachingCrawlerHandler
+public final class CachingCrawlerHandler
   implements CrawlHandler
 {
 
-  private final SchemaInfoLevel infoLevel;
   private final MutableSchema schema;
 
   /**
-   * @param writer
-   *        Writer to output to.
+   * Creates a new caching crawl handler.
    */
-  CachingCrawlerHandler(final String catalogName,
-                        final SchemaInfoLevel columnInfoLevel)
+  public CachingCrawlerHandler()
+  {
+    this("");
+  }
+
+  /**
+   * Creates a new caching crawl handler.
+   * 
+   * @param catalogName
+   *        Catalog name.
+   */
+  public CachingCrawlerHandler(final String catalogName)
   {
     schema = new MutableSchema(catalogName, "schema", "schema");
-    infoLevel = columnInfoLevel;
   }
 
   /**
@@ -73,7 +82,7 @@ final class CachingCrawlerHandler
    */
   public SchemaInfoLevel getInfoLevelHint()
   {
-    return infoLevel;
+    return SchemaInfoLevel.maximum;
   }
 
   /**
