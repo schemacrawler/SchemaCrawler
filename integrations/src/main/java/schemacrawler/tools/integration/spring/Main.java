@@ -21,6 +21,8 @@
 package schemacrawler.tools.integration.spring;
 
 
+import javax.sql.DataSource;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
@@ -47,9 +49,14 @@ public final class Main
 
     try
     {
-      final ApplicationContext appContext = new FileSystemXmlApplicationContext("context.xml");
-      final Executable executionContext = (Executable) appContext
-        .getBean("executionContext");
+      SpringOptions springOptions = new SpringOptionsParser(args).getValue();
+      final ApplicationContext appContext = new FileSystemXmlApplicationContext(springOptions
+        .getContextFileName());
+      final Executable<?> executable = (Executable<?>) appContext
+        .getBean(springOptions.getExecutableName());
+      final DataSource dataSource = (DataSource) appContext
+        .getBean(springOptions.getDataSourceName());
+      executable.execute(dataSource);
     }
     catch (final Exception e)
     {
