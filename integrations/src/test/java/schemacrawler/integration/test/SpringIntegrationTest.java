@@ -20,6 +20,7 @@ import schemacrawler.crawl.SchemaInfoLevel;
 import schemacrawler.schema.Schema;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.datatext.DataTextFormatOptions;
+import schemacrawler.tools.grep.GrepOptions;
 import schemacrawler.tools.operation.OperationOptions;
 import schemacrawler.tools.schematext.SchemaTextOptions;
 import dbconnector.datasource.PropertiesDataSourceException;
@@ -122,6 +123,21 @@ public class SpringIntegrationTest
 
     final Executable<SchemaTextOptions> executable = (Executable<SchemaTextOptions>) appContext
       .getBean("executableForVelocity");
+    executable.getToolOptions().getOutputOptions()
+      .setOutputFileName(outputFilename);
+
+    executeAndCheckForOutputFile(executable, outputFilename);
+  }
+
+  @Test
+  public void testExecutableForGrep()
+    throws Exception
+  {
+    final String outputFilename = File.createTempFile("schemacrawler", "test")
+      .getAbsolutePath();
+
+    final Executable<GrepOptions> executable = (Executable<GrepOptions>) appContext
+      .getBean("executableForGrep");
     executable.getToolOptions().getOutputOptions()
       .setOutputFileName(outputFilename);
 
