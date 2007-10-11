@@ -7,7 +7,28 @@
   <body>
     <release
       version="5.2"
-      date="2007-08-14">
+      date="2007-10-30">
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        A significant re-write of the internal command processing code.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        Spring framework support for all of SchemaCrawler functionality,
+        including integrations and grep.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        New example for grep.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        New example for using the Spring framework with SchemaCrawler.
+      </action>
       <action
         dev="Sualeh Fatehi"
         type="fix">
