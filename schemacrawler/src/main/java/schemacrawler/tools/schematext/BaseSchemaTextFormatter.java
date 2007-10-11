@@ -23,7 +23,6 @@ package schemacrawler.tools.schematext;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -248,9 +247,8 @@ public abstract class BaseSchemaTextFormatter
   public final void handle(final Table table)
   {
     handleTableStart();
-    final String typeBracketed = "["
-                                 + table.getType().toString()
-                                   .toLowerCase(Locale.ENGLISH) + "]";
+    final String typeBracketed = "[" + table.getType().toString().toLowerCase()
+                                 + "]";
     out.println(formattingHelper.createNameRow(table.getName(), typeBracketed));
 
     final SchemaTextDetailType schemaTextDetailType = options
