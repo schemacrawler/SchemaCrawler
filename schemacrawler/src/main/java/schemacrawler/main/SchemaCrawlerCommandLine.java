@@ -1,7 +1,7 @@
 package schemacrawler.main;
 
-
 import java.util.Arrays;
+import java.util.List;
 
 import schemacrawler.tools.Command;
 import schemacrawler.tools.OutputOptions;
@@ -16,7 +16,7 @@ import sf.util.Utilities;
 public class SchemaCrawlerCommandLine
 {
 
-  private final String[] args;
+  private final List<String> args;
   //
   private final Command[] commands;
   private final Config config;
@@ -44,31 +44,24 @@ public class SchemaCrawlerCommandLine
    */
   public SchemaCrawlerCommandLine(final String[] args, final String configResource)
   {
-    this.args = args;
-    if (args != null && args.length > 0)
-    {
+    this.args = Arrays.asList(args);
+    if (args != null && args.length > 0) {
       commands = new CommandParser(args).getValue();
       outputOptions = new OutputOptionsParser(args).getValue();
     }
-    else
-    {
+    else {
       commands = new Command[0];
       outputOptions = new OutputOptions();
     }
 
-    if (!Utilities.isBlank(configResource))
-    {
-      config = Config.load(SchemaCrawlerCommandLine.class
-        .getResourceAsStream(configResource));
+    if (!Utilities.isBlank(configResource)) {
+      config = Config.load(SchemaCrawlerCommandLine.class.getResourceAsStream(configResource));
     }
-    else
-    {
-      if (args != null && args.length > 0)
-      {
+    else {
+      if (args != null && args.length > 0) {
         config = new ConfigParser(args).getValue();
       }
-      else
-      {
+      else {
         config = new Config();
       }
     }
@@ -112,7 +105,7 @@ public class SchemaCrawlerCommandLine
   @Override
   public String toString()
   {
-    return Arrays.toString(args);
+    return args.toString();
   }
 
 }

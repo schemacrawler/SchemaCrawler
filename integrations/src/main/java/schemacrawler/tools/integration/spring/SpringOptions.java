@@ -26,6 +26,8 @@ public class SpringOptions
   implements ToolOptions
 {
 
+  private static final long serialVersionUID = 5125868244511892692L;
+
   private String executableName;
   private String dataSourceName;
   private String contextFileName;
@@ -35,7 +37,7 @@ public class SpringOptions
     return executableName;
   }
 
-  public void setExecutableName(String executableName)
+  public void setExecutableName(final String executableName)
   {
     this.executableName = executableName;
   }
@@ -45,7 +47,7 @@ public class SpringOptions
     return contextFileName;
   }
 
-  public void setContextFileName(String contextFileName)
+  public void setContextFileName(final String contextFileName)
   {
     this.contextFileName = contextFileName;
   }
@@ -55,7 +57,7 @@ public class SpringOptions
     return dataSourceName;
   }
 
-  public void setDataSourceName(String dataSourceName)
+  public void setDataSourceName(final String dataSourceName)
   {
     this.dataSourceName = dataSourceName;
   }
