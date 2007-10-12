@@ -28,6 +28,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -363,7 +364,7 @@ final class TableRetriever
         final String tableName = results.getString(TABLE_NAME);
         LOGGER.log(Level.FINEST, "Retrieving table: " + tableName);
         final TableType tableType = TableType.valueOf(results
-          .getString("TABLE_TYPE").toLowerCase());
+          .getString("TABLE_TYPE").toLowerCase(Locale.ENGLISH));
         final String remarks = results.getString(REMARKS);
 
         if (tableInclusionRule.include(tableName))

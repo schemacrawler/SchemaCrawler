@@ -27,6 +27,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -309,7 +310,8 @@ final class TableExRetriever
                                  + triggerName);
 
         final EventManipulationType eventManipulationType = EventManipulationType
-          .valueOf(results.getString("EVENT_MANIPULATION").toLowerCase());
+          .valueOf(results.getString("EVENT_MANIPULATION")
+            .toLowerCase(Locale.ENGLISH));
 
         // final String eventObjectCatalog = results
         // .getString("EVENT_OBJECT_CATALOG");
@@ -329,9 +331,11 @@ final class TableExRetriever
         final String actionCondition = results.getString("ACTION_CONDITION");
         final String actionStatement = results.getString("ACTION_STATEMENT");
         final ActionOrientationType actionOrientation = ActionOrientationType
-          .valueOf(results.getString("ACTION_ORIENTATION").toLowerCase());
+          .valueOf(results.getString("ACTION_ORIENTATION")
+            .toLowerCase(Locale.ENGLISH));
         final ConditionTimingType conditionTiming = ConditionTimingType
-          .valueOfFromValue(results.getString("CONDITION_TIMING").toLowerCase());
+          .valueOfFromValue(results.getString("CONDITION_TIMING")
+            .toLowerCase(Locale.ENGLISH));
 
         final MutableTrigger trigger = new MutableTrigger(triggerName, table);
         trigger.setEventManipulationType(eventManipulationType);
@@ -408,7 +412,7 @@ final class TableExRetriever
         LOGGER.log(Level.FINEST, "Retrieving view information for " + viewName);
         String definition = results.getString("VIEW_DEFINITION");
         final CheckOptionType checkOption = CheckOptionType.valueOf(results
-          .getString("CHECK_OPTION").toLowerCase());
+          .getString("CHECK_OPTION").toLowerCase(Locale.ENGLISH));
         final boolean updatable = Utilities.parseBoolean(results
           .getString("IS_UPDATABLE"));
 

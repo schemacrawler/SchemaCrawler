@@ -23,6 +23,7 @@ package schemacrawler.schema;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * An enumeration wrapper around JDBC table types.
@@ -67,7 +68,7 @@ public enum TableType
     {
       if (tableType != null)
       {
-        tableTypeStrings.add(tableType.toString().toUpperCase());
+        tableTypeStrings.add(tableType.toString().toUpperCase(Locale.ENGLISH));
       }
     }
     return tableTypeStrings.toArray(new String[tableTypeStrings.size()]);
@@ -91,7 +92,7 @@ public enum TableType
     final List<TableType> tableTypes = new ArrayList<TableType>(tableTypeStrings.length);
     for (final String tableTypeString: tableTypeStrings)
     {
-      tableTypes.add(valueOf(tableTypeString.toLowerCase()));
+      tableTypes.add(valueOf(tableTypeString.toLowerCase(Locale.ENGLISH)));
     }
     return tableTypes.toArray(new TableType[tableTypes.size()]);
   }

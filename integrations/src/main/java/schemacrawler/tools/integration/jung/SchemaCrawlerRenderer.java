@@ -39,7 +39,7 @@ final class SchemaCrawlerRenderer
   extends PluggableRenderer
 {
 
-  private final class SchemaCrawlerEdgePaintFunction
+  private static final class SchemaCrawlerEdgePaintFunction
     implements EdgePaintFunction
   {
     /**
@@ -59,7 +59,7 @@ final class SchemaCrawlerRenderer
     }
   }
 
-  private final class SchemaCrawlerVertexPaintFunction
+  private static final class SchemaCrawlerVertexPaintFunction
     implements VertexPaintFunction
   {
     /**
@@ -79,7 +79,7 @@ final class SchemaCrawlerRenderer
     }
   }
 
-  private final class SchemaCrawlerVertexShapeFunction
+  private static final class SchemaCrawlerVertexShapeFunction
     implements VertexShapeFunction
   {
     /**
@@ -91,7 +91,7 @@ final class SchemaCrawlerRenderer
     }
   }
 
-  private final class SchemaCrawlerVertexStringer
+  private static final class SchemaCrawlerVertexStringer
     implements VertexStringer
   {
     /**
