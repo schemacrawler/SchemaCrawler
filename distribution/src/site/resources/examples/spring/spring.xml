@@ -41,6 +41,41 @@
     dest="spring-2.0.7.jar"
     verbose="true"
     usetimestamp="true" />
+  <get
+    src="http://ibiblio.org/pub/packages/maven2/commons-logging/commons-logging/1.1/commons-logging-1.1.jar"
+    dest="commons-logging-1.1.jar"
+    verbose="true"
+    usetimestamp="true" />
+  <get
+    src="http://ibiblio.org/pub/packages/maven2/xerces/xerces/2.4.0/xerces-2.4.0.jar"
+    dest="xerces-2.4.0.jar"
+    verbose="true"
+    usetimestamp="true" />
+  <get
+    src="http://www.ibiblio.org/maven/velocity/jars/velocity-1.5.jar"
+    dest="velocity-1.5.jar"
+    verbose="true"
+    usetimestamp="true" />
+  <get
+    src="http://www.ibiblio.org/maven/log4j/jars/log4j-1.2.9.jar"
+    dest="log4j-1.2.9.jar"
+    verbose="true"
+    usetimestamp="true" />
+  <get
+    src="http://www.ibiblio.org/maven/commons-collections/jars/commons-collections-3.2.jar"
+    dest="commons-collections-3.2.jar"
+    verbose="true"
+    usetimestamp="true" />
+  <get
+    src="http://www.ibiblio.org/maven/commons-lang/jars/commons-lang-2.3.jar"
+    dest="commons-lang-2.3.jar"
+    verbose="true"
+    usetimestamp="true" />
+  <get
+    src="http://ibiblio.org/pub/packages/maven2/org/freemarker/freemarker/2.3.9/freemarker-2.3.9.jar"
+    dest="freemarker-2.3.9.jar"
+    verbose="true"
+    usetimestamp="true" />
 
   <!-- Step 5.
     Define an ant task that uses the <schemacrawler-spring> macro
@@ -49,10 +84,10 @@
 
     <schemacrawler-spring
       db-driver-classpath="db-driver-classpath"
-      spring-classpath="spring-classpath"    
+      spring-classpath="spring-classpath"
       context-file="context.xml"
       executable="executableForSchema"
-      datasource="${datasource}" />
+      datasource="datasource" />
 
   </target>
 
