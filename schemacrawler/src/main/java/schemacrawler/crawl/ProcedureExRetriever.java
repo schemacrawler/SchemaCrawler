@@ -25,6 +25,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -117,7 +118,7 @@ final class ProcedureExRetriever
         LOGGER.log(Level.FINEST, "Retrieving procedure information for "
                                  + procedureName);
         final RoutineBodyType routineBodyType = RoutineBodyType.valueOf(results
-          .getString("ROUTINE_BODY").toLowerCase());
+          .getString("ROUTINE_BODY").toLowerCase(Locale.ENGLISH));
         String definition = results.getString("ROUTINE_DEFINITION");
 
         if (!Utilities.isBlank(procedure.getDefinition()))

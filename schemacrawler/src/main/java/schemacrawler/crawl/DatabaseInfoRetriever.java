@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -305,7 +306,7 @@ final class DatabaseInfoRetriever
       name = name.substring(get.length());
     }
     // Capitalize the first letter
-    name = name.substring(0, 1).toUpperCase() + name.substring(1);
+    name = name.substring(0, 1).toUpperCase(Locale.ENGLISH) + name.substring(1);
     return name;
   }
 
@@ -334,8 +335,8 @@ final class DatabaseInfoRetriever
   {
     final Class<?> returnType = method.getReturnType();
     final boolean notPropertyMethod = returnType.equals(ResultSet.class)
-                                || returnType.equals(Connection.class)
-                                || method.getParameterTypes().length > 0;
+                                      || returnType.equals(Connection.class)
+                                      || method.getParameterTypes().length > 0;
     return !notPropertyMethod;
   }
 

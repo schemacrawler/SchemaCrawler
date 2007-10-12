@@ -23,6 +23,7 @@ package schemacrawler.tools.schematext;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -247,8 +248,9 @@ public abstract class BaseSchemaTextFormatter
   public final void handle(final Table table)
   {
     handleTableStart();
-    final String typeBracketed = "[" + table.getType().toString().toLowerCase()
-                                 + "]";
+    final String typeBracketed = "["
+                                 + table.getType().toString()
+                                   .toLowerCase(Locale.ENGLISH) + "]";
     out.println(formattingHelper.createNameRow(table.getName(), typeBracketed));
 
     final SchemaTextDetailType schemaTextDetailType = options
@@ -595,7 +597,7 @@ public abstract class BaseSchemaTextFormatter
         String triggerType = "[trigger, " + trigger.getConditionTiming() + " "
                              + trigger.getEventManipulationType() + ", per "
                              + trigger.getActionOrientation() + "]";
-        triggerType = triggerType.toLowerCase();
+        triggerType = triggerType.toLowerCase(Locale.ENGLISH);
         final String actionCondition = trigger.getActionCondition();
         final String actionStatement = trigger.getActionStatement();
         out.println(formattingHelper.createEmptyRow());
