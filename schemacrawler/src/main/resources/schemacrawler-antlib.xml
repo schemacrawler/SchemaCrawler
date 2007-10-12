@@ -175,7 +175,7 @@
       name="log-level"
       description="Log level - may be one of: OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL"
       default="SEVERE" />
-      
+
     <sequential>
 
       <!-- Required properties: -->
