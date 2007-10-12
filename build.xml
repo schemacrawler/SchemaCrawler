@@ -179,10 +179,15 @@
         dir="${schemacrawler-maven-plugin.classes}"/>
     </jar>
 
-    <!-- Copy config file -->
+    <!-- Copy config files -->
     <copy todir="${distribution.dir}">
       <fileset dir="${SchemaCrawlerHome}/schemacrawler/src/site/resources/config">
         <include name="*.properties"/>
+      </fileset>
+    </copy>
+    <copy todir="${distribution.dir}">
+      <fileset dir="${SchemaCrawlerHome}/integrations/src/test/resources">
+        <include name="*.xml"/>
       </fileset>
     </copy>
 

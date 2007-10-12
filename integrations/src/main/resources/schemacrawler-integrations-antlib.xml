@@ -4,28 +4,38 @@
   <macrodef name="schemacrawler-velocity">
 
     <!-- Attributes -->
-    <attribute name="config" default="schemacrawler.config.properties"/>
-    <attribute name="config-override" default="schemacrawler.config.override.properties"/>
+    <attribute
+      name="config"
+      default="schemacrawler.config.properties" />
+    <attribute
+      name="config-override"
+      default="schemacrawler.config.override.properties" />
 
-    <attribute name="datasource"/>
-    <attribute name="db-driver-classpath" default="${db-driver-classpath}"/>
+    <attribute name="datasource" />
+    <attribute
+      name="db-driver-classpath"
+      default="${db-driver-classpath}" />
 
-    <attribute name="velocity-classpath" default="${velocity-classpath}"/>
+    <attribute
+      name="velocity-classpath"
+      default="${velocity-classpath}" />
 
-    <attribute name="command"/>
+    <attribute name="command" />
 
-    <attribute name="template"/>
-    <attribute name="outputfile"/>
+    <attribute name="template" />
+    <attribute name="outputfile" />
 
     <attribute
       name="log-level"
       description="Log level - may be one of: OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL"
       default="SEVERE" />
-      
+
     <sequential>
 
       <!-- Required properties: -->
-      <property name="schemacrawler.dir" value="${basedir}"/>
+      <property
+        name="schemacrawler.dir"
+        value="${basedir}" />
 
       <java
         taskname="schemacrawler-velocity"
@@ -34,24 +44,24 @@
         failonerror="true">
         <classpath>
           <fileset dir="${schemacrawler.dir}">
-            <include name="*.jar"/>
+            <include name="*.jar" />
           </fileset>
-          <path refid="@{db-driver-classpath}"/>
-		  <path refid="@{velocity-classpath}"/>
+          <path refid="@{db-driver-classpath}" />
+          <path refid="@{velocity-classpath}" />
         </classpath>
-        <arg value="-g"/>
-        <arg value="@{config}"/>
-        <arg value="-p"/>
-        <arg value="@{config-override}"/>
-        <arg value="-c"/>
-        <arg value="@{datasource}"/>
-        <arg value="-command"/>
-        <arg value="@{command}"/>
-        <arg value="-outputformat"/>
-        <arg value="@{template}"/>
-        <arg value="-outputfile"/>
-        <arg value="@{outputfile}"/>   
-        <arg value="-log-level=@{log-level}" />           
+        <arg value="-g" />
+        <arg value="@{config}" />
+        <arg value="-p" />
+        <arg value="@{config-override}" />
+        <arg value="-c" />
+        <arg value="@{datasource}" />
+        <arg value="-command" />
+        <arg value="@{command}" />
+        <arg value="-outputformat" />
+        <arg value="@{template}" />
+        <arg value="-outputfile" />
+        <arg value="@{outputfile}" />
+        <arg value="-log-level=@{log-level}" />
       </java>
     </sequential>
 
@@ -60,28 +70,38 @@
   <macrodef name="schemacrawler-graphing">
 
     <!-- Attributes -->
-    <attribute name="config" default="schemacrawler.config.properties"/>
-    <attribute name="config-override" default="schemacrawler.config.override.properties"/>
+    <attribute
+      name="config"
+      default="schemacrawler.config.properties" />
+    <attribute
+      name="config-override"
+      default="schemacrawler.config.override.properties" />
 
-    <attribute name="datasource"/>
-    <attribute name="db-driver-classpath" default="${db-driver-classpath}"/>
+    <attribute name="datasource" />
+    <attribute
+      name="db-driver-classpath"
+      default="${db-driver-classpath}" />
 
-    <attribute name="graphing-classpath" default="${graphing-classpath}"/>
+    <attribute
+      name="graphing-classpath"
+      default="${graphing-classpath}" />
 
-    <attribute name="command"/>
+    <attribute name="command" />
 
-    <attribute name="graph-size"/>
-    <attribute name="outputfile"/>
+    <attribute name="graph-size" />
+    <attribute name="outputfile" />
 
     <attribute
       name="log-level"
       description="Log level - may be one of: OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL"
       default="SEVERE" />
-      
+
     <sequential>
 
       <!-- Required properties: -->
-      <property name="schemacrawler.dir" value="${basedir}"/>
+      <property
+        name="schemacrawler.dir"
+        value="${basedir}" />
 
       <java
         taskname="schemacrawler-graphing"
@@ -90,27 +110,84 @@
         failonerror="true">
         <classpath>
           <fileset dir="${schemacrawler.dir}">
-            <include name="*.jar"/>
+            <include name="*.jar" />
           </fileset>
-          <path refid="@{db-driver-classpath}"/>
-		  <path refid="@{graphing-classpath}"/>
+          <path refid="@{db-driver-classpath}" />
+          <path refid="@{graphing-classpath}" />
         </classpath>
-        <arg value="-g"/>
-        <arg value="@{config}"/>
-        <arg value="-p"/>
-        <arg value="@{config-override}"/>
-        <arg value="-c"/>
-        <arg value="@{datasource}"/>
-        <arg value="-command"/>
-        <arg value="@{command}"/>
-        <arg value="-outputformat"/>
-        <arg value="@{graph-size}"/>
-        <arg value="-outputfile"/>
-        <arg value="@{outputfile}"/>  
-        <arg value="-log-level=@{log-level}" />            
+        <arg value="-g" />
+        <arg value="@{config}" />
+        <arg value="-p" />
+        <arg value="@{config-override}" />
+        <arg value="-c" />
+        <arg value="@{datasource}" />
+        <arg value="-command" />
+        <arg value="@{command}" />
+        <arg value="-outputformat" />
+        <arg value="@{graph-size}" />
+        <arg value="-outputfile" />
+        <arg value="@{outputfile}" />
+        <arg value="-log-level=@{log-level}" />
       </java>
     </sequential>
 
   </macrodef>
-  
+
+  <macrodef name="schemacrawler-spring">
+
+    <!-- Attributes -->
+    <attribute
+      name="context-file"
+      default="schemacrawler.context.xml" />
+    <attribute
+      name="executable"
+      default="executable" />
+    <attribute
+      name="datasource"
+      default="datasource" />
+
+    <attribute
+      name="db-driver-classpath"
+      default="${db-driver-classpath}" />
+
+    <attribute
+      name="spring-classpath"
+      default="${spring-classpath}" />
+      
+    <attribute
+      name="log-level"
+      description="Log level - may be one of: OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL"
+      default="SEVERE" />
+
+    <sequential>
+
+      <!-- Required properties: -->
+      <property
+        name="schemacrawler.dir"
+        value="${basedir}" />
+
+      <java
+        taskname="schemacrawler-spring"
+        classname="schemacrawler.tools.integration.spring.Main"
+        logerror="true"
+        failonerror="true">
+        <classpath>
+          <fileset dir="${schemacrawler.dir}">
+            <include name="*.jar" />
+          </fileset>
+          <path refid="@{db-driver-classpath}" />
+          <path refid="@{spring-classpath}" />
+        </classpath>
+        <arg value="-context-file" />
+        <arg value="@{context-file}" />
+        <arg value="-executable" />
+        <arg value="@{executable}" />
+        <arg value="-datasource" />
+        <arg value="@{datasource}" />        
+        <arg value="-log-level=@{log-level}" />
+      </java>
+    </sequential>
+
+  </macrodef>
+
 </antlib>
