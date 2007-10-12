@@ -49,7 +49,7 @@ public class SpringIntegrationTest
   private ApplicationContext appContext;
 
   @Before
-  public void setupDatabase()
+  public void setup()
   {
     appContext = new ClassPathXmlApplicationContext("context.xml");
   }
