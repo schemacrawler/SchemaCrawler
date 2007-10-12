@@ -49,7 +49,7 @@ public final class Main
 
     try
     {
-      SpringOptions springOptions = new SpringOptionsParser(args).getValue();
+      final SpringOptions springOptions = new SpringOptionsParser(args).getValue();
       final ApplicationContext appContext = new FileSystemXmlApplicationContext(springOptions
         .getContextFileName());
       final Executable<?> executable = (Executable<?>) appContext

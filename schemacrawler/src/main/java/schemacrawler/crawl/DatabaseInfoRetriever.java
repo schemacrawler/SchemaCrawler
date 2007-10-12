@@ -333,7 +333,7 @@ final class DatabaseInfoRetriever
   private boolean isDatabasePropertyMethod(final Method method)
   {
     final Class<?> returnType = method.getReturnType();
-    boolean notPropertyMethod = returnType.equals(ResultSet.class)
+    final boolean notPropertyMethod = returnType.equals(ResultSet.class)
                                 || returnType.equals(Connection.class)
                                 || method.getParameterTypes().length > 0;
     return !notPropertyMethod;

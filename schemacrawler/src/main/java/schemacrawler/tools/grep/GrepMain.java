@@ -20,9 +20,6 @@
 
 package schemacrawler.tools.grep;
 
-
-import java.util.logging.Logger;
-
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import dbconnector.dbconnector.DatabaseConnector;
@@ -32,9 +29,6 @@ import dbconnector.dbconnector.DatabaseConnector;
  */
 public final class GrepMain
 {
-
-  private static final Logger LOGGER = Logger.getLogger(GrepMain.class
-    .getName());
 
   /**
    * Executes with the command line, and a given executor. The executor
@@ -51,17 +45,14 @@ public final class GrepMain
    * @throws Exception
    *         On an exception
    */
-  public static void grep(final GrepCommandLine commandLine,
-                          final DatabaseConnector dataSourceParser)
-    throws Exception
+  public static void grep(final GrepCommandLine commandLine, final DatabaseConnector dataSourceParser) throws Exception
   {
     final GrepOptions grepOptions = commandLine.getGrepOptions();
     grepOptions.setOutputOptions(commandLine.getOutputOptions());
     grepOptions.setSchemaTextDetailType(SchemaTextDetailType.verbose_schema);
 
     final GrepExecutable grepExecutable = new GrepExecutable();
-    grepExecutable.setSchemaCrawlerOptions(new SchemaCrawlerOptions(commandLine
-      .getConfig()));
+    grepExecutable.setSchemaCrawlerOptions(new SchemaCrawlerOptions(commandLine.getConfig()));
     grepExecutable.setToolOptions(grepOptions);
     grepExecutable.execute(dataSourceParser.createDataSource());
   }
