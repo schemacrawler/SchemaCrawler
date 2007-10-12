@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<project
+  name="Spring Integration"
+  default="spring">
+
+  <description>
+    SchemaCrawler integration with the Spring Framework.
+  </description>
+  <property environment="env" />
+
+  <!-- Step 1.
+    Define the ant tasks (macros) that come with SchemaCrawler
+  -->
+  <typedef
+    resource="schemacrawler-integrations-antlib.xml"
+    classpath="../../schemacrawler-5.2.jar" />
+
+  <!-- Step 2.
+    Define the classpath to the database driver
+  -->
+  <path id="db-driver-classpath">
+    <fileset dir="../..">
+      <include name="*.jar" />
+    </fileset>
+  </path>
+
+  <!-- Step 3.
+    Define the classpath to Spring Integration
+  -->
+  <path id="spring-classpath">
+    <fileset dir=".">
+      <include name="*.jar" />
+    </fileset>
+  </path>
+
+  <!-- Step 4.
+    Get Spring and dependencies
+  -->
+  <get
+    src="http://ibiblio.org/pub/packages/maven2/org/springframework/spring/2.0.7/spring-2.0.7.jar"
+    dest="spring-2.0.7.jar"
+    verbose="true"
+    usetimestamp="true" />
+
+  <!-- Step 5.
+    Define an ant task that uses the <schemacrawler-spring> macro
+  -->
+  <target name="spring">
+
+    <schemacrawler-spring
+      db-driver-classpath="db-driver-classpath"
+      spring-classpath="spring-classpath"    
+      context-file="context.xml"
+      executable="executableForSchema"
+      datasource="${datasource}" />
+
+  </target>
+
+</project>
