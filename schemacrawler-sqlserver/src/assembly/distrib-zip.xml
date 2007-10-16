@@ -28,6 +28,12 @@
       <outputDirectory></outputDirectory>
       <includes>
         <include>sqlserver.*</include>
+      </includes>
+     </fileSet>
+    <fileSet>
+      <directory>src/assembly</directory>
+      <outputDirectory></outputDirectory>
+      <includes>
         <include>*.exe</include>
         <include>*.sh</include>
       </includes>
