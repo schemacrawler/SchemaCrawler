@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
+import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.tools.Executable;
 import dbconnector.Version;
 import dbconnector.dbconnector.DatabaseConnector;
@@ -59,13 +60,12 @@ public final class SchemaCrawlerMain
                                    final DatabaseConnector dataSourceParser)
     throws Exception
   {
-
+    LOGGER.log(Level.CONFIG, Version.about());
+    LOGGER.log(Level.CONFIG, "Commandline: " + commandLine);
     final List<Executable<?>> executables = ExecutableFactory
       .createExecutables(commandLine);
     if (executables.size() > 0)
     {
-      LOGGER.log(Level.CONFIG, Version.about());
-      LOGGER.log(Level.CONFIG, "Commandline: " + commandLine);
       for (final Executable<?> executable: executables)
       {
         LOGGER.log(Level.CONFIG, executable.toString());
@@ -73,6 +73,11 @@ public final class SchemaCrawlerMain
         executable.execute(dataSource);
       }
     }
+    else
+    {
+      throw new SchemaCrawlerException("No commands specified");
+    }
+
   }
 
   private SchemaCrawlerMain()
