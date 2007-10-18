@@ -54,9 +54,9 @@ final class TableRetriever
   private static final Logger LOGGER = Logger.getLogger(TableRetriever.class
     .getName());
 
-  private static void createIndices(final ResultSet results,
-                                    final MutableTable table,
-                                    final Map<String, MutableIndex> indicesMap)
+  private void createIndices(final ResultSet results,
+                             final MutableTable table,
+                             final Map<String, MutableIndex> indicesMap)
     throws SQLException
   {
     try
@@ -80,11 +80,11 @@ final class TableRetriever
           continue;
         }
         final boolean uniqueIndex = !results.getBoolean("NON_UNIQUE");
-        final int type = results.getInt("TYPE");
-        final int ordinalPosition = results.getInt(ORDINAL_POSITION);
+        final int type = readInt(results, "TYPE", IndexType.unknown.getId());
+        final int ordinalPosition = readInt(results, ORDINAL_POSITION, 0);
         final String sortSequence = results.getString("ASC_OR_DESC");
-        final int cardinality = results.getInt("CARDINALITY");
-        final int pages = results.getInt("PAGES");
+        final int cardinality = readInt(results, "CARDINALITY", 0);
+        final int pages = readInt(results, "PAGES", 0);
 
         final MutableColumn column = (MutableColumn) table
           .lookupColumn(columnName);
@@ -167,12 +167,14 @@ final class TableRetriever
             && table.getName().equals(tableName))
         {
           LOGGER.log(Level.FINEST, "Retrieving column: " + columnName);
-          final int ordinalPosition = results.getInt(ORDINAL_POSITION);
-          final int dataType = results.getInt(DATA_TYPE);
+          final int ordinalPosition = readInt(results, ORDINAL_POSITION, 0);
+          final int dataType = readInt(results, DATA_TYPE, 0);
           final String typeName = results.getString(TYPE_NAME);
-          final int size = results.getInt("COLUMN_SIZE");
-          final int decimalDigits = results.getInt("DECIMAL_DIGITS");
-          final boolean isNullable = results.getInt(NULLABLE) == DatabaseMetaData.columnNullable;
+          final int size = readInt(results, "COLUMN_SIZE", 0);
+          final int decimalDigits = readInt(results, "DECIMAL_DIGITS", 0);
+          final boolean isNullable = readInt(results,
+                                            NULLABLE,
+                                            DatabaseMetaData.columnNullableUnknown) == DatabaseMetaData.columnNullable;
           final String remarks = results.getString(REMARKS);
 
           column.setOrdinalPosition(ordinalPosition);
@@ -429,10 +431,17 @@ final class TableRetriever
         final String pkColumnName = results.getString("PKCOLUMN_NAME");
         final String fkTableName = results.getString("FKTABLE_NAME");
         final String fkColumnName = results.getString("FKCOLUMN_NAME");
-        final int keySequence = results.getInt(KEY_SEQ);
-        final int updateRule = results.getInt("UPDATE_RULE");
-        final int deleteRule = results.getInt("DELETE_RULE");
-        final int deferrability = results.getInt("DEFERRABILITY");
+        int keySequence = readInt(results, KEY_SEQ, 0);
+        final int updateRule = readInt(results,
+                                      "UPDATE_RULE",
+                                      ForeignKeyUpdateRule.unknown.getId());
+        final int deleteRule = readInt(results,
+                                      "DELETE_RULE",
+                                      ForeignKeyUpdateRule.unknown.getId());
+        final int deferrability = readInt(results,
+                                         "DEFERRABILITY",
+                                         ForeignKeyDeferrability.unknown
+                                           .getId());
         final MutableColumn pkColumn = lookupOrCreateColumn(tables,
                                                             pkTableSchema,
                                                             pkTableName,

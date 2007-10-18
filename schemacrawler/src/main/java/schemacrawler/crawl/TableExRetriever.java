@@ -327,7 +327,7 @@ final class TableExRetriever
           continue;
         }
 
-        final int actionOrder = results.getInt("ACTION_ORDER");
+        final int actionOrder = readInt(results, "ACTION_ORDER", 0);
         final String actionCondition = results.getString("ACTION_CONDITION");
         final String actionStatement = results.getString("ACTION_STATEMENT");
         final ActionOrientationType actionOrientation = ActionOrientationType
