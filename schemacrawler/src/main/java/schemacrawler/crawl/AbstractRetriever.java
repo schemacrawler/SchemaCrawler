@@ -21,7 +21,10 @@
 package schemacrawler.crawl;
 
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.schema.DatabaseObject;
 import sf.util.Utilities;
@@ -36,6 +39,7 @@ abstract class AbstractRetriever
 {
 
   protected static final String COLUMN_NAME = "COLUMN_NAME";
+
   protected static final String DATA_TYPE = "DATA_TYPE";
   protected static final String KEY_SEQ = "KEY_SEQ";
   protected static final String NULLABLE = "NULLABLE";
@@ -43,9 +47,11 @@ abstract class AbstractRetriever
   protected static final String REMARKS = "REMARKS";
   protected static final String TABLE_NAME = "TABLE_NAME";
   protected static final String TYPE_NAME = "TYPE_NAME";
-
   protected static final String UNKNOWN = "<unknown>";
+
   protected static final int FETCHSIZE = 5;
+  private static final Logger LOGGER = Logger.getLogger(AbstractRetriever.class
+    .getName());
 
   private final RetrieverConnection retrieverConnection;
 
@@ -96,6 +102,112 @@ abstract class AbstractRetriever
   protected RetrieverConnection getRetrieverConnection()
   {
     return retrieverConnection;
+  }
+
+  /**
+   * Reads the value of a column from the result set as an integer. If
+   * the value was null, returns the default.
+   * 
+   * @param results
+   *        Result set
+   * @param columnName
+   *        Column name
+   * @return Integer value of the column, or the default if not
+   *         available
+   */
+  protected int readInt(final ResultSet results,
+                        final String columnName,
+                        final int defaultValue)
+  {
+    int value = defaultValue;
+    if (results != null && !Utilities.isBlank(columnName))
+    {
+      try
+      {
+        value = results.getInt(columnName);
+        if (results.wasNull())
+        {
+          value = defaultValue;
+        }
+        return value;
+      }
+      catch (final SQLException e)
+      {
+        LOGGER.log(Level.FINE, "Could not read integer value for column "
+                               + columnName);
+      }
+    }
+    return value;
+  }
+
+  /**
+   * Reads the value of a column from the result set as a long. If the
+   * value was null, returns the default.
+   * 
+   * @param results
+   *        Result set
+   * @param columnName
+   *        Column name
+   * @return Long value of the column, or the default if not available
+   */
+  protected long readLong(final ResultSet results,
+                          final String columnName,
+                          final long defaultValue)
+  {
+    long value = defaultValue;
+    if (results != null && !Utilities.isBlank(columnName))
+    {
+      try
+      {
+        value = results.getLong(columnName);
+        if (results.wasNull())
+        {
+          value = defaultValue;
+        }
+        return value;
+      }
+      catch (final SQLException e)
+      {
+        LOGGER.log(Level.FINE, "Could not read long value for column "
+                               + columnName);
+      }
+    }
+    return value;
+  }
+
+  /**
+   * Reads the value of a column from the result set as a short. If the
+   * value was null, returns the default.
+   * 
+   * @param results
+   *        Result set
+   * @param columnName
+   *        Column name
+   * @return Short value of the column, or the default if not available
+   */
+  protected short readShort(final ResultSet results,
+                            final String columnName,
+                            final short defaultValue)
+  {
+    short value = defaultValue;
+    if (results != null && !Utilities.isBlank(columnName))
+    {
+      try
+      {
+        value = results.getShort(columnName);
+        if (results.wasNull())
+        {
+          value = defaultValue;
+        }
+        return value;
+      }
+      catch (final SQLException e)
+      {
+        LOGGER.log(Level.FINE, "Could not read short value for column "
+                               + columnName);
+      }
+    }
+    return value;
   }
 
 }

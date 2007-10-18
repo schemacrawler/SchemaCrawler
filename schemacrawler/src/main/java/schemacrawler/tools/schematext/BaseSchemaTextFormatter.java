@@ -36,6 +36,7 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
+import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Procedure;
@@ -503,7 +504,31 @@ public abstract class BaseSchemaTextFormatter
       if (foreignKey != null)
       {
         final String name = foreignKey.getName();
-        final String updateRule = foreignKey.getUpdateRule().toString();
+
+        String updateRuleString = "";
+        final ForeignKeyUpdateRule updateRule = foreignKey.getUpdateRule();
+        if (updateRule != null && updateRule != ForeignKeyUpdateRule.unknown)
+        {
+          updateRuleString = ", on update " + updateRule.toString();
+        }
+
+        String deleteRuleString = "";
+        final ForeignKeyUpdateRule deleteRule = foreignKey.getDeleteRule();
+        if (deleteRule != null && deleteRule != ForeignKeyUpdateRule.unknown)
+        {
+          deleteRuleString = ", on delete " + deleteRule.toString();
+        }
+
+        String ruleString = "";
+        if (updateRule == deleteRule)
+        {
+          ruleString = ", with " + deleteRule.toString();
+        }
+        else
+        {
+          ruleString = updateRuleString + deleteRuleString;
+        }
+
         out.println(formattingHelper.createEmptyRow());
 
         String fkName = "";
@@ -511,8 +536,7 @@ public abstract class BaseSchemaTextFormatter
         {
           fkName = name;
         }
-        final String fkDetails = "[foreign key" + ", on update " + updateRule
-                                 + "]";
+        final String fkDetails = "[foreign key" + ruleString + "]";
         out.println(formattingHelper.createNameRow(fkName, fkDetails));
         final ForeignKeyColumnMap[] columnPairs = foreignKey.getColumnPairs();
         printColumnPairs(tableName, columnPairs);
