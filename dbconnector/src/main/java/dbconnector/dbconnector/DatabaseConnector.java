@@ -22,4 +22,11 @@ public interface DatabaseConnector
   DataSource createDataSource()
     throws DatabaseConnectorException;
 
+  /**
+   * Gets the name of the datasource.
+   * 
+   * @return Datasource name.
+   */
+  String getDataSourceName();
+
 }

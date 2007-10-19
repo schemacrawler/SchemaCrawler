@@ -30,7 +30,6 @@ import javax.sql.DataSource;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.tools.Executable;
 import dbconnector.Version;
-import dbconnector.dbconnector.DatabaseConnector;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -47,17 +46,12 @@ public final class SchemaCrawlerMain
    * execution. The execution can integrate with other software, such as
    * Velocity.
    * 
-   * @param args
+   * @param commandLine
    *        Command line arguments
-   * @param config
-   *        Configuration
-   * @param dataSourceParser
-   *        Datasource parser
    * @throws Exception
    *         On an exception
    */
-  public static void schemacrawler(final SchemaCrawlerCommandLine commandLine,
-                                   final DatabaseConnector dataSourceParser)
+  public static void schemacrawler(final SchemaCrawlerCommandLine commandLine)
     throws Exception
   {
     LOGGER.log(Level.CONFIG, Version.about());
@@ -69,7 +63,7 @@ public final class SchemaCrawlerMain
       for (final Executable<?> executable: executables)
       {
         LOGGER.log(Level.CONFIG, executable.toString());
-        final DataSource dataSource = dataSourceParser.createDataSource();
+        final DataSource dataSource = commandLine.createDataSource();
         executable.execute(dataSource);
       }
     }

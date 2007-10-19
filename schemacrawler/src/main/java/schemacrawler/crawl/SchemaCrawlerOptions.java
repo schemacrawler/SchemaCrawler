@@ -104,6 +104,19 @@ public final class SchemaCrawlerOptions
    */
   public SchemaCrawlerOptions(final Config config)
   {
+    this(config, null);
+  }
+
+  /**
+   * Options from properties.
+   * 
+   * @param config
+   *        Configuration properties
+   * @param partition
+   *        Partition for information schema
+   */
+  public SchemaCrawlerOptions(final Config config, final String partition)
+  {
 
     final String tableTypesString = config.getStringValue(SC_TABLE_TYPES,
                                                           DEFAULT_TABLE_TYPES);
@@ -111,7 +124,8 @@ public final class SchemaCrawlerOptions
 
     showStoredProcedures = config.getBooleanValue(SC_SHOW_STORED_PROCEDURES);
 
-    informationSchemaViews = new InformationSchemaViews(config);
+    informationSchemaViews = new InformationSchemaViews(config
+      .partition(partition));
 
     tableInclusionRule = new InclusionRule(config
                                              .getStringValue(SC_TABLE_PATTERN_INCLUDE,

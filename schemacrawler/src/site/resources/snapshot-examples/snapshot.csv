@@ -352,7 +352,7 @@ CUSTOMER,[table]
 SYS_PK_48,[primary key]
 ,ID,"INTEGER, not null"
 
-FK_INVOICE_CUSTOMER,"[foreign key, on update no action]"
+FK_INVOICE_CUSTOMER,"[foreign key, with no action]"
 ,ID --> INVOICE.CUSTOMERID,""
 
 DELETE,[grantable privilege]
@@ -402,10 +402,10 @@ INVOICE,[table]
 SYS_PK_49,[primary key]
 ,ID,"INTEGER, not null"
 
-FK_INVOICE_CUSTOMER,"[foreign key, on update no action]"
+FK_INVOICE_CUSTOMER,"[foreign key, with no action]"
 ,CUSTOMER.ID --> CUSTOMERID,""
 
-FK_B_ITEM_INVOICE,"[foreign key, on update no action]"
+FK_B_ITEM_INVOICE,"[foreign key, with no action]"
 ,ID --> ITEM.INVOICEID,""
 
 INDEX_INVOICE_CUSTOMER,[non-unique ascending other index]
@@ -439,10 +439,10 @@ SYS_PK_46,[primary key]
 ,INVOICEID,"INTEGER, not null"
 ,ITEM,"INTEGER, not null"
 
-FK_B_ITEM_INVOICE,"[foreign key, on update no action]"
+FK_B_ITEM_INVOICE,"[foreign key, with no action]"
 ,INVOICE.ID --> INVOICEID,""
 
-FK_A_ITEM_PRODUCT,"[foreign key, on update no action]"
+FK_A_ITEM_PRODUCT,"[foreign key, with no action]"
 ,PRODUCT.ID --> PRODUCTID,""
 
 INDEX_ITEM_INVOICE,[non-unique ascending other index]
@@ -479,7 +479,7 @@ PRODUCT,[table]
 SYS_PK_47,[primary key]
 ,ID,"INTEGER, not null"
 
-FK_A_ITEM_PRODUCT,"[foreign key, on update no action]"
+FK_A_ITEM_PRODUCT,"[foreign key, with no action]"
 ,ID --> ITEM.PRODUCTID,""
 
 DELETE,[grantable privilege]

@@ -24,9 +24,6 @@ package schemacrawler;
 import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.main.SchemaCrawlerMain;
 import sf.util.CommandLineUtility;
-import sf.util.Config;
-import dbconnector.dbconnector.DatabaseConnector;
-import dbconnector.dbconnector.DatabaseConnectorFactory;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -50,12 +47,7 @@ public final class Main
     CommandLineUtility.setLogLevel(args);
 
     final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args);
-
-    final Config config = commandLine.getConfig();
-    final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
-      .createPropertiesDriverDataSourceParser(args, config);
-
-    SchemaCrawlerMain.schemacrawler(commandLine, dataSourceParser);
+    SchemaCrawlerMain.schemacrawler(commandLine);
   }
 
   private Main()
