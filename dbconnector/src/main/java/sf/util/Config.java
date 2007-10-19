@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -227,6 +228,37 @@ public class Config
       properties.setProperty(entry.getKey(), entry.getValue());
     }
     return properties;
+  }
+
+  /**
+   * Gets a sub-group of properties - those that start with a given
+   * prefix. The prefix is removed in the result.
+   * 
+   * @param prefix
+   *        Prefix to group by.
+   * @return Partitioned properties.
+   */
+  public Config partition(final String prefix)
+  {
+    if (prefix == null || prefix.length() == 0)
+    {
+      return this;
+    }
+
+    final String dottedPrefix = prefix + ".";
+    final Config partition = new Config();
+
+    final Set<String> keys = keySet();
+    for (final String key: keys)
+    {
+      if (key.startsWith(dottedPrefix))
+      {
+        final String unprefixed = key.substring(dottedPrefix.length());
+        partition.put(unprefixed, get(key));
+      }
+    }
+
+    return partition;
   }
 
 }

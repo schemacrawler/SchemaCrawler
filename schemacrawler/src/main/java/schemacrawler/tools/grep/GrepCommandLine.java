@@ -1,6 +1,7 @@
 package schemacrawler.tools.grep;
 
 
+import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.main.SchemaCrawlerCommandLine;
 
 /**
@@ -19,8 +20,10 @@ public class GrepCommandLine
    * 
    * @param args
    *        Command line arguments.
+   * @throws SchemaCrawlerException
    */
   public GrepCommandLine(final String[] args)
+    throws SchemaCrawlerException
   {
     this(args, null);
   }
@@ -33,8 +36,10 @@ public class GrepCommandLine
    *        Command line arguments.
    * @param configResource
    *        Config resource.
+   * @throws SchemaCrawlerException
    */
   public GrepCommandLine(final String[] args, final String configResource)
+    throws SchemaCrawlerException
   {
     super(args, configResource);
 

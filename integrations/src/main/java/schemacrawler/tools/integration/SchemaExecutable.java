@@ -29,8 +29,6 @@ import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextOptions;
 import sf.util.CommandLineUtility;
 import sf.util.Config;
-import dbconnector.dbconnector.DatabaseConnector;
-import dbconnector.dbconnector.DatabaseConnectorFactory;
 
 /**
  * An executor that uses a template renderer to render a schema.
@@ -60,10 +58,9 @@ public abstract class SchemaExecutable
 
     final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args);
     final Config config = commandLine.getConfig();
-    final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
-      .createPropertiesDriverDataSourceParser(args, config);
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config,
+                                                                               commandLine
+                                                                                 .getPartition());
     final OutputOptions outputOptions = commandLine.getOutputOptions();
 
     final Command[] commands = commandLine.getCommands();
@@ -76,7 +73,7 @@ public abstract class SchemaExecutable
 
     setSchemaCrawlerOptions(schemaCrawlerOptions);
     setToolOptions(schemaTextOptions);
-    execute(dataSourceParser.createDataSource());
+    execute(commandLine.createDataSource());
   }
 
 }

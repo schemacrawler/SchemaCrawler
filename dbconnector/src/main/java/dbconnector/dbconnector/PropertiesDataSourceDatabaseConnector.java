@@ -21,6 +21,8 @@
 package dbconnector.dbconnector;
 
 
+import javax.sql.DataSource;
+
 import sf.util.CommandLineParser;
 import sf.util.Config;
 import sf.util.Utilities;
@@ -35,7 +37,7 @@ import dbconnector.datasource.PropertiesDataSource;
  * 
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
-final class PropertiesDataSourceDatabaseConnector
+public final class PropertiesDataSourceDatabaseConnector
   implements DatabaseConnector
 {
 
@@ -47,8 +49,7 @@ final class PropertiesDataSourceDatabaseConnector
   private static final String OPTION_CONNECTION = "connection";
   private static final String OPTION_DEFAULT = "default";
 
-  private boolean useDefaultConnection;
-  private String connectionName;
+  private String dataSourceName;
   private final Config config;
 
   private final String driver;
@@ -63,20 +64,19 @@ final class PropertiesDataSourceDatabaseConnector
    * 
    * @param args
    *        List of arguments.
-   * @param properties
+   * @param config
    *        Connection properties
    * @throws DatabaseConnectorException
    *         on an exception
    */
-  PropertiesDataSourceDatabaseConnector(final String[] args, final Config config)
+  public PropertiesDataSourceDatabaseConnector(final String[] args,
+                                               final Config config)
     throws DatabaseConnectorException
   {
     this.config = config;
 
     final CommandLineParser parser = createCommandLineParser();
     parser.parse(args);
-
-    useDefaultConnection = parser.getBooleanOptionValue(OPTION_DEFAULT);
 
     // JDBC connection information
     driver = parser.getStringOptionValue(OPTION_DRIVER);
@@ -85,14 +85,14 @@ final class PropertiesDataSourceDatabaseConnector
     password = parser.getStringOptionValue(OPTION_PASSWORD);
     useJdbcConnection = !Utilities.isBlank(driver) && !Utilities.isBlank(url);
 
-    connectionName = parser.getStringOptionValue(OPTION_CONNECTION);
+    final boolean useDefaultConnection = parser.getBooleanOptionValue(OPTION_DEFAULT);
+    dataSourceName = parser.getStringOptionValue(OPTION_CONNECTION);
     // Use default connection if no connection is specified
-    useDefaultConnection = Utilities.isBlank(connectionName);
-
-    if (useDefaultConnection)
+    if (useDefaultConnection || Utilities.isBlank(dataSourceName))
     {
-      connectionName = null;
+      dataSourceName = this.config.get("defaultconnection");
     }
+
   }
 
   /**
@@ -100,7 +100,7 @@ final class PropertiesDataSourceDatabaseConnector
    * 
    * @see dbconnector.dbconnector.DatabaseConnector#createDataSource()
    */
-  public PropertiesDataSource createDataSource()
+  public DataSource createDataSource()
     throws DatabaseConnectorException
   {
     PropertiesDataSource dataSource = null;
@@ -111,9 +111,19 @@ final class PropertiesDataSourceDatabaseConnector
     else
     {
       dataSource = new PropertiesDataSource(config.toProperties(),
-                                            connectionName);
+                                            dataSourceName);
     }
     return dataSource;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see dbconnector.dbconnector.DatabaseConnector#getDataSourceName()
+   */
+  public String getDataSourceName()
+  {
+    return dataSourceName;
   }
 
   private CommandLineParser createCommandLineParser()

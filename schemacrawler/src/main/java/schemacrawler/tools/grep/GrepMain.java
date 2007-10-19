@@ -20,9 +20,9 @@
 
 package schemacrawler.tools.grep;
 
+
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
-import dbconnector.dbconnector.DatabaseConnector;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -36,25 +36,23 @@ public final class GrepMain
    * execution. The execution can integrate with other software, such as
    * Velocity.
    * 
-   * @param args
+   * @param commandLine
    *        Command line arguments
-   * @param config
-   *        Configuration
-   * @param dataSourceParser
-   *        Datasource parser
    * @throws Exception
    *         On an exception
    */
-  public static void grep(final GrepCommandLine commandLine, final DatabaseConnector dataSourceParser) throws Exception
+  public static void grep(final GrepCommandLine commandLine)
+    throws Exception
   {
     final GrepOptions grepOptions = commandLine.getGrepOptions();
     grepOptions.setOutputOptions(commandLine.getOutputOptions());
     grepOptions.setSchemaTextDetailType(SchemaTextDetailType.verbose_schema);
 
     final GrepExecutable grepExecutable = new GrepExecutable();
-    grepExecutable.setSchemaCrawlerOptions(new SchemaCrawlerOptions(commandLine.getConfig()));
+    grepExecutable.setSchemaCrawlerOptions(new SchemaCrawlerOptions(commandLine
+      .getConfig(), commandLine.getPartition()));
     grepExecutable.setToolOptions(grepOptions);
-    grepExecutable.execute(dataSourceParser.createDataSource());
+    grepExecutable.execute(commandLine.createDataSource());
   }
 
   private GrepMain()

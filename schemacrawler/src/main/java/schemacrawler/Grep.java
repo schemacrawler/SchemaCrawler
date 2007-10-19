@@ -24,9 +24,6 @@ package schemacrawler;
 import schemacrawler.tools.grep.GrepCommandLine;
 import schemacrawler.tools.grep.GrepMain;
 import sf.util.CommandLineUtility;
-import sf.util.Config;
-import dbconnector.dbconnector.DatabaseConnector;
-import dbconnector.dbconnector.DatabaseConnectorFactory;
 
 /**
  * Main class that takes arguments for grep-ping table and columns in a
@@ -51,12 +48,7 @@ public final class Grep
     CommandLineUtility.setLogLevel(args);
 
     final GrepCommandLine commandLine = new GrepCommandLine(args);
-
-    final Config config = commandLine.getConfig();
-    final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
-      .createPropertiesDriverDataSourceParser(args, config);
-
-    GrepMain.grep(commandLine, dataSourceParser);
+    GrepMain.grep(commandLine);
   }
 
   private Grep()

@@ -20,6 +20,8 @@
 package dbconnector.dbconnector;
 
 
+import javax.sql.DataSource;
+
 import sf.util.CommandLineParser;
 import sf.util.Config;
 import sf.util.CommandLineParser.Option;
@@ -29,7 +31,7 @@ import dbconnector.datasource.PropertiesDataSource;
 /**
  * Parses a command line, and create a data-source.
  */
-final class BundledDriverDatabaseConnector
+public final class BundledDriverDatabaseConnector
   implements DatabaseConnector
 {
 
@@ -40,6 +42,7 @@ final class BundledDriverDatabaseConnector
   private static final String OPTION_PASSWORD = "password";
 
   private final Config configResource;
+  private final String dataSourceName;
 
   /**
    * Creates the command line parser, and stored the .
@@ -50,8 +53,8 @@ final class BundledDriverDatabaseConnector
    *        Base resource
    * @throws DatabaseConnectorException
    */
-  BundledDriverDatabaseConnector(final String[] args,
-                                 final Config baseConfigResource)
+  public BundledDriverDatabaseConnector(final String[] args,
+                                        final Config baseConfigResource)
     throws DatabaseConnectorException
   {
     if (baseConfigResource == null)
@@ -69,20 +72,20 @@ final class BundledDriverDatabaseConnector
     final String user = parser.getStringOptionValue(OPTION_USER);
     final String password = parser.getStringOptionValue(OPTION_PASSWORD);
 
-    final String connectionName = configResource.get("defaultconnection");
+    dataSourceName = configResource.get("defaultconnection");
     if (user != null && password != null)
     {
       if (host != null)
       {
-        configResource.put(connectionName + ".host", host);
+        configResource.put(dataSourceName + ".host", host);
       }
       if (port != null)
       {
-        configResource.put(connectionName + ".port", port);
+        configResource.put(dataSourceName + ".port", port);
       }
-      configResource.put(connectionName + ".database", database);
-      configResource.put(connectionName + ".user", user);
-      configResource.put(connectionName + ".password", password);
+      configResource.put(dataSourceName + ".database", database);
+      configResource.put(dataSourceName + ".user", user);
+      configResource.put(dataSourceName + ".password", password);
     }
   }
 
@@ -91,10 +94,20 @@ final class BundledDriverDatabaseConnector
    * 
    * @see dbconnector.dbconnector.DatabaseConnector#createDataSource()
    */
-  public PropertiesDataSource createDataSource()
+  public DataSource createDataSource()
     throws DatabaseConnectorException
   {
     return new PropertiesDataSource(configResource.toProperties());
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see dbconnector.dbconnector.DatabaseConnector#getDataSourceName()
+   */
+  public String getDataSourceName()
+  {
+    return dataSourceName;
   }
 
   private CommandLineParser createCommandLineParser()

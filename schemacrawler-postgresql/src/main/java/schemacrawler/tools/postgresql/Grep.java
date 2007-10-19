@@ -23,9 +23,6 @@ package schemacrawler.tools.postgresql;
 import schemacrawler.tools.grep.GrepCommandLine;
 import schemacrawler.tools.grep.GrepMain;
 import sf.util.CommandLineUtility;
-import sf.util.Config;
-import dbconnector.dbconnector.DatabaseConnector;
-import dbconnector.dbconnector.DatabaseConnectorFactory;
 
 /**
  * Main class that takes arguments for grep-ping table and columns in a
@@ -51,12 +48,7 @@ public final class Grep
     {
       final GrepCommandLine commandLine = new GrepCommandLine(args,
                                                               "/schemacrawler.config.properties");
-
-      final Config config = commandLine.getConfig();
-      final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
-        .createBundledDriverDataSourceParser(args, config);
-
-      GrepMain.grep(commandLine, dataSourceParser);
+      GrepMain.grep(commandLine);
     }
     catch (final Exception e)
     {

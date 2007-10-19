@@ -26,8 +26,8 @@ import sf.util.CommandLineUtility;
 import sf.util.Config;
 import sf.util.CommandLineParser.StringOption;
 import dbconnector.dbconnector.DatabaseConnector;
-import dbconnector.dbconnector.DatabaseConnectorFactory;
 import dbconnector.dbconnector.DatabaseConnectorException;
+import dbconnector.dbconnector.PropertiesDataSourceDatabaseConnector;
 
 /**
  * Main class that reads a properties file for database connection
@@ -64,8 +64,8 @@ public final class Main
       .getStringOptionValue(OPTION_CONNECTIONSFILE);
     final Config config = Config.load(connectionsFileName);
 
-    final DatabaseConnector dataSourceParser = DatabaseConnectorFactory
-      .createPropertiesDriverDataSourceParser(args, config);
+    final DatabaseConnector dataSourceParser = new PropertiesDataSourceDatabaseConnector(args,
+                                                                                         config);
     if (dataSourceParser.createDataSource() == null)
     {
       System.exit(2);

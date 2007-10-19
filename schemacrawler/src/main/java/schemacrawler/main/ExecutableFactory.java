@@ -154,7 +154,9 @@ public final class ExecutableFactory
         default:
           throw new IllegalArgumentException("Could not find the tool type");
       }
-      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config,
+                                                                                 commandLine
+                                                                                   .getPartition());
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
       executables.add(executable);
