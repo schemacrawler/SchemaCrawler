@@ -10,7 +10,6 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -248,13 +247,13 @@ public class Config
     final String dottedPrefix = prefix + ".";
     final Config partition = new Config();
 
-    final Set<String> keys = keySet();
-    for (final String key: keys)
+    for (final Map.Entry<String, String> entry: entrySet())
     {
+      String key = entry.getKey();
       if (key.startsWith(dottedPrefix))
       {
         final String unprefixed = key.substring(dottedPrefix.length());
-        partition.put(unprefixed, get(key));
+        partition.put(unprefixed, entry.getValue());
       }
     }
 
