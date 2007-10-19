@@ -21,6 +21,7 @@ package sf.util;
 
 
 import java.util.Enumeration;
+import java.util.Locale;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
@@ -117,7 +118,8 @@ public class CommandLineUtility
     parser.parse(args);
 
     final String logLevelString = parser.getStringOptionValue(OPTION_LOG_LEVEL);
-    final Level logLevel = Level.parse(logLevelString.toUpperCase());
+    final Level logLevel = Level.parse(logLevelString
+      .toUpperCase(Locale.ENGLISH));
     setApplicationLogLevel(logLevel);
   }
 
