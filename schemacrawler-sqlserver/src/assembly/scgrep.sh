@@ -1,1 +1,1 @@
-java -classpath lib/dbconnector-5.2.jar:lib/jtds-1.2.jar:lib/schemacrawler-5.2.jar:lib/schemacrawler-sqlserver-5.2.jar schemacrawler.tools.sqlserver.Grep $*
+java -classpath lib/dbconnector-5.3.jar:lib/jtds-1.2.jar:lib/schemacrawler-5.3.jar:lib/schemacrawler-sqlserver-5.3.jar schemacrawler.tools.sqlserver.Grep $*
