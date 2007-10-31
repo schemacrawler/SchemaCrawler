@@ -45,6 +45,21 @@ public interface Column
   Privilege[] getPrivileges();
 
   /**
+   * Referenced column if this column is part of a foreign key, null
+   * otherwise.
+   * 
+   * @return Referenced column.
+   */
+  Column getReferencedColumn();
+
+  /**
+   * True if this column is part of a foreign key.
+   * 
+   * @return If the column is part of a foreign key.
+   */
+  boolean isPartOfForeignKey();
+
+  /**
    * True if this column is a part of primary key.
    * 
    * @return If the column is a part of primary key

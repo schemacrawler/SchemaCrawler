@@ -80,7 +80,7 @@ class MutableTable
    */
   public Column getColumn(final String name)
   {
-    return columns.lookup(name);
+    return lookupColumn(name);
   }
 
   /**
@@ -296,7 +296,7 @@ class MutableTable
    *        Column name
    * @return Column, if found, or null
    */
-  Column lookupColumn(final String columnName)
+  MutableColumn lookupColumn(final String columnName)
   {
     return columns.lookup(columnName);
   }

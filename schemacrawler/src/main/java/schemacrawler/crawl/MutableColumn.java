@@ -43,6 +43,7 @@ final class MutableColumn
   private String defaultValue;
   private boolean isPartOfPrimaryKey;
   private boolean isPartOfUniqueIndex;
+  private MutableColumn referencedColumn;
   private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>(NamedObjectSort.natural);
 
   MutableColumn(final String name, final NamedObject parent)
@@ -68,6 +69,26 @@ final class MutableColumn
   public Privilege[] getPrivileges()
   {
     return privileges.getAll().toArray(new Privilege[privileges.size()]);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Column#getReferencedColumn()
+   */
+  public Column getReferencedColumn()
+  {
+    return referencedColumn;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Column#isPartOfForeignKey()
+   */
+  public boolean isPartOfForeignKey()
+  {
+    return referencedColumn != null;
   }
 
   /**
@@ -132,6 +153,17 @@ final class MutableColumn
   void setPartOfUniqueIndex(final boolean partOfUniqueIndex)
   {
     isPartOfUniqueIndex = partOfUniqueIndex;
+  }
+
+  /**
+   * Set the referenced column.
+   * 
+   * @param referencedColumn
+   *        Referenced column.
+   */
+  void setReferencedColumn(final MutableColumn referencedColumn)
+  {
+    this.referencedColumn = referencedColumn;
   }
 
 }
