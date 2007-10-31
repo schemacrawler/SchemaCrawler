@@ -31,6 +31,13 @@ public interface Procedure
 {
 
   /**
+   * Gets a column by name.
+   * 
+   * @return Column of the procedure.
+   */
+  ProcedureColumn getColumn(String name);
+
+  /**
    * List of columns in ordinal order.
    * 
    * @return Columns of the procedure.

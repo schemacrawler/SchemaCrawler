@@ -35,20 +35,10 @@ import schemacrawler.schema.Table;
 public final class GrepSchemaCrawler
 {
 
-  /**
-   * Gets the entire schema.
-   * 
-   * @return Schema
-   */
-  public Schema getSchema()
-  {
-    return schema;
-  }
-
   private final Schema schema;
+
   private final GrepOptions grepOptions;
   private final CrawlHandler handler;
-
   /**
    * Constructs a SchemaCrawler object, from a connection.
    * 
@@ -114,6 +104,16 @@ public final class GrepSchemaCrawler
     // }
 
     handler.end();
+  }
+
+  /**
+   * Gets the entire schema.
+   * 
+   * @return Schema
+   */
+  public Schema getSchema()
+  {
+    return schema;
   }
 
   /**

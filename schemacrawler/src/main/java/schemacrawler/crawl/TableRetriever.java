@@ -54,59 +54,6 @@ final class TableRetriever
   private static final Logger LOGGER = Logger.getLogger(TableRetriever.class
     .getName());
 
-  private void createIndices(final ResultSet results,
-                             final MutableTable table,
-                             final Map<String, MutableIndex> indicesMap)
-    throws SQLException
-  {
-    try
-    {
-      while (results.next())
-      {
-        String indexName = results.getString("INDEX_NAME");
-        if (indexName == null || indexName.length() == 0)
-        {
-          indexName = UNKNOWN;
-        }
-        MutableIndex index = indicesMap.get(indexName);
-        if (index == null)
-        {
-          index = new MutableIndex(indexName, table);
-          indicesMap.put(indexName, index);
-        }
-        final String columnName = results.getString(COLUMN_NAME);
-        if (columnName == null || columnName.trim().length() == 0)
-        {
-          continue;
-        }
-        final boolean uniqueIndex = !results.getBoolean("NON_UNIQUE");
-        final int type = readInt(results, "TYPE", IndexType.unknown.getId());
-        final int ordinalPosition = readInt(results, ORDINAL_POSITION, 0);
-        final String sortSequence = results.getString("ASC_OR_DESC");
-        final int cardinality = readInt(results, "CARDINALITY", 0);
-        final int pages = readInt(results, "PAGES", 0);
-
-        final MutableColumn column = (MutableColumn) table
-          .lookupColumn(columnName);
-        if (column != null)
-        {
-          index.addColumn(ordinalPosition, column);
-          index.setUnique(uniqueIndex);
-          column.setPartOfUniqueIndex(uniqueIndex);
-          index.setType(IndexType.valueOf(type));
-          index
-            .setSortSequence(IndexSortSequence.valueOfFromCode(sortSequence));
-          index.setCardinality(cardinality);
-          index.setPages(pages);
-        }
-      }
-    }
-    finally
-    {
-      results.close();
-    }
-  }
-
   /**
    * Constructs a SchemaCrawler object, from a connection.
    * 
@@ -462,6 +409,59 @@ final class TableRetriever
       results.close();
     }
 
+  }
+
+  private void createIndices(final ResultSet results,
+                             final MutableTable table,
+                             final Map<String, MutableIndex> indicesMap)
+    throws SQLException
+  {
+    try
+    {
+      while (results.next())
+      {
+        String indexName = results.getString("INDEX_NAME");
+        if (indexName == null || indexName.length() == 0)
+        {
+          indexName = UNKNOWN;
+        }
+        MutableIndex index = indicesMap.get(indexName);
+        if (index == null)
+        {
+          index = new MutableIndex(indexName, table);
+          indicesMap.put(indexName, index);
+        }
+        final String columnName = results.getString(COLUMN_NAME);
+        if (columnName == null || columnName.trim().length() == 0)
+        {
+          continue;
+        }
+        final boolean uniqueIndex = !results.getBoolean("NON_UNIQUE");
+        final int type = readInt(results, "TYPE", IndexType.unknown.getId());
+        final int ordinalPosition = readInt(results, ORDINAL_POSITION, 0);
+        final String sortSequence = results.getString("ASC_OR_DESC");
+        final int cardinality = readInt(results, "CARDINALITY", 0);
+        final int pages = readInt(results, "PAGES", 0);
+
+        final MutableColumn column = (MutableColumn) table
+          .lookupColumn(columnName);
+        if (column != null)
+        {
+          index.addColumn(ordinalPosition, column);
+          index.setUnique(uniqueIndex);
+          column.setPartOfUniqueIndex(uniqueIndex);
+          index.setType(IndexType.valueOf(type));
+          index
+            .setSortSequence(IndexSortSequence.valueOfFromCode(sortSequence));
+          index.setCardinality(cardinality);
+          index.setPages(pages);
+        }
+      }
+    }
+    finally
+    {
+      results.close();
+    }
   }
 
   private MutableColumn lookupOrCreateColumn(final NamedObjectList<MutableTable> tables,

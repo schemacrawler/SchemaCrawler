@@ -59,6 +59,16 @@ final class MutableProcedure
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schema.Procedure#getColumn(java.lang.String)
+   */
+  public ProcedureColumn getColumn(final String name)
+  {
+    return columns.lookup(name);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see Procedure#getColumns()
    */
   public ProcedureColumn[] getColumns()
