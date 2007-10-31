@@ -120,8 +120,8 @@ final class TableRetriever
           final int size = readInt(results, "COLUMN_SIZE", 0);
           final int decimalDigits = readInt(results, "DECIMAL_DIGITS", 0);
           final boolean isNullable = readInt(results,
-                                            NULLABLE,
-                                            DatabaseMetaData.columnNullableUnknown) == DatabaseMetaData.columnNullable;
+                                             NULLABLE,
+                                             DatabaseMetaData.columnNullableUnknown) == DatabaseMetaData.columnNullable;
           final String remarks = results.getString(REMARKS);
 
           column.setOrdinalPosition(ordinalPosition);
@@ -248,8 +248,7 @@ final class TableRetriever
         final String columnName = results.getString(COLUMN_NAME);
         final int keySequence = Integer.parseInt(results.getString(KEY_SEQ));
         // register primary key information
-        final MutableColumn column = (MutableColumn) table
-          .lookupColumn(columnName);
+        final MutableColumn column = table.lookupColumn(columnName);
         if (column != null)
         {
           column.setPartOfPrimaryKey(true);
@@ -380,15 +379,15 @@ final class TableRetriever
         final String fkColumnName = results.getString("FKCOLUMN_NAME");
         final int keySequence = readInt(results, KEY_SEQ, 0);
         final int updateRule = readInt(results,
-                                      "UPDATE_RULE",
-                                      ForeignKeyUpdateRule.unknown.getId());
+                                       "UPDATE_RULE",
+                                       ForeignKeyUpdateRule.unknown.getId());
         final int deleteRule = readInt(results,
-                                      "DELETE_RULE",
-                                      ForeignKeyUpdateRule.unknown.getId());
+                                       "DELETE_RULE",
+                                       ForeignKeyUpdateRule.unknown.getId());
         final int deferrability = readInt(results,
-                                         "DEFERRABILITY",
-                                         ForeignKeyDeferrability.unknown
-                                           .getId());
+                                          "DEFERRABILITY",
+                                          ForeignKeyDeferrability.unknown
+                                            .getId());
         final MutableColumn pkColumn = lookupOrCreateColumn(tables,
                                                             pkTableSchema,
                                                             pkTableName,
@@ -397,6 +396,8 @@ final class TableRetriever
                                                             pkTableSchema,
                                                             fkTableName,
                                                             fkColumnName);
+        // Make a direct connection between the two columns
+        fkColumn.setReferencedColumn(pkColumn);
         foreignKey.addColumnPair(keySequence, pkColumn, fkColumn);
         foreignKey.setUpdateRule(ForeignKeyUpdateRule.valueOf(updateRule));
         foreignKey.setDeleteRule(ForeignKeyUpdateRule.valueOf(deleteRule));
@@ -443,8 +444,7 @@ final class TableRetriever
         final int cardinality = readInt(results, "CARDINALITY", 0);
         final int pages = readInt(results, "PAGES", 0);
 
-        final MutableColumn column = (MutableColumn) table
-          .lookupColumn(columnName);
+        final MutableColumn column = table.lookupColumn(columnName);
         if (column != null)
         {
           index.addColumn(ordinalPosition, column);
@@ -474,7 +474,7 @@ final class TableRetriever
     MutableTable table = tables.lookup(tableName);
     if (table != null)
     {
-      column = (MutableColumn) table.lookupColumn(columnName);
+      column = table.lookupColumn(columnName);
     }
     if (column == null)
     {
