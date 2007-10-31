@@ -38,11 +38,25 @@ public interface Schema
   DatabaseInfo getDatabaseInfo();
 
   /**
+   * Gets a procedure by name.
+   * 
+   * @return Procedure.
+   */
+  Procedure getProcedure(String name);
+
+  /**
    * Procedures.
    * 
    * @return Procedures
    */
   Procedure[] getProcedures();
+
+  /**
+   * Gets a Table by name.
+   * 
+   * @return Table.
+   */
+  Table getTable(String name);
 
   /**
    * Tables.

@@ -120,11 +120,31 @@ class MutableSchema
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schema.Schema#getProcedure(java.lang.String)
+   */
+  public Procedure getProcedure(final String name)
+  {
+    return procedures.lookup(name);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see schemacrawler.schema.Schema#getProcedures()
    */
   public Procedure[] getProcedures()
   {
     return procedures.getAll().toArray(new Procedure[procedures.size()]);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Schema#getTable(java.lang.String)
+   */
+  public Table getTable(final String name)
+  {
+    return tables.lookup(name);
   }
 
   /**

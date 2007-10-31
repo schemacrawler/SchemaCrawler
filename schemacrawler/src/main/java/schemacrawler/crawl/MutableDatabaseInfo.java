@@ -54,6 +54,91 @@ final class MutableDatabaseInfo
   private final SortedMap<String, Object> dbProperties = new TreeMap<String, Object>();
   private final NamedObjectList<MutableColumnDataType> columnDataTypes = new NamedObjectList<MutableColumnDataType>(NamedObjectSort.alphabetical);
 
+  @Override
+  public boolean equals(final Object obj)
+  {
+    if (this == obj)
+    {
+      return true;
+    }
+    if (obj == null)
+    {
+      return false;
+    }
+    if (getClass() != obj.getClass())
+    {
+      return false;
+    }
+    final MutableDatabaseInfo other = (MutableDatabaseInfo) obj;
+    if (catalog == null)
+    {
+      if (other.catalog != null)
+      {
+        return false;
+      }
+    }
+    else if (!catalog.equals(other.catalog))
+    {
+      return false;
+    }
+    if (columnDataTypes == null)
+    {
+      if (other.columnDataTypes != null)
+      {
+        return false;
+      }
+    }
+    else if (!columnDataTypes.equals(other.columnDataTypes))
+    {
+      return false;
+    }
+    if (dbProperties == null)
+    {
+      if (other.dbProperties != null)
+      {
+        return false;
+      }
+    }
+    else if (!dbProperties.equals(other.dbProperties))
+    {
+      return false;
+    }
+    if (productName == null)
+    {
+      if (other.productName != null)
+      {
+        return false;
+      }
+    }
+    else if (!productName.equals(other.productName))
+    {
+      return false;
+    }
+    if (productVersion == null)
+    {
+      if (other.productVersion != null)
+      {
+        return false;
+      }
+    }
+    else if (!productVersion.equals(other.productVersion))
+    {
+      return false;
+    }
+    if (schemaPattern == null)
+    {
+      if (other.schemaPattern != null)
+      {
+        return false;
+      }
+    }
+    else if (!schemaPattern.equals(other.schemaPattern))
+    {
+      return false;
+    }
+    return true;
+  }
+
   /**
    * {@inheritDoc}
    * 
@@ -163,6 +248,24 @@ final class MutableDatabaseInfo
   public String getSchemaPattern()
   {
     return schemaPattern;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (catalog == null? 0: catalog.hashCode());
+    result = prime * result
+             + (columnDataTypes == null? 0: columnDataTypes.hashCode());
+    result = prime * result
+             + (dbProperties == null? 0: dbProperties.hashCode());
+    result = prime * result + (productName == null? 0: productName.hashCode());
+    result = prime * result
+             + (productVersion == null? 0: productVersion.hashCode());
+    result = prime * result
+             + (schemaPattern == null? 0: schemaPattern.hashCode());
+    return result;
   }
 
   /**
@@ -282,109 +385,6 @@ final class MutableDatabaseInfo
   void setSchemaPattern(final String schemaPattern)
   {
     this.schemaPattern = schemaPattern;
-  }
-
-  @Override
-  public int hashCode()
-  {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (catalog == null? 0: catalog.hashCode());
-    result = prime * result
-             + (columnDataTypes == null? 0: columnDataTypes.hashCode());
-    result = prime * result
-             + (dbProperties == null? 0: dbProperties.hashCode());
-    result = prime * result + (productName == null? 0: productName.hashCode());
-    result = prime * result
-             + (productVersion == null? 0: productVersion.hashCode());
-    result = prime * result
-             + (schemaPattern == null? 0: schemaPattern.hashCode());
-    return result;
-  }
-
-  @Override
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
-      return true;
-    }
-    if (obj == null)
-    {
-      return false;
-    }
-    if (getClass() != obj.getClass())
-    {
-      return false;
-    }
-    final MutableDatabaseInfo other = (MutableDatabaseInfo) obj;
-    if (catalog == null)
-    {
-      if (other.catalog != null)
-      {
-        return false;
-      }
-    }
-    else if (!catalog.equals(other.catalog))
-    {
-      return false;
-    }
-    if (columnDataTypes == null)
-    {
-      if (other.columnDataTypes != null)
-      {
-        return false;
-      }
-    }
-    else if (!columnDataTypes.equals(other.columnDataTypes))
-    {
-      return false;
-    }
-    if (dbProperties == null)
-    {
-      if (other.dbProperties != null)
-      {
-        return false;
-      }
-    }
-    else if (!dbProperties.equals(other.dbProperties))
-    {
-      return false;
-    }
-    if (productName == null)
-    {
-      if (other.productName != null)
-      {
-        return false;
-      }
-    }
-    else if (!productName.equals(other.productName))
-    {
-      return false;
-    }
-    if (productVersion == null)
-    {
-      if (other.productVersion != null)
-      {
-        return false;
-      }
-    }
-    else if (!productVersion.equals(other.productVersion))
-    {
-      return false;
-    }
-    if (schemaPattern == null)
-    {
-      if (other.schemaPattern != null)
-      {
-        return false;
-      }
-    }
-    else if (!schemaPattern.equals(other.schemaPattern))
-    {
-      return false;
-    }
-    return true;
   }
 
 }

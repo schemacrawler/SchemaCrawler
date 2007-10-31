@@ -76,6 +76,16 @@ class MutableTable
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schema.Table#getColumn(java.lang.String)
+   */
+  public Column getColumn(final String name)
+  {
+    return columns.lookup(name);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see Table#getColumns()
    */
   public Column[] getColumns()
@@ -112,11 +122,31 @@ class MutableTable
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schema.Table#getForeignKey(java.lang.String)
+   */
+  public ForeignKey getForeignKey(final String name)
+  {
+    return foreignKeys.lookup(name);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see Table#getForeignKeys()
    */
   public ForeignKey[] getForeignKeys()
   {
     return foreignKeys.getAll().toArray(new ForeignKey[foreignKeys.size()]);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Table#getIndex(java.lang.String)
+   */
+  public Index getIndex(final String name)
+  {
+    return indices.lookup(name);
   }
 
   /**
@@ -156,6 +186,16 @@ class MutableTable
   public Privilege[] getPrivileges()
   {
     return privileges.getAll().toArray(new Privilege[privileges.size()]);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Table#getTrigger(java.lang.String)
+   */
+  public Trigger getTrigger(final String name)
+  {
+    return triggers.lookup(name);
   }
 
   /**

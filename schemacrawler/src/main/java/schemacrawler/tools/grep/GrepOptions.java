@@ -21,24 +21,19 @@ public class GrepOptions
     invertMatch = false;
   }
 
+  public InclusionRule getColumnInclusionRule()
+  {
+    return columnInclusionRule;
+  }
+
   public InclusionRule getTableInclusionRule()
   {
     return tableInclusionRule;
   }
 
-  public void setTableInclusionRule(final InclusionRule tableInclusionRule)
+  public boolean isInvertMatch()
   {
-    if (tableInclusionRule == null) {
-      this.tableInclusionRule = new InclusionRule();
-    }
-    else {
-      this.tableInclusionRule = tableInclusionRule;
-    }
-  }
-
-  public InclusionRule getColumnInclusionRule()
-  {
-    return columnInclusionRule;
+    return invertMatch;
   }
 
   public void setColumnInclusionRule(final InclusionRule columnInclusionRule)
@@ -51,14 +46,19 @@ public class GrepOptions
     }
   }
 
-  public boolean isInvertMatch()
-  {
-    return invertMatch;
-  }
-
   public void setInvertMatch(final boolean invertMatch)
   {
     this.invertMatch = invertMatch;
+  }
+
+  public void setTableInclusionRule(final InclusionRule tableInclusionRule)
+  {
+    if (tableInclusionRule == null) {
+      this.tableInclusionRule = new InclusionRule();
+    }
+    else {
+      this.tableInclusionRule = tableInclusionRule;
+    }
   }
 
 }

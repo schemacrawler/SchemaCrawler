@@ -38,6 +38,13 @@ public interface Table
   CheckConstraint[] getCheckConstraints();
 
   /**
+   * Gets a column by name.
+   * 
+   * @return Column.
+   */
+  Column getColumn(String name);
+
+  /**
    * List of columns in ordinal order.
    * 
    * @return Columns of the table.
@@ -52,11 +59,25 @@ public interface Table
   String getColumnsListAsString();
 
   /**
+   * Gets a foreign key by name.
+   * 
+   * @return ForeignKey.
+   */
+  ForeignKey getForeignKey(String name);
+
+  /**
    * List of foreign keys.
    * 
    * @return Foreign keys of the table.
    */
   ForeignKey[] getForeignKeys();
+
+  /**
+   * Gets an index by name.
+   * 
+   * @return Index.
+   */
+  Index getIndex(String name);
 
   /**
    * List of indices.
@@ -78,6 +99,13 @@ public interface Table
    * @return Privileges for the table.
    */
   Privilege[] getPrivileges();
+
+  /**
+   * Gets a trigger by name.
+   * 
+   * @return Trigger.
+   */
+  Trigger getTrigger(String name);
 
   /**
    * List of triggers.
