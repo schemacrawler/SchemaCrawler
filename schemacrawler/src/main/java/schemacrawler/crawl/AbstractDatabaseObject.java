@@ -89,7 +89,7 @@ abstract class AbstractDatabaseObject
     {
       return false;
     }
-    return true;
+    return super.equals(obj);
   }
 
   /**
@@ -141,8 +141,7 @@ abstract class AbstractDatabaseObject
   {
     final int prime = 31;
     int result = super.hashCode();
-    result = prime * result
-             + (catalogName == null? 0: catalogName.hashCode());
+    result = prime * result + (catalogName == null? 0: catalogName.hashCode());
     result = prime * result + (schemaName == null? 0: schemaName.hashCode());
     return result;
   }
