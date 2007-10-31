@@ -431,7 +431,7 @@ final class TableRetriever
         final String pkColumnName = results.getString("PKCOLUMN_NAME");
         final String fkTableName = results.getString("FKTABLE_NAME");
         final String fkColumnName = results.getString("FKCOLUMN_NAME");
-        int keySequence = readInt(results, KEY_SEQ, 0);
+        final int keySequence = readInt(results, KEY_SEQ, 0);
         final int updateRule = readInt(results,
                                       "UPDATE_RULE",
                                       ForeignKeyUpdateRule.unknown.getId());
