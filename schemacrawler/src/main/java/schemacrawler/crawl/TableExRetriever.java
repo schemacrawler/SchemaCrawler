@@ -135,9 +135,9 @@ final class TableExRetriever
         }
 
         final String constraintType = results.getString("CONSTRAINT_TYPE");
-        final boolean deferrable = parseBoolean(results
+        final boolean deferrable = readBoolean(results
           .getString("IS_DEFERRABLE"));
-        final boolean initiallyDeferred = parseBoolean(results
+        final boolean initiallyDeferred = readBoolean(results
           .getString("INITIALLY_DEFERRED"));
 
         if (constraintType.equalsIgnoreCase("check"))
@@ -413,8 +413,7 @@ final class TableExRetriever
         String definition = results.getString("VIEW_DEFINITION");
         final CheckOptionType checkOption = CheckOptionType.valueOf(results
           .getString("CHECK_OPTION").toLowerCase(Locale.ENGLISH));
-        final boolean updatable = parseBoolean(results
-          .getString("IS_UPDATABLE"));
+        final boolean updatable = readBoolean(results.getString("IS_UPDATABLE"));
 
         if (!Utilities.isBlank(view.getDefinition()))
         {
@@ -456,13 +455,7 @@ final class TableExRetriever
         final String privilegeName = results.getString("PRIVILEGE");
         final String grantor = results.getString("GRANTOR");
         final String grantee = results.getString("GRANTEE");
-        final String isGrantableString = results.getString("IS_GRANTABLE");
-        boolean isGrantable = false;
-        if (isGrantableString != null
-            && isGrantableString.equalsIgnoreCase("YES"))
-        {
-          isGrantable = true;
-        }
+        final boolean isGrantable = readBoolean("IS_GRANTABLE");
 
         final MutablePrivilege privilege = new MutablePrivilege(privilegeName,
                                                                 namedObject);

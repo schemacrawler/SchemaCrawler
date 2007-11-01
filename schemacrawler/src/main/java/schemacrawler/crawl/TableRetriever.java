@@ -106,10 +106,8 @@ final class TableRetriever
         final MutableColumn column = new MutableColumn(columnName, table);
         final String columnFullName = column.getFullName();
         // Note: If the table name contains an underscore character,
-        // this is a
-        // wildcard character. We need to do another check to see if the
-        // table
-        // name matches.
+        // this is a wildcard character. We need to do another check to
+        // see if the table name matches.
         if (columnInclusionRule.include(columnFullName)
             && table.getName().equals(tableName))
         {
