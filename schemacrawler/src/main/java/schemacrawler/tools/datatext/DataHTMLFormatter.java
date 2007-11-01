@@ -22,8 +22,8 @@ package schemacrawler.tools.datatext;
 
 
 import schemacrawler.crawl.SchemaCrawlerException;
+import schemacrawler.tools.util.Entities;
 import schemacrawler.tools.util.FormatUtils;
-import sf.util.Entities;
 
 /**
  * Formats data as HTML for output.
