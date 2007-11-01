@@ -53,19 +53,6 @@ abstract class AbstractRetriever
   private static final Logger LOGGER = Logger.getLogger(AbstractRetriever.class
     .getName());
 
-  /**
-   * Checks if the text is true.
-   * 
-   * @param text
-   *        Text to check.
-   * @return Whether the string is true or yes.
-   */
-  static boolean parseBoolean(final String text)
-  {
-    return !Utilities.isBlank(text) && text.equalsIgnoreCase("YES")
-           || Boolean.valueOf(text).booleanValue();
-  }
-
   private final RetrieverConnection retrieverConnection;
 
   /**
@@ -115,6 +102,19 @@ abstract class AbstractRetriever
   protected RetrieverConnection getRetrieverConnection()
   {
     return retrieverConnection;
+  }
+
+  /**
+   * Checks if the text is true.
+   * 
+   * @param text
+   *        Text to check.
+   * @return Whether the string is true or yes.
+   */
+  protected boolean readBoolean(final String text)
+  {
+    return !Utilities.isBlank(text) && text.equalsIgnoreCase("YES")
+           || Boolean.valueOf(text).booleanValue();
   }
 
   /**
