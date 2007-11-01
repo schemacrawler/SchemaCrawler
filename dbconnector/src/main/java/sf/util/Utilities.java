@@ -215,19 +215,6 @@ public final class Utilities
   }
 
   /**
-   * Returns true if the current operating system is Windows.
-   * 
-   * @return True is the current operating system is Windows.
-   */
-  public static boolean isWindowsOS()
-  {
-    final String osName = System.getProperty("os.name");
-    final boolean isWindowsOS = osName == null
-                                || osName.toLowerCase().indexOf("windows") != -1;
-    return isWindowsOS;
-  }
-
-  /**
    * Right justifies the string in given field length.
    * 
    * @param string
