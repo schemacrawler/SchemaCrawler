@@ -71,7 +71,7 @@ public final class Main
     throws Exception
   {
 
-    final String shellExt = Utilities.isWindowsOS()? ".cmd": ".sh";
+    final String shellExt = isWindowsOS()? ".cmd": ".sh";
 
     System.out.println(Version.about());
 
@@ -109,6 +109,19 @@ public final class Main
     // Instructions
     System.out.println(instructions);
 
+  }
+
+  /**
+   * Returns true if the current operating system is Windows.
+   * 
+   * @return True is the current operating system is Windows.
+   */
+  public static boolean isWindowsOS()
+  {
+    final String osName = System.getProperty("os.name");
+    final boolean isWindowsOS = osName == null
+                                || osName.toLowerCase().indexOf("windows") != -1;
+    return isWindowsOS;
   }
 
   private Main()
