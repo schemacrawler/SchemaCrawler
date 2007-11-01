@@ -22,6 +22,8 @@ package schemacrawler.tools.integration.maven;
 
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import sf.util.Utilities;
 
@@ -76,8 +78,7 @@ public final class Main
     System.out.println(Version.about());
 
     // Create POM file
-    final File pomFile = Utilities.writeStringToFile(MAVEN_PLUGIN_POM_FILENAME,
-                                                     pluginPom);
+    final File pomFile = writeStringToFile(MAVEN_PLUGIN_POM_FILENAME, pluginPom);
     System.out.println("Created Maven POM file: " + pomFile.getAbsolutePath());
 
     // Create install script
@@ -89,9 +90,9 @@ public final class Main
                                  + "-Dfile=schemacrawler-"
                                  + Version.getVersion() + ".jar "
                                  + "-DpomFile=schemacrawler-maven-plugin.pom ";
-    final File installScriptFile = Utilities
-      .writeStringToFile(INSTALL_MAVEN_PLUGIN_SCRIPT_FILESTEM + shellExt,
-                         installScript);
+    final File installScriptFile = writeStringToFile(INSTALL_MAVEN_PLUGIN_SCRIPT_FILESTEM
+                                                         + shellExt,
+                                                     installScript);
     System.out.println("Created installation script: "
                        + installScriptFile.getAbsolutePath());
 
@@ -100,9 +101,9 @@ public final class Main
                                 + "-DgroupId=schemacrawler "
                                 + "-DartifactId=schemacrawler-maven-plugin "
                                 + "-Dversion=" + Version.getVersion() + " ";
-    final File verifyScriptFile = Utilities
-      .writeStringToFile(VERIFY_MAVEN_PLUGIN_SCRIPT_FILESTEM + shellExt,
-                         verifyScript);
+    final File verifyScriptFile = writeStringToFile(VERIFY_MAVEN_PLUGIN_SCRIPT_FILESTEM
+                                                        + shellExt,
+                                                    verifyScript);
     System.out.println("Created verification script: "
                        + verifyScriptFile.getAbsolutePath());
 
@@ -122,6 +123,39 @@ public final class Main
     final boolean isWindowsOS = osName == null
                                 || osName.toLowerCase().indexOf("windows") != -1;
     return isWindowsOS;
+  }
+
+  /**
+   * Writes a string to a file.
+   * 
+   * @param fileName
+   *        Name of the file to write.
+   * @param fileContents
+   *        Contents of the file.
+   * @return The file.
+   * @throws IOException
+   *         On an exception.
+   */
+  public static File writeStringToFile(final String fileName,
+                                       final String fileContents)
+    throws IOException
+  {
+    FileWriter writer = null;
+    try
+    {
+      final File file = new File(fileName);
+      writer = new FileWriter(file);
+      writer.write(fileContents);
+      writer.flush();
+      return file;
+    }
+    finally
+    {
+      if (writer != null)
+      {
+        writer.close();
+      }
+    }
   }
 
   private Main()
