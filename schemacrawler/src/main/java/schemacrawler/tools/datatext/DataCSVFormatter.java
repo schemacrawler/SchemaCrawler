@@ -23,7 +23,6 @@ package schemacrawler.tools.datatext;
 
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.tools.util.FormatUtils;
-import sf.util.Utilities;
 
 /**
  * Formats data as CSV for output.
@@ -97,7 +96,7 @@ final class DataCSVFormatter
   {
     out.println();
     out.println(title);
-    out.println(Utilities.repeat("-", FormatUtils.MAX_LINE_LENGTH));
+    out.println(FormatUtils.repeat("-", FormatUtils.MAX_LINE_LENGTH));
     out.flush();
   }
 

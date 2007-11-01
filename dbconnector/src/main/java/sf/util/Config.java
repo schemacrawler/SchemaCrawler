@@ -215,21 +215,6 @@ public class Config
   }
 
   /**
-   * Returns the configuration into properties.
-   * 
-   * @return Properties
-   */
-  public Properties toProperties()
-  {
-    final Properties properties = new Properties();
-    for (final Entry<String, String> entry: entrySet())
-    {
-      properties.setProperty(entry.getKey(), entry.getValue());
-    }
-    return properties;
-  }
-
-  /**
    * Gets a sub-group of properties - those that start with a given
    * prefix. The prefix is removed in the result.
    * 
@@ -249,7 +234,7 @@ public class Config
 
     for (final Map.Entry<String, String> entry: entrySet())
     {
-      String key = entry.getKey();
+      final String key = entry.getKey();
       if (key.startsWith(dottedPrefix))
       {
         final String unprefixed = key.substring(dottedPrefix.length());
@@ -258,6 +243,21 @@ public class Config
     }
 
     return partition;
+  }
+
+  /**
+   * Returns the configuration into properties.
+   * 
+   * @return Properties
+   */
+  public Properties toProperties()
+  {
+    final Properties properties = new Properties();
+    for (final Entry<String, String> entry: entrySet())
+    {
+      properties.setProperty(entry.getKey(), entry.getValue());
+    }
+    return properties;
   }
 
 }

@@ -149,6 +149,52 @@ public final class FormatUtils
   }
 
   /**
+   * Right justifies the string in given field length.
+   * 
+   * @param string
+   *        String to right justify
+   * @param len
+   *        Length of the field
+   * @return Justified string
+   */
+  public static String padLeft(final String string, final int len)
+  {
+    final StringBuffer buffer = new StringBuffer();
+    if (string != null)
+    {
+      buffer.append(string);
+    }
+    while (buffer.length() < len)
+    {
+      buffer.insert(0, ' ');
+    }
+    return buffer.toString();
+  }
+
+  /**
+   * Left justifies the string in given field length.
+   * 
+   * @param string
+   *        String to right justify
+   * @param len
+   *        Length of the field
+   * @return Justified string
+   */
+  public static String padRight(final String string, final int len)
+  {
+    final StringBuffer buffer = new StringBuffer();
+    if (string != null)
+    {
+      buffer.append(string);
+    }
+    while (buffer.length() < len)
+    {
+      buffer.append(' ');
+    }
+    return buffer.toString();
+  }
+
+  /**
    * Prints database information.
    * 
    * @param databaseInfo
@@ -159,12 +205,41 @@ public final class FormatUtils
   public static void printDatabaseInfo(final DatabaseInfo databaseInfo,
                                        final PrintWriter out)
   {
-    out.println(Utilities.repeat("-", MAX_LINE_LENGTH));
+    out.println(repeat("-", MAX_LINE_LENGTH));
     out.println(databaseInfo.toString());
-    out.println(Utilities.repeat("-", MAX_LINE_LENGTH));
+    out.println(repeat("-", MAX_LINE_LENGTH));
     out.println();
     out.println();
     out.flush();
+  }
+
+  /**
+   * Repeats a string.
+   * 
+   * @param string
+   *        String to repeat
+   * @param count
+   *        Number of times to repeat
+   * @return String with repetitions
+   */
+  public static String repeat(final String string, final int count)
+  {
+
+    String repeated = "";
+
+    if (string != null && count >= 1)
+    {
+      final StringBuffer stringbuffer = new StringBuffer(string.length()
+                                                         * count);
+      for (int i = 0; i < count; i++)
+      {
+        stringbuffer.append(string);
+      }
+      repeated = stringbuffer.toString();
+    }
+
+    return repeated;
+
   }
 
   private static String htmlHeader()

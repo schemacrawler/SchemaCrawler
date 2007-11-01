@@ -164,9 +164,9 @@ public abstract class BaseDataTextFormatter
   {
     if (!getNoInfo())
     {
-      out.println(Utilities.repeat("-", FormatUtils.MAX_LINE_LENGTH));
+      out.println(FormatUtils.repeat("-", FormatUtils.MAX_LINE_LENGTH));
       out.println(databaseInfo);
-      out.println(Utilities.repeat("-", FormatUtils.MAX_LINE_LENGTH));
+      out.println(FormatUtils.repeat("-", FormatUtils.MAX_LINE_LENGTH));
       out.flush();
     }
   }

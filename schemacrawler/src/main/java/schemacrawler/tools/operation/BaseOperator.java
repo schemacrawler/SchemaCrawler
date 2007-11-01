@@ -42,7 +42,6 @@ import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.util.FormatUtils;
 import schemacrawler.tools.util.TextFormattingHelper;
-import sf.util.Utilities;
 
 /**
  * Base functionality for operations.
@@ -339,7 +338,7 @@ public abstract class BaseOperator
   {
 
     Number number;
-    if (Utilities.isIntegral(aggregate))
+    if (Math.abs(aggregate - (int) aggregate) < 1E-10D)
     {
       number = Integer.valueOf((int) aggregate);
     }

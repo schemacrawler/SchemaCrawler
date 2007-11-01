@@ -24,19 +24,14 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.Map.Entry;
-import java.util.logging.Handler;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
-import java.util.logging.StreamHandler;
 
 /**
  * Utility methods.
@@ -200,78 +195,6 @@ public final class Utilities
   }
 
   /**
-   * Returns true if the number is an integer within a certain
-   * tolerance.
-   * 
-   * @param number
-   *        Number to check
-   * @return Whether the double is an integer
-   */
-  public static boolean isIntegral(final double number)
-  {
-    return Math.abs(number - (int) number) < 1E-10D;
-  }
-
-  /**
-   * Right justifies the string in given field length.
-   * 
-   * @param string
-   *        String to right justify
-   * @param len
-   *        Length of the field
-   * @return Justified string
-   */
-  public static String padLeft(final String string, final int len)
-  {
-    final StringBuffer buffer = new StringBuffer();
-    if (string != null)
-    {
-      buffer.append(string);
-    }
-    while (buffer.length() < len)
-    {
-      buffer.insert(0, ' ');
-    }
-    return buffer.toString();
-  }
-
-  /**
-   * Left justifies the string in given field length.
-   * 
-   * @param string
-   *        String to right justify
-   * @param len
-   *        Length of the field
-   * @return Justified string
-   */
-  public static String padRight(final String string, final int len)
-  {
-    final StringBuffer buffer = new StringBuffer();
-    if (string != null)
-    {
-      buffer.append(string);
-    }
-    while (buffer.length() < len)
-    {
-      buffer.append(' ');
-    }
-    return buffer.toString();
-  }
-
-  /**
-   * Checks if the text is true.
-   * 
-   * @param text
-   *        Text to check.
-   * @return Whether the string is true or yes.
-   */
-  public static boolean parseBoolean(final String text)
-  {
-    return !isBlank(text) && text.equalsIgnoreCase("YES")
-           || Boolean.valueOf(text).booleanValue();
-  }
-
-  /**
    * Copies properties into a map.
    * 
    * @param properties
@@ -336,55 +259,6 @@ public final class Utilities
     }
 
     return byteCode;
-  }
-
-  /**
-   * Repeats a string.
-   * 
-   * @param string
-   *        String to repeat
-   * @param count
-   *        Number of times to repeat
-   * @return String with repetitions
-   */
-  public static String repeat(final String string, final int count)
-  {
-
-    String repeated = "";
-
-    if (string != null && count >= 1)
-    {
-      final StringBuffer stringbuffer = new StringBuffer(string.length()
-                                                         * count);
-      for (int i = 0; i < count; i++)
-      {
-        stringbuffer.append(string);
-      }
-      repeated = stringbuffer.toString();
-    }
-
-    return repeated;
-
-  }
-
-  /**
-   * Sets the application-wide log level.
-   */
-  public static void setApplicationSysOutLogHandler()
-  {
-    final LogManager logManager = LogManager.getLogManager();
-    for (final Enumeration<String> loggerNames = logManager.getLoggerNames(); loggerNames
-      .hasMoreElements();)
-    {
-      final String loggerName = loggerNames.nextElement();
-      final Logger logger = logManager.getLogger(loggerName);
-      final Handler[] handlers = logger.getHandlers();
-      for (final Handler handler: handlers)
-      {
-        logger.removeHandler(handler);
-        logger.addHandler(new StreamHandler(System.out, new SimpleFormatter()));
-      }
-    }
   }
 
   /**
