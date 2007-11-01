@@ -22,8 +22,6 @@ package sf.util;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
@@ -385,40 +383,6 @@ public final class Utilities
       {
         logger.removeHandler(handler);
         logger.addHandler(new StreamHandler(System.out, new SimpleFormatter()));
-      }
-    }
-  }
-
-  /**
-   * Writes a string to a file.
-   * 
-   * @param fileName
-   *        Name of the file to write.
-   * @param fileContents
-   *        Contents of the file.
-   * @return The file.
-   * @throws IOException
-   *         On an exception.
-   */
-  public static File writeStringToFile(final String fileName,
-                                       final String fileContents)
-    throws IOException
-  {
-    FileWriter writer = null;
-    try
-    {
-      final File pomFile = new File(fileName);
-      writer = new FileWriter(pomFile);
-      writer.write(fileContents);
-      writer.flush();
-
-      return pomFile;
-    }
-    finally
-    {
-      if (writer != null)
-      {
-        writer.close();
       }
     }
   }
