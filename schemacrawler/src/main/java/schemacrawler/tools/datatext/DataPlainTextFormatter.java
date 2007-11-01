@@ -23,7 +23,6 @@ package schemacrawler.tools.datatext;
 
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.tools.util.FormatUtils;
-import sf.util.Utilities;
 
 /**
  * Formats data as plain text for output.
@@ -68,7 +67,7 @@ public final class DataPlainTextFormatter
       }
       out.println(columnName + ": " + columnData[i]);
     }
-    out.println(Utilities.repeat("-", FormatUtils.MAX_LINE_LENGTH));
+    out.println(FormatUtils.repeat("-", FormatUtils.MAX_LINE_LENGTH));
     out.flush();
   }
 
@@ -117,7 +116,7 @@ public final class DataPlainTextFormatter
     out.println();
     out.println(title);
     out.println();
-    out.println(Utilities.repeat("-", FormatUtils.MAX_LINE_LENGTH));
+    out.println(FormatUtils.repeat("-", FormatUtils.MAX_LINE_LENGTH));
     out.flush();
   }
 

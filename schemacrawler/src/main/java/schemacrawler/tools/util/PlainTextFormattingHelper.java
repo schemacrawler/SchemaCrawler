@@ -122,7 +122,7 @@ public class PlainTextFormattingHelper
     {
       row.append(name);
       row.append(getFieldSeparator());
-      row.append(Utilities.repeat(" ", totalLength - minimumLength));
+      row.append(FormatUtils.repeat(" ", totalLength - minimumLength));
       row.append(description);
     }
     else
@@ -158,7 +158,7 @@ public class PlainTextFormattingHelper
    */
   public String createSeparatorRow()
   {
-    return Utilities.repeat("-", FormatUtils.MAX_LINE_LENGTH);
+    return FormatUtils.repeat("-", FormatUtils.MAX_LINE_LENGTH);
   }
 
   private String format(final String text,
@@ -173,11 +173,11 @@ public class PlainTextFormattingHelper
     {
       if (alignLeft)
       {
-        return Utilities.padRight(text, maxWidth);
+        return FormatUtils.padRight(text, maxWidth);
       }
       else
       {
-        return Utilities.padLeft(text, maxWidth);
+        return FormatUtils.padLeft(text, maxWidth);
       }
     }
   }

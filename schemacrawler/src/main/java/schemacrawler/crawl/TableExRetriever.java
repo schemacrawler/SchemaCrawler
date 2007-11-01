@@ -135,9 +135,9 @@ final class TableExRetriever
         }
 
         final String constraintType = results.getString("CONSTRAINT_TYPE");
-        final boolean deferrable = Utilities.parseBoolean(results
+        final boolean deferrable = parseBoolean(results
           .getString("IS_DEFERRABLE"));
-        final boolean initiallyDeferred = Utilities.parseBoolean(results
+        final boolean initiallyDeferred = parseBoolean(results
           .getString("INITIALLY_DEFERRED"));
 
         if (constraintType.equalsIgnoreCase("check"))
@@ -413,7 +413,7 @@ final class TableExRetriever
         String definition = results.getString("VIEW_DEFINITION");
         final CheckOptionType checkOption = CheckOptionType.valueOf(results
           .getString("CHECK_OPTION").toLowerCase(Locale.ENGLISH));
-        final boolean updatable = Utilities.parseBoolean(results
+        final boolean updatable = parseBoolean(results
           .getString("IS_UPDATABLE"));
 
         if (!Utilities.isBlank(view.getDefinition()))

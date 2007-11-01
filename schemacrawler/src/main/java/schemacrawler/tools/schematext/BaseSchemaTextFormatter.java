@@ -44,6 +44,7 @@ import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
+import schemacrawler.tools.util.FormatUtils;
 import schemacrawler.tools.util.TextFormattingHelper;
 import sf.util.Utilities;
 
@@ -444,7 +445,7 @@ public abstract class BaseSchemaTextFormatter
       String keySequenceString = "";
       if (options.isShowOrdinalNumbers())
       {
-        keySequenceString = Utilities.padLeft(String.valueOf(keySequence), 2);
+        keySequenceString = FormatUtils.padLeft(String.valueOf(keySequence), 2);
       }
       out.println(formattingHelper.createDetailRow(keySequenceString,
                                                    pkColumnName + getArrow()
