@@ -21,14 +21,11 @@
 package schemacrawler.crawl;
 
 
-import java.lang.reflect.Field;
 import java.sql.Types;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.SearchableType;
+import schemacrawler.schema.SqlDataType;
 
 /**
  * A column type. Provide the java.sql.Types type, the java.sql.Types
@@ -41,36 +38,8 @@ final class MutableColumnDataType
 
   private static final long serialVersionUID = 3688503281676530744L;
 
-  private static final Map<Integer, String> JAVA_SQL_TYPES = getJavaSqlTypes();
-
-  private static Map<Integer, String> getJavaSqlTypes()
-  {
-
-    final Map<Integer, String> javaSqlTypes = new HashMap<Integer, String>();
-    final Field[] staticFields = Types.class.getFields();
-    for (final Field field: staticFields)
-    {
-      try
-      {
-        final String fieldName = field.getName();
-        final Integer fieldValue = (Integer) field.get(null);
-        javaSqlTypes.put(fieldValue, fieldName);
-      }
-      catch (final SecurityException e)
-      {
-        continue;
-      }
-      catch (final IllegalAccessException e)
-      {
-        continue;
-      }
-    }
-
-    return Collections.unmodifiableMap(javaSqlTypes);
-  }
-
   private boolean userDefined;
-  private int type;
+  private SqlDataType type;
   private long precision;
   private String literalPrefix;
   private String literalSuffix;
@@ -195,7 +164,7 @@ final class MutableColumnDataType
    */
   public int getType()
   {
-    return type;
+    return type.getType();
   }
 
   /**
@@ -213,12 +182,7 @@ final class MutableColumnDataType
    */
   public String getTypeName()
   {
-    String typeName = JAVA_SQL_TYPES.get(Integer.valueOf(type));
-    if (typeName == null)
-    {
-      typeName = "<UNKNOWN>";
-    }
-    return typeName;
+    return type.getTypeName();
   }
 
   /**
@@ -234,6 +198,7 @@ final class MutableColumnDataType
    */
   public boolean isBinaryType()
   {
+    final int type = getType();
     return type == Types.CLOB || type == Types.BLOB
            || type == Types.LONGVARBINARY || type == Types.OTHER;
   }
@@ -251,6 +216,7 @@ final class MutableColumnDataType
    */
   public boolean isCharacterType()
   {
+    final int type = getType();
     return type == Types.CHAR || type == Types.LONGVARCHAR
            || type == Types.VARCHAR || type == Types.CLOB;
   }
@@ -260,6 +226,7 @@ final class MutableColumnDataType
    */
   public boolean isDateType()
   {
+    final int type = getType();
     return type == Types.TIMESTAMP || type == Types.TIME || type == Types.DATE;
   }
 
@@ -276,6 +243,7 @@ final class MutableColumnDataType
    */
   public boolean isIntegralType()
   {
+    final int type = getType();
     return type == Types.INTEGER || type == Types.BIGINT
            || type == Types.SMALLINT || type == Types.TINYINT;
   }
@@ -293,6 +261,7 @@ final class MutableColumnDataType
    */
   public boolean isRealType()
   {
+    final int type = getType();
     return type == Types.DECIMAL || type == Types.FLOAT || type == Types.REAL
            || type == Types.DOUBLE || type == Types.NUMERIC;
   }
@@ -437,7 +406,7 @@ final class MutableColumnDataType
 
   void setType(final int type)
   {
-    this.type = type;
+    this.type = SqlDataType.lookupSqlDataType(type);
   }
 
   void setTypeClassName(final String typeClassName)
