@@ -34,15 +34,18 @@ import java.util.Map;
 public final class SqlDataType
 {
 
+  /** Unknown SQL data type. */
   public static final SqlDataType UNKNOWN = new SqlDataType(Integer.MAX_VALUE,
                                                             "<UNKNOWN>");
 
   private static final Map<Integer, SqlDataType> JAVA_SQL_TYPES = getJavaSqlTypes();
 
   /**
-   * The java.sql.Types type name.
+   * The java.sql.Types type .
    * 
-   * @return java.sql.Types type name
+   * @param type
+   *        java.sql.Types type
+   * @return java.sql.Types type
    */
   public static SqlDataType lookupSqlDataType(final int type)
   {
