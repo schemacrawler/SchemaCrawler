@@ -20,6 +20,7 @@
 
 package schemacrawler.crawl;
 
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -37,7 +38,8 @@ import schemacrawler.schema.TableType;
 public final class SchemaCrawler
 {
 
-  private static final Logger LOGGER = Logger.getLogger(SchemaCrawler.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(SchemaCrawler.class
+    .getName());
 
   /**
    * Gets the entire schema.
@@ -50,46 +52,56 @@ public final class SchemaCrawler
    *        Options
    * @return Schema
    */
-  public static Schema getSchema(
-      final DataSource dataSource,
-      final SchemaInfoLevel infoLevel,
-      final SchemaCrawlerOptions options)
+  public static Schema getSchema(final DataSource dataSource,
+                                 final SchemaInfoLevel infoLevel,
+                                 final SchemaCrawlerOptions options)
   {
 
     Connection connection;
-    try {
+    try
+    {
       connection = dataSource.getConnection();
     }
-    catch (final SQLException e) {
+    catch (final SQLException e)
+    {
       LOGGER.log(Level.WARNING, e.getMessage(), e);
       return null;
     }
 
     String catalog = null;
-    try {
+    try
+    {
       catalog = connection.getCatalog();
     }
-    catch (final SQLException e) {
+    catch (final SQLException e)
+    {
       LOGGER.log(Level.WARNING, e.getMessage(), e);
       // NOTE: catalog remains null, which is ok for JDBC
     }
-    finally {
-      try {
-        if (connection != null) {
+    finally
+    {
+      try
+      {
+        if (connection != null)
+        {
           connection.close();
         }
       }
-      catch (final SQLException e) {
+      catch (final SQLException e)
+      {
         LOGGER.log(Level.WARNING, "Could not close connection", e);
       }
     }
 
-    final CachingCrawlerHandler schemaMaker = new CachingCrawlerHandler(catalog, infoLevel);
-    try {
+    final CachingCrawlerHandler schemaMaker = new CachingCrawlerHandler(catalog,
+                                                                        infoLevel);
+    try
+    {
       final SchemaCrawler crawler = new SchemaCrawler(dataSource, schemaMaker);
       crawler.crawl(options);
     }
-    catch (final SchemaCrawlerException e) {
+    catch (final SchemaCrawlerException e)
+    {
       LOGGER.log(Level.WARNING, e.getMessage(), e);
     }
 
@@ -109,14 +121,18 @@ public final class SchemaCrawler
    * @throws SchemaCrawlerException
    *         On a crawler exception
    */
-  public SchemaCrawler(final DataSource dataSource, final CrawlHandler crawlHandler) throws SchemaCrawlerException
+  public SchemaCrawler(final DataSource dataSource,
+                       final CrawlHandler crawlHandler)
+    throws SchemaCrawlerException
   {
-    if (dataSource == null) {
+    if (dataSource == null)
+    {
       throw new SchemaCrawlerException("No data source specified");
     }
     this.dataSource = dataSource;
 
-    if (crawlHandler == null) {
+    if (crawlHandler == null)
+    {
       throw new SchemaCrawlerException("No crawl handler specified");
     }
     handler = crawlHandler;
@@ -130,89 +146,120 @@ public final class SchemaCrawler
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  public void crawl(final SchemaCrawlerOptions options) throws SchemaCrawlerException
+  public void crawl(final SchemaCrawlerOptions options)
+    throws SchemaCrawlerException
   {
     RetrieverConnection retrieverConnection = null;
-    try {
+    try
+    {
       SchemaCrawlerOptions schemaCrawlerOptions = options;
-      if (schemaCrawlerOptions == null) {
+      if (schemaCrawlerOptions == null)
+      {
         schemaCrawlerOptions = new SchemaCrawlerOptions();
       }
-      retrieverConnection = new RetrieverConnection(dataSource, schemaCrawlerOptions.getInformationSchemaViews());
+      retrieverConnection = new RetrieverConnection(dataSource,
+                                                    schemaCrawlerOptions);
 
       final SchemaInfoLevel infoLevel = handler.getInfoLevelHint();
       handler.begin();
-      final MutableDatabaseInfo databaseInfo = crawlDatabaseInfo(retrieverConnection, infoLevel);
-      final NamedObjectList<MutableColumnDataType> columnDataTypes = databaseInfo.getColumnDataTypesList();
+      final MutableDatabaseInfo databaseInfo = crawlDatabaseInfo(retrieverConnection,
+                                                                 infoLevel);
+      final NamedObjectList<MutableColumnDataType> columnDataTypes = databaseInfo
+        .getColumnDataTypesList();
 
-      crawlTables(retrieverConnection, infoLevel, schemaCrawlerOptions, columnDataTypes);
-      crawlProcedures(retrieverConnection, infoLevel, schemaCrawlerOptions, columnDataTypes);
+      crawlTables(retrieverConnection,
+                  infoLevel,
+                  schemaCrawlerOptions,
+                  columnDataTypes);
+      crawlProcedures(retrieverConnection,
+                      infoLevel,
+                      schemaCrawlerOptions,
+                      columnDataTypes);
 
       handler.end();
     }
-    catch (final SQLException e) {
+    catch (final SQLException e)
+    {
       final String errorMessage = e.getMessage();
       LOGGER.log(Level.WARNING, "Database access error: " + errorMessage);
       throw new SchemaCrawlerException(errorMessage, e);
     }
-    finally {
-      if (retrieverConnection != null) {
+    finally
+    {
+      if (retrieverConnection != null)
+      {
         retrieverConnection.close();
       }
     }
   }
 
-  private MutableDatabaseInfo crawlDatabaseInfo(
-      final RetrieverConnection retrieverConnection,
-      final SchemaInfoLevel infoLevel) throws SchemaCrawlerException
+  private MutableDatabaseInfo crawlDatabaseInfo(final RetrieverConnection retrieverConnection,
+                                                final SchemaInfoLevel infoLevel)
+    throws SchemaCrawlerException
   {
     MutableDatabaseInfo dbInfo;
-    try {
+    try
+    {
       final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection);
       dbInfo = retriever.retrieveDatabaseInfo();
-      if (infoLevel.isGreaterThan(SchemaInfoLevel.basic)) {
+      if (infoLevel.isGreaterThan(SchemaInfoLevel.basic))
+      {
         retriever.retrieveColumnDataTypes(dbInfo);
       }
-      if (infoLevel.isGreaterThan(SchemaInfoLevel.verbose)) {
+      if (infoLevel.isGreaterThan(SchemaInfoLevel.verbose))
+      {
         retriever.retrieveAdditionalDatabaseInfo(dbInfo);
         retriever.retrieveUserDefinedColumnDataTypes(dbInfo);
       }
     }
-    catch (final SQLException e) {
-      throw new SchemaCrawlerException("Exception retrieving database information", e);
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerException("Exception retrieving database information",
+                                       e);
     }
     handler.handle(dbInfo);
 
     return dbInfo;
   }
 
-  private void crawlProcedures(
-      final RetrieverConnection retrieverConnection,
-      final SchemaInfoLevel infoLevel,
-      final SchemaCrawlerOptions options,
-      final NamedObjectList<MutableColumnDataType> columnDataTypes) throws SchemaCrawlerException
+  private void crawlProcedures(final RetrieverConnection retrieverConnection,
+                               final SchemaInfoLevel infoLevel,
+                               final SchemaCrawlerOptions options,
+                               final NamedObjectList<MutableColumnDataType> columnDataTypes)
+    throws SchemaCrawlerException
   {
     ProcedureRetriever retriever;
     NamedObjectList<MutableProcedure> procedures;
-    try {
+    try
+    {
       retriever = new ProcedureRetriever(retrieverConnection);
       final ProcedureExRetriever retrieverExtra = new ProcedureExRetriever(retrieverConnection);
-      procedures = retriever.retrieveProcedures(options.isShowStoredProcedures(), options.getTableInclusionRule());
-      if (infoLevel.isGreaterThanOrEqualTo(SchemaInfoLevel.verbose)) {
+      procedures = retriever.retrieveProcedures(options
+        .isShowStoredProcedures(), options.getTableInclusionRule());
+      if (infoLevel.isGreaterThanOrEqualTo(SchemaInfoLevel.verbose))
+      {
         retrieverExtra.retrieveProcedureInformation(procedures);
       }
     }
-    catch (final SQLException e) {
+    catch (final SQLException e)
+    {
       throw new SchemaCrawlerException("Exception retrieving procedures", e);
     }
 
-    for (final MutableProcedure procedure : procedures) {
-      if (infoLevel != SchemaInfoLevel.minimum) {
-        try {
-          retriever.retrieveProcedureColumns(procedure, options.getColumnInclusionRule(), columnDataTypes);
+    for (final MutableProcedure procedure: procedures)
+    {
+      if (infoLevel != SchemaInfoLevel.minimum)
+      {
+        try
+        {
+          retriever.retrieveProcedureColumns(procedure, options
+            .getColumnInclusionRule(), columnDataTypes);
         }
-        catch (final SQLException e) {
-          throw new SchemaCrawlerException("Error retrieving metadata for procedure " + procedure, e);
+        catch (final SQLException e)
+        {
+          throw new SchemaCrawlerException("Error retrieving metadata for procedure "
+                                               + procedure,
+                                           e);
         }
       }
       // set comparators
@@ -222,48 +269,64 @@ public final class SchemaCrawler
     }
   }
 
-  private void crawlTables(
-      final RetrieverConnection retrieverConnection,
-      final SchemaInfoLevel infoLevel,
-      final SchemaCrawlerOptions options,
-      final NamedObjectList<MutableColumnDataType> columnDataTypes) throws SchemaCrawlerException
+  private void crawlTables(final RetrieverConnection retrieverConnection,
+                           final SchemaInfoLevel infoLevel,
+                           final SchemaCrawlerOptions options,
+                           final NamedObjectList<MutableColumnDataType> columnDataTypes)
+    throws SchemaCrawlerException
   {
     TableRetriever retriever;
     TableExRetriever retrieverExtra;
     NamedObjectList<MutableTable> tables;
-    try {
+    try
+    {
       retriever = new TableRetriever(retrieverConnection);
       retrieverExtra = new TableExRetriever(retrieverConnection);
-      tables = retriever.retrieveTables(options.getTableTypes(), options.getTableInclusionRule());
-      if (infoLevel.isGreaterThanOrEqualTo(SchemaInfoLevel.verbose)) {
+      tables = retriever.retrieveTables(options.getTableTypes(), options
+        .getTableInclusionRule());
+      if (infoLevel.isGreaterThanOrEqualTo(SchemaInfoLevel.verbose))
+      {
         retrieverExtra.retrieveCheckConstraintInformation(tables);
         retrieverExtra.retrieveViewInformation(tables);
       }
-      if (infoLevel == SchemaInfoLevel.maximum) {
+      if (infoLevel == SchemaInfoLevel.maximum)
+      {
         retrieverExtra.retrievePrivileges(null, tables);
         retrieverExtra.retrieveTriggerInformation(tables);
       }
     }
-    catch (final SQLException e) {
+    catch (final SQLException e)
+    {
       throw new SchemaCrawlerException("Exception retrieving tables", e);
     }
 
-    for (final MutableTable table : tables) {
-      if (infoLevel.isGreaterThan(SchemaInfoLevel.minimum)) {
-        try {
-          retriever.retrieveColumns(table, options.getColumnInclusionRule(), columnDataTypes);
-          if (infoLevel == SchemaInfoLevel.maximum) {
+    for (final MutableTable table: tables)
+    {
+      if (infoLevel.isGreaterThan(SchemaInfoLevel.minimum))
+      {
+        try
+        {
+          retriever.retrieveColumns(table,
+                                    options.getColumnInclusionRule(),
+                                    columnDataTypes);
+          if (infoLevel == SchemaInfoLevel.maximum)
+          {
             retrieverExtra.retrievePrivileges(table, table.getColumnsList());
           }
           retriever.retrievePrimaryKeys(table);
-          if (table.getType() != TableType.view && infoLevel.isGreaterThanOrEqualTo(SchemaInfoLevel.verbose)) {
+          if (table.getType() != TableType.view
+              && infoLevel.isGreaterThanOrEqualTo(SchemaInfoLevel.verbose))
+          {
             retriever.retrieveForeignKeys(tables, table.getName());
             retriever.retrieveIndices(table, true, false);
             retriever.retrieveIndices(table, false, false);
           }
         }
-        catch (final SQLException e) {
-          throw new SchemaCrawlerException("Error retrieving metadata for table " + table, e);
+        catch (final SQLException e)
+        {
+          throw new SchemaCrawlerException("Error retrieving metadata for table "
+                                               + table,
+                                           e);
         }
       }
       // set comparators

@@ -53,6 +53,8 @@ public final class SchemaCrawlerOptions
   private static final String SC_SORT_ALPHABETICALLY_TABLE_COLUMNS = "schemacrawler.sort_alphabetically.table_columns";
   private static final String SC_TABLE_TYPES = "schemacrawler.table_types";
 
+  private static final String OTHER_SCHEMA_PATTERN = "schemapattern";
+
   private static TableType[] copyTableTypes(final TableType[] tableTypes)
   {
     final TableType[] tableTypesCopy = new TableType[tableTypes.length];
@@ -64,8 +66,6 @@ public final class SchemaCrawlerOptions
 
   private boolean showStoredProcedures;
 
-  private InformationSchemaViews informationSchemaViews;
-
   private InclusionRule tableInclusionRule;
   private InclusionRule columnInclusionRule;
 
@@ -74,6 +74,9 @@ public final class SchemaCrawlerOptions
   private NamedObjectSort tableIndexComparator;
 
   private NamedObjectSort procedureColumnComparator;
+
+  private InformationSchemaViews informationSchemaViews;
+  private String schemaPattern;
 
   /**
    * Default options.
@@ -85,6 +88,7 @@ public final class SchemaCrawlerOptions
     showStoredProcedures = false;
 
     informationSchemaViews = new InformationSchemaViews();
+    schemaPattern = null;
 
     tableInclusionRule = new InclusionRule();
     columnInclusionRule = new InclusionRule();
@@ -124,8 +128,10 @@ public final class SchemaCrawlerOptions
 
     showStoredProcedures = config.getBooleanValue(SC_SHOW_STORED_PROCEDURES);
 
-    informationSchemaViews = new InformationSchemaViews(config
-      .partition(partition));
+    final Config partitionedConfig = config.partition(partition);
+    informationSchemaViews = new InformationSchemaViews(partitionedConfig);
+    schemaPattern = partitionedConfig
+      .getStringValue(OTHER_SCHEMA_PATTERN, null);
 
     tableInclusionRule = new InclusionRule(config
                                              .getStringValue(SC_TABLE_PATTERN_INCLUDE,
@@ -180,6 +186,17 @@ public final class SchemaCrawlerOptions
   public InformationSchemaViews getInformationSchemaViews()
   {
     return informationSchemaViews;
+  }
+
+  /**
+   * Gets the schema pattern.
+   * 
+   * @return Schema name pattern
+   * @see SchemaCrawlerOptions#setSchemaPattern(String)
+   */
+  public String getSchemaPattern()
+  {
+    return schemaPattern;
   }
 
   /**
@@ -332,6 +349,20 @@ public final class SchemaCrawlerOptions
     {
       this.informationSchemaViews = informationSchemaViews;
     }
+  }
+
+  /**
+   * Sets the schema pattern.
+   * 
+   * @param schemaPattern
+   *        A schema name pattern; must match the schema name as it is
+   *        stored in the database; "" retrieves those without a schema;
+   *        <code>null</code> means that the schema name should not be
+   *        used to narrow the search.
+   */
+  public void setSchemaPattern(final String schemaPattern)
+  {
+    this.schemaPattern = schemaPattern;
   }
 
   /**
