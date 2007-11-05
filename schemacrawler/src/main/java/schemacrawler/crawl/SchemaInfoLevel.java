@@ -21,57 +21,204 @@
 package schemacrawler.crawl;
 
 
+import java.io.Serializable;
+
 /**
  * Enumeration for level of schema detail.
  */
-public enum SchemaInfoLevel
+public final class SchemaInfoLevel
+  implements Serializable
 {
 
   /** No schema detail. */
-  minimum,
-  /** Basic schema detail. */
-  basic,
-  /** Verbose schema detail. */
-  verbose,
-  /** Maximum schema detail. */
-  maximum;
+  public final static SchemaInfoLevel minimum;
 
+  /** Basic schema detail. */
+  public final static SchemaInfoLevel basic;
+  /** Verbose schema detail. */
+  public final static SchemaInfoLevel verbose;
+  /** Maximum schema detail. */
+  public final static SchemaInfoLevel maximum;
   /**
-   * Checks if this is greater than the provided info level.
-   * 
-   * @param infoLevel
-   *        Info level to check against
-   * @return Yes if this is greater
+   * <pre>
+   *   DatabaseInfo
+   *   &gt; basic
+   *       retrieveColumnDataTypes
+   *   &gt; verbose
+   *       retrieveAdditionalDatabaseInfo
+   *       retrieveUserDefinedColumnDataTypes
+   *       
+   *   Procedures    
+   *   &gt; minimum
+   *       retrieveProcedureColumns  
+   *   &gt;= verbose
+   *       retrieveProcedureInformation     
+   *       
+   *   Tables
+   *   &gt;= verbose
+   *       retrieveCheckConstraintInformation
+   *       retrieveViewInformation
+   *       retrieveForeignKeys
+   *       retrieveIndices
+   *   = maximum      
+   *       retrievePrivileges (table and columns)
+   *       retrieveTriggerInformation      
+   *   &gt; minimum      
+   *       retrieveColumns
+   * </pre>
    */
-  public boolean isGreaterThan(final SchemaInfoLevel infoLevel)
+
+  private static final long serialVersionUID = -6721986729175552425L;
+
+  private boolean isImmutable;
+
+  private boolean retrieveColumnDataTypes;
+  private boolean retrieveAdditionalDatabaseInfo;
+  private boolean retrieveUserDefinedColumnDataTypes;
+  private boolean retrieveProcedureColumns;
+  private boolean retrieveProcedureInformation;
+  private boolean retrieveCheckConstraintInformation;
+  private boolean retrieveViewInformation;
+  private boolean retrieveForeignKeys;
+  private boolean retrieveIndices;
+  private boolean retrieveTablePrivileges;
+  private boolean retrieveTableColumnPrivileges;
+  private boolean retrieveTriggerInformation;
+  private boolean retrieveTableColumns;
+
+  public boolean isRetrieveAdditionalDatabaseInfo()
   {
-    if (infoLevel != null)
-    {
-      return ordinal() > infoLevel.ordinal();
-    }
-    else
-    {
-      return false;
-    }
+    return retrieveAdditionalDatabaseInfo;
   }
 
-  /**
-   * Checks if this is greater than or equal to the provided info level.
-   * 
-   * @param infoLevel
-   *        Info level to check against
-   * @return Yes if this is greater or equal to
-   */
-  public boolean isGreaterThanOrEqualTo(final SchemaInfoLevel infoLevel)
+  public boolean isRetrieveCheckConstraintInformation()
   {
-    if (infoLevel != null)
-    {
-      return ordinal() >= infoLevel.ordinal();
-    }
-    else
-    {
-      return false;
-    }
+    return retrieveCheckConstraintInformation;
+  }
+
+  public boolean isRetrieveColumnDataTypes()
+  {
+    return retrieveColumnDataTypes;
+  }
+
+  public boolean isRetrieveForeignKeys()
+  {
+    return retrieveForeignKeys;
+  }
+
+  public boolean isRetrieveIndices()
+  {
+    return retrieveIndices;
+  }
+
+  public boolean isRetrieveProcedureColumns()
+  {
+    return retrieveProcedureColumns;
+  }
+
+  public boolean isRetrieveProcedureInformation()
+  {
+    return retrieveProcedureInformation;
+  }
+
+  public boolean isRetrieveTableColumnPrivileges()
+  {
+    return retrieveTableColumnPrivileges;
+  }
+
+  public boolean isRetrieveTableColumns()
+  {
+    return retrieveTableColumns;
+  }
+
+  public boolean isRetrieveTablePrivileges()
+  {
+    return retrieveTablePrivileges;
+  }
+
+  public boolean isRetrieveTriggerInformation()
+  {
+    return retrieveTriggerInformation;
+  }
+
+  public boolean isRetrieveUserDefinedColumnDataTypes()
+  {
+    return retrieveUserDefinedColumnDataTypes;
+  }
+
+  public boolean isRetrieveViewInformation()
+  {
+    return retrieveViewInformation;
+  }
+
+  public void makeImmutable()
+  {
+    isImmutable = true;
+  }
+
+  public void setRetrieveAdditionalDatabaseInfo(final boolean retrieveAdditionalDatabaseInfo)
+  {
+    this.retrieveAdditionalDatabaseInfo = retrieveAdditionalDatabaseInfo;
+  }
+
+  public void setRetrieveCheckConstraintInformation(final boolean retrieveCheckConstraintInformation)
+  {
+    this.retrieveCheckConstraintInformation = retrieveCheckConstraintInformation;
+  }
+
+  public void setRetrieveColumnDataTypes(final boolean retrieveColumnDataTypes)
+  {
+    this.retrieveColumnDataTypes = retrieveColumnDataTypes;
+  }
+
+  public void setRetrieveForeignKeys(final boolean retrieveForeignKeys)
+  {
+    this.retrieveForeignKeys = retrieveForeignKeys;
+  }
+
+  public void setRetrieveIndices(final boolean retrieveIndices)
+  {
+    this.retrieveIndices = retrieveIndices;
+  }
+
+  public void setRetrieveProcedureColumns(final boolean retrieveProcedureColumns)
+  {
+    this.retrieveProcedureColumns = retrieveProcedureColumns;
+  }
+
+  public void setRetrieveProcedureInformation(final boolean retrieveProcedureInformation)
+  {
+    this.retrieveProcedureInformation = retrieveProcedureInformation;
+  }
+
+  public void setRetrieveTableColumnPrivileges(final boolean retrieveTableColumnPrivileges)
+  {
+    this.retrieveTableColumnPrivileges = retrieveTableColumnPrivileges;
+  }
+
+  public void setRetrieveTableColumns(final boolean retrieveTableColumns)
+  {
+    this.retrieveTableColumns = retrieveTableColumns;
+  }
+
+  public void setRetrieveTablePrivileges(final boolean retrieveTablePrivileges)
+  {
+    this.retrieveTablePrivileges = retrieveTablePrivileges;
+  }
+
+  public void setRetrieveTriggerInformation(final boolean retrieveTriggerInformation)
+  {
+    this.retrieveTriggerInformation = retrieveTriggerInformation;
+  }
+
+  public void setRetrieveUserDefinedColumnDataTypes(final boolean retrieveUserDefinedColumnDataTypes)
+  {
+    this.retrieveUserDefinedColumnDataTypes = retrieveUserDefinedColumnDataTypes;
+  }
+
+  public void setRetrieveViewInformation(final boolean retrieveViewInformation)
+  {
+    this.retrieveViewInformation = retrieveViewInformation;
   }
 
 }
