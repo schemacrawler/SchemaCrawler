@@ -30,8 +30,6 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
-import dbconnector.datasource.PropertiesDataSource;
-
 /**
  * A connection for the retriever.
  * 
@@ -44,15 +42,20 @@ final class RetrieverConnection
     .getLogger(RetrieverConnection.class.getName());
 
   private final DatabaseMetaData metaData;
-  private String catalog;
-  private String schemaPattern;
-  private String jdbcDriverClassName;
+  private final String catalog;
+  private final String schemaPattern;
+  private final String jdbcDriverClassName;
   private final InformationSchemaViews informationSchemaViews;
 
   RetrieverConnection(final DataSource dataSource,
-                      final InformationSchemaViews informationSchemaViews)
+                      final SchemaCrawlerOptions options)
     throws SchemaCrawlerException, SQLException
   {
+    SchemaCrawlerOptions schemaCrawlerOptions = options;
+    if (schemaCrawlerOptions == null)
+    {
+      schemaCrawlerOptions = new SchemaCrawlerOptions();
+    }
     if (dataSource == null)
     {
       throw new SchemaCrawlerException("No data source provided");
@@ -60,31 +63,22 @@ final class RetrieverConnection
     final Connection connection = dataSource.getConnection();
     metaData = connection.getMetaData();
 
-    if (dataSource instanceof PropertiesDataSource)
+    String catalogFromConnection;
+    try
     {
-      final PropertiesDataSource propertiesDataSource = (PropertiesDataSource) dataSource;
-      catalog = propertiesDataSource.getCatalog();
-      schemaPattern = propertiesDataSource.getSourceConfiguration()
-        .get("schemapattern");
-      jdbcDriverClassName = propertiesDataSource.getJdbcDriverClass();
+      catalogFromConnection = connection.getCatalog();
     }
-    else
+    catch (final SQLException e)
     {
-      try
-      {
-        catalog = connection.getCatalog();
-        // NOTE: schemaPattern remains null, which is ok for JDBC
-        schemaPattern = null;
-        jdbcDriverClassName = DriverManager.getDriver(metaData.getURL())
-          .getClass().getName();
-      }
-      catch (final SQLException e)
-      {
-        LOGGER.log(Level.WARNING, "", e);
-      }
+      catalogFromConnection = null;
+      LOGGER.log(Level.WARNING, "", e);
     }
+    catalog = catalogFromConnection;
+    schemaPattern = schemaCrawlerOptions.getSchemaPattern();
+    jdbcDriverClassName = DriverManager.getDriver(metaData.getURL()).getClass()
+      .getName();
 
-    this.informationSchemaViews = informationSchemaViews;
+    informationSchemaViews = schemaCrawlerOptions.getInformationSchemaViews();
   }
 
   /**
