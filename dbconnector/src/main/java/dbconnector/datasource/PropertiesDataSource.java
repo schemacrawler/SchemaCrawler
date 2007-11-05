@@ -94,8 +94,6 @@ public final class PropertiesDataSource
   private String databaseProductVersion;
   private String driverName;
   private String driverVersion;
-  private String catalogTerm;
-  private String catalog;
 
   private PrintWriter logWriter;
 
@@ -173,16 +171,6 @@ public final class PropertiesDataSource
     //
     constructPropertiesDataSource(properties, connectionName);
 
-  }
-
-  /**
-   * Get the catalog for this database connection.
-   * 
-   * @return Catalog name
-   */
-  public String getCatalog()
-  {
-    return catalog;
   }
 
   /**
@@ -284,16 +272,6 @@ public final class PropertiesDataSource
   }
 
   /**
-   * Gets the properties that were used to create this data source.
-   * 
-   * @return Source properties
-   */
-  public Map<String, String> getSourceConfiguration()
-  {
-    return Utilities.propertiesMap(connectionParams);
-  }
-
-  /**
    * Gets the database connection URL.
    * 
    * @return Database connection URL
@@ -367,19 +345,16 @@ public final class PropertiesDataSource
   {
 
     final StringBuffer info = new StringBuffer();
-
     info.append("-- database product: ").append(databaseProductName)
       .append(" ").append(databaseProductVersion).append(Utilities.NEWLINE)
       .append("-- driver: ").append(jdbcDriver.getClass().getName())
       .append(" - ").append(driverName).append(" ").append(driverVersion)
-      .append(Utilities.NEWLINE).append("-- connection: ").append(url)
-      .append(Utilities.NEWLINE).append("-- " + catalogTerm + ": ")
-      .append(catalog);
-
+      .append(Utilities.NEWLINE).append("-- connection: ").append(url);
     return info.toString();
 
-  } // end databaseInfo
+  }
 
+  @SuppressWarnings("unchecked")
   private void constructPropertiesDataSource(final Properties properties,
                                              final String connectionName)
     throws PropertiesDataSourceException
@@ -490,16 +465,6 @@ public final class PropertiesDataSource
       databaseProductVersion = metaData.getDatabaseProductVersion();
       driverName = metaData.getDriverName();
       driverVersion = metaData.getDriverVersion();
-      catalogTerm = metaData.getCatalogTerm();
-      if (catalogTerm == null || catalogTerm.length() == 0)
-      {
-        catalogTerm = "catalog";
-      }
-      catalog = connection.getCatalog();
-      if (catalog == null)
-      {
-        catalog = "";
-      }
     }
     catch (final SQLException e)
     {
