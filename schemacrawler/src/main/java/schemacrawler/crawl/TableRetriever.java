@@ -54,18 +54,6 @@ final class TableRetriever
   private static final Logger LOGGER = Logger.getLogger(TableRetriever.class
     .getName());
 
-  /**
-   * Constructs a SchemaCrawler object, from a connection.
-   * 
-   * @param connection
-   *        An open database connection.
-   * @param driverClassName
-   *        Class name of the JDBC driver
-   * @param schemaPatternString
-   *        JDBC schema pattern, or null
-   * @throws SQLException
-   *         On a SQL exception
-   */
   TableRetriever(final RetrieverConnection retrieverConnection)
     throws SQLException
   {

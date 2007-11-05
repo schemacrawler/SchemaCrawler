@@ -55,18 +55,6 @@ abstract class AbstractRetriever
 
   private final RetrieverConnection retrieverConnection;
 
-  /**
-   * Constructs a SchemaCrawler object, from a connection.
-   * 
-   * @param connection
-   *        An open database connection.
-   * @param driverClassName
-   *        Class name of the JDBC driver
-   * @param schemaPatternString
-   *        JDBC schema pattern, or null
-   * @throws SQLException
-   *         On a SQL exception
-   */
   AbstractRetriever(final RetrieverConnection retrieverConnection)
     throws SQLException
   {
