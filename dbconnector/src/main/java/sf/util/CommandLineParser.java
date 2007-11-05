@@ -405,7 +405,7 @@ public final class CommandLineParser
 
   private static final String DASH = "-";
 
-  private String[] remainingArgs;
+  private String[] remainingArgs = new String[0];
 
   private final Map<String, Option<?>> optionsMap = new HashMap<String, Option<?>>();
 
