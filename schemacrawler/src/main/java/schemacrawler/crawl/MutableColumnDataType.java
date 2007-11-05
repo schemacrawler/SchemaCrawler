@@ -62,6 +62,7 @@ final class MutableColumnDataType
     super(name);
     // Default values
     searchable = SearchableType.unknown;
+    type = SqlDataType.UNKNOWN;
     createParameters = "";
   }
 

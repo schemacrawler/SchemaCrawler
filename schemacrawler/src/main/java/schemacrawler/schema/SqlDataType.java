@@ -20,6 +20,7 @@
 package schemacrawler.schema;
 
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.sql.Types;
 import java.util.Collections;
@@ -32,7 +33,10 @@ import java.util.Map;
  * @author Sualeh Fatehi
  */
 public final class SqlDataType
+  implements Serializable
 {
+
+  private static final long serialVersionUID = 2614819974745473431L;
 
   /** Unknown SQL data type. */
   public static final SqlDataType UNKNOWN = new SqlDataType(Integer.MAX_VALUE,

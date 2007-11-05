@@ -29,16 +29,26 @@ import java.util.Map;
  * 
  * @author Sualeh Fatehi
  */
+@SuppressWarnings("unchecked")
 public class Entities
 {
 
-  private final static Map<Integer, String> BASIC_ENTITIES_MAP;
-  private final static Map<Integer, String> APOS_ENTITIES_MAP;
-  private final static Map<Integer, String> ISO8859_1_ENTITIES_MAP;
-  private final static Map<Integer, String> HTML40_ENTITIES_MAP;
-  
+  /** XML character entities. */
+  public final static Entities XML;
+
+  /** HTML 3.2 character entities. */
+  public final static Entities HTML32;
+
+  /** HTML 4.0 character entities. */
+  public final static Entities HTML40;
+
   static
   {
+    final Map<Integer, String> BASIC_ENTITIES_MAP;
+    final Map<Integer, String> APOS_ENTITIES_MAP;
+    final Map<Integer, String> ISO8859_1_ENTITIES_MAP;
+    final Map<Integer, String> HTML40_ENTITIES_MAP;
+
     final Map<Integer, String> map = new HashMap<Integer, String>();
 
     map.clear();
@@ -400,20 +410,18 @@ public class Entities
     map.put(732, "tilde");
     map.put(948, "delta");
     HTML40_ENTITIES_MAP = Collections.unmodifiableMap(map);
+
+    /** XML character entities. */
+    XML = new Entities(BASIC_ENTITIES_MAP, APOS_ENTITIES_MAP);
+
+    /** HTML 3.2 character entities. */
+    HTML32 = new Entities(BASIC_ENTITIES_MAP, ISO8859_1_ENTITIES_MAP);
+
+    /** HTML 4.0 character entities. */
+    HTML40 = new Entities(BASIC_ENTITIES_MAP,
+                          ISO8859_1_ENTITIES_MAP,
+                          HTML40_ENTITIES_MAP);
   }
-
-  /** XML character entities. */
-  public final static Entities XML = new Entities(BASIC_ENTITIES_MAP,
-                                                  APOS_ENTITIES_MAP);
-
-  /** HTML 3.2 character entities. */
-  public final static Entities HTML32 = new Entities(BASIC_ENTITIES_MAP,
-                                                     ISO8859_1_ENTITIES_MAP);
-
-  /** HTML 4.0 character entities. */
-  public final static Entities HTML40 = new Entities(BASIC_ENTITIES_MAP,
-                                                     ISO8859_1_ENTITIES_MAP,
-                                                     HTML40_ENTITIES_MAP);
 
   private static Map<String, Integer> flipMap(final Map<Integer, String> charEntityMap)
   {
@@ -454,7 +462,7 @@ public class Entities
     for (i = 0; i < str.length(); ++i)
     {
       final char ch = str.charAt(i);
-      final String entityName = charEntityMap.get(ch);
+      final String entityName = charEntityMap.get((int) ch);
       if (entityName == null)
       {
         if (ch > 0x7F)
