@@ -35,6 +35,7 @@ import edu.uci.ics.jung.graph.decorators.VertexShapeFunction;
 import edu.uci.ics.jung.graph.decorators.VertexStringer;
 import edu.uci.ics.jung.visualization.PluggableRenderer;
 
+@SuppressWarnings("unchecked")
 final class SchemaCrawlerRenderer
   extends PluggableRenderer
 {

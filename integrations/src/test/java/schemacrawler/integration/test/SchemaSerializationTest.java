@@ -95,17 +95,32 @@ public class SchemaSerializationTest
 
   private void write(final String contents, final String filename)
   {
+    Writer writer = null;
     try
     {
       final File file = new File(filename);
       file.getCanonicalFile().getParentFile().mkdirs();
-      final Writer writer = new FileWriter(file);
+      writer = new FileWriter(file);
       writer.write(contents);
-      writer.close();
+      writer.flush();
     }
     catch (final IOException e)
     {
       e.printStackTrace();
+    }
+    finally
+    {
+      if (writer != null)
+      {
+        try
+        {
+          writer.close();
+        }
+        catch (IOException e)
+        {
+          // Ignore
+        }
+      }
     }
   }
 
