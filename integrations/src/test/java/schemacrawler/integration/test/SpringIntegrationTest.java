@@ -8,7 +8,6 @@ import java.io.File;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -46,14 +45,9 @@ public class SpringIntegrationTest
     testUtility.createMemoryDatabase();
   }
 
-  private ApplicationContext appContext;
+  private ApplicationContext appContext = new ClassPathXmlApplicationContext("context.xml");
 
-  @Before
-  public void setup()
-  {
-    appContext = new ClassPathXmlApplicationContext("context.xml");
-  }
-
+  @SuppressWarnings("unchecked")
   @Test
   public void testExecutableForCount()
     throws Exception
@@ -69,6 +63,7 @@ public class SpringIntegrationTest
     executeAndCheckForOutputFile(executable, outputFilename);
   }
 
+  @SuppressWarnings("unchecked")
   @Test
   public void testExecutableForFreeMarker()
     throws Exception
@@ -84,6 +79,7 @@ public class SpringIntegrationTest
     executeAndCheckForOutputFile(executable, outputFilename);
   }
 
+  @SuppressWarnings("unchecked")
   @Test
   public void testExecutableForQuery()
     throws Exception
@@ -99,6 +95,7 @@ public class SpringIntegrationTest
     executeAndCheckForOutputFile(executable, outputFilename);
   }
 
+  @SuppressWarnings("unchecked")
   @Test
   public void testExecutableForSchema()
     throws Exception
@@ -114,6 +111,7 @@ public class SpringIntegrationTest
     executeAndCheckForOutputFile(executable, outputFilename);
   }
 
+  @SuppressWarnings("unchecked")
   @Test
   public void testExecutableForVelocity()
     throws Exception
@@ -129,6 +127,7 @@ public class SpringIntegrationTest
     executeAndCheckForOutputFile(executable, outputFilename);
   }
 
+  @SuppressWarnings("unchecked")
   @Test
   public void testExecutableForGrep()
     throws Exception
