@@ -25,8 +25,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.logging.Logger;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -45,9 +43,6 @@ import dbconnector.test.TestUtility;
 
 public class SchemaCrawlerDeepTest
 {
-
-  private static final Logger LOGGER = Logger
-    .getLogger(SchemaCrawlerDeepTest.class.getName());
 
   private static TestUtility testUtility = new TestUtility();
 
