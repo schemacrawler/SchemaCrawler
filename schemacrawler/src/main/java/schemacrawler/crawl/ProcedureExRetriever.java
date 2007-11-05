@@ -45,18 +45,6 @@ final class ProcedureExRetriever
   private static final Logger LOGGER = Logger
     .getLogger(ProcedureExRetriever.class.getName());
 
-  /**
-   * Constructs a SchemaCrawler object, from a connection.
-   * 
-   * @param connection
-   *        An open database connection.
-   * @param driverClassName
-   *        Class name of the JDBC driver
-   * @param schemaPatternString
-   *        JDBC schema pattern, or null
-   * @throws SQLException
-   *         On a SQL exception
-   */
   ProcedureExRetriever(final RetrieverConnection retrieverConnection)
     throws SQLException
   {

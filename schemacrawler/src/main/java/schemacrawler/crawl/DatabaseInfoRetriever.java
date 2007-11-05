@@ -51,18 +51,6 @@ final class DatabaseInfoRetriever
   private static final Logger LOGGER = Logger
     .getLogger(DatabaseInfoRetriever.class.getName());
 
-  /**
-   * Constructs a SchemaCrawler object, from a connection.
-   * 
-   * @param connection
-   *        An open database connection.
-   * @param driverClassName
-   *        Class name of the JDBC driver
-   * @param schemaPatternString
-   *        JDBC schema pattern, or null
-   * @throws SQLException
-   *         On a SQL exception
-   */
   DatabaseInfoRetriever(final RetrieverConnection retrieverConnection)
     throws SQLException
   {
