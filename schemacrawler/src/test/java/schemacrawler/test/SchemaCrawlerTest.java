@@ -28,6 +28,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -235,7 +236,7 @@ public class SchemaCrawlerTest
                    schemaName + "." + tableNames[tableIdx],
                    table.getFullName());
       assertEquals("Table type does not match", tableTypes[tableIdx], table
-        .getType().toString().toUpperCase());
+        .getType().toString().toUpperCase(Locale.ENGLISH));
     }
 
   }
