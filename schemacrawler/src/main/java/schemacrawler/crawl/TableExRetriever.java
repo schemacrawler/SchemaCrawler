@@ -203,51 +203,17 @@ final class TableExRetriever
 
   }
 
-  /**
-   * Retrieves table metadata according to the parameters specified. No
-   * column metadata is retrieved, for reasons of efficiency.
-   * 
-   * @param tableTypes
-   *        Array of table types
-   * @param tablePatternInclude
-   *        Table name pattern for table
-   * @param useRegExpPattern
-   *        True is the table name pattern is a regular expression;
-   *        false if the table name pattern is the JDBC pattern
-   * @throws SQLException
-   *         On a SQL exception
-   */
-  void retrievePrivileges(final DatabaseObject parent,
-                          final NamedObjectList<?> namedObjectList)
+  void retrieveTableColumnPrivileges(final MutableTable table,
+                                     final NamedObjectList<MutableColumn> tableColumnList)
     throws SQLException
   {
-    final ResultSet results;
+    retrievePrivileges(table, tableColumnList);
+  }
 
-    final boolean privilegesForTable = parent == null;
-    if (privilegesForTable)
-    {
-      results = getRetrieverConnection().getMetaData()
-        .getTablePrivileges(getRetrieverConnection().getCatalog(),
-                            getRetrieverConnection().getSchemaPattern(),
-                            "%");
-    }
-    else
-    {
-      results = getRetrieverConnection().getMetaData()
-        .getColumnPrivileges(getRetrieverConnection().getCatalog(),
-                             getRetrieverConnection().getSchemaPattern(),
-                             parent.getName(),
-                             "%");
-    }
-    try
-    {
-      createPrivileges(results, namedObjectList, privilegesForTable);
-    }
-    finally
-    {
-      results.close();
-    }
-
+  void retrieveTablePrivileges(final NamedObjectList<MutableTable> tableList)
+    throws SQLException
+  {
+    retrievePrivileges(null, tableList);
   }
 
   /**
@@ -461,6 +427,38 @@ final class TableExRetriever
           column.addPrivilege(privilege);
         }
       }
+    }
+  }
+
+  private void retrievePrivileges(final DatabaseObject parent,
+                                  final NamedObjectList<?> namedObjectList)
+    throws SQLException
+  {
+    final ResultSet results;
+
+    final boolean privilegesForTable = parent == null;
+    if (privilegesForTable)
+    {
+      results = getRetrieverConnection().getMetaData()
+        .getTablePrivileges(getRetrieverConnection().getCatalog(),
+                            getRetrieverConnection().getSchemaPattern(),
+                            "%");
+    }
+    else
+    {
+      results = getRetrieverConnection().getMetaData()
+        .getColumnPrivileges(getRetrieverConnection().getCatalog(),
+                             getRetrieverConnection().getSchemaPattern(),
+                             parent.getName(),
+                             "%");
+    }
+    try
+    {
+      createPrivileges(results, namedObjectList, privilegesForTable);
+    }
+    finally
+    {
+      results.close();
     }
   }
 

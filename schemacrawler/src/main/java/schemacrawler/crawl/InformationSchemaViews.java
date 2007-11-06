@@ -23,8 +23,6 @@ package schemacrawler.crawl;
 import java.util.HashMap;
 import java.util.Map;
 
-import schemacrawler.main.Options;
-
 /**
  * The database specific views to get additional database metadata in a
  * standard format.

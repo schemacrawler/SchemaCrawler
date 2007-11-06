@@ -29,7 +29,7 @@ import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.main.Options;
+import schemacrawler.crawl.Options;
 import sf.util.Utilities;
 
 /**

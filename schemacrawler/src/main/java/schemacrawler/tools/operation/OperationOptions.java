@@ -57,8 +57,8 @@ public final class OperationOptions
    *        Config
    */
   public OperationOptions(final Config config,
-                         final OutputOptions outputOptions,
-                         final Operation operation)
+                          final OutputOptions outputOptions,
+                          final Operation operation)
   {
     super(config, outputOptions, null);
 
@@ -87,8 +87,8 @@ public final class OperationOptions
    *        Config
    */
   public OperationOptions(final Config config,
-                         final OutputOptions outputOptions,
-                         final String queryName)
+                          final OutputOptions outputOptions,
+                          final String queryName)
   {
     super(config, outputOptions, queryName);
 

@@ -21,7 +21,6 @@
 package schemacrawler.tools;
 
 
-
 /**
  * Tool options.
  * 

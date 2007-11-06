@@ -32,7 +32,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.TableType;
 
 /**
- * SchemaCrawler uses database metadata to get the details about the
+ * SchemaCrawler uses database meta-data to get the details about the
  * schema.
  */
 public final class SchemaCrawler
@@ -206,13 +206,16 @@ public final class SchemaCrawler
       {
         retriever.retrieveColumnDataTypes(dbInfo);
       }
-      if (infoLevel.isRetrieveAdditionalDatabaseInfo())
+      if (infoLevel.isRetrieveDatabaseInfo())
       {
-        retriever.retrieveAdditionalDatabaseInfo(dbInfo);
-      }
-      if (infoLevel.isRetrieveUserDefinedColumnDataTypes())
-      {
-        retriever.retrieveUserDefinedColumnDataTypes(dbInfo);
+        if (infoLevel.isRetrieveAdditionalDatabaseInfo())
+        {
+          retriever.retrieveAdditionalDatabaseInfo(dbInfo);
+        }
+        if (infoLevel.isRetrieveUserDefinedColumnDataTypes())
+        {
+          retriever.retrieveUserDefinedColumnDataTypes(dbInfo);
+        }
       }
     }
     catch (final SQLException e)
@@ -239,7 +242,7 @@ public final class SchemaCrawler
       final ProcedureExRetriever retrieverExtra = new ProcedureExRetriever(retrieverConnection);
       procedures = retriever.retrieveProcedures(options
         .isShowStoredProcedures(), options.getTableInclusionRule());
-      if (infoLevel.isGreaterThanOrEqualTo(SchemaInfoLevel.verbose))
+      if (infoLevel.isRetrieveProcedureInformation())
       {
         retrieverExtra.retrieveProcedureInformation(procedures);
       }
@@ -287,14 +290,20 @@ public final class SchemaCrawler
       retrieverExtra = new TableExRetriever(retrieverConnection);
       tables = retriever.retrieveTables(options.getTableTypes(), options
         .getTableInclusionRule());
-      if (infoLevel.isGreaterThanOrEqualTo(SchemaInfoLevel.verbose))
+      if (infoLevel.isRetrieveCheckConstraintInformation())
       {
         retrieverExtra.retrieveCheckConstraintInformation(tables);
+      }
+      if (infoLevel.isRetrieveViewInformation())
+      {
         retrieverExtra.retrieveViewInformation(tables);
       }
-      if (infoLevel == SchemaInfoLevel.maximum)
+      if (infoLevel.isRetrieveTablePrivileges())
       {
-        retrieverExtra.retrievePrivileges(null, tables);
+        retrieverExtra.retrieveTablePrivileges(tables);
+      }
+      if (infoLevel.isRetrieveTriggerInformation())
+      {
         retrieverExtra.retrieveTriggerInformation(tables);
       }
     }
@@ -305,24 +314,30 @@ public final class SchemaCrawler
 
     for (final MutableTable table: tables)
     {
-      if (infoLevel.isGreaterThan(SchemaInfoLevel.minimum))
+      if (infoLevel.isRetrieveTableColumns())
       {
         try
         {
           retriever.retrieveColumns(table,
                                     options.getColumnInclusionRule(),
                                     columnDataTypes);
-          if (infoLevel == SchemaInfoLevel.maximum)
+          if (infoLevel.isRetrieveTableColumnPrivileges())
           {
-            retrieverExtra.retrievePrivileges(table, table.getColumnsList());
+            retrieverExtra.retrieveTableColumnPrivileges(table, table
+              .getColumnsList());
           }
           retriever.retrievePrimaryKeys(table);
-          if (table.getType() != TableType.view
-              && infoLevel.isGreaterThanOrEqualTo(SchemaInfoLevel.verbose))
+          if (table.getType() != TableType.view)
           {
-            retriever.retrieveForeignKeys(tables, table.getName());
-            retriever.retrieveIndices(table, true, false);
-            retriever.retrieveIndices(table, false, false);
+            if (infoLevel.isRetrieveForeignKeys())
+            {
+              retriever.retrieveForeignKeys(tables, table.getName());
+            }
+            if (infoLevel.isRetrieveIndices())
+            {
+              retriever.retrieveIndices(table, true, false);
+              retriever.retrieveIndices(table, false, false);
+            }
           }
         }
         catch (final SQLException e)
