@@ -1,10 +1,11 @@
 package schemacrawler.tools.grep;
 
+
 import schemacrawler.crawl.InclusionRule;
 import schemacrawler.tools.schematext.SchemaTextOptions;
 
 public class GrepOptions
-    extends SchemaTextOptions
+  extends SchemaTextOptions
 {
 
   private static final long serialVersionUID = -1606027815351884928L;
@@ -38,10 +39,12 @@ public class GrepOptions
 
   public void setColumnInclusionRule(final InclusionRule columnInclusionRule)
   {
-    if (columnInclusionRule == null) {
+    if (columnInclusionRule == null)
+    {
       this.columnInclusionRule = new InclusionRule();
     }
-    else {
+    else
+    {
       this.columnInclusionRule = columnInclusionRule;
     }
   }
@@ -53,10 +56,12 @@ public class GrepOptions
 
   public void setTableInclusionRule(final InclusionRule tableInclusionRule)
   {
-    if (tableInclusionRule == null) {
+    if (tableInclusionRule == null)
+    {
       this.tableInclusionRule = new InclusionRule();
     }
-    else {
+    else
+    {
       this.tableInclusionRule = tableInclusionRule;
     }
   }

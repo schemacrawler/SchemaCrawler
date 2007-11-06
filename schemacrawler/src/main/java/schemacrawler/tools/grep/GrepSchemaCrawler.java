@@ -39,6 +39,7 @@ public final class GrepSchemaCrawler
 
   private final GrepOptions grepOptions;
   private final CrawlHandler handler;
+
   /**
    * Constructs a SchemaCrawler object, from a connection.
    * 

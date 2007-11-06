@@ -20,6 +20,7 @@
 
 package schemacrawler.crawl;
 
+
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
@@ -31,7 +32,7 @@ import schemacrawler.schema.Table;
  * @author sfatehi
  */
 public final class CachingCrawlerHandler
-    implements CrawlHandler
+  implements CrawlHandler
 {
 
   private final MutableSchema schema;
@@ -51,13 +52,16 @@ public final class CachingCrawlerHandler
    * @param catalogName
    *        Catalog name.
    */
-  public CachingCrawlerHandler(final String catalogName, final SchemaInfoLevel infoLevel)
+  public CachingCrawlerHandler(final String catalogName,
+                               final SchemaInfoLevel infoLevel)
   {
     schema = new MutableSchema(catalogName, "schema", "schema");
-    if (infoLevel == null) {
+    if (infoLevel == null)
+    {
       this.infoLevel = SchemaInfoLevel.maximum;
     }
-    else {
+    else
+    {
       this.infoLevel = infoLevel;
     }
   }
@@ -65,7 +69,8 @@ public final class CachingCrawlerHandler
   /**
    * @see CrawlHandler#begin()
    */
-  public void begin() throws SchemaCrawlerException
+  public void begin()
+    throws SchemaCrawlerException
   {
     // do nothing
   }
@@ -73,7 +78,8 @@ public final class CachingCrawlerHandler
   /**
    * @see CrawlHandler#end()
    */
-  public void end() throws SchemaCrawlerException
+  public void end()
+    throws SchemaCrawlerException
   {
     // do nothing
   }

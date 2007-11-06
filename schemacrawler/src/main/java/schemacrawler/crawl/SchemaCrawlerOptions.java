@@ -25,12 +25,11 @@ import java.util.Arrays;
 import java.util.Properties;
 
 import schemacrawler.crawl.NamedObjectList.NamedObjectSort;
-import schemacrawler.main.Options;
 import schemacrawler.schema.TableType;
 import sf.util.Config;
 
 /**
- * SchemaCrarlwe options.
+ * SchemaCrawler options.
  * 
  * @author Sualeh Fatehi
  */

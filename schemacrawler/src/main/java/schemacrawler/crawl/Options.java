@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.main;
+package schemacrawler.crawl;
 
 
 import java.io.Serializable;

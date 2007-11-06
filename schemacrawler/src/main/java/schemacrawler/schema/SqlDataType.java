@@ -36,11 +36,11 @@ public final class SqlDataType
   implements Serializable
 {
 
-  private static final long serialVersionUID = 2614819974745473431L;
-
   /** Unknown SQL data type. */
   public static final SqlDataType UNKNOWN = new SqlDataType(Integer.MAX_VALUE,
                                                             "<UNKNOWN>");
+
+  private static final long serialVersionUID = 2614819974745473431L;
 
   private static final Map<Integer, SqlDataType> JAVA_SQL_TYPES = getJavaSqlTypes();
 
