@@ -202,13 +202,16 @@ public final class SchemaCrawler
     {
       final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection);
       dbInfo = retriever.retrieveDatabaseInfo();
-      if (infoLevel.isGreaterThan(SchemaInfoLevel.basic))
+      if (infoLevel.isRetrieveColumnDataTypes())
       {
         retriever.retrieveColumnDataTypes(dbInfo);
       }
-      if (infoLevel.isGreaterThan(SchemaInfoLevel.verbose))
+      if (infoLevel.isRetrieveAdditionalDatabaseInfo())
       {
         retriever.retrieveAdditionalDatabaseInfo(dbInfo);
+      }
+      if (infoLevel.isRetrieveUserDefinedColumnDataTypes())
+      {
         retriever.retrieveUserDefinedColumnDataTypes(dbInfo);
       }
     }
@@ -248,7 +251,7 @@ public final class SchemaCrawler
 
     for (final MutableProcedure procedure: procedures)
     {
-      if (infoLevel != SchemaInfoLevel.minimum)
+      if (infoLevel.isRetrieveProcedureColumns())
       {
         try
         {
