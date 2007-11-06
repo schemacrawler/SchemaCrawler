@@ -126,17 +126,11 @@ final class ProcedureRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  NamedObjectList<MutableProcedure> retrieveProcedures(final boolean retrieveProcedures,
-                                                       final InclusionRule procedureInclusionRule)
+  NamedObjectList<MutableProcedure> retrieveProcedures(final InclusionRule procedureInclusionRule)
     throws SQLException
   {
 
     final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>(NamedObjectSort.alphabetical);
-
-    if (!retrieveProcedures)
-    {
-      return procedures;
-    }
 
     final ResultSet results = getRetrieverConnection().getMetaData()
       .getProcedures(null, getRetrieverConnection().getSchemaPattern(), "%");

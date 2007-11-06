@@ -234,14 +234,21 @@ public final class SchemaCrawler
                                final NamedObjectList<MutableColumnDataType> columnDataTypes)
     throws SchemaCrawlerException
   {
+    boolean retrieveProcedures = options.isShowStoredProcedures()
+                                 && infoLevel.isRetrieveProcedures();
+    if (!retrieveProcedures)
+    {
+      return;
+    }
+
     ProcedureRetriever retriever;
     NamedObjectList<MutableProcedure> procedures;
     try
     {
       retriever = new ProcedureRetriever(retrieverConnection);
       final ProcedureExRetriever retrieverExtra = new ProcedureExRetriever(retrieverConnection);
-      procedures = retriever.retrieveProcedures(options
-        .isShowStoredProcedures(), options.getTableInclusionRule());
+      procedures = retriever
+        .retrieveProcedures(options.getTableInclusionRule());
       if (infoLevel.isRetrieveProcedureInformation())
       {
         retrieverExtra.retrieveProcedureInformation(procedures);
@@ -281,6 +288,12 @@ public final class SchemaCrawler
                            final NamedObjectList<MutableColumnDataType> columnDataTypes)
     throws SchemaCrawlerException
   {
+    boolean retrieveTables = infoLevel.isRetrieveTables();
+    if (!retrieveTables)
+    {
+      return;
+    }
+
     TableRetriever retriever;
     TableExRetriever retrieverExtra;
     NamedObjectList<MutableTable> tables;
