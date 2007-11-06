@@ -209,15 +209,4 @@ abstract class AbstractColumn
     this.size = size;
   }
 
-  /**
-   * Sets the column's data type.
-   * 
-   * @param columnDataType
-   *        Column data type
-   */
-  final void setType(final ColumnDataType columnDataType)
-  {
-    dataType = columnDataType;
-  }
-
 }
