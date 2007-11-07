@@ -55,8 +55,12 @@ abstract class AbstractRetriever
 
   private final RetrieverConnection retrieverConnection;
 
+  AbstractRetriever()
+  {
+    this(null);
+  }
+
   AbstractRetriever(final RetrieverConnection retrieverConnection)
-    throws SQLException
   {
     this.retrieverConnection = retrieverConnection;
   }
