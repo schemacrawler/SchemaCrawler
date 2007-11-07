@@ -36,14 +36,14 @@ final class MutableResultsColumn
 
   private static final long serialVersionUID = -6983013302549352559L;
 
-  private boolean isAutoIncrement;
-  private boolean isCaseSensitive;
-  private boolean isCurrency;
-  private boolean isDefinitelyWritable;
-  private boolean isReadOnly;
-  private boolean isSearchable;
-  private boolean isSigned;
-  private boolean isWritable;
+  private boolean autoIncrement;
+  private boolean caseSensitive;
+  private boolean currency;
+  private boolean definitelyWritable;
+  private boolean readOnly;
+  private boolean searchable;
+  private boolean signed;
+  private boolean writable;
 
   MutableResultsColumn(final String name, final NamedObject parent)
   {
@@ -52,82 +52,82 @@ final class MutableResultsColumn
 
   public boolean isAutoIncrement()
   {
-    return isAutoIncrement;
+    return autoIncrement;
   }
 
   public boolean isCaseSensitive()
   {
-    return isCaseSensitive;
+    return caseSensitive;
   }
 
   public boolean isCurrency()
   {
-    return isCurrency;
+    return currency;
   }
 
   public boolean isDefinitelyWritable()
   {
-    return isDefinitelyWritable;
+    return definitelyWritable;
   }
 
   public boolean isReadOnly()
   {
-    return isReadOnly;
+    return readOnly;
   }
 
   public boolean isSearchable()
   {
-    return isSearchable;
+    return searchable;
   }
 
   public boolean isSigned()
   {
-    return isSigned;
+    return signed;
   }
 
   public boolean isWritable()
   {
-    return isWritable;
+    return writable;
   }
 
   void setAutoIncrement(final boolean isAutoIncrement)
   {
-    this.isAutoIncrement = isAutoIncrement;
+    this.autoIncrement = isAutoIncrement;
   }
 
   void setCaseSensitive(final boolean isCaseSensitive)
   {
-    this.isCaseSensitive = isCaseSensitive;
+    this.caseSensitive = isCaseSensitive;
   }
 
   void setCurrency(final boolean isCurrency)
   {
-    this.isCurrency = isCurrency;
+    this.currency = isCurrency;
   }
 
   void setDefinitelyWritable(final boolean isDefinitelyWritable)
   {
-    this.isDefinitelyWritable = isDefinitelyWritable;
+    this.definitelyWritable = isDefinitelyWritable;
   }
 
   void setReadOnly(final boolean isReadOnly)
   {
-    this.isReadOnly = isReadOnly;
+    this.readOnly = isReadOnly;
   }
 
   void setSearchable(final boolean isSearchable)
   {
-    this.isSearchable = isSearchable;
+    this.searchable = isSearchable;
   }
 
   void setSigned(final boolean isSigned)
   {
-    this.isSigned = isSigned;
+    this.signed = isSigned;
   }
 
   void setWritable(final boolean isWritable)
   {
-    this.isWritable = isWritable;
+    this.writable = isWritable;
   }
 
 }
