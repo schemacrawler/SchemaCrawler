@@ -23,8 +23,10 @@
 	<property name="schemacrawler-maven-plugin.classes"
     location="${SchemaCrawlerHome}/schemacrawler-maven-plugin/target/classes"/>
 
+  <property name="distribution.target"
+    location="${SchemaCrawlerHome}/distribution/target"/>
   <property name="distribution.dir"
-    value="${SchemaCrawlerHome}/distribution/target/_distribution"/>
+    location="${distribution.target}/_distribution"/>
 
 	<available
     property="have.dependencies.classpath"
@@ -179,6 +181,15 @@
         dir="${schemacrawler-maven-plugin.classes}"/>
     </jar>
 
+    <!-- Copy licenses -->
+    <copy todir="${distribution.dir}">
+      <fileset dir="${SchemaCrawlerHome}/schemacrawler">
+        <include name="*README*.txt"/>
+        <include name="*LICENSE*.txt"/>
+        <include name="*NOTICE*.txt"/>
+      </fileset>
+    </copy>
+
     <!-- Copy config files -->
     <copy todir="${distribution.dir}">
       <fileset dir="${SchemaCrawlerHome}/schemacrawler/src/site/resources/config">
@@ -225,18 +236,13 @@
       <fileset dir="${SchemaCrawlerHome}/schemacrawler/target/site"/>
     </copy>
 
-	</target>
-
-  <target name="zip"
-    description="Create distributable files for a version">
-
-    <mkdir dir="_backups"/>
+    <!-- Create zip files for distribution -->
 
     <property
     	name="distribution.zip.prefix"
-    	value="SchemaCrawler-${pom.version}-distrib" />
-    <delete file="_backups/${distribution.zip.prefix}.zip"/>
-    <zip destfile="_backups/${distribution.zip.prefix}.zip">
+    	value="schemacrawler-${pom.version}-distrib" />
+    <delete file="${distribution.target}/${distribution.zip.prefix}.zip"/>
+    <zip destfile="${distribution.target}/${distribution.zip.prefix}.zip">
       <zipfileset
         dir="${distribution.dir}"
         prefix="${distribution.zip.prefix}"
@@ -245,15 +251,15 @@
 
 		<property
 			name="source.zip.prefix"
-			value="SchemaCrawler-${pom.version}-src"/>
-    <delete file="_backups/${source.zip.prefix}.zip"/>
-    <zip destfile="_backups/${source.zip.prefix}.zip">
+			value="schemacrawler-${pom.version}-src"/>
+    <delete file="${distribution.target}/${source.zip.prefix}.zip"/>
+    <zip destfile="${distribution.target}/${source.zip.prefix}.zip">
       <zipfileset
         dir="${SchemaCrawlerHome}"
         prefix="${source.zip.prefix}"
         defaultexcludes="yes">
-        <exclude name="_backups"/>
-        <exclude name="_backups/*"/>
+        <exclude name="${distribution.target}"/>
+        <exclude name="${distribution.target}/*"/>
         <exclude name="**/target"/>
         <exclude name="**/target/**/*"/>
         <exclude name="differencer"/>
@@ -265,7 +271,6 @@
         <exclude name="**/*.lck"/>
         <exclude name="**/*.ser"/>
         <exclude name="*.html"/>
-        <exclude name="*.txt"/>
       </zipfileset>
     </zip>
 
