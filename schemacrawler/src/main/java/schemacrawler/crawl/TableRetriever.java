@@ -111,7 +111,7 @@ final class TableRetriever
           final String remarks = results.getString(REMARKS);
 
           column.setOrdinalPosition(ordinalPosition);
-          column.lookupAndSetDataType(dataType, typeName, columnDataTypes);
+          lookupAndSetDataType(column, dataType, typeName, columnDataTypes);
           column.setSize(size);
           column.setDecimalDigits(decimalDigits);
           column.setRemarks(remarks);
