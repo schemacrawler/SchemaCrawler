@@ -21,7 +21,6 @@
 package schemacrawler.crawl;
 
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -31,80 +30,50 @@ public final class SchemaInfoLevel
   implements Options
 {
 
-  /** No schema detail. */
-  public final static SchemaInfoLevel minimum;
-  /** Basic schema detail. */
-  public final static SchemaInfoLevel basic;
-  /** Verbose schema detail. */
-  public final static SchemaInfoLevel verbose;
-  /** Maximum schema detail. */
-  public final static SchemaInfoLevel maximum;
-
   private static final long serialVersionUID = -6721986729175552425L;
 
   private static final Logger LOGGER = Logger.getLogger(SchemaInfoLevel.class
     .getName());
 
-  static
+  public static SchemaInfoLevel basic()
   {
-    minimum = new SchemaInfoLevel();
-    try
-    {
-      minimum.setRetrieveDatabaseInfo(true);
-      minimum.setRetrieveTables(true);
-      minimum.setRetrieveProcedures(true);
-      minimum.makeImmutable();
-    }
-    catch (final SchemaCrawlerException e)
-    {
-      LOGGER.log(Level.FINER, e.getMessage(), e);
-    }
-
-    basic = new SchemaInfoLevel(minimum);
-    try
-    {
-      basic.setRetrieveColumnDataTypes(true);
-      basic.setRetrieveProcedureColumns(true);
-      basic.setRetrieveTableColumns(true);
-      basic.makeImmutable();
-    }
-    catch (final SchemaCrawlerException e)
-    {
-      LOGGER.log(Level.FINER, e.getMessage(), e);
-    }
-
-    verbose = new SchemaInfoLevel(basic);
-    try
-    {
-      verbose.setRetrieveAdditionalDatabaseInfo(true);
-      verbose.setRetrieveUserDefinedColumnDataTypes(true);
-      verbose.setRetrieveProcedureInformation(true);
-      verbose.setRetrieveCheckConstraintInformation(true);
-      verbose.setRetrieveViewInformation(true);
-      verbose.setRetrieveForeignKeys(true);
-      verbose.setRetrieveIndices(true);
-      verbose.makeImmutable();
-    }
-    catch (final SchemaCrawlerException e)
-    {
-      LOGGER.log(Level.FINER, e.getMessage(), e);
-    }
-
-    maximum = new SchemaInfoLevel(verbose);
-    try
-    {
-      maximum.setRetrieveTablePrivileges(true);
-      maximum.setRetrieveTableColumnPrivileges(true);
-      maximum.setRetrieveTriggerInformation(true);
-      maximum.makeImmutable();
-    }
-    catch (final SchemaCrawlerException e)
-    {
-      LOGGER.log(Level.FINER, e.getMessage(), e);
-    }
+    SchemaInfoLevel basic = minimum();
+    basic.setRetrieveColumnDataTypes(true);
+    basic.setRetrieveProcedureColumns(true);
+    basic.setRetrieveTableColumns(true);
+    return basic;
   }
 
-  private boolean isImmutable;
+  public static SchemaInfoLevel maximum()
+  {
+    final SchemaInfoLevel maximum = verbose();
+    maximum.setRetrieveTablePrivileges(true);
+    maximum.setRetrieveTableColumnPrivileges(true);
+    maximum.setRetrieveTriggerInformation(true);
+    return maximum;
+  }
+
+  public static SchemaInfoLevel minimum()
+  {
+    final SchemaInfoLevel minimum = new SchemaInfoLevel();
+    minimum.setRetrieveDatabaseInfo(true);
+    minimum.setRetrieveTables(true);
+    minimum.setRetrieveProcedures(true);
+    return minimum;
+  }
+
+  public static SchemaInfoLevel verbose()
+  {
+    final SchemaInfoLevel verbose = basic();
+    verbose.setRetrieveAdditionalDatabaseInfo(true);
+    verbose.setRetrieveUserDefinedColumnDataTypes(true);
+    verbose.setRetrieveProcedureInformation(true);
+    verbose.setRetrieveCheckConstraintInformation(true);
+    verbose.setRetrieveViewInformation(true);
+    verbose.setRetrieveForeignKeys(true);
+    verbose.setRetrieveIndices(true);
+    return verbose;
+  }
 
   private boolean retrieveDatabaseInfo;
   private boolean retrieveTables;
@@ -118,45 +87,14 @@ public final class SchemaInfoLevel
   private boolean retrieveViewInformation;
   private boolean retrieveForeignKeys;
   private boolean retrieveIndices;
+
   private boolean retrieveTablePrivileges;
+
   private boolean retrieveTableColumnPrivileges;
+
   private boolean retrieveTriggerInformation;
+
   private boolean retrieveTableColumns;
-
-  public SchemaInfoLevel()
-  {
-  }
-
-  /**
-   * Create a mutable copy of the SchemaInfoLevel.
-   * 
-   * @param schemaInfoLevel
-   *        SchemaInfoLevel to copy
-   */
-  public SchemaInfoLevel(final SchemaInfoLevel schemaInfoLevel)
-  {
-    this.retrieveDatabaseInfo = schemaInfoLevel.retrieveDatabaseInfo;
-    this.retrieveTables = schemaInfoLevel.retrieveTables;
-    this.retrieveProcedures = schemaInfoLevel.retrieveProcedures;
-    this.retrieveColumnDataTypes = schemaInfoLevel.retrieveColumnDataTypes;
-    this.retrieveAdditionalDatabaseInfo = schemaInfoLevel.retrieveAdditionalDatabaseInfo;
-    this.retrieveUserDefinedColumnDataTypes = schemaInfoLevel.retrieveUserDefinedColumnDataTypes;
-    this.retrieveProcedureColumns = schemaInfoLevel.retrieveProcedureColumns;
-    this.retrieveProcedureInformation = schemaInfoLevel.retrieveProcedureInformation;
-    this.retrieveCheckConstraintInformation = schemaInfoLevel.retrieveCheckConstraintInformation;
-    this.retrieveViewInformation = schemaInfoLevel.retrieveViewInformation;
-    this.retrieveForeignKeys = schemaInfoLevel.retrieveForeignKeys;
-    this.retrieveIndices = schemaInfoLevel.retrieveIndices;
-    this.retrieveTablePrivileges = schemaInfoLevel.retrieveTablePrivileges;
-    this.retrieveTableColumnPrivileges = schemaInfoLevel.retrieveTableColumnPrivileges;
-    this.retrieveTriggerInformation = schemaInfoLevel.retrieveTriggerInformation;
-    this.retrieveTableColumns = schemaInfoLevel.retrieveTableColumns;
-  }
-
-  public boolean isImmutable()
-  {
-    return isImmutable;
-  }
 
   public boolean isRetrieveAdditionalDatabaseInfo()
   {
@@ -238,130 +176,84 @@ public final class SchemaInfoLevel
     return retrieveViewInformation;
   }
 
-  public void makeImmutable()
-  {
-    isImmutable = true;
-  }
-
   public void setRetrieveAdditionalDatabaseInfo(final boolean retrieveAdditionalDatabaseInfo)
-    throws SchemaCrawlerException
   {
-    checkMutability();
     this.retrieveAdditionalDatabaseInfo = retrieveAdditionalDatabaseInfo;
   }
 
   public void setRetrieveCheckConstraintInformation(final boolean retrieveCheckConstraintInformation)
-    throws SchemaCrawlerException
   {
-    checkMutability();
     this.retrieveCheckConstraintInformation = retrieveCheckConstraintInformation;
   }
 
   public void setRetrieveColumnDataTypes(final boolean retrieveColumnDataTypes)
-    throws SchemaCrawlerException
   {
-    checkMutability();
     this.retrieveColumnDataTypes = retrieveColumnDataTypes;
   }
 
   public void setRetrieveDatabaseInfo(final boolean retrieveDatabaseInfo)
-    throws SchemaCrawlerException
   {
-    checkMutability();
     this.retrieveDatabaseInfo = retrieveDatabaseInfo;
   }
 
   public void setRetrieveForeignKeys(final boolean retrieveForeignKeys)
-    throws SchemaCrawlerException
   {
-    checkMutability();
     this.retrieveForeignKeys = retrieveForeignKeys;
   }
 
   public void setRetrieveIndices(final boolean retrieveIndices)
-    throws SchemaCrawlerException
   {
-    checkMutability();
     this.retrieveIndices = retrieveIndices;
   }
 
   public void setRetrieveProcedureColumns(final boolean retrieveProcedureColumns)
-    throws SchemaCrawlerException
   {
-    checkMutability();
     this.retrieveProcedureColumns = retrieveProcedureColumns;
   }
 
   public void setRetrieveProcedureInformation(final boolean retrieveProcedureInformation)
-    throws SchemaCrawlerException
   {
-    checkMutability();
     this.retrieveProcedureInformation = retrieveProcedureInformation;
   }
 
   public void setRetrieveProcedures(final boolean retrieveProcedures)
-    throws SchemaCrawlerException
   {
-    checkMutability();
     this.retrieveProcedures = retrieveProcedures;
   }
 
   public void setRetrieveTableColumnPrivileges(final boolean retrieveTableColumnPrivileges)
-    throws SchemaCrawlerException
   {
-    checkMutability();
     this.retrieveTableColumnPrivileges = retrieveTableColumnPrivileges;
   }
 
   public void setRetrieveTableColumns(final boolean retrieveTableColumns)
-    throws SchemaCrawlerException
   {
-    checkMutability();
     this.retrieveTableColumns = retrieveTableColumns;
   }
 
   public void setRetrieveTablePrivileges(final boolean retrieveTablePrivileges)
-    throws SchemaCrawlerException
   {
-    checkMutability();
     this.retrieveTablePrivileges = retrieveTablePrivileges;
   }
 
   public void setRetrieveTables(final boolean retrieveTables)
-    throws SchemaCrawlerException
   {
-    checkMutability();
     this.retrieveTables = retrieveTables;
   }
 
   public void setRetrieveTriggerInformation(final boolean retrieveTriggerInformation)
-    throws SchemaCrawlerException
   {
-    checkMutability();
     this.retrieveTriggerInformation = retrieveTriggerInformation;
   }
 
   public void setRetrieveUserDefinedColumnDataTypes(final boolean retrieveUserDefinedColumnDataTypes)
-    throws SchemaCrawlerException
   {
-    checkMutability();
     this.retrieveUserDefinedColumnDataTypes = retrieveUserDefinedColumnDataTypes;
   }
 
   public void setRetrieveViewInformation(final boolean retrieveViewInformation)
-    throws SchemaCrawlerException
   {
-    checkMutability();
     this.retrieveViewInformation = retrieveViewInformation;
-  }
-
-  private void checkMutability()
-    throws SchemaCrawlerException
-  {
-    if (isImmutable)
-    {
-      throw new SchemaCrawlerException("Cannot modify the SchemaInfoLevel");
-    }
   }
 
 }

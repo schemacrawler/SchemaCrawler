@@ -7,6 +7,10 @@
 	<body>
 		<release version="5.3" date="2007-11-10">
 			<action dev="Sualeh Fatehi" type="fix">
+				Made sure that all relevant license files are getting
+				delivered.
+			</action>
+			<action dev="Sualeh Fatehi" type="fix">
 				Fixed bug in accessing foreign key update and delete
 				rules on Oracle.
 			</action>
