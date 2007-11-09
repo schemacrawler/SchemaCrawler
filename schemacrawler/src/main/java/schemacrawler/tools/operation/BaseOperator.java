@@ -213,7 +213,7 @@ public abstract class BaseOperator
    */
   public SchemaInfoLevel getInfoLevelHint()
   {
-    return SchemaInfoLevel.basic;
+    return SchemaInfoLevel.basic();
   }
 
   /**

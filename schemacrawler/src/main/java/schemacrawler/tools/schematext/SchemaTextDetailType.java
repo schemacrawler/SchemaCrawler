@@ -68,19 +68,19 @@ public enum SchemaTextDetailType
     switch (this)
     {
       case brief_schema:
-        columnInfoLevel = SchemaInfoLevel.minimum;
+        columnInfoLevel = SchemaInfoLevel.minimum();
         break;
       case basic_schema:
-        columnInfoLevel = SchemaInfoLevel.basic;
+        columnInfoLevel = SchemaInfoLevel.basic();
         break;
       case verbose_schema:
-        columnInfoLevel = SchemaInfoLevel.verbose;
+        columnInfoLevel = SchemaInfoLevel.verbose();
         break;
       case maximum_schema:
-        columnInfoLevel = SchemaInfoLevel.maximum;
+        columnInfoLevel = SchemaInfoLevel.maximum();
         break;
       default:
-        columnInfoLevel = SchemaInfoLevel.basic;
+        columnInfoLevel = SchemaInfoLevel.basic();
         break;
     }
     return columnInfoLevel;

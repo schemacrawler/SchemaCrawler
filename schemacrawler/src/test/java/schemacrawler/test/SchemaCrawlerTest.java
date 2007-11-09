@@ -128,7 +128,7 @@ public class SchemaCrawlerTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  SchemaInfoLevel.basic,
+                                                  SchemaInfoLevel.basic(),
                                                   schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema);
     final Table[] tables = schema.getTables();
@@ -177,7 +177,7 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions.setShowStoredProcedures(true);
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  SchemaInfoLevel.maximum,
+                                                  SchemaInfoLevel.maximum(),
                                                   schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema);
     final Procedure[] procedures = schema.getProcedures();
@@ -200,7 +200,7 @@ public class SchemaCrawlerTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     LOGGER.log(Level.FINE, schemaCrawlerOptions.toString());
     final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  SchemaInfoLevel.minimum,
+                                                  SchemaInfoLevel.minimum(),
                                                   schemaCrawlerOptions);
     final Table[] tables = schema.getTables();
     final int numTables = tables.length;
@@ -222,7 +222,7 @@ public class SchemaCrawlerTest
     };
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  SchemaInfoLevel.minimum,
+                                                  SchemaInfoLevel.minimum(),
                                                   schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema);
     final Table[] tables = schema.getTables();
@@ -268,7 +268,7 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions.setShowStoredProcedures(true);
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  SchemaInfoLevel.maximum,
+                                                  SchemaInfoLevel.maximum(),
                                                   schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema);
     final Table[] tables = schema.getTables();
@@ -302,7 +302,7 @@ public class SchemaCrawlerTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  SchemaInfoLevel.maximum,
+                                                  SchemaInfoLevel.maximum(),
                                                   schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema);
     final Table[] tables = schema.getTables();
@@ -335,7 +335,7 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions.setShowStoredProcedures(true);
 
     final Schema schema1 = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                   SchemaInfoLevel.verbose,
+                                                   SchemaInfoLevel.verbose(),
                                                    schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema1);
     assertTrue("Could not find any tables", schema1.getTables().length > 0);
@@ -343,7 +343,7 @@ public class SchemaCrawlerTest
                schema1.getProcedures().length > 0);
 
     final Schema schema2 = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                   SchemaInfoLevel.verbose,
+                                                   SchemaInfoLevel.verbose(),
                                                    schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema2);
 

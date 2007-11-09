@@ -58,7 +58,7 @@ public final class CachingCrawlerHandler
     schema = new MutableSchema(catalogName, "schema", "schema");
     if (infoLevel == null)
     {
-      this.infoLevel = SchemaInfoLevel.maximum;
+      this.infoLevel = SchemaInfoLevel.maximum();
     }
     else
     {
