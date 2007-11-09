@@ -60,36 +60,42 @@ final class ResultsRetriever
   }
 
   /**
-   * Retrieves a list of columns from the database, for the table
-   * specified.
+   * Retrieves a list of columns from the results. There is no attempt
+   * to share table objects, since the tables cannot have children that
+   * are ResultColumns. Likewise, there is no attempt to share column
+   * data types.
    * 
-   * @param table
-   *        Table for which data is required.
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveResults(final MutableResults results)
+  void retrieveResults()
     throws SQLException
   {
     int columnCount = resultsMetaData.getColumnCount();
     for (int i = 0; i < columnCount; i++)
     {
-      MutableResultsColumn column = new MutableResultsColumn(null, null);
+      String catalogName = resultsMetaData.getCatalogName(i);
+      String schemaName = resultsMetaData.getSchemaName(i);
+      String tableName = resultsMetaData.getTableName(i);
+      MutableTable table = new MutableTable(catalogName, schemaName, tableName);
 
-      // getCatalogName(i)
-      // getColumnClassName(i)
-      // getColumnDisplaySize(i)
-      // getColumnLabel(i)
-      // getColumnName(i)
-      // getColumnType(i)
-      // getColumnTypeName(i)
-      // getPrecision(i)
-      // getScale(i)
-      // getSchemaName(i)
-      // getTableName(i)
+      String databaseSpecificTypeName = resultsMetaData.getColumnTypeName(i);
+      MutableColumnDataType columnDataType = new MutableColumnDataType(databaseSpecificTypeName);
+      columnDataType.setType(resultsMetaData.getColumnType(i));
+      columnDataType.setTypeClassName(resultsMetaData.getColumnClassName(i));
+      columnDataType.setPrecision(resultsMetaData.getPrecision(i));
+      int scale = resultsMetaData.getScale(i);
+      columnDataType.setMaximumScale(scale);
+      columnDataType.setMinimumScale(scale);
+
+      String columnName = resultsMetaData.getColumnName(i);
+      MutableResultsColumn column = new MutableResultsColumn(columnName, table);
+      column.setType(columnDataType);
+
+      column.setColumnLabel(resultsMetaData.getColumnLabel(i));
+      column.setColumnDisplaySize(resultsMetaData.getColumnDisplaySize(i));
 
       final boolean isNullable = resultsMetaData.isNullable(i) == ResultSetMetaData.columnNullable;
-
       column.setAutoIncrement(resultsMetaData.isAutoIncrement(i));
       column.setCaseSensitive(resultsMetaData.isCaseSensitive(i));
       column.setCurrency(resultsMetaData.isCurrency(i));
@@ -102,26 +108,4 @@ final class ResultsRetriever
     }
 
   }
-
-  private MutableColumn lookupOrCreateColumn(final NamedObjectList<MutableTable> tables,
-                                             final String schema,
-                                             final String tableName,
-                                             final String columnName)
-  {
-
-    MutableColumn column = null;
-    MutableTable table = tables.lookup(tableName);
-    if (table != null)
-    {
-      column = table.lookupColumn(columnName);
-    }
-    if (column == null)
-    {
-      final String catalog = getRetrieverConnection().getCatalog();
-      table = new MutableTable(catalog, schema, tableName);
-      column = new MutableColumn(columnName, table);
-    }
-    return column;
-  }
-
 }

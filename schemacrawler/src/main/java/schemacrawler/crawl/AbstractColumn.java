@@ -36,7 +36,7 @@ abstract class AbstractColumn
   implements BaseColumn
 {
 
-  private ColumnDataType dataType;
+  private ColumnDataType type;
   private int ordinalPosition;
   private int size;
   private int decimalDigits;
@@ -105,7 +105,7 @@ abstract class AbstractColumn
    */
   public final ColumnDataType getType()
   {
-    return dataType;
+    return type;
   }
 
   /**
@@ -160,29 +160,6 @@ abstract class AbstractColumn
     return nullable;
   }
 
-  /**
-   * Creates a data type from the JDBC data type id, and the database
-   * specific type name.
-   * 
-   * @param jdbcDataType
-   *        JDBC data type
-   * @param databaseSpecificTypeName
-   *        Database specific type name
-   */
-  final void lookupAndSetDataType(final int jdbcDataType,
-                                  final String databaseSpecificTypeName,
-                                  final NamedObjectList<MutableColumnDataType> columnDataTypes)
-  {
-    MutableColumnDataType columnDataType = columnDataTypes
-      .lookup(databaseSpecificTypeName);
-    if (columnDataType == null)
-    {
-      columnDataType = new MutableColumnDataType(databaseSpecificTypeName);
-      columnDataType.setType(jdbcDataType);
-    }
-    dataType = columnDataType;
-  }
-
   final void setDecimalDigits(final int decimalDigits)
   {
     this.decimalDigits = decimalDigits;
@@ -207,6 +184,11 @@ abstract class AbstractColumn
   final void setSize(final int size)
   {
     this.size = size;
+  }
+
+  void setType(ColumnDataType type)
+  {
+    this.type = type;
   }
 
 }
