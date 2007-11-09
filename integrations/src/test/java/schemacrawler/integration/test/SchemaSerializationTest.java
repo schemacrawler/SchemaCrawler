@@ -72,7 +72,7 @@ public class SchemaSerializationTest
     options.setShowStoredProcedures(true);
 
     final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  SchemaInfoLevel.maximum,
+                                                  SchemaInfoLevel.maximum(),
                                                   options);
     final XStream xStream = new XStream();
 
