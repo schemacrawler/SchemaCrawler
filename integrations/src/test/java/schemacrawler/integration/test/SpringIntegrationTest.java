@@ -149,7 +149,7 @@ public class SpringIntegrationTest
     final SchemaCrawlerOptions schemaCrawlerOptions = (SchemaCrawlerOptions) appContext
       .getBean("schemaCrawlerOptions");
     final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  SchemaInfoLevel.maximum,
+                                                  SchemaInfoLevel.maximum(),
                                                   schemaCrawlerOptions);
     assertEquals(6, schema.getTables().length);
   }
