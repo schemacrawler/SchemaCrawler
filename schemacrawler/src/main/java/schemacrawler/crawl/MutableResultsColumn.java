@@ -36,6 +36,8 @@ final class MutableResultsColumn
 
   private static final long serialVersionUID = -6983013302549352559L;
 
+  private String label;
+  private int displaySize;
   private boolean autoIncrement;
   private boolean caseSensitive;
   private boolean currency;
@@ -48,6 +50,26 @@ final class MutableResultsColumn
   MutableResultsColumn(final String name, final NamedObject parent)
   {
     super(name, parent);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ResultsColumn#getDisplaySize()
+   */
+  public int getDisplaySize()
+  {
+    return displaySize;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ResultsColumn#getLabel()
+   */
+  public String getLabel()
+  {
+    return label;
   }
 
   public boolean isAutoIncrement()
@@ -108,6 +130,16 @@ final class MutableResultsColumn
   void setDefinitelyWritable(final boolean isDefinitelyWritable)
   {
     this.definitelyWritable = isDefinitelyWritable;
+  }
+
+  void setDisplaySize(final int displaySize)
+  {
+    this.displaySize = displaySize;
+  }
+
+  void setLabel(final String label)
+  {
+    this.label = label;
   }
 
   void setReadOnly(final boolean isReadOnly)
