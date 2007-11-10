@@ -21,6 +21,7 @@
 package schemacrawler.schema;
 
 
+
 /**
  * A table or procedure column.
  * 
@@ -29,6 +30,21 @@ package schemacrawler.schema;
 public interface ResultsColumn
   extends BaseColumn
 {
+  /**
+   * Gets the column's suggested title for use in printouts and
+   * displays.
+   * 
+   * @return Suggested column title
+   */
+  String getLabel();
+
+  /**
+   * The column's normal maximum width in characters.
+   * 
+   * @return Normal maximum number of characters allowed as the width of
+   *         the designated column
+   */
+  int getDisplaySize();
 
   /**
    * True if this column is auto-incremented.

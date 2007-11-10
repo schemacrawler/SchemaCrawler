@@ -92,8 +92,8 @@ final class ResultsRetriever
       MutableResultsColumn column = new MutableResultsColumn(columnName, table);
       column.setType(columnDataType);
 
-      column.setColumnLabel(resultsMetaData.getColumnLabel(i));
-      column.setColumnDisplaySize(resultsMetaData.getColumnDisplaySize(i));
+      column.setLabel(resultsMetaData.getColumnLabel(i));
+      column.setDisplaySize(resultsMetaData.getColumnDisplaySize(i));
 
       final boolean isNullable = resultsMetaData.isNullable(i) == ResultSetMetaData.columnNullable;
       column.setAutoIncrement(resultsMetaData.isAutoIncrement(i));
