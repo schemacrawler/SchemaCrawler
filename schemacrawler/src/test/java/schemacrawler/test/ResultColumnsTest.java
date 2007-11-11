@@ -70,18 +70,21 @@ public class ResultColumnsTest
   {
 
     final String[] columnNames = {
-        "", "FIRSTNAME", "LASTNAME",
+        "CUSTOMER.FIRSTNAME", "CUSTOMER.LASTNAME", "ADDRESS", "",
     };
-
     final String[] columnDataTypes = {
-        "DOUBLE", "VARCHAR", "VARCHAR",
+        "VARCHAR", "VARCHAR", "VARCHAR", "DOUBLE",
     };
 
-    final String sql = "SELECT " + "  CUSTOMER.FIRSTNAME, "
-                       + "  CUSTOMER.LASTNAME, " + "  SUM(INVOICE.TOTAL) "
-                       + "FROM " + "  CUSTOMER " + "  INNER JOIN INVOICE "
+    final String sql = "SELECT "
+                       + "  CUSTOMER.FIRSTNAME, "
+                       + "  CUSTOMER.LASTNAME, "
+                       + "  CUSTOMER.STREET + ', ' + CUSTOMER.CITY AS ADDRESS, "
+                       + "  SUM(INVOICE.TOTAL) " + "FROM " + "  CUSTOMER "
+                       + "  INNER JOIN INVOICE "
                        + "  ON INVOICE.CUSTOMERID = CUSTOMER.ID " + "GROUP BY "
-                       + "  CUSTOMER.FIRSTNAME, " + "  CUSTOMER.LASTNAME "
+                       + "  CUSTOMER.FIRSTNAME, " + "  CUSTOMER.LASTNAME, "
+                       + "  CUSTOMER.STREET, " + "  CUSTOMER.CITY "
                        + "ORDER BY " + "  SUM(INVOICE.TOTAL) DESC";
     Connection connection = testUtility.getDataSource().getConnection();
     Statement statement = connection.createStatement();
@@ -93,7 +96,7 @@ public class ResultColumnsTest
 
     assertNotNull("Could not obtain result columns", resultColumns);
     ResultsColumn[] columns = resultColumns.getColumns();
-    assertEquals("Column count does not match", 3, columns.length);
+    assertEquals("Column count does not match", 4, columns.length);
     for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
     {
       ResultsColumn column = columns[columnIdx];
@@ -101,8 +104,6 @@ public class ResultColumnsTest
       assertEquals("Column full name does not match",
                    columnNames[columnIdx],
                    column.getFullName());
-      assertEquals("Column name does not match", columnNames[columnIdx], column
-        .getName());
       assertEquals("Column type does not match",
                    columnDataTypes[columnIdx],
                    column.getType().getDatabaseSpecificTypeName());

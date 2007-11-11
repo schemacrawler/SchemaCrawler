@@ -100,6 +100,7 @@ final class ResultsRetriever
         final String columnName = resultsMetaData.getColumnName(i);
         final MutableResultsColumn column = new MutableResultsColumn(columnName,
                                                                      table);
+        column.setOrdinalPosition(i);
         column.setType(columnDataType);
 
         column.setLabel(resultsMetaData.getColumnLabel(i));
