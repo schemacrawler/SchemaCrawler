@@ -27,6 +27,14 @@
 				Externalized the wrapper for java.sql.Types into a new
 				public class, schemacrawler.schema.SqlDataType.
 			</action>
+			<action dev="Sualeh Fatehi" type="add">
+				Added the ability to get result set metadata.
+			</action>
+			<action dev="Sualeh Fatehi" type="add">
+				Changed schema info level from an enum into a class that
+				can be used to specify details on what aspects of the
+				schema need to be retrieved.
+			</action>
 		</release>
 		<release version="5.2" date="2007-10-30">
 			<action dev="Sualeh Fatehi" type="add">
