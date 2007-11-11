@@ -24,7 +24,9 @@ package schemacrawler.crawl;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.logging.Logger;
+
+import schemacrawler.schema.ResultColumns;
+import sf.util.Utilities;
 
 /**
  * TableRetriever uses database metadata to get the details about the
@@ -35,9 +37,6 @@ import java.util.logging.Logger;
 final class ResultsRetriever
   extends AbstractRetriever
 {
-
-  private static final Logger LOGGER = Logger.getLogger(ResultsRetriever.class
-    .getName());
 
   private final ResultSetMetaData resultsMetaData;
 
@@ -68,44 +67,63 @@ final class ResultsRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveResults()
-    throws SQLException
+  ResultColumns retrieveResults()
+    throws SchemaCrawlerException
   {
-    int columnCount = resultsMetaData.getColumnCount();
-    for (int i = 0; i < columnCount; i++)
+    MutableResultColumns results = new MutableResultColumns("");
+
+    try
     {
-      String catalogName = resultsMetaData.getCatalogName(i);
-      String schemaName = resultsMetaData.getSchemaName(i);
-      String tableName = resultsMetaData.getTableName(i);
-      MutableTable table = new MutableTable(catalogName, schemaName, tableName);
+      int columnCount = resultsMetaData.getColumnCount();
+      for (int i = 0; i < columnCount; i++)
+      {
+        String catalogName = resultsMetaData.getCatalogName(i);
+        String schemaName = resultsMetaData.getSchemaName(i);
+        String tableName = resultsMetaData.getTableName(i);
+        MutableTable table = null;
+        if (Utilities.isBlank(tableName))
+        {
+          table = new MutableTable(catalogName, schemaName, tableName);
+        }
 
-      String databaseSpecificTypeName = resultsMetaData.getColumnTypeName(i);
-      MutableColumnDataType columnDataType = new MutableColumnDataType(databaseSpecificTypeName);
-      columnDataType.setType(resultsMetaData.getColumnType(i));
-      columnDataType.setTypeClassName(resultsMetaData.getColumnClassName(i));
-      columnDataType.setPrecision(resultsMetaData.getPrecision(i));
-      int scale = resultsMetaData.getScale(i);
-      columnDataType.setMaximumScale(scale);
-      columnDataType.setMinimumScale(scale);
+        String databaseSpecificTypeName = resultsMetaData.getColumnTypeName(i);
+        MutableColumnDataType columnDataType = new MutableColumnDataType(databaseSpecificTypeName);
+        columnDataType.setType(resultsMetaData.getColumnType(i));
+        columnDataType.setTypeClassName(resultsMetaData.getColumnClassName(i));
+        columnDataType.setPrecision(resultsMetaData.getPrecision(i));
+        int scale = resultsMetaData.getScale(i);
+        columnDataType.setMaximumScale(scale);
+        columnDataType.setMinimumScale(scale);
 
-      String columnName = resultsMetaData.getColumnName(i);
-      MutableResultsColumn column = new MutableResultsColumn(columnName, table);
-      column.setType(columnDataType);
+        String columnName = resultsMetaData.getColumnName(i);
+        MutableResultsColumn column = new MutableResultsColumn(columnName,
+                                                               table);
+        column.setType(columnDataType);
 
-      column.setLabel(resultsMetaData.getColumnLabel(i));
-      column.setDisplaySize(resultsMetaData.getColumnDisplaySize(i));
+        column.setLabel(resultsMetaData.getColumnLabel(i));
+        column.setDisplaySize(resultsMetaData.getColumnDisplaySize(i));
 
-      final boolean isNullable = resultsMetaData.isNullable(i) == ResultSetMetaData.columnNullable;
-      column.setAutoIncrement(resultsMetaData.isAutoIncrement(i));
-      column.setCaseSensitive(resultsMetaData.isCaseSensitive(i));
-      column.setCurrency(resultsMetaData.isCurrency(i));
-      column.setDefinitelyWritable(resultsMetaData.isDefinitelyWritable(i));
-      column.setNullable(isNullable);
-      column.setReadOnly(resultsMetaData.isReadOnly(i));
-      column.setSearchable(resultsMetaData.isSearchable(i));
-      column.setSigned(resultsMetaData.isSigned(i));
-      column.setWritable(resultsMetaData.isWritable(i));
+        final boolean isNullable = resultsMetaData.isNullable(i) == ResultSetMetaData.columnNullable;
+        column.setAutoIncrement(resultsMetaData.isAutoIncrement(i));
+        column.setCaseSensitive(resultsMetaData.isCaseSensitive(i));
+        column.setCurrency(resultsMetaData.isCurrency(i));
+        column.setDefinitelyWritable(resultsMetaData.isDefinitelyWritable(i));
+        column.setNullable(isNullable);
+        column.setReadOnly(resultsMetaData.isReadOnly(i));
+        column.setSearchable(resultsMetaData.isSearchable(i));
+        column.setSigned(resultsMetaData.isSigned(i));
+        column.setWritable(resultsMetaData.isWritable(i));
+
+        results.addColumn(column);
+      }
+    }
+    catch (SQLException e)
+    {
+      throw new SchemaCrawlerException("Cannot retrieve metadata for results",
+                                       e);
     }
 
+    return results;
   }
+
 }
