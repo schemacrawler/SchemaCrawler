@@ -75,15 +75,19 @@ final class ResultsRetriever
     try
     {
       int columnCount = resultsMetaData.getColumnCount();
-      for (int i = 0; i < columnCount; i++)
+      for (int i = 1; i <= columnCount; i++)
       {
         String catalogName = resultsMetaData.getCatalogName(i);
         String schemaName = resultsMetaData.getSchemaName(i);
         String tableName = resultsMetaData.getTableName(i);
-        MutableTable table = null;
+        MutableTable table;
         if (Utilities.isBlank(tableName))
         {
           table = new MutableTable(catalogName, schemaName, tableName);
+        }
+        else
+        {
+          table = new MutableTable(catalogName, schemaName, "");
         }
 
         String databaseSpecificTypeName = resultsMetaData.getColumnTypeName(i);
@@ -125,5 +129,4 @@ final class ResultsRetriever
 
     return resultColumns;
   }
-
 }
