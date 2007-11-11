@@ -44,26 +44,26 @@ public final class SchemaCrawler
     .getName());
 
   /**
-   * Gets the entire schema.
+   * Gets the result set columns metadata.
    * 
    * @param resultSet
    *        Result set
    * @return Schema
    */
-  public static ResultColumns getResults(final ResultSet resultSet)
+  public static ResultColumns getResultColumns(final ResultSet resultSet)
   {
-    ResultColumns results = null;
+    ResultColumns resultColumns = null;
     try
     {
       ResultsRetriever resultsRetriever = new ResultsRetriever(resultSet);
-      results = resultsRetriever.retrieveResults();
+      resultColumns = resultsRetriever.retrieveResults();
     }
     catch (SchemaCrawlerException e)
     {
       LOGGER.log(Level.WARNING, e.getMessage(), e);
-      results = null;
+      resultColumns = null;
     }
-    return results;
+    return resultColumns;
   }
 
   /**

@@ -70,7 +70,7 @@ final class ResultsRetriever
   ResultColumns retrieveResults()
     throws SchemaCrawlerException
   {
-    MutableResultColumns results = new MutableResultColumns("");
+    MutableResultColumns resultColumns = new MutableResultColumns("");
 
     try
     {
@@ -114,7 +114,7 @@ final class ResultsRetriever
         column.setSigned(resultsMetaData.isSigned(i));
         column.setWritable(resultsMetaData.isWritable(i));
 
-        results.addColumn(column);
+        resultColumns.addColumn(column);
       }
     }
     catch (SQLException e)
@@ -123,7 +123,7 @@ final class ResultsRetriever
                                        e);
     }
 
-    return results;
+    return resultColumns;
   }
 
 }
