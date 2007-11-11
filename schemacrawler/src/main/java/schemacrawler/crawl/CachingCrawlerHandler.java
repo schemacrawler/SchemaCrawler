@@ -51,6 +51,8 @@ public final class CachingCrawlerHandler
    * 
    * @param catalogName
    *        Catalog name.
+   * @param infoLevel
+   *        Schema information level.
    */
   public CachingCrawlerHandler(final String catalogName,
                                final SchemaInfoLevel infoLevel)

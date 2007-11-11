@@ -22,7 +22,7 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.crawl.NamedObjectList.NamedObjectSort;
-import schemacrawler.schema.Results;
+import schemacrawler.schema.ResultColumns;
 import schemacrawler.schema.ResultsColumn;
 
 /**
@@ -30,16 +30,16 @@ import schemacrawler.schema.ResultsColumn;
  * 
  * @author Sualeh Fatehi
  */
-class MutableResults
+class MutableResultColumns
   extends AbstractNamedObject
-  implements Results
+  implements ResultColumns
 {
 
   private static final long serialVersionUID = 5204766782914559188L;
 
   private final NamedObjectList<MutableResultsColumn> columns = new NamedObjectList<MutableResultsColumn>(NamedObjectSort.natural);
 
-  MutableResults(final String name)
+  MutableResultColumns(final String name)
   {
     super(name);
   }

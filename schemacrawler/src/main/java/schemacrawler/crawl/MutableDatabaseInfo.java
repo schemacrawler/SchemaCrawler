@@ -54,6 +54,11 @@ final class MutableDatabaseInfo
   private final SortedMap<String, Object> dbProperties = new TreeMap<String, Object>();
   private final NamedObjectList<MutableColumnDataType> columnDataTypes = new NamedObjectList<MutableColumnDataType>(NamedObjectSort.alphabetical);
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#equals(java.lang.Object)
+   */
   @Override
   public boolean equals(final Object obj)
   {
@@ -250,6 +255,11 @@ final class MutableDatabaseInfo
     return schemaPattern;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#hashCode()
+   */
   @Override
   public int hashCode()
   {

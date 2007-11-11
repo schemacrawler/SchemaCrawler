@@ -22,12 +22,14 @@ package schemacrawler.crawl;
 
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
+import schemacrawler.schema.ResultColumns;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.TableType;
 
@@ -44,6 +46,29 @@ public final class SchemaCrawler
   /**
    * Gets the entire schema.
    * 
+   * @param resultSet
+   *        Result set
+   * @return Schema
+   */
+  public static ResultColumns getResults(final ResultSet resultSet)
+  {
+    ResultColumns results = null;
+    try
+    {
+      ResultsRetriever resultsRetriever = new ResultsRetriever(resultSet);
+      results = resultsRetriever.retrieveResults();
+    }
+    catch (SchemaCrawlerException e)
+    {
+      LOGGER.log(Level.WARNING, e.getMessage(), e);
+      results = null;
+    }
+    return results;
+  }
+
+  /**
+   * Gets the entire schema.
+   * 
    * @param dataSource
    *        Data source
    * @param infoLevel
@@ -56,7 +81,6 @@ public final class SchemaCrawler
                                  final SchemaInfoLevel infoLevel,
                                  final SchemaCrawlerOptions options)
   {
-
     Connection connection;
     try
     {
