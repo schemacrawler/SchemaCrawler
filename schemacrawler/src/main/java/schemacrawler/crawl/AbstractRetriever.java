@@ -53,6 +53,31 @@ abstract class AbstractRetriever
   private static final Logger LOGGER = Logger.getLogger(AbstractRetriever.class
     .getName());
 
+  /**
+   * Creates a data type from the JDBC data type id, and the database
+   * specific type name.
+   * 
+   * @param jdbcDataType
+   *        JDBC data type
+   * @param databaseSpecificTypeName
+   *        Database specific type name
+   */
+  protected final static void lookupAndSetDataType(final AbstractColumn column,
+                                                   final int jdbcDataType,
+                                                   final String databaseSpecificTypeName,
+                                                   final NamedObjectList<MutableColumnDataType> columnDataTypes)
+  {
+    MutableColumnDataType columnDataType = columnDataTypes
+      .lookup(databaseSpecificTypeName);
+    if (columnDataType == null)
+    {
+      columnDataType = new MutableColumnDataType(databaseSpecificTypeName);
+      columnDataType.setType(jdbcDataType);
+      columnDataTypes.add(columnDataType);
+    }
+    column.setType(columnDataType);
+  }
+
   private final RetrieverConnection retrieverConnection;
 
   AbstractRetriever()
@@ -213,31 +238,6 @@ abstract class AbstractRetriever
       }
     }
     return value;
-  }
-
-  /**
-   * Creates a data type from the JDBC data type id, and the database
-   * specific type name.
-   * 
-   * @param jdbcDataType
-   *        JDBC data type
-   * @param databaseSpecificTypeName
-   *        Database specific type name
-   */
-  protected final static void lookupAndSetDataType(final AbstractColumn column,
-                                                   final int jdbcDataType,
-                                                   final String databaseSpecificTypeName,
-                                                   final NamedObjectList<MutableColumnDataType> columnDataTypes)
-  {
-    MutableColumnDataType columnDataType = columnDataTypes
-      .lookup(databaseSpecificTypeName);
-    if (columnDataType == null)
-    {
-      columnDataType = new MutableColumnDataType(databaseSpecificTypeName);
-      columnDataType.setType(jdbcDataType);
-      columnDataTypes.add(columnDataType);
-    }
-    column.setType(columnDataType);
   }
 
 }

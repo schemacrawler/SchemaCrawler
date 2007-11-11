@@ -26,7 +26,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 import schemacrawler.schema.ResultColumns;
-import sf.util.Utilities;
 
 /**
  * TableRetriever uses database metadata to get the details about the
@@ -51,7 +50,7 @@ final class ResultsRetriever
     {
       resultsMetaData = resultSet.getMetaData();
     }
-    catch (SQLException e)
+    catch (final SQLException e)
     {
       throw new SchemaCrawlerException("Cannot retrieve metadata for results",
                                        e);
@@ -70,38 +69,37 @@ final class ResultsRetriever
   ResultColumns retrieveResults()
     throws SchemaCrawlerException
   {
-    MutableResultColumns resultColumns = new MutableResultColumns("");
+    final MutableResultColumns resultColumns = new MutableResultColumns("");
 
     try
     {
-      int columnCount = resultsMetaData.getColumnCount();
+      final int columnCount = resultsMetaData.getColumnCount();
       for (int i = 1; i <= columnCount; i++)
       {
-        String catalogName = resultsMetaData.getCatalogName(i);
-        String schemaName = resultsMetaData.getSchemaName(i);
+        final String catalogName = resultsMetaData.getCatalogName(i);
+        final String schemaName = resultsMetaData.getSchemaName(i);
         String tableName = resultsMetaData.getTableName(i);
-        MutableTable table;
-        if (Utilities.isBlank(tableName))
+        if (tableName == null)
         {
-          table = new MutableTable(catalogName, schemaName, tableName);
+          tableName = "";
         }
-        else
-        {
-          table = new MutableTable(catalogName, schemaName, "");
-        }
+        final MutableTable table = new MutableTable(catalogName,
+                                                    schemaName,
+                                                    tableName);
 
-        String databaseSpecificTypeName = resultsMetaData.getColumnTypeName(i);
-        MutableColumnDataType columnDataType = new MutableColumnDataType(databaseSpecificTypeName);
+        final String databaseSpecificTypeName = resultsMetaData
+          .getColumnTypeName(i);
+        final MutableColumnDataType columnDataType = new MutableColumnDataType(databaseSpecificTypeName);
         columnDataType.setType(resultsMetaData.getColumnType(i));
         columnDataType.setTypeClassName(resultsMetaData.getColumnClassName(i));
         columnDataType.setPrecision(resultsMetaData.getPrecision(i));
-        int scale = resultsMetaData.getScale(i);
+        final int scale = resultsMetaData.getScale(i);
         columnDataType.setMaximumScale(scale);
         columnDataType.setMinimumScale(scale);
 
-        String columnName = resultsMetaData.getColumnName(i);
-        MutableResultsColumn column = new MutableResultsColumn(columnName,
-                                                               table);
+        final String columnName = resultsMetaData.getColumnName(i);
+        final MutableResultsColumn column = new MutableResultsColumn(columnName,
+                                                                     table);
         column.setType(columnDataType);
 
         column.setLabel(resultsMetaData.getColumnLabel(i));
@@ -121,7 +119,7 @@ final class ResultsRetriever
         resultColumns.addColumn(column);
       }
     }
-    catch (SQLException e)
+    catch (final SQLException e)
     {
       throw new SchemaCrawlerException("Cannot retrieve metadata for results",
                                        e);

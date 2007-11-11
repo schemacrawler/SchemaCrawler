@@ -37,7 +37,7 @@ public final class SchemaInfoLevel
 
   public static SchemaInfoLevel basic()
   {
-    SchemaInfoLevel basic = minimum();
+    final SchemaInfoLevel basic = minimum();
     basic.setRetrieveColumnDataTypes(true);
     basic.setRetrieveProcedureColumns(true);
     basic.setRetrieveTableColumns(true);
