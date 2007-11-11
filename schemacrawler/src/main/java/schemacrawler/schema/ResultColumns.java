@@ -33,6 +33,8 @@ public interface ResultColumns
   /**
    * Gets a column by name.
    * 
+   * @param name
+   *        Name
    * @return Column.
    */
   ResultsColumn getColumn(String name);

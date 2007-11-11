@@ -40,6 +40,8 @@ public interface Table
   /**
    * Gets a column by name.
    * 
+   * @param name
+   *        Name
    * @return Column.
    */
   Column getColumn(String name);
@@ -61,6 +63,8 @@ public interface Table
   /**
    * Gets a foreign key by name.
    * 
+   * @param name
+   *        Name
    * @return ForeignKey.
    */
   ForeignKey getForeignKey(String name);
@@ -75,6 +79,8 @@ public interface Table
   /**
    * Gets an index by name.
    * 
+   * @param name
+   *        Name
    * @return Index.
    */
   Index getIndex(String name);
@@ -103,6 +109,8 @@ public interface Table
   /**
    * Gets a trigger by name.
    * 
+   * @param name
+   *        Name
    * @return Trigger.
    */
   Trigger getTrigger(String name);
