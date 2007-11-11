@@ -55,10 +55,10 @@ public final class SchemaCrawler
     ResultColumns resultColumns = null;
     try
     {
-      ResultsRetriever resultsRetriever = new ResultsRetriever(resultSet);
+      final ResultsRetriever resultsRetriever = new ResultsRetriever(resultSet);
       resultColumns = resultsRetriever.retrieveResults();
     }
-    catch (SchemaCrawlerException e)
+    catch (final SchemaCrawlerException e)
     {
       LOGGER.log(Level.WARNING, e.getMessage(), e);
       resultColumns = null;

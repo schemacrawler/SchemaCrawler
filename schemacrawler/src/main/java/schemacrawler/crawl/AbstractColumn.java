@@ -186,7 +186,7 @@ abstract class AbstractColumn
     this.size = size;
   }
 
-  void setType(ColumnDataType type)
+  void setType(final ColumnDataType type)
   {
     this.type = type;
   }
