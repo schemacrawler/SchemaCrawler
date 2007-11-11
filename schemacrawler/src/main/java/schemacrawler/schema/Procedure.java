@@ -33,6 +33,8 @@ public interface Procedure
   /**
    * Gets a column by name.
    * 
+   * @param name
+   *        Name
    * @return Column of the procedure.
    */
   ProcedureColumn getColumn(String name);

@@ -72,41 +72,81 @@ final class MutableResultsColumn
     return label;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ResultsColumn#isAutoIncrement()
+   */
   public boolean isAutoIncrement()
   {
     return autoIncrement;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ResultsColumn#isCaseSensitive()
+   */
   public boolean isCaseSensitive()
   {
     return caseSensitive;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ResultsColumn#isCurrency()
+   */
   public boolean isCurrency()
   {
     return currency;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ResultsColumn#isDefinitelyWritable()
+   */
   public boolean isDefinitelyWritable()
   {
     return definitelyWritable;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ResultsColumn#isReadOnly()
+   */
   public boolean isReadOnly()
   {
     return readOnly;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ResultsColumn#isSearchable()
+   */
   public boolean isSearchable()
   {
     return searchable;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ResultsColumn#isSigned()
+   */
   public boolean isSigned()
   {
     return signed;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ResultsColumn#isWritable()
+   */
   public boolean isWritable()
   {
     return writable;

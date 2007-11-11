@@ -40,6 +40,8 @@ public interface Schema
   /**
    * Gets a procedure by name.
    * 
+   * @param name
+   *        Name
    * @return Procedure.
    */
   Procedure getProcedure(String name);
@@ -54,6 +56,8 @@ public interface Schema
   /**
    * Gets a Table by name.
    * 
+   * @param name
+   *        Name
    * @return Table.
    */
   Table getTable(String name);
