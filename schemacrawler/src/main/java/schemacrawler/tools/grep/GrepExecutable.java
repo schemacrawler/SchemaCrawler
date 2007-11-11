@@ -86,6 +86,7 @@ public class GrepExecutable
    * Gets a subset of the entire schema, that is, the grep results.
    * 
    * @param dataSource
+   * @return Schema with grep results
    * @throws Exception
    */
   public Schema getSchema(final DataSource dataSource)

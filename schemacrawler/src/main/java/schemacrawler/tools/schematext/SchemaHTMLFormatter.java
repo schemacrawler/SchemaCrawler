@@ -40,8 +40,8 @@ public final class SchemaHTMLFormatter
    * 
    * @param options
    *        Options
-   * @param writer
-   *        Writer to output to
+   * @exception SchemaCrawlerException
+   *            On an exception
    */
   public SchemaHTMLFormatter(final SchemaTextOptions options)
     throws SchemaCrawlerException

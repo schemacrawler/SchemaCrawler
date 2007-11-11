@@ -28,7 +28,7 @@ import sf.util.CommandLineParser.BooleanOption;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
 
-public final class GrepOptionsParser
+final class GrepOptionsParser
   extends BaseCommandLineParser<GrepOptions>
 {
 
@@ -41,13 +41,13 @@ public final class GrepOptionsParser
   private final BooleanOption optionInvertMatch = new BooleanOption('v',
                                                                     "invert-match");
 
-  public GrepOptionsParser(final String[] args)
+  GrepOptionsParser(final String[] args)
   {
     super(args);
   }
 
   @Override
-  public GrepOptions getValue()
+  protected GrepOptions getValue()
   {
     parse(new Option[] {
         optionTables, optionColumns, optionInvertMatch

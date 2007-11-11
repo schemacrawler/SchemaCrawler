@@ -47,6 +47,8 @@ public final class GrepSchemaCrawler
    *        A schema.
    * @param crawlHandler
    *        A crawl handler instance
+   * @param grepOptions
+   *        Grep options
    * @throws SchemaCrawlerException
    *         On a crawler exception
    */
