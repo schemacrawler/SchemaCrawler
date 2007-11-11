@@ -27,6 +27,8 @@ import sf.util.CommandLineParser.Option;
 /**
  * Parses the command line.
  * 
+ * @param <O>
+ *        Object to be parsed from the command line.
  * @author Sualeh Fatehi
  */
 public abstract class BaseCommandLineParser<O>

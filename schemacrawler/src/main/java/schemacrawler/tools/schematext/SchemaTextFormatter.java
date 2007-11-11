@@ -40,6 +40,8 @@ public final class SchemaTextFormatter
    * 
    * @param options
    *        Options
+   * @exception SchemaCrawlerException
+   *            On an exception
    */
   public SchemaTextFormatter(final SchemaTextOptions options)
     throws SchemaCrawlerException

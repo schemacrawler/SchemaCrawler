@@ -57,7 +57,7 @@ class MutableResultColumns
   /**
    * {@inheritDoc}
    * 
-   * @see Table#getColumns()
+   * @see schemacrawler.schema.Table#getColumns()
    */
   public ResultsColumn[] getColumns()
   {
