@@ -30,7 +30,7 @@ import sf.util.CommandLineParser.StringOption;
  * 
  * @author sfatehi
  */
-public final class SpringOptionsParser
+final class SpringOptionsParser
   extends BaseCommandLineParser<SpringOptions>
 {
 
@@ -55,7 +55,7 @@ public final class SpringOptionsParser
   }
 
   @Override
-  public SpringOptions getValue()
+  protected SpringOptions getValue()
   {
     parse(new Option[] {
         optionContextFile, optionExecutable, optionDataSourceName,
