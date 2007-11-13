@@ -14,12 +14,9 @@
 			<subsection name="How to Run">
 				<ol>
 					<li>Make sure that the Java executable is on your path.</li>
-					<li>Copy the SchemaCrawler jar file and
+					<li>Copy the
 						<span class="code">schemacrawler.config.properties</span>
-						into the
-						<span class="code">commandline</span> example
-						directory.</li>
-					<li>Copy the hsqldb jar file from distribution directory into the
+						file into the
 						<span class="code">commandline</span> example
 						directory.</li>
           <li>Start the database server by running StartDatabaseServer script from the

@@ -35,7 +35,6 @@ import java.util.logging.Logger;
 import javax.sql.DataSource;
 
 import sf.util.GroupedProperties;
-import sf.util.LocalClassLoader;
 import sf.util.SubstitutableProperties;
 import sf.util.Utilities;
 
@@ -391,13 +390,9 @@ public final class PropertiesDataSource
 
     try
     {
-      final LocalClassLoader classLoader = LocalClassLoader.getClassLoader();
-      Class.forName("java.sql.DriverManager", true, classLoader);
-
-      // load driver
       final String driver = connectionParams.getProperty(DRIVER);
       final Class<Driver> jdbcDriverClass = (Class<Driver>) Class
-        .forName(driver, true, classLoader);
+        .forName(driver);
       jdbcDriver = jdbcDriverClass.newInstance();
     }
     catch (final ClassCastException e)
