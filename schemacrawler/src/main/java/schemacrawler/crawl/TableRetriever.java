@@ -180,8 +180,7 @@ final class TableRetriever
         .getQueryForTable(table);
       LOGGER.log(Level.FINE, "Using getIndexInfo SQL:" + Utilities.NEWLINE
                              + indexInfoSql);
-      final Connection connection = getRetrieverConnection().getMetaData()
-        .getConnection();
+      final Connection connection = getDatabaseConnection();
       final Statement statement = connection.createStatement();
       results = statement.executeQuery(indexInfoSql);
     }

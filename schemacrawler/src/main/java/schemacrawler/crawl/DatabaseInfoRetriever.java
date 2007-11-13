@@ -227,7 +227,7 @@ final class DatabaseInfoRetriever
     dbInfo.setDriverName(dbMetaData.getDriverName());
     dbInfo.setDriverVersion(dbMetaData.getDriverVersion());
     dbInfo.setConnectionUrl(dbMetaData.getURL());
-    dbInfo.setCatalog(dbMetaData.getConnection().getCatalog());
+    dbInfo.setCatalog(getRetrieverConnection().getCatalog());
     dbInfo.setJdbcDriverClassName(jdbcDriverClassName);
     dbInfo.setSchemaPattern(getRetrieverConnection().getSchemaPattern());
     dbInfo.setJdbcDriverClassName(getRetrieverConnection()

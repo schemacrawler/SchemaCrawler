@@ -73,8 +73,7 @@ final class ProcedureExRetriever
     final String procedureDefinitionsSql = informationSchemaViews.getRoutines()
       .getQuery();
 
-    final Connection connection = getRetrieverConnection().getMetaData()
-      .getConnection();
+    final Connection connection = getDatabaseConnection();
     final Statement statement = connection.createStatement();
     ResultSet results = null;
     try
