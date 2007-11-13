@@ -85,8 +85,7 @@ final class TableExRetriever
     final String tableConstraintsInformationSql = informationSchemaViews
       .getTableConstraints().getQuery();
 
-    final Connection connection = getRetrieverConnection().getMetaData()
-      .getConnection();
+    final Connection connection = getDatabaseConnection();
     Statement statement = connection.createStatement();
     ResultSet results = null;
     try
@@ -239,8 +238,7 @@ final class TableExRetriever
     final String triggerInformationSql = informationSchemaViews.getTriggers()
       .getQuery();
 
-    final Connection connection = getRetrieverConnection().getMetaData()
-      .getConnection();
+    final Connection connection = getDatabaseConnection();
     final Statement statement = connection.createStatement();
     ResultSet results = null;
     try
@@ -334,8 +332,7 @@ final class TableExRetriever
     final String viewInformationSql = informationSchemaViews.getViews()
       .getQuery();
 
-    final Connection connection = getRetrieverConnection().getMetaData()
-      .getConnection();
+    final Connection connection = getDatabaseConnection();
     final Statement statement = connection.createStatement();
     ResultSet results = null;
     try

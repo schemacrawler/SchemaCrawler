@@ -21,6 +21,7 @@
 package schemacrawler.crawl;
 
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -114,6 +115,11 @@ abstract class AbstractRetriever
       belongsToSchema = false;
     }
     return belongsToCatalog && belongsToSchema;
+  }
+
+  protected Connection getDatabaseConnection()
+  {
+    return retrieverConnection.getConnection();
   }
 
   protected RetrieverConnection getRetrieverConnection()

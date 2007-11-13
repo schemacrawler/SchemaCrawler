@@ -99,20 +99,18 @@ final class RetrieverConnection
     throws Throwable
   {
     super.finalize();
-    // Release database resources
-    if (metaData != null)
-    {
-      final Connection connection = metaData.getConnection();
-      connection.close();
-    }
+    close();
   }
 
   void close()
   {
     try
     {
-      final Connection connection = metaData.getConnection();
-      connection.close();
+      final Connection connection = getConnection();
+      if (connection != null && !connection.isClosed())
+      {
+        connection.close();
+      }
       LOGGER.log(Level.FINE, "Database connection closed - " + connection);
     }
     catch (final SQLException e)
@@ -124,6 +122,25 @@ final class RetrieverConnection
   String getCatalog()
   {
     return catalog;
+  }
+
+  Connection getConnection()
+  {
+    Connection connection = null;
+    if (metaData != null)
+    {
+      try
+      {
+        connection = metaData.getConnection();
+      }
+      catch (final SQLException e)
+      {
+        LOGGER.log(Level.WARNING,
+                   "Could not obtain database connection from metadata");
+        connection = null;
+      }
+    }
+    return connection;
   }
 
   String getJdbcDriverClassName()
