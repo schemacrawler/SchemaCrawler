@@ -274,6 +274,18 @@
       </zipfileset>
     </zip>
 
+    <move todir="${distribution.target}">
+      <fileset dir="${SchemaCrawlerHome}/schemacrawler-mysql/target">
+        <include name="schemacrawler-mysql*distrib.zip"/>
+      </fileset>
+      <fileset dir="${SchemaCrawlerHome}/schemacrawler-postgresql/target">
+        <include name="schemacrawler-postgresql*distrib.zip"/>
+      </fileset>
+      <fileset dir="${SchemaCrawlerHome}/schemacrawler-sqlserver/target">
+        <include name="schemacrawler-sqlserver*distrib.zip"/>
+      </fileset>
+    </move>
+
 	</target>
 
 </project>
