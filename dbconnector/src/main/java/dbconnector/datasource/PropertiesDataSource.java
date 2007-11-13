@@ -353,7 +353,6 @@ public final class PropertiesDataSource
 
   }
 
-  @SuppressWarnings("unchecked")
   private void constructPropertiesDataSource(final Properties properties,
                                              final String connectionName)
     throws PropertiesDataSourceException
