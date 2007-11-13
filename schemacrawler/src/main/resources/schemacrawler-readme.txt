@@ -12,7 +12,8 @@ To use SchemaCrawler:
 5. Start a command shell, and cd to the working directory.
 
 
-java -jar <schemacrawler-jar> [options]
+java -classpath <schemacrawler-jar>;<db-driver-jar> schemacrawler.Main [options]
+
 
 --- Optional Configuration Options ---
 
