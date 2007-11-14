@@ -406,7 +406,8 @@ final class TableExRetriever
         final String privilegeName = results.getString("PRIVILEGE");
         final String grantor = results.getString("GRANTOR");
         final String grantee = results.getString("GRANTEE");
-        final boolean isGrantable = readBoolean("IS_GRANTABLE");
+        final boolean isGrantable = readBoolean(results
+          .getString("IS_GRANTABLE"));
 
         final MutablePrivilege privilege = new MutablePrivilege(privilegeName,
                                                                 namedObject);
