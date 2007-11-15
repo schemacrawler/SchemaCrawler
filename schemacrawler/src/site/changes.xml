@@ -5,7 +5,7 @@
 		<author email="sualeh@hotmail.com">Sualeh Fatehi</author>
 	</properties>
 	<body>
-		<release version="5.3" date="2007-11-10">
+		<release version="5.3" date="2007-11-15">
 			<action dev="Sualeh Fatehi" type="fix">
 				Made sure that all relevant license files are getting
 				delivered.
@@ -28,7 +28,7 @@
 				public class, schemacrawler.schema.SqlDataType.
 			</action>
 			<action dev="Sualeh Fatehi" type="add">
-				Added the ability to get result set metadata.
+				Added the ability to get result-set metadata.
 			</action>
 			<action dev="Sualeh Fatehi" type="add">
 				Changed schema info level from an enum into a class that
