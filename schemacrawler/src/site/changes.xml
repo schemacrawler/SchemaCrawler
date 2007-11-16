@@ -5,7 +5,7 @@
 		<author email="sualeh@hotmail.com">Sualeh Fatehi</author>
 	</properties>
 	<body>
-		<release version="5.3" date="2007-11-15">
+		<release version="5.4" date="2007-11-15">
 			<action dev="Sualeh Fatehi" type="fix">
 				Made sure that all relevant license files are getting
 				delivered.
