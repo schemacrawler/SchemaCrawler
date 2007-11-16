@@ -154,8 +154,6 @@
 
     <property name="distributable.jar"
       value="${distribution.dir}/schemacrawler-${pom.version}.jar"/>
-    <property name="site.dir"
-      value="${SchemaCrawlerHome}/distribution/target/_site"/>
 
     <delete dir="${distribution.dir}"/>
     <mkdir dir="${distribution.dir}"/>
@@ -230,13 +228,19 @@
       <fileset dir="${SchemaCrawlerHome}/distribution/src/other"/>
     </copy>
 
-    <!-- Copy site -->
-    <mkdir dir="${SchemaCrawlerHome}/schemacrawler/target/site"/>
-    <copy todir="${site.dir}">
-      <fileset dir="${SchemaCrawlerHome}/schemacrawler/target/site"/>
-    </copy>
-
     <!-- Create zip files for distribution -->
+
+    <mkdir dir="${SchemaCrawlerHome}/schemacrawler/target/site"/>
+    <property
+    	name="site.zip.prefix"
+    	value="schemacrawler-${pom.version}-site" />
+    <delete file="${distribution.target}/${site.zip.prefix}.zip"/>
+    <zip destfile="${distribution.target}/${site.zip.prefix}.zip">
+      <zipfileset
+        dir="${SchemaCrawlerHome}/schemacrawler/target/site"
+        prefix="${site.zip.prefix}"
+        defaultexcludes="yes"/>
+    </zip>
 
     <property
     	name="distribution.zip.prefix"
