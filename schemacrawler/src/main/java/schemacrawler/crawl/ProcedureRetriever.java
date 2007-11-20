@@ -102,6 +102,8 @@ final class ProcedureRetriever
         column.setNullable(isNullable);
         column.setRemarks(remarks);
 
+        column.addAttributes(results.getAttributes());
+
         procedure.addColumn(column);
       }
     }
@@ -158,6 +160,8 @@ final class ProcedureRetriever
                                                                 procedureName);
         procedure.setType(ProcedureType.valueOf(procedureType));
         procedure.setRemarks(remarks);
+
+        procedure.addAttributes(results.getAttributes());
         // add it to the list
         procedures.add(procedure);
       }

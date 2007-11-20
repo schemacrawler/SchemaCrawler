@@ -60,7 +60,7 @@ public final class InformationSchemaViews
    */
   public InformationSchemaViews(final Map<String, String> informationSchemaViewsSql)
   {
-    this.informationSchemaQueries = new HashMap<String, Query>();
+    informationSchemaQueries = new HashMap<String, Query>();
     if (informationSchemaViewsSql != null)
     {
       final String[] keys = new String[] {
@@ -79,7 +79,7 @@ public final class InformationSchemaViews
           {
             final Query query = new Query(key, informationSchemaViewsSql
               .get(key));
-            this.informationSchemaQueries.put(key, query);
+            informationSchemaQueries.put(key, query);
           }
           catch (final IllegalArgumentException e)
           {

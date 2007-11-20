@@ -133,6 +133,9 @@ final class TableExRetriever
                                                                                     table);
           checkConstraint.setDeferrable(deferrable);
           checkConstraint.setInitiallyDeferred(initiallyDeferred);
+
+          checkConstraint.addAttributes(results.getAttributes());
+
           // Add to map, since we will need this later
           checkConstraintsMap.put(constraintName, checkConstraint);
         }
@@ -298,6 +301,8 @@ final class TableExRetriever
         trigger.setActionStatement(actionStatement);
         trigger.setActionOrientation(actionOrientation);
         trigger.setConditionTiming(conditionTiming);
+
+        trigger.addAttributes(results.getAttributes());
         // Add trigger to the table
         table.addTrigger(trigger);
 
@@ -378,6 +383,8 @@ final class TableExRetriever
         view.setDefinition(definition);
         view.setCheckOption(checkOption);
         view.setUpdatable(updatable);
+
+        view.addAttributes(results.getAttributes());
       }
     }
     finally
@@ -417,6 +424,9 @@ final class TableExRetriever
         privilege.setGrantor(grantor);
         privilege.setGrantee(grantee);
         privilege.setGrantable(isGrantable);
+
+        privilege.addAttributes(results.getAttributes());
+
         if (privilegesForTable)
         {
           final MutableTable table = (MutableTable) namedObject;
@@ -438,9 +448,9 @@ final class TableExRetriever
     final MetadataResultSet results;
 
     final boolean privilegesForTable = parent == null;
-    String catalog = getRetrieverConnection().getCatalog();
-    String schemaPattern = getRetrieverConnection().getSchemaPattern();
-    String privilegePattern = "%";
+    final String catalog = getRetrieverConnection().getCatalog();
+    final String schemaPattern = getRetrieverConnection().getSchemaPattern();
+    final String privilegePattern = "%";
     if (privilegesForTable)
     {
       results = new MetadataResultSet(getRetrieverConnection().getMetaData()

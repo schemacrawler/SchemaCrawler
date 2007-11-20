@@ -48,6 +48,16 @@ abstract class AbstractNamedObject
 
   /**
    * {@inheritDoc}
+   * 
+   * @see NamedObject#addAttributes(Map<String, Object>)
+   */
+  public void addAttributes(final Map<String, Object> values)
+  {
+    attributeMap.putAll(values);
+  }
+
+  /**
+   * {@inheritDoc}
    */
   public int compareTo(final NamedObject obj)
   {

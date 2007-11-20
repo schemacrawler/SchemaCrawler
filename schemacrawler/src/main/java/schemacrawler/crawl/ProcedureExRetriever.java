@@ -114,6 +114,8 @@ final class ProcedureExRetriever
 
         procedure.setRoutineBodyType(routineBodyType);
         procedure.setDefinition(definition);
+
+        procedure.addAttributes(results.getAttributes());
       }
     }
     finally

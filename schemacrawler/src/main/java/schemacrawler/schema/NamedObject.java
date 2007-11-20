@@ -22,6 +22,7 @@ package schemacrawler.schema;
 
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * Named object.
@@ -31,6 +32,14 @@ import java.io.Serializable;
 public interface NamedObject
   extends Serializable, Comparable<NamedObject>
 {
+
+  /**
+   * Adds attributes from a map.
+   * 
+   * @param values
+   *        Attribute values to add.
+   */
+  void addAttributes(Map<String, Object> values);
 
   /**
    * Gets an attribute.
@@ -56,7 +65,7 @@ public interface NamedObject
   String getRemarks();
 
   /**
-   * Sets an attibute.
+   * Sets an attribute.
    * 
    * @param name
    *        Attribute name.
