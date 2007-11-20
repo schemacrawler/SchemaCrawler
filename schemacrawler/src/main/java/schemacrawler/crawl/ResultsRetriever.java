@@ -25,7 +25,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
-import schemacrawler.schema.ResultColumns;
+import schemacrawler.schema.ResultsColumns;
 
 /**
  * TableRetriever uses database metadata to get the details about the
@@ -66,7 +66,7 @@ final class ResultsRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  ResultColumns retrieveResults()
+  ResultsColumns retrieveResults()
     throws SchemaCrawlerException
   {
     final MutableResultColumns resultColumns = new MutableResultColumns("");

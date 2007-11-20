@@ -22,7 +22,7 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.crawl.NamedObjectList.NamedObjectSort;
-import schemacrawler.schema.ResultColumns;
+import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.ResultsColumn;
 
 /**
@@ -32,7 +32,7 @@ import schemacrawler.schema.ResultsColumn;
  */
 class MutableResultColumns
   extends AbstractNamedObject
-  implements ResultColumns
+  implements ResultsColumns
 {
 
   private static final long serialVersionUID = 5204766782914559188L;

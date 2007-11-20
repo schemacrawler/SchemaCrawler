@@ -74,11 +74,11 @@ final class TableRetriever
                        final NamedObjectList<MutableColumnDataType> columnDataTypes)
     throws SQLException
   {
-    final ResultSet results = getRetrieverConnection().getMetaData()
-      .getColumns(getRetrieverConnection().getCatalog(),
-                  table.getSchemaName(),
-                  table.getName(),
-                  null);
+    final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
+      .getMetaData().getColumns(getRetrieverConnection().getCatalog(),
+                                table.getSchemaName(),
+                                table.getName(),
+                                null));
     try
     {
       while (results.next())
@@ -100,14 +100,13 @@ final class TableRetriever
             && table.getName().equals(tableName))
         {
           LOGGER.log(Level.FINEST, "Retrieving column: " + columnName);
-          final int ordinalPosition = readInt(results, ORDINAL_POSITION, 0);
-          final int dataType = readInt(results, DATA_TYPE, 0);
+          final int ordinalPosition = results.getInt(ORDINAL_POSITION, 0);
+          final int dataType = results.getInt(DATA_TYPE, 0);
           final String typeName = results.getString(TYPE_NAME);
-          final int size = readInt(results, "COLUMN_SIZE", 0);
-          final int decimalDigits = readInt(results, "DECIMAL_DIGITS", 0);
-          final boolean isNullable = readInt(results,
-                                             NULLABLE,
-                                             DatabaseMetaData.columnNullableUnknown) == DatabaseMetaData.columnNullable;
+          final int size = results.getInt("COLUMN_SIZE", 0);
+          final int decimalDigits = results.getInt("DECIMAL_DIGITS", 0);
+          final boolean isNullable = results
+            .getInt(NULLABLE, DatabaseMetaData.columnNullableUnknown) == DatabaseMetaData.columnNullable;
           final String remarks = results.getString(REMARKS);
 
           column.setOrdinalPosition(ordinalPosition);
@@ -142,15 +141,19 @@ final class TableRetriever
 
     final Map<String, MutableForeignKey> foreignKeysMap = new HashMap<String, MutableForeignKey>();
 
-    ResultSet results;
+    MetadataResultSet results;
 
     final String catalog = getRetrieverConnection().getCatalog();
     final DatabaseMetaData metaData = getRetrieverConnection().getMetaData();
 
-    results = metaData.getImportedKeys(catalog, schema, tableName);
+    results = new MetadataResultSet(metaData.getImportedKeys(catalog,
+                                                             schema,
+                                                             tableName));
     createForeignKeys(results, tables, table, foreignKeysMap);
 
-    results = metaData.getExportedKeys(catalog, schema, tableName);
+    results = new MetadataResultSet(metaData.getExportedKeys(catalog,
+                                                             schema,
+                                                             tableName));
     createForeignKeys(results, tables, table, foreignKeysMap);
 
     final Collection<MutableForeignKey> foreignKeyCollection = foreignKeysMap
@@ -173,7 +176,7 @@ final class TableRetriever
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
 
-    ResultSet results = null;
+    MetadataResultSet results = null;
     if (informationSchemaViews.hasIndexInfoSql())
     {
       final String indexInfoSql = informationSchemaViews.getIndexInfo()
@@ -182,17 +185,17 @@ final class TableRetriever
                              + indexInfoSql);
       final Connection connection = getDatabaseConnection();
       final Statement statement = connection.createStatement();
-      results = statement.executeQuery(indexInfoSql);
+      results = new MetadataResultSet(statement.executeQuery(indexInfoSql));
     }
     else
     {
       LOGGER.log(Level.FINE, "Using getIndexInfo()");
-      results = getRetrieverConnection().getMetaData()
+      results = new MetadataResultSet(getRetrieverConnection().getMetaData()
         .getIndexInfo(getRetrieverConnection().getCatalog(),
                       table.getSchemaName(),
                       table.getName(),
                       unique,
-                      approximate);
+                      approximate));
     }
     createIndices(results, table, indicesMap);
 
@@ -334,7 +337,7 @@ final class TableRetriever
    * @param foreignKeysMap
    * @throws SQLException
    */
-  private void createForeignKeys(final ResultSet results,
+  private void createForeignKeys(final MetadataResultSet results,
                                  final NamedObjectList<MutableTable> tables,
                                  final MutableTable table,
                                  final Map<String, MutableForeignKey> foreignKeysMap)
@@ -362,17 +365,15 @@ final class TableRetriever
         final String pkColumnName = results.getString("PKCOLUMN_NAME");
         final String fkTableName = results.getString("FKTABLE_NAME");
         final String fkColumnName = results.getString("FKCOLUMN_NAME");
-        final int keySequence = readInt(results, KEY_SEQ, 0);
-        final int updateRule = readInt(results,
-                                       "UPDATE_RULE",
-                                       ForeignKeyUpdateRule.unknown.getId());
-        final int deleteRule = readInt(results,
-                                       "DELETE_RULE",
-                                       ForeignKeyUpdateRule.unknown.getId());
-        final int deferrability = readInt(results,
-                                          "DEFERRABILITY",
-                                          ForeignKeyDeferrability.unknown
-                                            .getId());
+        final int keySequence = results.getInt(KEY_SEQ, 0);
+        final int updateRule = results.getInt("UPDATE_RULE",
+                                              ForeignKeyUpdateRule.unknown
+                                                .getId());
+        final int deleteRule = results.getInt("DELETE_RULE",
+                                              ForeignKeyUpdateRule.unknown
+                                                .getId());
+        final int deferrability = results
+          .getInt("DEFERRABILITY", ForeignKeyDeferrability.unknown.getId());
         final MutableColumn pkColumn = lookupOrCreateColumn(tables,
                                                             pkTableSchema,
                                                             pkTableName,
@@ -397,7 +398,7 @@ final class TableRetriever
 
   }
 
-  private void createIndices(final ResultSet results,
+  private void createIndices(final MetadataResultSet results,
                              final MutableTable table,
                              final Map<String, MutableIndex> indicesMap)
     throws SQLException
@@ -423,11 +424,11 @@ final class TableRetriever
           continue;
         }
         final boolean uniqueIndex = !results.getBoolean("NON_UNIQUE");
-        final int type = readInt(results, "TYPE", IndexType.unknown.getId());
-        final int ordinalPosition = readInt(results, ORDINAL_POSITION, 0);
+        final int type = results.getInt("TYPE", IndexType.unknown.getId());
+        final int ordinalPosition = results.getInt(ORDINAL_POSITION, 0);
         final String sortSequence = results.getString("ASC_OR_DESC");
-        final int cardinality = readInt(results, "CARDINALITY", 0);
-        final int pages = readInt(results, "PAGES", 0);
+        final int cardinality = results.getInt("CARDINALITY", 0);
+        final int pages = results.getInt("PAGES", 0);
 
         final MutableColumn column = table.lookupColumn(columnName);
         if (column != null)

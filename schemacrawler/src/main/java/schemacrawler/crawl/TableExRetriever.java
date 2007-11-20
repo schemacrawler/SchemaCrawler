@@ -22,7 +22,6 @@ package schemacrawler.crawl;
 
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
@@ -87,10 +86,11 @@ final class TableExRetriever
 
     final Connection connection = getDatabaseConnection();
     Statement statement = connection.createStatement();
-    ResultSet results = null;
+    MetadataResultSet results = null;
     try
     {
-      results = statement.executeQuery(tableConstraintsInformationSql);
+      results = new MetadataResultSet(statement
+        .executeQuery(tableConstraintsInformationSql));
     }
     catch (final SQLException e)
     {
@@ -122,9 +122,9 @@ final class TableExRetriever
         }
 
         final String constraintType = results.getString("CONSTRAINT_TYPE");
-        final boolean deferrable = readBoolean(results
+        final boolean deferrable = results.getBoolean(results
           .getString("IS_DEFERRABLE"));
-        final boolean initiallyDeferred = readBoolean(results
+        final boolean initiallyDeferred = results.getBoolean(results
           .getString("INITIALLY_DEFERRED"));
 
         if (constraintType.equalsIgnoreCase("check"))
@@ -155,7 +155,8 @@ final class TableExRetriever
 
     // Get check constraint definitions
     statement = connection.createStatement();
-    results = statement.executeQuery(checkConstraintInformationSql);
+    results = new MetadataResultSet(statement
+      .executeQuery(checkConstraintInformationSql));
     try
     {
       while (results.next())
@@ -240,10 +241,11 @@ final class TableExRetriever
 
     final Connection connection = getDatabaseConnection();
     final Statement statement = connection.createStatement();
-    ResultSet results = null;
+    MetadataResultSet results = null;
     try
     {
-      results = statement.executeQuery(triggerInformationSql);
+      results = new MetadataResultSet(statement
+        .executeQuery(triggerInformationSql));
     }
     catch (final SQLException e)
     {
@@ -279,7 +281,7 @@ final class TableExRetriever
           continue;
         }
 
-        final int actionOrder = readInt(results, "ACTION_ORDER", 0);
+        final int actionOrder = results.getInt("ACTION_ORDER", 0);
         final String actionCondition = results.getString("ACTION_CONDITION");
         final String actionStatement = results.getString("ACTION_STATEMENT");
         final ActionOrientationType actionOrientation = ActionOrientationType
@@ -334,10 +336,11 @@ final class TableExRetriever
 
     final Connection connection = getDatabaseConnection();
     final Statement statement = connection.createStatement();
-    ResultSet results = null;
+    MetadataResultSet results = null;
     try
     {
-      results = statement.executeQuery(viewInformationSql);
+      results = new MetadataResultSet(statement
+        .executeQuery(viewInformationSql));
     }
     catch (final SQLException e)
     {
@@ -364,7 +367,8 @@ final class TableExRetriever
         String definition = results.getString("VIEW_DEFINITION");
         final CheckOptionType checkOption = CheckOptionType.valueOf(results
           .getString("CHECK_OPTION").toLowerCase(Locale.ENGLISH));
-        final boolean updatable = readBoolean(results.getString("IS_UPDATABLE"));
+        final boolean updatable = results.getBoolean(results
+          .getString("IS_UPDATABLE"));
 
         if (!Utilities.isBlank(view.getDefinition()))
         {
@@ -384,7 +388,7 @@ final class TableExRetriever
 
   }
 
-  private void createPrivileges(final ResultSet results,
+  private void createPrivileges(final MetadataResultSet results,
                                 final NamedObjectList<?> namedObjectList,
                                 final boolean privilegesForTable)
     throws SQLException
@@ -406,8 +410,7 @@ final class TableExRetriever
         final String privilegeName = results.getString("PRIVILEGE");
         final String grantor = results.getString("GRANTOR");
         final String grantee = results.getString("GRANTEE");
-        final boolean isGrantable = readBoolean(results
-          .getString("IS_GRANTABLE"));
+        final boolean isGrantable = results.getBoolean("IS_GRANTABLE");
 
         final MutablePrivilege privilege = new MutablePrivilege(privilegeName,
                                                                 namedObject);
@@ -432,23 +435,24 @@ final class TableExRetriever
                                   final NamedObjectList<?> namedObjectList)
     throws SQLException
   {
-    final ResultSet results;
+    final MetadataResultSet results;
 
     final boolean privilegesForTable = parent == null;
+    String catalog = getRetrieverConnection().getCatalog();
+    String schemaPattern = getRetrieverConnection().getSchemaPattern();
+    String privilegePattern = "%";
     if (privilegesForTable)
     {
-      results = getRetrieverConnection().getMetaData()
-        .getTablePrivileges(getRetrieverConnection().getCatalog(),
-                            getRetrieverConnection().getSchemaPattern(),
-                            "%");
+      results = new MetadataResultSet(getRetrieverConnection().getMetaData()
+        .getTablePrivileges(catalog, schemaPattern, privilegePattern));
     }
     else
     {
-      results = getRetrieverConnection().getMetaData()
-        .getColumnPrivileges(getRetrieverConnection().getCatalog(),
-                             getRetrieverConnection().getSchemaPattern(),
+      results = new MetadataResultSet(getRetrieverConnection().getMetaData()
+        .getColumnPrivileges(catalog,
+                             schemaPattern,
                              parent.getName(),
-                             "%");
+                             privilegePattern));
     }
     try
     {

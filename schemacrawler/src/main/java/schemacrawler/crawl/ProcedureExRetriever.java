@@ -22,7 +22,6 @@ package schemacrawler.crawl;
 
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Locale;
@@ -75,10 +74,11 @@ final class ProcedureExRetriever
 
     final Connection connection = getDatabaseConnection();
     final Statement statement = connection.createStatement();
-    ResultSet results = null;
+    MetadataResultSet results = null;
     try
     {
-      results = statement.executeQuery(procedureDefinitionsSql);
+      results = new MetadataResultSet(statement
+        .executeQuery(procedureDefinitionsSql));
     }
     catch (final SQLException e)
     {
@@ -88,7 +88,6 @@ final class ProcedureExRetriever
 
     try
     {
-
       while (results.next())
       {
         final String catalog = results.getString("ROUTINE_CATALOG");

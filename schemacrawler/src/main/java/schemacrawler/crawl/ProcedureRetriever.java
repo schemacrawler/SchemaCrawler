@@ -22,7 +22,6 @@ package schemacrawler.crawl;
 
 
 import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -65,13 +64,11 @@ final class ProcedureRetriever
     throws SQLException
   {
 
-    final ResultSet results;
-
-    results = getRetrieverConnection().getMetaData()
-      .getProcedureColumns(getRetrieverConnection().getCatalog(),
-                           procedure.getSchemaName(),
-                           procedure.getName(),
-                           null);
+    final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
+      .getMetaData().getProcedureColumns(getRetrieverConnection().getCatalog(),
+                                         procedure.getSchemaName(),
+                                         procedure.getName(),
+                                         null));
     int ordinalNumber = 0;
     while (results.next())
     {
@@ -79,14 +76,13 @@ final class ProcedureRetriever
       final String procedureName = results.getString("PROCEDURE_NAME");
       final String columnName = results.getString(COLUMN_NAME);
       LOGGER.log(Level.FINEST, "Retrieving procedure column: " + columnName);
-      final short columnType = readShort(results, "COLUMN_TYPE", (short) 0);
-      final int dataType = readInt(results, DATA_TYPE, 0);
+      final short columnType = results.getShort("COLUMN_TYPE", (short) 0);
+      final int dataType = results.getInt(DATA_TYPE, 0);
       final String typeName = results.getString(TYPE_NAME);
-      final int length = readInt(results, "LENGTH", 0);
-      final int precision = readInt(results, "PRECISION", 0);
-      final boolean isNullable = readShort(results,
-                                           NULLABLE,
-                                           (short) DatabaseMetaData.procedureNullableUnknown) == DatabaseMetaData.procedureNullable;
+      final int length = results.getInt("LENGTH", 0);
+      final int precision = results.getInt("PRECISION", 0);
+      final boolean isNullable = results
+        .getShort(NULLABLE, (short) DatabaseMetaData.procedureNullableUnknown) == DatabaseMetaData.procedureNullable;
       final String remarks = results.getString(REMARKS);
       // Note: If the procedure name contains an underscore character,
       // this is a
@@ -132,8 +128,10 @@ final class ProcedureRetriever
 
     final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>(NamedObjectSort.alphabetical);
 
-    final ResultSet results = getRetrieverConnection().getMetaData()
-      .getProcedures(null, getRetrieverConnection().getSchemaPattern(), "%");
+    final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
+      .getMetaData().getProcedures(null,
+                                   getRetrieverConnection().getSchemaPattern(),
+                                   "%"));
     try
     {
       results.setFetchSize(FETCHSIZE);
@@ -149,10 +147,8 @@ final class ProcedureRetriever
       final String catalog = results.getString("PROCEDURE_CAT");
       final String procedureName = results.getString("PROCEDURE_NAME");
       LOGGER.log(Level.FINEST, "Retrieving procedure: " + procedureName);
-      final short procedureType = readShort(results,
-                                            "PROCEDURE_TYPE",
-                                            (short) ProcedureType.unknown
-                                              .getId());
+      final short procedureType = results
+        .getShort("PROCEDURE_TYPE", (short) ProcedureType.unknown.getId());
       final String remarks = results.getString(REMARKS);
 
       if (procedureInclusionRule.include(procedureName))

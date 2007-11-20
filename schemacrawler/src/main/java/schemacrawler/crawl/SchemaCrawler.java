@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
-import schemacrawler.schema.ResultColumns;
+import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.TableType;
 
@@ -50,9 +50,9 @@ public final class SchemaCrawler
    *        Result set
    * @return Schema
    */
-  public static ResultColumns getResultColumns(final ResultSet resultSet)
+  public static ResultsColumns getResultColumns(final ResultSet resultSet)
   {
-    ResultColumns resultColumns = null;
+    ResultsColumns resultColumns = null;
     try
     {
       final ResultsRetriever resultsRetriever = new ResultsRetriever(resultSet);
