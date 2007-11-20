@@ -9,27 +9,33 @@
 default_schema                                         [driver property]
   
   not required; choices [true, false]
-  null
+  value=null
+
 get_column_name                                        [driver property]
   
   not required; choices [true, false]
-  true
+  value=true
+
 ifexists                                               [driver property]
   
   not required; choices [true, false]
-  null
+  value=null
+
 password                                               [driver property]
   
-  
-  null
+  required
+  value=null
+
 shutdown                                               [driver property]
   
   not required; choices [true, false]
-  null
+  value=null
+
 user                                                   [driver property]
   
-  
-  null
+  required
+  value=null
+
 
 
 ------------------------------------------------------------------------

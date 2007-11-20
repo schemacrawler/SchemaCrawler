@@ -212,7 +212,9 @@ public abstract class BaseSchemaTextFormatter
       handleDriverPropertiesStart();
       for (final JdbcDriverProperty driverProperty: jdbcDriverProperties)
       {
+        handleJdbcDriverPropertyStart();
         printJdbcDriverProperty(driverProperty);
+        handleJdbcDriverPropertyEnd();
       }
       handleDriverPropertiesEnd();
     }
@@ -371,6 +373,10 @@ public abstract class BaseSchemaTextFormatter
 
   abstract void handleJdbcDriverInfo(JdbcDriverInfo driverInfo);
 
+  abstract void handleJdbcDriverPropertyEnd();
+
+  abstract void handleJdbcDriverPropertyStart();
+
   /**
    * Handles the end of output for a procedure.
    */
@@ -443,7 +449,7 @@ public abstract class BaseSchemaTextFormatter
     }
     out.println(formattingHelper.createNameRow(databaseSpecificTypeName,
                                                "[data type]"));
-    out.println(formattingHelper.createDefinitionRow("based on " + typeName));
+    out.println(formattingHelper.createDetailRow("", "based on", typeName));
     out.println(formattingHelper.createDefinitionRow(userDefined));
     out.println(formattingHelper.createDefinitionRow(definedWith));
     out.println(formattingHelper.createDefinitionRow(nullable));
@@ -615,21 +621,21 @@ public abstract class BaseSchemaTextFormatter
   {
     final String choices = Arrays.asList(driverProperty.getChoices())
       .toString();
-    final String required = driverProperty.isRequired()? "": "not "
-                                                             + "required";
+    final String required = (driverProperty.isRequired()? "": "not ")
+                            + "required";
     String details = required;
     if (driverProperty.hasChoices())
     {
       details = details + "; choices " + choices;
     }
+    final String value = driverProperty.getValue();
 
     out.println(formattingHelper.createNameRow(driverProperty.getName(),
                                                "[driver property]"));
     out.println(formattingHelper.createDefinitionRow(driverProperty
       .getDescription()));
     out.println(formattingHelper.createDefinitionRow(details));
-    out
-      .println(formattingHelper.createDefinitionRow(driverProperty.getValue()));
+    out.println(formattingHelper.createDetailRow("", "value", value));
   }
 
   private void printPrimaryKey(final Index primaryKey)

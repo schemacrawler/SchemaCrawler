@@ -134,6 +134,17 @@ public final class SchemaTextFormatter
     FormatUtils.printJdbcDriverInfo(driverInfo, out);
   }
 
+  @Override
+  void handleJdbcDriverPropertyEnd()
+  {
+    out.println();
+  }
+
+  @Override
+  void handleJdbcDriverPropertyStart()
+  {
+  }
+
   /**
    * {@inheritDoc}
    * 
