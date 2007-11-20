@@ -187,6 +187,8 @@ final class DatabaseInfoRetriever
         columnDataType.setMaximumScale(maximumScale);
         columnDataType.setNumPrecisionRadix(numPrecisionRadix);
 
+        columnDataType.addAttributes(results.getAttributes());
+
         dbInfo.addColumnDataType(columnDataType);
       }
     }
@@ -268,6 +270,8 @@ final class DatabaseInfoRetriever
         columnDataType.setTypeClassName(className);
         columnDataType.setBaseType(baseType);
         columnDataType.setRemarks(remarks);
+
+        columnDataType.addAttributes(results.getAttributes());
 
         dbInfo.addColumnDataType(columnDataType);
       }

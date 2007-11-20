@@ -53,7 +53,7 @@ final class MetadataResultSet
     readColumns = new HashSet<String>();
   }
 
-  public void setFetchSize(int rows)
+  public void setFetchSize(final int rows)
     throws SQLException
   {
     results.setFetchSize(rows);
@@ -65,7 +65,7 @@ final class MetadataResultSet
     results.close();
   }
 
-  Map<String, String> getAttributes()
+  Map<String, Object> getAttributes()
   {
     final Set<String> resultSetColumns = this.resultSetColumns;
     // Get unused columns
@@ -79,11 +79,18 @@ final class MetadataResultSet
       }
     }
     // Get attributes
-    final Map<String, String> attributes = new HashMap<String, String>();
+    final Map<String, Object> attributes = new HashMap<String, Object>();
     for (final String columnName: resultSetColumns)
     {
-      final String value = getString(columnName);
-      attributes.put(columnName, value);
+      try
+      {
+        final Object value = results.getObject(columnName);
+        attributes.put(columnName, value);
+      }
+      catch (SQLException e)
+      {
+        LOGGER.log(Level.FINE, "Could not read value for column " + columnName);
+      }
     }
     return attributes;
   }

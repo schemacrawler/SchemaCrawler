@@ -92,7 +92,7 @@ public final class OperationOptions
   {
     super(config, outputOptions, queryName);
 
-    this.operation = Operation.queryover;
+    operation = Operation.queryover;
   }
 
   /**

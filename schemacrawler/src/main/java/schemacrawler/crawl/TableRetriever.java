@@ -120,6 +120,8 @@ final class TableRetriever
             column.setDefaultValue(defaultValue);
           }
 
+          column.addAttributes(results.getAttributes());
+
           table.addColumn(column);
         }
       }
@@ -389,6 +391,8 @@ final class TableRetriever
         foreignKey.setDeleteRule(ForeignKeyUpdateRule.valueOf(deleteRule));
         foreignKey.setDeferrability(ForeignKeyDeferrability
           .valueOf(deferrability));
+
+        foreignKey.addAttributes(results.getAttributes());
       }
     }
     finally
@@ -441,6 +445,8 @@ final class TableRetriever
             .setSortSequence(IndexSortSequence.valueOfFromCode(sortSequence));
           index.setCardinality(cardinality);
           index.setPages(pages);
+
+          index.addAttributes(results.getAttributes());
         }
       }
     }

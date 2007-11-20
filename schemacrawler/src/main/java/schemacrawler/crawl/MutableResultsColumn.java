@@ -154,22 +154,22 @@ final class MutableResultsColumn
 
   void setAutoIncrement(final boolean isAutoIncrement)
   {
-    this.autoIncrement = isAutoIncrement;
+    autoIncrement = isAutoIncrement;
   }
 
   void setCaseSensitive(final boolean isCaseSensitive)
   {
-    this.caseSensitive = isCaseSensitive;
+    caseSensitive = isCaseSensitive;
   }
 
   void setCurrency(final boolean isCurrency)
   {
-    this.currency = isCurrency;
+    currency = isCurrency;
   }
 
   void setDefinitelyWritable(final boolean isDefinitelyWritable)
   {
-    this.definitelyWritable = isDefinitelyWritable;
+    definitelyWritable = isDefinitelyWritable;
   }
 
   void setDisplaySize(final int displaySize)
@@ -184,22 +184,22 @@ final class MutableResultsColumn
 
   void setReadOnly(final boolean isReadOnly)
   {
-    this.readOnly = isReadOnly;
+    readOnly = isReadOnly;
   }
 
   void setSearchable(final boolean isSearchable)
   {
-    this.searchable = isSearchable;
+    searchable = isSearchable;
   }
 
   void setSigned(final boolean isSigned)
   {
-    this.signed = isSigned;
+    signed = isSigned;
   }
 
   void setWritable(final boolean isWritable)
   {
-    this.writable = isWritable;
+    writable = isWritable;
   }
 
 }

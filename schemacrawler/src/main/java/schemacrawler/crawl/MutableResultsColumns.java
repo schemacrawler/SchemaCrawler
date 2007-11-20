@@ -22,8 +22,8 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.crawl.NamedObjectList.NamedObjectSort;
-import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.ResultsColumn;
+import schemacrawler.schema.ResultsColumns;
 
 /**
  * {@inheritDoc}

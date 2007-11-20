@@ -58,7 +58,7 @@ public final class Command
     {
       schemaTextDetailType = null;
     }
-    this.isQuery = schemaTextDetailType == null;
+    isQuery = schemaTextDetailType == null;
   }
 
   /**
