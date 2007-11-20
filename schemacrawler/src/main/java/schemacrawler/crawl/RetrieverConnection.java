@@ -23,7 +23,6 @@ package schemacrawler.crawl;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,7 +43,6 @@ final class RetrieverConnection
   private final DatabaseMetaData metaData;
   private final String catalog;
   private final String schemaPattern;
-  private final String jdbcDriverClassName;
   private final InformationSchemaViews informationSchemaViews;
 
   RetrieverConnection(final DataSource dataSource,
@@ -75,8 +73,6 @@ final class RetrieverConnection
     }
     catalog = catalogFromConnection;
     schemaPattern = schemaCrawlerOptions.getSchemaPattern();
-    jdbcDriverClassName = DriverManager.getDriver(metaData.getURL()).getClass()
-      .getName();
 
     informationSchemaViews = schemaCrawlerOptions.getInformationSchemaViews();
   }
@@ -141,11 +137,6 @@ final class RetrieverConnection
       }
     }
     return connection;
-  }
-
-  String getJdbcDriverClassName()
-  {
-    return jdbcDriverClassName;
   }
 
   DatabaseMetaData getMetaData()

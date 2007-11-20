@@ -48,34 +48,6 @@ public interface DatabaseInfo
   ColumnDataType[] getColumnDataTypes();
 
   /**
-   * Database connection URL.
-   * 
-   * @return Database connection URL.
-   */
-  String getConnectionUrl();
-
-  /**
-   * Name of the driver.
-   * 
-   * @return Driver name
-   */
-  String getDriverName();
-
-  /**
-   * Driver version.
-   * 
-   * @return Driver version.
-   */
-  String getDriverVersion();
-
-  /**
-   * Class name of the JDBC driver.
-   * 
-   * @return Class name of the JDBC driver.
-   */
-  String getJdbcDriverClassName();
-
-  /**
    * Name of the RDBMS vendor and product.
    * 
    * @return Name of the RDBMS vendor and product.

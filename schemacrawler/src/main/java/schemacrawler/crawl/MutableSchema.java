@@ -23,6 +23,7 @@ package schemacrawler.crawl;
 
 import schemacrawler.crawl.NamedObjectList.NamedObjectSort;
 import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -40,6 +41,7 @@ class MutableSchema
   private static final long serialVersionUID = 3258128063743931187L;
 
   private DatabaseInfo databaseInfo;
+  private JdbcDriverInfo driverInfo;
   private final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>(NamedObjectSort.alphabetical);
   private final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>(NamedObjectSort.alphabetical);
 
@@ -53,68 +55,21 @@ class MutableSchema
   /**
    * {@inheritDoc}
    * 
-   * @see java.lang.Object#equals(java.lang.Object)
-   */
-  @Override
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
-      return true;
-    }
-    if (obj == null)
-    {
-      return false;
-    }
-    if (getClass() != obj.getClass())
-    {
-      return false;
-    }
-    final MutableSchema other = (MutableSchema) obj;
-    if (databaseInfo == null)
-    {
-      if (other.databaseInfo != null)
-      {
-        return false;
-      }
-    }
-    else if (!databaseInfo.equals(other.databaseInfo))
-    {
-      return false;
-    }
-    if (procedures == null)
-    {
-      if (other.procedures != null)
-      {
-        return false;
-      }
-    }
-    else if (!procedures.equals(other.procedures))
-    {
-      return false;
-    }
-    if (tables == null)
-    {
-      if (other.tables != null)
-      {
-        return false;
-      }
-    }
-    else if (!tables.equals(other.tables))
-    {
-      return false;
-    }
-    return true;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see schemacrawler.schema.Schema#getDatabaseInfo()
    */
   public DatabaseInfo getDatabaseInfo()
   {
     return databaseInfo;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Schema#getJdbcDriverInfo()
+   */
+  public JdbcDriverInfo getJdbcDriverInfo()
+  {
+    return driverInfo;
   }
 
   /**
@@ -157,40 +112,11 @@ class MutableSchema
     return tables.getAll().toArray(new Table[tables.size()]);
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#hashCode()
-   */
-  @Override
-  public int hashCode()
-  {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result
-             + (databaseInfo == null? 0: databaseInfo.hashCode());
-    result = prime * result + (procedures == null? 0: procedures.hashCode());
-    result = prime * result + (tables == null? 0: tables.hashCode());
-    return result;
-  }
-
-  /**
-   * Adds a procedure.
-   * 
-   * @param procedure
-   *        Procedure
-   */
   void addProcedure(final MutableProcedure procedure)
   {
     procedures.add(procedure);
   }
 
-  /**
-   * Adds a table.
-   * 
-   * @param table
-   *        Table
-   */
   void addTable(final MutableTable table)
   {
     tables.add(table);
@@ -200,4 +126,10 @@ class MutableSchema
   {
     this.databaseInfo = databaseInfo;
   }
+
+  void setJdbcDriverInfo(final JdbcDriverInfo driverInfo)
+  {
+    this.driverInfo = driverInfo;
+  }
+
 }

@@ -22,58 +22,45 @@ package schemacrawler.schema;
 
 
 /**
- * Represents the database schema.
+ * Represents a JDBC driver property, and it's value.
  * 
- * @author Sualeh Fatehi
+ * @author sfatehi
  */
-public interface Schema
-  extends DatabaseObject
+public interface JdbcDriverProperty
+  extends NamedObject
 {
 
   /**
-   * Database information.
-   * 
-   * @return Database information
+   * An array of possible values if the value for the field
+   * <code>DriverPropertyInfo.value</code> may be selected from a
+   * particular set of values.
    */
-  DatabaseInfo getDatabaseInfo();
+  String[] getChoices();
 
   /**
-   * JDBC driver information.
-   * 
-   * @return JDBC driver information
+   * A brief description of the property.
    */
-  JdbcDriverInfo getJdbcDriverInfo();
+  String getDescription();
 
   /**
-   * Gets a procedure by name.
-   * 
-   * @param name
-   *        Name
-   * @return Procedure.
+   * The <code>value</code> field specifies the current value of the
+   * property, based on a combination of the information supplied to the
+   * method <code>getPropertyInfo</code>, the Java environment, and
+   * the driver-supplied default values. This field may be null if no
+   * value is known.
    */
-  Procedure getProcedure(String name);
+  String getValue();
 
   /**
-   * Procedures.
-   * 
-   * @return Procedures
+   * Whether this property has any possible choices.
    */
-  Procedure[] getProcedures();
+  boolean hasChoices();
 
   /**
-   * Gets a Table by name.
-   * 
-   * @param name
-   *        Name
-   * @return Table.
+   * The <code>required</code> field is <code>true</code> if a value
+   * must be supplied for this property during
+   * <code>Driver.connect</code> and <code>false</code> otherwise.
    */
-  Table getTable(String name);
-
-  /**
-   * Tables.
-   * 
-   * @return Tables
-   */
-  Table[] getTables();
+  boolean isRequired();
 
 }

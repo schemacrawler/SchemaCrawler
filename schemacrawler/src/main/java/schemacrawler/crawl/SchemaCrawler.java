@@ -186,6 +186,9 @@ public final class SchemaCrawler
 
       final SchemaInfoLevel infoLevel = handler.getInfoLevelHint();
       handler.begin();
+
+      crawlJdbcDriverInfo(retrieverConnection, infoLevel);
+
       final MutableDatabaseInfo databaseInfo = crawlDatabaseInfo(retrieverConnection,
                                                                  infoLevel);
       final NamedObjectList<MutableColumnDataType> columnDataTypes = databaseInfo
@@ -250,6 +253,24 @@ public final class SchemaCrawler
     handler.handle(dbInfo);
 
     return dbInfo;
+  }
+
+  private void crawlJdbcDriverInfo(final RetrieverConnection retrieverConnection,
+                                   final SchemaInfoLevel infoLevel)
+    throws SchemaCrawlerException
+  {
+    MutableJdbcDriverInfo driverInfo;
+    try
+    {
+      final JdbcDriverInfoRetriever retriever = new JdbcDriverInfoRetriever(retrieverConnection);
+      driverInfo = retriever.retrieveJdbcDriverInfo();
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerException("Exception retrieving JDBC driver information",
+                                       e);
+    }
+    handler.handle(driverInfo);
   }
 
   private void crawlProcedures(final RetrieverConnection retrieverConnection,

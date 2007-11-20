@@ -225,14 +225,8 @@ final class DatabaseInfoRetriever
 
     dbInfo.setProductName(dbMetaData.getDatabaseProductName());
     dbInfo.setProductVersion(dbMetaData.getDatabaseProductVersion());
-    dbInfo.setDriverName(dbMetaData.getDriverName());
-    dbInfo.setDriverVersion(dbMetaData.getDriverVersion());
-    dbInfo.setConnectionUrl(dbMetaData.getURL());
     dbInfo.setCatalog(getRetrieverConnection().getCatalog());
-    dbInfo.setJdbcDriverClassName(jdbcDriverClassName);
     dbInfo.setSchemaPattern(getRetrieverConnection().getSchemaPattern());
-    dbInfo.setJdbcDriverClassName(getRetrieverConnection()
-      .getJdbcDriverClassName());
 
     return dbInfo;
   }

@@ -30,6 +30,16 @@ public final class HtmlFormattingHelper
   implements TextFormattingHelper
 {
 
+  public static String createTableEnd()
+  {
+    return "</table>\n" + "<p></p>\n";
+  }
+
+  public static String createTableStart()
+  {
+    return "<table>\n";
+  }
+
   /**
    * {@inheritDoc}
    * 

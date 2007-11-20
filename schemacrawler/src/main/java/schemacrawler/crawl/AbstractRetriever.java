@@ -22,7 +22,6 @@ package schemacrawler.crawl;
 
 
 import java.sql.Connection;
-import java.util.logging.Logger;
 
 import schemacrawler.schema.DatabaseObject;
 import sf.util.Utilities;
@@ -48,8 +47,6 @@ abstract class AbstractRetriever
   protected static final String UNKNOWN = "<unknown>";
 
   protected static final int FETCHSIZE = 5;
-  private static final Logger LOGGER = Logger.getLogger(AbstractRetriever.class
-    .getName());
 
   /**
    * Creates a data type from the JDBC data type id, and the database
