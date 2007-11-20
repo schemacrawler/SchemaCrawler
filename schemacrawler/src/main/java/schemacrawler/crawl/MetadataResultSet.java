@@ -67,7 +67,7 @@ final class MetadataResultSet
 
   Map<String, Object> getAttributes()
   {
-    final Set<String> resultSetColumns = this.resultSetColumns;
+    final Set<String> resultSetColumns = new HashSet<String>(this.resultSetColumns);
     // Get unused columns
     for (final Iterator<String> iterator = resultSetColumns.iterator(); iterator
       .hasNext();)
