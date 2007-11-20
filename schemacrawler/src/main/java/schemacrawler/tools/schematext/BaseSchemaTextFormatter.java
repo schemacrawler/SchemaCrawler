@@ -23,6 +23,7 @@ package schemacrawler.tools.schematext;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -38,6 +39,8 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.Index;
+import schemacrawler.schema.JdbcDriverInfo;
+import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
@@ -179,6 +182,40 @@ public abstract class BaseSchemaTextFormatter
       handleColumnDataTypeEnd();
     }
     handleColumnDataTypesEnd();
+
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.crawl.CrawlHandler#handle(schemacrawler.schema.JdbcDriverInfo)
+   */
+  public void handle(final JdbcDriverInfo driverInfo)
+  {
+
+    if (!options.getOutputOptions().isNoInfo())
+    {
+      handleJdbcDriverInfo(driverInfo);
+    }
+
+    final SchemaTextDetailType schemaTextDetailType = options
+      .getSchemaTextDetailType();
+    if (schemaTextDetailType != SchemaTextDetailType.maximum_schema)
+    {
+      return;
+    }
+
+    final JdbcDriverProperty[] jdbcDriverProperties = driverInfo
+      .getDriverProperties();
+    if (jdbcDriverProperties.length > 0)
+    {
+      handleDriverPropertiesStart();
+      for (final JdbcDriverProperty driverProperty: jdbcDriverProperties)
+      {
+        printJdbcDriverProperty(driverProperty);
+      }
+      handleDriverPropertiesEnd();
+    }
 
   }
 
@@ -328,6 +365,12 @@ public abstract class BaseSchemaTextFormatter
 
   abstract void handleDatabasePropertiesStart();
 
+  abstract void handleDriverPropertiesEnd();
+
+  abstract void handleDriverPropertiesStart();
+
+  abstract void handleJdbcDriverInfo(JdbcDriverInfo driverInfo);
+
   /**
    * Handles the end of output for a procedure.
    */
@@ -407,7 +450,6 @@ public abstract class BaseSchemaTextFormatter
     out.println(formattingHelper.createDefinitionRow(autoIncrementable));
     out.println(formattingHelper.createDefinitionRow(columnDataType
       .getSearchable().toString()));
-
   }
 
   /**
@@ -567,6 +609,27 @@ public abstract class BaseSchemaTextFormatter
         printColumns(index.getColumns());
       }
     }
+  }
+
+  private void printJdbcDriverProperty(final JdbcDriverProperty driverProperty)
+  {
+    final String choices = Arrays.asList(driverProperty.getChoices())
+      .toString();
+    final String required = driverProperty.isRequired()? "": "not "
+                                                             + "required";
+    String details = required;
+    if (driverProperty.hasChoices())
+    {
+      details = details + "; choices " + choices;
+    }
+
+    out.println(formattingHelper.createNameRow(driverProperty.getName(),
+                                               "[driver property]"));
+    out.println(formattingHelper.createDefinitionRow(driverProperty
+      .getDescription()));
+    out.println(formattingHelper.createDefinitionRow(details));
+    out
+      .println(formattingHelper.createDefinitionRow(driverProperty.getValue()));
   }
 
   private void printPrimaryKey(final Index primaryKey)

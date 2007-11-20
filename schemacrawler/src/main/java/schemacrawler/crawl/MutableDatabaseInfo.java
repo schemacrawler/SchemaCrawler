@@ -45,20 +45,11 @@ final class MutableDatabaseInfo
 
   private String productName;
   private String productVersion;
-  private String driverName;
-  private String jdbcDriverClassName;
-  private String driverVersion;
-  private String connectionUrl;
   private String schemaPattern;
   private String catalog;
   private final SortedMap<String, Object> dbProperties = new TreeMap<String, Object>();
   private final NamedObjectList<MutableColumnDataType> columnDataTypes = new NamedObjectList<MutableColumnDataType>(NamedObjectSort.alphabetical);
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#equals(java.lang.Object)
-   */
   @Override
   public boolean equals(final Object obj)
   {
@@ -83,28 +74,6 @@ final class MutableDatabaseInfo
       }
     }
     else if (!catalog.equals(other.catalog))
-    {
-      return false;
-    }
-    if (columnDataTypes == null)
-    {
-      if (other.columnDataTypes != null)
-      {
-        return false;
-      }
-    }
-    else if (!columnDataTypes.equals(other.columnDataTypes))
-    {
-      return false;
-    }
-    if (dbProperties == null)
-    {
-      if (other.dbProperties != null)
-      {
-        return false;
-      }
-    }
-    else if (!dbProperties.equals(other.dbProperties))
     {
       return false;
     }
@@ -168,46 +137,6 @@ final class MutableDatabaseInfo
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.DatabaseInfo#getConnectionUrl()
-   */
-  public String getConnectionUrl()
-  {
-    return connectionUrl;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.DatabaseInfo#getDriverName()
-   */
-  public String getDriverName()
-  {
-    return driverName;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.DatabaseInfo#getDriverVersion()
-   */
-  public String getDriverVersion()
-  {
-    return driverVersion;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.DatabaseInfo#getJdbcDriverClassName()
-   */
-  public String getJdbcDriverClassName()
-  {
-    return jdbcDriverClassName;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see schemacrawler.schema.DatabaseInfo#getProductName()
    */
   public String getProductName()
@@ -255,21 +184,12 @@ final class MutableDatabaseInfo
     return schemaPattern;
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#hashCode()
-   */
   @Override
   public int hashCode()
   {
     final int prime = 31;
     int result = 1;
     result = prime * result + (catalog == null? 0: catalog.hashCode());
-    result = prime * result
-             + (columnDataTypes == null? 0: columnDataTypes.hashCode());
-    result = prime * result
-             + (dbProperties == null? 0: dbProperties.hashCode());
     result = prime * result + (productName == null? 0: productName.hashCode());
     result = prime * result
              + (productVersion == null? 0: productVersion.hashCode());
@@ -297,17 +217,6 @@ final class MutableDatabaseInfo
   }
 
   /**
-   * Sets name of the driver.
-   * 
-   * @param driverName
-   *        Driver name
-   */
-  public void setDriverName(final String driverName)
-  {
-    this.driverName = driverName;
-  }
-
-  /**
    * {@inheritDoc}
    * 
    * @see Object#toString()
@@ -318,12 +227,8 @@ final class MutableDatabaseInfo
 
     final StringBuffer info = new StringBuffer();
 
-    info.append("-- database product: ").append(getProductName()).append(" ")
+    info.append("-- database: ").append(getProductName()).append(" ")
       .append(getProductVersion()).append(Utilities.NEWLINE)
-      .append("-- driver: ").append(getJdbcDriverClassName()).append(" - ")
-      .append(getDriverName()).append(" ").append(getDriverVersion())
-      .append(Utilities.NEWLINE).append("-- connection: ")
-      .append(getConnectionUrl()).append(Utilities.NEWLINE)
       .append("-- schema pattern: ").append(getSchemaPattern());
 
     return info.toString();
@@ -331,10 +236,10 @@ final class MutableDatabaseInfo
   }
 
   /**
-   * Adds a table.
+   * Adds a column data type.
    * 
-   * @param table
-   *        Table
+   * @param columnDataType
+   *        Column data type
    */
   void addColumnDataType(final MutableColumnDataType columnDataType)
   {
@@ -365,21 +270,6 @@ final class MutableDatabaseInfo
   void putProperty(final String name, final Object value)
   {
     dbProperties.put(name, value);
-  }
-
-  void setConnectionUrl(final String connectionUrl)
-  {
-    this.connectionUrl = connectionUrl;
-  }
-
-  void setDriverVersion(final String driverVersion)
-  {
-    this.driverVersion = driverVersion;
-  }
-
-  void setJdbcDriverClassName(final String jdbcDriverClassName)
-  {
-    this.jdbcDriverClassName = jdbcDriverClassName;
   }
 
   void setProductName(final String productName)

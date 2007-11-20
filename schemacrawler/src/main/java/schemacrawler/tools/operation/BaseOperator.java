@@ -38,6 +38,7 @@ import schemacrawler.crawl.SchemaInfoLevel;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutorException;
 import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.util.FormatUtils;
@@ -236,6 +237,19 @@ public abstract class BaseOperator
     if (!getNoInfo())
     {
       FormatUtils.printDatabaseInfo(databaseInfo, out);
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see CrawlHandler#handle(DatabaseInfo)
+   */
+  public void handle(final JdbcDriverInfo driverInfo)
+  {
+    if (!getNoInfo())
+    {
+      FormatUtils.printJdbcDriverInfo(driverInfo, out);
     }
   }
 

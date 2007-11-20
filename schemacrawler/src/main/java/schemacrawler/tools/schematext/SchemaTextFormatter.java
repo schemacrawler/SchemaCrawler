@@ -23,6 +23,7 @@ package schemacrawler.tools.schematext;
 
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.tools.util.FormatUtils;
 import schemacrawler.tools.util.PlainTextFormattingHelper;
 
@@ -112,6 +113,25 @@ public final class SchemaTextFormatter
   @Override
   void handleDatabasePropertiesStart()
   {
+  }
+
+  @Override
+  void handleDriverPropertiesEnd()
+  {
+    out.println();
+    out.println();
+  }
+
+  @Override
+  void handleDriverPropertiesStart()
+  {
+    out.println();
+  }
+
+  @Override
+  void handleJdbcDriverInfo(final JdbcDriverInfo driverInfo)
+  {
+    FormatUtils.printJdbcDriverInfo(driverInfo, out);
   }
 
   /**

@@ -22,6 +22,7 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -113,6 +114,16 @@ public final class CachingCrawlerHandler
   public void handle(final DatabaseInfo databaseInfo)
   {
     schema.setDatabaseInfo(databaseInfo);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.crawl.CrawlHandler#handle(schemacrawler.schema.JdbcDriverInfo)
+   */
+  public void handle(final JdbcDriverInfo driverInfo)
+  {
+    schema.setJdbcDriverInfo(driverInfo);
   }
 
   /**

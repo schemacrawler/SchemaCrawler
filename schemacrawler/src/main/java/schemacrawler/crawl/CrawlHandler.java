@@ -22,6 +22,7 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Table;
 
@@ -67,6 +68,17 @@ public interface CrawlHandler
    *         On an exception
    */
   void handle(final DatabaseInfo databaseInfo)
+    throws SchemaCrawlerException;
+
+  /**
+   * Provides information on the database schema.
+   * 
+   * @param driverInfo
+   *        JDBC driver information
+   * @throws SchemaCrawlerException
+   *         On an exception
+   */
+  void handle(final JdbcDriverInfo driverInfo)
     throws SchemaCrawlerException;
 
   /**

@@ -87,7 +87,7 @@ final class MetadataResultSet
         final Object value = results.getObject(columnName);
         attributes.put(columnName, value);
       }
-      catch (SQLException e)
+      catch (final SQLException e)
       {
         LOGGER.log(Level.FINE, "Could not read value for column " + columnName);
       }

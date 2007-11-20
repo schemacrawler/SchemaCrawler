@@ -23,6 +23,7 @@ package schemacrawler.tools.schematext;
 
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.tools.util.FormatUtils;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 
@@ -92,8 +93,7 @@ public final class SchemaHTMLFormatter
   @Override
   void handleColumnDataTypeEnd()
   {
-    out.println("</table>");
-    out.println("<p></p>");
+    out.println(HtmlFormattingHelper.createTableEnd());
   }
 
   @Override
@@ -111,7 +111,7 @@ public final class SchemaHTMLFormatter
   @Override
   void handleColumnDataTypeStart()
   {
-    out.println("<table>");
+    out.println(HtmlFormattingHelper.createTableStart());
   }
 
   @Override
@@ -125,15 +125,34 @@ public final class SchemaHTMLFormatter
   @Override
   void handleDatabasePropertiesEnd()
   {
-    out.println("</table>");
-    out.println("<p></p>");
+    out.println(HtmlFormattingHelper.createTableEnd());
     out.println();
   }
 
   @Override
   void handleDatabasePropertiesStart()
   {
-    out.println("<table>");
+    out.println(HtmlFormattingHelper.createTableStart());
+  }
+
+  @Override
+  void handleDriverPropertiesEnd()
+  {
+    out.println(HtmlFormattingHelper.createTableEnd());
+  }
+
+  @Override
+  void handleDriverPropertiesStart()
+  {
+    out.println(HtmlFormattingHelper.createTableStart());
+  }
+
+  @Override
+  void handleJdbcDriverInfo(final JdbcDriverInfo driverInfo)
+  {
+    out.println("<pre id=\'driverInfo\'>");
+    FormatUtils.printJdbcDriverInfo(driverInfo, out);
+    out.println("</pre>");
   }
 
   /**
@@ -144,8 +163,7 @@ public final class SchemaHTMLFormatter
   @Override
   void handleProcedureEnd()
   {
-    out.println("</table>");
-    out.println("<p></p>");
+    out.println(HtmlFormattingHelper.createTableEnd());
     out.println();
   }
 
@@ -157,7 +175,7 @@ public final class SchemaHTMLFormatter
   @Override
   void handleProcedureStart()
   {
-    out.println("<table>");
+    out.println(HtmlFormattingHelper.createTableStart());
   }
 
   /**
@@ -168,8 +186,7 @@ public final class SchemaHTMLFormatter
   @Override
   void handleTableEnd()
   {
-    out.println("</table>");
-    out.println("<p></p>");
+    out.println(HtmlFormattingHelper.createTableEnd());
     out.println();
   }
 
@@ -181,7 +198,7 @@ public final class SchemaHTMLFormatter
   @Override
   void handleTableStart()
   {
-    out.println("<table>");
+    out.println(HtmlFormattingHelper.createTableStart());
   }
 
 }
