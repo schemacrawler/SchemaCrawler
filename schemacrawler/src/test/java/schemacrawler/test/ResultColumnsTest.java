@@ -36,7 +36,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.crawl.SchemaCrawler;
-import schemacrawler.schema.ResultColumns;
+import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.ResultsColumn;
 import dbconnector.datasource.PropertiesDataSourceException;
 import dbconnector.test.TestUtility;
@@ -90,7 +90,7 @@ public class ResultColumnsTest
     Statement statement = connection.createStatement();
     ResultSet resultSet = statement.executeQuery(sql);
 
-    final ResultColumns resultColumns = SchemaCrawler
+    final ResultsColumns resultColumns = SchemaCrawler
       .getResultColumns(resultSet);
     connection.close();
 

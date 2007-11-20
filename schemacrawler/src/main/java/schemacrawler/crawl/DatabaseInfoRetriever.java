@@ -143,33 +143,32 @@ final class DatabaseInfoRetriever
   void retrieveColumnDataTypes(final MutableDatabaseInfo dbInfo)
     throws SQLException
   {
-    final ResultSet results = getRetrieverConnection().getMetaData()
-      .getTypeInfo();
+    final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
+      .getMetaData().getTypeInfo());
     try
     {
       while (results.next())
       {
         final String typeName = results.getString("TYPE_NAME");
-        final int type = readInt(results, "DATA_TYPE", 0);
+        final int type = results.getInt("DATA_TYPE", 0);
         LOGGER.log(Level.FINEST, "Retrieving data type: " + typeName
                                  + ", with type id: " + type);
-        final long precision = readLong(results, "PRECISION", 0L);
+        final long precision = results.getLong("PRECISION", 0L);
         final String literalPrefix = results.getString("LITERAL_PREFIX");
         final String literalSuffix = results.getString("LITERAL_SUFFIX");
         final String createParameters = results.getString("CREATE_PARAMS");
-        final boolean isNullable = readInt(results,
-                                           NULLABLE,
-                                           DatabaseMetaData.typeNullableUnknown) == DatabaseMetaData.typeNullable;
+        final boolean isNullable = results
+          .getInt(NULLABLE, DatabaseMetaData.typeNullableUnknown) == DatabaseMetaData.typeNullable;
         final boolean isCaseSensitive = results.getBoolean("CASE_SENSITIVE");
-        final int searchable = readInt(results, "SEARCHABLE", -1);
+        final int searchable = results.getInt("SEARCHABLE", -1);
         final boolean isUnsigned = results.getBoolean("UNSIGNED_ATTRIBUTE");
         final boolean isFixedPrecisionScale = results
           .getBoolean("FIXED_PREC_SCALE");
         final boolean isAutoIncremented = results.getBoolean("AUTO_INCREMENT");
         final String localTypeName = results.getString("LOCAL_TYPE_NAME");
-        final int minimumScale = readInt(results, "MINIMUM_SCALE", 0);
-        final int maximumScale = readInt(results, "MAXIMUM_SCALE", 0);
-        final int numPrecisionRadix = readInt(results, "NUM_PREC_RADIX", 0);
+        final int minimumScale = results.getInt("MINIMUM_SCALE", 0);
+        final int maximumScale = results.getInt("MAXIMUM_SCALE", 0);
+        final int numPrecisionRadix = results.getInt("NUM_PREC_RADIX", 0);
 
         final MutableColumnDataType columnDataType = new MutableColumnDataType(typeName);
         columnDataType.setType(type);
@@ -247,21 +246,21 @@ final class DatabaseInfoRetriever
   void retrieveUserDefinedColumnDataTypes(final MutableDatabaseInfo dbInfo)
     throws SQLException
   {
-    final ResultSet results = getRetrieverConnection().getMetaData()
-      .getUDTs(getRetrieverConnection().getCatalog(),
-               getRetrieverConnection().getSchemaPattern(),
-               "%",
-               null);
+    final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
+      .getMetaData().getUDTs(getRetrieverConnection().getCatalog(),
+                             getRetrieverConnection().getSchemaPattern(),
+                             "%",
+                             null));
     try
     {
       while (results.next())
       {
         final String typeName = results.getString("TYPE_NAME");
         LOGGER.log(Level.FINEST, "Retrieving data type: " + typeName);
-        final int type = readInt(results, "DATA_TYPE", 0);
+        final int type = results.getInt("DATA_TYPE", 0);
         final String className = results.getString("CLASS_NAME");
         final String remarks = results.getString("REMARKS");
-        final int baseTypeValue = readInt(results, "BASE_TYPE", 0);
+        final int baseTypeValue = results.getInt("BASE_TYPE", 0);
         final ColumnDataType baseType = dbInfo.lookupByType(baseTypeValue);
         final MutableColumnDataType columnDataType = new MutableColumnDataType(typeName);
         columnDataType.setUserDefined(true);

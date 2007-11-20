@@ -26,7 +26,7 @@ package schemacrawler.schema;
  * 
  * @author Sualeh Fatehi
  */
-public interface ResultColumns
+public interface ResultsColumns
   extends NamedObject
 {
 
