@@ -69,7 +69,7 @@ final class ResultsRetriever
   ResultsColumns retrieveResults()
     throws SchemaCrawlerException
   {
-    final MutableResultColumns resultColumns = new MutableResultColumns("");
+    final MutableResultsColumns resultColumns = new MutableResultsColumns("");
 
     try
     {

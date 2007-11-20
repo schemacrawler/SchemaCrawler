@@ -30,7 +30,7 @@ import schemacrawler.schema.ResultsColumn;
  * 
  * @author Sualeh Fatehi
  */
-class MutableResultColumns
+class MutableResultsColumns
   extends AbstractNamedObject
   implements ResultsColumns
 {
@@ -39,7 +39,7 @@ class MutableResultColumns
 
   private final NamedObjectList<MutableResultsColumn> columns = new NamedObjectList<MutableResultsColumn>(NamedObjectSort.natural);
 
-  MutableResultColumns(final String name)
+  MutableResultsColumns(final String name)
   {
     super(name);
   }
