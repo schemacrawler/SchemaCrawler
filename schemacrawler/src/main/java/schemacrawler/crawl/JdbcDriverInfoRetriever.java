@@ -72,6 +72,8 @@ final class JdbcDriverInfoRetriever
     {
       final Driver jdbcDriver = DriverManager.getDriver(url);
       driverInfo.setJdbcDriverClassName(jdbcDriver.getClass().getName());
+      driverInfo.setJdbcCompliant(jdbcDriver.jdbcCompliant());
+
       final DriverPropertyInfo[] propertyInfo = jdbcDriver
         .getPropertyInfo(url, new Properties());
       for (final DriverPropertyInfo driverPropertyInfo: propertyInfo)

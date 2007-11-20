@@ -155,6 +155,18 @@ public final class SchemaHTMLFormatter
     out.println("</pre>");
   }
 
+  @Override
+  void handleJdbcDriverPropertyEnd()
+  {
+    out.println(HtmlFormattingHelper.createTableEnd());
+  }
+
+  @Override
+  void handleJdbcDriverPropertyStart()
+  {
+    out.println(HtmlFormattingHelper.createTableStart());
+  }
+
   /**
    * {@inheritDoc}
    * 

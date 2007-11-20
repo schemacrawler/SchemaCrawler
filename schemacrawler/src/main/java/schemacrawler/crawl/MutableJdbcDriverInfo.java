@@ -42,6 +42,7 @@ final class MutableJdbcDriverInfo
   private String driverClassName;
   private String driverVersion;
   private String connectionUrl;
+  private boolean jdbcCompliant;
   private final NamedObjectList<MutableJdbcDriverProperty> jdbcDriverProperties = new NamedObjectList<MutableJdbcDriverProperty>(NamedObjectSort.alphabetical);
 
   /**
@@ -186,6 +187,16 @@ final class MutableJdbcDriverInfo
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schema.JdbcDriverInfo#isJdbcCompliant()
+   */
+  public boolean isJdbcCompliant()
+  {
+    return jdbcCompliant;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see Object#toString()
    */
   @Override
@@ -198,7 +209,9 @@ final class MutableJdbcDriverInfo
       .append(getDriverVersion()).append(Utilities.NEWLINE);
     info.append("-- driver class: ").append(getDriverClassName())
       .append(Utilities.NEWLINE);
-    info.append("-- url: ").append(getConnectionUrl());
+    info.append("-- url: ").append(getConnectionUrl())
+      .append(Utilities.NEWLINE);
+    info.append("-- jdbc compliant: ").append(isJdbcCompliant());
 
     return info.toString();
 
@@ -228,6 +241,11 @@ final class MutableJdbcDriverInfo
   void setDriverVersion(final String driverVersion)
   {
     this.driverVersion = driverVersion;
+  }
+
+  void setJdbcCompliant(final boolean jdbcCompliant)
+  {
+    this.jdbcCompliant = jdbcCompliant;
   }
 
   void setJdbcDriverClassName(final String jdbcDriverClassName)

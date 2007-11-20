@@ -87,7 +87,12 @@ final class MutableJdbcDriverProperty
    */
   public String getValue()
   {
-    return driverPropertyInfo.value;
+    String value = driverPropertyInfo.value;
+    if (getName().equalsIgnoreCase("password") && value != null)
+    {
+      return "*****";
+    }
+    return value;
   }
 
   /**
