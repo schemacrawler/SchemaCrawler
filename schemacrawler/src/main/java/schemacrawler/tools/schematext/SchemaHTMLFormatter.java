@@ -138,13 +138,11 @@ public final class SchemaHTMLFormatter
   @Override
   void handleDriverPropertiesEnd()
   {
-    out.println(HtmlFormattingHelper.createTableEnd());
   }
 
   @Override
   void handleDriverPropertiesStart()
   {
-    out.println(HtmlFormattingHelper.createTableStart());
   }
 
   @Override
