@@ -21,8 +21,9 @@
 package schemacrawler.crawl;
 
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import schemacrawler.crawl.NamedObjectList.NamedObjectSort;
 import schemacrawler.schema.NamedObject;
@@ -38,7 +39,7 @@ abstract class AbstractNamedObject
 
   private final String name;
   private String remarks;
-  private final Map<String, Object> attributeMap = new HashMap<String, Object>();
+  private final SortedMap<String, Object> attributeMap = new TreeMap<String, Object>();
   private final NamedObjectSort comparator = NamedObjectSort.alphabetical;
 
   AbstractNamedObject(final String name)
@@ -49,15 +50,17 @@ abstract class AbstractNamedObject
   /**
    * {@inheritDoc}
    * 
-   * @see NamedObject#addAttributes(Map<String, Object>)
+   * @see schemacrawler.schema.NamedObject#addAttributes(java.util.Map)
    */
-  public void addAttributes(final Map<String, Object> values)
+  public final void addAttributes(final Map<String, Object> values)
   {
     attributeMap.putAll(values);
   }
 
   /**
    * {@inheritDoc}
+   * 
+   * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
   public int compareTo(final NamedObject obj)
   {
@@ -102,9 +105,9 @@ abstract class AbstractNamedObject
   /**
    * {@inheritDoc}
    * 
-   * @see NamedObject#getAttribute(String)
+   * @see schemacrawler.schema.NamedObject#getAttribute(java.lang.String)
    */
-  public Object getAttribute(final String name)
+  public final Object getAttribute(final String name)
   {
     return attributeMap.get(name);
   }
@@ -148,7 +151,7 @@ abstract class AbstractNamedObject
    * 
    * @see NamedObject#setAttribute(String, Object)
    */
-  public void setAttribute(final String name, final Object value)
+  public final void setAttribute(final String name, final Object value)
   {
     attributeMap.put(name, value);
   }
