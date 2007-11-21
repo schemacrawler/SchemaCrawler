@@ -5,7 +5,17 @@
 		<author email="sualeh@hotmail.com">Sualeh Fatehi</author>
 	</properties>
 	<body>
-		<release version="5.4" date="2007-11-15">
+		<release version="5.4" date="2007-12-15">
+			<action dev="Sualeh Fatehi" type="add">
+				Added object attributes automatically, from unused columns in
+				the metadata calls. Nothing goes to waste.
+			</action>
+			<action dev="Sualeh Fatehi" type="add">
+				Added JDBC driver metadata, including driver properties,
+				and separated those from the database system metadata.
+			</action>
+		</release>
+		<release version="5.3" date="2007-11-15">
 			<action dev="Sualeh Fatehi" type="fix">
 				Made sure that all relevant license files are getting
 				delivered.
