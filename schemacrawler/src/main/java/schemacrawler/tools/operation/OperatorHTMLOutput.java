@@ -27,6 +27,7 @@ import schemacrawler.crawl.Query;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.tools.util.FormatUtils;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 
@@ -95,6 +96,21 @@ final class OperatorHTMLOutput
     {
       out.println("<pre id='databaseInfo'>");
       out.println(databaseInfo);
+      out.println("</pre>");
+      out.flush();
+    }
+  }
+
+  /**
+   * @see BaseOperator#handle(JdbcDriverInfo)
+   */
+  @Override
+  public void handle(final JdbcDriverInfo driverInfo)
+  {
+    if (!getNoInfo())
+    {
+      out.println("<pre id='driverInfo'>");
+      out.println(driverInfo);
       out.println("</pre>");
       out.flush();
     }
