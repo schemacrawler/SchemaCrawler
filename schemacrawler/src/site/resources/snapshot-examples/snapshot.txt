@@ -2,6 +2,7 @@
 -- driver: HSQL Database Engine Driver 1.8.0
 -- driver class: org.hsqldb.jdbcDriver
 -- url: jdbc:hsqldb:hsql://localhost:9001/schemacrawler
+-- jdbc compliant: false
 ------------------------------------------------------------------------
 
 
@@ -9,32 +10,32 @@
 default_schema                                         [driver property]
   
   not required; choices [true, false]
-  value=null
+  value                                                         
 
 get_column_name                                        [driver property]
   
   not required; choices [true, false]
-  value=true
+  value                             true                        
 
 ifexists                                               [driver property]
   
   not required; choices [true, false]
-  value=null
+  value                                                         
 
 password                                               [driver property]
   
   required
-  value=null
+  value                                                         
 
 shutdown                                               [driver property]
   
   not required; choices [true, false]
-  value=null
+  value                                                         
 
 user                                                   [driver property]
   
   required
-  value=null
+  value                                                         
 
 
 
@@ -210,7 +211,7 @@ UsesLocalFiles                        false
 
 
 BIGINT                                                       [data type]
-  based on BIGINT
+  based on                          BIGINT                      
   not user defined
   defined with no parameters
   nullable
@@ -218,7 +219,7 @@ BIGINT                                                       [data type]
   searchable
 
 BINARY                                                       [data type]
-  based on BINARY
+  based on                          BINARY                      
   not user defined
   defined with no parameters
   nullable
@@ -226,7 +227,7 @@ BINARY                                                       [data type]
   searchable
 
 BOOLEAN                                                      [data type]
-  based on BOOLEAN
+  based on                          BOOLEAN                     
   not user defined
   defined with no parameters
   nullable
@@ -234,7 +235,7 @@ BOOLEAN                                                      [data type]
   searchable
 
 CHAR                                                         [data type]
-  based on CHAR
+  based on                          CHAR                        
   not user defined
   defined with LENGTH
   nullable
@@ -242,7 +243,7 @@ CHAR                                                         [data type]
   searchable
 
 DATE                                                         [data type]
-  based on DATE
+  based on                          DATE                        
   not user defined
   defined with no parameters
   nullable
@@ -250,7 +251,7 @@ DATE                                                         [data type]
   searchable
 
 DECIMAL                                                      [data type]
-  based on DECIMAL
+  based on                          DECIMAL                     
   not user defined
   defined with PRECISION,SCALE
   nullable
@@ -258,7 +259,7 @@ DECIMAL                                                      [data type]
   searchable
 
 DOUBLE                                                       [data type]
-  based on DOUBLE
+  based on                          DOUBLE                      
   not user defined
   defined with no parameters
   nullable
@@ -266,7 +267,7 @@ DOUBLE                                                       [data type]
   searchable
 
 FLOAT                                                        [data type]
-  based on FLOAT
+  based on                          FLOAT                       
   not user defined
   defined with PRECISION
   nullable
@@ -274,7 +275,7 @@ FLOAT                                                        [data type]
   searchable
 
 INTEGER                                                      [data type]
-  based on INTEGER
+  based on                          INTEGER                     
   not user defined
   defined with no parameters
   nullable
@@ -282,7 +283,7 @@ INTEGER                                                      [data type]
   searchable
 
 LONGVARBINARY                                                [data type]
-  based on LONGVARBINARY
+  based on                          LONGVARBINARY               
   not user defined
   defined with no parameters
   nullable
@@ -290,7 +291,7 @@ LONGVARBINARY                                                [data type]
   searchable
 
 LONGVARCHAR                                                  [data type]
-  based on LONGVARCHAR
+  based on                          LONGVARCHAR                 
   not user defined
   defined with no parameters
   nullable
@@ -298,7 +299,7 @@ LONGVARCHAR                                                  [data type]
   searchable
 
 NUMERIC                                                      [data type]
-  based on NUMERIC
+  based on                          NUMERIC                     
   not user defined
   defined with PRECISION,SCALE
   nullable
@@ -306,7 +307,7 @@ NUMERIC                                                      [data type]
   searchable
 
 OTHER                                                        [data type]
-  based on OTHER
+  based on                          OTHER                       
   not user defined
   defined with no parameters
   nullable
@@ -314,7 +315,7 @@ OTHER                                                        [data type]
   not searchable
 
 REAL                                                         [data type]
-  based on REAL
+  based on                          REAL                        
   not user defined
   defined with no parameters
   nullable
@@ -322,7 +323,7 @@ REAL                                                         [data type]
   searchable
 
 SMALLINT                                                     [data type]
-  based on SMALLINT
+  based on                          SMALLINT                    
   not user defined
   defined with no parameters
   nullable
@@ -330,7 +331,7 @@ SMALLINT                                                     [data type]
   searchable
 
 TIME                                                         [data type]
-  based on TIME
+  based on                          TIME                        
   not user defined
   defined with no parameters
   nullable
@@ -338,7 +339,7 @@ TIME                                                         [data type]
   searchable
 
 TIMESTAMP                                                    [data type]
-  based on TIMESTAMP
+  based on                          TIMESTAMP                   
   not user defined
   defined with PRECISION
   nullable
@@ -346,7 +347,7 @@ TIMESTAMP                                                    [data type]
   searchable
 
 TINYINT                                                      [data type]
-  based on TINYINT
+  based on                          TINYINT                     
   not user defined
   defined with no parameters
   nullable
@@ -354,7 +355,7 @@ TINYINT                                                      [data type]
   searchable
 
 VARBINARY                                                    [data type]
-  based on VARBINARY
+  based on                          VARBINARY                   
   not user defined
   defined with no parameters
   nullable
@@ -362,7 +363,7 @@ VARBINARY                                                    [data type]
   searchable
 
 VARCHAR                                                      [data type]
-  based on VARCHAR
+  based on                          VARCHAR                     
   not user defined
   defined with LENGTH
   nullable
@@ -370,7 +371,7 @@ VARCHAR                                                      [data type]
   searchable
 
 VARCHAR_IGNORECASE                                           [data type]
-  based on VARCHAR
+  based on                          VARCHAR                     
   not user defined
   defined with LENGTH
   nullable
