@@ -46,29 +46,34 @@ final class NamedObjectList<N extends AbstractNamedObject>
   {
 
     /** Alphabetical sort. */
-    alphabetical,
+    alphabetical
+    {
+      public int compare(final NamedObject namedObject1,
+                         final NamedObject namedObject2)
+      {
+        return namedObject1.toString().compareToIgnoreCase(namedObject2
+          .toString());
+      }
+    },
+
     /** Natural sort. */
-    natural;
+    natural
+    {
+      public int compare(final NamedObject namedObject1,
+                         final NamedObject namedObject2)
+      {
+        return namedObject1.compareTo(namedObject2);
+      }
+    };
 
     /**
      * {@inheritDoc}
      * 
-     * @see Comparator#compare(Object, Object)
+     * @see java.util.Comparator#compare(java.lang.Object,
+     *      java.lang.Object)
      */
-    public int compare(final NamedObject namedObject1,
-                       final NamedObject namedObject2)
-    {
-      switch (this)
-      {
-        case alphabetical:
-          return namedObject1.toString().compareToIgnoreCase(namedObject2
-            .toString());
-        case natural:
-          return namedObject1.compareTo(namedObject2);
-        default:
-          return 0;
-      }
-    }
+    public abstract int compare(final NamedObject namedObject1,
+                                final NamedObject namedObject2);
 
   }
 
