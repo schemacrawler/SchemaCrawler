@@ -30,13 +30,20 @@ public enum SchemaTextDetailType
 {
 
   /** No column detail. */
-  brief_schema,
+  brief_schema(SchemaInfoLevel.minimum()),
   /** Basic column detail. */
-  basic_schema,
+  basic_schema(SchemaInfoLevel.basic()),
   /** Verbose column detail. */
-  verbose_schema,
+  verbose_schema(SchemaInfoLevel.verbose()),
   /** Maximum column detail, everything supported by SchemaCrawler. */
-  maximum_schema;
+  maximum_schema(SchemaInfoLevel.maximum());
+
+  private final SchemaInfoLevel mappedToInfoLevel;
+
+  private SchemaTextDetailType(SchemaInfoLevel mappedToInfoLevel)
+  {
+    this.mappedToInfoLevel = mappedToInfoLevel;
+  }
 
   /**
    * Checks if this is greater than or equal to the provided info level.
@@ -64,26 +71,7 @@ public enum SchemaTextDetailType
    */
   public SchemaInfoLevel mapToInfoLevel()
   {
-    SchemaInfoLevel columnInfoLevel;
-    switch (this)
-    {
-      case brief_schema:
-        columnInfoLevel = SchemaInfoLevel.minimum();
-        break;
-      case basic_schema:
-        columnInfoLevel = SchemaInfoLevel.basic();
-        break;
-      case verbose_schema:
-        columnInfoLevel = SchemaInfoLevel.verbose();
-        break;
-      case maximum_schema:
-        columnInfoLevel = SchemaInfoLevel.maximum();
-        break;
-      default:
-        columnInfoLevel = SchemaInfoLevel.basic();
-        break;
-    }
-    return columnInfoLevel;
+    return mappedToInfoLevel;
   }
 
 }
