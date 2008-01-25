@@ -259,18 +259,21 @@ public final class SchemaCrawler
                                    final SchemaInfoLevel infoLevel)
     throws SchemaCrawlerException
   {
-    MutableJdbcDriverInfo driverInfo;
-    try
+    if (infoLevel.isRetrieveJdbcDriverInfo())
     {
-      final JdbcDriverInfoRetriever retriever = new JdbcDriverInfoRetriever(retrieverConnection);
-      driverInfo = retriever.retrieveJdbcDriverInfo();
+      MutableJdbcDriverInfo driverInfo;
+      try
+      {
+        final JdbcDriverInfoRetriever retriever = new JdbcDriverInfoRetriever(retrieverConnection);
+        driverInfo = retriever.retrieveJdbcDriverInfo();
+      }
+      catch (final SQLException e)
+      {
+        throw new SchemaCrawlerException("Exception retrieving JDBC driver information",
+                                         e);
+      }
+      handler.handle(driverInfo);
     }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerException("Exception retrieving JDBC driver information",
-                                       e);
-    }
-    handler.handle(driverInfo);
   }
 
   private void crawlProcedures(final RetrieverConnection retrieverConnection,

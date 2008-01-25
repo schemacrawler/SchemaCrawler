@@ -52,6 +52,7 @@ public final class SchemaInfoLevel
   public static SchemaInfoLevel maximum()
   {
     final SchemaInfoLevel maximum = verbose();
+    maximum.setRetrieveJdbcDriverInfo(true);
     maximum.setRetrieveTablePrivileges(true);
     maximum.setRetrieveTableColumnPrivileges(true);
     maximum.setRetrieveTriggerInformation(true);
@@ -90,6 +91,7 @@ public final class SchemaInfoLevel
     return verbose;
   }
 
+  private boolean retrieveJdbcDriverInfo;
   private boolean retrieveDatabaseInfo;
   private boolean retrieveTables;
   private boolean retrieveProcedures;
@@ -153,6 +155,11 @@ public final class SchemaInfoLevel
   public boolean isRetrieveIndices()
   {
     return retrieveIndices;
+  }
+
+  public boolean isRetrieveJdbcDriverInfo()
+  {
+    return retrieveJdbcDriverInfo;
   }
 
   /**
@@ -287,6 +294,11 @@ public final class SchemaInfoLevel
   public void setRetrieveIndices(final boolean retrieveIndices)
   {
     this.retrieveIndices = retrieveIndices;
+  }
+
+  public void setRetrieveJdbcDriverInfo(final boolean retrieveJdbcDriverInfo)
+  {
+    this.retrieveJdbcDriverInfo = retrieveJdbcDriverInfo;
   }
 
   /**
