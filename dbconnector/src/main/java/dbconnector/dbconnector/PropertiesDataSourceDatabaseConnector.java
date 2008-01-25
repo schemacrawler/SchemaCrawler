@@ -32,65 +32,79 @@ import sf.util.CommandLineParser.StringOption;
 import dbconnector.datasource.PropertiesDataSource;
 
 /**
- * Main class that reads a properties file for database connection
- * information, and tests the database connections.
- * 
- * @author Sualeh Fatehi sualeh@hotmail.com
+ * Parses a command line, and creates a data-source.
  */
 public final class PropertiesDataSourceDatabaseConnector
   implements DatabaseConnector
 {
 
-  private static final String OPTION_PASSWORD = "password";
-  private static final String OPTION_USER = "user";
   private static final String OPTION_URL = "url";
   private static final String OPTION_DRIVER = "driver";
+  private static final String OPTION_USER = "user";
+  private static final String OPTION_PASSWORD = "password";
 
   private static final String OPTION_CONNECTION = "connection";
   private static final String OPTION_DEFAULT = "default";
 
-  private String dataSourceName;
   private final Config config;
-
-  private final String driver;
-  private final String url;
-  private final String user;
-  private final String password;
-  private final boolean useJdbcConnection;
+  private final String dataSourceName;
 
   /**
-   * Creates a PropertiesDataSourceParser using an argument list as
-   * passed into a main program.
+   * Parses a command line, and creates a data-source.
    * 
    * @param args
-   *        List of arguments.
+   *        Command line arguments
    * @param config
    *        Connection properties
    * @throws DatabaseConnectorException
-   *         on an exception
+   *         On an exception
    */
   public PropertiesDataSourceDatabaseConnector(final String[] args,
-                                               final Config config)
+                                               final Config providedConfig)
     throws DatabaseConnectorException
   {
-    this.config = config;
+    if (providedConfig == null)
+    {
+      config = new Config();
+    }
+    else
+    {
+      config = providedConfig;
+    }
 
     final CommandLineParser parser = createCommandLineParser();
     parser.parse(args);
 
-    // JDBC connection information
-    driver = parser.getStringOptionValue(OPTION_DRIVER);
-    url = parser.getStringOptionValue(OPTION_URL);
-    user = parser.getStringOptionValue(OPTION_USER);
-    password = parser.getStringOptionValue(OPTION_PASSWORD);
-    useJdbcConnection = !Utilities.isBlank(driver) && !Utilities.isBlank(url);
+    final String driver = parser.getStringOptionValue(OPTION_DRIVER);
+    final String url = parser.getStringOptionValue(OPTION_URL);
+    final String user = parser.getStringOptionValue(OPTION_USER);
+    final String password = parser.getStringOptionValue(OPTION_PASSWORD);
+    final boolean useJdbcConnection = !Utilities.isBlank(driver)
+                                      && !Utilities.isBlank(url);
 
-    final boolean useDefaultConnection = parser.getBooleanOptionValue(OPTION_DEFAULT);
-    dataSourceName = parser.getStringOptionValue(OPTION_CONNECTION);
-    // Use default connection if no connection is specified
-    if (useDefaultConnection || Utilities.isBlank(dataSourceName))
+    if (useJdbcConnection)
     {
-      dataSourceName = this.config.get("defaultconnection");
+      dataSourceName = "PropertiesDataSourceConnection";
+      config.put(dataSourceName + ".driver", driver);
+      config.put(dataSourceName + ".url", url);
+      config.put(dataSourceName + ".user", user);
+      config.put(dataSourceName + ".password", password);
+    }
+    else
+    {
+      final boolean useDefaultConnection = parser
+        .getBooleanOptionValue(OPTION_DEFAULT);
+      final String connectionName = parser
+        .getStringOptionValue(OPTION_CONNECTION);
+      // Use default connection if no connection is specified
+      if (useDefaultConnection || Utilities.isBlank(connectionName))
+      {
+        dataSourceName = config.get("defaultconnection");
+      }
+      else
+      {
+        dataSourceName = connectionName;
+      }
     }
 
   }
@@ -103,17 +117,7 @@ public final class PropertiesDataSourceDatabaseConnector
   public DataSource createDataSource()
     throws DatabaseConnectorException
   {
-    PropertiesDataSource dataSource = null;
-    if (useJdbcConnection)
-    {
-      dataSource = new PropertiesDataSource(driver, url, user, password);
-    }
-    else
-    {
-      dataSource = new PropertiesDataSource(config.toProperties(),
-                                            dataSourceName);
-    }
-    return dataSource;
+    return new PropertiesDataSource(config.toProperties());
   }
 
   /**
