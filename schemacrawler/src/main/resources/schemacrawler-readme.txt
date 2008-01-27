@@ -47,7 +47,7 @@ One of:
     Tests all the connections defined in the configuration properties file,
     but does not execute any commands
 
-Or, all of the following:
+Or, the following:
 
 -driver=<driver-class-name>
 	Fully qualified name of the JDBC driver class.
@@ -60,6 +60,10 @@ Or, all of the following:
 
 -password=<password>
 	Database password.
+	
+-schemapattern=<schemapattern>
+	Optional, specifies the schema to use. Use _ to match a single character, 
+	and % to match many characters.
 	
 --- Command Options ---
 
