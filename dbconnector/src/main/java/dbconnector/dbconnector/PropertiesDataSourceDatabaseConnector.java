@@ -38,8 +38,9 @@ public final class PropertiesDataSourceDatabaseConnector
   implements DatabaseConnector
 {
 
-  private static final String OPTION_URL = "url";
   private static final String OPTION_DRIVER = "driver";
+  private static final String OPTION_URL = "url";
+  private static final String OPTION_SCHEMAPATTERN = "schemapattern";
   private static final String OPTION_USER = "user";
   private static final String OPTION_PASSWORD = "password";
 
@@ -54,7 +55,7 @@ public final class PropertiesDataSourceDatabaseConnector
    * 
    * @param args
    *        Command line arguments
-   * @param config
+   * @param providedConfig
    *        Connection properties
    * @throws DatabaseConnectorException
    *         On an exception
@@ -77,6 +78,8 @@ public final class PropertiesDataSourceDatabaseConnector
 
     final String driver = parser.getStringOptionValue(OPTION_DRIVER);
     final String url = parser.getStringOptionValue(OPTION_URL);
+    final String schemapattern = parser
+      .getStringOptionValue(OPTION_SCHEMAPATTERN);
     final String user = parser.getStringOptionValue(OPTION_USER);
     final String password = parser.getStringOptionValue(OPTION_PASSWORD);
     final boolean useJdbcConnection = !Utilities.isBlank(driver)
@@ -87,6 +90,10 @@ public final class PropertiesDataSourceDatabaseConnector
       dataSourceName = "PropertiesDataSourceConnection";
       config.put(dataSourceName + ".driver", driver);
       config.put(dataSourceName + ".url", url);
+      if (!Utilities.isBlank(schemapattern))
+      {
+        config.put(dataSourceName + ".schemapattern", schemapattern);
+      }
       config.put(dataSourceName + ".user", user);
       config.put(dataSourceName + ".password", password);
     }
@@ -140,6 +147,9 @@ public final class PropertiesDataSourceDatabaseConnector
     parser
       .addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_DRIVER, null));
     parser.addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_URL, null));
+    parser.addOption(new StringOption(Option.NO_SHORT_FORM,
+                                      OPTION_SCHEMAPATTERN,
+                                      null));
     parser.addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_USER, null));
     parser.addOption(new StringOption(Option.NO_SHORT_FORM,
                                       OPTION_PASSWORD,

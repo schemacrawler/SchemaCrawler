@@ -24,6 +24,7 @@ import javax.sql.DataSource;
 
 import sf.util.CommandLineParser;
 import sf.util.Config;
+import sf.util.Utilities;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
 import dbconnector.datasource.PropertiesDataSource;
@@ -38,6 +39,7 @@ public final class BundledDriverDatabaseConnector
   private static final String OPTION_HOST = "host";
   private static final String OPTION_PORT = "port";
   private static final String OPTION_DATABASE = "database";
+  private static final String OPTION_SCHEMAPATTERN = "schemapattern";
   private static final String OPTION_USER = "user";
   private static final String OPTION_PASSWORD = "password";
 
@@ -70,6 +72,8 @@ public final class BundledDriverDatabaseConnector
     final String host = parser.getStringOptionValue(OPTION_HOST);
     final String port = parser.getStringOptionValue(OPTION_PORT);
     final String database = parser.getStringOptionValue(OPTION_DATABASE);
+    final String schemapattern = parser
+      .getStringOptionValue(OPTION_SCHEMAPATTERN);
     final String user = parser.getStringOptionValue(OPTION_USER);
     final String password = parser.getStringOptionValue(OPTION_PASSWORD);
 
@@ -85,6 +89,10 @@ public final class BundledDriverDatabaseConnector
         config.put(dataSourceName + ".port", port);
       }
       config.put(dataSourceName + ".database", database);
+      if (!Utilities.isBlank(schemapattern))
+      {
+        config.put(dataSourceName + ".schemapattern", schemapattern);
+      }
       config.put(dataSourceName + ".user", user);
       config.put(dataSourceName + ".password", password);
     }
@@ -119,6 +127,9 @@ public final class BundledDriverDatabaseConnector
     parser.addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_PORT, null));
     parser
       .addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_DATABASE, ""));
+    parser.addOption(new StringOption(Option.NO_SHORT_FORM,
+                                      OPTION_SCHEMAPATTERN,
+                                      null));
     parser.addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_USER, null));
     parser.addOption(new StringOption(Option.NO_SHORT_FORM,
                                       OPTION_PASSWORD,
