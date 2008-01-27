@@ -20,7 +20,10 @@ scgrep [options]
 -password=<password>
 	Database password.
 	
-
+-schemapattern=<schemapattern>
+	Optional, specifies the schema to use. Use _ to match a single character, 
+	and % to match many characters.
+	
 --- Grep Options ---
 	
 -tables=<regular-expression>
