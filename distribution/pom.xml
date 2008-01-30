@@ -25,6 +25,11 @@
     </dependency>
     <dependency>
       <groupId>schemacrawler</groupId>
+      <artifactId>schemacrawler-tools</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>schemacrawler</groupId>
       <artifactId>integrations</artifactId>
       <version>${project.version}</version>
     </dependency>
