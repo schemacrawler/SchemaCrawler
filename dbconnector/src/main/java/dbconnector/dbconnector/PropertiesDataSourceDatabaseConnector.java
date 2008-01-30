@@ -104,14 +104,11 @@ public final class PropertiesDataSourceDatabaseConnector
       final String connectionName = parser
         .getStringOptionValue(OPTION_CONNECTION);
       // Use default connection if no connection is specified
-      if (useDefaultConnection || Utilities.isBlank(connectionName))
+      if (!useDefaultConnection && !Utilities.isBlank(connectionName))
       {
-        dataSourceName = config.get("defaultconnection");
+        config.put("defaultconnection", connectionName);
       }
-      else
-      {
-        dataSourceName = connectionName;
-      }
+      dataSourceName = config.get("defaultconnection");
     }
 
   }

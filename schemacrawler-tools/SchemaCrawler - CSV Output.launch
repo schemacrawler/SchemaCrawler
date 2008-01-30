@@ -12,7 +12,7 @@
 <listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="schemacrawler.Main"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-g &quot;${workspace_loc:SchemaCrawler - Tools/src/site/resources/config}/schemacrawler.config.properties&quot; -c hsqldb -command=maximum_schema,count,dump -outputformat=csv -outputfile=snapshot.csv"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-g &quot;${workspace_loc:SchemaCrawler - Tools/src/site/resources/config}/schemacrawler.config.properties&quot; -c hsqldb -command=maximum_schema,count,dump -outputformat=csv"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SchemaCrawler - Tools"/>
 <stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:SchemaCrawler - Tools/src/site/resources/snapshot-examples}"/>
 </launchConfiguration>
