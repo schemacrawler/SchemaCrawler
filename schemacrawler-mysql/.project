@@ -5,6 +5,7 @@
 	<projects>
 		<project>SchemaCrawler - Database Connector</project>
 		<project>SchemaCrawler - Main</project>
+		<project>SchemaCrawler - Tools</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

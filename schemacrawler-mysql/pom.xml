@@ -18,12 +18,7 @@
   <dependencies>
     <dependency>
       <groupId>schemacrawler</groupId>
-      <artifactId>dbconnector</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>schemacrawler</groupId>
-      <artifactId>schemacrawler</artifactId>
+      <artifactId>schemacrawler-tools</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>

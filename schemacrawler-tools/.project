@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>SchemaCrawler - Maven Plugin</name>
-	<comment>SchemaCrawler is a command-line tool to output your database schema and data in a readable form. The output is designed to be diff-ed with previous versions of your database schema. SchemaCrawler is also an API that improves on the standard JDBC metadata.</comment>
+	<name>SchemaCrawler - Tools</name>
+	<comment></comment>
 	<projects>
 		<project>SchemaCrawler - Database Connector</project>
 		<project>SchemaCrawler - Main</project>
-		<project>SchemaCrawler - Tools</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -18,9 +17,16 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>edu.umd.cs.findbugs.plugin.eclipse.findbugsBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.maven.ide.eclipse.maven2Nature</nature>
+		<nature>de.tobject.findbugs.findbugsNature</nature>
+		<nature>edu.umd.cs.findbugs.plugin.eclipse.findbugsNature</nature>
 	</natures>
 </projectDescription>
