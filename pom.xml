@@ -51,6 +51,7 @@
   <modules>
     <module>dbconnector</module>
     <module>schemacrawler</module>
+    <module>schemacrawler-tools</module>
     <module>integrations</module>
     <module>schemacrawler-maven-plugin</module>
     <module>schemacrawler-sqlserver</module>
