@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import schemacrawler.tools.Command;
+import schemacrawler.tools.schematext.SchemaTextDetailType;
 import sf.util.Utilities;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
@@ -64,7 +65,17 @@ final class CommandParser
     final List<Command> commands = new ArrayList<Command>(commandStrings.length);
     for (final String commandString: commandStrings)
     {
-      commands.add(new Command(commandString));
+      SchemaTextDetailType schemaTextDetailType;
+      try
+      {
+        schemaTextDetailType = SchemaTextDetailType.valueOf(commandString);
+      }
+      catch (final IllegalArgumentException e)
+      {
+        schemaTextDetailType = null;
+      }
+      boolean isQuery = schemaTextDetailType == null;
+      commands.add(new Command(commandString, isQuery));
     }
 
     return commands.toArray(new Command[commands.size()]);

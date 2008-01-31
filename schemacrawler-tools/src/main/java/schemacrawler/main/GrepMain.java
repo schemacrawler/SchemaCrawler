@@ -18,10 +18,12 @@
  *
  */
 
-package schemacrawler.tools.grep;
+package schemacrawler.main;
 
 
 import schemacrawler.crawl.SchemaCrawlerOptions;
+import schemacrawler.tools.grep.GrepExecutable;
+import schemacrawler.tools.grep.GrepOptions;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 
 /**

@@ -23,8 +23,6 @@ package schemacrawler.tools;
 
 import java.io.Serializable;
 
-import schemacrawler.tools.schematext.SchemaTextDetailType;
-
 /**
  * A single command from the command line.
  * 
@@ -45,20 +43,10 @@ public final class Command
    * @param name
    *        Command name.
    */
-  public Command(final String name)
+  public Command(final String name, final boolean isQuery)
   {
     this.name = name;
-
-    SchemaTextDetailType schemaTextDetailType;
-    try
-    {
-      schemaTextDetailType = SchemaTextDetailType.valueOf(name);
-    }
-    catch (final IllegalArgumentException e)
-    {
-      schemaTextDetailType = null;
-    }
-    isQuery = schemaTextDetailType == null;
+    this.isQuery = isQuery;
   }
 
   /**

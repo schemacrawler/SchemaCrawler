@@ -18,11 +18,11 @@
  *
  */
 
-package schemacrawler.tools.grep;
+package schemacrawler.main;
 
 
 import schemacrawler.crawl.InclusionRule;
-import schemacrawler.main.BaseCommandLineParser;
+import schemacrawler.tools.grep.GrepOptions;
 import sf.util.CommandLineParser;
 import sf.util.CommandLineParser.BooleanOption;
 import sf.util.CommandLineParser.Option;

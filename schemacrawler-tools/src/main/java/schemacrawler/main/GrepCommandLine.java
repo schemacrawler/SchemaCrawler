@@ -17,11 +17,11 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.grep;
+package schemacrawler.main;
 
 
 import schemacrawler.crawl.SchemaCrawlerException;
-import schemacrawler.main.SchemaCrawlerCommandLine;
+import schemacrawler.tools.grep.GrepOptions;
 
 /**
  * Utility for parsing the SchemaCrawler command line.
