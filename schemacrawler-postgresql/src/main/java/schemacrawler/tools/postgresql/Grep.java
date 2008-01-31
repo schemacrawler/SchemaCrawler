@@ -20,6 +20,7 @@
 package schemacrawler.tools.postgresql;
 
 
+import schemacrawler.Version;
 import schemacrawler.tools.grep.GrepCommandLine;
 import schemacrawler.tools.grep.GrepMain;
 import sf.util.CommandLineUtility;
@@ -41,7 +42,9 @@ public final class Grep
   public static void main(final String[] args)
   {
     CommandLineUtility
-      .checkForHelp(args, "/schemacrawler-postgresql-grep-readme.txt");
+      .checkForHelp(args,
+                    Version.about(),
+                    "/schemacrawler-postgresql-grep-readme.txt");
     CommandLineUtility.setLogLevel(args);
 
     try
