@@ -142,11 +142,8 @@ public class TestUtility
 
   /**
    * Load driver, and create database, schema and data
-   * 
-   * @throws PropertiesDataSourceException
    */
   public void createDatabase()
-    throws PropertiesDataSourceException
   {
     LOGGER.log(Level.FINE, toString() + " - Setting up database");
     // Attempt to delete the database files
@@ -168,11 +165,8 @@ public class TestUtility
 
   /**
    * Load driver, and create database, schema and data
-   * 
-   * @throws PropertiesDataSourceException
    */
   public void createMemoryDatabase()
-    throws PropertiesDataSourceException
   {
     LOGGER.log(Level.FINE, toString() + " - Setting up in-memory database");
     createDatabase("jdbc:hsqldb:mem:schemacrawler");
@@ -259,7 +253,6 @@ public class TestUtility
   }
 
   private void createDatabase(final String url)
-    throws PropertiesDataSourceException
   {
     makeDataSource(url);
     try
@@ -294,7 +287,6 @@ public class TestUtility
   }
 
   private void makeDataSource(final String url)
-    throws PropertiesDataSourceException
   {
     final String DATASOURCE_NAME = "schemacrawler";
 
@@ -305,7 +297,15 @@ public class TestUtility
     connectionProperties.setProperty(DATASOURCE_NAME + ".user", "sa");
     connectionProperties.setProperty(DATASOURCE_NAME + ".password", "");
 
-    dataSource = new PropertiesDataSource(connectionProperties, DATASOURCE_NAME);
+    try
+    {
+      dataSource = new PropertiesDataSource(connectionProperties,
+                                            DATASOURCE_NAME);
+    }
+    catch (PropertiesDataSourceException e)
+    {
+      throw new RuntimeException("Cannot create data source", e);
+    }
   }
 
 }

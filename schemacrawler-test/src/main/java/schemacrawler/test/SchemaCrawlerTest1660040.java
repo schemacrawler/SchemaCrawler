@@ -5,12 +5,12 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import schemacrawler.crawl.Config;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import sf.util.Config;
 import dbconnector.datasource.PropertiesDataSource;
 import dbconnector.datasource.PropertiesDataSourceException;
 

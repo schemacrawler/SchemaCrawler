@@ -57,11 +57,6 @@ public final class PropertiesDataSource
   private static final Logger LOGGER = Logger
     .getLogger(PropertiesDataSource.class.getName());
 
-  static
-  {
-    Utilities.checkJavaVersion(1.5);
-  }
-
   private String url;
   private Properties connectionParams;
   private int loginTimeout;

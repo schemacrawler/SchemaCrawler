@@ -33,7 +33,6 @@ import java.util.logging.Logger;
 
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
-import sf.util.Utilities;
 
 final class MetadataResultSet
 {
@@ -270,7 +269,8 @@ final class MetadataResultSet
 
   private boolean useColumn(final String columnName)
   {
-    final boolean useColumn = !Utilities.isBlank(columnName);
+    final boolean useColumn = !(columnName == null || columnName.trim()
+      .length() == 0);
     if (useColumn)
     {
       readColumns.add(columnName);

@@ -36,9 +36,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.crawl.SchemaCrawler;
-import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.ResultsColumn;
-import dbconnector.datasource.PropertiesDataSourceException;
+import schemacrawler.schema.ResultsColumns;
 import dbconnector.test.TestUtility;
 
 public class ResultColumnsTest
@@ -51,14 +50,14 @@ public class ResultColumnsTest
 
   @AfterClass
   public static void afterAllTests()
-    throws PropertiesDataSourceException, ClassNotFoundException
+    throws ClassNotFoundException
   {
     testUtility.shutdownDatabase();
   }
 
   @BeforeClass
   public static void beforeAllTests()
-    throws PropertiesDataSourceException, ClassNotFoundException
+    throws ClassNotFoundException
   {
     testUtility.setApplicationLogLevel();
     testUtility.createMemoryDatabase();

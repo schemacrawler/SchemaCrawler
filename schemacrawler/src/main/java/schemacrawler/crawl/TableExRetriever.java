@@ -37,7 +37,6 @@ import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.NamedObject;
-import sf.util.Utilities;
 
 /**
  * TableRetriever uses database metadata to get the details about the
@@ -180,8 +179,9 @@ final class TableExRetriever
                                    + constraintName);
           continue;
         }
+        final String text = checkConstraint.getDefinition();
 
-        if (!Utilities.isBlank(checkConstraint.getDefinition()))
+        if (!(text == null || text.trim().length() == 0))
         {
           definition = checkConstraint.getDefinition() + definition;
         }
@@ -374,8 +374,9 @@ final class TableExRetriever
           .getString("CHECK_OPTION").toLowerCase(Locale.ENGLISH));
         final boolean updatable = results.getBoolean(results
           .getString("IS_UPDATABLE"));
+        final String text = view.getDefinition();
 
-        if (!Utilities.isBlank(view.getDefinition()))
+        if (!(text == null || text.trim().length() == 0))
         {
           definition = view.getDefinition() + definition;
         }

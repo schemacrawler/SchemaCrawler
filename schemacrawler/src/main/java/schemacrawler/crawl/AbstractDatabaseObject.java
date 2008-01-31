@@ -22,7 +22,6 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.DatabaseObject;
-import sf.util.Utilities;
 
 /**
  * Represents a database object.
@@ -155,7 +154,7 @@ abstract class AbstractDatabaseObject
   public String toString()
   {
     String toString = "";
-    if (!Utilities.isBlank(schemaName))
+    if (!(schemaName == null || schemaName.trim().length() == 0))
     {
       toString = schemaName + ".";
     }

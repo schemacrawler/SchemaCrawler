@@ -48,8 +48,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
-import sf.util.Utilities;
-import dbconnector.datasource.PropertiesDataSourceException;
 import dbconnector.test.TestUtility;
 
 public class SchemaCrawlerTest
@@ -62,14 +60,14 @@ public class SchemaCrawlerTest
 
   @AfterClass
   public static void afterAllTests()
-    throws PropertiesDataSourceException, ClassNotFoundException
+    throws ClassNotFoundException
   {
     testUtility.shutdownDatabase();
   }
 
   @BeforeClass
   public static void beforeAllTests()
-    throws PropertiesDataSourceException, ClassNotFoundException
+    throws ClassNotFoundException
   {
     testUtility.setApplicationLogLevel();
     testUtility.createMemoryDatabase();
@@ -185,7 +183,8 @@ public class SchemaCrawlerTest
     // procedures.length);
     for (final Procedure procedure: procedures)
     {
-      if (Utilities.isBlank(procedure.getDefinition()))
+      if (procedure.getDefinition() == null
+          || procedure.getDefinition().trim().equals(""))
       {
         fail("Procedure definition not found");
       }
@@ -314,7 +313,8 @@ public class SchemaCrawlerTest
       {
         foundView = true;
         final View view = (View) table;
-        if (Utilities.isBlank(view.getDefinition()))
+        if (view.getDefinition() == null
+            || view.getDefinition().trim().equals(""))
         {
           fail("View definition not found");
         }

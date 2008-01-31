@@ -24,11 +24,8 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,134 +52,6 @@ public final class Utilities
     .getName());
 
   /**
-   * Checks the Java version, and throw an exception if it does not
-   * match the version provided as an argument.
-   * 
-   * @param minVersion
-   *        Minimum version supported
-   */
-  public static void checkJavaVersion(final double minVersion)
-  {
-    final String jvmVersion = System.getProperty("java.specification.version");
-    if (jvmVersion == null
-        || Double.parseDouble(jvmVersion.substring(0, 3)) < minVersion)
-    {
-      throw new IllegalArgumentException("Needs Java " + minVersion
-                                         + " or greater");
-    }
-  }
-
-  /**
-   * Interpolate substrings into system property values. Substrings of
-   * the form ${<i>propname</i>} are interpolated into the text of the
-   * system property whose key matches <i>propname</i>. For example,
-   * expandProperties("hello.${user.name}.world") is "hello.foo.world"
-   * when called by a user named "foo". Property substrings can be
-   * nested. References to nonexistent system properties are
-   * interpolated to an empty string.
-   * 
-   * @param template
-   *        Template
-   * @return Expanded template
-   */
-  public static String expandTemplateFromProperties(final String template)
-  {
-    return expandTemplateFromProperties(template, System.getProperties());
-  }
-
-  /**
-   * Interpolate substrings into property values. Substrings of the form ${<i>propname</i>}
-   * are interpolated into the text of the system property whose key
-   * matches <i>propname</i>. For example,
-   * expandProperties("hello.${user.name}.world") is "hello.foo.world"
-   * when called by a user named "foo". Property substrings can be
-   * nested. References to nonexistent system properties are
-   * interpolated to an empty string.
-   * 
-   * @param template
-   *        Template
-   * @param properties
-   *        Properties to substitute in the template
-   * @return Expanded template
-   */
-  public static String expandTemplateFromProperties(final String template,
-                                                    final Properties properties)
-  {
-
-    if (template == null)
-    {
-      return null;
-    }
-
-    String expandedTemplate = template;
-    for (int left; (left = expandedTemplate.indexOf("${")) >= 0;)
-    {
-      final int inner = expandedTemplate.indexOf("${", left + 2);
-      final int right = expandedTemplate.indexOf("}", left + 2);
-      if (inner >= 0 && inner < right)
-      {
-        // Evaluate nested property value
-        expandedTemplate = expandedTemplate.substring(0, inner)
-                           + expandTemplateFromProperties(expandedTemplate
-                             .substring(inner));
-      }
-      else if (right >= 0)
-      {
-        // Evaluate this property value
-        final String propertyKey = expandedTemplate.substring(left + 2, right);
-        Object propertyValue = properties.get(propertyKey);
-        if (propertyValue == null)
-        {
-          propertyValue = "";
-        }
-        expandedTemplate = expandedTemplate.substring(0, left) + propertyValue
-                           + expandedTemplate.substring(right + 1);
-      }
-      else
-      {
-        // Unmatched left delimiter - ignore
-        break;
-      }
-    }
-
-    return expandedTemplate;
-
-  }
-
-  /**
-   * Gets a list of template variables.
-   * 
-   * @param template
-   *        Template to extract variables from
-   * @return Set of variables
-   */
-  public static Set<String> extractTemplateVariables(final String template)
-  {
-
-    if (template == null)
-    {
-      return new HashSet<String>();
-    }
-
-    String shrunkTemplate = template;
-    final Set<String> keys = new HashSet<String>();
-    for (int left; (left = shrunkTemplate.indexOf("${")) >= 0;)
-    {
-      final int right = shrunkTemplate.indexOf("}", left + 2);
-      if (right >= 0)
-      {
-        final String propertyKey = shrunkTemplate.substring(left + 2, right);
-        keys.add(propertyKey);
-        // Destroy key, so we can find teh next one
-        shrunkTemplate = shrunkTemplate.substring(0, left) + ""
-                         + shrunkTemplate.substring(right + 1);
-      }
-    }
-
-    return keys;
-  }
-
-  /**
    * Checks if the text is null or empty.
    * 
    * @param text
@@ -192,27 +61,6 @@ public final class Utilities
   public static boolean isBlank(final String text)
   {
     return text == null || text.trim().length() == 0;
-  }
-
-  /**
-   * Copies properties into a map.
-   * 
-   * @param properties
-   *        Properties to copy
-   * @return Map
-   */
-  public static Map<String, String> propertiesMap(final Properties properties)
-  {
-    final Map<String, String> propertiesMap = new HashMap<String, String>();
-    if (properties != null)
-    {
-      final Set<Entry<Object, Object>> entries = properties.entrySet();
-      for (final Entry<Object, Object> entry: entries)
-      {
-        propertiesMap.put((String) entry.getKey(), (String) entry.getValue());
-      }
-    }
-    return propertiesMap;
   }
 
   /**
@@ -267,6 +115,21 @@ public final class Utilities
   private Utilities()
   {
     // intentionally left blank
+  }
+
+  /**
+   * Returns the configuration into properties.
+   * 
+   * @return Properties
+   */
+  public static Properties toProperties(Map<String, String> map)
+  {
+    final Properties properties = new Properties();
+    for (final Entry<String, String> entry: map.entrySet())
+    {
+      properties.setProperty(entry.getKey(), entry.getValue());
+    }
+    return properties;
   }
 
 }

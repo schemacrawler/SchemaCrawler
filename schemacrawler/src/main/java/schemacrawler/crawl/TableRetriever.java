@@ -39,7 +39,6 @@ import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.IndexSortSequence;
 import schemacrawler.schema.IndexType;
 import schemacrawler.schema.TableType;
-import sf.util.Utilities;
 
 /**
  * TableRetriever uses database metadata to get the details about the
@@ -183,8 +182,7 @@ final class TableRetriever
     {
       final String indexInfoSql = informationSchemaViews.getIndexInfo()
         .getQueryForTable(table);
-      LOGGER.log(Level.FINE, "Using getIndexInfo SQL:" + Utilities.NEWLINE
-                             + indexInfoSql);
+      LOGGER.log(Level.FINE, "Using getIndexInfo SQL:\n" + indexInfoSql);
       final Connection connection = getDatabaseConnection();
       final Statement statement = connection.createStatement();
       results = new MetadataResultSet(statement.executeQuery(indexInfoSql));

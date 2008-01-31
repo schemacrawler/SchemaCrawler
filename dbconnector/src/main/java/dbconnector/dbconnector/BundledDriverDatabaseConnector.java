@@ -20,10 +20,11 @@
 package dbconnector.dbconnector;
 
 
+import java.util.Map;
+
 import javax.sql.DataSource;
 
 import sf.util.CommandLineParser;
-import sf.util.Config;
 import sf.util.Utilities;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
@@ -43,7 +44,7 @@ public final class BundledDriverDatabaseConnector
   private static final String OPTION_USER = "user";
   private static final String OPTION_PASSWORD = "password";
 
-  private final Config config;
+  private final Map<String, String> config;
   private final String dataSourceName;
 
   /**
@@ -57,7 +58,7 @@ public final class BundledDriverDatabaseConnector
    *         On an exception
    */
   public BundledDriverDatabaseConnector(final String[] args,
-                                        final Config providedConfig)
+                                        final Map<String, String> providedConfig)
     throws DatabaseConnectorException
   {
     if (providedConfig == null)
@@ -106,7 +107,7 @@ public final class BundledDriverDatabaseConnector
   public DataSource createDataSource()
     throws DatabaseConnectorException
   {
-    return new PropertiesDataSource(config.toProperties());
+    return new PropertiesDataSource(Utilities.toProperties(config));
   }
 
   /**

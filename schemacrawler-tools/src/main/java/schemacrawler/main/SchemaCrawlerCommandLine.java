@@ -25,10 +25,10 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import schemacrawler.crawl.Config;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.tools.Command;
 import schemacrawler.tools.OutputOptions;
-import sf.util.Config;
 import sf.util.Utilities;
 import dbconnector.dbconnector.BundledDriverDatabaseConnector;
 import dbconnector.dbconnector.DatabaseConnector;

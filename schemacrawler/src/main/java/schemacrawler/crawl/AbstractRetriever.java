@@ -24,7 +24,6 @@ package schemacrawler.crawl;
 import java.sql.Connection;
 
 import schemacrawler.schema.DatabaseObject;
-import sf.util.Utilities;
 
 /**
  * SchemaRetriever uses database metadata to get the details about the
@@ -97,13 +96,15 @@ abstract class AbstractRetriever
     boolean belongsToCatalog = true;
     boolean belongsToSchema = true;
     final String dbObjectCatalog = dbObject.getCatalogName();
-    if (!Utilities.isBlank(catalog) && !Utilities.isBlank(dbObjectCatalog)
+    if (!(catalog == null || catalog.trim().length() == 0)
+        && !(dbObjectCatalog == null || dbObjectCatalog.trim().length() == 0)
         && !catalog.equals(dbObjectCatalog))
     {
       belongsToCatalog = false;
     }
     final String dbObjectSchema = dbObject.getSchemaName();
-    if (!Utilities.isBlank(schema) && !Utilities.isBlank(dbObjectSchema)
+    if (!(schema == null || schema.trim().length() == 0)
+        && !(dbObjectSchema == null || dbObjectSchema.trim().length() == 0)
         && !schema.equals(dbObjectSchema))
     {
       belongsToSchema = false;
