@@ -21,6 +21,7 @@
 package schemacrawler.tools.mysql;
 
 
+import schemacrawler.Version;
 import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.main.SchemaCrawlerMain;
 import sf.util.CommandLineUtility;
@@ -40,7 +41,9 @@ public final class Main
    */
   public static void main(final String[] args)
   {
-    CommandLineUtility.checkForHelp(args, "/schemacrawler-mysql-readme.txt");
+    CommandLineUtility.checkForHelp(args,
+                                    Version.about(),
+                                    "/schemacrawler-mysql-readme.txt");
     CommandLineUtility.setLogLevel(args);
 
     try
