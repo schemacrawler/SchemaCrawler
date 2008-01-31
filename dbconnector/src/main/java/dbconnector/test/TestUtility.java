@@ -73,6 +73,12 @@ public class TestUtility
     testUtility.createDatabase();
   }
 
+  /**
+   * Setup the schema.
+   * 
+   * @param dataSource
+   *        Datasource
+   */
   public static synchronized void setupSchema(final DataSource dataSource)
   {
     Connection connection = null;
@@ -141,7 +147,7 @@ public class TestUtility
   protected PrintWriter out;
 
   /**
-   * Load driver, and create database, schema and data
+   * Load driver, and create database, schema and data.
    */
   public void createDatabase()
   {
@@ -164,7 +170,7 @@ public class TestUtility
   }
 
   /**
-   * Load driver, and create database, schema and data
+   * Create database in memory.
    */
   public void createMemoryDatabase()
   {
@@ -302,7 +308,7 @@ public class TestUtility
       dataSource = new PropertiesDataSource(connectionProperties,
                                             DATASOURCE_NAME);
     }
-    catch (PropertiesDataSourceException e)
+    catch (final PropertiesDataSourceException e)
     {
       throw new RuntimeException("Cannot create data source", e);
     }

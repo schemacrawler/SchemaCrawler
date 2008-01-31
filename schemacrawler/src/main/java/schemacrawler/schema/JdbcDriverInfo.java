@@ -22,6 +22,11 @@ package schemacrawler.schema;
 
 import java.io.Serializable;
 
+/**
+ * JDBC driver information.
+ * 
+ * @author Sualeh Fatehi
+ */
 public interface JdbcDriverInfo
   extends Serializable
 {
@@ -49,6 +54,8 @@ public interface JdbcDriverInfo
 
   /**
    * Gets all the JDBC driver properties, and their values.
+   * 
+   * @return JDBC driver properties
    */
   JdbcDriverProperty[] getDriverProperties();
 

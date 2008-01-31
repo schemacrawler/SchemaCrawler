@@ -52,7 +52,7 @@ public final class BundledDriverDatabaseConnector
    * 
    * @param args
    *        Command line arguments
-   * @param config
+   * @param providedConfig
    *        Connection properties
    * @throws DatabaseConnectorException
    *         On an exception

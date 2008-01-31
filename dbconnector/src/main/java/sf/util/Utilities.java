@@ -120,9 +120,11 @@ public final class Utilities
   /**
    * Returns the configuration into properties.
    * 
+   * @param map
+   *        Map to convert to properties
    * @return Properties
    */
-  public static Properties toProperties(Map<String, String> map)
+  public static Properties toProperties(final Map<String, String> map)
   {
     final Properties properties = new Properties();
     for (final Entry<String, String> entry: map.entrySet())

@@ -71,6 +71,14 @@ final class MetadataResultSet
     readColumns = new HashSet<String>();
   }
 
+  /**
+   * Set fetch size for results.
+   * 
+   * @param rows
+   *        Number of rows to fetch
+   * @throws SQLException
+   *         On an exception
+   */
   public void setFetchSize(final int rows)
     throws SQLException
   {
@@ -107,7 +115,9 @@ final class MetadataResultSet
       }
       catch (final SQLException e)
       {
-        LOGGER.log(Level.FINE, "Could not read value for column " + columnName);
+        LOGGER.log(Level.FINE,
+                   "Could not read value for column " + columnName,
+                   e);
       }
     }
     return attributes;
@@ -135,7 +145,7 @@ final class MetadataResultSet
       catch (final SQLException e)
       {
         LOGGER.log(Level.FINE, "Could not read boolean value for column "
-                               + columnName);
+                               + columnName, e);
       }
     }
     return value;
@@ -167,7 +177,7 @@ final class MetadataResultSet
       catch (final SQLException e)
       {
         LOGGER.log(Level.FINE, "Could not read integer value for column "
-                               + columnName);
+                               + columnName, e);
       }
     }
     return value;
@@ -198,7 +208,7 @@ final class MetadataResultSet
       catch (final SQLException e)
       {
         LOGGER.log(Level.FINE, "Could not read long value for column "
-                               + columnName);
+                               + columnName, e);
       }
     }
     return value;
@@ -229,7 +239,7 @@ final class MetadataResultSet
       catch (final SQLException e)
       {
         LOGGER.log(Level.FINE, "Could not read short value for column "
-                               + columnName);
+                               + columnName, e);
       }
     }
     return value;
@@ -254,7 +264,7 @@ final class MetadataResultSet
       catch (final SQLException e)
       {
         LOGGER.log(Level.FINE, "Could not read string value for column "
-                               + columnName);
+                               + columnName, e);
       }
     }
     return value;

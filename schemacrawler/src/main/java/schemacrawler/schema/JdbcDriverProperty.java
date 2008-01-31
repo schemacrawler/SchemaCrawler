@@ -34,11 +34,15 @@ public interface JdbcDriverProperty
    * An array of possible values if the value for the field
    * <code>DriverPropertyInfo.value</code> may be selected from a
    * particular set of values.
+   * 
+   * @return Available choices for the value of a property
    */
   String[] getChoices();
 
   /**
    * A brief description of the property.
+   * 
+   * @return Description
    */
   String getDescription();
 
@@ -48,18 +52,17 @@ public interface JdbcDriverProperty
    * method <code>getPropertyInfo</code>, the Java environment, and
    * the driver-supplied default values. This field may be null if no
    * value is known.
+   * 
+   * @return Value of the property
    */
   String getValue();
-
-  /**
-   * Whether this property has any possible choices.
-   */
-  boolean hasChoices();
 
   /**
    * The <code>required</code> field is <code>true</code> if a value
    * must be supplied for this property during
    * <code>Driver.connect</code> and <code>false</code> otherwise.
+   * 
+   * @return Whether the property is required
    */
   boolean isRequired();
 

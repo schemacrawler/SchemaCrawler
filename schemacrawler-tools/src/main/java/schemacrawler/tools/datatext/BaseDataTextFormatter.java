@@ -31,6 +31,8 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.execute.DataHandler;
@@ -46,6 +48,9 @@ import sf.util.Utilities;
 public abstract class BaseDataTextFormatter
   implements DataHandler
 {
+
+  private static final Logger LOGGER = Logger
+    .getLogger(BaseDataTextFormatter.class.getName());
 
   private static final String BINARY = "<binary>";
 
@@ -371,9 +376,9 @@ public abstract class BaseDataTextFormatter
     }
     catch (final SQLException e)
     {
+      LOGGER.log(Level.FINE, "Could not read binary data", e);
       return lobData;
     }
 
   }
-
 }

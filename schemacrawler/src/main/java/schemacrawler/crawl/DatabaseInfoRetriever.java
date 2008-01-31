@@ -25,7 +25,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -210,19 +209,8 @@ final class DatabaseInfoRetriever
     throws SQLException
   {
     final DatabaseMetaData dbMetaData = getRetrieverConnection().getMetaData();
-    final String url = dbMetaData.getURL();
-    String jdbcDriverClassName;
-    try
-    {
-      jdbcDriverClassName = DriverManager.getDriver(url).getClass().getName();
-    }
-    catch (final SQLException e)
-    {
-      jdbcDriverClassName = "";
-    }
 
     final MutableDatabaseInfo dbInfo = new MutableDatabaseInfo();
-
     dbInfo.setProductName(dbMetaData.getDatabaseProductName());
     dbInfo.setProductVersion(dbMetaData.getDatabaseProductVersion());
     dbInfo.setCatalog(getRetrieverConnection().getCatalog());

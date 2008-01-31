@@ -132,7 +132,8 @@ final class RetrieverConnection
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING,
-                   "Could not obtain database connection from metadata");
+                   "Could not obtain database connection from metadata",
+                   e);
         connection = null;
       }
     }

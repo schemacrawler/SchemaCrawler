@@ -40,6 +40,7 @@ public class GrepCommandLine
    * @param args
    *        Command line arguments.
    * @throws SchemaCrawlerException
+   *         On an exception
    */
   public GrepCommandLine(final String[] args)
     throws SchemaCrawlerException
@@ -56,6 +57,7 @@ public class GrepCommandLine
    * @param configResource
    *        Config resource.
    * @throws SchemaCrawlerException
+   *         On an exception
    */
   public GrepCommandLine(final String[] args, final String configResource)
     throws SchemaCrawlerException

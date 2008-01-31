@@ -217,8 +217,8 @@ public final class FormatUtils
   /**
    * Prints database information.
    * 
-   * @param databaseInfo
-   *        Database information
+   * @param driverInfo
+   *        JDBC driver information
    * @param out
    *        Output writer
    */
