@@ -57,7 +57,7 @@ final class NullWriter
    */
   @Override
   public void write(@SuppressWarnings("unused")
-  final char cbuf[], @SuppressWarnings("unused")
+  final char[] cbuf, @SuppressWarnings("unused")
   final int off, @SuppressWarnings("unused")
   final int len)
     throws IOException
