@@ -21,7 +21,6 @@
 package dbconnector.datasource;
 
 
-import dbconnector.dbconnector.DatabaseConnectorException;
 
 /**
  * Error creating or accessing a PropertiesDataSource.
@@ -29,7 +28,7 @@ import dbconnector.dbconnector.DatabaseConnectorException;
  * @author Sualeh Fatehi
  */
 public final class PropertiesDataSourceException
-  extends DatabaseConnectorException
+  extends Exception
 {
 
   private static final long serialVersionUID = 4050761594017165621L;
