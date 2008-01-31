@@ -27,8 +27,6 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
-import dbconnector.Version;
-
 /**
  * Utility for the command line.
  * 
@@ -43,10 +41,14 @@ public final class CommandLineUtility
    * 
    * @param args
    *        Command line arguments.
+   * @param about
+   *        About text.
    * @param helpResource
    *        Resource file containing help text.
    */
-  public static void checkForHelp(final String[] args, final String helpResource)
+  public static void checkForHelp(final String[] args,
+                                  final String about,
+                                  final String helpResource)
   {
     boolean printUsage = false;
     if (args.length == 0)
@@ -68,7 +70,7 @@ public final class CommandLineUtility
         .getResourceAsStream(helpResource));
       final String info = new String(text);
 
-      System.out.println(Version.about());
+      System.out.println(about);
       System.out.println(info);
       System.exit(0);
     }
