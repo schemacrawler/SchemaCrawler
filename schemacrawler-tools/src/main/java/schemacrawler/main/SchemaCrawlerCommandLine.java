@@ -56,6 +56,7 @@ public class SchemaCrawlerCommandLine
    * @param args
    *        Command line arguments.
    * @throws SchemaCrawlerException
+   *         On an exception
    */
   public SchemaCrawlerCommandLine(final String[] args)
     throws SchemaCrawlerException
@@ -72,6 +73,7 @@ public class SchemaCrawlerCommandLine
    * @param configResource
    *        Config resource.
    * @throws SchemaCrawlerException
+   *         On an exception
    */
   public SchemaCrawlerCommandLine(final String[] args,
                                   final String configResource)

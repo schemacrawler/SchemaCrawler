@@ -40,7 +40,7 @@ public enum SchemaTextDetailType
 
   private final SchemaInfoLevel mappedToInfoLevel;
 
-  private SchemaTextDetailType(SchemaInfoLevel mappedToInfoLevel)
+  private SchemaTextDetailType(final SchemaInfoLevel mappedToInfoLevel)
   {
     this.mappedToInfoLevel = mappedToInfoLevel;
   }

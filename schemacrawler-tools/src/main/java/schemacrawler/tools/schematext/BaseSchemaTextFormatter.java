@@ -624,7 +624,7 @@ public abstract class BaseSchemaTextFormatter
     final String required = (driverProperty.isRequired()? "": "not ")
                             + "required";
     String details = required;
-    if (driverProperty.hasChoices())
+    if (driverProperty.getChoices() != null)
     {
       details = details + "; choices " + choices;
     }

@@ -34,7 +34,7 @@ import dbconnector.Version;
  * 
  * @author sfatehi
  */
-public class CommandLineUtility
+public final class CommandLineUtility
 {
 
   /**

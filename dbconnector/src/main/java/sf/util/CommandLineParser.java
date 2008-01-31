@@ -316,9 +316,9 @@ public final class CommandLineParser
   public static interface Option<T>
   {
     /** Special value when no short form is defined */
-    final char NO_SHORT_FORM = (char) 0;
+    char NO_SHORT_FORM = (char) 0;
     /** Special value when no long form is defined */
-    final String NO_LONG_FORM = null;
+    String NO_LONG_FORM = null;
 
     /**
      * Gets the default value for the option.

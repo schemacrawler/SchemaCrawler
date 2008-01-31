@@ -38,12 +38,41 @@ final class MutableJdbcDriverProperty
 
   private static final long serialVersionUID = 8030156654422512161L;
 
-  private final DriverPropertyInfo driverPropertyInfo;
+  /**
+   * A brief description of the property, which may be null.
+   */
+  private String description = null;
+
+  /**
+   * The <code>required</code> field is <code>true</code> if a value
+   * must be supplied for this property during
+   * <code>Driver.connect</code> and <code>false</code> otherwise.
+   */
+  private boolean required = false;
+
+  /**
+   * The <code>value</code> field specifies the current value of the
+   * property, based on a combination of the information supplied to the
+   * method <code>getPropertyInfo</code>, the Java environment, and
+   * the driver-supplied default values. This field may be null if no
+   * value is known.
+   */
+  private String value = null;
+
+  /**
+   * An array of possible values if the value for the field
+   * <code>DriverPropertyInfo.value</code> may be selected from a
+   * particular set of values; otherwise null.
+   */
+  private String[] choices = null;
 
   MutableJdbcDriverProperty(final DriverPropertyInfo driverPropertyInfo)
   {
     super(driverPropertyInfo.name);
-    this.driverPropertyInfo = driverPropertyInfo;
+    description = driverPropertyInfo.description;
+    required = driverPropertyInfo.required;
+    value = driverPropertyInfo.value;
+    choices = driverPropertyInfo.choices;
   }
 
   /**
@@ -53,9 +82,9 @@ final class MutableJdbcDriverProperty
    */
   public String[] getChoices()
   {
-    if (hasChoices())
+    if (choices != null)
     {
-      return driverPropertyInfo.choices;
+      return choices;
     }
     else
     {
@@ -70,9 +99,9 @@ final class MutableJdbcDriverProperty
    */
   public String getDescription()
   {
-    if (driverPropertyInfo.description != null)
+    if (description != null)
     {
-      return driverPropertyInfo.description;
+      return description;
     }
     else
     {
@@ -87,7 +116,6 @@ final class MutableJdbcDriverProperty
    */
   public String getValue()
   {
-    final String value = driverPropertyInfo.value;
     if (getName().equalsIgnoreCase("password") && value != null)
     {
       return "*****";
@@ -98,21 +126,11 @@ final class MutableJdbcDriverProperty
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.JdbcDriverProperty#hasChoices()
-   */
-  public boolean hasChoices()
-  {
-    return driverPropertyInfo.choices != null;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see schemacrawler.schema.JdbcDriverProperty#isRequired()
    */
   public boolean isRequired()
   {
-    return driverPropertyInfo.required;
+    return required;
   }
 
 }

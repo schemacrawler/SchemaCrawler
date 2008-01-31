@@ -117,7 +117,7 @@ final class MutableJdbcDriverInfo
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.DatabaseInfo#getConnectionUrl()
+   * @see schemacrawler.schema.JdbcDriverInfo#getConnectionUrl()
    */
   public String getConnectionUrl()
   {
@@ -127,7 +127,7 @@ final class MutableJdbcDriverInfo
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.DatabaseInfo#getJdbcDriverClassName()
+   * @see schemacrawler.schema.JdbcDriverInfo#getDriverClassName()
    */
   public String getDriverClassName()
   {
@@ -137,7 +137,7 @@ final class MutableJdbcDriverInfo
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.DatabaseInfo#getDriverName()
+   * @see schemacrawler.schema.JdbcDriverInfo#getDriverName()
    */
   public String getDriverName()
   {
@@ -147,7 +147,7 @@ final class MutableJdbcDriverInfo
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.JdbcDriverInfo#getJdbcDriverProperties()
+   * @see schemacrawler.schema.JdbcDriverInfo#getDriverProperties()
    */
   public JdbcDriverProperty[] getDriverProperties()
   {
@@ -158,7 +158,7 @@ final class MutableJdbcDriverInfo
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.DatabaseInfo#getDriverVersion()
+   * @see schemacrawler.schema.JdbcDriverInfo#getDriverVersion()
    */
   public String getDriverVersion()
   {

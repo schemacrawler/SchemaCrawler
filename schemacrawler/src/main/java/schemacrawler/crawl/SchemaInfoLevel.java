@@ -157,6 +157,9 @@ public final class SchemaInfoLevel
     return retrieveIndices;
   }
 
+  /**
+   * @return the retrieveJdbcDriverInfo
+   */
   public boolean isRetrieveJdbcDriverInfo()
   {
     return retrieveJdbcDriverInfo;
@@ -296,6 +299,10 @@ public final class SchemaInfoLevel
     this.retrieveIndices = retrieveIndices;
   }
 
+  /**
+   * @param retrieveJdbcDriverInfo
+   *        the retrieveJdbcDriverInfo to set
+   */
   public void setRetrieveJdbcDriverInfo(final boolean retrieveJdbcDriverInfo)
   {
     this.retrieveJdbcDriverInfo = retrieveJdbcDriverInfo;

@@ -30,17 +30,17 @@ import java.util.Map;
  * @author Sualeh Fatehi
  */
 @SuppressWarnings("unchecked")
-public class Entities
+public final class Entities
 {
 
   /** XML character entities. */
-  public final static Entities XML;
+  public static final Entities XML;
 
   /** HTML 3.2 character entities. */
-  public final static Entities HTML32;
+  public static final Entities HTML32;
 
   /** HTML 4.0 character entities. */
-  public final static Entities HTML40;
+  public static final Entities HTML40;
 
   static
   {
