@@ -21,6 +21,7 @@
 package schemacrawler.tools.sqlserver;
 
 
+import schemacrawler.Version;
 import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.main.SchemaCrawlerMain;
 import sf.util.CommandLineUtility;
@@ -40,8 +41,9 @@ public final class Main
    */
   public static void main(final String[] args)
   {
-    CommandLineUtility
-      .checkForHelp(args, "/schemacrawler-sqlserver-readme.txt");
+    CommandLineUtility.checkForHelp(args,
+                                    Version.about(),
+                                    "/schemacrawler-sqlserver-readme.txt");
     CommandLineUtility.setLogLevel(args);
 
     try
