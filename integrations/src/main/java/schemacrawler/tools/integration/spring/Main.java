@@ -26,6 +26,7 @@ import javax.sql.DataSource;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+import schemacrawler.Version;
 import schemacrawler.tools.Executable;
 import sf.util.CommandLineUtility;
 
@@ -44,12 +45,15 @@ public final class Main
    */
   public static void main(final String[] args)
   {
-    CommandLineUtility.checkForHelp(args, "/schemacrawler-spring-readme.txt");
+    CommandLineUtility.checkForHelp(args,
+                                    Version.about(),
+                                    "/schemacrawler-spring-readme.txt");
     CommandLineUtility.setLogLevel(args);
 
     try
     {
-      final SpringOptions springOptions = new SpringOptionsParser(args).getValue();
+      final SpringOptions springOptions = new SpringOptionsParser(args)
+        .getValue();
       final ApplicationContext appContext = new FileSystemXmlApplicationContext(springOptions
         .getContextFileName());
       final Executable<?> executable = (Executable<?>) appContext
