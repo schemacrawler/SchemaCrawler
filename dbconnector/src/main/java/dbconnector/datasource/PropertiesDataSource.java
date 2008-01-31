@@ -39,7 +39,7 @@ import sf.util.SubstitutableProperties;
 import sf.util.Utilities;
 
 /**
- * A DataSource that creates connections by reading a proerties file.
+ * A DataSource that creates connections by reading a properties file.
  * 
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
