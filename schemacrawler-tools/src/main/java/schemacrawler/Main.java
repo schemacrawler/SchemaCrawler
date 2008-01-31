@@ -43,7 +43,7 @@ public final class Main
   public static void main(final String[] args)
     throws Exception
   {
-    CommandLineUtility.checkForHelp(args, "/schemacrawler-readme.txt");
+    CommandLineUtility.checkForHelp(args, Version.about(), "/schemacrawler-readme.txt");
     CommandLineUtility.setLogLevel(args);
 
     final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args);
