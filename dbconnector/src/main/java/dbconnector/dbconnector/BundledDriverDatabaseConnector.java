@@ -29,6 +29,7 @@ import sf.util.Utilities;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
 import dbconnector.datasource.PropertiesDataSource;
+import dbconnector.datasource.PropertiesDataSourceException;
 
 /**
  * Parses a command line, and creates a data-source.
@@ -107,7 +108,14 @@ public final class BundledDriverDatabaseConnector
   public DataSource createDataSource()
     throws DatabaseConnectorException
   {
-    return new PropertiesDataSource(Utilities.toProperties(config));
+    try
+    {
+      return new PropertiesDataSource(Utilities.toProperties(config));
+    }
+    catch (PropertiesDataSourceException e)
+    {
+      throw new DatabaseConnectorException(e);
+    }
   }
 
   /**
