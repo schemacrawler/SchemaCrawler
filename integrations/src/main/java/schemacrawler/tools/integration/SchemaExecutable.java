@@ -20,6 +20,7 @@
 package schemacrawler.tools.integration;
 
 
+import schemacrawler.Version;
 import schemacrawler.crawl.Config;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.main.SchemaCrawlerCommandLine;
@@ -53,7 +54,7 @@ public abstract class SchemaExecutable
   public void executeOnSchema(final String[] args, final String helpResource)
     throws Exception
   {
-    CommandLineUtility.checkForHelp(args, helpResource);
+    CommandLineUtility.checkForHelp(args, Version.about(), helpResource);
     CommandLineUtility.setLogLevel(args);
 
     final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args);
