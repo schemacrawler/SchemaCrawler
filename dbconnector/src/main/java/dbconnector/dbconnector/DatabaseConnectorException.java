@@ -33,6 +33,21 @@ public class DatabaseConnectorException
   private static final long serialVersionUID = 4050761594017165621L;
 
   /**
+   * {@inheritDoc}
+   */
+  public DatabaseConnectorException()
+  {
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public DatabaseConnectorException(Throwable cause)
+  {
+    super(cause);
+  }
+
+  /**
    * Constructs a new exception with the specified detail message.
    * 
    * @param message
