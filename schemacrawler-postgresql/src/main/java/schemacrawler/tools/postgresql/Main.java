@@ -21,6 +21,7 @@
 package schemacrawler.tools.postgresql;
 
 
+import schemacrawler.Version;
 import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.main.SchemaCrawlerMain;
 import sf.util.CommandLineUtility;
@@ -41,6 +42,7 @@ public final class Main
   public static void main(final String[] args)
   {
     CommandLineUtility.checkForHelp(args,
+                                    Version.about(),
                                     "/schemacrawler-postgresql-readme.txt");
     CommandLineUtility.setLogLevel(args);
 
