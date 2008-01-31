@@ -24,7 +24,6 @@ package schemacrawler.crawl;
 import schemacrawler.crawl.NamedObjectList.NamedObjectSort;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
-import sf.util.Utilities;
 
 /**
  * Represents database metadata. Created from metadata returned by a
@@ -37,6 +36,8 @@ final class MutableJdbcDriverInfo
 {
 
   private static final long serialVersionUID = 8030156654422512161L;
+
+  private static final String NEWLINE = System.getProperty("line.separator");
 
   private String driverName;
   private String driverClassName;
@@ -206,11 +207,10 @@ final class MutableJdbcDriverInfo
     final StringBuffer info = new StringBuffer();
 
     info.append("-- driver: ").append(getDriverName()).append(" ")
-      .append(getDriverVersion()).append(Utilities.NEWLINE);
+      .append(getDriverVersion()).append(NEWLINE);
     info.append("-- driver class: ").append(getDriverClassName())
-      .append(Utilities.NEWLINE);
-    info.append("-- url: ").append(getConnectionUrl())
-      .append(Utilities.NEWLINE);
+      .append(NEWLINE);
+    info.append("-- url: ").append(getConnectionUrl()).append(NEWLINE);
     info.append("-- jdbc compliant: ").append(isJdbcCompliant());
 
     return info.toString();

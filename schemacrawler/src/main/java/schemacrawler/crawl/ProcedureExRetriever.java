@@ -29,7 +29,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.RoutineBodyType;
-import sf.util.Utilities;
 
 /**
  * ProcedureExRetriever uses database metadata to get the details about
@@ -106,8 +105,9 @@ final class ProcedureExRetriever
         final RoutineBodyType routineBodyType = RoutineBodyType.valueOf(results
           .getString("ROUTINE_BODY").toLowerCase(Locale.ENGLISH));
         String definition = results.getString("ROUTINE_DEFINITION");
+        final String text = procedure.getDefinition();
 
-        if (!Utilities.isBlank(procedure.getDefinition()))
+        if (!(text == null || text.trim().length() == 0))
         {
           definition = procedure.getDefinition() + definition;
         }

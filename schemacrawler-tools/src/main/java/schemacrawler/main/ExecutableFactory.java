@@ -24,6 +24,7 @@ package schemacrawler.main;
 import java.util.ArrayList;
 import java.util.List;
 
+import schemacrawler.crawl.Config;
 import schemacrawler.crawl.Query;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.crawl.SchemaCrawlerOptions;
@@ -38,7 +39,6 @@ import schemacrawler.tools.operation.OperationOptions;
 import schemacrawler.tools.schematext.SchemaCrawlerExecutable;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextOptions;
-import sf.util.Config;
 
 /**
  * Parses the command line.

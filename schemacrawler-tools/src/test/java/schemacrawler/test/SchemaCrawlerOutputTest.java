@@ -32,6 +32,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import schemacrawler.crawl.Config;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutor;
@@ -45,7 +46,6 @@ import schemacrawler.tools.operation.OperationOptions;
 import schemacrawler.tools.schematext.SchemaCrawlerExecutable;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextOptions;
-import sf.util.Config;
 import dbconnector.datasource.PropertiesDataSourceException;
 import dbconnector.test.TestUtility;
 

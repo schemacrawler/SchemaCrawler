@@ -30,7 +30,7 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
-import sf.util.Utilities;
+import schemacrawler.crawl.Query;
 
 /**
  * Executes SQL.
@@ -78,17 +78,17 @@ public final class QueryExecutor
    * Executes a SQL statement, and calls the registered handler on
    * events.
    * 
-   * @param query
+   * @param queryString
    *        SQL statement.
    * @throws QueryExecutorException
    *         On query execution error
    */
-  public void executeSQL(final String query)
+  public void executeSQL(final String queryString)
     throws QueryExecutorException
   {
 
-    final String sql = Utilities.expandTemplateFromProperties(query);
-    LOGGER.fine("Executing: " + sql);
+    final Query query = new Query("Ad hoc query", queryString);
+    LOGGER.fine("Executing: " + query);
 
     Connection connection = null;
     Statement statement = null;
@@ -97,18 +97,18 @@ public final class QueryExecutor
     {
       connection = dataSource.getConnection();
       statement = connection.createStatement();
-      resultSet = statement.executeQuery(sql);
+      resultSet = statement.executeQuery(query.getQuery());
 
       handler.begin();
       handler.handleMetadata(dataSource.toString());
-      handler.handleTitle(sql);
+      handler.handleTitle(query.getQuery());
       handler.handleData(resultSet);
       handler.end();
     }
     catch (final SQLException e)
     {
       throw new QueryExecutorException(e.getMessage() + " - when executing - "
-                                       + sql, e);
+                                       + query, e);
     }
     finally
     {

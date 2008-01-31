@@ -1,4 +1,4 @@
-package sf.util;
+package schemacrawler.crawl;
 
 
 import java.io.BufferedInputStream;
@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,7 +59,7 @@ public class Config
     {
       for (final String configFilename: configFilenames)
       {
-        if (!Utilities.isBlank(configFilename))
+        if (!(configFilename == null || configFilename.trim().length() == 0))
         {
           configProperties = loadProperties(configProperties,
                                             new File(configFilename));
@@ -141,6 +142,27 @@ public class Config
   }
 
   /**
+   * Copies properties into a map.
+   * 
+   * @param properties
+   *        Properties to copy
+   * @return Map
+   */
+  private static Map<String, String> propertiesMap(final Properties properties)
+  {
+    final Map<String, String> propertiesMap = new HashMap<String, String>();
+    if (properties != null)
+    {
+      final Set<Entry<Object, Object>> entries = properties.entrySet();
+      for (final Entry<Object, Object> entry: entries)
+      {
+        propertiesMap.put((String) entry.getKey(), (String) entry.getValue());
+      }
+    }
+    return propertiesMap;
+  }
+
+  /**
    * Creates an empty config.
    */
   public Config()
@@ -167,7 +189,7 @@ public class Config
    */
   public Config(final Properties properties)
   {
-    super(Utilities.propertiesMap(properties));
+    super(propertiesMap(properties));
   }
 
   /**
@@ -243,21 +265,6 @@ public class Config
     }
 
     return partition;
-  }
-
-  /**
-   * Returns the configuration into properties.
-   * 
-   * @return Properties
-   */
-  public Properties toProperties()
-  {
-    final Properties properties = new Properties();
-    for (final Entry<String, String> entry: entrySet())
-    {
-      properties.setProperty(entry.getKey(), entry.getValue());
-    }
-    return properties;
   }
 
 }

@@ -29,7 +29,6 @@ import java.util.TreeMap;
 import schemacrawler.crawl.NamedObjectList.NamedObjectSort;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DatabaseInfo;
-import sf.util.Utilities;
 
 /**
  * Represents database metadata. Created from metadata returned by a
@@ -42,6 +41,8 @@ final class MutableDatabaseInfo
 {
 
   private static final long serialVersionUID = 4051323422934251828L;
+
+  private static final String NEWLINE = System.getProperty("line.separator");
 
   private String productName;
   private String productVersion;
@@ -228,7 +229,7 @@ final class MutableDatabaseInfo
     final StringBuffer info = new StringBuffer();
 
     info.append("-- database: ").append(getProductName()).append(" ")
-      .append(getProductVersion()).append(Utilities.NEWLINE)
+      .append(getProductVersion()).append(NEWLINE)
       .append("-- schema pattern: ").append(getSchemaPattern());
 
     return info.toString();

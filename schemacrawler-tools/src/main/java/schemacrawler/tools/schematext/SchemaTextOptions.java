@@ -21,9 +21,9 @@
 package schemacrawler.tools.schematext;
 
 
+import schemacrawler.crawl.Config;
 import schemacrawler.tools.BaseToolOptions;
 import schemacrawler.tools.OutputOptions;
-import sf.util.Config;
 
 /**
  * Options.

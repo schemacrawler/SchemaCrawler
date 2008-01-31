@@ -26,8 +26,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
-import sf.util.Utilities;
-
 /**
  * Specifies inclusion and exclusion patterns that can be applied to the
  * names of database objects.
@@ -105,7 +103,7 @@ public final class InclusionRule
   public boolean include(final String name)
   {
     boolean include = false;
-    if (!Utilities.isBlank(name))
+    if (!(name == null || name.trim().length() == 0))
     {
       if (!patternInclude.matcher(name).matches())
       {

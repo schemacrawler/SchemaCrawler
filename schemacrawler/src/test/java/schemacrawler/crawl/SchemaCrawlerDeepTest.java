@@ -38,7 +38,6 @@ import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
-import dbconnector.datasource.PropertiesDataSourceException;
 import dbconnector.test.TestUtility;
 
 public class SchemaCrawlerDeepTest
@@ -48,14 +47,14 @@ public class SchemaCrawlerDeepTest
 
   @AfterClass
   public static void afterAllTests()
-    throws PropertiesDataSourceException, ClassNotFoundException
+    throws ClassNotFoundException
   {
     testUtility.shutdownDatabase();
   }
 
   @BeforeClass
   public static void beforeAllTests()
-    throws PropertiesDataSourceException, ClassNotFoundException
+    throws ClassNotFoundException
   {
     testUtility.setApplicationLogLevel();
     testUtility.createMemoryDatabase();

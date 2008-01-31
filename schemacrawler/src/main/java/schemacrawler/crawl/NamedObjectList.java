@@ -48,6 +48,7 @@ final class NamedObjectList<N extends AbstractNamedObject>
     /** Alphabetical sort. */
     alphabetical
     {
+      @Override
       public int compare(final NamedObject namedObject1,
                          final NamedObject namedObject2)
       {
@@ -59,6 +60,7 @@ final class NamedObjectList<N extends AbstractNamedObject>
     /** Natural sort. */
     natural
     {
+      @Override
       public int compare(final NamedObject namedObject1,
                          final NamedObject namedObject2)
       {

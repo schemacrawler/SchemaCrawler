@@ -21,7 +21,7 @@
 package schemacrawler.main;
 
 
-import sf.util.Config;
+import schemacrawler.crawl.Config;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
 
