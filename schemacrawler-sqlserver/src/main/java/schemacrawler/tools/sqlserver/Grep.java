@@ -21,8 +21,8 @@ package schemacrawler.tools.sqlserver;
 
 
 import schemacrawler.Version;
-import schemacrawler.tools.grep.GrepCommandLine;
-import schemacrawler.tools.grep.GrepMain;
+import schemacrawler.main.GrepCommandLine;
+import schemacrawler.main.GrepMain;
 import sf.util.CommandLineUtility;
 
 /**
