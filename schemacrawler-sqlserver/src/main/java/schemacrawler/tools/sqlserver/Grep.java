@@ -20,6 +20,7 @@
 package schemacrawler.tools.sqlserver;
 
 
+import schemacrawler.Version;
 import schemacrawler.tools.grep.GrepCommandLine;
 import schemacrawler.tools.grep.GrepMain;
 import sf.util.CommandLineUtility;
@@ -41,6 +42,7 @@ public final class Grep
   public static void main(final String[] args)
   {
     CommandLineUtility.checkForHelp(args,
+                                    Version.about(),
                                     "/schemacrawler-sqlserver-grep-readme.txt");
     CommandLineUtility.setLogLevel(args);
 
