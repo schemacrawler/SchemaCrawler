@@ -27,9 +27,9 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
+import schemacrawler.Version;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.tools.Executable;
-import dbconnector.Version;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
