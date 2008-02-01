@@ -44,7 +44,9 @@ public final class Grep
   public static void main(final String[] args)
     throws Exception
   {
-    CommandLineUtility.checkForHelp(args, Version.about(), "/schemacrawler-grep-readme.txt");
+    CommandLineUtility.checkForHelp(args,
+                                    Version.about(),
+                                    "/schemacrawler-grep-readme.txt");
     CommandLineUtility.setLogLevel(args);
 
     final GrepCommandLine commandLine = new GrepCommandLine(args);
