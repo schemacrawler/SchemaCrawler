@@ -35,7 +35,7 @@ import org.junit.Test;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
-import dbconnector.test.TestUtility;
+import schemacrawler.utility.test.TestUtility;
 
 public class ResultColumnsTest
 {

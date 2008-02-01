@@ -42,7 +42,7 @@ import schemacrawler.tools.grep.GrepOptions;
 import schemacrawler.tools.operation.OperationOptions;
 import schemacrawler.tools.schematext.SchemaTextOptions;
 import schemacrawler.utility.datasource.PropertiesDataSourceException;
-import dbconnector.test.TestUtility;
+import schemacrawler.utility.test.TestUtility;
 
 public class SpringIntegrationTest
 {

@@ -33,7 +33,7 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import dbconnector.test.TestUtility;
+import schemacrawler.utility.test.TestUtility;
 
 public class SortingTest
 {

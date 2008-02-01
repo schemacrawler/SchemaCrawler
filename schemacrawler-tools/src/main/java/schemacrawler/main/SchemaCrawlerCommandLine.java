@@ -27,13 +27,13 @@ import javax.sql.DataSource;
 
 import schemacrawler.crawl.Config;
 import schemacrawler.crawl.SchemaCrawlerException;
+import schemacrawler.main.dbconnector.BundledDriverDatabaseConnector;
+import schemacrawler.main.dbconnector.DatabaseConnector;
+import schemacrawler.main.dbconnector.DatabaseConnectorException;
+import schemacrawler.main.dbconnector.PropertiesDataSourceDatabaseConnector;
 import schemacrawler.tools.Command;
 import schemacrawler.tools.OutputOptions;
 import sf.util.Utilities;
-import dbconnector.dbconnector.BundledDriverDatabaseConnector;
-import dbconnector.dbconnector.DatabaseConnector;
-import dbconnector.dbconnector.DatabaseConnectorException;
-import dbconnector.dbconnector.PropertiesDataSourceDatabaseConnector;
 
 /**
  * Utility for parsing the SchemaCrawler command line.

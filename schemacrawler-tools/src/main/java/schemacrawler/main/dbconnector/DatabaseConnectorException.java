@@ -18,7 +18,7 @@
  *
  */
 
-package dbconnector.dbconnector;
+package schemacrawler.main.dbconnector;
 
 
 /**

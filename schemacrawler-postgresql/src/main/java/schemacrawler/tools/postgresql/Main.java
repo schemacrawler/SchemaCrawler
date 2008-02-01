@@ -50,7 +50,7 @@ public final class Main
     {
       final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
                                                                                 "/schemacrawler.config.properties");
-      SchemaCrawlerMain.schemacrawler(commandLine);
+      SchemaCrawlerMain.schemacrawler(commandLine, Version.about());
     }
     catch (final Exception e)
     {

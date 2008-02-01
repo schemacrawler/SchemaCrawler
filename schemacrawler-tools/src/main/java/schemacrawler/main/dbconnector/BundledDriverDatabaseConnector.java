@@ -17,11 +17,9 @@
  * Boston, MA 02111-1307, USA.
  *
  */
+package schemacrawler.main.dbconnector;
 
-package dbconnector.dbconnector;
 
-
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -30,25 +28,22 @@ import schemacrawler.utility.datasource.PropertiesDataSource;
 import schemacrawler.utility.datasource.PropertiesDataSourceException;
 import sf.util.CommandLineParser;
 import sf.util.Utilities;
-import sf.util.CommandLineParser.BooleanOption;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
 
 /**
  * Parses a command line, and creates a data-source.
  */
-public final class PropertiesDataSourceDatabaseConnector
+public final class BundledDriverDatabaseConnector
   implements DatabaseConnector
 {
 
-  private static final String OPTION_DRIVER = "driver";
-  private static final String OPTION_URL = "url";
+  private static final String OPTION_HOST = "host";
+  private static final String OPTION_PORT = "port";
+  private static final String OPTION_DATABASE = "database";
   private static final String OPTION_SCHEMAPATTERN = "schemapattern";
   private static final String OPTION_USER = "user";
   private static final String OPTION_PASSWORD = "password";
-
-  private static final String OPTION_CONNECTION = "connection";
-  private static final String OPTION_DEFAULT = "default";
 
   private final Map<String, String> config;
   private final String dataSourceName;
@@ -63,36 +58,39 @@ public final class PropertiesDataSourceDatabaseConnector
    * @throws DatabaseConnectorException
    *         On an exception
    */
-  public PropertiesDataSourceDatabaseConnector(final String[] args,
-                                               final Map<String, String> providedConfig)
+  public BundledDriverDatabaseConnector(final String[] args,
+                                        final Map<String, String> providedConfig)
     throws DatabaseConnectorException
   {
     if (providedConfig == null)
     {
-      config = new HashMap<String, String>();
+      throw new DatabaseConnectorException("Bundled driver needs configuration");
     }
-    else
-    {
-      config = providedConfig;
-    }
+    config = providedConfig;
 
     final CommandLineParser parser = createCommandLineParser();
     parser.parse(args);
 
-    final String driver = parser.getStringOptionValue(OPTION_DRIVER);
-    final String url = parser.getStringOptionValue(OPTION_URL);
+    final String host = parser.getStringOptionValue(OPTION_HOST);
+    final String port = parser.getStringOptionValue(OPTION_PORT);
+    final String database = parser.getStringOptionValue(OPTION_DATABASE);
     final String schemapattern = parser
       .getStringOptionValue(OPTION_SCHEMAPATTERN);
     final String user = parser.getStringOptionValue(OPTION_USER);
     final String password = parser.getStringOptionValue(OPTION_PASSWORD);
-    final boolean useJdbcConnection = !Utilities.isBlank(driver)
-                                      && !Utilities.isBlank(url);
 
-    if (useJdbcConnection)
+    dataSourceName = config.get("defaultconnection");
+    if (user != null && password != null)
     {
-      dataSourceName = "PropertiesDataSourceConnection";
-      config.put(dataSourceName + ".driver", driver);
-      config.put(dataSourceName + ".url", url);
+      if (host != null)
+      {
+        config.put(dataSourceName + ".host", host);
+      }
+      if (port != null)
+      {
+        config.put(dataSourceName + ".port", port);
+      }
+      config.put(dataSourceName + ".database", database);
       if (!Utilities.isBlank(schemapattern))
       {
         config.put(dataSourceName + ".schemapattern", schemapattern);
@@ -100,26 +98,12 @@ public final class PropertiesDataSourceDatabaseConnector
       config.put(dataSourceName + ".user", user);
       config.put(dataSourceName + ".password", password);
     }
-    else
-    {
-      final boolean useDefaultConnection = parser
-        .getBooleanOptionValue(OPTION_DEFAULT);
-      final String connectionName = parser
-        .getStringOptionValue(OPTION_CONNECTION);
-      // Use default connection if no connection is specified
-      if (!useDefaultConnection && !Utilities.isBlank(connectionName))
-      {
-        config.put("defaultconnection", connectionName);
-      }
-      dataSourceName = config.get("defaultconnection");
-    }
-
   }
 
   /**
    * {@inheritDoc}
    * 
-   * @see dbconnector.dbconnector.DatabaseConnector#createDataSource()
+   * @see schemacrawler.main.dbconnector.DatabaseConnector#createDataSource()
    */
   public DataSource createDataSource()
     throws DatabaseConnectorException
@@ -137,7 +121,7 @@ public final class PropertiesDataSourceDatabaseConnector
   /**
    * {@inheritDoc}
    * 
-   * @see dbconnector.dbconnector.DatabaseConnector#getDataSourceName()
+   * @see schemacrawler.main.dbconnector.DatabaseConnector#getDataSourceName()
    */
   public String getDataSourceName()
   {
@@ -148,12 +132,10 @@ public final class PropertiesDataSourceDatabaseConnector
   {
     final CommandLineParser parser = new CommandLineParser();
 
-    parser.addOption(new BooleanOption('d', OPTION_DEFAULT));
-    parser.addOption(new StringOption('c', OPTION_CONNECTION, null));
-    //
+    parser.addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_HOST, null));
+    parser.addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_PORT, null));
     parser
-      .addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_DRIVER, null));
-    parser.addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_URL, null));
+      .addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_DATABASE, ""));
     parser.addOption(new StringOption(Option.NO_SHORT_FORM,
                                       OPTION_SCHEMAPATTERN,
                                       null));
@@ -161,6 +143,7 @@ public final class PropertiesDataSourceDatabaseConnector
     parser.addOption(new StringOption(Option.NO_SHORT_FORM,
                                       OPTION_PASSWORD,
                                       null));
+
     return parser;
   }
 

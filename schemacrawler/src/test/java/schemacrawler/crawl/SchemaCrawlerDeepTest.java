@@ -35,7 +35,7 @@ import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
-import dbconnector.test.TestUtility;
+import schemacrawler.utility.test.TestUtility;
 
 public class SchemaCrawlerDeepTest
 {

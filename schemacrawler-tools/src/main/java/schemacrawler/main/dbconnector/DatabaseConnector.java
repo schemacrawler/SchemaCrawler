@@ -1,4 +1,4 @@
-package dbconnector.dbconnector;
+package schemacrawler.main.dbconnector;
 
 
 import javax.sql.DataSource;

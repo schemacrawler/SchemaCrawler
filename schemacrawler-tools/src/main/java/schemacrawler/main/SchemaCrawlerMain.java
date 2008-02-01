@@ -51,10 +51,10 @@ public final class SchemaCrawlerMain
    * @throws Exception
    *         On an exception
    */
-  public static void schemacrawler(final SchemaCrawlerCommandLine commandLine)
+  public static void schemacrawler(final SchemaCrawlerCommandLine commandLine, String about)
     throws Exception
   {
-    LOGGER.log(Level.CONFIG, Version.about());
+    LOGGER.log(Level.CONFIG, about);
     LOGGER.log(Level.CONFIG, "Commandline: " + commandLine);
     final List<Executable<?>> executables = ExecutableFactory
       .createExecutables(commandLine);

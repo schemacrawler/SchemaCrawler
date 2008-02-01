@@ -45,7 +45,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
-import dbconnector.test.TestUtility;
+import schemacrawler.utility.test.TestUtility;
 
 public class SchemaCrawlerTest
 {
