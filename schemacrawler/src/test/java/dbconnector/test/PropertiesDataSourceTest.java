@@ -27,7 +27,8 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import dbconnector.datasource.PropertiesDataSourceException;
+import schemacrawler.utility.datasource.PropertiesDataSourceException;
+
 
 public class PropertiesDataSourceTest
 {

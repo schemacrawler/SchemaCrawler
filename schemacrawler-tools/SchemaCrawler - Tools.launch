@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launchConfiguration type="de.odysseus.stan.eclipse.jdt.launch.type">
+<stringAttribute key="environment" value="java"/>
+<listAttribute key="exclusions"/>
+<stringAttribute key="level" value="MEMBER"/>
+<stringAttribute key="libraries_model" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &#10;&lt;java version=&quot;1.5.0_11&quot; class=&quot;java.beans.XMLDecoder&quot;&gt; &#10; &lt;object class=&quot;java.util.ArrayList&quot;&gt; &#10;  &lt;void method=&quot;add&quot;&gt; &#10;   &lt;object class=&quot;de.odysseus.stan.eclipse.jdt.launch.Container&quot;&gt; &#10;    &lt;void property=&quot;label&quot;&gt; &#10;     &lt;string&gt;/SchemaCrawler - Tools/src/main/java&lt;/string&gt; &#10;    &lt;/void&gt; &#10;    &lt;void property=&quot;path&quot;&gt; &#10;     &lt;string&gt;/SchemaCrawler - Tools/src/main/java&lt;/string&gt; &#10;    &lt;/void&gt; &#10;    &lt;void property=&quot;type&quot;&gt; &#10;     &lt;string&gt;JavaSourceFolder&lt;/string&gt; &#10;    &lt;/void&gt; &#10;   &lt;/object&gt; &#10;  &lt;/void&gt; &#10; &lt;/object&gt; &#10;&lt;/java&gt; &#10;"/>
+<listAttribute key="org.eclipse.debug.ui.favoriteGroups">
+<listEntry value="de.odysseus.stan.eclipse.jdt.launch.group"/>
+</listAttribute>
+</launchConfiguration>

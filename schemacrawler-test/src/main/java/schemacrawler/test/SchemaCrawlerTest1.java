@@ -11,8 +11,8 @@ import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import dbconnector.datasource.PropertiesDataSource;
-import dbconnector.datasource.PropertiesDataSourceException;
+import schemacrawler.utility.datasource.PropertiesDataSource;
+import schemacrawler.utility.datasource.PropertiesDataSourceException;
 
 public class SchemaCrawlerTest1
 {

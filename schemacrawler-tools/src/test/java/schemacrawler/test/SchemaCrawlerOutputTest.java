@@ -46,7 +46,7 @@ import schemacrawler.tools.operation.OperationOptions;
 import schemacrawler.tools.schematext.SchemaCrawlerExecutable;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextOptions;
-import dbconnector.datasource.PropertiesDataSourceException;
+import schemacrawler.utility.datasource.PropertiesDataSourceException;
 import dbconnector.test.TestUtility;
 
 public class SchemaCrawlerOutputTest
