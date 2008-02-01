@@ -49,7 +49,6 @@
     <url>http://schemacrawler.svn.sourceforge.net/viewvc/schemacrawler/</url>
   </scm>
   <modules>
-    <module>dbconnector</module>
     <module>schemacrawler</module>
     <module>schemacrawler-tools</module>
     <module>integrations</module>

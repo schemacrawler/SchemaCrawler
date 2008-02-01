@@ -6,10 +6,6 @@
 
   <property name="pom.version" value="5.4" />
 
-	<property name="dbconnector.source"
-    location="${SchemaCrawlerHome}/dbconnector/src/main"/>
-	<property name="dbconnector.classes"
-    location="${SchemaCrawlerHome}/dbconnector/target/classes"/>
   <property name="schemacrawler.source"
     location="${SchemaCrawlerHome}/schemacrawler/src/main"/>
 	<property name="schemacrawler.classes"
@@ -44,34 +40,16 @@
     <delete dir="integrations/target" />
     <delete dir="schemacrawler-tools/target" />
     <delete dir="schemacrawler/target" />
-    <delete dir="dbconnector/target" />
 
 	</target>
 
   <target name="all.build"
     description="Compile all sub-projects"
-    depends="build.dbconnector,
-             build.schemacrawler,
+    depends="build.schemacrawler,
              build.schemacrawler-tools,
              build.integrations,
              build.schemacrawler-maven-plugin"
   />
-
-	<target name="build.dbconnector">
-
-		<echo message="Compiling: dbconnector" />
-
-    <mkdir dir="${dbconnector.classes}" />
-
-		<javac destdir="${dbconnector.classes}">
-			<src path="${dbconnector.source}/java" />
-		</javac>
-
-    <copy todir="${dbconnector.classes}">
-       <fileset dir="${dbconnector.source}/resources"/>
-    </copy>
-
-	</target>
 
 	<target name="build.schemacrawler">
 
@@ -81,9 +59,6 @@
 
 		<javac destdir="${schemacrawler.classes}">
 			<src path="${schemacrawler.source}/java" />
-    	<classpath id="schemacrawler.classpath">
-    		<pathelement location="${dbconnector.classes}" />
-    	</classpath>
 		</javac>
 
     <copy todir="${schemacrawler.classes}">
@@ -101,7 +76,6 @@
 		<javac destdir="${schemacrawler-tools.classes}">
 			<src path="${schemacrawler-tools.source}/java" />
     	<classpath id="schemacrawler-tools.classpath">
-    		<pathelement location="${dbconnector.classes}" />
     		<pathelement location="${schemacrawler.classes}" />
     	</classpath>
 		</javac>
@@ -121,7 +95,6 @@
 		<javac destdir="${integrations.classes}">
 			<src path="${integrations.source}/java" />
     	<classpath id="integrations.classpath">
-    		<pathelement location="${dbconnector.classes}" />
     		<pathelement location="${schemacrawler.classes}" />
     		<pathelement location="${schemacrawler-tools.classes}" />
         <fileset dir="${env.M2_REPO}">
@@ -153,7 +126,6 @@
 		<javac destdir="${schemacrawler-maven-plugin.classes}">
 			<src path="${schemacrawler-maven-plugin.source}/java" />
     	<classpath id="schemacrawler-maven-plugin.classpath">
-    		<pathelement location="${dbconnector.classes}" />
     		<pathelement location="${schemacrawler.classes}" />
     		<pathelement location="${schemacrawler-tools.classes}" />
         <fileset dir="${env.M2_REPO}">
@@ -197,8 +169,6 @@
         <attribute name="Copyright" value="(c) 2003-2008, Sualeh Fatehi"/>
         <attribute name="Main-Class" value="schemacrawler.Main"/>
       </manifest>
-      <zipfileset
-        dir="${dbconnector.classes}"/>
       <zipfileset
         dir="${schemacrawler.classes}"/>
       <zipfileset

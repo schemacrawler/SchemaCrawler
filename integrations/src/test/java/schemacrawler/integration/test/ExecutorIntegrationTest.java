@@ -38,7 +38,7 @@ import schemacrawler.tools.integration.velocity.VelocityRenderer;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextOptions;
 import schemacrawler.utility.datasource.PropertiesDataSourceException;
-import dbconnector.test.TestUtility;
+import schemacrawler.utility.test.TestUtility;
 
 public class ExecutorIntegrationTest
 {

@@ -49,7 +49,7 @@ public final class Main
     CommandLineUtility.setLogLevel(args);
 
     final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args);
-    SchemaCrawlerMain.schemacrawler(commandLine);
+    SchemaCrawlerMain.schemacrawler(commandLine, Version.about());
   }
 
   private Main()

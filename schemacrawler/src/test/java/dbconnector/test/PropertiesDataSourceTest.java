@@ -28,7 +28,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.utility.datasource.PropertiesDataSourceException;
-
+import schemacrawler.utility.test.TestUtility;
 
 public class PropertiesDataSourceTest
 {
