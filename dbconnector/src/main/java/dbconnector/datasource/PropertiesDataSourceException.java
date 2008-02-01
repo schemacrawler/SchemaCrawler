@@ -21,7 +21,6 @@
 package dbconnector.datasource;
 
 
-
 /**
  * Error creating or accessing a PropertiesDataSource.
  * 

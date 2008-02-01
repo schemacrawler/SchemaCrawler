@@ -44,6 +44,7 @@ import dbconnector.datasource.PropertiesDataSourceException;
  * 
  * @author sfatehi
  */
+@SuppressWarnings("unchecked")
 public class TestUtility
 {
 
@@ -52,10 +53,18 @@ public class TestUtility
 
   private static final boolean DEBUG = false;
 
-  private static final Class<Driver> driver;
+  private static final Class<Driver> JDBC_DRIVER_CLASS;
   static
   {
-    driver = loadJdbcDriver();
+    try
+    {
+      JDBC_DRIVER_CLASS = (Class<Driver>) Class
+        .forName("org.hsqldb.jdbcDriver");
+    }
+    catch (final ClassNotFoundException e)
+    {
+      throw new RuntimeException(e);
+    }
   }
 
   /**
@@ -125,21 +134,6 @@ public class TestUtility
         }
       }
     }
-  }
-
-  private static Class<Driver> loadJdbcDriver()
-  {
-    Class<Driver> driver = null;
-    try
-    {
-      driver = (Class<Driver>) Class.forName("org.hsqldb.jdbcDriver");
-    }
-    catch (final ClassNotFoundException e)
-    {
-      e.printStackTrace();
-      System.exit(1);
-    }
-    return driver;
   }
 
   protected DataSource dataSource;
@@ -274,39 +268,32 @@ public class TestUtility
 
   private void deleteServerFiles(final String stem)
   {
-    try
+    final File[] files = new File(".")
+      .listFiles(new HSQLDBServerFilesFilter(stem));
+    for (final File file: files)
     {
-      final File[] files = new File(".")
-        .listFiles(new HSQLDBServerFilesFilter(stem));
-      for (final File file: files)
+      if (!file.isDirectory() && !file.isHidden())
       {
-        if (!file.isDirectory() && !file.isHidden())
-        {
-          file.delete();
-        }
+        file.delete();
       }
-    }
-    catch (final RuntimeException e)
-    {
-      LOGGER.log(Level.FINE, e.getMessage(), e);
     }
   }
 
   private void makeDataSource(final String url)
   {
-    final String DATASOURCE_NAME = "schemacrawler";
+    final String dataSourceName = "schemacrawler";
 
     final Properties connectionProperties = new Properties();
-    connectionProperties.setProperty(DATASOURCE_NAME + ".driver", driver
-      .getName());
-    connectionProperties.setProperty(DATASOURCE_NAME + ".url", url);
-    connectionProperties.setProperty(DATASOURCE_NAME + ".user", "sa");
-    connectionProperties.setProperty(DATASOURCE_NAME + ".password", "");
+    connectionProperties.setProperty(dataSourceName + ".driver",
+                                     JDBC_DRIVER_CLASS.getName());
+    connectionProperties.setProperty(dataSourceName + ".url", url);
+    connectionProperties.setProperty(dataSourceName + ".user", "sa");
+    connectionProperties.setProperty(dataSourceName + ".password", "");
 
     try
     {
       dataSource = new PropertiesDataSource(connectionProperties,
-                                            DATASOURCE_NAME);
+                                            dataSourceName);
     }
     catch (final PropertiesDataSourceException e)
     {
