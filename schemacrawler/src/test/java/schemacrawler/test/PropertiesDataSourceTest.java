@@ -18,7 +18,7 @@
  *
  */
 
-package dbconnector.test;
+package schemacrawler.test;
 
 
 import static org.junit.Assert.assertNotNull;
