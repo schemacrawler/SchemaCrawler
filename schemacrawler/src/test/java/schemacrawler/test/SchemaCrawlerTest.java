@@ -176,8 +176,7 @@ public class SchemaCrawlerTest
                                                   schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema);
     final Procedure[] procedures = schema.getProcedures();
-    // assertEquals("Procedure count does not match", 173,
-    // procedures.length);
+    assertTrue("No procedures found", procedures.length > 0);
     for (final Procedure procedure: procedures)
     {
       if (procedure.getDefinition() == null

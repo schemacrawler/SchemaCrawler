@@ -37,7 +37,7 @@ import schemacrawler.tools.integration.jung.JungExecutable;
 import schemacrawler.tools.integration.velocity.VelocityRenderer;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextOptions;
-import dbconnector.datasource.PropertiesDataSourceException;
+import schemacrawler.utility.datasource.PropertiesDataSourceException;
 import dbconnector.test.TestUtility;
 
 public class ExecutorIntegrationTest

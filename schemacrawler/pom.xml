@@ -14,12 +14,6 @@
   <name>SchemaCrawler</name>
   <dependencies>
     <dependency>
-      <groupId>schemacrawler</groupId>
-      <artifactId>dbconnector</artifactId>
-      <version>${project.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>xmlunit</groupId>
       <artifactId>xmlunit</artifactId>
       <version>1.0</version>

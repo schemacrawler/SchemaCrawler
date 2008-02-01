@@ -39,10 +39,10 @@ import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
 import schemacrawler.schema.Schema;
+import schemacrawler.utility.datasource.PropertiesDataSourceException;
 
 import com.thoughtworks.xstream.XStream;
 
-import dbconnector.datasource.PropertiesDataSourceException;
 import dbconnector.test.TestUtility;
 
 public class SchemaSerializationTest
