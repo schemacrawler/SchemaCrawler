@@ -110,14 +110,6 @@ public final class Utilities
   }
 
   /**
-   * Confound instantiation.
-   */
-  private Utilities()
-  {
-    // intentionally left blank
-  }
-
-  /**
    * Returns the configuration into properties.
    * 
    * @param map
@@ -132,6 +124,14 @@ public final class Utilities
       properties.setProperty(entry.getKey(), entry.getValue());
     }
     return properties;
+  }
+
+  /**
+   * Confound instantiation.
+   */
+  private Utilities()
+  {
+    // intentionally left blank
   }
 
 }

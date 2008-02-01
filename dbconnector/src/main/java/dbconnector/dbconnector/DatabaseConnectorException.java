@@ -40,14 +40,6 @@ public class DatabaseConnectorException
   }
 
   /**
-   * {@inheritDoc}
-   */
-  public DatabaseConnectorException(Throwable cause)
-  {
-    super(cause);
-  }
-
-  /**
    * Constructs a new exception with the specified detail message.
    * 
    * @param message
@@ -77,6 +69,14 @@ public class DatabaseConnectorException
   public DatabaseConnectorException(final String message, final Throwable cause)
   {
     super(message, cause);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public DatabaseConnectorException(final Throwable cause)
+  {
+    super(cause);
   }
 
 }

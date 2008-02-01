@@ -112,7 +112,7 @@ public final class BundledDriverDatabaseConnector
     {
       return new PropertiesDataSource(Utilities.toProperties(config));
     }
-    catch (PropertiesDataSourceException e)
+    catch (final PropertiesDataSourceException e)
     {
       throw new DatabaseConnectorException(e);
     }
