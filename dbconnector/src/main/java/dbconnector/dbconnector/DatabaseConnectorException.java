@@ -33,10 +33,12 @@ public class DatabaseConnectorException
   private static final long serialVersionUID = 4050761594017165621L;
 
   /**
-   * {@inheritDoc}
+   * Constructs a new exception with <code>null</code> as its detail
+   * message.
    */
   public DatabaseConnectorException()
   {
+    super();
   }
 
   /**
@@ -72,7 +74,11 @@ public class DatabaseConnectorException
   }
 
   /**
-   * {@inheritDoc}
+   * Constructs a new exception with the specified cause and a detail
+   * message of <tt>(cause==null ? null : cause.toString())</tt>.
+   * 
+   * @param cause
+   *        Cause for the exception
    */
   public DatabaseConnectorException(final Throwable cause)
   {
