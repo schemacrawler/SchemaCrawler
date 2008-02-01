@@ -16,7 +16,7 @@
   <version>5.4</version>
   <description>SchemaCrawler is an API that improves on the standard JDBC metadata.</description>
   <url>http://sourceforge.net/projects/schemacrawler</url>
-  <inceptionYear>2003</inceptionYear>
+  <inceptionYear>2000</inceptionYear>
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>
@@ -67,8 +67,21 @@
           <target>5</target>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <addMavenDescriptor>false</addMavenDescriptor>
+            <index>true</index>
+            <manifest>
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
     </plugins>
-  </build>  
+  </build>
   <reporting>
     <plugins>
       <plugin>
