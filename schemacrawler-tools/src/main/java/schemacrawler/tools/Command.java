@@ -42,6 +42,8 @@ public final class Command
    * 
    * @param name
    *        Command name.
+   * @param isQuery
+   *        Whether the command is a query.
    */
   public Command(final String name, final boolean isQuery)
   {
