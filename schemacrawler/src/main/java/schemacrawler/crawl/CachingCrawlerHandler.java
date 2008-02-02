@@ -67,7 +67,9 @@ public final class CachingCrawlerHandler
   }
 
   /**
-   * @see CrawlHandler#begin()
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.crawl.CrawlHandler#begin()
    */
   public void begin()
     throws SchemaCrawlerException
@@ -76,7 +78,9 @@ public final class CachingCrawlerHandler
   }
 
   /**
-   * @see CrawlHandler#end()
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.crawl.CrawlHandler#end()
    */
   public void end()
     throws SchemaCrawlerException
@@ -106,7 +110,7 @@ public final class CachingCrawlerHandler
   }
 
   /**
-   * @see CrawlHandler#handle(DatabaseInfo)
+   * {@inheritDoc}
    */
   public void handle(final DatabaseInfo databaseInfo)
   {

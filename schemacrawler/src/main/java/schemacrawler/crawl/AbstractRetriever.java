@@ -53,7 +53,7 @@ abstract class AbstractRetriever
    * @param databaseSpecificTypeName
    *        Database specific type name
    */
-  protected final static void lookupAndSetDataType(final AbstractColumn column,
+  protected static final void lookupAndSetDataType(final AbstractColumn column,
                                                    final int jdbcDataType,
                                                    final String databaseSpecificTypeName,
                                                    final NamedObjectList<MutableColumnDataType> columnDataTypes)
