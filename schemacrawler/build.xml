@@ -1,99 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="schemacrawler" default="package" basedir=".">
 
-  <property environment="env"/>
+  <property environment="env" />
   <property name="SchemaCrawlerHome" location="." />
 
   <property name="pom.version" value="5.4" />
 
   <property name="schemacrawler.source"
-    location="${SchemaCrawlerHome}/src/main"/>
-	<property name="schemacrawler.target"
-    location="${SchemaCrawlerHome}/target"/>
-	<property name="schemacrawler.distribution"
-    location="${SchemaCrawlerHome}/target/distribution"/>
+            location="${SchemaCrawlerHome}/src/main" />
+  <property name="schemacrawler.target"
+            location="${SchemaCrawlerHome}/target" />
+  <property name="schemacrawler.distribution"
+            location="${SchemaCrawlerHome}/target/distribution" />
   <property name="schemacrawler.jar"
-    location="${schemacrawler.target}/schemacrawler-${pom.version}.jar"/>
+            location="${schemacrawler.target}/schemacrawler-${pom.version}.jar" />
 
-	<available
-    property="have.dependencies.classpath"
-    file="${env.M2_REPO}" type="dir"/>
+  <available property="have.dependencies.classpath"
+             file="${env.M2_REPO}"
+             type="dir" />
 
   <target name="clean">
 
     <delete dir="${schemacrawler.target}" />
 
-	</target>
+  </target>
 
 
-	<target name="build" depends="clean">
+  <target name="build" depends="clean">
 
-		<echo message="Compiling: schemacrawler" />
+    <echo message="Compiling: schemacrawler" />
 
     <mkdir dir="${schemacrawler.target}/classes" />
 
-		<javac destdir="${schemacrawler.target}/classes">
-			<src path="${schemacrawler.source}/java" />
-		</javac>
+    <javac destdir="${schemacrawler.target}/classes">
+      <src path="${schemacrawler.source}/java" />
+    </javac>
 
     <copy todir="${schemacrawler.target}/classes">
-       <fileset dir="${schemacrawler.source}/resources"/>
+      <fileset dir="${schemacrawler.source}/resources" />
     </copy>
 
-	</target>
+  </target>
 
   <target name="jar" depends="build">
 
-    <jar
-      destfile="${schemacrawler.jar}"
-      duplicate="preserve"
-      index="true">
+    <jar destfile="${schemacrawler.jar}" duplicate="preserve" index="true">
       <manifest>
-        <attribute name="Product" value="SchemaCrawler"/>
-        <attribute name="Version" value="${pom.version}"/>
-        <attribute name="Author" value="Sualeh Fatehi"/>
-        <attribute name="Copyright" value="(c) 2000-2008, Sualeh Fatehi"/>
+        <attribute name="Product" value="SchemaCrawler" />
+        <attribute name="Version" value="${pom.version}" />
+        <attribute name="Author" value="Sualeh Fatehi" />
+        <attribute name="Copyright" value="(c) 2000-2008, Sualeh Fatehi" />
       </manifest>
-      <zipfileset
-        dir="${schemacrawler.classes}"/>
+      <zipfileset dir="${schemacrawler.classes}" />
     </jar>
 
-	</target>
+  </target>
 
   <target name="package" depends="jar">
 
-    <delete dir="${schemacrawler.distribution}"/>
-    <mkdir dir="${schemacrawler.distribution}"/>
+    <delete dir="${schemacrawler.distribution}" />
+    <mkdir dir="${schemacrawler.distribution}" />
 
     <!-- Copy jar -->
     <copy todir="${schemacrawler.distribution}">
       <fileset dir="${schemacrawler.target}">
-        <include name="*.jar"/>
+        <include name="*.jar" />
       </fileset>
     </copy>
 
     <!-- Copy licenses -->
     <copy todir="${schemacrawler.distribution}">
       <fileset dir="${SchemaCrawlerHome}">
-        <include name="*README*.txt"/>
-        <include name="*LICENSE*.txt"/>
-        <include name="*NOTICE*.txt"/>
+        <include name="*README*.txt" />
+        <include name="*LICENSE*.txt" />
+        <include name="*NOTICE*.txt" />
       </fileset>
     </copy>
 
     <!-- Copy config files -->
     <copy todir="${schemacrawler.distribution}">
       <fileset dir="${SchemaCrawlerHome}/schemacrawler/src/site/resources/config">
-        <include name="*.properties"/>
+        <include name="*.properties" />
       </fileset>
     </copy>
 
-		<!-- Copy examples -->
+    <!-- Copy examples -->
 
-		<!-- Copy database server -->
+    <!-- Copy database server -->
 
     <!-- Create zip files for distribution -->
 
-	</target>
+  </target>
 
 </project>
