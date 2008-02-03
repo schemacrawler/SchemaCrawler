@@ -190,7 +190,7 @@
 
     <!-- Copy config files -->
     <copy todir="${distribution.dir}">
-      <fileset dir="${SchemaCrawlerHome}/schemacrawler/src/site/resources/config">
+      <fileset dir="${SchemaCrawlerHome}/schemacrawler/src/main/resources">
         <include name="*.properties"/>
       </fileset>
     </copy>
