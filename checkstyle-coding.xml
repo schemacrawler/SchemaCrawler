@@ -45,7 +45,7 @@
         </module>
         <module name="CovariantEquals"/>
         <module name="DeclarationOrder">
-            <property name="severity" value="ignore"/>
+            <property name="severity" value="info"/>
         </module>
         <module name="DefaultComesLast"/>
         <module name="DoubleCheckedLocking"/>
@@ -57,6 +57,7 @@
             <property name="tokens" value="PARAMETER_DEF"/>
         </module>
         <module name="HiddenField">
+            <property name="severity" value="info"/>
             <property name="ignoreConstructorParameter" value="true"/>
             <property name="ignoreSetter" value="true"/>
         </module>
@@ -75,7 +76,7 @@
         <module name="IllegalType"/>
         <module name="InnerAssignment"/>
         <module name="MagicNumber">
-            <property name="severity" value="ignore"/>
+            <property name="severity" value="info"/>
             <property name="ignoreNumbers" value="0,1,-1,2,29"/>
             <property name="tokens" value="NUM_DOUBLE,NUM_FLOAT,NUM_INT"/>
         </module>
@@ -117,15 +118,12 @@
         <module name="ModifierOrder"/>
         <module name="RedundantModifier"/>
         <module name="AvoidStarImport"/>
-        <module name="ImportOrder">
-            <property name="severity" value="ignore"/>
-        </module>
-        <module name="UnusedImports">
-            <property name="severity" value="ignore"/>
-        </module>
+        <module name="ImportOrder"/>
+        <module name="UnusedImports"/>
         <module name="JavaNCSS"/>
         <module name="TodoComment"/>
         <module name="AbstractClassName">
+            <property name="severity" value="info"/>
             <property name="format" value="^Abstract.*$|^.*Factory$|^Base.*$"/>
         </module>
         <module name="ConstantName"/>
@@ -151,9 +149,16 @@
         <module name="JavadocType">
             <property name="scope" value="public"/>
         </module>
+        <module name="IllegalThrows"/>
+        <module name="MultipleStringLiterals">
+            <property name="severity" value="ignore"/>
+        </module>
+        <module name="MultipleStringLiterals">
+            <property name="severity" value="ignore"/>
+        </module>
     </module>
     <module name="StrictDuplicateCode">
         <metadata name="com.atlassw.tools.eclipse.checkstyle.lastEnabledSeverity" value="info"/>
-        <property name="severity" value="ignore"/>
+        <property name="severity" value="info"/>
     </module>
 </module>
