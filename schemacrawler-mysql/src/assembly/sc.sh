@@ -1,1 +1,1 @@
-java -classpath lib/dbconnector-5.4.jar:lib/mysql-connector-java-5.0.5.jar:lib/schemacrawler-5.4.jar:lib/schemacrawler-mysql-5.4.jar schemacrawler.tools.mysql.Main $*
+java -cp ./lib/schemacrawler-5.4.jar schemacrawler.LauncherMain schemacrawler.tools.mysql.Main $* --addclasspath ./lib
