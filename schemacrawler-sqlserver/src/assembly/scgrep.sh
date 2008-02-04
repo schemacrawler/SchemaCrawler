@@ -1,1 +1,1 @@
-java -cp ./lib/schemacrawler-tools-5.4.jar schemacrawler.LauncherMain schemacrawler.tools.sqlserver.Grep $* --addjardir ./lib
+java -classpath lib/jtds-1.2.2.jar:lib/schemacrawler-5.4.jar:lib/schemacrawler-tools-5.4.jar:lib/schemacrawler-sqlserver-5.4.jar schemacrawler.tools.sqlserver.Grep $*
