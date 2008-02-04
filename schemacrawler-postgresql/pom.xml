@@ -24,7 +24,7 @@
     <dependency>
         <groupId>postgresql</groupId>
         <artifactId>postgresql</artifactId>
-        <version>8.2-504.jdbc4</version>
+        <version>8.2-507.jdbc4</version>
     </dependency>
   </dependencies>
   <build>
