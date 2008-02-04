@@ -72,6 +72,13 @@ public final class Utilities
    */
   public static byte[] readFully(final InputStream stream)
   {
+    if (stream == null)
+    {
+      LOGGER.log(Level.WARNING,
+                 "Cannot read null input stream",
+                 new IOException("Cannot read null input stream"));
+      return new byte[0];
+    }
     final int bufferSize = 2048;
     final ByteArrayOutputStream output = new ByteArrayOutputStream();
     final BufferedInputStream input = new BufferedInputStream(stream);

@@ -1,1 +1,1 @@
-java -cp ./lib/schemacrawler-tools-5.4.jar schemacrawler.LauncherMain schemacrawler.tools.postgresql.Grep $* --addclasspath ./lib
+java -cp ./lib/schemacrawler-tools-5.4.jar schemacrawler.LauncherMain schemacrawler.tools.postgresql.Grep $* --addjardir ./lib
