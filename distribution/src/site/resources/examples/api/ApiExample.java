@@ -11,8 +11,8 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
-import dbconnector.datasource.PropertiesDataSource;
-import dbconnector.datasource.PropertiesDataSourceException;
+import schemacrawler.utility.datasource.PropertiesDataSource;
+import schemacrawler.utility.datasource.PropertiesDataSourceException;
 
 public final class ApiExample
 {
@@ -39,7 +39,7 @@ public final class ApiExample
 
     // Get the schema definition
     final Schema schema = SchemaCrawler.getSchema(dataSource,
-                                                  SchemaInfoLevel.basic,
+                                                  SchemaInfoLevel.basic(),
                                                   options);
 
     final Table[] tables = schema.getTables();

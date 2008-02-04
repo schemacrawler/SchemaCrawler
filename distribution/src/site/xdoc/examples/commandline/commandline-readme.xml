@@ -24,11 +24,11 @@
 					<li>Start a command shell in the
 						<em>commandline</em> example directory.</li>
 					<li>Run
-						<span class="code">schemacrawler.cmd</span> (or
-						<span class="code">schemacrawler.sh</span> on Unix). This
+						<span class="code">sc.cmd</span> (or
+						<span class="code">sc.sh</span> on Unix). This
 						will give you a list of available command line options.</li>
 					<li>To start with, run
-						<span class="code">schemacrawler.cmd -c hsqldb
+						<span class="code">sc.cmd -c hsqldb
 							-command=brief_schema</span></li>
 				</ol>
 			</subsection>
@@ -39,7 +39,7 @@
 						file with regular expressions, logging, and so on.</li>
 					<li>Try using different SchemaCrawler command line options. </li>
 					<li>Redirect the output of SchemaCrawler into a file, by running
-						<span class="code">schemacrawler.cmd &gt; file.txt</span>
+						<span class="code">sc.cmd &gt; file.txt</span>
 						.</li>
 					<li>Try defining a new database connection, using your favorite
 						database and driver.</li>
