@@ -34,16 +34,16 @@
           </li>
           <li>
             Run
-            <span class="code">grep.cmd</span>
+            <span class="code">scgrep.cmd</span>
             (or
-            <span class="code">grep.sh</span>
+            <span class="code">scgrep.sh</span>
             on Unix) to see command line options.
           </li>
           <li>
             Run
-            <span class="code">grep.cmd -c hsqldb -tables=C.*</span>
+            <span class="code">scgrep.cmd -c hsqldb -tables=C.*</span>
             (or
-            <span class="code">grep.sh -c hsqldb -tables=C.*</span>
+            <span class="code">scgrep.sh -c hsqldb -tables=C.*</span>
             on Unix) to search for all tables with names starting with 'C'.
           </li>
         </ol>
@@ -55,14 +55,14 @@
             names matching a regular expression. Please note that you may need
             to escape the command line in an operating system dependent way. For
             example, on Windows, you may need to use
-            <span class="code">grep.cmd -c hsqldb "-tables=C.*|P.*"</span>
+            <span class="code">scgrep.cmd -c hsqldb "-tables=C.*|P.*"</span>
             , with double-quotes around the
             <span class="code">-tables</span>
             command-line switch.
           </li>
           <li>
             Redirect the output of SchemaCrawler into a file, by running
-            <span class="code">grep.cmd &gt; file.txt</span>
+            <span class="code">scgrep.cmd &gt; file.txt</span>
             .
           </li>
         </ol>
