@@ -1,1 +1,1 @@
-java -cp ./lib/schemacrawler-tools-5.4.jar schemacrawler.LauncherMain schemacrawler.tools.mysql.Grep $* --addjardir ./lib
+java -classpath lib/mysql-connector-java-5.1.5.jar:lib/schemacrawler-5.4.jar:lib/schemacrawler-tools-5.4.jar:lib/schemacrawler-mysql-5.4.jar schemacrawler.tools.mysql.Grep $*
