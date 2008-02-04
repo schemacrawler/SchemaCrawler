@@ -49,7 +49,7 @@ public final class Main
     try
     {
       final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
-                                                                                "/schemacrawler.config.properties");
+                                                                                "/schemacrawler-mysql.config.properties");
       SchemaCrawlerMain.schemacrawler(commandLine, Version.about());
     }
     catch (final Exception e)

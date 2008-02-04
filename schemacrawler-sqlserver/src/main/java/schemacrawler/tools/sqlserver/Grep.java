@@ -49,7 +49,7 @@ public final class Grep
     try
     {
       final GrepCommandLine commandLine = new GrepCommandLine(args,
-                                                              "/schemacrawler.config.properties");
+                                                              "/schemacrawler-sqlserver.config.properties");
       GrepMain.grep(commandLine);
     }
     catch (final Exception e)

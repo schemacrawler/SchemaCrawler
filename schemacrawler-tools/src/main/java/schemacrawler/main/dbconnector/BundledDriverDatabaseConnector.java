@@ -80,24 +80,37 @@ public final class BundledDriverDatabaseConnector
     final String password = parser.getStringOptionValue(OPTION_PASSWORD);
 
     dataSourceName = config.get("defaultconnection");
-    if (user != null && password != null)
+
+    // Check arguments
+    if (user == null || user.trim().length() == 0)
     {
-      if (host != null)
-      {
-        config.put(dataSourceName + ".host", host);
-      }
-      if (port != null)
-      {
-        config.put(dataSourceName + ".port", port);
-      }
-      config.put(dataSourceName + ".database", database);
-      if (!Utilities.isBlank(schemapattern))
-      {
-        config.put(dataSourceName + ".schemapattern", schemapattern);
-      }
-      config.put(dataSourceName + ".user", user);
-      config.put(dataSourceName + ".password", password);
+      throw new DatabaseConnectorException("Please provide the user name");
     }
+    if (password == null)
+    {
+      throw new DatabaseConnectorException("Please provide the password");
+    }
+    if (dataSourceName == null || dataSourceName.trim().length() == 0)
+    {
+      throw new DatabaseConnectorException("Please provide the default connection");
+    }
+
+    if (host != null)
+    {
+      config.put(dataSourceName + ".host", host);
+    }
+    if (port != null)
+    {
+      config.put(dataSourceName + ".port", port);
+    }
+    config.put(dataSourceName + ".database", database);
+    if (!Utilities.isBlank(schemapattern))
+    {
+      config.put(dataSourceName + ".schemapattern", schemapattern);
+    }
+    config.put(dataSourceName + ".user", user);
+    config.put(dataSourceName + ".password", password);
+
   }
 
   /**
