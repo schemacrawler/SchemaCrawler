@@ -18,6 +18,7 @@
 package schemacrawler.crawl;
 
 
+import schemacrawler.schema.Column;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.PrimaryKey;
@@ -41,17 +42,20 @@ class MutablePrimaryKey
    *        Index
    * @return Primary key
    */
-  static MutablePrimaryKey fromIndex(final Index index)
+  MutablePrimaryKey(final Index index)
   {
-    final MutablePrimaryKey pk = new MutablePrimaryKey(index.getName(), index
-      .getParent());
-    pk.setCardinality(index.getCardinality());
-    pk.setPages(index.getPages());
-    pk.setRemarks(index.getRemarks());
-    pk.setSortSequence(index.getSortSequence());
-    pk.setType(index.getType());
-    pk.setUnique(index.isUnique());
-    return pk;
+    super(index.getName(), index.getParent());
+    setCardinality(index.getCardinality());
+    setPages(index.getPages());
+    setRemarks(index.getRemarks());
+    setSortSequence(index.getSortSequence());
+    setType(index.getType());
+    setUnique(index.isUnique());
+    // Copy columns
+    for (Column column: index.getColumns())
+    {
+      addColumn(column.getOrdinalPosition(), (MutableColumn) column);
+    }
   }
 
   MutablePrimaryKey(final String name, final NamedObject parent)
