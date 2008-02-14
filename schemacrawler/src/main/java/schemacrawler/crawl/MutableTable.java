@@ -159,7 +159,7 @@ class MutableTable
       final MutableIndex index = indices.remove(primaryKeyName);
       if (index != null)
       {
-        setPrimaryKey(MutablePrimaryKey.fromIndex(index));
+        setPrimaryKey(new MutablePrimaryKey(index));
       }
     }
     return indices.getAll().toArray(new Index[indices.size()]);
