@@ -137,8 +137,10 @@ final class MetadataResultSet
       try
       {
         stringValue = results.getString(columnName);
-        value = useColumn(stringValue) && stringValue.equalsIgnoreCase("YES")
-                || Boolean.valueOf(stringValue).booleanValue();
+        value = !isBlank(stringValue)
+                && (stringValue.equalsIgnoreCase("YES")
+                    || !stringValue.equalsIgnoreCase("0") || Boolean
+                  .valueOf(stringValue).booleanValue());
       }
       catch (final SQLException e)
       {
@@ -277,13 +279,17 @@ final class MetadataResultSet
 
   private boolean useColumn(final String columnName)
   {
-    final boolean useColumn = !(columnName == null || columnName.trim()
-      .length() == 0);
+    final boolean useColumn = !isBlank(columnName);
     if (useColumn)
     {
       readColumns.add(columnName);
     }
     return useColumn;
+  }
+
+  private boolean isBlank(final String text)
+  {
+    return text == null || text.trim().length() == 0;
   }
 
 }
