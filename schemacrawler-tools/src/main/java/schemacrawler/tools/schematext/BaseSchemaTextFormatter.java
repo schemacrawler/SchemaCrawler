@@ -39,6 +39,7 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.Index;
+import schemacrawler.schema.IndexType;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schema.Privilege;
@@ -519,7 +520,7 @@ public abstract class BaseSchemaTextFormatter
       String columnType = columnTypeName + column.getWidth();
       if (!column.isNullable())
       {
-        columnType = columnType + ", not null";
+        columnType = columnType + " not null";
       }
 
       String ordinalNumberString = "";
@@ -606,11 +607,16 @@ public abstract class BaseSchemaTextFormatter
         {
           indexName = index.getName();
         }
+        IndexType indexType = index.getType();
+        String indexTypeString = "";
+        if (indexType != IndexType.unknown && indexType != IndexType.other)
+        {
+          indexTypeString = indexType.toString() + " ";
+        }
         final String indexDetails = "[" + (index.isUnique()? "": "non-")
                                     + "unique "
                                     + index.getSortSequence().toString() + " "
-                                    + index.getType().toString() + " "
-                                    + "index]";
+                                    + indexTypeString + "index]";
         out.println(formattingHelper.createNameRow(indexName, indexDetails));
         printColumns(index.getColumns());
       }
@@ -624,7 +630,8 @@ public abstract class BaseSchemaTextFormatter
     final String required = (driverProperty.isRequired()? "": "not ")
                             + "required";
     String details = required;
-    if (driverProperty.getChoices() != null)
+    if (driverProperty.getChoices() != null
+        && driverProperty.getChoices().length > 0)
     {
       details = details + "; choices " + choices;
     }
