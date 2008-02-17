@@ -6,6 +6,25 @@
   </properties>
   <body>
     <release
+      version="5.5"
+      date="2008-02-28">
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        Fixed bug that always reported an index as unique.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        Fixed bug that with primary key columns.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="adds">
+        SchemaCrawler for Microsoft SQL Server to show procedures.
+      </action>
+    </release>
+    <release
       version="5.4"
       date="2007-12-15">
       <action
