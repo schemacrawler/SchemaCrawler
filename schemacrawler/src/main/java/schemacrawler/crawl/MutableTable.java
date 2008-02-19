@@ -298,6 +298,18 @@ class MutableTable
     return columns.lookup(columnName);
   }
 
+  /**
+   * Looks up a trigger by name.
+   * 
+   * @param triggerName
+   *        Trigger name
+   * @return Trigger, if found, or null
+   */
+  MutableTrigger lookupTrigger(final String triggerName)
+  {
+    return triggers.lookup(triggerName);
+  }
+
   void setCheckConstraintComparator(final NamedObjectSort comparator)
   {
     checkConstraints.setSortOrder(comparator);

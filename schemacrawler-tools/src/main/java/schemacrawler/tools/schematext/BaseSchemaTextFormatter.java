@@ -31,10 +31,13 @@ import java.util.Set;
 import schemacrawler.crawl.CrawlHandler;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.crawl.SchemaInfoLevel;
+import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.ForeignKeyUpdateRule;
@@ -607,7 +610,7 @@ public abstract class BaseSchemaTextFormatter
         {
           indexName = index.getName();
         }
-        IndexType indexType = index.getType();
+        final IndexType indexType = index.getType();
         String indexTypeString = "";
         if (indexType != IndexType.unknown && indexType != IndexType.other)
         {
@@ -695,9 +698,25 @@ public abstract class BaseSchemaTextFormatter
     {
       if (trigger != null)
       {
-        String triggerType = "[trigger, " + trigger.getConditionTiming() + " "
-                             + trigger.getEventManipulationType() + ", per "
-                             + trigger.getActionOrientation() + "]";
+        String timing = "";
+        final ConditionTimingType conditionTiming = trigger
+          .getConditionTiming();
+        final EventManipulationType eventManipulationType = trigger
+          .getEventManipulationType();
+        if (conditionTiming != null
+            && conditionTiming != ConditionTimingType.unknown
+            && eventManipulationType != null
+            && eventManipulationType != EventManipulationType.unknown)
+        {
+          timing = ", " + conditionTiming + " " + eventManipulationType;
+        }
+        String orientation = "";
+        if (trigger.getActionOrientation() != null
+            && trigger.getActionOrientation() != ActionOrientationType.unknown)
+        {
+          orientation = ", per " + trigger.getActionOrientation();
+        }
+        String triggerType = "[trigger" + timing + orientation + "]";
         triggerType = triggerType.toLowerCase(Locale.ENGLISH);
         final String actionCondition = trigger.getActionCondition();
         final String actionStatement = trigger.getActionStatement();
