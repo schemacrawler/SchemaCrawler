@@ -1,1 +1,1 @@
-java -classpath lib/postgresql-8.2-507.jdbc4.jar:lib/schemacrawler-5.4.jar:lib/schemacrawler-tools-5.4.jar:lib/schemacrawler-postgresql-5.4.jar schemacrawler.tools.postgresql.Grep $*
+java -classpath lib/postgresql-8.2-507.jdbc4.jar:lib/schemacrawler-5.5.jar:lib/schemacrawler-tools-5.5.jar:lib/schemacrawler-postgresql-5.5.jar schemacrawler.tools.postgresql.Grep $*
