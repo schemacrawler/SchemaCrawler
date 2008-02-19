@@ -38,14 +38,14 @@ final class MutableJdbcDriverProperty
   /**
    * A brief description of the property, which may be null.
    */
-  private String description;
+  private final String description;
 
   /**
    * The <code>required</code> field is <code>true</code> if a value
    * must be supplied for this property during
    * <code>Driver.connect</code> and <code>false</code> otherwise.
    */
-  private boolean required;
+  private final boolean required;
 
   /**
    * The <code>value</code> field specifies the current value of the
@@ -54,14 +54,14 @@ final class MutableJdbcDriverProperty
    * the driver-supplied default values. This field may be null if no
    * value is known.
    */
-  private String value;
+  private final String value;
 
   /**
    * An array of possible values if the value for the field
    * <code>DriverPropertyInfo.value</code> may be selected from a
    * particular set of values; otherwise null.
    */
-  private String[] choices;
+  private final String[] choices;
 
   MutableJdbcDriverProperty(final DriverPropertyInfo driverPropertyInfo)
   {

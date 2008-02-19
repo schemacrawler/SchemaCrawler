@@ -17,9 +17,9 @@
 
 package schemacrawler.crawl;
 
+
 import java.util.HashMap;
 import java.util.Map;
-
 
 /**
  * The database specific views to get additional database metadata in a

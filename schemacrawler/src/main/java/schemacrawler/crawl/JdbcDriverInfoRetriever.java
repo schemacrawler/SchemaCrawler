@@ -81,7 +81,7 @@ final class JdbcDriverInfoRetriever
     }
     catch (final SQLException e)
     {
-      LOGGER.log(Level.FINE, "Could not obtain JDBC driver information", e);
+      LOGGER.log(Level.WARNING, "Could not obtain JDBC driver information", e);
     }
 
     return driverInfo;

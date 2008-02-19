@@ -118,10 +118,9 @@ final class TableExRetriever
         }
 
         final String constraintType = results.getString("CONSTRAINT_TYPE");
-        final boolean deferrable = results.getBoolean(results
-          .getString("IS_DEFERRABLE"));
-        final boolean initiallyDeferred = results.getBoolean(results
-          .getString("INITIALLY_DEFERRED"));
+        final boolean deferrable = results.getBoolean("IS_DEFERRABLE");
+        final boolean initiallyDeferred = results
+          .getBoolean("INITIALLY_DEFERRED");
 
         if (constraintType.equalsIgnoreCase("check"))
         {
@@ -263,9 +262,16 @@ final class TableExRetriever
         LOGGER.log(Level.FINEST, "Retrieving trigger information for "
                                  + triggerName);
 
-        final EventManipulationType eventManipulationType = EventManipulationType
-          .valueOf(results.getString("EVENT_MANIPULATION")
-            .toLowerCase(Locale.ENGLISH));
+        EventManipulationType eventManipulationType;
+        try
+        {
+          eventManipulationType = EventManipulationType.valueOf(results
+            .getString("EVENT_MANIPULATION").toLowerCase(Locale.ENGLISH));
+        }
+        catch (final IllegalArgumentException e)
+        {
+          eventManipulationType = EventManipulationType.unknown;
+        }
 
         // final String eventObjectCatalog = results
         // .getString("EVENT_OBJECT_CATALOG");
@@ -283,7 +289,7 @@ final class TableExRetriever
 
         final int actionOrder = results.getInt("ACTION_ORDER", 0);
         final String actionCondition = results.getString("ACTION_CONDITION");
-        final String actionStatement = results.getString("ACTION_STATEMENT");
+        String actionStatement = results.getString("ACTION_STATEMENT");
         final ActionOrientationType actionOrientation = ActionOrientationType
           .valueOf(results.getString("ACTION_ORIENTATION")
             .toLowerCase(Locale.ENGLISH));
@@ -291,7 +297,15 @@ final class TableExRetriever
           .valueOfFromValue(results.getString("CONDITION_TIMING")
             .toLowerCase(Locale.ENGLISH));
 
-        final MutableTrigger trigger = new MutableTrigger(triggerName, table);
+        MutableTrigger trigger = table.lookupTrigger(triggerName);
+        if (trigger == null)
+        {
+          trigger = new MutableTrigger(triggerName, table);
+        }
+        else
+        {
+          actionStatement = trigger.getActionStatement() + actionStatement;
+        }
         trigger.setEventManipulationType(eventManipulationType);
         trigger.setActionOrder(actionOrder);
         trigger.setActionCondition(actionCondition);
@@ -369,8 +383,7 @@ final class TableExRetriever
         String definition = results.getString("VIEW_DEFINITION");
         final CheckOptionType checkOption = CheckOptionType.valueOf(results
           .getString("CHECK_OPTION").toLowerCase(Locale.ENGLISH));
-        final boolean updatable = results.getBoolean(results
-          .getString("IS_UPDATABLE"));
+        final boolean updatable = results.getBoolean("IS_UPDATABLE");
         final String text = view.getDefinition();
 
         if (!(text == null || text.trim().length() == 0))

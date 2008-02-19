@@ -113,9 +113,8 @@ final class MetadataResultSet
       }
       catch (final SQLException e)
       {
-        LOGGER.log(Level.FINE,
-                   "Could not read value for column " + columnName,
-                   e);
+        LOGGER.log(Level.WARNING, "Could not read value for column "
+                                  + columnName, e);
       }
     }
     return attributes;
@@ -144,8 +143,8 @@ final class MetadataResultSet
       }
       catch (final SQLException e)
       {
-        LOGGER.log(Level.FINE, "Could not read boolean value for column "
-                               + columnName, e);
+        LOGGER.log(Level.WARNING, "Could not read boolean value for column "
+                                  + columnName, e);
       }
     }
     return value;
@@ -176,8 +175,8 @@ final class MetadataResultSet
       }
       catch (final SQLException e)
       {
-        LOGGER.log(Level.FINE, "Could not read integer value for column "
-                               + columnName, e);
+        LOGGER.log(Level.WARNING, "Could not read integer value for column "
+                                  + columnName, e);
       }
     }
     return value;
@@ -207,8 +206,8 @@ final class MetadataResultSet
       }
       catch (final SQLException e)
       {
-        LOGGER.log(Level.FINE, "Could not read long value for column "
-                               + columnName, e);
+        LOGGER.log(Level.WARNING, "Could not read long value for column "
+                                  + columnName, e);
       }
     }
     return value;
@@ -238,8 +237,8 @@ final class MetadataResultSet
       }
       catch (final SQLException e)
       {
-        LOGGER.log(Level.FINE, "Could not read short value for column "
-                               + columnName, e);
+        LOGGER.log(Level.WARNING, "Could not read short value for column "
+                                  + columnName, e);
       }
     }
     return value;
@@ -263,8 +262,8 @@ final class MetadataResultSet
       }
       catch (final SQLException e)
       {
-        LOGGER.log(Level.FINE, "Could not read string value for column "
-                               + columnName, e);
+        LOGGER.log(Level.WARNING, "Could not read string value for column "
+                                  + columnName, e);
       }
     }
     return value;
@@ -277,6 +276,11 @@ final class MetadataResultSet
     return results.next();
   }
 
+  private boolean isBlank(final String text)
+  {
+    return text == null || text.trim().length() == 0;
+  }
+
   private boolean useColumn(final String columnName)
   {
     final boolean useColumn = !isBlank(columnName);
@@ -285,11 +289,6 @@ final class MetadataResultSet
       readColumns.add(columnName);
     }
     return useColumn;
-  }
-
-  private boolean isBlank(final String text)
-  {
-    return text == null || text.trim().length() == 0;
   }
 
 }
