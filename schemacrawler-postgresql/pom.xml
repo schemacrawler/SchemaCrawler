@@ -1,9 +1,10 @@
-<?xml version="1.0"?><project>
+<?xml version="1.0"?>
+<project>
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>schemacrawler</groupId>
     <artifactId>schemacrawler-all</artifactId>
-    <version>5.4</version>
+    <version>5.5</version>
   </parent>
   <groupId>schemacrawler</groupId>
   <artifactId>schemacrawler-postgresql</artifactId>
