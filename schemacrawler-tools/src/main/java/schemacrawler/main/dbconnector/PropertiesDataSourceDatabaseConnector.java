@@ -91,6 +91,7 @@ public final class PropertiesDataSourceDatabaseConnector
     if (useJdbcConnection)
     {
       dataSourceName = "PropertiesDataSourceConnection";
+      config.put("defaultconnection", dataSourceName);
       config.put(dataSourceName + ".driver", driver);
       config.put(dataSourceName + ".url", url);
       if (!Utilities.isBlank(schemapattern))
