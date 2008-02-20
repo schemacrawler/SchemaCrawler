@@ -1,1 +1,1 @@
-java -classpath lib/mysql-connector-java-5.1.5.jar:lib/schemacrawler-5.5.jar:lib/schemacrawler-tools-5.5.jar:lib/schemacrawler-mysql-5.5.jar schemacrawler.tools.mysql.Main $*
+java -classpath lib/schemacrawler-tools-5.5.jar schemacrawler.LauncherMain schemacrawler.tools.mysql.Main $*
