@@ -27,7 +27,6 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
-import schemacrawler.Version;
 import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.tools.Executable;
 
@@ -48,10 +47,13 @@ public final class SchemaCrawlerMain
    * 
    * @param commandLine
    *        Command line arguments
+   * @param about
+   *        About message
    * @throws Exception
    *         On an exception
    */
-  public static void schemacrawler(final SchemaCrawlerCommandLine commandLine, String about)
+  public static void schemacrawler(final SchemaCrawlerCommandLine commandLine,
+                                   final String about)
     throws Exception
   {
     LOGGER.log(Level.CONFIG, about);
