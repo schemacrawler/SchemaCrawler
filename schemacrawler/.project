@@ -2,9 +2,7 @@
 <projectDescription>
 	<name>SchemaCrawler - Main</name>
 	<comment></comment>
-	<projects>
-		<project>SchemaCrawler - Database Connector</project>
-	</projects>
+	<projects></projects>
 	<buildSpec>
 		<buildCommand>
 			<name>org.eclipse.jdt.core.javabuilder</name>

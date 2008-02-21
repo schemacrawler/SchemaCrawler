@@ -3,7 +3,6 @@
 	<name>SchemaCrawler - Tools</name>
 	<comment></comment>
 	<projects>
-		<project>SchemaCrawler - Database Connector</project>
 		<project>SchemaCrawler - Main</project>
 	</projects>
 	<buildSpec>

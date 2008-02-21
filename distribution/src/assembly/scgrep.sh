@@ -1,0 +1,1 @@
+java -classpath lib/schemacrawler-tools-5.5.jar schemacrawler.LauncherMain schemacrawler.Grep $*

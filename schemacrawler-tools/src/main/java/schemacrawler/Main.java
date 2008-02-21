@@ -37,23 +37,29 @@ public final class Main
    * 
    * @param args
    *        Arguments passed into the program from the command line.
-   * @throws Exception
-   *         On an exception
    */
   public static void main(final String[] args)
-    throws Exception
   {
     CommandLineUtility.checkForHelp(args,
                                     Version.about(),
                                     "/schemacrawler-readme.txt");
     CommandLineUtility.setLogLevel(args);
 
-    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args);
-    SchemaCrawlerMain.schemacrawler(commandLine, Version.about());
+    try
+    {
+      final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args);
+      SchemaCrawlerMain.schemacrawler(commandLine, Version.about());
+    }
+    catch (final Exception e)
+    {
+      // Print the stack trace for the benefit of the command line tools
+      e.printStackTrace();
+    }
   }
 
   private Main()
   {
+    // Prevent instantiation
   }
 
 }
