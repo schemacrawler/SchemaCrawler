@@ -153,10 +153,10 @@
     depends="all.build">
 
     <property name="distributable.jar"
-      value="${distribution.dir}/schemacrawler-${pom.version}.jar"/>
+      value="${distribution.dir}/examples/schemacrawler-${pom.version}.jar"/>
 
     <delete dir="${distribution.dir}"/>
-    <mkdir dir="${distribution.dir}"/>
+    <mkdir dir="${distribution.dir}/examples"/>
 
     <jar
       destfile="${distributable.jar}"
@@ -180,7 +180,7 @@
     </jar>
 
     <!-- Copy licenses -->
-    <copy todir="${distribution.dir}">
+    <copy todir="${distribution.dir}/examples">
       <fileset dir="${SchemaCrawlerHome}/schemacrawler">
         <include name="*README*.txt"/>
         <include name="*LICENSE*.txt"/>
@@ -189,12 +189,12 @@
     </copy>
 
     <!-- Copy config files -->
-    <copy todir="${distribution.dir}">
+    <copy todir="${distribution.dir}/examples">
       <fileset dir="${SchemaCrawlerHome}/schemacrawler/src/main/resources">
         <include name="*.properties"/>
       </fileset>
     </copy>
-    <copy todir="${distribution.dir}">
+    <copy todir="${distribution.dir}/examples">
       <fileset dir="${SchemaCrawlerHome}/integrations/src/test/resources">
         <include name="*.xml"/>
       </fileset>
@@ -207,7 +207,7 @@
     </copy>
 
 		<!-- Copy database server -->
-    <copy todir="${distribution.dir}">
+    <copy todir="${distribution.dir}/examples">
       <first>
         <sort>
           <reverse xmlns="antlib:org.apache.tools.ant.types.resources.comparators"/>
@@ -224,9 +224,18 @@
         <regexpmapper from="hsqldb.*\.jar" to="hsqldb\.jar"/>
       </chainedmapper>
     </copy>
-    <copy todir="${distribution.dir}">
+    <copy todir="${distribution.dir}/examples">
       <fileset dir="${SchemaCrawlerHome}/distribution/src/other"/>
     </copy>
+
+    <unzip
+      src="${SchemaCrawlerHome}/distribution/target/distribution-${pom.version}-distrib.zip"
+      dest="${distribution.dir}"/>
+    <move todir="${distribution.dir}/schemacrawler">
+      <fileset dir="${distribution.dir}/distribution-${pom.version}"/>
+    </move>
+    <delete
+      file="${SchemaCrawlerHome}/distribution/target/distribution-${pom.version}-distrib.zip"/>
 
     <!-- Create zip files for distribution -->
 

@@ -6,6 +6,15 @@
   <dependencySets>
     <dependencySet>
       <outputDirectory>lib</outputDirectory>
+      <includes>
+        <include>schemacrawler:schemacrawler-tools:jar:*</include>
+      </includes>
+    </dependencySet>
+    <dependencySet>
+      <outputDirectory>lib</outputDirectory>
+      <includes>
+        <include>schemacrawler:schemacrawler:jar:*</include>
+      </includes>
     </dependencySet>
   </dependencySets>
   <fileSets>
@@ -16,20 +25,6 @@
         <include>NOTICE*</include>
       </includes>
     </fileSet>
-    <fileSet>
-      <directory>target</directory>
-      <outputDirectory>lib</outputDirectory>
-      <includes>
-        <include>*.jar</include>
-      </includes>
-    </fileSet>
-    <fileSet>
-      <directory>src/main/resources</directory>
-      <outputDirectory></outputDirectory>
-      <includes>
-        <include>*</include>
-      </includes>
-     </fileSet>
     <fileSet>
       <directory>src/assembly</directory>
       <outputDirectory></outputDirectory>
