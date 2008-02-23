@@ -16,12 +16,17 @@
       <action
         dev="Sualeh Fatehi"
         type="fix">
-        Fixed bug that with primary key columns.
+        Fixed bug with primary key columns.
       </action>
       <action
         dev="Sualeh Fatehi"
-        type="adds">
-        SchemaCrawler for Microsoft SQL Server to show procedures.
+        type="add">
+        SchemaCrawler for Microsoft SQL Server to show procedures and triggers.
+      </action>
+      <action
+        dev="Sualeh Fatehi"
+        type="add">
+        SchemaCrawler distribution for any database.
       </action>
     </release>
     <release
