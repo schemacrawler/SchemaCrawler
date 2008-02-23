@@ -26,8 +26,8 @@
     </dependency>
     <dependency>
       <groupId>xerces</groupId>
-      <artifactId>xerces</artifactId>
-      <version>2.4.0</version>
+      <artifactId>xercesImpl</artifactId>
+      <version>2.8.1</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -90,13 +90,13 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>cobertura-maven-plugin</artifactId>
       </plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
         <configuration>
           <configLocation>checkstyle-coding.xml</configLocation>
         </configuration>
-			</plugin>
+      </plugin>
     </plugins>
   </reporting>
 </project>
