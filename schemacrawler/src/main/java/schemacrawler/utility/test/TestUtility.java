@@ -28,8 +28,11 @@ import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Enumeration;
 import java.util.Properties;
+import java.util.logging.Handler;
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import javax.sql.DataSource;
@@ -47,6 +50,8 @@ import schemacrawler.utility.datasource.PropertiesDataSourceException;
 @SuppressWarnings("unchecked")
 public class TestUtility
 {
+
+  private static final Level DEBUG_LOG_LEVEL = Level.OFF;
 
   /**
    * System specific line separator character.
@@ -85,6 +90,11 @@ public class TestUtility
   {
     final TestUtility testUtility = new TestUtility();
     testUtility.createDatabase();
+  }
+
+  public static void setApplicationLogLevel()
+  {
+    setApplicationLogLevel(DEBUG_LOG_LEVEL);
   }
 
   /**
@@ -174,6 +184,26 @@ public class TestUtility
     return buffer.toString();
   }
 
+  private static void setApplicationLogLevel(final Level logLevel)
+  {
+    final LogManager logManager = LogManager.getLogManager();
+    for (final Enumeration<String> loggerNames = logManager.getLoggerNames(); loggerNames
+      .hasMoreElements();)
+    {
+      final String loggerName = loggerNames.nextElement();
+      final Logger logger = logManager.getLogger(loggerName);
+      logger.setLevel(null);
+      final Handler[] handlers = logger.getHandlers();
+      for (final Handler handler: handlers)
+      {
+        handler.setLevel(logLevel);
+      }
+    }
+
+    final Logger rootLogger = Logger.getLogger("");
+    rootLogger.setLevel(logLevel);
+  }
+
   protected DataSource dataSource;
 
   protected PrintWriter out;
@@ -207,6 +237,14 @@ public class TestUtility
   public void createMemoryDatabase()
   {
     LOGGER.log(Level.FINE, toString() + " - Setting up in-memory database");
+    if (DEBUG)
+    {
+      out = new PrintWriter(System.out, true);
+    }
+    else
+    {
+      out = new PrintWriter(new NullWriter(), true);
+    }
     createDatabase("jdbc:hsqldb:mem:schemacrawler");
   }
 
@@ -218,22 +256,6 @@ public class TestUtility
   public DataSource getDataSource()
   {
     return dataSource;
-  }
-
-  /**
-   * Globally sets the application log level.
-   */
-  public void setApplicationLogLevel()
-  {
-    if (DEBUG)
-    {
-      out = new PrintWriter(System.out, true);
-    }
-    else
-    {
-      out = new PrintWriter(new NullWriter(), true);
-    }
-
   }
 
   /**
