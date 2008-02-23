@@ -234,8 +234,6 @@
     <move todir="${distribution.dir}/schemacrawler">
       <fileset dir="${distribution.dir}/distribution-${pom.version}"/>
     </move>
-    <delete
-      file="${SchemaCrawlerHome}/distribution/target/distribution-${pom.version}-distrib.zip"/>
 
     <!-- Create zip files for distribution -->
 
