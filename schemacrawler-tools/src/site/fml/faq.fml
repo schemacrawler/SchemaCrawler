@@ -195,8 +195,8 @@ Or, all of the following:
       </question>
       <answer>
         <p>
-          SchemaCrawler works with J2SE 1.4 and above. SchemaCrawler does not
-          depend on any Java libraries other than the standard J2SE 1.4 runtime
+          SchemaCrawler works with J2SE 5 and above. SchemaCrawler does not
+          depend on any Java libraries other than the standard J2SE 5 runtime
           libraries and a JDBC driver.
         </p>
       </answer>
@@ -221,7 +221,7 @@ Or, all of the following:
         <p>
           <i>
             See the example in the
-            <code>_distrib\examples\ant-task</code>
+            <code>examples\ant-task</code>
             directory.
           </i>
         </p>
@@ -240,7 +240,7 @@ Or, all of the following:
         <p>
           <i>
             See the example in the
-            <code>_distrib\examples\maven</code>
+            <code>examples\maven</code>
             directory.
           </i>
         </p>
@@ -269,7 +269,7 @@ Or, all of the following:
         <p>
           <i>
             See the example in the
-            <code>_distrib\examples\api</code>
+            <code>examples\api</code>
             directory.
           </i>
         </p>

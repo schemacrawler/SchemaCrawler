@@ -68,41 +68,25 @@
           The Maven build is a more comprehensive build that runs unit tests,
           and can also create the project web-site. Download
           <a href="http://maven.apache.org/">Maven 2.0.</a>
-          Start the hsqldb server by running
-          <code>runServer.cmd</code>
-          (
-          <code>runServer.sh</code>
-          on Unix) from the dbserver directory. Then run the
-          <code>package</code>
-          goal (
-          <code>mvn site</code>
-          ) from the SchemaCrawler directory. The SchemaCrawler jar file will be
-          created in the
-          <code>_distrib</code>
-          directory.
+          Then run
+          <code>mvn package</code>
+          from the SchemaCrawler directory. The SchemaCrawler distribution will
+          be created in the
+          <code>target</code>
+          of the
+          <code>distribution</code>
+          module.
         </p>
       </subsection>
       <subsection name="Eclipse">
-        <p>SchemaCrawler consists of the following Eclipse projects:</p>
-        <ul>
-          <li>SchemaCrawler - Database Connector</li>
-          <li>SchemaCrawler - Main</li>
-          <li>SchemaCrawler - Integrations</li>
-          <li>SchemaCrawler - Maven Plugin</li>
-          <li>SchemaCrawler - Distribution</li>
-        </ul>
         <p>
-          Before importing these projects into Eclipse, make sure that you have
-          a successful Maven build. Maven will download all the dependencies
-          needed to build SchemaCrawler. Also, install the
+          Before importing the SchemaCrawler project into Eclipse, make sure
+          that you have a successful Maven build. Maven will download all the
+          dependencies needed to build SchemaCrawler. Also, install the
           <a href="http://m2eclipse.codehaus.org/">
             Maven Integration for Eclipse
           </a>
-          plugin. Since each Eclipse project depends on the other before it, you
-          will need to import all the projects into Eclipse. You may need to
-          define one Eclipse Java Classpath Variables,
-          <code>MAVEN_REPO</code>
-          to point to the Maven 2.0 repository.
+          plugin.
         </p>
       </subsection>
     </section>
