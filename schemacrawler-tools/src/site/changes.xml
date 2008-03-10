@@ -6,7 +6,7 @@
   </properties>
   <body>
     <release
-      version="5.5"
+      version="5.6"
       date="2008-02-28">
       <action
         dev="Sualeh Fatehi"

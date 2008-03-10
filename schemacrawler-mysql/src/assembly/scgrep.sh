@@ -1,1 +1,1 @@
-java -classpath lib/schemacrawler-tools-5.5.jar schemacrawler.LauncherMain schemacrawler.tools.mysql.Grep $*
+java -classpath lib/schemacrawler-tools-5.6.jar schemacrawler.LauncherMain schemacrawler.tools.mysql.Grep $*
