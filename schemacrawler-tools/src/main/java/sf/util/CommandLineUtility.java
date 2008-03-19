@@ -110,7 +110,7 @@ public final class CommandLineUtility
    */
   public static void setLogLevel(final String[] args)
   {
-    final String OPTION_LOG_LEVEL = "log-level";
+    final String OPTION_LOG_LEVEL = "log_level";
 
     final CommandLineParser parser = new CommandLineParser();
     parser
