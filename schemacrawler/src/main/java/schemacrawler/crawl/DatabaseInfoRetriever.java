@@ -320,7 +320,7 @@ final class DatabaseInfoRetriever
    */
   private boolean isDatabasePropertyResultSetType(final Method method)
   {
-    final List<String> resultSetTypeMethods = Arrays.asList(new String[] {
+    final String[] databasePropertyResultSetTypes = new String[] {
         "deletesAreDetected",
         "insertsAreDetected",
         "updatesAreDetected",
@@ -331,9 +331,9 @@ final class DatabaseInfoRetriever
         "ownInsertsAreVisible",
         "ownUpdatesAreVisible",
         "supportsResultSetType"
-    });
-    final boolean isDatabasePropertyResultSetType = resultSetTypeMethods
-      .contains(method.getName());
+    };
+    final boolean isDatabasePropertyResultSetType = Arrays
+      .binarySearch(databasePropertyResultSetTypes, method.getName()) >= 0;
     return isDatabasePropertyResultSetType;
   }
 
