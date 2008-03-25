@@ -58,7 +58,8 @@
       src="http://www.ibiblio.org/maven/hsqldb/jars/hsqldb-1.8.0.7.jar"
       dest="hsqldb-1.8.0.7.jar"
       verbose="true"
-      usetimestamp="true" />
+      usetimestamp="true"
+      ignoreerrors="true" />
 
     <mkdir dir="${schemacrawler.classes}" />
 
