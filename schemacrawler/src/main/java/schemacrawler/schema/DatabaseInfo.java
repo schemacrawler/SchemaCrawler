@@ -31,30 +31,30 @@ public interface DatabaseInfo
 {
 
   /**
-   * Catalog name.
+   * Gets the catalog name.
    * 
    * @return Catalog name
    */
   String getCatalog();
 
   /**
-   * ColumnDataTypes.
+   * Gets the column data types defined by the RDBMS system.
    * 
-   * @return ColumnDataType
+   * @return Column data types
    */
   ColumnDataType[] getColumnDataTypes();
 
   /**
-   * Name of the RDBMS vendor and product.
+   * Gets the name of the RDBMS vendor and product.
    * 
-   * @return Name of the RDBMS vendor and product.
+   * @return Name of the RDBMS vendor and product
    */
   String getProductName();
 
   /**
-   * RDBMS product version.
+   * Gets the RDBMS product version.
    * 
-   * @return RDBMS product version.
+   * @return RDBMS product version
    */
   String getProductVersion();
 
@@ -69,15 +69,15 @@ public interface DatabaseInfo
    * Gets a database property.
    * 
    * @param name
-   *        Name of the property.
-   * @return Value of the property.
+   *        Name of the property
+   * @return Value of the property
    */
   Object getProperty(String name);
 
   /**
-   * Schema pattern.
+   * Gets the schema pattern.
    * 
-   * @return Schema pattern.
+   * @return Schema pattern
    */
   String getSchemaPattern();
 

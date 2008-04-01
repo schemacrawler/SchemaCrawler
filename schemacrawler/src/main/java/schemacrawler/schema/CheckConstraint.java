@@ -19,7 +19,7 @@ package schemacrawler.schema;
 
 
 /**
- * Represents an table constraint.
+ * Represents a table constraint.
  * 
  * @author Sualeh Fatehi
  */
