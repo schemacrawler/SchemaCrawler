@@ -28,9 +28,9 @@ public interface Table
 {
 
   /**
-   * List of check constraints.
+   * Gets the list of check constraints.
    * 
-   * @return Check constraints for the table.
+   * @return Check constraints for the table
    */
   CheckConstraint[] getCheckConstraints();
 
@@ -44,9 +44,9 @@ public interface Table
   Column getColumn(String name);
 
   /**
-   * List of columns in ordinal order.
+   * Gets the list of columns in ordinal order.
    * 
-   * @return Columns of the table.
+   * @return Columns of the table
    */
   Column[] getColumns();
 
@@ -67,7 +67,7 @@ public interface Table
   ForeignKey getForeignKey(String name);
 
   /**
-   * List of foreign keys.
+   * Gets the list of foreign keys.
    * 
    * @return Foreign keys of the table.
    */
@@ -83,21 +83,21 @@ public interface Table
   Index getIndex(String name);
 
   /**
-   * List of indices.
+   * Gets the list of indices.
    * 
    * @return Indices of the table.
    */
   Index[] getIndices();
 
   /**
-   * Primary key.
+   * Gets the primary key.
    * 
    * @return Primary key
    */
   PrimaryKey getPrimaryKey();
 
   /**
-   * List of privileges.
+   * Gets the list of privileges.
    * 
    * @return Privileges for the table.
    */
@@ -113,14 +113,14 @@ public interface Table
   Trigger getTrigger(String name);
 
   /**
-   * List of triggers.
+   * Gets the list of triggers.
    * 
    * @return Triggers for the table.
    */
   Trigger[] getTriggers();
 
   /**
-   * Table type.
+   * Gets the table type.
    * 
    * @return Table type.
    */

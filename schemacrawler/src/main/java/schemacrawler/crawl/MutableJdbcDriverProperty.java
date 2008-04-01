@@ -23,8 +23,8 @@ import java.sql.DriverPropertyInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 
 /**
- * Represents database metadata. Created from metadata returned by a
- * JDBC call, and other sources of information.
+ * Represents a JDBC driver property, and it's value. Created from
+ * metadata returned by a JDBC call, and other sources of information.
  * 
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
@@ -35,32 +35,9 @@ final class MutableJdbcDriverProperty
 
   private static final long serialVersionUID = 8030156654422512161L;
 
-  /**
-   * A brief description of the property, which may be null.
-   */
   private final String description;
-
-  /**
-   * The <code>required</code> field is <code>true</code> if a value
-   * must be supplied for this property during
-   * <code>Driver.connect</code> and <code>false</code> otherwise.
-   */
   private final boolean required;
-
-  /**
-   * The <code>value</code> field specifies the current value of the
-   * property, based on a combination of the information supplied to the
-   * method <code>getPropertyInfo</code>, the Java environment, and
-   * the driver-supplied default values. This field may be null if no
-   * value is known.
-   */
   private final String value;
-
-  /**
-   * An array of possible values if the value for the field
-   * <code>DriverPropertyInfo.value</code> may be selected from a
-   * particular set of values; otherwise null.
-   */
   private final String[] choices;
 
   MutableJdbcDriverProperty(final DriverPropertyInfo driverPropertyInfo)

@@ -23,7 +23,10 @@ import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.NamedObject;
 
 /**
- * {@inheritDoc}
+ * Represents a single column mapping from a primary key column to a
+ * foreign key column.
+ * 
+ * @author Sualeh Fatehi
  */
 final class MutableForeignKeyColumnMap
   extends AbstractDependantNamedObject

@@ -23,8 +23,8 @@ import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 
 /**
- * Represents database metadata. Created from metadata returned by a
- * JDBC call, and other sources of information.
+ * JDBC driver information. Created from metadata returned by a JDBC
+ * call, and other sources of information.
  * 
  * @author Sualeh Fatehi sualeh@hotmail.com
  */

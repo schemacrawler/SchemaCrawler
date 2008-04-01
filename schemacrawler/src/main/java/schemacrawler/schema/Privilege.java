@@ -19,7 +19,7 @@ package schemacrawler.schema;
 
 
 /**
- * Privilege of a table or column.
+ * Represents a privilege of a table or column.
  * 
  * @author Sualeh Fatehi
  */
@@ -28,21 +28,21 @@ public interface Privilege
 {
 
   /**
-   * Grantee.
+   * Gets the grantee.
    * 
    * @return Grantee
    */
   String getGrantee();
 
   /**
-   * Grantor.
+   * Gets the grantor.
    * 
    * @return Grantor
    */
   String getGrantor();
 
   /**
-   * Is grantable.
+   * If the privilege is grantable.
    * 
    * @return Is grantable
    */

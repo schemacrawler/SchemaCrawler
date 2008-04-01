@@ -27,7 +27,9 @@ import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.NamedObject;
 
 /**
- * Represents a foreign-key mapping to a private key in another table.
+ * Represents a foreign-key mapping to a primary key in another table.
+ * 
+ * @author Sualeh Fatehi
  */
 class MutableForeignKey
   extends AbstractDatabaseObject
@@ -135,16 +137,6 @@ class MutableForeignKey
     return updateRule;
   }
 
-  /**
-   * Adds a column pair.
-   * 
-   * @param keySequence
-   *        Foreign key sequence
-   * @param pkColumn
-   *        Primary key
-   * @param fkColumn
-   *        Foreign key
-   */
   void addColumnPair(final int keySequence,
                      final Column pkColumn,
                      final Column fkColumn)
@@ -158,9 +150,6 @@ class MutableForeignKey
     addColumnPair(fkColumnPair);
   }
 
-  /**
-   * @see schemacrawler.crawl.ForeignKey#getColumnPairsList()
-   */
   void addColumnPair(final MutableForeignKeyColumnMap columnPair)
   {
     columnPairs.add(columnPair);
