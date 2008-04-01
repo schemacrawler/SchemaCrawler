@@ -90,8 +90,8 @@ public final class InclusionRule
   }
 
   /**
-   * Adds a named object after considering the include and exclude
-   * patterns.
+   * Checks whether to add a named object after considering the include
+   * and exclude patterns.
    * 
    * @param name
    *        Name to check

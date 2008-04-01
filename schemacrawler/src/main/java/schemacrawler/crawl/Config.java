@@ -46,7 +46,8 @@ public class Config
   private static final Logger LOGGER = Logger.getLogger(Config.class.getName());
 
   /**
-   * Loads the SchemaCrawler configuration, and override.
+   * Loads the SchemaCrawler configuration, from a properties file
+   * stream.
    * 
    * @param configStream
    *        Configuration stream.
@@ -63,7 +64,8 @@ public class Config
   }
 
   /**
-   * Loads the SchemaCrawler configuration, and override.
+   * Loads the SchemaCrawler configuration, and override configuration,
+   * from properties files.
    * 
    * @param configFilenames
    *        Configuration file name.
@@ -163,7 +165,7 @@ public class Config
    * 
    * @param properties
    *        Properties to copy
-   * @return Map
+   * @return Map of properties and values
    */
   private static Map<String, String> propertiesMap(final Properties properties)
   {

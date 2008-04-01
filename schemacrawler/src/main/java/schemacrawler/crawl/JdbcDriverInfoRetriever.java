@@ -28,8 +28,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * SchemaRetriever uses JDBC driver metadata to get the details about
- * the schema.
+ * A retriever that uses JDBC driver metadata to get the details about
+ * the JDBC driver.
  * 
  * @author Sualeh Fatehi
  */

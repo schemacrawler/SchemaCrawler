@@ -22,7 +22,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * Named object.
+ * Represents a named object.
  * 
  * @author Sualeh Fatehi
  */
@@ -48,16 +48,16 @@ public interface NamedObject
   Object getAttribute(String name);
 
   /**
-   * Getter for name.
+   * Getter for name of object.
    * 
-   * @return Value of property name.
+   * @return Name of the object
    */
   String getName();
 
   /**
-   * Getter for property remarks.
+   * Getter for remarks.
    * 
-   * @return Value of property remarks.
+   * @return Remarks
    */
   String getRemarks();
 
@@ -65,9 +65,9 @@ public interface NamedObject
    * Sets an attribute.
    * 
    * @param name
-   *        Attribute name.
+   *        Attribute name
    * @param value
-   *        Attribute value.
+   *        Attribute value
    */
   void setAttribute(String name, Object value);
 

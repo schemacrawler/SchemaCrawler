@@ -32,6 +32,14 @@ import java.util.logging.Logger;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
 
+/**
+ * A wrapper around a JDBC resultset obtained from a database metadata
+ * call. This allows type-safe methods to obtain boolean, integer and
+ * string data, while abstracting away the quirks of the JDBC metadata
+ * API.
+ * 
+ * @author Sualeh Fatehi
+ */
 final class MetadataResultSet
 {
 
@@ -83,12 +91,27 @@ final class MetadataResultSet
     results.setFetchSize(rows);
   }
 
+  /**
+   * Releases this <code>ResultSet</code> object's database and JDBC
+   * resources immediately instead of waiting for this to happen when it
+   * is automatically closed.
+   * 
+   * @throws SQLException
+   *         On an exception
+   */
   void close()
     throws SQLException
   {
     results.close();
   }
 
+  /**
+   * Gets unread (and therefore unmapped) columns from the database
+   * metadata resultset, and makes them available as addiiotnal
+   * attributes.
+   * 
+   * @return Map of additional attributes to the database object
+   */
   Map<String, Object> getAttributes()
   {
     final Set<String> resultSetColumns = new HashSet<String>(this.resultSetColumns);
@@ -102,7 +125,7 @@ final class MetadataResultSet
         iterator.remove();
       }
     }
-    // Get attributes
+    // Set attributes
     final Map<String, Object> attributes = new HashMap<String, Object>();
     for (final String columnName: resultSetColumns)
     {
@@ -121,11 +144,12 @@ final class MetadataResultSet
   }
 
   /**
-   * Checks if the text is true.
+   * Checks if the value of a column from the result set evaluates to
+   * true.
    * 
-   * @param text
-   *        Text to check.
-   * @return Whether the string is true or yes.
+   * @param columnName
+   *        Column name to check
+   * @return Whether the string evaluates to true
    */
   boolean getBoolean(final String columnName)
   {
@@ -269,6 +293,18 @@ final class MetadataResultSet
     return value;
   }
 
+  /**
+   * Moves the cursor down one row from its current position. A
+   * <code>ResultSet</code> cursor is initially positioned before the
+   * first row; the first call to the method <code>next</code> makes
+   * the first row the current row; the second call makes the second row
+   * the current row, and so on.
+   * 
+   * @return <code>true</code> if the new current row is valid;
+   *         <code>false</code> if there are no more rows
+   * @throws SQLException
+   *         On a database access error
+   */
   boolean next()
     throws SQLException
   {
