@@ -19,7 +19,7 @@ package schemacrawler.schema;
 
 
 /**
- * Describes a database object.
+ * Represents a database object.
  * 
  * @author Sualeh Fatehi
  */
@@ -28,9 +28,9 @@ public interface DatabaseObject
 {
 
   /**
-   * Catalog name.
+   * Gets the database catalog name.
    * 
-   * @return the catalog name
+   * @return Database catalog name
    */
   String getCatalogName();
 
@@ -42,9 +42,9 @@ public interface DatabaseObject
   String getFullName();
 
   /**
-   * Schema name.
+   * Gets the database schema name.
    * 
-   * @return the schema name
+   * @return Database schema name
    */
   String getSchemaName();
 

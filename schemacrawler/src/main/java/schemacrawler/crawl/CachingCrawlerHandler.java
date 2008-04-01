@@ -27,7 +27,7 @@ import schemacrawler.schema.Table;
 /**
  * Caches a crawled schema internally.
  * 
- * @author sfatehi
+ * @author Sualeh Fatehi
  */
 public final class CachingCrawlerHandler
   implements CrawlHandler
@@ -48,9 +48,9 @@ public final class CachingCrawlerHandler
    * Creates a new caching crawl handler.
    * 
    * @param catalogName
-   *        Catalog name.
+   *        Catalog name
    * @param infoLevel
-   *        Schema information level.
+   *        Schema information level
    */
   public CachingCrawlerHandler(final String catalogName,
                                final SchemaInfoLevel infoLevel)

@@ -164,12 +164,6 @@ abstract class AbstractNamedObject
     return name;
   }
 
-  /**
-   * Setter for property remarks.
-   * 
-   * @param remarks
-   *        New value of property remarks.
-   */
   final void setRemarks(final String remarks)
   {
     if (remarks == null)

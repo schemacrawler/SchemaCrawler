@@ -23,8 +23,8 @@ import java.sql.Connection;
 import schemacrawler.schema.DatabaseObject;
 
 /**
- * SchemaRetriever uses database metadata to get the details about the
- * schema.
+ * Base class for retriever that uses database metadata to get the
+ * details about the schema.
  * 
  * @author Sualeh Fatehi
  */
@@ -81,6 +81,18 @@ abstract class AbstractRetriever
     this.retrieverConnection = retrieverConnection;
   }
 
+  /**
+   * Checks whether the provided database object belongs to the
+   * specified schema.
+   * 
+   * @param dbObject
+   *        Database object to check
+   * @param catalog
+   *        Database catalog to check against
+   * @param schema
+   *        Database schema to check against
+   * @return Whether the database object belongs to the specified schema
+   */
   protected boolean belongsToSchema(final DatabaseObject dbObject,
                                     final String catalog,
                                     final String schema)

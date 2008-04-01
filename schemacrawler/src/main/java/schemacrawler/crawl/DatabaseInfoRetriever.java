@@ -35,8 +35,8 @@ import java.util.logging.Logger;
 import schemacrawler.schema.ColumnDataType;
 
 /**
- * SchemaRetriever uses database metadata to get the details about the
- * schema.
+ * Retriever of database metadata to get the details about the database
+ * system.
  * 
  * @author Sualeh Fatehi
  */
@@ -129,7 +129,7 @@ final class DatabaseInfoRetriever
   }
 
   /**
-   * Retrieves type metadata.
+   * Retrieves column data type metadata.
    * 
    * @param dbInfo
    *        Database info
@@ -217,7 +217,7 @@ final class DatabaseInfoRetriever
   }
 
   /**
-   * Retrieves type metadata.
+   * Retrieves user defined column data type metadata.
    * 
    * @param dbInfo
    *        Database info

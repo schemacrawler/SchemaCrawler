@@ -48,11 +48,10 @@ public interface CrawlHandler
     throws SchemaCrawlerException;
 
   /**
-   * Hint for the level detail requires. Helps SchemaCrawler optimize
-   * the metadata queries. One of the level constants defined in
-   * SchemaCrawler.
+   * Gets the hint for the level of schema detail required. Helps
+   * SchemaCrawler optimize the metadata queries.
    * 
-   * @return Level hint
+   * @return Hint for the level of schema detail
    */
   SchemaInfoLevel getInfoLevelHint();
 
