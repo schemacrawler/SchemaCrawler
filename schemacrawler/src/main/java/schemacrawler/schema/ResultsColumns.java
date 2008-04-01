@@ -19,7 +19,7 @@ package schemacrawler.schema;
 
 
 /**
- * Represents a table in the database.
+ * Represents a result set, a result of a query.
  * 
  * @author Sualeh Fatehi
  */
@@ -37,7 +37,7 @@ public interface ResultsColumns
   ResultsColumn getColumn(String name);
 
   /**
-   * List of columns in ordinal order.
+   * Gets the list of columns in ordinal order.
    * 
    * @return Columns of the table.
    */

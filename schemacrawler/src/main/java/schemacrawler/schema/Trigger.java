@@ -28,7 +28,7 @@ public interface Trigger
 {
 
   /**
-   * The WHEN clause of the trigger.
+   * Gets the WHEN clause of the trigger.
    * 
    * @return Action condition.
    */
@@ -42,14 +42,14 @@ public interface Trigger
   int getActionOrder();
 
   /**
-   * Get whether the trigger is a row trigger or a statement trigger.
+   * Gets whether the trigger is a row trigger or a statement trigger.
    * 
    * @return Action orientation.
    */
   ActionOrientationType getActionOrientation();
 
   /**
-   * Get the body of the trigger.
+   * Gets the body of the trigger.
    * 
    * @return Body of the trigger.
    */

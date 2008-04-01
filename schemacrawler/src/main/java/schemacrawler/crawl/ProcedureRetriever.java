@@ -28,8 +28,8 @@ import schemacrawler.schema.ProcedureColumnType;
 import schemacrawler.schema.ProcedureType;
 
 /**
- * SchemaRetriever uses database metadata to get the details about the
- * schema.
+ * A retriever uses database metadata to get the details about the
+ * database procedures.
  * 
  * @author Sualeh Fatehi
  */

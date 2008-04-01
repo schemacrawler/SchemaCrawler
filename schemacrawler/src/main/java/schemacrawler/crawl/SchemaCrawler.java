@@ -33,6 +33,8 @@ import schemacrawler.schema.TableType;
 /**
  * SchemaCrawler uses database meta-data to get the details about the
  * schema.
+ * 
+ * @author Sualeh Fatehi
  */
 public final class SchemaCrawler
 {

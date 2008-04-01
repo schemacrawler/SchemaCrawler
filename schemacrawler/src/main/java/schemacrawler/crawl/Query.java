@@ -177,7 +177,9 @@ public class Query
   }
 
   /**
-   * @return the name
+   * Gets the query name.
+   * 
+   * @return Query name
    */
   public String getName()
   {
@@ -185,7 +187,9 @@ public class Query
   }
 
   /**
-   * @return the query
+   * Gets the query SQL.
+   * 
+   * @return Query SQL
    */
   public String getQuery()
   {

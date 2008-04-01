@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 import javax.sql.DataSource;
 
 /**
- * A connection for the retriever.
+ * A connection for the retriever. Wraps a live database connection.
  * 
  * @author Sualeh Fatehi
  */
@@ -95,6 +95,14 @@ final class RetrieverConnection
     close();
   }
 
+  /**
+   * Releases the <code>Connection</code> object's database and JDBC
+   * resources immediately instead of waiting for them to be
+   * automatically released.
+   * 
+   * @throws SQLException
+   *         On a database access error
+   */
   void close()
   {
     try

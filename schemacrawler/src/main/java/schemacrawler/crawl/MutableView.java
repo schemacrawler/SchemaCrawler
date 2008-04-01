@@ -23,7 +23,7 @@ import schemacrawler.schema.TableType;
 import schemacrawler.schema.View;
 
 /**
- * {@inheritDoc}
+ * Represents a view in the database.
  * 
  * @author Sualeh Fatehi
  */
