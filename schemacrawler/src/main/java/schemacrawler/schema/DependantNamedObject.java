@@ -19,8 +19,8 @@ package schemacrawler.schema;
 
 
 /**
- * Represents the child of a database object, such as a column or an
- * index.
+ * Represents the dependent of a database object, such as a column or an
+ * index, which are dependents of a table.
  * 
  * @author Sualeh Fatehi
  */
@@ -36,9 +36,9 @@ public interface DependantNamedObject
   String getFullName();
 
   /**
-   * Parent database object.
+   * Gets the parent database object.
    * 
-   * @return Parent
+   * @return Parent database object
    */
   NamedObject getParent();
 

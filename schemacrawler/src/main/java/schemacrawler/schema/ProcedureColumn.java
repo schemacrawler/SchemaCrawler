@@ -19,7 +19,7 @@ package schemacrawler.schema;
 
 
 /**
- * {@inheritDoc}
+ * Represents a column in a database procedure.
  * 
  * @author Sualeh Fatehi
  */

@@ -19,18 +19,19 @@ package schemacrawler.schema;
 
 
 /**
- * A table or procedure column.
+ * Represents a column in a result set.
  * 
  * @author Sualeh Fatehi
  */
 public interface ResultsColumn
   extends BaseColumn
 {
+
   /**
-   * The column's normal maximum width in characters.
+   * Gets the normal maximum number of characters allowed as the width
+   * of the designated column.
    * 
-   * @return Normal maximum number of characters allowed as the width of
-   *         the designated column
+   * @return The column's normal maximum width in characters
    */
   int getDisplaySize();
 
@@ -75,7 +76,7 @@ public interface ResultsColumn
   /**
    * Indicates whether the designated column is definitely not writable.
    * 
-   * @return Whether the designated column is definitely not writable.
+   * @return Whether the designated column is definitely not writable
    */
   boolean isReadOnly();
 
@@ -83,8 +84,7 @@ public interface ResultsColumn
    * Indicates whether the designated column can be used in a where
    * clause.
    * 
-   * @return Whether the designated column can be used in a where
-   *         clause.
+   * @return Whether the designated column can be used in a where clause
    */
   boolean isSearchable();
 
@@ -92,7 +92,7 @@ public interface ResultsColumn
    * Indicates whether values in the designated column are signed
    * numbers.
    * 
-   * @return Whether values in the designated column are signed numbers.
+   * @return Whether values in the designated column are signed numbers
    */
   boolean isSigned();
 
@@ -101,7 +101,7 @@ public interface ResultsColumn
    * column to succeed.
    * 
    * @return Whether it is possible for a write on the designated column
-   *         to succeed.
+   *         to succeed
    */
   boolean isWritable();
 
