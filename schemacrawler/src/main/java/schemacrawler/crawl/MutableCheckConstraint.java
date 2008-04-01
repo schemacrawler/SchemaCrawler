@@ -22,7 +22,7 @@ import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.NamedObject;
 
 /**
- * Represents an index on a database table.
+ * Represents a table constraint.
  */
 class MutableCheckConstraint
   extends AbstractDependantNamedObject

@@ -19,106 +19,108 @@ package schemacrawler.schema;
 
 
 /**
- * A column type. Provide the java.sql.Types type, the java.sql.Types
- * type name, and the database specific data type name.
+ * Represents a column type. Provides the java.sql.Types type, the
+ * java.sql.Types type name, and the database specific data type name.
+ * 
+ * @author Sualeh Fatehi
  */
 public interface ColumnDataType
   extends NamedObject
 {
 
   /**
-   * The base type of the data type.
+   * Gets the base type of the data type.
    * 
    * @return Base type
    */
   ColumnDataType getBaseType();
 
   /**
-   * Parameters needed when using this data type.
+   * Gets the parameters needed when using this data type.
    * 
    * @return Parameters needed when using this data type
    */
   String getCreateParameters();
 
   /**
-   * The database specific data type name.
+   * Gets the database specific data type name.
    * 
    * @return Database specific data type name
    */
   String getDatabaseSpecificTypeName();
 
   /**
-   * Literal prefix.
+   * Gets the literal prefix.
    * 
    * @return Literal prefix
    */
   String getLiteralPrefix();
 
   /**
-   * Literal suffix.
+   * Gets the literal suffix.
    * 
    * @return Literal suffix
    */
   String getLiteralSuffix();
 
   /**
-   * Local data type name.
+   * Gets the local data type name.
    * 
    * @return Local data type name
    */
   String getLocalTypeName();
 
   /**
-   * Maximum scale.
+   * Gets the maximum scale.
    * 
    * @return Maximum scale
    */
   int getMaximumScale();
 
   /**
-   * Minimum scale.
+   * Gets the minimum scale.
    * 
    * @return Minimum scale
    */
   int getMinimumScale();
 
   /**
-   * Precision of the radix.
+   * Gets the precision of the radix.
    * 
    * @return Precision of the radix
    */
   int getNumPrecisionRadix();
 
   /**
-   * Precision.
+   * Gets the precision.
    * 
    * @return Precision
    */
   long getPrecision();
 
   /**
-   * Search method.
+   * Gets the search method.
    * 
    * @return Search method
    */
   SearchableType getSearchable();
 
   /**
-   * The java.sql.Types type.
+   * Gets the java.sql.Types type.
    * 
    * @return java.sql.Types type
    */
   int getType();
 
   /**
-   * Get the Java class for the type.
+   * Gets the Java class for the type.
    * 
    * @return The Java class for the type
    */
   String getTypeClassName();
 
   /**
-   * The java.sql.Types type name.
+   * Gets the java.sql.Types type name.
    * 
    * @return java.sql.Types type name
    */

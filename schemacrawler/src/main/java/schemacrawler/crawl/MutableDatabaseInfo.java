@@ -28,8 +28,8 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DatabaseInfo;
 
 /**
- * Represents database metadata. Created from metadata returned by a
- * JDBC call, and other sources of information.
+ * Database and connection information. Created from metadata returned
+ * by a JDBC call, and other sources of information.
  * 
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
@@ -207,24 +207,6 @@ final class MutableDatabaseInfo
   }
 
   /**
-   * Sets the catalog.
-   * 
-   * @param catalog
-   *        Catalog
-   */
-  public void setCatalog(final String catalog)
-  {
-    if (catalog == null)
-    {
-      this.catalog = "";
-    }
-    else
-    {
-      this.catalog = catalog;
-    }
-  }
-
-  /**
    * {@inheritDoc}
    * 
    * @see Object#toString()
@@ -243,12 +225,6 @@ final class MutableDatabaseInfo
 
   }
 
-  /**
-   * Adds a column data type.
-   * 
-   * @param columnDataType
-   *        Column data type
-   */
   void addColumnDataType(final MutableColumnDataType columnDataType)
   {
     columnDataTypes.add(columnDataType);
@@ -278,6 +254,18 @@ final class MutableDatabaseInfo
   void putProperty(final String name, final Object value)
   {
     dbProperties.put(name, value);
+  }
+
+  void setCatalog(final String catalog)
+  {
+    if (catalog == null)
+    {
+      this.catalog = "";
+    }
+    else
+    {
+      this.catalog = catalog;
+    }
   }
 
   void setProductName(final String productName)

@@ -25,8 +25,10 @@ import schemacrawler.schema.SearchableType;
 import schemacrawler.schema.SqlDataType;
 
 /**
- * A column type. Provide the java.sql.Types type, the java.sql.Types
- * type name, and the database specific data type name.
+ * Represents a column type. Provides the java.sql.Types type, the
+ * java.sql.Types type name, and the database specific data type name.
+ * 
+ * @author Sualeh Fatehi
  */
 final class MutableColumnDataType
   extends AbstractNamedObject
@@ -65,6 +67,8 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ColumnDataType#getBaseType()
    */
   public ColumnDataType getBaseType()
   {
@@ -72,9 +76,9 @@ final class MutableColumnDataType
   }
 
   /**
-   * Parameters used in type creation.
+   * {@inheritDoc}
    * 
-   * @return Parameters used in type creation.
+   * @see schemacrawler.schema.ColumnDataType#getCreateParameters()
    */
   public String getCreateParameters()
   {
@@ -92,7 +96,9 @@ final class MutableColumnDataType
   }
 
   /**
-   * @return Returns the literalPrefix.
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ColumnDataType#getLiteralPrefix()
    */
   public String getLiteralPrefix()
   {
@@ -100,7 +106,9 @@ final class MutableColumnDataType
   }
 
   /**
-   * @return Returns the literalSuffix.
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ColumnDataType#getLiteralSuffix()
    */
   public String getLiteralSuffix()
   {
@@ -108,7 +116,9 @@ final class MutableColumnDataType
   }
 
   /**
-   * @return Returns the localTypeName.
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ColumnDataType#getLocalTypeName()
    */
   public String getLocalTypeName()
   {
@@ -116,7 +126,9 @@ final class MutableColumnDataType
   }
 
   /**
-   * @return Returns the maximumScale.
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ColumnDataType#getMaximumScale()
    */
   public int getMaximumScale()
   {
@@ -124,7 +136,9 @@ final class MutableColumnDataType
   }
 
   /**
-   * @return Returns the minimumScale.
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ColumnDataType#getMinimumScale()
    */
   public int getMinimumScale()
   {
@@ -132,7 +146,9 @@ final class MutableColumnDataType
   }
 
   /**
-   * @return Returns the numPrecisionRadix.
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ColumnDataType#getNumPrecisionRadix()
    */
   public int getNumPrecisionRadix()
   {
@@ -140,7 +156,9 @@ final class MutableColumnDataType
   }
 
   /**
-   * @return Returns the precision.
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ColumnDataType#getPrecision()
    */
   public long getPrecision()
   {
@@ -148,7 +166,9 @@ final class MutableColumnDataType
   }
 
   /**
-   * @return Returns the searchable.
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ColumnDataType#getSearchable()
    */
   public SearchableType getSearchable()
   {
@@ -167,6 +187,8 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ColumnDataType#getTypeClassName()
    */
   public String getTypeClassName()
   {
@@ -184,7 +206,9 @@ final class MutableColumnDataType
   }
 
   /**
-   * @return Returns the autoIncremented.
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ColumnDataType#isAutoIncrementable()
    */
   public boolean isAutoIncrementable()
   {
@@ -193,6 +217,8 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ColumnDataType#isBinaryType()
    */
   public boolean isBinaryType()
   {
@@ -202,7 +228,9 @@ final class MutableColumnDataType
   }
 
   /**
-   * @return Returns the caseSensitive.
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ColumnDataType#isCaseSensitive()
    */
   public boolean isCaseSensitive()
   {
@@ -211,6 +239,8 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ColumnDataType#isCharacterType()
    */
   public boolean isCharacterType()
   {
@@ -221,6 +251,8 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ColumnDataType#isDateType()
    */
   public boolean isDateType()
   {
@@ -229,7 +261,9 @@ final class MutableColumnDataType
   }
 
   /**
-   * @return Returns the fixedPrecisionScale.
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ColumnDataType#isFixedPrecisionScale()
    */
   public boolean isFixedPrecisionScale()
   {
@@ -238,6 +272,8 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ColumnDataType#isIntegralType()
    */
   public boolean isIntegralType()
   {
@@ -247,7 +283,9 @@ final class MutableColumnDataType
   }
 
   /**
-   * @return Returns the nullable.
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ColumnDataType#isNullable()
    */
   public boolean isNullable()
   {
@@ -256,6 +294,8 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ColumnDataType#isRealType()
    */
   public boolean isRealType()
   {
@@ -265,7 +305,9 @@ final class MutableColumnDataType
   }
 
   /**
-   * @return Returns the unsignedAttribute.
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ColumnDataType#isUnsigned()
    */
   public boolean isUnsigned()
   {
@@ -273,17 +315,15 @@ final class MutableColumnDataType
   }
 
   /**
-   * @return Returns the userDefined.
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ColumnDataType#isUserDefined()
    */
   public boolean isUserDefined()
   {
     return userDefined;
   }
 
-  /**
-   * @param autoIncremented
-   *        The autoIncremented to set.
-   */
   void setAutoIncrementable(final boolean autoIncrementable)
   {
     this.autoIncrementable = autoIncrementable;
@@ -294,109 +334,61 @@ final class MutableColumnDataType
     this.baseType = baseType;
   }
 
-  /**
-   * @param caseSensitive
-   *        The caseSensitive to set.
-   */
   void setCaseSensitive(final boolean caseSensitive)
   {
     this.caseSensitive = caseSensitive;
   }
 
-  /**
-   * @param createParams
-   *        The createParams to set.
-   */
   void setCreateParameters(final String createParams)
   {
     createParameters = createParams;
   }
 
-  /**
-   * @param fixedPrecisionScale
-   *        The fixedPrecisionScale to set.
-   */
   void setFixedPrecisionScale(final boolean fixedPrecisionScale)
   {
     this.fixedPrecisionScale = fixedPrecisionScale;
   }
 
-  /**
-   * @param literalPrefix
-   *        The literalPrefix to set.
-   */
   void setLiteralPrefix(final String literalPrefix)
   {
     this.literalPrefix = literalPrefix;
   }
 
-  /**
-   * @param literalSuffix
-   *        The literalSuffix to set.
-   */
   void setLiteralSuffix(final String literalSuffix)
   {
     this.literalSuffix = literalSuffix;
   }
 
-  /**
-   * @param localTypeName
-   *        The localTypeName to set.
-   */
   void setLocalTypeName(final String localTypeName)
   {
     localizedTypeName = localTypeName;
   }
 
-  /**
-   * @param maximumScale
-   *        The maximumScale to set.
-   */
   void setMaximumScale(final int maximumScale)
   {
     this.maximumScale = maximumScale;
   }
 
-  /**
-   * @param minimumScale
-   *        The minimumScale to set.
-   */
   void setMinimumScale(final int minimumScale)
   {
     this.minimumScale = minimumScale;
   }
 
-  /**
-   * @param nullable
-   *        The nullable to set.
-   */
   void setNullable(final boolean nullable)
   {
     this.nullable = nullable;
   }
 
-  /**
-   * @param numPrecisionRadix
-   *        The numPrecisionRadix to set.
-   */
   void setNumPrecisionRadix(final int numPrecisionRadix)
   {
     this.numPrecisionRadix = numPrecisionRadix;
   }
 
-  /**
-   * @param precision
-   *        The precision to set.
-   */
   void setPrecision(final long precision)
   {
     this.precision = precision;
   }
 
-  /**
-   * @param searchable
-   *        The searchable to set.
-   */
   void setSearchable(final int searchable)
   {
     this.searchable = SearchableType.valueOf(searchable);
@@ -412,19 +404,11 @@ final class MutableColumnDataType
     this.typeClassName = typeClassName;
   }
 
-  /**
-   * @param unsignedAttribute
-   *        The unsignedAttribute to set.
-   */
   void setUnsigned(final boolean unsignedAttribute)
   {
     unsigned = unsignedAttribute;
   }
 
-  /**
-   * @param userDefined
-   *        The userDefined to set.
-   */
   void setUserDefined(final boolean userDefined)
   {
     this.userDefined = userDefined;
