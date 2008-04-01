@@ -19,7 +19,9 @@ package schemacrawler.crawl;
 
 
 /**
- * Enumeration for level of schema detail.
+ * Descriptor for level of schema detail.
+ * 
+ * @author Sualeh Fatehi
  */
 public final class SchemaInfoLevel
   implements Options

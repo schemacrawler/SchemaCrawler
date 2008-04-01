@@ -36,8 +36,8 @@ import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.NamedObject;
 
 /**
- * TableRetriever uses database metadata to get the details about the
- * schema.
+ * A retriever uses database metadata to get the extended details about
+ * the database tables.
  * 
  * @author Sualeh Fatehi
  */
