@@ -23,8 +23,8 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.NamedObject;
 
 /**
- * Represents a column in a database table. Created from metadata
- * returned by a JDBC call.
+ * Represents a column in a database for tables and procedures. Created
+ * from metadata returned by a JDBC call.
  * 
  * @author Sualeh Fatehi
  */

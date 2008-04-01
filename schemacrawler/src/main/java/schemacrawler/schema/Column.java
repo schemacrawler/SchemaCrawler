@@ -19,7 +19,7 @@ package schemacrawler.schema;
 
 
 /**
- * A table or procedure column.
+ * Represents a column in a database table or procedure.
  * 
  * @author Sualeh Fatehi
  */
@@ -28,16 +28,16 @@ public interface Column
 {
 
   /**
-   * Getter for property default value.
+   * Gets the default data value for the column.
    * 
-   * @return Value of property default value.
+   * @return Default data value for the column
    */
   String getDefaultValue();
 
   /**
-   * List of privileges.
+   * Gets the list of privileges for the table.
    * 
-   * @return Privileges for the table.
+   * @return Privileges for the table
    */
   Privilege[] getPrivileges();
 
@@ -45,14 +45,14 @@ public interface Column
    * Referenced column if this column is part of a foreign key, null
    * otherwise.
    * 
-   * @return Referenced column.
+   * @return Referenced column
    */
   Column getReferencedColumn();
 
   /**
    * True if this column is part of a foreign key.
    * 
-   * @return If the column is part of a foreign key.
+   * @return If the column is part of a foreign key
    */
   boolean isPartOfForeignKey();
 

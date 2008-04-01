@@ -24,11 +24,10 @@ import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Privilege;
 
 /**
- * Represents a column in a database table. Created from metadata
- * returned by a JDBC call.
+ * Represents a column in a database table or procedure. Created from
+ * metadata returned by a JDBC call.
  * 
  * @author Sualeh Fatehi
- * @version 0.1
  */
 final class MutableColumn
   extends AbstractColumn
@@ -49,9 +48,9 @@ final class MutableColumn
   }
 
   /**
-   * Gets the column's default value.
+   * {@inheritDoc}
    * 
-   * @return Default value
+   * @see schemacrawler.schema.Column#getDefaultValue()
    */
   public String getDefaultValue()
   {
@@ -89,9 +88,9 @@ final class MutableColumn
   }
 
   /**
-   * Whether the column is a part of the primary key.
+   * {@inheritDoc}
    * 
-   * @return Whether the column is a part of the primary key
+   * @see schemacrawler.schema.Column#isPartOfPrimaryKey()
    */
   public boolean isPartOfPrimaryKey()
   {
@@ -99,65 +98,35 @@ final class MutableColumn
   }
 
   /**
-   * If the column has unique index.
+   * {@inheritDoc}
    * 
-   * @return If the column has a unique index.
+   * @see schemacrawler.schema.Column#isPartOfUniqueIndex()
    */
   public boolean isPartOfUniqueIndex()
   {
     return isPartOfUniqueIndex;
   }
 
-  /**
-   * Adds a privilege to the collection.
-   * 
-   * @param privilege
-   *        Privilege
-   */
   void addPrivilege(final MutablePrivilege privilege)
   {
     privileges.add(privilege);
   }
 
-  /**
-   * Setter for property default value.
-   * 
-   * @param defaultValue
-   *        New value of property default value.
-   */
   void setDefaultValue(final String defaultValue)
   {
     this.defaultValue = defaultValue;
   }
 
-  /**
-   * Sets true if this column is a part of primary key.
-   * 
-   * @param partOfPrimaryKey
-   *        Is the column a part of primary key
-   */
   void setPartOfPrimaryKey(final boolean partOfPrimaryKey)
   {
     isPartOfPrimaryKey = partOfPrimaryKey;
   }
 
-  /**
-   * Sets true if this column is a unique index.
-   * 
-   * @param partOfUniqueIndex
-   *        Is the column a part of a unique index
-   */
   void setPartOfUniqueIndex(final boolean partOfUniqueIndex)
   {
     isPartOfUniqueIndex = partOfUniqueIndex;
   }
 
-  /**
-   * Set the referenced column.
-   * 
-   * @param referencedColumn
-   *        Referenced column.
-   */
   void setReferencedColumn(final MutableColumn referencedColumn)
   {
     this.referencedColumn = referencedColumn;

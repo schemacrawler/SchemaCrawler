@@ -22,7 +22,8 @@ import schemacrawler.schema.DependantNamedObject;
 import schemacrawler.schema.NamedObject;
 
 /**
- * Represents a database object.
+ * Represents the dependent of a database object, such as a column or an
+ * index, which are dependents of a table.
  * 
  * @author Sualeh Fatehi
  */
@@ -81,7 +82,7 @@ abstract class AbstractDependantNamedObject
   /**
    * {@inheritDoc}
    * 
-   * @see Object#toString()
+   * @see schemacrawler.schema.DependantNamedObject#getFullName()
    */
   public String getFullName()
   {
