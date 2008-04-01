@@ -102,12 +102,6 @@ final class MutableProcedure
     return procedureType;
   }
 
-  /**
-   * Adds a column.
-   * 
-   * @param column
-   *        Column
-   */
   void addColumn(final MutableProcedureColumn column)
   {
     columns.add(column);
@@ -128,12 +122,6 @@ final class MutableProcedure
     this.routineBodyType = routineBodyType;
   }
 
-  /**
-   * Sets the procedure type.
-   * 
-   * @param type
-   *        Procedure type.
-   */
   void setType(final ProcedureType type)
   {
     if (type == null)

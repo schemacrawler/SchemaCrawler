@@ -26,7 +26,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 
 /**
- * {@inheritDoc}
+ * Represents the database schema.
  * 
  * @author Sualeh Fatehi
  */

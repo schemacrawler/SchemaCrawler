@@ -28,7 +28,7 @@ public interface JdbcDriverProperty
 {
 
   /**
-   * An array of possible values if the value for the field
+   * Gets the array of possible values if the value for the field
    * <code>DriverPropertyInfo.value</code> may be selected from a
    * particular set of values.
    * 
@@ -37,18 +37,18 @@ public interface JdbcDriverProperty
   String[] getChoices();
 
   /**
-   * A brief description of the property.
+   * Gets the description of the property.
    * 
    * @return Description
    */
   String getDescription();
 
   /**
-   * The <code>value</code> field specifies the current value of the
-   * property, based on a combination of the information supplied to the
-   * method <code>getPropertyInfo</code>, the Java environment, and
-   * the driver-supplied default values. This field may be null if no
-   * value is known.
+   * Gets the the current value of the property, based on a combination
+   * of the information supplied to the method
+   * <code>getPropertyInfo</code>, the Java environment, and the
+   * driver-supplied default values. This field may be null if no value
+   * is known.
    * 
    * @return Value of the property
    */

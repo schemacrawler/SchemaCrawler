@@ -31,6 +31,8 @@ import schemacrawler.schema.NamedObject;
 
 /**
  * Represents an index on a database table.
+ * 
+ * @author Sualeh Fatehi
  */
 class MutableIndex
   extends AbstractDependantNamedObject

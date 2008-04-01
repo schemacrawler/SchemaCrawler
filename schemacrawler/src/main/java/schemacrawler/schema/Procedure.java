@@ -19,7 +19,7 @@ package schemacrawler.schema;
 
 
 /**
- * Represents a procedure.
+ * Represents a database procedure.
  * 
  * @author Sualeh Fatehi
  */
@@ -32,14 +32,14 @@ public interface Procedure
    * 
    * @param name
    *        Name
-   * @return Column of the procedure.
+   * @return Column of the procedure
    */
   ProcedureColumn getColumn(String name);
 
   /**
-   * List of columns in ordinal order.
+   * Gets the list of columns in ordinal order.
    * 
-   * @return Columns of the procedure.
+   * @return Columns of the procedure
    */
   ProcedureColumn[] getColumns();
 
@@ -53,12 +53,12 @@ public interface Procedure
   /**
    * Gets the type of the routine body.
    * 
-   * @return Routine body type.
+   * @return Routine body type
    */
   RoutineBodyType getRoutineBodyType();
 
   /**
-   * Procedure type.
+   * Gets the procedure type.
    * 
    * @return Procedure type
    */

@@ -19,7 +19,7 @@ package schemacrawler.schema;
 
 
 /**
- * Represents a foreign key in a table.
+ * RRepresents a foreign-key mapping to a primary key in another table.
  * 
  * @author Sualeh Fatehi
  */
@@ -28,28 +28,28 @@ public interface ForeignKey
 {
 
   /**
-   * List of column pairs.
+   * Gets the list of column pairs.
    * 
    * @return Column pairs
    */
   ForeignKeyColumnMap[] getColumnPairs();
 
   /**
-   * Deferrability.
+   * Gets the deferrability.
    * 
    * @return Deferrability
    */
   ForeignKeyDeferrability getDeferrability();
 
   /**
-   * Delete rule.
+   * Gets the delete rule.
    * 
    * @return Delete rule
    */
   ForeignKeyUpdateRule getDeleteRule();
 
   /**
-   * Update rule.
+   * Gets the update rule.
    * 
    * @return Update rule
    */

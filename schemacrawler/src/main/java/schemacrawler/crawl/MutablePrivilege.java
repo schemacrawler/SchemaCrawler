@@ -22,7 +22,7 @@ import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Privilege;
 
 /**
- * Table or column privilege.
+ * Represents a privilege of a table or column.
  * 
  * @author Sualeh Fatehi
  */

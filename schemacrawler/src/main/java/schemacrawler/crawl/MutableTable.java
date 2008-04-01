@@ -30,7 +30,7 @@ import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
 
 /**
- * {@inheritDoc}
+ * Represents a table in the database.
  * 
  * @author Sualeh Fatehi
  */
@@ -215,67 +215,31 @@ class MutableTable
     return type;
   }
 
-  /**
-   * Adds an check constraints.
-   * 
-   * @param checkConstraints
-   *        Check constraints
-   */
   void addCheckConstraint(final MutableCheckConstraint checkConstraint)
   {
     checkConstraints.add(checkConstraint);
   }
 
-  /**
-   * Adds a column.
-   * 
-   * @param column
-   *        Column
-   */
   void addColumn(final MutableColumn column)
   {
     columns.add(column);
   }
 
-  /**
-   * Adds a foreign key.
-   * 
-   * @param foreignKey
-   *        Foreign key
-   */
   void addForeignKey(final MutableForeignKey foreignKey)
   {
     foreignKeys.add(foreignKey);
   }
 
-  /**
-   * Adds an index.
-   * 
-   * @param index
-   *        Index
-   */
   void addIndex(final MutableIndex index)
   {
     indices.add(index);
   }
 
-  /**
-   * Adds a privilege.
-   * 
-   * @param privilege
-   *        Privilege
-   */
   void addPrivilege(final MutablePrivilege privilege)
   {
     privileges.add(privilege);
   }
 
-  /**
-   * Adds an trigger.
-   * 
-   * @param trigger
-   *        Trigger
-   */
   void addTrigger(final MutableTrigger trigger)
   {
     triggers.add(trigger);
@@ -340,12 +304,6 @@ class MutableTable
     triggers.setSortOrder(comparator);
   }
 
-  /**
-   * Sets the table type.
-   * 
-   * @param type
-   *        Table type
-   */
   void setType(final TableType type)
   {
     if (type == null)

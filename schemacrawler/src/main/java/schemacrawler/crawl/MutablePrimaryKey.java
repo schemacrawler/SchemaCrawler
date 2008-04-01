@@ -24,7 +24,7 @@ import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.PrimaryKey;
 
 /**
- * Primary key.
+ * Represents a primary key in a table.
  * 
  * @author Sualeh Fatehi
  */
@@ -40,7 +40,6 @@ class MutablePrimaryKey
    * 
    * @param index
    *        Index
-   * @return Primary key
    */
   MutablePrimaryKey(final Index index)
   {

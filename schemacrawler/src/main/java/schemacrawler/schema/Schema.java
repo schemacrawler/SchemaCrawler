@@ -28,14 +28,14 @@ public interface Schema
 {
 
   /**
-   * Database information.
+   * Gets the database information.
    * 
    * @return Database information
    */
   DatabaseInfo getDatabaseInfo();
 
   /**
-   * JDBC driver information.
+   * Gets the JDBC driver information.
    * 
    * @return JDBC driver information
    */
@@ -51,14 +51,14 @@ public interface Schema
   Procedure getProcedure(String name);
 
   /**
-   * Procedures.
+   * Gets the procedures.
    * 
    * @return Procedures
    */
   Procedure[] getProcedures();
 
   /**
-   * Gets a Table by name.
+   * Gets a table by name.
    * 
    * @param name
    *        Name
@@ -67,7 +67,7 @@ public interface Schema
   Table getTable(String name);
 
   /**
-   * Tables.
+   * Gets the tables.
    * 
    * @return Tables
    */

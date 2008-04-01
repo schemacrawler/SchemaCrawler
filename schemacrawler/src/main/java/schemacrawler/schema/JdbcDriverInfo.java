@@ -30,21 +30,21 @@ public interface JdbcDriverInfo
 {
 
   /**
-   * Database connection URL.
+   * Gets the database connection URL.
    * 
-   * @return Database connection URL.
+   * @return Database connection URL
    */
   String getConnectionUrl();
 
   /**
-   * Class name of the JDBC driver.
+   * Gets the class name of the JDBC driver.
    * 
-   * @return Class name of the JDBC driver.
+   * @return Class name of the JDBC driver
    */
   String getDriverClassName();
 
   /**
-   * Name of the driver.
+   * Gets the name of the JDBC driver.
    * 
    * @return Driver name
    */
@@ -58,14 +58,14 @@ public interface JdbcDriverInfo
   JdbcDriverProperty[] getDriverProperties();
 
   /**
-   * Driver version.
+   * Gets the JDBC driver version.
    * 
    * @return Driver version.
    */
   String getDriverVersion();
 
   /**
-   * Reports whether this driver is a genuine JDBC Compliant<sup><font
+   * Reports whether this JDBC driver is a genuine JDBC Compliant<sup><font
    * size=-2>TM</font></sup> driver.
    * <P>
    * JDBC compliance requires full support for the JDBC API and full
