@@ -34,7 +34,7 @@ import schemacrawler.schema.NamedObject;
  * 
  * @author Sualeh Fatehi
  */
-final class NamedObjectList<N extends AbstractNamedObject>
+final class NamedObjectList<N extends NamedObject>
   implements Serializable, Iterable<N>
 {
 

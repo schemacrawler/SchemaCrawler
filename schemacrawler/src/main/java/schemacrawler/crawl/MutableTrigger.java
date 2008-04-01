@@ -26,6 +26,8 @@ import schemacrawler.schema.Trigger;
 
 /**
  * Represents a trigger.
+ * 
+ * @author Sualeh Fatehi
  */
 class MutableTrigger
   extends AbstractDependantNamedObject

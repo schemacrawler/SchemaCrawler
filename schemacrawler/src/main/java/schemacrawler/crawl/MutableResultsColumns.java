@@ -23,7 +23,7 @@ import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
 
 /**
- * {@inheritDoc}
+ * Represents a result set, a result of a query.
  * 
  * @author Sualeh Fatehi
  */
@@ -44,7 +44,7 @@ class MutableResultsColumns
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.Table#getColumn(java.lang.String)
+   * @see schemacrawler.schema.ResultsColumns#getColumn(java.lang.String)
    */
   public ResultsColumn getColumn(final String name)
   {
@@ -54,7 +54,7 @@ class MutableResultsColumns
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.Table#getColumns()
+   * @see schemacrawler.schema.ResultsColumns#getColumns()
    */
   public ResultsColumn[] getColumns()
   {
@@ -64,7 +64,7 @@ class MutableResultsColumns
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.Table#getColumnsListAsString()
+   * @see schemacrawler.schema.ResultsColumns#getColumnsListAsString()
    */
   public String getColumnsListAsString()
   {
@@ -87,25 +87,9 @@ class MutableResultsColumns
     return columnsList;
   }
 
-  /**
-   * Adds a column.
-   * 
-   * @param column
-   *        Column
-   */
   void addColumn(final MutableResultsColumn column)
   {
     columns.add(column);
-  }
-
-  NamedObjectList<MutableResultsColumn> getColumnsList()
-  {
-    return columns;
-  }
-
-  void setColumnComparator(final NamedObjectSort comparator)
-  {
-    columns.setSortOrder(comparator);
   }
 
 }

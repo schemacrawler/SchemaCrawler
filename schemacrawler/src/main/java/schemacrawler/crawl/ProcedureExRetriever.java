@@ -28,8 +28,8 @@ import java.util.logging.Logger;
 import schemacrawler.schema.RoutineBodyType;
 
 /**
- * ProcedureExRetriever uses database metadata to get the details about
- * the schema.
+ * A retriever that uses database metadata to get the extended details
+ * about the database procedures.
  * 
  * @author Sualeh Fatehi
  */
