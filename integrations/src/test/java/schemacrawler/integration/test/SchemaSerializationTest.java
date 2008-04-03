@@ -58,7 +58,7 @@ public class SchemaSerializationTest
   public static void beforeAllTests()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
-    testUtility.setApplicationLogLevel();
+    TestUtility.setApplicationLogLevel();
     testUtility.createMemoryDatabase();
   }
 
@@ -112,7 +112,7 @@ public class SchemaSerializationTest
         {
           writer.close();
         }
-        catch (IOException e)
+        catch (final IOException e)
         {
           // Ignore
         }

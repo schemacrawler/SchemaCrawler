@@ -58,11 +58,11 @@ public class SpringIntegrationTest
   public static void beforeAllTests()
     throws PropertiesDataSourceException, ClassNotFoundException
   {
-    testUtility.setApplicationLogLevel();
+    TestUtility.setApplicationLogLevel();
     testUtility.createMemoryDatabase();
   }
 
-  private ApplicationContext appContext = new ClassPathXmlApplicationContext("context.xml");
+  private final ApplicationContext appContext = new ClassPathXmlApplicationContext("context.xml");
 
   @SuppressWarnings("unchecked")
   @Test
@@ -90,6 +90,22 @@ public class SpringIntegrationTest
 
     final Executable<SchemaTextOptions> executable = (Executable<SchemaTextOptions>) appContext
       .getBean("executableForFreeMarker");
+    executable.getToolOptions().getOutputOptions()
+      .setOutputFileName(outputFilename);
+
+    executeAndCheckForOutputFile(executable, outputFilename);
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void testExecutableForGrep()
+    throws Exception
+  {
+    final String outputFilename = File.createTempFile("schemacrawler", "test")
+      .getAbsolutePath();
+
+    final Executable<GrepOptions> executable = (Executable<GrepOptions>) appContext
+      .getBean("executableForGrep");
     executable.getToolOptions().getOutputOptions()
       .setOutputFileName(outputFilename);
 
@@ -138,22 +154,6 @@ public class SpringIntegrationTest
 
     final Executable<SchemaTextOptions> executable = (Executable<SchemaTextOptions>) appContext
       .getBean("executableForVelocity");
-    executable.getToolOptions().getOutputOptions()
-      .setOutputFileName(outputFilename);
-
-    executeAndCheckForOutputFile(executable, outputFilename);
-  }
-
-  @SuppressWarnings("unchecked")
-  @Test
-  public void testExecutableForGrep()
-    throws Exception
-  {
-    final String outputFilename = File.createTempFile("schemacrawler", "test")
-      .getAbsolutePath();
-
-    final Executable<GrepOptions> executable = (Executable<GrepOptions>) appContext
-      .getBean("executableForGrep");
     executable.getToolOptions().getOutputOptions()
       .setOutputFileName(outputFilename);
 

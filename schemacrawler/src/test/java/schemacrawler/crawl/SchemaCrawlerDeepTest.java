@@ -53,7 +53,7 @@ public class SchemaCrawlerDeepTest
   public static void beforeAllTests()
     throws ClassNotFoundException
   {
-    testUtility.setApplicationLogLevel();
+    TestUtility.setApplicationLogLevel();
     testUtility.createMemoryDatabase();
   }
 
@@ -71,42 +71,44 @@ public class SchemaCrawlerDeepTest
                schema.getProcedures().length > 0);
 
     // Try negative test
-    Table table0 = schema.getTables()[0];
+    final Table table0 = schema.getTables()[0];
     assertTrue("Could not find any columns", table0.getColumns().length > 0);
 
-    MutableTable table1 = new MutableTable(table0.getCatalogName(), table0
-      .getSchemaName(), "Test Table 1");
-    MutableTable table2 = new MutableTable(table0.getCatalogName(), table0
-      .getSchemaName(), "Test Table 2");
-    PrimaryKey primaryKey = table0.getPrimaryKey();
+    final MutableTable table1 = new MutableTable(table0.getCatalogName(),
+                                                 table0.getSchemaName(),
+                                                 "Test Table 1");
+    final MutableTable table2 = new MutableTable(table0.getCatalogName(),
+                                                 table0.getSchemaName(),
+                                                 "Test Table 2");
+    final PrimaryKey primaryKey = table0.getPrimaryKey();
     table1.setPrimaryKey(primaryKey);
     table2.setPrimaryKey(primaryKey);
-    for (Column column: table0.getColumns())
+    for (final Column column: table0.getColumns())
     {
       table1.addColumn((MutableColumn) column);
       table2.addColumn((MutableColumn) column);
     }
-    for (Index index: table0.getIndices())
+    for (final Index index: table0.getIndices())
     {
       table1.addIndex((MutableIndex) index);
       table2.addIndex((MutableIndex) index);
     }
-    for (ForeignKey fk: table0.getForeignKeys())
+    for (final ForeignKey fk: table0.getForeignKeys())
     {
       table1.addForeignKey((MutableForeignKey) fk);
       table2.addForeignKey((MutableForeignKey) fk);
     }
-    for (Trigger trigger: table0.getTriggers())
+    for (final Trigger trigger: table0.getTriggers())
     {
       table1.addTrigger((MutableTrigger) trigger);
       table2.addTrigger((MutableTrigger) trigger);
     }
-    for (Privilege privilege: table0.getPrivileges())
+    for (final Privilege privilege: table0.getPrivileges())
     {
       table1.addPrivilege((MutablePrivilege) privilege);
       table2.addPrivilege((MutablePrivilege) privilege);
     }
-    for (CheckConstraint checkConstraint: table0.getCheckConstraints())
+    for (final CheckConstraint checkConstraint: table0.getCheckConstraints())
     {
       table1.addCheckConstraint((MutableCheckConstraint) checkConstraint);
       table2.addCheckConstraint((MutableCheckConstraint) checkConstraint);
