@@ -6,7 +6,17 @@
   </properties>
   <body>
     <release
-      version="5.6"
+      version="6.0"
+      date="2008-05-28">
+      <action
+        dev="Sualeh Fatehi"
+        type="fix">
+        Changed the API so that there is a separation of concerns - the
+        SchemaInfoLevel should be an option, not a CrawlHandler property.
+      </action>
+    </release>
+    <release
+      version="5.5"
       date="2008-02-28">
       <action
         dev="Sualeh Fatehi"
