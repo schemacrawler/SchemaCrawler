@@ -106,9 +106,8 @@ public class SortingTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setAlphabeticalSortForTableColumns(sortAlphabetically);
-
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
     final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  SchemaInfoLevel.maximum(),
                                                   schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema);
 
@@ -137,9 +136,8 @@ public class SortingTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setAlphabeticalSortForForeignKeys(sortAlphabetically);
-
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
     final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  SchemaInfoLevel.maximum(),
                                                   schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema);
 
@@ -168,9 +166,8 @@ public class SortingTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setAlphabeticalSortForIndexes(sortAlphabetically);
-
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
     final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  SchemaInfoLevel.maximum(),
                                                   schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema);
 

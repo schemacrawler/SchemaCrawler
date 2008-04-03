@@ -107,7 +107,7 @@ public class OperationExecutable
                                        operationDataHandler);
     }
 
-    final SchemaCrawler crawler = new SchemaCrawler(dataSource, handler);
-    crawler.crawl(schemaCrawlerOptions);
+    final SchemaCrawler crawler = new SchemaCrawler(dataSource);
+    crawler.crawl(schemaCrawlerOptions, handler);
   }
 }

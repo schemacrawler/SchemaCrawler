@@ -113,11 +113,11 @@ public class GrepExecutable
     schemaCrawlerOptions.setShowStoredProcedures(false);
     schemaCrawlerOptions.setTableInclusionRule(toolOptions
       .getTableInclusionRule());
+    schemaCrawlerOptions.setSchemaInfoLevel(toolOptions
+      .getSchemaTextDetailType().mapToInfoLevel());
 
     // Get the entire schema at once
-    final Schema schema = SchemaCrawler.getSchema(dataSource, toolOptions
-      .getSchemaTextDetailType().mapToInfoLevel(), schemaCrawlerOptions);
-    return schema;
+    return SchemaCrawler.getSchema(dataSource, schemaCrawlerOptions);
   }
 
 }

@@ -30,7 +30,6 @@ import java.util.Set;
 
 import schemacrawler.crawl.CrawlHandler;
 import schemacrawler.crawl.SchemaCrawlerException;
-import schemacrawler.crawl.SchemaInfoLevel;
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.Column;
@@ -117,16 +116,6 @@ public abstract class BaseSchemaTextFormatter
     throws SchemaCrawlerException
   {
     options.getOutputOptions().closeOutputWriter(out);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see CrawlHandler#getInfoLevelHint()
-   */
-  public SchemaInfoLevel getInfoLevelHint()
-  {
-    return options.getSchemaTextDetailType().mapToInfoLevel();
   }
 
   /**

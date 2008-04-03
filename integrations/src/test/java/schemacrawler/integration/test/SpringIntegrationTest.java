@@ -34,7 +34,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
-import schemacrawler.crawl.SchemaInfoLevel;
 import schemacrawler.schema.Schema;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.datatext.DataTextFormatOptions;
@@ -165,11 +164,10 @@ public class SpringIntegrationTest
   @Test
   public void testSchema()
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = (SchemaCrawlerOptions) appContext
+    final SchemaCrawlerOptions options = (SchemaCrawlerOptions) appContext
       .getBean("schemaCrawlerOptions");
     final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  SchemaInfoLevel.maximum(),
-                                                  schemaCrawlerOptions);
+                                                  options);
     assertEquals(6, schema.getTables().length);
   }
 

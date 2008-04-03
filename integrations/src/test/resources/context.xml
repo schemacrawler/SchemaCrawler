@@ -31,7 +31,7 @@
       <value></value>
     </property>
   </bean>
-  
+
   <bean
     id="schemaCrawlerOptions"
     class="schemacrawler.crawl.SchemaCrawlerOptions">
@@ -68,6 +68,11 @@
     <property
       name="informationSchemaViews"
       ref="informationSchemaViews" />
+    <property name="schemaInfoLevel">
+      <bean
+        factory-method="maximum"
+        class="schemacrawler.crawl.SchemaInfoLevel" />
+    </property>
   </bean>
 
   <bean
