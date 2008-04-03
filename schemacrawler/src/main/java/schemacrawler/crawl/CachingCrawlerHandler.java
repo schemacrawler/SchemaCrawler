@@ -34,14 +34,13 @@ public final class CachingCrawlerHandler
 {
 
   private final MutableSchema schema;
-  private final SchemaInfoLevel infoLevel;
 
   /**
    * Creates a new caching crawl handler.
    */
   public CachingCrawlerHandler()
   {
-    this("", null);
+    this("");
   }
 
   /**
@@ -52,18 +51,9 @@ public final class CachingCrawlerHandler
    * @param infoLevel
    *        Schema information level
    */
-  public CachingCrawlerHandler(final String catalogName,
-                               final SchemaInfoLevel infoLevel)
+  public CachingCrawlerHandler(final String catalogName)
   {
     schema = new MutableSchema(catalogName, "schema", "schema");
-    if (infoLevel == null)
-    {
-      this.infoLevel = SchemaInfoLevel.maximum();
-    }
-    else
-    {
-      this.infoLevel = infoLevel;
-    }
   }
 
   /**
@@ -86,17 +76,6 @@ public final class CachingCrawlerHandler
     throws SchemaCrawlerException
   {
     // do nothing
-  }
-
-  /**
-   * Column info level.
-   * 
-   * @return Column info level
-   * @see CrawlHandler#getInfoLevelHint()
-   */
-  public SchemaInfoLevel getInfoLevelHint()
-  {
-    return infoLevel;
   }
 
   /**

@@ -66,18 +66,15 @@ public final class SchemaCrawler
   }
 
   /**
-   * Gets the entire schema.
+   * Gets the entire schema, using a caching crawl handler.
    * 
    * @param dataSource
    *        Data source
-   * @param infoLevel
-   *        Schema info level
    * @param options
    *        Options
    * @return Schema
    */
   public static Schema getSchema(final DataSource dataSource,
-                                 final SchemaInfoLevel infoLevel,
                                  final SchemaCrawlerOptions options)
   {
     Connection connection;
@@ -116,12 +113,11 @@ public final class SchemaCrawler
       }
     }
 
-    final CachingCrawlerHandler schemaMaker = new CachingCrawlerHandler(catalog,
-                                                                        infoLevel);
+    final CachingCrawlerHandler schemaMaker = new CachingCrawlerHandler(catalog);
     try
     {
-      final SchemaCrawler crawler = new SchemaCrawler(dataSource, schemaMaker);
-      crawler.crawl(options);
+      final SchemaCrawler crawler = new SchemaCrawler(dataSource);
+      crawler.crawl(options, schemaMaker);
     }
     catch (final SchemaCrawlerException e)
     {
@@ -132,7 +128,6 @@ public final class SchemaCrawler
   }
 
   private final DataSource dataSource;
-  private final CrawlHandler handler;
 
   /**
    * Constructs a SchemaCrawler object, from a connection.
@@ -144,8 +139,7 @@ public final class SchemaCrawler
    * @throws SchemaCrawlerException
    *         On a crawler exception
    */
-  public SchemaCrawler(final DataSource dataSource,
-                       final CrawlHandler crawlHandler)
+  public SchemaCrawler(final DataSource dataSource)
     throws SchemaCrawlerException
   {
     if (dataSource == null)
@@ -153,12 +147,6 @@ public final class SchemaCrawler
       throw new SchemaCrawlerException("No data source specified");
     }
     this.dataSource = dataSource;
-
-    if (crawlHandler == null)
-    {
-      throw new SchemaCrawlerException("No crawl handler specified");
-    }
-    handler = crawlHandler;
   }
 
   /**
@@ -169,9 +157,15 @@ public final class SchemaCrawler
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  public void crawl(final SchemaCrawlerOptions options)
+  public void crawl(final SchemaCrawlerOptions options,
+                    final CrawlHandler handler)
     throws SchemaCrawlerException
   {
+    if (handler == null)
+    {
+      throw new SchemaCrawlerException("No crawl handler specified");
+    }
+
     RetrieverConnection retrieverConnection = null;
     try
     {
@@ -183,23 +177,23 @@ public final class SchemaCrawler
       retrieverConnection = new RetrieverConnection(dataSource,
                                                     schemaCrawlerOptions);
 
-      final SchemaInfoLevel infoLevel = handler.getInfoLevelHint();
       handler.begin();
 
-      crawlJdbcDriverInfo(retrieverConnection, infoLevel);
+      crawlJdbcDriverInfo(retrieverConnection, options, handler);
 
       final MutableDatabaseInfo databaseInfo = crawlDatabaseInfo(retrieverConnection,
-                                                                 infoLevel);
+                                                                 options,
+                                                                 handler);
       final NamedObjectList<MutableColumnDataType> columnDataTypes = databaseInfo
         .getColumnDataTypesList();
 
       crawlTables(retrieverConnection,
-                  infoLevel,
                   schemaCrawlerOptions,
+                  handler,
                   columnDataTypes);
       crawlProcedures(retrieverConnection,
-                      infoLevel,
                       schemaCrawlerOptions,
+                      handler,
                       columnDataTypes);
 
       handler.end();
@@ -220,12 +214,14 @@ public final class SchemaCrawler
   }
 
   private MutableDatabaseInfo crawlDatabaseInfo(final RetrieverConnection retrieverConnection,
-                                                final SchemaInfoLevel infoLevel)
+                                                final SchemaCrawlerOptions options,
+                                                final CrawlHandler handler)
     throws SchemaCrawlerException
   {
     MutableDatabaseInfo dbInfo;
     try
     {
+      final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
       final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection);
       dbInfo = retriever.retrieveDatabaseInfo();
       if (infoLevel.isRetrieveColumnDataTypes())
@@ -255,9 +251,11 @@ public final class SchemaCrawler
   }
 
   private void crawlJdbcDriverInfo(final RetrieverConnection retrieverConnection,
-                                   final SchemaInfoLevel infoLevel)
+                                   final SchemaCrawlerOptions options,
+                                   final CrawlHandler handler)
     throws SchemaCrawlerException
   {
+    final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
     if (infoLevel.isRetrieveJdbcDriverInfo())
     {
       MutableJdbcDriverInfo driverInfo;
@@ -276,11 +274,12 @@ public final class SchemaCrawler
   }
 
   private void crawlProcedures(final RetrieverConnection retrieverConnection,
-                               final SchemaInfoLevel infoLevel,
                                final SchemaCrawlerOptions options,
+                               final CrawlHandler handler,
                                final NamedObjectList<MutableColumnDataType> columnDataTypes)
     throws SchemaCrawlerException
   {
+    final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
     boolean retrieveProcedures = options.isShowStoredProcedures()
                                  && infoLevel.isRetrieveProcedures();
     if (!retrieveProcedures)
@@ -330,11 +329,12 @@ public final class SchemaCrawler
   }
 
   private void crawlTables(final RetrieverConnection retrieverConnection,
-                           final SchemaInfoLevel infoLevel,
                            final SchemaCrawlerOptions options,
+                           final CrawlHandler handler,
                            final NamedObjectList<MutableColumnDataType> columnDataTypes)
     throws SchemaCrawlerException
   {
+    final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
     boolean retrieveTables = infoLevel.isRetrieveTables();
     if (!retrieveTables)
     {

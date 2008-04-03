@@ -70,6 +70,7 @@ public final class SchemaCrawlerOptions
 
   private NamedObjectSort procedureColumnComparator;
 
+  private SchemaInfoLevel schemaInfoLevel;
   private InformationSchemaViews informationSchemaViews;
   private String schemaPattern;
 
@@ -92,7 +93,6 @@ public final class SchemaCrawlerOptions
     tableForeignKeyComparator = NamedObjectSort.natural;
     tableIndexComparator = NamedObjectSort.natural;
     procedureColumnComparator = NamedObjectSort.natural;
-
   }
 
   /**
@@ -181,6 +181,24 @@ public final class SchemaCrawlerOptions
   public InformationSchemaViews getInformationSchemaViews()
   {
     return informationSchemaViews;
+  }
+
+  /**
+   * Gets the schema information level, identifying to what level the
+   * schema should be crawled.
+   * 
+   * @return Schema information level.
+   */
+  public SchemaInfoLevel getSchemaInfoLevel()
+  {
+    if (schemaInfoLevel == null)
+    {
+      return SchemaInfoLevel.basic();
+    }
+    else
+    {
+      return schemaInfoLevel;
+    }
   }
 
   /**
@@ -344,6 +362,18 @@ public final class SchemaCrawlerOptions
     {
       this.informationSchemaViews = informationSchemaViews;
     }
+  }
+
+  /**
+   * Sets the schema information level, identifying to what level the
+   * schema should be crawled.
+   * 
+   * @param schemaInfoLevel
+   *        Schema information level.
+   */
+  public void setSchemaInfoLevel(SchemaInfoLevel schemaInfoLevel)
+  {
+    this.schemaInfoLevel = schemaInfoLevel;
   }
 
   /**

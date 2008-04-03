@@ -46,8 +46,10 @@ public abstract class TemplateRenderer
     throws Exception
   {
     // Get the entire schema at once
-    final Schema schema = SchemaCrawler.getSchema(dataSource, toolOptions
-      .getSchemaTextDetailType().mapToInfoLevel(), schemaCrawlerOptions);
+    schemaCrawlerOptions.setSchemaInfoLevel(toolOptions
+      .getSchemaTextDetailType().mapToInfoLevel());
+    final Schema schema = SchemaCrawler.getSchema(dataSource,
+                                                  schemaCrawlerOptions);
 
     // Executable-specific work
     final Writer writer = toolOptions.getOutputOptions().openOutputWriter();

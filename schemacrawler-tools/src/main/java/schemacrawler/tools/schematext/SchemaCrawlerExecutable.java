@@ -59,8 +59,12 @@ public class SchemaCrawlerExecutable
       handler = new SchemaTextFormatter(toolOptions);
     }
 
-    final SchemaCrawler crawler = new SchemaCrawler(dataSource, handler);
-    crawler.crawl(schemaCrawlerOptions);
+    // Set the correct level of crawling required
+    schemaCrawlerOptions.setSchemaInfoLevel(toolOptions
+      .getSchemaTextDetailType().mapToInfoLevel());
+
+    final SchemaCrawler crawler = new SchemaCrawler(dataSource);
+    crawler.crawl(schemaCrawlerOptions, handler);
   }
 
 }
