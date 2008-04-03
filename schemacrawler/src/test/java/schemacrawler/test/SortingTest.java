@@ -25,7 +25,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
 import schemacrawler.schema.Column;
@@ -107,8 +106,7 @@ public class SortingTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setAlphabeticalSortForTableColumns(sortAlphabetically);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  schemaCrawlerOptions);
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema);
 
     final Table[] tables = schema.getTables();
@@ -137,8 +135,7 @@ public class SortingTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setAlphabeticalSortForForeignKeys(sortAlphabetically);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  schemaCrawlerOptions);
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema);
 
     final Table[] tables = schema.getTables();
@@ -167,8 +164,7 @@ public class SortingTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setAlphabeticalSortForIndexes(sortAlphabetically);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  schemaCrawlerOptions);
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema);
 
     final Table[] tables = schema.getTables();
