@@ -32,7 +32,6 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.schema.Schema;
 import schemacrawler.tools.Executable;
@@ -164,10 +163,9 @@ public class SpringIntegrationTest
   @Test
   public void testSchema()
   {
-    final SchemaCrawlerOptions options = (SchemaCrawlerOptions) appContext
+    final SchemaCrawlerOptions schemaCrawlerOptions = (SchemaCrawlerOptions) appContext
       .getBean("schemaCrawlerOptions");
-    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  options);
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions);
     assertEquals(6, schema.getTables().length);
   }
 

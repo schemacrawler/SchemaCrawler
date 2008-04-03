@@ -35,7 +35,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.crawl.SchemaInfoLevel;
 import schemacrawler.schema.Schema;
@@ -67,11 +66,10 @@ public class SchemaSerializationTest
   public void schemaSerializationWithXStream()
     throws Exception
   {
-    final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
-    options.setShowStoredProcedures(true);
-    options.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  options);
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setShowStoredProcedures(true);
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions);
     final XStream xStream = new XStream();
 
     final String xmlSerializedSchema1 = xStream.toXML(schema);

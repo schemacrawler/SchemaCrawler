@@ -64,8 +64,7 @@ public class SchemaCrawlerDeepTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setShowStoredProcedures(true);
 
-    final Schema schema = SchemaCrawler.getSchema(testUtility.getDataSource(),
-                                                  schemaCrawlerOptions);
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions);
     assertNotNull("Could not obtain schema", schema);
     assertTrue("Could not find any tables", schema.getTables().length > 0);
     assertTrue("Could not find any procedures",

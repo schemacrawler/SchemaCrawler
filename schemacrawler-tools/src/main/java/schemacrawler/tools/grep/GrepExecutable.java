@@ -21,11 +21,14 @@
 package schemacrawler.tools.grep;
 
 
+import java.util.logging.Logger;
+
 import javax.sql.DataSource;
 
 import schemacrawler.crawl.CachingCrawlerHandler;
 import schemacrawler.crawl.CrawlHandler;
 import schemacrawler.crawl.SchemaCrawler;
+import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.schema.Schema;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputFormat;
@@ -41,6 +44,9 @@ import schemacrawler.tools.schematext.SchemaTextFormatter;
 public class GrepExecutable
   extends Executable<GrepOptions>
 {
+
+  private static final Logger LOGGER = Logger.getLogger(GrepExecutable.class
+    .getName());
 
   /**
    * Sets up default options.
@@ -108,6 +114,7 @@ public class GrepExecutable
   }
 
   private Schema getEntireSchema(final DataSource dataSource)
+    throws SchemaCrawlerException
   {
     // Force certain SchemaCrawler options
     schemaCrawlerOptions.setShowStoredProcedures(false);
@@ -117,7 +124,8 @@ public class GrepExecutable
       .getSchemaTextDetailType().mapToInfoLevel());
 
     // Get the entire schema at once
-    return SchemaCrawler.getSchema(dataSource, schemaCrawlerOptions);
+    final SchemaCrawler schemaCrawler = new SchemaCrawler(dataSource);
+    return schemaCrawler.load(schemaCrawlerOptions);
   }
 
 }
