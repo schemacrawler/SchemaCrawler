@@ -56,7 +56,7 @@ public class ResultColumnsTest
   public static void beforeAllTests()
     throws ClassNotFoundException
   {
-    testUtility.setApplicationLogLevel();
+    TestUtility.setApplicationLogLevel();
     testUtility.createMemoryDatabase();
   }
 
@@ -82,20 +82,20 @@ public class ResultColumnsTest
                        + "  CUSTOMER.FIRSTNAME, " + "  CUSTOMER.LASTNAME, "
                        + "  CUSTOMER.STREET, " + "  CUSTOMER.CITY "
                        + "ORDER BY " + "  SUM(INVOICE.TOTAL) DESC";
-    Connection connection = testUtility.getDataSource().getConnection();
-    Statement statement = connection.createStatement();
-    ResultSet resultSet = statement.executeQuery(sql);
+    final Connection connection = testUtility.getDataSource().getConnection();
+    final Statement statement = connection.createStatement();
+    final ResultSet resultSet = statement.executeQuery(sql);
 
     final ResultsColumns resultColumns = SchemaCrawler
       .getResultColumns(resultSet);
     connection.close();
 
     assertNotNull("Could not obtain result columns", resultColumns);
-    ResultsColumn[] columns = resultColumns.getColumns();
+    final ResultsColumn[] columns = resultColumns.getColumns();
     assertEquals("Column count does not match", 4, columns.length);
     for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
     {
-      ResultsColumn column = columns[columnIdx];
+      final ResultsColumn column = columns[columnIdx];
       LOGGER.log(Level.FINE, column.toString());
       assertEquals("Column full name does not match",
                    columnNames[columnIdx],

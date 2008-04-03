@@ -38,27 +38,6 @@ public class SpringOptions
   private String contextFileName;
 
   /**
-   * Bean name of the SchemaCrawler executable.
-   * 
-   * @return Bean name of the SchemaCrawler executable.
-   */
-  public String getExecutableName()
-  {
-    return executableName;
-  }
-
-  /**
-   * Set the bean name of the SchemaCrawler executable.
-   * 
-   * @param executableName
-   *        Bean name of the SchemaCrawler executable.
-   */
-  public void setExecutableName(final String executableName)
-  {
-    this.executableName = executableName;
-  }
-
-  /**
    * Spring context file name.
    * 
    * @return Spring context file name.
@@ -66,6 +45,26 @@ public class SpringOptions
   public String getContextFileName()
   {
     return contextFileName;
+  }
+
+  /**
+   * Bean name for the datasource.
+   * 
+   * @return Bean name for the datasource.
+   */
+  public String getDataSourceName()
+  {
+    return dataSourceName;
+  }
+
+  /**
+   * Bean name of the SchemaCrawler executable.
+   * 
+   * @return Bean name of the SchemaCrawler executable.
+   */
+  public String getExecutableName()
+  {
+    return executableName;
   }
 
   /**
@@ -80,16 +79,6 @@ public class SpringOptions
   }
 
   /**
-   * Bean name for the datasource.
-   * 
-   * @return Bean name for the datasource.
-   */
-  public String getDataSourceName()
-  {
-    return dataSourceName;
-  }
-
-  /**
    * Set the bean name for the datasource.
    * 
    * @param dataSourceName
@@ -98,6 +87,17 @@ public class SpringOptions
   public void setDataSourceName(final String dataSourceName)
   {
     this.dataSourceName = dataSourceName;
+  }
+
+  /**
+   * Set the bean name of the SchemaCrawler executable.
+   * 
+   * @param executableName
+   *        Bean name of the SchemaCrawler executable.
+   */
+  public void setExecutableName(final String executableName)
+  {
+    this.executableName = executableName;
   }
 
 }

@@ -371,7 +371,7 @@ public final class SchemaCrawlerOptions
    * @param schemaInfoLevel
    *        Schema information level.
    */
-  public void setSchemaInfoLevel(SchemaInfoLevel schemaInfoLevel)
+  public void setSchemaInfoLevel(final SchemaInfoLevel schemaInfoLevel)
   {
     this.schemaInfoLevel = schemaInfoLevel;
   }

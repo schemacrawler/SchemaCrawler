@@ -21,7 +21,6 @@
 package schemacrawler.tools.integration.velocity;
 
 
-
 /**
  * Main class that takes arguments for a database for crawling a schema.
  */

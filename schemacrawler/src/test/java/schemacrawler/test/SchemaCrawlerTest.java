@@ -185,6 +185,36 @@ public class SchemaCrawlerTest
   }
 
   @Test
+  public void schemaEquals()
+  {
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setShowStoredProcedures(true);
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.verbose());
+    final Schema schema1 = testUtility.getSchema(schemaCrawlerOptions);
+    assertNotNull("Could not obtain schema", schema1);
+    assertTrue("Could not find any tables", schema1.getTables().length > 0);
+    assertTrue("Could not find any procedures",
+               schema1.getProcedures().length > 0);
+
+    final Schema schema2 = testUtility.getSchema(schemaCrawlerOptions);
+    assertNotNull("Could not obtain schema", schema2);
+
+    assertEquals("Schema not not match", schema1, schema2);
+    assertArrayEquals("Tables do not match", schema1.getTables(), schema2
+      .getTables());
+    assertArrayEquals("Procedures do not match",
+                      schema1.getProcedures(),
+                      schema2.getProcedures());
+
+    // Try negative test
+    final Table table1 = schema1.getTables()[0];
+    final Table table2 = schema1.getTables()[1];
+    assertFalse("Tables should not be equal", table1.equals(table2));
+
+  }
+
+  @Test
   public void tableCount()
   {
     LOGGER.log(Level.FINE, testUtility.getDataSource().toString());
@@ -312,36 +342,6 @@ public class SchemaCrawlerTest
     {
       fail("No views found");
     }
-
-  }
-
-  @Test
-  public void schemaEquals()
-  {
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setShowStoredProcedures(true);
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.verbose());
-    final Schema schema1 = testUtility.getSchema(schemaCrawlerOptions);
-    assertNotNull("Could not obtain schema", schema1);
-    assertTrue("Could not find any tables", schema1.getTables().length > 0);
-    assertTrue("Could not find any procedures",
-               schema1.getProcedures().length > 0);
-
-    final Schema schema2 = testUtility.getSchema(schemaCrawlerOptions);
-    assertNotNull("Could not obtain schema", schema2);
-
-    assertEquals("Schema not not match", schema1, schema2);
-    assertArrayEquals("Tables do not match", schema1.getTables(), schema2
-      .getTables());
-    assertArrayEquals("Procedures do not match",
-                      schema1.getProcedures(),
-                      schema2.getProcedures());
-
-    // Try negative test
-    Table table1 = schema1.getTables()[0];
-    Table table2 = schema1.getTables()[1];
-    assertFalse("Tables should not be equal", table1.equals(table2));
 
   }
 }

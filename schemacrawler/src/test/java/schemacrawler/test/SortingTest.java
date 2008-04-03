@@ -50,7 +50,7 @@ public class SortingTest
   public static void beforeAllTests()
     throws Exception
   {
-    testUtility.setApplicationLogLevel();
+    TestUtility.setApplicationLogLevel();
     testUtility.createMemoryDatabase();
   }
 

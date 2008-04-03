@@ -21,7 +21,6 @@
 package schemacrawler.tools.integration.freemarker;
 
 
-
 /**
  * Main class that takes arguments for a database for crawling a schema.
  */
