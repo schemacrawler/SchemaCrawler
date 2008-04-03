@@ -1,1 +1,1 @@
-java -classpath ../schemacrawler-5.6.jar:../hsqldb.jar schemacrawler.Main -c hsqldb -command=tables.select -outputformat=csv
+java -classpath ../schemacrawler-6.0.jar:../hsqldb.jar schemacrawler.Main -c hsqldb -command=tables.select -outputformat=csv

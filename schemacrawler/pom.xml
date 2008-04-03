@@ -6,14 +6,14 @@
   <parent>
     <artifactId>schemacrawler-all</artifactId>
     <groupId>schemacrawler</groupId>
-    <version>5.6</version>
+    <version>6.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>schemacrawler</groupId>
   <artifactId>schemacrawler</artifactId>
   <packaging>jar</packaging>
   <name>SchemaCrawler</name>
-  <version>5.6</version>
+  <version>6.0</version>
   <description>SchemaCrawler is an API that improves on the standard JDBC metadata.</description>
   <url>http://sourceforge.net/projects/schemacrawler</url>
   <inceptionYear>2000</inceptionYear>
