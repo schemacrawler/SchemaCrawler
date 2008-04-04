@@ -72,14 +72,13 @@ public final class DatabaseSchemaCrawler
   }
 
   private final DataSource dataSource;
+  private String catalog = null;
 
   /**
    * Constructs a SchemaCrawler object, from a connection.
    * 
    * @param dataSource
    *        An data source.
-   * @param crawlHandler
-   *        A crawl handler instance
    * @throws SchemaCrawlerException
    *         On a crawler exception
    */
@@ -91,6 +90,33 @@ public final class DatabaseSchemaCrawler
       throw new SchemaCrawlerException("No data source specified");
     }
     this.dataSource = dataSource;
+
+    // Check data source, and obtain the catalog name
+    Connection connection = null;
+    try
+    {
+      connection = dataSource.getConnection();
+      catalog = connection.getCatalog();
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, e.getMessage(), e);
+      // NOTE: catalog remains null, which is ok for JDBC
+    }
+    finally
+    {
+      try
+      {
+        if (connection != null)
+        {
+          connection.close();
+        }
+      }
+      catch (final SQLException e)
+      {
+        LOGGER.log(Level.WARNING, "Could not close connection", e);
+      }
+    }
   }
 
   /**
@@ -162,47 +188,10 @@ public final class DatabaseSchemaCrawler
    */
   public Schema load(final SchemaCrawlerOptions options)
   {
-    Connection connection;
-    try
-    {
-      connection = dataSource.getConnection();
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, e.getMessage(), e);
-      return null;
-    }
-
-    String catalog = null;
-    try
-    {
-      catalog = connection.getCatalog();
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, e.getMessage(), e);
-      // NOTE: catalog remains null, which is ok for JDBC
-    }
-    finally
-    {
-      try
-      {
-        if (connection != null)
-        {
-          connection.close();
-        }
-      }
-      catch (final SQLException e)
-      {
-        LOGGER.log(Level.WARNING, "Could not close connection", e);
-      }
-    }
-
     final CachingCrawlerHandler schemaMaker = new CachingCrawlerHandler(catalog);
     try
     {
-      final SchemaCrawler crawler = new DatabaseSchemaCrawler(dataSource);
-      crawler.crawl(options, schemaMaker);
+      crawl(options, schemaMaker);
     }
     catch (final SchemaCrawlerException e)
     {
