@@ -263,11 +263,6 @@ public class TestUtility
     return dataSource;
   }
 
-  /**
-   * Gets the datasource.
-   * 
-   * @return Datasource
-   */
   public Schema getSchema(final SchemaCrawlerOptions schemaCrawlerOptions)
   {
     SchemaCrawler schemaCrawler;
