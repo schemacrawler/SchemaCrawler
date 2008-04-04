@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package schemacrawler.crawl;
+package schemacrawler;
 
 
 import java.io.BufferedInputStream;
@@ -37,7 +37,7 @@ import java.util.logging.Logger;
  * 
  * @author Sualeh Fatehi
  */
-public class Config
+public final class Config
   extends HashMap<String, String>
 {
 

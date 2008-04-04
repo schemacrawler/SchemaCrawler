@@ -32,7 +32,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import schemacrawler.crawl.SchemaCrawlerOptions;
+import schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schema.Schema;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.datatext.DataTextFormatOptions;

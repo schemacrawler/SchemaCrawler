@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-package schemacrawler.crawl;
+package schemacrawler;
 
 
 import java.util.Arrays;
 import java.util.Properties;
 
-import schemacrawler.crawl.NamedObjectList.NamedObjectSort;
 import schemacrawler.schema.TableType;
 
 /**
@@ -43,7 +42,7 @@ public final class SchemaCrawlerOptions
   private static final String SC_TABLE_PATTERN_EXCLUDE = "schemacrawler.table.pattern.exclude";
   private static final String SC_TABLE_PATTERN_INCLUDE = "schemacrawler.table.pattern.include";
   private static final String SC_SORT_ALPHABETICALLY_PROCEDURE_COLUMNS = "schemacrawler.sort_alphabetically.procedure_columns";
-  private static final String SC_SORT_ALPHABETICALLY_TABLE_INDICES = "schemacrawler.sort_alphabetically.table_indices";
+  private static final String SC_SORT_ALPHABETICALLY_TABLE_INDEXES = "schemacrawler.sort_alphabetically.table_indices";
   private static final String SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS = "schemacrawler.sort_alphabetically.table_foreignkeys";
   private static final String SC_SORT_ALPHABETICALLY_TABLE_COLUMNS = "schemacrawler.sort_alphabetically.table_columns";
   private static final String SC_TABLE_TYPES = "schemacrawler.table_types";
@@ -64,11 +63,11 @@ public final class SchemaCrawlerOptions
   private InclusionRule tableInclusionRule;
   private InclusionRule columnInclusionRule;
 
-  private NamedObjectSort tableColumnComparator;
-  private NamedObjectSort tableForeignKeyComparator;
-  private NamedObjectSort tableIndexComparator;
+  private boolean isAlphabeticalSortForTableColumns;
+  private boolean isAlphabeticalSortForForeignKeys;
+  private boolean isAlphabeticalSortForIndexes;
 
-  private NamedObjectSort procedureColumnComparator;
+  private boolean isAlphabeticalSortForProcedureColumns;
 
   private SchemaInfoLevel schemaInfoLevel;
   private InformationSchemaViews informationSchemaViews;
@@ -88,11 +87,6 @@ public final class SchemaCrawlerOptions
 
     tableInclusionRule = new InclusionRule();
     columnInclusionRule = new InclusionRule();
-
-    tableColumnComparator = NamedObjectSort.natural;
-    tableForeignKeyComparator = NamedObjectSort.natural;
-    tableIndexComparator = NamedObjectSort.natural;
-    procedureColumnComparator = NamedObjectSort.natural;
   }
 
   /**
@@ -141,15 +135,14 @@ public final class SchemaCrawlerOptions
                                               .getStringValue(SC_COLUMN_PATTERN_EXCLUDE,
                                                               InclusionRule.EXCLUDE_NONE));
 
-    // comparators
-    tableColumnComparator = getComparator(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS,
-                                          config);
-    tableForeignKeyComparator = getComparator(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS,
-                                              config);
-    tableIndexComparator = getComparator(SC_SORT_ALPHABETICALLY_TABLE_INDICES,
-                                         config);
-    procedureColumnComparator = getComparator(SC_SORT_ALPHABETICALLY_PROCEDURE_COLUMNS,
-                                              config);
+    isAlphabeticalSortForTableColumns = config
+      .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS);
+    isAlphabeticalSortForForeignKeys = config
+      .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS);
+    isAlphabeticalSortForIndexes = config
+      .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES);
+    isAlphabeticalSortForProcedureColumns = config
+      .getBooleanValue(SC_SORT_ALPHABETICALLY_PROCEDURE_COLUMNS);
   }
 
   /**
@@ -240,8 +233,7 @@ public final class SchemaCrawlerOptions
    */
   public boolean isAlphabeticalSortForForeignKeys()
   {
-    return tableForeignKeyComparator != null
-           && tableForeignKeyComparator == NamedObjectSort.alphabetical;
+    return isAlphabeticalSortForForeignKeys;
   }
 
   /**
@@ -251,8 +243,7 @@ public final class SchemaCrawlerOptions
    */
   public boolean isAlphabeticalSortForIndexes()
   {
-    return tableIndexComparator != null
-           && tableIndexComparator == NamedObjectSort.alphabetical;
+    return isAlphabeticalSortForIndexes;
   }
 
   /**
@@ -262,8 +253,7 @@ public final class SchemaCrawlerOptions
    */
   public boolean isAlphabeticalSortForProcedureColumns()
   {
-    return procedureColumnComparator != null
-           && procedureColumnComparator == NamedObjectSort.alphabetical;
+    return isAlphabeticalSortForProcedureColumns;
   }
 
   /**
@@ -273,8 +263,7 @@ public final class SchemaCrawlerOptions
    */
   public boolean isAlphabeticalSortForTableColumns()
   {
-    return tableColumnComparator != null
-           && tableColumnComparator == NamedObjectSort.alphabetical;
+    return isAlphabeticalSortForTableColumns;
   }
 
   /**
@@ -295,7 +284,7 @@ public final class SchemaCrawlerOptions
    */
   public void setAlphabeticalSortForForeignKeys(final boolean alphabeticalSort)
   {
-    tableForeignKeyComparator = getComparator(alphabeticalSort);
+    isAlphabeticalSortForForeignKeys = alphabeticalSort;
   }
 
   /**
@@ -306,7 +295,7 @@ public final class SchemaCrawlerOptions
    */
   public void setAlphabeticalSortForIndexes(final boolean alphabeticalSort)
   {
-    tableIndexComparator = getComparator(alphabeticalSort);
+    isAlphabeticalSortForIndexes = alphabeticalSort;
   }
 
   /**
@@ -317,7 +306,7 @@ public final class SchemaCrawlerOptions
    */
   public void setAlphabeticalSortForProcedureColumns(final boolean alphabeticalSort)
   {
-    procedureColumnComparator = getComparator(alphabeticalSort);
+    isAlphabeticalSortForProcedureColumns = alphabeticalSort;
   }
 
   /**
@@ -328,7 +317,7 @@ public final class SchemaCrawlerOptions
    */
   public void setAlphabeticalSortForTableColumns(final boolean alphabeticalSort)
   {
-    tableColumnComparator = getComparator(alphabeticalSort);
+    isAlphabeticalSortForTableColumns = alphabeticalSort;
   }
 
   /**
@@ -485,44 +474,6 @@ public final class SchemaCrawlerOptions
     }
     buffer.append("]");
     return buffer.toString();
-  }
-
-  NamedObjectSort getProcedureColumnComparator()
-  {
-    return procedureColumnComparator;
-  }
-
-  NamedObjectSort getTableColumnComparator()
-  {
-    return tableColumnComparator;
-  }
-
-  NamedObjectSort getTableForeignKeyComparator()
-  {
-    return tableForeignKeyComparator;
-  }
-
-  NamedObjectSort getTableIndexComparator()
-  {
-    return tableIndexComparator;
-  }
-
-  private NamedObjectSort getComparator(final boolean alphabeticalSort)
-  {
-    if (alphabeticalSort)
-    {
-      return NamedObjectSort.alphabetical;
-    }
-    else
-    {
-      return NamedObjectSort.natural;
-    }
-  }
-
-  private NamedObjectSort getComparator(final String propertyName,
-                                        final Config config)
-  {
-    return getComparator(config.getBooleanValue(propertyName));
   }
 
 }

@@ -25,8 +25,8 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import schemacrawler.crawl.Config;
-import schemacrawler.crawl.SchemaCrawlerException;
+import schemacrawler.Config;
+import schemacrawler.SchemaCrawlerException;
 import schemacrawler.main.dbconnector.BundledDriverDatabaseConnector;
 import schemacrawler.main.dbconnector.DatabaseConnector;
 import schemacrawler.main.dbconnector.DatabaseConnectorException;

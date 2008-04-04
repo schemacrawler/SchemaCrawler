@@ -18,7 +18,6 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.crawl.NamedObjectList.NamedObjectSort;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.ProcedureType;

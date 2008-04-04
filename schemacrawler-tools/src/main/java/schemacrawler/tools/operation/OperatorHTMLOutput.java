@@ -23,8 +23,8 @@ package schemacrawler.tools.operation;
 
 import java.sql.Connection;
 
-import schemacrawler.crawl.Query;
-import schemacrawler.crawl.SchemaCrawlerException;
+import schemacrawler.Query;
+import schemacrawler.SchemaCrawlerException;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;

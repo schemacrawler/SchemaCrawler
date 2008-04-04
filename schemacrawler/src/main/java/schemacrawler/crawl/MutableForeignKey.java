@@ -18,7 +18,6 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.crawl.NamedObjectList.NamedObjectSort;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;

@@ -26,6 +26,11 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
+import schemacrawler.CrawlHandler;
+import schemacrawler.SchemaCrawler1;
+import schemacrawler.SchemaCrawlerException;
+import schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.SchemaInfoLevel;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.TableType;
@@ -37,6 +42,7 @@ import schemacrawler.schema.TableType;
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawler
+  implements SchemaCrawler1
 {
 
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawler.class
@@ -88,12 +94,10 @@ public final class SchemaCrawler
   }
 
   /**
-   * Crawls the schema for all tables and views.
+   * {@inheritDoc}
    * 
-   * @param options
-   *        Options
-   * @throws SchemaCrawlerException
-   *         On an exception
+   * @see schemacrawler.SchemaCrawler1#crawl(schemacrawler.SchemaCrawlerOptions,
+   *      schemacrawler.CrawlHandler)
    */
   public void crawl(final SchemaCrawlerOptions options,
                     final CrawlHandler handler)
@@ -152,11 +156,9 @@ public final class SchemaCrawler
   }
 
   /**
-   * Gets the entire schema, using a caching crawl handler.
+   * {@inheritDoc}
    * 
-   * @param options
-   *        Options
-   * @return Schema
+   * @see schemacrawler.SchemaCrawler1#load(schemacrawler.SchemaCrawlerOptions)
    */
   public Schema load(final SchemaCrawlerOptions options)
   {
@@ -199,7 +201,7 @@ public final class SchemaCrawler
     final CachingCrawlerHandler schemaMaker = new CachingCrawlerHandler(catalog);
     try
     {
-      final SchemaCrawler crawler = new SchemaCrawler(dataSource);
+      final SchemaCrawler1 crawler = new SchemaCrawler(dataSource);
       crawler.crawl(options, schemaMaker);
     }
     catch (final SchemaCrawlerException e)
@@ -319,7 +321,8 @@ public final class SchemaCrawler
         }
       }
       // set comparators
-      procedure.setColumnComparator(options.getProcedureColumnComparator());
+      procedure.setColumnComparator(NamedObjectSort.getNamedObjectSort(options
+        .isAlphabeticalSortForProcedureColumns()));
       // handle procedure
       handler.handle(procedure);
     }
@@ -405,9 +408,12 @@ public final class SchemaCrawler
         }
       }
       // set comparators
-      table.setColumnComparator(options.getTableColumnComparator());
-      table.setForeignKeyComparator(options.getTableForeignKeyComparator());
-      table.setIndexComparator(options.getTableIndexComparator());
+      table.setColumnComparator(NamedObjectSort.getNamedObjectSort(options
+        .isAlphabeticalSortForTableColumns()));
+      table.setForeignKeyComparator(NamedObjectSort.getNamedObjectSort(options
+        .isAlphabeticalSortForForeignKeys()));
+      table.setIndexComparator(NamedObjectSort.getNamedObjectSort(options
+        .isAlphabeticalSortForIndexes()));
       // handle table
       handler.handle(table);
     }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package schemacrawler.crawl;
+package schemacrawler;
 
 
 import java.io.Serializable;
@@ -30,7 +30,7 @@ import schemacrawler.schema.Table;
  * 
  * @author sfatehi
  */
-public class Query
+public final class Query
   implements Serializable
 {
 

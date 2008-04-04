@@ -18,6 +18,8 @@
 package schemacrawler.crawl;
 
 
+import schemacrawler.CrawlHandler;
+import schemacrawler.SchemaCrawlerException;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
@@ -48,8 +50,6 @@ public final class CachingCrawlerHandler
    * 
    * @param catalogName
    *        Catalog name
-   * @param infoLevel
-   *        Schema information level
    */
   public CachingCrawlerHandler(final String catalogName)
   {
@@ -59,7 +59,7 @@ public final class CachingCrawlerHandler
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.CrawlHandler#begin()
+   * @see schemacrawler.CrawlHandler#begin()
    */
   public void begin()
     throws SchemaCrawlerException
@@ -70,7 +70,7 @@ public final class CachingCrawlerHandler
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.CrawlHandler#end()
+   * @see schemacrawler.CrawlHandler#end()
    */
   public void end()
     throws SchemaCrawlerException
@@ -99,7 +99,7 @@ public final class CachingCrawlerHandler
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.CrawlHandler#handle(schemacrawler.schema.JdbcDriverInfo)
+   * @see schemacrawler.CrawlHandler#handle(schemacrawler.schema.JdbcDriverInfo)
    */
   public void handle(final JdbcDriverInfo driverInfo)
   {

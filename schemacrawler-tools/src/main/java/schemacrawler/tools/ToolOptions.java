@@ -20,7 +20,7 @@
 package schemacrawler.tools;
 
 
-import schemacrawler.crawl.Options;
+import schemacrawler.Options;
 
 /**
  * Tag interface for all tool-specific options.

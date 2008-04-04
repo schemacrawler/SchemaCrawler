@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package schemacrawler.crawl;
+package schemacrawler;
 
 
 import java.util.HashMap;
@@ -152,6 +152,40 @@ public final class InformationSchemaViews
     return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_VIEWS);
   }
 
+  public boolean hasCheckConstraintsSql()
+  {
+    return informationSchemaQueries
+      .containsKey(KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS);
+  }
+
+  public boolean hasIndexInfoSql()
+  {
+    return informationSchemaQueries.containsKey(KEY_GET_INDEX_INFO);
+  }
+
+  public boolean hasRoutinesSql()
+  {
+    return informationSchemaQueries
+      .containsKey(KEY_INFORMATION_SCHEMA_ROUTINES);
+  }
+
+  public boolean hasTableConstraintsSql()
+  {
+    return informationSchemaQueries
+      .containsKey(KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS);
+  }
+
+  public boolean hasTriggerSql()
+  {
+    return informationSchemaQueries
+      .containsKey(KEY_INFORMATION_SCHEMA_TRIGGERS);
+  }
+
+  public boolean hasViewsSql()
+  {
+    return informationSchemaQueries.containsKey(KEY_INFORMATION_SCHEMA_VIEWS);
+  }
+
   /**
    * Sets the table check constraints SQL from the additional
    * configuration.
@@ -239,40 +273,6 @@ public final class InformationSchemaViews
   public String toString()
   {
     return informationSchemaQueries.toString();
-  }
-
-  boolean hasCheckConstraintsSql()
-  {
-    return informationSchemaQueries
-      .containsKey(KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS);
-  }
-
-  boolean hasIndexInfoSql()
-  {
-    return informationSchemaQueries.containsKey(KEY_GET_INDEX_INFO);
-  }
-
-  boolean hasRoutinesSql()
-  {
-    return informationSchemaQueries
-      .containsKey(KEY_INFORMATION_SCHEMA_ROUTINES);
-  }
-
-  boolean hasTableConstraintsSql()
-  {
-    return informationSchemaQueries
-      .containsKey(KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS);
-  }
-
-  boolean hasTriggerSql()
-  {
-    return informationSchemaQueries
-      .containsKey(KEY_INFORMATION_SCHEMA_TRIGGERS);
-  }
-
-  boolean hasViewsSql()
-  {
-    return informationSchemaQueries.containsKey(KEY_INFORMATION_SCHEMA_VIEWS);
   }
 
 }

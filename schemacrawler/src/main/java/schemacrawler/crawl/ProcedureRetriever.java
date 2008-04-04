@@ -23,7 +23,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.crawl.NamedObjectList.NamedObjectSort;
+import schemacrawler.InclusionRule;
 import schemacrawler.schema.ProcedureColumnType;
 import schemacrawler.schema.ProcedureType;
 

@@ -26,6 +26,10 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
+import schemacrawler.InformationSchemaViews;
+import schemacrawler.SchemaCrawlerException;
+import schemacrawler.SchemaCrawlerOptions;
+
 /**
  * A connection for the retriever. Wraps a live database connection.
  * 

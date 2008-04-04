@@ -21,7 +21,6 @@ package schemacrawler.crawl;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.SortedMap;
@@ -37,44 +36,6 @@ import schemacrawler.schema.NamedObject;
 final class NamedObjectList<N extends NamedObject>
   implements Serializable, Iterable<N>
 {
-
-  enum NamedObjectSort
-    implements Comparator<NamedObject>
-  {
-
-    /** Alphabetical sort. */
-    alphabetical
-    {
-      @Override
-      public int compare(final NamedObject namedObject1,
-                         final NamedObject namedObject2)
-      {
-        return namedObject1.toString().compareToIgnoreCase(namedObject2
-          .toString());
-      }
-    },
-
-    /** Natural sort. */
-    natural
-    {
-      @Override
-      public int compare(final NamedObject namedObject1,
-                         final NamedObject namedObject2)
-      {
-        return namedObject1.compareTo(namedObject2);
-      }
-    };
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see java.util.Comparator#compare(java.lang.Object,
-     *      java.lang.Object)
-     */
-    public abstract int compare(final NamedObject namedObject1,
-                                final NamedObject namedObject2);
-
-  }
 
   private static final long serialVersionUID = 3257847666804142128L;
 

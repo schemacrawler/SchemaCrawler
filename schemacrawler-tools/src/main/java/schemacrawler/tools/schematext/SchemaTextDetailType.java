@@ -21,7 +21,7 @@
 package schemacrawler.tools.schematext;
 
 
-import schemacrawler.crawl.SchemaInfoLevel;
+import schemacrawler.SchemaInfoLevel;
 
 /**
  * Enumeration for level of schema text output detail.
