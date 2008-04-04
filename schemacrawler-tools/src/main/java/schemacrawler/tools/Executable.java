@@ -23,7 +23,7 @@ package schemacrawler.tools;
 
 import javax.sql.DataSource;
 
-import schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 /**
  * A SchemaCrawler tools executable unit.

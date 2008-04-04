@@ -23,9 +23,9 @@ package schemacrawler.tools.schematext;
 
 import javax.sql.DataSource;
 
-import schemacrawler.CrawlHandler;
-import schemacrawler.SchemaCrawler1;
-import schemacrawler.crawl.SchemaCrawler;
+import schemacrawler.crawl.DatabaseSchemaCrawler;
+import schemacrawler.schemacrawler.CrawlHandler;
+import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
@@ -64,7 +64,7 @@ public class SchemaCrawlerExecutable
     schemaCrawlerOptions.setSchemaInfoLevel(toolOptions
       .getSchemaTextDetailType().mapToInfoLevel());
 
-    final SchemaCrawler1 crawler = new SchemaCrawler(dataSource);
+    final SchemaCrawler crawler = new DatabaseSchemaCrawler(dataSource);
     crawler.crawl(schemaCrawlerOptions, handler);
   }
 

@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
-import schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.Executable;
 
 /**

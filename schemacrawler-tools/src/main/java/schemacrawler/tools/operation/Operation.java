@@ -23,7 +23,7 @@ package schemacrawler.tools.operation;
 
 import java.util.EnumSet;
 
-import schemacrawler.Query;
+import schemacrawler.schemacrawler.Query;
 
 /**
  * Database operations.

@@ -30,13 +30,13 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.InclusionRule;
-import schemacrawler.InformationSchemaViews;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.IndexSortSequence;
 import schemacrawler.schema.IndexType;
 import schemacrawler.schema.TableType;
+import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.InformationSchemaViews;
 
 /**
  * A retriever uses database metadata to get the details about the

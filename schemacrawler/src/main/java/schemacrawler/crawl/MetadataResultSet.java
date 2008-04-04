@@ -29,9 +29,9 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.SchemaCrawlerException;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
  * A wrapper around a JDBC resultset obtained from a database metadata

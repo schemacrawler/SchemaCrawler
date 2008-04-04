@@ -39,11 +39,11 @@ import javax.sql.DataSource;
 
 import org.hsqldb.Server;
 
-import schemacrawler.SchemaCrawler1;
-import schemacrawler.SchemaCrawlerException;
-import schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.crawl.SchemaCrawler;
+import schemacrawler.crawl.DatabaseSchemaCrawler;
 import schemacrawler.schema.Schema;
+import schemacrawler.schemacrawler.SchemaCrawler;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.datasource.PropertiesDataSource;
 import schemacrawler.utility.datasource.PropertiesDataSourceException;
 
@@ -270,10 +270,10 @@ public class TestUtility
    */
   public Schema getSchema(final SchemaCrawlerOptions schemaCrawlerOptions)
   {
-    SchemaCrawler1 schemaCrawler;
+    SchemaCrawler schemaCrawler;
     try
     {
-      schemaCrawler = new SchemaCrawler(getDataSource());
+      schemaCrawler = new DatabaseSchemaCrawler(getDataSource());
       final Schema schema = schemaCrawler.load(schemaCrawlerOptions);
       return schema;
     }

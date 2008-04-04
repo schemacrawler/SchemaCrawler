@@ -23,9 +23,9 @@ package schemacrawler.tools.datatext;
 
 import javax.sql.DataSource;
 
-import schemacrawler.SchemaCrawlerException;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutor;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputOptions;
 

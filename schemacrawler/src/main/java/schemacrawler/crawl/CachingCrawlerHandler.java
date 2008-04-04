@@ -18,13 +18,13 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.CrawlHandler;
-import schemacrawler.SchemaCrawlerException;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.CrawlHandler;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
  * Caches a crawled schema internally.
@@ -59,7 +59,7 @@ public final class CachingCrawlerHandler
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.CrawlHandler#begin()
+   * @see schemacrawler.schemacrawler.CrawlHandler#begin()
    */
   public void begin()
     throws SchemaCrawlerException
@@ -70,7 +70,7 @@ public final class CachingCrawlerHandler
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.CrawlHandler#end()
+   * @see schemacrawler.schemacrawler.CrawlHandler#end()
    */
   public void end()
     throws SchemaCrawlerException
@@ -99,7 +99,7 @@ public final class CachingCrawlerHandler
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.CrawlHandler#handle(schemacrawler.schema.JdbcDriverInfo)
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.JdbcDriverInfo)
    */
   public void handle(final JdbcDriverInfo driverInfo)
   {

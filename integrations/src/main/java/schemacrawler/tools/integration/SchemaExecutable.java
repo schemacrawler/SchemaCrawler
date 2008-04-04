@@ -20,10 +20,10 @@
 package schemacrawler.tools.integration;
 
 
-import schemacrawler.Config;
-import schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.Version;
 import schemacrawler.main.SchemaCrawlerCommandLine;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.Command;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputOptions;

@@ -26,7 +26,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
@@ -36,6 +35,7 @@ import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.test.TestUtility;
 
 public class SchemaCrawlerDeepTest

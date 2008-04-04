@@ -20,7 +20,7 @@
 package schemacrawler.main;
 
 
-import schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.grep.GrepOptions;
 
 /**

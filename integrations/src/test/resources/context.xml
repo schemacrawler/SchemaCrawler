@@ -34,7 +34,7 @@
 
   <bean
     id="schemaCrawlerOptions"
-    class="schemacrawler.SchemaCrawlerOptions">
+    class="schemacrawler.schemacrawler.SchemaCrawlerOptions">
     <property
       name="alphabeticalSortForTableColumns"
       value="true" />
@@ -51,13 +51,13 @@
       name="showStoredProcedures"
       value="true" />
     <property name="tableInclusionRule">
-      <bean class="schemacrawler.InclusionRule">
+      <bean class="schemacrawler.schemacrawler.InclusionRule">
         <constructor-arg value=".*" />
         <constructor-arg value="" />
       </bean>
     </property>
     <property name="columnInclusionRule">
-      <bean class="schemacrawler.InclusionRule">
+      <bean class="schemacrawler.schemacrawler.InclusionRule">
         <constructor-arg value=".*" />
         <constructor-arg value="" />
       </bean>
@@ -71,7 +71,7 @@
     <property name="schemaInfoLevel">
       <bean
         factory-method="maximum"
-        class="schemacrawler.SchemaInfoLevel" />
+        class="schemacrawler.schemacrawler.SchemaInfoLevel" />
     </property>
   </bean>
 
@@ -97,7 +97,7 @@
 
   <bean
     id="informationSchemaViews"
-    class="schemacrawler.InformationSchemaViews">
+    class="schemacrawler.schemacrawler.InformationSchemaViews">
     <property name="routinesSql">
       <value>
         <![CDATA[
@@ -194,7 +194,7 @@
       name="mergeRows"
       value="true" />
     <property name="query">
-      <bean class="schemacrawler.Query">
+      <bean class="schemacrawler.schemacrawler.Query">
         <constructor-arg value="select.tables" />
         <constructor-arg>
           <value>
@@ -276,13 +276,13 @@
       name="outputOptions"
       ref="outputOptions" />
     <property name="tableInclusionRule">
-      <bean class="schemacrawler.InclusionRule">
+      <bean class="schemacrawler.schemacrawler.InclusionRule">
         <constructor-arg value="C.*|P.*" />
         <constructor-arg value="" />
       </bean>
     </property>
     <property name="columnInclusionRule">
-      <bean class="schemacrawler.InclusionRule">
+      <bean class="schemacrawler.schemacrawler.InclusionRule">
         <constructor-arg value=".*\.STREET|.*\.PRICE" />
         <constructor-arg value="" />
       </bean>

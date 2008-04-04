@@ -21,7 +21,7 @@
 package schemacrawler.main;
 
 
-import schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.grep.GrepExecutable;
 import schemacrawler.tools.grep.GrepOptions;
 import schemacrawler.tools.schematext.SchemaTextDetailType;

@@ -25,8 +25,8 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.InformationSchemaViews;
 import schemacrawler.schema.RoutineBodyType;
+import schemacrawler.schemacrawler.InformationSchemaViews;
 
 /**
  * A retriever that uses database metadata to get the extended details

@@ -24,9 +24,9 @@ import java.io.Writer;
 
 import javax.sql.DataSource;
 
-import schemacrawler.SchemaCrawler1;
-import schemacrawler.crawl.SchemaCrawler;
+import schemacrawler.crawl.DatabaseSchemaCrawler;
 import schemacrawler.schema.Schema;
+import schemacrawler.schemacrawler.SchemaCrawler;
 
 /**
  * An executor that uses a template renderer to render a schema.
@@ -49,7 +49,7 @@ public abstract class TemplateRenderer
     // Get the entire schema at once
     schemaCrawlerOptions.setSchemaInfoLevel(toolOptions
       .getSchemaTextDetailType().mapToInfoLevel());
-    final SchemaCrawler1 schemaCrawler = new SchemaCrawler(dataSource);
+    final SchemaCrawler schemaCrawler = new DatabaseSchemaCrawler(dataSource);
     final Schema schema = schemaCrawler.load(schemaCrawlerOptions);
 
     // Executable-specific work

@@ -23,9 +23,9 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.InclusionRule;
 import schemacrawler.schema.ProcedureColumnType;
 import schemacrawler.schema.ProcedureType;
+import schemacrawler.schemacrawler.InclusionRule;
 
 /**
  * A retriever uses database metadata to get the details about the
