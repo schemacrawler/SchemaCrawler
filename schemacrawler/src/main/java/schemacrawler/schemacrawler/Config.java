@@ -186,7 +186,6 @@ public final class Config
    */
   public Config()
   {
-    super();
   }
 
   /**
