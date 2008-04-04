@@ -21,7 +21,7 @@
 package schemacrawler.tools.datatext;
 
 
-import schemacrawler.crawl.SchemaCrawlerException;
+import schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.util.Entities;
 import schemacrawler.tools.util.FormatUtils;
 

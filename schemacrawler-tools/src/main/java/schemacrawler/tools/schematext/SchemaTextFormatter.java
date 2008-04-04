@@ -21,7 +21,7 @@
 package schemacrawler.tools.schematext;
 
 
-import schemacrawler.crawl.SchemaCrawlerException;
+import schemacrawler.SchemaCrawlerException;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.tools.util.FormatUtils;
@@ -54,7 +54,7 @@ public final class SchemaTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.crawl.CrawlHandler#end()
+   * @see schemacrawler.CrawlHandler#end()
    */
   @Override
   public void end()

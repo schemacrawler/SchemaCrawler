@@ -23,7 +23,7 @@ package schemacrawler.tools.datatext;
 
 import javax.sql.DataSource;
 
-import schemacrawler.crawl.SchemaCrawlerException;
+import schemacrawler.SchemaCrawlerException;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutor;
 import schemacrawler.tools.Executable;

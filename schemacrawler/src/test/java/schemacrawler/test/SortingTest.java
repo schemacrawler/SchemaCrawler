@@ -25,8 +25,8 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.crawl.SchemaCrawlerOptions;
-import schemacrawler.crawl.SchemaInfoLevel;
+import schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.SchemaInfoLevel;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;

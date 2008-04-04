@@ -22,6 +22,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
+import schemacrawler.SchemaCrawlerException;
 import schemacrawler.schema.ResultsColumns;
 
 /**

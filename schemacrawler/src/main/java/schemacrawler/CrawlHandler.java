@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package schemacrawler.crawl;
+package schemacrawler;
 
 
 import schemacrawler.schema.DatabaseInfo;

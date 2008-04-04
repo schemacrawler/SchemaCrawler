@@ -20,9 +20,9 @@
 package schemacrawler.tools.integration;
 
 
+import schemacrawler.Config;
+import schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.Version;
-import schemacrawler.crawl.Config;
-import schemacrawler.crawl.SchemaCrawlerOptions;
 import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.tools.Command;
 import schemacrawler.tools.Executable;

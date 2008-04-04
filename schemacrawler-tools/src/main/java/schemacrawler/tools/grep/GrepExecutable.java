@@ -25,10 +25,11 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
+import schemacrawler.CrawlHandler;
+import schemacrawler.SchemaCrawler1;
+import schemacrawler.SchemaCrawlerException;
 import schemacrawler.crawl.CachingCrawlerHandler;
-import schemacrawler.crawl.CrawlHandler;
 import schemacrawler.crawl.SchemaCrawler;
-import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.schema.Schema;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputFormat;
@@ -124,7 +125,7 @@ public class GrepExecutable
       .getSchemaTextDetailType().mapToInfoLevel());
 
     // Get the entire schema at once
-    final SchemaCrawler schemaCrawler = new SchemaCrawler(dataSource);
+    final SchemaCrawler1 schemaCrawler = new SchemaCrawler(dataSource);
     return schemaCrawler.load(schemaCrawlerOptions);
   }
 

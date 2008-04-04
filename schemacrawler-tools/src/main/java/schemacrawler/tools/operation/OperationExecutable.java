@@ -28,10 +28,11 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
-import schemacrawler.crawl.CrawlHandler;
-import schemacrawler.crawl.Query;
+import schemacrawler.CrawlHandler;
+import schemacrawler.Query;
+import schemacrawler.SchemaCrawler1;
+import schemacrawler.SchemaCrawlerException;
 import schemacrawler.crawl.SchemaCrawler;
-import schemacrawler.crawl.SchemaCrawlerException;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputFormat;
@@ -107,7 +108,7 @@ public class OperationExecutable
                                        operationDataHandler);
     }
 
-    final SchemaCrawler crawler = new SchemaCrawler(dataSource);
+    final SchemaCrawler1 crawler = new SchemaCrawler(dataSource);
     crawler.crawl(schemaCrawlerOptions, handler);
   }
 }

@@ -21,9 +21,9 @@
 package schemacrawler.tools.grep;
 
 
-import schemacrawler.crawl.CrawlHandler;
-import schemacrawler.crawl.InclusionRule;
-import schemacrawler.crawl.SchemaCrawlerException;
+import schemacrawler.CrawlHandler;
+import schemacrawler.InclusionRule;
+import schemacrawler.SchemaCrawlerException;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;

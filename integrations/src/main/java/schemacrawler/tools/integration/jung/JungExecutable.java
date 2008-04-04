@@ -26,6 +26,7 @@ import java.io.File;
 
 import javax.sql.DataSource;
 
+import schemacrawler.SchemaCrawler1;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Schema;
 import schemacrawler.tools.integration.SchemaExecutable;
@@ -54,7 +55,7 @@ public final class JungExecutable
     // Get the entire schema at once
     schemaCrawlerOptions.setSchemaInfoLevel(toolOptions
       .getSchemaTextDetailType().mapToInfoLevel());
-    final SchemaCrawler schemaCrawler = new SchemaCrawler(dataSource);
+    final SchemaCrawler1 schemaCrawler = new SchemaCrawler(dataSource);
     final Schema schema = schemaCrawler.load(schemaCrawlerOptions);
 
     // Executable-specific work

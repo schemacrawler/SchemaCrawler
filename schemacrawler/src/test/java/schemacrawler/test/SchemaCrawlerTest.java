@@ -33,9 +33,9 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.crawl.InformationSchemaViews;
-import schemacrawler.crawl.SchemaCrawlerOptions;
-import schemacrawler.crawl.SchemaInfoLevel;
+import schemacrawler.InformationSchemaViews;
+import schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.SchemaInfoLevel;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.Procedure;

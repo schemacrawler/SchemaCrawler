@@ -31,9 +31,9 @@ import java.text.MessageFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.crawl.CrawlHandler;
-import schemacrawler.crawl.Query;
-import schemacrawler.crawl.SchemaCrawlerException;
+import schemacrawler.CrawlHandler;
+import schemacrawler.Query;
+import schemacrawler.SchemaCrawlerException;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutorException;
 import schemacrawler.schema.DatabaseInfo;

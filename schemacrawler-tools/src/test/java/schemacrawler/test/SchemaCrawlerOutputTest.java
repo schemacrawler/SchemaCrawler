@@ -32,8 +32,8 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.crawl.Config;
-import schemacrawler.crawl.SchemaCrawlerException;
+import schemacrawler.Config;
+import schemacrawler.SchemaCrawlerException;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutor;
 import schemacrawler.execute.QueryExecutorException;

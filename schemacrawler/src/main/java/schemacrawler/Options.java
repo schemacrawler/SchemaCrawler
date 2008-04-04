@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package schemacrawler.crawl;
+package schemacrawler;
 
 
 import java.io.Serializable;

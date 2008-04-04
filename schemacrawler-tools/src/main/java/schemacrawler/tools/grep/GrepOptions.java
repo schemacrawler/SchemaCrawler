@@ -20,7 +20,7 @@
 package schemacrawler.tools.grep;
 
 
-import schemacrawler.crawl.InclusionRule;
+import schemacrawler.InclusionRule;
 import schemacrawler.tools.schematext.SchemaTextOptions;
 
 /**
