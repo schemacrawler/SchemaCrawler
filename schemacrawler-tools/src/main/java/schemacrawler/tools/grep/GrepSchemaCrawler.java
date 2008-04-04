@@ -21,12 +21,12 @@
 package schemacrawler.tools.grep;
 
 
-import schemacrawler.CrawlHandler;
-import schemacrawler.InclusionRule;
-import schemacrawler.SchemaCrawlerException;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.CrawlHandler;
+import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
  * SchemaCrawler uses database metadata to get the details about the

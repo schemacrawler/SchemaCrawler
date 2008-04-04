@@ -21,7 +21,7 @@
 package schemacrawler.main;
 
 
-import schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.tools.grep.GrepOptions;
 import sf.util.CommandLineParser;
 import sf.util.CommandLineParser.BooleanOption;

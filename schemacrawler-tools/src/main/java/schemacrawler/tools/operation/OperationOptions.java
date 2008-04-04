@@ -21,7 +21,7 @@
 package schemacrawler.tools.operation;
 
 
-import schemacrawler.Config;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.datatext.DataTextFormatOptions;
 

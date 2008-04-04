@@ -28,8 +28,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import schemacrawler.CrawlHandler;
-import schemacrawler.SchemaCrawlerException;
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.Column;
@@ -50,6 +48,8 @@ import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
+import schemacrawler.schemacrawler.CrawlHandler;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.util.FormatUtils;
 import schemacrawler.tools.util.TextFormattingHelper;
 import sf.util.Utilities;
@@ -181,7 +181,7 @@ public abstract class BaseSchemaTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.CrawlHandler#handle(schemacrawler.schema.JdbcDriverInfo)
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.JdbcDriverInfo)
    */
   public void handle(final JdbcDriverInfo driverInfo)
   {

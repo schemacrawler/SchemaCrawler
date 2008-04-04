@@ -1,9 +1,9 @@
-package schemacrawler;
+package schemacrawler.schemacrawler;
 
 
 import schemacrawler.schema.Schema;
 
-public interface SchemaCrawler1
+public interface SchemaCrawler
 {
 
   /**

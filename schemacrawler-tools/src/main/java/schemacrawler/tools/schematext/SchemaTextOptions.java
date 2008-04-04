@@ -21,7 +21,7 @@
 package schemacrawler.tools.schematext;
 
 
-import schemacrawler.Config;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.BaseToolOptions;
 import schemacrawler.tools.OutputOptions;
 

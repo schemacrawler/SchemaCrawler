@@ -32,8 +32,8 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schema.Schema;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.datatext.DataTextFormatOptions;
 import schemacrawler.tools.grep.GrepOptions;

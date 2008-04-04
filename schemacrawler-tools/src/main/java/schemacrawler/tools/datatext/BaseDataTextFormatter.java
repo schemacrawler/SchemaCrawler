@@ -34,9 +34,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.SchemaCrawlerException;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutorException;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.util.FormatUtils;
 import sf.util.Utilities;
 

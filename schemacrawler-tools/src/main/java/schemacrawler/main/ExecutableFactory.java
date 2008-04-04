@@ -24,10 +24,10 @@ package schemacrawler.main;
 import java.util.ArrayList;
 import java.util.List;
 
-import schemacrawler.Config;
-import schemacrawler.Query;
-import schemacrawler.SchemaCrawlerException;
-import schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.Query;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.Command;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputOptions;

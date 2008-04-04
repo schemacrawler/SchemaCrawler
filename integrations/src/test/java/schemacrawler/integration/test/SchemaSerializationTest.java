@@ -35,9 +35,9 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.SchemaInfoLevel;
 import schemacrawler.schema.Schema;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.utility.datasource.PropertiesDataSourceException;
 import schemacrawler.utility.test.TestUtility;
 

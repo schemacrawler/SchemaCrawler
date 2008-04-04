@@ -32,7 +32,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.crawl.SchemaCrawler;
+import schemacrawler.crawl.DatabaseSchemaCrawler;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.utility.test.TestUtility;
@@ -86,7 +86,7 @@ public class ResultColumnsTest
     final Statement statement = connection.createStatement();
     final ResultSet resultSet = statement.executeQuery(sql);
 
-    final ResultsColumns resultColumns = SchemaCrawler
+    final ResultsColumns resultColumns = DatabaseSchemaCrawler
       .getResultColumns(resultSet);
     connection.close();
 

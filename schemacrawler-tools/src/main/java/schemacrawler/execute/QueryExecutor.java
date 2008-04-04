@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
-import schemacrawler.Query;
+import schemacrawler.schemacrawler.Query;
 
 /**
  * Executes SQL.

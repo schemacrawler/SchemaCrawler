@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package schemacrawler;
+package schemacrawler.schemacrawler;
 
 
 import java.util.Arrays;

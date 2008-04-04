@@ -26,14 +26,14 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
-import schemacrawler.CrawlHandler;
-import schemacrawler.SchemaCrawler1;
-import schemacrawler.SchemaCrawlerException;
-import schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.SchemaInfoLevel;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.TableType;
+import schemacrawler.schemacrawler.CrawlHandler;
+import schemacrawler.schemacrawler.SchemaCrawler;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaInfoLevel;
 
 /**
  * SchemaCrawler uses database meta-data to get the details about the
@@ -41,12 +41,12 @@ import schemacrawler.schema.TableType;
  * 
  * @author Sualeh Fatehi
  */
-public final class SchemaCrawler
-  implements SchemaCrawler1
+public final class DatabaseSchemaCrawler
+  implements SchemaCrawler
 {
 
-  private static final Logger LOGGER = Logger.getLogger(SchemaCrawler.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(DatabaseSchemaCrawler.class.getName());
 
   /**
    * Gets the result set columns metadata.
@@ -83,7 +83,7 @@ public final class SchemaCrawler
    * @throws SchemaCrawlerException
    *         On a crawler exception
    */
-  public SchemaCrawler(final DataSource dataSource)
+  public DatabaseSchemaCrawler(final DataSource dataSource)
     throws SchemaCrawlerException
   {
     if (dataSource == null)
@@ -96,8 +96,8 @@ public final class SchemaCrawler
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.SchemaCrawler1#crawl(schemacrawler.SchemaCrawlerOptions,
-   *      schemacrawler.CrawlHandler)
+   * @see schemacrawler.schemacrawler.SchemaCrawler#crawl(schemacrawler.schemacrawler.SchemaCrawlerOptions,
+   *      schemacrawler.schemacrawler.CrawlHandler)
    */
   public void crawl(final SchemaCrawlerOptions options,
                     final CrawlHandler handler)
@@ -158,7 +158,7 @@ public final class SchemaCrawler
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.SchemaCrawler1#load(schemacrawler.SchemaCrawlerOptions)
+   * @see schemacrawler.schemacrawler.SchemaCrawler#load(schemacrawler.schemacrawler.SchemaCrawlerOptions)
    */
   public Schema load(final SchemaCrawlerOptions options)
   {
@@ -201,7 +201,7 @@ public final class SchemaCrawler
     final CachingCrawlerHandler schemaMaker = new CachingCrawlerHandler(catalog);
     try
     {
-      final SchemaCrawler1 crawler = new SchemaCrawler(dataSource);
+      final SchemaCrawler crawler = new DatabaseSchemaCrawler(dataSource);
       crawler.crawl(options, schemaMaker);
     }
     catch (final SchemaCrawlerException e)

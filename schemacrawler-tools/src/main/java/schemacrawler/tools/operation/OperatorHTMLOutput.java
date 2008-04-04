@@ -23,11 +23,11 @@ package schemacrawler.tools.operation;
 
 import java.sql.Connection;
 
-import schemacrawler.Query;
-import schemacrawler.SchemaCrawlerException;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
+import schemacrawler.schemacrawler.Query;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.util.FormatUtils;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 

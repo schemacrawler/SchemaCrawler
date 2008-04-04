@@ -28,13 +28,13 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.InformationSchemaViews;
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.CheckOptionType;
 import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.NamedObject;
+import schemacrawler.schemacrawler.InformationSchemaViews;
 
 /**
  * A retriever uses database metadata to get the extended details about
