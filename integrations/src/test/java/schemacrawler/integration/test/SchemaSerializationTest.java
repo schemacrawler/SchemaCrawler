@@ -22,10 +22,14 @@ package schemacrawler.integration.test;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
 
@@ -38,6 +42,7 @@ import org.junit.Test;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.tools.integration.xml.XmlSchemaCrawler;
 import schemacrawler.utility.datasource.PropertiesDataSourceException;
 import schemacrawler.utility.test.TestUtility;
 
@@ -63,20 +68,77 @@ public class SchemaSerializationTest
   }
 
   @Test
+  public void schemaSerializationWithXmlSchemaCrawler()
+    throws Exception
+  {
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setShowStoredProcedures(true);
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions);
+    assertNotNull("No schema provided", schema);
+    assertEquals("Unexpected number of tables in the schema", 6, schema
+      .getTables().length);
+
+    XmlSchemaCrawler xmlSchemaCrawler;
+    StringWriter writer;
+
+    xmlSchemaCrawler = new XmlSchemaCrawler(schema);
+    writer = new StringWriter();
+    xmlSchemaCrawler.save(writer);
+    writer.close();
+    final String xmlSerializedSchema1 = writer.toString();
+    assertNotNull("Schema was not serialized to XML", xmlSerializedSchema1);
+    assertNotSame("Schema was not serialized to XML", 0, xmlSerializedSchema1
+      .trim().length());
+
+    xmlSchemaCrawler = new XmlSchemaCrawler();
+    xmlSchemaCrawler.load(new StringReader(xmlSerializedSchema1));
+    writer = new StringWriter();
+    xmlSchemaCrawler.save(writer);
+    writer.close();
+    final String xmlSerializedSchema2 = writer.toString();
+    assertNotNull("Schema was not serialized to XML", xmlSerializedSchema2);
+    assertNotSame("Schema was not serialized to XML", 0, xmlSerializedSchema2
+      .trim().length());
+
+    final DetailedDiff myDiff = new DetailedDiff(new Diff(xmlSerializedSchema1,
+                                                          xmlSerializedSchema2));
+    final List<?> allDifferences = myDiff.getAllDifferences();
+    if (!myDiff.similar())
+    {
+      write(xmlSerializedSchema1, "/temp/serialized-schema-1.xml");
+      write(xmlSerializedSchema2, "/temp/serialized-schema-2.xml");
+    }
+    assertEquals(myDiff.toString(), 0, allDifferences.size());
+  }
+
+  @Test
   public void schemaSerializationWithXStream()
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setShowStoredProcedures(true);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+
     final Schema schema = testUtility.getSchema(schemaCrawlerOptions);
+    assertNotNull("No schema provided", schema);
+    assertEquals("Unexpected number of tables in the schema", 6, schema
+      .getTables().length);
+
     final XStream xStream = new XStream();
 
     final String xmlSerializedSchema1 = xStream.toXML(schema);
+    assertNotNull("Schema was not serialized to XML", xmlSerializedSchema1);
+    assertNotSame("Schema was not serialized to XML", 0, xmlSerializedSchema1
+      .trim().length());
 
     final Schema deserializedSchema = (Schema) xStream
       .fromXML(xmlSerializedSchema1);
     final String xmlSerializedSchema2 = xStream.toXML(deserializedSchema);
+    assertNotNull("Schema was not serialized to XML", xmlSerializedSchema2);
+    assertNotSame("Schema was not serialized to XML", 0, xmlSerializedSchema2
+      .trim().length());
 
     final DetailedDiff myDiff = new DetailedDiff(new Diff(xmlSerializedSchema1,
                                                           xmlSerializedSchema2));
