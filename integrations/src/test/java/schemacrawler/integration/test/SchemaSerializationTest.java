@@ -25,14 +25,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 
-import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.io.Writer;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.custommonkey.xmlunit.DetailedDiff;
 import org.custommonkey.xmlunit.Diff;
 import org.junit.AfterClass;
@@ -107,8 +105,10 @@ public class SchemaSerializationTest
     final List<?> allDifferences = myDiff.getAllDifferences();
     if (!myDiff.similar())
     {
-      write(xmlSerializedSchema1, "/temp/serialized-schema-1.xml");
-      write(xmlSerializedSchema2, "/temp/serialized-schema-2.xml");
+      IOUtils.write(xmlSerializedSchema1,
+                    new FileWriter("/temp/serialized-schema-1.xml"));
+      IOUtils.write(xmlSerializedSchema2,
+                    new FileWriter("/temp/serialized-schema-2.xml"));
     }
     assertEquals(myDiff.toString(), 0, allDifferences.size());
   }
@@ -145,41 +145,12 @@ public class SchemaSerializationTest
     final List<?> allDifferences = myDiff.getAllDifferences();
     if (!myDiff.similar())
     {
-      write(xmlSerializedSchema1, "/temp/serialized-schema-1.xml");
-      write(xmlSerializedSchema2, "/temp/serialized-schema-2.xml");
+      IOUtils.write(xmlSerializedSchema1,
+                    new FileWriter("/temp/serialized-schema-1.xml"));
+      IOUtils.write(xmlSerializedSchema2,
+                    new FileWriter("/temp/serialized-schema-2.xml"));
     }
     assertEquals(myDiff.toString(), 0, allDifferences.size());
-  }
-
-  private void write(final String contents, final String filename)
-  {
-    Writer writer = null;
-    try
-    {
-      final File file = new File(filename);
-      file.getCanonicalFile().getParentFile().mkdirs();
-      writer = new FileWriter(file);
-      writer.write(contents);
-      writer.flush();
-    }
-    catch (final IOException e)
-    {
-      e.printStackTrace();
-    }
-    finally
-    {
-      if (writer != null)
-      {
-        try
-        {
-          writer.close();
-        }
-        catch (final IOException e)
-        {
-          // Ignore
-        }
-      }
-    }
   }
 
 }
