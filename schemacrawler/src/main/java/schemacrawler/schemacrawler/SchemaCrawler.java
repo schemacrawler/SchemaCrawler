@@ -30,6 +30,7 @@ public interface SchemaCrawler
    *        Options
    * @return Schema
    */
-  Schema load(final SchemaCrawlerOptions options);
+  Schema load(final SchemaCrawlerOptions options)
+    throws SchemaCrawlerException;
 
 }
