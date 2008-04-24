@@ -90,8 +90,7 @@ public class SchemaSerializationTest
     assertNotSame("Schema was not serialized to XML", 0, xmlSerializedSchema1
       .trim().length());
 
-    xmlSchemaCrawler = new XmlSchemaCrawler();
-    xmlSchemaCrawler.load(new StringReader(xmlSerializedSchema1));
+    xmlSchemaCrawler = new XmlSchemaCrawler(new StringReader(xmlSerializedSchema1));
     writer = new StringWriter();
     xmlSchemaCrawler.save(writer);
     writer.close();
