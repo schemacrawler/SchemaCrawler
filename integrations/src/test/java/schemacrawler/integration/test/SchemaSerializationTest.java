@@ -91,6 +91,11 @@ public class SchemaSerializationTest
       .trim().length());
 
     xmlSchemaCrawler = new XmlSchemaCrawler(new StringReader(xmlSerializedSchema1));
+    Schema deserializedSchema = xmlSchemaCrawler.load(null);
+    assertNotNull("No schema deserialized", deserializedSchema);
+    assertEquals("Unexpected number of tables in the schema",
+                 6,
+                 deserializedSchema.getTables().length);
     writer = new StringWriter();
     xmlSchemaCrawler.save(writer);
     writer.close();
@@ -134,6 +139,10 @@ public class SchemaSerializationTest
 
     final Schema deserializedSchema = (Schema) xStream
       .fromXML(xmlSerializedSchema1);
+    assertNotNull("No schema deserialized", deserializedSchema);
+    assertEquals("Unexpected number of tables in the schema",
+                 6,
+                 deserializedSchema.getTables().length);
     final String xmlSerializedSchema2 = xStream.toXML(deserializedSchema);
     assertNotNull("Schema was not serialized to XML", xmlSerializedSchema2);
     assertNotSame("Schema was not serialized to XML", 0, xmlSerializedSchema2
