@@ -47,6 +47,11 @@ public class CachedSchemaCrawler
     handler.end();
   }
 
+  public Schema getSchema()
+  {
+    return schema;
+  }
+
   public Schema load(final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
   {
