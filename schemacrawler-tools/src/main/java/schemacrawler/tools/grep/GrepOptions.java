@@ -35,7 +35,10 @@ public class GrepOptions
   private static final long serialVersionUID = -1606027815351884928L;
 
   private InclusionRule tableInclusionRule;
-  private InclusionRule columnInclusionRule;
+  private InclusionRule tableColumnInclusionRule;
+  private InclusionRule procedureInclusionRule;
+  private InclusionRule procedureColumnInclusionRule;
+  private InclusionRule definitionTextInclusionRule;
   private boolean invertMatch;
 
   /**
@@ -44,9 +47,19 @@ public class GrepOptions
   public GrepOptions()
   {
     tableInclusionRule = new InclusionRule();
-    columnInclusionRule = new InclusionRule();
+    tableColumnInclusionRule = new InclusionRule();
 
     invertMatch = false;
+  }
+
+  /**
+   * Gets the inclusion rule for text contained in a definition.
+   * 
+   * @return Inclusion rule for text contained in a definition.
+   */
+  public InclusionRule getDefinitionTextInclusionRule()
+  {
+    return definitionTextInclusionRule;
   }
 
   /**
@@ -54,9 +67,29 @@ public class GrepOptions
    * 
    * @return Column inclusion rule.
    */
-  public InclusionRule getColumnInclusionRule()
+  public InclusionRule getProcedureColumnInclusionRule()
   {
-    return columnInclusionRule;
+    return procedureColumnInclusionRule;
+  }
+
+  /**
+   * Gets the procedure inclusion rule.
+   * 
+   * @return Procedure inclusion rule.
+   */
+  public InclusionRule getProcedureInclusionRule()
+  {
+    return procedureInclusionRule;
+  }
+
+  /**
+   * Gets the column inclusion rule.
+   * 
+   * @return Column inclusion rule.
+   */
+  public InclusionRule getTableColumnInclusionRule()
+  {
+    return tableColumnInclusionRule;
   }
 
   /**
@@ -80,20 +113,20 @@ public class GrepOptions
   }
 
   /**
-   * Sets the column inclusion rule.
+   * Sets the inclusion rule for text contained in a definition.
    * 
-   * @param columnInclusionRule
-   *        Column inclusion rule.
+   * @param definitionTextInclusionRule
+   *        Inclusion rule for text contained in a definition.
    */
-  public void setColumnInclusionRule(final InclusionRule columnInclusionRule)
+  public void setDefinitionTextInclusionRule(final InclusionRule definitionTextInclusionRule)
   {
-    if (columnInclusionRule == null)
+    if (definitionTextInclusionRule == null)
     {
-      this.columnInclusionRule = new InclusionRule();
+      this.definitionTextInclusionRule = new InclusionRule();
     }
     else
     {
-      this.columnInclusionRule = columnInclusionRule;
+      this.definitionTextInclusionRule = definitionTextInclusionRule;
     }
   }
 
@@ -106,6 +139,60 @@ public class GrepOptions
   public void setInvertMatch(final boolean invertMatch)
   {
     this.invertMatch = invertMatch;
+  }
+
+  /**
+   * Sets the column inclusion rule.
+   * 
+   * @param procedureColumnInclusionRule
+   *        Column inclusion rule.
+   */
+  public void setProcedureColumnInclusionRule(final InclusionRule procedureColumnInclusionRule)
+  {
+    if (procedureColumnInclusionRule == null)
+    {
+      this.procedureColumnInclusionRule = new InclusionRule();
+    }
+    else
+    {
+      this.procedureColumnInclusionRule = procedureColumnInclusionRule;
+    }
+  }
+
+  /**
+   * Sets the procedure inclusion rule.
+   * 
+   * @param procedureInclusionRule
+   *        Procedure inclusion rule.
+   */
+  public void setProcedureInclusionRule(final InclusionRule procedureInclusionRule)
+  {
+    if (procedureInclusionRule == null)
+    {
+      this.procedureInclusionRule = new InclusionRule();
+    }
+    else
+    {
+      this.procedureInclusionRule = procedureInclusionRule;
+    }
+  }
+
+  /**
+   * Sets the column inclusion rule.
+   * 
+   * @param tableColumnInclusionRule
+   *        Column inclusion rule.
+   */
+  public void setTableColumnInclusionRule(final InclusionRule tableColumnInclusionRule)
+  {
+    if (tableColumnInclusionRule == null)
+    {
+      this.tableColumnInclusionRule = new InclusionRule();
+    }
+    else
+    {
+      this.tableColumnInclusionRule = tableColumnInclusionRule;
+    }
   }
 
   /**

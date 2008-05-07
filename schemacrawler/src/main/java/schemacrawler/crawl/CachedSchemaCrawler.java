@@ -40,9 +40,12 @@ public class CachedSchemaCrawler
     {
       handler.handle(table);
     }
-    for (final Procedure procedure: schema.getProcedures())
+    if (options == null || options.isShowStoredProcedures())
     {
-      handler.handle(procedure);
+      for (final Procedure procedure: schema.getProcedures())
+      {
+        handler.handle(procedure);
+      }
     }
     handler.end();
   }
