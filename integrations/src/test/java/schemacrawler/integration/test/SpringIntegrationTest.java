@@ -21,12 +21,12 @@ package schemacrawler.integration.test;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
 
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -176,8 +176,8 @@ public class SpringIntegrationTest
     executable.execute(testUtility.getDataSource());
 
     final File outputFile = new File(outputFilename);
-    Assert.assertTrue(outputFile.exists());
-    Assert.assertTrue(outputFile.length() > 0);
+    assertTrue(outputFile.exists());
+    assertTrue(outputFile.length() > 0);
     if (!outputFile.delete())
     {
       fail("Cannot delete output file");

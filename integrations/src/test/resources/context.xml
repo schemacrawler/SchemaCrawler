@@ -1,13 +1,24 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
-  Copyright 2007, Sualeh Fatehi <sualeh@hotmail.com>
-  
-  This work is licensed under the Creative Commons Attribution 3.0 License. 
-  To view a copy of this license, visit 
-  http://creativecommons.org/licenses/by/3.0/ 
-  or send a letter to 
-  Creative Commons
-  171 Second Street, Suite 300, San Francisco, California, 94105, USA.
+/* 
+ *
+ * SchemaCrawler
+ * http://sourceforge.net/projects/schemacrawler
+ * Copyright (c) 2000-2008, Sualeh Fatehi.
+ *
+ * This library is free software; you can redistribute it and/or modify it under the terms
+ * of the GNU Lesser General Public License as published by the Free Software Foundation;
+ * either version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * Boston, MA 02111-1307, USA.
+ *
+ */
 -->
 <beans
   xmlns="http://www.springframework.org/schema/beans"
@@ -281,7 +292,7 @@
         <constructor-arg value="" />
       </bean>
     </property>
-    <property name="columnInclusionRule">
+    <property name="tableColumnInclusionRule">
       <bean class="schemacrawler.schemacrawler.InclusionRule">
         <constructor-arg value=".*\.STREET|.*\.PRICE" />
         <constructor-arg value="" />

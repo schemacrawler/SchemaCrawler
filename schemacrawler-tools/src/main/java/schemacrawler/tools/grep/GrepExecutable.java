@@ -25,7 +25,6 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
-import schemacrawler.crawl.CachingCrawlerHandler;
 import schemacrawler.crawl.DatabaseSchemaCrawler;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.CrawlHandler;
@@ -66,7 +65,6 @@ public class GrepExecutable
   public void execute(final DataSource dataSource)
     throws Exception
   {
-
     final Schema schema = getEntireSchema(dataSource);
 
     CrawlHandler handler = null;
@@ -81,37 +79,8 @@ public class GrepExecutable
       handler = new SchemaTextFormatter(toolOptions);
     }
 
-    // The GrepSchemaCrawler is capable of crawling a previously cached
-    // schema.
-    final GrepSchemaCrawler crawler = new GrepSchemaCrawler(schema,
-                                                            toolOptions,
-                                                            handler);
-    crawler.crawl();
-  }
-
-  /**
-   * Gets a subset of the entire schema, that is, the grep results.
-   * 
-   * @param dataSource
-   *        Data source
-   * @return Schema with grep results
-   * @throws Exception
-   *         On an exception
-   */
-  public Schema getSchema(final DataSource dataSource)
-    throws Exception
-  {
-
-    final Schema schema = getEntireSchema(dataSource);
-    final CachingCrawlerHandler handler = new CachingCrawlerHandler();
-    // The GrepSchemaCrawler is capable of crawling a previously cached
-    // schema.
-    final GrepSchemaCrawler crawler = new GrepSchemaCrawler(schema,
-                                                            toolOptions,
-                                                            handler);
-    crawler.crawl();
-
-    return handler.getSchema();
+    final GrepSchemaCrawler crawler = new GrepSchemaCrawler(schema, toolOptions);
+    crawler.crawl(schemaCrawlerOptions, handler);
   }
 
   private Schema getEntireSchema(final DataSource dataSource)

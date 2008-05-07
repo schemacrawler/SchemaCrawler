@@ -21,47 +21,42 @@
 package schemacrawler.tools.grep;
 
 
+import schemacrawler.crawl.CachedSchemaCrawler;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.Procedure;
+import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 /**
  * SchemaCrawler uses database metadata to get the details about the
  * schema.
  */
 public final class GrepSchemaCrawler
+  extends CachedSchemaCrawler
 {
 
-  private final Schema schema;
-
   private final GrepOptions grepOptions;
-  private final CrawlHandler handler;
 
   /**
    * Constructs a SchemaCrawler object, from a connection.
    * 
    * @param schema
    *        A schema.
-   * @param crawlHandler
-   *        A crawl handler instance
    * @param grepOptions
    *        Grep options
    * @throws SchemaCrawlerException
    *         On a crawler exception
    */
-  public GrepSchemaCrawler(final Schema schema,
-                           final GrepOptions grepOptions,
-                           final CrawlHandler crawlHandler)
+  public GrepSchemaCrawler(final Schema schema, final GrepOptions grepOptions)
     throws SchemaCrawlerException
   {
-    if (schema == null)
-    {
-      throw new SchemaCrawlerException("No schema specified");
-    }
-    this.schema = schema;
+    super(schema);
 
     if (grepOptions == null)
     {
@@ -71,25 +66,21 @@ public final class GrepSchemaCrawler
     {
       this.grepOptions = grepOptions;
     }
-
-    if (crawlHandler == null)
-    {
-      throw new SchemaCrawlerException("No crawl handler specified");
-    }
-    handler = crawlHandler;
   }
 
   /**
    * Crawls the schema.
    * 
+   * @param handler
+   *        A crawl handler instance
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  public void crawl()
+  public void crawl(final SchemaCrawlerOptions options,
+                    final CrawlHandler handler)
     throws SchemaCrawlerException
   {
     handler.begin();
-    // handler.handle(schema.getDatabaseInfo());
 
     final Table[] tables = schema.getTables();
     for (final Table table: tables)
@@ -99,24 +90,15 @@ public final class GrepSchemaCrawler
         handler.handle(table);
       }
     }
-
-    // final Procedure[] procedures = schema.getProcedures();
-    // for (final Procedure procedure: procedures)
-    // {
-    // handler.handle(procedure);
-    // }
-
+    final Procedure[] procedures = schema.getProcedures();
+    for (final Procedure procedure: procedures)
+    {
+      if (includesColumn(procedure))
+      {
+        handler.handle(procedure);
+      }
+    }
     handler.end();
-  }
-
-  /**
-   * Gets the entire schema.
-   * 
-   * @return Schema
-   */
-  public Schema getSchema()
-  {
-    return schema;
   }
 
   /**
@@ -135,7 +117,9 @@ public final class GrepSchemaCrawler
   private boolean includesColumn(final Table table)
   {
     final InclusionRule columnInclusionRule = grepOptions
-      .getColumnInclusionRule();
+      .getTableColumnInclusionRule();
+    final InclusionRule definitionTextInclusionRule = grepOptions
+      .getDefinitionTextInclusionRule();
     final boolean invertMatch = grepOptions.isInvertMatch();
 
     boolean handleTable = false;
@@ -150,11 +134,69 @@ public final class GrepSchemaCrawler
         break;
       }
     }
+    if (handleTable)
+    {
+      if (table instanceof View)
+      {
+        View view = (View) table;
+        if (!definitionTextInclusionRule.include(view.getDefinition()))
+        {
+          handleTable = false;
+        }
+      }
+    }
     if (invertMatch)
     {
       handleTable = !handleTable;
     }
     return handleTable;
+  }
+
+  /**
+   * Special case for "grep" like functionality. Handle procedure if a
+   * procedure column inclusion rule is found, and at least one column
+   * matches the rule.
+   * 
+   * @param procedure
+   *        Procedure to check
+   * @param columnInclusionRule
+   *        Inclusion rule for columns
+   * @param invertMatch
+   *        Whether to invert the procedure match
+   * @return Whether the column should be included
+   */
+  private boolean includesColumn(final Procedure procedure)
+  {
+    final InclusionRule columnInclusionRule = grepOptions
+      .getProcedureColumnInclusionRule();
+    final InclusionRule definitionTextInclusionRule = grepOptions
+      .getDefinitionTextInclusionRule();
+    final boolean invertMatch = grepOptions.isInvertMatch();
+
+    boolean handleProcedure = false;
+    final ProcedureColumn[] columns = procedure.getColumns();
+    for (final ProcedureColumn column: columns)
+    {
+      if (columnInclusionRule.include(column.getFullName()))
+      {
+        // We found a column that should be included, so handle the
+        // procedure
+        handleProcedure = true;
+        break;
+      }
+    }
+    if (handleProcedure)
+    {
+      if (!definitionTextInclusionRule.include(procedure.getDefinition()))
+      {
+        handleProcedure = false;
+      }
+    }
+    if (invertMatch)
+    {
+      handleProcedure = !handleProcedure;
+    }
+    return handleProcedure;
   }
 
 }

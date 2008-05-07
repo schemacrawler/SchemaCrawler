@@ -35,9 +35,18 @@ final class GrepOptionsParser
   private final StringOption optionTables = new StringOption(CommandLineParser.Option.NO_SHORT_FORM,
                                                              "tables",
                                                              InclusionRule.INCLUDE_ALL);
-  private final StringOption optionColumns = new StringOption(CommandLineParser.Option.NO_SHORT_FORM,
-                                                              "columns",
-                                                              InclusionRule.INCLUDE_ALL);
+  private final StringOption optionTableColumns = new StringOption(CommandLineParser.Option.NO_SHORT_FORM,
+                                                                   "columns",
+                                                                   InclusionRule.INCLUDE_ALL);
+  private final StringOption optionProcedures = new StringOption(CommandLineParser.Option.NO_SHORT_FORM,
+                                                                 "procedures",
+                                                                 InclusionRule.INCLUDE_ALL);
+  private final StringOption optionProcedureColumns = new StringOption(CommandLineParser.Option.NO_SHORT_FORM,
+                                                                       "inout",
+                                                                       InclusionRule.INCLUDE_ALL);
+  private final StringOption optionDefinitionText = new StringOption(CommandLineParser.Option.NO_SHORT_FORM,
+                                                                     "definition",
+                                                                     InclusionRule.INCLUDE_ALL);
   private final BooleanOption optionInvertMatch = new BooleanOption('v',
                                                                     "invert-match");
 
@@ -50,17 +59,35 @@ final class GrepOptionsParser
   protected GrepOptions getValue()
   {
     parse(new Option[] {
-        optionTables, optionColumns, optionInvertMatch
+        optionTables,
+        optionTableColumns,
+        optionProcedures,
+        optionProcedureColumns,
+        optionDefinitionText,
+        optionInvertMatch
     });
 
     final InclusionRule tableInclusionRule = new InclusionRule(optionTables
       .getValue(), InclusionRule.EXCLUDE_NONE);
-    final InclusionRule columnInclusionRule = new InclusionRule(optionColumns
-      .getValue(), InclusionRule.EXCLUDE_NONE);
+    final InclusionRule tableColumnInclusionRule = new InclusionRule(optionTableColumns
+                                                                       .getValue(),
+                                                                     InclusionRule.EXCLUDE_NONE);
+    final InclusionRule procedureInclusionRule = new InclusionRule(optionProcedures
+                                                                     .getValue(),
+                                                                   InclusionRule.EXCLUDE_NONE);
+    final InclusionRule procedureColumnInclusionRule = new InclusionRule(optionProcedureColumns
+                                                                           .getValue(),
+                                                                         InclusionRule.EXCLUDE_NONE);
+    final InclusionRule definitionTextInclusionRule = new InclusionRule(optionDefinitionText
+                                                                          .getValue(),
+                                                                        InclusionRule.EXCLUDE_NONE);
 
     final GrepOptions options = new GrepOptions();
     options.setTableInclusionRule(tableInclusionRule);
-    options.setColumnInclusionRule(columnInclusionRule);
+    options.setTableColumnInclusionRule(tableColumnInclusionRule);
+    options.setProcedureInclusionRule(procedureInclusionRule);
+    options.setProcedureColumnInclusionRule(procedureColumnInclusionRule);
+    options.setDefinitionTextInclusionRule(definitionTextInclusionRule);
     options.setInvertMatch(optionInvertMatch.getValue());
 
     return options;
