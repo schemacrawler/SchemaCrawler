@@ -55,14 +55,4 @@ public class CachedSchemaCrawler
     return schema;
   }
 
-  public Schema load(final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
-  {
-    if (schema == null)
-    {
-      throw new SchemaCrawlerException("No cached schema");
-    }
-    return schema;
-  }
-
 }

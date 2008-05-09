@@ -49,6 +49,11 @@ public class GrepOptions
     tableInclusionRule = new InclusionRule();
     tableColumnInclusionRule = new InclusionRule();
 
+    procedureInclusionRule = new InclusionRule();
+    procedureColumnInclusionRule = new InclusionRule();
+
+    definitionTextInclusionRule = new InclusionRule();
+
     invertMatch = false;
   }
 

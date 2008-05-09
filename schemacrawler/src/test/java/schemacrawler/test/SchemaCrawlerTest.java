@@ -217,10 +217,8 @@ public class SchemaCrawlerTest
   @Test
   public void tableCount()
   {
-    LOGGER.log(Level.FINE, testUtility.getDataSource().toString());
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.minimum());
-    LOGGER.log(Level.FINE, schemaCrawlerOptions.toString());
     final Schema schema = testUtility.getSchema(schemaCrawlerOptions);
     final Table[] tables = schema.getTables();
     final int numTables = tables.length;

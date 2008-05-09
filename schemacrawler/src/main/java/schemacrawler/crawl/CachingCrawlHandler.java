@@ -31,7 +31,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
  * 
  * @author Sualeh Fatehi
  */
-public final class CachingCrawlerHandler
+public final class CachingCrawlHandler
   implements CrawlHandler
 {
 
@@ -40,7 +40,7 @@ public final class CachingCrawlerHandler
   /**
    * Creates a new caching crawl handler.
    */
-  public CachingCrawlerHandler()
+  public CachingCrawlHandler()
   {
     this("");
   }
@@ -51,7 +51,7 @@ public final class CachingCrawlerHandler
    * @param catalogName
    *        Catalog name
    */
-  public CachingCrawlerHandler(final String catalogName)
+  public CachingCrawlHandler(final String catalogName)
   {
     schema = new MutableSchema(catalogName, "schema", "schema");
   }

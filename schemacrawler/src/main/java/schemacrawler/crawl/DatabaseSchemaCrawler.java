@@ -27,7 +27,6 @@ import java.util.logging.Logger;
 import javax.sql.DataSource;
 
 import schemacrawler.schema.ResultsColumns;
-import schemacrawler.schema.Schema;
 import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawler;
@@ -179,26 +178,6 @@ public final class DatabaseSchemaCrawler
         retrieverConnection.close();
       }
     }
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schemacrawler.SchemaCrawler#load(schemacrawler.schemacrawler.SchemaCrawlerOptions)
-   */
-  public Schema load(final SchemaCrawlerOptions options)
-  {
-    final CachingCrawlerHandler schemaMaker = new CachingCrawlerHandler(catalog);
-    try
-    {
-      crawl(options, schemaMaker);
-    }
-    catch (final SchemaCrawlerException e)
-    {
-      LOGGER.log(Level.WARNING, e.getMessage(), e);
-    }
-
-    return schemaMaker.getSchema();
   }
 
   private MutableDatabaseInfo crawlDatabaseInfo(final RetrieverConnection retrieverConnection,
