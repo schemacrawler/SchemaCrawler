@@ -21,15 +21,11 @@
 package schemacrawler.tools.grep;
 
 
-import java.util.logging.Logger;
-
 import javax.sql.DataSource;
 
 import schemacrawler.crawl.DatabaseSchemaCrawler;
-import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawler;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
@@ -44,9 +40,6 @@ import schemacrawler.tools.schematext.SchemaTextFormatter;
 public class GrepExecutable
   extends Executable<GrepOptions>
 {
-
-  private static final Logger LOGGER = Logger.getLogger(GrepExecutable.class
-    .getName());
 
   /**
    * Sets up default options.
@@ -65,7 +58,10 @@ public class GrepExecutable
   public void execute(final DataSource dataSource)
     throws Exception
   {
-    final Schema schema = getEntireSchema(dataSource);
+    schemaCrawlerOptions.setTableInclusionRule(toolOptions
+      .getTableInclusionRule());
+    schemaCrawlerOptions.setSchemaInfoLevel(toolOptions
+      .getSchemaTextDetailType().mapToInfoLevel());
 
     CrawlHandler handler = null;
     final OutputOptions outputOptions = toolOptions.getOutputOptions();
@@ -78,24 +74,10 @@ public class GrepExecutable
     {
       handler = new SchemaTextFormatter(toolOptions);
     }
+    handler = new GrepCrawlHandler(toolOptions, handler);
 
-    final GrepSchemaCrawler crawler = new GrepSchemaCrawler(schema, toolOptions);
+    final SchemaCrawler crawler = new DatabaseSchemaCrawler(dataSource);
     crawler.crawl(schemaCrawlerOptions, handler);
-  }
-
-  private Schema getEntireSchema(final DataSource dataSource)
-    throws SchemaCrawlerException
-  {
-    // Force certain SchemaCrawler options
-    schemaCrawlerOptions.setShowStoredProcedures(false);
-    schemaCrawlerOptions.setTableInclusionRule(toolOptions
-      .getTableInclusionRule());
-    schemaCrawlerOptions.setSchemaInfoLevel(toolOptions
-      .getSchemaTextDetailType().mapToInfoLevel());
-
-    // Get the entire schema at once
-    final SchemaCrawler schemaCrawler = new DatabaseSchemaCrawler(dataSource);
-    return schemaCrawler.load(schemaCrawlerOptions);
   }
 
 }

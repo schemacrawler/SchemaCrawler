@@ -40,6 +40,14 @@ public class SchemaCrawlerExecutable
 {
 
   /**
+   * Sets up default options.
+   */
+  public SchemaCrawlerExecutable()
+  {
+    toolOptions = new SchemaTextOptions();
+  }
+
+  /**
    * {@inheritDoc}
    * 
    * @see schemacrawler.tools.Executable#execute(javax.sql.DataSource)
@@ -48,6 +56,9 @@ public class SchemaCrawlerExecutable
   public void execute(final DataSource dataSource)
     throws Exception
   {
+    schemaCrawlerOptions.setSchemaInfoLevel(toolOptions
+      .getSchemaTextDetailType().mapToInfoLevel());
+
     CrawlHandler handler = null;
     final OutputOptions outputOptions = toolOptions.getOutputOptions();
     final OutputFormat outputFormatType = outputOptions.getOutputFormat();
@@ -59,10 +70,6 @@ public class SchemaCrawlerExecutable
     {
       handler = new SchemaTextFormatter(toolOptions);
     }
-
-    // Set the correct level of crawling required
-    schemaCrawlerOptions.setSchemaInfoLevel(toolOptions
-      .getSchemaTextDetailType().mapToInfoLevel());
 
     final SchemaCrawler crawler = new DatabaseSchemaCrawler(dataSource);
     crawler.crawl(schemaCrawlerOptions, handler);

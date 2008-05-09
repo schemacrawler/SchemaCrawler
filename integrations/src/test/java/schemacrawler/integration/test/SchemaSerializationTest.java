@@ -91,7 +91,7 @@ public class SchemaSerializationTest
       .trim().length());
 
     xmlSchemaCrawler = new XmlSchemaCrawler(new StringReader(xmlSerializedSchema1));
-    Schema deserializedSchema = xmlSchemaCrawler.load(null);
+    Schema deserializedSchema = xmlSchemaCrawler.getSchema();
     assertNotNull("No schema deserialized", deserializedSchema);
     assertEquals("Unexpected number of tables in the schema",
                  6,

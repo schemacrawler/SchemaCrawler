@@ -1,62 +1,62 @@
-/* 
- *
+/*
  * SchemaCrawler
- * http://sourceforge.net/projects/schemacrawler
  * Copyright (c) 2000-2008, Sualeh Fatehi.
  *
- * This library is free software; you can redistribute it and/or modify it under the terms
- * of the GNU Lesser General Public License as published by the Free Software Foundation;
- * either version 2.1 of the License, or (at your option) any later version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
- * Boston, MA 02111-1307, USA.
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package schemacrawler.tools.grep;
 
 
-import schemacrawler.crawl.CachedSchemaCrawler;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
-import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 /**
- * SchemaCrawler uses database metadata to get the details about the
- * schema.
+ * Greps a schema.
+ * 
+ * @author Sualeh Fatehi
  */
-public final class GrepSchemaCrawler
-  extends CachedSchemaCrawler
+public final class GrepCrawlHandler
+  implements CrawlHandler
 {
 
   private final GrepOptions grepOptions;
+  private final CrawlHandler chainedCrawlHandler;
 
   /**
-   * Constructs a SchemaCrawler object, from a connection.
+   * Constructs a crawl handler for grep.
    * 
-   * @param schema
-   *        A schema.
    * @param grepOptions
    *        Grep options
    * @throws SchemaCrawlerException
-   *         On a crawler exception
    */
-  public GrepSchemaCrawler(final Schema schema, final GrepOptions grepOptions)
+  public GrepCrawlHandler(final GrepOptions grepOptions,
+                          CrawlHandler chainedCrawlHandler)
     throws SchemaCrawlerException
   {
-    super(schema);
+    if (chainedCrawlHandler == null)
+    {
+      throw new SchemaCrawlerException("Need a chained crawler handler");
+    }
+    this.chainedCrawlHandler = chainedCrawlHandler;
 
     if (grepOptions == null)
     {
@@ -69,36 +69,80 @@ public final class GrepSchemaCrawler
   }
 
   /**
-   * Crawls the schema.
+   * {@inheritDoc}
    * 
-   * @param handler
-   *        A crawl handler instance
-   * @throws SchemaCrawlerException
-   *         On an exception
+   * @see schemacrawler.schemacrawler.CrawlHandler#begin()
    */
-  public void crawl(final SchemaCrawlerOptions options,
-                    final CrawlHandler handler)
+  public void begin()
     throws SchemaCrawlerException
   {
-    handler.begin();
+    chainedCrawlHandler.begin();
+  }
 
-    final Table[] tables = schema.getTables();
-    for (final Table table: tables)
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schemacrawler.CrawlHandler#end()
+   */
+  public void end()
+    throws SchemaCrawlerException
+  {
+    chainedCrawlHandler.end();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @throws SchemaCrawlerException
+   */
+  public void handle(final DatabaseInfo databaseInfo)
+    throws SchemaCrawlerException
+  {
+    chainedCrawlHandler.handle(databaseInfo);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @throws SchemaCrawlerException
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.JdbcDriverInfo)
+   */
+  public void handle(final JdbcDriverInfo driverInfo)
+    throws SchemaCrawlerException
+  {
+    chainedCrawlHandler.handle(driverInfo);
+  }
+
+  /**
+   * Provides information on the database schema.
+   * 
+   * @param procedure
+   *        Procedure metadata.
+   * @throws SchemaCrawlerException
+   */
+  public void handle(final Procedure procedure)
+    throws SchemaCrawlerException
+  {
+    if (include(procedure))
     {
-      if (includesColumn(table))
-      {
-        handler.handle(table);
-      }
+      chainedCrawlHandler.handle(procedure);
     }
-    final Procedure[] procedures = schema.getProcedures();
-    for (final Procedure procedure: procedures)
+  }
+
+  /**
+   * Provides information on the database schema.
+   * 
+   * @param table
+   *        Table metadata.
+   * @throws SchemaCrawlerException
+   */
+  public void handle(final Table table)
+    throws SchemaCrawlerException
+  {
+    if (include(table))
     {
-      if (includesColumn(procedure))
-      {
-        handler.handle(procedure);
-      }
+      chainedCrawlHandler.handle(table);
     }
-    handler.end();
   }
 
   /**
@@ -114,7 +158,7 @@ public final class GrepSchemaCrawler
    *        Whether to invert the table match
    * @return Whether the column should be included
    */
-  private boolean includesColumn(final Table table)
+  private boolean include(final Table table)
   {
     final InclusionRule columnInclusionRule = grepOptions
       .getTableColumnInclusionRule();
@@ -165,7 +209,7 @@ public final class GrepSchemaCrawler
    *        Whether to invert the procedure match
    * @return Whether the column should be included
    */
-  private boolean includesColumn(final Procedure procedure)
+  private boolean include(final Procedure procedure)
   {
     final InclusionRule columnInclusionRule = grepOptions
       .getProcedureColumnInclusionRule();

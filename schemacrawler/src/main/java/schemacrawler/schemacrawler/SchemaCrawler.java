@@ -1,7 +1,6 @@
 package schemacrawler.schemacrawler;
 
 
-import schemacrawler.schema.Schema;
 
 public interface SchemaCrawler
 {
@@ -20,17 +19,6 @@ public interface SchemaCrawler
    *         On an exception
    */
   void crawl(final SchemaCrawlerOptions options, final CrawlHandler handler)
-    throws SchemaCrawlerException;
-
-  /**
-   * Gets the entire schema at once, using an internally caching crawl
-   * handler.
-   * 
-   * @param options
-   *        Options
-   * @return Schema
-   */
-  Schema load(final SchemaCrawlerOptions options)
     throws SchemaCrawlerException;
 
 }
