@@ -46,15 +46,18 @@ public final class GrepCrawlHandler
    * 
    * @param grepOptions
    *        Grep options
+   * @param chainedCrawlHandler
+   *        Handler that handles result of the grep
    * @throws SchemaCrawlerException
+   *         On an exception
    */
   public GrepCrawlHandler(final GrepOptions grepOptions,
-                          CrawlHandler chainedCrawlHandler)
+                          final CrawlHandler chainedCrawlHandler)
     throws SchemaCrawlerException
   {
     if (chainedCrawlHandler == null)
     {
-      throw new SchemaCrawlerException("Need a chained crawler handler");
+      throw new SchemaCrawlerException("No chained crawl handler provided");
     }
     this.chainedCrawlHandler = chainedCrawlHandler;
 
@@ -119,6 +122,7 @@ public final class GrepCrawlHandler
    * @param procedure
    *        Procedure metadata.
    * @throws SchemaCrawlerException
+   *         On an exception
    */
   public void handle(final Procedure procedure)
     throws SchemaCrawlerException
@@ -135,6 +139,7 @@ public final class GrepCrawlHandler
    * @param table
    *        Table metadata.
    * @throws SchemaCrawlerException
+   *         On an exception
    */
   public void handle(final Table table)
     throws SchemaCrawlerException
@@ -143,57 +148,6 @@ public final class GrepCrawlHandler
     {
       chainedCrawlHandler.handle(table);
     }
-  }
-
-  /**
-   * Special case for "grep" like functionality. Handle table if a table
-   * column inclusion rule is found, and at least one column matches the
-   * rule.
-   * 
-   * @param table
-   *        Table to check
-   * @param columnInclusionRule
-   *        Inclusion rule for columns
-   * @param invertMatch
-   *        Whether to invert the table match
-   * @return Whether the column should be included
-   */
-  private boolean include(final Table table)
-  {
-    final InclusionRule columnInclusionRule = grepOptions
-      .getTableColumnInclusionRule();
-    final InclusionRule definitionTextInclusionRule = grepOptions
-      .getDefinitionTextInclusionRule();
-    final boolean invertMatch = grepOptions.isInvertMatch();
-
-    boolean handleTable = false;
-    final Column[] columns = table.getColumns();
-    for (final Column column: columns)
-    {
-      if (columnInclusionRule.include(column.getFullName()))
-      {
-        // We found a column that should be included, so handle the
-        // table
-        handleTable = true;
-        break;
-      }
-    }
-    if (handleTable)
-    {
-      if (table instanceof View)
-      {
-        View view = (View) table;
-        if (!definitionTextInclusionRule.include(view.getDefinition()))
-        {
-          handleTable = false;
-        }
-      }
-    }
-    if (invertMatch)
-    {
-      handleTable = !handleTable;
-    }
-    return handleTable;
   }
 
   /**
@@ -241,6 +195,57 @@ public final class GrepCrawlHandler
       handleProcedure = !handleProcedure;
     }
     return handleProcedure;
+  }
+
+  /**
+   * Special case for "grep" like functionality. Handle table if a table
+   * column inclusion rule is found, and at least one column matches the
+   * rule.
+   * 
+   * @param table
+   *        Table to check
+   * @param columnInclusionRule
+   *        Inclusion rule for columns
+   * @param invertMatch
+   *        Whether to invert the table match
+   * @return Whether the column should be included
+   */
+  private boolean include(final Table table)
+  {
+    final InclusionRule columnInclusionRule = grepOptions
+      .getTableColumnInclusionRule();
+    final InclusionRule definitionTextInclusionRule = grepOptions
+      .getDefinitionTextInclusionRule();
+    final boolean invertMatch = grepOptions.isInvertMatch();
+
+    boolean handleTable = false;
+    final Column[] columns = table.getColumns();
+    for (final Column column: columns)
+    {
+      if (columnInclusionRule.include(column.getFullName()))
+      {
+        // We found a column that should be included, so handle the
+        // table
+        handleTable = true;
+        break;
+      }
+    }
+    if (handleTable)
+    {
+      if (table instanceof View)
+      {
+        final View view = (View) table;
+        if (!definitionTextInclusionRule.include(view.getDefinition()))
+        {
+          handleTable = false;
+        }
+      }
+    }
+    if (invertMatch)
+    {
+      handleTable = !handleTable;
+    }
+    return handleTable;
   }
 
 }
