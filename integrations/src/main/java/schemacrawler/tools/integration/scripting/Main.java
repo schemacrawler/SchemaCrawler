@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.tools.integration.velocity;
+package schemacrawler.tools.integration.scripting;
 
 
 /**
@@ -39,7 +39,7 @@ public final class Main
   public static void main(final String[] args)
     throws Exception
   {
-    new VelocityRenderer().main(args);
+    new ScriptRenderer().main(args);
   }
 
   private Main()
