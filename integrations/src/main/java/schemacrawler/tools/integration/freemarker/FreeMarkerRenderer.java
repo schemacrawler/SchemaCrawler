@@ -29,7 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Schema;
-import schemacrawler.tools.integration.TemplateRenderer;
+import schemacrawler.tools.integration.SchemaRenderer;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.MultiTemplateLoader;
@@ -44,7 +44,7 @@ import freemarker.template.Template;
  * @author Sualeh Fatehi
  */
 public final class FreeMarkerRenderer
-  extends TemplateRenderer
+  extends SchemaRenderer
 {
 
   private static final Logger LOGGER = Logger
@@ -53,13 +53,13 @@ public final class FreeMarkerRenderer
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.integration.TemplateRenderer#renderTemplate(java.lang.String,
+   * @see schemacrawler.tools.integration.SchemaRenderer#render(java.lang.String,
    *      schemacrawler.schema.Schema, java.io.Writer)
    */
   @Override
-  protected void renderTemplate(final String templateName,
-                                final Schema schema,
-                                final Writer writer)
+  protected void render(final String templateName,
+                        final Schema schema,
+                        final Writer writer)
     throws Exception
   {
     // Set the file path, in case the template is a file template

@@ -30,7 +30,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
 import schemacrawler.schema.Schema;
-import schemacrawler.tools.integration.TemplateRenderer;
+import schemacrawler.tools.integration.SchemaRenderer;
 
 /**
  * Main executor for the scripting engine integration.
@@ -38,7 +38,7 @@ import schemacrawler.tools.integration.TemplateRenderer;
  * @author Sualeh Fatehi
  */
 public final class ScriptRenderer
-  extends TemplateRenderer
+  extends SchemaRenderer
 {
 
   private static final Logger LOGGER = Logger.getLogger(ScriptRenderer.class
@@ -47,20 +47,20 @@ public final class ScriptRenderer
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.integration.TemplatedSchemaRenderer#renderTemplate(java.lang.String,
+   * @see schemacrawler.tools.integration.TemplatedSchemaRenderer#render(java.lang.String,
    *      schemacrawler.schema.Schema, java.io.Writer)
    */
   @Override
-  protected void renderTemplate(final String templateName,
-                                final Schema schema,
-                                final Writer writer)
+  protected void render(final String resource,
+                        final Schema schema,
+                        final Writer writer)
     throws Exception
   {
-    String ext = (templateName.lastIndexOf(".") == -1)? "": templateName
-      .substring(templateName.lastIndexOf(".") + 1, templateName.length());
+    final String ext = resource.lastIndexOf(".") == -1? "": resource
+      .substring(resource.lastIndexOf(".") + 1, resource.length());
 
     // Create a new instance of the engine
-    ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
+    final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
     ScriptEngine scriptEngine = scriptEngineManager.getEngineByExtension(ext);
     if (scriptEngine == null)
     {
@@ -75,7 +75,7 @@ public final class ScriptRenderer
     scriptEngine.put("schema", schema);
 
     // Evaluate the script
-    scriptEngine.eval(new FileReader(new File(templateName)));
+    scriptEngine.eval(new FileReader(new File(resource)));
   }
 
 }

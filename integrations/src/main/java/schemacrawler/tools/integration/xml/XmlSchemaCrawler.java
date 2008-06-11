@@ -15,14 +15,14 @@ public final class XmlSchemaCrawler
   extends CachedSchemaCrawler
 {
 
-  public XmlSchemaCrawler(Schema schema)
-  {
-    super(schema);
-  }
-
   public XmlSchemaCrawler(final Reader reader)
   {
     super((Schema) new XStream().fromXML(reader));
+  }
+
+  public XmlSchemaCrawler(final Schema schema)
+  {
+    super(schema);
   }
 
   public void save(final Writer writer)

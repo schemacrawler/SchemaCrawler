@@ -35,7 +35,7 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
 
 import schemacrawler.schema.Schema;
-import schemacrawler.tools.integration.TemplateRenderer;
+import schemacrawler.tools.integration.SchemaRenderer;
 
 /**
  * Main executor for the Velocity integration.
@@ -43,7 +43,7 @@ import schemacrawler.tools.integration.TemplateRenderer;
  * @author Sualeh Fatehi
  */
 public final class VelocityRenderer
-  extends TemplateRenderer
+  extends SchemaRenderer
 {
 
   private static final Logger LOGGER = Logger.getLogger(VelocityRenderer.class
@@ -62,13 +62,13 @@ public final class VelocityRenderer
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.integration.TemplatedSchemaRenderer#renderTemplate(java.lang.String,
+   * @see schemacrawler.tools.integration.TemplatedSchemaRenderer#render(java.lang.String,
    *      schemacrawler.schema.Schema, java.io.Writer)
    */
   @Override
-  protected void renderTemplate(final String templateName,
-                                final Schema schema,
-                                final Writer writer)
+  protected void render(final String templateName,
+                        final Schema schema,
+                        final Writer writer)
     throws Exception
   {
     // Set the file path, in case the template is a file template
