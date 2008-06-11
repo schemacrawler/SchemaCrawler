@@ -385,7 +385,8 @@ public class SchemaCrawlerMojo
       for (int i = 0; i < jdbcJarPaths.length; i++)
       {
         final String jdbcJarPath = jdbcJarPaths[i];
-        jdbcJarUrls[i] = (new File(jdbcJarPath)).getCanonicalFile().toURL();
+        jdbcJarUrls[i] = ((new File(jdbcJarPath)).getCanonicalFile().toURI())
+          .toURL();
       }
 
       final Method addUrlMethod = (new URLClassLoader(new URL[0])).getClass()

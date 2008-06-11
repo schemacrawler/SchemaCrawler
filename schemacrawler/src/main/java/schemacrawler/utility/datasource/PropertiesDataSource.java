@@ -220,6 +220,17 @@ public final class PropertiesDataSource
   }
 
   /**
+   * {@inheritDoc}
+   * 
+   * @see java.sql.Wrapper#isWrapperFor(java.lang.Class)
+   */
+  public boolean isWrapperFor(final Class<?> iface)
+    throws SQLException
+  {
+    return false;
+  }
+
+  /**
    * Sets the maximum time in seconds that this data source will wait
    * while attempting to connect to a database. A value of zero
    * specifies that the timeout is the default system timeout if there
@@ -280,6 +291,17 @@ public final class PropertiesDataSource
       .append(NEWLINE).append("-- connection: ").append(url);
     return info.toString();
 
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.sql.Wrapper#unwrap(java.lang.Class)
+   */
+  public <T> T unwrap(final Class<T> iface)
+    throws SQLException
+  {
+    throw new SQLException("Not implemented");
   }
 
   private void constructPropertiesDataSource(final Properties properties,

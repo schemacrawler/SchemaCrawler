@@ -1,0 +1,81 @@
+/* 
+ *
+ * SchemaCrawler
+ * http://sourceforge.net/projects/schemacrawler
+ * Copyright (c) 2000-2008, Sualeh Fatehi.
+ *
+ * This library is free software; you can redistribute it and/or modify it under the terms
+ * of the GNU Lesser General Public License as published by the Free Software Foundation;
+ * either version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * Boston, MA 02111-1307, USA.
+ *
+ */
+
+package schemacrawler.tools.integration.scripting;
+
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.Writer;
+import java.util.logging.Logger;
+
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+
+import schemacrawler.schema.Schema;
+import schemacrawler.tools.integration.TemplateRenderer;
+
+/**
+ * Main executor for the scripting engine integration.
+ * 
+ * @author Sualeh Fatehi
+ */
+public final class ScriptRenderer
+  extends TemplateRenderer
+{
+
+  private static final Logger LOGGER = Logger.getLogger(ScriptRenderer.class
+    .getName());
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.integration.TemplatedSchemaRenderer#renderTemplate(java.lang.String,
+   *      schemacrawler.schema.Schema, java.io.Writer)
+   */
+  @Override
+  protected void renderTemplate(final String templateName,
+                                final Schema schema,
+                                final Writer writer)
+    throws Exception
+  {
+    String ext = (templateName.lastIndexOf(".") == -1)? "": templateName
+      .substring(templateName.lastIndexOf(".") + 1, templateName.length());
+
+    // Create a new instance of the engine
+    ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
+    ScriptEngine scriptEngine = scriptEngineManager.getEngineByExtension(ext);
+    if (scriptEngine == null)
+    {
+      scriptEngine = scriptEngineManager.getEngineByName("JavaScript");
+    }
+    if (scriptEngine == null)
+    {
+      throw new RuntimeException("Script engine not found");
+    }
+
+    // Set the context
+    scriptEngine.put("schema", schema);
+
+    // Evaluate the script
+    scriptEngine.eval(new FileReader(new File(templateName)));
+  }
+
+}
