@@ -32,7 +32,7 @@ import schemacrawler.utility.SchemaCrawlerUtility;
  * 
  * @author sfatehi
  */
-public abstract class TemplateRenderer
+public abstract class SchemaRenderer
   extends SchemaExecutable
 {
 
@@ -55,7 +55,7 @@ public abstract class TemplateRenderer
     final Writer writer = toolOptions.getOutputOptions().openOutputWriter();
     final String templateName = toolOptions.getOutputOptions()
       .getOutputFormatValue();
-    renderTemplate(templateName, schema, writer);
+    render(templateName, schema, writer);
     toolOptions.getOutputOptions().closeOutputWriter(writer);
   }
 
@@ -77,17 +77,17 @@ public abstract class TemplateRenderer
   /**
    * Renders the schema with the given template.
    * 
-   * @param templateName
-   *        Name of the template
+   * @param resource
+   *        Location of the recource
    * @param schema
    *        Schema
    * @param writer
    *        Writer
    * @throws Exception
    */
-  protected abstract void renderTemplate(final String templateName,
-                                         final Schema schema,
-                                         final Writer writer)
+  protected abstract void render(final String resource,
+                                 final Schema schema,
+                                 final Writer writer)
     throws Exception;
 
 }
