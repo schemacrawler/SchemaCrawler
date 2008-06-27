@@ -206,7 +206,7 @@ public class SchemaCrawlerMojo
    *      java.util.Locale)
    */
   @Override
-  public void generate(@SuppressWarnings("unused")
+  public void generate(
   final Sink sink, final Locale locale)
     throws MavenReportException
   {
@@ -229,7 +229,7 @@ public class SchemaCrawlerMojo
    * 
    * @see org.apache.maven.reporting.MavenReport#getDescription(java.util.Locale)
    */
-  public String getDescription(@SuppressWarnings("unused")
+  public String getDescription(
   final Locale locale)
   {
     return "SchemaCrawler Report";
@@ -240,7 +240,7 @@ public class SchemaCrawlerMojo
    * 
    * @see org.apache.maven.reporting.MavenReport#getName(java.util.Locale)
    */
-  public String getName(@SuppressWarnings("unused")
+  public String getName(
   final Locale locale)
   {
     return "SchemaCrawler Report";
@@ -297,7 +297,7 @@ public class SchemaCrawlerMojo
   }
 
   @Override
-  protected void executeReport(@SuppressWarnings("unused")
+  protected void executeReport(
   final Locale locale)
     throws MavenReportException
   {
