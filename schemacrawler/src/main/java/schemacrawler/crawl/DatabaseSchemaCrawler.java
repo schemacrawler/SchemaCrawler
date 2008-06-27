@@ -71,7 +71,6 @@ public final class DatabaseSchemaCrawler
   }
 
   private final DataSource dataSource;
-  private String catalog = null;
 
   /**
    * Constructs a SchemaCrawler object, from a connection.
@@ -95,7 +94,7 @@ public final class DatabaseSchemaCrawler
     try
     {
       connection = dataSource.getConnection();
-      catalog = connection.getCatalog();
+      connection.getCatalog();
     }
     catch (final SQLException e)
     {

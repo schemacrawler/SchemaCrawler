@@ -65,7 +65,7 @@ public class SchemaCrawlerTest
   public static void beforeAllTests()
     throws ClassNotFoundException
   {
-    testUtility.setApplicationLogLevel();
+    TestUtility.setApplicationLogLevel();
     testUtility.createMemoryDatabase();
   }
 

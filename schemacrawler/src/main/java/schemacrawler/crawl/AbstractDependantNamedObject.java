@@ -32,6 +32,8 @@ abstract class AbstractDependantNamedObject
   implements DependantNamedObject
 {
 
+  private static final long serialVersionUID = -4327208866052082457L;
+
   private final NamedObject parent;
 
   AbstractDependantNamedObject(final String name, final NamedObject parent)

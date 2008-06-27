@@ -40,8 +40,7 @@ final class HSQLDBServerFilesFilter
    * 
    * @see java.io.FilenameFilter#accept(java.io.File, java.lang.String)
    */
-  public boolean accept(@SuppressWarnings("unused")
-  final File dir, final String name)
+  public boolean accept(final File dir, final String name)
   {
     return serverFiles.contains(name);
   }
