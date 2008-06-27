@@ -24,7 +24,6 @@ package schemacrawler.tools.integration.scripting;
 import java.io.File;
 import java.io.FileReader;
 import java.io.Writer;
-import java.util.logging.Logger;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -40,9 +39,6 @@ import schemacrawler.tools.integration.SchemaRenderer;
 public final class ScriptRenderer
   extends SchemaRenderer
 {
-
-  private static final Logger LOGGER = Logger.getLogger(ScriptRenderer.class
-    .getName());
 
   /**
    * {@inheritDoc}
