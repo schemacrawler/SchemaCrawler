@@ -36,8 +36,9 @@ import sf.util.CommandLineUtility;
 
 /**
  * A wrapper used to assemble the classpath before launching the actual
- * application. See
- * {@link http://tapestryjava.blogspot.com/2007/08/quick-and-dirty-java-application.html}
+ * application. See {@link http
+ * ://tapestryjava.blogspot.com/2007/08/quick
+ * -and-dirty-java-application.html}
  */
 public final class LauncherMain
 {
@@ -159,8 +160,7 @@ public final class LauncherMain
     {
       final File[] jarFiles = dir.listFiles(new FilenameFilter()
       {
-        public boolean accept(@SuppressWarnings("unused")
-        final File dir, final String name)
+        public boolean accept(final File dir, final String name)
         {
           return name.endsWith(".jar");
         }
@@ -200,7 +200,7 @@ public final class LauncherMain
   {
     try
     {
-      return file.toURL();
+      return file.toURI().toURL();
     }
     catch (final MalformedURLException ex)
     {

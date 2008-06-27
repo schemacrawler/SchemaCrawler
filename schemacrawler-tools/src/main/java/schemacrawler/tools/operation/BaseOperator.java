@@ -247,7 +247,7 @@ public abstract class BaseOperator
    * 
    * @see CrawlHandler#handle(Procedure)
    */
-  public final void handle(@SuppressWarnings("unused")
+  public final void handle(
   final Procedure procedure)
   {
   }

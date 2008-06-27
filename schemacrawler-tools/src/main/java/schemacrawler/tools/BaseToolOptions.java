@@ -30,6 +30,8 @@ public abstract class BaseToolOptions
   implements ToolOptions
 {
 
+  private static final long serialVersionUID = -2072130838813852782L;
+
   private OutputOptions outputOptions;
 
   /**
