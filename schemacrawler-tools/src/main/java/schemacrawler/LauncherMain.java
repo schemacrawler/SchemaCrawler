@@ -36,9 +36,10 @@ import sf.util.CommandLineUtility;
 
 /**
  * A wrapper used to assemble the classpath before launching the actual
- * application. See {@link http
- * ://tapestryjava.blogspot.com/2007/08/quick
- * -and-dirty-java-application.html}
+ * application.
+ * <p>
+ * See <a href=" http://tapestryjava.blogspot.com/2007/08/quick-and-dirty-java-application.html"
+ * >launcher discussion</a>.
  */
 public final class LauncherMain
 {
