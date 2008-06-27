@@ -33,6 +33,8 @@ abstract class AbstractNamedObject
   implements NamedObject
 {
 
+  private static final long serialVersionUID = -1486322887991472729L;
+
   private final String name;
   private String remarks;
   private final SortedMap<String, Object> attributeMap = new TreeMap<String, Object>();

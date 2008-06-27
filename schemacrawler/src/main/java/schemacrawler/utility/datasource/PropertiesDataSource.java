@@ -224,7 +224,7 @@ public final class PropertiesDataSource
    * 
    * @see java.sql.Wrapper#isWrapperFor(java.lang.Class)
    */
-  public boolean isWrapperFor(final Class<?> iface)
+  public boolean isWrapperFor( final Class<?> iface)
     throws SQLException
   {
     return false;
@@ -248,14 +248,14 @@ public final class PropertiesDataSource
   }
 
   /**
-   * Sets the log writer for this <code>DataSource</code> object to
-   * the given <code>java.io.PrintWriter</code> object. The log writer
-   * is a character output stream to which all logging and tracing
-   * messages for this data source will be printed. This includes
-   * messages printed by the methods of this object, messages printed by
-   * methods of other objects manufactured by this object, and so on.
-   * Messages printed to a data source- specific log writer are not
-   * printed to the log writer associated with the
+   * Sets the log writer for this <code>DataSource</code> object to the
+   * given <code>java.io.PrintWriter</code> object. The log writer is a
+   * character output stream to which all logging and tracing messages
+   * for this data source will be printed. This includes messages
+   * printed by the methods of this object, messages printed by methods
+   * of other objects manufactured by this object, and so on. Messages
+   * printed to a data source- specific log writer are not printed to
+   * the log writer associated with the
    * <code>java.sql.Drivermanager</code> class. When a
    * <code>DataSource</code> object is created the log writer is
    * initially null; in other words, the default is for logging to be
@@ -298,7 +298,7 @@ public final class PropertiesDataSource
    * 
    * @see java.sql.Wrapper#unwrap(java.lang.Class)
    */
-  public <T> T unwrap(final Class<T> iface)
+  public <T> T unwrap( final Class<T> iface)
     throws SQLException
   {
     throw new SQLException("Not implemented");
@@ -341,9 +341,8 @@ public final class PropertiesDataSource
     try
     {
       final String driver = connectionParams.getProperty(DRIVER);
-      final Class<Driver> jdbcDriverClass = (Class<Driver>) Class
-        .forName(driver);
-      jdbcDriver = jdbcDriverClass.newInstance();
+      final Class<?> jdbcDriverClass = Class.forName(driver);
+      jdbcDriver = (Driver) jdbcDriverClass.newInstance();
     }
     catch (final ClassCastException e)
     {

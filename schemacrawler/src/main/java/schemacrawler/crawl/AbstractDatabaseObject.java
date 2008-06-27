@@ -30,6 +30,8 @@ abstract class AbstractDatabaseObject
   implements DatabaseObject
 {
 
+  private static final long serialVersionUID = 3099561832386790624L;
+
   private final String schemaName;
   private final String catalogName;
 

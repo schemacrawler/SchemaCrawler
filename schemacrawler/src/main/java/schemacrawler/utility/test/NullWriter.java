@@ -54,9 +54,9 @@ final class NullWriter
    * {@inheritDoc}
    */
   @Override
-  public void write(@SuppressWarnings("unused")
-  final char[] cbuf, @SuppressWarnings("unused")
-  final int off, @SuppressWarnings("unused")
+  public void write(
+  final char[] cbuf, 
+  final int off, 
   final int len)
     throws IOException
   {
@@ -67,7 +67,7 @@ final class NullWriter
    * {@inheritDoc}
    */
   @Override
-  public void write(@SuppressWarnings("unused")
+  public void write(
   final int c)
     throws IOException
   {
@@ -78,9 +78,9 @@ final class NullWriter
    * {@inheritDoc}
    */
   @Override
-  public void write(@SuppressWarnings("unused")
-  final String str, @SuppressWarnings("unused")
-  final int off, @SuppressWarnings("unused")
+  public void write(
+  final String str, 
+  final int off, 
   final int len)
     throws IOException
   {

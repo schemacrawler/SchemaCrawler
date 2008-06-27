@@ -33,6 +33,8 @@ abstract class AbstractColumn
   implements BaseColumn
 {
 
+  private static final long serialVersionUID = -8492662324895309485L;
+
   private ColumnDataType type;
   private int ordinalPosition;
   private int size;
