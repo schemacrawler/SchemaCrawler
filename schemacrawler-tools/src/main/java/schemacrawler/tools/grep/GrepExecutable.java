@@ -76,7 +76,8 @@ public class GrepExecutable
     }
     handler = new GrepCrawlHandler(toolOptions, handler);
 
-    final SchemaCrawler crawler = new DatabaseSchemaCrawler(dataSource);
+    final SchemaCrawler crawler = new DatabaseSchemaCrawler(dataSource
+      .getConnection());
     crawler.crawl(schemaCrawlerOptions, handler);
   }
 

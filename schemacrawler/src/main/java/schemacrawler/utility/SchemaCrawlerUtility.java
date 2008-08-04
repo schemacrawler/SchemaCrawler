@@ -18,6 +18,7 @@
 package schemacrawler.utility;
 
 
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -49,12 +50,17 @@ public class SchemaCrawlerUtility
     try
     {
       final CachingCrawlHandler crawlHandler = new CachingCrawlHandler();
-      schemaCrawler = new DatabaseSchemaCrawler(dataSource);
+      schemaCrawler = new DatabaseSchemaCrawler(dataSource.getConnection());
       schemaCrawler.crawl(schemaCrawlerOptions, crawlHandler);
       final Schema schema = crawlHandler.getSchema();
       return schema;
     }
     catch (final SchemaCrawlerException e)
+    {
+      LOGGER.log(Level.SEVERE, e.getMessage(), e);
+      return null;
+    }
+    catch (final SQLException e)
     {
       LOGGER.log(Level.SEVERE, e.getMessage(), e);
       return null;
