@@ -24,8 +24,6 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.sql.DataSource;
-
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.CrawlHandler;
@@ -70,7 +68,7 @@ public final class DatabaseSchemaCrawler
     return resultColumns;
   }
 
-  private final DataSource dataSource;
+  private final Connection connection;
 
   /**
    * Constructs a SchemaCrawler object, from a connection.
@@ -80,40 +78,24 @@ public final class DatabaseSchemaCrawler
    * @throws SchemaCrawlerException
    *         On a crawler exception
    */
-  public DatabaseSchemaCrawler(final DataSource dataSource)
+  public DatabaseSchemaCrawler(final Connection connection)
     throws SchemaCrawlerException
   {
-    if (dataSource == null)
+    if (connection == null)
     {
-      throw new SchemaCrawlerException("No data source specified");
+      throw new SchemaCrawlerException("No connection specified");
     }
-    this.dataSource = dataSource;
+    this.connection = connection;
 
     // Check data source, and obtain the catalog name
-    Connection connection = null;
     try
     {
-      connection = dataSource.getConnection();
       connection.getCatalog();
     }
     catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING, e.getMessage(), e);
       // NOTE: catalog remains null, which is ok for JDBC
-    }
-    finally
-    {
-      try
-      {
-        if (connection != null)
-        {
-          connection.close();
-        }
-      }
-      catch (final SQLException e)
-      {
-        LOGGER.log(Level.WARNING, "Could not close connection", e);
-      }
     }
   }
 
@@ -140,7 +122,7 @@ public final class DatabaseSchemaCrawler
       {
         schemaCrawlerOptions = new SchemaCrawlerOptions();
       }
-      retrieverConnection = new RetrieverConnection(dataSource,
+      retrieverConnection = new RetrieverConnection(connection,
                                                     schemaCrawlerOptions);
 
       handler.begin();

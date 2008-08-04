@@ -24,8 +24,6 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.sql.DataSource;
-
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -46,7 +44,7 @@ final class RetrieverConnection
   private final String schemaPattern;
   private final InformationSchemaViews informationSchemaViews;
 
-  RetrieverConnection(final DataSource dataSource,
+  RetrieverConnection(final Connection connection,
                       final SchemaCrawlerOptions options)
     throws SchemaCrawlerException, SQLException
   {
@@ -55,11 +53,10 @@ final class RetrieverConnection
     {
       schemaCrawlerOptions = new SchemaCrawlerOptions();
     }
-    if (dataSource == null)
+    if (connection == null)
     {
-      throw new SchemaCrawlerException("No data source provided");
+      throw new SchemaCrawlerException("No connection provided");
     }
-    final Connection connection = dataSource.getConnection();
     metaData = connection.getMetaData();
 
     String catalogFromConnection;
