@@ -73,8 +73,8 @@ public final class DatabaseSchemaCrawler
   /**
    * Constructs a SchemaCrawler object, from a connection.
    * 
-   * @param dataSource
-   *        An data source.
+   * @param connection
+   *        An database connection.
    * @throws SchemaCrawlerException
    *         On a crawler exception
    */

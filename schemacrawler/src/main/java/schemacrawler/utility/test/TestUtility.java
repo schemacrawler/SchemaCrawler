@@ -263,8 +263,16 @@ public class TestUtility
 
   public Schema getSchema(final SchemaCrawlerOptions schemaCrawlerOptions)
   {
-    return SchemaCrawlerUtility
-      .getSchema(getDataSource(), schemaCrawlerOptions);
+    try
+    {
+      return SchemaCrawlerUtility.getSchema(getDataSource().getConnection(),
+                                            schemaCrawlerOptions);
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.SEVERE, "Could not obtain a connection", e);
+      return null;
+    }
   }
 
   /**
