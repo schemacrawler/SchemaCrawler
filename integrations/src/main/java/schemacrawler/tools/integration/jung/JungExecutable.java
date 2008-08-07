@@ -54,8 +54,8 @@ public final class JungExecutable
     // Get the entire schema at once
     schemaCrawlerOptions.setSchemaInfoLevel(toolOptions
       .getSchemaTextDetailType().mapToInfoLevel());
-    final Schema schema = SchemaCrawlerUtility.getSchema(dataSource,
-                                                         schemaCrawlerOptions);
+    final Schema schema = SchemaCrawlerUtility.getSchema(dataSource
+      .getConnection(), schemaCrawlerOptions);
 
     // Executable-specific work
     final File outputFile = toolOptions.getOutputOptions().getOutputFile();

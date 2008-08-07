@@ -48,8 +48,8 @@ public abstract class SchemaRenderer
     // Get the entire schema at once
     schemaCrawlerOptions.setSchemaInfoLevel(toolOptions
       .getSchemaTextDetailType().mapToInfoLevel());
-    final Schema schema = SchemaCrawlerUtility.getSchema(dataSource,
-                                                         schemaCrawlerOptions);
+    final Schema schema = SchemaCrawlerUtility.getSchema(dataSource
+      .getConnection(), schemaCrawlerOptions);
 
     // Executable-specific work
     final Writer writer = toolOptions.getOutputOptions().openOutputWriter();
