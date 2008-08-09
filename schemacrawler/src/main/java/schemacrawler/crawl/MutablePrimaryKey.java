@@ -19,8 +19,8 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.Column;
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Index;
-import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.PrimaryKey;
 
 /**
@@ -57,7 +57,7 @@ class MutablePrimaryKey
     }
   }
 
-  MutablePrimaryKey(final String name, final NamedObject parent)
+  MutablePrimaryKey(final String name, final DatabaseObject parent)
   {
     super(name, parent);
   }

@@ -91,7 +91,9 @@ final class ProcedureExRetriever
         final String schema = results.getString("ROUTINE_SCHEMA");
         final String procedureName = results.getString("ROUTINE_NAME");
 
-        final MutableProcedure procedure = procedures.lookup(procedureName);
+        final MutableProcedure procedure = procedures.lookup(catalog,
+                                                             schema,
+                                                             procedureName);
         if (!belongsToSchema(procedure, catalog, schema))
         {
           LOGGER.log(Level.FINEST, "Procedure not found: " + procedureName);

@@ -24,6 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Column;
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexSortSequence;
 import schemacrawler.schema.IndexType;
@@ -51,7 +52,7 @@ class MutableIndex
   private int cardinality;
   private int pages;
 
-  MutableIndex(final String name, final NamedObject parent)
+  MutableIndex(final String name, final DatabaseObject parent)
   {
     super(name, parent);
     // Default values

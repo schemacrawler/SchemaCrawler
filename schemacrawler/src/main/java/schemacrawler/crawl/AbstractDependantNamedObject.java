@@ -18,8 +18,8 @@
 package schemacrawler.crawl;
 
 
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DependantNamedObject;
-import schemacrawler.schema.NamedObject;
 
 /**
  * Represents the dependent of a database object, such as a column or an
@@ -28,21 +28,17 @@ import schemacrawler.schema.NamedObject;
  * @author Sualeh Fatehi
  */
 abstract class AbstractDependantNamedObject
-  extends AbstractNamedObject
+  extends AbstractDatabaseObject
   implements DependantNamedObject
 {
 
   private static final long serialVersionUID = -4327208866052082457L;
 
-  private final NamedObject parent;
+  private final DatabaseObject parent;
 
-  AbstractDependantNamedObject(final String name, final NamedObject parent)
+  AbstractDependantNamedObject(final String name, final DatabaseObject parent)
   {
-    super(name);
-    if (parent == null)
-    {
-      throw new IllegalArgumentException("Parent object not specified");
-    }
+    super(parent.getCatalogName(), parent.getSchemaName(), name);
     this.parent = parent;
   }
 
@@ -62,10 +58,6 @@ abstract class AbstractDependantNamedObject
     {
       return false;
     }
-    if (getClass() != obj.getClass())
-    {
-      return false;
-    }
     final AbstractDependantNamedObject other = (AbstractDependantNamedObject) obj;
     if (parent == null)
     {
@@ -78,7 +70,7 @@ abstract class AbstractDependantNamedObject
     {
       return false;
     }
-    return true;
+    return super.equals(obj);
   }
 
   /**
@@ -105,7 +97,7 @@ abstract class AbstractDependantNamedObject
    * 
    * @see schemacrawler.schema.DependantNamedObject#getParent()
    */
-  public final NamedObject getParent()
+  public final DatabaseObject getParent()
   {
     return parent;
   }
@@ -121,6 +113,7 @@ abstract class AbstractDependantNamedObject
     final int prime = 31;
     int result = super.hashCode();
     result = prime * result + (parent == null? 0: parent.hashCode());
+    result = prime * result + (super.hashCode());
     return result;
   }
 

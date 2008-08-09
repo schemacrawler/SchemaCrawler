@@ -18,7 +18,7 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.ProcedureColumnType;
 
@@ -37,7 +37,7 @@ final class MutableProcedureColumn
 
   private ProcedureColumnType procedureColumnType;
 
-  MutableProcedureColumn(final String name, final NamedObject parent)
+  MutableProcedureColumn(final String name, final DatabaseObject parent)
   {
     super(name, parent);
   }

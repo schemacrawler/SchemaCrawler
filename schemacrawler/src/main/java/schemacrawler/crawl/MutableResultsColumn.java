@@ -18,7 +18,7 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.ResultsColumn;
 
 /**
@@ -44,7 +44,7 @@ final class MutableResultsColumn
   private boolean signed;
   private boolean writable;
 
-  MutableResultsColumn(final String name, final NamedObject parent)
+  MutableResultsColumn(final String name, final DatabaseObject parent)
   {
     super(name, parent);
   }

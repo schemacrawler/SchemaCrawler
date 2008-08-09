@@ -23,9 +23,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
 
 /**
@@ -40,11 +41,8 @@ final class NamedObjectList<N extends NamedObject>
   private static final long serialVersionUID = 3257847666804142128L;
 
   private NamedObjectSort sort;
-  /**
-   * Map of names and named objects. This map needs to be sorted so that
-   * schema serialization does not break.
-   */
-  private final SortedMap<String, N> map;
+  /** Needs to be sorted, so serialization does not break. */
+  private final SortedSet<N> objects;
 
   /**
    * Construct an initially empty ordered list of named objects, that
@@ -56,7 +54,22 @@ final class NamedObjectList<N extends NamedObject>
   NamedObjectList(final NamedObjectSort sort)
   {
     this.sort = sort;
-    this.map = new TreeMap<String, N>();
+    this.objects = new TreeSet<N>();
+  }
+
+  /**
+   * Add a named object to the list.
+   * 
+   * @param namedObject
+   *        Named object
+   */
+  void add(final N namedObject)
+  {
+    if (namedObject == null || namedObject.getName() == null)
+    {
+      throw new IllegalArgumentException("Cannot add an object to the list");
+    }
+    objects.add(namedObject);
   }
 
   /**
@@ -81,18 +94,30 @@ final class NamedObjectList<N extends NamedObject>
       return false;
     }
     final NamedObjectList<N> other = (NamedObjectList<N>) obj;
-    if (map == null)
+    if (objects == null)
     {
-      if (other.map != null)
+      if (other.objects != null)
       {
         return false;
       }
     }
-    else if (!map.equals(other.map))
+    else if (!objects.equals(other.objects))
     {
       return false;
     }
     return true;
+  }
+
+  /**
+   * Gets all named objects in the list, in sorted order.
+   * 
+   * @return All named objects
+   */
+  List<N> getAll()
+  {
+    final List<N> all = new ArrayList<N>(objects);
+    Collections.sort(all, sort);
+    return Collections.unmodifiableList(all);
   }
 
   /**
@@ -105,7 +130,7 @@ final class NamedObjectList<N extends NamedObject>
   {
     final int prime = 31;
     int result = 1;
-    result = prime * result + (map == null? 0: map.hashCode());
+    result = prime * result + (objects == null? 0: objects.hashCode());
     return result;
   }
 
@@ -119,42 +144,26 @@ final class NamedObjectList<N extends NamedObject>
     return getAll().iterator();
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#toString()
-   */
-  @Override
-  public String toString()
+  N lookup(DatabaseObject databaseObject, String name)
   {
-    return getAll().toString();
+    return lookup(databaseObject.getCatalogName(), databaseObject
+      .getSchemaName(), databaseObject.getName(), name);
   }
 
-  /**
-   * Add a named object to the list.
-   * 
-   * @param namedObject
-   *        Named object
-   */
-  void add(final N namedObject)
+  private N lookup(final NamedObject namedObject)
   {
-    if (namedObject == null || namedObject.getName() == null)
+    if (namedObject == null)
     {
-      throw new IllegalArgumentException("Cannot add an object to the list");
+      return null;
     }
-    map.put(namedObject.getName(), namedObject);
-  }
-
-  /**
-   * Gets all named objects in the list, in sorted order.
-   * 
-   * @return All named objects
-   */
-  List<N> getAll()
-  {
-    final List<N> all = new ArrayList<N>(map.values());
-    Collections.sort(all, sort);
-    return Collections.unmodifiableList(all);
+    for (N listItem: objects)
+    {
+      if (namedObject.equals(listItem))
+      {
+        return listItem;
+      }
+    }
+    return null;
   }
 
   /**
@@ -164,14 +173,78 @@ final class NamedObjectList<N extends NamedObject>
    *        Name
    * @return Named object
    */
+  @SuppressWarnings("serial")
   N lookup(final String name)
   {
-    return map.get(name);
+    return lookup(new AbstractNamedObject(name)
+    {
+
+    });
   }
 
-  N remove(final String namedObjectName)
+  /**
+   * Looks up a named object by name.
+   * 
+   * @param name
+   *        Name
+   * @return Named object
+   */
+  @SuppressWarnings("serial")
+  N lookup(final String catalogName, final String schemaName, final String name)
   {
-    return map.remove(namedObjectName);
+    return lookup(new AbstractDatabaseObject(catalogName, schemaName, name)
+    {
+
+    });
+  }
+
+  /**
+   * Looks up a named object by name.
+   * 
+   * @param name
+   *        Name
+   * @return Named object
+   */
+  @SuppressWarnings("serial")
+  N lookup(final String catalogName,
+           final String schemaName,
+           final String name,
+           final String dependentObjectName)
+  {
+    return lookup(new AbstractDependantNamedObject(dependentObjectName,
+      new AbstractDatabaseObject(catalogName, schemaName, name)
+      {
+
+      })
+    {
+    });
+  }
+
+  private N remove(final NamedObject namedObject)
+  {
+    if (namedObject == null)
+    {
+      return null;
+    }
+    for (Iterator<N> iterator = objects.iterator(); iterator.hasNext();)
+    {
+      N listItem = (N) iterator.next();
+      if (namedObject.equals(listItem))
+      {
+        iterator.remove();
+        return listItem;
+      }
+    }
+    return null;
+  }
+
+  @SuppressWarnings("serial")
+  N remove(final String name)
+  {
+    return remove(new AbstractNamedObject(name)
+    {
+
+    });
   }
 
   void setSortOrder(final NamedObjectSort sort)
@@ -186,7 +259,18 @@ final class NamedObjectList<N extends NamedObject>
    */
   int size()
   {
-    return map.size();
+    return objects.size();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    return getAll().toString();
   }
 
 }

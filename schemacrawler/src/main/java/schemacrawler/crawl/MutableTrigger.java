@@ -20,8 +20,8 @@ package schemacrawler.crawl;
 
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.ConditionTimingType;
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.EventManipulationType;
-import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Trigger;
 
 /**
@@ -43,7 +43,7 @@ class MutableTrigger
   private ActionOrientationType actionOrientation;
   private ConditionTimingType conditionTiming;
 
-  MutableTrigger(final String name, final NamedObject parent)
+  MutableTrigger(final String name, final DatabaseObject parent)
   {
     super(name, parent);
     // Default values
