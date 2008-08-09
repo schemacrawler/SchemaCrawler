@@ -414,7 +414,7 @@ final class TableRetriever
         MutableIndex index = indicesMap.get(indexName);
         if (index == null)
         {
-          index = new MutableIndex(indexName, table);
+          index = new MutableIndex(table, indexName);
           indicesMap.put(indexName, index);
         }
         final String columnName = results.getString(COLUMN_NAME);

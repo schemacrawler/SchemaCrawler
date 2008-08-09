@@ -27,7 +27,7 @@ import schemacrawler.schema.Privilege;
  * @author Sualeh Fatehi
  */
 final class MutablePrivilege
-  extends AbstractDependantNamedObject
+  extends AbstractDependantObject
   implements Privilege
 {
 
@@ -37,9 +37,9 @@ final class MutablePrivilege
   private String grantee;
   private boolean isGrantable;
 
-  MutablePrivilege(final String name, final DatabaseObject parent)
+  MutablePrivilege(final DatabaseObject parent, final String name)
   {
-    super(name, parent);
+    super(parent, name);
   }
 
   /**

@@ -30,7 +30,7 @@ import schemacrawler.schema.NamedObject;
  * @author Sualeh Fatehi
  */
 abstract class AbstractColumn
-  extends AbstractDependantNamedObject
+  extends AbstractDependantObject
   implements BaseColumn
 {
 
@@ -42,9 +42,9 @@ abstract class AbstractColumn
   private int decimalDigits;
   private boolean nullable;
 
-  AbstractColumn(final String name, final DatabaseObject parent)
+  AbstractColumn(final DatabaseObject parent, final String name)
   {
-    super(name, parent);
+    super(parent, name);
   }
 
   /**

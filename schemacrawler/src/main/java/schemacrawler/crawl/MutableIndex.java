@@ -36,7 +36,7 @@ import schemacrawler.schema.NamedObject;
  * @author Sualeh Fatehi
  */
 class MutableIndex
-  extends AbstractDependantNamedObject
+  extends AbstractDependantObject
   implements Index
 {
 
@@ -52,9 +52,9 @@ class MutableIndex
   private int cardinality;
   private int pages;
 
-  MutableIndex(final String name, final DatabaseObject parent)
+  MutableIndex(final DatabaseObject parent, final String name)
   {
-    super(name, parent);
+    super(parent, name);
     // Default values
     type = IndexType.unknown;
     sortSequence = IndexSortSequence.unknown;

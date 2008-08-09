@@ -30,7 +30,7 @@ import schemacrawler.schema.NamedObject;
  * @author Sualeh Fatehi
  */
 final class MutableForeignKeyColumnMap
-  extends AbstractDependantNamedObject
+  extends AbstractDependantObject
   implements ForeignKeyColumnMap
 {
 
@@ -40,9 +40,9 @@ final class MutableForeignKeyColumnMap
   private Column primaryKeyColumn;
   private int keySequence;
 
-  MutableForeignKeyColumnMap(final String name, final DatabaseObject parent)
+  MutableForeignKeyColumnMap(final DatabaseObject parent, final String name)
   {
-    super(name, parent);
+    super(parent, name);
   }
 
   /**

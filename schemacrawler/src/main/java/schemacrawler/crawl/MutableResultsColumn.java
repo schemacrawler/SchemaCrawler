@@ -46,7 +46,7 @@ final class MutableResultsColumn
 
   MutableResultsColumn(final String name, final DatabaseObject parent)
   {
-    super(name, parent);
+    super(parent, name);
   }
 
   /**

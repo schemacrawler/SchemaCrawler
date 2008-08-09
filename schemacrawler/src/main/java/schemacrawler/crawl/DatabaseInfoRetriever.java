@@ -109,21 +109,9 @@ final class DatabaseInfoRetriever
                                         "TypeScrollSensitive");
         }
       }
-      catch (final IllegalAccessException e)
+      catch (final Exception e)
       {
-        LOGGER.log(Level.WARNING, e.getMessage(), e);
-      }
-      catch (final IllegalArgumentException e)
-      {
-        LOGGER.log(Level.WARNING, e.getMessage(), e);
-      }
-      catch (final InvocationTargetException e)
-      {
-        LOGGER.log(Level.WARNING, e.getMessage(), e);
-      }
-      catch (final AbstractMethodError e)
-      {
-        LOGGER.log(Level.WARNING, e.getMessage(), e);
+        LOGGER.log(Level.FINE, "Could not execute method, " + method, e);
       }
     }
   }
