@@ -96,11 +96,13 @@ final class TableExRetriever
       return;
     }
 
+    final String catalog = results.getString("PROCEDURE_CAT");
     try
     {
       while (results.next())
       {
-        final String catalog = results.getString("CONSTRAINT_CATALOG");
+        // final String catalog =
+        // results.getString("CONSTRAINT_CATALOG");
         final String schema = results.getString("CONSTRAINT_SCHEMA");
         final String constraintName = results.getString("CONSTRAINT_NAME");
         LOGGER.log(Level.FINEST, "Retrieving constraint information for "
@@ -124,8 +126,8 @@ final class TableExRetriever
 
         if (constraintType.equalsIgnoreCase("check"))
         {
-          final MutableCheckConstraint checkConstraint = new MutableCheckConstraint(constraintName,
-                                                                                    table);
+          final MutableCheckConstraint checkConstraint = new MutableCheckConstraint(table,
+                                                                                    constraintName);
           checkConstraint.setDeferrable(deferrable);
           checkConstraint.setInitiallyDeferred(initiallyDeferred);
 
@@ -300,7 +302,7 @@ final class TableExRetriever
         MutableTrigger trigger = table.lookupTrigger(triggerName);
         if (trigger == null)
         {
-          trigger = new MutableTrigger(triggerName, table);
+          trigger = new MutableTrigger(table, triggerName);
         }
         else
         {
@@ -364,11 +366,12 @@ final class TableExRetriever
       return;
     }
 
+    final String catalog = results.getString("PROCEDURE_CAT");
     try
     {
       while (results.next())
       {
-        final String catalog = results.getString("TABLE_CATALOG");
+        // final String catalog = results.getString("TABLE_CATALOG");
         final String schema = results.getString("TABLE_SCHEMA");
         final String viewName = results.getString("TABLE_NAME");
 
@@ -438,8 +441,8 @@ final class TableExRetriever
         final String grantee = results.getString("GRANTEE");
         final boolean isGrantable = results.getBoolean("IS_GRANTABLE");
 
-        final MutablePrivilege privilege = new MutablePrivilege(privilegeName,
-                                                                databaseObject);
+        final MutablePrivilege privilege = new MutablePrivilege(databaseObject,
+                                                                privilegeName);
         privilege.setGrantor(grantor);
         privilege.setGrantee(grantee);
         privilege.setGrantable(isGrantable);

@@ -25,7 +25,7 @@ import schemacrawler.schema.DatabaseObject;
  * Represents a table constraint.
  */
 class MutableCheckConstraint
-  extends AbstractDependantNamedObject
+  extends AbstractDependantObject
   implements CheckConstraint
 {
 
@@ -35,9 +35,9 @@ class MutableCheckConstraint
   private boolean initiallyDeferred;
   private String definition;
 
-  MutableCheckConstraint(final String name, final DatabaseObject parent)
+  MutableCheckConstraint(final DatabaseObject parent, final String name)
   {
-    super(name, parent);
+    super(parent, name);
   }
 
   /**

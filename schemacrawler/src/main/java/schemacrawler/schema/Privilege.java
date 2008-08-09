@@ -24,7 +24,7 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface Privilege
-  extends DependantNamedObject
+  extends DependantObject
 {
 
   /**

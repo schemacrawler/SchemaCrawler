@@ -30,7 +30,7 @@ import schemacrawler.schema.Trigger;
  * @author Sualeh Fatehi
  */
 class MutableTrigger
-  extends AbstractDependantNamedObject
+  extends AbstractDependantObject
   implements Trigger
 {
 
@@ -43,9 +43,9 @@ class MutableTrigger
   private ActionOrientationType actionOrientation;
   private ConditionTimingType conditionTiming;
 
-  MutableTrigger(final String name, final DatabaseObject parent)
+  MutableTrigger(final DatabaseObject parent, final String name)
   {
-    super(name, parent);
+    super(parent, name);
     // Default values
     eventManipulationType = EventManipulationType.unknown;
     actionOrientation = ActionOrientationType.unknown;

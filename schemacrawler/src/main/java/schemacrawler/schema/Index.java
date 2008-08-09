@@ -24,7 +24,7 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface Index
-  extends DependantNamedObject
+  extends DependantObject
 {
 
   /**

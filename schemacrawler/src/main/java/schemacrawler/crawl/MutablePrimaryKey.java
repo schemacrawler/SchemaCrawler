@@ -43,7 +43,7 @@ class MutablePrimaryKey
    */
   MutablePrimaryKey(final Index index)
   {
-    super(index.getName(), index.getParent());
+    super(index.getParent(), index.getName());
     setCardinality(index.getCardinality());
     setPages(index.getPages());
     setRemarks(index.getRemarks());
@@ -59,7 +59,7 @@ class MutablePrimaryKey
 
   MutablePrimaryKey(final String name, final DatabaseObject parent)
   {
-    super(name, parent);
+    super(parent, name);
   }
 
 }

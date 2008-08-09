@@ -19,7 +19,7 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.DatabaseObject;
-import schemacrawler.schema.DependantNamedObject;
+import schemacrawler.schema.DependantObject;
 
 /**
  * Represents the dependent of a database object, such as a column or an
@@ -27,16 +27,16 @@ import schemacrawler.schema.DependantNamedObject;
  * 
  * @author Sualeh Fatehi
  */
-abstract class AbstractDependantNamedObject
+abstract class AbstractDependantObject
   extends AbstractDatabaseObject
-  implements DependantNamedObject
+  implements DependantObject
 {
 
   private static final long serialVersionUID = -4327208866052082457L;
 
   private final DatabaseObject parent;
 
-  AbstractDependantNamedObject(final String name, final DatabaseObject parent)
+  AbstractDependantObject(final DatabaseObject parent, final String name)
   {
     super(parent.getCatalogName(), parent.getSchemaName(), name);
     this.parent = parent;
@@ -58,7 +58,7 @@ abstract class AbstractDependantNamedObject
     {
       return false;
     }
-    final AbstractDependantNamedObject other = (AbstractDependantNamedObject) obj;
+    final AbstractDependantObject other = (AbstractDependantObject) obj;
     if (parent == null)
     {
       if (other.parent != null)
@@ -76,7 +76,7 @@ abstract class AbstractDependantNamedObject
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.DependantNamedObject#getFullName()
+   * @see schemacrawler.schema.DependantObject#getFullName()
    */
   public String getFullName()
   {
@@ -95,7 +95,7 @@ abstract class AbstractDependantNamedObject
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.DependantNamedObject#getParent()
+   * @see schemacrawler.schema.DependantObject#getParent()
    */
   public final DatabaseObject getParent()
   {

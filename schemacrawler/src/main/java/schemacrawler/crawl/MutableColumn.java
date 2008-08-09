@@ -43,7 +43,7 @@ final class MutableColumn
 
   MutableColumn(final String name, final DatabaseObject parent)
   {
-    super(name, parent);
+    super(parent, name);
   }
 
   /**

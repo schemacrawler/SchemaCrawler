@@ -141,8 +141,8 @@ class MutableForeignKey
                      final Column fkColumn)
   {
     final String fkColumnMapName = getName() + "." + keySequence;
-    final MutableForeignKeyColumnMap fkColumnPair = new MutableForeignKeyColumnMap(fkColumnMapName,
-                                                                                   this);
+    final MutableForeignKeyColumnMap fkColumnPair = new MutableForeignKeyColumnMap(this,
+                                                                                   fkColumnMapName);
     fkColumnPair.setKeySequence(keySequence);
     fkColumnPair.setPrimaryKeyColumn(pkColumn);
     fkColumnPair.setForeignKeyColumn(fkColumn);

@@ -24,7 +24,7 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface BaseColumn
-  extends DependantNamedObject
+  extends DependantObject
 {
 
   /**

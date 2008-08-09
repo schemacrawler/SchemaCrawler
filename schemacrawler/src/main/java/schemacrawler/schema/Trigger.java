@@ -24,7 +24,7 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface Trigger
-  extends DependantNamedObject
+  extends DependantObject
 {
 
   /**

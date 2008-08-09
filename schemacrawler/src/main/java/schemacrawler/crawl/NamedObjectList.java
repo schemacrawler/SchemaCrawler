@@ -146,8 +146,16 @@ final class NamedObjectList<N extends NamedObject>
 
   N lookup(DatabaseObject databaseObject, String name)
   {
-    return lookup(databaseObject.getCatalogName(), databaseObject
-      .getSchemaName(), databaseObject.getName(), name);
+    final AbstractDatabaseObject parent = new AbstractDatabaseObject(databaseObject
+      .getCatalogName(),
+      databaseObject.getSchemaName(),
+      databaseObject.getName())
+    {
+
+    };
+    return lookup(new AbstractDependantObject(parent, name)
+    {
+    });
   }
 
   private N lookup(final NamedObject namedObject)
@@ -195,28 +203,6 @@ final class NamedObjectList<N extends NamedObject>
     return lookup(new AbstractDatabaseObject(catalogName, schemaName, name)
     {
 
-    });
-  }
-
-  /**
-   * Looks up a named object by name.
-   * 
-   * @param name
-   *        Name
-   * @return Named object
-   */
-  @SuppressWarnings("serial")
-  N lookup(final String catalogName,
-           final String schemaName,
-           final String name,
-           final String dependentObjectName)
-  {
-    return lookup(new AbstractDependantNamedObject(dependentObjectName,
-      new AbstractDatabaseObject(catalogName, schemaName, name)
-      {
-
-      })
-    {
     });
   }
 
