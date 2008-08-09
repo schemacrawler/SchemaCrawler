@@ -81,10 +81,6 @@ abstract class AbstractNamedObject
     {
       return false;
     }
-    if (getClass() != obj.getClass())
-    {
-      return false;
-    }
     final AbstractNamedObject other = (AbstractNamedObject) obj;
     if (name == null)
     {
@@ -141,6 +137,7 @@ abstract class AbstractNamedObject
     final int prime = 31;
     int result = 1;
     result = prime * result + (name == null? 0: name.hashCode());
+    result = prime * result + (super.hashCode());
     return result;
   }
 

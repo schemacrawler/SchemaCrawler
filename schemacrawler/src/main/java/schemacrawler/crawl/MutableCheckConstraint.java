@@ -19,7 +19,7 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.CheckConstraint;
-import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.DatabaseObject;
 
 /**
  * Represents a table constraint.
@@ -35,7 +35,7 @@ class MutableCheckConstraint
   private boolean initiallyDeferred;
   private String definition;
 
-  MutableCheckConstraint(final String name, final NamedObject parent)
+  MutableCheckConstraint(final String name, final DatabaseObject parent)
   {
     super(name, parent);
   }

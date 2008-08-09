@@ -58,7 +58,7 @@ final class MutableProcedure
    */
   public ProcedureColumn getColumn(final String name)
   {
-    return columns.lookup(name);
+    return columns.lookup(this, name);
   }
 
   /**

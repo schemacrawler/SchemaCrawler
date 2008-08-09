@@ -20,6 +20,7 @@ package schemacrawler.crawl;
 
 import schemacrawler.schema.BaseColumn;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
 
 /**
@@ -41,7 +42,7 @@ abstract class AbstractColumn
   private int decimalDigits;
   private boolean nullable;
 
-  AbstractColumn(final String name, final NamedObject parent)
+  AbstractColumn(final String name, final DatabaseObject parent)
   {
     super(name, parent);
   }

@@ -33,7 +33,6 @@ import schemacrawler.schema.CheckOptionType;
 import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.EventManipulationType;
-import schemacrawler.schema.NamedObject;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 
 /**
@@ -111,7 +110,7 @@ final class TableExRetriever
         // final String tableSchema = results.getString("TABLE_SCHEMA");
         final String tableName = results.getString("TABLE_NAME");
 
-        final MutableTable table = tables.lookup(tableName);
+        final MutableTable table = tables.lookup(catalog, schema, tableName);
         if (!belongsToSchema(table, catalog, schema))
         {
           LOGGER.log(Level.FINEST, "Table not found: " + tableName);
@@ -280,7 +279,7 @@ final class TableExRetriever
         // .getString("EVENT_OBJECT_SCHEMA");
         final String tableName = results.getString("EVENT_OBJECT_TABLE");
 
-        final MutableTable table = tables.lookup(tableName);
+        final MutableTable table = tables.lookup(catalog, schema, tableName);
         if (!belongsToSchema(table, catalog, schema))
         {
           LOGGER.log(Level.FINEST, "Skipping trigger " + triggerName
@@ -373,7 +372,9 @@ final class TableExRetriever
         final String schema = results.getString("TABLE_SCHEMA");
         final String viewName = results.getString("TABLE_NAME");
 
-        final MutableView view = (MutableView) tables.lookup(viewName);
+        final MutableView view = (MutableView) tables.lookup(catalog,
+                                                             schema,
+                                                             viewName);
         if (!belongsToSchema(view, catalog, schema))
         {
           LOGGER.log(Level.FINEST, "Skipping definition for view " + viewName);
@@ -412,8 +413,13 @@ final class TableExRetriever
                                 final boolean privilegesForTable)
     throws SQLException
   {
+
+    final String catalog = getRetrieverConnection().getCatalog();
     while (results.next())
     {
+
+      // final String catalog = results.getString("TABLE_CAT");
+      final String schema = results.getString("TABLE_SCHEM");
       final String name;
       if (privilegesForTable)
       {
@@ -423,8 +429,9 @@ final class TableExRetriever
       {
         name = results.getString(COLUMN_NAME);
       }
-      final NamedObject namedObject = namedObjectList.lookup(name);
-      if (namedObject != null)
+      final DatabaseObject databaseObject = (DatabaseObject) namedObjectList
+        .lookup(catalog, schema, name);
+      if (databaseObject != null)
       {
         final String privilegeName = results.getString("PRIVILEGE");
         final String grantor = results.getString("GRANTOR");
@@ -432,7 +439,7 @@ final class TableExRetriever
         final boolean isGrantable = results.getBoolean("IS_GRANTABLE");
 
         final MutablePrivilege privilege = new MutablePrivilege(privilegeName,
-                                                                namedObject);
+                                                                databaseObject);
         privilege.setGrantor(grantor);
         privilege.setGrantee(grantee);
         privilege.setGrantable(isGrantable);
@@ -441,12 +448,12 @@ final class TableExRetriever
 
         if (privilegesForTable)
         {
-          final MutableTable table = (MutableTable) namedObject;
+          final MutableTable table = (MutableTable) databaseObject;
           table.addPrivilege(privilege);
         }
         else
         {
-          final MutableColumn column = (MutableColumn) namedObject;
+          final MutableColumn column = (MutableColumn) databaseObject;
           column.addPrivilege(privilege);
         }
       }

@@ -18,7 +18,7 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Privilege;
 
 /**
@@ -37,7 +37,7 @@ final class MutablePrivilege
   private String grantee;
   private boolean isGrantable;
 
-  MutablePrivilege(final String name, final NamedObject parent)
+  MutablePrivilege(final String name, final DatabaseObject parent)
   {
     super(name, parent);
   }

@@ -131,11 +131,10 @@ final class TableRetriever
   }
 
   void retrieveForeignKeys(final NamedObjectList<MutableTable> tables,
-                           final String tableName)
+                           final MutableTable table)
     throws SQLException
   {
 
-    final MutableTable table = tables.lookup(tableName);
     final String schema = table.getSchemaName();
 
     final Map<String, MutableForeignKey> foreignKeysMap = new HashMap<String, MutableForeignKey>();
@@ -147,12 +146,12 @@ final class TableRetriever
 
     results = new MetadataResultSet(metaData.getImportedKeys(catalog,
                                                              schema,
-                                                             tableName));
+                                                             table.getName()));
     createForeignKeys(results, tables, table, foreignKeysMap);
 
     results = new MetadataResultSet(metaData.getExportedKeys(catalog,
                                                              schema,
-                                                             tableName));
+                                                             table.getName()));
     createForeignKeys(results, tables, table, foreignKeysMap);
 
     final Collection<MutableForeignKey> foreignKeyCollection = foreignKeysMap
@@ -457,16 +456,15 @@ final class TableRetriever
                                              final String tableName,
                                              final String columnName)
   {
-
+    final String catalog = getRetrieverConnection().getCatalog();
     MutableColumn column = null;
-    MutableTable table = tables.lookup(tableName);
+    MutableTable table = tables.lookup(catalog, schema, tableName);
     if (table != null)
     {
       column = table.lookupColumn(columnName);
     }
     if (column == null)
     {
-      final String catalog = getRetrieverConnection().getCatalog();
       table = new MutableTable(catalog, schema, tableName);
       column = new MutableColumn(columnName, table);
     }

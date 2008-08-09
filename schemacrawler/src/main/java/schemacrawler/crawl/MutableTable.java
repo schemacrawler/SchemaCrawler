@@ -122,7 +122,7 @@ class MutableTable
    */
   public ForeignKey getForeignKey(final String name)
   {
-    return foreignKeys.lookup(name);
+    return foreignKeys.lookup(this, name);
   }
 
   /**
@@ -142,7 +142,7 @@ class MutableTable
    */
   public Index getIndex(final String name)
   {
-    return indices.lookup(name);
+    return indices.lookup(this, name);
   }
 
   /**
@@ -191,7 +191,7 @@ class MutableTable
    */
   public Trigger getTrigger(final String name)
   {
-    return triggers.lookup(name);
+    return lookupTrigger(name);
   }
 
   /**
@@ -258,7 +258,7 @@ class MutableTable
    */
   MutableColumn lookupColumn(final String columnName)
   {
-    return columns.lookup(columnName);
+    return columns.lookup(this, columnName);
   }
 
   /**
@@ -270,7 +270,7 @@ class MutableTable
    */
   MutableTrigger lookupTrigger(final String triggerName)
   {
-    return triggers.lookup(triggerName);
+    return triggers.lookup(this, triggerName);
   }
 
   void setCheckConstraintComparator(final NamedObjectSort comparator)

@@ -157,7 +157,6 @@ public class SortingTest
     }
   }
 
-  @SuppressWarnings("boxing")
   private void checkIndexSort(final String[] expectedValues,
                               final boolean sortAlphabetically)
   {
@@ -185,4 +184,5 @@ public class SortingTest
       }
     }
   }
+
 }

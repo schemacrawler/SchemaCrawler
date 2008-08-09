@@ -340,7 +340,7 @@ public final class DatabaseSchemaCrawler
           {
             if (infoLevel.isRetrieveForeignKeys())
             {
-              retriever.retrieveForeignKeys(tables, table.getName());
+              retriever.retrieveForeignKeys(tables, table);
             }
             if (infoLevel.isRetrieveIndices())
             {

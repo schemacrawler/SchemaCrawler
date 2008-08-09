@@ -25,21 +25,14 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface DependantNamedObject
-  extends NamedObject
+  extends DatabaseObject
 {
-
-  /**
-   * Gets the full name, including the schema name.
-   * 
-   * @return Full name
-   */
-  String getFullName();
 
   /**
    * Gets the parent database object.
    * 
    * @return Parent database object
    */
-  NamedObject getParent();
+  DatabaseObject getParent();
 
 }

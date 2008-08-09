@@ -19,7 +19,7 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.Column;
-import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Privilege;
 
 /**
@@ -41,7 +41,7 @@ final class MutableColumn
   private MutableColumn referencedColumn;
   private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>(NamedObjectSort.natural);
 
-  MutableColumn(final String name, final NamedObject parent)
+  MutableColumn(final String name, final DatabaseObject parent)
   {
     super(name, parent);
   }
