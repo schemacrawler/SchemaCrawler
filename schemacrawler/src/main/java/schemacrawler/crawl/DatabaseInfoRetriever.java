@@ -300,7 +300,7 @@ final class DatabaseInfoRetriever
     final MutableDatabaseInfo dbInfo = new MutableDatabaseInfo();
     dbInfo.setProductName(dbMetaData.getDatabaseProductName());
     dbInfo.setProductVersion(dbMetaData.getDatabaseProductVersion());
-    dbInfo.setCatalogName(getRetrieverConnection().getCatalog());
+    dbInfo.setCatalogName(getRetrieverConnection().getCatalogName());
     dbInfo.setSchemaPattern(getRetrieverConnection().getSchemaPattern());
 
     return dbInfo;
@@ -334,7 +334,7 @@ final class DatabaseInfoRetriever
     throws SQLException
   {
     final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
-      .getMetaData().getUDTs(getRetrieverConnection().getCatalog(),
+      .getMetaData().getUDTs(getRetrieverConnection().getCatalogName(),
                              getRetrieverConnection().getSchemaPattern(),
                              "%",
                              null));

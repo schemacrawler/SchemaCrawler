@@ -62,7 +62,8 @@ final class ProcedureRetriever
   {
 
     final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
-      .getMetaData().getProcedureColumns(getRetrieverConnection().getCatalog(),
+      .getMetaData().getProcedureColumns(getRetrieverConnection()
+                                           .getCatalogName(),
                                          procedure.getSchemaName(),
                                          procedure.getName(),
                                          null));
@@ -140,7 +141,7 @@ final class ProcedureRetriever
       // Need this catch for the JDBC/ ODBC driver
       LOGGER.log(Level.WARNING, "", e);
     }
-    final String catalog = getRetrieverConnection().getCatalog();
+    final String catalog = getRetrieverConnection().getCatalogName();
     while (results.next())
     {
       // final String catalog = results.getString("PROCEDURE_CAT");
