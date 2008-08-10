@@ -228,8 +228,8 @@ public final class DatabaseSchemaCrawler
     throws SchemaCrawlerException
   {
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
-    boolean retrieveProcedures = options.isShowStoredProcedures()
-                                 && infoLevel.isRetrieveProcedures();
+    final boolean retrieveProcedures = options.isShowStoredProcedures()
+                                       && infoLevel.isRetrieveProcedures();
     if (!retrieveProcedures)
     {
       return;
@@ -284,7 +284,7 @@ public final class DatabaseSchemaCrawler
     throws SchemaCrawlerException
   {
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
-    boolean retrieveTables = infoLevel.isRetrieveTables();
+    final boolean retrieveTables = infoLevel.isRetrieveTables();
     if (!retrieveTables)
     {
       return;

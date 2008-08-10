@@ -78,6 +78,7 @@ abstract class AbstractDependantObject
    * 
    * @see schemacrawler.schema.DependantObject#getFullName()
    */
+  @Override
   public String getFullName()
   {
     final StringBuffer buffer = new StringBuffer();
@@ -113,7 +114,7 @@ abstract class AbstractDependantObject
     final int prime = 31;
     int result = super.hashCode();
     result = prime * result + (parent == null? 0: parent.hashCode());
-    result = prime * result + (super.hashCode());
+    result = prime * result + super.hashCode();
     return result;
   }
 

@@ -61,6 +61,46 @@ class MutableIndex
   }
 
   /**
+   * Add a named object at a given ordinal position. If the ordinal
+   * position is beyond the end of the list, add the object to the end.
+   * 
+   * @param ordinalPosition
+   *        Position to add at, starting from 1
+   * @param namedObject
+   *        Named object to add
+   */
+  void addColumn(final int ordinalPosition, final MutableColumn column)
+  {
+    if (column == null || column.getName() == null)
+    {
+      throw new IllegalArgumentException("Cannot add a column to the index");
+    }
+
+    final int size = columns.size();
+    int index = ordinalPosition - 1;
+    if (index < 0)
+    {
+      index = 0;
+    }
+    else if (index > size)
+    {
+      index = size;
+    }
+    // Add the object in a new position
+    if (LOGGER.isLoggable(Level.FINEST))
+    {
+      String message = "Adding \"" + column + "\" at position #" + index;
+      if (index != ordinalPosition - 1)
+      {
+        message = message + " (instead of at position #"
+                  + (ordinalPosition - 1) + ")";
+      }
+      LOGGER.log(Level.FINEST, message);
+    }
+    columns.add(index, column);
+  }
+
+  /**
    * {@inheritDoc}
    * <p>
    * Note: Since indexes are not always explicitly named in databases,
@@ -162,46 +202,6 @@ class MutableIndex
   public final boolean isUnique()
   {
     return isUnique;
-  }
-
-  /**
-   * Add a named object at a given ordinal position. If the ordinal
-   * position is beyond the end of the list, add the object to the end.
-   * 
-   * @param ordinalPosition
-   *        Position to add at, starting from 1
-   * @param namedObject
-   *        Named object to add
-   */
-  void addColumn(final int ordinalPosition, final MutableColumn column)
-  {
-    if (column == null || column.getName() == null)
-    {
-      throw new IllegalArgumentException("Cannot add a column to the index");
-    }
-
-    final int size = columns.size();
-    int index = ordinalPosition - 1;
-    if (index < 0)
-    {
-      index = 0;
-    }
-    else if (index > size)
-    {
-      index = size;
-    }
-    // Add the object in a new position
-    if (LOGGER.isLoggable(Level.FINEST))
-    {
-      String message = "Adding \"" + column + "\" at position #" + index;
-      if (index != ordinalPosition - 1)
-      {
-        message = message + " (instead of at position #"
-                  + (ordinalPosition - 1) + ")";
-      }
-      LOGGER.log(Level.FINEST, message);
-    }
-    columns.add(index, column);
   }
 
   final void setCardinality(final int cardinality)

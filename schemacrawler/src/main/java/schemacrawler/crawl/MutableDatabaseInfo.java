@@ -47,6 +47,11 @@ final class MutableDatabaseInfo
   private final SortedMap<String, Object> dbProperties = new TreeMap<String, Object>();
   private final NamedObjectList<MutableColumnDataType> columnDataTypes = new NamedObjectList<MutableColumnDataType>(NamedObjectSort.alphabetical);
 
+  void addColumnDataType(final MutableColumnDataType columnDataType)
+  {
+    columnDataTypes.add(columnDataType);
+  }
+
   /**
    * {@inheritDoc}
    * 
@@ -136,6 +141,11 @@ final class MutableDatabaseInfo
       .size()]);
   }
 
+  NamedObjectList<MutableColumnDataType> getColumnDataTypesList()
+  {
+    return columnDataTypes;
+  }
+
   /**
    * {@inheritDoc}
    * 
@@ -205,35 +215,6 @@ final class MutableDatabaseInfo
     return result;
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-
-    final StringBuffer info = new StringBuffer();
-
-    info.append("-- database: ").append(getProductName()).append(" ")
-      .append(getProductVersion()).append(NEWLINE)
-      .append("-- schema pattern: ").append(getSchemaPattern());
-
-    return info.toString();
-
-  }
-
-  void addColumnDataType(final MutableColumnDataType columnDataType)
-  {
-    columnDataTypes.add(columnDataType);
-  }
-
-  NamedObjectList<MutableColumnDataType> getColumnDataTypesList()
-  {
-    return columnDataTypes;
-  }
-
   MutableColumnDataType lookupByType(final int type)
   {
     MutableColumnDataType columnDataType = null;
@@ -280,6 +261,25 @@ final class MutableDatabaseInfo
   void setSchemaPattern(final String schemaPattern)
   {
     this.schemaPattern = schemaPattern;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+
+    final StringBuffer info = new StringBuffer();
+
+    info.append("-- database: ").append(getProductName()).append(" ")
+      .append(getProductVersion()).append(NEWLINE)
+      .append("-- schema pattern: ").append(getSchemaPattern());
+
+    return info.toString();
+
   }
 
 }

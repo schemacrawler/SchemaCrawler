@@ -26,7 +26,7 @@ import java.io.File;
 
 import javax.sql.DataSource;
 
-import schemacrawler.schema.Schema;
+import schemacrawler.schema.Catalog;
 import schemacrawler.tools.integration.SchemaExecutable;
 import schemacrawler.utility.SchemaCrawlerUtility;
 import edu.uci.ics.jung.graph.Graph;
@@ -54,14 +54,14 @@ public final class JungExecutable
     // Get the entire schema at once
     schemaCrawlerOptions.setSchemaInfoLevel(toolOptions
       .getSchemaTextDetailType().mapToInfoLevel());
-    final Schema schema = SchemaCrawlerUtility.getSchema(dataSource
+    Catalog catalog = SchemaCrawlerUtility.getCatalog(dataSource
       .getConnection(), schemaCrawlerOptions);
 
     // Executable-specific work
     final File outputFile = toolOptions.getOutputOptions().getOutputFile();
     final Dimension size = getSize(toolOptions.getOutputOptions()
       .getOutputFormatValue());
-    final Graph graph = JungUtil.makeSchemaGraph(schema);
+    final Graph graph = JungUtil.makeSchemaGraph(catalog);
     JungUtil.saveGraphJpeg(graph, outputFile, size);
   }
 

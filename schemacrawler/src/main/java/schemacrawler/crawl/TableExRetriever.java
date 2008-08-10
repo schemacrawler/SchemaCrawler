@@ -54,6 +54,58 @@ final class TableExRetriever
     super(retrieverConnection);
   }
 
+  private void createPrivileges(final MetadataResultSet results,
+                                final NamedObjectList<?> namedObjectList,
+                                final boolean privilegesForTable)
+    throws SQLException
+  {
+
+    final String catalog = getRetrieverConnection().getCatalog();
+    while (results.next())
+    {
+
+      // final String catalog = results.getString("TABLE_CAT");
+      final String schema = results.getString("TABLE_SCHEM");
+      final String name;
+      if (privilegesForTable)
+      {
+        name = results.getString(TABLE_NAME);
+      }
+      else
+      {
+        name = results.getString(COLUMN_NAME);
+      }
+      final DatabaseObject databaseObject = (DatabaseObject) namedObjectList
+        .lookup(catalog, schema, name);
+      if (databaseObject != null)
+      {
+        final String privilegeName = results.getString("PRIVILEGE");
+        final String grantor = results.getString("GRANTOR");
+        final String grantee = results.getString("GRANTEE");
+        final boolean isGrantable = results.getBoolean("IS_GRANTABLE");
+
+        final MutablePrivilege privilege = new MutablePrivilege(databaseObject,
+                                                                privilegeName);
+        privilege.setGrantor(grantor);
+        privilege.setGrantee(grantee);
+        privilege.setGrantable(isGrantable);
+
+        privilege.addAttributes(results.getAttributes());
+
+        if (privilegesForTable)
+        {
+          final MutableTable table = (MutableTable) databaseObject;
+          table.addPrivilege(privilege);
+        }
+        else
+        {
+          final MutableColumn column = (MutableColumn) databaseObject;
+          column.addPrivilege(privilege);
+        }
+      }
+    }
+  }
+
   /**
    * Retrieves a check constraint information from the database, in the
    * INFORMATION_SCHEMA format.
@@ -202,6 +254,39 @@ final class TableExRetriever
       table.addCheckConstraint(checkConstraint);
     }
 
+  }
+
+  private void retrievePrivileges(final DatabaseObject parent,
+                                  final NamedObjectList<?> namedObjectList)
+    throws SQLException
+  {
+    final MetadataResultSet results;
+
+    final boolean privilegesForTable = parent == null;
+    final String catalog = getRetrieverConnection().getCatalog();
+    final String schemaPattern = getRetrieverConnection().getSchemaPattern();
+    final String privilegePattern = "%";
+    if (privilegesForTable)
+    {
+      results = new MetadataResultSet(getRetrieverConnection().getMetaData()
+        .getTablePrivileges(catalog, schemaPattern, privilegePattern));
+    }
+    else
+    {
+      results = new MetadataResultSet(getRetrieverConnection().getMetaData()
+        .getColumnPrivileges(catalog,
+                             schemaPattern,
+                             parent.getName(),
+                             privilegePattern));
+    }
+    try
+    {
+      createPrivileges(results, namedObjectList, privilegesForTable);
+    }
+    finally
+    {
+      results.close();
+    }
   }
 
   void retrieveTableColumnPrivileges(final MutableTable table,
@@ -409,91 +494,6 @@ final class TableExRetriever
       results.close();
     }
 
-  }
-
-  private void createPrivileges(final MetadataResultSet results,
-                                final NamedObjectList<?> namedObjectList,
-                                final boolean privilegesForTable)
-    throws SQLException
-  {
-
-    final String catalog = getRetrieverConnection().getCatalog();
-    while (results.next())
-    {
-
-      // final String catalog = results.getString("TABLE_CAT");
-      final String schema = results.getString("TABLE_SCHEM");
-      final String name;
-      if (privilegesForTable)
-      {
-        name = results.getString(TABLE_NAME);
-      }
-      else
-      {
-        name = results.getString(COLUMN_NAME);
-      }
-      final DatabaseObject databaseObject = (DatabaseObject) namedObjectList
-        .lookup(catalog, schema, name);
-      if (databaseObject != null)
-      {
-        final String privilegeName = results.getString("PRIVILEGE");
-        final String grantor = results.getString("GRANTOR");
-        final String grantee = results.getString("GRANTEE");
-        final boolean isGrantable = results.getBoolean("IS_GRANTABLE");
-
-        final MutablePrivilege privilege = new MutablePrivilege(databaseObject,
-                                                                privilegeName);
-        privilege.setGrantor(grantor);
-        privilege.setGrantee(grantee);
-        privilege.setGrantable(isGrantable);
-
-        privilege.addAttributes(results.getAttributes());
-
-        if (privilegesForTable)
-        {
-          final MutableTable table = (MutableTable) databaseObject;
-          table.addPrivilege(privilege);
-        }
-        else
-        {
-          final MutableColumn column = (MutableColumn) databaseObject;
-          column.addPrivilege(privilege);
-        }
-      }
-    }
-  }
-
-  private void retrievePrivileges(final DatabaseObject parent,
-                                  final NamedObjectList<?> namedObjectList)
-    throws SQLException
-  {
-    final MetadataResultSet results;
-
-    final boolean privilegesForTable = parent == null;
-    final String catalog = getRetrieverConnection().getCatalog();
-    final String schemaPattern = getRetrieverConnection().getSchemaPattern();
-    final String privilegePattern = "%";
-    if (privilegesForTable)
-    {
-      results = new MetadataResultSet(getRetrieverConnection().getMetaData()
-        .getTablePrivileges(catalog, schemaPattern, privilegePattern));
-    }
-    else
-    {
-      results = new MetadataResultSet(getRetrieverConnection().getMetaData()
-        .getColumnPrivileges(catalog,
-                             schemaPattern,
-                             parent.getName(),
-                             privilegePattern));
-    }
-    try
-    {
-      createPrivileges(results, namedObjectList, privilegesForTable);
-    }
-    finally
-    {
-      results.close();
-    }
   }
 
 }

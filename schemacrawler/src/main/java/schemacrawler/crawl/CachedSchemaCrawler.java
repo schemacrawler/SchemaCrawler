@@ -1,6 +1,7 @@
 package schemacrawler.crawl;
 
 
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -13,11 +14,11 @@ public class CachedSchemaCrawler
   implements SchemaCrawler
 {
 
-  protected final Schema schema;
+  protected final Catalog catalog;
 
-  public CachedSchemaCrawler(final Schema schema)
+  public CachedSchemaCrawler(final Catalog catalog)
   {
-    this.schema = schema;
+    this.catalog = catalog;
   }
 
   public void crawl(final SchemaCrawlerOptions options,
@@ -28,31 +29,34 @@ public class CachedSchemaCrawler
     {
       throw new SchemaCrawlerException("No crawl handler specified");
     }
-    if (schema == null)
+    if (catalog == null)
     {
       throw new SchemaCrawlerException("No schema loaded");
     }
 
     handler.begin();
-    handler.handle(schema.getJdbcDriverInfo());
-    handler.handle(schema.getDatabaseInfo());
-    for (final Table table: schema.getTables())
+    handler.handle(catalog.getJdbcDriverInfo());
+    handler.handle(catalog.getDatabaseInfo());
+    for (final Schema schema: catalog.getSchemas())
     {
-      handler.handle(table);
-    }
-    if (options == null || options.isShowStoredProcedures())
-    {
-      for (final Procedure procedure: schema.getProcedures())
+      for (final Table table: schema.getTables())
       {
-        handler.handle(procedure);
+        handler.handle(table);
+      }
+      if (options == null || options.isShowStoredProcedures())
+      {
+        for (final Procedure procedure: schema.getProcedures())
+        {
+          handler.handle(procedure);
+        }
       }
     }
     handler.end();
   }
 
-  public Schema getSchema()
+  public Catalog getCatalog()
   {
-    return schema;
+    return catalog;
   }
 
 }

@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.crawl.CachingCrawlHandler;
 import schemacrawler.crawl.DatabaseSchemaCrawler;
-import schemacrawler.schema.Schema;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -41,8 +41,8 @@ public class SchemaCrawlerUtility
   private static final Logger LOGGER = Logger.getLogger(TestUtility.class
     .getName());
 
-  public static Schema getSchema(final Connection connection,
-                                 final SchemaCrawlerOptions schemaCrawlerOptions)
+  public static Catalog getCatalog(final Connection connection,
+                                   final SchemaCrawlerOptions schemaCrawlerOptions)
   {
     SchemaCrawler schemaCrawler;
     try
@@ -50,8 +50,8 @@ public class SchemaCrawlerUtility
       final CachingCrawlHandler crawlHandler = new CachingCrawlHandler();
       schemaCrawler = new DatabaseSchemaCrawler(connection);
       schemaCrawler.crawl(schemaCrawlerOptions, crawlHandler);
-      final Schema schema = crawlHandler.getSchema();
-      return schema;
+      Catalog catalog = crawlHandler.getCatalog();
+      return catalog;
     }
     catch (final SchemaCrawlerException e)
     {

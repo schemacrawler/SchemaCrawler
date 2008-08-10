@@ -137,7 +137,7 @@ abstract class AbstractNamedObject
     final int prime = 31;
     int result = 1;
     result = prime * result + (name == null? 0: name.hashCode());
-    result = prime * result + (super.hashCode());
+    result = prime * result + super.hashCode();
     return result;
   }
 
@@ -151,17 +151,6 @@ abstract class AbstractNamedObject
     attributeMap.put(name, value);
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return name;
-  }
-
   final void setRemarks(final String remarks)
   {
     if (remarks == null)
@@ -172,6 +161,17 @@ abstract class AbstractNamedObject
     {
       this.remarks = remarks;
     }
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    return name;
   }
 
 }

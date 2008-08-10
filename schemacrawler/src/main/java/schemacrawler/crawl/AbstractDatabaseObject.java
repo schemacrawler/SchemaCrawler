@@ -137,7 +137,7 @@ abstract class AbstractDatabaseObject
     int result = super.hashCode();
     result = prime * result + (catalogName == null? 0: catalogName.hashCode());
     result = prime * result + (schemaName == null? 0: schemaName.hashCode());
-    result = prime * result + (super.hashCode());
+    result = prime * result + super.hashCode();
     return result;
   }
 

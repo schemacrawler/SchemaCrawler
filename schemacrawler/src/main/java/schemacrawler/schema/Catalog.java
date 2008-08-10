@@ -19,51 +19,42 @@ package schemacrawler.schema;
 
 
 /**
- * Represents the database schema.
+ * Represents the database.
  * 
  * @author Sualeh Fatehi
  */
-public interface Schema
-  extends DatabaseObject
+public interface Catalog
+  extends NamedObject
 {
 
   /**
-   * Gets the catalog.
+   * Gets the database information.
    * 
-   * @return Parent catalog
+   * @return Database information
    */
-  Catalog getCatalog();
+  DatabaseInfo getDatabaseInfo();
 
   /**
-   * Gets a procedure by name.
+   * Gets the JDBC driver information.
+   * 
+   * @return JDBC driver information
+   */
+  JdbcDriverInfo getJdbcDriverInfo();
+
+  /**
+   * Gets a schema by name.
    * 
    * @param name
    *        Name
-   * @return Procedure.
+   * @return Schema.
    */
-  Procedure getProcedure(String name);
+  Schema getSchema(String name);
 
   /**
-   * Gets the procedures.
+   * Gets the schemas.
    * 
-   * @return Procedures
+   * @return Schemas
    */
-  Procedure[] getProcedures();
-
-  /**
-   * Gets a table by name.
-   * 
-   * @param name
-   *        Name
-   * @return Table.
-   */
-  Table getTable(String name);
-
-  /**
-   * Gets the tables.
-   * 
-   * @return Tables
-   */
-  Table[] getTables();
+  Schema[] getSchemas();
 
 }

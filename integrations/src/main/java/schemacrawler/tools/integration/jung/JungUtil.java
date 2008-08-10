@@ -24,9 +24,13 @@ package schemacrawler.tools.integration.jung;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
@@ -53,36 +57,24 @@ public final class JungUtil
    *        Schema
    * @return Graph
    */
-  public static Graph makeSchemaGraph(final Schema schema)
+  public static Graph makeSchemaGraph(final Catalog catalog)
   {
     final Graph graph = new DirectedSparseGraph();
     final Map<NamedObject, SchemaGraphVertex> verticesMap = new HashMap<NamedObject, SchemaGraphVertex>();
-    final Table[] tables = schema.getTables();
+
+    final List<Table> tablesList = new ArrayList<Table>();
+    if (catalog != null)
+    {
+      for (Schema schema: catalog.getSchemas())
+      {
+        tablesList.addAll(Arrays.asList(schema.getTables()));
+      }
+    }
+
+    final Table[] tables = tablesList.toArray(new Table[0]);
     mapTablesAndColumns(graph, tables, verticesMap);
     mapForeignKeys(graph, tables, verticesMap);
     return graph;
-  }
-
-  /**
-   * Saves a schema graph as a JPEG file.
-   * 
-   * @param graph
-   *        Schema graph
-   * @param file
-   *        Output JPEG file
-   * @param size
-   *        Image size
-   * @throws IOException
-   *         On an exception
-   */
-  public static void saveGraphJpeg(final Graph graph,
-                                   final File file,
-                                   final Dimension size)
-    throws IOException
-  {
-    final Layout layout = new ISOMLayout(graph);
-    final JpgVisualizationViewer vv = new JpgVisualizationViewer(layout);
-    vv.save(file, size);
   }
 
   private static void mapForeignKeys(final Graph graph,
@@ -132,6 +124,28 @@ public final class JungUtil
         graph.addEdge(columnEdge);
       }
     }
+  }
+
+  /**
+   * Saves a schema graph as a JPEG file.
+   * 
+   * @param graph
+   *        Schema graph
+   * @param file
+   *        Output JPEG file
+   * @param size
+   *        Image size
+   * @throws IOException
+   *         On an exception
+   */
+  public static void saveGraphJpeg(final Graph graph,
+                                   final File file,
+                                   final Dimension size)
+    throws IOException
+  {
+    final Layout layout = new ISOMLayout(graph);
+    final JpgVisualizationViewer vv = new JpgVisualizationViewer(layout);
+    vv.save(file, size);
   }
 
   /**

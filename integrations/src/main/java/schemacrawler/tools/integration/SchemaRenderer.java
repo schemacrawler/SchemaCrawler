@@ -24,7 +24,7 @@ import java.io.Writer;
 
 import javax.sql.DataSource;
 
-import schemacrawler.schema.Schema;
+import schemacrawler.schema.Catalog;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
 /**
@@ -48,14 +48,14 @@ public abstract class SchemaRenderer
     // Get the entire schema at once
     schemaCrawlerOptions.setSchemaInfoLevel(toolOptions
       .getSchemaTextDetailType().mapToInfoLevel());
-    final Schema schema = SchemaCrawlerUtility.getSchema(dataSource
+    Catalog catalog = SchemaCrawlerUtility.getCatalog(dataSource
       .getConnection(), schemaCrawlerOptions);
 
     // Executable-specific work
     final Writer writer = toolOptions.getOutputOptions().openOutputWriter();
     final String templateName = toolOptions.getOutputOptions()
       .getOutputFormatValue();
-    render(templateName, schema, writer);
+    render(templateName, catalog, writer);
     toolOptions.getOutputOptions().closeOutputWriter(writer);
   }
 
@@ -78,15 +78,15 @@ public abstract class SchemaRenderer
    * Renders the schema with the given template.
    * 
    * @param resource
-   *        Location of the recource
-   * @param schema
-   *        Schema
+   *        Location of the resource
+   * @param catalog
+   *        Catalog
    * @param writer
    *        Writer
    * @throws Exception
    */
   protected abstract void render(final String resource,
-                                 final Schema schema,
+                                 final Catalog catalog,
                                  final Writer writer)
     throws Exception;
 
