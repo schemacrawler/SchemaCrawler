@@ -34,7 +34,7 @@ import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
 
-import schemacrawler.schema.Schema;
+import schemacrawler.schema.Catalog;
 import schemacrawler.tools.integration.SchemaRenderer;
 
 /**
@@ -67,7 +67,7 @@ public final class VelocityRenderer
    */
   @Override
   protected void render(final String templateName,
-                        final Schema schema,
+                        final Catalog catalog,
                         final Writer writer)
     throws Exception
   {
@@ -88,7 +88,8 @@ public final class VelocityRenderer
 
     // Set up Velocity resource loaders for loading from the classpath,
     // as well as the file system
-    // http://jakarta.apache.org/velocity/docs/developer-guide.html#Configuring%20Resource%20Loaders
+    // http://jakarta.apache.org/velocity/docs/developer-guide.html#
+    // Configuring%20Resource%20Loaders
     final String fileResourceLoader = "file";
     final String classpathResourceLoader = "classpath";
     final Properties p = new Properties();
@@ -115,7 +116,7 @@ public final class VelocityRenderer
 
     // Set the context
     final VelocityContext context = new VelocityContext();
-    context.put("schema", schema);
+    context.put("catalog", catalog);
 
     // Evaluate the template
     final Template template = ve.getTemplate(templateLocation);

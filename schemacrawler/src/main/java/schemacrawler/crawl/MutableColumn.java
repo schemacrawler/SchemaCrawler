@@ -46,6 +46,11 @@ final class MutableColumn
     super(parent, name);
   }
 
+  void addPrivilege(final MutablePrivilege privilege)
+  {
+    privileges.add(privilege);
+  }
+
   /**
    * {@inheritDoc}
    * 
@@ -104,11 +109,6 @@ final class MutableColumn
   public boolean isPartOfUniqueIndex()
   {
     return isPartOfUniqueIndex;
-  }
-
-  void addPrivilege(final MutablePrivilege privilege)
-  {
-    privileges.add(privilege);
   }
 
   void setDefaultValue(final String defaultValue)

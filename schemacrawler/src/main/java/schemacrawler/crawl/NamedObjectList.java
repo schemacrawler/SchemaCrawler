@@ -144,7 +144,7 @@ final class NamedObjectList<N extends NamedObject>
     return getAll().iterator();
   }
 
-  N lookup(DatabaseObject databaseObject, String name)
+  N lookup(final DatabaseObject databaseObject, final String name)
   {
     final AbstractDatabaseObject parent = new AbstractDatabaseObject(databaseObject
       .getCatalogName(),
@@ -152,9 +152,13 @@ final class NamedObjectList<N extends NamedObject>
       databaseObject.getName())
     {
 
+      private static final long serialVersionUID = 2521419524823080025L;
+
     };
     return lookup(new AbstractDependantObject(parent, name)
     {
+
+      private static final long serialVersionUID = -6700397214465123353L;
     });
   }
 
@@ -164,7 +168,7 @@ final class NamedObjectList<N extends NamedObject>
     {
       return null;
     }
-    for (N listItem: objects)
+    for (final N listItem: objects)
     {
       if (namedObject.equals(listItem))
       {
@@ -212,9 +216,9 @@ final class NamedObjectList<N extends NamedObject>
     {
       return null;
     }
-    for (Iterator<N> iterator = objects.iterator(); iterator.hasNext();)
+    for (final Iterator<N> iterator = objects.iterator(); iterator.hasNext();)
     {
-      N listItem = (N) iterator.next();
+      final N listItem = iterator.next();
       if (namedObject.equals(listItem))
       {
         iterator.remove();

@@ -76,27 +76,6 @@ final class RetrieverConnection
   }
 
   /**
-   * Gets the INFORMATION_SCHEMA views select SQL statements.
-   * 
-   * @return INFORMATION_SCHEMA views selects
-   */
-  public InformationSchemaViews getInformationSchemaViews()
-  {
-    return informationSchemaViews;
-  }
-
-  /**
-   * @see java.lang.Object#finalize()
-   */
-  @Override
-  protected void finalize()
-    throws Throwable
-  {
-    super.finalize();
-    close();
-  }
-
-  /**
    * Releases the <code>Connection</code> object's database and JDBC
    * resources immediately instead of waiting for them to be
    * automatically released.
@@ -119,6 +98,17 @@ final class RetrieverConnection
     {
       LOGGER.log(Level.WARNING, "Could not close database connection", e);
     }
+  }
+
+  /**
+   * @see java.lang.Object#finalize()
+   */
+  @Override
+  protected void finalize()
+    throws Throwable
+  {
+    super.finalize();
+    close();
   }
 
   String getCatalog()
@@ -144,6 +134,16 @@ final class RetrieverConnection
       }
     }
     return connection;
+  }
+
+  /**
+   * Gets the INFORMATION_SCHEMA views select SQL statements.
+   * 
+   * @return INFORMATION_SCHEMA views selects
+   */
+  public InformationSchemaViews getInformationSchemaViews()
+  {
+    return informationSchemaViews;
   }
 
   DatabaseMetaData getMetaData()

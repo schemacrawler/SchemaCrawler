@@ -28,7 +28,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.Schema;
+import schemacrawler.schema.Catalog;
 import schemacrawler.tools.integration.SchemaRenderer;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.FileTemplateLoader;
@@ -58,7 +58,7 @@ public final class FreeMarkerRenderer
    */
   @Override
   protected void render(final String templateName,
-                        final Schema schema,
+                        final Catalog catalog,
                         final Writer writer)
     throws Exception
   {
@@ -95,7 +95,7 @@ public final class FreeMarkerRenderer
 
     // Create the root hash
     final Map<String, Object> objectMap = new HashMap<String, Object>();
-    objectMap.put("schema", schema);
+    objectMap.put("catalog", catalog);
 
     // Evaluate the template
     final Template template = cfg.getTemplate(templateLocation);

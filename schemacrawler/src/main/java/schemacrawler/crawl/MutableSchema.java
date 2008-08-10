@@ -18,8 +18,7 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.schema.JdbcDriverInfo;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -36,36 +35,34 @@ class MutableSchema
 
   private static final long serialVersionUID = 3258128063743931187L;
 
-  private DatabaseInfo databaseInfo;
-  private JdbcDriverInfo driverInfo;
+  private final Catalog catalog;
   private final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>(NamedObjectSort.alphabetical);
   private final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>(NamedObjectSort.alphabetical);
 
-  MutableSchema(final String catalogName,
-                final String schemaName,
-                final String name)
+  MutableSchema(final Catalog catalog, final String name)
   {
-    super(catalogName, schemaName, name);
+    super(catalog.getName(), name, name);
+    this.catalog = catalog;
+  }
+
+  void addProcedure(final MutableProcedure procedure)
+  {
+    procedures.add(procedure);
+  }
+
+  void addTable(final MutableTable table)
+  {
+    tables.add(table);
   }
 
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.Schema#getDatabaseInfo()
+   * @see schemacrawler.schema.Schema#getCatalog()
    */
-  public DatabaseInfo getDatabaseInfo()
+  public Catalog getCatalog()
   {
-    return databaseInfo;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.Schema#getJdbcDriverInfo()
-   */
-  public JdbcDriverInfo getJdbcDriverInfo()
-  {
-    return driverInfo;
+    return catalog;
   }
 
   /**
@@ -106,26 +103,6 @@ class MutableSchema
   public Table[] getTables()
   {
     return tables.getAll().toArray(new Table[tables.size()]);
-  }
-
-  void addProcedure(final MutableProcedure procedure)
-  {
-    procedures.add(procedure);
-  }
-
-  void addTable(final MutableTable table)
-  {
-    tables.add(table);
-  }
-
-  void setDatabaseInfo(final DatabaseInfo databaseInfo)
-  {
-    this.databaseInfo = databaseInfo;
-  }
-
-  void setJdbcDriverInfo(final JdbcDriverInfo driverInfo)
-  {
-    this.driverInfo = driverInfo;
   }
 
 }

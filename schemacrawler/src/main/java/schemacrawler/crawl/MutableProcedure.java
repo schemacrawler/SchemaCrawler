@@ -51,6 +51,11 @@ final class MutableProcedure
     routineBodyType = RoutineBodyType.unknown;
   }
 
+  void addColumn(final MutableProcedureColumn column)
+  {
+    columns.add(column);
+  }
+
   /**
    * {@inheritDoc}
    * 
@@ -99,11 +104,6 @@ final class MutableProcedure
   public ProcedureType getType()
   {
     return procedureType;
-  }
-
-  void addColumn(final MutableProcedureColumn column)
-  {
-    columns.add(column);
   }
 
   void setColumnComparator(final NamedObjectSort comparator)

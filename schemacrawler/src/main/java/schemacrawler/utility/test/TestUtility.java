@@ -39,7 +39,7 @@ import javax.sql.DataSource;
 
 import org.hsqldb.Server;
 
-import schemacrawler.schema.Schema;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.SchemaCrawlerUtility;
 import schemacrawler.utility.datasource.PropertiesDataSource;
@@ -261,12 +261,12 @@ public class TestUtility
     return dataSource;
   }
 
-  public Schema getSchema(final SchemaCrawlerOptions schemaCrawlerOptions)
+  public Catalog getCatalog(final SchemaCrawlerOptions schemaCrawlerOptions)
   {
     try
     {
-      return SchemaCrawlerUtility.getSchema(getDataSource().getConnection(),
-                                            schemaCrawlerOptions);
+      return SchemaCrawlerUtility.getCatalog(getDataSource().getConnection(),
+                                             schemaCrawlerOptions);
     }
     catch (final SQLException e)
     {

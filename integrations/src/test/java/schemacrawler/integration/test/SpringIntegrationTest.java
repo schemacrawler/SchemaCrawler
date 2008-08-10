@@ -21,6 +21,7 @@ package schemacrawler.integration.test;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -32,6 +33,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.Executable;
@@ -165,7 +167,14 @@ public class SpringIntegrationTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = (SchemaCrawlerOptions) appContext
       .getBean("schemaCrawlerOptions");
-    final Schema schema = testUtility.getSchema(schemaCrawlerOptions);
+
+    Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
+    assertNotNull("Could not obtain catalog", catalog);
+    assertTrue("Could not find any schemas", catalog.getSchemas().length > 0);
+
+    final Schema schema = catalog.getSchema("PUBLIC");
+    assertNotNull("Could not obtain schema", schema);
+
     assertEquals(6, schema.getTables().length);
   }
 
