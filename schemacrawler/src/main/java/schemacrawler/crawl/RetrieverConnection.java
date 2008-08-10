@@ -111,7 +111,7 @@ final class RetrieverConnection
     close();
   }
 
-  String getCatalog()
+  String getCatalogName()
   {
     return catalogName;
   }

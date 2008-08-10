@@ -186,7 +186,7 @@ final class TableRetriever
                                              final String tableName,
                                              final String columnName)
   {
-    final String catalog = getRetrieverConnection().getCatalog();
+    final String catalog = getRetrieverConnection().getCatalogName();
     MutableColumn column = null;
     MutableTable table = tables.lookup(catalog, schema, tableName);
     if (table != null)
@@ -216,7 +216,7 @@ final class TableRetriever
     throws SQLException
   {
     final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
-      .getMetaData().getColumns(getRetrieverConnection().getCatalog(),
+      .getMetaData().getColumns(getRetrieverConnection().getCatalogName(),
                                 table.getSchemaName(),
                                 table.getName(),
                                 null));
@@ -285,7 +285,7 @@ final class TableRetriever
 
     MetadataResultSet results;
 
-    final String catalog = getRetrieverConnection().getCatalog();
+    final String catalog = getRetrieverConnection().getCatalogName();
     final DatabaseMetaData metaData = getRetrieverConnection().getMetaData();
 
     results = new MetadataResultSet(metaData.getImportedKeys(catalog,
@@ -332,7 +332,7 @@ final class TableRetriever
     {
       LOGGER.log(Level.FINE, "Using getIndexInfo()");
       results = new MetadataResultSet(getRetrieverConnection().getMetaData()
-        .getIndexInfo(getRetrieverConnection().getCatalog(),
+        .getIndexInfo(getRetrieverConnection().getCatalogName(),
                       table.getSchemaName(),
                       table.getName(),
                       unique,
@@ -363,7 +363,7 @@ final class TableRetriever
     try
     {
       results = getRetrieverConnection().getMetaData()
-        .getPrimaryKeys(getRetrieverConnection().getCatalog(),
+        .getPrimaryKeys(getRetrieverConnection().getCatalogName(),
                         schema,
                         tableName);
       MutablePrimaryKey primaryKey = null;
@@ -416,7 +416,7 @@ final class TableRetriever
     throws SQLException
   {
     final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>(NamedObjectSort.alphabetical);
-    final String catalog = getRetrieverConnection().getCatalog();
+    final String catalog = getRetrieverConnection().getCatalogName();
     final ResultSet results = getRetrieverConnection().getMetaData()
       .getTables(catalog,
                  getRetrieverConnection().getSchemaPattern(),

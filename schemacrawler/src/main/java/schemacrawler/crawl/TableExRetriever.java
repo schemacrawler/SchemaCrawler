@@ -60,7 +60,7 @@ final class TableExRetriever
     throws SQLException
   {
 
-    final String catalog = getRetrieverConnection().getCatalog();
+    final String catalog = getRetrieverConnection().getCatalogName();
     while (results.next())
     {
 
@@ -263,7 +263,7 @@ final class TableExRetriever
     final MetadataResultSet results;
 
     final boolean privilegesForTable = parent == null;
-    final String catalog = getRetrieverConnection().getCatalog();
+    final String catalog = getRetrieverConnection().getCatalogName();
     final String schemaPattern = getRetrieverConnection().getSchemaPattern();
     final String privilegePattern = "%";
     if (privilegesForTable)

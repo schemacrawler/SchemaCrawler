@@ -83,7 +83,7 @@ final class ProcedureExRetriever
       return;
     }
 
-    final String catalog = getRetrieverConnection().getCatalog();
+    final String catalog = getRetrieverConnection().getCatalogName();
     try
     {
       while (results.next())
