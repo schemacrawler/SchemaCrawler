@@ -40,7 +40,7 @@ final class RetrieverConnection
     .getLogger(RetrieverConnection.class.getName());
 
   private final DatabaseMetaData metaData;
-  private final String catalog;
+  private final String catalogName;
   private final String schemaPattern;
   private final InformationSchemaViews informationSchemaViews;
 
@@ -69,7 +69,7 @@ final class RetrieverConnection
       catalogFromConnection = null;
       LOGGER.log(Level.WARNING, "", e);
     }
-    catalog = catalogFromConnection;
+    catalogName = catalogFromConnection;
     schemaPattern = schemaCrawlerOptions.getSchemaPattern();
 
     informationSchemaViews = schemaCrawlerOptions.getInformationSchemaViews();
@@ -113,7 +113,7 @@ final class RetrieverConnection
 
   String getCatalog()
   {
-    return catalog;
+    return catalogName;
   }
 
   Connection getConnection()

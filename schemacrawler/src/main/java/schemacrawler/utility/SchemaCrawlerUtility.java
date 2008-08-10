@@ -50,7 +50,7 @@ public class SchemaCrawlerUtility
       final CachingCrawlHandler crawlHandler = new CachingCrawlHandler();
       schemaCrawler = new DatabaseSchemaCrawler(connection);
       schemaCrawler.crawl(schemaCrawlerOptions, crawlHandler);
-      Catalog catalog = crawlHandler.getCatalog();
+      final Catalog catalog = crawlHandler.getCatalog();
       return catalog;
     }
     catch (final SchemaCrawlerException e)

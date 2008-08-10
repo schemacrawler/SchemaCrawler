@@ -65,8 +65,8 @@ public interface JdbcDriverInfo
   String getDriverVersion();
 
   /**
-   * Reports whether this JDBC driver is a genuine JDBC Compliant<sup><font
-   * size=-2>TM</font></sup> driver.
+   * Reports whether this JDBC driver is a genuine JDBC
+   * Compliant<sup><font size=-2>TM</font></sup> driver.
    * <P>
    * JDBC compliance requires full support for the JDBC API and full
    * support for SQL 92 Entry Level.

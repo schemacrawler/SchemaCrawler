@@ -1,7 +1,6 @@
 package schemacrawler.schemacrawler;
 
 
-
 public interface SchemaCrawler
 {
 

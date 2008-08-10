@@ -43,7 +43,7 @@ final class MutableDatabaseInfo
   private String productName;
   private String productVersion;
   private String schemaPattern;
-  private String catalog;
+  private String catalogName;
   private final SortedMap<String, Object> dbProperties = new TreeMap<String, Object>();
   private final NamedObjectList<MutableColumnDataType> columnDataTypes = new NamedObjectList<MutableColumnDataType>(NamedObjectSort.alphabetical);
 
@@ -73,14 +73,14 @@ final class MutableDatabaseInfo
       return false;
     }
     final MutableDatabaseInfo other = (MutableDatabaseInfo) obj;
-    if (catalog == null)
+    if (catalogName == null)
     {
-      if (other.catalog != null)
+      if (other.catalogName != null)
       {
         return false;
       }
     }
-    else if (!catalog.equals(other.catalog))
+    else if (!catalogName.equals(other.catalogName))
     {
       return false;
     }
@@ -123,11 +123,11 @@ final class MutableDatabaseInfo
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.DatabaseInfo#getCatalog()
+   * @see schemacrawler.schema.DatabaseInfo#getCatalogName()
    */
-  public String getCatalog()
+  public String getCatalogName()
   {
-    return catalog;
+    return catalogName;
   }
 
   /**
@@ -206,7 +206,7 @@ final class MutableDatabaseInfo
   {
     final int prime = 31;
     int result = 1;
-    result = prime * result + (catalog == null? 0: catalog.hashCode());
+    result = prime * result + (catalogName == null? 0: catalogName.hashCode());
     result = prime * result + (productName == null? 0: productName.hashCode());
     result = prime * result
              + (productVersion == null? 0: productVersion.hashCode());
@@ -236,15 +236,15 @@ final class MutableDatabaseInfo
     dbProperties.put(name, value);
   }
 
-  void setCatalog(final String catalog)
+  void setCatalogName(final String catalogName)
   {
-    if (catalog == null)
+    if (catalogName == null)
     {
-      this.catalog = "";
+      this.catalogName = "";
     }
     else
     {
-      this.catalog = catalog;
+      this.catalogName = catalogName;
     }
   }
 

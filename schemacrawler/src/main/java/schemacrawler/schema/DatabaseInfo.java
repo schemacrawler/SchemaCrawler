@@ -35,7 +35,7 @@ public interface DatabaseInfo
    * 
    * @return Catalog name
    */
-  String getCatalog();
+  String getCatalogName();
 
   /**
    * Gets the column data types defined by the RDBMS system.
