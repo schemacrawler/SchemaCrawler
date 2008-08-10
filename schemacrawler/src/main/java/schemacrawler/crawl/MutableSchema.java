@@ -19,6 +19,7 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -36,6 +37,7 @@ class MutableSchema
   private static final long serialVersionUID = 3258128063743931187L;
 
   private final Catalog catalog;
+  private final NamedObjectList<MutableColumnDataType> columnDataTypes = new NamedObjectList<MutableColumnDataType>(NamedObjectSort.alphabetical);
   private final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>(NamedObjectSort.alphabetical);
   private final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>(NamedObjectSort.alphabetical);
 
@@ -43,6 +45,11 @@ class MutableSchema
   {
     super(catalog.getName(), name, name);
     this.catalog = catalog;
+  }
+
+  void addColumnDataType(final MutableColumnDataType columnDataType)
+  {
+    columnDataTypes.add(columnDataType);
   }
 
   void addProcedure(final MutableProcedure procedure)
@@ -63,6 +70,51 @@ class MutableSchema
   public Catalog getCatalog()
   {
     return catalog;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Schema#getColumnDataType(java.lang.String)
+   */
+  public ColumnDataType getColumnDataType(String name)
+  {
+    return columnDataTypes.lookup(name);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.DatabaseInfo#getSystemColumnDataTypes()
+   */
+  public ColumnDataType[] getColumnDataTypes()
+  {
+    return columnDataTypes.getAll().toArray(new ColumnDataType[columnDataTypes
+      .size()]);
+  }
+
+  NamedObjectList<MutableColumnDataType> getColumnDataTypesList()
+  {
+    return columnDataTypes;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Object#toString()
+   */
+  public String getFullName()
+  {
+    final StringBuffer buffer = new StringBuffer();
+    if (getCatalogName() != null && getCatalogName().length() > 0)
+    {
+      buffer.append(getCatalogName()).append(".");
+    }
+    if (getName() != null)
+    {
+      buffer.append(getName());
+    }
+    return buffer.toString();
   }
 
   /**
@@ -103,6 +155,22 @@ class MutableSchema
   public Table[] getTables()
   {
     return tables.getAll().toArray(new Table[tables.size()]);
+  }
+
+  MutableColumnDataType lookupByType(final int type)
+  {
+    MutableColumnDataType columnDataType = null;
+    final MutableColumnDataType[] allColumnDataTypes = columnDataTypes.getAll()
+      .toArray(new MutableColumnDataType[columnDataTypes.size()]);
+    for (final MutableColumnDataType currentColumnDataType: allColumnDataTypes)
+    {
+      if (type == currentColumnDataType.getType())
+      {
+        columnDataType = currentColumnDataType;
+        break;
+      }
+    }
+    return columnDataType;
   }
 
 }

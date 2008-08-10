@@ -104,6 +104,10 @@ abstract class AbstractDatabaseObject
   public String getFullName()
   {
     final StringBuffer buffer = new StringBuffer();
+    if (catalogName != null && catalogName.length() > 0)
+    {
+      buffer.append(catalogName).append(".");
+    }
     if (schemaName != null && schemaName.length() > 0)
     {
       buffer.append(schemaName).append(".");

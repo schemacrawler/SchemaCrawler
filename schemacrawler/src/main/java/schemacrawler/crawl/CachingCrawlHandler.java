@@ -19,6 +19,7 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
@@ -90,6 +91,18 @@ public final class CachingCrawlHandler
 
   /**
    * {@inheritDoc}
+   * 
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.ColumnDataType)
+   */
+  public void handle(ColumnDataType dataType)
+  {
+    final String schemaName = dataType.getSchemaName();
+    final MutableSchema schema = lookupOrCreateSchema(schemaName);
+    schema.addColumnDataType((MutableColumnDataType) dataType);
+  }
+
+  /**
+   * {@inheritDoc}
    */
   public void handle(final DatabaseInfo databaseInfo)
   {
@@ -107,10 +120,9 @@ public final class CachingCrawlHandler
   }
 
   /**
-   * Provides information on the database.
+   * {@inheritDoc}
    * 
-   * @param procedure
-   *        Procedure metadata.
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.Procedure)
    */
   public void handle(final Procedure procedure)
   {
@@ -120,10 +132,9 @@ public final class CachingCrawlHandler
   }
 
   /**
-   * Provides information on the database.
+   * {@inheritDoc}
    * 
-   * @param table
-   *        Table metadata.
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.Table)
    */
   public void handle(final Table table)
   {

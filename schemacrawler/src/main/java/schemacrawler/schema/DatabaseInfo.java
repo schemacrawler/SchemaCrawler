@@ -31,20 +31,6 @@ public interface DatabaseInfo
 {
 
   /**
-   * Gets the catalog name.
-   * 
-   * @return Catalog name
-   */
-  String getCatalogName();
-
-  /**
-   * Gets the column data types defined by the RDBMS system.
-   * 
-   * @return Column data types
-   */
-  ColumnDataType[] getColumnDataTypes();
-
-  /**
    * Gets the name of the RDBMS vendor and product.
    * 
    * @return Name of the RDBMS vendor and product
@@ -75,10 +61,17 @@ public interface DatabaseInfo
   Object getProperty(String name);
 
   /**
-   * Gets the schema pattern.
+   * Gets the column data types defined by the RDBMS system, by name.
    * 
-   * @return Schema pattern
+   * @return Column data type
    */
-  String getSchemaPattern();
+  ColumnDataType getSystemColumnDataType(String name);
+
+  /**
+   * Gets the column data types defined by the RDBMS system.
+   * 
+   * @return Column data types
+   */
+  ColumnDataType[] getSystemColumnDataTypes();
 
 }

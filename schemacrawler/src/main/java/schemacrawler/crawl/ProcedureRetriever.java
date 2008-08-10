@@ -57,7 +57,7 @@ final class ProcedureRetriever
    */
   void retrieveProcedureColumns(final MutableProcedure procedure,
                                 final InclusionRule columnInclusionRule,
-                                final NamedObjectList<MutableColumnDataType> columnDataTypes)
+                                final ColumnDataTypes columnDataTypes)
     throws SQLException
   {
 
@@ -94,7 +94,7 @@ final class ProcedureRetriever
                                                                          procedure);
         column.setOrdinalPosition(ordinalNumber++);
         column.setProcedureColumnType(ProcedureColumnType.valueOf(columnType));
-        lookupAndSetDataType(column, dataType, typeName, columnDataTypes);
+        columnDataTypes.lookupAndSetDataType(column, dataType, typeName);
         column.setSize(length);
         column.setPrecision(precision);
         column.setNullable(isNullable);
