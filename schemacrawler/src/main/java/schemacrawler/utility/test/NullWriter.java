@@ -54,10 +54,7 @@ final class NullWriter
    * {@inheritDoc}
    */
   @Override
-  public void write(
-  final char[] cbuf, 
-  final int off, 
-  final int len)
+  public void write(final char[] cbuf, final int off, final int len)
     throws IOException
   {
     // No-op
@@ -67,8 +64,7 @@ final class NullWriter
    * {@inheritDoc}
    */
   @Override
-  public void write(
-  final int c)
+  public void write(final int c)
     throws IOException
   {
     // No-op
@@ -78,10 +74,7 @@ final class NullWriter
    * {@inheritDoc}
    */
   @Override
-  public void write(
-  final String str, 
-  final int off, 
-  final int len)
+  public void write(final String str, final int off, final int len)
     throws IOException
   {
     // No-op

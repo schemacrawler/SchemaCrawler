@@ -57,9 +57,9 @@ public final class Query
   }
 
   /**
-   * Interpolate substrings into property values. Substrings of the form ${<i>propname</i>}
-   * are interpolated into the text of the system property whose key
-   * matches <i>propname</i>. For example,
+   * Interpolate substrings into property values. Substrings of the form
+   * ${<i>propname</i>} are interpolated into the text of the system
+   * property whose key matches <i>propname</i>. For example,
    * expandProperties("hello.${user.name}.world") is "hello.foo.world"
    * when called by a user named "foo". Property substrings can be
    * nested. References to nonexistent system properties are

@@ -300,7 +300,7 @@ final class DatabaseInfoRetriever
     final MutableDatabaseInfo dbInfo = new MutableDatabaseInfo();
     dbInfo.setProductName(dbMetaData.getDatabaseProductName());
     dbInfo.setProductVersion(dbMetaData.getDatabaseProductVersion());
-    dbInfo.setCatalog(getRetrieverConnection().getCatalog());
+    dbInfo.setCatalogName(getRetrieverConnection().getCatalog());
     dbInfo.setSchemaPattern(getRetrieverConnection().getSchemaPattern());
 
     return dbInfo;

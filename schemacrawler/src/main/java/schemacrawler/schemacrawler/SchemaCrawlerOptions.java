@@ -408,7 +408,8 @@ public final class SchemaCrawlerOptions
   /**
    * Sets table types from a comma-separated list of table types. For
    * example:
-   * TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS,SYNONYM
+   * TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS
+   * ,SYNONYM
    * 
    * @param tableTypesString
    *        Comma-separated list of table types.
@@ -440,7 +441,8 @@ public final class SchemaCrawlerOptions
   /**
    * Sets table types from a comma-separated list of table types. For
    * example:
-   * TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS,SYNONYM
+   * TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS
+   * ,SYNONYM
    * 
    * @param tableTypesString
    *        Comma-separated list of table types.
