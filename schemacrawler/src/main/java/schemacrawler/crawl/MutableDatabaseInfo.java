@@ -20,6 +20,7 @@ package schemacrawler.crawl;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -42,23 +43,11 @@ final class MutableDatabaseInfo
 
   private String productName;
   private String productVersion;
-  private String schemaPattern;
-  private String catalogName;
   private final SortedMap<String, Object> dbProperties = new TreeMap<String, Object>();
-  private final NamedObjectList<MutableColumnDataType> columnDataTypes = new NamedObjectList<MutableColumnDataType>(NamedObjectSort.alphabetical);
+  private final NamedObjectList<MutableColumnDataType> systemColumnDataTypes = new NamedObjectList<MutableColumnDataType>(NamedObjectSort.alphabetical);
 
-  void addColumnDataType(final MutableColumnDataType columnDataType)
-  {
-    columnDataTypes.add(columnDataType);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#equals(java.lang.Object)
-   */
   @Override
-  public boolean equals(final Object obj)
+  public boolean equals(Object obj)
   {
     if (this == obj)
     {
@@ -72,15 +61,26 @@ final class MutableDatabaseInfo
     {
       return false;
     }
-    final MutableDatabaseInfo other = (MutableDatabaseInfo) obj;
-    if (catalogName == null)
+    MutableDatabaseInfo other = (MutableDatabaseInfo) obj;
+    if (systemColumnDataTypes == null)
     {
-      if (other.catalogName != null)
+      if (other.systemColumnDataTypes != null)
       {
         return false;
       }
     }
-    else if (!catalogName.equals(other.catalogName))
+    else if (!systemColumnDataTypes.equals(other.systemColumnDataTypes))
+    {
+      return false;
+    }
+    if (dbProperties == null)
+    {
+      if (other.dbProperties != null)
+      {
+        return false;
+      }
+    }
+    else if (!dbProperties.equals(other.dbProperties))
     {
       return false;
     }
@@ -106,44 +106,7 @@ final class MutableDatabaseInfo
     {
       return false;
     }
-    if (schemaPattern == null)
-    {
-      if (other.schemaPattern != null)
-      {
-        return false;
-      }
-    }
-    else if (!schemaPattern.equals(other.schemaPattern))
-    {
-      return false;
-    }
     return true;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.DatabaseInfo#getCatalogName()
-   */
-  public String getCatalogName()
-  {
-    return catalogName;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.DatabaseInfo#getColumnDataTypes()
-   */
-  public ColumnDataType[] getColumnDataTypes()
-  {
-    return columnDataTypes.getAll().toArray(new ColumnDataType[columnDataTypes
-      .size()]);
-  }
-
-  NamedObjectList<MutableColumnDataType> getColumnDataTypesList()
-  {
-    return columnDataTypes;
   }
 
   /**
@@ -189,63 +152,59 @@ final class MutableDatabaseInfo
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.DatabaseInfo#getSchemaPattern()
+   * @see schemacrawler.schema.DatabaseInfo#getSystemColumnDataType(java.lang.String)
    */
-  public String getSchemaPattern()
+  public ColumnDataType getSystemColumnDataType(final String name)
   {
-    return schemaPattern;
+    return systemColumnDataTypes.lookup(name);
   }
 
   /**
    * {@inheritDoc}
    * 
-   * @see java.lang.Object#hashCode()
+   * @see schemacrawler.schema.DatabaseInfo#getSystemColumnDataTypes()
    */
+  public ColumnDataType[] getSystemColumnDataTypes()
+  {
+    return systemColumnDataTypes.getAll()
+      .toArray(new ColumnDataType[systemColumnDataTypes.size()]);
+  }
+
   @Override
   public int hashCode()
   {
     final int prime = 31;
     int result = 1;
-    result = prime * result + (catalogName == null? 0: catalogName.hashCode());
-    result = prime * result + (productName == null? 0: productName.hashCode());
+    result = prime
+             * result
+             + ((systemColumnDataTypes == null)? 0: systemColumnDataTypes
+               .hashCode());
     result = prime * result
-             + (productVersion == null? 0: productVersion.hashCode());
+             + ((dbProperties == null)? 0: dbProperties.hashCode());
     result = prime * result
-             + (schemaPattern == null? 0: schemaPattern.hashCode());
+             + ((productName == null)? 0: productName.hashCode());
+    result = prime * result
+             + ((productVersion == null)? 0: productVersion.hashCode());
     return result;
   }
 
-  MutableColumnDataType lookupByType(final int type)
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Object#toString()
+   */
+  @Override
+  public String toString()
   {
-    MutableColumnDataType columnDataType = null;
-    final MutableColumnDataType[] allColumnDataTypes = columnDataTypes.getAll()
-      .toArray(new MutableColumnDataType[columnDataTypes.size()]);
-    for (final MutableColumnDataType currentColumnDataType: allColumnDataTypes)
-    {
-      if (type == currentColumnDataType.getType())
-      {
-        columnDataType = currentColumnDataType;
-        break;
-      }
-    }
-    return columnDataType;
+    final StringBuffer info = new StringBuffer();
+    info.append("-- database: ").append(getProductName()).append(" ")
+      .append(getProductVersion()).append(NEWLINE);
+    return info.toString();
   }
 
   void putProperty(final String name, final Object value)
   {
     dbProperties.put(name, value);
-  }
-
-  void setCatalogName(final String catalogName)
-  {
-    if (catalogName == null)
-    {
-      this.catalogName = "";
-    }
-    else
-    {
-      this.catalogName = catalogName;
-    }
   }
 
   void setProductName(final String productName)
@@ -258,28 +217,15 @@ final class MutableDatabaseInfo
     this.productVersion = productVersion;
   }
 
-  void setSchemaPattern(final String schemaPattern)
+  void setSystemColumnDataTypes(Set<MutableColumnDataType> columnDataTypes)
   {
-    this.schemaPattern = schemaPattern;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-
-    final StringBuffer info = new StringBuffer();
-
-    info.append("-- database: ").append(getProductName()).append(" ")
-      .append(getProductVersion()).append(NEWLINE)
-      .append("-- schema pattern: ").append(getSchemaPattern());
-
-    return info.toString();
-
+    if (columnDataTypes != null)
+    {
+      for (MutableColumnDataType columnDataType: columnDataTypes)
+      {
+        systemColumnDataTypes.add(columnDataType);
+      }
+    }
   }
 
 }

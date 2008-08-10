@@ -221,14 +221,16 @@ final class DatabaseInfoRetriever
   /**
    * Retrieves column data type metadata.
    * 
-   * @param dbInfo
-   *        Database info
+   * @param columnDataTypes
+   *        Column data types
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveColumnDataTypes(final MutableDatabaseInfo dbInfo)
+  void retrieveSystemColumnDataTypes(final ColumnDataTypes columnDataTypes)
     throws SQLException
   {
+    String catalogName = getRetrieverConnection().getCatalogName();
+    String schemaName = null;
     final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
       .getMetaData().getTypeInfo());
     try
@@ -256,7 +258,9 @@ final class DatabaseInfoRetriever
         final int maximumScale = results.getInt("MAXIMUM_SCALE", 0);
         final int numPrecisionRadix = results.getInt("NUM_PREC_RADIX", 0);
 
-        final MutableColumnDataType columnDataType = new MutableColumnDataType(typeName);
+        final MutableColumnDataType columnDataType = new MutableColumnDataType(catalogName,
+                                                                               schemaName,
+                                                                               typeName);
         columnDataType.setType(type);
         columnDataType.setPrecision(precision);
         columnDataType.setLiteralPrefix(literalPrefix);
@@ -275,7 +279,7 @@ final class DatabaseInfoRetriever
 
         columnDataType.addAttributes(results.getAttributes());
 
-        dbInfo.addColumnDataType(columnDataType);
+        columnDataTypes.addColumnDataType(schemaName, columnDataType);
       }
     }
     finally
@@ -300,9 +304,6 @@ final class DatabaseInfoRetriever
     final MutableDatabaseInfo dbInfo = new MutableDatabaseInfo();
     dbInfo.setProductName(dbMetaData.getDatabaseProductName());
     dbInfo.setProductVersion(dbMetaData.getDatabaseProductVersion());
-    dbInfo.setCatalogName(getRetrieverConnection().getCatalogName());
-    dbInfo.setSchemaPattern(getRetrieverConnection().getSchemaPattern());
-
     return dbInfo;
   }
 
@@ -330,9 +331,10 @@ final class DatabaseInfoRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveUserDefinedColumnDataTypes(final MutableDatabaseInfo dbInfo)
+  void retrieveUserDefinedColumnDataTypes(final ColumnDataTypes columnDataTypes)
     throws SQLException
   {
+    String catalogName = getRetrieverConnection().getCatalogName();
     final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
       .getMetaData().getUDTs(getRetrieverConnection().getCatalogName(),
                              getRetrieverConnection().getSchemaPattern(),
@@ -342,14 +344,19 @@ final class DatabaseInfoRetriever
     {
       while (results.next())
       {
+        // final String catalogName = results.getString("TYPE_CAT");
+        String schemaName = results.getString("TYPE_SCHEM");
         final String typeName = results.getString("TYPE_NAME");
         LOGGER.log(Level.FINEST, "Retrieving data type: " + typeName);
         final int type = results.getInt("DATA_TYPE", 0);
         final String className = results.getString("CLASS_NAME");
         final String remarks = results.getString("REMARKS");
         final int baseTypeValue = results.getInt("BASE_TYPE", 0);
-        final ColumnDataType baseType = dbInfo.lookupByType(baseTypeValue);
-        final MutableColumnDataType columnDataType = new MutableColumnDataType(typeName);
+        final ColumnDataType baseType = columnDataTypes
+          .lookupColumnDataTypeByType(baseTypeValue);
+        final MutableColumnDataType columnDataType = new MutableColumnDataType(catalogName,
+                                                                               schemaName,
+                                                                               typeName);
         columnDataType.setUserDefined(true);
         columnDataType.setType(type);
         columnDataType.setTypeClassName(className);
@@ -358,7 +365,7 @@ final class DatabaseInfoRetriever
 
         columnDataType.addAttributes(results.getAttributes());
 
-        dbInfo.addColumnDataType(columnDataType);
+        columnDataTypes.addColumnDataType(schemaName, columnDataType);
       }
     }
     finally

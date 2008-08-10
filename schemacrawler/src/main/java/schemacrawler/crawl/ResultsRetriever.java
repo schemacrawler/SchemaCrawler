@@ -87,7 +87,9 @@ final class ResultsRetriever
 
         final String databaseSpecificTypeName = resultsMetaData
           .getColumnTypeName(i);
-        final MutableColumnDataType columnDataType = new MutableColumnDataType(databaseSpecificTypeName);
+        final MutableColumnDataType columnDataType = new MutableColumnDataType(catalogName,
+                                                                               schemaName,
+                                                                               databaseSpecificTypeName);
         columnDataType.setType(resultsMetaData.getColumnType(i));
         columnDataType.setTypeClassName(resultsMetaData.getColumnClassName(i));
         columnDataType.setPrecision(resultsMetaData.getPrecision(i));

@@ -66,7 +66,7 @@ public class ResultColumnsTest
   {
 
     final String[] columnNames = {
-        "CUSTOMER.FIRSTNAME", "CUSTOMER.LASTNAME", "ADDRESS", "",
+        "PUBLIC.CUSTOMER.FIRSTNAME", "PUBLIC.CUSTOMER.LASTNAME", "ADDRESS", "",
     };
     final String[] columnDataTypes = {
         "VARCHAR", "VARCHAR", "VARCHAR", "DOUBLE",

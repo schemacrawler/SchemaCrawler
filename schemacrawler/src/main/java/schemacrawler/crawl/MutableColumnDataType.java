@@ -31,7 +31,7 @@ import schemacrawler.schema.SqlDataType;
  * @author Sualeh Fatehi
  */
 final class MutableColumnDataType
-  extends AbstractNamedObject
+  extends AbstractDatabaseObject
   implements ColumnDataType
 {
 
@@ -56,9 +56,11 @@ final class MutableColumnDataType
   private ColumnDataType baseType;
   private String typeClassName;
 
-  MutableColumnDataType(final String name)
+  MutableColumnDataType(final String catalogName,
+                        final String schemaName,
+                        final String name)
   {
-    super(name);
+    super(catalogName, schemaName, name);
     // Default values
     searchable = SearchableType.unknown;
     type = SqlDataType.UNKNOWN;

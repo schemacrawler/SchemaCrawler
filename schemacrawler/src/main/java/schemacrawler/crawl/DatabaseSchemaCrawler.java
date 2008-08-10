@@ -127,13 +127,15 @@ public final class DatabaseSchemaCrawler
 
       handler.begin();
 
-      crawlJdbcDriverInfo(retrieverConnection, options, handler);
+      ColumnDataTypes columnDataTypes = crawlColumnDataTypes(retrieverConnection,
+                                                             schemaCrawlerOptions);
 
-      final MutableDatabaseInfo databaseInfo = crawlDatabaseInfo(retrieverConnection,
-                                                                 options,
-                                                                 handler);
-      final NamedObjectList<MutableColumnDataType> columnDataTypes = databaseInfo
-        .getColumnDataTypesList();
+      crawlJdbcDriverInfo(retrieverConnection, schemaCrawlerOptions, handler);
+
+      crawlDatabaseInfo(retrieverConnection,
+                        schemaCrawlerOptions,
+                        handler,
+                        columnDataTypes);
 
       crawlTables(retrieverConnection,
                   schemaCrawlerOptions,
@@ -161,9 +163,37 @@ public final class DatabaseSchemaCrawler
     }
   }
 
+  private ColumnDataTypes crawlColumnDataTypes(final RetrieverConnection retrieverConnection,
+                                               final SchemaCrawlerOptions options)
+    throws SchemaCrawlerException
+  {
+    ColumnDataTypes columnDataTypes = new ColumnDataTypes();
+    try
+    {
+      final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
+      final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection);
+      if (infoLevel.isRetrieveColumnDataTypes())
+      {
+        retriever.retrieveSystemColumnDataTypes(columnDataTypes);
+      }
+      if (infoLevel.isRetrieveUserDefinedColumnDataTypes())
+      {
+        retriever.retrieveUserDefinedColumnDataTypes(columnDataTypes);
+      }
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerException("Exception retrieving column data type information",
+                                       e);
+    }
+
+    return columnDataTypes;
+  }
+
   private MutableDatabaseInfo crawlDatabaseInfo(final RetrieverConnection retrieverConnection,
                                                 final SchemaCrawlerOptions options,
-                                                final CrawlHandler handler)
+                                                final CrawlHandler handler,
+                                                final ColumnDataTypes columnDataTypes)
     throws SchemaCrawlerException
   {
     MutableDatabaseInfo dbInfo;
@@ -172,21 +202,15 @@ public final class DatabaseSchemaCrawler
       final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
       final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection);
       dbInfo = retriever.retrieveDatabaseInfo();
-      if (infoLevel.isRetrieveColumnDataTypes())
-      {
-        retriever.retrieveColumnDataTypes(dbInfo);
-      }
       if (infoLevel.isRetrieveDatabaseInfo())
       {
         if (infoLevel.isRetrieveAdditionalDatabaseInfo())
         {
           retriever.retrieveAdditionalDatabaseInfo(dbInfo);
         }
-        if (infoLevel.isRetrieveUserDefinedColumnDataTypes())
-        {
-          retriever.retrieveUserDefinedColumnDataTypes(dbInfo);
-        }
       }
+      dbInfo.setSystemColumnDataTypes(columnDataTypes
+        .lookupColumnDataTypes(null));
     }
     catch (final SQLException e)
     {
@@ -224,7 +248,7 @@ public final class DatabaseSchemaCrawler
   private void crawlProcedures(final RetrieverConnection retrieverConnection,
                                final SchemaCrawlerOptions options,
                                final CrawlHandler handler,
-                               final NamedObjectList<MutableColumnDataType> columnDataTypes)
+                               final ColumnDataTypes columnDataTypes)
     throws SchemaCrawlerException
   {
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
@@ -280,7 +304,7 @@ public final class DatabaseSchemaCrawler
   private void crawlTables(final RetrieverConnection retrieverConnection,
                            final SchemaCrawlerOptions options,
                            final CrawlHandler handler,
-                           final NamedObjectList<MutableColumnDataType> columnDataTypes)
+                           final ColumnDataTypes columnDataTypes)
     throws SchemaCrawlerException
   {
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();

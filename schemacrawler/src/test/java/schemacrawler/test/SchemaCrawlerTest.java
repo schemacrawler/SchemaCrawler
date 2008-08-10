@@ -76,32 +76,34 @@ public class SchemaCrawlerTest
 
     final String[][] columnNames = {
         {
-            "CUSTOMER.ID",
-            "CUSTOMER.FIRSTNAME",
-            "CUSTOMER.LASTNAME",
-            "CUSTOMER.STREET",
-            "CUSTOMER.CITY"
+            "PUBLIC.CUSTOMER.ID",
+            "PUBLIC.CUSTOMER.FIRSTNAME",
+            "PUBLIC.CUSTOMER.LASTNAME",
+            "PUBLIC.CUSTOMER.STREET",
+            "PUBLIC.CUSTOMER.CITY"
         },
         {
-            "CUSTOMERLIST.ID",
-            "CUSTOMERLIST.FIRSTNAME",
-            "CUSTOMERLIST.LASTNAME",
+            "PUBLIC.CUSTOMERLIST.ID",
+            "PUBLIC.CUSTOMERLIST.FIRSTNAME",
+            "PUBLIC.CUSTOMERLIST.LASTNAME",
         },
         {
-            "INVOICE.ID", "INVOICE.CUSTOMERID", "INVOICE.TOTAL"
+            "PUBLIC.INVOICE.ID",
+            "PUBLIC.INVOICE.CUSTOMERID",
+            "PUBLIC.INVOICE.TOTAL"
         },
         {
-            "ITEM.INVOICEID",
-            "ITEM.ITEM",
-            "ITEM.PRODUCTID",
-            "ITEM.QUANTITY",
-            "ITEM.COST"
+            "PUBLIC.ITEM.INVOICEID",
+            "PUBLIC.ITEM.ITEM",
+            "PUBLIC.ITEM.PRODUCTID",
+            "PUBLIC.ITEM.QUANTITY",
+            "PUBLIC.ITEM.COST"
         },
         {
-            "PRODUCT.ID", "PRODUCT.NAME", "PRODUCT.PRICE"
+            "PUBLIC.PRODUCT.ID", "PUBLIC.PRODUCT.NAME", "PUBLIC.PRODUCT.PRICE"
         },
         {
-            "SUPPLIER.SUPPLIER_ID", "SUPPLIER.SUPPLIER_NAME"
+            "PUBLIC.SUPPLIER.SUPPLIER_ID", "PUBLIC.SUPPLIER.SUPPLIER_NAME"
         }
     };
 
@@ -137,9 +139,6 @@ public class SchemaCrawlerTest
         assertEquals("Column full name does not match",
                      columnsNamesForTable[columnIdx],
                      column.getFullName());
-        assertEquals("Column name does not match",
-                     columnsNamesForTable[columnIdx],
-                     table.getName() + "." + column.getName());
         assertEquals("Column type does not match",
                      columnDataTypes[tableIdx][columnIdx],
                      column.getType().getDatabaseSpecificTypeName());
@@ -291,7 +290,7 @@ public class SchemaCrawlerTest
       {
         foundTrigger = true;
         assertEquals("Triggers full name does not match",
-                     "CUSTOMER.SCTRIGGER",
+                     "PUBLIC.CUSTOMER.SCTRIGGER",
                      trigger.getFullName());
         assertEquals("Trigger EventManipulationType does not match",
                      EventManipulationType.delete,

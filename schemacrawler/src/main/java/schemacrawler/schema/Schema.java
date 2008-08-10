@@ -28,11 +28,25 @@ public interface Schema
 {
 
   /**
-   * Gets the catalog.
+   * Gets the catalog that this schema belongs to.
    * 
    * @return Parent catalog
    */
   Catalog getCatalog();
+
+  /**
+   * Gets the column data types defined in the schema, by name.
+   * 
+   * @return Column data types
+   */
+  ColumnDataType getColumnDataType(String name);
+
+  /**
+   * Gets the column data types defined in the schema, by name.
+   * 
+   * @return Column data types
+   */
+  ColumnDataType[] getColumnDataTypes();
 
   /**
    * Gets a procedure by name.

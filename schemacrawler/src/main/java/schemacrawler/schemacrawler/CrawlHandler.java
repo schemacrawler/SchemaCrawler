@@ -18,6 +18,7 @@
 package schemacrawler.schemacrawler;
 
 
+import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
@@ -48,7 +49,7 @@ public interface CrawlHandler
     throws SchemaCrawlerException;
 
   /**
-   * Provides information on the database schema.
+   * Handles information on the database schema.
    * 
    * @param databaseInfo
    *        Database information
@@ -59,7 +60,7 @@ public interface CrawlHandler
     throws SchemaCrawlerException;
 
   /**
-   * Provides information on the database schema.
+   * Handles information on the JDBC driver.
    * 
    * @param driverInfo
    *        JDBC driver information
@@ -67,6 +68,18 @@ public interface CrawlHandler
    *         On an exception
    */
   void handle(final JdbcDriverInfo driverInfo)
+    throws SchemaCrawlerException;
+
+  /**
+   * Handles information on column data types. This method may be called
+   * more than once, once for each schema.
+   * 
+   * @param dataType
+   *        Column data type information
+   * @throws SchemaCrawlerException
+   *         On an exception
+   */
+  void handle(final ColumnDataType dataType)
     throws SchemaCrawlerException;
 
   /**

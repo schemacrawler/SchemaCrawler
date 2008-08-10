@@ -212,7 +212,7 @@ final class TableRetriever
    */
   void retrieveColumns(final MutableTable table,
                        final InclusionRule columnInclusionRule,
-                       final NamedObjectList<MutableColumnDataType> columnDataTypes)
+                       final ColumnDataTypes columnDataTypes)
     throws SQLException
   {
     final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
@@ -251,7 +251,7 @@ final class TableRetriever
           final String remarks = results.getString(REMARKS);
 
           column.setOrdinalPosition(ordinalPosition);
-          lookupAndSetDataType(column, dataType, typeName, columnDataTypes);
+          columnDataTypes.lookupAndSetDataType(column, dataType, typeName);
           column.setSize(size);
           column.setDecimalDigits(decimalDigits);
           column.setRemarks(remarks);
