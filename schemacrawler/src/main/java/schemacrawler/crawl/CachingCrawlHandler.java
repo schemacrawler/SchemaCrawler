@@ -89,8 +89,11 @@ public final class CachingCrawlHandler
   public void handle(ColumnDataType dataType)
   {
     final String schemaName = dataType.getSchemaName();
-    final MutableSchema schema = lookupOrCreateSchema(schemaName);
-    schema.addColumnDataType((MutableColumnDataType) dataType);
+    if (schemaName != null)
+    {
+      final MutableSchema schema = lookupOrCreateSchema(schemaName);
+      schema.addColumnDataType((MutableColumnDataType) dataType);
+    }
   }
 
   /**
