@@ -19,14 +19,11 @@ package schemacrawler.test;
 
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
@@ -107,8 +104,8 @@ public class SortingTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setAlphabeticalSortForTableColumns(sortAlphabetically);
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    final Schema schema = getSchema(schemaCrawlerOptions);
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.minimum());
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
 
     final Table[] tables = schema.getTables();
     assertEquals("Table count does not match", 6, tables.length);
@@ -136,7 +133,7 @@ public class SortingTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setAlphabeticalSortForForeignKeys(sortAlphabetically);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    final Schema schema = getSchema(schemaCrawlerOptions);
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
 
     final Table[] tables = schema.getTables();
     assertEquals("Table count does not match", 6, tables.length);
@@ -163,7 +160,7 @@ public class SortingTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setAlphabeticalSortForIndexes(sortAlphabetically);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    final Schema schema = getSchema(schemaCrawlerOptions);
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
 
     final Table[] tables = schema.getTables();
     assertEquals("Table count does not match", 6, tables.length);
@@ -182,17 +179,6 @@ public class SortingTest
         }
       }
     }
-  }
-
-  private Schema getSchema(final SchemaCrawlerOptions schemaCrawlerOptions)
-  {
-    Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
-    assertNotNull("Could not obtain catalog", catalog);
-    assertTrue("Could not find any schemas", catalog.getSchemas().length > 0);
-
-    final Schema schema = catalog.getSchema("PUBLIC");
-    assertNotNull("Could not obtain schema", schema);
-    return schema;
   }
 
 }
