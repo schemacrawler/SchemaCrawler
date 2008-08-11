@@ -19,6 +19,7 @@ package schemacrawler.test;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -107,21 +108,18 @@ public class SortingTest
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.minimum());
     final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
 
-    final Table[] tables = schema.getTables();
-    assertEquals("Table count does not match", 6, tables.length);
-    for (final Table table: tables)
+    final Table table = schema.getTable("INVOICE");
+    assertNotNull("Table INVOICE not found", table);
+    if (table.getName().equals("INVOICE"))
     {
-      if (table.getName().equals("INVOICE"))
+      final Column[] columns = table.getColumns();
+      assertEquals("Column count does not match", 3, columns.length);
+      for (int i = 0; i < columns.length; i++)
       {
-        final Column[] columns = table.getColumns();
-        assertEquals("Column count does not match", 3, columns.length);
-        for (int i = 0; i < columns.length; i++)
-        {
-          final Column column = columns[i];
-          assertEquals("Columns not "
-                       + (sortAlphabetically? "alphabetically": "naturally")
-                       + " sorted", expectedValues[i], column.getName());
-        }
+        final Column column = columns[i];
+        assertEquals("Columns not "
+                     + (sortAlphabetically? "alphabetically": "naturally")
+                     + " sorted", expectedValues[i], column.getName());
       }
     }
   }
