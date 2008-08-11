@@ -77,7 +77,7 @@ class MutableSchema
    * 
    * @see schemacrawler.schema.Schema#getColumnDataType(java.lang.String)
    */
-  public ColumnDataType getColumnDataType(String name)
+  public ColumnDataType getColumnDataType(final String name)
   {
     return columnDataTypes.lookup(name);
   }
@@ -103,6 +103,7 @@ class MutableSchema
    * 
    * @see Object#toString()
    */
+  @Override
   public String getFullName()
   {
     final StringBuffer buffer = new StringBuffer();
