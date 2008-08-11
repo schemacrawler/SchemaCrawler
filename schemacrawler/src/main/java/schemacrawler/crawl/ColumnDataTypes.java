@@ -1,67 +1,40 @@
 package schemacrawler.crawl;
 
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
+import schemacrawler.schema.BaseColumn;
+
 class ColumnDataTypes
+  extends NamedObjectList<MutableColumnDataType>
 {
 
-  private final Map<String, Set<MutableColumnDataType>> columnDataTypes = new HashMap<String, Set<MutableColumnDataType>>();
+  private static final long serialVersionUID = 6793135093651666453L;
 
-  void addColumnDataType(String schemaName,
-                         final MutableColumnDataType systemColumnDataType)
+  ColumnDataTypes()
   {
-    Set<MutableColumnDataType> columnDataTypesList = columnDataTypes
-      .get(schemaName);
-    if (columnDataTypesList == null)
-    {
-      columnDataTypesList = new HashSet<MutableColumnDataType>();
-      columnDataTypes.put(schemaName, columnDataTypesList);
-    }
-    columnDataTypesList.add(systemColumnDataType);
+    super(NamedObjectSort.alphabetical);
   }
 
-  Set<MutableColumnDataType> lookupColumnDataTypes(String schemaName)
+  MutableColumnDataType lookupColumnDataTypeByType(final int type)
   {
-    return columnDataTypes.get(schemaName);
-  }
-
-  /**
-   * Creates a data type from the JDBC data type id, and the database
-   * specific type name.
-   * 
-   * @param jdbcDataType
-   *        JDBC data type
-   * @param databaseSpecificTypeName
-   *        Database specific type name
-   */
-  void lookupAndSetDataType(final AbstractColumn column,
-                            final int jdbcDataType,
-                            final String databaseSpecificTypeName)
-  {
-    MutableColumnDataType columnDataType = lookupColumnDataTypeByType(databaseSpecificTypeName);
-    if (columnDataType == null)
+    MutableColumnDataType columnDataType = null;
+    for (final MutableColumnDataType currentColumnDataType: this)
     {
-      String catalogName = column.getCatalogName();
-      String schemaName = column.getSchemaName();
-      columnDataType = new MutableColumnDataType(catalogName,
-                                                 schemaName,
-                                                 databaseSpecificTypeName);
-      columnDataType.setType(jdbcDataType);
-      addColumnDataType(schemaName, columnDataType);
+      if (type == currentColumnDataType.getType())
+      {
+        columnDataType = currentColumnDataType;
+        break;
+      }
     }
-    column.setType(columnDataType);
+    return columnDataType;
   }
 
   MutableColumnDataType lookupColumnDataTypeByType(final String databaseSpecificTypeName)
   {
-    final Set<MutableColumnDataType> allColumnDataTypes = getAllColumnDataTypes();
-
     MutableColumnDataType columnDataType = null;
-    for (final MutableColumnDataType currentColumnDataType: allColumnDataTypes)
+    for (final MutableColumnDataType currentColumnDataType: this)
     {
       if (currentColumnDataType.getDatabaseSpecificTypeName()
         .equals(databaseSpecificTypeName))
@@ -73,31 +46,46 @@ class ColumnDataTypes
     return columnDataType;
   }
 
-  MutableColumnDataType lookupColumnDataTypeByType(final int type)
+  Set<MutableColumnDataType> lookupColumnDataTypes(final String schemaName)
   {
-    final Set<MutableColumnDataType> allColumnDataTypes = getAllColumnDataTypes();
-
-    MutableColumnDataType columnDataType = null;
-    for (final MutableColumnDataType currentColumnDataType: allColumnDataTypes)
+    final Set<MutableColumnDataType> columnDataTypes = new HashSet<MutableColumnDataType>();
+    for (final MutableColumnDataType currentColumnDataType: this)
     {
-      if (type == currentColumnDataType.getType())
+      String dataTypeSchemaName = currentColumnDataType.getSchemaName();
+      if (dataTypeSchemaName == null? schemaName == null: dataTypeSchemaName
+        .equals(schemaName))
       {
-        columnDataType = currentColumnDataType;
-        break;
+        columnDataTypes.add(currentColumnDataType);
       }
     }
-    return columnDataType;
+    return columnDataTypes;
   }
 
-  Set<MutableColumnDataType> getAllColumnDataTypes()
+  /**
+   * Creates a data type from the JDBC data type id, and the database
+   * specific type name, if it does not exist.
+   * 
+   * @param jdbcDataType
+   *        JDBC data type
+   * @param databaseSpecificTypeName
+   *        Database specific type name
+   */
+  MutableColumnDataType lookupOrCreateColumnDataType(final BaseColumn column,
+                                                     final int jdbcDataType,
+                                                     final String databaseSpecificTypeName)
   {
-    final Set<MutableColumnDataType> allColumnDataTypesList = new HashSet<MutableColumnDataType>();
-    for (final Set<MutableColumnDataType> columnDataTypesList: columnDataTypes
-      .values())
+    MutableColumnDataType columnDataType = lookupColumnDataTypeByType(databaseSpecificTypeName);
+    if (columnDataType == null)
     {
-      allColumnDataTypesList.addAll(columnDataTypesList);
+      final String catalogName = column.getCatalogName();
+      final String schemaName = column.getSchemaName();
+      columnDataType = new MutableColumnDataType(catalogName,
+                                                 schemaName,
+                                                 databaseSpecificTypeName);
+      columnDataType.setType(jdbcDataType);
+      add(columnDataType);
     }
-    return allColumnDataTypesList;
+    return columnDataType;
   }
 
 }

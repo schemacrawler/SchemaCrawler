@@ -47,7 +47,7 @@ final class MutableDatabaseInfo
   private final NamedObjectList<MutableColumnDataType> systemColumnDataTypes = new NamedObjectList<MutableColumnDataType>(NamedObjectSort.alphabetical);
 
   @Override
-  public boolean equals(Object obj)
+  public boolean equals(final Object obj)
   {
     if (this == obj)
     {
@@ -61,7 +61,7 @@ final class MutableDatabaseInfo
     {
       return false;
     }
-    MutableDatabaseInfo other = (MutableDatabaseInfo) obj;
+    final MutableDatabaseInfo other = (MutableDatabaseInfo) obj;
     if (systemColumnDataTypes == null)
     {
       if (other.systemColumnDataTypes != null)
@@ -177,29 +177,14 @@ final class MutableDatabaseInfo
     int result = 1;
     result = prime
              * result
-             + ((systemColumnDataTypes == null)? 0: systemColumnDataTypes
+             + (systemColumnDataTypes == null? 0: systemColumnDataTypes
                .hashCode());
     result = prime * result
-             + ((dbProperties == null)? 0: dbProperties.hashCode());
+             + (dbProperties == null? 0: dbProperties.hashCode());
+    result = prime * result + (productName == null? 0: productName.hashCode());
     result = prime * result
-             + ((productName == null)? 0: productName.hashCode());
-    result = prime * result
-             + ((productVersion == null)? 0: productVersion.hashCode());
+             + (productVersion == null? 0: productVersion.hashCode());
     return result;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    final StringBuffer info = new StringBuffer();
-    info.append("-- database: ").append(getProductName()).append(" ")
-      .append(getProductVersion()).append(NEWLINE);
-    return info.toString();
   }
 
   void putProperty(final String name, final Object value)
@@ -217,15 +202,29 @@ final class MutableDatabaseInfo
     this.productVersion = productVersion;
   }
 
-  void setSystemColumnDataTypes(Set<MutableColumnDataType> columnDataTypes)
+  void setSystemColumnDataTypes(final Set<MutableColumnDataType> columnDataTypes)
   {
     if (columnDataTypes != null)
     {
-      for (MutableColumnDataType columnDataType: columnDataTypes)
+      for (final MutableColumnDataType columnDataType: columnDataTypes)
       {
         systemColumnDataTypes.add(columnDataType);
       }
     }
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    final StringBuffer info = new StringBuffer();
+    info.append("-- database: ").append(getProductName()).append(" ")
+      .append(getProductVersion()).append(NEWLINE);
+    return info.toString();
   }
 
 }

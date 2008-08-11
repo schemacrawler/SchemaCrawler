@@ -86,7 +86,7 @@ public final class CachingCrawlHandler
    * 
    * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.ColumnDataType)
    */
-  public void handle(ColumnDataType dataType)
+  public void handle(final ColumnDataType dataType)
   {
     final String schemaName = dataType.getSchemaName();
     if (schemaName != null)

@@ -94,7 +94,9 @@ final class ProcedureRetriever
                                                                          procedure);
         column.setOrdinalPosition(ordinalNumber++);
         column.setProcedureColumnType(ProcedureColumnType.valueOf(columnType));
-        columnDataTypes.lookupAndSetDataType(column, dataType, typeName);
+        column.setType(columnDataTypes.lookupOrCreateColumnDataType(column,
+                                                                    dataType,
+                                                                    typeName));
         column.setSize(length);
         column.setPrecision(precision);
         column.setNullable(isNullable);

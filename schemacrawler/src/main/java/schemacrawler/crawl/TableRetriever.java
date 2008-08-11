@@ -251,7 +251,10 @@ final class TableRetriever
           final String remarks = results.getString(REMARKS);
 
           column.setOrdinalPosition(ordinalPosition);
-          columnDataTypes.lookupAndSetDataType(column, dataType, typeName);
+          column
+            .setType(columnDataTypes.lookupOrCreateColumnDataType(column,
+                                                                  dataType,
+                                                                  typeName));
           column.setSize(size);
           column.setDecimalDigits(decimalDigits);
           column.setRemarks(remarks);

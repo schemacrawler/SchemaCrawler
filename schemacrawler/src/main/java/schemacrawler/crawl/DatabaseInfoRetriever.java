@@ -219,6 +219,40 @@ final class DatabaseInfoRetriever
   }
 
   /**
+   * Provides information on the database.
+   * 
+   * @return Database information
+   * @throws SQLException
+   *         On a SQL exception
+   */
+  MutableDatabaseInfo retrieveDatabaseInfo()
+    throws SQLException
+  {
+    final DatabaseMetaData dbMetaData = getRetrieverConnection().getMetaData();
+
+    final MutableDatabaseInfo dbInfo = new MutableDatabaseInfo();
+    dbInfo.setProductName(dbMetaData.getDatabaseProductName());
+    dbInfo.setProductVersion(dbMetaData.getDatabaseProductVersion());
+    return dbInfo;
+  }
+
+  private void retrieveResultSetTypeProperty(final DatabaseMetaData dbMetaData,
+                                             final MutableDatabaseInfo dbInfo,
+                                             final Method method,
+                                             final int resultSetType,
+                                             final String resultSetTypeName)
+    throws IllegalAccessException, InvocationTargetException
+  {
+    final String name = derivePropertyName(method) + "ResultSet"
+                        + resultSetTypeName;
+    Boolean propertyValue = null;
+    propertyValue = (Boolean) method.invoke(dbMetaData, new Object[] {
+      Integer.valueOf(resultSetType)
+    });
+    dbInfo.putProperty(name, propertyValue);
+  }
+
+  /**
    * Retrieves column data type metadata.
    * 
    * @param columnDataTypes
@@ -229,8 +263,8 @@ final class DatabaseInfoRetriever
   void retrieveSystemColumnDataTypes(final ColumnDataTypes columnDataTypes)
     throws SQLException
   {
-    String catalogName = getRetrieverConnection().getCatalogName();
-    String schemaName = null;
+    final String catalogName = getRetrieverConnection().getCatalogName();
+    final String schemaName = null;
     final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
       .getMetaData().getTypeInfo());
     try
@@ -279,7 +313,7 @@ final class DatabaseInfoRetriever
 
         columnDataType.addAttributes(results.getAttributes());
 
-        columnDataTypes.addColumnDataType(schemaName, columnDataType);
+        columnDataTypes.add(columnDataType);
       }
     }
     finally
@@ -287,40 +321,6 @@ final class DatabaseInfoRetriever
       results.close();
     }
 
-  }
-
-  /**
-   * Provides information on the database.
-   * 
-   * @return Database information
-   * @throws SQLException
-   *         On a SQL exception
-   */
-  MutableDatabaseInfo retrieveDatabaseInfo()
-    throws SQLException
-  {
-    final DatabaseMetaData dbMetaData = getRetrieverConnection().getMetaData();
-
-    final MutableDatabaseInfo dbInfo = new MutableDatabaseInfo();
-    dbInfo.setProductName(dbMetaData.getDatabaseProductName());
-    dbInfo.setProductVersion(dbMetaData.getDatabaseProductVersion());
-    return dbInfo;
-  }
-
-  private void retrieveResultSetTypeProperty(final DatabaseMetaData dbMetaData,
-                                             final MutableDatabaseInfo dbInfo,
-                                             final Method method,
-                                             final int resultSetType,
-                                             final String resultSetTypeName)
-    throws IllegalAccessException, InvocationTargetException
-  {
-    final String name = derivePropertyName(method) + "ResultSet"
-                        + resultSetTypeName;
-    Boolean propertyValue = null;
-    propertyValue = (Boolean) method.invoke(dbMetaData, new Object[] {
-      Integer.valueOf(resultSetType)
-    });
-    dbInfo.putProperty(name, propertyValue);
   }
 
   /**
@@ -334,7 +334,7 @@ final class DatabaseInfoRetriever
   void retrieveUserDefinedColumnDataTypes(final ColumnDataTypes columnDataTypes)
     throws SQLException
   {
-    String catalogName = getRetrieverConnection().getCatalogName();
+    final String catalogName = getRetrieverConnection().getCatalogName();
     final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
       .getMetaData().getUDTs(getRetrieverConnection().getCatalogName(),
                              getRetrieverConnection().getSchemaPattern(),
@@ -345,7 +345,7 @@ final class DatabaseInfoRetriever
       while (results.next())
       {
         // final String catalogName = results.getString("TYPE_CAT");
-        String schemaName = results.getString("TYPE_SCHEM");
+        final String schemaName = results.getString("TYPE_SCHEM");
         final String typeName = results.getString("TYPE_NAME");
         LOGGER.log(Level.FINEST, "Retrieving data type: " + typeName);
         final int type = results.getInt("DATA_TYPE", 0);
@@ -365,7 +365,7 @@ final class DatabaseInfoRetriever
 
         columnDataType.addAttributes(results.getAttributes());
 
-        columnDataTypes.addColumnDataType(schemaName, columnDataType);
+        columnDataTypes.add(columnDataType);
       }
     }
     finally

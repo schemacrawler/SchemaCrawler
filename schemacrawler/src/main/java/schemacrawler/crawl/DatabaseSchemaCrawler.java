@@ -127,8 +127,8 @@ public final class DatabaseSchemaCrawler
 
       handler.begin();
 
-      ColumnDataTypes columnDataTypes = crawlColumnDataTypes(retrieverConnection,
-                                                             schemaCrawlerOptions);
+      final ColumnDataTypes columnDataTypes = crawlColumnDataTypes(retrieverConnection,
+                                                                   schemaCrawlerOptions);
 
       crawlJdbcDriverInfo(retrieverConnection, schemaCrawlerOptions, handler);
 
@@ -137,8 +137,7 @@ public final class DatabaseSchemaCrawler
                         handler,
                         columnDataTypes);
 
-      for (MutableColumnDataType columnDataType: columnDataTypes
-        .getAllColumnDataTypes())
+      for (final MutableColumnDataType columnDataType: columnDataTypes)
       {
         handler.handle(columnDataType);
       }
@@ -173,7 +172,7 @@ public final class DatabaseSchemaCrawler
                                                final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
   {
-    ColumnDataTypes columnDataTypes = new ColumnDataTypes();
+    final ColumnDataTypes columnDataTypes = new ColumnDataTypes();
     try
     {
       final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
