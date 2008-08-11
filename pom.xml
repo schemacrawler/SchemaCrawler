@@ -71,12 +71,12 @@
 		  <groupId>org.apache.maven.plugins</groupId>
 		  <artifactId>maven-source-plugin</artifactId>
 		  <executions>
-			<execution>
-			  <goals>
-  				<goal>jar</goal>
-  				<goal>test-jar</goal>
-			  </goals>
-			</execution>
+  			<execution>
+  			  <goals>
+    				<goal>jar</goal>
+    				<goal>test-jar</goal>
+  			  </goals>
+  			</execution>
 		  </executions>
 		</plugin>
       <plugin>
