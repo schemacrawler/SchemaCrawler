@@ -97,18 +97,6 @@ public final class SchemaHTMLFormatter
   }
 
   @Override
-  void handleColumnDataTypesEnd()
-  {
-
-  }
-
-  @Override
-  void handleColumnDataTypesStart()
-  {
-
-  }
-
-  @Override
   void handleColumnDataTypeStart()
   {
     out.println(HtmlFormattingHelper.createTableStart());

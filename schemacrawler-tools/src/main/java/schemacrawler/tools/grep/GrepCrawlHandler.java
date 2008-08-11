@@ -19,6 +19,7 @@ package schemacrawler.tools.grep;
 
 
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
@@ -246,6 +247,12 @@ public final class GrepCrawlHandler
       handleTable = !handleTable;
     }
     return handleTable;
+  }
+
+  public void handle(ColumnDataType dataType)
+    throws SchemaCrawlerException
+  {
+    // Ignore
   }
 
 }

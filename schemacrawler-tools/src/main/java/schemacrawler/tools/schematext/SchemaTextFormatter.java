@@ -81,18 +81,6 @@ public final class SchemaTextFormatter
   }
 
   @Override
-  void handleColumnDataTypesEnd()
-  {
-    out.println();
-    out.println();
-  }
-
-  @Override
-  void handleColumnDataTypesStart()
-  {
-  }
-
-  @Override
   void handleColumnDataTypeStart()
   {
   }

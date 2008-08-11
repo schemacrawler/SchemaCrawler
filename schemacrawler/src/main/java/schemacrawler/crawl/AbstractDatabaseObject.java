@@ -153,13 +153,7 @@ abstract class AbstractDatabaseObject
   @Override
   public String toString()
   {
-    String toString = "";
-    if (!(schemaName == null || schemaName.trim().length() == 0))
-    {
-      toString = schemaName + ".";
-    }
-    toString = toString + getName();
-    return toString;
+    return getFullName();
   }
 
 }

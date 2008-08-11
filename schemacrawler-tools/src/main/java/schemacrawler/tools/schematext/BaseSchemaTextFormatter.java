@@ -166,16 +166,14 @@ public abstract class BaseSchemaTextFormatter
       handleDatabasePropertiesEnd();
     }
 
-    handleColumnDataTypesStart();
-    final ColumnDataType[] columnDataTypes = databaseInfo.getColumnDataTypes();
-    for (final ColumnDataType columnDataType: columnDataTypes)
-    {
-      handleColumnDataTypeStart();
-      printColumnDataType(columnDataType);
-      handleColumnDataTypeEnd();
-    }
-    handleColumnDataTypesEnd();
+  }
 
+  public void handle(ColumnDataType columnDataType)
+    throws SchemaCrawlerException
+  {
+    handleColumnDataTypeStart();
+    printColumnDataType(columnDataType);
+    handleColumnDataTypeEnd();
   }
 
   /**
@@ -227,7 +225,7 @@ public abstract class BaseSchemaTextFormatter
 
     final String procedureTypeDetail = "procedure, " + procedure.getType();
     out
-      .println(formattingHelper.createNameRow(procedure.getName(),
+      .println(formattingHelper.createNameRow(procedure.getFullName(),
                                               "[" + procedureTypeDetail + "]"));
 
     final SchemaTextDetailType schemaTextDetailType = options
@@ -285,7 +283,8 @@ public abstract class BaseSchemaTextFormatter
     final String typeBracketed = "["
                                  + table.getType().toString()
                                    .toLowerCase(Locale.ENGLISH) + "]";
-    out.println(formattingHelper.createNameRow(table.getName(), typeBracketed));
+    out.println(formattingHelper.createNameRow(table.getFullName(),
+                                               typeBracketed));
 
     final SchemaTextDetailType schemaTextDetailType = options
       .getSchemaTextDetailType();
@@ -347,10 +346,6 @@ public abstract class BaseSchemaTextFormatter
   }
 
   abstract void handleColumnDataTypeEnd();
-
-  abstract void handleColumnDataTypesEnd();
-
-  abstract void handleColumnDataTypesStart();
 
   abstract void handleColumnDataTypeStart();
 
@@ -423,8 +418,7 @@ public abstract class BaseSchemaTextFormatter
 
   private void printColumnDataType(final ColumnDataType columnDataType)
   {
-    final String databaseSpecificTypeName = columnDataType
-      .getDatabaseSpecificTypeName();
+    final String databaseSpecificTypeName = columnDataType.getFullName();
     final String typeName = columnDataType.getTypeName();
     final String userDefined = negate(columnDataType.isUserDefined(),
                                       "user defined");

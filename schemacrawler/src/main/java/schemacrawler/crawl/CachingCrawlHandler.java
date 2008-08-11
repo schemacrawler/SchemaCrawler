@@ -40,14 +40,6 @@ public final class CachingCrawlHandler
 
   /**
    * Creates a new caching crawl handler.
-   */
-  public CachingCrawlHandler()
-  {
-    this("");
-  }
-
-  /**
-   * Creates a new caching crawl handler.
    * 
    * @param catalogName
    *        Catalog name

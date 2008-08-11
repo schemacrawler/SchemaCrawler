@@ -31,9 +31,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.util.FormatUtils;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 
-/**
- * 
- */
 final class OperatorHTMLOutput
   extends BaseOperator
 {

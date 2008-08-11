@@ -89,7 +89,7 @@ class ColumnDataTypes
     return columnDataType;
   }
 
-  private Set<MutableColumnDataType> getAllColumnDataTypes()
+  Set<MutableColumnDataType> getAllColumnDataTypes()
   {
     final Set<MutableColumnDataType> allColumnDataTypesList = new HashSet<MutableColumnDataType>();
     for (final Set<MutableColumnDataType> columnDataTypesList: columnDataTypes
