@@ -18,6 +18,10 @@
 package schemacrawler.utility.test;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -40,6 +44,7 @@ import javax.sql.DataSource;
 import org.hsqldb.Server;
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.SchemaCrawlerUtility;
 import schemacrawler.utility.datasource.PropertiesDataSource;
@@ -168,11 +173,19 @@ public class TestUtility
       // Load schema script file
       final String script = readFully(new InputStreamReader(TestUtility.class
         .getResourceAsStream("/schemacrawler.test.sql")));
+      final String script2 = readFully(new InputStreamReader(TestUtility.class
+        .getResourceAsStream("/schemacrawler.test2.sql")));
       if (dataSource != null)
       {
         connection = dataSource.getConnection();
         statement = connection.createStatement();
+
         statement.execute(script);
+        connection.commit();
+
+        statement.execute(script2);
+        connection.commit();
+
         connection.close();
       }
     }
@@ -282,8 +295,12 @@ public class TestUtility
   {
     try
     {
-      return SchemaCrawlerUtility.getCatalog(getDataSource().getConnection(),
-                                             schemaCrawlerOptions);
+      Catalog catalog = SchemaCrawlerUtility.getCatalog(getDataSource()
+        .getConnection(), schemaCrawlerOptions);
+      assertNotNull("Could not obtain catalog", catalog);
+      assertTrue("Could not find any schemas", catalog.getSchemas().length > 0);
+      assertEquals("Could not find schemas", 2, catalog.getSchemas().length);
+      return catalog;
     }
     catch (final SQLException e)
     {
@@ -374,6 +391,16 @@ public class TestUtility
         }
       }
     }
+  }
+
+  public Schema getSchema(final SchemaCrawlerOptions schemaCrawlerOptions,
+                          String schemaName)
+  {
+    Catalog catalog = getCatalog(schemaCrawlerOptions);
+
+    final Schema schema = catalog.getSchema(schemaName);
+    assertNotNull("Could not obtain schema", schema);
+    return schema;
   }
 
 }

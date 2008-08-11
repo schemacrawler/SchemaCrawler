@@ -33,7 +33,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.Procedure;
@@ -124,7 +123,7 @@ public class SchemaCrawlerTest
     };
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    final Schema schema = getSchema(schemaCrawlerOptions);
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
     final Table[] tables = schema.getTables();
     assertEquals("Table count does not match", 6, tables.length);
     for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
@@ -168,7 +167,7 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions.setShowStoredProcedures(true);
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    final Schema schema = getSchema(schemaCrawlerOptions);
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
     final Procedure[] procedures = schema.getProcedures();
     assertTrue("No procedures found", procedures.length > 0);
     for (final Procedure procedure: procedures)
@@ -189,12 +188,14 @@ public class SchemaCrawlerTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setShowStoredProcedures(true);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.verbose());
-    final Schema schema1 = getSchema(schemaCrawlerOptions);
+    final Schema schema1 = testUtility
+      .getSchema(schemaCrawlerOptions, "PUBLIC");
     assertTrue("Could not find any tables", schema1.getTables().length > 0);
     assertTrue("Could not find any procedures",
                schema1.getProcedures().length > 0);
 
-    final Schema schema2 = getSchema(schemaCrawlerOptions);
+    final Schema schema2 = testUtility
+      .getSchema(schemaCrawlerOptions, "PUBLIC");
 
     assertEquals("Schema not not match", schema1, schema2);
     assertArrayEquals("Tables do not match", schema1.getTables(), schema2
@@ -215,12 +216,15 @@ public class SchemaCrawlerTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.minimum());
-    final Schema schema = getSchema(schemaCrawlerOptions);
-    final Table[] tables = schema.getTables();
+    final Schema publicSchema = testUtility.getSchema(schemaCrawlerOptions,
+                                                      "PUBLIC");
+    final Table[] tables = publicSchema.getTables();
     final int numTables = tables.length;
-    assertNotNull("Could not obtain schema", schema);
+    assertNotNull("Could not obtain schema", publicSchema);
     assertEquals("Table count does not match", 6, numTables);
 
+    assertEquals("Table count does not match", 2, testUtility
+      .getSchema(schemaCrawlerOptions, "SCHEMACRAWLER").getTables().length);
   }
 
   @Test
@@ -236,7 +240,7 @@ public class SchemaCrawlerTest
     };
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.minimum());
-    final Schema schema = getSchema(schemaCrawlerOptions);
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
     final Table[] tables = schema.getTables();
     assertEquals("Table count does not match", 6, tables.length);
     for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
@@ -250,7 +254,6 @@ public class SchemaCrawlerTest
       assertEquals("Table type does not match", tableTypes[tableIdx], table
         .getType().toString().toUpperCase(Locale.ENGLISH));
     }
-
   }
 
   @Test
@@ -280,7 +283,7 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions.setShowStoredProcedures(true);
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    final Schema schema = getSchema(schemaCrawlerOptions);
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
     final Table[] tables = schema.getTables();
     boolean foundTrigger = false;
     for (final Table table: tables)
@@ -312,7 +315,7 @@ public class SchemaCrawlerTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    final Schema schema = getSchema(schemaCrawlerOptions);
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
     final Table[] tables = schema.getTables();
     assertEquals("Table count does not match", 6, tables.length);
     boolean foundView = false;
@@ -336,14 +339,4 @@ public class SchemaCrawlerTest
 
   }
 
-  private Schema getSchema(final SchemaCrawlerOptions schemaCrawlerOptions)
-  {
-    Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
-    assertNotNull("Could not obtain catalog", catalog);
-    assertTrue("Could not find any schemas", catalog.getSchemas().length > 0);
-
-    final Schema schema = catalog.getSchema("PUBLIC");
-    assertNotNull("Could not obtain schema", schema);
-    return schema;
-  }
 }
