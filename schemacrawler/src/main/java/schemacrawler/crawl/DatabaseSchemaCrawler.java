@@ -137,6 +137,12 @@ public final class DatabaseSchemaCrawler
                         handler,
                         columnDataTypes);
 
+      for (MutableColumnDataType columnDataType: columnDataTypes
+        .getAllColumnDataTypes())
+      {
+        handler.handle(columnDataType);
+      }
+
       crawlTables(retrieverConnection,
                   schemaCrawlerOptions,
                   handler,

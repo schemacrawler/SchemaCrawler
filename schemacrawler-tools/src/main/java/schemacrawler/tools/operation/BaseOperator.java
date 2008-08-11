@@ -33,6 +33,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutorException;
+import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
@@ -247,8 +248,17 @@ public abstract class BaseOperator
    * 
    * @see CrawlHandler#handle(Procedure)
    */
-  public final void handle(
-  final Procedure procedure)
+  public final void handle(final Procedure procedure)
+  {
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.ColumnDataType)
+   */
+  public void handle(ColumnDataType dataType)
+    throws SchemaCrawlerException
   {
   }
 
