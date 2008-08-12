@@ -105,7 +105,7 @@ public class SortingTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setAlphabeticalSortForTableColumns(sortAlphabetically);
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.minimum());
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
     final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
 
     final Table table = schema.getTable("INVOICE");

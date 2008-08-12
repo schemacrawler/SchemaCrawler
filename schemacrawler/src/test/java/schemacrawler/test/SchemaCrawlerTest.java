@@ -38,7 +38,6 @@ import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -153,7 +152,6 @@ public class SchemaCrawlerTest
   public void procedureDefinitions()
   {
 
-    // Set up information schema properties
     final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
     informationSchemaViews
       .setRoutinesSql("SELECT " + "PROCEDURE_CAT AS ROUTINE_CATALOG, "
@@ -167,6 +165,7 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions.setShowStoredProcedures(true);
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+
     final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
     final Procedure[] procedures = schema.getProcedures();
     assertTrue("No procedures found", procedures.length > 0);
@@ -307,36 +306,21 @@ public class SchemaCrawlerTest
   public void viewDefinitions()
   {
 
-    // Set up information schema properties
     final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
     informationSchemaViews
       .setViewsSql("SELECT * FROM INFORMATION_SCHEMA.SYSTEM_VIEWS");
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setTableTypesString("VIEW");
     schemaCrawlerOptions.setInformationSchemaViews(informationSchemaViews);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
-    final Table[] tables = schema.getTables();
-    assertEquals("Table count does not match", 6, tables.length);
-    boolean foundView = false;
-    for (final Table table: tables)
-    {
-      if (table.getType() == TableType.view)
-      {
-        foundView = true;
-        final View view = (View) table;
-        if (view.getDefinition() == null
-            || view.getDefinition().trim().equals(""))
-        {
-          fail("View definition not found");
-        }
-      }
-    }
-    if (!foundView)
-    {
-      fail("No views found");
-    }
 
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
+    final View view = (View) schema.getTable("CUSTOMERLIST");
+    assertNotNull("View not found", view);
+    assertNotNull("View definition not found", view.getDefinition());
+    assertFalse("View definition not found", view.getDefinition().trim()
+      .equals(""));
   }
 
 }
