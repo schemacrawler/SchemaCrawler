@@ -125,7 +125,7 @@ class MutableSchema
    */
   public Procedure getProcedure(final String name)
   {
-    return procedures.lookup(this, name);
+    return procedures.lookup(name);
   }
 
   /**
@@ -145,7 +145,7 @@ class MutableSchema
    */
   public Table getTable(final String name)
   {
-    return tables.lookup(this, name);
+    return tables.lookup(name);
   }
 
   /**

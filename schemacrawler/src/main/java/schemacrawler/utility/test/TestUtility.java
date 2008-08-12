@@ -18,10 +18,6 @@
 package schemacrawler.utility.test;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -173,8 +169,8 @@ public class TestUtility
       // Load schema script file
       final String script = readFully(new InputStreamReader(TestUtility.class
         .getResourceAsStream("/schemacrawler.test.sql")));
-      final String script2 = readFully(new InputStreamReader(TestUtility.class
-        .getResourceAsStream("/schemacrawler.test2.sql")));
+      final String otherScript = readFully(new InputStreamReader(TestUtility.class
+        .getResourceAsStream("/schemacrawler.test.other.sql")));
       if (dataSource != null)
       {
         connection = dataSource.getConnection();
@@ -183,7 +179,7 @@ public class TestUtility
         statement.execute(script);
         connection.commit();
 
-        statement.execute(script2);
+        statement.execute(otherScript);
         connection.commit();
 
         connection.close();
@@ -297,9 +293,6 @@ public class TestUtility
     {
       Catalog catalog = SchemaCrawlerUtility.getCatalog(getDataSource()
         .getConnection(), schemaCrawlerOptions);
-      assertNotNull("Could not obtain catalog", catalog);
-      assertTrue("Could not find any schemas", catalog.getSchemas().length > 0);
-      assertEquals("Could not find schemas", 2, catalog.getSchemas().length);
       return catalog;
     }
     catch (final SQLException e)
@@ -399,7 +392,6 @@ public class TestUtility
     Catalog catalog = getCatalog(schemaCrawlerOptions);
 
     final Schema schema = catalog.getSchema(schemaName);
-    assertNotNull("Could not obtain schema", schema);
     return schema;
   }
 
