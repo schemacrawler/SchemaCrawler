@@ -1,0 +1,65 @@
+package schemacrawler.test;
+
+
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
+import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.utility.SchemaCrawlerUtility;
+import schemacrawler.utility.datasource.PropertiesDataSource;
+import schemacrawler.utility.datasource.PropertiesDataSourceException;
+
+public class SchemaCrawlerTest1
+{
+
+  public static void main(final String[] args)
+    throws Exception
+  {
+    final DataSource dataSource = makeDataSource();
+
+    final Properties properties = new Properties();
+    properties.setProperty("schemacrawler.table_types", "TABLE");
+    properties.setProperty("schemacrawler.show_stored_procedures", "false");
+    properties.setProperty("schemacrawler.table.pattern.include", ".*");
+    properties.setProperty("schemacrawler.table.pattern.exclude", "");
+
+    final SchemaCrawlerOptions options = new SchemaCrawlerOptions(properties);
+    options.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+    Catalog catalog = SchemaCrawlerUtility.getCatalog(dataSource
+      .getConnection(), options);
+
+    Schema[] schemas = catalog.getSchemas();
+    for (Schema schema: schemas)
+    {
+      final Table[] tables = schema.getTables();
+      for (final Table table: tables)
+      {
+        System.out.println(table);
+      }
+    }
+
+  }
+
+  private static DataSource makeDataSource()
+    throws PropertiesDataSourceException
+  {
+    final String datasourceName = "schemacrawler";
+
+    final Properties connectionProperties = new Properties();
+    connectionProperties.setProperty(datasourceName + ".driver",
+                                     "org.hsqldb.jdbcDriver");
+    connectionProperties
+      .setProperty(datasourceName + ".url",
+                   "jdbc:hsqldb:hsql://localhost:9001/schemacrawler");
+    connectionProperties.setProperty(datasourceName + ".user", "sa");
+    connectionProperties.setProperty(datasourceName + ".password", "");
+
+    return new PropertiesDataSource(connectionProperties, datasourceName);
+  }
+
+}
