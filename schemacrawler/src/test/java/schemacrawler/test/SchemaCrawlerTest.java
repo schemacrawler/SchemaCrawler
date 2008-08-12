@@ -23,7 +23,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.Locale;
 import java.util.logging.Level;
@@ -171,11 +170,9 @@ public class SchemaCrawlerTest
     assertTrue("No procedures found", procedures.length > 0);
     for (final Procedure procedure: procedures)
     {
-      if (procedure.getDefinition() == null
-          || procedure.getDefinition().trim().equals(""))
-      {
-        fail("Procedure definition not found");
-      }
+      assertNotNull("Procedure definition not found", procedure.getDefinition());
+      assertFalse("Procedure definition not found", procedure.getDefinition()
+        .trim().equals(""));
     }
 
   }
@@ -305,7 +302,6 @@ public class SchemaCrawlerTest
   @Test
   public void viewDefinitions()
   {
-
     final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
     informationSchemaViews
       .setViewsSql("SELECT * FROM INFORMATION_SCHEMA.SYSTEM_VIEWS");
