@@ -32,6 +32,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.Procedure;
@@ -70,81 +71,116 @@ public class SchemaCrawlerTest
   @Test
   public void columns()
   {
-
-    final String[][] columnNames = {
+    final String[] schemaNames = {
+        "PUBLIC", "SCHEMACRAWLER"
+    };
+    final int[] tableCounts = {
+        6, 2
+    };
+    final String[][][] columnNames = {
         {
-            "PUBLIC.CUSTOMER.ID",
-            "PUBLIC.CUSTOMER.FIRSTNAME",
-            "PUBLIC.CUSTOMER.LASTNAME",
-            "PUBLIC.CUSTOMER.STREET",
-            "PUBLIC.CUSTOMER.CITY"
+            {
+                "CUSTOMER.ID",
+                "CUSTOMER.FIRSTNAME",
+                "CUSTOMER.LASTNAME",
+                "CUSTOMER.STREET",
+                "CUSTOMER.CITY"
+            },
+            {
+                "CUSTOMERLIST.ID",
+                "CUSTOMERLIST.FIRSTNAME",
+                "CUSTOMERLIST.LASTNAME",
+            },
+            {
+                "INVOICE.ID", "INVOICE.CUSTOMERID", "INVOICE.TOTAL"
+            },
+            {
+                "ITEM.INVOICEID",
+                "ITEM.ITEM",
+                "ITEM.PRODUCTID",
+                "ITEM.QUANTITY",
+                "ITEM.COST"
+            },
+            {
+                "PRODUCT.ID", "PRODUCT.NAME", "PRODUCT.PRICE"
+            },
+            {
+                "SUPPLIER.SUPPLIER_ID", "SUPPLIER.SUPPLIER_NAME"
+            }
         },
         {
-            "PUBLIC.CUSTOMERLIST.ID",
-            "PUBLIC.CUSTOMERLIST.FIRSTNAME",
-            "PUBLIC.CUSTOMERLIST.LASTNAME",
-        },
-        {
-            "PUBLIC.INVOICE.ID",
-            "PUBLIC.INVOICE.CUSTOMERID",
-            "PUBLIC.INVOICE.TOTAL"
-        },
-        {
-            "PUBLIC.ITEM.INVOICEID",
-            "PUBLIC.ITEM.ITEM",
-            "PUBLIC.ITEM.PRODUCTID",
-            "PUBLIC.ITEM.QUANTITY",
-            "PUBLIC.ITEM.COST"
-        },
-        {
-            "PUBLIC.PRODUCT.ID", "PUBLIC.PRODUCT.NAME", "PUBLIC.PRODUCT.PRICE"
-        },
-        {
-            "PUBLIC.SUPPLIER.SUPPLIER_ID", "PUBLIC.SUPPLIER.SUPPLIER_NAME"
+            {
+                "ITEM.INVOICEID",
+                "ITEM.ITEM",
+                "ITEM.PRODUCTID",
+                "ITEM.QUANTITY",
+                "ITEM.COST"
+            },
+            {
+                "PRODUCT2.ID", "PRODUCT2.NAME", "PRODUCT2.PRICE"
+            },
         }
     };
-
-    final String[][] columnDataTypes = {
+    final String[][][] columnDataTypes = {
         {
-            "INTEGER", "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR"
+            {
+                "INTEGER", "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR"
+            }, {
+                "INTEGER", "VARCHAR", "VARCHAR"
+            }, {
+                "INTEGER", "INTEGER", "FLOAT"
+            }, {
+                "INTEGER", "INTEGER", "INTEGER", "INTEGER", "FLOAT"
+            }, {
+                "INTEGER", "VARCHAR", "FLOAT"
+            }, {
+                "INTEGER", "VARCHAR"
+            }
         }, {
-            "INTEGER", "VARCHAR", "VARCHAR"
-        }, {
-            "INTEGER", "INTEGER", "FLOAT"
-        }, {
-            "INTEGER", "INTEGER", "INTEGER", "INTEGER", "FLOAT"
-        }, {
-            "INTEGER", "VARCHAR", "FLOAT"
-        }, {
-            "INTEGER", "VARCHAR"
+            {
+                "INTEGER", "INTEGER", "INTEGER", "INTEGER", "FLOAT"
+            }, {
+                "INTEGER", "VARCHAR", "FLOAT"
+            },
         }
     };
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
-    final Table[] tables = schema.getTables();
-    assertEquals("Table count does not match", 6, tables.length);
-    for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
+
+    final Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
+    final Schema[] schemas = catalog.getSchemas();
+    assertEquals("Schema count does not match", 2, schemas.length);
+    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
-      final Table table = tables[tableIdx];
-      final Column[] columns = table.getColumns();
-      final String[] columnsNamesForTable = columnNames[tableIdx];
-      for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
+      final Schema schema = schemas[schemaIdx];
+      assertEquals("Schema name does not match", schemaNames[schemaIdx], schema
+        .getName());
+      final Table[] tables = schema.getTables();
+      assertEquals("Table count does not match",
+                   tableCounts[schemaIdx],
+                   tables.length);
+      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
       {
-        final Column column = columns[columnIdx];
-        LOGGER.log(Level.FINE, column.toString());
-        assertEquals("Column full name does not match",
-                     columnsNamesForTable[columnIdx],
-                     column.getFullName());
-        assertEquals("Column type does not match",
-                     columnDataTypes[tableIdx][columnIdx],
-                     column.getType().getDatabaseSpecificTypeName());
-        assertEquals("Column JDBC type does not match",
-                     columnDataTypes[tableIdx][columnIdx],
-                     column.getType().getTypeName());
+        final Table table = tables[tableIdx];
+        final Column[] columns = table.getColumns();
+        final String[] columnsNamesForTable = columnNames[schemaIdx][tableIdx];
+        for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
+        {
+          final Column column = columns[columnIdx];
+          LOGGER.log(Level.FINE, column.toString());
+          assertEquals("Column full name does not match",
+                       schemaNames[schemaIdx] + "."
+                           + columnsNamesForTable[columnIdx],
+                       column.getFullName());
+          assertEquals("Column type does not match",
+                       columnDataTypes[schemaIdx][tableIdx][columnIdx],
+                       column.getType().getDatabaseSpecificTypeName());
+          assertEquals("Column JDBC type does not match",
+                       columnDataTypes[schemaIdx][tableIdx][columnIdx],
+                       column.getType().getTypeName());
+        }
       }
     }
-
   }
 
   @Test
@@ -208,47 +244,76 @@ public class SchemaCrawlerTest
   }
 
   @Test
-  public void tableCount()
+  public void tableCounts()
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.minimum());
+
     final Schema publicSchema = testUtility.getSchema(schemaCrawlerOptions,
                                                       "PUBLIC");
-    final Table[] tables = publicSchema.getTables();
-    final int numTables = tables.length;
     assertNotNull("Could not obtain schema", publicSchema);
-    assertEquals("Table count does not match", 6, numTables);
+    assertEquals("Table count does not match",
+                 6,
+                 publicSchema.getTables().length);
 
-    assertEquals("Table count does not match", 2, testUtility
-      .getSchema(schemaCrawlerOptions, "SCHEMACRAWLER").getTables().length);
+    Schema scSchema = testUtility.getSchema(schemaCrawlerOptions,
+                                            "SCHEMACRAWLER");
+    assertNotNull("Could not obtain schema", scSchema);
+    assertEquals("Table count does not match", 2, scSchema.getTables().length);
   }
 
   @Test
-  public void tableNames()
+  public void tables()
   {
 
-    final String schemaName = "PUBLIC";
-    final String[] tableNames = {
-        "CUSTOMER", "CUSTOMERLIST", "INVOICE", "ITEM", "PRODUCT", "SUPPLIER"
+    final String[] schemaNames = {
+        "PUBLIC", "SCHEMACRAWLER"
     };
-    final String[] tableTypes = {
-        "TABLE", "VIEW", "TABLE", "TABLE", "TABLE", "TABLE"
+    final String[][] tableNames = {
+        {
+            "CUSTOMER",
+            "CUSTOMERLIST",
+            "INVOICE",
+            "ITEM",
+            "PRODUCT",
+            "SUPPLIER"
+        },
+        {
+            "ITEM", "PRODUCT2"
+        }
+    };
+    final String[][] tableTypes = {
+        {
+            "TABLE", "VIEW", "TABLE", "TABLE", "TABLE", "TABLE"
+        }, {
+            "TABLE", "TABLE"
+        }
     };
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.minimum());
-    final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
-    final Table[] tables = schema.getTables();
-    assertEquals("Table count does not match", 6, tables.length);
-    for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
+
+    final Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
+    final Schema[] schemas = catalog.getSchemas();
+    assertEquals("Schema count does not match", 2, schemas.length);
+    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
-      final Table table = tables[tableIdx];
-      assertEquals("Table name does not match", tableNames[tableIdx], table
+      final Schema schema = schemas[schemaIdx];
+      assertEquals("Schema name does not match", schemaNames[schemaIdx], schema
         .getName());
-      assertEquals("Full table name does not match",
-                   schemaName + "." + tableNames[tableIdx],
-                   table.getFullName());
-      assertEquals("Table type does not match", tableTypes[tableIdx], table
-        .getType().toString().toUpperCase(Locale.ENGLISH));
+      final Table[] tables = schema.getTables();
+      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
+      {
+        final Table table = tables[tableIdx];
+        assertEquals("Table name does not match",
+                     tableNames[schemaIdx][tableIdx],
+                     table.getName());
+        assertEquals("Full table name does not match",
+                     schema.getName() + "." + tableNames[schemaIdx][tableIdx],
+                     table.getFullName());
+        assertEquals("Table type does not match",
+                     tableTypes[schemaIdx][tableIdx],
+                     table.getType().toString().toUpperCase(Locale.ENGLISH));
+      }
     }
   }
 
