@@ -184,6 +184,77 @@ public class SchemaCrawlerTest
   }
 
   @Test
+  public void counts()
+  {
+
+    final int[] tableCounts = {
+        6, 2
+    };
+    final int[][] tableColumnCounts = {
+        {
+            5, 3, 3, 5, 3, 2
+        }, {
+            5, 3,
+        }
+    };
+    final int[][] checkConstraints = {
+        {
+            0, 0, 0, 0, 0, 0
+        }, {
+            0, 0
+        }
+    };
+    final int[][] indexCounts = {
+        {
+            0, 0, 2, 4, 0, 2
+        }, {
+            0, 0
+        }
+    };
+    final int[][] fkCounts = {
+        {
+            1, 0, 2, 2, 1, 0
+        }, {
+            0, 0
+        }
+    };
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+
+    final Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
+    final Schema[] schemas = catalog.getSchemas();
+    assertEquals("Schema count does not match", 2, schemas.length);
+    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
+    {
+      final Schema schema = schemas[schemaIdx];
+      final Table[] tables = schema.getTables();
+      assertEquals("Table count does not match",
+                   tableCounts[schemaIdx],
+                   tables.length);
+      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
+      {
+        final Table table = tables[tableIdx];
+        assertEquals(String.format("Table %s columns count does not match",
+                                   table.getFullName()),
+                     tableColumnCounts[schemaIdx][tableIdx],
+                     table.getColumns().length);
+        assertEquals(String
+          .format("Table %s check constraints count does not match", table
+            .getFullName()), checkConstraints[schemaIdx][tableIdx], table
+          .getCheckConstraints().length);
+        assertEquals(String.format("Table %s index count does not match", table
+                       .getFullName()),
+                     indexCounts[schemaIdx][tableIdx],
+                     table.getIndices().length);
+        assertEquals(String.format("Table %s foreign key count does not match",
+                                   table.getFullName()),
+                     fkCounts[schemaIdx][tableIdx],
+                     table.getForeignKeys().length);
+      }
+    }
+  }
+
+  @Test
   public void procedureDefinitions()
   {
 
@@ -241,25 +312,6 @@ public class SchemaCrawlerTest
     final Table table2 = schema1.getTables()[1];
     assertFalse("Tables should not be equal", table1.equals(table2));
 
-  }
-
-  @Test
-  public void tableCounts()
-  {
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.minimum());
-
-    final Schema publicSchema = testUtility.getSchema(schemaCrawlerOptions,
-                                                      "PUBLIC");
-    assertNotNull("Could not obtain schema", publicSchema);
-    assertEquals("Table count does not match",
-                 6,
-                 publicSchema.getTables().length);
-
-    Schema scSchema = testUtility.getSchema(schemaCrawlerOptions,
-                                            "SCHEMACRAWLER");
-    assertNotNull("Could not obtain schema", scSchema);
-    assertEquals("Table count does not match", 2, scSchema.getTables().length);
   }
 
   @Test
