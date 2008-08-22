@@ -143,11 +143,11 @@ final class ProcedureRetriever
       // Need this catch for the JDBC/ ODBC driver
       LOGGER.log(Level.WARNING, "", e);
     }
-    final String catalog = getRetrieverConnection().getCatalogName();
+    final String catalogName = getRetrieverConnection().getCatalogName();
     while (results.next())
     {
-      // final String catalog = results.getString("PROCEDURE_CAT");
-      final String schema = results.getString("PROCEDURE_SCHEM");
+      // final String catalogName = results.getString("PROCEDURE_CAT");
+      final String schemaName = results.getString("PROCEDURE_SCHEM");
       final String procedureName = results.getString("PROCEDURE_NAME");
       LOGGER.log(Level.FINEST, "Retrieving procedure: " + procedureName);
       final short procedureType = results
@@ -156,8 +156,8 @@ final class ProcedureRetriever
 
       if (procedureInclusionRule.include(procedureName))
       {
-        final MutableProcedure procedure = new MutableProcedure(catalog,
-                                                                schema,
+        final MutableProcedure procedure = new MutableProcedure(catalogName,
+                                                                schemaName,
                                                                 procedureName);
         procedure.setType(ProcedureType.valueOf(procedureType));
         procedure.setRemarks(remarks);

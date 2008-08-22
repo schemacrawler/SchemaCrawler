@@ -83,19 +83,20 @@ final class ProcedureExRetriever
       return;
     }
 
-    final String catalog = getRetrieverConnection().getCatalogName();
+    final String catalogName = getRetrieverConnection().getCatalogName();
     try
     {
       while (results.next())
       {
-        // final String catalog = results.getString("ROUTINE_CATALOG");
-        final String schema = results.getString("ROUTINE_SCHEMA");
+        // final String catalogName =
+        // results.getString("ROUTINE_CATALOG");
+        final String schemaName = results.getString("ROUTINE_SCHEMA");
         final String procedureName = results.getString("ROUTINE_NAME");
 
-        final MutableProcedure procedure = procedures.lookup(catalog,
-                                                             schema,
+        final MutableProcedure procedure = procedures.lookup(catalogName,
+                                                             schemaName,
                                                              procedureName);
-        if (!belongsToSchema(procedure, catalog, schema))
+        if (!belongsToSchema(procedure, catalogName, schemaName))
         {
           LOGGER.log(Level.FINEST, "Procedure not found: " + procedureName);
           continue;
