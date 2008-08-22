@@ -182,20 +182,20 @@ final class TableRetriever
   }
 
   private MutableColumn lookupOrCreateColumn(final NamedObjectList<MutableTable> tables,
-                                             final String schema,
+                                             final String schemaName,
                                              final String tableName,
                                              final String columnName)
   {
-    final String catalog = getRetrieverConnection().getCatalogName();
+    final String catalogName = getRetrieverConnection().getCatalogName();
     MutableColumn column = null;
-    MutableTable table = tables.lookup(catalog, schema, tableName);
+    MutableTable table = tables.lookup(catalogName, schemaName, tableName);
     if (table != null)
     {
       column = table.lookupColumn(columnName);
     }
     if (column == null)
     {
-      table = new MutableTable(catalog, schema, tableName);
+      table = new MutableTable(catalogName, schemaName, tableName);
       column = new MutableColumn(columnName, table);
     }
     return column;
@@ -282,22 +282,22 @@ final class TableRetriever
     throws SQLException
   {
 
-    final String schema = table.getSchemaName();
+    final String schemaName = table.getSchemaName();
 
     final Map<String, MutableForeignKey> foreignKeysMap = new HashMap<String, MutableForeignKey>();
 
     MetadataResultSet results;
 
-    final String catalog = getRetrieverConnection().getCatalogName();
+    final String catalogName = getRetrieverConnection().getCatalogName();
     final DatabaseMetaData metaData = getRetrieverConnection().getMetaData();
 
-    results = new MetadataResultSet(metaData.getImportedKeys(catalog,
-                                                             schema,
+    results = new MetadataResultSet(metaData.getImportedKeys(catalogName,
+                                                             schemaName,
                                                              table.getName()));
     createForeignKeys(results, tables, table, foreignKeysMap);
 
-    results = new MetadataResultSet(metaData.getExportedKeys(catalog,
-                                                             schema,
+    results = new MetadataResultSet(metaData.getExportedKeys(catalogName,
+                                                             schemaName,
                                                              table.getName()));
     createForeignKeys(results, tables, table, foreignKeysMap);
 
@@ -419,9 +419,9 @@ final class TableRetriever
     throws SQLException
   {
     final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>(NamedObjectSort.alphabetical);
-    final String catalog = getRetrieverConnection().getCatalogName();
+    final String catalogName = getRetrieverConnection().getCatalogName();
     final ResultSet results = getRetrieverConnection().getMetaData()
-      .getTables(catalog,
+      .getTables(catalogName,
                  getRetrieverConnection().getSchemaPattern(),
                  "%",
                  TableType.toStrings(tableTypes));
@@ -438,7 +438,7 @@ final class TableRetriever
     {
       while (results.next())
       {
-        // final String catalog = results.getString("TABLE_CAT");
+        // final String catalogName = results.getString("TABLE_CAT");
         final String schema = results.getString("TABLE_SCHEM");
 
         final String tableName = results.getString(TABLE_NAME);
@@ -452,11 +452,11 @@ final class TableRetriever
           final MutableTable table;
           if (tableType == TableType.view)
           {
-            table = new MutableView(catalog, schema, tableName);
+            table = new MutableView(catalogName, schema, tableName);
           }
           else
           {
-            table = new MutableTable(catalog, schema, tableName);
+            table = new MutableTable(catalogName, schema, tableName);
           }
           table.setType(tableType);
           table.setRemarks(remarks);

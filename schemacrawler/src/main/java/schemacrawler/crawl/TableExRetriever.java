@@ -60,12 +60,12 @@ final class TableExRetriever
     throws SQLException
   {
 
-    final String catalog = getRetrieverConnection().getCatalogName();
+    final String catalogName = getRetrieverConnection().getCatalogName();
     while (results.next())
     {
 
-      // final String catalog = results.getString("TABLE_CAT");
-      final String schema = results.getString("TABLE_SCHEM");
+      // final String catalogName = results.getString("TABLE_CAT");
+      final String schemaName = results.getString("TABLE_SCHEM");
       final String name;
       if (privilegesForTable)
       {
@@ -76,7 +76,7 @@ final class TableExRetriever
         name = results.getString(COLUMN_NAME);
       }
       final DatabaseObject databaseObject = (DatabaseObject) namedObjectList
-        .lookup(catalog, schema, name);
+        .lookup(catalogName, schemaName, name);
       if (databaseObject != null)
       {
         final String privilegeName = results.getString("PRIVILEGE");
@@ -148,24 +148,27 @@ final class TableExRetriever
       return;
     }
 
-    final String catalog = results.getString("PROCEDURE_CAT");
+    final String catalogName = getRetrieverConnection().getCatalogName();
     try
     {
       while (results.next())
       {
-        // final String catalog =
+        // final String catalogName =
         // results.getString("CONSTRAINT_CATALOG");
-        final String schema = results.getString("CONSTRAINT_SCHEMA");
+        final String schemaName = results.getString("CONSTRAINT_SCHEMA");
         final String constraintName = results.getString("CONSTRAINT_NAME");
         LOGGER.log(Level.FINEST, "Retrieving constraint information for "
                                  + constraintName);
-        // final String tableCatalog =
+        // final String tableCatalogName =
         // results.getString("TABLE_CATALOG");
-        // final String tableSchema = results.getString("TABLE_SCHEMA");
+        // final String tableSchemaName =
+        // results.getString("TABLE_SCHEMA");
         final String tableName = results.getString("TABLE_NAME");
 
-        final MutableTable table = tables.lookup(catalog, schema, tableName);
-        if (!belongsToSchema(table, catalog, schema))
+        final MutableTable table = tables.lookup(catalogName,
+                                                 schemaName,
+                                                 tableName);
+        if (!belongsToSchema(table, catalogName, schemaName))
         {
           LOGGER.log(Level.FINEST, "Table not found: " + tableName);
           continue;
@@ -213,9 +216,10 @@ final class TableExRetriever
     {
       while (results.next())
       {
-        // final String catalog =
+        // final String catalogName =
         // results.getString("CONSTRAINT_CATALOG");
-        // final String schema = results.getString("CONSTRAINT_SCHEMA");
+        // final String schemaName =
+        // results.getString("CONSTRAINT_SCHEMA");
         final String constraintName = results.getString("CONSTRAINT_NAME");
         LOGGER.log(Level.FINEST, "Retrieving constraint definition for "
                                  + constraintName);
@@ -263,18 +267,18 @@ final class TableExRetriever
     final MetadataResultSet results;
 
     final boolean privilegesForTable = parent == null;
-    final String catalog = getRetrieverConnection().getCatalogName();
+    final String catalogName = getRetrieverConnection().getCatalogName();
     final String schemaPattern = getRetrieverConnection().getSchemaPattern();
     final String privilegePattern = "%";
     if (privilegesForTable)
     {
       results = new MetadataResultSet(getRetrieverConnection().getMetaData()
-        .getTablePrivileges(catalog, schemaPattern, privilegePattern));
+        .getTablePrivileges(catalogName, schemaPattern, privilegePattern));
     }
     else
     {
       results = new MetadataResultSet(getRetrieverConnection().getMetaData()
-        .getColumnPrivileges(catalog,
+        .getColumnPrivileges(catalogName,
                              schemaPattern,
                              parent.getName(),
                              privilegePattern));
@@ -339,11 +343,13 @@ final class TableExRetriever
       return;
     }
 
+    final String catalogName = getRetrieverConnection().getCatalogName();
     try
     {
       while (results.next())
       {
-        final String catalog = results.getString("TRIGGER_CATALOG");
+        // final String catalogName =
+        // results.getString("TRIGGER_CATALOG");
         final String schema = results.getString("TRIGGER_SCHEMA");
         final String triggerName = results.getString("TRIGGER_NAME");
         LOGGER.log(Level.FINEST, "Retrieving trigger information for "
@@ -366,8 +372,8 @@ final class TableExRetriever
         // .getString("EVENT_OBJECT_SCHEMA");
         final String tableName = results.getString("EVENT_OBJECT_TABLE");
 
-        final MutableTable table = tables.lookup(catalog, schema, tableName);
-        if (!belongsToSchema(table, catalog, schema))
+        final MutableTable table = tables.lookup(catalogName, schema, tableName);
+        if (!belongsToSchema(table, catalogName, schema))
         {
           LOGGER.log(Level.FINEST, "Skipping trigger " + triggerName
                                    + " for table " + tableName);
@@ -451,12 +457,11 @@ final class TableExRetriever
       return;
     }
 
-    final String catalog = results.getString("PROCEDURE_CAT");
     try
     {
       while (results.next())
       {
-        // final String catalog = results.getString("TABLE_CATALOG");
+        final String catalog = results.getString("TABLE_CATALOG");
         final String schema = results.getString("TABLE_SCHEMA");
         final String viewName = results.getString("TABLE_NAME");
 
