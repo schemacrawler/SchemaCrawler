@@ -292,6 +292,7 @@ public final class CommandLineParser
       super(shortForm, longForm, defaultValue);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected N parseValue(final String arg)
     {
