@@ -20,8 +20,6 @@ package schemacrawler.crawl;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.logging.Logger;
-
 import org.junit.Test;
 
 import schemacrawler.schema.Table;
@@ -29,9 +27,6 @@ import schemacrawler.schema.TableType;
 
 public class NamedObjectTest
 {
-
-  private static final Logger LOGGER = Logger.getLogger(NamedObjectTest.class
-    .getName());
 
   @Test
   public void tableNames()
