@@ -85,24 +85,6 @@ public final class SchemaHTMLFormatter
   }
 
   @Override
-  String getArrow()
-  {
-    return " &rarr; ";
-  }
-
-  @Override
-  void handleColumnDataTypeEnd()
-  {
-    out.println(HtmlFormattingHelper.createTableEnd());
-  }
-
-  @Override
-  void handleColumnDataTypeStart()
-  {
-    out.println(HtmlFormattingHelper.createTableStart());
-  }
-
-  @Override
   void handleDatabaseInfo(final DatabaseInfo databaseInfo)
   {
     out.println("<pre id=\'databaseInfo\'>");
@@ -111,92 +93,11 @@ public final class SchemaHTMLFormatter
   }
 
   @Override
-  void handleDatabasePropertiesEnd()
-  {
-    out.println(HtmlFormattingHelper.createTableEnd());
-    out.println();
-  }
-
-  @Override
-  void handleDatabasePropertiesStart()
-  {
-    out.println(HtmlFormattingHelper.createTableStart());
-  }
-
-  @Override
-  void handleDriverPropertiesEnd()
-  {
-  }
-
-  @Override
-  void handleDriverPropertiesStart()
-  {
-  }
-
-  @Override
   void handleJdbcDriverInfo(final JdbcDriverInfo driverInfo)
   {
     out.println("<pre id=\'driverInfo\'>");
     FormatUtils.printJdbcDriverInfo(driverInfo, out);
     out.println("</pre>");
-  }
-
-  @Override
-  void handleJdbcDriverPropertyEnd()
-  {
-    out.println(HtmlFormattingHelper.createTableEnd());
-  }
-
-  @Override
-  void handleJdbcDriverPropertyStart()
-  {
-    out.println(HtmlFormattingHelper.createTableStart());
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see BaseSchemaTextFormatter#handleProcedureEnd()
-   */
-  @Override
-  void handleProcedureEnd()
-  {
-    out.println(HtmlFormattingHelper.createTableEnd());
-    out.println();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see BaseSchemaTextFormatter#handleProcedureStart()
-   */
-  @Override
-  void handleProcedureStart()
-  {
-    out.println(HtmlFormattingHelper.createTableStart());
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see BaseSchemaTextFormatter#handleTableEnd()
-   */
-  @Override
-  void handleTableEnd()
-  {
-    out.println(HtmlFormattingHelper.createTableEnd());
-    out.println();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see BaseSchemaTextFormatter#handleTableStart()
-   */
-  @Override
-  void handleTableStart()
-  {
-    out.println(HtmlFormattingHelper.createTableStart());
   }
 
 }

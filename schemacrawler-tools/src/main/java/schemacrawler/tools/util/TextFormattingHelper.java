@@ -30,6 +30,11 @@ public interface TextFormattingHelper
 {
 
   /**
+   * Creates an arrow symbol.
+   */
+  String createArrow();
+
+  /**
    * Creates a definition row with a pre-formatted definition.
    * 
    * @param definition
@@ -86,5 +91,19 @@ public interface TextFormattingHelper
    * @return Row as a string
    */
   String createSeparatorRow();
+
+  /**
+   * Table end.
+   * 
+   * @return Table end
+   */
+  String createTableEnd();
+
+  /**
+   * Table start.
+   * 
+   * @return Table start
+   */
+  String createTableStart();
 
 }

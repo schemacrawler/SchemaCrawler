@@ -45,6 +45,11 @@ public class PlainTextFormattingHelper
     this.outputFormat = outputFormat;
   }
 
+  public String createArrow()
+  {
+    return " --> ";
+  }
+
   /**
    * {@inheritDoc}
    * 
@@ -159,6 +164,26 @@ public class PlainTextFormattingHelper
   public String createSeparatorRow()
   {
     return FormatUtils.repeat("-", FormatUtils.MAX_LINE_LENGTH);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createTableEnd()
+   */
+  public String createTableEnd()
+  {
+    return "\n";
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createTableStart()
+   */
+  public String createTableStart()
+  {
+    return "";
   }
 
   private String format(final String text,
