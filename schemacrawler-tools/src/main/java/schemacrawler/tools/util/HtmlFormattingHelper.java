@@ -30,24 +30,9 @@ public final class HtmlFormattingHelper
   implements TextFormattingHelper
 {
 
-  /**
-   * Table end HTML.
-   * 
-   * @return Table end HTML
-   */
-  public static String createTableEnd()
+  public String createArrow()
   {
-    return "</table>\n" + "<p></p>\n";
-  }
-
-  /**
-   * Table start HTML.
-   * 
-   * @return Table start HTML
-   */
-  public static String createTableStart()
-  {
-    return "<table>\n";
+    return " &rarr; ";
   }
 
   /**
@@ -128,6 +113,26 @@ public final class HtmlFormattingHelper
     final HtmlTableRow row = new HtmlTableRow();
     row.addCell(new HtmlTableCell(3, "", "<hr/>"));
     return row.toString();
+  }
+
+  /**
+   * Table end HTML.
+   * 
+   * @return Table end HTML
+   */
+  public String createTableEnd()
+  {
+    return "</table>\n" + "<p></p>\n";
+  }
+
+  /**
+   * Table start HTML.
+   * 
+   * @return Table start HTML
+   */
+  public String createTableStart()
+  {
+    return "<table>\n";
   }
 
 }

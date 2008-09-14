@@ -152,7 +152,7 @@ public abstract class BaseSchemaTextFormatter
       .getProperties().entrySet();
     if (propertySet.size() > 0)
     {
-      handleDatabasePropertiesStart();
+      out.print(formattingHelper.createTableStart());
       for (final Map.Entry<String, Object> property: propertySet)
       {
         final String key = property.getKey();
@@ -163,7 +163,8 @@ public abstract class BaseSchemaTextFormatter
         }
         out.println(formattingHelper.createNameValueRow(key, value.toString()));
       }
-      handleDatabasePropertiesEnd();
+      out.print(formattingHelper.createTableEnd());
+      out.println();
     }
 
   }
@@ -171,9 +172,9 @@ public abstract class BaseSchemaTextFormatter
   public void handle(ColumnDataType columnDataType)
     throws SchemaCrawlerException
   {
-    handleColumnDataTypeStart();
+    out.print(formattingHelper.createTableStart());
     printColumnDataType(columnDataType);
-    handleColumnDataTypeEnd();
+    out.print(formattingHelper.createTableEnd());
   }
 
   /**
@@ -200,14 +201,15 @@ public abstract class BaseSchemaTextFormatter
       .getDriverProperties();
     if (jdbcDriverProperties.length > 0)
     {
-      handleDriverPropertiesStart();
+      out.println();
       for (final JdbcDriverProperty driverProperty: jdbcDriverProperties)
       {
-        handleJdbcDriverPropertyStart();
+        out.print(formattingHelper.createTableStart());
         printJdbcDriverProperty(driverProperty);
-        handleJdbcDriverPropertyEnd();
+        out.print(formattingHelper.createTableEnd());
       }
-      handleDriverPropertiesEnd();
+      out.println();
+      out.println();
     }
 
   }
@@ -221,7 +223,7 @@ public abstract class BaseSchemaTextFormatter
   public final void handle(final Procedure procedure)
   {
 
-    handleProcedureStart();
+    out.print(formattingHelper.createTableStart());
 
     final String procedureTypeDetail = "procedure, " + procedure.getType();
     out
@@ -264,7 +266,8 @@ public abstract class BaseSchemaTextFormatter
       {
         printDefinition(procedure.getDefinition());
       }
-      handleProcedureEnd();
+      out.print(formattingHelper.createTableEnd());
+      out.println();
     }
 
     out.flush();
@@ -279,7 +282,7 @@ public abstract class BaseSchemaTextFormatter
    */
   public final void handle(final Table table)
   {
-    handleTableStart();
+    out.print(formattingHelper.createTableStart());
     final String typeBracketed = "["
                                  + table.getType().toString()
                                    .toLowerCase(Locale.ENGLISH) + "]";
@@ -320,15 +323,14 @@ public abstract class BaseSchemaTextFormatter
       }
     }
 
-    handleTableEnd();
+    out.print(formattingHelper.createTableEnd());
+    out.println();
 
     tableCount = tableCount + 1;
 
     out.flush();
 
   }
-
-  abstract String getArrow();
 
   final boolean getNoFooter()
   {
@@ -345,45 +347,9 @@ public abstract class BaseSchemaTextFormatter
     return options.getSchemaTextDetailType();
   }
 
-  abstract void handleColumnDataTypeEnd();
-
-  abstract void handleColumnDataTypeStart();
-
   abstract void handleDatabaseInfo(final DatabaseInfo databaseInfo);
 
-  abstract void handleDatabasePropertiesEnd();
-
-  abstract void handleDatabasePropertiesStart();
-
-  abstract void handleDriverPropertiesEnd();
-
-  abstract void handleDriverPropertiesStart();
-
   abstract void handleJdbcDriverInfo(JdbcDriverInfo driverInfo);
-
-  abstract void handleJdbcDriverPropertyEnd();
-
-  abstract void handleJdbcDriverPropertyStart();
-
-  /**
-   * Handles the end of output for a procedure.
-   */
-  abstract void handleProcedureEnd();
-
-  /**
-   * Handles the start of output for a procedure.
-   */
-  abstract void handleProcedureStart();
-
-  /**
-   * Handles the end of output for a table.
-   */
-  abstract void handleTableEnd();
-
-  /**
-   * Handles the start of output for a table.
-   */
-  abstract void handleTableStart();
 
   private String negate(final boolean positive, final String text)
   {
@@ -483,7 +449,9 @@ public abstract class BaseSchemaTextFormatter
         keySequenceString = FormatUtils.padLeft(String.valueOf(keySequence), 2);
       }
       out.println(formattingHelper.createDetailRow(keySequenceString,
-                                                   pkColumnName + getArrow()
+                                                   pkColumnName
+                                                       + formattingHelper
+                                                         .createArrow()
                                                        + fkColumnName,
                                                    ""));
     }
@@ -660,7 +628,8 @@ public abstract class BaseSchemaTextFormatter
         {
           privilegeType = "grantable " + privilegeType;
         }
-        final String grantedFrom = privilege.getGrantor() + getArrow()
+        final String grantedFrom = privilege.getGrantor()
+                                   + formattingHelper.createArrow()
                                    + privilege.getGrantee();
         out.println(formattingHelper.createEmptyRow());
 

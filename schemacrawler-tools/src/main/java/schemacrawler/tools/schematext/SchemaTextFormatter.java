@@ -65,24 +65,8 @@ public final class SchemaTextFormatter
       out.println();
       out.println(getTableCount() + " tables.");
     }
+    out.flush();
     super.end();
-  }
-
-  @Override
-  String getArrow()
-  {
-    return " --> ";
-  }
-
-  @Override
-  void handleColumnDataTypeEnd()
-  {
-    out.println();
-  }
-
-  @Override
-  void handleColumnDataTypeStart()
-  {
   }
 
   @Override
@@ -92,92 +76,9 @@ public final class SchemaTextFormatter
   }
 
   @Override
-  void handleDatabasePropertiesEnd()
-  {
-    out.println();
-    out.println();
-  }
-
-  @Override
-  void handleDatabasePropertiesStart()
-  {
-  }
-
-  @Override
-  void handleDriverPropertiesEnd()
-  {
-    out.println();
-    out.println();
-  }
-
-  @Override
-  void handleDriverPropertiesStart()
-  {
-    out.println();
-  }
-
-  @Override
   void handleJdbcDriverInfo(final JdbcDriverInfo driverInfo)
   {
     FormatUtils.printJdbcDriverInfo(driverInfo, out);
-  }
-
-  @Override
-  void handleJdbcDriverPropertyEnd()
-  {
-    out.println();
-  }
-
-  @Override
-  void handleJdbcDriverPropertyStart()
-  {
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see BaseSchemaTextFormatter#handleProcedureEnd()
-   */
-  @Override
-  void handleProcedureEnd()
-  {
-    out.println();
-    out.println();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see BaseSchemaTextFormatter#handleProcedureStart()
-   */
-  @Override
-  void handleProcedureStart()
-  {
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see BaseSchemaTextFormatter#handleTableEnd()
-   */
-  @Override
-  void handleTableEnd()
-  {
-    if (getSchemaTextDetailType() != SchemaTextDetailType.brief_schema)
-    {
-      out.println();
-      out.println();
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see BaseSchemaTextFormatter#handleTableStart()
-   */
-  @Override
-  void handleTableStart()
-  {
   }
 
 }
