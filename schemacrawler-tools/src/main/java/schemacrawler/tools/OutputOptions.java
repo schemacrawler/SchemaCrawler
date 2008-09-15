@@ -105,7 +105,7 @@ public final class OutputOptions
         }
         catch (final IOException e)
         {
-          LOGGER.log(Level.FINER, "Exception closing output writer closed", e);
+          LOGGER.log(Level.FINER, "Exception closing output writer", e);
         }
       }
     }
@@ -231,11 +231,13 @@ public final class OutputOptions
     if (outputFile == null)
     {
       writer = new PrintWriter(System.out, /* autoFlush = */true);
+      LOGGER.log(Level.FINER, "Output writer to console opened");
     }
     else
     {
       final FileWriter fileWriter = new FileWriter(outputFile, appendOutput);
       writer = new PrintWriter(fileWriter, /* autoFlush = */true);
+      LOGGER.log(Level.FINER, "Output writer to console opened");
     }
     return writer;
   }

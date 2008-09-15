@@ -21,7 +21,6 @@
 package schemacrawler.tools.operation;
 
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -127,22 +126,7 @@ public abstract class BaseOperator
     }
     this.connection = connection;
     this.query = query;
-    try
-    {
-      if (operation == Operation.count)
-      {
-        out = options.getOutputOptions().openOutputWriter();
-      }
-      else
-      {
-        out = dataHandler.getPrintWriter();
-      }
-    }
-    catch (final IOException e)
-    {
-      throw new SchemaCrawlerException("Could not obtain output writer", e);
-    }
-
+    this.out = dataHandler.getPrintWriter();
   }
 
   /**

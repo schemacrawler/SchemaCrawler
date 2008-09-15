@@ -143,7 +143,7 @@ class MutableTable
           buffer.append(", ");
         }
         final Column column = columnsArray[i];
-        buffer.append(column.getFullName());
+        buffer.append(column.getName());
       }
       columnsList = buffer.toString();
     }
