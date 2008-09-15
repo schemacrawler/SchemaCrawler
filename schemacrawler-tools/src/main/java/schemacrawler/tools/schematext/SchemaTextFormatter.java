@@ -680,7 +680,6 @@ public final class SchemaTextFormatter
 
   private void printTriggers(final Trigger[] triggers)
   {
-
     for (final Trigger trigger: triggers)
     {
       if (trigger != null)
