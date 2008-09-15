@@ -147,10 +147,19 @@ final class MetadataResultSet
       try
       {
         stringValue = results.getString(columnName);
-        value = !isBlank(stringValue)
-                && (stringValue.equalsIgnoreCase("YES")
-                    || !stringValue.equalsIgnoreCase("0") || Boolean
-                  .valueOf(stringValue).booleanValue());
+        if (!isBlank(stringValue))
+        {
+          try
+          {
+            int booleanInt = Integer.parseInt(stringValue);
+            value = booleanInt != 0;
+          }
+          catch (final NumberFormatException e)
+          {
+            value = stringValue.equalsIgnoreCase("YES")
+                    || Boolean.valueOf(stringValue).booleanValue();
+          }
+        }
       }
       catch (final SQLException e)
       {
