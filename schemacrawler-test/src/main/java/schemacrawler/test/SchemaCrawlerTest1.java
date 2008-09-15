@@ -6,6 +6,7 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -30,16 +31,24 @@ public class SchemaCrawlerTest1
 
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions(properties);
     options.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+    
     Catalog catalog = SchemaCrawlerUtility.getCatalog(dataSource
       .getConnection(), options);
 
     Schema[] schemas = catalog.getSchemas();
     for (Schema schema: schemas)
     {
-      final Table[] tables = schema.getTables();
-      for (final Table table: tables)
+      Table[] tables = schema.getTables();
+      for (int i = 0; i < tables.length; i++)
       {
+        Table table = tables[i];
         System.out.println(table);
+        Column[] columns = table.getColumns();
+        for (int j = 0; j < columns.length; j++)
+        {
+          Column column = columns[j];
+          System.out.println("-- " + column);
+        }
       }
     }
 
