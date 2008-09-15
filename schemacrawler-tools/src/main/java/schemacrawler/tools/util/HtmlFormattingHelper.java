@@ -68,6 +68,26 @@ public final class HtmlFormattingHelper
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createDocumentEnd()
+   */
+  public String createDocumentEnd()
+  {
+    return FormatUtils.HTML_FOOTER;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createDocumentStart()
+   */
+  public String createDocumentStart()
+  {
+    return FormatUtils.HTML_HEADER;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see schemacrawler.tools.util.TextFormattingHelper#createEmptyRow()
    */
   public String createEmptyRow()
@@ -106,6 +126,37 @@ public final class HtmlFormattingHelper
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createObjectEnd()
+   */
+  public String createObjectEnd()
+  {
+    return "</table>\n" + "<p></p>\n";
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createObjectStart()
+   */
+  public String createObjectStart()
+  {
+    return "<table>\n";
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createPreformattedText(java.lang.String,
+   *      java.lang.String)
+   */
+  public String createPreformattedText(final String id, final String text)
+  {
+    return String.format("<pre id=\'%s\'>%s</pre>", id, text);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see schemacrawler.tools.util.TextFormattingHelper#createSeparatorRow()
    */
   public String createSeparatorRow()
@@ -113,26 +164,6 @@ public final class HtmlFormattingHelper
     final HtmlTableRow row = new HtmlTableRow();
     row.addCell(new HtmlTableCell(3, "", "<hr/>"));
     return row.toString();
-  }
-
-  /**
-   * Table end HTML.
-   * 
-   * @return Table end HTML
-   */
-  public String createTableEnd()
-  {
-    return "</table>\n" + "<p></p>\n";
-  }
-
-  /**
-   * Table start HTML.
-   * 
-   * @return Table start HTML
-   */
-  public String createTableStart()
-  {
-    return "<table>\n";
   }
 
 }

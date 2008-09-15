@@ -35,6 +35,11 @@ public interface TextFormattingHelper
   String createArrow();
 
   /**
+   * Creates a pre-formatted text section.
+   */
+  String createPreformattedText(String id, String text);
+
+  /**
    * Creates a definition row with a pre-formatted definition.
    * 
    * @param definition
@@ -55,6 +60,20 @@ public interface TextFormattingHelper
    * @return Row as a string
    */
   String createDetailRow(String ordinal, final String subName, final String type);
+
+  /**
+   * Document end.
+   * 
+   * @return Document end
+   */
+  String createDocumentEnd();
+
+  /**
+   * Document start.
+   * 
+   * @return Document start
+   */
+  String createDocumentStart();
 
   /**
    * Create an empty row.
@@ -86,24 +105,24 @@ public interface TextFormattingHelper
   String createNameValueRow(final String name, final String value);
 
   /**
+   * Database object end.
+   * 
+   * @return Database object end
+   */
+  String createObjectEnd();
+
+  /**
+   * Database object start.
+   * 
+   * @return Database object start
+   */
+  String createObjectStart();
+
+  /**
    * Creates a separator row.
    * 
    * @return Row as a string
    */
   String createSeparatorRow();
-
-  /**
-   * Table end.
-   * 
-   * @return Table end
-   */
-  String createTableEnd();
-
-  /**
-   * Table start.
-   * 
-   * @return Table start
-   */
-  String createTableStart();
 
 }

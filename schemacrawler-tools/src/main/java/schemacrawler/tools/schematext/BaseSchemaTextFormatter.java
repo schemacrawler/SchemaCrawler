@@ -23,6 +23,7 @@ package schemacrawler.tools.schematext;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map;
@@ -104,7 +105,10 @@ public abstract class BaseSchemaTextFormatter
   public void begin()
     throws SchemaCrawlerException
   {
-    // do nothing
+    if (!getNoHeader())
+    {
+      out.println(formattingHelper.createDocumentStart());
+    }
   }
 
   /**
@@ -115,7 +119,31 @@ public abstract class BaseSchemaTextFormatter
   public void end()
     throws SchemaCrawlerException
   {
+    if (!getNoFooter())
+    {
+      out.println(formattingHelper.createPreformattedText("tableCount",
+                                                          getTableCount()
+                                                              + " tables."));
+    }
+    out.println(formattingHelper.createDocumentEnd());
+    out.flush();
+    //
     options.getOutputOptions().closeOutputWriter(out);
+  }
+
+  final boolean getNoFooter()
+  {
+    return options.getOutputOptions().isNoFooter();
+  }
+
+  final boolean getNoHeader()
+  {
+    return options.getOutputOptions().isNoHeader();
+  }
+
+  final SchemaTextDetailType getSchemaTextDetailType()
+  {
+    return options.getSchemaTextDetailType();
   }
 
   /**
@@ -128,6 +156,14 @@ public abstract class BaseSchemaTextFormatter
     return tableCount;
   }
 
+  public void handle(final ColumnDataType columnDataType)
+    throws SchemaCrawlerException
+  {
+    out.print(formattingHelper.createObjectStart());
+    printColumnDataType(columnDataType);
+    out.print(formattingHelper.createObjectEnd());
+  }
+
   /**
    * {@inheritDoc}
    * 
@@ -138,7 +174,11 @@ public abstract class BaseSchemaTextFormatter
 
     if (!options.getOutputOptions().isNoInfo())
     {
-      handleDatabaseInfo(databaseInfo);
+      final StringWriter stringWriter = new StringWriter();
+      FormatUtils
+        .printDatabaseInfo(databaseInfo, new PrintWriter(stringWriter));
+      formattingHelper.createPreformattedText("databaseInfo", stringWriter
+        .toString());
     }
 
     final SchemaTextDetailType schemaTextDetailType = options
@@ -152,7 +192,7 @@ public abstract class BaseSchemaTextFormatter
       .getProperties().entrySet();
     if (propertySet.size() > 0)
     {
-      out.print(formattingHelper.createTableStart());
+      out.print(formattingHelper.createObjectStart());
       for (final Map.Entry<String, Object> property: propertySet)
       {
         final String key = property.getKey();
@@ -163,18 +203,10 @@ public abstract class BaseSchemaTextFormatter
         }
         out.println(formattingHelper.createNameValueRow(key, value.toString()));
       }
-      out.print(formattingHelper.createTableEnd());
+      out.print(formattingHelper.createObjectEnd());
       out.println();
     }
 
-  }
-
-  public void handle(ColumnDataType columnDataType)
-    throws SchemaCrawlerException
-  {
-    out.print(formattingHelper.createTableStart());
-    printColumnDataType(columnDataType);
-    out.print(formattingHelper.createTableEnd());
   }
 
   /**
@@ -187,7 +219,11 @@ public abstract class BaseSchemaTextFormatter
 
     if (!options.getOutputOptions().isNoInfo())
     {
-      handleJdbcDriverInfo(driverInfo);
+      final StringWriter stringWriter = new StringWriter();
+      FormatUtils
+        .printJdbcDriverInfo(driverInfo, new PrintWriter(stringWriter));
+      formattingHelper.createPreformattedText("driverInfo", stringWriter
+        .toString());
     }
 
     final SchemaTextDetailType schemaTextDetailType = options
@@ -204,9 +240,9 @@ public abstract class BaseSchemaTextFormatter
       out.println();
       for (final JdbcDriverProperty driverProperty: jdbcDriverProperties)
       {
-        out.print(formattingHelper.createTableStart());
+        out.print(formattingHelper.createObjectStart());
         printJdbcDriverProperty(driverProperty);
-        out.print(formattingHelper.createTableEnd());
+        out.print(formattingHelper.createObjectEnd());
       }
       out.println();
       out.println();
@@ -223,7 +259,7 @@ public abstract class BaseSchemaTextFormatter
   public final void handle(final Procedure procedure)
   {
 
-    out.print(formattingHelper.createTableStart());
+    out.print(formattingHelper.createObjectStart());
 
     final String procedureTypeDetail = "procedure, " + procedure.getType();
     out
@@ -266,7 +302,7 @@ public abstract class BaseSchemaTextFormatter
       {
         printDefinition(procedure.getDefinition());
       }
-      out.print(formattingHelper.createTableEnd());
+      out.print(formattingHelper.createObjectEnd());
       out.println();
     }
 
@@ -282,7 +318,7 @@ public abstract class BaseSchemaTextFormatter
    */
   public final void handle(final Table table)
   {
-    out.print(formattingHelper.createTableStart());
+    out.print(formattingHelper.createObjectStart());
     final String typeBracketed = "["
                                  + table.getType().toString()
                                    .toLowerCase(Locale.ENGLISH) + "]";
@@ -323,7 +359,7 @@ public abstract class BaseSchemaTextFormatter
       }
     }
 
-    out.print(formattingHelper.createTableEnd());
+    out.print(formattingHelper.createObjectEnd());
     out.println();
 
     tableCount = tableCount + 1;
@@ -331,25 +367,6 @@ public abstract class BaseSchemaTextFormatter
     out.flush();
 
   }
-
-  final boolean getNoFooter()
-  {
-    return options.getOutputOptions().isNoFooter();
-  }
-
-  final boolean getNoHeader()
-  {
-    return options.getOutputOptions().isNoHeader();
-  }
-
-  final SchemaTextDetailType getSchemaTextDetailType()
-  {
-    return options.getSchemaTextDetailType();
-  }
-
-  abstract void handleDatabaseInfo(final DatabaseInfo databaseInfo);
-
-  abstract void handleJdbcDriverInfo(JdbcDriverInfo driverInfo);
 
   private String negate(final boolean positive, final String text)
   {
