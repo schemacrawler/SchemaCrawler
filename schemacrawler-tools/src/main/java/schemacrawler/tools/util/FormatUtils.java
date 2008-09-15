@@ -115,9 +115,9 @@ public final class FormatUtils
    *        needs to be escaped and quoted
    * @return the value, escaped and quoted.
    */
-  public static String escapeAndQuoteForExcelCsv(final String value)
+  public static String escapeAndQuoteForExcelCsv(final String text)
   {
-
+    final String value = String.valueOf(text);
     final int length = value.length();
     if (length == 0)
     {
