@@ -1,9 +1,12 @@
+
+
 ------------------------------------------------------------------------
 -- driver: HSQL Database Engine Driver 1.8.0
 -- driver class: org.hsqldb.jdbcDriver
 -- url: jdbc:hsqldb:hsql://localhost:9001/schemacrawler
 -- jdbc compliant: false
 ------------------------------------------------------------------------
+
 
 
 
@@ -39,10 +42,12 @@ user                                                   [driver property]
 
 
 
+
 ------------------------------------------------------------------------
 -- database: HSQL Database Engine 1.8.0
 
 ------------------------------------------------------------------------
+
 
 
 AllProceduresAreCallable              true
@@ -2245,6 +2250,7 @@ PUBLIC.YEAR                                  [procedure, returns result]
 
                                                             [definition]
   org.hsqldb.Library.year(java.sql.Date)
+
 
 
 CUSTOMER                                                         50 rows

@@ -51,7 +51,11 @@ import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.OutputFormat;
+import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.util.FormatUtils;
+import schemacrawler.tools.util.HtmlFormattingHelper;
+import schemacrawler.tools.util.PlainTextFormattingHelper;
 import schemacrawler.tools.util.TextFormattingHelper;
 import sf.util.Utilities;
 
@@ -60,7 +64,7 @@ import sf.util.Utilities;
  * 
  * @author Sualeh Fatehi
  */
-public abstract class BaseSchemaTextFormatter
+public final class SchemaTextFormatter
   implements CrawlHandler
 {
 
@@ -74,8 +78,7 @@ public abstract class BaseSchemaTextFormatter
    * @param writer
    *        Writer to output to.
    */
-  BaseSchemaTextFormatter(final SchemaTextOptions options,
-                          final TextFormattingHelper formattingHelper)
+  public SchemaTextFormatter(final SchemaTextOptions options)
     throws SchemaCrawlerException
   {
     if (options == null)
@@ -84,16 +87,25 @@ public abstract class BaseSchemaTextFormatter
     }
     this.options = options;
 
+    final OutputOptions outputOptions = options.getOutputOptions();
+    final OutputFormat outputFormat = outputOptions.getOutputFormat();
+    if (outputFormat == OutputFormat.html)
+    {
+      formattingHelper = new HtmlFormattingHelper();
+    }
+    else
+    {
+      formattingHelper = new PlainTextFormattingHelper(outputFormat);
+    }
+
     try
     {
-      out = options.getOutputOptions().openOutputWriter();
+      out = outputOptions.openOutputWriter();
     }
     catch (final IOException e)
     {
       throw new SchemaCrawlerException("Could not obtain output writer", e);
     }
-
-    this.formattingHelper = formattingHelper;
 
   }
 
@@ -175,10 +187,13 @@ public abstract class BaseSchemaTextFormatter
     if (!options.getOutputOptions().isNoInfo())
     {
       final StringWriter stringWriter = new StringWriter();
-      FormatUtils
-        .printDatabaseInfo(databaseInfo, new PrintWriter(stringWriter));
-      formattingHelper.createPreformattedText("databaseInfo", stringWriter
-        .toString());
+      final PrintWriter writer = new PrintWriter(stringWriter);
+      FormatUtils.printDatabaseInfo(databaseInfo, writer);
+      writer.flush();
+      writer.close();
+      out.println(formattingHelper.createPreformattedText("databaseInfo",
+                                                          stringWriter
+                                                            .toString()));
     }
 
     final SchemaTextDetailType schemaTextDetailType = options
@@ -220,10 +235,13 @@ public abstract class BaseSchemaTextFormatter
     if (!options.getOutputOptions().isNoInfo())
     {
       final StringWriter stringWriter = new StringWriter();
-      FormatUtils
-        .printJdbcDriverInfo(driverInfo, new PrintWriter(stringWriter));
-      formattingHelper.createPreformattedText("driverInfo", stringWriter
-        .toString());
+      final PrintWriter writer = new PrintWriter(stringWriter);
+      FormatUtils.printJdbcDriverInfo(driverInfo, writer);
+      writer.flush();
+      writer.close();
+      out.println(formattingHelper.createPreformattedText("driverInfo",
+                                                          stringWriter
+                                                            .toString()));
     }
 
     final SchemaTextDetailType schemaTextDetailType = options

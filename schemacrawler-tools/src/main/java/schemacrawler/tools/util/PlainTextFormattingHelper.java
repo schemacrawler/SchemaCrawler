@@ -21,6 +21,7 @@
 package schemacrawler.tools.util;
 
 
+import schemacrawler.tools.OutputFormat;
 import sf.util.Utilities;
 
 /**
@@ -32,7 +33,7 @@ public class PlainTextFormattingHelper
   implements TextFormattingHelper
 {
 
-  private final String outputFormat;
+  private final OutputFormat outputFormat;
 
   /**
    * Constructor.
@@ -40,7 +41,7 @@ public class PlainTextFormattingHelper
    * @param outputFormat
    *        Output format - text or CSV.
    */
-  public PlainTextFormattingHelper(final String outputFormat)
+  public PlainTextFormattingHelper(final OutputFormat outputFormat)
   {
     this.outputFormat = outputFormat;
   }
@@ -221,7 +222,7 @@ public class PlainTextFormattingHelper
                         final int maxWidth,
                         final boolean alignLeft)
   {
-    if (outputFormat.equalsIgnoreCase("csv"))
+    if (outputFormat == OutputFormat.csv)
     {
       return FormatUtils.escapeAndQuoteForExcelCsv(text);
     }
@@ -240,7 +241,7 @@ public class PlainTextFormattingHelper
 
   private String getFieldSeparator()
   {
-    if (outputFormat.equalsIgnoreCase("csv"))
+    if (outputFormat == OutputFormat.csv)
     {
       return ",";
     }

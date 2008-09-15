@@ -27,8 +27,6 @@ import schemacrawler.crawl.DatabaseSchemaCrawler;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.tools.Executable;
-import schemacrawler.tools.OutputFormat;
-import schemacrawler.tools.OutputOptions;
 
 /**
  * Basic SchemaCrawler executor.
@@ -59,18 +57,7 @@ public class SchemaCrawlerExecutable
     schemaCrawlerOptions.setSchemaInfoLevel(toolOptions
       .getSchemaTextDetailType().mapToInfoLevel());
 
-    CrawlHandler handler = null;
-    final OutputOptions outputOptions = toolOptions.getOutputOptions();
-    final OutputFormat outputFormatType = outputOptions.getOutputFormat();
-    if (outputFormatType == OutputFormat.html)
-    {
-      handler = new SchemaHTMLFormatter(toolOptions);
-    }
-    else
-    {
-      handler = new SchemaTextFormatter(toolOptions);
-    }
-
+    final CrawlHandler handler = new SchemaTextFormatter(toolOptions);
     final SchemaCrawler crawler = new DatabaseSchemaCrawler(dataSource
       .getConnection());
     crawler.crawl(schemaCrawlerOptions, handler);
