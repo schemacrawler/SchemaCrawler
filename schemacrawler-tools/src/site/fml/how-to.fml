@@ -12,7 +12,7 @@
       <answer>
         <p>
           Re-run SchemaCrawler with
-          <code>-log-level=ALL</code>
+          <code>-log_level=ALL</code>
           on the command-line.
         </p>
       </answer>

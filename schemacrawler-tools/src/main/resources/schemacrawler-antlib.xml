@@ -77,7 +77,7 @@
       default="false" />
 
     <attribute
-      name="log-level"
+      name="log_level"
       description="Log level - may be one of: OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL"
       default="SEVERE" />
 
@@ -114,7 +114,7 @@
         <arg value="-outputformat=@{outputformat}" />
         <arg value="-outputfile=@{outputfile}" />
         <arg value="-append=@{append}" />
-        <arg value="-log-level=@{log-level}" />
+        <arg value="-log_level=@{log_level}" />
       </java>
 
     </sequential>
@@ -181,7 +181,7 @@
       default="false" />
 
     <attribute
-      name="log-level"
+      name="log_level"
       description="Log level - may be one of: OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL"
       default="SEVERE" />
 
@@ -214,7 +214,7 @@
         <arg value="-tables=@{tables}" />
         <arg value="-columns=@{columns}" />
         <arg value="-v=@{invert-match}" />
-        <arg value="-log-level=@{log-level}" />
+        <arg value="-log_level=@{log_level}" />
       </java>
 
     </sequential>
