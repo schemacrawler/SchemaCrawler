@@ -151,7 +151,7 @@ public final class HtmlFormattingHelper
    */
   public String createPreformattedText(final String id, final String text)
   {
-    return String.format("<pre id=\'%s\'>%s</pre>", id, text);
+    return String.format("<pre id=\'%s\'>%n%s</pre>", id, text);
   }
 
   /**
