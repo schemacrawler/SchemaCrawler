@@ -81,6 +81,32 @@
           for an introduction to the SchemaCrawler API. You can also browse the
           <a href="apidocs/index.html">javadocs</a>
           .
+          
+          For those impatient to get started, here is a quick code snippet to use:
+          <pre>
+    final SchemaCrawlerOptions options = new SchemaCrawlerOptions(properties);
+    options.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+    
+    Catalog catalog = SchemaCrawlerUtility.getCatalog(dataSource
+      .getConnection(), options);
+
+    Schema[] schemas = catalog.getSchemas();
+    for (Schema schema: schemas)
+    {
+      Table[] tables = schema.getTables();
+      for (int i = 0; i < tables.length; i++)
+      {
+        Table table = tables[i];
+        System.out.println(table);
+        Column[] columns = table.getColumns();
+        for (int j = 0; j < columns.length; j++)
+        {
+          Column column = columns[j];
+          System.out.println("-- " + column);
+        }
+      }
+    }
+          </pre>
         </p>
       </answer>
     </faq>
