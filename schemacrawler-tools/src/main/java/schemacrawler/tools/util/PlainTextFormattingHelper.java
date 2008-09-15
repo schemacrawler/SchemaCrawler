@@ -92,6 +92,26 @@ public class PlainTextFormattingHelper
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createDocumentEnd()
+   */
+  public String createDocumentEnd()
+  {
+    return "";
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createDocumentStart()
+   */
+  public String createDocumentStart()
+  {
+    return "";
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see schemacrawler.tools.util.TextFormattingHelper#createEmptyRow()
    */
   public String createEmptyRow()
@@ -159,19 +179,9 @@ public class PlainTextFormattingHelper
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.util.TextFormattingHelper#createSeparatorRow()
+   * @see schemacrawler.tools.util.TextFormattingHelper#createObjectEnd()
    */
-  public String createSeparatorRow()
-  {
-    return FormatUtils.repeat("-", FormatUtils.MAX_LINE_LENGTH);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.util.TextFormattingHelper#createTableEnd()
-   */
-  public String createTableEnd()
+  public String createObjectEnd()
   {
     return "\n";
   }
@@ -179,11 +189,32 @@ public class PlainTextFormattingHelper
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.util.TextFormattingHelper#createTableStart()
+   * @see schemacrawler.tools.util.TextFormattingHelper#createObjectStart()
    */
-  public String createTableStart()
+  public String createObjectStart()
   {
     return "";
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createPreformattedText(java.lang.String,
+   *      java.lang.String)
+   */
+  public String createPreformattedText(final String id, final String text)
+  {
+    return "\n" + text;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createSeparatorRow()
+   */
+  public String createSeparatorRow()
+  {
+    return FormatUtils.repeat("-", FormatUtils.MAX_LINE_LENGTH);
   }
 
   private String format(final String text,
@@ -218,5 +249,4 @@ public class PlainTextFormattingHelper
       return "  ";
     }
   }
-
 }
