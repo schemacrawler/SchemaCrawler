@@ -53,11 +53,11 @@ import schemacrawler.tools.util.TextFormattingHelper;
  * 
  * @author Sualeh Fatehi
  */
-public final class BaseOperator
+public final class OperationFormatter
   implements CrawlHandler
 {
 
-  private static final Logger LOGGER = Logger.getLogger(BaseOperator.class
+  private static final Logger LOGGER = Logger.getLogger(OperationFormatter.class
     .getName());
 
   protected final Operation operation;
@@ -78,7 +78,7 @@ public final class BaseOperator
    * @param connection
    *        Database connection to use
    */
-  public BaseOperator(final OperationOptions options,
+  public OperationFormatter(final OperationOptions options,
                       final Query query,
                       final Connection connection,
                       final DataHandler dataHandler)
