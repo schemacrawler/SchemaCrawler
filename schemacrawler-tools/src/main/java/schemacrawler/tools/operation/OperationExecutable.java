@@ -30,12 +30,10 @@ import javax.sql.DataSource;
 
 import schemacrawler.crawl.DatabaseSchemaCrawler;
 import schemacrawler.execute.DataHandler;
-import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.Executable;
-import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.datatext.DataToolsExecutable;
 
 /**
@@ -79,7 +77,6 @@ public class OperationExecutable
     final DataHandler operationDataHandler = DataToolsExecutable
       .createDataHandler(toolOptions);
 
-    CrawlHandler handler = null;
     final Operation operation = toolOptions.getOperation();
     Query query;
     if (operation == Operation.queryover)
@@ -91,25 +88,12 @@ public class OperationExecutable
       query = operation.getQuery();
     }
 
-    final OutputFormat outputFormatType = toolOptions.getOutputOptions()
-      .getOutputFormat();
-    if (outputFormatType == OutputFormat.html)
-    {
-      handler = new OperatorHTMLOutput(toolOptions,
-                                       query,
-                                       connection,
-                                       operationDataHandler);
-    }
-    else
-    {
-      handler = new OperatorTextOutput(toolOptions,
-                                       query,
-                                       connection,
-                                       operationDataHandler);
-    }
-
     final SchemaCrawler crawler = new DatabaseSchemaCrawler(dataSource
       .getConnection());
-    crawler.crawl(schemaCrawlerOptions, handler);
+    crawler.crawl(schemaCrawlerOptions, new BaseOperator(toolOptions,
+                                                         query,
+                                                         connection,
+                                                         operationDataHandler));
   }
+
 }

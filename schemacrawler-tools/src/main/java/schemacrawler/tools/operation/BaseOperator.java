@@ -22,6 +22,7 @@ package schemacrawler.tools.operation;
 
 
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,7 +41,11 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.OutputFormat;
+import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.util.FormatUtils;
+import schemacrawler.tools.util.HtmlFormattingHelper;
+import schemacrawler.tools.util.PlainTextFormattingHelper;
 import schemacrawler.tools.util.TextFormattingHelper;
 
 /**
@@ -48,7 +53,7 @@ import schemacrawler.tools.util.TextFormattingHelper;
  * 
  * @author Sualeh Fatehi
  */
-public abstract class BaseOperator
+public final class BaseOperator
   implements CrawlHandler
 {
 
@@ -73,11 +78,10 @@ public abstract class BaseOperator
    * @param connection
    *        Database connection to use
    */
-  BaseOperator(final OperationOptions options,
-               final Query query,
-               final Connection connection,
-               final DataHandler dataHandler,
-               final TextFormattingHelper formattingHelper)
+  public BaseOperator(final OperationOptions options,
+                      final Query query,
+                      final Connection connection,
+                      final DataHandler dataHandler)
     throws SchemaCrawlerException
   {
     if (options == null)
@@ -108,7 +112,16 @@ public abstract class BaseOperator
       throw new SchemaCrawlerException("No query provided");
     }
 
-    this.formattingHelper = formattingHelper;
+    final OutputOptions outputOptions = options.getOutputOptions();
+    final OutputFormat outputFormat = outputOptions.getOutputFormat();
+    if (outputFormat == OutputFormat.html)
+    {
+      formattingHelper = new HtmlFormattingHelper();
+    }
+    else
+    {
+      formattingHelper = new PlainTextFormattingHelper(outputFormat);
+    }
 
     try
     {
@@ -137,7 +150,6 @@ public abstract class BaseOperator
   public void begin()
     throws SchemaCrawlerException
   {
-
     try
     {
       if (connection == null || connection.isClosed())
@@ -151,6 +163,15 @@ public abstract class BaseOperator
       LOGGER.log(Level.WARNING, "Connection is closed: " + errorMessage);
       throw new SchemaCrawlerException(errorMessage, e);
     }
+
+    if (!getNoHeader())
+    {
+      out.println(formattingHelper.createDocumentStart());
+    }
+    if (operation == Operation.count)
+    {
+      out.println(formattingHelper.createObjectStart());
+    }
   }
 
   /**
@@ -161,7 +182,19 @@ public abstract class BaseOperator
   public void end()
     throws SchemaCrawlerException
   {
-
+    if (operation == Operation.count)
+    {
+      out.println(formattingHelper.createObjectEnd());
+    }
+    if (!getNoFooter())
+    {
+      out.println(formattingHelper.createPreformattedText("tableCount",
+                                                          getTableCount()
+                                                              + " tables."));
+      out.println(formattingHelper.createDocumentEnd());
+    }
+    out.flush();
+    //
     options.getOutputOptions().closeOutputWriter(out);
     try
     {
@@ -188,7 +221,6 @@ public abstract class BaseOperator
       LOGGER.log(Level.WARNING, "Cannot close connection: " + errorMessage);
       throw new SchemaCrawlerException(errorMessage, e);
     }
-
   }
 
   /**
@@ -208,22 +240,36 @@ public abstract class BaseOperator
    */
   public void handle(final DatabaseInfo databaseInfo)
   {
-    if (!getNoInfo())
+    if (!options.getOutputOptions().isNoInfo())
     {
-      FormatUtils.printDatabaseInfo(databaseInfo, out);
+      final StringWriter stringWriter = new StringWriter();
+      final PrintWriter writer = new PrintWriter(stringWriter);
+      FormatUtils.printDatabaseInfo(databaseInfo, writer);
+      writer.flush();
+      writer.close();
+      out.println(formattingHelper.createPreformattedText("databaseInfo",
+                                                          stringWriter
+                                                            .toString()));
     }
   }
 
   /**
    * {@inheritDoc}
    * 
-   * @see CrawlHandler#handle(DatabaseInfo)
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.JdbcDriverInfo)
    */
   public void handle(final JdbcDriverInfo driverInfo)
   {
-    if (!getNoInfo())
+    if (!options.getOutputOptions().isNoInfo())
     {
-      FormatUtils.printJdbcDriverInfo(driverInfo, out);
+      final StringWriter stringWriter = new StringWriter();
+      final PrintWriter writer = new PrintWriter(stringWriter);
+      FormatUtils.printJdbcDriverInfo(driverInfo, writer);
+      writer.flush();
+      writer.close();
+      out.println(formattingHelper.createPreformattedText("driverInfo",
+                                                          stringWriter
+                                                            .toString()));
     }
   }
 
@@ -253,11 +299,6 @@ public abstract class BaseOperator
    */
   public final void handle(final Table table)
   {
-
-    if (tableCount == 0)
-    {
-      handleStartTables();
-    }
     tableCount++;
 
     final String sql = query.getQueryForTable(table);
@@ -310,10 +351,6 @@ public abstract class BaseOperator
   protected Operation getOperation()
   {
     return operation;
-  }
-
-  protected void handleStartTables()
-  {
   }
 
   boolean getNoFooter()

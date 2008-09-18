@@ -136,8 +136,8 @@ public final class SchemaTextFormatter
       out.println(formattingHelper.createPreformattedText("tableCount",
                                                           getTableCount()
                                                               + " tables."));
+      out.println(formattingHelper.createDocumentEnd());
     }
-    out.println(formattingHelper.createDocumentEnd());
     out.flush();
     //
     options.getOutputOptions().closeOutputWriter(out);
