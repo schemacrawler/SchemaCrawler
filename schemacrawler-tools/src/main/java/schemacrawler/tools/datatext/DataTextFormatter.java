@@ -51,12 +51,12 @@ import sf.util.Utilities;
  * 
  * @author Sualeh Fatehi
  */
-public final class BaseDataTextFormatter
+public final class DataTextFormatter
   implements DataHandler
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(BaseDataTextFormatter.class.getName());
+    .getLogger(DataTextFormatter.class.getName());
 
   private static final String BINARY = "<binary>";
 
@@ -70,7 +70,7 @@ public final class BaseDataTextFormatter
    * 
    * @param mergeRows
    */
-  public BaseDataTextFormatter(final DataTextFormatOptions options)
+  public DataTextFormatter(final DataTextFormatOptions options)
     throws SchemaCrawlerException
   {
     if (options == null)
