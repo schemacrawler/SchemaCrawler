@@ -56,7 +56,7 @@ public class DataToolsExecutable
       return null;
     }
 
-    final DataHandler handler = new BaseDataTextFormatter(options);
+    final DataHandler handler = new DataTextFormatter(options);
     return handler;
   }
 
