@@ -27,7 +27,6 @@ import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutor;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.Executable;
-import schemacrawler.tools.OutputOptions;
 
 /**
  * Basic SchemaCrawler executor.
@@ -57,25 +56,7 @@ public class DataToolsExecutable
       return null;
     }
 
-    DataHandler handler = null;
-    final OutputOptions outputOptions = options.getOutputOptions();
-    switch (outputOptions.getOutputFormat())
-    {
-      case text:
-        handler = new DataPlainTextFormatter(options);
-        break;
-      case html:
-        handler = new DataHTMLFormatter(options);
-        break;
-      case csv:
-        handler = new DataCSVFormatter(options);
-        break;
-      default:
-        throw new IllegalArgumentException("Unknown output format specified - "
-                                           + outputOptions
-                                             .getOutputFormatValue());
-    }
-
+    final DataHandler handler = new BaseDataTextFormatter(options);
     return handler;
   }
 

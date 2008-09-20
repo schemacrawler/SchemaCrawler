@@ -37,15 +37,6 @@ public interface DataHandler
     throws QueryExecutorException;
 
   /**
-   * Closes all open resources.
-   * 
-   * @throws QueryExecutorException
-   *         On an exception
-   */
-  void close()
-    throws QueryExecutorException;
-
-  /**
    * Handles the end of the execution.
    * 
    * @throws QueryExecutorException
@@ -69,29 +60,7 @@ public interface DataHandler
    * @throws QueryExecutorException
    *         On an exception
    */
-  void handleData(final ResultSet rows)
-    throws QueryExecutorException;
-
-  /**
-   * Handles metadata information.
-   * 
-   * @param databaseInfo
-   *        Database metadata.
-   * @throws QueryExecutorException
-   *         On an exception
-   */
-  void handleMetadata(final String databaseInfo)
-    throws QueryExecutorException;
-
-  /**
-   * Handles metadata information.
-   * 
-   * @param title
-   *        Execution title.
-   * @throws QueryExecutorException
-   *         On an exception
-   */
-  void handleTitle(final String title)
+  void handleData(final String title, final ResultSet rows)
     throws QueryExecutorException;
 
 }

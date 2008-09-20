@@ -114,9 +114,11 @@ public interface TextFormattingHelper
   /**
    * Database object start.
    * 
+   * @param name
+   *        Object name
    * @return Database object start
    */
-  String createObjectStart();
+  String createObjectStart(final String name);
 
   /**
    * Creates a separator row.

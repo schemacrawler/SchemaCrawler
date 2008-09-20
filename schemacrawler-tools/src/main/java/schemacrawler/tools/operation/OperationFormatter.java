@@ -57,11 +57,11 @@ public final class OperationFormatter
   implements CrawlHandler
 {
 
-  private static final Logger LOGGER = Logger.getLogger(OperationFormatter.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(OperationFormatter.class.getName());
 
-  protected final Operation operation;
-  protected final PrintWriter out;
+  private final Operation operation;
+  private final PrintWriter out;
   private final Connection connection;
   private final DataHandler dataHandler;
   private final Query query;
@@ -79,9 +79,9 @@ public final class OperationFormatter
    *        Database connection to use
    */
   public OperationFormatter(final OperationOptions options,
-                      final Query query,
-                      final Connection connection,
-                      final DataHandler dataHandler)
+                            final Query query,
+                            final Connection connection,
+                            final DataHandler dataHandler)
     throws SchemaCrawlerException
   {
     if (options == null)
@@ -116,7 +116,7 @@ public final class OperationFormatter
     final OutputFormat outputFormat = outputOptions.getOutputFormat();
     if (outputFormat == OutputFormat.html)
     {
-      formattingHelper = new HtmlFormattingHelper();
+      formattingHelper = new HtmlFormattingHelper(outputFormat);
     }
     else
     {
@@ -164,13 +164,13 @@ public final class OperationFormatter
       throw new SchemaCrawlerException(errorMessage, e);
     }
 
-    if (!getNoHeader())
+    if (!options.getOutputOptions().isNoHeader())
     {
       out.println(formattingHelper.createDocumentStart());
     }
     if (operation == Operation.count)
     {
-      out.println(formattingHelper.createObjectStart());
+      out.println(formattingHelper.createObjectStart(query.getQuery()));
     }
   }
 
@@ -186,7 +186,7 @@ public final class OperationFormatter
     {
       out.println(formattingHelper.createObjectEnd());
     }
-    if (!getNoFooter())
+    if (!options.getOutputOptions().isNoFooter())
     {
       out.println(formattingHelper.createPreformattedText("tableCount",
                                                           getTableCount()
@@ -200,7 +200,7 @@ public final class OperationFormatter
     {
       if (dataHandler != null)
       {
-        dataHandler.close();
+        dataHandler.end();
       }
     }
     catch (final QueryExecutorException e)
@@ -318,7 +318,7 @@ public final class OperationFormatter
         }
         else
         {
-          handleOperationForTable(table, results);
+          dataHandler.handleData(table.getName(), results);
         }
       }
       out.flush();
@@ -351,21 +351,6 @@ public final class OperationFormatter
   protected Operation getOperation()
   {
     return operation;
-  }
-
-  boolean getNoFooter()
-  {
-    return options.getOutputOptions().isNoFooter();
-  }
-
-  boolean getNoHeader()
-  {
-    return options.getOutputOptions().isNoHeader();
-  }
-
-  boolean getNoInfo()
-  {
-    return options.getOutputOptions().isNoInfo();
   }
 
   private String getMessage(final double aggregate)
@@ -409,24 +394,6 @@ public final class OperationFormatter
     final String message = getMessage(aggregate);
     //
     out.println(formattingHelper.createNameRow(table.getName(), message));
-  }
-
-  /**
-   * Handles an operation, for a given table.
-   * 
-   * @param table
-   *        Table
-   * @param results
-   *        Results
-   * @throws SQLException
-   *         On an exception
-   */
-  private void handleOperationForTable(final Table table,
-                                       final ResultSet results)
-    throws QueryExecutorException
-  {
-    dataHandler.handleTitle(table.getName());
-    dataHandler.handleData(results);
   }
 
 }

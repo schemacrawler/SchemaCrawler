@@ -68,8 +68,8 @@ public final class SchemaTextFormatter
   implements CrawlHandler
 {
 
-  protected final PrintWriter out;
-  protected final TextFormattingHelper formattingHelper;
+  private final PrintWriter out;
+  private final TextFormattingHelper formattingHelper;
   private final SchemaTextOptions options;
 
   private int tableCount;
@@ -91,7 +91,7 @@ public final class SchemaTextFormatter
     final OutputFormat outputFormat = outputOptions.getOutputFormat();
     if (outputFormat == OutputFormat.html)
     {
-      formattingHelper = new HtmlFormattingHelper();
+      formattingHelper = new HtmlFormattingHelper(outputFormat);
     }
     else
     {
@@ -171,7 +171,7 @@ public final class SchemaTextFormatter
   public void handle(final ColumnDataType columnDataType)
     throws SchemaCrawlerException
   {
-    out.print(formattingHelper.createObjectStart());
+    out.print(formattingHelper.createObjectStart(""));
     printColumnDataType(columnDataType);
     out.print(formattingHelper.createObjectEnd());
   }
@@ -207,7 +207,7 @@ public final class SchemaTextFormatter
       .getProperties().entrySet();
     if (propertySet.size() > 0)
     {
-      out.print(formattingHelper.createObjectStart());
+      out.print(formattingHelper.createObjectStart(""));
       for (final Map.Entry<String, Object> property: propertySet)
       {
         final String key = property.getKey();
@@ -258,7 +258,7 @@ public final class SchemaTextFormatter
       out.println();
       for (final JdbcDriverProperty driverProperty: jdbcDriverProperties)
       {
-        out.print(formattingHelper.createObjectStart());
+        out.print(formattingHelper.createObjectStart(""));
         printJdbcDriverProperty(driverProperty);
         out.print(formattingHelper.createObjectEnd());
       }
@@ -276,9 +276,7 @@ public final class SchemaTextFormatter
    */
   public final void handle(final Procedure procedure)
   {
-
-    out.print(formattingHelper.createObjectStart());
-
+    out.print(formattingHelper.createObjectStart(""));
     final String procedureTypeDetail = "procedure, " + procedure.getType();
     out
       .println(formattingHelper.createNameRow(procedure.getFullName(),
@@ -336,7 +334,7 @@ public final class SchemaTextFormatter
    */
   public final void handle(final Table table)
   {
-    out.print(formattingHelper.createObjectStart());
+    out.print(formattingHelper.createObjectStart(""));
     final String typeBracketed = "["
                                  + table.getType().toString()
                                    .toLowerCase(Locale.ENGLISH) + "]";

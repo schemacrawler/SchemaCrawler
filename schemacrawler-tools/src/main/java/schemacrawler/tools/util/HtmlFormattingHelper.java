@@ -21,48 +21,26 @@
 package schemacrawler.tools.util;
 
 
+import schemacrawler.tools.OutputFormat;
+import sf.util.Utilities;
+
 /**
  * Methods to format entire rows of output as HTML.
  * 
  * @author Sualeh Fatehi
  */
 public final class HtmlFormattingHelper
-  implements TextFormattingHelper
+  extends BaseTextFormattingHelper
 {
+
+  public HtmlFormattingHelper(OutputFormat outputFormat)
+  {
+    super(outputFormat);
+  }
 
   public String createArrow()
   {
     return " &rarr; ";
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.util.TextFormattingHelper#createDefinitionRow(java.lang.String)
-   */
-  public String createDefinitionRow(final String definition)
-  {
-    final HtmlTableRow row = new HtmlTableRow();
-    row.addCell(new HtmlTableCell("ordinal", ""));
-    row.addCell(new HtmlTableCell(2, "definition", definition));
-    return row.toString();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.util.TextFormattingHelper#createDetailRow(java.lang.String,
-   *      java.lang.String, java.lang.String)
-   */
-  public String createDetailRow(final String ordinal,
-                                final String subName,
-                                final String type)
-  {
-    final HtmlTableRow row = new HtmlTableRow();
-    row.addCell(new HtmlTableCell("ordinal", ordinal));
-    row.addCell(new HtmlTableCell("subname", subName));
-    row.addCell(new HtmlTableCell("type", type));
-    return row.toString();
   }
 
   /**
@@ -88,59 +66,27 @@ public final class HtmlFormattingHelper
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.util.TextFormattingHelper#createEmptyRow()
-   */
-  public String createEmptyRow()
-  {
-    return new HtmlTableRow(4).toString();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.util.TextFormattingHelper#createNameRow(java.lang.String,
-   *      java.lang.String)
-   */
-  public String createNameRow(final String name, final String description)
-  {
-    final HtmlTableRow row = new HtmlTableRow();
-    row.addCell(new HtmlTableCell(2, "name", name));
-    row.addCell(new HtmlTableCell("description", description));
-    return row.toString();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.util.TextFormattingHelper#createNameValueRow(java.lang.String,
-   *      java.lang.String)
-   */
-  public String createNameValueRow(final String name, final String value)
-  {
-    final HtmlTableRow row = new HtmlTableRow();
-    row.addCell(new HtmlTableCell("", name));
-    row.addCell(new HtmlTableCell("", value));
-    return row.toString();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see schemacrawler.tools.util.TextFormattingHelper#createObjectEnd()
    */
   public String createObjectEnd()
   {
-    return "</table>\n" + "<p></p>\n";
+    return "</table>" + Utilities.NEWLINE + "<p></p>" + Utilities.NEWLINE;
   }
 
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.util.TextFormattingHelper#createObjectStart()
+   * @see schemacrawler.tools.util.TextFormattingHelper#createObjectStart(java.lang.String)
    */
-  public String createObjectStart()
+  public String createObjectStart(final String name)
   {
-    return "<table>\n";
+    String objectStart = "<table>" + Utilities.NEWLINE;
+    if (!Utilities.isBlank(name))
+    {
+      objectStart = objectStart + "  <caption>" + name + "</caption>"
+                    + Utilities.NEWLINE;
+    }
+    return objectStart;
   }
 
   /**
@@ -161,8 +107,8 @@ public final class HtmlFormattingHelper
    */
   public String createSeparatorRow()
   {
-    final HtmlTableRow row = new HtmlTableRow();
-    row.addCell(new HtmlTableCell(3, "", "<hr/>"));
+    final TableRow row = new TableRow(OutputFormat.html);
+    row.add(new TableCell(OutputFormat.html, 3, "", "<hr/>"));
     return row.toString();
   }
 

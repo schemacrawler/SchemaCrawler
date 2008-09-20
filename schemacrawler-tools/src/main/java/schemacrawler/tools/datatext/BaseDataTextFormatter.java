@@ -37,7 +37,13 @@ import java.util.logging.Logger;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutorException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.util.FormatUtils;
+import schemacrawler.tools.OutputFormat;
+import schemacrawler.tools.OutputOptions;
+import schemacrawler.tools.util.HtmlFormattingHelper;
+import schemacrawler.tools.util.PlainTextFormattingHelper;
+import schemacrawler.tools.util.TableCell;
+import schemacrawler.tools.util.TableRow;
+import schemacrawler.tools.util.TextFormattingHelper;
 import sf.util.Utilities;
 
 /**
@@ -45,7 +51,7 @@ import sf.util.Utilities;
  * 
  * @author Sualeh Fatehi
  */
-public abstract class BaseDataTextFormatter
+public final class BaseDataTextFormatter
   implements DataHandler
 {
 
@@ -56,6 +62,7 @@ public abstract class BaseDataTextFormatter
 
   protected final PrintWriter out;
   private final DataTextFormatOptions options;
+  protected final TextFormattingHelper formattingHelper;
 
   /**
    * Constructor for a base data handler that is capable of merging
@@ -63,7 +70,7 @@ public abstract class BaseDataTextFormatter
    * 
    * @param mergeRows
    */
-  BaseDataTextFormatter(final DataTextFormatOptions options)
+  public BaseDataTextFormatter(final DataTextFormatOptions options)
     throws SchemaCrawlerException
   {
     if (options == null)
@@ -71,6 +78,17 @@ public abstract class BaseDataTextFormatter
       throw new IllegalArgumentException("Options not provided");
     }
     this.options = options;
+
+    final OutputOptions outputOptions = options.getOutputOptions();
+    final OutputFormat outputFormat = outputOptions.getOutputFormat();
+    if (outputFormat == OutputFormat.html)
+    {
+      formattingHelper = new HtmlFormattingHelper(outputFormat);
+    }
+    else
+    {
+      formattingHelper = new PlainTextFormattingHelper(OutputFormat.csv);
+    }
 
     try
     {
@@ -86,30 +104,30 @@ public abstract class BaseDataTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see DataHandler#begin()
+   * @see schemacrawler.execute.DataHandler#begin()
    */
   public void begin()
   {
+    if (!options.getOutputOptions().isNoHeader())
+    {
+      out.println(formattingHelper.createDocumentStart());
+    }
   }
 
   /**
    * {@inheritDoc}
    * 
-   * @see DataHandler#close()
-   */
-  public void close()
-  {
-    options.getOutputOptions().closeOutputWriter(out);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see DataHandler#end()
+   * @see schemacrawler.execute.DataHandler#end()
    */
   public void end()
   {
-    close();
+    if (!options.getOutputOptions().isNoFooter())
+    {
+      out.println(formattingHelper.createDocumentEnd());
+    }
+    out.flush();
+    //
+    options.getOutputOptions().closeOutputWriter(out);
   }
 
   /**
@@ -127,9 +145,10 @@ public abstract class BaseDataTextFormatter
    * 
    * @see schemacrawler.execute.DataHandler#handleData(java.sql.ResultSet)
    */
-  public final void handleData(final ResultSet rows)
+  public final void handleData(final String title, final ResultSet rows)
     throws QueryExecutorException
   {
+    out.println(formattingHelper.createObjectStart(title));
     try
     {
       final ResultSetMetaData rsm = rows.getMetaData();
@@ -141,7 +160,6 @@ public abstract class BaseDataTextFormatter
       }
       handleRowsHeader(columnNames);
 
-      handleRowsBegin();
       if (options.isMergeRows() && columnCount > 1)
       {
         iterateRowsAndMerge(rows, columnNames);
@@ -150,92 +168,12 @@ public abstract class BaseDataTextFormatter
       {
         iterateRows(rows, columnNames);
       }
-
-      handleRowsEnd();
     }
     catch (final SQLException e)
     {
       throw new QueryExecutorException(e.getMessage(), e);
     }
-  }
-
-  /**
-   * Handles metadata information.
-   * 
-   * @param databaseInfo
-   *        Database info.
-   */
-  public void handleMetadata(final String databaseInfo)
-  {
-    if (!getNoInfo())
-    {
-      out.println(FormatUtils.repeat("-", FormatUtils.MAX_LINE_LENGTH));
-      out.println(databaseInfo);
-      out.println(FormatUtils.repeat("-", FormatUtils.MAX_LINE_LENGTH));
-      out.flush();
-    }
-  }
-
-  /**
-   * Called to handle the row output. Handler to be implemented by
-   * subclass.
-   * 
-   * @param columnNames
-   *        Column names
-   * @param columnData
-   *        Column data
-   * @throws QueryExecutorException
-   *         On an exception
-   */
-  public abstract void handleRow(final String[] columnNames,
-                                 final String[] columnData)
-    throws QueryExecutorException;
-
-  /**
-   * Called to handle the beginning of row output. Handler to be
-   * implemented by subclass.
-   * 
-   * @throws QueryExecutorException
-   *         On an exception
-   */
-  public abstract void handleRowsBegin()
-    throws QueryExecutorException;
-
-  /**
-   * Called to handle the end of row output. Handler to be implemented
-   * by subclass.
-   * 
-   * @throws QueryExecutorException
-   *         On an exception
-   */
-  public abstract void handleRowsEnd()
-    throws QueryExecutorException;
-
-  /**
-   * Called to handle the header output. Handler to be implemented by
-   * subclass.
-   * 
-   * @param columnNames
-   *        Column names
-   * @throws QueryExecutorException
-   *         On an exception
-   */
-  public abstract void handleRowsHeader(final String[] columnNames)
-    throws QueryExecutorException;
-
-  boolean getNoFooter()
-  {
-    return options.getOutputOptions().isNoFooter();
-  }
-
-  boolean getNoHeader()
-  {
-    return options.getOutputOptions().isNoHeader();
-  }
-
-  boolean getNoInfo()
-  {
-    return options.getOutputOptions().isNoInfo();
+    out.println(formattingHelper.createObjectEnd());
   }
 
   private String convertColumnDataToString(final Object columnData)
@@ -277,6 +215,56 @@ public abstract class BaseDataTextFormatter
     handleRow(columnNames, columnData);
   }
 
+  /**
+   * Called to handle the row output. Handler to be implemented by
+   * subclass.
+   * 
+   * @param columnNames
+   *        Column names
+   * @param columnData
+   *        Column data
+   * @throws QueryExecutorException
+   *         On an exception
+   */
+  private void handleRow(final String[] columnNames, final String[] columnData)
+  {
+    OutputFormat outputFormat = options.getOutputOptions().getOutputFormat();
+    if (outputFormat == OutputFormat.text)
+    {
+      outputFormat = OutputFormat.csv;
+    }
+    final TableRow row = new TableRow(outputFormat);
+    for (int i = 0; i < columnData.length; i++)
+    {
+      row.add(new TableCell(outputFormat, columnData[i]));
+    }
+    out.println(row.toString());
+  }
+
+  /**
+   * Called to handle the header output. Handler to be implemented by
+   * subclass.
+   * 
+   * @param columnNames
+   *        Column names
+   * @throws QueryExecutorException
+   *         On an exception
+   */
+  private void handleRowsHeader(final String[] columnNames)
+  {
+    OutputFormat outputFormat = options.getOutputOptions().getOutputFormat();
+    if (outputFormat == OutputFormat.text)
+    {
+      outputFormat = OutputFormat.csv;
+    }
+    final TableRow row = new TableRow(outputFormat);
+    for (int i = 0; i < columnNames.length; i++)
+    {
+      row.add(new TableCell(outputFormat, "name", columnNames[i]));
+    }
+    out.println(row.toString());
+  }
+
   private void iterateRows(final ResultSet rows, final String[] columnNames)
     throws SQLException, QueryExecutorException
   {
@@ -298,13 +286,6 @@ public abstract class BaseDataTextFormatter
     }
   }
 
-  /**
-   * @param rows
-   * @param columnCount
-   * @param columnNames
-   * @throws SQLException
-   * @throws QueryExecutorException
-   */
   private void iterateRowsAndMerge(final ResultSet rows,
                                    final String[] columnNames)
     throws SQLException, QueryExecutorException
@@ -381,4 +362,5 @@ public abstract class BaseDataTextFormatter
     }
 
   }
+
 }

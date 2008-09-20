@@ -97,9 +97,7 @@ public final class QueryExecutor
       resultSet = statement.executeQuery(query.getQuery());
 
       handler.begin();
-      handler.handleMetadata(dataSource.toString());
-      handler.handleTitle(query.getQuery());
-      handler.handleData(resultSet);
+      handler.handleData(query.getQuery(), resultSet);
       handler.end();
     }
     catch (final SQLException e)
