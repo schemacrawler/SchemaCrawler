@@ -20,6 +20,7 @@
 package schemacrawler.tools.util;
 
 
+import schemacrawler.tools.OutputFormat;
 import sf.util.Utilities;
 
 /**
@@ -27,31 +28,40 @@ import sf.util.Utilities;
  * 
  * @author Sualeh Fatehi
  */
-final class HtmlTableCell
+public final class TableCell
 {
 
+  private final OutputFormat outputFormat;
   private final String styleClass;
-  private int colSpan = 1;
-  private final String innerHtml;
+  private final int colSpan;
+  private final String text;
 
-  HtmlTableCell()
+  public TableCell(final OutputFormat outputFormat)
   {
-    this(0, null, null);
+    this(outputFormat, 1, "", "");
   }
 
-  HtmlTableCell(final int colSpan,
-                final String styleClass,
-                final String innerHtml)
+  public TableCell(final OutputFormat outputFormat,
+                       final int colSpan,
+                       final String styleClass,
+                       final String text)
   {
+    this.outputFormat = outputFormat;
     this.colSpan = colSpan;
     this.styleClass = styleClass;
-    this.innerHtml = innerHtml;
+    this.text = text;
   }
 
-  HtmlTableCell(final String styleClass, final String innerHtml)
+  public TableCell(final OutputFormat outputFormat, final String text)
   {
-    this.styleClass = styleClass;
-    this.innerHtml = innerHtml;
+    this(outputFormat, 1, "", text);
+  }
+
+  public TableCell(final OutputFormat outputFormat,
+                       final String styleClass,
+                       final String text)
+  {
+    this(outputFormat, 1, styleClass, text);
   }
 
   /**
@@ -61,6 +71,23 @@ final class HtmlTableCell
    */
   @Override
   public String toString()
+  {
+    if (outputFormat == OutputFormat.html)
+    {
+      return toHtmlString();
+    }
+    else
+    {
+      return toPlainTextString();
+    }
+  }
+
+  /**
+   * Converts the table cell to HTML.
+   * 
+   * @return HTML
+   */
+  private String toHtmlString()
   {
     final StringBuffer buffer = new StringBuffer();
     buffer.append("<td");
@@ -73,9 +100,9 @@ final class HtmlTableCell
       buffer.append(" class='").append(styleClass).append("'");
     }
     buffer.append(">");
-    if (!Utilities.isBlank(innerHtml))
+    if (!Utilities.isBlank(text))
     {
-      buffer.append(innerHtml);
+      buffer.append(Entities.XML.escape(text));
     }
     else
     {
@@ -84,6 +111,23 @@ final class HtmlTableCell
     buffer.append("</td>");
 
     return buffer.toString();
+  }
+
+  /**
+   * Converts the table cell to CSV.
+   * 
+   * @return CSV
+   */
+  private String toPlainTextString()
+  {
+    if (outputFormat == OutputFormat.csv)
+    {
+      return FormatUtils.escapeAndQuoteForExcelCsv(text);
+    }
+    else
+    {
+      return text;
+    }
   }
 
 }

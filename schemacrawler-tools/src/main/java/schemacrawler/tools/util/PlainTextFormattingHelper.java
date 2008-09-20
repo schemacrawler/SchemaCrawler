@@ -30,10 +30,8 @@ import sf.util.Utilities;
  * @author Sualeh Fatehi
  */
 public class PlainTextFormattingHelper
-  implements TextFormattingHelper
+  extends BaseTextFormattingHelper
 {
-
-  private final OutputFormat outputFormat;
 
   /**
    * Constructor.
@@ -43,51 +41,12 @@ public class PlainTextFormattingHelper
    */
   public PlainTextFormattingHelper(final OutputFormat outputFormat)
   {
-    this.outputFormat = outputFormat;
+    super(outputFormat);
   }
 
   public String createArrow()
   {
     return " --> ";
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.util.TextFormattingHelper#createDefinitionRow(java.lang.String)
-   */
-  public String createDefinitionRow(final String definition)
-  {
-    final StringBuffer row = new StringBuffer();
-    row.append(getFieldSeparator());
-    row.append(definition);
-    return row.toString();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.util.TextFormattingHelper#createDetailRow(java.lang.String,
-   *      java.lang.String, java.lang.String)
-   */
-  public String createDetailRow(final String ordinal,
-                                final String subName,
-                                final String type)
-  {
-    final int subNameWidth = 32;
-    final int typeWidth = 28;
-
-    final StringBuffer row = new StringBuffer();
-    row.append(getFieldSeparator());
-    if (!Utilities.isBlank(ordinal))
-    {
-      row.append(format(ordinal, 2, true));
-      row.append(getFieldSeparator());
-    }
-    row.append(format(subName, subNameWidth, true));
-    row.append(getFieldSeparator());
-    row.append(format(type, typeWidth, true));
-    return row.toString();
   }
 
   /**
@@ -113,73 +72,6 @@ public class PlainTextFormattingHelper
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.util.TextFormattingHelper#createEmptyRow()
-   */
-  public String createEmptyRow()
-  {
-    return "";
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.util.TextFormattingHelper#createNameRow(java.lang.String,
-   *      java.lang.String)
-   */
-  public String createNameRow(final String name, final String description)
-  {
-    final int nameWidth = 36;
-    final int descriptionWidth = 34;
-
-    boolean overlay = false;
-    final int nameLength = name.length();
-    final int descriptionLength = description.length();
-    final int fieldSeparatorLength = getFieldSeparator().length();
-    final int minimumLength = nameLength + descriptionLength
-                              + fieldSeparatorLength;
-    final int totalLength = nameWidth + descriptionWidth + fieldSeparatorLength;
-    if (nameLength > nameWidth && descriptionLength < descriptionWidth)
-    {
-      overlay = true;
-    }
-
-    final StringBuffer row = new StringBuffer();
-    if (overlay)
-    {
-      row.append(name);
-      row.append(getFieldSeparator());
-      row.append(FormatUtils.repeat(" ", totalLength - minimumLength));
-      row.append(description);
-    }
-    else
-    {
-      row.append(format(name, nameWidth, true));
-      row.append(getFieldSeparator());
-      row.append(format(description, descriptionWidth, false));
-    }
-    return row.toString();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.util.TextFormattingHelper#createNameValueRow(java.lang.String,
-   *      java.lang.String)
-   */
-  public String createNameValueRow(final String name, final String value)
-  {
-    final int nameWidth = 36;
-
-    final StringBuffer row = new StringBuffer();
-    row.append(format(name, nameWidth, true));
-    row.append(getFieldSeparator());
-    row.append(value);
-    return row.toString();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see schemacrawler.tools.util.TextFormattingHelper#createObjectEnd()
    */
   public String createObjectEnd()
@@ -190,11 +82,18 @@ public class PlainTextFormattingHelper
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.util.TextFormattingHelper#createObjectStart()
+   * @see schemacrawler.tools.util.TextFormattingHelper#createObjectStart(java.lang.String)
    */
-  public String createObjectStart()
+  public String createObjectStart(final String name)
   {
-    return "";
+    String objectStart = "";
+    if (!Utilities.isBlank(name))
+    {
+      objectStart = objectStart + Utilities.NEWLINE + name + Utilities.NEWLINE
+                    + FormatUtils.repeat("-", FormatUtils.MAX_LINE_LENGTH)
+                    + Utilities.NEWLINE;
+    }
+    return objectStart;
   }
 
   /**
@@ -218,36 +117,4 @@ public class PlainTextFormattingHelper
     return FormatUtils.repeat("-", FormatUtils.MAX_LINE_LENGTH);
   }
 
-  private String format(final String text,
-                        final int maxWidth,
-                        final boolean alignLeft)
-  {
-    if (outputFormat == OutputFormat.csv)
-    {
-      return FormatUtils.escapeAndQuoteForExcelCsv(text);
-    }
-    else
-    {
-      if (alignLeft)
-      {
-        return FormatUtils.padRight(text, maxWidth);
-      }
-      else
-      {
-        return FormatUtils.padLeft(text, maxWidth);
-      }
-    }
-  }
-
-  private String getFieldSeparator()
-  {
-    if (outputFormat == OutputFormat.csv)
-    {
-      return ",";
-    }
-    else
-    {
-      return "  ";
-    }
-  }
 }
