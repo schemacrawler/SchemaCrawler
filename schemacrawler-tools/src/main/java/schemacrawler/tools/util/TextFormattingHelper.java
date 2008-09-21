@@ -20,6 +20,9 @@
 
 package schemacrawler.tools.util;
 
+import schemacrawler.execute.QueryExecutorException;
+import schemacrawler.tools.OutputFormat;
+
 
 /**
  * Methods to format entire rows of output.
@@ -126,5 +129,29 @@ public interface TextFormattingHelper
    * @return Row as a string
    */
   String createSeparatorRow();
+
+  /**
+   * Called to handle the row output. Handler to be implemented by
+   * subclass.
+   * 
+   * @param columnNames
+   *        Column names
+   * @param columnData
+   *        Column data
+   * @throws QueryExecutorException
+   *         On an exception
+   */
+  public String createRow(final String[] columnNames, final String[] columnData);
+
+  /**
+   * Called to handle the header output. Handler to be implemented by
+   * subclass.
+   * 
+   * @param columnNames
+   *        Column names
+   * @throws QueryExecutorException
+   *         On an exception
+   */
+  public String createRowHeader(final String[] columnNames);
 
 }

@@ -28,7 +28,7 @@ import sf.util.Utilities;
  * 
  * @author Sualeh Fatehi
  */
-public final class TableCell
+final class TableCell
 {
 
   private final OutputFormat outputFormat;
@@ -36,15 +36,15 @@ public final class TableCell
   private final int colSpan;
   private final String text;
 
-  public TableCell(final OutputFormat outputFormat)
+  TableCell(final OutputFormat outputFormat)
   {
     this(outputFormat, 1, "", "");
   }
 
-  public TableCell(final OutputFormat outputFormat,
-                       final int colSpan,
-                       final String styleClass,
-                       final String text)
+  TableCell(final OutputFormat outputFormat,
+            final int colSpan,
+            final String styleClass,
+            final String text)
   {
     this.outputFormat = outputFormat;
     this.colSpan = colSpan;
@@ -52,14 +52,9 @@ public final class TableCell
     this.text = text;
   }
 
-  public TableCell(final OutputFormat outputFormat, final String text)
-  {
-    this(outputFormat, 1, "", text);
-  }
-
-  public TableCell(final OutputFormat outputFormat,
-                       final String styleClass,
-                       final String text)
+  TableCell(final OutputFormat outputFormat,
+            final String styleClass,
+            final String text)
   {
     this(outputFormat, 1, styleClass, text);
   }
