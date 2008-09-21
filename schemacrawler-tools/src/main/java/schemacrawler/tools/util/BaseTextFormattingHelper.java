@@ -21,7 +21,9 @@
 package schemacrawler.tools.util;
 
 
+import schemacrawler.execute.QueryExecutorException;
 import schemacrawler.tools.OutputFormat;
+import sf.util.Utilities;
 
 /**
  * Methods to format entire rows of output as HTML.
@@ -31,7 +33,7 @@ import schemacrawler.tools.OutputFormat;
 abstract class BaseTextFormattingHelper
   implements TextFormattingHelper
 {
-  private final OutputFormat outputFormat;
+  final OutputFormat outputFormat;
 
   BaseTextFormattingHelper(OutputFormat outputFormat)
   {
@@ -65,7 +67,14 @@ abstract class BaseTextFormattingHelper
     final int typeWidth = 28;
 
     final TableRow row = new TableRow(outputFormat);
-    row.add(new TableCell(outputFormat, "ordinal", format(ordinal, 2, true)));
+    if (Utilities.isBlank(ordinal))
+    {
+      row.add(new TableCell(outputFormat, "ordinal", ""));
+    }
+    else
+    {
+      row.add(new TableCell(outputFormat, "ordinal", format(ordinal, 2, true)));
+    }
     row.add(new TableCell(outputFormat, "subname", format(subName,
                                                           subNameWidth,
                                                           true)));
@@ -91,9 +100,17 @@ abstract class BaseTextFormattingHelper
    */
   public String createNameRow(final String name, final String description)
   {
+    final int nameWidth = 34;
+    final int descriptionWidth = 36;
+
     final TableRow row = new TableRow(outputFormat);
-    row.add(new TableCell(outputFormat, 2, "name", name));
-    row.add(new TableCell(outputFormat, "description", description));
+    row.add(new TableCell(outputFormat,
+                          2,
+                          "name",
+                          format(name, nameWidth, true)));
+    row.add(new TableCell(outputFormat, "description", format(description,
+                                                              descriptionWidth,
+                                                              false)));
     return row.toString();
   }
 
@@ -108,8 +125,8 @@ abstract class BaseTextFormattingHelper
     final int nameWidth = 36;
 
     final TableRow row = new TableRow(outputFormat);
-    row.add(new TableCell(outputFormat, format(name, nameWidth, true)));
-    row.add(new TableCell(outputFormat, value));
+    row.add(new TableCell(outputFormat, "", format(name, nameWidth, true)));
+    row.add(new TableCell(outputFormat, "", value));
     return row.toString();
   }
 
@@ -132,6 +149,56 @@ abstract class BaseTextFormattingHelper
     {
       return text;
     }
+  }
+
+  /**
+   * Called to handle the row output. Handler to be implemented by
+   * subclass.
+   * 
+   * @param columnNames
+   *        Column names
+   * @param columnData
+   *        Column data
+   * @throws QueryExecutorException
+   *         On an exception
+   */
+  public String createRow(final String[] columnNames, final String[] columnData)
+  {
+    OutputFormat outputFormat = this.outputFormat;
+    if (outputFormat == OutputFormat.text)
+    {
+      outputFormat = OutputFormat.csv;
+    }
+    final TableRow row = new TableRow(outputFormat);
+    for (int i = 0; i < columnData.length; i++)
+    {
+      row.add(new TableCell(outputFormat, "", columnData[i]));
+    }
+    return row.toString();
+  }
+
+  /**
+   * Called to handle the header output. Handler to be implemented by
+   * subclass.
+   * 
+   * @param columnNames
+   *        Column names
+   * @throws QueryExecutorException
+   *         On an exception
+   */
+  public String createRowHeader(final String[] columnNames)
+  {
+    OutputFormat outputFormat = this.outputFormat;
+    if (outputFormat == OutputFormat.text)
+    {
+      outputFormat = OutputFormat.csv;
+    }
+    final TableRow row = new TableRow(outputFormat);
+    for (int i = 0; i < columnNames.length; i++)
+    {
+      row.add(new TableCell(outputFormat, "name", columnNames[i]));
+    }
+    return row.toString();
   }
 
 }

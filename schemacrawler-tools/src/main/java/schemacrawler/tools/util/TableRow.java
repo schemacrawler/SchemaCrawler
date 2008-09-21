@@ -32,19 +32,19 @@ import sf.util.Utilities;
  * 
  * @author Sualeh Fatehi
  */
-public final class TableRow
+final class TableRow
 {
 
   private final OutputFormat outputFormat;
   private final List<TableCell> cells;
 
-  public TableRow(final OutputFormat outputFormat)
+  TableRow(final OutputFormat outputFormat)
   {
     this.outputFormat = outputFormat;
     cells = new ArrayList<TableCell>();
   }
 
-  public TableRow(final OutputFormat outputFormat, final int colSpan)
+  TableRow(final OutputFormat outputFormat, final int colSpan)
   {
     this(outputFormat);
     cells.add(new TableCell(outputFormat, colSpan, "", ""));

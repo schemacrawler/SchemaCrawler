@@ -41,8 +41,6 @@ import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 import schemacrawler.tools.util.PlainTextFormattingHelper;
-import schemacrawler.tools.util.TableCell;
-import schemacrawler.tools.util.TableRow;
 import schemacrawler.tools.util.TextFormattingHelper;
 import sf.util.Utilities;
 
@@ -55,8 +53,8 @@ public final class DataTextFormatter
   implements DataHandler
 {
 
-  private static final Logger LOGGER = Logger
-    .getLogger(DataTextFormatter.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(DataTextFormatter.class
+    .getName());
 
   private static final String BINARY = "<binary>";
 
@@ -158,7 +156,7 @@ public final class DataTextFormatter
       {
         columnNames[i] = rsm.getColumnName(i + 1);
       }
-      handleRowsHeader(columnNames);
+      out.println(formattingHelper.createRowHeader(columnNames));
 
       if (options.isMergeRows() && columnCount > 1)
       {
@@ -212,57 +210,7 @@ public final class DataTextFormatter
     outputRow.addAll(row);
     outputRow.add(lastColumnData);
     final String[] columnData = outputRow.toArray(new String[outputRow.size()]);
-    handleRow(columnNames, columnData);
-  }
-
-  /**
-   * Called to handle the row output. Handler to be implemented by
-   * subclass.
-   * 
-   * @param columnNames
-   *        Column names
-   * @param columnData
-   *        Column data
-   * @throws QueryExecutorException
-   *         On an exception
-   */
-  private void handleRow(final String[] columnNames, final String[] columnData)
-  {
-    OutputFormat outputFormat = options.getOutputOptions().getOutputFormat();
-    if (outputFormat == OutputFormat.text)
-    {
-      outputFormat = OutputFormat.csv;
-    }
-    final TableRow row = new TableRow(outputFormat);
-    for (int i = 0; i < columnData.length; i++)
-    {
-      row.add(new TableCell(outputFormat, columnData[i]));
-    }
-    out.println(row.toString());
-  }
-
-  /**
-   * Called to handle the header output. Handler to be implemented by
-   * subclass.
-   * 
-   * @param columnNames
-   *        Column names
-   * @throws QueryExecutorException
-   *         On an exception
-   */
-  private void handleRowsHeader(final String[] columnNames)
-  {
-    OutputFormat outputFormat = options.getOutputOptions().getOutputFormat();
-    if (outputFormat == OutputFormat.text)
-    {
-      outputFormat = OutputFormat.csv;
-    }
-    final TableRow row = new TableRow(outputFormat);
-    for (int i = 0; i < columnNames.length; i++)
-    {
-      row.add(new TableCell(outputFormat, "name", columnNames[i]));
-    }
-    out.println(row.toString());
+    out.println(formattingHelper.createRow(columnNames, columnData));
   }
 
   private void iterateRows(final ResultSet rows, final String[] columnNames)
@@ -282,7 +230,7 @@ public final class DataTextFormatter
       }
       final String[] columnData = currentRow.toArray(new String[currentRow
         .size()]);
-      handleRow(columnNames, columnData);
+      out.println(formattingHelper.createRow(columnNames, columnData));
     }
   }
 
