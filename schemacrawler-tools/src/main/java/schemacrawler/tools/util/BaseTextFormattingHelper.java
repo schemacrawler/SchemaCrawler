@@ -23,6 +23,7 @@ package schemacrawler.tools.util;
 
 import schemacrawler.execute.QueryExecutorException;
 import schemacrawler.tools.OutputFormat;
+import schemacrawler.tools.util.TableCell.Align;
 import sf.util.Utilities;
 
 /**
@@ -48,8 +49,13 @@ abstract class BaseTextFormattingHelper
   public String createDefinitionRow(final String definition)
   {
     final TableRow row = new TableRow(outputFormat);
-    row.add(new TableCell(outputFormat, "ordinal", ""));
-    row.add(new TableCell(outputFormat, 2, "definition", definition));
+    row.add(new TableCell("", 0, Align.left, 1, "ordinal", outputFormat));
+    row.add(new TableCell(definition,
+                          0,
+                          Align.left,
+                          2,
+                          "definition",
+                          outputFormat));
     return row.toString();
   }
 
@@ -69,16 +75,29 @@ abstract class BaseTextFormattingHelper
     final TableRow row = new TableRow(outputFormat);
     if (Utilities.isBlank(ordinal))
     {
-      row.add(new TableCell(outputFormat, "ordinal", ""));
+      row.add(new TableCell("", 0, Align.left, 1, "ordinal", outputFormat));
     }
     else
     {
-      row.add(new TableCell(outputFormat, "ordinal", format(ordinal, 2, true)));
+      row.add(new TableCell(format(ordinal, 2, true),
+                            0,
+                            Align.left,
+                            1,
+                            "ordinal",
+                            outputFormat));
     }
-    row.add(new TableCell(outputFormat, "subname", format(subName,
-                                                          subNameWidth,
-                                                          true)));
-    row.add(new TableCell(outputFormat, "type", format(type, typeWidth, true)));
+    row.add(new TableCell(format(subName, subNameWidth, true),
+                          0,
+                          Align.left,
+                          1,
+                          "subname",
+                          outputFormat));
+    row.add(new TableCell(format(type, typeWidth, true),
+                          0,
+                          Align.left,
+                          1,
+                          "type",
+                          outputFormat));
     return row.toString();
   }
 
@@ -104,13 +123,18 @@ abstract class BaseTextFormattingHelper
     final int descriptionWidth = 36;
 
     final TableRow row = new TableRow(outputFormat);
-    row.add(new TableCell(outputFormat,
+    row.add(new TableCell(format(name, nameWidth, true),
+                          0,
+                          Align.left,
                           2,
                           "name",
-                          format(name, nameWidth, true)));
-    row.add(new TableCell(outputFormat, "description", format(description,
-                                                              descriptionWidth,
-                                                              false)));
+                          outputFormat));
+    row.add(new TableCell(format(description, descriptionWidth, false),
+                          0,
+                          Align.left,
+                          1,
+                          "description",
+                          outputFormat));
     return row.toString();
   }
 
@@ -125,8 +149,13 @@ abstract class BaseTextFormattingHelper
     final int nameWidth = 36;
 
     final TableRow row = new TableRow(outputFormat);
-    row.add(new TableCell(outputFormat, "", format(name, nameWidth, true)));
-    row.add(new TableCell(outputFormat, "", value));
+    row.add(new TableCell(format(name, nameWidth, true),
+                          0,
+                          Align.left,
+                          1,
+                          "",
+                          outputFormat));
+    row.add(new TableCell(value, 0, Align.left, 1, "", outputFormat));
     return row.toString();
   }
 
@@ -172,7 +201,7 @@ abstract class BaseTextFormattingHelper
     final TableRow row = new TableRow(outputFormat);
     for (int i = 0; i < columnData.length; i++)
     {
-      row.add(new TableCell(outputFormat, "", columnData[i]));
+      row.add(new TableCell(columnData[i], 0, Align.left, 1, "", outputFormat));
     }
     return row.toString();
   }
@@ -196,7 +225,12 @@ abstract class BaseTextFormattingHelper
     final TableRow row = new TableRow(outputFormat);
     for (int i = 0; i < columnNames.length; i++)
     {
-      row.add(new TableCell(outputFormat, "name", columnNames[i]));
+      row.add(new TableCell(columnNames[i],
+                            0,
+                            Align.left,
+                            1,
+                            "name",
+                            outputFormat));
     }
     return row.toString();
   }

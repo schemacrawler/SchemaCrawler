@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import schemacrawler.tools.OutputFormat;
+import schemacrawler.tools.util.TableCell.Align;
 import sf.util.Utilities;
 
 /**
@@ -47,7 +48,7 @@ final class TableRow
   TableRow(final OutputFormat outputFormat, final int colSpan)
   {
     this(outputFormat);
-    cells.add(new TableCell(outputFormat, colSpan, "", ""));
+    cells.add(new TableCell("", 0, Align.left, colSpan, "", outputFormat));
   }
 
   /**

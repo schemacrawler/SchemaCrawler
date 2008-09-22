@@ -31,32 +31,36 @@ import sf.util.Utilities;
 final class TableCell
 {
 
+  enum Align
+  {
+    left, right;
+  }
+
   private final OutputFormat outputFormat;
   private final String styleClass;
   private final int colSpan;
+  private final int characterWidth;
+  private final Align align;
   private final String text;
 
   TableCell(final OutputFormat outputFormat)
   {
-    this(outputFormat, 1, "", "");
+    this("", 0, Align.left, 1, "", outputFormat);
   }
 
-  TableCell(final OutputFormat outputFormat,
+  TableCell(final String text,
+            int characterWidth,
+            Align align,
             final int colSpan,
             final String styleClass,
-            final String text)
+            final OutputFormat outputFormat)
   {
     this.outputFormat = outputFormat;
     this.colSpan = colSpan;
     this.styleClass = styleClass;
     this.text = text;
-  }
-
-  TableCell(final OutputFormat outputFormat,
-            final String styleClass,
-            final String text)
-  {
-    this(outputFormat, 1, styleClass, text);
+    this.characterWidth = characterWidth;
+    this.align = align;
   }
 
   /**
