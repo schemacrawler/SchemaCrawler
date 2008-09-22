@@ -22,6 +22,7 @@ package schemacrawler.tools.util;
 
 
 import schemacrawler.tools.OutputFormat;
+import schemacrawler.tools.util.TableCell.Align;
 import sf.util.Utilities;
 
 /**
@@ -108,7 +109,7 @@ public final class HtmlFormattingHelper
   public String createSeparatorRow()
   {
     final TableRow row = new TableRow(OutputFormat.html);
-    row.add(new TableCell(OutputFormat.html, 3, "", "<hr/>"));
+    row.add(new TableCell("<hr/>", 0, Align.left, 3, "", OutputFormat.html));
     return row.toString();
   }
 
