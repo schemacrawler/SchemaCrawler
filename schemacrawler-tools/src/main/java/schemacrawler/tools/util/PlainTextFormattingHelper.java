@@ -76,7 +76,7 @@ public class PlainTextFormattingHelper
    */
   public String createObjectEnd()
   {
-    return "\n";
+    return Utilities.NEWLINE;
   }
 
   /**
@@ -90,8 +90,7 @@ public class PlainTextFormattingHelper
     if (!Utilities.isBlank(name))
     {
       objectStart = objectStart + Utilities.NEWLINE + name + Utilities.NEWLINE
-                    + FormatUtils.repeat("-", FormatUtils.MAX_LINE_LENGTH)
-                    + Utilities.NEWLINE;
+                    + FormatUtils.repeat("-", FormatUtils.MAX_LINE_LENGTH);
     }
     return objectStart;
   }
@@ -104,7 +103,7 @@ public class PlainTextFormattingHelper
    */
   public String createPreformattedText(final String id, final String text)
   {
-    return "\n" + text;
+    return Utilities.NEWLINE + text;
   }
 
   /**

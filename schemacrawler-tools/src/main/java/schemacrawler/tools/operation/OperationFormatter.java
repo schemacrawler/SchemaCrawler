@@ -170,7 +170,7 @@ public final class OperationFormatter
     }
     if (operation == Operation.count)
     {
-      out.println(formattingHelper.createObjectStart(query.getQuery()));
+      out.println(formattingHelper.createObjectStart("Row Count"));
     }
   }
 
