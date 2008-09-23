@@ -50,6 +50,19 @@ public class SchemaCrawlerCommandLine
   private final OutputOptions outputOptions;
   private final DatabaseConnector databaseConnector;
 
+  public SchemaCrawlerCommandLine(Command[] commands,
+                                  Config config,
+                                  DatabaseConnector databaseConnector,
+                                  OutputOptions outputOptions)
+  {
+    this.args = null;
+    //
+    this.commands = commands;
+    this.config = config;
+    this.databaseConnector = databaseConnector;
+    this.outputOptions = outputOptions;
+  }
+
   /**
    * Loads objects from command line options.
    * 
@@ -180,7 +193,7 @@ public class SchemaCrawlerCommandLine
   @Override
   public String toString()
   {
-    return args.toString();
+    return String.valueOf(args);
   }
 
 }

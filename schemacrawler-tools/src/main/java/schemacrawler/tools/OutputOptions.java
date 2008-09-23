@@ -87,6 +87,33 @@ public final class OutputOptions
   }
 
   /**
+   * Output options, given the type and the output filename.
+   * 
+   * @param outputFormatValue
+   *        Type of output, which is dependent on the executor
+   * @param outputFilename
+   *        Output filename
+   */
+  public OutputOptions(final OutputFormat outputFormat,
+                       final String outputFilename)
+  {
+    if (outputFormat == null)
+    {
+      throw new IllegalArgumentException("No output format provided");
+    }
+    this.outputFormatValue = outputFormat.name();
+
+    if (!Utilities.isBlank(outputFilename))
+    {
+      outputFile = new File(outputFilename);
+    }
+
+    noHeader = true;
+    noFooter = true;
+    noInfo = true;
+  }
+
+  /**
    * Close the output writer.
    * 
    * @param writer

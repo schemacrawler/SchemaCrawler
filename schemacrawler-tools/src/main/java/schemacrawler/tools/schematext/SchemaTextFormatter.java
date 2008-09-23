@@ -169,17 +169,7 @@ public final class SchemaTextFormatter
   public void handle(final DatabaseInfo databaseInfo)
   {
 
-    if (!options.getOutputOptions().isNoInfo())
-    {
-      final StringWriter stringWriter = new StringWriter();
-      final PrintWriter writer = new PrintWriter(stringWriter);
-      FormatUtils.printDatabaseInfo(databaseInfo, writer);
-      writer.flush();
-      writer.close();
-      out.println(formattingHelper.createPreformattedText("databaseInfo",
-                                                          stringWriter
-                                                            .toString()));
-    }
+    printHeaderObject("databaseInfo", databaseInfo);
 
     final SchemaTextDetailType schemaTextDetailType = options
       .getSchemaTextDetailType();
@@ -217,17 +207,7 @@ public final class SchemaTextFormatter
   public void handle(final JdbcDriverInfo driverInfo)
   {
 
-    if (!options.getOutputOptions().isNoInfo())
-    {
-      final StringWriter stringWriter = new StringWriter();
-      final PrintWriter writer = new PrintWriter(stringWriter);
-      FormatUtils.printJdbcDriverInfo(driverInfo, writer);
-      writer.flush();
-      writer.close();
-      out.println(formattingHelper.createPreformattedText("driverInfo",
-                                                          stringWriter
-                                                            .toString()));
-    }
+    printHeaderObject("driverInfo", driverInfo);
 
     final SchemaTextDetailType schemaTextDetailType = options
       .getSchemaTextDetailType();
@@ -271,7 +251,6 @@ public final class SchemaTextFormatter
       .getSchemaTextDetailType();
     if (schemaTextDetailType != SchemaTextDetailType.brief_schema)
     {
-
       out.println(formattingHelper.createSeparatorRow());
 
       final ProcedureColumn[] columns = procedure.getColumns();
@@ -298,14 +277,14 @@ public final class SchemaTextFormatter
                                                      column.getName(),
                                                      columnType));
       }
-      if (schemaTextDetailType
-        .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
-      {
-        printDefinition(procedure.getDefinition());
-      }
-      out.print(formattingHelper.createObjectEnd());
-      out.println();
     }
+    if (schemaTextDetailType
+      .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
+    {
+      printDefinition(procedure.getDefinition());
+    }
+    out.print(formattingHelper.createObjectEnd());
+    out.println();
 
     out.flush();
 
@@ -332,7 +311,7 @@ public final class SchemaTextFormatter
     if (schemaTextDetailType != SchemaTextDetailType.brief_schema)
     {
       out.println(formattingHelper.createSeparatorRow());
-      printColumns(table.getColumns());
+      printTableColumns(table.getColumns());
     }
 
     if (schemaTextDetailType
@@ -490,10 +469,7 @@ public final class SchemaTextFormatter
     }
   }
 
-  /**
-   * @param columns
-   */
-  private void printColumns(final Column[] columns)
+  private void printTableColumns(final Column[] columns)
   {
     for (int i = 0; i < columns.length; i++)
     {
@@ -581,6 +557,20 @@ public final class SchemaTextFormatter
     }
   }
 
+  private void printHeaderObject(String id, final Object object)
+  {
+    if (!options.getOutputOptions().isNoInfo())
+    {
+      final StringWriter stringWriter = new StringWriter();
+      final PrintWriter writer = new PrintWriter(stringWriter);
+      FormatUtils.printHeaderObject(object, writer);
+      writer.flush();
+      writer.close();
+      out.println(formattingHelper.createPreformattedText(id, stringWriter
+        .toString()));
+    }
+  }
+
   private void printIndices(final Index[] indices)
   {
     for (final Index index: indices)
@@ -605,7 +595,7 @@ public final class SchemaTextFormatter
                                     + index.getSortSequence().toString() + " "
                                     + indexTypeString + "index]";
         out.println(formattingHelper.createNameRow(indexName, indexDetails));
-        printColumns(index.getColumns());
+        printTableColumns(index.getColumns());
       }
     }
   }
@@ -645,7 +635,7 @@ public final class SchemaTextFormatter
         pkName = name;
       }
       out.println(formattingHelper.createNameRow(pkName, "[primary key]"));
-      printColumns(primaryKey.getColumns());
+      printTableColumns(primaryKey.getColumns());
     }
   }
 

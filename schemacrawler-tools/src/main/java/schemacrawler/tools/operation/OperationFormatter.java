@@ -250,17 +250,7 @@ public final class OperationFormatter
    */
   public void handle(final DatabaseInfo databaseInfo)
   {
-    if (!options.getOutputOptions().isNoInfo())
-    {
-      final StringWriter stringWriter = new StringWriter();
-      final PrintWriter writer = new PrintWriter(stringWriter);
-      FormatUtils.printDatabaseInfo(databaseInfo, writer);
-      writer.flush();
-      writer.close();
-      out.println(formattingHelper.createPreformattedText("databaseInfo",
-                                                          stringWriter
-                                                            .toString()));
-    }
+    printHeaderObject("databaseInfo", databaseInfo);
   }
 
   /**
@@ -270,17 +260,7 @@ public final class OperationFormatter
    */
   public void handle(final JdbcDriverInfo driverInfo)
   {
-    if (!options.getOutputOptions().isNoInfo())
-    {
-      final StringWriter stringWriter = new StringWriter();
-      final PrintWriter writer = new PrintWriter(stringWriter);
-      FormatUtils.printJdbcDriverInfo(driverInfo, writer);
-      writer.flush();
-      writer.close();
-      out.println(formattingHelper.createPreformattedText("driverInfo",
-                                                          stringWriter
-                                                            .toString()));
-    }
+    printHeaderObject("driverInfo", driverInfo);
   }
 
   /**
@@ -394,6 +374,20 @@ public final class OperationFormatter
     final String message = getMessage(aggregate);
     //
     out.println(formattingHelper.createNameRow(table.getName(), message));
+  }
+
+  private void printHeaderObject(String id, final Object object)
+  {
+    if (!options.getOutputOptions().isNoInfo())
+    {
+      final StringWriter stringWriter = new StringWriter();
+      final PrintWriter writer = new PrintWriter(stringWriter);
+      FormatUtils.printHeaderObject(object, writer);
+      writer.flush();
+      writer.close();
+      out.println(formattingHelper.createPreformattedText(id, stringWriter
+        .toString()));
+    }
   }
 
 }
