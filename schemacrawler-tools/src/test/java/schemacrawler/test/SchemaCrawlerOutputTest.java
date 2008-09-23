@@ -92,12 +92,8 @@ public class SchemaCrawlerOutputTest
     for (OutputFormat outputFormat: OutputFormat.values())
     {
       File outputFile;
-
       outputFile = createCompositeOutput(commands1, outputFormat);
-      System.err.println(outputFile.getAbsolutePath());
-
       outputFile = createCompositeOutput(commands2, outputFormat);
-      System.err.println(outputFile.getAbsolutePath());
     }
   }
 
@@ -282,10 +278,7 @@ public class SchemaCrawlerOutputTest
                        .getResourceAsStream(referenceFile)));
     if (!contentEquals)
     {
-      // fail("Incorrect file contents in " +
-      // outputFile.getAbsolutePath());
-      System.err.println("Incorrect file contents in "
-                         + outputFile.getAbsolutePath());
+      fail("Incorrect file contents in " + outputFile.getAbsolutePath());
     }
 
     return outputFile;

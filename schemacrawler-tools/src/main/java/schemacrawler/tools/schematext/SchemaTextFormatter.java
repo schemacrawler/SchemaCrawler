@@ -131,6 +131,11 @@ public final class SchemaTextFormatter
   public void end()
     throws SchemaCrawlerException
   {
+    if (options.getSchemaTextDetailType() == SchemaTextDetailType.brief_schema)
+    {
+      out.print(formattingHelper.createObjectEnd());
+    }
+
     if (!getNoFooter())
     {
       out.println(formattingHelper.createPreformattedText("tableCount",
@@ -241,14 +246,18 @@ public final class SchemaTextFormatter
    */
   public final void handle(final Procedure procedure)
   {
-    out.print(formattingHelper.createObjectStart(""));
+    final SchemaTextDetailType schemaTextDetailType = options
+      .getSchemaTextDetailType();
+    if (schemaTextDetailType != SchemaTextDetailType.brief_schema)
+    {
+      out.print(formattingHelper.createObjectStart(""));
+    }
+
     final String procedureTypeDetail = "procedure, " + procedure.getType();
     out
       .println(formattingHelper.createNameRow(procedure.getFullName(),
                                               "[" + procedureTypeDetail + "]"));
 
-    final SchemaTextDetailType schemaTextDetailType = options
-      .getSchemaTextDetailType();
     if (schemaTextDetailType != SchemaTextDetailType.brief_schema)
     {
       out.println(formattingHelper.createSeparatorRow());
@@ -283,8 +292,11 @@ public final class SchemaTextFormatter
     {
       printDefinition(procedure.getDefinition());
     }
-    out.print(formattingHelper.createObjectEnd());
-    out.println();
+
+    if (schemaTextDetailType != SchemaTextDetailType.brief_schema)
+    {
+      out.println(formattingHelper.createObjectEnd());
+    }
 
     out.flush();
 
@@ -298,15 +310,21 @@ public final class SchemaTextFormatter
    */
   public final void handle(final Table table)
   {
-    out.print(formattingHelper.createObjectStart(""));
-    final String typeBracketed = "["
-                                 + table.getType().toString()
-                                   .toLowerCase(Locale.ENGLISH) + "]";
-    out.println(formattingHelper.createNameRow(table.getFullName(),
-                                               typeBracketed));
-
     final SchemaTextDetailType schemaTextDetailType = options
       .getSchemaTextDetailType();
+
+    String nameRow = formattingHelper.createNameRow(table.getFullName(),
+                                                    "["
+                                                        + table.getType()
+                                                          .name() + "]");
+
+    if ((schemaTextDetailType != SchemaTextDetailType.brief_schema)
+        || (schemaTextDetailType == SchemaTextDetailType.brief_schema && tableCount == 0))
+    {
+      out.print(formattingHelper.createObjectStart(""));
+    }
+
+    out.println(nameRow);
 
     if (schemaTextDetailType != SchemaTextDetailType.brief_schema)
     {
@@ -339,13 +357,13 @@ public final class SchemaTextFormatter
       }
     }
 
-    out.print(formattingHelper.createObjectEnd());
-    out.println();
-
-    tableCount = tableCount + 1;
-
+    if (schemaTextDetailType != SchemaTextDetailType.brief_schema)
+    {
+      out.println(formattingHelper.createObjectEnd());
+    }
     out.flush();
 
+    tableCount = tableCount + 1;
   }
 
   final boolean getNoFooter()
