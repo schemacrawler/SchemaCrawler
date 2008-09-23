@@ -1,0 +1,49 @@
+
+
+------------------------------------------------------------------------
+-- database: HSQL Database Engine 1.8.0
+
+------------------------------------------------------------------------
+
+
+
+PUBLIC.CUSTOMER                                                  [table]
+
+
+PUBLIC.CUSTOMERLIST                                               [view]
+
+
+PUBLIC.INVOICE                                                   [table]
+
+
+PUBLIC.ITEM                                                      [table]
+
+
+PUBLIC.PRODUCT                                                   [table]
+
+
+PUBLIC.SUPPLIER                                                  [table]
+
+
+SCHEMACRAWLER.ITEM                                               [table]
+
+
+SCHEMACRAWLER.PRODUCT2                                           [table]
+
+
+
+Row Count
+------------------------------------------------------------------------
+CUSTOMER                                                         50 rows
+CUSTOMERLIST                                                     50 rows
+INVOICE                                                          50 rows
+ITEM                                                            650 rows
+PRODUCT                                                          50 rows
+SUPPLIER                                                          1 rows
+ITEM                                                             20 rows
+PRODUCT2                                                         11 rows
+
+
+
+8 tables.
+

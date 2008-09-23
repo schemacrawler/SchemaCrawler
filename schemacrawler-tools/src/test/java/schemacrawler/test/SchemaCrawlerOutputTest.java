@@ -26,7 +26,9 @@ import static org.junit.Assert.fail;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
+import org.apache.commons.io.IOUtils;
 import org.custommonkey.xmlunit.Validator;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -78,30 +80,24 @@ public class SchemaCrawlerOutputTest
   public void compareCompositeOutput()
     throws Exception
   {
-    final OutputFormat outputFormat = OutputFormat.text;
-
-    final String outputFilename = File
-      .createTempFile("schemacrawler.compareCompositeOutput.", "test")
-      .getAbsolutePath();
-    final OutputOptions outputOptions = new OutputOptions(outputFormat,
-                                                          outputFilename);
-
-    Command[] commands = new Command[] {
+    Command[] commands1 = new Command[] {
         new Command("maximum_schema", false),
         new Command("count", true),
-        new Command("dump", true)
+        new Command("dump", true),
     };
-    SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(commands,
-                                                                        new Config(),
-                                                                        new TestUtilityDatabaseConnector(testUtility),
-                                                                        outputOptions);
+    Command[] commands2 = new Command[] {
+        new Command("brief_schema", false), new Command("count", true),
+    };
 
-    SchemaCrawlerMain.schemacrawler(commandLine, "");
-
-    final File outputFile = new File(outputFilename);
-    if (!outputFile.delete())
+    for (OutputFormat outputFormat: OutputFormat.values())
     {
-      fail("Cannot delete output file");
+      File outputFile;
+
+      outputFile = createCompositeOutput(commands1, outputFormat);
+      System.err.println(outputFile.getAbsolutePath());
+
+      outputFile = createCompositeOutput(commands2, outputFormat);
+      System.err.println(outputFile.getAbsolutePath());
     }
   }
 
@@ -250,5 +246,48 @@ public class SchemaCrawlerOutputTest
 
     final Validator validator = new Validator(new FileReader(outputFilename));
     validator.assertIsValid();
+  }
+
+  private File createCompositeOutput(Command[] commands,
+                                     final OutputFormat outputFormat)
+    throws IOException, Exception
+  {
+    String referenceFile = "/" + commands[0].toString() + "."
+                           + outputFormat.name();
+
+    File outputFile = File.createTempFile("schemacrawler.", ".test."
+                                                            + commands[0]
+                                                              .toString()
+                                                            + "."
+                                                            + outputFormat
+                                                              .name());
+
+    final OutputOptions outputOptions = new OutputOptions(outputFormat,
+                                                          outputFile
+                                                            .getAbsolutePath());
+    outputOptions.setNoInfo(false);
+    outputOptions.setNoHeader(false);
+    outputOptions.setNoFooter(false);
+
+    SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(commands,
+                                                                        new Config(),
+                                                                        new TestUtilityDatabaseConnector(testUtility),
+                                                                        outputOptions);
+
+    SchemaCrawlerMain.schemacrawler(commandLine, "");
+
+    boolean contentEquals = IOUtils
+      .contentEquals(new FileReader(outputFile),
+                     new InputStreamReader(SchemaCrawlerOutputTest.class
+                       .getResourceAsStream(referenceFile)));
+    if (!contentEquals)
+    {
+      // fail("Incorrect file contents in " +
+      // outputFile.getAbsolutePath());
+      System.err.println("Incorrect file contents in "
+                         + outputFile.getAbsolutePath());
+    }
+
+    return outputFile;
   }
 }
