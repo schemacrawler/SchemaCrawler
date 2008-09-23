@@ -168,10 +168,6 @@ public final class OperationFormatter
     {
       out.println(formattingHelper.createDocumentStart());
     }
-    if (operation == Operation.count)
-    {
-      out.println(formattingHelper.createObjectStart("Row Count"));
-    }
   }
 
   /**
@@ -279,6 +275,10 @@ public final class OperationFormatter
    */
   public final void handle(final Table table)
   {
+    if (operation == Operation.count && tableCount == 0)
+    {
+      out.println(formattingHelper.createObjectStart("Row Count"));
+    }
     tableCount++;
 
     final String sql = query.getQueryForTable(table);
