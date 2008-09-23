@@ -1,3 +1,7 @@
+.underscore {
+  border-bottom: 1px solid Black;
+}
+
 .name {
   font-weight: bold;
   width: 150px;
