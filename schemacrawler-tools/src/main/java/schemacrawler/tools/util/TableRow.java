@@ -51,6 +51,11 @@ final class TableRow
     cells.add(new TableCell("", 0, Align.left, colSpan, "", outputFormat));
   }
 
+  public void add(final TableCell cell)
+  {
+    cells.add(cell);
+  }
+
   /**
    * Converts the table row to HTML.
    * 
@@ -67,11 +72,6 @@ final class TableRow
     {
       return toPlainTextString();
     }
-  }
-
-  public void add(final TableCell cell)
-  {
-    cells.add(cell);
   }
 
   private String getFieldSeparator()
