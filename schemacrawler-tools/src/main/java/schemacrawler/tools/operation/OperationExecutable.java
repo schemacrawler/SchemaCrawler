@@ -90,10 +90,11 @@ public class OperationExecutable
 
     final SchemaCrawler crawler = new DatabaseSchemaCrawler(dataSource
       .getConnection());
-    crawler.crawl(schemaCrawlerOptions, new OperationFormatter(toolOptions,
-                                                         query,
-                                                         connection,
-                                                         operationDataHandler));
+    crawler.crawl(schemaCrawlerOptions,
+                  new OperationFormatter(toolOptions,
+                                         query,
+                                         connection,
+                                         operationDataHandler));
   }
 
 }
