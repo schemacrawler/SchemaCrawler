@@ -45,7 +45,7 @@ final class TableCell
 
   TableCell(final OutputFormat outputFormat)
   {
-    this("", 0, Align.left, 1, "", outputFormat);
+    this("", "", outputFormat);
   }
 
   TableCell(final String text,
@@ -61,6 +61,13 @@ final class TableCell
     this.text = text;
     this.characterWidth = characterWidth;
     this.align = align;
+  }
+
+  TableCell(final String text,
+            final String styleClass,
+            final OutputFormat outputFormat)
+  {
+    this(text, 0, Align.left, 1, styleClass, outputFormat);
   }
 
   /**
