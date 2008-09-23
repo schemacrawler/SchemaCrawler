@@ -106,14 +106,4 @@ public class PlainTextFormattingHelper
     return Utilities.NEWLINE + text;
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.util.TextFormattingHelper#createSeparatorRow()
-   */
-  public String createSeparatorRow()
-  {
-    return FormatUtils.repeat("-", FormatUtils.MAX_LINE_LENGTH);
-  }
-
 }

@@ -108,7 +108,9 @@ abstract class BaseTextFormattingHelper
    * @see schemacrawler.tools.util.TextFormattingHelper#createNameRow(java.lang.String,
    *      java.lang.String)
    */
-  public String createNameRow(final String name, final String description)
+  public String createNameRow(final String name,
+                              final String description,
+                              boolean underscore)
   {
     int nameWidth = 34;
     int descriptionWidth = 36;
@@ -126,16 +128,29 @@ abstract class BaseTextFormattingHelper
                                - (description.length() - descriptionWidth));
     }
 
+    String nameRowString;
     final TableRow row = new TableRow(outputFormat);
-    row
-      .add(new TableCell(name, nameWidth, Align.left, 2, "name", outputFormat));
+    row.add(new TableCell(name,
+                          nameWidth,
+                          Align.left,
+                          2,
+                          "name" + (underscore? " underscore": ""),
+                          outputFormat));
     row.add(new TableCell(description,
                           descriptionWidth,
                           Align.right,
                           1,
-                          "description",
+                          "description" + (underscore? " underscore": ""),
                           outputFormat));
-    return row.toString();
+    nameRowString = row.toString();
+
+    if (underscore && outputFormat != OutputFormat.html)
+    {
+      nameRowString = nameRowString + Utilities.NEWLINE
+                      + FormatUtils.repeat("-", FormatUtils.MAX_LINE_LENGTH);
+    }
+
+    return nameRowString;
   }
 
   /**

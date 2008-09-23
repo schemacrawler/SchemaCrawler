@@ -21,8 +21,6 @@
 package schemacrawler.tools.util;
 
 
-import schemacrawler.execute.QueryExecutorException;
-
 /**
  * Methods to format entire rows of output.
  * 
@@ -112,7 +110,9 @@ public interface TextFormattingHelper
    *        Description
    * @return Row as a string
    */
-  String createNameRow(final String name, final String description);
+  String createNameRow(final String name,
+                       final String description,
+                       boolean underscore);
 
   /**
    * Create a name and value row.
@@ -145,12 +145,5 @@ public interface TextFormattingHelper
    * Creates a pre-formatted text section.
    */
   String createPreformattedText(String id, String text);
-
-  /**
-   * Creates a separator row.
-   * 
-   * @return Row as a string
-   */
-  String createSeparatorRow();
 
 }

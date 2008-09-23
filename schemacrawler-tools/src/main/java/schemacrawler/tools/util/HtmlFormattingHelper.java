@@ -22,7 +22,6 @@ package schemacrawler.tools.util;
 
 
 import schemacrawler.tools.OutputFormat;
-import schemacrawler.tools.util.TableCell.Align;
 import sf.util.Utilities;
 
 /**
@@ -99,18 +98,6 @@ public final class HtmlFormattingHelper
   public String createPreformattedText(final String id, final String text)
   {
     return String.format("<pre id=\'%s\'>%n%s</pre>", id, text);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.util.TextFormattingHelper#createSeparatorRow()
-   */
-  public String createSeparatorRow()
-  {
-    final TableRow row = new TableRow(OutputFormat.html);
-    row.add(new TableCell("<hr/>", 0, Align.left, 3, "", OutputFormat.html));
-    return row.toString();
   }
 
 }

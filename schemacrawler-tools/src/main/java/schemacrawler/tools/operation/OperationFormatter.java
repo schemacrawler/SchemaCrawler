@@ -373,7 +373,7 @@ public final class OperationFormatter
     }
     final String message = getMessage(aggregate);
     //
-    out.println(formattingHelper.createNameRow(table.getName(), message));
+    out.println(formattingHelper.createNameRow(table.getName(), message, false));
   }
 
   private void printHeaderObject(String id, final Object object)

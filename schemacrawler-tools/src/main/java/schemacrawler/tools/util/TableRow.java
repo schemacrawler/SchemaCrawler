@@ -74,7 +74,7 @@ final class TableRow
     }
   }
 
-  private String getFieldSeparator()
+  String getFieldSeparator()
   {
     if (outputFormat == OutputFormat.csv)
     {
