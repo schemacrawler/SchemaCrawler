@@ -164,7 +164,7 @@ public final class DataTextFormatter
       }
       else
       {
-        iterateRows(rows, columnNames);
+        iterateRows(rows, columnNames.length);
       }
     }
     catch (final SQLException e)
@@ -196,8 +196,7 @@ public final class DataTextFormatter
     return columnDataString;
   }
 
-  private void doHandleOneRow(final String[] columnNames,
-                              final List<String> row,
+  private void doHandleOneRow(final List<String> row,
                               final String lastColumnData)
     throws QueryExecutorException
   {
@@ -210,13 +209,12 @@ public final class DataTextFormatter
     outputRow.addAll(row);
     outputRow.add(lastColumnData);
     final String[] columnData = outputRow.toArray(new String[outputRow.size()]);
-    out.println(formattingHelper.createRow(columnNames, columnData));
+    out.println(formattingHelper.createRow(columnData));
   }
 
-  private void iterateRows(final ResultSet rows, final String[] columnNames)
+  private void iterateRows(final ResultSet rows, final int columnCount)
     throws SQLException, QueryExecutorException
   {
-    final int columnCount = columnNames.length;
     List<String> currentRow;
     while (rows.next())
     {
@@ -230,7 +228,7 @@ public final class DataTextFormatter
       }
       final String[] columnData = currentRow.toArray(new String[currentRow
         .size()]);
-      out.println(formattingHelper.createRow(columnNames, columnData));
+      out.println(formattingHelper.createRow(columnData));
     }
   }
 
@@ -262,8 +260,7 @@ public final class DataTextFormatter
       {
         // At this point, we have a new row coming in, so dump the
         // previous merged row out
-        doHandleOneRow(columnNames, previousRow, currentRowLastColumn
-          .toString());
+        doHandleOneRow(previousRow, currentRowLastColumn.toString());
         // reset
         currentRowLastColumn = new StringBuffer();
         // save the last column
@@ -273,7 +270,7 @@ public final class DataTextFormatter
       previousRow = currentRow;
     }
     // Dump the last row out
-    doHandleOneRow(columnNames, previousRow, currentRowLastColumn.toString());
+    doHandleOneRow(previousRow, currentRowLastColumn.toString());
   }
 
   /**

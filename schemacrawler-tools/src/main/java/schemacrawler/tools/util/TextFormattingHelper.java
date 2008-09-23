@@ -33,14 +33,12 @@ public interface TextFormattingHelper
    * Called to handle the row output. Handler to be implemented by
    * subclass.
    * 
-   * @param columnNames
-   *        Column names
    * @param columnData
    *        Column data
    * @throws QueryExecutorException
    *         On an exception
    */
-  public String createRow(final String[] columnNames, final String[] columnData);
+  public String createRow(final String[] columnData);
 
   /**
    * Called to handle the header output. Handler to be implemented by
