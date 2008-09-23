@@ -88,8 +88,8 @@ public class SchemaCrawlerOutputTest
 
     Command[] commands = new Command[] {
         new Command("maximum_schema", false),
-        new Command("count", false),
-        new Command("dump", false)
+        new Command("count", true),
+        new Command("dump", true)
     };
     SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(commands,
                                                                         new Config(),
