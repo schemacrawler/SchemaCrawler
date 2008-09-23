@@ -236,6 +236,16 @@ public final class OperationFormatter
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.ColumnDataType)
+   */
+  public void handle(ColumnDataType dataType)
+    throws SchemaCrawlerException
+  {
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see CrawlHandler#handle(DatabaseInfo)
    */
   public void handle(final DatabaseInfo databaseInfo)
@@ -279,16 +289,6 @@ public final class OperationFormatter
    * @see CrawlHandler#handle(Procedure)
    */
   public final void handle(final Procedure procedure)
-  {
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.ColumnDataType)
-   */
-  public void handle(ColumnDataType dataType)
-    throws SchemaCrawlerException
   {
   }
 
