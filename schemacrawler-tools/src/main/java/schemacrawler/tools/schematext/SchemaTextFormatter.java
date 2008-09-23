@@ -143,21 +143,6 @@ public final class SchemaTextFormatter
     options.getOutputOptions().closeOutputWriter(out);
   }
 
-  final boolean getNoFooter()
-  {
-    return options.getOutputOptions().isNoFooter();
-  }
-
-  final boolean getNoHeader()
-  {
-    return options.getOutputOptions().isNoHeader();
-  }
-
-  final SchemaTextDetailType getSchemaTextDetailType()
-  {
-    return options.getSchemaTextDetailType();
-  }
-
   /**
    * Tables count for tables processed.
    * 
@@ -382,6 +367,21 @@ public final class SchemaTextFormatter
 
     out.flush();
 
+  }
+
+  final boolean getNoFooter()
+  {
+    return options.getOutputOptions().isNoFooter();
+  }
+
+  final boolean getNoHeader()
+  {
+    return options.getOutputOptions().isNoHeader();
+  }
+
+  final SchemaTextDetailType getSchemaTextDetailType()
+  {
+    return options.getSchemaTextDetailType();
   }
 
   private String negate(final boolean positive, final String text)
