@@ -49,7 +49,7 @@ abstract class BaseTextFormattingHelper
   public String createDefinitionRow(final String definition)
   {
     final TableRow row = new TableRow(outputFormat);
-    row.add(new TableCell("", 0, Align.left, 1, "ordinal", outputFormat));
+    row.add(new TableCell("", "ordinal", outputFormat));
     row.add(new TableCell(definition,
                           0,
                           Align.left,
@@ -75,7 +75,7 @@ abstract class BaseTextFormattingHelper
     final TableRow row = new TableRow(outputFormat);
     if (Utilities.isBlank(ordinal))
     {
-      row.add(new TableCell("", 0, Align.left, 1, "ordinal", outputFormat));
+      row.add(new TableCell("", "ordinal", outputFormat));
     }
     else
     {
@@ -151,7 +151,7 @@ abstract class BaseTextFormattingHelper
 
     final TableRow row = new TableRow(outputFormat);
     row.add(new TableCell(name, nameWidth, Align.left, 1, "", outputFormat));
-    row.add(new TableCell(value, 0, Align.left, 1, "", outputFormat));
+    row.add(new TableCell(value, "", outputFormat));
     return row.toString();
   }
 
@@ -176,7 +176,7 @@ abstract class BaseTextFormattingHelper
     final TableRow row = new TableRow(outputFormat);
     for (int i = 0; i < columnData.length; i++)
     {
-      row.add(new TableCell(columnData[i], 0, Align.left, 1, "", outputFormat));
+      row.add(new TableCell(columnData[i], "", outputFormat));
     }
     return row.toString();
   }
@@ -200,12 +200,7 @@ abstract class BaseTextFormattingHelper
     final TableRow row = new TableRow(outputFormat);
     for (int i = 0; i < columnNames.length; i++)
     {
-      row.add(new TableCell(columnNames[i],
-                            0,
-                            Align.left,
-                            1,
-                            "name",
-                            outputFormat));
+      row.add(new TableCell(columnNames[i], "name", outputFormat));
     }
     return row.toString();
   }
