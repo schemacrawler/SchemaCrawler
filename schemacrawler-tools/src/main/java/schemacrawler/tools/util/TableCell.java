@@ -125,7 +125,21 @@ final class TableCell
     }
     else
     {
-      return text;
+      if (characterWidth > 0)
+      {
+        if (align == Align.right)
+        {
+          return FormatUtils.padLeft(text, characterWidth);
+        }
+        else
+        {
+          return FormatUtils.padRight(text, characterWidth);
+        }
+      }
+      else
+      {
+        return text;
+      }
     }
   }
 
