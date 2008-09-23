@@ -23,7 +23,6 @@ package schemacrawler.tools.schematext;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map;
@@ -569,13 +568,8 @@ public final class SchemaTextFormatter
   {
     if (!options.getOutputOptions().isNoInfo())
     {
-      final StringWriter stringWriter = new StringWriter();
-      final PrintWriter writer = new PrintWriter(stringWriter);
-      FormatUtils.printHeaderObject(object, writer);
-      writer.flush();
-      writer.close();
-      out.println(formattingHelper.createPreformattedText(id, stringWriter
-        .toString()));
+      out.println(formattingHelper.createPreformattedText(id, FormatUtils
+        .printHeaderObject(object)));
     }
   }
 

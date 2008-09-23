@@ -21,7 +21,7 @@
 package schemacrawler.tools.util;
 
 
-import java.io.PrintWriter;
+import sf.util.Utilities;
 
 /**
  * Utility.
@@ -88,15 +88,14 @@ public final class FormatUtils
    * @param out
    *        Output writer
    */
-  public static void printHeaderObject(final Object object,
-                                       final PrintWriter out)
+  public static String printHeaderObject(final Object object)
   {
-    out.println(repeat("-", MAX_LINE_LENGTH));
-    out.println(object.toString());
-    out.println(repeat("-", MAX_LINE_LENGTH));
-    out.println();
-    out.println();
-    out.flush();
+    final StringBuffer buffer = new StringBuffer();
+    buffer.append(repeat("-", MAX_LINE_LENGTH)).append(Utilities.NEWLINE);
+    buffer.append(object.toString()).append(Utilities.NEWLINE);
+    buffer.append(repeat("-", MAX_LINE_LENGTH)).append(Utilities.NEWLINE);
+    buffer.append(Utilities.NEWLINE).append(Utilities.NEWLINE);
+    return buffer.toString();
   }
 
   /**

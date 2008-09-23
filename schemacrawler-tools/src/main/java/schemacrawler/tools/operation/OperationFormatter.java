@@ -22,7 +22,6 @@ package schemacrawler.tools.operation;
 
 
 import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -373,20 +372,16 @@ public final class OperationFormatter
     }
     final String message = getMessage(aggregate);
     //
-    out.println(formattingHelper.createNameRow(table.getName(), message, false));
+    out
+      .println(formattingHelper.createNameRow(table.getName(), message, false));
   }
 
   private void printHeaderObject(String id, final Object object)
   {
     if (!options.getOutputOptions().isNoInfo())
     {
-      final StringWriter stringWriter = new StringWriter();
-      final PrintWriter writer = new PrintWriter(stringWriter);
-      FormatUtils.printHeaderObject(object, writer);
-      writer.flush();
-      writer.close();
-      out.println(formattingHelper.createPreformattedText(id, stringWriter
-        .toString()));
+      out.println(formattingHelper.createPreformattedText(id, FormatUtils
+        .printHeaderObject(object)));
     }
   }
 
