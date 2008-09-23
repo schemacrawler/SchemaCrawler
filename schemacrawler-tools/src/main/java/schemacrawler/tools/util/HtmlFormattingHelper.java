@@ -32,6 +32,39 @@ import sf.util.Utilities;
 public final class HtmlFormattingHelper
   extends BaseTextFormattingHelper
 {
+  /**
+   * HTML footer.
+   */
+  public static final String HTML_FOOTER = "</body>" + Utilities.NEWLINE
+                                           + "</html>";
+  /**
+   * HTML header.
+   */
+  public static final String HTML_HEADER = htmlHeader();
+
+  private static String htmlHeader()
+  {
+    final byte[] text = Utilities.readFully(FormatUtils.class
+      .getResourceAsStream("/schemacrawler-output.css"));
+    final String styleSheet = new String(text);
+
+    final String header = "" + "<?xml version='1.0' encoding='UTF-8'?>"
+                          + Utilities.NEWLINE
+                          + "<!DOCTYPE html"
+                          + Utilities.NEWLINE
+                          + "     PUBLIC \"-//W3C//DTD HTML 4.01 Strict//EN\""
+                          + Utilities.NEWLINE
+                          + "    \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"
+                          + Utilities.NEWLINE
+                          + "<html xmlns='http://www.w3.org/1999/xhtml'>"
+                          + Utilities.NEWLINE + "<head>" + Utilities.NEWLINE
+                          + "  <title>SchemaCrawler Output</title>"
+                          + Utilities.NEWLINE + "  <style type='text/css'>"
+                          + Utilities.NEWLINE + styleSheet + Utilities.NEWLINE
+                          + "  </style>" + Utilities.NEWLINE + "</head>"
+                          + Utilities.NEWLINE + "<body>" + Utilities.NEWLINE;
+    return header;
+  }
 
   public HtmlFormattingHelper(OutputFormat outputFormat)
   {
@@ -50,7 +83,7 @@ public final class HtmlFormattingHelper
    */
   public String createDocumentEnd()
   {
-    return FormatUtils.HTML_FOOTER;
+    return HTML_FOOTER;
   }
 
   /**
@@ -60,7 +93,7 @@ public final class HtmlFormattingHelper
    */
   public String createDocumentStart()
   {
-    return FormatUtils.HTML_HEADER;
+    return HTML_HEADER;
   }
 
   /**

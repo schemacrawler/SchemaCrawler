@@ -23,8 +23,6 @@ package schemacrawler.tools.util;
 
 import java.io.PrintWriter;
 
-import sf.util.Utilities;
-
 /**
  * Utility.
  * 
@@ -33,77 +31,12 @@ import sf.util.Utilities;
 public final class FormatUtils
 {
 
-  /**
-   * HTML footer.
-   */
-  public static final String HTML_FOOTER = "</body>" + Utilities.NEWLINE
-                                           + "</html>";
-  /**
-   * HTML header.
-   */
-  public static final String HTML_HEADER = htmlHeader();
-
   /** Maximum output line length */
   public static final int MAX_LINE_LENGTH = 72;
 
   private static final char QUOTE = '\"';
 
   private static final char SEPARATOR = ',';
-
-  /**
-   * Enclose the value in quotes and escape the quote and comma
-   * characters that are inside.
-   * 
-   * @param value
-   *        needs to be escaped and quoted
-   * @return the value, escaped and quoted.
-   */
-  public static String escapeAndQuoteForCsv(final String value)
-  {
-
-    final int length = value.length();
-    if (length == 0)
-    {
-      return "\"\"";
-    }
-
-    if (value.indexOf(SEPARATOR) < 0 && value.indexOf(QUOTE) < 0)
-    {
-      return value;
-    }
-
-    final StringBuffer sb = new StringBuffer(length);
-    sb.append(QUOTE);
-    for (int i = 0; i < length; i++)
-    {
-      final char c = value.charAt(i);
-      switch (c)
-      {
-        case '\n':
-          sb.append("\\n");
-          break;
-        case '\r':
-          sb.append("\\r");
-          break;
-        case '\\':
-          sb.append("\\\\");
-          break;
-        default:
-          if (c == QUOTE)
-          {
-            sb.append("\\" + QUOTE);
-          }
-          else
-          {
-            sb.append(c);
-          }
-      }
-    }
-    sb.append(QUOTE);
-
-    return sb.toString();
-
-  }
 
   /**
    * Enclose the value in quotes and escape the quote and comma
@@ -239,30 +172,6 @@ public final class FormatUtils
 
     return repeated;
 
-  }
-
-  private static String htmlHeader()
-  {
-    final byte[] text = Utilities.readFully(FormatUtils.class
-      .getResourceAsStream("/schemacrawler-output.css"));
-    final String styleSheet = new String(text);
-
-    final String header = "" + "<?xml version='1.0' encoding='UTF-8'?>"
-                          + Utilities.NEWLINE
-                          + "<!DOCTYPE html"
-                          + Utilities.NEWLINE
-                          + "     PUBLIC \"-//W3C//DTD HTML 4.01 Strict//EN\""
-                          + Utilities.NEWLINE
-                          + "    \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"
-                          + Utilities.NEWLINE
-                          + "<html xmlns='http://www.w3.org/1999/xhtml'>"
-                          + Utilities.NEWLINE + "<head>" + Utilities.NEWLINE
-                          + "  <title>SchemaCrawler Output</title>"
-                          + Utilities.NEWLINE + "  <style type='text/css'>"
-                          + Utilities.NEWLINE + styleSheet + Utilities.NEWLINE
-                          + "  </style>" + Utilities.NEWLINE + "</head>"
-                          + Utilities.NEWLINE + "<body>" + Utilities.NEWLINE;
-    return header;
   }
 
   private FormatUtils()
