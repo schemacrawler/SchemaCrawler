@@ -34,52 +34,6 @@ public final class FormatUtils
   /** Maximum output line length */
   public static final int MAX_LINE_LENGTH = 72;
 
-  private static final char QUOTE = '\"';
-
-  private static final char SEPARATOR = ',';
-
-  /**
-   * Enclose the value in quotes and escape the quote and comma
-   * characters that are inside.
-   * 
-   * @param value
-   *        needs to be escaped and quoted
-   * @return the value, escaped and quoted.
-   */
-  public static String escapeAndQuoteForExcelCsv(final String text)
-  {
-    final String value = String.valueOf(text);
-    final int length = value.length();
-    if (length == 0)
-    {
-      return "\"\"";
-    }
-
-    if (value.indexOf(SEPARATOR) < 0 && value.indexOf(QUOTE) < 0)
-    {
-      return value;
-    }
-
-    final StringBuffer sb = new StringBuffer(length);
-    sb.append(QUOTE);
-    for (int i = 0; i < length; i++)
-    {
-      final char c = value.charAt(i);
-      if (c == QUOTE)
-      {
-        sb.append(QUOTE + QUOTE);
-      }
-      else
-      {
-        sb.append(c);
-      }
-    }
-    sb.append(QUOTE);
-
-    return sb.toString();
-
-  }
-
   /**
    * Right justifies the string in given field length.
    * 
