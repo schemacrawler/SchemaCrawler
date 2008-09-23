@@ -35,8 +35,13 @@ import org.junit.Test;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutor;
 import schemacrawler.execute.QueryExecutorException;
+import schemacrawler.main.SchemaCrawlerCommandLine;
+import schemacrawler.main.SchemaCrawlerMain;
+import schemacrawler.main.dbconnector.TestUtilityDatabaseConnector;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.Command;
+import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.datatext.DataTextFormatOptions;
 import schemacrawler.tools.datatext.DataToolsExecutable;
@@ -70,13 +75,44 @@ public class SchemaCrawlerOutputTest
   }
 
   @Test
+  public void compareCompositeOutput()
+    throws Exception
+  {
+    final OutputFormat outputFormat = OutputFormat.text;
+
+    final String outputFilename = File
+      .createTempFile("schemacrawler.compareCompositeOutput.", "test")
+      .getAbsolutePath();
+    final OutputOptions outputOptions = new OutputOptions(outputFormat,
+                                                          outputFilename);
+
+    Command[] commands = new Command[] {
+        new Command("maximum_schema", false),
+        new Command("count", false),
+        new Command("dump", false)
+    };
+    SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(commands,
+                                                                        new Config(),
+                                                                        new TestUtilityDatabaseConnector(testUtility),
+                                                                        outputOptions);
+
+    SchemaCrawlerMain.schemacrawler(commandLine, "");
+
+    final File outputFile = new File(outputFilename);
+    if (!outputFile.delete())
+    {
+      fail("Cannot delete output file");
+    }
+  }
+
+  @Test
   public void countOperatorOutput()
     throws Exception
   {
     final String outputFilename = File.createTempFile("schemacrawler", "test")
       .getAbsolutePath();
 
-    final OutputOptions outputOptions = new OutputOptions("text",
+    final OutputOptions outputOptions = new OutputOptions(OutputFormat.text,
                                                           outputFilename);
     final OperationOptions operatorOptions = new OperationOptions(new Config(),
                                                                   outputOptions,
@@ -101,7 +137,7 @@ public class SchemaCrawlerOutputTest
                                                       ".test.html")
       .getAbsolutePath();
 
-    final OutputOptions outputOptions = new OutputOptions("html",
+    final OutputOptions outputOptions = new OutputOptions(OutputFormat.html,
                                                           outputFilename);
     outputOptions.setNoHeader(false);
     outputOptions.setNoFooter(false);
@@ -126,7 +162,7 @@ public class SchemaCrawlerOutputTest
       .getAbsolutePath();
 
     final DataTextFormatOptions textFormatOptions = new DataTextFormatOptions(new Config(),
-                                                                              new OutputOptions("text",
+                                                                              new OutputOptions(OutputFormat.text,
                                                                                                 outputFilename),
                                                                               null);
 
@@ -151,7 +187,7 @@ public class SchemaCrawlerOutputTest
                                                       ".test.html")
       .getAbsolutePath();
 
-    final OutputOptions outputOptions = new OutputOptions("html",
+    final OutputOptions outputOptions = new OutputOptions(OutputFormat.html,
                                                           outputFilename);
     outputOptions.setNoHeader(false);
     outputOptions.setNoFooter(false);
@@ -176,7 +212,7 @@ public class SchemaCrawlerOutputTest
       .getAbsolutePath();
 
     final SchemaTextOptions textFormatOptions = new SchemaTextOptions(new Config(),
-                                                                      new OutputOptions("text",
+                                                                      new OutputOptions(OutputFormat.text,
                                                                                         outputFilename),
                                                                       SchemaTextDetailType.brief_schema);
 
@@ -199,7 +235,7 @@ public class SchemaCrawlerOutputTest
                                                       ".test.html")
       .getAbsolutePath();
 
-    final OutputOptions outputOptions = new OutputOptions("html",
+    final OutputOptions outputOptions = new OutputOptions(OutputFormat.html,
                                                           outputFilename);
     outputOptions.setNoHeader(false);
     outputOptions.setNoFooter(false);
@@ -215,5 +251,4 @@ public class SchemaCrawlerOutputTest
     final Validator validator = new Validator(new FileReader(outputFilename));
     validator.assertIsValid();
   }
-
 }

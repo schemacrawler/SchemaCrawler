@@ -23,8 +23,6 @@ package schemacrawler.tools.util;
 
 import java.io.PrintWriter;
 
-import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.schema.JdbcDriverInfo;
 import sf.util.Utilities;
 
 /**
@@ -196,37 +194,18 @@ public final class FormatUtils
   }
 
   /**
-   * Prints database information.
+   * Prints information.
    * 
-   * @param databaseInfo
-   *        Database information
+   * @param object
+   *        Object to print
    * @param out
    *        Output writer
    */
-  public static void printDatabaseInfo(final DatabaseInfo databaseInfo,
+  public static void printHeaderObject(final Object object,
                                        final PrintWriter out)
   {
     out.println(repeat("-", MAX_LINE_LENGTH));
-    out.println(databaseInfo.toString());
-    out.println(repeat("-", MAX_LINE_LENGTH));
-    out.println();
-    out.println();
-    out.flush();
-  }
-
-  /**
-   * Prints database information.
-   * 
-   * @param driverInfo
-   *        JDBC driver information
-   * @param out
-   *        Output writer
-   */
-  public static void printJdbcDriverInfo(final JdbcDriverInfo driverInfo,
-                                         final PrintWriter out)
-  {
-    out.println(repeat("-", MAX_LINE_LENGTH));
-    out.println(driverInfo.toString());
+    out.println(object.toString());
     out.println(repeat("-", MAX_LINE_LENGTH));
     out.println();
     out.println();
