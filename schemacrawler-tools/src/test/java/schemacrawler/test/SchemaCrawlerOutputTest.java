@@ -278,7 +278,10 @@ public class SchemaCrawlerOutputTest
                        .getResourceAsStream(referenceFile)));
     if (!contentEquals)
     {
-      fail("Incorrect file contents in " + outputFile.getAbsolutePath());
+      final String message = "Incorrect file contents in "
+                             + outputFile.getAbsolutePath();
+      System.err.println(message);
+      fail(message);
     }
 
     return outputFile;
