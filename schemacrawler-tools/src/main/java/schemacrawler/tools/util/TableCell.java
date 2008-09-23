@@ -89,6 +89,50 @@ final class TableCell
   }
 
   /**
+   * Enclose the value in quotes and escape the quote and comma
+   * characters that are inside.
+   * 
+   * @param text
+   *        Text that needs to be escaped and quoted
+   * @return Text, escaped and quoted.
+   */
+  private String escapeAndQuoteCsv(final String text)
+  {
+    final char QUOTE = '\"';
+    final char SEPARATOR = ',';
+
+    final String value = String.valueOf(text);
+    final int length = value.length();
+    if (length == 0)
+    {
+      return "\"\"";
+    }
+
+    if (value.indexOf(SEPARATOR) < 0 && value.indexOf(QUOTE) < 0)
+    {
+      return value;
+    }
+
+    final StringBuffer sb = new StringBuffer(length);
+    sb.append(QUOTE);
+    for (int i = 0; i < length; i++)
+    {
+      final char c = value.charAt(i);
+      if (c == QUOTE)
+      {
+        sb.append(QUOTE + QUOTE);
+      }
+      else
+      {
+        sb.append(c);
+      }
+    }
+    sb.append(QUOTE);
+
+    return sb.toString();
+  }
+
+  /**
    * Converts the table cell to HTML.
    * 
    * @return HTML
@@ -128,7 +172,7 @@ final class TableCell
   {
     if (outputFormat == OutputFormat.csv)
     {
-      return FormatUtils.escapeAndQuoteForExcelCsv(text);
+      return escapeAndQuoteCsv(text);
     }
     else
     {
