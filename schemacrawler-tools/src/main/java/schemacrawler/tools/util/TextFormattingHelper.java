@@ -20,9 +20,8 @@
 
 package schemacrawler.tools.util;
 
-import schemacrawler.execute.QueryExecutorException;
-import schemacrawler.tools.OutputFormat;
 
+import schemacrawler.execute.QueryExecutorException;
 
 /**
  * Methods to format entire rows of output.
@@ -33,14 +32,33 @@ public interface TextFormattingHelper
 {
 
   /**
+   * Called to handle the row output. Handler to be implemented by
+   * subclass.
+   * 
+   * @param columnNames
+   *        Column names
+   * @param columnData
+   *        Column data
+   * @throws QueryExecutorException
+   *         On an exception
+   */
+  public String createRow(final String[] columnNames, final String[] columnData);
+
+  /**
+   * Called to handle the header output. Handler to be implemented by
+   * subclass.
+   * 
+   * @param columnNames
+   *        Column names
+   * @throws QueryExecutorException
+   *         On an exception
+   */
+  public String createRowHeader(final String[] columnNames);
+
+  /**
    * Creates an arrow symbol.
    */
   String createArrow();
-
-  /**
-   * Creates a pre-formatted text section.
-   */
-  String createPreformattedText(String id, String text);
 
   /**
    * Creates a definition row with a pre-formatted definition.
@@ -124,34 +142,15 @@ public interface TextFormattingHelper
   String createObjectStart(final String name);
 
   /**
+   * Creates a pre-formatted text section.
+   */
+  String createPreformattedText(String id, String text);
+
+  /**
    * Creates a separator row.
    * 
    * @return Row as a string
    */
   String createSeparatorRow();
-
-  /**
-   * Called to handle the row output. Handler to be implemented by
-   * subclass.
-   * 
-   * @param columnNames
-   *        Column names
-   * @param columnData
-   *        Column data
-   * @throws QueryExecutorException
-   *         On an exception
-   */
-  public String createRow(final String[] columnNames, final String[] columnData);
-
-  /**
-   * Called to handle the header output. Handler to be implemented by
-   * subclass.
-   * 
-   * @param columnNames
-   *        Column names
-   * @throws QueryExecutorException
-   *         On an exception
-   */
-  public String createRowHeader(final String[] columnNames);
 
 }
