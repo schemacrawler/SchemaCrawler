@@ -170,17 +170,14 @@ abstract class BaseTextFormattingHelper
   }
 
   /**
-   * Called to handle the row output. Handler to be implemented by
-   * subclass.
+   * Called to handle the row output.
    * 
-   * @param columnNames
-   *        Column names
    * @param columnData
    *        Column data
    * @throws QueryExecutorException
    *         On an exception
    */
-  public String createRow(final String[] columnNames, final String[] columnData)
+  public String createRow(final String[] columnData)
   {
     OutputFormat outputFormat = this.outputFormat;
     if (outputFormat == OutputFormat.text)
