@@ -117,7 +117,7 @@ public final class SchemaTextFormatter
   public void begin()
     throws SchemaCrawlerException
   {
-    if (!getNoHeader())
+    if (!options.getOutputOptions().isNoHeader())
     {
       out.println(formattingHelper.createDocumentStart());
     }
@@ -136,7 +136,7 @@ public final class SchemaTextFormatter
       out.print(formattingHelper.createObjectEnd());
     }
 
-    if (!getNoFooter())
+    if (!options.getOutputOptions().isNoFooter())
     {
       out.println(formattingHelper.createPreformattedText("tableCount",
                                                           getTableCount()
@@ -362,16 +362,6 @@ public final class SchemaTextFormatter
     out.flush();
 
     tableCount = tableCount + 1;
-  }
-
-  final boolean getNoFooter()
-  {
-    return options.getOutputOptions().isNoFooter();
-  }
-
-  final boolean getNoHeader()
-  {
-    return options.getOutputOptions().isNoHeader();
   }
 
   final SchemaTextDetailType getSchemaTextDetailType()
