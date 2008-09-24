@@ -32,6 +32,16 @@ public interface TextFormattingHelper
 {
 
   /**
+   * Prints information.
+   * 
+   * @param object
+   *        Object to print
+   * @param id
+   *        HTML id
+   */
+  public String createHeader(final String id, final Object object);
+
+  /**
    * Called to handle the row output. Handler to be implemented by
    * subclass.
    * 
@@ -52,16 +62,6 @@ public interface TextFormattingHelper
    *         On an exception
    */
   public String createRowHeader(final String[] columnNames);
-
-  /**
-   * Prints information.
-   * 
-   * @param object
-   *        Object to print
-   * @param id
-   *        HTML id
-   */
-  public String createHeader(final String id, final Object object);
 
   /**
    * Creates an arrow symbol.

@@ -117,6 +117,25 @@ abstract class BaseTextFormattingHelper
   }
 
   /**
+   * Prints information.
+   * 
+   * @param object
+   *        Object to print
+   * @param out
+   *        Output writer
+   */
+  public String createHeader(final String id, final Object object)
+  {
+    final StringBuffer buffer = new StringBuffer();
+    buffer.append(DASHED_SEPARATOR).append(Utilities.NEWLINE);
+    buffer.append(object.toString()).append(Utilities.NEWLINE);
+    buffer.append(DASHED_SEPARATOR).append(Utilities.NEWLINE);
+    buffer.append(Utilities.NEWLINE).append(Utilities.NEWLINE);
+
+    return createPreformattedText(id, buffer.toString());
+  }
+
+  /**
    * {@inheritDoc}
    * 
    * @see schemacrawler.tools.util.TextFormattingHelper#createNameRow(java.lang.String,
@@ -227,25 +246,6 @@ abstract class BaseTextFormattingHelper
       row.add(new TableCell(columnNames[i], "name", outputFormat));
     }
     return row.toString();
-  }
-
-  /**
-   * Prints information.
-   * 
-   * @param object
-   *        Object to print
-   * @param out
-   *        Output writer
-   */
-  public String createHeader(final String id, final Object object)
-  {
-    final StringBuffer buffer = new StringBuffer();
-    buffer.append(DASHED_SEPARATOR).append(Utilities.NEWLINE);
-    buffer.append(object.toString()).append(Utilities.NEWLINE);
-    buffer.append(DASHED_SEPARATOR).append(Utilities.NEWLINE);
-    buffer.append(Utilities.NEWLINE).append(Utilities.NEWLINE);
-
-    return createPreformattedText(id, buffer.toString());
   }
 
 }
