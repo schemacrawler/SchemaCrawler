@@ -28,6 +28,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.custommonkey.xmlunit.Validator;
 import org.junit.AfterClass;
@@ -80,20 +81,59 @@ public class SchemaCrawlerOutputTest
   public void compareCompositeOutput()
     throws Exception
   {
-    Command[] commands1 = new Command[] {
-        new Command("maximum_schema", false),
-        new Command("count", true),
-        new Command("dump", true),
+    Command[][] commands = new Command[][] {
+        {
+            new Command("maximum_schema", false),
+            new Command("count", true),
+            new Command("dump", true),
+        },
+        {
+            new Command("brief_schema", false), new Command("count", true),
+        }
     };
-    Command[] commands2 = new Command[] {
-        new Command("brief_schema", false), new Command("count", true),
-    };
+    final TestUtilityDatabaseConnector dbConnector = new TestUtilityDatabaseConnector(testUtility);
 
     for (OutputFormat outputFormat: OutputFormat.values())
     {
-      File outputFile;
-      outputFile = createCompositeOutput(commands1, outputFormat);
-      outputFile = createCompositeOutput(commands2, outputFormat);
+      for (Command[] commandSet: commands)
+      {
+        final String referenceFile = commandSet[0].toString() + "."
+                                     + outputFormat.name();
+
+        final File testOutputFile = File.createTempFile("schemacrawler.test.",
+                                                        referenceFile);
+
+        final OutputOptions outputOptions = new OutputOptions(outputFormat,
+                                                              testOutputFile
+                                                                .getAbsolutePath());
+        outputOptions.setNoInfo(false);
+        outputOptions.setNoHeader(false);
+        outputOptions.setNoFooter(false);
+
+        SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(commandSet,
+                                                                            new Config(),
+                                                                            dbConnector,
+                                                                            outputOptions);
+        SchemaCrawlerMain.schemacrawler(commandLine, "");
+
+        boolean contentEquals = IOUtils
+          .contentEquals(new FileReader(testOutputFile),
+                         new InputStreamReader(SchemaCrawlerOutputTest.class
+                           .getResourceAsStream("/" + referenceFile)));
+        if (!contentEquals)
+        {
+          final File testOutputLocalFile = new File("./", referenceFile);
+          FileUtils.moveFile(testOutputFile, testOutputLocalFile);
+          final String message = "Incorrect file contents in "
+                                 + testOutputLocalFile.getAbsolutePath();
+          System.err.println(message);
+          fail(message);
+        }
+        else
+        {
+          FileUtils.deleteQuietly(testOutputFile);
+        }
+      }
     }
   }
 
@@ -244,46 +284,4 @@ public class SchemaCrawlerOutputTest
     validator.assertIsValid();
   }
 
-  private File createCompositeOutput(Command[] commands,
-                                     final OutputFormat outputFormat)
-    throws IOException, Exception
-  {
-    String referenceFile = "/" + commands[0].toString() + "."
-                           + outputFormat.name();
-
-    File outputFile = File.createTempFile("schemacrawler.", ".test."
-                                                            + commands[0]
-                                                              .toString()
-                                                            + "."
-                                                            + outputFormat
-                                                              .name());
-
-    final OutputOptions outputOptions = new OutputOptions(outputFormat,
-                                                          outputFile
-                                                            .getAbsolutePath());
-    outputOptions.setNoInfo(false);
-    outputOptions.setNoHeader(false);
-    outputOptions.setNoFooter(false);
-
-    SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(commands,
-                                                                        new Config(),
-                                                                        new TestUtilityDatabaseConnector(testUtility),
-                                                                        outputOptions);
-
-    SchemaCrawlerMain.schemacrawler(commandLine, "");
-
-    boolean contentEquals = IOUtils
-      .contentEquals(new FileReader(outputFile),
-                     new InputStreamReader(SchemaCrawlerOutputTest.class
-                       .getResourceAsStream(referenceFile)));
-    if (!contentEquals)
-    {
-      final String message = "Incorrect file contents in "
-                             + outputFile.getAbsolutePath();
-      System.err.println(message);
-      fail(message);
-    }
-
-    return outputFile;
-  }
 }
