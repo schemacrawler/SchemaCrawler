@@ -58,10 +58,10 @@ public interface TextFormattingHelper
    * 
    * @param object
    *        Object to print
-   * @param out
-   *        Output writer
+   * @param id
+   *        HTML id
    */
-  public String printHeaderObject(final String id, final Object object);
+  public String createHeader(final String id, final Object object);
 
   /**
    * Creates an arrow symbol.
