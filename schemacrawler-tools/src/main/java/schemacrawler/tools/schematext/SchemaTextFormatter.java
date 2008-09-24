@@ -253,10 +253,11 @@ public final class SchemaTextFormatter
       out.print(formattingHelper.createObjectStart(""));
     }
 
+    boolean underscore = (schemaTextDetailType != SchemaTextDetailType.brief_schema);
     final String procedureTypeDetail = "procedure, " + procedure.getType();
     out.println(formattingHelper.createNameRow(procedure.getFullName(),
                                                "[" + procedureTypeDetail + "]",
-                                               true));
+                                               underscore));
 
     if (schemaTextDetailType != SchemaTextDetailType.brief_schema)
     {
@@ -311,11 +312,12 @@ public final class SchemaTextFormatter
     final SchemaTextDetailType schemaTextDetailType = options
       .getSchemaTextDetailType();
 
+    boolean underscore = (schemaTextDetailType != SchemaTextDetailType.brief_schema);
     String nameRow = formattingHelper.createNameRow(table.getFullName(),
                                                     "["
                                                         + table.getType()
                                                           .name() + "]",
-                                                    true);
+                                                    underscore);
 
     if ((schemaTextDetailType != SchemaTextDetailType.brief_schema)
         || (schemaTextDetailType == SchemaTextDetailType.brief_schema && tableCount == 0))

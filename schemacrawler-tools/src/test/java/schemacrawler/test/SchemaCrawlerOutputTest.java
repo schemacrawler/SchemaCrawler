@@ -129,16 +129,13 @@ public class SchemaCrawlerOutputTest
         if (!contentEquals)
         {
           final File testOutputLocalFile = new File("./", referenceFile);
-          FileUtils.moveFile(testOutputFile, testOutputLocalFile);
+          FileUtils.copyFile(testOutputFile, testOutputLocalFile);
           final String message = "Incorrect file contents in "
                                  + testOutputLocalFile.getAbsolutePath();
           System.err.println(message);
           fail(message);
         }
-        else
-        {
-          FileUtils.deleteQuietly(testOutputFile);
-        }
+        FileUtils.deleteQuietly(testOutputFile);
       }
     }
   }
