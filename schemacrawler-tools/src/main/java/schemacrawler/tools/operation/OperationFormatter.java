@@ -379,7 +379,7 @@ public final class OperationFormatter
   {
     if (!options.getOutputOptions().isNoInfo())
     {
-      out.println(formattingHelper.printHeaderObject(id, object));
+      out.println(formattingHelper.createHeader(id, object));
     }
   }
 
