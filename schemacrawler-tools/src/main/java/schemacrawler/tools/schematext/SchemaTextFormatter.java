@@ -364,11 +364,6 @@ public final class SchemaTextFormatter
     tableCount = tableCount + 1;
   }
 
-  final SchemaTextDetailType getSchemaTextDetailType()
-  {
-    return options.getSchemaTextDetailType();
-  }
-
   private String negate(final boolean positive, final String text)
   {
     String textValue = text;
@@ -474,34 +469,6 @@ public final class SchemaTextFormatter
                                                          .createArrow()
                                                        + fkColumnName,
                                                    ""));
-    }
-  }
-
-  private void printTableColumns(final Column[] columns)
-  {
-    for (int i = 0; i < columns.length; i++)
-    {
-      final Column column = columns[i];
-      final String columnName = column.getName();
-      String columnTypeName = column.getType().getDatabaseSpecificTypeName();
-      if (options.isShowStandardColumnTypeNames())
-      {
-        columnTypeName = column.getType().getTypeName();
-      }
-      String columnType = columnTypeName + column.getWidth();
-      if (!column.isNullable())
-      {
-        columnType = columnType + " not null";
-      }
-
-      String ordinalNumberString = "";
-      if (options.isShowOrdinalNumbers())
-      {
-        ordinalNumberString = String.valueOf(i + 1);
-      }
-      out.println(formattingHelper.createDetailRow(ordinalNumberString,
-                                                   columnName,
-                                                   columnType));
     }
   }
 
@@ -670,6 +637,34 @@ public final class SchemaTextFormatter
 
         out.println(formattingHelper.createDetailRow("", grantedFrom, ""));
       }
+    }
+  }
+
+  private void printTableColumns(final Column[] columns)
+  {
+    for (int i = 0; i < columns.length; i++)
+    {
+      final Column column = columns[i];
+      final String columnName = column.getName();
+      String columnTypeName = column.getType().getDatabaseSpecificTypeName();
+      if (options.isShowStandardColumnTypeNames())
+      {
+        columnTypeName = column.getType().getTypeName();
+      }
+      String columnType = columnTypeName + column.getWidth();
+      if (!column.isNullable())
+      {
+        columnType = columnType + " not null";
+      }
+
+      String ordinalNumberString = "";
+      if (options.isShowOrdinalNumbers())
+      {
+        ordinalNumberString = String.valueOf(i + 1);
+      }
+      out.println(formattingHelper.createDetailRow(ordinalNumberString,
+                                                   columnName,
+                                                   columnType));
     }
   }
 

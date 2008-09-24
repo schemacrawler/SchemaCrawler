@@ -166,7 +166,7 @@ public final class OperationFormatter
     if (!options.getOutputOptions().isNoFooter())
     {
       out.println(formattingHelper.createPreformattedText("tableCount",
-                                                          getTableCount()
+                                                          tableCount
                                                               + " tables."));
       out.println(formattingHelper.createDocumentEnd());
     }
@@ -198,16 +198,6 @@ public final class OperationFormatter
       LOGGER.log(Level.WARNING, "Cannot close connection: " + errorMessage);
       throw new SchemaCrawlerException(errorMessage, e);
     }
-  }
-
-  /**
-   * Gets the table count.
-   * 
-   * @return Table count
-   */
-  public int getTableCount()
-  {
-    return tableCount;
   }
 
   /**
