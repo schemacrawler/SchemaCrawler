@@ -90,7 +90,7 @@ public class PlainTextFormattingHelper
     if (!Utilities.isBlank(name))
     {
       objectStart = objectStart + Utilities.NEWLINE + name + Utilities.NEWLINE
-                    + FormatUtils.repeat("-", FormatUtils.MAX_LINE_LENGTH);
+                    + DASHED_SEPARATOR;
     }
     return objectStart;
   }
