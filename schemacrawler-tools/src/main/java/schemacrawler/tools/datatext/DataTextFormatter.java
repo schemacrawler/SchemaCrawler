@@ -45,7 +45,7 @@ import schemacrawler.tools.util.TextFormattingHelper;
 import sf.util.Utilities;
 
 /**
- * Base functionality for the text formatting of data.
+ * Text formatting of data.
  * 
  * @author Sualeh Fatehi
  */
@@ -58,15 +58,15 @@ public final class DataTextFormatter
 
   private static final String BINARY = "<binary>";
 
-  protected final PrintWriter out;
   private final DataTextFormatOptions options;
+  protected final PrintWriter out;
   protected final TextFormattingHelper formattingHelper;
 
   /**
-   * Constructor for a base data handler that is capable of merging
-   * rows.
+   * Text formatting of data.
    * 
-   * @param mergeRows
+   * @param options
+   *        Options for text formatting of data
    */
   public DataTextFormatter(final DataTextFormatOptions options)
     throws SchemaCrawlerException

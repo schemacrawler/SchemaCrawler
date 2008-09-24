@@ -21,8 +21,6 @@
 package schemacrawler.tools.operation;
 
 
-import java.util.EnumSet;
-
 import schemacrawler.schemacrawler.Query;
 
 /**
@@ -80,19 +78,6 @@ public enum Operation
   public Query getQuery()
   {
     return new Query(name(), query);
-  }
-
-  /**
-   * If this operation is a select operation.
-   * 
-   * @return If this operation is a select operation
-   */
-  public boolean isSelectOperation()
-  {
-    final EnumSet<Operation> selectOperations = EnumSet.of(queryover,
-                                                           dump,
-                                                           count);
-    return selectOperations.contains(this);
   }
 
 }
