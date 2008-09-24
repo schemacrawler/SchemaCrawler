@@ -20,8 +20,8 @@
 
 package schemacrawler.tools.util;
 
-import sf.util.Utilities;
 
+import schemacrawler.execute.QueryExecutorException;
 
 /**
  * Methods to format entire rows of output.
@@ -52,6 +52,16 @@ public interface TextFormattingHelper
    *         On an exception
    */
   public String createRowHeader(final String[] columnNames);
+
+  /**
+   * Prints information.
+   * 
+   * @param object
+   *        Object to print
+   * @param out
+   *        Output writer
+   */
+  public String printHeaderObject(final String id, final Object object);
 
   /**
    * Creates an arrow symbol.
@@ -145,15 +155,5 @@ public interface TextFormattingHelper
    * Creates a pre-formatted text section.
    */
   String createPreformattedText(String id, String text);
-
-  /**
-   * Prints information.
-   * 
-   * @param object
-   *        Object to print
-   * @param out
-   *        Output writer
-   */
-  public String printHeaderObject(final String id, final Object object);
 
 }

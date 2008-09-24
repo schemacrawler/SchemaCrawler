@@ -34,32 +34,24 @@ import sf.util.Utilities;
 abstract class BaseTextFormattingHelper
   implements TextFormattingHelper
 {
+
+  protected static final String DASHED_SEPARATOR = dashedSeparator();
+
+  private static String dashedSeparator()
+  {
+    final StringBuffer dashedSeparator = new StringBuffer();
+    for (int i = 0; i < 72; i++)
+    {
+      dashedSeparator.append('-');
+    }
+    return dashedSeparator.toString();
+  }
+
   final OutputFormat outputFormat;
 
   BaseTextFormattingHelper(OutputFormat outputFormat)
   {
     this.outputFormat = outputFormat;
-  }
-
-  /**
-   * Prints information.
-   * 
-   * @param object
-   *        Object to print
-   * @param out
-   *        Output writer
-   */
-  public String printHeaderObject(final String id, final Object object)
-  {
-    final StringBuffer buffer = new StringBuffer();
-    buffer.append(FormatUtils.repeat("-", FormatUtils.MAX_LINE_LENGTH))
-      .append(Utilities.NEWLINE);
-    buffer.append(object.toString()).append(Utilities.NEWLINE);
-    buffer.append(FormatUtils.repeat("-", FormatUtils.MAX_LINE_LENGTH))
-      .append(Utilities.NEWLINE);
-    buffer.append(Utilities.NEWLINE).append(Utilities.NEWLINE);
-
-    return createPreformattedText(id, buffer.toString());
   }
 
   /**
@@ -168,8 +160,7 @@ abstract class BaseTextFormattingHelper
 
     if (underscore && outputFormat != OutputFormat.html)
     {
-      nameRowString = nameRowString + Utilities.NEWLINE
-                      + FormatUtils.repeat("-", FormatUtils.MAX_LINE_LENGTH);
+      nameRowString = nameRowString + Utilities.NEWLINE + DASHED_SEPARATOR;
     }
 
     return nameRowString;
@@ -236,6 +227,25 @@ abstract class BaseTextFormattingHelper
       row.add(new TableCell(columnNames[i], "name", outputFormat));
     }
     return row.toString();
+  }
+
+  /**
+   * Prints information.
+   * 
+   * @param object
+   *        Object to print
+   * @param out
+   *        Output writer
+   */
+  public String printHeaderObject(final String id, final Object object)
+  {
+    final StringBuffer buffer = new StringBuffer();
+    buffer.append(DASHED_SEPARATOR).append(Utilities.NEWLINE);
+    buffer.append(object.toString()).append(Utilities.NEWLINE);
+    buffer.append(DASHED_SEPARATOR).append(Utilities.NEWLINE);
+    buffer.append(Utilities.NEWLINE).append(Utilities.NEWLINE);
+
+    return createPreformattedText(id, buffer.toString());
   }
 
 }

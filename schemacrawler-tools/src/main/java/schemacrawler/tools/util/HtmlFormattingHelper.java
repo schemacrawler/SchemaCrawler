@@ -44,7 +44,7 @@ public final class HtmlFormattingHelper
 
   private static String htmlHeader()
   {
-    final byte[] text = Utilities.readFully(FormatUtils.class
+    final byte[] text = Utilities.readFully(HtmlFormattingHelper.class
       .getResourceAsStream("/schemacrawler-output.css"));
     final String styleSheet = new String(text);
 
