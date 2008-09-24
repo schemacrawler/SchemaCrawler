@@ -52,7 +52,6 @@ import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.util.FormatUtils;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 import schemacrawler.tools.util.PlainTextFormattingHelper;
 import schemacrawler.tools.util.TextFormattingHelper;
@@ -465,7 +464,7 @@ public final class SchemaTextFormatter
       String keySequenceString = "";
       if (options.isShowOrdinalNumbers())
       {
-        keySequenceString = FormatUtils.padLeft(String.valueOf(keySequence), 2);
+        keySequenceString = String.format("%2d", keySequence);
       }
       out.println(formattingHelper.createDetailRow(keySequenceString,
                                                    pkColumnName
@@ -568,8 +567,7 @@ public final class SchemaTextFormatter
   {
     if (!options.getOutputOptions().isNoInfo())
     {
-      out.println(formattingHelper.createPreformattedText(id, FormatUtils
-        .printHeaderObject(object)));
+      out.println(formattingHelper.printHeaderObject(id, object));
     }
   }
 

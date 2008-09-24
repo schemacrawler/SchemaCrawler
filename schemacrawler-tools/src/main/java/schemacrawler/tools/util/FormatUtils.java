@@ -21,8 +21,6 @@
 package schemacrawler.tools.util;
 
 
-import sf.util.Utilities;
-
 /**
  * Utility.
  * 
@@ -33,70 +31,6 @@ public final class FormatUtils
 
   /** Maximum output line length */
   public static final int MAX_LINE_LENGTH = 72;
-
-  /**
-   * Right justifies the string in given field length.
-   * 
-   * @param string
-   *        String to right justify
-   * @param len
-   *        Length of the field
-   * @return Justified string
-   */
-  public static String padLeft(final String string, final int len)
-  {
-    final StringBuffer buffer = new StringBuffer();
-    if (string != null)
-    {
-      buffer.append(string);
-    }
-    while (buffer.length() < len)
-    {
-      buffer.insert(0, ' ');
-    }
-    return buffer.toString();
-  }
-
-  /**
-   * Left justifies the string in given field length.
-   * 
-   * @param string
-   *        String to right justify
-   * @param len
-   *        Length of the field
-   * @return Justified string
-   */
-  public static String padRight(final String string, final int len)
-  {
-    final StringBuffer buffer = new StringBuffer();
-    if (string != null)
-    {
-      buffer.append(string);
-    }
-    while (buffer.length() < len)
-    {
-      buffer.append(' ');
-    }
-    return buffer.toString();
-  }
-
-  /**
-   * Prints information.
-   * 
-   * @param object
-   *        Object to print
-   * @param out
-   *        Output writer
-   */
-  public static String printHeaderObject(final Object object)
-  {
-    final StringBuffer buffer = new StringBuffer();
-    buffer.append(repeat("-", MAX_LINE_LENGTH)).append(Utilities.NEWLINE);
-    buffer.append(object.toString()).append(Utilities.NEWLINE);
-    buffer.append(repeat("-", MAX_LINE_LENGTH)).append(Utilities.NEWLINE);
-    buffer.append(Utilities.NEWLINE).append(Utilities.NEWLINE);
-    return buffer.toString();
-  }
 
   /**
    * Repeats a string.

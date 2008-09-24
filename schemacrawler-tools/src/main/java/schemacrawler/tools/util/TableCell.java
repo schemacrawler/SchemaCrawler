@@ -133,6 +133,52 @@ final class TableCell
   }
 
   /**
+   * Right justifies the string in given field length.
+   * 
+   * @param string
+   *        String to right justify
+   * @param len
+   *        Length of the field
+   * @return Justified string
+   */
+  private String padLeft(final String string, final int len)
+  {
+    final StringBuffer buffer = new StringBuffer();
+    if (string != null)
+    {
+      buffer.append(string);
+    }
+    while (buffer.length() < len)
+    {
+      buffer.insert(0, ' ');
+    }
+    return buffer.toString();
+  }
+
+  /**
+   * Left justifies the string in given field length.
+   * 
+   * @param string
+   *        String to right justify
+   * @param len
+   *        Length of the field
+   * @return Justified string
+   */
+  private String padRight(final String string, final int len)
+  {
+    final StringBuffer buffer = new StringBuffer();
+    if (string != null)
+    {
+      buffer.append(string);
+    }
+    while (buffer.length() < len)
+    {
+      buffer.append(' ');
+    }
+    return buffer.toString();
+  }
+
+  /**
    * Converts the table cell to HTML.
    * 
    * @return HTML
@@ -180,11 +226,11 @@ final class TableCell
       {
         if (align == Align.right)
         {
-          return FormatUtils.padLeft(text, characterWidth);
+          return padLeft(text, characterWidth);
         }
         else
         {
-          return FormatUtils.padRight(text, characterWidth);
+          return padRight(text, characterWidth);
         }
       }
       else
@@ -193,5 +239,4 @@ final class TableCell
       }
     }
   }
-
 }

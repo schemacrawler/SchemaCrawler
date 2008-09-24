@@ -42,7 +42,6 @@ import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.util.FormatUtils;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 import schemacrawler.tools.util.PlainTextFormattingHelper;
 import schemacrawler.tools.util.TextFormattingHelper;
@@ -380,8 +379,7 @@ public final class OperationFormatter
   {
     if (!options.getOutputOptions().isNoInfo())
     {
-      out.println(formattingHelper.createPreformattedText(id, FormatUtils
-        .printHeaderObject(object)));
+      out.println(formattingHelper.printHeaderObject(id, object));
     }
   }
 
