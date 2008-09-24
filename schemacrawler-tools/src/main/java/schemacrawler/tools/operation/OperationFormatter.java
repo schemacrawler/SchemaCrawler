@@ -47,7 +47,7 @@ import schemacrawler.tools.util.PlainTextFormattingHelper;
 import schemacrawler.tools.util.TextFormattingHelper;
 
 /**
- * Base functionality for operations.
+ * Text formatting of operations output.
  * 
  * @author Sualeh Fatehi
  */
@@ -58,23 +58,21 @@ public final class OperationFormatter
   private static final Logger LOGGER = Logger
     .getLogger(OperationFormatter.class.getName());
 
-  private final Operation operation;
+  private final OperationOptions options;
   private final PrintWriter out;
+  private final TextFormattingHelper formattingHelper;
+
   private final Connection connection;
   private final DataHandler dataHandler;
   private final Query query;
-  private final Statement statement;
+
   private int tableCount;
-  private final OperationOptions options;
-  private final TextFormattingHelper formattingHelper;
 
   /**
-   * Constructs a new table dropper.
+   * Text formatting of operations output.
    * 
-   * @param operation
-   *        Operation to perform.
-   * @param connection
-   *        Database connection to use
+   * @param options
+   *        Options for text formatting of operations output
    */
   public OperationFormatter(final OperationOptions options,
                             final Query query,
@@ -88,13 +86,12 @@ public final class OperationFormatter
     }
     this.options = options;
 
-    operation = options.getOperation();
-    if (operation == null)
+    if (options.getOperation() == null)
     {
       throw new SchemaCrawlerException("Cannot perform null operation");
     }
 
-    if (dataHandler == null && !(operation == Operation.count))
+    if (dataHandler == null && !(options.getOperation() == Operation.count))
     {
       throw new SchemaCrawlerException("No data handler provided");
     }
@@ -121,20 +118,6 @@ public final class OperationFormatter
       formattingHelper = new PlainTextFormattingHelper(outputFormat);
     }
 
-    try
-    {
-      if (!operation.isSelectOperation())
-      {
-        connection.setAutoCommit(true);
-      }
-      statement = connection.createStatement();
-    }
-    catch (final SQLException e)
-    {
-      final String errorMessage = e.getMessage();
-      LOGGER.log(Level.WARNING, "Cannot set autocommit: " + errorMessage);
-      throw new SchemaCrawlerException(errorMessage, e);
-    }
     this.connection = connection;
     this.query = query;
     this.out = dataHandler.getPrintWriter();
@@ -176,7 +159,7 @@ public final class OperationFormatter
   public void end()
     throws SchemaCrawlerException
   {
-    if (operation == Operation.count)
+    if (options.getOperation() == Operation.count)
     {
       out.println(formattingHelper.createObjectEnd());
     }
@@ -232,7 +215,7 @@ public final class OperationFormatter
    * 
    * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.ColumnDataType)
    */
-  public void handle(ColumnDataType dataType)
+  public void handle(@SuppressWarnings("unused") ColumnDataType dataType)
     throws SchemaCrawlerException
   {
   }
@@ -262,7 +245,7 @@ public final class OperationFormatter
    * 
    * @see CrawlHandler#handle(Procedure)
    */
-  public final void handle(final Procedure procedure)
+  public final void handle(@SuppressWarnings("unused") final Procedure procedure)
   {
   }
 
@@ -273,7 +256,7 @@ public final class OperationFormatter
    */
   public final void handle(final Table table)
   {
-    if (operation == Operation.count && tableCount == 0)
+    if (options.getOperation() == Operation.count && tableCount == 0)
     {
       out.println(formattingHelper.createObjectStart("Row Count"));
     }
@@ -282,15 +265,17 @@ public final class OperationFormatter
     final String sql = query.getQueryForTable(table);
     LOGGER.fine("Executing: " + sql);
 
+    Statement statement = null;
     ResultSet results = null;
     try
     {
+      statement = connection.createStatement();
       final boolean hasResults = statement.execute(sql);
       // Pass into data handler for output
       if (hasResults)
       {
         results = statement.getResultSet();
-        if (operation == Operation.count)
+        if (options.getOperation() == Operation.count)
         {
           handleAggregateOperationForTable(table, results);
         }
@@ -326,11 +311,6 @@ public final class OperationFormatter
 
   }
 
-  protected Operation getOperation()
-  {
-    return operation;
-  }
-
   private String getMessage(final double aggregate)
   {
 
@@ -343,7 +323,7 @@ public final class OperationFormatter
     {
       number = Double.valueOf(aggregate);
     }
-    final String message = MessageFormat.format(operation
+    final String message = MessageFormat.format(options.getOperation()
       .getCountMessageFormat(), new Object[] {
       number
     });

@@ -58,7 +58,7 @@ import schemacrawler.tools.util.TextFormattingHelper;
 import sf.util.Utilities;
 
 /**
- * Base functionality for the text formatting of schema.
+ * Text formatting of schema.
  * 
  * @author Sualeh Fatehi
  */
@@ -66,15 +66,17 @@ public final class SchemaTextFormatter
   implements CrawlHandler
 {
 
+  private final SchemaTextOptions options;
   private final PrintWriter out;
   private final TextFormattingHelper formattingHelper;
-  private final SchemaTextOptions options;
 
   private int tableCount;
 
   /**
-   * @param writer
-   *        Writer to output to.
+   * Text formatting of schema.
+   * 
+   * @param options
+   *        Options for text formatting of schema
    */
   public SchemaTextFormatter(final SchemaTextOptions options)
     throws SchemaCrawlerException
