@@ -237,7 +237,7 @@ abstract class BaseTextFormattingHelper
    * @param out
    *        Output writer
    */
-  public String printHeaderObject(final String id, final Object object)
+  public String createHeader(final String id, final Object object)
   {
     final StringBuffer buffer = new StringBuffer();
     buffer.append(DASHED_SEPARATOR).append(Utilities.NEWLINE);
