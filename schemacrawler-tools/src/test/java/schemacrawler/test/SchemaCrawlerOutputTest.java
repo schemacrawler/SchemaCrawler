@@ -116,6 +116,12 @@ public class SchemaCrawlerOutputTest
                                                                             outputOptions);
         SchemaCrawlerMain.schemacrawler(commandLine, "");
 
+        if (outputFormat == OutputFormat.html)
+        {
+          final Validator validator = new Validator(new FileReader(testOutputFile));
+          validator.assertIsValid();
+        }
+
         boolean contentEquals = IOUtils
           .contentEquals(new FileReader(testOutputFile),
                          new InputStreamReader(SchemaCrawlerOutputTest.class
