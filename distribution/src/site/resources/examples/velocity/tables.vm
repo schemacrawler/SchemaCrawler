@@ -1,5 +1,6 @@
-$schema.databaseInfo
+$catalog.databaseInfo
 
+#foreach($schema in $catalog.schemas)
 #foreach($table in $schema.tables)
 #if ($table.type == "table")
 CREATE TABLE $table.name
@@ -13,5 +14,6 @@ CREATE TABLE $table.name
 
 );
 
+#end
 #end
 #end
