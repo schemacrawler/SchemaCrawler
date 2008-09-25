@@ -216,8 +216,8 @@
       <fileset dir="${SchemaCrawlerHome}/distribution/target/site/examples"/>
     </copy>
     <copy
-      file="${SchemaCrawlerHome}/schemacrawler-test/src/main/java"
-      todir="${distribution.dir}/examples/api/ApiExample.java"/>
+      file="${SchemaCrawlerHome}/schemacrawler-test/src/main/java/ApiExample.java"
+      todir="${distribution.dir}/examples/api"/>
 
 		<!-- Copy database server -->
     <copy todir="${distribution.dir}/examples">
