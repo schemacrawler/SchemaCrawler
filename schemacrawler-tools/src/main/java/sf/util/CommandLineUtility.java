@@ -110,16 +110,16 @@ public final class CommandLineUtility
    */
   public static void setLogLevel(final String[] args)
   {
-    final String OPTION_LOG_LEVEL = "log_level";
+    final String OPTION_loglevel = "loglevel";
 
     final CommandLineParser parser = new CommandLineParser();
     parser
       .addOption(new CommandLineParser.StringOption(CommandLineParser.Option.NO_SHORT_FORM,
-                                                    OPTION_LOG_LEVEL,
+                                                    OPTION_loglevel,
                                                     "OFF"));
     parser.parse(args);
 
-    final String logLevelString = parser.getStringOptionValue(OPTION_LOG_LEVEL);
+    final String logLevelString = parser.getStringOptionValue(OPTION_loglevel);
     final Level logLevel = Level.parse(logLevelString
       .toUpperCase(Locale.ENGLISH));
     setApplicationLogLevel(logLevel);

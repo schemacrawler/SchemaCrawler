@@ -26,7 +26,7 @@
     <attribute name="outputfile" />
 
     <attribute
-      name="log_level"
+      name="loglevel"
       description="Log level - may be one of: OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL"
       default="SEVERE" />
 
@@ -61,7 +61,7 @@
         <arg value="@{template}" />
         <arg value="-outputfile" />
         <arg value="@{outputfile}" />
-        <arg value="-log_level=@{log_level}" />
+        <arg value="-loglevel=@{loglevel}" />
       </java>
     </sequential>
 
@@ -92,7 +92,7 @@
     <attribute name="outputfile" />
 
     <attribute
-      name="log_level"
+      name="loglevel"
       description="Log level - may be one of: OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL"
       default="SEVERE" />
 
@@ -127,7 +127,7 @@
         <arg value="@{graph-size}" />
         <arg value="-outputfile" />
         <arg value="@{outputfile}" />
-        <arg value="-log_level=@{log_level}" />
+        <arg value="-loglevel=@{loglevel}" />
       </java>
     </sequential>
 
@@ -155,7 +155,7 @@
       default="${spring-classpath}" />
       
     <attribute
-      name="log_level"
+      name="loglevel"
       description="Log level - may be one of: OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL"
       default="SEVERE" />
 
@@ -184,7 +184,7 @@
         <arg value="@{executable}" />
         <arg value="-datasource" />
         <arg value="@{datasource}" />        
-        <arg value="-log_level=@{log_level}" />
+        <arg value="-loglevel=@{loglevel}" />
       </java>
     </sequential>
 
