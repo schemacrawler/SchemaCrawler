@@ -55,7 +55,7 @@ import schemacrawler.utility.datasource.PropertiesDataSourceException;
 public class TestUtility
 {
 
-  private static final Level DEBUG_LOG_LEVEL = Level.OFF;
+  private static final Level DEBUG_loglevel = Level.OFF;
 
   /**
    * System specific line separator character.
@@ -131,7 +131,7 @@ public class TestUtility
 
   public static void setApplicationLogLevel()
   {
-    setApplicationLogLevel(DEBUG_LOG_LEVEL);
+    setApplicationLogLevel(DEBUG_loglevel);
   }
 
   private static void setApplicationLogLevel(final Level logLevel)
