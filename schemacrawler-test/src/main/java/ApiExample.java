@@ -1,16 +1,14 @@
 import java.util.Properties;
-import java.util.regex.Pattern;
 
 import javax.sql.DataSource;
 
-import schemacrawler.crawl.InclusionRule;
-import schemacrawler.crawl.SchemaCrawler;
-import schemacrawler.crawl.SchemaCrawlerOptions;
-import schemacrawler.crawl.SchemaInfoLevel;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.utility.SchemaCrawlerUtility;
 import schemacrawler.utility.datasource.PropertiesDataSource;
 import schemacrawler.utility.datasource.PropertiesDataSourceException;
 
@@ -25,42 +23,31 @@ public final class ApiExample
 
     // Create the options
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
-    /*
     options.setShowStoredProcedures(false);
-    options
-      .setTableInclusionRule(new InclusionRule("C.*",
-                                               InclusionRule.EXCLUDE_NONE));
-    options
-      .setColumnInclusionRule(new InclusionRule(InclusionRule.INCLUDE_ALL_PATTERN,
-                                               Pattern.compile(".*ID")));
-    options.setTableTypes("TABLE");
     options.setAlphabeticalSortForTableColumns(true);
-    */
 
     // Get the schema definition
-    final Schema schema = SchemaCrawler.getSchema(dataSource,
-                                                  SchemaInfoLevel.basic(),
-                                                  options);
+    final Catalog catalog = SchemaCrawlerUtility.getCatalog(dataSource
+      .getConnection(), options);
 
-    final Table[] tables = schema.getTables();
-    for (int i = 0; i < tables.length; i++)
+    for (Schema schema: catalog.getSchemas())
     {
-      final Table table = tables[i];
-      System.out.print(table);
-      if (table instanceof View)
+      System.out.println(schema);
+      for (Table table: schema.getTables())
       {
-        System.out.println(" (view)");
-      }
-      else
-      {
-        System.out.println();
-      }
+        System.out.print("o--> " + table);
+        if (table instanceof View)
+        {
+          System.out.println(" (VIEW)");
+        }
+        else
+        {
+          System.out.println();
+        }
 
-      final Column[] columns = table.getColumns();
-      for (int j = 0; j < columns.length; j++)
-      {
-        final Column column = columns[j];
-        System.out.println("-- " + column);
+        for (Column column: table.getColumns())
+          System.out.println("     o--> " + column + " (" + column.getType()
+                             + ")");
       }
     }
 
