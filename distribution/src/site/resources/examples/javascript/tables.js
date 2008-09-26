@@ -1,19 +1,17 @@
-print(schema.getDatabaseInfo());
-print("\n");
-print("\n");
+print(catalog.getDatabaseInfo() + "\n");
 
-var tables = schema.getTables();
-for (i = 0; i < tables.length; i++)
+var schemas = catalog.getSchemas();
+for (i = 0; i < schemas.length; i++)
 {
-  print(tables[i].getName());
-  print("\n");
-
-  var columns = tables[i].getColumns();
-  for (j = 0; j < columns.length; j++)
+  print(schemas[i].getName() + "\n");
+  var tables = schemas[i].getTables();
+  for (j = 0; j < tables.length; j++)
   {
-    print("-- ");
-    print(columns[j].getName());
-    print("\n");
+    print("o--> " + tables[j].getName() + "\n");
+    var columns = tables[j].getColumns();
+    for (k = 0; k < columns.length; k++)
+    {
+      print("     o--> " + columns[k].getName() + "\n");
+    }
   }
-  print("\n");
 }
