@@ -104,11 +104,13 @@ final class TableRetriever
         final MutableColumn pkColumn = lookupOrCreateColumn(tables,
                                                             pkTableSchema,
                                                             pkTableName,
-                                                            pkColumnName);
+                                                            pkColumnName,
+                                                            true);
         final MutableColumn fkColumn = lookupOrCreateColumn(tables,
                                                             pkTableSchema,
                                                             fkTableName,
-                                                            fkColumnName);
+                                                            fkColumnName,
+                                                            true);
         // Make a direct connection between the two columns
         fkColumn.setReferencedColumn(pkColumn);
         foreignKey.addColumnPair(keySequence, pkColumn, fkColumn);
@@ -184,7 +186,8 @@ final class TableRetriever
   private MutableColumn lookupOrCreateColumn(final NamedObjectList<MutableTable> tables,
                                              final String schemaName,
                                              final String tableName,
-                                             final String columnName)
+                                             final String columnName,
+                                             boolean add)
   {
     final String catalogName = getRetrieverConnection().getCatalogName();
     MutableColumn column = null;
@@ -193,10 +196,21 @@ final class TableRetriever
     {
       column = table.lookupColumn(columnName);
     }
-    if (column == null)
+    else
     {
       table = new MutableTable(catalogName, schemaName, tableName);
+      if (add)
+      {
+        tables.add(table);
+      }
+    }
+    if (column == null)
+    {
       column = new MutableColumn(columnName, table);
+      if (add)
+      {
+        table.addColumn(column);
+      }
     }
     return column;
   }
@@ -210,14 +224,17 @@ final class TableRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveColumns(final MutableTable table,
+  void retrieveColumns(final NamedObjectList<MutableTable> tables,
+                       final MutableTable table,
                        final InclusionRule columnInclusionRule,
                        final ColumnDataTypes columnDataTypes)
     throws SQLException
   {
+
+    final String schemaName = table.getSchemaName();
     final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
       .getMetaData().getColumns(getRetrieverConnection().getCatalogName(),
-                                table.getSchemaName(),
+                                schemaName,
                                 table.getName(),
                                 null));
     try
@@ -232,7 +249,11 @@ final class TableRetriever
         final String tableName = results.getString("TABLE_NAME");
         final String columnName = results.getString(COLUMN_NAME);
 
-        final MutableColumn column = new MutableColumn(columnName, table);
+        final MutableColumn column = lookupOrCreateColumn(tables,
+                                                          schemaName,
+                                                          tableName,
+                                                          columnName,
+                                                          false);
         final String columnFullName = column.getFullName();
         // Note: If the table name contains an underscore character,
         // this is a wildcard character. We need to do another check to

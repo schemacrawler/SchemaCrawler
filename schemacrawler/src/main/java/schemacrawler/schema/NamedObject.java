@@ -55,6 +55,11 @@ public interface NamedObject
   String getName();
 
   /**
+   * Object hash code.
+   */
+  String getObjectHash();
+
+  /**
    * Getter for remarks.
    * 
    * @return Remarks
