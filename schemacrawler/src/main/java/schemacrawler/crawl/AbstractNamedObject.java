@@ -36,6 +36,7 @@ abstract class AbstractNamedObject
   private static final long serialVersionUID = -1486322887991472729L;
 
   private final String name;
+
   private String remarks;
   private final SortedMap<String, Object> attributeMap = new TreeMap<String, Object>();
   private final NamedObjectSort comparator = NamedObjectSort.alphabetical;
@@ -119,6 +120,16 @@ abstract class AbstractNamedObject
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schema.NamedObject#getObjectHash()
+   */
+  public String getObjectHash()
+  {
+    return Integer.toHexString(super.hashCode());
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see schemacrawler.schema.DatabaseObject#getRemarks()
    */
   public final String getRemarks()
@@ -151,6 +162,17 @@ abstract class AbstractNamedObject
     attributeMap.put(name, value);
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    return name;
+  }
+
   final void setRemarks(final String remarks)
   {
     if (remarks == null)
@@ -161,17 +183,6 @@ abstract class AbstractNamedObject
     {
       this.remarks = remarks;
     }
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return name;
   }
 
 }

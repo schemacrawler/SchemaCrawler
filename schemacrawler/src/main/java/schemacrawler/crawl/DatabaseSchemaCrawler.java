@@ -356,9 +356,8 @@ public final class DatabaseSchemaCrawler
       {
         try
         {
-          retriever.retrieveColumns(table,
-                                    options.getColumnInclusionRule(),
-                                    columnDataTypes);
+          retriever.retrieveColumns(tables, table, options
+            .getColumnInclusionRule(), columnDataTypes);
           if (infoLevel.isRetrieveTableColumnPrivileges())
           {
             retrieverExtra.retrieveTableColumnPrivileges(table, table
