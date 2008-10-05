@@ -10,7 +10,6 @@ import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.SchemaCrawlerUtility;
 import schemacrawler.utility.datasource.PropertiesDataSource;
-import schemacrawler.utility.datasource.PropertiesDataSourceException;
 
 public final class ApiExample
 {
@@ -30,10 +29,10 @@ public final class ApiExample
     final Catalog catalog = SchemaCrawlerUtility.getCatalog(dataSource
       .getConnection(), options);
 
-    for (Schema schema: catalog.getSchemas())
+    for (final Schema schema: catalog.getSchemas())
     {
       System.out.println(schema);
-      for (Table table: schema.getTables())
+      for (final Table table: schema.getTables())
       {
         System.out.print("o--> " + table);
         if (table instanceof View)
@@ -45,16 +44,17 @@ public final class ApiExample
           System.out.println();
         }
 
-        for (Column column: table.getColumns())
+        for (final Column column: table.getColumns())
+        {
           System.out.println("     o--> " + column + " (" + column.getType()
                              + ")");
+        }
       }
     }
 
   }
 
   private static DataSource makeDataSource()
-    throws PropertiesDataSourceException
   {
     final String datasourceName = "schemacrawler";
 

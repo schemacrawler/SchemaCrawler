@@ -24,7 +24,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.utility.datasource.PropertiesDataSourceException;
 import schemacrawler.utility.test.TestUtility;
 
 public class PropertiesDataSourceTest
@@ -34,14 +33,12 @@ public class PropertiesDataSourceTest
 
   @AfterClass
   public static void afterAllTests()
-    throws PropertiesDataSourceException, ClassNotFoundException
   {
     testUtility.shutdownDatabase();
   }
 
   @BeforeClass
   public static void beforeAllTests()
-    throws PropertiesDataSourceException, ClassNotFoundException
   {
     TestUtility.setApplicationLogLevel();
     testUtility.createMemoryDatabase();

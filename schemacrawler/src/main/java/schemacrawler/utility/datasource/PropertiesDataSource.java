@@ -1,18 +1,21 @@
-/*
+/* 
+ *
  * SchemaCrawler
+ * http://sourceforge.net/projects/schemacrawler
  * Copyright (c) 2000-2008, Sualeh Fatehi.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * This library is free software; you can redistribute it and/or modify it under the terms
+ * of the GNU Lesser General Public License as published by the Free Software Foundation;
+ * either version 2.1 of the License, or (at your option) any later version.
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * Boston, MA 02111-1307, USA.
+ *
  */
 
 package schemacrawler.utility.datasource;
@@ -77,7 +80,6 @@ public final class PropertiesDataSource
    *         On any exception in creating the PropertiesDataSource.
    */
   public PropertiesDataSource(final Properties properties)
-    throws PropertiesDataSourceException
   {
     constructPropertiesDataSource(properties, null);
   }
@@ -96,14 +98,12 @@ public final class PropertiesDataSource
    */
   public PropertiesDataSource(final Properties properties,
                               final String connectionName)
-    throws PropertiesDataSourceException
   {
     constructPropertiesDataSource(properties, connectionName);
   }
 
   private void constructPropertiesDataSource(final Properties properties,
                                              final String connectionName)
-    throws PropertiesDataSourceException
   {
     final String defaultConnection = properties.getProperty(DEFAULTCONNECTION,
                                                             "");
@@ -120,8 +120,8 @@ public final class PropertiesDataSource
     // check if the connection name is defined
     if (!groups.isGroup(useConnectionName))
     {
-      throw new PropertiesDataSourceException("Connection not defined: "
-                                              + useConnectionName);
+      throw new IllegalArgumentException("Connection not defined: "
+                                         + useConnectionName);
     }
 
     // create substituted properties
@@ -141,23 +141,10 @@ public final class PropertiesDataSource
       final Class<?> jdbcDriverClass = Class.forName(driver);
       jdbcDriver = (Driver) jdbcDriverClass.newInstance();
     }
-    catch (final ClassCastException e)
+    catch (final Exception e)
     {
-      throw new PropertiesDataSourceException("Driver class not found - "
-                                              + e.getLocalizedMessage(), e);
-    }
-    catch (final ClassNotFoundException e)
-    {
-      throw new PropertiesDataSourceException("Driver class not found - "
-                                              + e.getLocalizedMessage(), e);
-    }
-    catch (final InstantiationException e)
-    {
-      throw new PropertiesDataSourceException(e.getLocalizedMessage(), e);
-    }
-    catch (final IllegalAccessException e)
-    {
-      throw new PropertiesDataSourceException(e.getLocalizedMessage(), e);
+      throw new RuntimeException("Driver class not be initialized - "
+                                 + e.getLocalizedMessage(), e);
     }
 
     url = connectionParams.getProperty(URL);
@@ -360,7 +347,6 @@ public final class PropertiesDataSource
   }
 
   private void testConnection()
-    throws PropertiesDataSourceException
   {
 
     LOGGER.log(Level.FINE, "Attempting connection...");
@@ -371,7 +357,7 @@ public final class PropertiesDataSource
       connection = getConnection();
       if (connection == null)
       {
-        throw new PropertiesDataSourceException("Could not establish a connection");
+        throw new RuntimeException("Could not establish a connection");
       }
       // set metadata properties
       final DatabaseMetaData metaData = connection.getMetaData();
@@ -385,7 +371,7 @@ public final class PropertiesDataSource
       final String errorMessage = e.getMessage();
       LOGGER.log(Level.SEVERE, "Could not establish a connection: "
                                + errorMessage);
-      throw new PropertiesDataSourceException(errorMessage, e);
+      throw new RuntimeException(errorMessage, e);
     }
     finally
     {
@@ -401,7 +387,7 @@ public final class PropertiesDataSource
         final String errorMessage = e.getMessage();
         LOGGER.log(Level.WARNING, "Could not close the connection: "
                                   + errorMessage);
-        throw new PropertiesDataSourceException(errorMessage, e);
+        throw new RuntimeException(errorMessage, e);
       }
     }
 

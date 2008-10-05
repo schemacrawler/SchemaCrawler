@@ -43,7 +43,6 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.integration.xml.XmlSchemaCrawler;
-import schemacrawler.utility.datasource.PropertiesDataSourceException;
 import schemacrawler.utility.test.TestUtility;
 
 import com.thoughtworks.xstream.XStream;
@@ -54,14 +53,12 @@ public class SchemaSerializationTest
 
   @AfterClass
   public static void afterAllTests()
-    throws PropertiesDataSourceException, ClassNotFoundException
   {
     testUtility.shutdownDatabase();
   }
 
   @BeforeClass
   public static void beforeAllTests()
-    throws PropertiesDataSourceException, ClassNotFoundException
   {
     TestUtility.setApplicationLogLevel();
     testUtility.createMemoryDatabase();
