@@ -54,7 +54,6 @@ import schemacrawler.tools.operation.OperationOptions;
 import schemacrawler.tools.schematext.SchemaCrawlerExecutable;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextOptions;
-import schemacrawler.utility.datasource.PropertiesDataSourceException;
 import schemacrawler.utility.test.TestUtility;
 
 public class SchemaCrawlerOutputTest
@@ -64,14 +63,12 @@ public class SchemaCrawlerOutputTest
 
   @AfterClass
   public static void afterAllTests()
-    throws PropertiesDataSourceException, ClassNotFoundException
   {
     testUtility.shutdownDatabase();
   }
 
   @BeforeClass
   public static void beforeAllTests()
-    throws PropertiesDataSourceException, ClassNotFoundException
   {
     TestUtility.setApplicationLogLevel();
     testUtility.createMemoryDatabase();

@@ -59,8 +59,8 @@ public final class DataTextFormatter
   private static final String BINARY = "<binary>";
 
   private final DataTextFormatOptions options;
-  protected final PrintWriter out;
-  protected final TextFormattingHelper formattingHelper;
+  private final PrintWriter out;
+  private final TextFormattingHelper formattingHelper;
 
   /**
    * Text formatting of data.

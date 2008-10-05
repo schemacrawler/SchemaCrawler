@@ -250,14 +250,14 @@
 
     <!-- Create zip files for distribution -->
 
-    <mkdir dir="${SchemaCrawlerHome}/schemacrawler/target/site"/>
+    <mkdir dir="${SchemaCrawlerHome}/schemacrawler-tools/target/site"/>
     <property
     	name="site.zip.prefix"
     	value="schemacrawler-${pom.version}-site" />
     <delete file="${distribution.target}/${site.zip.prefix}.zip"/>
     <zip destfile="${distribution.target}/${site.zip.prefix}.zip">
       <zipfileset
-        dir="${SchemaCrawlerHome}/schemacrawler/target/site"
+        dir="${SchemaCrawlerHome}/schemacrawler-tools/target/site"
         prefix="${site.zip.prefix}"
         defaultexcludes="yes"/>
     </zip>

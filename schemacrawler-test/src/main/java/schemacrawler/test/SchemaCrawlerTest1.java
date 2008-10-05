@@ -13,7 +13,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.utility.SchemaCrawlerUtility;
 import schemacrawler.utility.datasource.PropertiesDataSource;
-import schemacrawler.utility.datasource.PropertiesDataSourceException;
 
 public class SchemaCrawlerTest1
 {
@@ -55,7 +54,6 @@ public class SchemaCrawlerTest1
   }
 
   private static DataSource makeDataSource()
-    throws PropertiesDataSourceException
   {
     final String datasourceName = "schemacrawler";
 

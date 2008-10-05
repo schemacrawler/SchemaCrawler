@@ -27,7 +27,6 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import schemacrawler.utility.datasource.PropertiesDataSource;
-import schemacrawler.utility.datasource.PropertiesDataSourceException;
 import sf.util.CommandLineParser;
 import sf.util.Utilities;
 import sf.util.CommandLineParser.BooleanOption;
@@ -129,7 +128,7 @@ public final class PropertiesDataSourceDatabaseConnector
     {
       return new PropertiesDataSource(Utilities.toProperties(config));
     }
-    catch (final PropertiesDataSourceException e)
+    catch (final Exception e)
     {
       throw new DatabaseConnectorException(e);
     }

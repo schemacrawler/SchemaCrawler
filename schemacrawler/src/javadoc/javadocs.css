@@ -2,79 +2,79 @@
 /* Define colors, fonts and other style attributes here to override the defaults  */
 
 body {
-    font-family: Helvetica,Tahoma,Arial,Verdana;
-    font-size: 10pt;
+    font-family: Verdana,Tahoma,Arial;
+    font-size: 9pt;
     background-color:#FFFFFF;
 }
 h2 {
-    font-family: Verdana,Helvetica,Tahoma,Arial;
-    font-size: 14pt;
+    font-family: Verdana,Tahoma,Arial;
+    font-size: 11pt;
 }
 h3 {
-    font-family: Verdana,Helvetica,Tahoma,Arial;
-    font-size: 12pt;
+    font-family: Verdana,Tahoma,Arial;
+    font-size: 10pt;
 }
 font {
-    font-family: Verdana,Helvetica,Tahoma,Arial;
+    font-family: Verdana,Tahoma,Arial;
     font-size: 9pt;
 }
 
 .TableHeadingColor     {
     background: #FAFAD2;
-    font-family: Verdana,Helvetica,Tahoma,Arial;
-    font-size: 10pt;
-} 
+    font-family: Verdana,Tahoma,Arial;
+    font-size: 9pt;
+}
 .TableSubHeadingColor  {
     background: #FFFFF0;
-    font-family: Verdana,Helvetica,Tahoma,Arial;
-    font-size: 10pt;
-} 
+    font-family: Verdana,Tahoma,Arial;
+    font-size: 9pt;
+}
 .TableRowColor         {
     background: #FFFFFF;
-    font-family: Verdana,Helvetica,Tahoma,Arial;
-    font-size: 10pt;
-} 
+    font-family: Verdana,Tahoma,Arial;
+    font-size: 9pt;
+}
 
 .FrameTitleFont   {
-    font-family: Verdana,Helvetica,Tahoma,Arial;
-    font-size: 10pt;
+    font-family: Verdana,Tahoma,Arial;
+    font-size: 9pt;
 }
 .FrameHeadingFont {
-    font-family: Verdana,Helvetica,Tahoma,Arial;
-    font-size: 10pt;
+    font-family: Verdana,Tahoma,Arial;
+    font-size: 9pt;
 }
 .FrameItemFont  {
-    font-family: Verdana,Helvetica,Tahoma,Arial;
-    font-size: 10pt;
+    font-family: Verdana,Tahoma,Arial;
+    font-size: 9pt;
 }
 
 .NavBarCell1    {
     background-color: #FAFAD2;
-    font-family: Verdana,Helvetica,Tahoma,Arial;
-    font-size: 10pt;
+    font-family: Verdana,Tahoma,Arial;
+    font-size: 9pt;
 }
 .NavBarCell1Rev {
     background-color: Purple;
-    font : 10pt;
+    font : 9pt;
 }
 .NavBarFont1    {
-    font-family: Verdana,Helvetica,Tahoma,Arial;
-    font-size: 10pt;
+    font-family: Verdana,Tahoma,Arial;
+    font-size: 9pt;
     color:#000000;
 }
 .NavBarFont1Rev {
-    font-family: Verdana,Helvetica,Tahoma,Arial;
-    font-size: 10pt;
+    font-family: Verdana,Tahoma,Arial;
+    font-size: 9pt;
     color:#FFFFFF;
 }
 .NavBarCell2    {
-    font-family: Verdana,Helvetica,Tahoma,Arial;
+    font-family: Verdana,Tahoma,Arial;
     font-size: 8pt;
     background-color:#FFFFFF;
 }
 .NavBarCell3    {
-    font-family: Verdana,Helvetica,Tahoma,Arial;
-    font-size: 10pt;
+    font-family: Verdana,Tahoma,Arial;
+    font-size: 9pt;
     background-color:#FFFFFF;
 }
 

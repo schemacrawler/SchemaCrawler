@@ -37,7 +37,6 @@ import schemacrawler.tools.integration.jung.JungExecutable;
 import schemacrawler.tools.integration.velocity.VelocityRenderer;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextOptions;
-import schemacrawler.utility.datasource.PropertiesDataSourceException;
 import schemacrawler.utility.test.TestUtility;
 
 public class ExecutorIntegrationTest
@@ -47,14 +46,12 @@ public class ExecutorIntegrationTest
 
   @AfterClass
   public static void afterAllTests()
-    throws PropertiesDataSourceException, ClassNotFoundException
   {
     testUtility.shutdownDatabase();
   }
 
   @BeforeClass
   public static void beforeAllTests()
-    throws PropertiesDataSourceException, ClassNotFoundException
   {
     TestUtility.setApplicationLogLevel();
     testUtility.createMemoryDatabase();

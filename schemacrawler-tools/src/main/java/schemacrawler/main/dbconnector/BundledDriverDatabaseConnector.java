@@ -25,7 +25,6 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import schemacrawler.utility.datasource.PropertiesDataSource;
-import schemacrawler.utility.datasource.PropertiesDataSourceException;
 import sf.util.CommandLineParser;
 import sf.util.Utilities;
 import sf.util.CommandLineParser.Option;
@@ -125,7 +124,7 @@ public final class BundledDriverDatabaseConnector
     {
       return new PropertiesDataSource(Utilities.toProperties(config));
     }
-    catch (final PropertiesDataSourceException e)
+    catch (final Exception e)
     {
       throw new DatabaseConnectorException(e);
     }
