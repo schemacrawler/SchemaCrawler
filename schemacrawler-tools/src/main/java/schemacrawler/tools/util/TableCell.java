@@ -133,52 +133,6 @@ final class TableCell
   }
 
   /**
-   * Right justifies the string in given field length.
-   * 
-   * @param string
-   *        String to right justify
-   * @param len
-   *        Length of the field
-   * @return Justified string
-   */
-  private String padLeft(final String string, final int len)
-  {
-    final StringBuffer buffer = new StringBuffer();
-    if (string != null)
-    {
-      buffer.append(string);
-    }
-    while (buffer.length() < len)
-    {
-      buffer.insert(0, ' ');
-    }
-    return buffer.toString();
-  }
-
-  /**
-   * Left justifies the string in given field length.
-   * 
-   * @param string
-   *        String to right justify
-   * @param len
-   *        Length of the field
-   * @return Justified string
-   */
-  private String padRight(final String string, final int len)
-  {
-    final StringBuffer buffer = new StringBuffer();
-    if (string != null)
-    {
-      buffer.append(string);
-    }
-    while (buffer.length() < len)
-    {
-      buffer.append(' ');
-    }
-    return buffer.toString();
-  }
-
-  /**
    * Converts the table cell to HTML.
    * 
    * @return HTML
@@ -196,14 +150,7 @@ final class TableCell
       buffer.append(" class='").append(styleClass).append("'");
     }
     buffer.append(">");
-    if (!Utilities.isBlank(text))
-    {
-      buffer.append(Entities.XML.escape(text));
-    }
-    else
-    {
-      buffer.append("&nbsp;");
-    }
+    buffer.append(Entities.XML.escape(String.valueOf(text)));
     buffer.append("</td>");
 
     return buffer.toString();
@@ -226,11 +173,11 @@ final class TableCell
       {
         if (align == Align.right)
         {
-          return padLeft(text, characterWidth);
+          return String.format("%" + characterWidth + "s", text);
         }
         else
         {
-          return padRight(text, characterWidth);
+          return String.format("%-" + characterWidth + "s", text);
         }
       }
       else
@@ -239,4 +186,5 @@ final class TableCell
       }
     }
   }
+
 }
