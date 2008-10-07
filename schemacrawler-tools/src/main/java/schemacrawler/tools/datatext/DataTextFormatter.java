@@ -143,7 +143,7 @@ public final class DataTextFormatter
    * 
    * @see schemacrawler.execute.DataHandler#handleData(java.sql.ResultSet)
    */
-  public final void handleData(final String title, final ResultSet rows)
+  public void handleData(final String title, final ResultSet rows)
     throws QueryExecutorException
   {
     out.println(formattingHelper.createObjectStart(title));
