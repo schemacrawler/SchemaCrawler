@@ -153,7 +153,7 @@ public final class SchemaTextFormatter
    * 
    * @return Table count
    */
-  public final int getTableCount()
+  public int getTableCount()
   {
     return tableCount;
   }
@@ -244,7 +244,7 @@ public final class SchemaTextFormatter
    * @param procedure
    *        Procedure metadata.
    */
-  public final void handle(final Procedure procedure)
+  public void handle(final Procedure procedure)
   {
     final SchemaTextDetailType schemaTextDetailType = options
       .getSchemaTextDetailType();
@@ -307,7 +307,7 @@ public final class SchemaTextFormatter
    * @param table
    *        Table metadata.
    */
-  public final void handle(final Table table)
+  public void handle(final Table table)
   {
     final SchemaTextDetailType schemaTextDetailType = options
       .getSchemaTextDetailType();

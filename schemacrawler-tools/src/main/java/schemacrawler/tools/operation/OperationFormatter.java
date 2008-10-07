@@ -205,7 +205,7 @@ public final class OperationFormatter
    * 
    * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.ColumnDataType)
    */
-  public void handle(@SuppressWarnings("unused") ColumnDataType dataType)
+  public void handle(final ColumnDataType dataType)
     throws SchemaCrawlerException
   {
   }
@@ -235,7 +235,7 @@ public final class OperationFormatter
    * 
    * @see CrawlHandler#handle(Procedure)
    */
-  public final void handle(@SuppressWarnings("unused") final Procedure procedure)
+  public void handle(final Procedure procedure)
   {
   }
 
@@ -244,7 +244,7 @@ public final class OperationFormatter
    * 
    * @see CrawlHandler#handle(Table)
    */
-  public final void handle(final Table table)
+  public void handle(final Table table)
   {
     if (options.getOperation() == Operation.count && tableCount == 0)
     {
