@@ -47,11 +47,6 @@ class MutableCatalog
     super(name);
   }
 
-  void addSchema(final MutableSchema schema)
-  {
-    schemas.add(schema);
-  }
-
   /**
    * {@inheritDoc}
    * 
@@ -90,6 +85,11 @@ class MutableCatalog
   public Schema[] getSchemas()
   {
     return schemas.getAll().toArray(new Schema[schemas.size()]);
+  }
+
+  void addSchema(final MutableSchema schema)
+  {
+    schemas.add(schema);
   }
 
   MutableSchema lookupSchema(final String name)

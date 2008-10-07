@@ -98,62 +98,9 @@ public class TestUtility
     testUtility.createDatabase();
   }
 
-  /**
-   * Reads the stream fully, and returns a byte array of data.
-   * 
-   * @param stream
-   *        Stream to read.
-   * @return Byte array
-   */
-  private static String readFully(final Reader reader)
-  {
-    if (reader == null)
-    {
-      return "";
-    }
-
-    final StringBuffer buffer = new StringBuffer();
-    try
-    {
-      final BufferedReader in = new BufferedReader(reader);
-      String line;
-      while ((line = in.readLine()) != null)
-      {
-        buffer.append(line).append(NEWLINE);
-      }
-      in.close();
-    }
-    catch (final IOException e)
-    {
-      LOGGER.log(Level.WARNING, "Error reading input stream", e);
-    }
-
-    return buffer.toString();
-  }
-
   public static void setApplicationLogLevel()
   {
     setApplicationLogLevel(DEBUG_loglevel);
-  }
-
-  private static void setApplicationLogLevel(final Level logLevel)
-  {
-    final LogManager logManager = LogManager.getLogManager();
-    for (final Enumeration<String> loggerNames = logManager.getLoggerNames(); loggerNames
-      .hasMoreElements();)
-    {
-      final String loggerName = loggerNames.nextElement();
-      final Logger logger = logManager.getLogger(loggerName);
-      logger.setLevel(null);
-      final Handler[] handlers = logger.getHandlers();
-      for (final Handler handler: handlers)
-      {
-        handler.setLevel(logLevel);
-      }
-    }
-
-    final Logger rootLogger = Logger.getLogger("");
-    rootLogger.setLevel(logLevel);
   }
 
   /**
@@ -218,6 +165,59 @@ public class TestUtility
     }
   }
 
+  /**
+   * Reads the stream fully, and returns a byte array of data.
+   * 
+   * @param stream
+   *        Stream to read.
+   * @return Byte array
+   */
+  private static String readFully(final Reader reader)
+  {
+    if (reader == null)
+    {
+      return "";
+    }
+
+    final StringBuffer buffer = new StringBuffer();
+    try
+    {
+      final BufferedReader in = new BufferedReader(reader);
+      String line;
+      while ((line = in.readLine()) != null)
+      {
+        buffer.append(line).append(NEWLINE);
+      }
+      in.close();
+    }
+    catch (final IOException e)
+    {
+      LOGGER.log(Level.WARNING, "Error reading input stream", e);
+    }
+
+    return buffer.toString();
+  }
+
+  private static void setApplicationLogLevel(final Level logLevel)
+  {
+    final LogManager logManager = LogManager.getLogManager();
+    for (final Enumeration<String> loggerNames = logManager.getLoggerNames(); loggerNames
+      .hasMoreElements();)
+    {
+      final String loggerName = loggerNames.nextElement();
+      final Logger logger = logManager.getLogger(loggerName);
+      logger.setLevel(null);
+      final Handler[] handlers = logger.getHandlers();
+      for (final Handler handler: handlers)
+      {
+        handler.setLevel(logLevel);
+      }
+    }
+
+    final Logger rootLogger = Logger.getLogger("");
+    rootLogger.setLevel(logLevel);
+  }
+
   protected DataSource dataSource;
 
   protected PrintWriter out;
@@ -245,20 +245,6 @@ public class TestUtility
     createDatabase("jdbc:hsqldb:hsql://localhost/schemacrawler");
   }
 
-  private void createDatabase(final String url)
-  {
-    makeDataSource(url);
-    try
-    {
-      dataSource.setLogWriter(out);
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.FINE, "Could not set log writer", e);
-    }
-    setupSchema(dataSource);
-  }
-
   /**
    * Create database in memory.
    */
@@ -274,19 +260,6 @@ public class TestUtility
       out = new PrintWriter(new NullWriter(), true);
     }
     createDatabase("jdbc:hsqldb:mem:schemacrawler");
-  }
-
-  private void deleteServerFiles(final String stem)
-  {
-    final File[] files = new File(".")
-      .listFiles(new HSQLDBServerFilesFilter(stem));
-    for (final File file: files)
-    {
-      if (!file.isDirectory() && !file.isHidden())
-      {
-        file.delete();
-      }
-    }
   }
 
   public Catalog getCatalog(final SchemaCrawlerOptions schemaCrawlerOptions)
@@ -314,18 +287,13 @@ public class TestUtility
     return dataSource;
   }
 
-  private void makeDataSource(final String url)
+  public Schema getSchema(final SchemaCrawlerOptions schemaCrawlerOptions,
+                          String schemaName)
   {
-    final String dataSourceName = "schemacrawler";
+    Catalog catalog = getCatalog(schemaCrawlerOptions);
 
-    final Properties connectionProperties = new Properties();
-    connectionProperties.setProperty(dataSourceName + ".driver",
-                                     JDBC_DRIVER_CLASS.getName());
-    connectionProperties.setProperty(dataSourceName + ".url", url);
-    connectionProperties.setProperty(dataSourceName + ".user", "sa");
-    connectionProperties.setProperty(dataSourceName + ".password", "");
-
-    dataSource = new PropertiesDataSource(connectionProperties, dataSourceName);
+    final Schema schema = catalog.getSchema(schemaName);
+    return schema;
   }
 
   /**
@@ -380,13 +348,45 @@ public class TestUtility
     }
   }
 
-  public Schema getSchema(final SchemaCrawlerOptions schemaCrawlerOptions,
-                          String schemaName)
+  private void createDatabase(final String url)
   {
-    Catalog catalog = getCatalog(schemaCrawlerOptions);
+    makeDataSource(url);
+    try
+    {
+      dataSource.setLogWriter(out);
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.FINE, "Could not set log writer", e);
+    }
+    setupSchema(dataSource);
+  }
 
-    final Schema schema = catalog.getSchema(schemaName);
-    return schema;
+  private void deleteServerFiles(final String stem)
+  {
+    final File[] files = new File(".")
+      .listFiles(new HSQLDBServerFilesFilter(stem));
+    for (final File file: files)
+    {
+      if (!file.isDirectory() && !file.isHidden())
+      {
+        file.delete();
+      }
+    }
+  }
+
+  private void makeDataSource(final String url)
+  {
+    final String dataSourceName = "schemacrawler";
+
+    final Properties connectionProperties = new Properties();
+    connectionProperties.setProperty(dataSourceName + ".driver",
+                                     JDBC_DRIVER_CLASS.getName());
+    connectionProperties.setProperty(dataSourceName + ".url", url);
+    connectionProperties.setProperty(dataSourceName + ".user", "sa");
+    connectionProperties.setProperty(dataSourceName + ".password", "");
+
+    dataSource = new PropertiesDataSource(connectionProperties, dataSourceName);
   }
 
 }

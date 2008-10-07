@@ -71,10 +71,14 @@ public final class OutputOptions
    * @param outputFilename
    *        Output filename
    */
-  public OutputOptions(final String outputFormatValue,
+  public OutputOptions(final OutputFormat outputFormat,
                        final String outputFilename)
   {
-    this.outputFormatValue = outputFormatValue;
+    if (outputFormat == null)
+    {
+      throw new IllegalArgumentException("No output format provided");
+    }
+    this.outputFormatValue = outputFormat.name();
 
     if (!Utilities.isBlank(outputFilename))
     {
@@ -94,14 +98,10 @@ public final class OutputOptions
    * @param outputFilename
    *        Output filename
    */
-  public OutputOptions(final OutputFormat outputFormat,
+  public OutputOptions(final String outputFormatValue,
                        final String outputFilename)
   {
-    if (outputFormat == null)
-    {
-      throw new IllegalArgumentException("No output format provided");
-    }
-    this.outputFormatValue = outputFormat.name();
+    this.outputFormatValue = outputFormatValue;
 
     if (!Utilities.isBlank(outputFilename))
     {

@@ -43,11 +43,6 @@ class MutableResultsColumns
     super(name);
   }
 
-  void addColumn(final MutableResultsColumn column)
-  {
-    columns.add(column);
-  }
-
   /**
    * {@inheritDoc}
    * 
@@ -92,6 +87,11 @@ class MutableResultsColumns
       columnsList = buffer.toString();
     }
     return columnsList;
+  }
+
+  void addColumn(final MutableResultsColumn column)
+  {
+    columns.add(column);
   }
 
 }

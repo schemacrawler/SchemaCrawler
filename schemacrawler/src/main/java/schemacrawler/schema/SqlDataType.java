@@ -45,6 +45,23 @@ public final class SqlDataType
 
   private static final Map<Integer, SqlDataType> JAVA_SQL_TYPES = getJavaSqlTypes();
 
+  /**
+   * The java.sql.Types type .
+   * 
+   * @param type
+   *        java.sql.Types type
+   * @return java.sql.Types type
+   */
+  public static SqlDataType lookupSqlDataType(final int type)
+  {
+    SqlDataType sqlDataType = JAVA_SQL_TYPES.get(Integer.valueOf(type));
+    if (sqlDataType == null)
+    {
+      sqlDataType = UNKNOWN;
+    }
+    return sqlDataType;
+  }
+
   private static Map<Integer, SqlDataType> getJavaSqlTypes()
   {
 
@@ -69,23 +86,6 @@ public final class SqlDataType
     }
 
     return Collections.unmodifiableMap(javaSqlTypes);
-  }
-
-  /**
-   * The java.sql.Types type .
-   * 
-   * @param type
-   *        java.sql.Types type
-   * @return java.sql.Types type
-   */
-  public static SqlDataType lookupSqlDataType(final int type)
-  {
-    SqlDataType sqlDataType = JAVA_SQL_TYPES.get(Integer.valueOf(type));
-    if (sqlDataType == null)
-    {
-      sqlDataType = UNKNOWN;
-    }
-    return sqlDataType;
   }
 
   private final int type;

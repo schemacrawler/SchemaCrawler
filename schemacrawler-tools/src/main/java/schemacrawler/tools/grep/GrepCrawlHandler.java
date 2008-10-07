@@ -94,6 +94,12 @@ public final class GrepCrawlHandler
     chainedCrawlHandler.end();
   }
 
+  public void handle(ColumnDataType dataType)
+    throws SchemaCrawlerException
+  {
+    // Ignore
+  }
+
   /**
    * {@inheritDoc}
    * 
@@ -247,12 +253,6 @@ public final class GrepCrawlHandler
       handleTable = !handleTable;
     }
     return handleTable;
-  }
-
-  public void handle(ColumnDataType dataType)
-    throws SchemaCrawlerException
-  {
-    // Ignore
   }
 
 }

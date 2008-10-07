@@ -46,17 +46,6 @@ final class MutableJdbcDriverInfo
   private final NamedObjectList<MutableJdbcDriverProperty> jdbcDriverProperties = new NamedObjectList<MutableJdbcDriverProperty>(NamedObjectSort.alphabetical);
 
   /**
-   * Adds a JDBC driver property.
-   * 
-   * @param jdbcDriverProperty
-   *        JDBC driver property
-   */
-  void addJdbcDriverProperty(final MutableJdbcDriverProperty jdbcDriverProperty)
-  {
-    jdbcDriverProperties.add(jdbcDriverProperty);
-  }
-
-  /**
    * {@inheritDoc}
    * 
    * @see java.lang.Object#equals(java.lang.Object)
@@ -205,6 +194,39 @@ final class MutableJdbcDriverInfo
     return jdbcCompliant;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+
+    final StringBuffer info = new StringBuffer();
+
+    info.append("-- driver: ").append(getDriverName()).append(" ")
+      .append(getDriverVersion()).append(NEWLINE);
+    info.append("-- driver class: ").append(getDriverClassName())
+      .append(NEWLINE);
+    info.append("-- url: ").append(getConnectionUrl()).append(NEWLINE);
+    info.append("-- jdbc compliant: ").append(isJdbcCompliant());
+
+    return info.toString();
+
+  }
+
+  /**
+   * Adds a JDBC driver property.
+   * 
+   * @param jdbcDriverProperty
+   *        JDBC driver property
+   */
+  void addJdbcDriverProperty(final MutableJdbcDriverProperty jdbcDriverProperty)
+  {
+    jdbcDriverProperties.add(jdbcDriverProperty);
+  }
+
   void setConnectionUrl(final String connectionUrl)
   {
     this.connectionUrl = connectionUrl;
@@ -228,28 +250,6 @@ final class MutableJdbcDriverInfo
   void setJdbcDriverClassName(final String jdbcDriverClassName)
   {
     driverClassName = jdbcDriverClassName;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-
-    final StringBuffer info = new StringBuffer();
-
-    info.append("-- driver: ").append(getDriverName()).append(" ")
-      .append(getDriverVersion()).append(NEWLINE);
-    info.append("-- driver class: ").append(getDriverClassName())
-      .append(NEWLINE);
-    info.append("-- url: ").append(getConnectionUrl()).append(NEWLINE);
-    info.append("-- jdbc compliant: ").append(isJdbcCompliant());
-
-    return info.toString();
-
   }
 
 }

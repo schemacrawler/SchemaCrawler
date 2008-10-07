@@ -61,21 +61,6 @@ class NamedObjectList<N extends NamedObject>
   }
 
   /**
-   * Add a named object to the list.
-   * 
-   * @param namedObject
-   *        Named object
-   */
-  void add(final N namedObject)
-  {
-    if (namedObject == null || namedObject.getName() == null)
-    {
-      throw new IllegalArgumentException("Cannot add an object to the list");
-    }
-    objects.add(namedObject);
-  }
-
-  /**
    * {@inheritDoc}
    * 
    * @see java.lang.Object#equals(java.lang.Object)
@@ -112,18 +97,6 @@ class NamedObjectList<N extends NamedObject>
   }
 
   /**
-   * Gets all named objects in the list, in sorted order.
-   * 
-   * @return All named objects
-   */
-  List<N> getAll()
-  {
-    final List<N> all = new ArrayList<N>(objects);
-    Collections.sort(all, sort);
-    return Collections.unmodifiableList(all);
-  }
-
-  /**
    * {@inheritDoc}
    * 
    * @see java.lang.Object#hashCode()
@@ -147,6 +120,44 @@ class NamedObjectList<N extends NamedObject>
     return getAll().iterator();
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    return getAll().toString();
+  }
+
+  /**
+   * Add a named object to the list.
+   * 
+   * @param namedObject
+   *        Named object
+   */
+  void add(final N namedObject)
+  {
+    if (namedObject == null || namedObject.getName() == null)
+    {
+      throw new IllegalArgumentException("Cannot add an object to the list");
+    }
+    objects.add(namedObject);
+  }
+
+  /**
+   * Gets all named objects in the list, in sorted order.
+   * 
+   * @return All named objects
+   */
+  List<N> getAll()
+  {
+    final List<N> all = new ArrayList<N>(objects);
+    Collections.sort(all, sort);
+    return Collections.unmodifiableList(all);
+  }
+
   N lookup(final DatabaseObject databaseObject, final String name)
   {
     final AbstractDatabaseObject parent = new AbstractDatabaseObject(databaseObject
@@ -163,22 +174,6 @@ class NamedObjectList<N extends NamedObject>
 
       private static final long serialVersionUID = -6700397214465123353L;
     });
-  }
-
-  private N lookup(final NamedObject namedObject)
-  {
-    if (namedObject == null)
-    {
-      return null;
-    }
-    for (final N listItem: objects)
-    {
-      if (namedObject.equals(listItem))
-      {
-        return listItem;
-      }
-    }
-    return null;
   }
 
   /**
@@ -213,24 +208,6 @@ class NamedObjectList<N extends NamedObject>
     });
   }
 
-  private N remove(final NamedObject namedObject)
-  {
-    if (namedObject == null)
-    {
-      return null;
-    }
-    for (final Iterator<N> iterator = objects.iterator(); iterator.hasNext();)
-    {
-      final N listItem = iterator.next();
-      if (namedObject.equals(listItem))
-      {
-        iterator.remove();
-        return listItem;
-      }
-    }
-    return null;
-  }
-
   @SuppressWarnings("serial")
   N remove(final String name)
   {
@@ -255,15 +232,38 @@ class NamedObjectList<N extends NamedObject>
     return objects.size();
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#toString()
-   */
-  @Override
-  public String toString()
+  private N lookup(final NamedObject namedObject)
   {
-    return getAll().toString();
+    if (namedObject == null)
+    {
+      return null;
+    }
+    for (final N listItem: objects)
+    {
+      if (namedObject.equals(listItem))
+      {
+        return listItem;
+      }
+    }
+    return null;
+  }
+
+  private N remove(final NamedObject namedObject)
+  {
+    if (namedObject == null)
+    {
+      return null;
+    }
+    for (final Iterator<N> iterator = objects.iterator(); iterator.hasNext();)
+    {
+      final N listItem = iterator.next();
+      if (namedObject.equals(listItem))
+      {
+        iterator.remove();
+        return listItem;
+      }
+    }
+    return null;
   }
 
 }

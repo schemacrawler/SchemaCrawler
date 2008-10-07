@@ -190,6 +190,20 @@ final class MutableDatabaseInfo
     return result;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    final StringBuffer info = new StringBuffer();
+    info.append("-- database: ").append(getProductName()).append(" ")
+      .append(getProductVersion()).append(NEWLINE);
+    return info.toString();
+  }
+
   void putProperty(final String name, final Object value)
   {
     dbProperties.put(name, value);
@@ -214,20 +228,6 @@ final class MutableDatabaseInfo
         systemColumnDataTypes.add(columnDataType);
       }
     }
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    final StringBuffer info = new StringBuffer();
-    info.append("-- database: ").append(getProductName()).append(" ")
-      .append(getProductVersion()).append(NEWLINE);
-    return info.toString();
   }
 
 }
