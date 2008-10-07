@@ -57,24 +57,6 @@ class MutableForeignKey
     deferrability = ForeignKeyDeferrability.unknown;
   }
 
-  void addColumnPair(final int keySequence,
-                     final Column pkColumn,
-                     final Column fkColumn)
-  {
-    final String fkColumnMapName = getName() + "." + keySequence;
-    final MutableForeignKeyColumnMap fkColumnPair = new MutableForeignKeyColumnMap(this,
-                                                                                   fkColumnMapName);
-    fkColumnPair.setKeySequence(keySequence);
-    fkColumnPair.setPrimaryKeyColumn(pkColumn);
-    fkColumnPair.setForeignKeyColumn(fkColumn);
-    addColumnPair(fkColumnPair);
-  }
-
-  void addColumnPair(final MutableForeignKeyColumnMap columnPair)
-  {
-    columnPairs.add(columnPair);
-  }
-
   /**
    * {@inheritDoc}
    * <p>
@@ -155,6 +137,24 @@ class MutableForeignKey
   public final ForeignKeyUpdateRule getUpdateRule()
   {
     return updateRule;
+  }
+
+  void addColumnPair(final int keySequence,
+                     final Column pkColumn,
+                     final Column fkColumn)
+  {
+    final String fkColumnMapName = getName() + "." + keySequence;
+    final MutableForeignKeyColumnMap fkColumnPair = new MutableForeignKeyColumnMap(this,
+                                                                                   fkColumnMapName);
+    fkColumnPair.setKeySequence(keySequence);
+    fkColumnPair.setPrimaryKeyColumn(pkColumn);
+    fkColumnPair.setForeignKeyColumn(fkColumn);
+    addColumnPair(fkColumnPair);
+  }
+
+  void addColumnPair(final MutableForeignKeyColumnMap columnPair)
+  {
+    columnPairs.add(columnPair);
   }
 
   final void setDeferrability(final ForeignKeyDeferrability deferrability)

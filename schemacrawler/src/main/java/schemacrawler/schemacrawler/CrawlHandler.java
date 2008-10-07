@@ -52,6 +52,18 @@ public interface CrawlHandler
     throws SchemaCrawlerException;
 
   /**
+   * Handles information on column data types. This method may be called
+   * more than once, once for each schema.
+   * 
+   * @param dataType
+   *        Column data type information
+   * @throws SchemaCrawlerException
+   *         On an exception
+   */
+  void handle(final ColumnDataType dataType)
+    throws SchemaCrawlerException;
+
+  /**
    * Handles information on the database schema.
    * 
    * @param databaseInfo
@@ -71,18 +83,6 @@ public interface CrawlHandler
    *         On an exception
    */
   void handle(final JdbcDriverInfo driverInfo)
-    throws SchemaCrawlerException;
-
-  /**
-   * Handles information on column data types. This method may be called
-   * more than once, once for each schema.
-   * 
-   * @param dataType
-   *        Column data type information
-   * @throws SchemaCrawlerException
-   *         On an exception
-   */
-  void handle(final ColumnDataType dataType)
     throws SchemaCrawlerException;
 
   /**

@@ -102,56 +102,6 @@ public final class PropertiesDataSource
     constructPropertiesDataSource(properties, connectionName);
   }
 
-  private void constructPropertiesDataSource(final Properties properties,
-                                             final String connectionName)
-  {
-    final String defaultConnection = properties.getProperty(DEFAULTCONNECTION,
-                                                            "");
-    String useConnectionName = connectionName;
-
-    // get the subgroup of the properties for the given connection
-    if (connectionName == null)
-    {
-      useConnectionName = defaultConnection;
-    }
-
-    final GroupedProperties groups = new GroupedProperties(properties);
-
-    // check if the connection name is defined
-    if (!groups.isGroup(useConnectionName))
-    {
-      throw new IllegalArgumentException("Connection not defined: "
-                                         + useConnectionName);
-    }
-
-    // create substituted properties
-    final SubstitutableProperties substitutedProperties = new SubstitutableProperties(groups
-      .subgroup(useConnectionName));
-
-    logWriter = new PrintWriter(System.err);
-
-    connectionParams = substitutedProperties;
-
-    LOGGER.log(Level.FINE, "Using connection \"" + connectionName + "\"");
-    LOGGER.log(Level.FINE, getConnectionParamsInfo());
-
-    try
-    {
-      final String driver = connectionParams.getProperty(DRIVER);
-      final Class<?> jdbcDriverClass = Class.forName(driver);
-      jdbcDriver = (Driver) jdbcDriverClass.newInstance();
-    }
-    catch (final Exception e)
-    {
-      throw new RuntimeException("Driver class not be initialized - "
-                                 + e.getLocalizedMessage(), e);
-    }
-
-    url = connectionParams.getProperty(URL);
-
-    testConnection();
-  }
-
   /**
    * Attempts to establish a connection with the data source that this
    * <code>DataSource</code> object represents.
@@ -199,27 +149,6 @@ public final class PropertiesDataSource
     params.setProperty(PASSWORD, password);
 
     return jdbcDriver.connect(url, params);
-
-  }
-
-  private String getConnectionParamsInfo()
-  {
-
-    final StringBuffer buffer = new StringBuffer();
-    buffer.append("Connection parameters:");
-    final Set<Map.Entry<Object, Object>> entries = connectionParams.entrySet();
-    for (final Map.Entry<Object, Object> entry: entries)
-    {
-      final String key = (String) entry.getKey();
-      final String value = (String) entry.getValue();
-      if (!key.equalsIgnoreCase(PASSWORD))
-      {
-        buffer.append(NEWLINE).append("-- ").append(key).append(": ")
-          .append(value);
-      }
-    }
-
-    return buffer.toString();
 
   }
 
@@ -346,6 +275,107 @@ public final class PropertiesDataSource
     }
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+
+    final StringBuffer info = new StringBuffer();
+    info.append("-- database product: ").append(databaseProductName)
+      .append(" ").append(databaseProductVersion).append(NEWLINE)
+      .append("-- driver: ").append(jdbcDriver.getClass().getName())
+      .append(" - ").append(driverName).append(" ").append(driverVersion)
+      .append(NEWLINE).append("-- connection: ").append(url);
+    return info.toString();
+
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.sql.Wrapper#unwrap(java.lang.Class)
+   */
+  public <T> T unwrap(final Class<T> iface)
+    throws SQLException
+  {
+    throw new SQLException("Not implemented");
+  }
+
+  private void constructPropertiesDataSource(final Properties properties,
+                                             final String connectionName)
+  {
+    final String defaultConnection = properties.getProperty(DEFAULTCONNECTION,
+                                                            "");
+    String useConnectionName = connectionName;
+
+    // get the subgroup of the properties for the given connection
+    if (connectionName == null)
+    {
+      useConnectionName = defaultConnection;
+    }
+
+    final GroupedProperties groups = new GroupedProperties(properties);
+
+    // check if the connection name is defined
+    if (!groups.isGroup(useConnectionName))
+    {
+      throw new IllegalArgumentException("Connection not defined: "
+                                         + useConnectionName);
+    }
+
+    // create substituted properties
+    final SubstitutableProperties substitutedProperties = new SubstitutableProperties(groups
+      .subgroup(useConnectionName));
+
+    logWriter = new PrintWriter(System.err);
+
+    connectionParams = substitutedProperties;
+
+    LOGGER.log(Level.FINE, "Using connection \"" + connectionName + "\"");
+    LOGGER.log(Level.FINE, getConnectionParamsInfo());
+
+    try
+    {
+      final String driver = connectionParams.getProperty(DRIVER);
+      final Class<?> jdbcDriverClass = Class.forName(driver);
+      jdbcDriver = (Driver) jdbcDriverClass.newInstance();
+    }
+    catch (final Exception e)
+    {
+      throw new RuntimeException("Driver class not be initialized - "
+                                 + e.getLocalizedMessage(), e);
+    }
+
+    url = connectionParams.getProperty(URL);
+
+    testConnection();
+  }
+
+  private String getConnectionParamsInfo()
+  {
+
+    final StringBuffer buffer = new StringBuffer();
+    buffer.append("Connection parameters:");
+    final Set<Map.Entry<Object, Object>> entries = connectionParams.entrySet();
+    for (final Map.Entry<Object, Object> entry: entries)
+    {
+      final String key = (String) entry.getKey();
+      final String value = (String) entry.getValue();
+      if (!key.equalsIgnoreCase(PASSWORD))
+      {
+        buffer.append(NEWLINE).append("-- ").append(key).append(": ")
+          .append(value);
+      }
+    }
+
+    return buffer.toString();
+
+  }
+
   private void testConnection()
   {
 
@@ -394,36 +424,6 @@ public final class PropertiesDataSource
     LOGGER.log(Level.FINE, "Connection successful.");
     LOGGER.log(Level.INFO, NEWLINE + toString());
 
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-
-    final StringBuffer info = new StringBuffer();
-    info.append("-- database product: ").append(databaseProductName)
-      .append(" ").append(databaseProductVersion).append(NEWLINE)
-      .append("-- driver: ").append(jdbcDriver.getClass().getName())
-      .append(" - ").append(driverName).append(" ").append(driverVersion)
-      .append(NEWLINE).append("-- connection: ").append(url);
-    return info.toString();
-
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.sql.Wrapper#unwrap(java.lang.Class)
-   */
-  public <T> T unwrap(final Class<T> iface)
-    throws SQLException
-  {
-    throw new SQLException("Not implemented");
   }
 
 }

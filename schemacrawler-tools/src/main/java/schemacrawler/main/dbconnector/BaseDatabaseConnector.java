@@ -59,11 +59,6 @@ abstract class BaseDatabaseConnector
     config = new HashMap<String, String>(providedConfig);
   }
 
-  protected void configPut(String key, String value)
-  {
-    config.put(key, value);
-  }
-
   /**
    * {@inheritDoc}
    * 
@@ -106,6 +101,11 @@ abstract class BaseDatabaseConnector
   {
     final String dataSourceName = getDataSourceName();
     return dataSourceName != null && dataSourceName.trim().length() > 0;
+  }
+
+  protected void configPut(String key, String value)
+  {
+    config.put(key, value);
   }
 
 }

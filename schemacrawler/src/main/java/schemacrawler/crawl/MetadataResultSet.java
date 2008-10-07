@@ -82,6 +82,20 @@ final class MetadataResultSet
   }
 
   /**
+   * Set fetch size for results.
+   * 
+   * @param rows
+   *        Number of rows to fetch
+   * @throws SQLException
+   *         On an exception
+   */
+  public void setFetchSize(final int rows)
+    throws SQLException
+  {
+    results.setFetchSize(rows);
+  }
+
+  /**
    * Releases this <code>ResultSet</code> object's database and JDBC
    * resources immediately instead of waiting for this to happen when it
    * is automatically closed.
@@ -292,11 +306,6 @@ final class MetadataResultSet
     return value;
   }
 
-  private boolean isBlank(final String text)
-  {
-    return text == null || text.trim().length() == 0;
-  }
-
   /**
    * Moves the cursor down one row from its current position. A
    * <code>ResultSet</code> cursor is initially positioned before the
@@ -316,18 +325,9 @@ final class MetadataResultSet
     return results.next();
   }
 
-  /**
-   * Set fetch size for results.
-   * 
-   * @param rows
-   *        Number of rows to fetch
-   * @throws SQLException
-   *         On an exception
-   */
-  public void setFetchSize(final int rows)
-    throws SQLException
+  private boolean isBlank(final String text)
   {
-    results.setFetchSize(rows);
+    return text == null || text.trim().length() == 0;
   }
 
   private boolean useColumn(final String columnName)

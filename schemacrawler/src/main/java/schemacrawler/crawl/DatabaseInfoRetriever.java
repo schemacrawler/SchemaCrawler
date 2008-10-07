@@ -57,108 +57,6 @@ final class DatabaseInfoRetriever
   }
 
   /**
-   * Derives the property name from the method name.
-   * 
-   * @param method
-   *        Method
-   * @return Method name
-   */
-  private String derivePropertyName(final Method method)
-  {
-    final String get = "get";
-    String name = method.getName();
-    if (name.startsWith(get))
-    {
-      name = name.substring(get.length());
-    }
-    // Capitalize the first letter
-    name = name.substring(0, 1).toUpperCase(Locale.ENGLISH) + name.substring(1);
-    return name;
-  }
-
-  /**
-   * Checks if a method is a result set method.
-   * 
-   * @param method
-   * @return Whether a method is a result set method
-   */
-  private boolean isDatabasePropertiesResultSetMethod(final Method method)
-  {
-    final Class<?> returnType = method.getReturnType();
-    final boolean isPropertiesResultSetMethod = returnType
-      .equals(ResultSet.class)
-                                                && method.getParameterTypes().length == 0;
-    return isPropertiesResultSetMethod;
-  }
-
-  /**
-   * Checks if a method is a database property.
-   * 
-   * @param method
-   * @return Whether method is a database property
-   */
-  private boolean isDatabasePropertyMethod(final Method method)
-  {
-    final Class<?> returnType = method.getReturnType();
-    final boolean notPropertyMethod = returnType.equals(ResultSet.class)
-                                      || returnType.equals(Connection.class)
-                                      || method.getParameterTypes().length > 0;
-    return !notPropertyMethod;
-  }
-
-  /**
-   * Checks if a method is a database property result set type.
-   * 
-   * @param method
-   * @return Whether a method is a database property result set type
-   */
-  private boolean isDatabasePropertyResultSetType(final Method method)
-  {
-    final String[] databasePropertyResultSetTypes = new String[] {
-        "deletesAreDetected",
-        "insertsAreDetected",
-        "updatesAreDetected",
-        "othersDeletesAreVisible",
-        "othersInsertsAreVisible",
-        "othersUpdatesAreVisible",
-        "ownDeletesAreVisible",
-        "ownInsertsAreVisible",
-        "ownUpdatesAreVisible",
-        "supportsResultSetType"
-    };
-    final boolean isDatabasePropertyResultSetType = Arrays
-      .binarySearch(databasePropertyResultSetTypes, method.getName()) >= 0;
-    return isDatabasePropertyResultSetType;
-  }
-
-  /**
-   * Reads a single column result set as a list.
-   * 
-   * @param results
-   *        Result set
-   * @return List
-   * @throws SQLException
-   */
-  private List<String> readResultsVector(final ResultSet results)
-    throws SQLException
-  {
-    final List<String> values = new ArrayList<String>();
-    try
-    {
-      while (results.next())
-      {
-        final String value = results.getString(1);
-        values.add(value);
-      }
-    }
-    finally
-    {
-      results.close();
-    }
-    return values;
-  }
-
-  /**
    * Provides additional information on the database.
    * 
    * @param dbInfo
@@ -237,22 +135,6 @@ final class DatabaseInfoRetriever
     dbInfo.setProductName(dbMetaData.getDatabaseProductName());
     dbInfo.setProductVersion(dbMetaData.getDatabaseProductVersion());
     return dbInfo;
-  }
-
-  private void retrieveResultSetTypeProperty(final DatabaseMetaData dbMetaData,
-                                             final MutableDatabaseInfo dbInfo,
-                                             final Method method,
-                                             final int resultSetType,
-                                             final String resultSetTypeName)
-    throws IllegalAccessException, InvocationTargetException
-  {
-    final String name = derivePropertyName(method) + "ResultSet"
-                        + resultSetTypeName;
-    Boolean propertyValue = null;
-    propertyValue = (Boolean) method.invoke(dbMetaData, new Object[] {
-      Integer.valueOf(resultSetType)
-    });
-    dbInfo.putProperty(name, propertyValue);
   }
 
   /**
@@ -376,5 +258,123 @@ final class DatabaseInfoRetriever
       results.close();
     }
 
+  }
+
+  /**
+   * Derives the property name from the method name.
+   * 
+   * @param method
+   *        Method
+   * @return Method name
+   */
+  private String derivePropertyName(final Method method)
+  {
+    final String get = "get";
+    String name = method.getName();
+    if (name.startsWith(get))
+    {
+      name = name.substring(get.length());
+    }
+    // Capitalize the first letter
+    name = name.substring(0, 1).toUpperCase(Locale.ENGLISH) + name.substring(1);
+    return name;
+  }
+
+  /**
+   * Checks if a method is a result set method.
+   * 
+   * @param method
+   * @return Whether a method is a result set method
+   */
+  private boolean isDatabasePropertiesResultSetMethod(final Method method)
+  {
+    final Class<?> returnType = method.getReturnType();
+    final boolean isPropertiesResultSetMethod = returnType
+      .equals(ResultSet.class)
+                                                && method.getParameterTypes().length == 0;
+    return isPropertiesResultSetMethod;
+  }
+
+  /**
+   * Checks if a method is a database property.
+   * 
+   * @param method
+   * @return Whether method is a database property
+   */
+  private boolean isDatabasePropertyMethod(final Method method)
+  {
+    final Class<?> returnType = method.getReturnType();
+    final boolean notPropertyMethod = returnType.equals(ResultSet.class)
+                                      || returnType.equals(Connection.class)
+                                      || method.getParameterTypes().length > 0;
+    return !notPropertyMethod;
+  }
+
+  /**
+   * Checks if a method is a database property result set type.
+   * 
+   * @param method
+   * @return Whether a method is a database property result set type
+   */
+  private boolean isDatabasePropertyResultSetType(final Method method)
+  {
+    final String[] databasePropertyResultSetTypes = new String[] {
+        "deletesAreDetected",
+        "insertsAreDetected",
+        "updatesAreDetected",
+        "othersDeletesAreVisible",
+        "othersInsertsAreVisible",
+        "othersUpdatesAreVisible",
+        "ownDeletesAreVisible",
+        "ownInsertsAreVisible",
+        "ownUpdatesAreVisible",
+        "supportsResultSetType"
+    };
+    final boolean isDatabasePropertyResultSetType = Arrays
+      .binarySearch(databasePropertyResultSetTypes, method.getName()) >= 0;
+    return isDatabasePropertyResultSetType;
+  }
+
+  /**
+   * Reads a single column result set as a list.
+   * 
+   * @param results
+   *        Result set
+   * @return List
+   * @throws SQLException
+   */
+  private List<String> readResultsVector(final ResultSet results)
+    throws SQLException
+  {
+    final List<String> values = new ArrayList<String>();
+    try
+    {
+      while (results.next())
+      {
+        final String value = results.getString(1);
+        values.add(value);
+      }
+    }
+    finally
+    {
+      results.close();
+    }
+    return values;
+  }
+
+  private void retrieveResultSetTypeProperty(final DatabaseMetaData dbMetaData,
+                                             final MutableDatabaseInfo dbInfo,
+                                             final Method method,
+                                             final int resultSetType,
+                                             final String resultSetTypeName)
+    throws IllegalAccessException, InvocationTargetException
+  {
+    final String name = derivePropertyName(method) + "ResultSet"
+                        + resultSetTypeName;
+    Boolean propertyValue = null;
+    propertyValue = (Boolean) method.invoke(dbMetaData, new Object[] {
+      Integer.valueOf(resultSetType)
+    });
+    dbInfo.putProperty(name, propertyValue);
   }
 }

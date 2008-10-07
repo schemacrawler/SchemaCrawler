@@ -50,21 +50,6 @@ class MutableSchema
     this.catalog = catalog;
   }
 
-  void addColumnDataType(final MutableColumnDataType columnDataType)
-  {
-    columnDataTypes.add(columnDataType);
-  }
-
-  void addProcedure(final MutableProcedure procedure)
-  {
-    procedures.add(procedure);
-  }
-
-  void addTable(final MutableTable table)
-  {
-    tables.add(table);
-  }
-
   /**
    * {@inheritDoc}
    * 
@@ -94,11 +79,6 @@ class MutableSchema
   {
     return columnDataTypes.getAll().toArray(new ColumnDataType[columnDataTypes
       .size()]);
-  }
-
-  NamedObjectList<MutableColumnDataType> getColumnDataTypesList()
-  {
-    return columnDataTypes;
   }
 
   /**
@@ -159,6 +139,26 @@ class MutableSchema
   public Table[] getTables()
   {
     return tables.getAll().toArray(new Table[tables.size()]);
+  }
+
+  void addColumnDataType(final MutableColumnDataType columnDataType)
+  {
+    columnDataTypes.add(columnDataType);
+  }
+
+  void addProcedure(final MutableProcedure procedure)
+  {
+    procedures.add(procedure);
+  }
+
+  void addTable(final MutableTable table)
+  {
+    tables.add(table);
+  }
+
+  NamedObjectList<MutableColumnDataType> getColumnDataTypesList()
+  {
+    return columnDataTypes;
   }
 
   MutableColumnDataType lookupByType(final int type)

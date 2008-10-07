@@ -61,36 +61,6 @@ class MutableTable
     type = TableType.unknown;
   }
 
-  void addCheckConstraint(final MutableCheckConstraint checkConstraint)
-  {
-    checkConstraints.add(checkConstraint);
-  }
-
-  void addColumn(final MutableColumn column)
-  {
-    columns.add(column);
-  }
-
-  void addForeignKey(final MutableForeignKey foreignKey)
-  {
-    foreignKeys.add(foreignKey);
-  }
-
-  void addIndex(final MutableIndex index)
-  {
-    indices.add(index);
-  }
-
-  void addPrivilege(final MutablePrivilege privilege)
-  {
-    privileges.add(privilege);
-  }
-
-  void addTrigger(final MutableTrigger trigger)
-  {
-    triggers.add(trigger);
-  }
-
   /**
    * {@inheritDoc}
    * 
@@ -120,11 +90,6 @@ class MutableTable
   public Column[] getColumns()
   {
     return columns.getAll().toArray(new Column[columns.size()]);
-  }
-
-  NamedObjectList<MutableColumn> getColumnsList()
-  {
-    return columns;
   }
 
   /**
@@ -250,6 +215,41 @@ class MutableTable
   public TableType getType()
   {
     return type;
+  }
+
+  void addCheckConstraint(final MutableCheckConstraint checkConstraint)
+  {
+    checkConstraints.add(checkConstraint);
+  }
+
+  void addColumn(final MutableColumn column)
+  {
+    columns.add(column);
+  }
+
+  void addForeignKey(final MutableForeignKey foreignKey)
+  {
+    foreignKeys.add(foreignKey);
+  }
+
+  void addIndex(final MutableIndex index)
+  {
+    indices.add(index);
+  }
+
+  void addPrivilege(final MutablePrivilege privilege)
+  {
+    privileges.add(privilege);
+  }
+
+  void addTrigger(final MutableTrigger trigger)
+  {
+    triggers.add(trigger);
+  }
+
+  NamedObjectList<MutableColumn> getColumnsList()
+  {
+    return columns;
   }
 
   /**
