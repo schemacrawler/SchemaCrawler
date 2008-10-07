@@ -35,8 +35,7 @@ public final class HtmlFormattingHelper
   /**
    * HTML footer.
    */
-  public static final String HTML_FOOTER = "</body>" + Utilities.NEWLINE
-                                           + "</html>";
+  public static final String HTML_FOOTER = "</body>" + NEWLINE + "</html>";
   /**
    * HTML header.
    */
@@ -49,20 +48,19 @@ public final class HtmlFormattingHelper
     final String styleSheet = new String(text);
 
     final String header = "" + "<?xml version='1.0' encoding='UTF-8'?>"
-                          + Utilities.NEWLINE
+                          + NEWLINE
                           + "<!DOCTYPE html"
-                          + Utilities.NEWLINE
+                          + NEWLINE
                           + "     PUBLIC \"-//W3C//DTD HTML 4.01 Strict//EN\""
-                          + Utilities.NEWLINE
+                          + NEWLINE
                           + "    \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"
-                          + Utilities.NEWLINE
+                          + NEWLINE
                           + "<html xmlns='http://www.w3.org/1999/xhtml'>"
-                          + Utilities.NEWLINE + "<head>" + Utilities.NEWLINE
-                          + "  <title>SchemaCrawler Output</title>"
-                          + Utilities.NEWLINE + "  <style type='text/css'>"
-                          + Utilities.NEWLINE + styleSheet + Utilities.NEWLINE
-                          + "  </style>" + Utilities.NEWLINE + "</head>"
-                          + Utilities.NEWLINE + "<body>" + Utilities.NEWLINE;
+                          + NEWLINE + "<head>" + NEWLINE
+                          + "  <title>SchemaCrawler Output</title>" + NEWLINE
+                          + "  <style type='text/css'>" + NEWLINE + styleSheet
+                          + NEWLINE + "  </style>" + NEWLINE + "</head>"
+                          + NEWLINE + "<body>" + NEWLINE;
     return header;
   }
 
@@ -103,7 +101,7 @@ public final class HtmlFormattingHelper
    */
   public String createObjectEnd()
   {
-    return "</table>" + Utilities.NEWLINE + "<p></p>" + Utilities.NEWLINE;
+    return "</table>" + NEWLINE + "<p></p>" + NEWLINE;
   }
 
   /**
@@ -113,11 +111,10 @@ public final class HtmlFormattingHelper
    */
   public String createObjectStart(final String name)
   {
-    String objectStart = "<table>" + Utilities.NEWLINE;
+    String objectStart = "<table>" + NEWLINE;
     if (!Utilities.isBlank(name))
     {
-      objectStart = objectStart + "  <caption>" + name + "</caption>"
-                    + Utilities.NEWLINE;
+      objectStart = objectStart + "  <caption>" + name + "</caption>" + NEWLINE;
     }
     return objectStart;
   }

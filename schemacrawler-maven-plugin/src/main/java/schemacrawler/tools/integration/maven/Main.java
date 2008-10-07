@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import schemacrawler.Version;
 import sf.util.Utilities;
 
 /**

@@ -45,4 +45,9 @@ public class TestUtilityDatabaseConnector
     return "TestUtilityDataSource";
   }
 
+  public boolean hasDataSourceName()
+  {
+    return true;
+  }
+
 }

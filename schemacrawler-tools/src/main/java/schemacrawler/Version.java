@@ -21,8 +21,6 @@
 package schemacrawler;
 
 
-import sf.util.Utilities;
-
 /**
  * Version information for this product. Has methods to obtain
  * information about the product, as well as a main method, so it can be
@@ -43,8 +41,9 @@ public final class Version
    */
   public static String about()
   {
-    return PRODUCTNAME + " " + VERSION + Utilities.NEWLINE
-           + "Copyright (c) 2000-2008, Sualeh Fatehi.";
+    return String.format("%s %s%nCopyright (c) 2000-2008, Sualeh Fatehi.",
+                         PRODUCTNAME,
+                         VERSION);
   }
 
   /**

@@ -24,9 +24,6 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,16 +35,6 @@ import java.util.logging.Logger;
 public final class Utilities
 {
 
-  /**
-   * System specific file separator character.
-   */
-  public static final char FILE_SEPARATOR = System
-    .getProperty("file.separator").charAt(0);
-
-  /**
-   * System specific line separator character.
-   */
-  public static final String NEWLINE = System.getProperty("line.separator");
   private static final Logger LOGGER = Logger.getLogger(Utilities.class
     .getName());
 
@@ -114,23 +101,6 @@ public final class Utilities
     }
 
     return byteCode;
-  }
-
-  /**
-   * Returns the configuration into properties.
-   * 
-   * @param map
-   *        Map to convert to properties
-   * @return Properties
-   */
-  public static Properties toProperties(final Map<String, String> map)
-  {
-    final Properties properties = new Properties();
-    for (final Entry<String, String> entry: map.entrySet())
-    {
-      properties.setProperty(entry.getKey(), entry.getValue());
-    }
-    return properties;
   }
 
   /**

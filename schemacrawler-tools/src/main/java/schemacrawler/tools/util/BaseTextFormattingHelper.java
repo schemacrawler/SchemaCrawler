@@ -34,6 +34,10 @@ abstract class BaseTextFormattingHelper
   implements TextFormattingHelper
 {
 
+  /**
+   * System specific line separator character.
+   */
+  protected static final String NEWLINE = System.getProperty("line.separator");
   protected static final String DASHED_SEPARATOR = dashedSeparator();
 
   private static String dashedSeparator()
@@ -126,10 +130,10 @@ abstract class BaseTextFormattingHelper
   public String createHeader(final String id, final Object object)
   {
     final StringBuffer buffer = new StringBuffer();
-    buffer.append(DASHED_SEPARATOR).append(Utilities.NEWLINE);
-    buffer.append(object.toString()).append(Utilities.NEWLINE);
-    buffer.append(DASHED_SEPARATOR).append(Utilities.NEWLINE);
-    buffer.append(Utilities.NEWLINE).append(Utilities.NEWLINE);
+    buffer.append(DASHED_SEPARATOR).append(NEWLINE);
+    buffer.append(object.toString()).append(NEWLINE);
+    buffer.append(DASHED_SEPARATOR).append(NEWLINE);
+    buffer.append(NEWLINE).append(NEWLINE);
 
     return createPreformattedText(id, buffer.toString());
   }
@@ -178,7 +182,7 @@ abstract class BaseTextFormattingHelper
 
     if (underscore && outputFormat != OutputFormat.html)
     {
-      nameRowString = nameRowString + Utilities.NEWLINE + DASHED_SEPARATOR;
+      nameRowString = nameRowString + NEWLINE + DASHED_SEPARATOR;
     }
 
     return nameRowString;

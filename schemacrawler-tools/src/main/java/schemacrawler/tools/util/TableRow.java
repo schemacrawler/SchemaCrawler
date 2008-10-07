@@ -26,7 +26,6 @@ import java.util.List;
 
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.util.TableCell.Align;
-import sf.util.Utilities;
 
 /**
  * Represents an HTML table row.
@@ -35,6 +34,11 @@ import sf.util.Utilities;
  */
 final class TableRow
 {
+
+  /**
+   * System specific line separator character.
+   */
+  private static final String NEWLINE = System.getProperty("line.separator");
 
   private final OutputFormat outputFormat;
   private final List<TableCell> cells;
@@ -94,10 +98,10 @@ final class TableRow
   private String toHtmlString()
   {
     final StringBuffer buffer = new StringBuffer();
-    buffer.append("\t<tr>" + Utilities.NEWLINE);
+    buffer.append("\t<tr>" + NEWLINE);
     for (final TableCell cell: cells)
     {
-      buffer.append("\t\t").append(cell).append(Utilities.NEWLINE);
+      buffer.append("\t\t").append(cell).append(NEWLINE);
     }
     buffer.append("\t</tr>");
 

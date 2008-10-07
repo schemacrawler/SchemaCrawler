@@ -22,9 +22,6 @@ package schemacrawler.main.dbconnector;
 
 import java.util.Map;
 
-import javax.sql.DataSource;
-
-import schemacrawler.utility.datasource.PropertiesDataSource;
 import sf.util.CommandLineParser;
 import sf.util.Utilities;
 import sf.util.CommandLineParser.Option;
@@ -34,7 +31,7 @@ import sf.util.CommandLineParser.StringOption;
  * Parses a command line, and creates a data-source.
  */
 public final class BundledDriverDatabaseConnector
-  implements DatabaseConnector
+  extends BaseDatabaseConnector
 {
 
   private static final String OPTION_HOST = "host";
@@ -43,9 +40,6 @@ public final class BundledDriverDatabaseConnector
   private static final String OPTION_SCHEMAPATTERN = "schemapattern";
   private static final String OPTION_USER = "user";
   private static final String OPTION_PASSWORD = "password";
-
-  private final Map<String, String> config;
-  private final String dataSourceName;
 
   /**
    * Parses a command line, and creates a data-source.
@@ -61,11 +55,7 @@ public final class BundledDriverDatabaseConnector
                                         final Map<String, String> providedConfig)
     throws DatabaseConnectorException
   {
-    if (providedConfig == null)
-    {
-      throw new DatabaseConnectorException("Bundled driver needs configuration");
-    }
-    config = providedConfig;
+    super(providedConfig);
 
     final CommandLineParser parser = createCommandLineParser();
     parser.parse(args);
@@ -78,8 +68,6 @@ public final class BundledDriverDatabaseConnector
     final String user = parser.getStringOptionValue(OPTION_USER);
     final String password = parser.getStringOptionValue(OPTION_PASSWORD);
 
-    dataSourceName = config.get("defaultconnection");
-
     // Check arguments
     if (user == null || user.trim().length() == 0)
     {
@@ -89,55 +77,28 @@ public final class BundledDriverDatabaseConnector
     {
       throw new DatabaseConnectorException("Please provide the password");
     }
-    if (dataSourceName == null || dataSourceName.trim().length() == 0)
-    {
-      throw new DatabaseConnectorException("Please provide the default connection");
-    }
 
+    final String dataSourceName = getDataSourceName();
     if (host != null)
     {
-      config.put(dataSourceName + ".host", host);
+      configPut(dataSourceName + ".host", host);
     }
     if (port != null)
     {
-      config.put(dataSourceName + ".port", port);
+      configPut(dataSourceName + ".port", port);
     }
-    config.put(dataSourceName + ".database", database);
+    configPut(dataSourceName + ".database", database);
     if (!Utilities.isBlank(schemapattern))
     {
-      config.put(dataSourceName + ".schemapattern", schemapattern);
+      configPut(dataSourceName + ".schemapattern", schemapattern);
     }
-    config.put(dataSourceName + ".user", user);
-    config.put(dataSourceName + ".password", password);
+    configPut(dataSourceName + ".user", user);
+    configPut(dataSourceName + ".password", password);
 
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.main.dbconnector.DatabaseConnector#createDataSource()
-   */
-  public DataSource createDataSource()
-    throws DatabaseConnectorException
-  {
-    try
+    if (!hasDataSourceName())
     {
-      return new PropertiesDataSource(Utilities.toProperties(config));
+      throw new DatabaseConnectorException("No datasource name provided");
     }
-    catch (final Exception e)
-    {
-      throw new DatabaseConnectorException(e);
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.main.dbconnector.DatabaseConnector#getDataSourceName()
-   */
-  public String getDataSourceName()
-  {
-    return dataSourceName;
   }
 
   private CommandLineParser createCommandLineParser()

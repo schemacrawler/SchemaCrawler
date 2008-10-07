@@ -29,4 +29,11 @@ public interface DatabaseConnector
    */
   String getDataSourceName();
 
+  /**
+   * Whether the name of the datasource has been defined.
+   * 
+   * @return Whether the name of the datasource has been defined.
+   */
+  boolean hasDataSourceName();
+
 }
