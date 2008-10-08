@@ -109,7 +109,7 @@ public class TestUtility
    * @param dataSource
    *        Datasource
    */
-  public static synchronized void setupSchema(final DataSource dataSource)
+  private void setupSchema(final DataSource dataSource)
   {
     Connection connection = null;
     Statement statement = null;
@@ -123,6 +123,9 @@ public class TestUtility
       if (dataSource != null)
       {
         connection = dataSource.getConnection();
+
+        catalogName = connection.getCatalog();
+
         statement = connection.createStatement();
 
         statement.execute(script);
@@ -218,9 +221,9 @@ public class TestUtility
     rootLogger.setLevel(logLevel);
   }
 
-  protected DataSource dataSource;
-
-  protected PrintWriter out;
+  private String catalogName;
+  private DataSource dataSource;
+  private PrintWriter out;
 
   /**
    * Load driver, and create database, schema and data.
@@ -275,6 +278,11 @@ public class TestUtility
       LOGGER.log(Level.SEVERE, "Could not obtain a connection", e);
       return null;
     }
+  }
+
+  public String getCatalogName()
+  {
+    return catalogName;
   }
 
   /**
