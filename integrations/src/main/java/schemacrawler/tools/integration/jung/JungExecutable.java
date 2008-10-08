@@ -28,7 +28,6 @@ import javax.sql.DataSource;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.tools.integration.SchemaExecutable;
-import schemacrawler.utility.SchemaCrawlerUtility;
 import edu.uci.ics.jung.graph.Graph;
 
 /**
@@ -42,22 +41,10 @@ public final class JungExecutable
 
   private static final int DEFAULT_IMAGE_WIDTH = 600;
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.Executable#execute(javax.sql.DataSource)
-   */
-  @Override
-  public void execute(final DataSource dataSource)
+  protected void doExecute(final DataSource dataSource)
     throws Exception
   {
-    // Get the entire schema at once
-    schemaCrawlerOptions.setSchemaInfoLevel(toolOptions
-      .getSchemaTextDetailType().mapToInfoLevel());
-    Catalog catalog = SchemaCrawlerUtility.getCatalog(dataSource
-      .getConnection(), schemaCrawlerOptions);
-
-    // Executable-specific work
+    Catalog catalog = getCatalog(dataSource);
     final File outputFile = toolOptions.getOutputOptions().getOutputFile();
     final Dimension size = getSize(toolOptions.getOutputOptions()
       .getOutputFormatValue());

@@ -62,7 +62,7 @@ public abstract class Executable<O extends ToolOptions>
    * 
    * @return SchemaCrawlerOptions
    */
-  public SchemaCrawlerOptions getSchemaCrawlerOptions()
+  public final SchemaCrawlerOptions getSchemaCrawlerOptions()
   {
     return schemaCrawlerOptions;
   }
@@ -72,7 +72,7 @@ public abstract class Executable<O extends ToolOptions>
    * 
    * @return Tool options
    */
-  public O getToolOptions()
+  public final O getToolOptions()
   {
     return toolOptions;
   }
@@ -83,7 +83,7 @@ public abstract class Executable<O extends ToolOptions>
    * @param schemaCrawlerOptions
    *        SchemaCrawlerOptions
    */
-  public void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
+  public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
   {
     this.schemaCrawlerOptions = schemaCrawlerOptions;
   }
@@ -94,7 +94,7 @@ public abstract class Executable<O extends ToolOptions>
    * @param toolOptions
    *        Tool options
    */
-  public void setToolOptions(final O toolOptions)
+  public final void setToolOptions(final O toolOptions)
   {
     this.toolOptions = toolOptions;
   }

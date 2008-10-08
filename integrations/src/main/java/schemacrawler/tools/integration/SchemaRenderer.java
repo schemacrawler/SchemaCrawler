@@ -21,11 +21,12 @@ package schemacrawler.tools.integration;
 
 
 import java.io.Writer;
+import java.sql.Connection;
 
 import javax.sql.DataSource;
 
+import schemacrawler.crawl.CachingCrawlHandler;
 import schemacrawler.schema.Catalog;
-import schemacrawler.utility.SchemaCrawlerUtility;
 
 /**
  * An executor that uses a template renderer to render a schema.
@@ -36,20 +37,14 @@ public abstract class SchemaRenderer
   extends SchemaExecutable
 {
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.Executable#execute(javax.sql.DataSource)
-   */
-  @Override
-  public void execute(final DataSource dataSource)
+  protected void doExecute(final DataSource dataSource)
     throws Exception
   {
     // Get the entire schema at once
-    schemaCrawlerOptions.setSchemaInfoLevel(toolOptions
-      .getSchemaTextDetailType().mapToInfoLevel());
-    Catalog catalog = SchemaCrawlerUtility.getCatalog(dataSource
-      .getConnection(), schemaCrawlerOptions);
+    final Connection connection = dataSource.getConnection();
+    crawlHandler = new CachingCrawlHandler(connection.getCatalog());
+    super.execute(dataSource);
+    Catalog catalog = ((CachingCrawlHandler) crawlHandler).getCatalog();
 
     // Executable-specific work
     final Writer writer = toolOptions.getOutputOptions().openOutputWriter();

@@ -20,13 +20,19 @@
 package schemacrawler.tools.integration;
 
 
+import java.sql.Connection;
+
+import javax.sql.DataSource;
+
 import schemacrawler.Version;
+import schemacrawler.crawl.CachingCrawlHandler;
 import schemacrawler.main.SchemaCrawlerCommandLine;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.Command;
-import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputOptions;
+import schemacrawler.tools.schematext.SchemaCrawlerExecutable;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextOptions;
 import sf.util.CommandLineUtility;
@@ -37,7 +43,7 @@ import sf.util.CommandLineUtility;
  * @author sfatehi
  */
 public abstract class SchemaExecutable
-  extends Executable<SchemaTextOptions>
+  extends SchemaCrawlerExecutable
 {
 
   /**
@@ -51,7 +57,8 @@ public abstract class SchemaExecutable
    * @throws Exception
    *         On an exception
    */
-  public void executeOnSchema(final String[] args, final String helpResource)
+  public final void executeOnSchema(final String[] args,
+                                    final String helpResource)
     throws Exception
   {
     CommandLineUtility.checkForHelp(args, Version.about(), helpResource);
@@ -74,7 +81,27 @@ public abstract class SchemaExecutable
 
     setSchemaCrawlerOptions(schemaCrawlerOptions);
     setToolOptions(schemaTextOptions);
-    execute(commandLine.createDataSource());
+    doExecute(commandLine.createDataSource());
+  }
+
+  protected abstract void doExecute(final DataSource createDataSource)
+    throws Exception;
+
+  protected final Catalog getCatalog(final DataSource dataSource)
+    throws Exception
+  {
+    final Connection connection = dataSource.getConnection();
+    crawlHandler = new CachingCrawlHandler(connection.getCatalog());
+    execute(dataSource);
+    Catalog catalog = ((CachingCrawlHandler) crawlHandler).getCatalog();
+    return catalog;
+  }
+
+  @Override
+  public final void execute(DataSource dataSource)
+    throws Exception
+  {
+    super.execute(dataSource);
   }
 
 }

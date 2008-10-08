@@ -26,7 +26,7 @@ import javax.sql.DataSource;
 import schemacrawler.crawl.DatabaseSchemaCrawler;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawler;
-import schemacrawler.tools.Executable;
+import schemacrawler.tools.BaseSchemaCrawlerExecutable;
 import schemacrawler.tools.schematext.SchemaTextFormatter;
 
 /**
@@ -35,7 +35,7 @@ import schemacrawler.tools.schematext.SchemaTextFormatter;
  * @author Sualeh Fatehi
  */
 public class GrepExecutable
-  extends Executable<GrepOptions>
+  extends BaseSchemaCrawlerExecutable<GrepOptions>
 {
 
   /**
@@ -60,8 +60,14 @@ public class GrepExecutable
     schemaCrawlerOptions.setSchemaInfoLevel(toolOptions
       .getSchemaTextDetailType().mapToInfoLevel());
 
+    CrawlHandler chainedCrawlHandler = crawlHandler;
+    if (chainedCrawlHandler == null)
+    {
+      chainedCrawlHandler = new SchemaTextFormatter(toolOptions);
+    }
+
     final CrawlHandler handler = new GrepCrawlHandler(toolOptions,
-                                                      new SchemaTextFormatter(toolOptions));
+                                                      chainedCrawlHandler);
     final SchemaCrawler crawler = new DatabaseSchemaCrawler(dataSource
       .getConnection());
     crawler.crawl(schemaCrawlerOptions, handler);
