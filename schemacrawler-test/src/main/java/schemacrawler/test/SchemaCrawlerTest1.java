@@ -30,7 +30,7 @@ public class SchemaCrawlerTest1
 
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions(properties);
     options.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    
+
     Catalog catalog = SchemaCrawlerUtility.getCatalog(dataSource
       .getConnection(), options);
 
