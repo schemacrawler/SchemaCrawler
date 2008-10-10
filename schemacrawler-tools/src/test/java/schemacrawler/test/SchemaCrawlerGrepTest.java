@@ -20,13 +20,11 @@ package schemacrawler.test;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import schemacrawler.crawl.CachingCrawlHandler;
@@ -36,7 +34,6 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.grep.GrepExecutable;
 import schemacrawler.tools.grep.GrepOptions;
 import schemacrawler.utility.test.TestUtility;
