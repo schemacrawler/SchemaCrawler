@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>SchemaCrawler - Differencer</name>
-	<comment>SchemaCrawler is a command-line tool to output your database schema and data in a readable form. The output is designed to be diff-ed with previous versions of your database schema. SchemaCrawler is also an API that improves on the standard JDBC metadata.</comment>
+	<comment>SchemaCrawler is an API that improves on the standard JDBC metadata. SchemaCrawler is also a command-line tool to output your database schema and data in a readable form. The output is designed to be diff-ed with previous versions of your database schema.</comment>
 	<projects>
 		<project>SchemaCrawler - Main</project>
 	</projects>
