@@ -72,7 +72,7 @@
    <subsection
     name="ant Build">
     <p>
-     The ant build is a quick build that builds the SchemaCrawler jar
+     The <a href="http://ant.apache.org/">ant</a> build is a quick build that builds the SchemaCrawler jar
      without running unit tests. Download
      <a
       href="http://ant.apache.org/">ant</a>
@@ -106,7 +106,7 @@
    <subsection
     name="Eclipse">
     <p>
-     Before importing the SchemaCrawler project into Eclipse, make sure
+     Before importing the various SchemaCrawler projects into Eclipse, make sure
      that you have a successful Maven build. Maven will download all the
      dependencies needed to build SchemaCrawler. Also, install the
      <a
