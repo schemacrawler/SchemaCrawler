@@ -6,7 +6,7 @@
   <packaging>pom</packaging>
   <name>SchemaCrawler</name>
   <version>6.0</version>
-  <description>SchemaCrawler is a command-line tool to output your database schema and data in a readable form. The output is designed to be diff-ed with previous versions of your database schema. SchemaCrawler is also an API that improves on the standard JDBC metadata.</description>
+  <description>SchemaCrawler is an API that improves on the standard JDBC metadata. SchemaCrawler is also a command-line tool to output your database schema and data in a readable form. The output is designed to be diff-ed with previous versions of your database schema.</description>
   <url>http://sourceforge.net/projects/schemacrawler</url>
   <inceptionYear>2003</inceptionYear>
   <licenses>
