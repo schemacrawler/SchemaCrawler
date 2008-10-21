@@ -259,7 +259,15 @@
       <zipfileset
         dir="${SchemaCrawlerHome}/schemacrawler-tools/target/site"
         prefix="${site.zip.prefix}"
-        defaultexcludes="yes"/>
+        defaultexcludes="yes">
+          <exclude name="apidocs/**/*"/>
+      </zipfileset>
+      <zipfileset
+        dir="${SchemaCrawlerHome}/schemacrawler/target/site"
+        prefix="${site.zip.prefix}"
+        defaultexcludes="yes">
+          <include name="apidocs/**/*"/>
+      </zipfileset>
     </zip>
 
     <property
