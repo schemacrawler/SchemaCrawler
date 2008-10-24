@@ -233,10 +233,10 @@ final class DatabaseInfoRetriever
         final String schemaName = results.getString("TYPE_SCHEM");
         final String typeName = results.getString("TYPE_NAME");
         LOGGER.log(Level.FINEST, "Retrieving data type: " + typeName);
-        final int type = results.getInt("DATA_TYPE", 0);
+        final short type = results.getShort("DATA_TYPE", (short) 0);
         final String className = results.getString("CLASS_NAME");
         final String remarks = results.getString("REMARKS");
-        final int baseTypeValue = results.getInt("BASE_TYPE", 0);
+        final short baseTypeValue = results.getShort("BASE_TYPE", (short) 0);
         final ColumnDataType baseType = columnDataTypes
           .lookupColumnDataTypeByType(baseTypeValue);
         final MutableColumnDataType columnDataType = new MutableColumnDataType(catalogName,
