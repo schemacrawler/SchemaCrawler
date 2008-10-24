@@ -5,7 +5,7 @@
 		<author email="sualeh@hotmail.com">Sualeh Fatehi</author>
 	</properties>
 	<body>
-		<release version="6.0" date="2008-10-16">
+		<release version="6.1" date="2008-10-16">
 			<action dev="Sualeh Fatehi" type="fix">
 				Changed the API so that there
 				is a separation of concerns - the

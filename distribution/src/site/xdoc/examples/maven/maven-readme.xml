@@ -32,7 +32,7 @@
           <li>Start the database server by running StartDatabaseServer script from the
             distribution directory.</li>
           <li> Install the SchemaCrawler Maven plug-in by running
-            <span class="code">java -cp schemacrawler-6.0.jar;hsqldb.jar
+            <span class="code">java -cp schemacrawler-6.1.jar;hsqldb.jar
               schemacrawler.tools.integration.maven.Main</span> and following the
             instructions. </li>
           <li>
