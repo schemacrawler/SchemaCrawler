@@ -21,7 +21,6 @@
 package schemacrawler.main.dbconnector;
 
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Map.Entry;
@@ -56,7 +55,9 @@ abstract class BaseDatabaseConnector
     {
       throw new DatabaseConnectorException("No configuration provided");
     }
-    config = new HashMap<String, String>(providedConfig);
+    // Don't make a copy of the config that was loaded in from the
+    // classpath resource
+    config = providedConfig;
   }
 
   /**
