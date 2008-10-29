@@ -28,7 +28,7 @@
           </li>
           <li> Run
             <span class="code">db-specific-query.cmd</span> (or
-            <span class="code">db-specific-query.cmd</span> on
+            <span class="code">db-specific-query.sh</span> on
               Unix). </li>
         </ol>
       </subsection>
