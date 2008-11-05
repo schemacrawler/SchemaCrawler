@@ -32,7 +32,7 @@ public final class Version
 {
 
   private static final String PRODUCTNAME = "SchemaCrawler";
-  private static final String VERSION = "6.1";
+  private static final String VERSION = "6.0.1";
 
   /**
    * Information about this product.
