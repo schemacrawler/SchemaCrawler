@@ -5,7 +5,7 @@
   <artifactId>schemacrawler-all</artifactId>
   <packaging>pom</packaging>
   <name>SchemaCrawler</name>
-  <version>6.1</version>
+  <version>6.0.1</version>
   <description>SchemaCrawler is an API that improves on the standard JDBC metadata. SchemaCrawler is also a command-line tool to output your database schema and data in a readable form. The output is designed to be diff-ed with previous versions of your database schema.</description>
   <inceptionYear>2003</inceptionYear>
   <licenses>
@@ -33,7 +33,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.4</version>
+      <version>4.5</version>
       <scope>test</scope>
     </dependency>
     <dependency>
