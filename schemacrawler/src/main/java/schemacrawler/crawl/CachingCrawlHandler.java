@@ -152,4 +152,10 @@ public final class CachingCrawlHandler
     return schema;
   }
 
+  @Override
+  public String toString()
+  {
+    return catalog.toString();
+  }
+
 }
