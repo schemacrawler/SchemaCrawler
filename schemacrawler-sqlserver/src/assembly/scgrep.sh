@@ -1,1 +1,1 @@
-java -classpath lib/schemacrawler-tools-6.0.1.jar schemacrawler.LauncherMain schemacrawler.tools.sqlserver.Grep $*
+java -classpath lib/schemacrawler-tools-6.0.2.jar schemacrawler.LauncherMain schemacrawler.tools.sqlserver.Grep $*

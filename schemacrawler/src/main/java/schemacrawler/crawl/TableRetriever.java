@@ -305,7 +305,11 @@ final class TableRetriever
       while (results.next())
       {
         // final String catalogName = results.getString("TABLE_CAT");
-        final String schema = results.getString("TABLE_SCHEM");
+        String schema = results.getString("TABLE_SCHEM");
+        if (schema == null)
+        {
+          schema = "";
+        }
 
         final String tableName = results.getString(TABLE_NAME);
         LOGGER.log(Level.FINEST, "Retrieving table: " + tableName);
