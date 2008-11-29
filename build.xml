@@ -251,6 +251,7 @@
     <!-- Create zip files for distribution -->
 
     <mkdir dir="${SchemaCrawlerHome}/schemacrawler-tools/target/site"/>
+    <mkdir dir="${SchemaCrawlerHome}/schemacrawler/target/site"/>
     <property
     	name="site.zip.prefix"
     	value="schemacrawler-${pom.version}-site" />
