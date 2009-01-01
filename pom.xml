@@ -4,8 +4,8 @@
   <groupId>schemacrawler</groupId>
   <artifactId>schemacrawler-all</artifactId>
   <packaging>pom</packaging>
-  <name>SchemaCrawler</name>
   <version>6.0.2</version>
+  <name>SchemaCrawler [All]</name>
   <description>SchemaCrawler is an API that improves on the standard JDBC metadata. SchemaCrawler is also a command-line tool to output your database schema and data in a readable form. The output is designed to be diff-ed with previous versions of your database schema.</description>
   <inceptionYear>2003</inceptionYear>
   <licenses>
@@ -29,6 +29,20 @@
   <organization>
     <name>Sualeh Fatehi</name>
   </organization>
+  <scm>
+    <connection>scm:svn:https://schemacrawler.svn.sourceforge.net/svnroot/schemacrawler</connection>
+    <url>https://schemacrawler.svn.sourceforge.net/svnroot/schemacrawler/</url>
+  </scm>
+  <modules>
+    <module>schemacrawler</module>
+    <module>schemacrawler-tools</module>
+    <module>integrations</module>
+    <module>schemacrawler-maven-plugin</module>
+    <module>schemacrawler-sqlserver</module>
+    <module>schemacrawler-mysql</module>
+    <module>schemacrawler-postgresql</module>
+    <module>distribution</module>
+  </modules>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -49,20 +63,6 @@
       <scope>provided</scope>
     </dependency>
   </dependencies>
-  <scm>
-    <connection>scm:svn:https://svn.sourceforge.net/svnroot/schemacrawler</connection>
-    <url>http://schemacrawler.svn.sourceforge.net/viewvc/schemacrawler/</url>
-  </scm>
-  <modules>
-    <module>schemacrawler</module>
-    <module>schemacrawler-tools</module>
-    <module>integrations</module>
-    <module>schemacrawler-maven-plugin</module>
-    <module>schemacrawler-sqlserver</module>
-    <module>schemacrawler-mysql</module>
-    <module>schemacrawler-postgresql</module>
-    <module>distribution</module>
-  </modules>
   <build>
     <plugins>
       <plugin>
