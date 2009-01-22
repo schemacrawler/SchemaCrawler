@@ -297,8 +297,6 @@
         <exclude name="**/target/**/*"/>
         <exclude name="differencer"/>
         <exclude name="differencer/**/*"/>
-        <exclude name="schemacrawler-test"/>
-        <exclude name="schemacrawler-test/**/*"/>
         <exclude name="**/*.launch"/>
         <exclude name="**/*.log"/>
         <exclude name="**/*.lck"/>
