@@ -23,13 +23,14 @@ package schemacrawler.test;
 
 import static org.junit.Assert.fail;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.custommonkey.xmlunit.Validator;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -119,10 +120,10 @@ public class SchemaCrawlerOutputTest
           validator.assertIsValid();
         }
 
-        boolean contentEquals = IOUtils
-          .contentEquals(new FileReader(testOutputFile),
-                         new InputStreamReader(SchemaCrawlerOutputTest.class
-                           .getResourceAsStream("/" + referenceFile)));
+        final boolean contentEquals = contentEquals(new FileReader(testOutputFile),
+                                                    new InputStreamReader(SchemaCrawlerOutputTest.class
+                                                      .getResourceAsStream("/"
+                                                                           + referenceFile)));
         if (!contentEquals)
         {
           final File testOutputLocalFile = new File("./", referenceFile);
@@ -282,6 +283,31 @@ public class SchemaCrawlerOutputTest
 
     final Validator validator = new Validator(new FileReader(outputFilename));
     validator.assertIsValid();
+  }
+
+  private static boolean contentEquals(final Reader input1, final Reader input2)
+    throws Exception
+  {
+    BufferedReader reader1 = new BufferedReader(input1);
+    BufferedReader reader2 = new BufferedReader(input2);
+
+    String line1 = reader1.readLine();
+    while (null != line1)
+    {
+      String line2 = reader2.readLine();
+      if (line2 == null)
+      {
+        return false;
+      }
+      if (!line1.trim().equals(line2.trim()))
+      {
+        return false;
+      }
+      line1 = reader1.readLine();
+    }
+
+    String line2 = reader2.readLine();
+    return (line2 == null);
   }
 
 }
