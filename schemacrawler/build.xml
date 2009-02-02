@@ -4,7 +4,7 @@
   <property environment="env" />
   <property name="SchemaCrawlerHome" location="." />
 
-  <property name="pom.version" value="6.0.2" />
+  <property name="pom.version" value="6.1" />
 
   <property name="schemacrawler.source"
             location="${SchemaCrawlerHome}/src/main" />
