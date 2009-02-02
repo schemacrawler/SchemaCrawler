@@ -1,1 +1,1 @@
-@java -classpath ../schemacrawler-6.0.2.jar;../hsqldb.jar schemacrawler.Main %*
+@java -classpath ../schemacrawler-6.1.jar;../hsqldb.jar schemacrawler.Main %*

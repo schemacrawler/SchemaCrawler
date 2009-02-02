@@ -27,7 +27,8 @@
       <directory>src/assembly</directory>
       <outputDirectory></outputDirectory>
       <includes>
-        <include>*.exe</include>
+        <include>*.cmd</include>
+        <include>*.wsf</include>
         <include>*.sh</include>
       </includes>
      </fileSet>
