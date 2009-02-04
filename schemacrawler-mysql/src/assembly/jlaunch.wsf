@@ -27,6 +27,7 @@
       Next
     End Function
 
+
     Function LocateJava
       '  Find JRE (in order to find java.exe)
       '  1 In .\jre directory (JRE Installed with application)
@@ -71,6 +72,27 @@
 
     End Function
 
+
+    Function CreateLibClasspath(ByVal LibPath)
+
+      Set WScriptShell = WScript.CreateObject("WScript.Shell")
+      Set FileSystemObject = CreateObject("Scripting.FileSystemObject")
+      Set LibFolder = FileSystemObject.GetFolder(LibPath)
+      Set JarFiles = LibFolder.Files
+
+      CreateLibClasspath = ""
+      CreateLibClasspath = CreateLibClasspath & WScriptShell.Environment("User").Item("CLASSPATH")
+      For Each JarFile In JarFiles
+        If FileSystemObject.GetExtensionName(JarFile) = "jar" Then
+          CreateLibClasspath = CreateLibClasspath + FileSystemObject.GetAbsolutePathName(JarFile) + ";"
+        End If
+      Next
+
+      CreateLibClasspath = """" + CreateLibClasspath + """"
+
+    End Function
+
+
     Function ExecuteShellProgram(ByVal CommandLine)
       ' http://www.intelliadmin.com/blog/2007/01/how-to-run-external-program-within-vb.html
 
@@ -108,6 +130,17 @@
     End Function
   </script>
   <script language="VBScript">
-    ExecuteShellProgram(LocateJava() & " " & CommandLineArguments())
+    Dim Java
+    Java = LocateJava()
+
+    Dim LibClasspath
+    LibClasspath = CreateLibClasspath(Replace(WScript.ScriptFullName, WScript.ScriptName, "") & "lib")
+
+    Dim CommandLine
+    CommandLine = Java & " -classpath " & LibClasspath & " " & CommandLineArguments()
+
+    ' WScript.Echo CommandLine
+
+    ExecuteShellProgram(CommandLine)
   </script>
 </job>

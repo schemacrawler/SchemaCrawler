@@ -37,6 +37,26 @@
     	<scope>test</scope>
     </dependency>
   </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <index>true</index>
+            <manifest>
+              <mainClass>schemacrawler.LauncherMain</mainClass>
+              <addClasspath>true</addClasspath>
+            </manifest>
+            <manifestEntries>
+              <Project>${project.name}, ${project.version}</Project>
+              <Author>Sualeh Fatehi, sualeh@hotmail.com</Author>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
   <reporting>
     <plugins>
       <plugin>
