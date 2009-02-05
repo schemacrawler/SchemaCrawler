@@ -305,17 +305,56 @@
       </zipfileset>
     </zip>
 
+    <property name="mysql-prefix" value="schemacrawler-mysql-${pom.version}"/>
+    <property name="postgresql-prefix" value="schemacrawler-postgresql-${pom.version}"/>
+    <property name="sqlserver-prefix" value="schemacrawler-sqlserver-${pom.version}"/>
+
     <move todir="${distribution.target}">
       <fileset dir="${SchemaCrawlerHome}/schemacrawler-mysql/target">
-        <include name="schemacrawler-mysql*distrib.zip"/>
+        <include name="${mysql-prefix}-distrib.zip"/>
       </fileset>
       <fileset dir="${SchemaCrawlerHome}/schemacrawler-postgresql/target">
-        <include name="schemacrawler-postgresql*distrib.zip"/>
+        <include name="${postgresql-prefix}-distrib.zip"/>
       </fileset>
       <fileset dir="${SchemaCrawlerHome}/schemacrawler-sqlserver/target">
-        <include name="schemacrawler-sqlserver*distrib.zip"/>
+        <include name="${sqlserver-prefix}-distrib.zip"/>
       </fileset>
     </move>
+
+    <property name="wsf.dir" location="${schemacrawler-tools.source}/../assembly"/>
+
+    <zip
+      destfile="${distribution.target}/${postgresql-prefix}-distrib.zip"
+      update="true"
+      whenempty="fail">
+      <zipfileset
+        dir="${wsf.dir}"
+        prefix="${postgresql-prefix}">
+        <include name="*.wsf"/>
+      </zipfileset>
+    </zip>
+
+    <zip
+      destfile="${distribution.target}/${sqlserver-prefix}-distrib.zip"
+      update="true"
+      whenempty="fail">
+      <zipfileset
+        dir="${wsf.dir}"
+        prefix="${sqlserver-prefix}">
+        <include name="*.wsf"/>
+      </zipfileset>
+    </zip>
+
+    <zip
+      destfile="${distribution.target}/${mysql-prefix}-distrib.zip"
+      update="true"
+      whenempty="fail">
+      <zipfileset
+        dir="${wsf.dir}"
+        prefix="${mysql-prefix}">
+        <include name="*.wsf"/>
+      </zipfileset>
+    </zip>
 
 	</target>
 
