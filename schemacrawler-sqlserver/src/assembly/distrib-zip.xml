@@ -28,7 +28,6 @@
       <outputDirectory></outputDirectory>
       <includes>
         <include>*.cmd</include>
-        <include>*.wsf</include>
         <include>*.sh</include>
       </includes>
      </fileSet>
