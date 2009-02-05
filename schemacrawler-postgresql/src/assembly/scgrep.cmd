@@ -1,1 +1,0 @@
-@cscript //NOLOGO "%~dp0jlaunch.wsf" schemacrawler.tools.postgresql.Grep %*

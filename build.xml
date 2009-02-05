@@ -23,6 +23,8 @@
 	<property name="schemacrawler-maven-plugin.classes"
     location="${SchemaCrawlerHome}/schemacrawler-maven-plugin/target/classes"/>
 
+  <property name="distribution.assembly"
+    location="${SchemaCrawlerHome}/distribution/src/assembly"/>
   <property name="distribution.target"
     location="${SchemaCrawlerHome}/distribution/target"/>
   <property name="distribution.dir"
@@ -305,57 +307,42 @@
       </zipfileset>
     </zip>
 
-    <property name="mysql-prefix" value="schemacrawler-mysql-${pom.version}"/>
-    <property name="postgresql-prefix" value="schemacrawler-postgresql-${pom.version}"/>
-    <property name="sqlserver-prefix" value="schemacrawler-sqlserver-${pom.version}"/>
-
-    <move todir="${distribution.target}">
-      <fileset dir="${SchemaCrawlerHome}/schemacrawler-mysql/target">
-        <include name="${mysql-prefix}-distrib.zip"/>
-      </fileset>
-      <fileset dir="${SchemaCrawlerHome}/schemacrawler-postgresql/target">
-        <include name="${postgresql-prefix}-distrib.zip"/>
-      </fileset>
-      <fileset dir="${SchemaCrawlerHome}/schemacrawler-sqlserver/target">
-        <include name="${sqlserver-prefix}-distrib.zip"/>
-      </fileset>
-    </move>
-
-    <property name="wsf.dir" location="${schemacrawler-tools.source}/../assembly"/>
-
-    <zip
-      destfile="${distribution.target}/${postgresql-prefix}-distrib.zip"
-      update="true"
-      whenempty="fail">
-      <zipfileset
-        dir="${wsf.dir}"
-        prefix="${postgresql-prefix}">
-        <include name="*.wsf"/>
-      </zipfileset>
-    </zip>
-
-    <zip
-      destfile="${distribution.target}/${sqlserver-prefix}-distrib.zip"
-      update="true"
-      whenempty="fail">
-      <zipfileset
-        dir="${wsf.dir}"
-        prefix="${sqlserver-prefix}">
-        <include name="*.wsf"/>
-      </zipfileset>
-    </zip>
-
-    <zip
-      destfile="${distribution.target}/${mysql-prefix}-distrib.zip"
-      update="true"
-      whenempty="fail">
-      <zipfileset
-        dir="${wsf.dir}"
-        prefix="${mysql-prefix}">
-        <include name="*.wsf"/>
-      </zipfileset>
-    </zip>
+    <create-database-distrib database="mysql"/>
+    <create-database-distrib database="postgresql"/>
+    <create-database-distrib database="sqlserver"/>
 
 	</target>
+
+
+  <macrodef name="create-database-distrib">
+    <attribute name="database"/>
+
+    <sequential>
+      <move todir="${distribution.target}">
+        <fileset dir="${SchemaCrawlerHome}/schemacrawler-@{database}/target">
+          <include name="schemacrawler-@{database}-${pom.version}-distrib.zip"/>
+        </fileset>
+      </move>
+
+      <mkdir dir="${distribution.target}/@{database}-launches"/>
+      <filter token="version" value="${pom.version}"/>
+      <filter token="package" value="schemacrawler.tools.@{database}"/>
+      <copy todir="${distribution.target}/@{database}-launches" filtering="true">
+        <fileset dir="${distribution.assembly}">
+          <include name="*.cmd"/>
+          <include name="*.sh"/>
+          <include name="*.wsf"/>
+        </fileset>
+      </copy>
+      <zip
+        destfile="${distribution.target}/schemacrawler-@{database}-${pom.version}-distrib.zip"
+        update="true"
+        whenempty="fail">
+        <zipfileset
+          dir="${distribution.target}/@{database}-launches"
+          prefix="schemacrawler-@{database}-${pom.version}"/>
+      </zip>
+    </sequential>
+  </macrodef>
 
 </project>
