@@ -25,13 +25,5 @@
         <include>NOTICE*</include>
       </includes>
     </fileSet>
-    <fileSet>
-      <directory>src/assembly</directory>
-      <outputDirectory></outputDirectory>
-      <includes>
-        <include>*.exe</include>
-        <include>*.sh</include>
-      </includes>
-     </fileSet>
   </fileSets>
 </assembly>
