@@ -1,1 +1,1 @@
-java -classpath lib/schemacrawler-tools-@version@.jar schemacrawler.LauncherMain schemacrawler.@package@Main $*
+java -classpath lib/schemacrawler-tools-@version@.jar schemacrawler.LauncherMain @package@.Main $*

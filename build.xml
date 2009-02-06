@@ -249,6 +249,15 @@
     <move todir="${distribution.dir}/schemacrawler">
       <fileset dir="${distribution.dir}/distribution-${pom.version}"/>
     </move>
+    <filter token="version" value="${pom.version}"/>
+    <filter token="package" value="schemacrawler"/>
+    <copy todir="${distribution.dir}/schemacrawler" filtering="true">
+      <fileset dir="${distribution.assembly}">
+        <include name="*.cmd"/>
+        <include name="*.sh"/>
+        <include name="*.wsf"/>
+      </fileset>
+    </copy>
 
     <!-- Create zip files for distribution -->
 
@@ -283,6 +292,7 @@
         prefix="${distribution.zip.prefix}"
         defaultexcludes="yes"/>
     </zip>
+    <delete dir="${distribution.dir}"/>
 
 		<property
 			name="source.zip.prefix"
@@ -325,6 +335,7 @@
     <attribute name="database"/>
 
     <sequential>
+
       <move todir="${distribution.target}">
         <fileset dir="${SchemaCrawlerHome}/schemacrawler-@{database}/target">
           <include name="schemacrawler-@{database}-${pom.version}-distrib.zip"/>
