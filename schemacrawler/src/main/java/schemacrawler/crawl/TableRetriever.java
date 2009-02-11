@@ -176,9 +176,7 @@ final class TableRetriever
 
   }
 
-  void retrieveIndices(final MutableTable table,
-                       final boolean unique,
-                       final boolean approximate)
+  void retrieveIndices(final MutableTable table, final boolean unique)
     throws SQLException
   {
 
@@ -205,7 +203,7 @@ final class TableRetriever
                       table.getSchemaName(),
                       table.getName(),
                       unique,
-                      approximate));
+                      true/* approximate */));
     }
     createIndices(results, table, indicesMap);
 
