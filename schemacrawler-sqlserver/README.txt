@@ -1,6 +1,6 @@
 SchemaCrawler
 http://sourceforge.net/projects/schemacrawler
-Copyright (c) 2000-2008, Sualeh Fatehi.
+Copyright (c) 2000-2009, Sualeh Fatehi.
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software

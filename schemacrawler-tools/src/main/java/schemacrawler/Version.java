@@ -2,7 +2,7 @@
  *
  * SchemaCrawler
  * http://sourceforge.net/projects/schemacrawler
- * Copyright (c) 2000-2008, Sualeh Fatehi.
+ * Copyright (c) 2000-2009, Sualeh Fatehi.
  *
  * This library is free software; you can redistribute it and/or modify it under the terms
  * of the GNU Lesser General Public License as published by the Free Software Foundation;
@@ -41,7 +41,7 @@ public final class Version
    */
   public static String about()
   {
-    return String.format("%s %s%nCopyright (c) 2000-2008, Sualeh Fatehi.",
+    return String.format("%s %s%nCopyright (c) 2000-2009, Sualeh Fatehi.",
                          PRODUCTNAME,
                          VERSION);
   }

@@ -49,7 +49,7 @@
         <attribute name="Product" value="SchemaCrawler" />
         <attribute name="Version" value="${pom.version}" />
         <attribute name="Author" value="Sualeh Fatehi" />
-        <attribute name="Copyright" value="(c) 2000-2008, Sualeh Fatehi" />
+        <attribute name="Copyright" value="(c) 2000-2009, Sualeh Fatehi" />
       </manifest>
       <zipfileset dir="${schemacrawler.classes}" />
     </jar>
