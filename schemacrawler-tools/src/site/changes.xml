@@ -5,6 +5,15 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+    <release version="6.1" date="2009-2-11">
+      <action dev="Sualeh Fatehi" type="fix">
+        Minor bug fixes for Sybase, including generating warnings when obtaining table
+        column privileges, instead of failing.
+      </action>
+      <action dev="Sualeh Fatehi" type="fix">
+        New Windows script file for locating Java, and launching SchemaCrawler.
+      </action>      
+    </release>  
     <release version="6.0.2" date="2008-11-30">
       <action dev="Sualeh Fatehi" type="fix">
         Minor bug fixes for MySQL, where
