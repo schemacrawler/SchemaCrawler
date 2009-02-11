@@ -361,11 +361,6 @@ public final class DatabaseSchemaCrawler
         {
           retriever.retrieveColumns(tables, table, options
             .getColumnInclusionRule(), columnDataTypes);
-          if (infoLevel.isRetrieveTableColumnPrivileges())
-          {
-            retrieverExtra.retrieveTableColumnPrivileges(table, table
-              .getColumnsList());
-          }
           retriever.retrievePrimaryKeys(table);
           if (table.getType() != TableType.view)
           {
@@ -375,8 +370,8 @@ public final class DatabaseSchemaCrawler
             }
             if (infoLevel.isRetrieveIndices())
             {
-              retriever.retrieveIndices(table, true, false);
-              retriever.retrieveIndices(table, false, false);
+              retriever.retrieveIndices(table, true);
+              retriever.retrieveIndices(table, false);
             }
           }
         }
@@ -385,6 +380,20 @@ public final class DatabaseSchemaCrawler
           throw new SchemaCrawlerException("Error retrieving metadata for table "
                                                + table,
                                            e);
+        }
+        try
+        {
+          if (infoLevel.isRetrieveTableColumnPrivileges())
+          {
+            retrieverExtra.retrieveTableColumnPrivileges(table, table
+              .getColumnsList());
+          }
+        }
+        catch (final SQLException e)
+        {
+          LOGGER.log(Level.WARNING,
+                     "Error retrieving column privileges for table " + table,
+                     e);
         }
       }
       // set comparators
