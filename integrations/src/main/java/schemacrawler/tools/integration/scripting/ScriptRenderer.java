@@ -28,10 +28,9 @@ import java.io.Writer;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
-import org.apache.commons.lang.StringUtils;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.tools.integration.SchemaRenderer;
+import sf.util.Utilities;
 
 /**
  * Main executor for the scripting engine integration.
@@ -54,7 +53,7 @@ public final class ScriptRenderer
                         final Writer writer)
     throws Exception
   {
-    if (StringUtils.isBlank(scriptFileName))
+    if (Utilities.isBlank(scriptFileName))
     {
       throw new Exception("No script file provided");
     }
