@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="SchemaCrawler">
   <bannerLeft>
+    <name>SchemaCrawler</name>
+    <src>images/schemacrawler.png</src>
+    <href>http://sourceforge.net/projects/schemacrawler</href>
+  </bannerLeft>
+  <bannerRight>
     <name>SourceForge</name>
     <src>
       <![CDATA[http://sourceforge.net/sflogo.php?group_id=148383&type=7]]>
     </src>
-  </bannerLeft>
-  <bannerRight>
-    <name>SchemaCrawler</name>
-    <href>http://sourceforge.net/projects/schemacrawler</href>
   </bannerRight>
   <body>
     <links>
