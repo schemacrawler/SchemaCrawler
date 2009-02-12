@@ -28,6 +28,8 @@ import java.io.Writer;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
+import org.apache.commons.lang.StringUtils;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.tools.integration.SchemaRenderer;
 
@@ -47,13 +49,28 @@ public final class ScriptRenderer
    *      schemacrawler.schema.Schema, java.io.Writer)
    */
   @Override
-  protected void render(final String resource,
+  protected void render(final String scriptFileName,
                         final Catalog catalog,
                         final Writer writer)
     throws Exception
   {
-    final String ext = resource.lastIndexOf(".") == -1? "": resource
-      .substring(resource.lastIndexOf(".") + 1, resource.length());
+    if (StringUtils.isBlank(scriptFileName))
+    {
+      throw new Exception("No script file provided");
+    }
+    final File scriptFile = new File(scriptFileName);
+    if (!scriptFile.exists() || !scriptFile.canRead())
+    {
+      throw new Exception("Cannot read script file, " + scriptFileName);
+    }
+
+    final String ext = scriptFileName.lastIndexOf(".") == -1
+                                                            ? ""
+                                                            : scriptFileName
+                                                              .substring(scriptFileName
+                                                                           .lastIndexOf(".") + 1,
+                                                                         scriptFileName
+                                                                           .length());
 
     // Create a new instance of the engine
     final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
@@ -71,7 +88,7 @@ public final class ScriptRenderer
     scriptEngine.put("catalog", catalog);
 
     // Evaluate the script
-    scriptEngine.eval(new FileReader(new File(resource)));
+    scriptEngine.eval(new FileReader(scriptFile));
   }
 
 }
