@@ -40,10 +40,10 @@ final class GrepOptionsParser
                                                                    InclusionRule.INCLUDE_ALL);
   private final StringOption optionProcedures = new StringOption(CommandLineParser.Option.NO_SHORT_FORM,
                                                                  "procedures",
-                                                                 InclusionRule.INCLUDE_ALL);
+                                                                 InclusionRule.EXCLUDE_ALL);
   private final StringOption optionProcedureColumns = new StringOption(CommandLineParser.Option.NO_SHORT_FORM,
                                                                        "inout",
-                                                                       InclusionRule.INCLUDE_ALL);
+                                                                       InclusionRule.EXCLUDE_ALL);
   private final StringOption optionDefinitionText = new StringOption(CommandLineParser.Option.NO_SHORT_FORM,
                                                                      "definition",
                                                                      InclusionRule.INCLUDE_ALL);
@@ -68,19 +68,19 @@ final class GrepOptionsParser
     });
 
     final InclusionRule tableInclusionRule = new InclusionRule(optionTables
-      .getValue(), InclusionRule.EXCLUDE_NONE);
+      .getValue(), InclusionRule.EXCLUDE_ALL);
     final InclusionRule tableColumnInclusionRule = new InclusionRule(optionTableColumns
                                                                        .getValue(),
-                                                                     InclusionRule.EXCLUDE_NONE);
+                                                                     InclusionRule.EXCLUDE_ALL);
     final InclusionRule procedureInclusionRule = new InclusionRule(optionProcedures
                                                                      .getValue(),
-                                                                   InclusionRule.EXCLUDE_NONE);
+                                                                   InclusionRule.EXCLUDE_ALL);
     final InclusionRule procedureColumnInclusionRule = new InclusionRule(optionProcedureColumns
                                                                            .getValue(),
-                                                                         InclusionRule.EXCLUDE_NONE);
+                                                                         InclusionRule.EXCLUDE_ALL);
     final InclusionRule definitionTextInclusionRule = new InclusionRule(optionDefinitionText
                                                                           .getValue(),
-                                                                        InclusionRule.EXCLUDE_NONE);
+                                                                        InclusionRule.EXCLUDE_ALL);
 
     final GrepOptions options = new GrepOptions();
     options.setTableInclusionRule(tableInclusionRule);

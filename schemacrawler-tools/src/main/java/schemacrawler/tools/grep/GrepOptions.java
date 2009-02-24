@@ -46,13 +46,13 @@ public class GrepOptions
    */
   public GrepOptions()
   {
-    tableInclusionRule = new InclusionRule();
-    tableColumnInclusionRule = new InclusionRule();
+    tableInclusionRule = InclusionRule.INCLUDE_ALL_RULE;
+    tableColumnInclusionRule = InclusionRule.INCLUDE_ALL_RULE;
 
-    procedureInclusionRule = new InclusionRule();
-    procedureColumnInclusionRule = new InclusionRule();
+    procedureInclusionRule = InclusionRule.EXCLUDE_ALL_RULE;
+    procedureColumnInclusionRule = InclusionRule.EXCLUDE_ALL_RULE;
 
-    definitionTextInclusionRule = new InclusionRule();
+    definitionTextInclusionRule = InclusionRule.INCLUDE_ALL_RULE;
 
     invertMatch = false;
   }
@@ -127,7 +127,7 @@ public class GrepOptions
   {
     if (definitionTextInclusionRule == null)
     {
-      this.definitionTextInclusionRule = new InclusionRule();
+      this.definitionTextInclusionRule = InclusionRule.INCLUDE_ALL_RULE;
     }
     else
     {
@@ -156,7 +156,7 @@ public class GrepOptions
   {
     if (procedureColumnInclusionRule == null)
     {
-      this.procedureColumnInclusionRule = new InclusionRule();
+      this.procedureColumnInclusionRule = InclusionRule.EXCLUDE_ALL_RULE;
     }
     else
     {
@@ -174,7 +174,7 @@ public class GrepOptions
   {
     if (procedureInclusionRule == null)
     {
-      this.procedureInclusionRule = new InclusionRule();
+      this.procedureInclusionRule = InclusionRule.EXCLUDE_ALL_RULE;
     }
     else
     {
@@ -192,7 +192,7 @@ public class GrepOptions
   {
     if (tableColumnInclusionRule == null)
     {
-      this.tableColumnInclusionRule = new InclusionRule();
+      this.tableColumnInclusionRule = InclusionRule.INCLUDE_ALL_RULE;
     }
     else
     {
@@ -210,7 +210,7 @@ public class GrepOptions
   {
     if (tableInclusionRule == null)
     {
-      this.tableInclusionRule = new InclusionRule();
+      this.tableInclusionRule = InclusionRule.INCLUDE_ALL_RULE;
     }
     else
     {

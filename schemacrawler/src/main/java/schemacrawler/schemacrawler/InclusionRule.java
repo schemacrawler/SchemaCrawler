@@ -37,15 +37,15 @@ public final class InclusionRule
 {
 
   /** Exclude nothing */
-  public static final String EXCLUDE_NONE = "";
+  public static final String EXCLUDE_ALL = "";
   /** Include everything. */
   public static final String INCLUDE_ALL = ".*";
 
   /** Exclude nothing */
-  public static final Pattern EXCLUDE_NONE_PATTERN = Pattern
-    .compile(EXCLUDE_NONE);
+  private static final Pattern EXCLUDE_ALL_PATTERN = Pattern
+    .compile(EXCLUDE_ALL);
   /** Include everything. */
-  public static final Pattern INCLUDE_ALL_PATTERN = Pattern
+  private static final Pattern INCLUDE_ALL_PATTERN = Pattern
     .compile(INCLUDE_ALL);
 
   private static final Logger LOGGER = Logger.getLogger(InclusionRule.class
@@ -53,16 +53,19 @@ public final class InclusionRule
 
   private static final long serialVersionUID = 3443758881974362293L;
 
+  /**
+   * Exclude all, include none.
+   */
+  public static final InclusionRule EXCLUDE_ALL_RULE = new InclusionRule(EXCLUDE_ALL_PATTERN,
+                                                                         INCLUDE_ALL_PATTERN);
+  /**
+   * Include all.
+   */
+  public static final InclusionRule INCLUDE_ALL_RULE = new InclusionRule(INCLUDE_ALL_PATTERN,
+                                                                         EXCLUDE_ALL_PATTERN);
+
   private final Pattern patternInclude;
   private final Pattern patternExclude;
-
-  /**
-   * Include all, exclude none.
-   */
-  public InclusionRule()
-  {
-    this(INCLUDE_ALL_PATTERN, EXCLUDE_NONE_PATTERN);
-  }
 
   /**
    * Set include and exclude patterns.
