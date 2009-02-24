@@ -5,7 +5,10 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="6.1" date="2009-2-11">
+    <release version="6.1" date="2009-3-11">
+      <action dev="Sualeh Fatehi" type="fix">
+        Grep options default to excluding stored procedures.
+      </action>    
       <action dev="Sualeh Fatehi" type="fix">
         Minor bug fixes for Sybase, including generating warnings when obtaining table
         column privileges, instead of failing.
