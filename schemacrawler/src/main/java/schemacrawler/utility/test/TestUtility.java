@@ -104,71 +104,6 @@ public class TestUtility
   }
 
   /**
-   * Setup the schema.
-   * 
-   * @param dataSource
-   *        Datasource
-   */
-  private void setupSchema(final DataSource dataSource)
-  {
-    Connection connection = null;
-    Statement statement = null;
-    try
-    {
-      // Load schema script file
-      final String script = readFully(new InputStreamReader(TestUtility.class
-        .getResourceAsStream("/schemacrawler.test.sql")));
-      final String otherScript = readFully(new InputStreamReader(TestUtility.class
-        .getResourceAsStream("/schemacrawler.test.other.sql")));
-      if (dataSource != null)
-      {
-        connection = dataSource.getConnection();
-
-        catalogName = connection.getCatalog();
-
-        statement = connection.createStatement();
-
-        statement.execute(script);
-        connection.commit();
-
-        statement.execute(otherScript);
-        connection.commit();
-
-        connection.close();
-      }
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, "", e);
-    }
-    finally
-    {
-      if (statement != null)
-      {
-        try
-        {
-          statement.close();
-        }
-        catch (final SQLException e)
-        {
-          LOGGER.log(Level.WARNING, "", e);
-        }
-      }
-      if (connection != null)
-      {
-        try
-        {
-          connection.close();
-        }
-        catch (final SQLException e)
-        {
-          LOGGER.log(Level.WARNING, "", e);
-        }
-      }
-    }
-  }
-
-  /**
    * Reads the stream fully, and returns a byte array of data.
    * 
    * @param stream
@@ -222,6 +157,7 @@ public class TestUtility
   }
 
   private String catalogName;
+
   private DataSource dataSource;
   private PrintWriter out;
 
@@ -269,7 +205,7 @@ public class TestUtility
   {
     try
     {
-      Catalog catalog = SchemaCrawlerUtility.getCatalog(getDataSource()
+      final Catalog catalog = SchemaCrawlerUtility.getCatalog(getDataSource()
         .getConnection(), schemaCrawlerOptions);
       return catalog;
     }
@@ -296,9 +232,9 @@ public class TestUtility
   }
 
   public Schema getSchema(final SchemaCrawlerOptions schemaCrawlerOptions,
-                          String schemaName)
+                          final String schemaName)
   {
-    Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
 
     final Schema schema = catalog.getSchema(schemaName);
     return schema;
@@ -395,6 +331,71 @@ public class TestUtility
     connectionProperties.setProperty(dataSourceName + ".password", "");
 
     dataSource = new PropertiesDataSource(connectionProperties, dataSourceName);
+  }
+
+  /**
+   * Setup the schema.
+   * 
+   * @param dataSource
+   *        Datasource
+   */
+  private void setupSchema(final DataSource dataSource)
+  {
+    Connection connection = null;
+    Statement statement = null;
+    try
+    {
+      // Load schema script file
+      final String script = readFully(new InputStreamReader(TestUtility.class
+        .getResourceAsStream("/schemacrawler.test.sql")));
+      final String otherScript = readFully(new InputStreamReader(TestUtility.class
+        .getResourceAsStream("/schemacrawler.test.other.sql")));
+      if (dataSource != null)
+      {
+        connection = dataSource.getConnection();
+
+        catalogName = connection.getCatalog();
+
+        statement = connection.createStatement();
+
+        statement.execute(script);
+        connection.commit();
+
+        statement.execute(otherScript);
+        connection.commit();
+
+        connection.close();
+      }
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "", e);
+    }
+    finally
+    {
+      if (statement != null)
+      {
+        try
+        {
+          statement.close();
+        }
+        catch (final SQLException e)
+        {
+          LOGGER.log(Level.WARNING, "", e);
+        }
+      }
+      if (connection != null)
+      {
+        try
+        {
+          connection.close();
+        }
+        catch (final SQLException e)
+        {
+          LOGGER.log(Level.WARNING, "", e);
+        }
+      }
+    }
   }
 
 }

@@ -41,17 +41,6 @@ public final class JungExecutable
 
   private static final int DEFAULT_IMAGE_WIDTH = 600;
 
-  protected void doExecute(final DataSource dataSource)
-    throws Exception
-  {
-    Catalog catalog = getCatalog(dataSource);
-    final File outputFile = toolOptions.getOutputOptions().getOutputFile();
-    final Dimension size = getSize(toolOptions.getOutputOptions()
-      .getOutputFormatValue());
-    final Graph graph = JungUtil.makeSchemaGraph(catalog);
-    JungUtil.saveGraphJpeg(graph, outputFile, size);
-  }
-
   /**
    * Get connection parameters, and creates a connection, and crawls the
    * schema.
@@ -80,6 +69,18 @@ public final class JungExecutable
     {
       return new Dimension(DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_WIDTH);
     }
+  }
+
+  @Override
+  protected void doExecute(final DataSource dataSource)
+    throws Exception
+  {
+    final Catalog catalog = getCatalog(dataSource);
+    final File outputFile = toolOptions.getOutputOptions().getOutputFile();
+    final Dimension size = getSize(toolOptions.getOutputOptions()
+      .getOutputFormatValue());
+    final Graph graph = JungUtil.makeSchemaGraph(catalog);
+    JungUtil.saveGraphJpeg(graph, outputFile, size);
   }
 
 }

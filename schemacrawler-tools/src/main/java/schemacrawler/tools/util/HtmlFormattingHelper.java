@@ -64,7 +64,7 @@ public final class HtmlFormattingHelper
     return header;
   }
 
-  public HtmlFormattingHelper(OutputFormat outputFormat)
+  public HtmlFormattingHelper(final OutputFormat outputFormat)
   {
     super(outputFormat);
   }

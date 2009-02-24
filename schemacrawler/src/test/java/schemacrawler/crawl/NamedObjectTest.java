@@ -45,9 +45,9 @@ public class NamedObjectTest
     MutableTable table;
     final NamedObjectList<Table> tables = new NamedObjectList<Table>(NamedObjectSort.alphabetical);
 
-    for (String schemaName: schemaNames)
+    for (final String schemaName: schemaNames)
     {
-      for (String tableName: tableNames)
+      for (final String tableName: tableNames)
       {
         table = new MutableTable(catalogNames[0], schemaName, tableName);
         table.setType(TableType.table);

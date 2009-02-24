@@ -21,6 +21,7 @@
 package schemacrawler.tools.util;
 
 
+import schemacrawler.execute.QueryExecutorException;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.util.TableCell.Align;
 import sf.util.Utilities;
@@ -52,7 +53,7 @@ abstract class BaseTextFormattingHelper
 
   final OutputFormat outputFormat;
 
-  BaseTextFormattingHelper(OutputFormat outputFormat)
+  BaseTextFormattingHelper(final OutputFormat outputFormat)
   {
     this.outputFormat = outputFormat;
   }
@@ -146,7 +147,7 @@ abstract class BaseTextFormattingHelper
    */
   public String createNameRow(final String name,
                               final String description,
-                              boolean underscore)
+                              final boolean underscore)
   {
     int nameWidth = 34;
     int descriptionWidth = 36;
@@ -220,9 +221,9 @@ abstract class BaseTextFormattingHelper
       outputFormat = OutputFormat.csv;
     }
     final TableRow row = new TableRow(outputFormat);
-    for (int i = 0; i < columnData.length; i++)
+    for (final String element: columnData)
     {
-      row.add(new TableCell(columnData[i], "", outputFormat));
+      row.add(new TableCell(element, "", outputFormat));
     }
     return row.toString();
   }
@@ -244,9 +245,9 @@ abstract class BaseTextFormattingHelper
       outputFormat = OutputFormat.csv;
     }
     final TableRow row = new TableRow(outputFormat);
-    for (int i = 0; i < columnNames.length; i++)
+    for (final String columnName: columnNames)
     {
-      row.add(new TableCell(columnNames[i], "name", outputFormat));
+      row.add(new TableCell(columnName, "name", outputFormat));
     }
     return row.toString();
   }

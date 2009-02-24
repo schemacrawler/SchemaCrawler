@@ -120,7 +120,7 @@ public final class OperationFormatter
 
     this.connection = connection;
     this.query = query;
-    this.out = dataHandler.getPrintWriter();
+    out = dataHandler.getPrintWriter();
   }
 
   /**
@@ -345,7 +345,7 @@ public final class OperationFormatter
       .println(formattingHelper.createNameRow(table.getName(), message, false));
   }
 
-  private void printHeaderObject(String id, final Object object)
+  private void printHeaderObject(final String id, final Object object)
   {
     if (!options.getOutputOptions().isNoInfo())
     {

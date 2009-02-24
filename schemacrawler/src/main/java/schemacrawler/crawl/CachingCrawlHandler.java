@@ -141,6 +141,12 @@ public final class CachingCrawlHandler
     schema.addTable((MutableTable) table);
   }
 
+  @Override
+  public String toString()
+  {
+    return catalog.toString();
+  }
+
   private MutableSchema lookupOrCreateSchema(final String schemaName)
   {
     MutableSchema schema = catalog.lookupSchema(schemaName);
@@ -150,12 +156,6 @@ public final class CachingCrawlHandler
       catalog.addSchema(schema);
     }
     return schema;
-  }
-
-  @Override
-  public String toString()
-  {
-    return catalog.toString();
   }
 
 }

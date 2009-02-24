@@ -131,6 +131,40 @@ class NamedObjectList<N extends NamedObject>
     return getAll().toString();
   }
 
+  private N lookup(final NamedObject namedObject)
+  {
+    if (namedObject == null)
+    {
+      return null;
+    }
+    for (final N listItem: objects)
+    {
+      if (namedObject.equals(listItem))
+      {
+        return listItem;
+      }
+    }
+    return null;
+  }
+
+  private N remove(final NamedObject namedObject)
+  {
+    if (namedObject == null)
+    {
+      return null;
+    }
+    for (final Iterator<N> iterator = objects.iterator(); iterator.hasNext();)
+    {
+      final N listItem = iterator.next();
+      if (namedObject.equals(listItem))
+      {
+        iterator.remove();
+        return listItem;
+      }
+    }
+    return null;
+  }
+
   /**
    * Add a named object to the list.
    * 
@@ -230,40 +264,6 @@ class NamedObjectList<N extends NamedObject>
   int size()
   {
     return objects.size();
-  }
-
-  private N lookup(final NamedObject namedObject)
-  {
-    if (namedObject == null)
-    {
-      return null;
-    }
-    for (final N listItem: objects)
-    {
-      if (namedObject.equals(listItem))
-      {
-        return listItem;
-      }
-    }
-    return null;
-  }
-
-  private N remove(final NamedObject namedObject)
-  {
-    if (namedObject == null)
-    {
-      return null;
-    }
-    for (final Iterator<N> iterator = objects.iterator(); iterator.hasNext();)
-    {
-      final N listItem = iterator.next();
-      if (namedObject.equals(listItem))
-      {
-        iterator.remove();
-        return listItem;
-      }
-    }
-    return null;
   }
 
 }

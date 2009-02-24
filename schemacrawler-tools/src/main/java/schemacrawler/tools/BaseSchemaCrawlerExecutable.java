@@ -41,7 +41,7 @@ public abstract class BaseSchemaCrawlerExecutable<O extends ToolOptions>
     return crawlHandler;
   }
 
-  public final void setCrawlHandler(CrawlHandler crawlHandler)
+  public final void setCrawlHandler(final CrawlHandler crawlHandler)
   {
     this.crawlHandler = crawlHandler;
   }
