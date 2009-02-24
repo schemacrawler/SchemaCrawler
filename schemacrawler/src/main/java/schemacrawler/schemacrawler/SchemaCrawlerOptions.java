@@ -88,8 +88,8 @@ public final class SchemaCrawlerOptions
     informationSchemaViews = new InformationSchemaViews();
     schemaPattern = null;
 
-    tableInclusionRule = new InclusionRule();
-    columnInclusionRule = new InclusionRule();
+    tableInclusionRule = InclusionRule.INCLUDE_ALL_RULE;
+    columnInclusionRule = InclusionRule.INCLUDE_ALL_RULE;
   }
 
   /**
@@ -130,13 +130,13 @@ public final class SchemaCrawlerOptions
                                                              InclusionRule.INCLUDE_ALL),
                                            config
                                              .getStringValue(SC_TABLE_PATTERN_EXCLUDE,
-                                                             InclusionRule.EXCLUDE_NONE));
+                                                             InclusionRule.EXCLUDE_ALL));
     columnInclusionRule = new InclusionRule(config
                                               .getStringValue(SC_COLUMN_PATTERN_INCLUDE,
                                                               InclusionRule.INCLUDE_ALL),
                                             config
                                               .getStringValue(SC_COLUMN_PATTERN_EXCLUDE,
-                                                              InclusionRule.EXCLUDE_NONE));
+                                                              InclusionRule.EXCLUDE_ALL));
 
     isAlphabeticalSortForTableColumns = config
       .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS);
