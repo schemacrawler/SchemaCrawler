@@ -95,6 +95,21 @@ final class MetadataResultSet
     results.setFetchSize(rows);
   }
 
+  private boolean isBlank(final String text)
+  {
+    return text == null || text.trim().length() == 0;
+  }
+
+  private boolean useColumn(final String columnName)
+  {
+    final boolean useColumn = !isBlank(columnName);
+    if (useColumn)
+    {
+      readColumns.add(columnName);
+    }
+    return useColumn;
+  }
+
   /**
    * Releases this <code>ResultSet</code> object's database and JDBC
    * resources immediately instead of waiting for this to happen when it
@@ -168,7 +183,7 @@ final class MetadataResultSet
         {
           try
           {
-            int booleanInt = Integer.parseInt(stringValue);
+            final int booleanInt = Integer.parseInt(stringValue);
             value = booleanInt != 0;
           }
           catch (final NumberFormatException e)
@@ -323,21 +338,6 @@ final class MetadataResultSet
   {
     readColumns = new HashSet<String>();
     return results.next();
-  }
-
-  private boolean isBlank(final String text)
-  {
-    return text == null || text.trim().length() == 0;
-  }
-
-  private boolean useColumn(final String columnName)
-  {
-    final boolean useColumn = !isBlank(columnName);
-    if (useColumn)
-    {
-      readColumns.add(columnName);
-    }
-    return useColumn;
   }
 
 }

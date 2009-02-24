@@ -72,7 +72,7 @@ public class SchemaSerializationTest
     schemaCrawlerOptions.setShowStoredProcedures(true);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-    Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
+    final Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
     assertNotNull("Could not obtain catalog", catalog);
     assertTrue("Could not find any schemas", catalog.getSchemas().length > 0);
 
@@ -132,7 +132,7 @@ public class SchemaSerializationTest
     schemaCrawlerOptions.setShowStoredProcedures(true);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-    Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
+    final Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
     assertNotNull("Could not obtain catalog", catalog);
     assertTrue("Could not find any schemas", catalog.getSchemas().length > 0);
 

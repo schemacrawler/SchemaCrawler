@@ -46,6 +46,13 @@ public abstract class SchemaExecutable
   extends SchemaCrawlerExecutable
 {
 
+  @Override
+  public final void execute(final DataSource dataSource)
+    throws Exception
+  {
+    super.execute(dataSource);
+  }
+
   /**
    * Get connection parameters, and creates a connection, and crawls the
    * schema.
@@ -93,15 +100,8 @@ public abstract class SchemaExecutable
     final Connection connection = dataSource.getConnection();
     crawlHandler = new CachingCrawlHandler(connection.getCatalog());
     execute(dataSource);
-    Catalog catalog = ((CachingCrawlHandler) crawlHandler).getCatalog();
+    final Catalog catalog = ((CachingCrawlHandler) crawlHandler).getCatalog();
     return catalog;
-  }
-
-  @Override
-  public final void execute(DataSource dataSource)
-    throws Exception
-  {
-    super.execute(dataSource);
   }
 
 }

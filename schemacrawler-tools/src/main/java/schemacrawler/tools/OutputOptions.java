@@ -78,7 +78,7 @@ public final class OutputOptions
     {
       throw new IllegalArgumentException("No output format provided");
     }
-    this.outputFormatValue = outputFormat.name();
+    outputFormatValue = outputFormat.name();
 
     if (!Utilities.isBlank(outputFilename))
     {

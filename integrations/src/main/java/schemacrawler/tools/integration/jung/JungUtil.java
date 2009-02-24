@@ -65,7 +65,7 @@ public final class JungUtil
     final List<Table> tablesList = new ArrayList<Table>();
     if (catalog != null)
     {
-      for (Schema schema: catalog.getSchemas())
+      for (final Schema schema: catalog.getSchemas())
       {
         tablesList.addAll(Arrays.asList(schema.getTables()));
       }
@@ -75,6 +75,28 @@ public final class JungUtil
     mapTablesAndColumns(graph, tables, verticesMap);
     mapForeignKeys(graph, tables, verticesMap);
     return graph;
+  }
+
+  /**
+   * Saves a schema graph as a JPEG file.
+   * 
+   * @param graph
+   *        Schema graph
+   * @param file
+   *        Output JPEG file
+   * @param size
+   *        Image size
+   * @throws IOException
+   *         On an exception
+   */
+  public static void saveGraphJpeg(final Graph graph,
+                                   final File file,
+                                   final Dimension size)
+    throws IOException
+  {
+    final Layout layout = new ISOMLayout(graph);
+    final JpgVisualizationViewer vv = new JpgVisualizationViewer(layout);
+    vv.save(file, size);
   }
 
   private static void mapForeignKeys(final Graph graph,
@@ -124,28 +146,6 @@ public final class JungUtil
         graph.addEdge(columnEdge);
       }
     }
-  }
-
-  /**
-   * Saves a schema graph as a JPEG file.
-   * 
-   * @param graph
-   *        Schema graph
-   * @param file
-   *        Output JPEG file
-   * @param size
-   *        Image size
-   * @throws IOException
-   *         On an exception
-   */
-  public static void saveGraphJpeg(final Graph graph,
-                                   final File file,
-                                   final Dimension size)
-    throws IOException
-  {
-    final Layout layout = new ISOMLayout(graph);
-    final JpgVisualizationViewer vv = new JpgVisualizationViewer(layout);
-    vv.save(file, size);
   }
 
   /**

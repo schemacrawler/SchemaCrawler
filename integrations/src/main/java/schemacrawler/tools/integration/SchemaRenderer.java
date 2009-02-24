@@ -37,23 +37,6 @@ public abstract class SchemaRenderer
   extends SchemaExecutable
 {
 
-  protected void doExecute(final DataSource dataSource)
-    throws Exception
-  {
-    // Get the entire schema at once
-    final Connection connection = dataSource.getConnection();
-    crawlHandler = new CachingCrawlHandler(connection.getCatalog());
-    super.execute(dataSource);
-    Catalog catalog = ((CachingCrawlHandler) crawlHandler).getCatalog();
-
-    // Executable-specific work
-    final Writer writer = toolOptions.getOutputOptions().openOutputWriter();
-    final String templateName = toolOptions.getOutputOptions()
-      .getOutputFormatValue();
-    render(templateName, catalog, writer);
-    toolOptions.getOutputOptions().closeOutputWriter(writer);
-  }
-
   /**
    * Get connection parameters, and creates a connection, and crawls the
    * schema.
@@ -67,6 +50,24 @@ public abstract class SchemaRenderer
     throws Exception
   {
     executeOnSchema(args, "/schemacrawler-templating-readme.txt");
+  }
+
+  @Override
+  protected void doExecute(final DataSource dataSource)
+    throws Exception
+  {
+    // Get the entire schema at once
+    final Connection connection = dataSource.getConnection();
+    crawlHandler = new CachingCrawlHandler(connection.getCatalog());
+    super.execute(dataSource);
+    final Catalog catalog = ((CachingCrawlHandler) crawlHandler).getCatalog();
+
+    // Executable-specific work
+    final Writer writer = toolOptions.getOutputOptions().openOutputWriter();
+    final String templateName = toolOptions.getOutputOptions()
+      .getOutputFormatValue();
+    render(templateName, catalog, writer);
+    toolOptions.getOutputOptions().closeOutputWriter(writer);
   }
 
   /**

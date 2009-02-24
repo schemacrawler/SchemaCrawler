@@ -104,7 +104,7 @@ abstract class BaseDatabaseConnector
     return dataSourceName != null && dataSourceName.trim().length() > 0;
   }
 
-  protected void configPut(String key, String value)
+  protected void configPut(final String key, final String value)
   {
     config.put(key, value);
   }

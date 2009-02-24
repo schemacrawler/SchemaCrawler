@@ -253,7 +253,7 @@ public final class SchemaTextFormatter
       out.print(formattingHelper.createObjectStart(""));
     }
 
-    boolean underscore = (schemaTextDetailType != SchemaTextDetailType.brief_schema);
+    final boolean underscore = schemaTextDetailType != SchemaTextDetailType.brief_schema;
     final String procedureTypeDetail = "procedure, " + procedure.getType();
     out.println(formattingHelper.createNameRow(procedure.getFullName(),
                                                "[" + procedureTypeDetail + "]",
@@ -312,15 +312,16 @@ public final class SchemaTextFormatter
     final SchemaTextDetailType schemaTextDetailType = options
       .getSchemaTextDetailType();
 
-    boolean underscore = (schemaTextDetailType != SchemaTextDetailType.brief_schema);
-    String nameRow = formattingHelper.createNameRow(table.getFullName(),
-                                                    "["
-                                                        + table.getType()
-                                                          .name() + "]",
-                                                    underscore);
+    final boolean underscore = schemaTextDetailType != SchemaTextDetailType.brief_schema;
+    final String nameRow = formattingHelper.createNameRow(table.getFullName(),
+                                                          "["
+                                                              + table.getType()
+                                                                .name() + "]",
+                                                          underscore);
 
-    if ((schemaTextDetailType != SchemaTextDetailType.brief_schema)
-        || (schemaTextDetailType == SchemaTextDetailType.brief_schema && tableCount == 0))
+    if (schemaTextDetailType != SchemaTextDetailType.brief_schema
+        || schemaTextDetailType == SchemaTextDetailType.brief_schema
+        && tableCount == 0)
     {
       out.print(formattingHelper.createObjectStart(""));
     }
@@ -534,7 +535,7 @@ public final class SchemaTextFormatter
     }
   }
 
-  private void printHeaderObject(String id, final Object object)
+  private void printHeaderObject(final String id, final Object object)
   {
     if (!options.getOutputOptions().isNoInfo())
     {

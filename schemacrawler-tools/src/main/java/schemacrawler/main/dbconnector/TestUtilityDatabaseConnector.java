@@ -19,7 +19,7 @@ public class TestUtilityDatabaseConnector
    * @param testUtility
    *        Test utility
    */
-  public TestUtilityDatabaseConnector(TestUtility testUtility)
+  public TestUtilityDatabaseConnector(final TestUtility testUtility)
   {
     this.testUtility = testUtility;
   }

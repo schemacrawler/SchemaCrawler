@@ -50,12 +50,12 @@ public class SchemaCrawlerCommandLine
   private final OutputOptions outputOptions;
   private final DatabaseConnector databaseConnector;
 
-  public SchemaCrawlerCommandLine(Command[] commands,
-                                  Config config,
-                                  DatabaseConnector databaseConnector,
-                                  OutputOptions outputOptions)
+  public SchemaCrawlerCommandLine(final Command[] commands,
+                                  final Config config,
+                                  final DatabaseConnector databaseConnector,
+                                  final OutputOptions outputOptions)
   {
-    this.args = null;
+    args = null;
     //
     this.commands = commands;
     this.config = config;

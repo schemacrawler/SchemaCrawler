@@ -63,7 +63,7 @@ public class SchemaCrawlerUtility
       LOGGER.log(Level.SEVERE, e.getMessage(), e);
       return null;
     }
-    catch (SQLException e)
+    catch (final SQLException e)
     {
       LOGGER.log(Level.SEVERE, e.getMessage(), e);
       return null;

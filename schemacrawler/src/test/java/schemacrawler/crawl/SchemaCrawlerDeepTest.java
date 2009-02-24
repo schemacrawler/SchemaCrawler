@@ -66,7 +66,7 @@ public class SchemaCrawlerDeepTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setShowStoredProcedures(true);
 
-    Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
+    final Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
     assertNotNull("Could not obtain catalog", catalog);
     assertTrue("Could not find any schemas", catalog.getSchemas().length > 0);
 

@@ -70,7 +70,7 @@ class ColumnDataTypes
     final Set<MutableColumnDataType> columnDataTypes = new HashSet<MutableColumnDataType>();
     for (final MutableColumnDataType currentColumnDataType: this)
     {
-      String dataTypeSchemaName = currentColumnDataType.getSchemaName();
+      final String dataTypeSchemaName = currentColumnDataType.getSchemaName();
       if (dataTypeSchemaName == null? schemaName == null: dataTypeSchemaName
         .equals(schemaName))
       {

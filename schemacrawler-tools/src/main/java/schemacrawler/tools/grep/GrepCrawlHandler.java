@@ -94,7 +94,7 @@ public final class GrepCrawlHandler
     chainedCrawlHandler.end();
   }
 
-  public void handle(ColumnDataType dataType)
+  public void handle(final ColumnDataType dataType)
     throws SchemaCrawlerException
   {
     // Ignore

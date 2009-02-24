@@ -49,8 +49,8 @@ final class TableCell
   }
 
   TableCell(final String text,
-            int characterWidth,
-            Align align,
+            final int characterWidth,
+            final Align align,
             final int colSpan,
             final String styleClass,
             final OutputFormat outputFormat)

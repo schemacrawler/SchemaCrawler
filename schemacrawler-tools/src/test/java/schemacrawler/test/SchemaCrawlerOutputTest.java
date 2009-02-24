@@ -75,11 +75,36 @@ public class SchemaCrawlerOutputTest
     testUtility.createMemoryDatabase();
   }
 
+  private static boolean contentEquals(final Reader input1, final Reader input2)
+    throws Exception
+  {
+    final BufferedReader reader1 = new BufferedReader(input1);
+    final BufferedReader reader2 = new BufferedReader(input2);
+
+    String line1 = reader1.readLine();
+    while (null != line1)
+    {
+      final String line2 = reader2.readLine();
+      if (line2 == null)
+      {
+        return false;
+      }
+      if (!line1.trim().equals(line2.trim()))
+      {
+        return false;
+      }
+      line1 = reader1.readLine();
+    }
+
+    final String line2 = reader2.readLine();
+    return line2 == null;
+  }
+
   @Test
   public void compareCompositeOutput()
     throws Exception
   {
-    Command[][] commands = new Command[][] {
+    final Command[][] commands = new Command[][] {
         {
             new Command("maximum_schema", false),
             new Command("count", true),
@@ -91,9 +116,9 @@ public class SchemaCrawlerOutputTest
     };
     final TestUtilityDatabaseConnector dbConnector = new TestUtilityDatabaseConnector(testUtility);
 
-    for (OutputFormat outputFormat: OutputFormat.values())
+    for (final OutputFormat outputFormat: OutputFormat.values())
     {
-      for (Command[] commandSet: commands)
+      for (final Command[] commandSet: commands)
       {
         final String referenceFile = commandSet[0].toString() + "."
                                      + outputFormat.name();
@@ -108,10 +133,10 @@ public class SchemaCrawlerOutputTest
         outputOptions.setNoHeader(false);
         outputOptions.setNoFooter(false);
 
-        SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(commandSet,
-                                                                            new Config(),
-                                                                            dbConnector,
-                                                                            outputOptions);
+        final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(commandSet,
+                                                                                  new Config(),
+                                                                                  dbConnector,
+                                                                                  outputOptions);
         SchemaCrawlerMain.schemacrawler(commandLine, "");
 
         if (outputFormat == OutputFormat.html)
@@ -283,31 +308,6 @@ public class SchemaCrawlerOutputTest
 
     final Validator validator = new Validator(new FileReader(outputFilename));
     validator.assertIsValid();
-  }
-
-  private static boolean contentEquals(final Reader input1, final Reader input2)
-    throws Exception
-  {
-    BufferedReader reader1 = new BufferedReader(input1);
-    BufferedReader reader2 = new BufferedReader(input2);
-
-    String line1 = reader1.readLine();
-    while (null != line1)
-    {
-      String line2 = reader2.readLine();
-      if (line2 == null)
-      {
-        return false;
-      }
-      if (!line1.trim().equals(line2.trim()))
-      {
-        return false;
-      }
-      line1 = reader1.readLine();
-    }
-
-    String line2 = reader2.readLine();
-    return (line2 == null);
   }
 
 }
