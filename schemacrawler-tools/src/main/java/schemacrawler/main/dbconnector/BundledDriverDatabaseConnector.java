@@ -22,24 +22,12 @@ package schemacrawler.main.dbconnector;
 
 import java.util.Map;
 
-import sf.util.CommandLineParser;
-import sf.util.Utilities;
-import sf.util.CommandLineParser.Option;
-import sf.util.CommandLineParser.StringOption;
-
 /**
  * Parses a command line, and creates a data-source.
  */
 public final class BundledDriverDatabaseConnector
   extends BaseDatabaseConnector
 {
-
-  private static final String OPTION_HOST = "host";
-  private static final String OPTION_PORT = "port";
-  private static final String OPTION_DATABASE = "database";
-  private static final String OPTION_SCHEMAPATTERN = "schemapattern";
-  private static final String OPTION_USER = "user";
-  private static final String OPTION_PASSWORD = "password";
 
   /**
    * Parses a command line, and creates a data-source.
@@ -57,67 +45,45 @@ public final class BundledDriverDatabaseConnector
   {
     super(providedConfig);
 
-    final CommandLineParser parser = createCommandLineParser();
-    parser.parse(args);
-
-    final String host = parser.getStringOptionValue(OPTION_HOST);
-    final String port = parser.getStringOptionValue(OPTION_PORT);
-    final String database = parser.getStringOptionValue(OPTION_DATABASE);
-    final String schemapattern = parser
-      .getStringOptionValue(OPTION_SCHEMAPATTERN);
-    final String user = parser.getStringOptionValue(OPTION_USER);
-    final String password = parser.getStringOptionValue(OPTION_PASSWORD);
+    final BundledDriverOptions options = new BundledDriverOptionsParser(args)
+      .getValue();
 
     // Check arguments
-    if (user == null || user.trim().length() == 0)
+    if (!options.hasUser())
     {
       throw new DatabaseConnectorException("Please provide the user name");
     }
-    if (password == null)
+    if (!options.hasPassword())
     {
       throw new DatabaseConnectorException("Please provide the password");
     }
 
     final String dataSourceName = getDataSourceName();
-    if (host != null)
+    if (options.hasHost())
     {
-      configPut(dataSourceName + ".host", host);
+      configPut(dataSourceName + ".host", options.getHost());
     }
-    if (port != null)
+    if (options.hasPort())
     {
-      configPut(dataSourceName + ".port", port);
+      configPut(dataSourceName + ".port", String.valueOf(options.getPort()));
     }
-    configPut(dataSourceName + ".database", database);
-    if (!Utilities.isBlank(schemapattern))
+    if (options.hasDatabase())
     {
-      configPut(dataSourceName + ".schemapattern", schemapattern);
+      configPut(dataSourceName + ".database", options.getDatabase());
     }
-    configPut(dataSourceName + ".user", user);
-    configPut(dataSourceName + ".password", password);
+
+    if (options.hasSchemaPattern())
+    {
+      configPut(dataSourceName + ".schemapattern", options.getSchemapattern());
+    }
+
+    configPut(dataSourceName + ".user", options.getUser());
+    configPut(dataSourceName + ".password", options.getPassword());
 
     if (!hasDataSourceName())
     {
       throw new DatabaseConnectorException("No datasource name provided");
     }
-  }
-
-  private CommandLineParser createCommandLineParser()
-  {
-    final CommandLineParser parser = new CommandLineParser();
-
-    parser.addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_HOST, null));
-    parser.addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_PORT, null));
-    parser
-      .addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_DATABASE, ""));
-    parser.addOption(new StringOption(Option.NO_SHORT_FORM,
-                                      OPTION_SCHEMAPATTERN,
-                                      null));
-    parser.addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_USER, null));
-    parser.addOption(new StringOption(Option.NO_SHORT_FORM,
-                                      OPTION_PASSWORD,
-                                      null));
-
-    return parser;
   }
 
 }
