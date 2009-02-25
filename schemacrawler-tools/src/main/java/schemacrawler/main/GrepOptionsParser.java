@@ -23,7 +23,6 @@ package schemacrawler.main;
 
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.tools.grep.GrepOptions;
-import sf.util.CommandLineParser;
 import sf.util.CommandLineParser.BooleanOption;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
@@ -32,19 +31,19 @@ final class GrepOptionsParser
   extends BaseCommandLineParser<GrepOptions>
 {
 
-  private final StringOption optionTables = new StringOption(CommandLineParser.Option.NO_SHORT_FORM,
+  private final StringOption optionTables = new StringOption(Option.NO_SHORT_FORM,
                                                              "tables",
                                                              InclusionRule.INCLUDE_ALL);
-  private final StringOption optionTableColumns = new StringOption(CommandLineParser.Option.NO_SHORT_FORM,
+  private final StringOption optionTableColumns = new StringOption(Option.NO_SHORT_FORM,
                                                                    "columns",
                                                                    InclusionRule.INCLUDE_ALL);
-  private final StringOption optionProcedures = new StringOption(CommandLineParser.Option.NO_SHORT_FORM,
+  private final StringOption optionProcedures = new StringOption(Option.NO_SHORT_FORM,
                                                                  "procedures",
                                                                  InclusionRule.EXCLUDE_ALL);
-  private final StringOption optionProcedureColumns = new StringOption(CommandLineParser.Option.NO_SHORT_FORM,
+  private final StringOption optionProcedureColumns = new StringOption(Option.NO_SHORT_FORM,
                                                                        "inout",
                                                                        InclusionRule.EXCLUDE_ALL);
-  private final StringOption optionDefinitionText = new StringOption(CommandLineParser.Option.NO_SHORT_FORM,
+  private final StringOption optionDefinitionText = new StringOption(Option.NO_SHORT_FORM,
                                                                      "definition",
                                                                      InclusionRule.INCLUDE_ALL);
   private final BooleanOption optionInvertMatch = new BooleanOption('v',
