@@ -23,11 +23,7 @@ package schemacrawler.main.dbconnector;
 
 import java.util.Map;
 
-import sf.util.CommandLineParser;
 import sf.util.Utilities;
-import sf.util.CommandLineParser.BooleanOption;
-import sf.util.CommandLineParser.Option;
-import sf.util.CommandLineParser.StringOption;
 
 /**
  * Parses a command line, and creates a data-source.
@@ -35,15 +31,6 @@ import sf.util.CommandLineParser.StringOption;
 public final class PropertiesDataSourceDatabaseConnector
   extends BaseDatabaseConnector
 {
-
-  private static final String OPTION_DRIVER = "driver";
-  private static final String OPTION_URL = "url";
-  private static final String OPTION_SCHEMAPATTERN = "schemapattern";
-  private static final String OPTION_USER = "user";
-  private static final String OPTION_PASSWORD = "password";
-
-  private static final String OPTION_CONNECTION = "connection";
-  private static final String OPTION_DEFAULT = "default";
 
   /**
    * Parses a command line, and creates a data-source.
@@ -61,39 +48,28 @@ public final class PropertiesDataSourceDatabaseConnector
   {
     super(providedConfig);
 
-    final CommandLineParser parser = createCommandLineParser();
-    parser.parse(args);
+    final PropertiesDataSourceOptions options = new PropertiesDataSourceOptionsParser(args)
+      .getValue();
 
-    final String driver = parser.getStringOptionValue(OPTION_DRIVER);
-    final String url = parser.getStringOptionValue(OPTION_URL);
-    final String schemapattern = parser
-      .getStringOptionValue(OPTION_SCHEMAPATTERN);
-    final String user = parser.getStringOptionValue(OPTION_USER);
-    final String password = parser.getStringOptionValue(OPTION_PASSWORD);
-    final boolean useJdbcConnection = !Utilities.isBlank(driver)
-                                      && !Utilities.isBlank(url);
-
-    if (useJdbcConnection)
+    if (options.isUseJdbcConnection())
     {
       final String dataSourceName = "PropertiesDataSourceConnection";
       configPut("defaultconnection", dataSourceName);
-      configPut(dataSourceName + ".driver", driver);
-      configPut(dataSourceName + ".url", url);
-      if (!Utilities.isBlank(schemapattern))
+      configPut(dataSourceName + ".driver", options.getDriver());
+      configPut(dataSourceName + ".url", options.getConnectionUrl());
+      if (options.hasSchemaPattern())
       {
-        configPut(dataSourceName + ".schemapattern", schemapattern);
+        configPut(dataSourceName + ".schemapattern", options.getSchemapattern());
       }
-      configPut(dataSourceName + ".user", user);
-      configPut(dataSourceName + ".password", password);
+      configPut(dataSourceName + ".user", options.getUser());
+      configPut(dataSourceName + ".password", options.getPassword());
     }
     else
     {
-      final boolean useDefaultConnection = parser
-        .getBooleanOptionValue(OPTION_DEFAULT);
-      final String connectionName = parser
-        .getStringOptionValue(OPTION_CONNECTION);
+      final String connectionName = options.getConnection();
       // Use default connection if no connection is specified
-      if (!useDefaultConnection && !Utilities.isBlank(connectionName))
+      if (!options.isUseDefaultConnection()
+          && !Utilities.isBlank(connectionName))
       {
         configPut("defaultconnection", connectionName);
       }
@@ -103,26 +79,6 @@ public final class PropertiesDataSourceDatabaseConnector
     {
       throw new DatabaseConnectorException("No datasource name provided");
     }
-  }
-
-  private CommandLineParser createCommandLineParser()
-  {
-    final CommandLineParser parser = new CommandLineParser();
-
-    parser.addOption(new BooleanOption('d', OPTION_DEFAULT));
-    parser.addOption(new StringOption('c', OPTION_CONNECTION, null));
-    //
-    parser
-      .addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_DRIVER, null));
-    parser.addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_URL, null));
-    parser.addOption(new StringOption(Option.NO_SHORT_FORM,
-                                      OPTION_SCHEMAPATTERN,
-                                      null));
-    parser.addOption(new StringOption(Option.NO_SHORT_FORM, OPTION_USER, null));
-    parser.addOption(new StringOption(Option.NO_SHORT_FORM,
-                                      OPTION_PASSWORD,
-                                      null));
-    return parser;
   }
 
 }
