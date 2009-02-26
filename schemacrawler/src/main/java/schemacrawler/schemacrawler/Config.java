@@ -199,7 +199,11 @@ public final class Config
    */
   public Config(final Map<String, String> config)
   {
-    super(config);
+    super();
+    if (config != null)
+    {
+      putAll(config);
+    }
   }
 
   /**

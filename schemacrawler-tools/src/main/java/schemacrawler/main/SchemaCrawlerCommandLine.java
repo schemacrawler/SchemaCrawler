@@ -30,6 +30,7 @@ import schemacrawler.main.dbconnector.DatabaseConnectorException;
 import schemacrawler.main.dbconnector.PropertiesDataSourceDatabaseConnector;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.Command;
 import schemacrawler.tools.OutputOptions;
 import sf.util.Utilities;
@@ -44,6 +45,7 @@ public class SchemaCrawlerCommandLine
 
   private final Command[] commands;
   private final Config config;
+  private final SchemaCrawlerOptions schemaCrawlerOptions;
   private final OutputOptions outputOptions;
   private final DatabaseConnector databaseConnector;
 
@@ -56,6 +58,7 @@ public class SchemaCrawlerCommandLine
     this.config = config;
     this.databaseConnector = databaseConnector;
     this.outputOptions = outputOptions;
+    schemaCrawlerOptions = new SchemaCrawlerOptions();
   }
 
   /**
@@ -124,6 +127,12 @@ public class SchemaCrawlerCommandLine
     {
       throw new SchemaCrawlerException("Cannot create a database connector", e);
     }
+
+    schemaCrawlerOptions = new SchemaCrawlerOptionsParser(args,
+                                                          config,
+                                                          databaseConnector
+                                                            .getDataSourceName())
+      .getValue();
   }
 
   /**
@@ -177,6 +186,11 @@ public class SchemaCrawlerCommandLine
   public String getPartition()
   {
     return databaseConnector.getDataSourceName();
+  }
+
+  public SchemaCrawlerOptions getSchemaCrawlerOptions()
+  {
+    return schemaCrawlerOptions;
   }
 
 }

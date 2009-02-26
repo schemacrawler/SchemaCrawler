@@ -21,7 +21,6 @@
 package schemacrawler.main;
 
 
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.grep.GrepExecutable;
 import schemacrawler.tools.grep.GrepOptions;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
@@ -51,8 +50,8 @@ public final class GrepMain
     grepOptions.setSchemaTextDetailType(SchemaTextDetailType.verbose_schema);
 
     final GrepExecutable grepExecutable = new GrepExecutable();
-    grepExecutable.setSchemaCrawlerOptions(new SchemaCrawlerOptions(commandLine
-      .getConfig(), commandLine.getPartition()));
+    grepExecutable.setSchemaCrawlerOptions(commandLine
+      .getSchemaCrawlerOptions());
     grepExecutable.setToolOptions(grepOptions);
     grepExecutable.execute(commandLine.createDataSource());
   }
