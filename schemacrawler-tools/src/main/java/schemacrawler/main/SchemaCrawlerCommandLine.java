@@ -21,7 +21,6 @@ package schemacrawler.main;
 
 
 import java.util.Arrays;
-import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -43,8 +42,6 @@ import sf.util.Utilities;
 public class SchemaCrawlerCommandLine
 {
 
-  private final List<String> args;
-  //
   private final Command[] commands;
   private final Config config;
   private final OutputOptions outputOptions;
@@ -55,8 +52,6 @@ public class SchemaCrawlerCommandLine
                                   final DatabaseConnector databaseConnector,
                                   final OutputOptions outputOptions)
   {
-    args = null;
-    //
     this.commands = commands;
     this.config = config;
     this.databaseConnector = databaseConnector;
@@ -92,7 +87,6 @@ public class SchemaCrawlerCommandLine
                                   final String configResource)
     throws SchemaCrawlerException
   {
-    this.args = Arrays.asList(args);
     if (args != null && args.length > 0)
     {
       commands = new CommandParser(args).getValue();
@@ -183,17 +177,6 @@ public class SchemaCrawlerCommandLine
   public String getPartition()
   {
     return databaseConnector.getDataSourceName();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return String.valueOf(args);
   }
 
 }
