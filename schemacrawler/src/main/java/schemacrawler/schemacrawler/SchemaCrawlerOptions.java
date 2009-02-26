@@ -35,7 +35,7 @@ public final class SchemaCrawlerOptions
   implements Options
 {
 
-  private static final String DEFAULT_TABLE_TYPES = "TABLE,VIEW";
+  public static final String DEFAULT_TABLE_TYPES = "TABLE,VIEW";
 
   private static final long serialVersionUID = -3557794862382066029L;
 
@@ -81,26 +81,7 @@ public final class SchemaCrawlerOptions
    */
   public SchemaCrawlerOptions()
   {
-    tableTypes = TableType.valueOf(DEFAULT_TABLE_TYPES.split(","));
-
-    showStoredProcedures = false;
-
-    informationSchemaViews = new InformationSchemaViews();
-    schemaPattern = null;
-
-    tableInclusionRule = InclusionRule.INCLUDE_ALL_RULE;
-    columnInclusionRule = InclusionRule.INCLUDE_ALL_RULE;
-  }
-
-  /**
-   * Options from properties.
-   * 
-   * @param config
-   *        Configuration properties
-   */
-  public SchemaCrawlerOptions(final Config config)
-  {
-    this(config, null);
+    this(new Config(), null);
   }
 
   /**
@@ -113,38 +94,40 @@ public final class SchemaCrawlerOptions
    */
   public SchemaCrawlerOptions(final Config config, final String partition)
   {
+    final Config configProperties = new Config(config);
 
-    final String tableTypesString = config.getStringValue(SC_TABLE_TYPES,
-                                                          DEFAULT_TABLE_TYPES);
+    final String tableTypesString = configProperties
+      .getStringValue(SC_TABLE_TYPES, DEFAULT_TABLE_TYPES);
     tableTypes = TableType.valueOf(tableTypesString.split(","));
 
-    showStoredProcedures = config.getBooleanValue(SC_SHOW_STORED_PROCEDURES);
+    showStoredProcedures = configProperties
+      .getBooleanValue(SC_SHOW_STORED_PROCEDURES);
 
-    final Config partitionedConfig = config.partition(partition);
+    final Config partitionedConfig = configProperties.partition(partition);
     informationSchemaViews = new InformationSchemaViews(partitionedConfig);
     schemaPattern = partitionedConfig
       .getStringValue(OTHER_SCHEMA_PATTERN, null);
 
-    tableInclusionRule = new InclusionRule(config
+    tableInclusionRule = new InclusionRule(configProperties
                                              .getStringValue(SC_TABLE_PATTERN_INCLUDE,
                                                              InclusionRule.INCLUDE_ALL),
-                                           config
+                                           configProperties
                                              .getStringValue(SC_TABLE_PATTERN_EXCLUDE,
                                                              InclusionRule.EXCLUDE_ALL));
-    columnInclusionRule = new InclusionRule(config
+    columnInclusionRule = new InclusionRule(configProperties
                                               .getStringValue(SC_COLUMN_PATTERN_INCLUDE,
                                                               InclusionRule.INCLUDE_ALL),
-                                            config
+                                            configProperties
                                               .getStringValue(SC_COLUMN_PATTERN_EXCLUDE,
                                                               InclusionRule.EXCLUDE_ALL));
 
-    isAlphabeticalSortForTableColumns = config
+    isAlphabeticalSortForTableColumns = configProperties
       .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS);
-    isAlphabeticalSortForForeignKeys = config
+    isAlphabeticalSortForForeignKeys = configProperties
       .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS);
-    isAlphabeticalSortForIndexes = config
+    isAlphabeticalSortForIndexes = configProperties
       .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES);
-    isAlphabeticalSortForProcedureColumns = config
+    isAlphabeticalSortForProcedureColumns = configProperties
       .getBooleanValue(SC_SORT_ALPHABETICALLY_PROCEDURE_COLUMNS);
   }
 
@@ -156,7 +139,7 @@ public final class SchemaCrawlerOptions
    */
   public SchemaCrawlerOptions(final Properties properties)
   {
-    this(new Config(properties));
+    this(new Config(properties), null);
   }
 
   /**

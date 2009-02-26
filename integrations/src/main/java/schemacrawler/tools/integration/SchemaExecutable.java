@@ -73,9 +73,8 @@ public abstract class SchemaExecutable
 
     final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args);
     final Config config = commandLine.getConfig();
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config,
-                                                                               commandLine
-                                                                                 .getPartition());
+    final SchemaCrawlerOptions schemaCrawlerOptions = commandLine
+      .getSchemaCrawlerOptions();
     final OutputOptions outputOptions = commandLine.getOutputOptions();
 
     final Command[] commands = commandLine.getCommands();
