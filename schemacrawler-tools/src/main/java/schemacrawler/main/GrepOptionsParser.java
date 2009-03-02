@@ -33,19 +33,16 @@ final class GrepOptionsParser
 
   private final StringOption optionTables = new StringOption(Option.NO_SHORT_FORM,
                                                              "tables",
-                                                             InclusionRule.INCLUDE_ALL);
+                                                             InclusionRule.ALL);
   private final StringOption optionTableColumns = new StringOption(Option.NO_SHORT_FORM,
                                                                    "columns",
-                                                                   InclusionRule.INCLUDE_ALL);
+                                                                   InclusionRule.NONE);
   private final StringOption optionProcedures = new StringOption(Option.NO_SHORT_FORM,
                                                                  "procedures",
-                                                                 InclusionRule.EXCLUDE_ALL);
+                                                                 InclusionRule.ALL);
   private final StringOption optionProcedureColumns = new StringOption(Option.NO_SHORT_FORM,
                                                                        "inout",
-                                                                       InclusionRule.EXCLUDE_ALL);
-  private final StringOption optionDefinitionText = new StringOption(Option.NO_SHORT_FORM,
-                                                                     "definition",
-                                                                     InclusionRule.INCLUDE_ALL);
+                                                                       InclusionRule.NONE);
   private final BooleanOption optionInvertMatch = new BooleanOption('v',
                                                                     "invert-match");
 
@@ -62,31 +59,26 @@ final class GrepOptionsParser
         optionTableColumns,
         optionProcedures,
         optionProcedureColumns,
-        optionDefinitionText,
         optionInvertMatch
     });
 
     final InclusionRule tableInclusionRule = new InclusionRule(optionTables
-      .getValue(), InclusionRule.EXCLUDE_ALL);
+      .getValue(), InclusionRule.NONE);
     final InclusionRule tableColumnInclusionRule = new InclusionRule(optionTableColumns
                                                                        .getValue(),
-                                                                     InclusionRule.EXCLUDE_ALL);
+                                                                     InclusionRule.NONE);
     final InclusionRule procedureInclusionRule = new InclusionRule(optionProcedures
                                                                      .getValue(),
-                                                                   InclusionRule.EXCLUDE_ALL);
+                                                                   InclusionRule.NONE);
     final InclusionRule procedureColumnInclusionRule = new InclusionRule(optionProcedureColumns
                                                                            .getValue(),
-                                                                         InclusionRule.EXCLUDE_ALL);
-    final InclusionRule definitionTextInclusionRule = new InclusionRule(optionDefinitionText
-                                                                          .getValue(),
-                                                                        InclusionRule.EXCLUDE_ALL);
+                                                                         InclusionRule.NONE);
 
     final GrepOptions options = new GrepOptions();
     options.setTableInclusionRule(tableInclusionRule);
     options.setTableColumnInclusionRule(tableColumnInclusionRule);
     options.setProcedureInclusionRule(procedureInclusionRule);
     options.setProcedureColumnInclusionRule(procedureColumnInclusionRule);
-    options.setDefinitionTextInclusionRule(definitionTextInclusionRule);
     options.setInvertMatch(optionInvertMatch.getValue());
 
     return options;

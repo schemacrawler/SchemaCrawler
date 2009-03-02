@@ -25,6 +25,7 @@ import javax.sql.DataSource;
 
 import schemacrawler.crawl.DatabaseSchemaCrawler;
 import schemacrawler.schemacrawler.CrawlHandler;
+import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.tools.BaseSchemaCrawlerExecutable;
 import schemacrawler.tools.schematext.SchemaTextFormatter;
@@ -57,8 +58,26 @@ public class GrepExecutable
   {
     schemaCrawlerOptions.setTableInclusionRule(toolOptions
       .getTableInclusionRule());
+    schemaCrawlerOptions.setProcedureInclusionRule(toolOptions
+      .getProcedureInclusionRule());
     schemaCrawlerOptions.setSchemaInfoLevel(toolOptions
       .getSchemaTextDetailType().mapToInfoLevel());
+
+    // Force certain SchemaCrawler options, based on the grep options
+    if (toolOptions.getTableInclusionRule()
+      .equals(InclusionRule.EXCLUDE_ALL_RULE)
+        || toolOptions.getTableColumnInclusionRule()
+          .equals(InclusionRule.EXCLUDE_ALL_RULE))
+    {
+      schemaCrawlerOptions.setTableTypes("");
+    }
+    if (!toolOptions.getProcedureInclusionRule()
+      .equals(InclusionRule.EXCLUDE_ALL_RULE)
+        || !toolOptions.getProcedureColumnInclusionRule()
+          .equals(InclusionRule.EXCLUDE_ALL_RULE))
+    {
+      schemaCrawlerOptions.setShowStoredProcedures(true);
+    }
 
     CrawlHandler chainedCrawlHandler = crawlHandler;
     if (chainedCrawlHandler == null)
@@ -72,5 +91,4 @@ public class GrepExecutable
       .getConnection());
     crawler.crawl(schemaCrawlerOptions, handler);
   }
-
 }

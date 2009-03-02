@@ -37,32 +37,26 @@ public final class InclusionRule
 {
 
   /** Exclude nothing */
-  public static final String EXCLUDE_ALL = "";
+  public static final String NONE = "";
   /** Include everything. */
-  public static final String INCLUDE_ALL = ".*";
+  public static final String ALL = ".*";
 
   /** Exclude nothing */
-  private static final Pattern EXCLUDE_ALL_PATTERN = Pattern
-    .compile(EXCLUDE_ALL);
+  private static final Pattern NONE_PATTERN = Pattern.compile(NONE);
   /** Include everything. */
-  private static final Pattern INCLUDE_ALL_PATTERN = Pattern
-    .compile(INCLUDE_ALL);
+  private static final Pattern ALL_PATTERN = Pattern.compile(ALL);
 
   private static final Logger LOGGER = Logger.getLogger(InclusionRule.class
     .getName());
 
   private static final long serialVersionUID = 3443758881974362293L;
 
-  /**
-   * Exclude all, include none.
-   */
-  public static final InclusionRule EXCLUDE_ALL_RULE = new InclusionRule(EXCLUDE_ALL_PATTERN,
-                                                                         INCLUDE_ALL_PATTERN);
-  /**
-   * Include all.
-   */
-  public static final InclusionRule INCLUDE_ALL_RULE = new InclusionRule(INCLUDE_ALL_PATTERN,
-                                                                         EXCLUDE_ALL_PATTERN);
+  /** Exclude all, include none. */
+  public static final InclusionRule EXCLUDE_ALL_RULE = new InclusionRule(NONE_PATTERN,
+                                                                         ALL_PATTERN);
+  /** Include all. */
+  public static final InclusionRule INCLUDE_ALL_RULE = new InclusionRule(ALL_PATTERN,
+                                                                         NONE_PATTERN);
 
   private final Pattern patternInclude;
   private final Pattern patternExclude;
@@ -93,6 +87,59 @@ public final class InclusionRule
   public InclusionRule(final String patternInclude, final String patternExclude)
   {
     this(Pattern.compile(patternInclude), Pattern.compile(patternExclude));
+  }
+
+  @Override
+  public boolean equals(final Object obj)
+  {
+    if (this == obj)
+    {
+      return true;
+    }
+    if (obj == null)
+    {
+      return false;
+    }
+    if (getClass() != obj.getClass())
+    {
+      return false;
+    }
+    final InclusionRule other = (InclusionRule) obj;
+    if (patternExclude == null)
+    {
+      if (other.patternExclude != null)
+      {
+        return false;
+      }
+    }
+    else if (!patternExclude.equals(other.patternExclude))
+    {
+      return false;
+    }
+    if (patternInclude == null)
+    {
+      if (other.patternInclude != null)
+      {
+        return false;
+      }
+    }
+    else if (!patternInclude.equals(other.patternInclude))
+    {
+      return false;
+    }
+    return true;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result
+             + (patternExclude == null? 0: patternExclude.hashCode());
+    result = prime * result
+             + (patternInclude == null? 0: patternInclude.hashCode());
+    return result;
   }
 
   /**

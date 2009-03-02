@@ -25,7 +25,6 @@ import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -174,8 +173,6 @@ public final class GrepCrawlHandler
   {
     final InclusionRule columnInclusionRule = grepOptions
       .getProcedureColumnInclusionRule();
-    final InclusionRule definitionTextInclusionRule = grepOptions
-      .getDefinitionTextInclusionRule();
     final boolean invertMatch = grepOptions.isInvertMatch();
 
     boolean handleProcedure = false;
@@ -188,13 +185,6 @@ public final class GrepCrawlHandler
         // procedure
         handleProcedure = true;
         break;
-      }
-    }
-    if (handleProcedure)
-    {
-      if (!definitionTextInclusionRule.include(procedure.getDefinition()))
-      {
-        handleProcedure = false;
       }
     }
     if (invertMatch)
@@ -221,8 +211,6 @@ public final class GrepCrawlHandler
   {
     final InclusionRule columnInclusionRule = grepOptions
       .getTableColumnInclusionRule();
-    final InclusionRule definitionTextInclusionRule = grepOptions
-      .getDefinitionTextInclusionRule();
     final boolean invertMatch = grepOptions.isInvertMatch();
 
     boolean handleTable = false;
@@ -235,17 +223,6 @@ public final class GrepCrawlHandler
         // table
         handleTable = true;
         break;
-      }
-    }
-    if (handleTable)
-    {
-      if (table instanceof View)
-      {
-        final View view = (View) table;
-        if (!definitionTextInclusionRule.include(view.getDefinition()))
-        {
-          handleTable = false;
-        }
       }
     }
     if (invertMatch)

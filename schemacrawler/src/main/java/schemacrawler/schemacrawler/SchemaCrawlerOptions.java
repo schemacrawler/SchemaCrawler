@@ -44,6 +44,12 @@ public final class SchemaCrawlerOptions
   private static final String SC_COLUMN_PATTERN_INCLUDE = "schemacrawler.column.pattern.include";
   private static final String SC_TABLE_PATTERN_EXCLUDE = "schemacrawler.table.pattern.exclude";
   private static final String SC_TABLE_PATTERN_INCLUDE = "schemacrawler.table.pattern.include";
+
+  private static final String SC_PROCEDURE_COLUMN_PATTERN_EXCLUDE = "schemacrawler.procedure.column.pattern.exclude";
+  private static final String SC_PROCEDURE_COLUMN_PATTERN_INCLUDE = "schemacrawler.procedure.column.pattern.include";
+  private static final String SC_PROCEDURE_PATTERN_EXCLUDE = "schemacrawler.procedure.pattern.exclude";
+  private static final String SC_PROCEDURE_PATTERN_INCLUDE = "schemacrawler.procedure.pattern.include";
+
   private static final String SC_SORT_ALPHABETICALLY_PROCEDURE_COLUMNS = "schemacrawler.sort_alphabetically.procedure_columns";
   private static final String SC_SORT_ALPHABETICALLY_TABLE_INDEXES = "schemacrawler.sort_alphabetically.table_indices";
   private static final String SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS = "schemacrawler.sort_alphabetically.table_foreignkeys";
@@ -65,6 +71,9 @@ public final class SchemaCrawlerOptions
 
   private InclusionRule tableInclusionRule;
   private InclusionRule columnInclusionRule;
+
+  private InclusionRule procedureInclusionRule;
+  private InclusionRule procedureColumnInclusionRule;
 
   private boolean isAlphabeticalSortForTableColumns;
   private boolean isAlphabeticalSortForForeignKeys;
@@ -110,16 +119,29 @@ public final class SchemaCrawlerOptions
 
     tableInclusionRule = new InclusionRule(configProperties
                                              .getStringValue(SC_TABLE_PATTERN_INCLUDE,
-                                                             InclusionRule.INCLUDE_ALL),
+                                                             InclusionRule.ALL),
                                            configProperties
                                              .getStringValue(SC_TABLE_PATTERN_EXCLUDE,
-                                                             InclusionRule.EXCLUDE_ALL));
+                                                             InclusionRule.NONE));
     columnInclusionRule = new InclusionRule(configProperties
                                               .getStringValue(SC_COLUMN_PATTERN_INCLUDE,
-                                                              InclusionRule.INCLUDE_ALL),
+                                                              InclusionRule.ALL),
                                             configProperties
                                               .getStringValue(SC_COLUMN_PATTERN_EXCLUDE,
-                                                              InclusionRule.EXCLUDE_ALL));
+                                                              InclusionRule.NONE));
+
+    procedureInclusionRule = new InclusionRule(configProperties
+                                                 .getStringValue(SC_PROCEDURE_PATTERN_INCLUDE,
+                                                                 InclusionRule.ALL),
+                                               configProperties
+                                                 .getStringValue(SC_PROCEDURE_PATTERN_EXCLUDE,
+                                                                 InclusionRule.NONE));
+    procedureColumnInclusionRule = new InclusionRule(configProperties
+                                                       .getStringValue(SC_PROCEDURE_COLUMN_PATTERN_INCLUDE,
+                                                                       InclusionRule.ALL),
+                                                     configProperties
+                                                       .getStringValue(SC_PROCEDURE_COLUMN_PATTERN_EXCLUDE,
+                                                                       InclusionRule.NONE));
 
     isAlphabeticalSortForTableColumns = configProperties
       .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS);
@@ -160,6 +182,26 @@ public final class SchemaCrawlerOptions
   public InformationSchemaViews getInformationSchemaViews()
   {
     return informationSchemaViews;
+  }
+
+  /**
+   * Gets the procedure column rule.
+   * 
+   * @return Procedure column rule.
+   */
+  public InclusionRule getProcedureColumnInclusionRule()
+  {
+    return procedureColumnInclusionRule;
+  }
+
+  /**
+   * Gets the procedure inclusion rule.
+   * 
+   * @return Procedure inclusion rule.
+   */
+  public InclusionRule getProcedureInclusionRule()
+  {
+    return procedureInclusionRule;
   }
 
   /**
@@ -337,6 +379,36 @@ public final class SchemaCrawlerOptions
     {
       this.informationSchemaViews = informationSchemaViews;
     }
+  }
+
+  /**
+   * Sets the procedure column inclusion rule.
+   * 
+   * @param procedureColumnInclusionRule
+   *        Procedure column inclusion rule
+   */
+  public void setProcedureColumnInclusionRule(final InclusionRule procedureColumnInclusionRule)
+  {
+    if (procedureColumnInclusionRule == null)
+    {
+      throw new IllegalArgumentException("Cannot use null value in a setter");
+    }
+    this.procedureColumnInclusionRule = procedureColumnInclusionRule;
+  }
+
+  /**
+   * Sets the procedure inclusion rule.
+   * 
+   * @param procedureInclusionRule
+   *        Procedure inclusion rule
+   */
+  public void setProcedureInclusionRule(final InclusionRule procedureInclusionRule)
+  {
+    if (procedureInclusionRule == null)
+    {
+      throw new IllegalArgumentException("Cannot use null value in a setter");
+    }
+    this.procedureInclusionRule = procedureInclusionRule;
   }
 
   /**
