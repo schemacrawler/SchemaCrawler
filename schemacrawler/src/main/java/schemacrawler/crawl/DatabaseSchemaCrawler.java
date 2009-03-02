@@ -273,8 +273,8 @@ public final class DatabaseSchemaCrawler
     {
       retriever = new ProcedureRetriever(retrieverConnection);
       final ProcedureExRetriever retrieverExtra = new ProcedureExRetriever(retrieverConnection);
-      procedures = retriever
-        .retrieveProcedures(options.getTableInclusionRule());
+      procedures = retriever.retrieveProcedures(options
+        .getProcedureInclusionRule());
       if (infoLevel.isRetrieveProcedureInformation())
       {
         retrieverExtra.retrieveProcedureInformation(procedures);
@@ -292,7 +292,7 @@ public final class DatabaseSchemaCrawler
         try
         {
           retriever.retrieveProcedureColumns(procedure, options
-            .getColumnInclusionRule(), columnDataTypes);
+            .getProcedureColumnInclusionRule(), columnDataTypes);
         }
         catch (final SQLException e)
         {

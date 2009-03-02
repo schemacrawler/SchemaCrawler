@@ -69,7 +69,7 @@ public class SchemaCrawlerGrepTest
         "PUBLIC", "SCHEMACRAWLER"
     };
     final int[] tableCounts = {
-        3, 1
+        4, 1
     };
     final String[][][] columnNames = {
         {
@@ -79,6 +79,11 @@ public class SchemaCrawlerGrepTest
                 "CUSTOMER.LASTNAME",
                 "CUSTOMER.STREET",
                 "CUSTOMER.CITY"
+            },
+            {
+                "CUSTOMERLIST.ID",
+                "CUSTOMERLIST.FIRSTNAME",
+                "CUSTOMERLIST.LASTNAME"
             },
             {
                 "INVOICE.ID", "INVOICE.CUSTOMERID", "INVOICE.TOTAL"
@@ -97,6 +102,8 @@ public class SchemaCrawlerGrepTest
         {
             {
                 "INTEGER", "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR"
+            }, {
+                "INTEGER", "VARCHAR", "VARCHAR"
             }, {
                 "INTEGER", "INTEGER", "FLOAT"
             }, {
@@ -158,5 +165,4 @@ public class SchemaCrawlerGrepTest
       }
     }
   }
-
 }

@@ -58,7 +58,7 @@ public class SchemaCrawlerCommandLine
     this.config = config;
     this.databaseConnector = databaseConnector;
     this.outputOptions = outputOptions;
-    schemaCrawlerOptions = new SchemaCrawlerOptions();
+    this.schemaCrawlerOptions = new SchemaCrawlerOptions();
   }
 
   /**

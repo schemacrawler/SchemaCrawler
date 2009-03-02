@@ -138,24 +138,11 @@ public final class SchemaTextFormatter
 
     if (!options.getOutputOptions().isNoFooter())
     {
-      out.println(formattingHelper.createPreformattedText("tableCount",
-                                                          getTableCount()
-                                                              + " tables."));
       out.println(formattingHelper.createDocumentEnd());
     }
     out.flush();
     //
     options.getOutputOptions().closeOutputWriter(out);
-  }
-
-  /**
-   * Tables count for tables processed.
-   * 
-   * @return Table count
-   */
-  public int getTableCount()
-  {
-    return tableCount;
   }
 
   public void handle(final ColumnDataType columnDataType)

@@ -38,8 +38,29 @@ public class GrepOptions
   private InclusionRule tableColumnInclusionRule;
   private InclusionRule procedureInclusionRule;
   private InclusionRule procedureColumnInclusionRule;
-  private InclusionRule definitionTextInclusionRule;
   private boolean invertMatch;
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    final StringBuffer buffer = new StringBuffer();
+    buffer.append("GrepOptions[");
+    buffer.append("invertMatch=").append(invertMatch);
+    buffer.append(", tableInclusionRule=").append(tableInclusionRule);
+    buffer.append(", tableColumnInclusionRule=")
+      .append(tableColumnInclusionRule);
+    buffer.append(", procedureInclusionRule=").append(procedureInclusionRule);
+    buffer.append(", procedureColumnInclusionRule=")
+      .append(procedureColumnInclusionRule);
+    buffer.append("textFormatOptions=").append(super.toString());
+    buffer.append("]");
+    return buffer.toString();
+  }
 
   /**
    * Creates default options.
@@ -47,24 +68,12 @@ public class GrepOptions
   public GrepOptions()
   {
     tableInclusionRule = InclusionRule.INCLUDE_ALL_RULE;
-    tableColumnInclusionRule = InclusionRule.INCLUDE_ALL_RULE;
+    tableColumnInclusionRule = InclusionRule.EXCLUDE_ALL_RULE;
 
-    procedureInclusionRule = InclusionRule.EXCLUDE_ALL_RULE;
+    procedureInclusionRule = InclusionRule.INCLUDE_ALL_RULE;
     procedureColumnInclusionRule = InclusionRule.EXCLUDE_ALL_RULE;
 
-    definitionTextInclusionRule = InclusionRule.INCLUDE_ALL_RULE;
-
     invertMatch = false;
-  }
-
-  /**
-   * Gets the inclusion rule for text contained in a definition.
-   * 
-   * @return Inclusion rule for text contained in a definition.
-   */
-  public InclusionRule getDefinitionTextInclusionRule()
-  {
-    return definitionTextInclusionRule;
   }
 
   /**
@@ -118,24 +127,6 @@ public class GrepOptions
   }
 
   /**
-   * Sets the inclusion rule for text contained in a definition.
-   * 
-   * @param definitionTextInclusionRule
-   *        Inclusion rule for text contained in a definition.
-   */
-  public void setDefinitionTextInclusionRule(final InclusionRule definitionTextInclusionRule)
-  {
-    if (definitionTextInclusionRule == null)
-    {
-      this.definitionTextInclusionRule = InclusionRule.INCLUDE_ALL_RULE;
-    }
-    else
-    {
-      this.definitionTextInclusionRule = definitionTextInclusionRule;
-    }
-  }
-
-  /**
    * Set whether to invert matches.
    * 
    * @param invertMatch
@@ -174,7 +165,7 @@ public class GrepOptions
   {
     if (procedureInclusionRule == null)
     {
-      this.procedureInclusionRule = InclusionRule.EXCLUDE_ALL_RULE;
+      this.procedureInclusionRule = InclusionRule.INCLUDE_ALL_RULE;
     }
     else
     {
@@ -192,7 +183,7 @@ public class GrepOptions
   {
     if (tableColumnInclusionRule == null)
     {
-      this.tableColumnInclusionRule = InclusionRule.INCLUDE_ALL_RULE;
+      this.tableColumnInclusionRule = InclusionRule.EXCLUDE_ALL_RULE;
     }
     else
     {
