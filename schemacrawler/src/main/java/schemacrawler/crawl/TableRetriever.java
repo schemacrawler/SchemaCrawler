@@ -170,6 +170,7 @@ final class TableRetriever
           column.setPartOfUniqueIndex(uniqueIndex);
           final MutableIndexColumn indexColumn = new MutableIndexColumn(index,
                                                                         column);
+          indexColumn.setIndexOrdinalPosition(ordinalPosition);
           indexColumn.setSortSequence(IndexColumnSortSequence
             .valueOfFromCode(sortSequence));
           //
