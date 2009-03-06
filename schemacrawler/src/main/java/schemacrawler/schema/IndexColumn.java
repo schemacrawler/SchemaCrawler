@@ -19,4 +19,11 @@ public interface IndexColumn
    */
   IndexColumnSortSequence getSortSequence();
 
+  /**
+   * Ordinal position of the column, in the index.
+   * 
+   * @return Ordinal position
+   */
+  int getIndexOrdinalPosition();
+
 }
