@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Index;
-import schemacrawler.schema.IndexSortSequence;
+import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexType;
 import schemacrawler.schema.NamedObject;
 
@@ -48,10 +48,9 @@ class MutableIndex
   private static final Logger LOGGER = Logger.getLogger(MutableIndex.class
     .getName());
 
-  private final List<MutableColumn> columns = new ArrayList<MutableColumn>();
+  private final List<MutableIndexColumn> columns = new ArrayList<MutableIndexColumn>();
   private boolean isUnique;
   private IndexType type;
-  private IndexSortSequence sortSequence;
   private int cardinality;
   private int pages;
 
@@ -60,7 +59,6 @@ class MutableIndex
     super(parent, name);
     // Default values
     type = IndexType.unknown;
-    sortSequence = IndexSortSequence.unknown;
   }
 
   /**
@@ -122,9 +120,9 @@ class MutableIndex
    * 
    * @see Index#getColumns()
    */
-  public Column[] getColumns()
+  public IndexColumn[] getColumns()
   {
-    return columns.toArray(new Column[columns.size()]);
+    return columns.toArray(new IndexColumn[columns.size()]);
   }
 
   /**
@@ -135,16 +133,6 @@ class MutableIndex
   public final int getPages()
   {
     return pages;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Index#getSortSequence()
-   */
-  public final IndexSortSequence getSortSequence()
-  {
-    return sortSequence;
   }
 
   /**
@@ -162,7 +150,7 @@ class MutableIndex
    * 
    * @see Index#isUnique()
    */
-  public final boolean isUnique()
+  public boolean isUnique()
   {
     return isUnique;
   }
@@ -176,7 +164,7 @@ class MutableIndex
    * @param namedObject
    *        Named object to add
    */
-  void addColumn(final int ordinalPosition, final MutableColumn column)
+  void addColumn(final int ordinalPosition, final MutableIndexColumn column)
   {
     if (column == null || column.getName() == null)
     {
@@ -215,11 +203,6 @@ class MutableIndex
   final void setPages(final int pages)
   {
     this.pages = pages;
-  }
-
-  final void setSortSequence(final IndexSortSequence sortSequence)
-  {
-    this.sortSequence = sortSequence;
   }
 
   final void setType(final IndexType type)

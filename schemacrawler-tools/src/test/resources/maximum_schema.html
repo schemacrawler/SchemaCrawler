@@ -1550,7 +1550,7 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>ID</td>
-		<td class='type'>INTEGER not null</td>
+		<td class='type'>ascending</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -1719,7 +1719,7 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>ID</td>
-		<td class='type'>INTEGER not null</td>
+		<td class='type'>ascending</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -1750,24 +1750,24 @@ hr {
 	</tr>
 	<tr>
 		<td colspan='2' class='name'>INDEX_INVOICE_CUSTOMER</td>
-		<td class='description'>[non-unique ascending index]</td>
+		<td class='description'>[non-unique index]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>CUSTOMERID</td>
-		<td class='type'>INTEGER</td>
+		<td class='type'>ascending</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
 	</tr>
 	<tr>
 		<td colspan='2' class='name'>SYS_IDX_60</td>
-		<td class='description'>[non-unique ascending index]</td>
+		<td class='description'>[non-unique index]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>CUSTOMERID</td>
-		<td class='type'>INTEGER</td>
+		<td class='type'>ascending</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -1860,12 +1860,12 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>INVOICEID</td>
-		<td class='type'>INTEGER not null</td>
+		<td class='type'>ascending</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>ITEM</td>
-		<td class='type'>INTEGER not null</td>
+		<td class='type'>ascending</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -1896,48 +1896,48 @@ hr {
 	</tr>
 	<tr>
 		<td colspan='2' class='name'>INDEX_ITEM_INVOICE</td>
-		<td class='description'>[non-unique ascending index]</td>
+		<td class='description'>[non-unique index]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>INVOICEID</td>
-		<td class='type'>INTEGER not null</td>
+		<td class='type'>ascending</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
 	</tr>
 	<tr>
 		<td colspan='2' class='name'>SYS_IDX_56</td>
-		<td class='description'>[non-unique ascending index]</td>
+		<td class='description'>[non-unique index]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>INVOICEID</td>
-		<td class='type'>INTEGER not null</td>
+		<td class='type'>ascending</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
 	</tr>
 	<tr>
 		<td colspan='2' class='name'>INDEX_ITEM_PRODUCT</td>
-		<td class='description'>[non-unique ascending index]</td>
+		<td class='description'>[non-unique index]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>PRODUCTID</td>
-		<td class='type'>INTEGER</td>
+		<td class='type'>ascending</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
 	</tr>
 	<tr>
 		<td colspan='2' class='name'>SYS_IDX_58</td>
-		<td class='description'>[non-unique ascending index]</td>
+		<td class='description'>[non-unique index]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>PRODUCTID</td>
-		<td class='type'>INTEGER</td>
+		<td class='type'>ascending</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -2020,7 +2020,7 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>ID</td>
-		<td class='type'>INTEGER not null</td>
+		<td class='type'>ascending</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -2105,34 +2105,34 @@ hr {
 	</tr>
 	<tr>
 		<td colspan='2' class='name'>INDEX_B_SUPPLIER</td>
-		<td class='description'>[non-unique ascending index]</td>
+		<td class='description'>[non-unique index]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>SUPPLIER_ID</td>
-		<td class='type'>INTEGER</td>
+		<td class='type'>ascending</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>SUPPLIER_NAME</td>
-		<td class='type'>VARCHAR(255)</td>
+		<td class='type'>ascending</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
 	</tr>
 	<tr>
 		<td colspan='2' class='name'>INDEX_A_SUPPLIER</td>
-		<td class='description'>[non-unique ascending index]</td>
+		<td class='description'>[non-unique index]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>SUPPLIER_NAME</td>
-		<td class='type'>VARCHAR(255)</td>
+		<td class='type'>ascending</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>SUPPLIER_ID</td>
-		<td class='type'>INTEGER</td>
+		<td class='type'>ascending</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -2225,12 +2225,12 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>INVOICEID</td>
-		<td class='type'>INTEGER not null</td>
+		<td class='type'>ascending</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>ITEM</td>
-		<td class='type'>INTEGER not null</td>
+		<td class='type'>ascending</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -2313,7 +2313,7 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>ID</td>
-		<td class='type'>INTEGER not null</td>
+		<td class='type'>ascending</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
