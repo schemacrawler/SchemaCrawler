@@ -69,6 +69,7 @@ class MutablePrimaryKey
    * 
    * @see Index#isUnique()
    */
+  @Override
   public final boolean isUnique()
   {
     return true;

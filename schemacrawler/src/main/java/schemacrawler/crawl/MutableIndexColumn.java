@@ -16,12 +16,7 @@ final class MutableIndexColumn
   private final Index index;
   private IndexColumnSortSequence sortSequence;
 
-  public IndexColumnSortSequence getSortSequence()
-  {
-    return sortSequence;
-  }
-
-  public MutableIndexColumn(Index index, Column column)
+  public MutableIndexColumn(final Index index, final Column column)
   {
     super(column.getParent(), column.getName());
     this.index = index;
@@ -38,14 +33,19 @@ final class MutableIndexColumn
     setType(column.getType());
   }
 
-  public void setSortSequence(IndexColumnSortSequence sortSequence)
-  {
-    this.sortSequence = sortSequence;
-  }
-
   public Index getIndex()
   {
     return index;
+  }
+
+  public IndexColumnSortSequence getSortSequence()
+  {
+    return sortSequence;
+  }
+
+  public void setSortSequence(final IndexColumnSortSequence sortSequence)
+  {
+    this.sortSequence = sortSequence;
   }
 
 }
