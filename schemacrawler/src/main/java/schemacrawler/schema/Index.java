@@ -44,7 +44,7 @@ public interface Index
    * 
    * @return Columns of the table.
    */
-  Column[] getColumns();
+  IndexColumn[] getColumns();
 
   /**
    * Gets the pages. When the index type is statistic, then this is the
@@ -54,13 +54,6 @@ public interface Index
    * @return Pages
    */
   int getPages();
-
-  /**
-   * Gets the sort sequence.
-   * 
-   * @return Sort sequence
-   */
-  IndexSortSequence getSortSequence();
 
   /**
    * Gets the index type.

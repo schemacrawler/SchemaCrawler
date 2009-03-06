@@ -39,6 +39,7 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.Index;
+import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexType;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
@@ -550,9 +551,7 @@ public final class SchemaTextFormatter
           indexTypeString = indexType.toString() + " ";
         }
         final String indexDetails = "[" + (index.isUnique()? "": "non-")
-                                    + "unique "
-                                    + index.getSortSequence().toString() + " "
-                                    + indexTypeString + "index]";
+                                    + "unique " + indexTypeString + "index]";
         out.println(formattingHelper.createNameRow(indexName,
                                                    indexDetails,
                                                    false));
@@ -636,15 +635,22 @@ public final class SchemaTextFormatter
     {
       final Column column = columns[i];
       final String columnName = column.getName();
-      String columnTypeName = column.getType().getDatabaseSpecificTypeName();
-      if (options.isShowStandardColumnTypeNames())
+
+      final String columnDetails;
+      if (column instanceof IndexColumn)
       {
-        columnTypeName = column.getType().getTypeName();
+        columnDetails = ((IndexColumn) column).getSortSequence().name();
       }
-      String columnType = columnTypeName + column.getWidth();
-      if (!column.isNullable())
+      else
       {
-        columnType = columnType + " not null";
+        String columnTypeName = column.getType().getDatabaseSpecificTypeName();
+        if (options.isShowStandardColumnTypeNames())
+        {
+          columnTypeName = column.getType().getTypeName();
+        }
+        final String columnType = columnTypeName + column.getWidth();
+        final String nullable = column.isNullable()? "": " not null";
+        columnDetails = columnType + nullable;
       }
 
       String ordinalNumberString = "";
@@ -654,7 +660,7 @@ public final class SchemaTextFormatter
       }
       out.println(formattingHelper.createDetailRow(ordinalNumberString,
                                                    columnName,
-                                                   columnType));
+                                                   columnDetails));
     }
   }
 

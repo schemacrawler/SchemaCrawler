@@ -21,9 +21,9 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Index;
+import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.PrimaryKey;
 
 /**
@@ -50,19 +50,28 @@ class MutablePrimaryKey
     setCardinality(index.getCardinality());
     setPages(index.getPages());
     setRemarks(index.getRemarks());
-    setSortSequence(index.getSortSequence());
     setType(index.getType());
     setUnique(index.isUnique());
     // Copy columns
-    for (final Column column: index.getColumns())
+    for (final IndexColumn column: index.getColumns())
     {
-      addColumn(column.getOrdinalPosition(), (MutableColumn) column);
+      addColumn(column.getOrdinalPosition(), (MutableIndexColumn) column);
     }
   }
 
   MutablePrimaryKey(final String name, final DatabaseObject parent)
   {
     super(parent, name);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Index#isUnique()
+   */
+  public final boolean isUnique()
+  {
+    return true;
   }
 
 }

@@ -386,7 +386,7 @@ PUBLIC.CUSTOMER                                                  [table]
   CITY                              VARCHAR(255)                
 
 SYS_IDX_50                                                 [primary key]
-  ID                                INTEGER not null            
+  ID                                ascending                   
 
 FK_INVOICE_CUSTOMER                        [foreign key, with no action]
   ID --> PUBLIC.INVOICE.CUSTOMERID                              
@@ -431,7 +431,7 @@ PUBLIC.INVOICE                                                   [table]
   TOTAL                             FLOAT(17, 0)                
 
 SYS_IDX_52                                                 [primary key]
-  ID                                INTEGER not null            
+  ID                                ascending                   
 
 FK_INVOICE_CUSTOMER                        [foreign key, with no action]
   PUBLIC.CUSTOMER.ID --> CUSTOMERID                              
@@ -439,11 +439,11 @@ FK_INVOICE_CUSTOMER                        [foreign key, with no action]
 FK_B_ITEM_INVOICE                          [foreign key, with no action]
   ID --> PUBLIC.ITEM.INVOICEID                                  
 
-INDEX_INVOICE_CUSTOMER                      [non-unique ascending index]
-  CUSTOMERID                        INTEGER                     
+INDEX_INVOICE_CUSTOMER                                [non-unique index]
+  CUSTOMERID                        ascending                   
 
-SYS_IDX_60                                  [non-unique ascending index]
-  CUSTOMERID                        INTEGER                     
+SYS_IDX_60                                            [non-unique index]
+  CUSTOMERID                        ascending                   
 
 DELETE                                             [grantable privilege]
   DBA --> SA                                                    
@@ -467,8 +467,8 @@ PUBLIC.ITEM                                                      [table]
   COST                              FLOAT(17, 0)                
 
 SYS_IDX_46                                                 [primary key]
-  INVOICEID                         INTEGER not null            
-  ITEM                              INTEGER not null            
+  INVOICEID                         ascending                   
+  ITEM                              ascending                   
 
 FK_B_ITEM_INVOICE                          [foreign key, with no action]
   PUBLIC.INVOICE.ID --> INVOICEID                               
@@ -476,17 +476,17 @@ FK_B_ITEM_INVOICE                          [foreign key, with no action]
 FK_A_ITEM_PRODUCT                          [foreign key, with no action]
   PUBLIC.PRODUCT.ID --> PRODUCTID                               
 
-INDEX_ITEM_INVOICE                          [non-unique ascending index]
-  INVOICEID                         INTEGER not null            
+INDEX_ITEM_INVOICE                                    [non-unique index]
+  INVOICEID                         ascending                   
 
-SYS_IDX_56                                  [non-unique ascending index]
-  INVOICEID                         INTEGER not null            
+SYS_IDX_56                                            [non-unique index]
+  INVOICEID                         ascending                   
 
-INDEX_ITEM_PRODUCT                          [non-unique ascending index]
-  PRODUCTID                         INTEGER                     
+INDEX_ITEM_PRODUCT                                    [non-unique index]
+  PRODUCTID                         ascending                   
 
-SYS_IDX_58                                  [non-unique ascending index]
-  PRODUCTID                         INTEGER                     
+SYS_IDX_58                                            [non-unique index]
+  PRODUCTID                         ascending                   
 
 DELETE                                             [grantable privilege]
   DBA --> SA                                                    
@@ -508,7 +508,7 @@ PUBLIC.PRODUCT                                                   [table]
   PRICE                             FLOAT(17, 0)                
 
 SYS_IDX_48                                                 [primary key]
-  ID                                INTEGER not null            
+  ID                                ascending                   
 
 FK_A_ITEM_PRODUCT                          [foreign key, with no action]
   ID --> PUBLIC.ITEM.PRODUCTID                                  
@@ -531,13 +531,13 @@ PUBLIC.SUPPLIER                                                  [table]
   SUPPLIER_ID                       INTEGER                     
   SUPPLIER_NAME                     VARCHAR(255)                
 
-INDEX_B_SUPPLIER                            [non-unique ascending index]
-  SUPPLIER_ID                       INTEGER                     
-  SUPPLIER_NAME                     VARCHAR(255)                
+INDEX_B_SUPPLIER                                      [non-unique index]
+  SUPPLIER_ID                       ascending                   
+  SUPPLIER_NAME                     ascending                   
 
-INDEX_A_SUPPLIER                            [non-unique ascending index]
-  SUPPLIER_NAME                     VARCHAR(255)                
-  SUPPLIER_ID                       INTEGER                     
+INDEX_A_SUPPLIER                                      [non-unique index]
+  SUPPLIER_NAME                     ascending                   
+  SUPPLIER_ID                       ascending                   
 
 DELETE                                             [grantable privilege]
   DBA --> SA                                                    
@@ -561,8 +561,8 @@ SCHEMACRAWLER.ITEM                                               [table]
   COST                              FLOAT(17, 0)                
 
 SYS_IDX_62                                                 [primary key]
-  INVOICEID                         INTEGER not null            
-  ITEM                              INTEGER not null            
+  INVOICEID                         ascending                   
+  ITEM                              ascending                   
 
 DELETE                                             [grantable privilege]
   DBA --> SA                                                    
@@ -584,7 +584,7 @@ SCHEMACRAWLER.PRODUCT2                                           [table]
   PRICE                             FLOAT(17, 0)                
 
 SYS_IDX_64                                                 [primary key]
-  ID                                INTEGER not null            
+  ID                                ascending                   
 
 DELETE                                             [grantable privilege]
   DBA --> SA                                                    

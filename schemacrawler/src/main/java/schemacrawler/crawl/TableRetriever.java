@@ -35,7 +35,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
-import schemacrawler.schema.IndexSortSequence;
+import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.IndexType;
 import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.InclusionRule;
@@ -167,15 +167,17 @@ final class TableRetriever
         final MutableColumn column = table.lookupColumn(columnName);
         if (column != null)
         {
-          index.addColumn(ordinalPosition, column);
-          index.setUnique(uniqueIndex);
           column.setPartOfUniqueIndex(uniqueIndex);
+          final MutableIndexColumn indexColumn = new MutableIndexColumn(index,
+                                                                        column);
+          indexColumn.setSortSequence(IndexColumnSortSequence
+            .valueOfFromCode(sortSequence));
+          //
+          index.addColumn(ordinalPosition, indexColumn);
+          index.setUnique(uniqueIndex);
           index.setType(IndexType.valueOf(type));
-          index
-            .setSortSequence(IndexSortSequence.valueOfFromCode(sortSequence));
           index.setCardinality(cardinality);
           index.setPages(pages);
-
           index.addAttributes(results.getAttributes());
         }
       }
@@ -209,7 +211,7 @@ final class TableRetriever
     }
     if (column == null)
     {
-      column = new MutableColumn(columnName, table);
+      column = new MutableColumn(table, columnName);
       if (add)
       {
         table.addColumn(column);
@@ -406,7 +408,11 @@ final class TableRetriever
         if (column != null)
         {
           column.setPartOfPrimaryKey(true);
-          primaryKey.addColumn(keySequence, column);
+          final MutableIndexColumn indexColumn = new MutableIndexColumn(primaryKey,
+                                                                        column);
+          indexColumn.setSortSequence(IndexColumnSortSequence.ascending);
+          //
+          primaryKey.addColumn(keySequence, indexColumn);
         }
       }
       table.setPrimaryKey(primaryKey);

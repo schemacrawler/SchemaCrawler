@@ -31,7 +31,7 @@ import schemacrawler.schema.Privilege;
  * 
  * @author Sualeh Fatehi
  */
-final class MutableColumn
+class MutableColumn
   extends AbstractColumn
   implements Column
 {
@@ -44,7 +44,7 @@ final class MutableColumn
   private MutableColumn referencedColumn;
   private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>(NamedObjectSort.natural);
 
-  MutableColumn(final String name, final DatabaseObject parent)
+  MutableColumn(final DatabaseObject parent, final String name)
   {
     super(parent, name);
   }
