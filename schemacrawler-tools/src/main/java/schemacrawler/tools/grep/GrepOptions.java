@@ -41,28 +41,6 @@ public class GrepOptions
   private boolean invertMatch;
 
   /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    final StringBuffer buffer = new StringBuffer();
-    buffer.append("GrepOptions[");
-    buffer.append("invertMatch=").append(invertMatch);
-    buffer.append(", tableInclusionRule=").append(tableInclusionRule);
-    buffer.append(", tableColumnInclusionRule=")
-      .append(tableColumnInclusionRule);
-    buffer.append(", procedureInclusionRule=").append(procedureInclusionRule);
-    buffer.append(", procedureColumnInclusionRule=")
-      .append(procedureColumnInclusionRule);
-    buffer.append("textFormatOptions=").append(super.toString());
-    buffer.append("]");
-    return buffer.toString();
-  }
-
-  /**
    * Creates default options.
    */
   public GrepOptions()
@@ -207,6 +185,28 @@ public class GrepOptions
     {
       this.tableInclusionRule = tableInclusionRule;
     }
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    final StringBuffer buffer = new StringBuffer();
+    buffer.append("GrepOptions[");
+    buffer.append("invertMatch=").append(invertMatch);
+    buffer.append(", tableInclusionRule=").append(tableInclusionRule);
+    buffer.append(", tableColumnInclusionRule=")
+      .append(tableColumnInclusionRule);
+    buffer.append(", procedureInclusionRule=").append(procedureInclusionRule);
+    buffer.append(", procedureColumnInclusionRule=")
+      .append(procedureColumnInclusionRule);
+    buffer.append("textFormatOptions=").append(super.toString());
+    buffer.append("]");
+    return buffer.toString();
   }
 
 }
