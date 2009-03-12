@@ -13,17 +13,17 @@ public interface IndexColumn
   Index getIndex();
 
   /**
-   * Gets the sort sequence.
-   * 
-   * @return Sort sequence
-   */
-  IndexColumnSortSequence getSortSequence();
-
-  /**
    * Ordinal position of the column, in the index.
    * 
    * @return Ordinal position
    */
   int getIndexOrdinalPosition();
+
+  /**
+   * Gets the sort sequence.
+   * 
+   * @return Sort sequence
+   */
+  IndexColumnSortSequence getSortSequence();
 
 }
