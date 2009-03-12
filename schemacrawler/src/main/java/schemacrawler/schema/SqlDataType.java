@@ -21,12 +21,18 @@
 package schemacrawler.schema;
 
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.sql.Types;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
+import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * A wrapper around java.sql.Types.
@@ -36,6 +42,9 @@ import java.util.Map;
 public final class SqlDataType
   implements Serializable
 {
+
+  private static final Logger LOGGER = Logger.getLogger(SqlDataType.class
+    .getName());
 
   /** Unknown SQL data type. */
   public static final SqlDataType UNKNOWN = new SqlDataType(Integer.MAX_VALUE,
@@ -66,22 +75,53 @@ public final class SqlDataType
   {
 
     final Map<Integer, SqlDataType> javaSqlTypes = new HashMap<Integer, SqlDataType>();
-    final Field[] staticFields = Types.class.getFields();
-    for (final Field field: staticFields)
+
+    final InputStream javaSqlTypesStream = SqlDataType.class
+      .getResourceAsStream("/java.sql.Types.properties");
+    if (javaSqlTypesStream != null)
     {
+      final Properties javaSqlTypesProperties = new Properties();
       try
       {
-        final String fieldName = field.getName();
-        final Integer fieldValue = (Integer) field.get(null);
-        javaSqlTypes.put(fieldValue, new SqlDataType(fieldValue, fieldName));
+        javaSqlTypesProperties.load(javaSqlTypesStream);
+        javaSqlTypesStream.close();
       }
-      catch (final SecurityException e)
+      catch (final IOException e)
       {
-        continue;
+        LOGGER.log(Level.WARNING, "Could not read internal resource", e);
       }
-      catch (final IllegalAccessException e)
+      for (final Entry<Object, Object> entry: javaSqlTypesProperties.entrySet())
       {
-        continue;
+        if (entry.getKey() != null && entry.getValue() != null)
+        {
+          final Integer type = Integer.parseInt(entry.getKey().toString());
+          javaSqlTypes.put(type, new SqlDataType(type, entry.getValue()
+            .toString()));
+        }
+      }
+    }
+
+    if (javaSqlTypes.size() == 0)
+    {
+      final Field[] staticFields = Types.class.getFields();
+      for (final Field field: staticFields)
+      {
+        try
+        {
+          final String fieldName = field.getName();
+          final Integer fieldValue = (Integer) field.get(null);
+          javaSqlTypes.put(fieldValue, new SqlDataType(fieldValue, fieldName));
+        }
+        catch (final SecurityException e)
+        {
+          LOGGER.log(Level.WARNING, "Could not access java.sql.Types", e);
+          continue;
+        }
+        catch (final IllegalAccessException e)
+        {
+          LOGGER.log(Level.WARNING, "Could not access java.sql.Types", e);
+          continue;
+        }
       }
     }
 
@@ -95,6 +135,40 @@ public final class SqlDataType
   {
     this.type = type;
     this.typeName = typeName;
+  }
+
+  @Override
+  public boolean equals(final Object obj)
+  {
+    if (this == obj)
+    {
+      return true;
+    }
+    if (obj == null)
+    {
+      return false;
+    }
+    if (getClass() != obj.getClass())
+    {
+      return false;
+    }
+    final SqlDataType other = (SqlDataType) obj;
+    if (type != other.type)
+    {
+      return false;
+    }
+    if (typeName == null)
+    {
+      if (other.typeName != null)
+      {
+        return false;
+      }
+    }
+    else if (!typeName.equals(other.typeName))
+    {
+      return false;
+    }
+    return true;
   }
 
   /**
@@ -115,6 +189,22 @@ public final class SqlDataType
   public String getTypeName()
   {
     return typeName;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + type;
+    result = prime * result + (typeName == null? 0: typeName.hashCode());
+    return result;
+  }
+
+  @Override
+  public String toString()
+  {
+    return String.format("%s[%d]", typeName, type);
   }
 
 }
