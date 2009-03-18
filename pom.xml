@@ -36,7 +36,7 @@
   <modules>
     <module>schemacrawler</module>
     <module>schemacrawler-tools</module>
-    <module>integrations</module>
+    <module>schemacrawler-integrations</module>
     <module>schemacrawler-maven-plugin</module>
     <module>schemacrawler-sqlserver</module>
     <module>schemacrawler-mysql</module>
