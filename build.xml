@@ -15,9 +15,9 @@
 	<property name="schemacrawler-tools.classes"
     location="${SchemaCrawlerHome}/schemacrawler-tools/target/classes"/>
   <property name="integrations.source"
-    location="${SchemaCrawlerHome}/integrations/src/main"/>
+    location="${SchemaCrawlerHome}/schemacrawler-integrations/src/main"/>
 	<property name="integrations.classes"
-    location="${SchemaCrawlerHome}/integrations/target/classes"/>
+    location="${SchemaCrawlerHome}/schemacrawler-integrations/target/classes"/>
   <property name="schemacrawler-maven-plugin.source"
     location="${SchemaCrawlerHome}/schemacrawler-maven-plugin/src/main"/>
 	<property name="schemacrawler-maven-plugin.classes"
@@ -38,7 +38,7 @@
     description="Clean all sub-projects">
 
     <delete dir="schemacrawler-maven-plugin/target" />
-    <delete dir="integrations/target" />
+    <delete dir="schemacrawler-integrations/target" />
     <delete dir="schemacrawler-tools/target" />
     <delete dir="schemacrawler/target" />
 
@@ -207,7 +207,7 @@
       </fileset>
     </copy>
     <copy todir="${distribution.dir}/examples">
-      <fileset dir="${SchemaCrawlerHome}/integrations/src/test/resources">
+      <fileset dir="${SchemaCrawlerHome}/schemacrawler-integrations/src/test/resources">
         <include name="*.xml"/>
       </fileset>
     </copy>
