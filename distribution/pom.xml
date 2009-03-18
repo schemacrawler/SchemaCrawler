@@ -95,7 +95,7 @@
             <configuration>
               <tasks>
                 <property name="SchemaCrawlerHome" location=".."/>
-                <ant antfile="${SchemaCrawlerHome}/build.xml" target="package"/>
+                <ant antfile="distribution.xml" target="make-distribution"/>
               </tasks>
             </configuration>
             <goals>
