@@ -67,7 +67,7 @@
 				<include name="*config*.properties"/>
 			</fileset>
 			<fileset dir="${SchemaCrawler.home}/schemacrawler-integrations/src/test/resources">
-				<include name="*config*.xml"/>
+				<include name="*.xml"/>
 			</fileset>
 		</copy>
 
