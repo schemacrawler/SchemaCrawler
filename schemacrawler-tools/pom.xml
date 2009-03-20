@@ -11,7 +11,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>schemacrawler</groupId>
   <artifactId>schemacrawler-tools</artifactId>
-  <name>SchemaCrawler - Tools</name>
+  <name>SchemaCrawler Tools</name>
   <dependencies>
     <dependency>
       <groupId>schemacrawler</groupId>

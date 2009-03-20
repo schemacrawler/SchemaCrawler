@@ -1,16 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="schemacrawler" default="make-distribution" basedir=".">
 
-	<property name="SchemaCrawlerHome" location=".."/>
-	<property name="pom.version" value="6.1"/>
-
-	<property name="distribution.assembly" location="${SchemaCrawlerHome}/distribution/src/assembly"/>
-	<property name="distribution.target" location="${SchemaCrawlerHome}/distribution/target"/>
+	<property name="distribution.assembly" location="${SchemaCrawler.home}/distribution/src/assembly"/>
+	<property name="distribution.target" location="${SchemaCrawler.home}/distribution/target"/>
 
 	<target
 	  name="make-distribution"
-	  depends="make-binary-distribution,make-source-distribution,make-database-distributions,cleanup-distribution"
+	  depends="make-super-jar,make-binary-distribution,make-source-distribution,make-database-distributions,cleanup-distribution"
 	  description="Package all sub-project jars into the distributable jar"/>
+
+	<target name="make-super-jar">
+
+		<property name="schemacrawler.super.jar" value="${distribution.target}/schemacrawler-${SchemaCrawler.version}.jar"/>
+		<jar destfile="${schemacrawler.super.jar}" duplicate="preserve" index="true">
+			<manifest>
+				<attribute name="Product" value="SchemaCrawler"/>
+				<attribute name="Version" value="${SchemaCrawler.version}"/>
+				<attribute name="Author" value="Sualeh Fatehi"/>
+				<attribute name="Copyright" value="(c) 2003-2009, Sualeh Fatehi"/>
+				<attribute name="Main-Class" value="schemacrawler.Main"/>
+			</manifest>
+			<zipfileset dir="${SchemaCrawler.home}/schemacrawler/target/classes"/>
+			<zipfileset dir="${SchemaCrawler.home}/schemacrawler-tools/target/classes"/>
+			<zipfileset dir="${SchemaCrawler.home}/schemacrawler-integrations/target/classes"/>
+			<zipfileset dir="${SchemaCrawler.home}/schemacrawler-maven-plugin/target/classes"/>
+		</jar>
+
+  </target>
+
 
 	<target name="make-binary-distribution">
 
@@ -18,25 +35,16 @@
 		<delete dir="${distribution.dir}"/>
 		<mkdir dir="${distribution.dir}/examples"/>
 
-    <!-- Create super-jar -->
-		<property name="distributable.jar" value="${distribution.dir}/examples/schemacrawler-${pom.version}.jar"/>
-		<jar destfile="${distributable.jar}" duplicate="preserve" index="true">
-			<manifest>
-				<attribute name="Product" value="SchemaCrawler"/>
-				<attribute name="Version" value="${pom.version}"/>
-				<attribute name="Author" value="Sualeh Fatehi"/>
-				<attribute name="Copyright" value="(c) 2003-2009, Sualeh Fatehi"/>
-				<attribute name="Main-Class" value="schemacrawler.Main"/>
-			</manifest>
-			<zipfileset dir="${SchemaCrawlerHome}/schemacrawler/target/classes"/>
-			<zipfileset dir="${SchemaCrawlerHome}/schemacrawler-tools/target/classes"/>
-			<zipfileset dir="${SchemaCrawlerHome}/schemacrawler-integrations/target/classes"/>
-			<zipfileset dir="${SchemaCrawlerHome}/schemacrawler-maven-plugin/target/classes"/>
-		</jar>
+    <!-- Copy super-jar -->
+		<copy todir="${distribution.dir}/examples">
+			<fileset dir="${distribution.target}">
+				<include name="schemacrawler-${SchemaCrawler.version}.jar"/>
+			</fileset>
+		</copy>
 
 		<!-- Copy licenses -->
 		<copy todir="${distribution.dir}/examples">
-			<fileset dir="${SchemaCrawlerHome}/schemacrawler">
+			<fileset dir="${SchemaCrawler.home}/schemacrawler">
 				<include name="*README*.txt"/>
 				<include name="*LICENSE*.txt"/>
 				<include name="*NOTICE*.txt"/>
@@ -45,22 +53,22 @@
 
 		<!-- Copy config files -->
 		<copy todir="${distribution.dir}/examples">
-			<fileset dir="${SchemaCrawlerHome}/schemacrawler/src/main/resources">
+			<fileset dir="${SchemaCrawler.home}/schemacrawler/src/main/resources">
 				<include name="*.properties"/>
 			</fileset>
 		</copy>
 		<copy todir="${distribution.dir}/examples">
-			<fileset dir="${SchemaCrawlerHome}/schemacrawler-integrations/src/test/resources">
+			<fileset dir="${SchemaCrawler.home}/schemacrawler-integrations/src/test/resources">
 				<include name="*.xml"/>
 			</fileset>
 		</copy>
 
 		<!-- Copy examples -->
-		<mkdir dir="${SchemaCrawlerHome}/distribution/target/site/examples"/>
+		<mkdir dir="${SchemaCrawler.home}/distribution/target/site/examples"/>
 		<copy todir="${distribution.dir}/examples">
-			<fileset dir="${SchemaCrawlerHome}/distribution/target/site/examples"/>
+			<fileset dir="${SchemaCrawler.home}/distribution/target/site/examples"/>
 		</copy>
-		<copy file="${SchemaCrawlerHome}/schemacrawler-test/src/main/java/ApiExample.java" todir="${distribution.dir}/examples/api"/>
+		<copy file="${SchemaCrawler.home}/schemacrawler-test/src/main/java/ApiExample.java" todir="${distribution.dir}/examples/api"/>
 
 		<!-- Copy database server -->
     <get
@@ -72,13 +80,14 @@
 
     <!-- Create shortcuts -->
 		<copy todir="${distribution.dir}/examples">
-			<fileset dir="${SchemaCrawlerHome}/distribution/src/other"/>
+			<fileset dir="${SchemaCrawler.home}/distribution/src/other"/>
 		</copy>
-		<unzip src="${SchemaCrawlerHome}/distribution/target/distribution-${pom.version}-distrib.zip" dest="${distribution.dir}"/>
-		<move todir="${distribution.dir}/schemacrawler">
-			<fileset dir="${distribution.dir}/distribution-${pom.version}"/>
-		</move>
-		<filter token="version" value="${pom.version}"/>
+		<copy todir="${distribution.dir}/schemacrawler/lib">
+			<fileset dir="${distribution.target}">
+				<include name="schemacrawler-${SchemaCrawler.version}.jar"/>
+			</fileset>
+		</copy>
+		<filter token="version" value="${SchemaCrawler.version}"/>
 		<filter token="package" value="schemacrawler"/>
 		<copy todir="${distribution.dir}/schemacrawler" filtering="true">
 			<fileset dir="${distribution.assembly}">
@@ -86,22 +95,25 @@
 				<include name="*.sh"/>
 				<include name="*.wsf"/>
 			</fileset>
+			<fileset dir="${SchemaCrawler.home}/distribution">
+				<include name="*.txt"/>
+			</fileset>
 		</copy>
 
 		<!-- Create zip files for distribution -->
-		<mkdir dir="${SchemaCrawlerHome}/schemacrawler-tools/target/site"/>
-		<mkdir dir="${SchemaCrawlerHome}/schemacrawler/target/site"/>
-		<property name="site.zip.prefix" value="schemacrawler-${pom.version}-site"/>
+		<mkdir dir="${SchemaCrawler.home}/schemacrawler-tools/target/site"/>
+		<mkdir dir="${SchemaCrawler.home}/schemacrawler/target/site"/>
+		<property name="site.zip.prefix" value="schemacrawler-${SchemaCrawler.version}-site"/>
 		<delete file="${distribution.target}/${site.zip.prefix}.zip"/>
 		<zip destfile="${distribution.target}/${site.zip.prefix}.zip">
-			<zipfileset dir="${SchemaCrawlerHome}/schemacrawler-tools/target/site" prefix="${site.zip.prefix}" defaultexcludes="yes">
+			<zipfileset dir="${SchemaCrawler.home}/schemacrawler-tools/target/site" prefix="${site.zip.prefix}" defaultexcludes="yes">
 				<exclude name="apidocs/**/*"/>
 			</zipfileset>
-			<zipfileset dir="${SchemaCrawlerHome}/schemacrawler/target/site" prefix="${site.zip.prefix}" defaultexcludes="yes">
+			<zipfileset dir="${SchemaCrawler.home}/schemacrawler/target/site" prefix="${site.zip.prefix}" defaultexcludes="yes">
 				<include name="apidocs/**/*"/>
 			</zipfileset>
 		</zip>
-		<property name="distribution.zip.prefix" value="schemacrawler-${pom.version}-distrib"/>
+		<property name="distribution.zip.prefix" value="schemacrawler-${SchemaCrawler.version}-distrib"/>
 		<delete file="${distribution.target}/${distribution.zip.prefix}.zip"/>
 		<zip destfile="${distribution.target}/${distribution.zip.prefix}.zip">
 			<zipfileset dir="${distribution.dir}" prefix="${distribution.zip.prefix}" defaultexcludes="yes"/>
@@ -114,10 +126,10 @@
 
 	<target name="make-source-distribution">
 
-		<property name="source.zip.prefix" value="schemacrawler-${pom.version}-src"/>
+		<property name="source.zip.prefix" value="schemacrawler-${SchemaCrawler.version}-src"/>
 		<delete file="${distribution.target}/${source.zip.prefix}.zip"/>
 		<zip destfile="${distribution.target}/${source.zip.prefix}.zip">
-			<zipfileset dir="${SchemaCrawlerHome}" prefix="${source.zip.prefix}" defaultexcludes="yes">
+			<zipfileset dir="${SchemaCrawler.home}" prefix="${source.zip.prefix}" defaultexcludes="yes">
 				<exclude name="${distribution.target}"/>
 				<exclude name="${distribution.target}/*"/>
 				<exclude name="**/target"/>
@@ -162,14 +174,14 @@
 		<sequential>
 
 			<move todir="${distribution.target}">
-				<fileset dir="${SchemaCrawlerHome}/schemacrawler-@{database}/target">
-					<include name="schemacrawler-@{database}-${pom.version}-distrib.zip"/>
+				<fileset dir="${SchemaCrawler.home}/schemacrawler-@{database}/target">
+					<include name="schemacrawler-@{database}-${SchemaCrawler.version}-distrib.zip"/>
 				</fileset>
 			</move>
 
 			<mkdir dir="${distribution.target}/@{database}-launches"/>
 
-			<filter token="version" value="${pom.version}"/>
+			<filter token="version" value="${SchemaCrawler.version}"/>
 			<filter token="package" value="schemacrawler.tools.@{database}"/>
 			<copy todir="${distribution.target}/@{database}-launches" filtering="true">
 				<fileset dir="${distribution.assembly}">
@@ -179,8 +191,8 @@
 				</fileset>
 			</copy>
 
-			<zip destfile="${distribution.target}/schemacrawler-@{database}-${pom.version}-distrib.zip" update="true" whenempty="fail">
-				<zipfileset dir="${distribution.target}/@{database}-launches" prefix="schemacrawler-@{database}-${pom.version}"/>
+			<zip destfile="${distribution.target}/schemacrawler-@{database}-${SchemaCrawler.version}-distrib.zip" update="true" whenempty="fail">
+				<zipfileset dir="${distribution.target}/@{database}-launches" prefix="schemacrawler-@{database}-${SchemaCrawler.version}"/>
 			</zip>
 
 			<delete dir="${distribution.target}/@{database}-launches"/>
