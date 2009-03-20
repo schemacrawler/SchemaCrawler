@@ -9,6 +9,7 @@
 	  depends="make-super-jar,make-binary-distribution,make-source-distribution,make-database-distributions,cleanup-distribution"
 	  description="Package all sub-project jars into the distributable jar"/>
 
+
 	<target name="make-super-jar">
 
 		<property name="schemacrawler.super.jar" value="${distribution.target}/schemacrawler-${SchemaCrawler.version}.jar"/>
@@ -16,7 +17,7 @@
 			<manifest>
 				<attribute name="Product" value="SchemaCrawler"/>
 				<attribute name="Version" value="${SchemaCrawler.version}"/>
-				<attribute name="Author" value="Sualeh Fatehi"/>
+				<attribute name="Author" value="Sualeh Fatehi sualeh@hotmail.com"/>
 				<attribute name="Copyright" value="(c) 2003-2009, Sualeh Fatehi"/>
 				<attribute name="Main-Class" value="schemacrawler.Main"/>
 			</manifest>
@@ -42,22 +43,23 @@
 			</fileset>
 		</copy>
 
-		<!-- Copy licenses -->
-		<copy todir="${distribution.dir}/examples">
-			<fileset dir="${SchemaCrawler.home}/schemacrawler">
-				<include name="*README*.txt"/>
-				<include name="*LICENSE*.txt"/>
-				<include name="*NOTICE*.txt"/>
-			</fileset>
-		</copy>
+		<!-- Get licenses -->
+		<get
+      src="http://www.gnu.org/licenses/lgpl-3.0.txt"
+      dest="${distribution.dir}/examples/LICENSE.txt"
+      verbose="true"
+      usetimestamp="false" />
+		<get
+      src="http://hsqldb.org/web/hsqlLicense.html"
+      dest="${distribution.dir}/examples/hsqlLicense.html"
+      verbose="true"
+      usetimestamp="false" />
 
 		<!-- Copy config files -->
 		<copy todir="${distribution.dir}/examples">
 			<fileset dir="${SchemaCrawler.home}/schemacrawler/src/main/resources">
-				<include name="*.properties"/>
+				<include name="*config.properties"/>
 			</fileset>
-		</copy>
-		<copy todir="${distribution.dir}/examples">
 			<fileset dir="${SchemaCrawler.home}/schemacrawler-integrations/src/test/resources">
 				<include name="*.xml"/>
 			</fileset>
@@ -96,7 +98,10 @@
 				<include name="*.wsf"/>
 			</fileset>
 			<fileset dir="${SchemaCrawler.home}/distribution">
-				<include name="*.txt"/>
+				<include name="README.txt"/>
+			</fileset>
+			<fileset dir="${distribution.dir}/examples">
+				<include name="LICENSE.txt"/>
 			</fileset>
 		</copy>
 
