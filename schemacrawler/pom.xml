@@ -15,28 +15,6 @@
   <name>SchemaCrawler</name>
   <description>SchemaCrawler is an API that improves on the standard JDBC metadata.</description>
   <url>http://sourceforge.net/projects/schemacrawler</url>
-  <inceptionYear>2000</inceptionYear>
-  <licenses>
-    <license>
-      <name>Apache License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
-    </license>
-  </licenses>
-  <developers>
-    <developer>
-      <name>Sualeh Fatehi</name>
-      <id>sfatehi</id>
-      <email>sualeh@hotmail.com</email>
-      <organization>Sualeh Fatehi</organization>
-      <roles>
-        <role>All</role>
-      </roles>
-      <timezone>-5</timezone>
-    </developer>
-  </developers>
-  <organization>
-    <name>Sualeh Fatehi</name>
-  </organization>
   <reporting>
     <plugins>
       <plugin>
