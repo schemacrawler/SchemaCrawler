@@ -10,7 +10,7 @@
   </parent>
   <groupId>schemacrawler</groupId>
   <artifactId>distribution</artifactId>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
   <name>SchemaCrawler Distribution</name>
   <dependencies>
     <dependency>
@@ -25,7 +25,7 @@
     </dependency>
     <dependency>
       <groupId>schemacrawler</groupId>
-      <artifactId>integrations</artifactId>
+      <artifactId>schemacrawler-integrations</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
