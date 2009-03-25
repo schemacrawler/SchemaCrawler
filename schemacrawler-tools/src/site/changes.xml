@@ -5,27 +5,48 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="6.1" date="2009-3-11">
-      <action dev="Sualeh Fatehi" type="fix">
-        Grep options default to excluding stored procedures.
-      </action>    
-      <action dev="Sualeh Fatehi" type="fix">
-        Minor bug fixes for Sybase, including generating warnings when obtaining table
-        column privileges, instead of failing.
+    <release version="6.1" date="2009-03-25">
+      <action dev="Sualeh Fatehi" type="add">
+        Better reporting of ascending and descending index columns. This is an API
+        change.
+      </action>
+      <action dev="Sualeh Fatehi" type="add">
+        Better grep options, to allow searching through both tables and stored
+        procedures.
       </action>
       <action dev="Sualeh Fatehi" type="fix">
-        New Windows script file for locating Java, and launching SchemaCrawler.
-      </action>      
-    </release>  
+        Grep options default to
+        excluding stored procedures.
+      </action>
+      <action dev="Sualeh Fatehi" type="fix">
+        Minor bug fixes for Sybase,
+        including generating warnings when obtaining
+        table column privileges,
+        instead of failing.
+      </action>
+      <action dev="Sualeh Fatehi" type="fix">
+        New Windows script file for
+        locating Java, and launching SchemaCrawler.
+			</action>
+      <action dev="Sualeh Fatehi" type="fix">
+        Reorganization of
+        distribution, so that only a single SchemaCrawler jar file is
+        distributed in all distributions. License distribution is also
+        reorganized.
+      </action>
+    </release>
     <release version="6.0.2" date="2008-11-30">
       <action dev="Sualeh Fatehi" type="fix">
-        Minor bug fixes for MySQL, where
-        the schema name was being reported as null, causing an exception.
-      </action>
+        Minor bug fixes for MySQL,
+        where
+        the schema name was being reported as null, causing an
+        exception.
+			</action>
     </release>
     <release version="6.0.1" date="2008-10-30">
       <action dev="Sualeh Fatehi" type="fix">
-        Minor bug fixes for Oracle, where
+        Minor bug fixes for Oracle,
+        where
         the data-type was a short instead of an integer.
       </action>
     </release>
@@ -35,7 +56,8 @@
         is a
         separation of concerns - the
         SchemaInfoLevel should be an
-        option, not a
+        option,
+        not a
         CrawlHandler property.
 			</action>
       <action dev="Sualeh Fatehi" type="add">
@@ -189,7 +211,7 @@
         API changed to use Java 5
         constructs. Tested with Java 6. API is no
         longer Java 1.4 compatible.
-      </action>
+			</action>
       <action dev="Sualeh Fatehi" type="add">
         Started SchemaCrawler Grep
         for MS
@@ -381,7 +403,7 @@
         for templated output, and with JUNG for
         JPEG graph
         generation
-      </action>
+			</action>
       <action dev="Sualeh Fatehi" type="add">
         Added new examples to
         demonstrate
@@ -474,7 +496,7 @@
         A new substitution variable,
         ${columns}, for use in database queries
         that iterate over tables.
-      </action>
+			</action>
       <action dev="Sualeh Fatehi" type="add">
         New examples for executing
         database-specific and user-defined queries
