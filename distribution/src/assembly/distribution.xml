@@ -84,6 +84,11 @@
 		  verbose="true"
 		  usetimestamp="true" />
 		<copy file="hsqldb.jar" todir="${distribution.staging.dir}/examples" />
+		<copy todir="${distribution.staging.dir}/examples">
+			<fileset dir="${distribution.assembly}">
+				<include name="StartDatabase*.*" />
+			</fileset>
+		</copy>
 
 		<!-- Create super jar -->
 		<copy file="${schemacrawler.distibution.jar}" todir="${distribution.staging.dir}/schemacrawler/lib" />
@@ -99,6 +104,7 @@
 				<include name="*.cmd" />
 				<include name="*.sh" />
 				<include name="*.wsf" />
+				<exclude name="StartDatabase*.*" />
 			</fileset>
 			<fileset dir="${SchemaCrawler.home}/distribution">
 				<include name="README.txt" />
