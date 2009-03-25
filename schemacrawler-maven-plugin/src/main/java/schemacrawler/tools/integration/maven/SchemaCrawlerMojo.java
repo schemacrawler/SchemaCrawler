@@ -250,7 +250,7 @@ public class SchemaCrawlerMojo
    */
   public String getOutputName()
   {
-    final String outputFilename = (new File(outputFile)).getName();
+    final String outputFilename = new File(outputFile).getName();
     return outputFilename.substring(0, outputFilename.lastIndexOf("."));
   }
 
@@ -262,7 +262,7 @@ public class SchemaCrawlerMojo
   @Override
   public File getReportOutputDirectory()
   {
-    return (new File(outputFile)).getParentFile();
+    return new File(outputFile).getParentFile();
   }
 
   /**
@@ -285,11 +285,11 @@ public class SchemaCrawlerMojo
   public void setReportOutputDirectory(final File directory)
   {
     // Get the output filename
-    final String outputFilename = (new File(outputFile)).getName();
+    final String outputFilename = new File(outputFile).getName();
     // Set the new path
     if (directory.exists() && directory.isDirectory())
     {
-      outputFile = (new File(directory, outputFilename)).getAbsolutePath();
+      outputFile = new File(directory, outputFilename).getAbsolutePath();
     }
   }
 
@@ -340,7 +340,7 @@ public class SchemaCrawlerMojo
   @Override
   protected String getOutputDirectory()
   {
-    return (new File(outputFile)).getParentFile().getAbsolutePath();
+    return new File(outputFile).getParentFile().getAbsolutePath();
   }
 
   /**
@@ -381,11 +381,11 @@ public class SchemaCrawlerMojo
       for (int i = 0; i < jdbcJarPaths.length; i++)
       {
         final String jdbcJarPath = jdbcJarPaths[i];
-        jdbcJarUrls[i] = ((new File(jdbcJarPath)).getCanonicalFile().toURI())
+        jdbcJarUrls[i] = new File(jdbcJarPath).getCanonicalFile().toURI()
           .toURL();
       }
 
-      final Method addUrlMethod = (new URLClassLoader(new URL[0])).getClass()
+      final Method addUrlMethod = new URLClassLoader(new URL[0]).getClass()
         .getDeclaredMethod("addURL", new Class[] {
           URL.class
         });

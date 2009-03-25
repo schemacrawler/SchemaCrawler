@@ -161,6 +161,25 @@ public final class CommandLineParser
       return optionString;
     }
 
+    /**
+     * Override to extract and convert an option value passed on the
+     * command-line.
+     * 
+     * @param valueString
+     * @return Parsed value
+     */
+    protected abstract T parseValue(final String valueString);
+
+    void reset()
+    {
+      value = null;
+    }
+
+    void setValue(final String valueString)
+    {
+      value = parseValue(valueString);
+    }
+
     private void setLongForm(final String longForm)
     {
       if (longForm.equals(NO_LONG_FORM))
@@ -190,25 +209,6 @@ public final class CommandLineParser
         shortForm
       });
       hasShortForm = true;
-    }
-
-    /**
-     * Override to extract and convert an option value passed on the
-     * command-line.
-     * 
-     * @param valueString
-     * @return Parsed value
-     */
-    protected abstract T parseValue(final String valueString);
-
-    void reset()
-    {
-      value = null;
-    }
-
-    void setValue(final String valueString)
-    {
-      value = parseValue(valueString);
     }
   }
 

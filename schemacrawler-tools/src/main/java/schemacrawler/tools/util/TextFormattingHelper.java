@@ -21,8 +21,6 @@
 package schemacrawler.tools.util;
 
 
-import schemacrawler.execute.QueryExecutorException;
-
 /**
  * Methods to format entire rows of output.
  * 

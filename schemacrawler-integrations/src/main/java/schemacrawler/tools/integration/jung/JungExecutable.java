@@ -56,6 +56,18 @@ public final class JungExecutable
     executeOnSchema(args, "/schemacrawler-jung-readme.txt");
   }
 
+  @Override
+  protected void doExecute(final DataSource dataSource)
+    throws Exception
+  {
+    final Catalog catalog = getCatalog(dataSource);
+    final File outputFile = toolOptions.getOutputOptions().getOutputFile();
+    final Dimension size = getSize(toolOptions.getOutputOptions()
+      .getOutputFormatValue());
+    final Graph graph = JungUtil.makeSchemaGraph(catalog);
+    JungUtil.saveGraphJpeg(graph, outputFile, size);
+  }
+
   private Dimension getSize(final String dimensions)
   {
     final String[] sizes = dimensions.split("x");
@@ -69,18 +81,6 @@ public final class JungExecutable
     {
       return new Dimension(DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_WIDTH);
     }
-  }
-
-  @Override
-  protected void doExecute(final DataSource dataSource)
-    throws Exception
-  {
-    final Catalog catalog = getCatalog(dataSource);
-    final File outputFile = toolOptions.getOutputOptions().getOutputFile();
-    final Dimension size = getSize(toolOptions.getOutputOptions()
-      .getOutputFormatValue());
-    final Graph graph = JungUtil.makeSchemaGraph(catalog);
-    JungUtil.saveGraphJpeg(graph, outputFile, size);
   }
 
 }
