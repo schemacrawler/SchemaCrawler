@@ -62,6 +62,19 @@ public final class Main
   }
 
   /**
+   * Returns true if the current operating system is Windows.
+   * 
+   * @return True is the current operating system is Windows.
+   */
+  public static boolean isWindowsOS()
+  {
+    final String osName = System.getProperty("os.name");
+    final boolean isWindowsOS = osName == null
+                                || osName.toLowerCase().indexOf("windows") != -1;
+    return isWindowsOS;
+  }
+
+  /**
    * Get connection parameters, and creates a connection, and crawls the
    * schema.
    * 
@@ -111,19 +124,6 @@ public final class Main
     // Instructions
     System.out.println(instructions);
 
-  }
-
-  /**
-   * Returns true if the current operating system is Windows.
-   * 
-   * @return True is the current operating system is Windows.
-   */
-  public static boolean isWindowsOS()
-  {
-    final String osName = System.getProperty("os.name");
-    final boolean isWindowsOS = osName == null
-                                || osName.toLowerCase().indexOf("windows") != -1;
-    return isWindowsOS;
   }
 
   /**

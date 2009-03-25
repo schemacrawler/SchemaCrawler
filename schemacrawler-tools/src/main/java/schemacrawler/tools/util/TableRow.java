@@ -78,6 +78,18 @@ final class TableRow
     }
   }
 
+  String getFieldSeparator()
+  {
+    if (outputFormat == OutputFormat.csv)
+    {
+      return ",";
+    }
+    else
+    {
+      return "  ";
+    }
+  }
+
   /**
    * Converts the table row to HTML.
    * 
@@ -116,18 +128,6 @@ final class TableRow
     }
 
     return buffer.toString();
-  }
-
-  String getFieldSeparator()
-  {
-    if (outputFormat == OutputFormat.csv)
-    {
-      return ",";
-    }
-    else
-    {
-      return "  ";
-    }
   }
 
 }
