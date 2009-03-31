@@ -26,6 +26,8 @@ import java.io.Writer;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ForeignKey;
+import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.integration.SchemaRenderer;
@@ -75,14 +77,14 @@ public final class DotRenderer
       for (final Table table: schema.getTables())
       {
         final StringBuilder buffer = new StringBuilder();
-        final String tableName = table.getName();
+        final String tableName = table.getFullName();
         buffer
-          .append("  \"" + table.getName() + "\" [")
+          .append("  \"" + tableName + "\" [")
           .append(NEWLINE)
           .append("    label=<")
           .append(NEWLINE)
-          .append("      <table border=\"0\" cellborder=\"0\" cellspacing=\"0\" bgcolor=\"#FFFFFF\">")
-          .append(NEWLINE).append("        <tr><td colspan=\"2\" bgcolor=\""
+          .append("      <table border=\"0\" cellborder=\"0\" cellpadding=\"0\" cellspacing=\"0\" bgcolor=\"#FFFFFF\">")
+          .append(NEWLINE).append("        <tr><td colspan=\"3\" bgcolor=\""
                                   + htmlColor(bgcolor.darker())
                                   + "\" align=\"center\">" + tableName
                                   + "</td></tr>").append(NEWLINE);
@@ -98,21 +100,47 @@ public final class DotRenderer
           {
             columnBgcolor = bgcolor;
           }
-          buffer.append("        <tr>").append(NEWLINE)
-            .append("          <td port=\"" + column.getName()
-                    + "\" bgcolor=\"" + htmlColor(columnBgcolor)
-                    + "\" align=\"left\">" + columnName + "</td>")
-            .append(NEWLINE).append("          <td align=\"right\" bgcolor=\""
-                                    + htmlColor(columnBgcolor)
-                                    + "\">"
-                                    + column.getType()
-                                      .getDatabaseSpecificTypeName()
-                                    + column.getWidth() + "</td>")
-            .append(NEWLINE).append("        </tr>").append(NEWLINE);
+          buffer.append("        <tr>").append(NEWLINE);
+          buffer.append("          <td port=\"" + columnName
+                        + ".end\" bgcolor=\"" + htmlColor(columnBgcolor)
+                        + "\" align=\"left\">" + columnName + "</td>")
+            .append(NEWLINE);
+          buffer.append("          <td bgcolor=\"" + htmlColor(columnBgcolor)
+                        + "\"> </td>").append(NEWLINE);
+          buffer.append("          <td port=\"" + htmlColor(columnBgcolor)
+                        + "\" align=\"right\" bgcolor=\""
+                        + htmlColor(columnBgcolor) + "\">"
+                        + column.getType().getDatabaseSpecificTypeName()
+                        + column.getWidth() + "</td>").append(NEWLINE);
+          buffer.append("        </tr>").append(NEWLINE);
         }
         buffer.append("      </table>").append(NEWLINE).append("    >")
-          .append(NEWLINE).append("  ];").append(NEWLINE).append(NEWLINE);
+          .append(NEWLINE).append("  ];").append(NEWLINE);
 
+        for (final ForeignKey foreignKey: table.getForeignKeys())
+        {
+          for (final ForeignKeyColumnMap foreignKeyColumnMap: foreignKey
+            .getColumnPairs())
+          {
+            final Column primaryKeyColumn = foreignKeyColumnMap
+              .getPrimaryKeyColumn();
+            final Column foreignKeyColumn = foreignKeyColumnMap
+              .getForeignKeyColumn();
+            if (primaryKeyColumn.getParent().equals(table))
+            {
+              buffer
+                .append(String
+                  .format("  \"%s\":\"%s.end\":w -> \"%s\":\"%s.start\":e [arrowhead=none arrowtail=crowodot label=%s];%n",
+                          primaryKeyColumn.getParent().getFullName(),
+                          primaryKeyColumn.getName(),
+                          foreignKeyColumn.getParent().getFullName(),
+                          foreignKeyColumn.getName(),
+                          foreignKey.getName()));
+            }
+          }
+        }
+
+        buffer.append(NEWLINE).append(NEWLINE);
         writer.write(buffer.toString());
       }
     }
