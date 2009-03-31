@@ -83,7 +83,7 @@ public final class DotRenderer
           .append(NEWLINE)
           .append("    label=<")
           .append(NEWLINE)
-          .append("      <table border=\"0\" cellborder=\"0\" cellpadding=\"0\" cellspacing=\"0\" bgcolor=\"#FFFFFF\">")
+          .append("      <table border=\"1\" cellborder=\"0\" cellspacing=\"0\">")
           .append(NEWLINE).append("        <tr><td colspan=\"3\" bgcolor=\""
                                   + htmlColor(bgcolor.darker())
                                   + "\" align=\"center\">" + tableName
@@ -92,23 +92,23 @@ public final class DotRenderer
         {
           final String columnName = column.getName();
           final Color columnBgcolor;
-          if (!column.isPartOfPrimaryKey())
-          {
-            columnBgcolor = bgcolor.brighter();
-          }
-          else
+          if (column.isPartOfPrimaryKey())
           {
             columnBgcolor = bgcolor;
           }
+          else
+          {
+            columnBgcolor = Color.white;
+          }
           buffer.append("        <tr>").append(NEWLINE);
           buffer.append("          <td port=\"" + columnName
-                        + ".end\" bgcolor=\"" + htmlColor(columnBgcolor)
+                        + ".start\" bgcolor=\"" + htmlColor(columnBgcolor)
                         + "\" align=\"left\">" + columnName + "</td>")
             .append(NEWLINE);
           buffer.append("          <td bgcolor=\"" + htmlColor(columnBgcolor)
                         + "\"> </td>").append(NEWLINE);
-          buffer.append("          <td port=\"" + htmlColor(columnBgcolor)
-                        + "\" align=\"right\" bgcolor=\""
+          buffer.append("          <td port=\"" + columnName
+                        + ".end\" align=\"right\" bgcolor=\""
                         + htmlColor(columnBgcolor) + "\">"
                         + column.getType().getDatabaseSpecificTypeName()
                         + column.getWidth() + "</td>").append(NEWLINE);
@@ -128,14 +128,34 @@ public final class DotRenderer
               .getForeignKeyColumn();
             if (primaryKeyColumn.getParent().equals(table))
             {
+              final String arrowhead;
+              if (foreignKeyColumn.isNullable())
+              {
+                arrowhead = "odottee";
+              }
+              else
+              {
+                arrowhead = "teetee";
+              }
+              final String arrowtail;
+              if (foreignKeyColumn.isPartOfUniqueIndex())
+              {
+                arrowtail = "teeodot";
+              }
+              else
+              {
+                arrowtail = "crowodot";
+              }
               buffer
                 .append(String
-                  .format("  \"%s\":\"%s.end\":w -> \"%s\":\"%s.start\":e [arrowhead=none arrowtail=crowodot label=%s];%n",
+                  .format("  \"%s\":\"%s.start\":w -> \"%s\":\"%s.end\":e [label=%s arrowhead=%s arrowtail=%s];%n",
                           primaryKeyColumn.getParent().getFullName(),
                           primaryKeyColumn.getName(),
                           foreignKeyColumn.getParent().getFullName(),
                           foreignKeyColumn.getName(),
-                          foreignKey.getName()));
+                          foreignKey.getName(),
+                          arrowhead,
+                          arrowtail));
             }
           }
         }
@@ -151,14 +171,14 @@ public final class DotRenderer
 
   private int colorValue()
   {
-    final int colorBase = 120;
-    return (int) (Math.random() * (255D - colorBase) * 0.9 + colorBase);
+    final int colorBase = 200;
+    final int colorValue = (int) (Math.random() * (255D - colorBase) + colorBase);
+    return colorValue;
   }
 
   private String htmlColor(final Color color)
   {
-    return "#"
-           + Integer.toHexString(color.getRGB()).substring(0, 6).toUpperCase();
+    return "#" + Integer.toHexString(color.getRGB()).substring(2).toUpperCase();
   }
 
   private Color newPastel()

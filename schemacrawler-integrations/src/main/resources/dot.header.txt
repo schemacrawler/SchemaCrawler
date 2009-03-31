@@ -8,6 +8,7 @@ digraph "%s" {
     ranksep="0.46"
     fontname="Helvetica"
     fontsize="10"
+    truecolor="true"
   ];
   
   node [
@@ -21,4 +22,5 @@ digraph "%s" {
     fontsize="8"  
     arrowsize="0.8"
   ];
+
 
