@@ -73,19 +73,30 @@ public final class DotRenderer
           .append(NEWLINE)
           .append("    label=<")
           .append(NEWLINE)
-          .append("      <table border=\"0\" cellborder=\"0\" cellspacing=\"0\" bgcolor=\""
-                  + htmlColor(bgcolor) + "\">").append(NEWLINE)
-          .append("        <tr><td colspan=\"2\" bgcolor=\""
-                  + htmlColor(bgcolor.darker()) + "\" align=\"center\">"
-                  + tableName + "</td></tr>").append(NEWLINE);
+          .append("      <table border=\"0\" cellborder=\"0\" cellspacing=\"0\" bgcolor=\"#FFFFFF\">")
+          .append(NEWLINE).append("        <tr><td colspan=\"2\" bgcolor=\""
+                                  + htmlColor(bgcolor.darker())
+                                  + "\" align=\"center\">" + tableName
+                                  + "</td></tr>").append(NEWLINE);
         for (final Column column: table.getColumns())
         {
           final String columnName = column.getName();
+          final Color columnBgcolor;
+          if (!column.isPartOfPrimaryKey())
+          {
+            columnBgcolor = bgcolor.brighter();
+          }
+          else
+          {
+            columnBgcolor = bgcolor;
+          }
           buffer.append("        <tr>").append(NEWLINE)
             .append("          <td port=\"" + column.getName()
-                    + "\" bgcolor=\"" + htmlColor(bgcolor)
+                    + "\" bgcolor=\"" + htmlColor(columnBgcolor)
                     + "\" align=\"left\">" + columnName + "</td>")
-            .append(NEWLINE).append("          <td align=\"right\">"
+            .append(NEWLINE).append("          <td align=\"right\" bgcolor=\""
+                                    + htmlColor(columnBgcolor)
+                                    + "\">"
                                     + column.getType()
                                       .getDatabaseSpecificTypeName()
                                     + column.getWidth() + "</td>")
@@ -104,7 +115,8 @@ public final class DotRenderer
 
   private String htmlColor(final Color color)
   {
-    return "#" + Integer.toHexString(color.getRGB()).substring(0, 6);
+    return "#"
+           + Integer.toHexString(color.getRGB()).substring(0, 6).toUpperCase();
   }
 
   private static String dotHeader(final String name)
@@ -117,8 +129,8 @@ public final class DotRenderer
 
   private int colorValue()
   {
-    final int colorBase = 200;
-    return (int) (Math.random() * (255D - colorBase) + colorBase);
+    final int colorBase = 120;
+    return (int) (Math.random() * (255D - colorBase) * 0.9 + colorBase);
   }
 
   private Color newPastel()
