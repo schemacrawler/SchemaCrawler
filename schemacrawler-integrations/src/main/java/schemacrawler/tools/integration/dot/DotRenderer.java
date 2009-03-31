@@ -43,6 +43,14 @@ public final class DotRenderer
 
   public static final String NEWLINE = System.getProperty("line.separator");
 
+  private static String dotHeader(final String name)
+  {
+    final byte[] text = Utilities.readFully(HtmlFormattingHelper.class
+      .getResourceAsStream("/dot.header.txt"));
+    final String dotHeader = new String(text);
+    return String.format(dotHeader, name);
+  }
+
   /**
    * {@inheritDoc}
    * 
@@ -113,24 +121,16 @@ public final class DotRenderer
     writer.close();
   }
 
-  private String htmlColor(final Color color)
-  {
-    return "#"
-           + Integer.toHexString(color.getRGB()).substring(0, 6).toUpperCase();
-  }
-
-  private static String dotHeader(final String name)
-  {
-    final byte[] text = Utilities.readFully(HtmlFormattingHelper.class
-      .getResourceAsStream("/dot.header.txt"));
-    final String dotHeader = new String(text);
-    return String.format(dotHeader, name);
-  }
-
   private int colorValue()
   {
     final int colorBase = 120;
     return (int) (Math.random() * (255D - colorBase) * 0.9 + colorBase);
+  }
+
+  private String htmlColor(final Color color)
+  {
+    return "#"
+           + Integer.toHexString(color.getRGB()).substring(0, 6).toUpperCase();
   }
 
   private Color newPastel()
