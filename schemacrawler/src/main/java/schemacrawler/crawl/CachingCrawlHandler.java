@@ -110,7 +110,7 @@ public final class CachingCrawlHandler
   /**
    * {@inheritDoc}
    * 
-   * @see catalogcrawler.catalogcrawler.CrawlHandler#handle(catalogcrawler.catalog.JdbcDriverInfo)
+   * @see schemacrawler.catalogcrawler.CrawlHandler#handle(catalogcrawler.catalog.JdbcDriverInfo)
    */
   public void handle(final JdbcDriverInfo driverInfo)
   {
