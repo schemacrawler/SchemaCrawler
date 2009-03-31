@@ -1,0 +1,18 @@
+digraph "%s" {
+  graph [
+    rankdir="RL"
+    label="%s"
+    labeljust="l"
+    nodesep="0.18"
+    ranksep="0.46"
+    fontname="Helvetica"
+    fontsize="10"
+  ];
+  node [
+    fontname="Helvetica"
+    fontsize="10"
+    shape="plaintext"
+  ];
+  edge [
+    arrowsize="0.8"
+  ];
