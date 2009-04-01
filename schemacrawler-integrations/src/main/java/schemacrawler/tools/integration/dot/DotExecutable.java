@@ -22,7 +22,6 @@ package schemacrawler.tools.integration.dot;
 
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -56,7 +55,6 @@ public final class DotExecutable
 
   private static final Logger LOGGER = Logger.getLogger(DotExecutable.class
     .getName());
-  private static final int DEFAULT_IMAGE_WIDTH = 600;
   public static final String NEWLINE = System.getProperty("line.separator");
 
   private static String dotHeader(final String name)
@@ -89,7 +87,6 @@ public final class DotExecutable
     final Catalog catalog = getCatalog(dataSource);
     final OutputOptions outputOptions = toolOptions.getOutputOptions();
     final File outputFile = outputOptions.getOutputFile();
-    final Dimension size = getSize(outputOptions.getOutputFormatValue());
 
     try
     {
@@ -97,14 +94,21 @@ public final class DotExecutable
                                                    + catalog.getName() + "_",
                                                ".dot");
       dotFile.deleteOnExit();
+
+      String outputFormat = outputOptions.getOutputFormatValue();
+      if (Utilities.isBlank(outputFormat))
+      {
+        outputFormat = "png";
+      }
+
       final Dot dot = new Dot();
       writeDotFile(catalog, dotFile);
-      dot.generateDiagram(dotFile, outputFile);
+      dot.generateDiagram(dotFile, outputFormat, outputFile);
     }
     catch (Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not write diagram", e);
-      writeDotFile(catalog, outputFile);
+      writeDotFile(catalog, Utilities.changeFileExtension(outputFile, ".dot"));
     }
   }
 
@@ -113,21 +117,6 @@ public final class DotExecutable
     final int colorBase = 200;
     final int colorValue = (int) (Math.random() * (255D - colorBase) + colorBase);
     return colorValue;
-  }
-
-  private Dimension getSize(final String dimensions)
-  {
-    final String[] sizes = dimensions.split("x");
-    try
-    {
-      final int width = Integer.parseInt(sizes[0]);
-      final int height = Integer.parseInt(sizes[1]);
-      return new Dimension(width, height);
-    }
-    catch (final NumberFormatException e)
-    {
-      return new Dimension(DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_WIDTH);
-    }
   }
 
   private String htmlColor(final Color color)
