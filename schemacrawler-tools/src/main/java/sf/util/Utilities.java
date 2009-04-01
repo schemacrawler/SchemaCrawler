@@ -22,6 +22,7 @@ package sf.util;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
@@ -101,6 +102,37 @@ public final class Utilities
     }
 
     return byteCode;
+  }
+
+  public static String getFileExtension(final File file)
+  {
+    final String ext;
+    if (file != null)
+    {
+      final String scriptFileName = file.getName();
+      ext = scriptFileName.lastIndexOf(".") == -1
+                                                 ? ""
+                                                 : scriptFileName
+                                                   .substring(scriptFileName
+                                                                .lastIndexOf(".") + 1,
+                                                              scriptFileName
+                                                                .length());
+    }
+    else
+    {
+      ext = "";
+    }
+    return ext;
+  }
+
+  public static File changeFileExtension(final File file, final String ext)
+  {
+    final String oldExt = getFileExtension(file);
+    final String oldFileName = file.getName();
+    final String newFileName = oldFileName.substring(0, (oldFileName
+      .lastIndexOf(oldExt) - 1))
+                               + ext;
+    return new File(file.getParentFile(), newFileName);
   }
 
   /**
