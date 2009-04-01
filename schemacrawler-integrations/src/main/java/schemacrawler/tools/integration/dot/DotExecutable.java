@@ -65,6 +65,13 @@ public final class DotExecutable
     return String.format(dotHeader, name);
   }
 
+  private static String dotError()
+  {
+    final byte[] text = Utilities.readFully(HtmlFormattingHelper.class
+      .getResourceAsStream("/dot.error.txt"));
+    return new String(text);
+  }
+
   /**
    * Get connection parameters, and creates a connection, and crawls the
    * schema.
@@ -78,38 +85,6 @@ public final class DotExecutable
     throws Exception
   {
     executeOnSchema(args, "/schemacrawler-dot-readme.txt");
-  }
-
-  @Override
-  protected void doExecute(final DataSource dataSource)
-    throws Exception
-  {
-    final Catalog catalog = getCatalog(dataSource);
-    final OutputOptions outputOptions = toolOptions.getOutputOptions();
-    final File outputFile = outputOptions.getOutputFile();
-
-    try
-    {
-      final File dotFile = File.createTempFile("schemacrawler_"
-                                                   + catalog.getName() + "_",
-                                               ".dot");
-      dotFile.deleteOnExit();
-
-      String outputFormat = outputOptions.getOutputFormatValue();
-      if (Utilities.isBlank(outputFormat))
-      {
-        outputFormat = "png";
-      }
-
-      final Dot dot = new Dot();
-      writeDotFile(catalog, dotFile);
-      dot.generateDiagram(dotFile, outputFormat, outputFile);
-    }
-    catch (Exception e)
-    {
-      LOGGER.log(Level.WARNING, "Could not write diagram", e);
-      writeDotFile(catalog, Utilities.changeFileExtension(outputFile, ".dot"));
-    }
   }
 
   private int colorValue()
@@ -132,7 +107,7 @@ public final class DotExecutable
   private void writeDotFile(final Catalog catalog, final File dotFile)
     throws IOException
   {
-    Writer writer = new BufferedWriter(new FileWriter(dotFile));
+    final Writer writer = new BufferedWriter(new FileWriter(dotFile));
 
     writer.write(dotHeader(catalog.getName()));
     for (final Schema schema: catalog.getSchemas())
@@ -153,8 +128,8 @@ public final class DotExecutable
                       + tableName + "</td>").append(NEWLINE);
         buffer.append("          <td bgcolor=\"" + htmlColor(bgcolor.darker())
                       + "\" align=\"right\">"
-                      + ((table instanceof View)? "[view]": "[table]")
-                      + "</td>").append(NEWLINE);
+                      + (table instanceof View? "[view]": "[table]") + "</td>")
+          .append(NEWLINE);
         buffer.append("        </tr>").append(NEWLINE);
         for (final Column column: table.getColumns())
         {
@@ -236,6 +211,34 @@ public final class DotExecutable
     writer.flush();
     writer.close();
     LOGGER.log(Level.INFO, "Wrote DOT file, " + dotFile.getAbsolutePath());
+  }
+
+  @Override
+  protected void doExecute(final DataSource dataSource)
+    throws Exception
+  {
+    final Catalog catalog = getCatalog(dataSource);
+    final OutputOptions outputOptions = toolOptions.getOutputOptions();
+    final File outputFile = outputOptions.getOutputFile();
+
+    try
+    {
+      final File dotFile = File.createTempFile("schemacrawler_"
+                                                   + catalog.getName() + "_",
+                                               ".dot");
+      dotFile.deleteOnExit();
+
+      final String outputFormat = outputOptions.getOutputFormatValue();
+      final Dot dot = new Dot();
+      writeDotFile(catalog, dotFile);
+      dot.generateDiagram(dotFile, outputFormat, outputFile);
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Could not write diagram", e);
+      writeDotFile(catalog, Utilities.changeFileExtension(outputFile, ".dot"));
+      System.out.println(dotError());
+    }
   }
 
 }

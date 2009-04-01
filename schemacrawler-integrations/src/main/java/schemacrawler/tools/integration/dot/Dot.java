@@ -17,30 +17,6 @@ final class Dot
 
   private static final Logger LOGGER = Logger.getLogger(Dot.class.getName());
 
-  Dot()
-    throws IOException
-  {
-    dot("-V");
-  }
-
-  void generateDiagram(final File dotFile,
-                       final String outputFormat,
-                       final File diagramFile)
-    throws IOException
-  {
-    if (dotFile == null || !dotFile.exists() || !dotFile.canRead())
-    {
-      throw new IOException("Cannot read the input DOT file, " + dotFile);
-    }
-    if (diagramFile == null)
-    {
-      throw new IOException("Cannot write diagram file, " + diagramFile);
-    }
-
-    dot("-q", "-T" + outputFormat, "-o", diagramFile.getAbsolutePath(), dotFile
-      .getAbsolutePath());
-  }
-
   private static void dot(final String... args)
     throws IOException
   {
@@ -64,26 +40,26 @@ final class Dot
           buffer.append(line);
         }
       }
-      catch (EOFException e)
+      catch (final EOFException e)
       {
         // 
       }
       reader.close();
     }
-    catch (IOException e)
+    catch (final IOException e)
     {
       LOGGER.log(Level.WARNING, "Could not read dot output" + e.getMessage());
     }
 
     try
     {
-      int exitCode = process.waitFor();
+      final int exitCode = process.waitFor();
       if (exitCode != 0)
       {
         throw new IOException(buffer.toString());
       }
     }
-    catch (InterruptedException e)
+    catch (final InterruptedException e)
     {
       //
     }
@@ -96,6 +72,30 @@ final class Dot
     {
       LOGGER.log(Level.INFO, buffer.toString());
     }
+  }
+
+  Dot()
+    throws IOException
+  {
+    dot("-V");
+  }
+
+  void generateDiagram(final File dotFile,
+                       final String outputFormat,
+                       final File diagramFile)
+    throws IOException
+  {
+    if (dotFile == null || !dotFile.exists() || !dotFile.canRead())
+    {
+      throw new IOException("Cannot read the input DOT file, " + dotFile);
+    }
+    if (diagramFile == null)
+    {
+      throw new IOException("Cannot write diagram file, " + diagramFile);
+    }
+
+    dot("-q", "-T" + outputFormat, "-o", diagramFile.getAbsolutePath(), dotFile
+      .getAbsolutePath());
   }
 
 }
