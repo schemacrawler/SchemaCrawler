@@ -22,7 +22,19 @@ package schemacrawler.tools.integration.dot;
 
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
 import java.io.Writer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.sql.DataSource;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -31,18 +43,88 @@ import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
-import schemacrawler.tools.integration.SchemaRenderer;
+import schemacrawler.tools.OutputOptions;
+import schemacrawler.tools.integration.SchemaExecutable;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 import sf.util.Utilities;
 
 /**
- * Main executor for the dot engine integration.
+ * Main executor for the JUNG integration.
  * 
  * @author Sualeh Fatehi
  */
-public final class DotRenderer
-  extends SchemaRenderer
+public final class DotExecutable
+  extends SchemaExecutable
 {
+
+  private static final Logger LOGGER = Logger.getLogger(DotExecutable.class
+    .getName());
+  private static final int DEFAULT_IMAGE_WIDTH = 600;
+
+  /**
+   * Get connection parameters, and creates a connection, and crawls the
+   * schema.
+   * 
+   * @param args
+   *        Arguments passed into the program from the command line.
+   * @throws Exception
+   *         On an exception
+   */
+  public void main(final String[] args)
+    throws Exception
+  {
+    executeOnSchema(args, "/schemacrawler-jung-readme.txt");
+  }
+
+  @Override
+  protected void doExecute(final DataSource dataSource)
+    throws Exception
+  {
+    final Catalog catalog = getCatalog(dataSource);
+    final OutputOptions outputOptions = toolOptions.getOutputOptions();
+
+    final File outputFile = outputOptions.getOutputFile();
+    final Dimension size = getSize(outputOptions.getOutputFormatValue());
+
+    if (catalog == null)
+    {
+      return;
+    }
+
+    final File dotFile = writeDotFile(catalog);
+    final File diagramFile = File.createTempFile("schemacrawler_"
+                                                     + catalog.getName() + "_",
+                                                 ".png");
+    try
+    {
+      final Dot dot = new Dot();
+      dot.generateDiagram(dotFile, diagramFile);
+      System.err.println("DOT file: " + dotFile.getAbsolutePath());
+      System.err.println("Diagram file: " + diagramFile.getAbsolutePath());
+      copy(new FileReader(diagramFile), new FileWriter(outputFile));
+    }
+    catch (Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Could not write diagram", e);
+      copy(new BufferedReader(new FileReader(dotFile)),
+           new FileWriter(outputFile));
+    }
+  }
+
+  private Dimension getSize(final String dimensions)
+  {
+    final String[] sizes = dimensions.split("x");
+    try
+    {
+      final int width = Integer.parseInt(sizes[0]);
+      final int height = Integer.parseInt(sizes[1]);
+      return new Dimension(width, height);
+    }
+    catch (final NumberFormatException e)
+    {
+      return new Dimension(DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_WIDTH);
+    }
+  }
 
   public static final String NEWLINE = System.getProperty("line.separator");
 
@@ -54,22 +136,12 @@ public final class DotRenderer
     return String.format(dotHeader, name);
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.integration.TemplatedSchemaRenderer#render(java.lang.String,
-   *      schemacrawler.schema.Schema, java.io.Writer)
-   */
-  @Override
-  protected void render(final String configFileName,
-                        final Catalog catalog,
-                        final Writer writer)
-    throws Exception
+  private File writeDotFile(final Catalog catalog)
+    throws IOException
   {
-    if (catalog == null || writer == null)
-    {
-      return;
-    }
+    final File dotFile = File.createTempFile("schemacrawler_"
+                                             + catalog.getName() + "_", ".dot");
+    Writer writer = new BufferedWriter(new FileWriter(dotFile));
 
     writer.write(dotHeader(catalog.getName()));
     for (final Schema schema: catalog.getSchemas())
@@ -172,6 +244,8 @@ public final class DotRenderer
     writer.write("}\n");
     writer.flush();
     writer.close();
+
+    return dotFile;
   }
 
   private int colorValue()
@@ -189,6 +263,32 @@ public final class DotRenderer
   private Color newPastel()
   {
     return new Color(colorValue(), colorValue(), colorValue());
+  }
+
+  /**
+   * Copy chars from a Reader to a Writer.
+   * 
+   * @param input
+   *        the Reader to read from
+   * @param output
+   *        the Writer to write to
+   * @return the number of characters copied
+   * @throws IOException
+   *         In case of an I/O problem
+   */
+  private static void copy(final Reader input, final Writer output)
+    throws IOException
+  {
+    final char[] buffer = new char[4096];
+    int n = 0;
+    while (-1 != (n = input.read(buffer)))
+    {
+      output.write(buffer, 0, n);
+    }
+    input.close();
+
+    output.flush();
+    output.close();
   }
 
 }

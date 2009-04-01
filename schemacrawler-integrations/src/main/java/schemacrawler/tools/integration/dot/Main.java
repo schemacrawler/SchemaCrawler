@@ -39,7 +39,7 @@ public final class Main
   public static void main(final String[] args)
     throws Exception
   {
-    new DotRenderer().main(args);
+    new DotExecutable().main(args);
   }
 
   private Main()
