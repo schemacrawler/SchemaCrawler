@@ -30,6 +30,7 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.View;
 import schemacrawler.tools.integration.SchemaRenderer;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 import sf.util.Utilities;
@@ -78,16 +79,20 @@ public final class DotRenderer
       {
         final StringBuilder buffer = new StringBuilder();
         final String tableName = table.getFullName();
+        buffer.append("  \"" + tableName + "\" [").append(NEWLINE)
+          .append("    label=<").append(NEWLINE);
         buffer
-          .append("  \"" + tableName + "\" [")
-          .append(NEWLINE)
-          .append("    label=<")
-          .append(NEWLINE)
           .append("      <table border=\"1\" cellborder=\"0\" cellspacing=\"0\">")
-          .append(NEWLINE).append("        <tr><td colspan=\"3\" bgcolor=\""
-                                  + htmlColor(bgcolor.darker())
-                                  + "\" align=\"center\">" + tableName
-                                  + "</td></tr>").append(NEWLINE);
+          .append(NEWLINE);
+        buffer.append("        <tr>").append(NEWLINE);
+        buffer.append("          <td colspan=\"2\" bgcolor=\""
+                      + htmlColor(bgcolor.darker()) + "\" align=\"left\">"
+                      + tableName + "</td>").append(NEWLINE);
+        buffer.append("          <td bgcolor=\"" + htmlColor(bgcolor.darker())
+                      + "\" align=\"right\">"
+                      + ((table instanceof View)? "[view]": "[table]")
+                      + "</td>").append(NEWLINE);
+        buffer.append("        </tr>").append(NEWLINE);
         for (final Column column: table.getColumns())
         {
           final String columnName = column.getName();
