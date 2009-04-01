@@ -23,13 +23,10 @@ package schemacrawler.tools.integration.dot;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Reader;
 import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -60,6 +57,15 @@ public final class DotExecutable
   private static final Logger LOGGER = Logger.getLogger(DotExecutable.class
     .getName());
   private static final int DEFAULT_IMAGE_WIDTH = 600;
+  public static final String NEWLINE = System.getProperty("line.separator");
+
+  private static String dotHeader(final String name)
+  {
+    final byte[] text = Utilities.readFully(HtmlFormattingHelper.class
+      .getResourceAsStream("/dot.header.txt"));
+    final String dotHeader = new String(text);
+    return String.format(dotHeader, name);
+  }
 
   /**
    * Get connection parameters, and creates a connection, and crawls the
@@ -73,7 +79,7 @@ public final class DotExecutable
   public void main(final String[] args)
     throws Exception
   {
-    executeOnSchema(args, "/schemacrawler-jung-readme.txt");
+    executeOnSchema(args, "/schemacrawler-dot-readme.txt");
   }
 
   @Override
@@ -82,33 +88,31 @@ public final class DotExecutable
   {
     final Catalog catalog = getCatalog(dataSource);
     final OutputOptions outputOptions = toolOptions.getOutputOptions();
-
     final File outputFile = outputOptions.getOutputFile();
     final Dimension size = getSize(outputOptions.getOutputFormatValue());
 
-    if (catalog == null)
-    {
-      return;
-    }
-
-    final File dotFile = writeDotFile(catalog);
-    final File diagramFile = File.createTempFile("schemacrawler_"
-                                                     + catalog.getName() + "_",
-                                                 ".png");
     try
     {
+      final File dotFile = File.createTempFile("schemacrawler_"
+                                                   + catalog.getName() + "_",
+                                               ".dot");
+      dotFile.deleteOnExit();
       final Dot dot = new Dot();
-      dot.generateDiagram(dotFile, diagramFile);
-      System.err.println("DOT file: " + dotFile.getAbsolutePath());
-      System.err.println("Diagram file: " + diagramFile.getAbsolutePath());
-      copy(new FileReader(diagramFile), new FileWriter(outputFile));
+      writeDotFile(catalog, dotFile);
+      dot.generateDiagram(dotFile, outputFile);
     }
     catch (Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not write diagram", e);
-      copy(new BufferedReader(new FileReader(dotFile)),
-           new FileWriter(outputFile));
+      writeDotFile(catalog, outputFile);
     }
+  }
+
+  private int colorValue()
+  {
+    final int colorBase = 200;
+    final int colorValue = (int) (Math.random() * (255D - colorBase) + colorBase);
+    return colorValue;
   }
 
   private Dimension getSize(final String dimensions)
@@ -126,21 +130,19 @@ public final class DotExecutable
     }
   }
 
-  public static final String NEWLINE = System.getProperty("line.separator");
-
-  private static String dotHeader(final String name)
+  private String htmlColor(final Color color)
   {
-    final byte[] text = Utilities.readFully(HtmlFormattingHelper.class
-      .getResourceAsStream("/dot.header.txt"));
-    final String dotHeader = new String(text);
-    return String.format(dotHeader, name);
+    return "#" + Integer.toHexString(color.getRGB()).substring(2).toUpperCase();
   }
 
-  private File writeDotFile(final Catalog catalog)
+  private Color newPastel()
+  {
+    return new Color(colorValue(), colorValue(), colorValue());
+  }
+
+  private void writeDotFile(final Catalog catalog, final File dotFile)
     throws IOException
   {
-    final File dotFile = File.createTempFile("schemacrawler_"
-                                             + catalog.getName() + "_", ".dot");
     Writer writer = new BufferedWriter(new FileWriter(dotFile));
 
     writer.write(dotHeader(catalog.getName()));
@@ -244,51 +246,7 @@ public final class DotExecutable
     writer.write("}\n");
     writer.flush();
     writer.close();
-
-    return dotFile;
-  }
-
-  private int colorValue()
-  {
-    final int colorBase = 200;
-    final int colorValue = (int) (Math.random() * (255D - colorBase) + colorBase);
-    return colorValue;
-  }
-
-  private String htmlColor(final Color color)
-  {
-    return "#" + Integer.toHexString(color.getRGB()).substring(2).toUpperCase();
-  }
-
-  private Color newPastel()
-  {
-    return new Color(colorValue(), colorValue(), colorValue());
-  }
-
-  /**
-   * Copy chars from a Reader to a Writer.
-   * 
-   * @param input
-   *        the Reader to read from
-   * @param output
-   *        the Writer to write to
-   * @return the number of characters copied
-   * @throws IOException
-   *         In case of an I/O problem
-   */
-  private static void copy(final Reader input, final Writer output)
-    throws IOException
-  {
-    final char[] buffer = new char[4096];
-    int n = 0;
-    while (-1 != (n = input.read(buffer)))
-    {
-      output.write(buffer, 0, n);
-    }
-    input.close();
-
-    output.flush();
-    output.close();
+    LOGGER.log(Level.INFO, "Wrote DOT file, " + dotFile.getAbsolutePath());
   }
 
 }
