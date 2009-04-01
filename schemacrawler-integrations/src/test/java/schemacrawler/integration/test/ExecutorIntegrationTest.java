@@ -33,7 +33,6 @@ import org.junit.Test;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.integration.freemarker.FreeMarkerRenderer;
-import schemacrawler.tools.integration.jung.JungExecutable;
 import schemacrawler.tools.integration.velocity.VelocityRenderer;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextOptions;
@@ -55,17 +54,6 @@ public class ExecutorIntegrationTest
   {
     TestUtility.setApplicationLogLevel();
     testUtility.createMemoryDatabase();
-  }
-
-  @Test
-  public void schemaGraphingWithJung()
-    throws Exception
-  {
-    final String outputFilename = File.createTempFile("schemacrawler", ".jpg")
-      .getAbsolutePath();
-    final OutputOptions outputOptions = new OutputOptions("800x600",
-                                                          outputFilename);
-    executeAndCheckForOutputFile(new JungExecutable(), outputOptions);
   }
 
   @Test
