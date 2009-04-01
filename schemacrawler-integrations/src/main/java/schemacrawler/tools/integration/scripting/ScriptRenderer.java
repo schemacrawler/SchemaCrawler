@@ -63,17 +63,10 @@ public final class ScriptRenderer
       throw new Exception("Cannot read script file, " + scriptFileName);
     }
 
-    final String ext = scriptFileName.lastIndexOf(".") == -1
-                                                            ? ""
-                                                            : scriptFileName
-                                                              .substring(scriptFileName
-                                                                           .lastIndexOf(".") + 1,
-                                                                         scriptFileName
-                                                                           .length());
-
     // Create a new instance of the engine
     final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
-    ScriptEngine scriptEngine = scriptEngineManager.getEngineByExtension(ext);
+    ScriptEngine scriptEngine = scriptEngineManager
+      .getEngineByExtension(Utilities.getFileExtension(scriptFile));
     if (scriptEngine == null)
     {
       scriptEngine = scriptEngineManager.getEngineByName("JavaScript");
@@ -89,5 +82,4 @@ public final class ScriptRenderer
     // Evaluate the script
     scriptEngine.eval(new FileReader(scriptFile));
   }
-
 }

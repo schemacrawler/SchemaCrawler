@@ -23,7 +23,9 @@ final class Dot
     dot("-V");
   }
 
-  void generateDiagram(final File dotFile, final File diagramFile)
+  void generateDiagram(final File dotFile,
+                       final String outputFormat,
+                       final File diagramFile)
     throws IOException
   {
     if (dotFile == null || !dotFile.exists() || !dotFile.canRead())
@@ -35,7 +37,7 @@ final class Dot
       throw new IOException("Cannot write diagram file, " + diagramFile);
     }
 
-    dot("-q", "-Tpng", "-o", diagramFile.getAbsolutePath(), dotFile
+    dot("-q", "-T" + outputFormat, "-o", diagramFile.getAbsolutePath(), dotFile
       .getAbsolutePath());
   }
 
@@ -51,6 +53,7 @@ final class Dot
     final BufferedReader reader = new BufferedReader(new InputStreamReader(process
       .getInputStream()));
 
+    final StringBuilder buffer = new StringBuilder();
     String line;
     try
     {
@@ -58,7 +61,7 @@ final class Dot
       {
         while ((line = reader.readLine()) != null)
         {
-          LOGGER.log(Level.INFO, line);
+          buffer.append(line);
         }
       }
       catch (EOFException e)
@@ -74,7 +77,11 @@ final class Dot
 
     try
     {
-      process.waitFor();
+      int exitCode = process.waitFor();
+      if (exitCode != 0)
+      {
+        throw new IOException(buffer.toString());
+      }
     }
     catch (InterruptedException e)
     {
@@ -84,6 +91,11 @@ final class Dot
     process.getInputStream().close();
     process.getOutputStream().close();
     process.getErrorStream().close();
+
+    if (buffer.length() > 0)
+    {
+      LOGGER.log(Level.INFO, buffer.toString());
+    }
   }
 
 }
