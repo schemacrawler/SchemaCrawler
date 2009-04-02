@@ -10,7 +10,7 @@ public final class PastelColor
 
   private static final long serialVersionUID = 7256039994498918504L;
 
-  private static final double FACTOR = 0.8;
+  private static final double FACTOR = 0.87;
 
   private final Color color;
 
@@ -52,7 +52,7 @@ public final class PastelColor
 
   private int colorValue()
   {
-    return (int) (Math.random() * 50 + 200);
+    return (int) (Math.random() * 60 + 190);
   }
 
 }
