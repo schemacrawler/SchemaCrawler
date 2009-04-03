@@ -1,4 +1,4 @@
-package schemacrawler.tools.integration.dot;
+package schemacrawler.tools.integration.graph;
 
 
 import java.awt.Color;
@@ -24,7 +24,7 @@ public final class PastelColor
     this.color = color;
   }
 
-  public PastelColor brighter()
+  public PastelColor tint()
   {
     return new PastelColor(new Color(Math.min((int) (color.getRed() / FACTOR),
                                               255), Math.min((int) (color
@@ -32,7 +32,7 @@ public final class PastelColor
                                             255)));
   }
 
-  public PastelColor darker()
+  public PastelColor shade()
   {
     return new PastelColor(new Color(Math.max((int) (color.getRed() * FACTOR),
                                               0), Math.max((int) (color

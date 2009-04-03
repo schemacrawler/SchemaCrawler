@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.tools.integration.dot;
+package schemacrawler.tools.integration.graph;
 
 
 import java.io.BufferedWriter;
@@ -47,15 +47,15 @@ import schemacrawler.tools.util.HtmlFormattingHelper;
 import sf.util.Utilities;
 
 /**
- * Main executor for the JUNG integration.
+ * Main executor for the graphing integration.
  * 
  * @author Sualeh Fatehi
  */
-public final class DotExecutable
+public final class GraphExecutable
   extends SchemaExecutable
 {
 
-  private static final Logger LOGGER = Logger.getLogger(DotExecutable.class
+  private static final Logger LOGGER = Logger.getLogger(GraphExecutable.class
     .getName());
   public static final String NEWLINE = System.getProperty("line.separator");
 
@@ -154,7 +154,7 @@ public final class DotExecutable
       dotFile.deleteOnExit();
 
       final String outputFormat = outputOptions.getOutputFormatValue();
-      final Dot dot = new Dot();
+      final GraphGenerator dot = new GraphGenerator();
       writeDotFile(catalog, dotFile);
       dot.generateDiagram(dotFile, outputFormat, outputFile);
     }
@@ -177,7 +177,7 @@ public final class DotExecutable
       final PastelColor bgcolor = new PastelColor();
       for (final Table table: schema.getTables())
       {
-        final PastelColor tableBgColor = bgcolor.darker();
+        final PastelColor tableBgColor = bgcolor.shade();
         final StringBuilder buffer = new StringBuilder();
         final String tableName = table.getFullName();
         buffer.append("  \"" + tableName + "\" [").append(NEWLINE)
@@ -205,7 +205,7 @@ public final class DotExecutable
           }
           else
           {
-            columnBgcolor = bgcolor.brighter();
+            columnBgcolor = bgcolor.tint();
           }
           buffer.append("        <tr>").append(NEWLINE);
           buffer.append("          <td port=\"" + columnName
