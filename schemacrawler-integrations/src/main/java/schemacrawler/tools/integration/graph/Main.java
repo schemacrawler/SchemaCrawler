@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.tools.integration.dot;
+package schemacrawler.tools.integration.graph;
 
 
 /**
@@ -39,7 +39,7 @@ public final class Main
   public static void main(final String[] args)
     throws Exception
   {
-    new DotExecutable().main(args);
+    new GraphExecutable().main(args);
   }
 
   private Main()
