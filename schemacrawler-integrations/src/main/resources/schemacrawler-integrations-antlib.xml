@@ -82,13 +82,9 @@
       name="db-driver-classpath"
       default="${db-driver-classpath}" />
 
-    <attribute
-      name="graphing-classpath"
-      default="${graphing-classpath}" />
-
     <attribute name="command" />
 
-    <attribute name="graph-size" />
+    <attribute name="graph-type" />
     <attribute name="outputfile" />
 
     <attribute
@@ -105,7 +101,7 @@
 
       <java
         taskname="schemacrawler-graphing"
-        classname="schemacrawler.tools.integration.jung.Main"
+        classname="schemacrawler.tools.integration.graph.Main"
         logerror="true"
         failonerror="true">
         <classpath>
@@ -113,7 +109,6 @@
             <include name="*.jar" />
           </fileset>
           <path refid="@{db-driver-classpath}" />
-          <path refid="@{graphing-classpath}" />
         </classpath>
         <arg value="-g" />
         <arg value="@{config}" />
@@ -124,7 +119,7 @@
         <arg value="-command" />
         <arg value="@{command}" />
         <arg value="-outputformat" />
-        <arg value="@{graph-size}" />
+        <arg value="@{graph-type}" />
         <arg value="-outputfile" />
         <arg value="@{outputfile}" />
         <arg value="-loglevel=@{loglevel}" />

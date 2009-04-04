@@ -208,24 +208,22 @@ schemacrawler.format.hide_constraint_names=false
 				</p>
 			</answer>
 		</faq>
-		<faq id="jung">
+		<faq id="graphing">
 			<question>
-				<span>How to create a JPEG image of your schema</span>
+				<span>How to create a database diagram of your schema</span>
 			</question>
 			<answer>
 				<p>
 					SchemaCrawler integrates with
-					<a href="http://jung.sourceforge.net/">
-						JUNG (Java Universal Network/Graph Framework)
+					<a href="http://www.graphviz.org/">
+						Graphviz
           </a>
-					to produce graph images. Put JUNG on your classpath, and run
-					<code>schemacrawler.tools.integration.jung.Main
+					to produce graph images. Install Graphviz, and run
+					<code>schemacrawler.tools.integration.graph.Main
 					</code>
 					, with the correct options. See the graphing example in the
 					<code>_distrib\graphing</code>
-					directory for more details. This is just a sample integration,
-					intended as a
-					proof-of-concept.
+					directory for more details.
 				</p>
 			</answer>
 		</faq>
@@ -406,7 +404,7 @@ for (Schema schema: catalog.getSchemas())
 					command,
 					and following the instructions that are printed out.
 					<pre>
-            <![CDATA[java -cp schemacrawler-6.1.jar schemacrawler.tools.integration.maven.Main]]>
+            <![CDATA[java -cp schemacrawler-6.2.jar schemacrawler.tools.integration.maven.Main]]>
 					</pre>
 				</p>
 				<p>

@@ -79,10 +79,18 @@
 
 		<!-- Copy database server -->
 		<get
-		  src="http://www.ibiblio.org/maven/hsqldb/jars/hsqldb-1.8.0.7.jar"
-		  dest="hsqldb.jar"
+		  src="http://voxel.dl.sourceforge.net/sourceforge/hsqldb/hsqldb_1_8_0_10.zip"
+		  dest="hsqldb_1_8_0_10.zip"
 		  verbose="true"
 		  usetimestamp="true" />
+    <unzip
+      src="hsqldb_1_8_0_10.zip"
+      dest="${distribution.staging.dir}/examples">
+      <patternset>
+        <include name="**/hsqldb.jar"/>
+      </patternset>
+      <mapper type="flatten"/>
+    </unzip>
 		<copy file="hsqldb.jar" todir="${distribution.staging.dir}/examples" />
 		<copy todir="${distribution.staging.dir}/examples">
 			<fileset dir="${distribution.assembly}">

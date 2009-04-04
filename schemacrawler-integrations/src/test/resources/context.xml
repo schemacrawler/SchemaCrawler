@@ -337,8 +337,8 @@
   </bean>
 
   <bean
-    id="executableForJung"
-    class="schemacrawler.tools.integration.jung.JungExecutable">
+    id="executableForGraph"
+    class="schemacrawler.tools.integration.graph.GraphExecutable">
     <property
       name="schemaCrawlerOptions"
       ref="schemaCrawlerOptions" />
