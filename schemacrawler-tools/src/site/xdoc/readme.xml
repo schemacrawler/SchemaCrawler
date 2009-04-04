@@ -26,10 +26,10 @@
      an API, as well as how to use the
      <a
       href="http://velocity.apache.org/">Apache Velocity</a>
-     (templating) and
+     (templating) integration and how to create database diagrams with 
      <a
-      href="http://jung.sourceforge.net/">JUNG (Java Universal Network/Graph Framework)</a>
-     (graphing) integrations are provided in the
+      href="http://www.graphviz.org/">Graphviz</a>
+     are provided in the
      <code>_distrib/examples</code>
      directory.
     </p>

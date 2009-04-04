@@ -348,12 +348,9 @@ Or, all of the following:
 					schema.
 					Examples are provided in the
 					<code>examples\velocity</code>
-					directory. There is
-					also a
-					proof-of-concept
+					directory. Database diagrams can be generated using the 
 					integration with
-					<a href="http://jung.sourceforge.net/">JUNG (Java Universal Network/Graph Framework)</a>
-					for creating graph JPEG files.
+					<a href="http://www.graphviz.org/">Graphviz</a>.
 				</p>
 			</answer>
 		</faq>

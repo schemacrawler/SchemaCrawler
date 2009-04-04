@@ -5,7 +5,7 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="6.1" date="2009-03-29">
+    <release version="6.2" date="2009-03-29">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Better reporting of ascending and descending index columns. This is an API
         change.
