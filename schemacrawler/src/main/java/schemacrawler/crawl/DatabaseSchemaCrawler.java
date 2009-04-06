@@ -406,6 +406,8 @@ public final class DatabaseSchemaCrawler
       // handle table
       handler.handle(table);
     }
-  }
 
+    TableAnalyzer tableAnalyzer = new TableAnalyzer();
+    tableAnalyzer.analyzeTables(tables);
+  }
 }
