@@ -27,6 +27,7 @@ import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableAssociations;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
@@ -139,6 +140,17 @@ public final class CachingCrawlHandler
     final String schemaName = table.getSchemaName();
     final MutableSchema schema = lookupOrCreateSchema(schemaName);
     schema.addTable((MutableTable) table);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.TableAssociations)
+   */
+  public void handle(final TableAssociations tableAssociations)
+    throws SchemaCrawlerException
+  {
+    catalog.setTableAssociations(tableAssociations);
   }
 
   @Override

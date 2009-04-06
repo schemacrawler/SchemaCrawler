@@ -25,6 +25,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Schema;
+import schemacrawler.schema.TableAssociations;
 
 /**
  * Represents the database.
@@ -41,6 +42,7 @@ class MutableCatalog
   private DatabaseInfo databaseInfo;
   private JdbcDriverInfo driverInfo;
   private final NamedObjectList<MutableSchema> schemas = new NamedObjectList<MutableSchema>(NamedObjectSort.alphabetical);
+  private TableAssociations tableAssociations;
 
   MutableCatalog(final String name)
   {
@@ -87,6 +89,11 @@ class MutableCatalog
     return schemas.getAll().toArray(new Schema[schemas.size()]);
   }
 
+  public TableAssociations getTableAssociations()
+  {
+    return tableAssociations;
+  }
+
   void addSchema(final MutableSchema schema)
   {
     schemas.add(schema);
@@ -105,6 +112,11 @@ class MutableCatalog
   void setJdbcDriverInfo(final JdbcDriverInfo driverInfo)
   {
     this.driverInfo = driverInfo;
+  }
+
+  void setTableAssociations(final TableAssociations tableAssociations)
+  {
+    this.tableAssociations = tableAssociations;
   }
 
 }
