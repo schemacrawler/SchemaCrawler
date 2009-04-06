@@ -24,12 +24,9 @@ public final class PastelColor
     this.color = color;
   }
 
-  public PastelColor tint()
+  public Color getColor()
   {
-    return new PastelColor(new Color(Math.min((int) (color.getRed() / FACTOR),
-                                              255), Math.min((int) (color
-      .getGreen() / FACTOR), 255), Math.min((int) (color.getBlue() / FACTOR),
-                                            255)));
+    return color;
   }
 
   public PastelColor shade()
@@ -39,9 +36,12 @@ public final class PastelColor
       .getGreen() * FACTOR), 0), Math.max((int) (color.getBlue() * FACTOR), 0)));
   }
 
-  public Color getColor()
+  public PastelColor tint()
   {
-    return color;
+    return new PastelColor(new Color(Math.min((int) (color.getRed() / FACTOR),
+                                              255), Math.min((int) (color
+      .getGreen() / FACTOR), 255), Math.min((int) (color.getBlue() / FACTOR),
+                                            255)));
   }
 
   @Override

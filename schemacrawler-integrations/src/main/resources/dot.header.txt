@@ -15,6 +15,7 @@ digraph "%s" {
     dpi="300"
     ratio="fill"
     packmode="node"
+    overlap="false"
   ];
   
   node [
@@ -26,7 +27,7 @@ digraph "%s" {
   edge [
     fontname="Helvetica"
     fontsize="8"  
-    arrowsize="0.8"
+    arrowsize="0.6"
   ];
 
 

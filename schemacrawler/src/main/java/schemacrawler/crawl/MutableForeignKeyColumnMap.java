@@ -65,13 +65,13 @@ final class MutableForeignKeyColumnMap
     // name.
     if (comparison == 0)
     {
-      comparison = getPrimaryKeyColumn().getName().compareTo(other
-        .getPrimaryKeyColumn().getName());
+      comparison = getPrimaryKeyColumn().getFullName().compareTo(other
+        .getPrimaryKeyColumn().getFullName());
     }
     if (comparison == 0)
     {
-      comparison = getForeignKeyColumn().getName().compareTo(other
-        .getForeignKeyColumn().getName());
+      comparison = getForeignKeyColumn().getFullName().compareTo(other
+        .getForeignKeyColumn().getFullName());
     }
 
     return comparison;

@@ -60,4 +60,11 @@ public interface Catalog
    */
   Schema[] getSchemas();
 
+  /**
+   * Gets the table associations.
+   * 
+   * @return Table associations
+   */
+  TableAssociations getTableAssociations();
+
 }

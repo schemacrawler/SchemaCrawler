@@ -47,6 +47,7 @@ import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableAssociations;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.CrawlHandler;
@@ -353,6 +354,31 @@ public final class SchemaTextFormatter
     out.flush();
 
     tableCount = tableCount + 1;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.TableAssociations)
+   */
+  public void handle(final TableAssociations tableAssociations)
+    throws SchemaCrawlerException
+  {
+    final SchemaTextDetailType schemaTextDetailType = options
+      .getSchemaTextDetailType();
+    if (schemaTextDetailType != SchemaTextDetailType.maximum_schema)
+    {
+      return;
+    }
+    if (tableAssociations == null
+        || tableAssociations.getColumnPairs().length == 0)
+    {
+      return;
+    }
+
+    out.println(formattingHelper
+      .createNameRow("", "[table associations]", true));
+    printColumnPairs("", tableAssociations.getColumnPairs());
   }
 
   private String negate(final boolean positive, final String text)

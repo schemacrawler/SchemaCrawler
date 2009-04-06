@@ -40,6 +40,7 @@ import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableAssociations;
 import schemacrawler.schema.View;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.integration.SchemaExecutable;
@@ -166,6 +167,50 @@ public final class GraphExecutable
     }
   }
 
+  private String printColumnAssociation(final String associationName,
+                                        final Column primaryKeyColumn,
+                                        final Column foreignKeyColumn)
+  {
+    final String arrowhead;
+    if (foreignKeyColumn.isNullable())
+    {
+      arrowhead = "odottee";
+    }
+    else
+    {
+      arrowhead = "teetee";
+    }
+    final String arrowtail;
+    if (foreignKeyColumn.isPartOfUniqueIndex())
+    {
+      arrowtail = "teeodot";
+    }
+    else
+    {
+      arrowtail = "crowodot";
+    }
+    final String style;
+    if (associationName == null || associationName.equals(""))
+    {
+      style = "dashed";
+    }
+    else
+    {
+      style = "solid";
+    }
+
+    return String
+      .format("  \"%s\":\"%s.start\":w -> \"%s\":\"%s.end\":e [label=\"%s\" style=\"%s\" arrowhead=\"%s\" arrowtail=\"%s\"];%n",
+              primaryKeyColumn.getParent().getFullName(),
+              primaryKeyColumn.getName(),
+              foreignKeyColumn.getParent().getFullName(),
+              foreignKeyColumn.getName(),
+              associationName,
+              style,
+              arrowhead,
+              arrowtail);
+  }
+
   private void writeDotFile(final Catalog catalog, final File dotFile)
     throws IOException
   {
@@ -235,34 +280,9 @@ public final class GraphExecutable
               .getForeignKeyColumn();
             if (primaryKeyColumn.getParent().equals(table))
             {
-              final String arrowhead;
-              if (foreignKeyColumn.isNullable())
-              {
-                arrowhead = "odottee";
-              }
-              else
-              {
-                arrowhead = "teetee";
-              }
-              final String arrowtail;
-              if (foreignKeyColumn.isPartOfUniqueIndex())
-              {
-                arrowtail = "teeodot";
-              }
-              else
-              {
-                arrowtail = "crowodot";
-              }
-              buffer
-                .append(String
-                  .format("  \"%s\":\"%s.start\":w -> \"%s\":\"%s.end\":e [label=%s arrowhead=%s arrowtail=%s];%n",
-                          primaryKeyColumn.getParent().getFullName(),
-                          primaryKeyColumn.getName(),
-                          foreignKeyColumn.getParent().getFullName(),
-                          foreignKeyColumn.getName(),
-                          foreignKey.getName(),
-                          arrowhead,
-                          arrowtail));
+              buffer.append(printColumnAssociation(foreignKey.getName(),
+                                                   primaryKeyColumn,
+                                                   foreignKeyColumn));
             }
           }
         }
@@ -271,6 +291,23 @@ public final class GraphExecutable
         writer.write(buffer.toString());
       }
     }
+
+    final TableAssociations tableAssociations = catalog.getTableAssociations();
+    if (tableAssociations != null)
+    {
+      for (final ForeignKeyColumnMap foreignKeyColumnMap: tableAssociations
+        .getColumnPairs())
+      {
+        final Column primaryKeyColumn = foreignKeyColumnMap
+          .getPrimaryKeyColumn();
+        final Column foreignKeyColumn = foreignKeyColumnMap
+          .getForeignKeyColumn();
+        writer.write(printColumnAssociation("",
+                                            primaryKeyColumn,
+                                            foreignKeyColumn));
+      }
+    }
+
     writer.write("}\n");
     writer.flush();
     writer.close();

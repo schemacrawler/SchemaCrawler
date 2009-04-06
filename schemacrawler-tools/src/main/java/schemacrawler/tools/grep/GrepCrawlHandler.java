@@ -25,6 +25,7 @@ import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableAssociations;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -154,6 +155,17 @@ public final class GrepCrawlHandler
     {
       chainedCrawlHandler.handle(table);
     }
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.TableAssociations)
+   */
+  public void handle(final TableAssociations tableAssociations)
+    throws SchemaCrawlerException
+  {
+    // Ignore
   }
 
   /**

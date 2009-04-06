@@ -26,6 +26,7 @@ import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableAssociations;
 
 /**
  * Handler for SchemaCrawler.
@@ -60,7 +61,7 @@ public interface CrawlHandler
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  void handle(final ColumnDataType dataType)
+  void handle(ColumnDataType dataType)
     throws SchemaCrawlerException;
 
   /**
@@ -71,7 +72,7 @@ public interface CrawlHandler
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  void handle(final DatabaseInfo databaseInfo)
+  void handle(DatabaseInfo databaseInfo)
     throws SchemaCrawlerException;
 
   /**
@@ -82,7 +83,7 @@ public interface CrawlHandler
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  void handle(final JdbcDriverInfo driverInfo)
+  void handle(JdbcDriverInfo driverInfo)
     throws SchemaCrawlerException;
 
   /**
@@ -93,7 +94,7 @@ public interface CrawlHandler
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  void handle(final Procedure procedure)
+  void handle(Procedure procedure)
     throws SchemaCrawlerException;
 
   /**
@@ -104,7 +105,18 @@ public interface CrawlHandler
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  void handle(final Table table)
+  void handle(Table table)
+    throws SchemaCrawlerException;
+
+  /**
+   * Provides information on the database schema.
+   * 
+   * @param tableAssociations
+   *        Table associations information
+   * @throws SchemaCrawlerException
+   *         On an exception
+   */
+  void handle(TableAssociations tableAssociations)
     throws SchemaCrawlerException;
 
 }
