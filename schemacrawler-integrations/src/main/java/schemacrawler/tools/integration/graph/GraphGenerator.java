@@ -102,12 +102,8 @@ final class GraphGenerator
       throw new IOException("Cannot write diagram file, " + diagramFile);
     }
 
-    run("-q",
-        "-x",
-        "-T" + outputFormat,
-        "-o",
-        diagramFile.getAbsolutePath(),
-        dotFile.getAbsolutePath());
+    run("-q", "-T" + outputFormat, "-o", diagramFile.getAbsolutePath(), dotFile
+      .getAbsolutePath());
   }
 
 }

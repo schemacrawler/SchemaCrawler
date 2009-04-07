@@ -58,6 +58,7 @@ public final class SchemaInfoLevel
     maximum.setRetrieveTablePrivileges(true);
     maximum.setRetrieveTableColumnPrivileges(true);
     maximum.setRetrieveTriggerInformation(true);
+    maximum.setRetrieveWeakAssociations(true);
     return maximum;
   }
 
@@ -110,294 +111,186 @@ public final class SchemaInfoLevel
   private boolean retrieveTableColumnPrivileges;
   private boolean retrieveTriggerInformation;
   private boolean retrieveTableColumns;
+  private boolean retrieveWeakAssociations;
 
-  /**
-   * @return the retrieveAdditionalDatabaseInfo
-   */
   public boolean isRetrieveAdditionalDatabaseInfo()
   {
     return retrieveAdditionalDatabaseInfo;
   }
 
-  /**
-   * @return the retrieveCheckConstraintInformation
-   */
   public boolean isRetrieveCheckConstraintInformation()
   {
     return retrieveCheckConstraintInformation;
   }
 
-  /**
-   * @return the retrieveColumnDataTypes
-   */
   public boolean isRetrieveColumnDataTypes()
   {
     return retrieveColumnDataTypes;
   }
 
-  /**
-   * @return the retrieveDatabaseInfo
-   */
   public boolean isRetrieveDatabaseInfo()
   {
     return retrieveDatabaseInfo;
   }
 
-  /**
-   * @return the retrieveForeignKeys
-   */
   public boolean isRetrieveForeignKeys()
   {
     return retrieveForeignKeys;
   }
 
-  /**
-   * @return the retrieveIndices
-   */
   public boolean isRetrieveIndices()
   {
     return retrieveIndices;
   }
 
-  /**
-   * @return the retrieveJdbcDriverInfo
-   */
   public boolean isRetrieveJdbcDriverInfo()
   {
     return retrieveJdbcDriverInfo;
   }
 
-  /**
-   * @return the retrieveProcedureColumns
-   */
   public boolean isRetrieveProcedureColumns()
   {
     return retrieveProcedureColumns;
   }
 
-  /**
-   * @return the retrieveProcedureInformation
-   */
   public boolean isRetrieveProcedureInformation()
   {
     return retrieveProcedureInformation;
   }
 
-  /**
-   * @return the retrieveProcedures
-   */
   public boolean isRetrieveProcedures()
   {
     return retrieveProcedures;
   }
 
-  /**
-   * @return the retrieveTableColumnPrivileges
-   */
   public boolean isRetrieveTableColumnPrivileges()
   {
     return retrieveTableColumnPrivileges;
   }
 
-  /**
-   * @return the retrieveTableColumns
-   */
   public boolean isRetrieveTableColumns()
   {
     return retrieveTableColumns;
   }
 
-  /**
-   * @return the retrieveTablePrivileges
-   */
   public boolean isRetrieveTablePrivileges()
   {
     return retrieveTablePrivileges;
   }
 
-  /**
-   * @return the retrieveTables
-   */
   public boolean isRetrieveTables()
   {
     return retrieveTables;
   }
 
-  /**
-   * @return the retrieveTriggerInformation
-   */
   public boolean isRetrieveTriggerInformation()
   {
     return retrieveTriggerInformation;
   }
 
-  /**
-   * @return the retrieveUserDefinedColumnDataTypes
-   */
   public boolean isRetrieveUserDefinedColumnDataTypes()
   {
     return retrieveUserDefinedColumnDataTypes;
   }
 
-  /**
-   * @return the retrieveViewInformation
-   */
   public boolean isRetrieveViewInformation()
   {
     return retrieveViewInformation;
   }
 
-  /**
-   * @param retrieveAdditionalDatabaseInfo
-   *        the retrieveAdditionalDatabaseInfo to set
-   */
-  public void setRetrieveAdditionalDatabaseInfo(final boolean retrieveAdditionalDatabaseInfo)
+  public boolean isRetrieveWeakAssociations()
+  {
+    return retrieveWeakAssociations;
+  }
+
+  public void setRetrieveAdditionalDatabaseInfo(boolean retrieveAdditionalDatabaseInfo)
   {
     this.retrieveAdditionalDatabaseInfo = retrieveAdditionalDatabaseInfo;
   }
 
-  /**
-   * @param retrieveCheckConstraintInformation
-   *        the retrieveCheckConstraintInformation to set
-   */
-  public void setRetrieveCheckConstraintInformation(final boolean retrieveCheckConstraintInformation)
+  public void setRetrieveCheckConstraintInformation(boolean retrieveCheckConstraintInformation)
   {
     this.retrieveCheckConstraintInformation = retrieveCheckConstraintInformation;
   }
 
-  /**
-   * @param retrieveColumnDataTypes
-   *        the retrieveColumnDataTypes to set
-   */
-  public void setRetrieveColumnDataTypes(final boolean retrieveColumnDataTypes)
+  public void setRetrieveColumnDataTypes(boolean retrieveColumnDataTypes)
   {
     this.retrieveColumnDataTypes = retrieveColumnDataTypes;
   }
 
-  /**
-   * @param retrieveDatabaseInfo
-   *        the retrieveDatabaseInfo to set
-   */
-  public void setRetrieveDatabaseInfo(final boolean retrieveDatabaseInfo)
+  public void setRetrieveDatabaseInfo(boolean retrieveDatabaseInfo)
   {
     this.retrieveDatabaseInfo = retrieveDatabaseInfo;
   }
 
-  /**
-   * @param retrieveForeignKeys
-   *        the retrieveForeignKeys to set
-   */
-  public void setRetrieveForeignKeys(final boolean retrieveForeignKeys)
+  public void setRetrieveForeignKeys(boolean retrieveForeignKeys)
   {
     this.retrieveForeignKeys = retrieveForeignKeys;
   }
 
-  /**
-   * @param retrieveIndices
-   *        the retrieveIndices to set
-   */
-  public void setRetrieveIndices(final boolean retrieveIndices)
+  public void setRetrieveIndices(boolean retrieveIndices)
   {
     this.retrieveIndices = retrieveIndices;
   }
 
-  /**
-   * @param retrieveJdbcDriverInfo
-   *        the retrieveJdbcDriverInfo to set
-   */
-  public void setRetrieveJdbcDriverInfo(final boolean retrieveJdbcDriverInfo)
+  public void setRetrieveJdbcDriverInfo(boolean retrieveJdbcDriverInfo)
   {
     this.retrieveJdbcDriverInfo = retrieveJdbcDriverInfo;
   }
 
-  /**
-   * @param retrieveProcedureColumns
-   *        the retrieveProcedureColumns to set
-   */
-  public void setRetrieveProcedureColumns(final boolean retrieveProcedureColumns)
+  public void setRetrieveProcedureColumns(boolean retrieveProcedureColumns)
   {
     this.retrieveProcedureColumns = retrieveProcedureColumns;
   }
 
-  /**
-   * @param retrieveProcedureInformation
-   *        the retrieveProcedureInformation to set
-   */
-  public void setRetrieveProcedureInformation(final boolean retrieveProcedureInformation)
+  public void setRetrieveProcedureInformation(boolean retrieveProcedureInformation)
   {
     this.retrieveProcedureInformation = retrieveProcedureInformation;
   }
 
-  /**
-   * @param retrieveProcedures
-   *        the retrieveProcedures to set
-   */
-  public void setRetrieveProcedures(final boolean retrieveProcedures)
+  public void setRetrieveProcedures(boolean retrieveProcedures)
   {
     this.retrieveProcedures = retrieveProcedures;
   }
 
-  /**
-   * @param retrieveTableColumnPrivileges
-   *        the retrieveTableColumnPrivileges to set
-   */
-  public void setRetrieveTableColumnPrivileges(final boolean retrieveTableColumnPrivileges)
+  public void setRetrieveTableColumnPrivileges(boolean retrieveTableColumnPrivileges)
   {
     this.retrieveTableColumnPrivileges = retrieveTableColumnPrivileges;
   }
 
-  /**
-   * @param retrieveTableColumns
-   *        the retrieveTableColumns to set
-   */
-  public void setRetrieveTableColumns(final boolean retrieveTableColumns)
+  public void setRetrieveTableColumns(boolean retrieveTableColumns)
   {
     this.retrieveTableColumns = retrieveTableColumns;
   }
 
-  /**
-   * @param retrieveTablePrivileges
-   *        the retrieveTablePrivileges to set
-   */
-  public void setRetrieveTablePrivileges(final boolean retrieveTablePrivileges)
+  public void setRetrieveTablePrivileges(boolean retrieveTablePrivileges)
   {
     this.retrieveTablePrivileges = retrieveTablePrivileges;
   }
 
-  /**
-   * @param retrieveTables
-   *        the retrieveTables to set
-   */
-  public void setRetrieveTables(final boolean retrieveTables)
+  public void setRetrieveTables(boolean retrieveTables)
   {
     this.retrieveTables = retrieveTables;
   }
 
-  /**
-   * @param retrieveTriggerInformation
-   *        the retrieveTriggerInformation to set
-   */
-  public void setRetrieveTriggerInformation(final boolean retrieveTriggerInformation)
+  public void setRetrieveTriggerInformation(boolean retrieveTriggerInformation)
   {
     this.retrieveTriggerInformation = retrieveTriggerInformation;
   }
 
-  /**
-   * @param retrieveUserDefinedColumnDataTypes
-   *        the retrieveUserDefinedColumnDataTypes to set
-   */
-  public void setRetrieveUserDefinedColumnDataTypes(final boolean retrieveUserDefinedColumnDataTypes)
+  public void setRetrieveUserDefinedColumnDataTypes(boolean retrieveUserDefinedColumnDataTypes)
   {
     this.retrieveUserDefinedColumnDataTypes = retrieveUserDefinedColumnDataTypes;
   }
 
-  /**
-   * @param retrieveViewInformation
-   *        the retrieveViewInformation to set
-   */
-  public void setRetrieveViewInformation(final boolean retrieveViewInformation)
+  public void setRetrieveViewInformation(boolean retrieveViewInformation)
   {
     this.retrieveViewInformation = retrieveViewInformation;
+  }
+
+  public void setRetrieveWeakAssociations(boolean retrieveWeakAssociations)
+  {
+    this.retrieveWeakAssociations = retrieveWeakAssociations;
   }
 
 }

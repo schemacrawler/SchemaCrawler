@@ -23,15 +23,15 @@ package schemacrawler.crawl;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKeyColumnMap;
-import schemacrawler.schema.TableAssociations;
+import schemacrawler.schema.WeakAssociations;
 
 /**
  * Represents a foreign-key mapping to a primary key in another table.
  * 
  * @author Sualeh Fatehi
  */
-class MutableTableAssociations
-  implements TableAssociations
+class MutableWeakAssociations
+  implements WeakAssociations
 {
 
   private static final long serialVersionUID = 4121411795974895671L;
@@ -41,7 +41,7 @@ class MutableTableAssociations
   /**
    * {@inheritDoc}
    * 
-   * @see TableAssociations#getColumnPairs()
+   * @see WeakAssociations#getColumnPairs()
    * @see ForeignKey#getColumnPairs()
    */
   public ForeignKeyColumnMap[] getColumnPairs()

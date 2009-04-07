@@ -24,11 +24,12 @@ package schemacrawler.schema;
 import java.io.Serializable;
 
 /**
- * Represents a foreign-key mapping to a primary key in another table.
+ * Represents a a set of weak (or inferred) foreign-key mappings to a
+ * primary key in another table.
  * 
  * @author Sualeh Fatehi
  */
-public interface TableAssociations
+public interface WeakAssociations
   extends Serializable
 {
 
