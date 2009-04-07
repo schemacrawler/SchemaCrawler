@@ -61,10 +61,10 @@ public interface Catalog
   Schema[] getSchemas();
 
   /**
-   * Gets the table associations.
+   * Gets the weak table associations.
    * 
-   * @return Table associations
+   * @return Weak table associations
    */
-  TableAssociations getTableAssociations();
+  WeakAssociations getWeakAssociations();
 
 }

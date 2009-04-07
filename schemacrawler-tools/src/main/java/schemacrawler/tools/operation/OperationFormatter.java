@@ -37,7 +37,7 @@ import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.TableAssociations;
+import schemacrawler.schema.WeakAssociations;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -305,9 +305,9 @@ public final class OperationFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.TableAssociations)
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.WeakAssociations)
    */
-  public void handle(final TableAssociations tableAssociations)
+  public void handle(final WeakAssociations weakAssociations)
     throws SchemaCrawlerException
   {
     // Ignore

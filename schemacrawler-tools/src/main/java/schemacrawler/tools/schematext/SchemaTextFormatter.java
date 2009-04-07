@@ -47,9 +47,9 @@ import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.TableAssociations;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
+import schemacrawler.schema.WeakAssociations;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.OutputFormat;
@@ -359,9 +359,9 @@ public final class SchemaTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.TableAssociations)
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.WeakAssociations)
    */
-  public void handle(final TableAssociations tableAssociations)
+  public void handle(final WeakAssociations weakAssociations)
     throws SchemaCrawlerException
   {
     final SchemaTextDetailType schemaTextDetailType = options
@@ -370,15 +370,15 @@ public final class SchemaTextFormatter
     {
       return;
     }
-    if (tableAssociations == null
-        || tableAssociations.getColumnPairs().length == 0)
+    if (weakAssociations == null
+        || weakAssociations.getColumnPairs().length == 0)
     {
       return;
     }
 
-    out.println(formattingHelper
-      .createNameRow("", "[table associations]", true));
-    printColumnPairs("", tableAssociations.getColumnPairs());
+    out
+      .println(formattingHelper.createNameRow("", "[weak associations]", true));
+    printColumnPairs("", weakAssociations.getColumnPairs());
   }
 
   private String negate(final boolean positive, final String text)

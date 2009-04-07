@@ -28,8 +28,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.ResultsColumns;
-import schemacrawler.schema.TableAssociations;
 import schemacrawler.schema.TableType;
+import schemacrawler.schema.WeakAssociations;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -408,10 +408,13 @@ public final class DatabaseSchemaCrawler
       handler.handle(table);
     }
 
-    final TableAnalyzer tableAnalyzer = new TableAnalyzer();
-    final TableAssociations tableAssociations = tableAnalyzer
-      .analyzeTables(tables);
-    handler.handle(tableAssociations);
+    if (infoLevel.isRetrieveWeakAssociations())
+    {
+      final TableAnalyzer tableAnalyzer = new TableAnalyzer();
+      final WeakAssociations weakAssociations = tableAnalyzer
+        .analyzeTables(tables);
+      handler.handle(weakAssociations);
+    }
   }
 
 }

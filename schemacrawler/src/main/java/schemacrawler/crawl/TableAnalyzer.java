@@ -26,7 +26,7 @@ public class TableAnalyzer
   private static final Logger LOGGER = Logger.getLogger(TableAnalyzer.class
     .getName());
 
-  public MutableTableAssociations analyzeTables(final NamedObjectList<MutableTable> tables)
+  public MutableWeakAssociations analyzeTables(final NamedObjectList<MutableTable> tables)
   {
     final Collection<String> prefixes = findTableNamePrefixes(tables);
     LOGGER.log(Level.FINE, "Table prefixes=" + prefixes);
@@ -37,7 +37,7 @@ public class TableAnalyzer
 
     final Map<String, ForeignKeyColumnMap> fkColumnsMap = mapForeignKeyColumns(tables);
 
-    return findTableAssociations(tables, tableMatchMap, fkColumnsMap);
+    return findWeakAssociations(tables, tableMatchMap, fkColumnsMap);
   }
 
   private String commonPrefix(final String string1, final String string2)
@@ -53,11 +53,11 @@ public class TableAnalyzer
     }
   }
 
-  private MutableTableAssociations findTableAssociations(final NamedObjectList<MutableTable> tables,
-                                                         final Map<String, Table> tableMatchMap,
-                                                         final Map<String, ForeignKeyColumnMap> fkColumnsMap)
+  private MutableWeakAssociations findWeakAssociations(final NamedObjectList<MutableTable> tables,
+                                                       final Map<String, Table> tableMatchMap,
+                                                       final Map<String, ForeignKeyColumnMap> fkColumnsMap)
   {
-    final MutableTableAssociations tableAssociations = new MutableTableAssociations();
+    final MutableWeakAssociations weakAssociations = new MutableWeakAssociations();
     final List<MutableTable> tablesList = tables.getAll();
     for (final MutableTable table: tablesList)
     {
@@ -88,14 +88,14 @@ public class TableAnalyzer
               LOGGER.log(Level.FINE, "Found association "
                                      + fkColumn.getFullName() + " --> "
                                      + pkColumn.getFullName());
-              tableAssociations.addColumnPair(pkColumn, fkColumn);
+              weakAssociations.addColumnPair(pkColumn, fkColumn);
             }
           }
         }
       }
     }
 
-    return tableAssociations;
+    return weakAssociations;
   }
 
   /**
@@ -111,10 +111,11 @@ public class TableAnalyzer
       {
         final String table1 = tablesList.get(i).getName();
         final String table2 = tablesList.get(j).getName();
-        final String commonPrefix = commonPrefix(table1, table2).toLowerCase();
+        String commonPrefix = commonPrefix(table1, table2);
         if (commonPrefix != null && !commonPrefix.equals("")
             && commonPrefix.endsWith("_"))
         {
+          commonPrefix = commonPrefix.toLowerCase();
           final int prevCount;
           if (prefixesMap.containsKey(commonPrefix))
           {

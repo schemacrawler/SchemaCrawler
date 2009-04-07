@@ -40,7 +40,7 @@ import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.TableAssociations;
+import schemacrawler.schema.WeakAssociations;
 import schemacrawler.schema.View;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.integration.SchemaExecutable;
@@ -292,10 +292,10 @@ public final class GraphExecutable
       }
     }
 
-    final TableAssociations tableAssociations = catalog.getTableAssociations();
-    if (tableAssociations != null)
+    final WeakAssociations weakAssociations = catalog.getWeakAssociations();
+    if (weakAssociations != null)
     {
-      for (final ForeignKeyColumnMap foreignKeyColumnMap: tableAssociations
+      for (final ForeignKeyColumnMap foreignKeyColumnMap: weakAssociations
         .getColumnPairs())
       {
         final Column primaryKeyColumn = foreignKeyColumnMap

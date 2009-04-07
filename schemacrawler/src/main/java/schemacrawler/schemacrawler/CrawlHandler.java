@@ -26,7 +26,7 @@ import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.TableAssociations;
+import schemacrawler.schema.WeakAssociations;
 
 /**
  * Handler for SchemaCrawler.
@@ -111,12 +111,12 @@ public interface CrawlHandler
   /**
    * Provides information on the database schema.
    * 
-   * @param tableAssociations
+   * @param weakAssociations
    *        Table associations information
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  void handle(TableAssociations tableAssociations)
+  void handle(WeakAssociations weakAssociations)
     throws SchemaCrawlerException;
 
 }
