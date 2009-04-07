@@ -40,8 +40,8 @@ import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.WeakAssociations;
 import schemacrawler.schema.View;
+import schemacrawler.schema.WeakAssociations;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.integration.SchemaExecutable;
 import schemacrawler.tools.util.HtmlFormattingHelper;
@@ -149,15 +149,22 @@ public final class GraphExecutable
 
     try
     {
-      final File dotFile = File.createTempFile("schemacrawler_"
-                                                   + catalog.getName() + "_",
-                                               ".dot");
-      dotFile.deleteOnExit();
-
       final String outputFormat = outputOptions.getOutputFormatValue();
-      final GraphGenerator dot = new GraphGenerator();
-      writeDotFile(catalog, dotFile);
-      dot.generateDiagram(dotFile, outputFormat, outputFile);
+      if (outputFormat.equalsIgnoreCase("dot"))
+      {
+        writeDotFile(catalog, Utilities.changeFileExtension(outputFile, ".dot"));
+      }
+      else
+      {
+        final File dotFile = File.createTempFile("schemacrawler_"
+                                                     + catalog.getName() + "_",
+                                                 ".dot");
+        dotFile.deleteOnExit();
+
+        final GraphGenerator dot = new GraphGenerator();
+        writeDotFile(catalog, dotFile);
+        dot.generateDiagram(dotFile, outputFormat, outputFile);
+      }
     }
     catch (final Exception e)
     {
