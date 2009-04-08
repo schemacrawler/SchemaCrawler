@@ -59,8 +59,14 @@ final class SchemaCrawlerOptionsParser
         optionTableTypes, optionShowStoredProcedures
     });
 
-    options.setTableTypes(optionTableTypes.getValue());
-    options.setShowStoredProcedures(optionShowStoredProcedures.getValue());
+    if (optionTableTypes.isFound())
+    {
+      options.setTableTypes(optionTableTypes.getValue());
+    }
+    if (optionShowStoredProcedures.isFound())
+    {
+      options.setShowStoredProcedures(optionShowStoredProcedures.getValue());
+    }
 
     return options;
   }
