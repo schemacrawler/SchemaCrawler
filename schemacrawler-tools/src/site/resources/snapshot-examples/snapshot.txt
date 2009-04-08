@@ -13,7 +13,7 @@
 default_schema                                         [driver property]
   
   not required; choices [true, false]
-  value                                                         
+  value                             null                        
 
 get_column_name                                        [driver property]
   
@@ -23,22 +23,22 @@ get_column_name                                        [driver property]
 ifexists                                               [driver property]
   
   not required; choices [true, false]
-  value                                                         
+  value                             null                        
 
 password                                               [driver property]
   
   required
-  value                                                         
+  value                             null                        
 
 shutdown                                               [driver property]
   
   not required; choices [true, false]
-  value                                                         
+  value                             null                        
 
 user                                                   [driver property]
   
   required
-  value                                                         
+  value                             null                        
 
 
 
@@ -386,7 +386,7 @@ PUBLIC.CUSTOMER                                                  [table]
   CITY                              VARCHAR(255)                
 
 SYS_IDX_50                                                 [primary key]
-  ID                                INTEGER not null            
+  ID                                ascending                   
 
 FK_INVOICE_CUSTOMER                        [foreign key, with no action]
   ID --> PUBLIC.INVOICE.CUSTOMERID                              
@@ -436,7 +436,7 @@ PUBLIC.INVOICE                                                   [table]
   TOTAL                             FLOAT(17, 0)                
 
 SYS_IDX_52                                                 [primary key]
-  ID                                INTEGER not null            
+  ID                                ascending                   
 
 FK_INVOICE_CUSTOMER                        [foreign key, with no action]
   PUBLIC.CUSTOMER.ID --> CUSTOMERID                              
@@ -444,11 +444,11 @@ FK_INVOICE_CUSTOMER                        [foreign key, with no action]
 FK_B_ITEM_INVOICE                          [foreign key, with no action]
   ID --> PUBLIC.ITEM.INVOICEID                                  
 
-INDEX_INVOICE_CUSTOMER                      [non-unique ascending index]
-  CUSTOMERID                        INTEGER                     
+INDEX_INVOICE_CUSTOMER                                [non-unique index]
+  CUSTOMERID                        ascending                   
 
-SYS_IDX_60                                  [non-unique ascending index]
-  CUSTOMERID                        INTEGER                     
+SYS_IDX_60                                            [non-unique index]
+  CUSTOMERID                        ascending                   
 
 DELETE                                             [grantable privilege]
   DBA --> SA                                                    
@@ -472,8 +472,8 @@ PUBLIC.ITEM                                                      [table]
   COST                              FLOAT(17, 0)                
 
 SYS_IDX_46                                                 [primary key]
-  INVOICEID                         INTEGER not null            
-  ITEM                              INTEGER not null            
+  INVOICEID                         ascending                   
+  ITEM                              ascending                   
 
 FK_B_ITEM_INVOICE                          [foreign key, with no action]
   PUBLIC.INVOICE.ID --> INVOICEID                               
@@ -481,17 +481,17 @@ FK_B_ITEM_INVOICE                          [foreign key, with no action]
 FK_A_ITEM_PRODUCT                          [foreign key, with no action]
   PUBLIC.PRODUCT.ID --> PRODUCTID                               
 
-INDEX_ITEM_INVOICE                          [non-unique ascending index]
-  INVOICEID                         INTEGER not null            
+INDEX_ITEM_INVOICE                                    [non-unique index]
+  INVOICEID                         ascending                   
 
-SYS_IDX_56                                  [non-unique ascending index]
-  INVOICEID                         INTEGER not null            
+SYS_IDX_56                                            [non-unique index]
+  INVOICEID                         ascending                   
 
-INDEX_ITEM_PRODUCT                          [non-unique ascending index]
-  PRODUCTID                         INTEGER                     
+INDEX_ITEM_PRODUCT                                    [non-unique index]
+  PRODUCTID                         ascending                   
 
-SYS_IDX_58                                  [non-unique ascending index]
-  PRODUCTID                         INTEGER                     
+SYS_IDX_58                                            [non-unique index]
+  PRODUCTID                         ascending                   
 
 DELETE                                             [grantable privilege]
   DBA --> SA                                                    
@@ -513,7 +513,7 @@ PUBLIC.PRODUCT                                                   [table]
   PRICE                             FLOAT(17, 0)                
 
 SYS_IDX_48                                                 [primary key]
-  ID                                INTEGER not null            
+  ID                                ascending                   
 
 FK_A_ITEM_PRODUCT                          [foreign key, with no action]
   ID --> PUBLIC.ITEM.PRODUCTID                                  
@@ -536,13 +536,13 @@ PUBLIC.SUPPLIER                                                  [table]
   SUPPLIER_ID                       INTEGER                     
   SUPPLIER_NAME                     VARCHAR(255)                
 
-INDEX_B_SUPPLIER                            [non-unique ascending index]
-  SUPPLIER_ID                       INTEGER                     
-  SUPPLIER_NAME                     VARCHAR(255)                
+INDEX_B_SUPPLIER                                      [non-unique index]
+  SUPPLIER_ID                       ascending                   
+  SUPPLIER_NAME                     ascending                   
 
-INDEX_A_SUPPLIER                            [non-unique ascending index]
-  SUPPLIER_NAME                     VARCHAR(255)                
-  SUPPLIER_ID                       INTEGER                     
+INDEX_A_SUPPLIER                                      [non-unique index]
+  SUPPLIER_NAME                     ascending                   
+  SUPPLIER_ID                       ascending                   
 
 CHECK_UPPERCASE_SUPPLIER_NAME                         [check constraint]
   SUPPLIER.SUPPLIER_NAME=UPPER(SUPPLIER.SUPPLIER_NAME)
@@ -943,6 +943,19 @@ PUBLIC.java.lang.Math.ceil                   [procedure, returns result]
   java.lang.Math.ceil(double)
 
 
+PUBLIC.java.lang.Math.copySign               [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17), in           
+  @p2                               DOUBLE(8, 17), in           
+  @p0                               DOUBLE(8, 17), result       
+  @p1                               FLOAT(8, 17), in            
+  @p2                               FLOAT(8, 17), in            
+  @p0                               FLOAT(8, 17), result        
+
+                                                            [definition]
+  java.lang.Math.copySign(double,double)java.lang.Math.copySign(float,float)
+
+
 PUBLIC.java.lang.Math.cos                    [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               DOUBLE(8, 17), in           
@@ -986,6 +999,17 @@ PUBLIC.java.lang.Math.floor                  [procedure, returns result]
 
                                                             [definition]
   java.lang.Math.floor(double)
+
+
+PUBLIC.java.lang.Math.getExponent            [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17), in           
+  @p0                               INTEGER, result             
+  @p1                               FLOAT(8, 17), in            
+  @p0                               INTEGER, result             
+
+                                                            [definition]
+  java.lang.Math.getExponent(double)java.lang.Math.getExponent(float)
 
 
 PUBLIC.java.lang.Math.hypot                  [procedure, returns result]
@@ -1073,6 +1097,30 @@ PUBLIC.java.lang.Math.min                    [procedure, returns result]
   java.lang.Math.min(double,double)java.lang.Math.min(float,float)java.lang.Math.min(int,int)java.lang.Math.min(long,long)
 
 
+PUBLIC.java.lang.Math.nextAfter              [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17), in           
+  @p2                               DOUBLE(8, 17), in           
+  @p0                               DOUBLE(8, 17), result       
+  @p1                               FLOAT(8, 17), in            
+  @p2                               DOUBLE(8, 17), in           
+  @p0                               FLOAT(8, 17), result        
+
+                                                            [definition]
+  java.lang.Math.nextAfter(double,double)java.lang.Math.nextAfter(float,double)
+
+
+PUBLIC.java.lang.Math.nextUp                 [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17), in           
+  @p0                               DOUBLE(8, 17), result       
+  @p1                               FLOAT(8, 17), in            
+  @p0                               FLOAT(8, 17), result        
+
+                                                            [definition]
+  java.lang.Math.nextUp(double)java.lang.Math.nextUp(float)
+
+
 PUBLIC.java.lang.Math.pow                    [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               DOUBLE(8, 17), in           
@@ -1109,6 +1157,19 @@ PUBLIC.java.lang.Math.round                  [procedure, returns result]
 
                                                             [definition]
   java.lang.Math.round(double)java.lang.Math.round(float)
+
+
+PUBLIC.java.lang.Math.scalb                  [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               DOUBLE(8, 17), in           
+  @p2                               INTEGER, in                 
+  @p0                               DOUBLE(8, 17), result       
+  @p1                               FLOAT(8, 17), in            
+  @p2                               INTEGER, in                 
+  @p0                               FLOAT(8, 17), result        
+
+                                                            [definition]
+  java.lang.Math.scalb(double,int)java.lang.Math.scalb(float,int)
 
 
 PUBLIC.java.lang.Math.signum                 [procedure, returns result]
