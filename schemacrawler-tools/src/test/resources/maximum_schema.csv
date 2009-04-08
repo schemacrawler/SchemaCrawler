@@ -599,6 +599,11 @@ UPDATE,[grantable privilege]
 "",DBA --> SA,""
 
 
+"",[weak associations]
+------------------------------------------------------------------------
+"",PUBLIC.INVOICE.ID --> SCHEMACRAWLER.ITEM.INVOICEID,""
+"",PUBLIC.PRODUCT.ID --> SCHEMACRAWLER.ITEM.PRODUCTID,""
+
 
 Row Count
 ------------------------------------------------------------------------

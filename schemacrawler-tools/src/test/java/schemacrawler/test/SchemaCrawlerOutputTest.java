@@ -29,6 +29,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.custommonkey.xmlunit.Validator;
@@ -116,6 +118,7 @@ public class SchemaCrawlerOutputTest
     };
     final TestUtilityDatabaseConnector dbConnector = new TestUtilityDatabaseConnector(testUtility);
 
+    final List<String> failures = new ArrayList<String>();
     for (final OutputFormat outputFormat: OutputFormat.values())
     {
       for (final Command[] commandSet: commands)
@@ -142,7 +145,10 @@ public class SchemaCrawlerOutputTest
         if (outputFormat == OutputFormat.html)
         {
           final Validator validator = new Validator(new FileReader(testOutputFile));
-          validator.assertIsValid();
+          if (!validator.isValid())
+          {
+            failures.add(validator.toString());
+          }
         }
 
         final boolean contentEquals = contentEquals(new FileReader(testOutputFile),
@@ -153,14 +159,20 @@ public class SchemaCrawlerOutputTest
         {
           final File testOutputLocalFile = new File("./", referenceFile);
           FileUtils.copyFile(testOutputFile, testOutputLocalFile);
-          final String message = "Incorrect file contents in "
+          final String message = "Expected file contents in "
                                  + testOutputLocalFile.getAbsolutePath();
-          System.err.println(message);
-          fail(message);
+          failures.add(message);
         }
         FileUtils.deleteQuietly(testOutputFile);
       }
     }
+
+    if (failures.size() > 0)
+    {
+      System.err.println(failures);
+      fail(failures.toString());
+    }
+
   }
 
   @Test
