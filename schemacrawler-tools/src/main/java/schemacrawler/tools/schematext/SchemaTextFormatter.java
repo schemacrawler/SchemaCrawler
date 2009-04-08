@@ -376,9 +376,11 @@ public final class SchemaTextFormatter
       return;
     }
 
+    out.print(formattingHelper.createObjectStart(""));
     out
       .println(formattingHelper.createNameRow("", "[weak associations]", true));
     printColumnPairs("", weakAssociations.getColumnPairs());
+    out.print(formattingHelper.createObjectEnd());
   }
 
   private String negate(final boolean positive, final String text)
