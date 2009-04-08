@@ -91,7 +91,6 @@
       </patternset>
       <mapper type="flatten"/>
     </unzip>
-		<copy file="hsqldb.jar" todir="${distribution.staging.dir}/examples" />
 		<copy todir="${distribution.staging.dir}/examples">
 			<fileset dir="${distribution.assembly}">
 				<include name="StartDatabase*.*" />
