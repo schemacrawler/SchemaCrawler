@@ -5,7 +5,20 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="6.2" date="2009-03-29">
+    <release version="6.2" date="2009-04-08">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        A new feature to infer weak associations between tables, even if there is no foreign key.
+        Ruby on Rails table schemes are supported, as well as other simple relationships.
+        Table name prefixes are automatically detected.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Database diagram support using Graphviz. Primary keys 
+        are indicated in a darker color than other columns. Foreign keys are indicated
+        with arrow connectors. Weak associations between tables are shown in dashed lines.
+        Multiple output formats are supported. Support for Jung is dropped. 
+      ]]></action>
+    </release>
+    <release version="6.1" date="2009-03-29">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Better reporting of ascending and descending index columns. This is an API
         change.
