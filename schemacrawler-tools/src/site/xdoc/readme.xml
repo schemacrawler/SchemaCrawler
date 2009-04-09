@@ -1,0 +1,120 @@
+<!DOCTYPE document PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+  "http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+ <properties>
+  <title>SchemaCrawler - Readme</title>
+  <author
+   email="sualeh@hotmail.com">Sualeh Fatehi</author>
+ </properties>
+ <body>
+  <section
+   name="Getting Started">
+   <subsection
+    name="FAQs">
+    Before downloading SchemaCrawler, be sure to read the
+    <a
+     href="faq.html">FAQs</a>
+    .
+   </subsection>
+   <subsection
+    name="Examples">
+    <p>
+     The first thing to try after downloading the SchemaCrawler
+     distribution is the examples. Several examples on how to use
+     SchemaCrawler on the command line, as an ant task or Maven plugin,
+     as
+     an API, as well as how to use the
+     <a
+      href="http://velocity.apache.org/">Apache Velocity</a>
+     (templating) integration and how to create database diagrams with 
+     <a
+      href="http://www.graphviz.org/">Graphviz</a>
+     are provided in the
+     <code>_distrib/examples</code>
+     directory.
+    </p>
+   </subsection>
+   <subsection
+    name="How-tos">
+    <p>
+     Once you start getting comfortable with SchemaCrawler, and need to
+     know more about how to do things, read the
+     <a
+      href="how-to.html">how-tos</a>
+     section.
+    </p>
+   </subsection>
+   <subsection
+    name="Whitepapers and Documentation">
+    <p>To read more about SchemaCrawler, you can read:</p>
+    <ul>
+     <li>
+      <a
+       href="http://www.devx.com/Java/Article/32443">
+       Java API Makes Database Metadata as Easily Accessible as
+       POJOs
+            </a>
+      for an introduction to the SchemaCrawler API. (This article may
+      refer to an older release of the SchemaCrawler API, but the
+      concepts are the same.)
+     </li>
+     <li>
+      The SchemaCrawler API
+      <a
+       href="apidocs/index.html">javadocs</a>
+      .
+     </li>
+    </ul>
+   </subsection>
+  </section>
+  <section
+   name="Building From the Source Code">
+   <subsection
+    name="ant Build">
+    <p>
+     The <a href="http://ant.apache.org/">ant</a> build is a quick build that builds the SchemaCrawler jar
+     without running unit tests. Download
+     <a
+      href="http://ant.apache.org/">ant</a>
+     and run it from the SchemaCrawler directory. The SchemaCrawler jar
+     file will be created in the
+     <code>_distrib</code>
+     directory. The main targets are
+     <code>all.build</code>
+     and
+     <code>all.clean.</code>
+    </p>
+   </subsection>
+   <subsection
+    name="Maven Build">
+    <p>
+     The Maven build is a more comprehensive build that runs unit tests,
+     and can also create the project web-site. Download
+     <a
+      href="http://maven.apache.org/">Maven 2.0.</a>
+     Then run
+     <code>mvn package</code>
+     from the SchemaCrawler directory. The SchemaCrawler distribution
+     will
+     be created in the
+     <code>target</code>
+     of the
+     <code>distribution</code>
+     module.
+    </p>
+   </subsection>
+   <subsection
+    name="Eclipse">
+    <p>
+     Before importing the various SchemaCrawler projects into Eclipse, make sure
+     that you have a successful Maven build. Maven will download all the
+     dependencies needed to build SchemaCrawler. Also, install the
+     <a
+      href="http://m2eclipse.sonatype.org/">m2eclipse Maven Integration for Eclipse
+          </a>
+     plugin.
+    </p>
+   </subsection>
+  </section>
+ </body>
+</document>

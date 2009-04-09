@@ -1,0 +1,4 @@
+Graphviz was not available to create the requested graph. Please reinstall 
+Graphviz, and make it available on the system PATH. Meanwhile, a .dot text file 
+has been created instead. This .dot file can be opened in any Graphviz file 
+viewer.

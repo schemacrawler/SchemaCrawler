@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <artifactId>schemacrawler-all</artifactId>
+    <groupId>schemacrawler</groupId>
+    <version>6.2</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>schemacrawler</groupId>
+  <artifactId>schemacrawler</artifactId>
+  <packaging>jar</packaging>
+  <name>SchemaCrawler</name>
+  <description>SchemaCrawler is an API that improves on the standard JDBC metadata.</description>
+  <url>http://sourceforge.net/projects/schemacrawler</url>
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <quiet>true</quiet>
+          <show>public</show>
+          <stylesheetfile>${basedir}/src/javadoc/javadocs.css</stylesheetfile>
+          <link>http://java.sun.com/j2se/1.5.0/docs/api</link>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+</project>

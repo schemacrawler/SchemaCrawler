@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>schemacrawler</groupId>
+  <artifactId>schemacrawler-all</artifactId>
+  <packaging>pom</packaging>
+  <version>6.2</version>
+  <name>SchemaCrawler [All]</name>
+  <description>SchemaCrawler is an API that improves on the standard JDBC metadata. SchemaCrawler is also a command-line tool to output your database schema and data in a readable form. The output is designed to be diff-ed with previous versions of your database schema.</description>
+  <inceptionYear>2003</inceptionYear>
+  <licenses>
+    <license>
+      <name>GNU Lesser General Public License</name>
+      <url>http://www.gnu.org/copyleft/lesser.txt</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <name>Sualeh Fatehi</name>
+      <id>sfatehi</id>
+      <email>sualeh@hotmail.com</email>
+      <organization>Sualeh Fatehi</organization>
+      <roles>
+        <role>All</role>
+      </roles>
+      <timezone>-5</timezone>
+    </developer>
+  </developers>
+  <organization>
+    <name>Sualeh Fatehi</name>
+  </organization>
+  <scm>
+    <connection>scm:svn:https://schemacrawler.svn.sourceforge.net/svnroot/schemacrawler</connection>
+    <url>https://schemacrawler.svn.sourceforge.net/svnroot/schemacrawler/</url>
+  </scm>
+  <modules>
+    <module>schemacrawler</module>
+    <module>schemacrawler-tools</module>
+    <module>schemacrawler-integrations</module>
+    <module>schemacrawler-maven-plugin</module>
+    <module>schemacrawler-sqlserver</module>
+    <module>schemacrawler-mysql</module>
+    <module>schemacrawler-postgresql</module>
+    <module>distribution</module>
+  </modules>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.5</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>xmlunit</groupId>
+      <artifactId>xmlunit</artifactId>
+      <version>1.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <version>1.8.0.7</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>5</source>
+          <target>5</target>
+        </configuration>
+      </plugin>
+  		<plugin>
+  		  <groupId>org.apache.maven.plugins</groupId>
+  		  <artifactId>maven-source-plugin</artifactId>
+  		  <executions>
+    			<execution>
+    			  <goals>
+      				<goal>jar</goal>
+      				<goal>test-jar</goal>
+    			  </goals>
+    			</execution>
+  		  </executions>
+  		</plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>clean</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

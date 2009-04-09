@@ -1,0 +1,72 @@
+<!DOCTYPE document PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+  "http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+  <properties>
+    <title>SchemaCrawler - Grep Example</title>
+    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
+  </properties>
+  <body>
+    <section name="SchemaCrawler - Grep Example">
+      <subsection name="Description">
+        <p>
+          The grep example shows how to search a schema for tables and columns
+          matching a regular expression.
+        </p>
+      </subsection>
+      <subsection name="How to Run">
+        <ol>
+          <li>Make sure that the Java executable is on your path.</li>
+          <li>
+            Copy the
+            <span class="code">schemacrawler.config.properties</span>
+            file into the
+            <span class="code">grep</span>
+            example directory.
+          </li>
+          <li>
+            Start the database server by running StartDatabaseServer script from
+            the distribution directory.
+          </li>
+          <li>
+            Start a command shell in the
+            <span class="code">grep</span>
+            example directory.
+          </li>
+          <li>
+            Run
+            <span class="code">scgrep.cmd</span>
+            (or
+            <span class="code">scgrep.sh</span>
+            on Unix) to see command line options.
+          </li>
+          <li>
+            Run
+            <span class="code">scgrep.cmd -c hsqldb -tables=C.*</span>
+            (or
+            <span class="code">scgrep.sh -c hsqldb -tables=C.*</span>
+            on Unix) to search for all tables with names starting with 'C'.
+          </li>
+        </ol>
+      </subsection>
+      <subsection name="How to Experiment">
+        <ol type="1">
+          <li>
+            Try modifying the command line to search for tables with column
+            names matching a regular expression. Please note that you may need
+            to escape the command line in an operating system dependent way. For
+            example, on Windows, you may need to use
+            <span class="code">scgrep.cmd -c hsqldb "-tables=C.*|P.*"</span>
+            , with double-quotes around the
+            <span class="code">-tables</span>
+            command-line switch.
+          </li>
+          <li>
+            Redirect the output of SchemaCrawler into a file, by running
+            <span class="code">scgrep.cmd &gt; file.txt</span>
+            .
+          </li>
+        </ol>
+      </subsection>
+    </section>
+  </body>
+</document>

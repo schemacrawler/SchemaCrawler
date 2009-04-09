@@ -1,0 +1,31 @@
+<assembly>
+  <id>distrib</id>
+  <formats>
+    <format>zip</format>
+  </formats>
+  <dependencySets>
+    <dependencySet>
+      <outputDirectory>lib</outputDirectory>
+      <excludes>
+        <exclude>schemacrawler:schemacrawler:jar</exclude>
+        <exclude>schemacrawler:schemacrawler-tools:jar</exclude>
+      </excludes>
+    </dependencySet>
+  </dependencySets>
+  <fileSets>
+    <fileSet>
+      <includes>
+        <include>README*</include>
+        <include>*LICENSE*</include>
+        <include>NOTICE*</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>src/main/resources</directory>
+      <outputDirectory></outputDirectory>
+      <includes>
+        <include>mysql.*</include>
+      </includes>
+     </fileSet>
+  </fileSets>
+</assembly>

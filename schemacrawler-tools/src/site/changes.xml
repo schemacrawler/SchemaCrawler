@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document>
+  <properties>
+    <title>SchemaCrawler</title>
+    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
+  </properties>
+  <body>
+    <release version="6.2" date="2009-04-08">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        A new feature to infer weak associations between tables, even if there is no foreign key.
+        Ruby on Rails table schemes are supported, as well as other simple relationships.
+        Table name prefixes are automatically detected.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Database diagram support using Graphviz. Primary keys 
+        are indicated in a darker color than other columns. Foreign keys are indicated
+        with arrow connectors. Weak associations between tables are shown in dashed lines.
+        Multiple output formats are supported. Support for Jung is dropped. 
+      ]]></action>
+    </release>
+    <release version="6.1" date="2009-03-29">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Better reporting of ascending and descending index columns. This is an API
+        change.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Better grep options, to allow searching through both tables and stored
+        procedures.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Grep options default to excluding stored procedures.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Minor bug fixes for Sybase, including generating warnings when obtaining
+        table column privileges, instead of failing.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        New Windows script file for locating Java, and launching SchemaCrawler.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        Reorganization of distribution, so that only a single SchemaCrawler jar
+        file is distributed in all distributions. License distribution is also
+        reorganized.
+      ]]></action>
+    </release>
+    <release version="6.0.2" date="2008-11-30">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Minor bug fixes for MySQL, where the schema name was being reported as null,
+        causing an exception.
+      ]]></action>
+    </release>
+    <release version="6.0.1" date="2008-10-30">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Minor bug fixes for Oracle,
+        where
+        the data-type was a short instead of an
+        integer.
+      ]]></action>
+    </release>
+    <release version="6.0" date="2008-10-16">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Changed the API so that there
+        is a
+        separation of concerns - the
+        SchemaInfoLevel should be an
+        option,
+        not a
+        CrawlHandler property.
+			]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Changed the API so the top
+        level
+        object is a catalog, which contains
+        schemas. This means that
+        there is full
+        support for multiple schemas.
+			]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added support for JavaScript
+        scripting with J2SE 6 and above.
+			]]></action>
+    </release>
+    <release version="5.5" date="2008-02-28">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed bug that always
+        reported an
+        index as unique.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed bug with primary key
+        columns.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        SchemaCrawler for Microsoft
+        SQL
+        Server to show procedures and triggers.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        SchemaCrawler distribution
+        for any
+        database.
+      ]]></action>
+    </release>
+    <release version="5.4" date="2007-12-15">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added new command line
+        switch,
+        -schemapattern, for specifying schema
+        patterns when a
+        connection is
+        specified from the command line.
+			]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added object attributes
+        automatically, from unused columns in the
+        metadata
+        calls. Nothing
+        goes to
+        waste.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added JDBC driver metadata,
+        including driver properties, and separated
+        those from the database
+        system
+        metadata.
+      ]]></action>
+    </release>
+    <release version="5.3" date="2007-11-15">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Made sure that all relevant
+        license files are getting delivered.
+			]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed bug in accessing
+        foreign key
+        update and delete rules on Oracle.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed equals comparison on
+        all
+        schema objects, and added a unit test for
+        equals.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added an easier way to access
+        foreign keys from the foreign key column
+        itself Use
+        isPartOfForeignKey(),
+        and getReferencedColumn() on the
+        Column
+        class.
+			]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Externalized the wrapper for
+        java.sql.Types into a new public class,
+        schemacrawler.schema.SqlDataType.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added the ability to get
+        result-set metadata.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Changed schema info level
+        from an
+        enum into a class that can be used to
+        specify details on what
+        aspects of
+        the schema need to be retrieved.
+			]]></action>
+    </release>
+    <release version="5.2" date="2007-10-30">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        A significant re-write of the
+        internal command processing code.
+			]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Spring framework support for
+        all of
+        SchemaCrawler functionality,
+        including
+        integrations and grep.
+			]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        New example for grep.
+			]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        New example for using the
+        Spring
+        framework with SchemaCrawler.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Pre-packaged releases do not
+        load
+        config file, even if available.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed Unix shell script for
+        PostgreSQL.
+      ]]></action>
+    </release>
+    <release version="5.1" date="2007-08-05">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Simplified examples.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Executable for SchemaCrawler
+        for
+        Microsoft SQL Server and MySQL.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Commonly available
+        SchemaCrawler
+        command line argument for setting the
+        log
+        level.
+			]]></action>
+    </release>
+    <release version="5.0" date="2007-06-25">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        API changed to use Java 5
+        constructs. Tested with Java 6. API is no
+        longer
+        Java 1.4 compatible.
+			]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Started SchemaCrawler Grep
+        for MS
+        SQL Server.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed
+        java.lang.AbstractMethodError with Java 6.
+      ]]></action>
+    </release>
+    <release version="4.2" date="2007-01-07">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed null pointer exception
+        with
+        DB2.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed error message on a bad
+        command line. Added a general -help option.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added new schema grep
+        functionality, that can search for tables and
+        columns
+        usng regular
+        expressions.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added new example for setting
+        options programatically.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added documentation for
+        provding
+        database connection options directly on
+        the
+        command line.
+			]]></action>
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        Updated ant task to
+        optionally take
+        database connection options as
+        arguments, instead of
+        from the
+        configuration file.
+        ]]></action>
+    </release>
+    <release version="4.1" date="2006-12-07">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed bug [ 1610140 ] Sorting
+        doesn't work.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed output of standard data
+        types. Also changed the configuration
+        option
+        name.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed column output for
+        tables and
+        procedures that contain an underscore
+        in
+        their name. JDBC
+        matches the
+        underscore to a wildcard character.
+			]]></action>
+    </release>
+    <release version="4.0" date="2006-12-03">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added support for SQL
+        standard
+        INFORMATION_SCHEMA views. If equivalent
+        SQL
+        for the standard
+        INFORMATION_SCHEMA view is specified, it is
+        used to
+        provide additional
+        schema information such as
+        check constraints,
+        triggers, and view and
+        procedure definitions.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added support for get index
+        information views. This SQL will be used in
+        preference to the
+        getIndexInfo JDBC method to allow for databases
+        and
+        drivers that do
+        not
+        support getIndexInfo due to
+        permissioning issues.
+			]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Better output format for HTML
+        and
+        text.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Better handling of output
+        file
+        resources.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Better handling of database
+        connection resources.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        More information on the
+        website,
+        and better website usability.
+      ]]></action>
+    </release>
+    <release version="3.8" date="2006-09-26">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added Maven 2.0 plugin for
+        generation of schema reports
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added command line option to
+        provide database connection information
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Worked around a bug in the
+        Oracle
+        driver as described in
+        http://issues.apache.org/jira/browse/DDLUTILS-29?page=all
+      ]]></action>
+    </release>
+    <release version="3.7" date="2006-06-12">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added retrieval of database
+        properties
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added retrieval of column
+        data
+        types, both system datatypes and UDTs
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added unit tests to ensure
+        that the
+        XHTML output is valid XML
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed bug with merge rows
+        option
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed bug with appending
+        output
+        when multiple runs of SchemaCrawler
+        append to
+        the same output
+        file
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed SQLException with
+        Oracle
+        Database 10g Express Edition driver on
+        outputting views
+			]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added XStream integration for
+        XML
+        serialization and deserialization
+			]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added new command,
+        maximum_schema,
+        that can give all possible details of
+        the
+        schema
+			]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Obtain database system
+        properties
+        when the maximum schema command is
+        used
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added integrations with
+        FreeMarker
+        for templated output
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="remove"><![CDATA[ 
+        Removed Betwixt integration,
+        since
+        the required functionality is
+        provided by
+        XStream
+        ]]></action>
+    </release>
+    <release version="3.6" date="2006-03-28">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added integrations with
+        Velocity
+        for templated output, and with JUNG for
+        JPEG graph
+        generation
+			]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added new examples to
+        demonstrate
+        Velocity templating, and JUNG graphs
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        New command line option to
+        specify
+        the output file name
+      ]]></action>
+    </release>
+    <release version="3.5" date="2006-03-06">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added ability to retrieve
+        column
+        and table privileges
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added Betwixt mappings for
+        XML
+        serialization and de-serialization
+			]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added Unix shell scripts for
+        examples
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed bug with the ordering
+        of
+        primary key and index columns
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        Changed API - ColumnInfoLevel
+        is
+        called SchemaInfoLevel
+        ]]></action>
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        Moved source repository to
+        Subversion
+        ]]></action>
+    </release>
+    <release version="3.4" date="2006-01-16">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Correction of spelling of the
+        "sort_alphabetically" option names
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        Refactoring of inhertance
+        hierarchy of database objects, resulting in
+        fewer
+        equals, hashCode
+        and
+        compareTo implementations
+        ]]></action>
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        Better HTML formatting for
+        counts
+        ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Dirty reads are performed for
+        counts and other operations
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Sets the default value for
+        table
+        columns
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        Javadoc clean-up
+        ]]></action>
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        Findbugs, checkstyle, and PMD
+        code
+        smells clean-up
+        ]]></action>
+    </release>
+    <release version="3.3" date="2005-11-03">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        The ability to include as
+        well as
+        exclude tables using regular
+        expressions.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        The ability to include as
+        well as
+        exclude columns using regular
+        expressions.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        A new substitution variable,
+        ${columns}, for use in database queries
+        that
+        iterate over tables.
+			]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        New examples for executing
+        database-specific and user-defined queries
+        have
+        been added.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Better output formatting for
+        HTML
+        dumps, and counts in text format.
+			]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        New website.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Worked around an issue with
+        the
+        Sybase driver, that provides primary
+        keys in
+        a different order
+        than most
+        other drivers.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Improved logging, and made
+        the log
+        level in the configuration really
+        work.
+      ]]></action>
+    </release>
+  </body>
+</document>

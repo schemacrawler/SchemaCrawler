@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<project
+  name="Graphing"
+  default="graphing"
+  xmlns:ivy="antlib:fr.jayasoft.ivy.ant">
+
+  <description>Graphing - Integration of SchemaCrawler with GraphViz.</description>
+  <property environment="env" />
+
+  <!-- Step 1.
+    Define the ant tasks (macros) that come with SchemaCrawler
+  -->
+  <typedef
+    resource="schemacrawler-integrations-antlib.xml"
+    classpath="../schemacrawler-6.2.jar" />
+
+  <!-- Step 2.
+    Define the classpath to the database driver
+  -->
+  <path id="db-driver-classpath">
+    <fileset dir="..">
+      <include name="*.jar" />
+    </fileset>
+  </path>
+
+  <!-- Step 3.
+    Define an ant task that uses the <schemacrawler-graphing> macro
+  -->
+  <target name="graphing">
+
+    <property
+      name="graph-type"
+      value="png" />
+    <property
+      name="outputfile"
+      value="schema-graph.png" />
+
+    <delete file="${outputfile}" />
+
+    <schemacrawler-graphing
+      datasource="hsqldb"
+      db-driver-classpath="db-driver-classpath"
+      command="verbose_schema"
+    	graph-type="${graph-type}"
+      outputfile="${outputfile}" />
+
+    <echo message="Graph is in ${outputfile}" />
+
+  </target>
+
+</project>
