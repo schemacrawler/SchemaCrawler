@@ -203,92 +203,92 @@ public final class SchemaInfoLevel
     return retrieveWeakAssociations;
   }
 
-  public void setRetrieveAdditionalDatabaseInfo(boolean retrieveAdditionalDatabaseInfo)
+  public void setRetrieveAdditionalDatabaseInfo(final boolean retrieveAdditionalDatabaseInfo)
   {
     this.retrieveAdditionalDatabaseInfo = retrieveAdditionalDatabaseInfo;
   }
 
-  public void setRetrieveCheckConstraintInformation(boolean retrieveCheckConstraintInformation)
+  public void setRetrieveCheckConstraintInformation(final boolean retrieveCheckConstraintInformation)
   {
     this.retrieveCheckConstraintInformation = retrieveCheckConstraintInformation;
   }
 
-  public void setRetrieveColumnDataTypes(boolean retrieveColumnDataTypes)
+  public void setRetrieveColumnDataTypes(final boolean retrieveColumnDataTypes)
   {
     this.retrieveColumnDataTypes = retrieveColumnDataTypes;
   }
 
-  public void setRetrieveDatabaseInfo(boolean retrieveDatabaseInfo)
+  public void setRetrieveDatabaseInfo(final boolean retrieveDatabaseInfo)
   {
     this.retrieveDatabaseInfo = retrieveDatabaseInfo;
   }
 
-  public void setRetrieveForeignKeys(boolean retrieveForeignKeys)
+  public void setRetrieveForeignKeys(final boolean retrieveForeignKeys)
   {
     this.retrieveForeignKeys = retrieveForeignKeys;
   }
 
-  public void setRetrieveIndices(boolean retrieveIndices)
+  public void setRetrieveIndices(final boolean retrieveIndices)
   {
     this.retrieveIndices = retrieveIndices;
   }
 
-  public void setRetrieveJdbcDriverInfo(boolean retrieveJdbcDriverInfo)
+  public void setRetrieveJdbcDriverInfo(final boolean retrieveJdbcDriverInfo)
   {
     this.retrieveJdbcDriverInfo = retrieveJdbcDriverInfo;
   }
 
-  public void setRetrieveProcedureColumns(boolean retrieveProcedureColumns)
+  public void setRetrieveProcedureColumns(final boolean retrieveProcedureColumns)
   {
     this.retrieveProcedureColumns = retrieveProcedureColumns;
   }
 
-  public void setRetrieveProcedureInformation(boolean retrieveProcedureInformation)
+  public void setRetrieveProcedureInformation(final boolean retrieveProcedureInformation)
   {
     this.retrieveProcedureInformation = retrieveProcedureInformation;
   }
 
-  public void setRetrieveProcedures(boolean retrieveProcedures)
+  public void setRetrieveProcedures(final boolean retrieveProcedures)
   {
     this.retrieveProcedures = retrieveProcedures;
   }
 
-  public void setRetrieveTableColumnPrivileges(boolean retrieveTableColumnPrivileges)
+  public void setRetrieveTableColumnPrivileges(final boolean retrieveTableColumnPrivileges)
   {
     this.retrieveTableColumnPrivileges = retrieveTableColumnPrivileges;
   }
 
-  public void setRetrieveTableColumns(boolean retrieveTableColumns)
+  public void setRetrieveTableColumns(final boolean retrieveTableColumns)
   {
     this.retrieveTableColumns = retrieveTableColumns;
   }
 
-  public void setRetrieveTablePrivileges(boolean retrieveTablePrivileges)
+  public void setRetrieveTablePrivileges(final boolean retrieveTablePrivileges)
   {
     this.retrieveTablePrivileges = retrieveTablePrivileges;
   }
 
-  public void setRetrieveTables(boolean retrieveTables)
+  public void setRetrieveTables(final boolean retrieveTables)
   {
     this.retrieveTables = retrieveTables;
   }
 
-  public void setRetrieveTriggerInformation(boolean retrieveTriggerInformation)
+  public void setRetrieveTriggerInformation(final boolean retrieveTriggerInformation)
   {
     this.retrieveTriggerInformation = retrieveTriggerInformation;
   }
 
-  public void setRetrieveUserDefinedColumnDataTypes(boolean retrieveUserDefinedColumnDataTypes)
+  public void setRetrieveUserDefinedColumnDataTypes(final boolean retrieveUserDefinedColumnDataTypes)
   {
     this.retrieveUserDefinedColumnDataTypes = retrieveUserDefinedColumnDataTypes;
   }
 
-  public void setRetrieveViewInformation(boolean retrieveViewInformation)
+  public void setRetrieveViewInformation(final boolean retrieveViewInformation)
   {
     this.retrieveViewInformation = retrieveViewInformation;
   }
 
-  public void setRetrieveWeakAssociations(boolean retrieveWeakAssociations)
+  public void setRetrieveWeakAssociations(final boolean retrieveWeakAssociations)
   {
     this.retrieveWeakAssociations = retrieveWeakAssociations;
   }

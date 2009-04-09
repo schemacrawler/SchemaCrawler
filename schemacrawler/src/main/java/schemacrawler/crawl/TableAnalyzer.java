@@ -53,51 +53,6 @@ public class TableAnalyzer
     }
   }
 
-  private MutableWeakAssociations findWeakAssociations(final NamedObjectList<MutableTable> tables,
-                                                       final Map<String, Table> tableMatchMap,
-                                                       final Map<String, ForeignKeyColumnMap> fkColumnsMap)
-  {
-    final MutableWeakAssociations weakAssociations = new MutableWeakAssociations();
-    final List<MutableTable> tablesList = tables.getAll();
-    for (final MutableTable table: tablesList)
-    {
-      final Map<String, Column> columnNameMatchesMap = mapColumnNameMatches(table);
-
-      for (final Map.Entry<String, Column> columnEntry: columnNameMatchesMap
-        .entrySet())
-      {
-        final String matchColumnName = columnEntry.getKey();
-        final Table matchedTable = tableMatchMap.get(matchColumnName);
-        final Column fkColumn = columnEntry.getValue();
-        if (matchedTable != null && !fkColumn.getParent().equals(matchedTable))
-        {
-          // Check if the table association is already expressed as a
-          // foreign key
-          final ForeignKeyColumnMap fkColumnMap = fkColumnsMap.get(fkColumn
-            .getFullName());
-          if (fkColumnMap == null
-              || !fkColumnMap.getPrimaryKeyColumn().getParent()
-                .equals(matchedTable))
-          {
-            // Ensure that we associate to the primary key
-            final Map<String, Column> pkColumnNameMatchesMap = mapColumnNameMatches(matchedTable);
-            final Column pkColumn = pkColumnNameMatchesMap.get("id");
-            if (pkColumn != null
-                && fkColumn.getType().getType() == pkColumn.getType().getType())
-            {
-              LOGGER.log(Level.FINE, "Found association "
-                                     + fkColumn.getFullName() + " --> "
-                                     + pkColumn.getFullName());
-              weakAssociations.addColumnPair(pkColumn, fkColumn);
-            }
-          }
-        }
-      }
-    }
-
-    return weakAssociations;
-  }
-
   /**
    * Finds table prefixes. A prefix ends with "_".
    */
@@ -189,6 +144,51 @@ public class TableAnalyzer
     prefixes.add("");
 
     return prefixes;
+  }
+
+  private MutableWeakAssociations findWeakAssociations(final NamedObjectList<MutableTable> tables,
+                                                       final Map<String, Table> tableMatchMap,
+                                                       final Map<String, ForeignKeyColumnMap> fkColumnsMap)
+  {
+    final MutableWeakAssociations weakAssociations = new MutableWeakAssociations();
+    final List<MutableTable> tablesList = tables.getAll();
+    for (final MutableTable table: tablesList)
+    {
+      final Map<String, Column> columnNameMatchesMap = mapColumnNameMatches(table);
+
+      for (final Map.Entry<String, Column> columnEntry: columnNameMatchesMap
+        .entrySet())
+      {
+        final String matchColumnName = columnEntry.getKey();
+        final Table matchedTable = tableMatchMap.get(matchColumnName);
+        final Column fkColumn = columnEntry.getValue();
+        if (matchedTable != null && !fkColumn.getParent().equals(matchedTable))
+        {
+          // Check if the table association is already expressed as a
+          // foreign key
+          final ForeignKeyColumnMap fkColumnMap = fkColumnsMap.get(fkColumn
+            .getFullName());
+          if (fkColumnMap == null
+              || !fkColumnMap.getPrimaryKeyColumn().getParent()
+                .equals(matchedTable))
+          {
+            // Ensure that we associate to the primary key
+            final Map<String, Column> pkColumnNameMatchesMap = mapColumnNameMatches(matchedTable);
+            final Column pkColumn = pkColumnNameMatchesMap.get("id");
+            if (pkColumn != null
+                && fkColumn.getType().getType() == pkColumn.getType().getType())
+            {
+              LOGGER.log(Level.FINE, "Found association "
+                                     + fkColumn.getFullName() + " --> "
+                                     + pkColumn.getFullName());
+              weakAssociations.addColumnPair(pkColumn, fkColumn);
+            }
+          }
+        }
+      }
+    }
+
+    return weakAssociations;
   }
 
   private int indexOfDifference(final String string1, final String string2)
