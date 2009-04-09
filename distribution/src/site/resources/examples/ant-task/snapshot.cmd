@@ -1,0 +1,1 @@
+@ant -f snapshot.xml %*

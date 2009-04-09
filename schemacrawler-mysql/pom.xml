@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>schemacrawler</groupId>
+    <artifactId>schemacrawler-all</artifactId>
+    <version>6.2</version>
+  </parent>
+  <groupId>schemacrawler</groupId>
+  <artifactId>schemacrawler-mysql</artifactId>
+  <packaging>jar</packaging>
+  <name>SchemaCrawler for MySQL</name>
+  <licenses>
+    <license>
+      <name>GNU General Public License</name>
+      <url>http://www.gnu.org/copyleft/gpl.html</url>
+    </license>
+  </licenses>
+  <dependencies>
+    <dependency>
+      <groupId>schemacrawler</groupId>
+      <artifactId>schemacrawler-integrations</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>5.1.6</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>attached</goal>
+            </goals>
+            <configuration>
+              <descriptors>
+                <descriptor>src/assembly/distrib-zip.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

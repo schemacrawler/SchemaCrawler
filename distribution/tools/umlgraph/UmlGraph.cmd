@@ -1,0 +1,1 @@
+mvn install:install-file -Dpackaging=jar -DartifactId=umlgraph -Dversion=4.8 -Dfile=UmlGraph.jar -DgroupId=gr.spinellis -DpomFile=UmlGraph.pom
