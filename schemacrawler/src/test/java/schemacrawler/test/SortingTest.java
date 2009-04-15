@@ -107,6 +107,7 @@ public class SortingTest
     schemaCrawlerOptions.setAlphabeticalSortForTableColumns(sortAlphabetically);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
     final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
+    assertNotNull("Schema not found", schema);
 
     final Table table = schema.getTable("INVOICE");
     assertNotNull("Table INVOICE not found", table);
@@ -132,6 +133,7 @@ public class SortingTest
     schemaCrawlerOptions.setAlphabeticalSortForForeignKeys(sortAlphabetically);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
     final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
+    assertNotNull("Schema not found", schema);
 
     final Table[] tables = schema.getTables();
     assertEquals("Table count does not match", 6, tables.length);
@@ -159,6 +161,7 @@ public class SortingTest
     schemaCrawlerOptions.setAlphabeticalSortForIndexes(sortAlphabetically);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
     final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
+    assertNotNull("Schema not found", schema);
 
     final Table[] tables = schema.getTables();
     assertEquals("Table count does not match", 6, tables.length);
