@@ -5,6 +5,13 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+    <release version="6.3" date="2009-04-08">
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        SchemaCrawler Grep functionality is built into the SchemaCrawler options, and the
+        SchemaCrawler command line. This means that all of the SchemaCrawler commands,
+        including graphing, will use grep options.
+      ]]></action>
+    </release>  
     <release version="6.2" date="2009-04-08">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         A new feature to infer weak associations between tables, even if there is no foreign key.

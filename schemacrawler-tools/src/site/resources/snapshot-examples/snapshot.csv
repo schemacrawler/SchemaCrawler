@@ -3116,7 +3116,7 @@ ID,NAME,PRICE
 22,Iron Iron,6.6
 23,Shoe Chair,7.6
 24,Chair Shoe,7.2
-25,Shoe Shoe,16.2
+25,Shoe Shoe,16.3
 26,Shoe Shoe,25.2
 27,Telephone Iron,23.0
 28,Clock Iron,3.0
@@ -3137,7 +3137,7 @@ ID,NAME,PRICE
 43,Telephone Clock,9.4
 44,Ice Tea Ice Tea,9.6
 45,Iron Ice Tea,18.0
-46,Ice Tea Clock,6.2
+46,Ice Tea Clock,6.3
 47,Ice Tea Iron,17.8
 48,Clock Clock,21.0
 49,Iron Iron,2.2
