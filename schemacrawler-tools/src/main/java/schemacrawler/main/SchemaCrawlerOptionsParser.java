@@ -22,6 +22,7 @@ package schemacrawler.main;
 
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import sf.util.CommandLineParser.BooleanOption;
 import sf.util.CommandLineParser.Option;
@@ -36,11 +37,29 @@ final class SchemaCrawlerOptionsParser
   extends BaseCommandLineParser<SchemaCrawlerOptions>
 {
 
+  private final StringOption optionSchemaPattern = new StringOption(Option.NO_SHORT_FORM,
+                                                                    "schemapattern",
+                                                                    "");
   private final BooleanOption optionShowStoredProcedures = new BooleanOption(Option.NO_SHORT_FORM,
                                                                              "show_stored_procedures");
   private final StringOption optionTableTypes = new StringOption(Option.NO_SHORT_FORM,
                                                                  "table_types",
                                                                  SchemaCrawlerOptions.DEFAULT_TABLE_TYPES);
+
+  private final StringOption optionTables = new StringOption(Option.NO_SHORT_FORM,
+                                                             "tables",
+                                                             InclusionRule.ALL);
+  private final StringOption optionGrepColumns = new StringOption(Option.NO_SHORT_FORM,
+                                                                  "grep-columns",
+                                                                  InclusionRule.NONE);
+  private final StringOption optionProcedures = new StringOption(Option.NO_SHORT_FORM,
+                                                                 "procedures",
+                                                                 InclusionRule.ALL);
+  private final StringOption optionGrepProcedureColumns = new StringOption(Option.NO_SHORT_FORM,
+                                                                           "grep-inout",
+                                                                           InclusionRule.NONE);
+  private final BooleanOption optionGrepInvertMatch = new BooleanOption('v',
+                                                                    "invert-match");
 
   private final SchemaCrawlerOptions options;
 
@@ -56,9 +75,20 @@ final class SchemaCrawlerOptionsParser
   protected SchemaCrawlerOptions getValue()
   {
     parse(new Option[] {
-        optionTableTypes, optionShowStoredProcedures
+        optionSchemaPattern,
+        optionTableTypes,
+        optionShowStoredProcedures,
+        optionTables,
+        optionGrepColumns,
+        optionProcedures,
+        optionGrepProcedureColumns,
+        optionGrepInvertMatch
     });
 
+    if (optionGrepInvertMatch.isFound())
+    {
+      options.setGrepInvertMatch(optionGrepInvertMatch.getValue());
+    }
     if (optionTableTypes.isFound())
     {
       options.setTableTypes(optionTableTypes.getValue());
@@ -66,6 +96,35 @@ final class SchemaCrawlerOptionsParser
     if (optionShowStoredProcedures.isFound())
     {
       options.setShowStoredProcedures(optionShowStoredProcedures.getValue());
+    }
+
+    if (optionTables.isFound())
+    {
+      final InclusionRule tableInclusionRule = new InclusionRule(optionTables
+        .getValue(), InclusionRule.NONE);
+      options.setTableInclusionRule(tableInclusionRule);
+    }
+    if (optionGrepColumns.isFound())
+    {
+      final InclusionRule grepColumnInclusionRule = new InclusionRule(optionGrepColumns
+                                                                        .getValue(),
+                                                                      InclusionRule.NONE);
+      options.setGrepColumnInclusionRule(grepColumnInclusionRule);
+    }
+    if (optionProcedures.isFound())
+    {
+      final InclusionRule procedureInclusionRule = new InclusionRule(optionProcedures
+                                                                       .getValue(),
+                                                                     InclusionRule.NONE);
+      options.setProcedureInclusionRule(procedureInclusionRule);
+    }
+    if (optionGrepProcedureColumns.isFound())
+    {
+      final InclusionRule grepProcedureColumnInclusionRule = new InclusionRule(optionGrepProcedureColumns
+                                                                                 .getValue(),
+                                                                               InclusionRule.NONE);
+      options
+        .setGrepProcedureColumnInclusionRule(grepProcedureColumnInclusionRule);
     }
 
     return options;

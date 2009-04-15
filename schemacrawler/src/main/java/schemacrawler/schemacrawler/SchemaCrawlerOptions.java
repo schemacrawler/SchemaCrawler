@@ -39,7 +39,10 @@ public final class SchemaCrawlerOptions
 
   private static final long serialVersionUID = -3557794862382066029L;
 
+  private static final String OTHER_SCHEMA_PATTERN = "schemapattern";
+  private static final String SC_TABLE_TYPES = "schemacrawler.table_types";
   private static final String SC_SHOW_STORED_PROCEDURES = "schemacrawler.show_stored_procedures";
+
   private static final String SC_COLUMN_PATTERN_EXCLUDE = "schemacrawler.column.pattern.exclude";
   private static final String SC_COLUMN_PATTERN_INCLUDE = "schemacrawler.column.pattern.include";
   private static final String SC_TABLE_PATTERN_EXCLUDE = "schemacrawler.table.pattern.exclude";
@@ -54,9 +57,13 @@ public final class SchemaCrawlerOptions
   private static final String SC_SORT_ALPHABETICALLY_TABLE_INDEXES = "schemacrawler.sort_alphabetically.table_indices";
   private static final String SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS = "schemacrawler.sort_alphabetically.table_foreignkeys";
   private static final String SC_SORT_ALPHABETICALLY_TABLE_COLUMNS = "schemacrawler.sort_alphabetically.table_columns";
-  private static final String SC_TABLE_TYPES = "schemacrawler.table_types";
 
-  private static final String OTHER_SCHEMA_PATTERN = "schemapattern";
+  private static final String SC_GREP_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.column.pattern.exclude";
+  private static final String SC_GREP_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.column.pattern.include";
+  private static final String SC_GREP_PROCEDURE_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.procedure.column.pattern.exclude";
+  private static final String SC_GREP_PROCEDURE_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.procedure.column.pattern.include";
+
+  private static final String SC_GREP_INVERT_MATCH = "schemacrawler.grep.invert-match";
 
   private static TableType[] copyTableTypes(final TableType[] tableTypes)
   {
@@ -65,8 +72,8 @@ public final class SchemaCrawlerOptions
     return tableTypesCopy;
   }
 
+  private String schemaPattern;
   private TableType[] tableTypes;
-
   private boolean showStoredProcedures;
 
   private InclusionRule tableInclusionRule;
@@ -78,12 +85,14 @@ public final class SchemaCrawlerOptions
   private boolean isAlphabeticalSortForTableColumns;
   private boolean isAlphabeticalSortForForeignKeys;
   private boolean isAlphabeticalSortForIndexes;
-
   private boolean isAlphabeticalSortForProcedureColumns;
 
   private SchemaInfoLevel schemaInfoLevel;
   private InformationSchemaViews informationSchemaViews;
-  private String schemaPattern;
+
+  private InclusionRule grepColumnInclusionRule;
+  private InclusionRule grepProcedureColumnInclusionRule;
+  private boolean grepInvertMatch;
 
   /**
    * Default options.
@@ -151,6 +160,20 @@ public final class SchemaCrawlerOptions
       .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES);
     isAlphabeticalSortForProcedureColumns = configProperties
       .getBooleanValue(SC_SORT_ALPHABETICALLY_PROCEDURE_COLUMNS);
+
+    grepColumnInclusionRule = new InclusionRule(configProperties
+                                                  .getStringValue(SC_GREP_COLUMN_PATTERN_INCLUDE,
+                                                                  InclusionRule.ALL),
+                                                configProperties
+                                                  .getStringValue(SC_GREP_COLUMN_PATTERN_EXCLUDE,
+                                                                  InclusionRule.NONE));
+    grepProcedureColumnInclusionRule = new InclusionRule(configProperties
+      .getStringValue(SC_GREP_PROCEDURE_COLUMN_PATTERN_INCLUDE,
+                      InclusionRule.ALL), configProperties
+      .getStringValue(SC_GREP_PROCEDURE_COLUMN_PATTERN_EXCLUDE,
+                      InclusionRule.NONE));
+    grepInvertMatch = configProperties.getBooleanValue(SC_GREP_INVERT_MATCH);
+
   }
 
   /**
@@ -172,6 +195,26 @@ public final class SchemaCrawlerOptions
   public InclusionRule getColumnInclusionRule()
   {
     return columnInclusionRule;
+  }
+
+  /**
+   * Gets the column inclusion rule for grep.
+   * 
+   * @return Column inclusion rule for grep.
+   */
+  public InclusionRule getGrepColumnInclusionRule()
+  {
+    return grepColumnInclusionRule;
+  }
+
+  /**
+   * Gets the procedure column rule for grep.
+   * 
+   * @return Procedure column rule for grep.
+   */
+  public InclusionRule getGrepProcedureColumnInclusionRule()
+  {
+    return grepProcedureColumnInclusionRule;
   }
 
   /**
@@ -295,6 +338,16 @@ public final class SchemaCrawlerOptions
   }
 
   /**
+   * Whether to invert matches.
+   * 
+   * @return Whether to invert matches.
+   */
+  public boolean isGrepInvertMatch()
+  {
+    return grepInvertMatch;
+  }
+
+  /**
    * Whether stored procedures are output.
    * 
    * @return Whether stored procedures are output
@@ -361,6 +414,47 @@ public final class SchemaCrawlerOptions
       throw new IllegalArgumentException("Cannot use null value in a setter");
     }
     this.columnInclusionRule = columnInclusionRule;
+  }
+
+  /**
+   * Sets the column inclusion rule for grep.
+   * 
+   * @param columnInclusionRule
+   *        Column inclusion rule for grep
+   */
+  public void setGrepColumnInclusionRule(final InclusionRule grepColumnInclusionRule)
+  {
+    if (grepColumnInclusionRule == null)
+    {
+      throw new IllegalArgumentException("Cannot use null value in a setter");
+    }
+    this.grepColumnInclusionRule = grepColumnInclusionRule;
+  }
+
+  /**
+   * Set whether to invert matches.
+   * 
+   * @param invertMatch
+   *        Whether to invert matches.
+   */
+  public void setGrepInvertMatch(boolean grepInvertMatch)
+  {
+    this.grepInvertMatch = grepInvertMatch;
+  }
+
+  /**
+   * Sets the procedure column inclusion rule for grep.
+   * 
+   * @param procedureColumnInclusionRule
+   *        Procedure column inclusion rule for grep
+   */
+  public void setGrepProcedureColumnInclusionRule(final InclusionRule grepProcedureColumnInclusionRule)
+  {
+    if (grepProcedureColumnInclusionRule == null)
+    {
+      throw new IllegalArgumentException("Cannot use null value in a setter");
+    }
+    this.grepProcedureColumnInclusionRule = grepProcedureColumnInclusionRule;
   }
 
   /**

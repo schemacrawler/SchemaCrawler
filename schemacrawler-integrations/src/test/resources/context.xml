@@ -260,50 +260,6 @@
   </bean>
 
   <bean
-    id="grepOptions"
-    class="schemacrawler.tools.grep.GrepOptions">
-    <property
-      name="showOrdinalNumbers"
-      value="false" />
-    <property
-      name="showStandardColumnTypeNames"
-      value="true" />
-    <property
-      name="hidePrimaryKeyNames"
-      value="true" />
-    <property
-      name="hideIndexNames"
-      value="true" />
-    <property
-      name="hideForeignKeyNames"
-      value="true" />
-    <property
-      name="hideConstraintNames"
-      value="true" />
-    <property
-      name="schemaTextDetailType"
-      value="basic_schema" />
-    <property
-      name="outputOptions"
-      ref="outputOptions" />
-    <property name="tableInclusionRule">
-      <bean class="schemacrawler.schemacrawler.InclusionRule">
-        <constructor-arg value="C.*|P.*" />
-        <constructor-arg value="" />
-      </bean>
-    </property>
-    <property name="tableColumnInclusionRule">
-      <bean class="schemacrawler.schemacrawler.InclusionRule">
-        <constructor-arg value=".*\.STREET|.*\.PRICE" />
-        <constructor-arg value="" />
-      </bean>
-    </property>
-    <property
-      name="invertMatch"
-      value="false" />
-  </bean>
-
-  <bean
     id="executableForSchema"
     class="schemacrawler.tools.schematext.SchemaCrawlerExecutable">
     <property
@@ -367,17 +323,6 @@
     <property
       name="toolOptions"
       ref="schemaTextOptionsForFreeMarker" />
-  </bean>
-
-  <bean
-    id="executableForGrep"
-    class="schemacrawler.tools.grep.GrepExecutable">
-    <property
-      name="schemaCrawlerOptions"
-      ref="schemaCrawlerOptions" />
-    <property
-      name="toolOptions"
-      ref="grepOptions" />
   </bean>
 
 </beans>

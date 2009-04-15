@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<launchConfiguration type="de.odysseus.stan.eclipse.jdt.launch.type">
-<stringAttribute key="environment" value="java"/>
-<listAttribute key="exclusions"/>
-<stringAttribute key="level" value="MEMBER"/>
-<stringAttribute key="libraries_model" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; &#10;&lt;java version=&quot;1.5.0_11&quot; class=&quot;java.beans.XMLDecoder&quot;&gt; &#10; &lt;object class=&quot;java.util.ArrayList&quot;&gt; &#10;  &lt;void method=&quot;add&quot;&gt; &#10;   &lt;object class=&quot;de.odysseus.stan.eclipse.jdt.launch.Container&quot;&gt; &#10;    &lt;void property=&quot;label&quot;&gt; &#10;     &lt;string&gt;/SchemaCrawler - Tools/src/main/java&lt;/string&gt; &#10;    &lt;/void&gt; &#10;    &lt;void property=&quot;path&quot;&gt; &#10;     &lt;string&gt;/SchemaCrawler - Tools/src/main/java&lt;/string&gt; &#10;    &lt;/void&gt; &#10;    &lt;void property=&quot;type&quot;&gt; &#10;     &lt;string&gt;JavaSourceFolder&lt;/string&gt; &#10;    &lt;/void&gt; &#10;   &lt;/object&gt; &#10;  &lt;/void&gt; &#10; &lt;/object&gt; &#10;&lt;/java&gt; &#10;"/>
-<listAttribute key="org.eclipse.debug.ui.favoriteGroups">
-<listEntry value="de.odysseus.stan.eclipse.jdt.launch.group"/>
+<launchConfiguration type="org.eclipse.jdt.junit.launchconfig">
+<booleanAttribute key="com.mountainminds.eclemma.core.INPLACE_INSTRUMENTATION" value="false"/>
+<listAttribute key="com.mountainminds.eclemma.core.INSTRUMENTATION_PATHS">
+<listEntry value="/SchemaCrawler - Database Connector/target/test-classes"/>
+<listEntry value="/SchemaCrawler - Tools/target/classes"/>
+<listEntry value="/SchemaCrawler - Database Connector/target/classes"/>
+<listEntry value="/SchemaCrawler - Tools/src/main/resources"/>
 </listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/SchemaCrawler - Tools"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="4"/>
+</listAttribute>
+<booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
+<stringAttribute key="org.eclipse.jdt.junit.CONTAINER" value="=SchemaCrawler - Tools"/>
+<booleanAttribute key="org.eclipse.jdt.junit.KEEPRUNNING_ATTR" value="false"/>
+<stringAttribute key="org.eclipse.jdt.junit.TESTNAME" value=""/>
+<stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit4"/>
+<stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.classpathProvider"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value=""/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SchemaCrawler - Tools"/>
+<stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.sourcepathProvider"/>
 </launchConfiguration>

@@ -34,8 +34,9 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.grep.GrepExecutable;
-import schemacrawler.tools.grep.GrepOptions;
+import schemacrawler.tools.schematext.SchemaCrawlerExecutable;
+import schemacrawler.tools.schematext.SchemaTextDetailType;
+import schemacrawler.tools.schematext.SchemaTextOptions;
 import schemacrawler.utility.test.TestUtility;
 
 public class SchemaCrawlerGrepTest
@@ -118,17 +119,20 @@ public class SchemaCrawlerGrepTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
 
-    final GrepOptions grepOptions = new GrepOptions();
-    grepOptions.setTableColumnInclusionRule(new InclusionRule(".*\\..*\\.ID",
-                                                              ""));
+    schemaCrawlerOptions
+      .setGrepColumnInclusionRule(new InclusionRule(".*\\..*\\.ID", ""));
     final CachingCrawlHandler crawlHandler = new CachingCrawlHandler(testUtility
       .getCatalogName());
 
-    final GrepExecutable grepExecutable = new GrepExecutable();
-    grepExecutable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    grepExecutable.setToolOptions(grepOptions);
-    grepExecutable.setCrawlHandler(crawlHandler);
-    grepExecutable.execute(testUtility.getDataSource());
+    final SchemaTextOptions schemaTextOptions = new SchemaTextOptions();
+    schemaTextOptions
+      .setSchemaTextDetailType(SchemaTextDetailType.maximum_schema);
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable();
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setToolOptions(schemaTextOptions);
+    executable.setCrawlHandler(crawlHandler);
+    executable.execute(testUtility.getDataSource());
 
     final Catalog catalog = crawlHandler.getCatalog();
     final Schema[] schemas = catalog.getSchemas();
