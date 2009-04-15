@@ -41,11 +41,6 @@ public abstract class BaseCommandLineParser<O>
     this.args = args;
   }
 
-  protected String[] getArgs()
-  {
-    return args;
-  }
-
   /**
    * Parses the command line.
    * 

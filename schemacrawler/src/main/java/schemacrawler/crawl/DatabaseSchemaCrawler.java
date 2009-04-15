@@ -27,10 +27,15 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schema.Column;
+import schemacrawler.schema.Procedure;
+import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.ResultsColumns;
+import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.WeakAssociations;
 import schemacrawler.schemacrawler.CrawlHandler;
+import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -306,7 +311,10 @@ public final class DatabaseSchemaCrawler
       procedure.setColumnComparator(NamedObjectSort.getNamedObjectSort(options
         .isAlphabeticalSortForProcedureColumns()));
       // handle procedure
-      handler.handle(procedure);
+      if (include(options, procedure))
+      {
+        handler.handle(procedure);
+      }
     }
   }
 
@@ -405,7 +413,10 @@ public final class DatabaseSchemaCrawler
       table.setIndexComparator(NamedObjectSort.getNamedObjectSort(options
         .isAlphabeticalSortForIndexes()));
       // handle table
-      handler.handle(table);
+      if (include(options, table))
+      {
+        handler.handle(table);
+      }
     }
 
     if (infoLevel.isRetrieveWeakAssociations())
@@ -415,6 +426,93 @@ public final class DatabaseSchemaCrawler
         .analyzeTables(tables);
       handler.handle(weakAssociations);
     }
+  }
+
+  /**
+   * Special case for "grep" like functionality. Handle procedure if a
+   * procedure column inclusion rule is found, and at least one column
+   * matches the rule.
+   * 
+   * @param options
+   *        Options
+   * @param procedure
+   *        Procedure to check
+   * @return Whether the column should be included
+   */
+  private boolean include(final SchemaCrawlerOptions options,
+                          final Procedure procedure)
+  {
+    final InclusionRule grepProcedureColumnInclusionRule = options
+      .getProcedureColumnInclusionRule();
+    final boolean invertMatch = options.isGrepInvertMatch();
+
+    boolean include = false;
+    final ProcedureColumn[] columns = procedure.getColumns();
+    if (columns.length == 0)
+    {
+      include = true;
+    }
+    else
+    {
+      for (final ProcedureColumn column: columns)
+      {
+        if (grepProcedureColumnInclusionRule.include(column.getFullName()))
+        {
+          // We found a column that should be included,
+          // so handle the procedure
+          include = true;
+          break;
+        }
+      }
+    }
+    if (invertMatch)
+    {
+      include = !include;
+    }
+    return include;
+  }
+
+  /**
+   * Special case for "grep" like functionality. Handle table if a table
+   * column inclusion rule is found, and at least one column matches the
+   * rule.
+   * 
+   * @param options
+   *        Options
+   * @param table
+   *        Table to check
+   * @return Whether the column should be included
+   */
+  private boolean include(final SchemaCrawlerOptions options, final Table table)
+  {
+    final InclusionRule grepColumnInclusionRule = options
+      .getGrepColumnInclusionRule();
+    final boolean invertMatch = options.isGrepInvertMatch();
+
+    boolean include = false;
+    final Column[] columns = table.getColumns();
+    if (columns.length == 0)
+    {
+      include = true;
+    }
+    else
+    {
+      for (final Column column: columns)
+      {
+        if (grepColumnInclusionRule.include(column.getFullName()))
+        {
+          // We found a column that should be included,
+          // so handle the table
+          include = true;
+          break;
+        }
+      }
+    }
+    if (invertMatch)
+    {
+      include = !include;
+    }
+    return include;
   }
 
 }
