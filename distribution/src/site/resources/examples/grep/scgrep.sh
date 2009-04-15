@@ -1,1 +1,1 @@
-java -classpath ../schemacrawler-6.2.jar:../hsqldb.jar schemacrawler.Grep $*
+java -classpath ../schemacrawler-6.3.jar:../hsqldb.jar schemacrawler.Grep $*
