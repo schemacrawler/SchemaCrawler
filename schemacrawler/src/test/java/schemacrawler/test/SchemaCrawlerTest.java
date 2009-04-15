@@ -429,6 +429,7 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
     final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
+    assertNotNull("Schema not found", schema);
     final View view = (View) schema.getTable("CUSTOMERLIST");
     assertNotNull("View not found", view);
     assertNotNull("View definition not found", view.getDefinition());
