@@ -26,4 +26,3 @@ digraph "SchemaCrawler_Diagram" {
     arrowsize="0.6"
   ];
 
-
