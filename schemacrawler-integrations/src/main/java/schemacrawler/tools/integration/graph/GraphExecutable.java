@@ -45,7 +45,6 @@ public final class GraphExecutable
 
   private static final Logger LOGGER = Logger.getLogger(GraphExecutable.class
     .getName());
-  public static final String NEWLINE = System.getProperty("line.separator");
 
   private static String dotError()
   {
@@ -120,4 +119,5 @@ public final class GraphExecutable
       LOGGER.log(Level.SEVERE, "Could not write diagram, " + dotFile, e);
     }
   }
+
 }
