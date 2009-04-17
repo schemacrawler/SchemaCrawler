@@ -44,6 +44,7 @@ import schemacrawler.schema.View;
 import schemacrawler.schema.WeakAssociations;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.integration.SchemaExecutable;
+import schemacrawler.tools.schematext.PastelColor;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 import sf.util.Utilities;
 

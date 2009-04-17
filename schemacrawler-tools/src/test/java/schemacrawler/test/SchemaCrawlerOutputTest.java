@@ -121,6 +121,10 @@ public class SchemaCrawlerOutputTest
     final List<String> failures = new ArrayList<String>();
     for (final OutputFormat outputFormat: OutputFormat.values())
     {
+      if (outputFormat == OutputFormat.dot)
+      {
+        continue;
+      }
       for (final Command[] commandSet: commands)
       {
         final String referenceFile = commandSet[0].toString() + "."
