@@ -21,8 +21,12 @@
 package schemacrawler.tools.schematext;
 
 
+import java.awt.Color;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Column;
@@ -44,6 +48,60 @@ import sf.util.Utilities;
 public final class SchemaDotFormatter
   implements CrawlHandler
 {
+  public final class PastelColor
+    implements Serializable
+  {
+
+    private static final long serialVersionUID = 7256039994498918504L;
+
+    private static final double FACTOR = 0.87;
+
+    private final Color color;
+
+    public PastelColor()
+    {
+      color = new Color(colorValue(), colorValue(), colorValue());
+    }
+
+    private PastelColor(final Color color)
+    {
+      this.color = color;
+    }
+
+    public Color getColor()
+    {
+      return color;
+    }
+
+    public PastelColor shade()
+    {
+      return new PastelColor(new Color(Math
+        .max((int) (color.getRed() * FACTOR), 0), Math.max((int) (color
+        .getGreen() * FACTOR), 0), Math
+        .max((int) (color.getBlue() * FACTOR), 0)));
+    }
+
+    public PastelColor tint()
+    {
+      return new PastelColor(new Color(Math
+        .min((int) (color.getRed() / FACTOR), 255), Math.min((int) (color
+        .getGreen() / FACTOR), 255), Math.min((int) (color.getBlue() / FACTOR),
+                                              255)));
+    }
+
+    @Override
+    public String toString()
+    {
+      return "#"
+             + Integer.toHexString(color.getRGB()).substring(2).toUpperCase();
+    }
+
+    private int colorValue()
+    {
+      return (int) (Math.random() * 60 + 190);
+    }
+
+  }
 
   private static final Logger LOGGER = Logger
     .getLogger(SchemaDotFormatter.class.getName());
@@ -52,6 +110,7 @@ public final class SchemaDotFormatter
 
   private final SchemaTextOptions options;
   private final PrintWriter out;
+  private final Map<String, PastelColor> colorMap;
 
   /**
    * Text formatting of schema.
@@ -78,50 +137,7 @@ public final class SchemaDotFormatter
       throw new SchemaCrawlerException("Could not obtain output writer", e);
     }
 
-  }
-
-  private String printColumnAssociation(final String associationName,
-                                        final Column primaryKeyColumn,
-                                        final Column foreignKeyColumn)
-  {
-    final String arrowhead;
-    if (foreignKeyColumn.isNullable())
-    {
-      arrowhead = "odottee";
-    }
-    else
-    {
-      arrowhead = "teetee";
-    }
-    final String arrowtail;
-    if (foreignKeyColumn.isPartOfUniqueIndex())
-    {
-      arrowtail = "teeodot";
-    }
-    else
-    {
-      arrowtail = "crowodot";
-    }
-    final String style;
-    if (associationName == null || associationName.equals(""))
-    {
-      style = "dashed";
-    }
-    else
-    {
-      style = "solid";
-    }
-
-    return String
-      .format("  \"%s\":\"%s.start\":w -> \"%s\":\"%s.end\":e [label=\"%s\" style=\"%s\" arrowhead=\"%s\" arrowtail=\"%s\"];%n",
-              primaryKeyColumn.getParent().getFullName(),
-              primaryKeyColumn.getName(),
-              foreignKeyColumn.getParent().getFullName(),
-              foreignKeyColumn.getName(),
-              associationName,
-              style,
-              arrowhead,
-              arrowtail);
+    colorMap = new HashMap<String, PastelColor>();
   }
 
   public void begin()
@@ -164,7 +180,12 @@ public final class SchemaDotFormatter
   public void handle(Table table)
     throws SchemaCrawlerException
   {
-    final PastelColor bgcolor = new PastelColor();
+    final String schemaName = table.getSchemaName();
+    if (!colorMap.containsKey(schemaName))
+    {
+      colorMap.put(schemaName, new PastelColor());
+    }
+    final PastelColor bgcolor = colorMap.get(schemaName);
     final PastelColor tableBgColor = bgcolor.shade();
     final StringBuilder buffer = new StringBuilder();
     final String tableName = table.getFullName();
@@ -247,6 +268,50 @@ public final class SchemaDotFormatter
       final Column foreignKeyColumn = foreignKeyColumnMap.getForeignKeyColumn();
       out.write(printColumnAssociation("", primaryKeyColumn, foreignKeyColumn));
     }
+  }
+
+  private String printColumnAssociation(final String associationName,
+                                        final Column primaryKeyColumn,
+                                        final Column foreignKeyColumn)
+  {
+    final String arrowhead;
+    if (foreignKeyColumn.isNullable())
+    {
+      arrowhead = "odottee";
+    }
+    else
+    {
+      arrowhead = "teetee";
+    }
+    final String arrowtail;
+    if (foreignKeyColumn.isPartOfUniqueIndex())
+    {
+      arrowtail = "teeodot";
+    }
+    else
+    {
+      arrowtail = "crowodot";
+    }
+    final String style;
+    if (associationName == null || associationName.equals(""))
+    {
+      style = "dashed";
+    }
+    else
+    {
+      style = "solid";
+    }
+
+    return String
+      .format("  \"%s\":\"%s.start\":w -> \"%s\":\"%s.end\":e [label=\"%s\" style=\"%s\" arrowhead=\"%s\" arrowtail=\"%s\"];%n",
+              primaryKeyColumn.getParent().getFullName(),
+              primaryKeyColumn.getName(),
+              foreignKeyColumn.getParent().getFullName(),
+              foreignKeyColumn.getName(),
+              associationName,
+              style,
+              arrowhead,
+              arrowtail);
   }
 
 }
