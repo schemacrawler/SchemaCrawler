@@ -74,7 +74,7 @@ class MutableResultsColumns
     final ResultsColumn[] columnsArray = getColumns();
     if (columnsArray != null && columnsArray.length > 0)
     {
-      final StringBuffer buffer = new StringBuffer();
+      final StringBuilder buffer = new StringBuilder();
       for (int i = 0; i < columnsArray.length; i++)
       {
         if (i > 0)

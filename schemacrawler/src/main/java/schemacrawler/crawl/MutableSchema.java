@@ -89,7 +89,7 @@ class MutableSchema
   @Override
   public String getFullName()
   {
-    final StringBuffer buffer = new StringBuffer();
+    final StringBuilder buffer = new StringBuilder();
     if (getCatalogName() != null && getCatalogName().length() > 0)
     {
       buffer.append(getCatalogName()).append(".");

@@ -137,7 +137,7 @@ abstract class AbstractColumn
       needWidth = false;
     }
 
-    final StringBuffer columnWidthBuffer = new StringBuffer();
+    final StringBuilder columnWidthBuffer = new StringBuilder();
     if (needWidth)
     {
       columnWidthBuffer.append("(");

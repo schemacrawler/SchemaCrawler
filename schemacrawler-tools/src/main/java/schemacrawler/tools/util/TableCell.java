@@ -113,7 +113,7 @@ final class TableCell
       return value;
     }
 
-    final StringBuffer sb = new StringBuffer(length);
+    final StringBuilder sb = new StringBuilder(length);
     sb.append(QUOTE);
     for (int i = 0; i < length; i++)
     {
@@ -139,7 +139,7 @@ final class TableCell
    */
   private String toHtmlString()
   {
-    final StringBuffer buffer = new StringBuffer();
+    final StringBuilder buffer = new StringBuilder();
     buffer.append("<td");
     if (colSpan > 1)
     {

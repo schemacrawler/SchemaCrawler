@@ -612,7 +612,7 @@ public final class SchemaCrawlerOptions
   @Override
   public String toString()
   {
-    final StringBuffer buffer = new StringBuffer();
+    final StringBuilder buffer = new StringBuilder();
     buffer.append("SchemaCrawlerOptions[");
     buffer.append("tableInclusionRule=").append(tableInclusionRule);
     buffer.append(", columnInclusionRule=").append(columnInclusionRule);

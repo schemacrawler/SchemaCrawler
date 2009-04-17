@@ -165,7 +165,7 @@ public class DataTextFormatOptions
   @Override
   public String toString()
   {
-    final StringBuffer buffer = new StringBuffer();
+    final StringBuilder buffer = new StringBuilder();
     buffer.append("DataTextFormatOptions[");
     buffer.append("mergeRows=").append(mergeRows);
     buffer.append(", showLobs=").append(showLobs);

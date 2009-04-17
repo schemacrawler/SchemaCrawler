@@ -42,7 +42,7 @@ abstract class BaseTextFormattingHelper
 
   private static String dashedSeparator()
   {
-    final StringBuffer dashedSeparator = new StringBuffer();
+    final StringBuilder dashedSeparator = new StringBuilder();
     for (int i = 0; i < 72; i++)
     {
       dashedSeparator.append('-');
@@ -129,7 +129,7 @@ abstract class BaseTextFormattingHelper
    */
   public String createHeader(final String id, final Object object)
   {
-    final StringBuffer buffer = new StringBuffer();
+    final StringBuilder buffer = new StringBuilder();
     buffer.append(DASHED_SEPARATOR).append(NEWLINE);
     buffer.append(object.toString()).append(NEWLINE);
     buffer.append(DASHED_SEPARATOR).append(NEWLINE);

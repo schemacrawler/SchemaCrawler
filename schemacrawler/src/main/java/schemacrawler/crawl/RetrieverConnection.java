@@ -91,12 +91,12 @@ final class RetrieverConnection
   @Override
   public String toString()
   {
-    final StringBuffer stringBuffer = new StringBuffer();
-    stringBuffer.append(String.format("catalogName=%s; ", catalogName));
-    stringBuffer.append(String.format("schemaPattern=%s; ", schemaPattern));
-    stringBuffer.append(String.format("informationSchemaViews=%s; ",
+    final StringBuilder StringBuilder = new StringBuilder();
+    StringBuilder.append(String.format("catalogName=%s; ", catalogName));
+    StringBuilder.append(String.format("schemaPattern=%s; ", schemaPattern));
+    StringBuilder.append(String.format("informationSchemaViews=%s; ",
                                       informationSchemaViews));
-    return stringBuffer.toString();
+    return StringBuilder.toString();
   }
 
   /**

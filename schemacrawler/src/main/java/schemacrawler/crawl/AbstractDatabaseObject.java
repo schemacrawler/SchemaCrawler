@@ -106,7 +106,7 @@ abstract class AbstractDatabaseObject
    */
   public String getFullName()
   {
-    final StringBuffer buffer = new StringBuffer();
+    final StringBuilder buffer = new StringBuilder();
     if (schemaName != null)
     {
       if (catalogName != null && catalogName.length() > 0)

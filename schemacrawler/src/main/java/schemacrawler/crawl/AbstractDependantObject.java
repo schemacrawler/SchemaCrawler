@@ -84,7 +84,7 @@ abstract class AbstractDependantObject
   @Override
   public String getFullName()
   {
-    final StringBuffer buffer = new StringBuffer();
+    final StringBuilder buffer = new StringBuilder();
     if (parent != null && parent.getFullName().length() > 0)
     {
       buffer.append(parent.getFullName()).append(".");

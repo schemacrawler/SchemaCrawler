@@ -117,7 +117,7 @@ public class TestUtility
       return "";
     }
 
-    final StringBuffer buffer = new StringBuffer();
+    final StringBuilder buffer = new StringBuilder();
     try
     {
       final BufferedReader in = new BufferedReader(reader);

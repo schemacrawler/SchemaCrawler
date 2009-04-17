@@ -44,13 +44,14 @@ final class MutableDatabaseInfo
 
   private static final String NEWLINE = System.getProperty("line.separator");
 
+  private String catalogName;
   private String productName;
   private String productVersion;
   private final SortedMap<String, Object> dbProperties = new TreeMap<String, Object>();
   private final NamedObjectList<MutableColumnDataType> systemColumnDataTypes = new NamedObjectList<MutableColumnDataType>(NamedObjectSort.alphabetical);
 
   @Override
-  public boolean equals(final Object obj)
+  public boolean equals(Object obj)
   {
     if (this == obj)
     {
@@ -64,26 +65,15 @@ final class MutableDatabaseInfo
     {
       return false;
     }
-    final MutableDatabaseInfo other = (MutableDatabaseInfo) obj;
-    if (systemColumnDataTypes == null)
+    MutableDatabaseInfo other = (MutableDatabaseInfo) obj;
+    if (catalogName == null)
     {
-      if (other.systemColumnDataTypes != null)
+      if (other.catalogName != null)
       {
         return false;
       }
     }
-    else if (!systemColumnDataTypes.equals(other.systemColumnDataTypes))
-    {
-      return false;
-    }
-    if (dbProperties == null)
-    {
-      if (other.dbProperties != null)
-      {
-        return false;
-      }
-    }
-    else if (!dbProperties.equals(other.dbProperties))
+    else if (!catalogName.equals(other.catalogName))
     {
       return false;
     }
@@ -110,6 +100,16 @@ final class MutableDatabaseInfo
       return false;
     }
     return true;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.DatabaseInfo#getCatalogName()
+   */
+  public String getCatalogName()
+  {
+    return catalogName;
   }
 
   /**
@@ -178,15 +178,12 @@ final class MutableDatabaseInfo
   {
     final int prime = 31;
     int result = 1;
-    result = prime
-             * result
-             + (systemColumnDataTypes == null? 0: systemColumnDataTypes
-               .hashCode());
     result = prime * result
-             + (dbProperties == null? 0: dbProperties.hashCode());
-    result = prime * result + (productName == null? 0: productName.hashCode());
+             + ((catalogName == null)? 0: catalogName.hashCode());
     result = prime * result
-             + (productVersion == null? 0: productVersion.hashCode());
+             + ((productName == null)? 0: productName.hashCode());
+    result = prime * result
+             + ((productVersion == null)? 0: productVersion.hashCode());
     return result;
   }
 
@@ -198,7 +195,11 @@ final class MutableDatabaseInfo
   @Override
   public String toString()
   {
-    final StringBuffer info = new StringBuffer();
+    final StringBuilder info = new StringBuilder();
+    if (getCatalogName() != null)
+    {
+      info.append("-- catalog: ").append(getCatalogName()).append(NEWLINE);
+    }
     info.append("-- database: ").append(getProductName()).append(" ")
       .append(getProductVersion()).append(NEWLINE);
     return info.toString();
@@ -207,6 +208,11 @@ final class MutableDatabaseInfo
   void putProperty(final String name, final Object value)
   {
     dbProperties.put(name, value);
+  }
+
+  void setCatalogName(String catalogName)
+  {
+    this.catalogName = catalogName;
   }
 
   void setProductName(final String productName)
