@@ -113,6 +113,7 @@ public final class SchemaDotFormatter
   public void handle(final DatabaseInfo databaseInfo)
     throws SchemaCrawlerException
   {
+    final String catalogName = databaseInfo.getCatalogName();
     final StringBuilder buffer = new StringBuilder();
     buffer
       .append("      <table border=\"1\" cellborder=\"0\" cellspacing=\"0\">")
@@ -121,8 +122,11 @@ public final class SchemaDotFormatter
     buffer.append("        <tr>").append(NEWLINE);
     buffer.append("          <td align=\"right\">Catalog:</td>")
       .append(NEWLINE);
-    buffer.append("          <td align=\"left\">"
-                  + databaseInfo.getCatalogName() + "</td>").append(NEWLINE);
+    if (catalogName != null)
+    {
+      buffer.append("          <td align=\"left\">" + catalogName + "</td>")
+        .append(NEWLINE);
+    }
     buffer.append("        </tr>").append(NEWLINE);
 
     buffer.append("        <tr>").append(NEWLINE);
@@ -142,7 +146,7 @@ public final class SchemaDotFormatter
     buffer.append("      </table>");
 
     final String graphLabel = String
-      .format("  graph [%n    label=<%n%s    >%n    labeljust=1%n  ];%n%n",
+      .format("  graph [%n    label=<%n%s    >%n    labeljust=r%n    labelloc=b%n  ];%n%n",
               buffer.toString());
     out.println(graphLabel);
   }
