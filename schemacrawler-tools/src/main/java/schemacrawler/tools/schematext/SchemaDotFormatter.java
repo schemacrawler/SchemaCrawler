@@ -120,10 +120,10 @@ public final class SchemaDotFormatter
       .append(NEWLINE);
 
     buffer.append("        <tr>").append(NEWLINE);
-    buffer.append("          <td align=\"right\">Catalog:</td>")
-      .append(NEWLINE);
     if (catalogName != null)
     {
+      buffer.append("          <td align=\"right\">Catalog:</td>")
+        .append(NEWLINE);
       buffer.append("          <td align=\"left\">" + catalogName + "</td>")
         .append(NEWLINE);
     }
