@@ -119,15 +119,15 @@ public final class SchemaDotFormatter
       .append("      <table border=\"1\" cellborder=\"0\" cellspacing=\"0\">")
       .append(NEWLINE);
 
-    buffer.append("        <tr>").append(NEWLINE);
     if (catalogName != null)
     {
+      buffer.append("        <tr>").append(NEWLINE);
       buffer.append("          <td align=\"right\">Catalog:</td>")
         .append(NEWLINE);
       buffer.append("          <td align=\"left\">" + catalogName + "</td>")
         .append(NEWLINE);
+      buffer.append("        </tr>").append(NEWLINE);
     }
-    buffer.append("        </tr>").append(NEWLINE);
 
     buffer.append("        <tr>").append(NEWLINE);
     buffer.append("          <td align=\"right\">Database:</td>")
