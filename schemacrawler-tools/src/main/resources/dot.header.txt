@@ -1,9 +1,7 @@
 digraph "%s" {
 
   graph [
-    label=<
-%s
-    >
+    label="%s"
     labeljust="l"
     nodesep="0.18"
     ranksep="0.46"

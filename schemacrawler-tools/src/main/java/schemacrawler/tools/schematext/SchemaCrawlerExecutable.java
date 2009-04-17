@@ -60,7 +60,7 @@ public class SchemaCrawlerExecutable
     CrawlHandler handler = crawlHandler;
     if (handler == null)
     {
-      handler = new SchemaTextFormatter(toolOptions);
+      handler = SchemaTextFactory.createSchemaTextCrawlHandler(toolOptions);
     }
 
     final SchemaCrawler crawler = new DatabaseSchemaCrawler(dataSource

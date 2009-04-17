@@ -1,4 +1,4 @@
-package schemacrawler.tools.integration.graph;
+package schemacrawler.tools.schematext;
 
 
 import java.awt.Color;

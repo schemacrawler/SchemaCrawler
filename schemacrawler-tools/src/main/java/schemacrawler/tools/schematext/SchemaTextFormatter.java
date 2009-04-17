@@ -80,7 +80,7 @@ public final class SchemaTextFormatter
    * @param options
    *        Options for text formatting of schema
    */
-  public SchemaTextFormatter(final SchemaTextOptions options)
+  SchemaTextFormatter(final SchemaTextOptions options)
     throws SchemaCrawlerException
   {
     if (options == null)

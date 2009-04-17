@@ -33,6 +33,8 @@ public enum OutputFormat
   html,
   /** CSV formatting. */
   csv,
+  /** DOT formatting. */
+  dot,
   /** Other - tool defined. */
   other;
 
