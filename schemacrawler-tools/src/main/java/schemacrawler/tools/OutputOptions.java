@@ -326,11 +326,6 @@ public final class OutputOptions
       throw new IllegalArgumentException("Cannot set null output file name");
     }
     outputFile = new File(outputFileName);
-    if (!outputFile.canWrite())
-    {
-      throw new IllegalArgumentException("Cannot write to "
-                                         + outputFile.getAbsolutePath());
-    }
   }
 
   /**

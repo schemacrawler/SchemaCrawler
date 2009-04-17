@@ -30,7 +30,6 @@ import javax.sql.DataSource;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.integration.SchemaExecutable;
-import schemacrawler.tools.schematext.SchemaTextOptions;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 import sf.util.Utilities;
 
@@ -109,9 +108,8 @@ public final class GraphExecutable
       final OutputOptions outputOptions = new OutputOptions();
       outputOptions.setOutputFormatValue(OutputFormat.dot.name());
       outputOptions.setOutputFileName(dotFile.getAbsolutePath());
-
-      toolOptions = new SchemaTextOptions();
       toolOptions.setOutputOptions(outputOptions);
+
       execute(dataSource);
     }
     catch (final Exception e)

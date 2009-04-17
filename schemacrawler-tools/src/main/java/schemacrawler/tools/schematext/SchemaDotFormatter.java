@@ -198,8 +198,8 @@ public final class SchemaDotFormatter
     buffer.append("      </table>");
 
     final String graphLabel = String
-      .format("  graph [%n    label=<%n%s    >%n    labeljust=1%n  ];", buffer
-        .toString());
+      .format("  graph [%n    label=<%n%s    >%n    labeljust=1%n  ];%n%n",
+              buffer.toString());
     out.println(graphLabel);
   }
 
