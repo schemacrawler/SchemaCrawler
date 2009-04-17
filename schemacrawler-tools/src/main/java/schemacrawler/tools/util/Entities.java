@@ -457,7 +457,7 @@ public final class Entities
   public String escape(final String str)
   {
     // todo: rewrite to use a Writer
-    final StringBuffer buf = new StringBuffer(str.length() * 2);
+    final StringBuilder buf = new StringBuilder(str.length() * 2);
     int i;
     for (i = 0; i < str.length(); ++i)
     {
@@ -496,7 +496,7 @@ public final class Entities
    */
   public String unescape(final String str)
   {
-    final StringBuffer buf = new StringBuffer(str.length());
+    final StringBuilder buf = new StringBuilder(str.length());
     int i;
     for (i = 0; i < str.length(); ++i)
     {

@@ -97,7 +97,7 @@ final class TableRow
    */
   private String toHtmlString()
   {
-    final StringBuffer buffer = new StringBuffer();
+    final StringBuilder buffer = new StringBuilder();
     buffer.append("\t<tr>" + NEWLINE);
     for (final TableCell cell: cells)
     {
@@ -115,7 +115,7 @@ final class TableRow
    */
   private String toPlainTextString()
   {
-    final StringBuffer buffer = new StringBuffer();
+    final StringBuilder buffer = new StringBuilder();
 
     for (int i = 0; i < cells.size(); i++)
     {

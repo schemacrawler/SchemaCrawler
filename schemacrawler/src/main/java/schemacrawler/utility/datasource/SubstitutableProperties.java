@@ -93,7 +93,7 @@ final class SubstitutableProperties
   private String substituteVariables(final String template)
   {
 
-    final StringBuffer buffer = new StringBuffer();
+    final StringBuilder buffer = new StringBuilder();
     int currentPosition = 0;
     int delimiterStartPosition;
     int delimiterEndPosition;

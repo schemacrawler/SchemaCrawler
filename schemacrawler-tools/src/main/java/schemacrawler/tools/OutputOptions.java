@@ -356,7 +356,7 @@ public final class OutputOptions
   @Override
   public String toString()
   {
-    final StringBuffer buffer = new StringBuffer();
+    final StringBuilder buffer = new StringBuilder();
     buffer.append("OutputOptions[");
     buffer.append("outputFormat=").append(getOutputFormat());
     buffer.append("; outputFormatValue=").append(outputFormatValue);

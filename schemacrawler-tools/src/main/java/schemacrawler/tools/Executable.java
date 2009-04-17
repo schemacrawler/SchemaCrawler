@@ -107,7 +107,7 @@ public abstract class Executable<O extends ToolOptions>
   @Override
   public String toString()
   {
-    final StringBuffer buffer = new StringBuffer();
+    final StringBuilder buffer = new StringBuilder();
     buffer.append("Executable[");
     buffer.append("; ").append(schemaCrawlerOptions);
     buffer.append("; ").append(toolOptions);

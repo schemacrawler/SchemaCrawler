@@ -1,8 +1,6 @@
-digraph "%s" {
+digraph "SchemaCrawler_Diagram" {
 
   graph [
-    label="%s"
-    labeljust="l"
     nodesep="0.18"
     ranksep="0.46"
     rankdir="RL"

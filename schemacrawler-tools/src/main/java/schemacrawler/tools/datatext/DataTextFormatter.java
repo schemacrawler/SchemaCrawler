@@ -200,7 +200,7 @@ public final class DataTextFormatter
                               final String lastColumnData)
     throws QueryExecutorException
   {
-    if (row.size() == 0)
+    if (row.isEmpty())
     {
       return;
     }
@@ -239,7 +239,7 @@ public final class DataTextFormatter
     final int columnCount = columnNames.length;
     List<String> previousRow = new ArrayList<String>();
     List<String> currentRow;
-    StringBuffer currentRowLastColumn = new StringBuffer();
+    StringBuilder currentRowLastColumn = new StringBuilder();
     // write out the data
     while (rows.next())
     {
@@ -262,7 +262,7 @@ public final class DataTextFormatter
         // previous merged row out
         doHandleOneRow(previousRow, currentRowLastColumn.toString());
         // reset
-        currentRowLastColumn = new StringBuffer();
+        currentRowLastColumn = new StringBuilder();
         // save the last column
         currentRowLastColumn.append(lastColumnDataString);
       }

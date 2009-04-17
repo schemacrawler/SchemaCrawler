@@ -284,7 +284,7 @@ public final class PropertiesDataSource
   public String toString()
   {
 
-    final StringBuffer info = new StringBuffer();
+    final StringBuilder info = new StringBuilder();
     info.append("-- database product: ").append(databaseProductName)
       .append(" ").append(databaseProductVersion).append(NEWLINE)
       .append("-- driver: ").append(jdbcDriver.getClass().getName())
@@ -358,7 +358,7 @@ public final class PropertiesDataSource
   private String getConnectionParamsInfo()
   {
 
-    final StringBuffer buffer = new StringBuffer();
+    final StringBuilder buffer = new StringBuilder();
     buffer.append("Connection parameters:");
     final Set<Map.Entry<Object, Object>> entries = connectionParams.entrySet();
     for (final Map.Entry<Object, Object> entry: entries)

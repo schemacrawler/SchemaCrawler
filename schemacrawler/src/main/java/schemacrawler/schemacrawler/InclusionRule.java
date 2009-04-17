@@ -183,7 +183,7 @@ public final class InclusionRule
   @Override
   public String toString()
   {
-    final StringBuffer buffer = new StringBuffer();
+    final StringBuilder buffer = new StringBuilder();
     buffer.append("InclusionRule[");
     buffer.append("patternInclude=").append(patternInclude.pattern());
     buffer.append(", patternExclude=").append(patternExclude.pattern());

@@ -27,6 +27,8 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.CheckConstraint;
@@ -67,6 +69,9 @@ import sf.util.Utilities;
 public final class SchemaTextFormatter
   implements CrawlHandler
 {
+
+  private static final Logger LOGGER = Logger
+    .getLogger(SchemaTextFormatter.class.getName());
 
   private final SchemaTextOptions options;
   private final PrintWriter out;
@@ -145,6 +150,8 @@ public final class SchemaTextFormatter
     out.flush();
     //
     options.getOutputOptions().closeOutputWriter(out);
+    LOGGER.log(Level.FINE, "Wrote output, "
+                           + options.getOutputOptions().getOutputFile());
   }
 
   public void handle(final ColumnDataType columnDataType)

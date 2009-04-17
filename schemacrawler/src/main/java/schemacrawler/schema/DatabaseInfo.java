@@ -34,6 +34,13 @@ public interface DatabaseInfo
 {
 
   /**
+   * Gets the name of the database.
+   * 
+   * @return Name of the database
+   */
+  String getCatalogName();
+
+  /**
    * Gets the name of the RDBMS vendor and product.
    * 
    * @return Name of the RDBMS vendor and product

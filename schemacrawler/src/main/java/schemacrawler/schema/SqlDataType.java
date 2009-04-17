@@ -101,7 +101,7 @@ public final class SqlDataType
       }
     }
 
-    if (javaSqlTypes.size() == 0)
+    if (javaSqlTypes.isEmpty())
     {
       final Field[] staticFields = Types.class.getFields();
       for (final Field field: staticFields)

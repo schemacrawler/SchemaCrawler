@@ -128,7 +128,7 @@ public final class OperationOptions
   @Override
   public String toString()
   {
-    final StringBuffer buffer = new StringBuffer();
+    final StringBuilder buffer = new StringBuilder();
     buffer.append("OperatorOptions[");
     buffer.append("operation=").append(operation);
     buffer.append(", outputOptions=").append(getOutputOptions());

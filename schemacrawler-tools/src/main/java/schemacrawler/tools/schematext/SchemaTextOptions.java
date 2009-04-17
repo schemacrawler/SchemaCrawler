@@ -275,7 +275,7 @@ public class SchemaTextOptions
   @Override
   public String toString()
   {
-    final StringBuffer buffer = new StringBuffer();
+    final StringBuilder buffer = new StringBuilder();
     buffer.append("TextFormatOptions[");
     buffer.append("hideIndexNames=").append(hideConstraintNames);
     buffer.append(", showStandardColumnTypeNames=")
