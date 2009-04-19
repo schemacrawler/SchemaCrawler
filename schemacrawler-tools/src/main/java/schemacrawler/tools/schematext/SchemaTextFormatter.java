@@ -630,6 +630,10 @@ public final class SchemaTextFormatter
       {
         pkName = name;
       }
+      if (pkName == null)
+      {
+        pkName = "";
+      }
       out.println(formattingHelper
         .createNameRow(pkName, "[primary key]", false));
       printTableColumns(primaryKey.getColumns());

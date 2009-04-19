@@ -49,10 +49,11 @@ public final class BundledDriverDatabaseConnector
       .getValue();
 
     // Check arguments
-    if (!options.hasUser())
-    {
-      throw new DatabaseConnectorException("Please provide the user name");
-    }
+    // if (!options.hasUser())
+    // {
+    // throw new
+    // DatabaseConnectorException("Please provide the user name");
+    // }
     if (!options.hasPassword())
     {
       throw new DatabaseConnectorException("Please provide the password");
