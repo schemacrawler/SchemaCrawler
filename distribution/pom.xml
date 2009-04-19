@@ -48,6 +48,11 @@
       <artifactId>schemacrawler-postgresql</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>schemacrawler</groupId>
+      <artifactId>schemacrawler-sqlite</artifactId>
+      <version>${project.version}</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
