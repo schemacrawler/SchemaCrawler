@@ -41,6 +41,7 @@
     <module>schemacrawler-sqlserver</module>
     <module>schemacrawler-mysql</module>
     <module>schemacrawler-postgresql</module>
+    <module>schemacrawler-sqlite</module>
     <module>distribution</module>
   </modules>
   <dependencies>
