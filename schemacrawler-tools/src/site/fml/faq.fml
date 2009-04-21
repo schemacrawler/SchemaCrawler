@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<faqs title="SchemaCrawler - Frequently Asked Questions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="http://maven.apache.org/reference/plugins/faq/faq.xsd">
+<faqs xmlns="http://maven.apache.org/FML/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/FML/1.0 http://maven.apache.org/xsd/fml-1.0.xsd" title="SchemaCrawler - Frequently Asked Questions">
 	<part id="general">
 		<title>General</title>
 		<faq id="whats-schemacrawler">
 			<question>
-				<span>What is SchemaCrawler?</span>
+				What is SchemaCrawler?
 			</question>
 			<answer>
-				<p>
-					SchemaCrawler is an API that improves on the standard JDBC
-					metadata.
-        </p>
+				<p>SchemaCrawler is an API that improves on the standard JDBC metadata.</p>
 				<p>
 					SchemaCrawler is also a command-line tool, written in Java to
 					output your
@@ -24,7 +20,7 @@
 		</faq>
 		<faq id="output">
 			<question>
-				<span>What does SchemaCrawler output look like?</span>
+				What does SchemaCrawler output look like?
 			</question>
 			<answer>
 				<p>
@@ -45,7 +41,7 @@
 		</faq>
 		<faq id="commands">
 			<question>
-				<span>What are the SchemaCrawler commands?</span>
+				What are the SchemaCrawler commands?
 			</question>
 			<answer>
 				<p>
@@ -80,8 +76,7 @@
 					configuration
 					files.
 				</p>
-				<source>
-          <![CDATA[
+				<source><![CDATA[
 java -classpath <schemacrawler-jar>;<db-driver-jar> schemacrawler.Main [options]
 
 --- Optional Configuration Options ---
@@ -174,14 +169,13 @@ Or, all of the following:
 
 -outputfile=<outputfile>
 	Optional - <outputfile> is the path to the output file
-]]>
-				</source>
+]]></source>
 			</answer>
 		</faq>
 		<faq id="config">
 			<question>
-				<span>What does a SchemaCrawler configuration file look like?
-				</span>
+				What does a SchemaCrawler configuration file look like?
+				
 			</question>
 			<answer>
 				<p>
@@ -197,7 +191,7 @@ Or, all of the following:
 		<title>Supported Platforms</title>
 		<faq id="supported-databases">
 			<question>
-				<span>What databases does SchemaCrawler work with?</span>
+				What databases does SchemaCrawler work with?
 			</question>
 			<answer>
 				<p>
@@ -212,7 +206,7 @@ Or, all of the following:
 		</faq>
 		<faq id="supported-java">
 			<question>
-				<span>What Java version does SchemaCrawler work with?</span>
+				What Java version does SchemaCrawler work with?
 			</question>
 			<answer>
 				<p>
@@ -226,8 +220,8 @@ Or, all of the following:
 		</faq>
 		<faq id="supported-os">
 			<question>
-				<span>What operating systems does SchemaCrawler work with?
-				</span>
+				What operating systems does SchemaCrawler work with?
+				
 			</question>
 			<answer>
 				<p>
@@ -239,7 +233,7 @@ Or, all of the following:
 		</faq>
 		<faq id="ant">
 			<question>
-				<span>Can SchemaCrawler be used with ant?</span>
+				Can SchemaCrawler be used with ant?
 			</question>
 			<answer>
 				<p>Yes, SchemaCrawler comes with a full-featured ant task.</p>
@@ -254,7 +248,7 @@ Or, all of the following:
 		</faq>
 		<faq id="maven">
 			<question>
-				<span>Can SchemaCrawler be used with Maven?</span>
+				Can SchemaCrawler be used with Maven?
 			</question>
 			<answer>
 				<p>
@@ -274,7 +268,7 @@ Or, all of the following:
 		</faq>
 		<faq id="api">
 			<question>
-				<span>Can SchemaCrawler be used programmatically?</span>
+				Can SchemaCrawler be used programmatically?
 			</question>
 			<answer>
 				<p>
@@ -310,7 +304,7 @@ Or, all of the following:
 		</faq>
 		<faq id="javascript">
 			<question>
-				<span>Can SchemaCrawler be used with scripting languages?</span>
+				Can SchemaCrawler be used with scripting languages?
 			</question>
 			<answer>
 				<p>
@@ -328,8 +322,8 @@ Or, all of the following:
 		</faq>
 		<faq id="integrations">
 			<question>
-				<span>Can SchemaCrawler be used integrated with other programs?
-				</span>
+				Can SchemaCrawler be used integrated with other programs?
+				
 			</question>
 			<answer>
 				<p>
@@ -359,11 +353,11 @@ Or, all of the following:
 		<title>SchemaCrawler Grep</title>
 		<faq id="whats-schemacrawler-grep">
 			<question>
-				<span>What is SchemaCrawler Grep?</span>
+				What is SchemaCrawler Grep?
 			</question>
 			<answer>
 				<p>
-					SchemaCrawler Grep is a command-line tool that allows you to search
+					SchemaCrawler Grep is a set of SchemaCrawler command-line options that allow you to search
 					your
 					database for tables and columns that match a regular
 					expression,
@@ -376,7 +370,7 @@ Or, all of the following:
 		</faq>
 		<faq id="grep-output">
 			<question>
-				<span>What does SchemaCrawler output look like?</span>
+				What does SchemaCrawler output look like?
 			</question>
 			<answer>
 				<p>
@@ -387,65 +381,10 @@ Or, all of the following:
 		</faq>
 		<faq id="commands">
 			<question>
-				<span>What are the SchemaCrawler Grep commands?</span>
+				What are the SchemaCrawler Grep commands?
 			</question>
 			<answer>
-				<source>
-          <![CDATA[
-SchemaCrawler Grep is a command-line tool to search for tables that contain
-columns matching regular expressions in your database schema.
-
-To use SchemaCrawler Grep:
-1. Create a working directory, and copy the program jar file to that
-   directory.
-2. Copy your database driver jar or zip files to the same directory.
-3. Modify schemacrawler.config.properties to point to your database.
-4. Try not to give your database user DBA permissions - at least when you
-   are running SchemaCrawler Grep.
-5. Start a command shell, and cd to the working directory.
-
-
-java -cp <schemacrawler-jar> schemacrawler.Grep [options]
-
---- Optional Configuration Options ---
-
--g <config-file> (short for -configfile <config-file>)
-    Reads SchemaCrawler configuration properties from <config-file> instead
-    of the default schemacrawler.config.properties
-
--p <config-override-file> (short for -configoverridefile <config-override-file>)
-    Reads SchemaCrawler configuration properties from <config-override-file>
-    and overrides the properties from the configuration file
-
---- Required Connection Options ---
-
-One of:
-
--c <connection_name> (short for -connection <connection_name>)
-    Uses a named connection
-
--d (short for -default)
-    Uses the default connection
-
--x <connection_name> (short for -prompt <connection_name>)
-    Prompts for connection information, which is saved
-    into <connection_name>.properties
-
-Or, all of the following:
-
--driver=<driver-class-name>
-	Fully qualified name of the JDBC driver class.
-
--url=<url>
-	JDBC connection URL to the database.
-
--user=<user>
-	Database user name.
-
--password=<password>
-	Database password.
-
-
+				<source><![CDATA[
 --- Grep Options ---
 
 -tables=<regular-expression>
@@ -464,14 +403,13 @@ Or, all of the following:
 
 -v (short for -invert-match)
 	Inverts the match, and shows non-matching tables and columns.
-]]>
-				</source>
+]]></source>
 			</answer>
 		</faq>
 		<faq id="config">
 			<question>
-				<span>What does a SchemaCrawler configuration file look like?
-				</span>
+				What does a SchemaCrawler configuration file look like?
+				
 			</question>
 			<answer>
 				<p>
@@ -487,7 +425,7 @@ Or, all of the following:
 		<title>Distribution</title>
 		<faq id="availibility">
 			<question>
-				<span>Where is SchemaCrawler available?</span>
+				Where is SchemaCrawler available?
 			</question>
 			<answer>
 				<p>
@@ -501,7 +439,7 @@ Or, all of the following:
 		</faq>
 		<faq id="tech-support">
 			<question>
-				<span>Is technical support available?</span>
+				Is technical support available?
 			</question>
 			<answer>
 				<p>
@@ -514,11 +452,11 @@ Or, all of the following:
 		</faq>
 		<faq id="cost">
 			<question>
-				<span>Is SchemaCrawler free?</span>
+				Is SchemaCrawler free?
 			</question>
 			<answer>
 				<p>
-					<img src="http://www.gnu.org/graphics/lgplv3-88x31.png" />
+					<img src="http://www.gnu.org/graphics/lgplv3-88x31.png" alt="LGPL"/>
 					SchemaCrawler is free, licensed under the
 					<a href="http://www.gnu.org/licenses/lgpl-3.0.txt">GNU Lesser General Public License (LGPL),</a>
 					but
@@ -528,7 +466,7 @@ Or, all of the following:
 					are welcome.
 				</p>
 				<p>
-					<img src="http://www.gnu.org/graphics/gplv3-88x31.png" />
+					<img src="http://www.gnu.org/graphics/gplv3-88x31.png" alt="GPL"/>
 					SchemaCrawler is also distributed packaged for different database
 					systems
 					such as

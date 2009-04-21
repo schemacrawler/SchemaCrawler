@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<faqs title="SchemaCrawler - How-to" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="http://maven.apache.org/reference/plugins/faq/faq.xsd">
+<faqs xmlns="http://maven.apache.org/FML/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/FML/1.0 http://maven.apache.org/xsd/fml-1.0.xsd" title="SchemaCrawler - How-to">
 	<part id="include-exclude">
 		<title>Include and Exclude Stuff from the Output</title>
 		<faq id="excluded-tables">
 			<question>
-				<span>How to see why certain tables or columns for excluded
-				</span>
+				<b>How to see why certain tables or columns for excluded
+				</b>
 			</question>
 			<answer>
 				<p>
@@ -18,7 +17,7 @@
 		</faq>
 		<faq id="excluded-tables-or-columns">
 			<question>
-				<span>How to include or exclude certain tables or columns</span>
+				<b>How to include or exclude certain tables or columns</b>
 			</question>
 			<answer>
 				<p>
@@ -28,8 +27,7 @@
 					<code>schemacrawler.config.properties
 					</code>
 					file. The include or exclude specification is a
-					<a
-						href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/regex/Pattern.html">
+					<a href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/regex/Pattern.html">
 						Java regular expression
           </a>
 					. The include pattern is evaluated first, and the exclusions are
@@ -41,7 +39,7 @@
 		</faq>
 		<faq id="excluded-views">
 			<question>
-				<span>How to exclude database views from the output</span>
+				<b>How to exclude database views from the output</b>
 			</question>
 			<answer>
 				<p>
@@ -57,7 +55,7 @@
 		</faq>
 		<faq id="excluded-procedures">
 			<question>
-				<span>How to exclude stored procedures from the output</span>
+				<b>How to exclude stored procedures from the output</b>
 			</question>
 			<answer>
 				<p>
@@ -76,9 +74,9 @@
 		<title>Create diff-able Output</title>
 		<faq id="sorting">
 			<question>
-				<span>
+				<b>
 					How to sort columns, foreign-keys and indices alphabetically
-				</span>
+				</b>
 			</question>
 			<answer>
 				<p>
@@ -93,7 +91,7 @@
 		</faq>
 		<faq id="diff-data-types">
 			<question>
-				<span>How to diff column data types across databases</span>
+				<b>How to diff column data types across databases</b>
 			</question>
 			<answer>
 				<p>
@@ -114,10 +112,10 @@
 		</faq>
 		<faq id="ordinal-numbers">
 			<question>
-				<span>
+				<b>
 					How to allow diffs of tables that have columns added in
 					between
-        </span>
+        </b>
 			</question>
 			<answer>
 				<p>
@@ -139,7 +137,7 @@
 		</faq>
 		<faq id="index-names">
 			<question>
-				<span>How to hide primary key, foreign key and index names</span>
+				<b>How to hide primary key, foreign key and index names</b>
 			</question>
 			<answer>
 				<p>
@@ -170,7 +168,7 @@ schemacrawler.format.hide_constraint_names=false
 		<title>Integrations</title>
 		<faq id="javascript">
 			<question>
-				<span>How to script with your database metadata</span>
+				<b>How to script with your database metadata</b>
 			</question>
 			<answer>
 				<p>
@@ -191,7 +189,7 @@ schemacrawler.format.hide_constraint_names=false
 		</faq>
 		<faq id="velocity">
 			<question>
-				<span>How to create your own output format</span>
+				<b>How to create your own output format</b>
 			</question>
 			<answer>
 				<p>
@@ -210,7 +208,7 @@ schemacrawler.format.hide_constraint_names=false
 		</faq>
 		<faq id="graphing">
 			<question>
-				<span>How to create a database diagram of your schema</span>
+				<b>How to create a database diagram of your schema</b>
 			</question>
 			<answer>
 				<p>
@@ -232,7 +230,7 @@ schemacrawler.format.hide_constraint_names=false
 		<title>How to Use SchemaCrawler in Projects</title>
 		<faq id="api">
 			<question>
-				<span>How to use SchemaCrawler programmatically</span>
+				<b>How to use SchemaCrawler programmatically</b>
 			</question>
 			<answer>
 				<p>
@@ -278,13 +276,12 @@ for (Schema schema: catalog.getSchemas())
   }
 }
 ]]></source>
-
 				</p>
 			</answer>
 		</faq>
 		<faq id="ant">
 			<question>
-				<span>How to use SchemaCrawler as an ant Task</span>
+				<b>How to use SchemaCrawler as an ant Task</b>
 			</question>
 			<answer>
 				<p>SchemaCrawler comes with a full-featured ant task.
@@ -381,7 +378,7 @@ for (Schema schema: catalog.getSchemas())
 		</faq>
 		<faq id="maven">
 			<question>
-				<span>How to use SchemaCrawler To Produce a Maven Report</span>
+				<b>How to use SchemaCrawler To Produce a Maven Report</b>
 			</question>
 			<answer>
 				<p>
@@ -403,9 +400,7 @@ for (Schema schema: catalog.getSchemas())
 					Install the SchemaCrawler Maven plug-in by running the following
 					command,
 					and following the instructions that are printed out.
-					<pre>
-            <![CDATA[java -cp schemacrawler-6.3.jar schemacrawler.tools.integration.maven.Main]]>
-					</pre>
+					<code><![CDATA[java -cp schemacrawler-6.3.jar schemacrawler.tools.integration.maven.Main]]></code>
 				</p>
 				<p>
 					Next, add a section to your Maven 2.0 project's pom.xml file,
@@ -445,7 +440,7 @@ for (Schema schema: catalog.getSchemas())
 		<title>Advanced SchemaCrawler Usage</title>
 		<faq id="definitions">
 			<question>
-				<span>How to get view and procedure definitions</span>
+				<b>How to get view and procedure definitions</b>
 			</question>
 			<answer>
 				<p>
@@ -459,7 +454,7 @@ for (Schema schema: catalog.getSchemas())
 		</faq>
 		<faq id="check_constraints">
 			<question>
-				<span>How to obtain check constraints</span>
+				<b>How to obtain check constraints</b>
 			</question>
 			<answer>
 				<p>
