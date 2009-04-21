@@ -73,7 +73,12 @@ abstract class BaseDatabaseConnector
       final Properties properties = new Properties();
       for (final Entry<String, String> entry: config.entrySet())
       {
-        properties.setProperty(entry.getKey(), entry.getValue());
+        final String key = entry.getKey();
+        final String value = entry.getValue();
+        if (key != null && value != null)
+        {
+          properties.setProperty(key, value);
+        }
       }
       return new PropertiesDataSource(properties);
     }

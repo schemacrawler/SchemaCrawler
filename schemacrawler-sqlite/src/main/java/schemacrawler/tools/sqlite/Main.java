@@ -21,6 +21,10 @@
 package schemacrawler.tools.sqlite;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import schemacrawler.Version;
 import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.main.SchemaCrawlerMain;
@@ -35,7 +39,7 @@ public final class Main
   /**
    * Get connection parameters, and creates a connection, and crawls the
    * schema.
-   *
+   * 
    * @param args
    *        Arguments passed into the program from the command line.
    */
@@ -48,7 +52,7 @@ public final class Main
 
     try
     {
-      final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
+      final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(addAdditionalArgs(args),
                                                                                 "/schemacrawler-sqlite.config.properties");
       SchemaCrawlerMain.schemacrawler(commandLine, Version.about());
     }
@@ -56,6 +60,14 @@ public final class Main
     {
       e.printStackTrace();
     }
+  }
+
+  private static String[] addAdditionalArgs(final String[] args)
+  {
+    final List<String> argsList = new ArrayList<String>(Arrays.asList(args));
+    argsList.add("-user=");
+    argsList.add("-password=");
+    return argsList.toArray(new String[argsList.size()]);
   }
 
   private Main()
