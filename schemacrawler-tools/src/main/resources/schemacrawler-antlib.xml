@@ -77,6 +77,27 @@
       default="false" />
 
     <attribute
+      name="tables"
+      description="Regular expression to select tables"
+      default="" />
+    <attribute
+      name="columns"
+      description="Regular expression to select columns"
+      default="" />
+    <attribute
+      name="procedures"
+      description="Regular expression to select procedures"
+      default="" />
+    <attribute
+      name="inout"
+      description="Regular expression to select procedure parameters"
+      default="" />      
+    <attribute
+      name="invert-match"
+      description="Whether to invert the matching tables"
+      default="false" />
+      
+    <attribute
       name="loglevel"
       description="Log level - may be one of: OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL"
       default="SEVERE" />
@@ -108,112 +129,17 @@
         <arg value="-user=@{user}" />
         <arg value="-password=@{password}" />
         <arg value="-command=@{command}" />
+        <arg value="-tables=@{tables}" />
+        <arg value="-columns=@{columns}" />
+        <arg value="-procedures=@{procedures}" />
+        <arg value="-inout=@{inout}" />        
+        <arg value="-v=@{invert-match}" />        
         <arg value="-noheader=@{no-header}" />
         <arg value="-nofooter=@{no-footer}" />
         <arg value="-noinfo=@{no-info}" />
         <arg value="-outputformat=@{outputformat}" />
         <arg value="-outputfile=@{outputfile}" />
         <arg value="-append=@{append}" />
-        <arg value="-loglevel=@{loglevel}" />
-      </java>
-
-    </sequential>
-
-  </macrodef>
-
-
-  <macrodef name="schemacrawler-grep">
-
-    <attribute
-      name="config"
-      description="Path to the configuration file"
-      default="schemacrawler.config.properties" />
-    <attribute
-      name="config-override"
-      description="Path to the configuration override file"
-      default="schemacrawler.config.override.properties" />
-
-    <attribute
-      name="db-driver-classpath"
-      description="Database driver classpath"
-      default="${db-driver-classpath}" />
-
-    <!-- Either the datasource, or the connection properties should be
-      provided. If both sets are provided, the datasource is ignored. -->
-
-    <attribute
-      name="datasource"
-      description="Datasource defined in the configuration"
-      default="" />
-
-    <attribute
-      name="driver"
-      description="JDBC driver class name"
-      default="" />
-    <attribute
-      name="url"
-      description="Database connection string"
-      default="" />
-    <attribute
-      name="schemapattern"
-      description="Schema pattern"
-      default="" />       
-    <attribute
-      name="user"
-      description="Database connection user name"
-      default="" />
-    <attribute
-      name="password"
-      description="Database connection password"
-      default="" />
-
-    <attribute
-      name="tables"
-      description="Regular expression to select tables"
-      default="" />
-    <attribute
-      name="columns"
-      description="Regular expression to select columns"
-      default="" />
-    <attribute
-      name="invert-match"
-      description="Whether to invert the matching tables"
-      default="false" />
-
-    <attribute
-      name="loglevel"
-      description="Log level - may be one of: OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL"
-      default="SEVERE" />
-
-    <sequential>
-
-      <!-- Required properties: -->
-      <property
-        name="schemacrawler.dir"
-        value="${basedir}" />
-
-      <java
-        taskname="schemacrawler-grep"
-        classname="schemacrawler.Grep"
-        logerror="true"
-        failonerror="true">
-        <classpath>
-          <fileset dir="${schemacrawler.dir}">
-            <include name="*.jar" />
-          </fileset>
-          <path refid="@{db-driver-classpath}" />
-        </classpath>
-        <arg value="-g=@{config}" />
-        <arg value="-p=@{config-override}" />
-        <arg value="-c=@{datasource}" />
-        <arg value="-driver=@{driver}" />
-        <arg value="-url=@{url}" />
-        <arg value="-schemapattern=@{schemapattern}" />
-        <arg value="-user=@{user}" />
-        <arg value="-password=@{password}" />
-        <arg value="-tables=@{tables}" />
-        <arg value="-columns=@{columns}" />
-        <arg value="-v=@{invert-match}" />
         <arg value="-loglevel=@{loglevel}" />
       </java>
 
