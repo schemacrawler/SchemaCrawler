@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.PrimaryKey;
@@ -175,13 +176,18 @@ public class TableAnalyzer
             // Ensure that we associate to the primary key
             final Map<String, Column> pkColumnNameMatchesMap = mapColumnNameMatches(matchedTable);
             final Column pkColumn = pkColumnNameMatchesMap.get("id");
-            if (pkColumn != null
-                && fkColumn.getType().getType() == pkColumn.getType().getType())
+            if (pkColumn != null && fkColumn != null)
             {
-              LOGGER.log(Level.FINE, "Found association "
-                                     + fkColumn.getFullName() + " --> "
-                                     + pkColumn.getFullName());
-              weakAssociations.addColumnPair(pkColumn, fkColumn);
+              final ColumnDataType fkColumnType = fkColumn.getType();
+              final ColumnDataType pkColumnType = pkColumn.getType();
+              if (pkColumnType != null && fkColumnType != null
+                  && fkColumnType.getType() == pkColumnType.getType())
+              {
+                LOGGER.log(Level.FINE, "Found weak association "
+                                       + fkColumn.getFullName() + " --> "
+                                       + pkColumn.getFullName());
+                weakAssociations.addColumnPair(pkColumn, fkColumn);
+              }
             }
           }
         }
