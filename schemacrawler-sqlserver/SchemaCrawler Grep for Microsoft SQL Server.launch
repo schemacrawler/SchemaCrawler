@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/SchemaCrawler for Microsoft SQL Server/src/main/java/schemacrawler/tools/sqlserver/Grep.java"/>
+<listEntry value="/SchemaCrawler for Microsoft SQL Server/src/main/java/schemacrawler/tools/sqlserver/Main.java"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="1"/>
@@ -12,8 +12,8 @@
 <listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.classpathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="schemacrawler.tools.sqlserver.Grep"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-database=schemacrawler&#13;&#10;-user=sa &#13;&#10;-password=sualeh &#13;&#10;-columns=.*\.ID&#13;&#10;-show_stored_procedures&#13;&#10;-inout=.*"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="schemacrawler.tools.sqlserver.Main"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-database=schemacrawler &#13;&#10;-schemapattern=% &#13;&#10;-user=sa &#13;&#10;-password=sualeh &#13;&#10;-command=maximum_schema &#13;&#10;-tables ${string_prompt:regular expression for tables:C.*|P.*} &#13;&#10;-columns ${string_prompt:regular expression for tables columns:.*\.STREET|.*\.PRICE}  &#13;&#10;-procedures ${string_prompt:regular expression for procedures:C.*|P.*} &#13;&#10;-inout ${string_prompt:regular expression for procedure columns:.*\.@p2}&#13;&#10;&quot;--outputfile=${workspace_loc:SchemaCrawler - Main/target}/sc6.txt&quot;"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SchemaCrawler for Microsoft SQL Server"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.sourcepathProvider"/>
 </launchConfiguration>
