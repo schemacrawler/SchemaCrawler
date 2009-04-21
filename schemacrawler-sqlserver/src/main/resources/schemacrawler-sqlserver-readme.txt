@@ -44,6 +44,24 @@ sc [options]
       To count rows in the tables
     dump
     	To select all rows from the tables, and output the data
+--- Grep Options ---
+    
+-tables=<regular-expression>
+    Optional, where <regular-expression> is a regular expression to match table 
+    names.
+    For example, 
+    -tables C.*|P.*
+    matches any table whose names start with C or P.
+    
+-columns=<regular-expression>
+    Optional, where <regular-expression> is a regular expression to match column 
+    names in the form "TABLENAME.COLUMNNAME".
+    For example,
+    -columns .*\.STREET|.*\.PRICE
+    matches columns named STREET or PRICE in any table.
+    
+-v (short for -invert-match)        
+    Inverts the match, and shows non-matching tables and columns.   
 
 --- Output Options ---
 
