@@ -5,7 +5,7 @@
     <title>Include and Exclude Stuff from the Output</title>
     <faq id="excluded-tables">
       <question>
-        <b>How to see why certain tables or columns for excluded </b>
+        How to see why certain tables or columns for excluded
       </question>
       <answer>
         <p>
@@ -17,7 +17,7 @@
     </faq>
     <faq id="excluded-tables-or-columns">
       <question>
-        <b>How to include or exclude certain tables or columns</b>
+        How to include or exclude certain tables or columns
       </question>
       <answer>
         <p>
@@ -32,7 +32,7 @@
     </faq>
     <faq id="excluded-views">
       <question>
-        <b>How to exclude database views from the output</b>
+        How to exclude database views from the output
       </question>
       <answer>
         <p>
@@ -46,7 +46,7 @@
     </faq>
     <faq id="excluded-procedures">
       <question>
-        <b>How to exclude stored procedures from the output</b>
+        How to exclude stored procedures from the output
       </question>
       <answer>
         <p>
@@ -63,7 +63,7 @@
     <title>Create diff-able Output</title>
     <faq id="sorting">
       <question>
-        <b> How to sort columns, foreign-keys and indices alphabetically </b>
+         How to sort columns, foreign-keys and indices alphabetically
       </question>
       <answer>
         <p>
@@ -75,7 +75,7 @@
     </faq>
     <faq id="diff-data-types">
       <question>
-        <b>How to diff column data types across databases</b>
+        How to diff column data types across databases
       </question>
       <answer>
         <p>
@@ -91,7 +91,7 @@
     </faq>
     <faq id="ordinal-numbers">
       <question>
-        <b> How to allow diffs of tables that have columns added in between </b>
+         How to allow diffs of tables that have columns added in between
       </question>
       <answer>
         <p>
@@ -107,7 +107,7 @@
     </faq>
     <faq id="index-names">
       <question>
-        <b>How to hide primary key, foreign key and index names</b>
+        How to hide primary key, foreign key and index names
       </question>
       <answer>
         <p>
@@ -130,7 +130,7 @@ schemacrawler.format.hide_constraint_names=false
     <title>Integrations</title>
     <faq id="javascript">
       <question>
-        <b>How to script with your database metadata</b>
+        How to script with your database metadata
       </question>
       <answer>
         <p>
@@ -146,7 +146,7 @@ schemacrawler.format.hide_constraint_names=false
     </faq>
     <faq id="velocity">
       <question>
-        <b>How to create your own output format</b>
+        How to create your own output format
       </question>
       <answer>
         <p>
@@ -162,7 +162,7 @@ schemacrawler.format.hide_constraint_names=false
     </faq>
     <faq id="graphing">
       <question>
-        <b>How to create a database diagram of your schema</b>
+        How to create a database diagram of your schema
       </question>
       <answer>
         <p>
@@ -181,7 +181,7 @@ schemacrawler.format.hide_constraint_names=false
     <title>How to Use SchemaCrawler in Projects</title>
     <faq id="api">
       <question>
-        <b>How to use SchemaCrawler programmatically</b>
+        How to use SchemaCrawler programmatically
       </question>
       <answer>
         <p>
@@ -203,7 +203,7 @@ schemacrawler.format.hide_constraint_names=false
           Or, if you are impatient, try code similar to the following:
 					<source><![CDATA[
 SchemaCrawlerOptions options = new SchemaCrawlerOptions();
-Catalog catalog = 
+Catalog catalog =
   SchemaCrawlerUtility.getCatalog(connection, options);
 for (Schema schema: catalog.getSchemas())
 {
@@ -214,7 +214,7 @@ for (Schema schema: catalog.getSchemas())
     for (Column column: table.getColumns())
     {
       System.out.println("     o--> " + column);
-    }  
+    }
   }
 }
 ]]></source>
@@ -223,7 +223,7 @@ for (Schema schema: catalog.getSchemas())
     </faq>
     <faq id="ant">
       <question>
-        <b>How to use SchemaCrawler as an ant Task</b>
+        How to use SchemaCrawler as an ant Task
       </question>
       <answer>
         <p>SchemaCrawler comes with a full-featured ant task. </p>
@@ -238,64 +238,64 @@ for (Schema schema: catalog.getSchemas())
           useful. </p>
         <ul>
           <li>
-            <b>config</b>
+            config
             Path to the configuration file (default value - schemacrawler.config.properties)
           </li>
           <li>
-            <b>config-override</b>
+            config-override
             Path to the configuration override file (default value - schemacrawler.config.override.properties)
           </li>
           <li>
-            <b>db-driver-classpath</b>
+            db-driver-classpath
             Database driver classpath (default value - value of the ant property value ${db-driver-classpath})
           </li>
           <li>
-            <b>datasource</b>
+            datasource
             Datasource defined in the configuration (either the datasource, or the connection properties should be
             provided - if both sets are provided, the datasource is ignored)
           </li>
           <li>
-            <b>driver</b>
+            driver
             JDBC driver class name
           </li>
           <li>
-            <b>url</b>
+            url
             Database connection string
           </li>
           <li>
-            <b>user</b>
+            user
             Database connection user name
           </li>
           <li>
-            <b>password</b>
+            password
             Database connection password (default value is an empty string)
           </li>
           <li>
-            <b>command</b>
+            command
             Comma-separated list of commands
           </li>
           <li>
-            <b>no-header</b>
+            no-header
             Whether to print the header - true or false (default value - false)
           </li>
           <li>
-            <b>no-footer</b>
+            no-footer
             Whether to print the footer - true or false (default value - false)
           </li>
           <li>
-            <b>no-info</b>
+            no-info
             Whether to print information - true or false (default value - false)
           </li>
           <li>
-            <b>outputformat</b>
+            outputformat
             Output format (default value - text)
           </li>
           <li>
-            <b>outputfile</b>
+            outputfile
             Path to output file
           </li>
           <li>
-            <b>append</b>
+            append
             Whether to append to the output - true or false (default value - false)
           </li>
         </ul>
@@ -303,7 +303,7 @@ for (Schema schema: catalog.getSchemas())
     </faq>
     <faq id="maven">
       <question>
-        <b>How to use SchemaCrawler To Produce a Maven Report</b>
+        How to use SchemaCrawler To Produce a Maven Report
       </question>
       <answer>
         <p> SchemaCrawler comes with a Maven reports plug-in. You can generate a SchemaCrawler report along with other
@@ -354,7 +354,7 @@ for (Schema schema: catalog.getSchemas())
     <title>Advanced SchemaCrawler Usage</title>
     <faq id="definitions">
       <question>
-        <b>How to get view and procedure definitions</b>
+        How to get view and procedure definitions
       </question>
       <answer>
         <p>
@@ -368,7 +368,7 @@ for (Schema schema: catalog.getSchemas())
     </faq>
     <faq id="check_constraints">
       <question>
-        <b>How to obtain check constraints</b>
+        How to obtain check constraints
       </question>
       <answer>
         <p>
