@@ -105,7 +105,7 @@ public final class SchemaDotFormatter
                            + options.getOutputOptions().getOutputFile());
   }
 
-  public void handle(@SuppressWarnings("unused") ColumnDataType dataType)
+  public void handle(final ColumnDataType dataType)
     throws SchemaCrawlerException
   {
   }
@@ -151,12 +151,12 @@ public final class SchemaDotFormatter
     out.println(graphLabel);
   }
 
-  public void handle(@SuppressWarnings("unused") JdbcDriverInfo driverInfo)
+  public void handle(final JdbcDriverInfo driverInfo)
     throws SchemaCrawlerException
   {
   }
 
-  public void handle(@SuppressWarnings("unused") Procedure procedure)
+  public void handle(final Procedure procedure)
     throws SchemaCrawlerException
   {
   }
