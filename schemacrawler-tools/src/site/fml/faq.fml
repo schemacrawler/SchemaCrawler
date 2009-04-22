@@ -1,82 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<faqs xmlns="http://maven.apache.org/FML/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/FML/1.0 http://maven.apache.org/xsd/fml-1.0.xsd" title="SchemaCrawler - Frequently Asked Questions">
-	<part id="general">
-		<title>General</title>
-		<faq id="whats-schemacrawler">
-			<question>
-				What is SchemaCrawler?
-			</question>
-			<answer>
-				<p>SchemaCrawler is an API that improves on the standard JDBC metadata.</p>
-				<p>
-					SchemaCrawler is also a command-line tool, written in Java to
-					output your
-					database schema and data in a human readable form.
-					SchemaCrawler output is
-					designed to be diff-ed with previous
-					versions of yourdatabase schema or
-					data. </p>
-			</answer>
-		</faq>
-		<faq id="output">
-			<question>
-				What does SchemaCrawler output look like?
-			</question>
-			<answer>
-				<p>
-					SchemaCrawler can produce
-					<a href="snapshot-examples/snapshot.txt">plain text</a>
-					output,
-					<a href="snapshot-examples/snapshot.html">XHTML,</a>
-					or
-					<a href="snapshot-examples/snapshot.csv">
-						comma-separated text (CSV)
-          </a>
-					. The XHTML output is a combination of valid XML (that can be
-					manipulated by
-					XML tools or XSLT), and HTML that can be viewed in a
-					browser.
-				</p>
-			</answer>
-		</faq>
-		<faq id="commands">
-			<question>
-				What are the SchemaCrawler commands?
-			</question>
-			<answer>
-				<p>
-					SchemaCrawler can produce brief, basic, or verbose details of
-					your
-					schema.
-					The brief schema option gives you just table, view, and
-					procedure names. The
-					basic schema option gives you the column names
-					and primary keys. The verbose
-					schema option will give you details
-					of
-					data types, indices, primary and
-					foreign keys, view and procedure
-					definitions. The maximum schema option will
-					give you details of
-					privileges, triggers, and check constraints. Each
-					successive option
-					takes more time to execute.
+<faqs xmlns="http://maven.apache.org/FML/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/FML/1.0 http://maven.apache.org/xsd/fml-1.0.xsd" title="SchemaCrawler - Frequently Asked Questions">
+  <part id="general">
+    <title>General</title>
+    <faq id="whats-schemacrawler">
+      <question> What is SchemaCrawler? </question>
+      <answer>
+        <p>SchemaCrawler is an API that improves on the standard JDBC metadata.</p>
+        <p> SchemaCrawler is also a command-line tool, written in Java to output your database schema and data in a
+          human readable form. SchemaCrawler output is designed to be diff-ed with previous versions of your database
+          schema or data. </p>
+      </answer>
+    </faq>
+    <faq id="output">
+      <question> What does SchemaCrawler output look like? </question>
+      <answer>
+        <p>
+          SchemaCrawler can produce
+          <a href="snapshot-examples/snapshot.txt">plain text</a>
+          output,
+          <a href="snapshot-examples/snapshot.html">XHTML,</a>
+          or
+          <a href="snapshot-examples/snapshot.csv"> comma-separated text (CSV) </a>
+          . The XHTML output is a combination of valid XML (that can be manipulated by XML tools or XSLT), and HTML that
+          can be viewed in a browser.
         </p>
-				<p>
-					SchemaCrawler can also manipulate your data. You can get counts
-					of the
-					rows in tables and views. SchemaCrawler can output all the
-					data in
-					your
-					tables and views, or run specific SQL statements
-					against
-					table
-					and views.
-					SchemaCrawler can be fine-tuned using
-					configuration
-					files.
-				</p>
-				<source><![CDATA[
+      </answer>
+    </faq>
+    <faq id="commands">
+      <question> What are the SchemaCrawler commands? </question>
+      <answer>
+        <p> SchemaCrawler can produce brief, basic, or verbose details of your schema. The brief schema option gives you
+          just table, view, and procedure names. The basic schema option gives you the column names and primary keys.
+          The verbose schema option will give you details of data types, indices, primary and foreign keys, view and
+          procedure definitions. The maximum schema option will give you details of privileges, triggers, and check
+          constraints. Each successive option takes more time to execute. </p>
+        <p> SchemaCrawler can also manipulate your data. You can get counts of the rows in tables and views.
+          SchemaCrawler can output all the data in your tables and views, or run specific SQL statements against table
+          and views. SchemaCrawler can be fine-tuned using configuration files. </p>
+    <source><![CDATA[
 java -classpath <schemacrawler-jar>;<db-driver-jar> schemacrawler.Main [options]
 
 --- Optional Configuration Options ---
@@ -90,23 +52,23 @@ java -classpath <schemacrawler-jar>;<db-driver-jar> schemacrawler.Main [options]
     and overrides the properties from the configuration file
 
 -loglevel <loglevel>
-		Log level - may be one of: 
-		OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL
-		
+  Log level - may be one of:
+  OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL
+
 --- Required Connection Options ---
 
 One of:
 
 -c <connection_name> (short for -connection <connection_name>)
     Uses a named connection
-    
+
 -d (short for -default)
     Uses the default connection
-    
+
 -x <connection_name> (short for -prompt <connection_name>)
     Prompts for connection information, which is saved
     into <connection_name>.properties
-    
+
 -a (short for -testall)
     Tests all the connections defined in the configuration properties file,
     but does not execute any commands
@@ -114,31 +76,31 @@ One of:
 Or, all of the following:
 
 -driver=<driver-class-name>
-	Fully qualified name of the JDBC driver class.
-	
+ Fully qualified name of the JDBC driver class.
+
 -url=<url>
-	JDBC connection URL to the database.
-	
+ JDBC connection URL to the database.
+
 -user=<user>
-	Database user name.
+ Database user name.
 
 -password=<password>
-	Database password.
-	
+ Database password.
+
 --- Command Options ---
 
 -command=<command>
-	Required, where <command> is a comma-separated list of:
+ Required, where <command> is a comma-separated list of:
     brief_schema
       If you only want to see table, view and procedure names
     basic_schema
-      For more details of tables, views and procedures, including columns 
+      For more details of tables, views and procedures, including columns
       and primary keys
     verbose_schema
-      For the most detail of the schema, including data types, indexes, 
+      For the most detail of the schema, including data types, indexes,
       foreign keys, and view and procedure definitions
     maximum_schema
-      For maximum possible detail of the schema, including privileges, and 
+      For maximum possible detail of the schema, including privileges, and
       details of privileges, triggers, and check constraints
     count
       To count rows in the tables
@@ -147,19 +109,19 @@ Or, all of the following:
     drop
       To drop the tables
     dump
-    	To select all rows from the tables, and output the data
+    To select all rows from the tables, and output the data
     <query_name>
-	    Query name, as specified in the configuration properties file
-			The query itself can contain the variables ${table} and ${tabletype}
-			or system properties referenced as ${<system-property-name>}.
-			Queries without any variables are executed exactly once. Queries
-			with variables are executed once for each table, with the variables
-			substituted.
+     Query name, as specified in the configuration properties file
+   The query itself can contain the variables ${table} and ${tabletype}
+   or system properties referenced as ${<system-property-name>}.
+   Queries without any variables are executed exactly once. Queries
+   with variables are executed once for each table, with the variables
+   substituted.
 
 --- Output Options ---
 
 -outputformat=<outputformat>
-	Optional, where <outputformat> is one of:
+ Optional, where <outputformat> is one of:
     text
       For text output (default)
     html
@@ -168,321 +130,227 @@ Or, all of the following:
       For CSV output
 
 -outputfile=<outputfile>
-	Optional - <outputfile> is the path to the output file
+ Optional - <outputfile> is the path to the output file
 ]]></source>
-			</answer>
-		</faq>
-		<faq id="config">
-			<question>
-				What does a SchemaCrawler configuration file look like?
-				
-			</question>
-			<answer>
-				<p>
-					An example of a
-					<a href="config/schemacrawler.config.properties">
-						SchemaCrawler configuration file.
-          </a>
-				</p>
-			</answer>
-		</faq>
-	</part>
-	<part id="supported-platforms">
-		<title>Supported Platforms</title>
-		<faq id="supported-databases">
-			<question>
-				What databases does SchemaCrawler work with?
-			</question>
-			<answer>
-				<p>
-					SchemaCrawler supports any database for which there is a JDBC
-					database
-					driver available. SchemaCrawler has been tested with
-					various
-					databases, and
-					JDBC drivers.
+   </answer>
+    </faq>
+    <faq id="config">
+      <question> What does a SchemaCrawler configuration file look like?  </question>
+      <answer>
+        <p>
+          An example of a
+          <a href="config/schemacrawler.config.properties"> SchemaCrawler configuration file. </a>
         </p>
-			</answer>
-		</faq>
-		<faq id="supported-java">
-			<question>
-				What Java version does SchemaCrawler work with?
-			</question>
-			<answer>
-				<p>
-					SchemaCrawler works with J2SE 5 and above. SchemaCrawler does not
-					depend
-					on any Java libraries other than the standard J2SE 5 runtime
-					libraries and a
-					JDBC driver.
+      </answer>
+    </faq>
+  </part>
+  <part id="supported-platforms">
+    <title>Supported Platforms</title>
+    <faq id="supported-databases">
+      <question> What databases does SchemaCrawler work with? </question>
+      <answer>
+        <p> SchemaCrawler supports any database for which there is a JDBC database driver available. SchemaCrawler has
+          been tested with various databases, and JDBC drivers. </p>
+      </answer>
+    </faq>
+    <faq id="supported-java">
+      <question> What Java version does SchemaCrawler work with? </question>
+      <answer>
+        <p> SchemaCrawler works with J2SE 5 and above. SchemaCrawler does not depend on any Java libraries other than
+          the standard J2SE 5 runtime libraries and a JDBC driver. </p>
+      </answer>
+    </faq>
+    <faq id="supported-os">
+      <question> What operating systems does SchemaCrawler work with?  </question>
+      <answer>
+        <p> SchemaCrawler works with any operating system that supports J2SE 5 and above. </p>
+      </answer>
+    </faq>
+    <faq id="ant">
+      <question> Can SchemaCrawler be used with ant? </question>
+      <answer>
+        <p>Yes, SchemaCrawler comes with a full-featured ant task.</p>
+        <p>
+          <i>
+            See the example in the
+            <code>examples\ant-task</code>
+            directory.
+          </i>
         </p>
-			</answer>
-		</faq>
-		<faq id="supported-os">
-			<question>
-				What operating systems does SchemaCrawler work with?
-				
-			</question>
-			<answer>
-				<p>
-					SchemaCrawler works with any operating system that supports J2SE
-					5 and
-					above.
+      </answer>
+    </faq>
+    <faq id="maven">
+      <question> Can SchemaCrawler be used with Maven? </question>
+      <answer>
+        <p> Yes, SchemaCrawler comes with a Maven plug-in. You can generate a SchemaCrawler report along with other
+          reports for your Maven generated site. </p>
+        <p>
+          <i>
+            See the example in the
+            <code>examples\maven</code>
+            directory.
+          </i>
         </p>
-			</answer>
-		</faq>
-		<faq id="ant">
-			<question>
-				Can SchemaCrawler be used with ant?
-			</question>
-			<answer>
-				<p>Yes, SchemaCrawler comes with a full-featured ant task.</p>
-				<p>
-					<i>
-						See the example in the
-						<code>examples\ant-task</code>
-						directory.
-					</i>
-				</p>
-			</answer>
-		</faq>
-		<faq id="maven">
-			<question>
-				Can SchemaCrawler be used with Maven?
-			</question>
-			<answer>
-				<p>
-					Yes, SchemaCrawler comes with a Maven plug-in. You can generate a
-					SchemaCrawler report along with other reports for your Maven
-					generated
-					site.
-    </p>
-				<p>
-					<i>
-						See the example in the
-						<code>examples\maven</code>
-						directory.
-					</i>
-				</p>
-			</answer>
-		</faq>
-		<faq id="api">
-			<question>
-				Can SchemaCrawler be used programmatically?
-			</question>
-			<answer>
-				<p>
-					SchemaCrawler is an API that improves on the standard JDBC
-					metadata
-					facilities. SchemaCrawler provides an easy to use set of
-					plain old Java
-					objects (POJOs) that represent your database schema.
-				</p>
-				<p>
-					Read
-					<a href="http://www.devx.com/Java/Article/32443">
-						Java API Makes Database Metadata as Easily Accessible as
-						POJOs
-          </a>
-					for an introduction to the SchemaCrawler API. (This article may
-					refer to an
-					older release of the SchemaCrawler API, but the
-					concepts
-					are the same.) You
-					can also browse
-					the
-					<a href="apidocs/index.html">javadocs.</a>
-				</p>
-				<p>
-					<i>
-						See the example in the
-						<code>examples\api</code>
-						directory.
-					</i>
-				</p>
-			</answer>
-		</faq>
-		<faq id="javascript">
-			<question>
-				Can SchemaCrawler be used with scripting languages?
-			</question>
-			<answer>
-				<p>
-					When SchemaCrawler is used with J2SE 6 and above, it has built-in
-					support to be used with JavaScript scripts.
-				</p>
-				<p>
-					<i>
-						See the example in the
-						<code>examples\javascript</code>
-						directory.
-					</i>
-				</p>
-			</answer>
-		</faq>
-		<faq id="integrations">
-			<question>
-				Can SchemaCrawler be used integrated with other programs?
-				
-			</question>
-			<answer>
-				<p>
-					SchemaCrawler can be integrated with other programs, but this
-					requires some Java programming. SchemaCrawler is designed to be
-					used programmatically with the
-					<a href="http://www.springframework.org/">Spring Framework</a>
-					. Examples are provided in the
-					<code>examples\spring</code>
-					directory.
-				</p>
-				<p>
-					SchemaCrawler comes pre-built with integration with
-					<a href="http://velocity.apache.org/">Apache Velocity.</a>
-					This allows you to specify your own templates for formatting the
-					schema.
-					Examples are provided in the
-					<code>examples\velocity</code>
-					directory. Database diagrams can be generated using the 
-					integration with
-					<a href="http://www.graphviz.org/">Graphviz</a>.
-				</p>
-			</answer>
-		</faq>
-	</part>
-	<part id="grep">
-		<title>SchemaCrawler Grep</title>
-		<faq id="whats-schemacrawler-grep">
-			<question>
-				What is SchemaCrawler Grep?
-			</question>
-			<answer>
-				<p>
-					SchemaCrawler Grep is a set of SchemaCrawler command-line options that allow you to search
-					your
-					database for tables and columns that match a regular
-					expression,
-					much like
-					the standard
-					<a href="http://en.wikipedia.org/wiki/Grep">grep</a>
-					tool.
-				</p>
-			</answer>
-		</faq>
-		<faq id="grep-output">
-			<question>
-				What does SchemaCrawler output look like?
-			</question>
-			<answer>
-				<p>
-					SchemaCrawler Grep output is the same as the SchemaCrawler text
-					output.
-    </p>
-			</answer>
-		</faq>
-		<faq id="commands">
-			<question>
-				What are the SchemaCrawler Grep commands?
-			</question>
-			<answer>
-				<source><![CDATA[
+      </answer>
+    </faq>
+    <faq id="api">
+      <question> Can SchemaCrawler be used programmatically? </question>
+      <answer>
+        <p> SchemaCrawler is an API that improves on the standard JDBC metadata facilities. SchemaCrawler provides an
+          easy to use set of plain old Java objects (POJOs) that represent your database schema. </p>
+        <p>
+          Read
+          <a href="http://www.devx.com/Java/Article/32443"> Java API Makes Database Metadata as Easily Accessible as POJOs </a>
+          for an introduction to the SchemaCrawler API. (This article may refer to an older release of the SchemaCrawler
+          API, but the concepts are the same.) You can also browse the
+          <a href="apidocs/index.html">javadocs.</a>
+        </p>
+        <p>
+          <i>
+            See the example in the
+            <code>examples\api</code>
+            directory.
+          </i>
+        </p>
+      </answer>
+    </faq>
+    <faq id="javascript">
+      <question> Can SchemaCrawler be used with scripting languages? </question>
+      <answer>
+        <p> When SchemaCrawler is used with J2SE 6 and above, it has built-in support to be used with JavaScript
+          scripts. </p>
+        <p>
+          <i>
+            See the example in the
+            <code>examples\javascript</code>
+            directory.
+          </i>
+        </p>
+      </answer>
+    </faq>
+    <faq id="integrations">
+      <question> Can SchemaCrawler be used integrated with other programs?  </question>
+      <answer>
+        <p>
+          SchemaCrawler can be integrated with other programs, but this requires some Java programming. SchemaCrawler is
+          designed to be used programmatically with the
+          <a href="http://www.springframework.org/">Spring Framework</a>
+          . Examples are provided in the
+          <code>examples\spring</code>
+          directory.
+        </p>
+        <p>
+          SchemaCrawler comes pre-built with integration with
+          <a href="http://velocity.apache.org/">Apache Velocity.</a>
+          This allows you to specify your own templates for formatting the schema. Examples are provided in the
+          <code>examples\velocity</code>
+          directory. Database diagrams can be generated using the integration with
+          <a href="http://www.graphviz.org/">Graphviz</a>
+          .
+        </p>
+      </answer>
+    </faq>
+  </part>
+  <part id="grep">
+    <title>SchemaCrawler Grep</title>
+    <faq id="whats-schemacrawler-grep">
+      <question> What is SchemaCrawler Grep? </question>
+      <answer>
+        <p>
+          SchemaCrawler Grep is a set of SchemaCrawler command-line options that allow you to search your database for
+          tables and columns that match a regular expression, much like the standard
+          <a href="http://en.wikipedia.org/wiki/Grep">grep</a>
+          tool.
+        </p>
+      </answer>
+    </faq>
+    <faq id="grep-output">
+      <question> What does SchemaCrawler output look like? </question>
+      <answer>
+        <p> SchemaCrawler Grep output is the same as the SchemaCrawler text output. </p>
+      </answer>
+    </faq>
+    <faq id="commands">
+      <question> What are the SchemaCrawler Grep commands? </question>
+      <answer>
+    <source><![CDATA[
 --- Grep Options ---
 
 -tables=<regular-expression>
-	Optional, where <regular-expression> is a regular expression to match table
-	names.
-	For example,
-	-tables C.*|P.*
-	matches any table whose names start with C or P.
+ Optional, where <regular-expression> is a regular expression to match table
+ names.
+ For example,
+ -tables C.*|P.*
+ matches any table whose names start with C or P.
 
 -columns=<regular-expression>
-	Optional, where <regular-expression> is a regular expression to match column
-	names in the form "TABLENAME.COLUMNNAME".
-	For example,
-	-columns .*\.STREET|.*\.PRICE
-	matches columns named STREET or PRICE in any table.
+ Optional, where <regular-expression> is a regular expression to match column
+ names in the form "TABLENAME.COLUMNNAME".
+ For example,
+ -columns .*\.STREET|.*\.PRICE
+ matches columns named STREET or PRICE in any table.
 
 -v (short for -invert-match)
-	Inverts the match, and shows non-matching tables and columns.
+ Inverts the match, and shows non-matching tables and columns.
 ]]></source>
-			</answer>
-		</faq>
-		<faq id="config">
-			<question>
-				What does a SchemaCrawler configuration file look like?
-				
-			</question>
-			<answer>
-				<p>
-					The SchemaCrawler Grep configuration file is the same as the
-					<a href="config/schemacrawler.config.properties">
-						SchemaCrawler configuration file.
-          </a>
-				</p>
-			</answer>
-		</faq>
-	</part>
-	<part id="distribution">
-		<title>Distribution</title>
-		<faq id="availibility">
-			<question>
-				Where is SchemaCrawler available?
-			</question>
-			<answer>
-				<p>
-					SchemaCrawler is available as a download from
-					<a href="https://sourceforge.net/project/showfiles.php?group_id=148383">
-						SourceForge
-          </a>
-					.
-				</p>
-			</answer>
-		</faq>
-		<faq id="tech-support">
-			<question>
-				Is technical support available?
-			</question>
-			<answer>
-				<p>
-					Technical support is not available for SchemaCrawler. Please post
-					questions
-					on the
-					<a href="http://sourceforge.net/forum/?group_id=148383">forums.</a>
-				</p>
-			</answer>
-		</faq>
-		<faq id="cost">
-			<question>
-				Is SchemaCrawler free?
-			</question>
-			<answer>
-				<p>
-					<img src="http://www.gnu.org/graphics/lgplv3-88x31.png" alt="LGPL"/>
-					SchemaCrawler is free, licensed under the
-					<a href="http://www.gnu.org/licenses/lgpl-3.0.txt">GNU Lesser General Public License (LGPL),</a>
-					but
-					<a href="http://sourceforge.net/donate/index.php?group_id=148383">
-						donations
-          </a>
-					are welcome.
-				</p>
-				<p>
-					<img src="http://www.gnu.org/graphics/gplv3-88x31.png" alt="GPL"/>
-					SchemaCrawler is also distributed packaged for different database
-					systems
-					such as
-					<a href="http://www.microsoft.com/sqlserver">Microsoft SQL Server</a>
-					,
-					<a href="http://www.mysql.com/">MySQL</a>
-					and
-					<a href="http://www.postgresql.org/">PostgreSQL</a>
-					. These pre-packaged distributions are distributed under the
-					<a href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License (GPL) license.</a>
-					The JDBC drivers that are packaged with these SchemaCrawler
-					distributions
-					are in their binary form, and retain their original
-					license.
-				</p>
-			</answer>
-		</faq>
-	</part>
+   </answer>
+    </faq>
+    <faq id="config">
+      <question> What does a SchemaCrawler configuration file look like?  </question>
+      <answer>
+        <p>
+          The SchemaCrawler Grep configuration file is the same as the
+          <a href="config/schemacrawler.config.properties"> SchemaCrawler configuration file. </a>
+        </p>
+      </answer>
+    </faq>
+  </part>
+  <part id="distribution">
+    <title>Distribution</title>
+    <faq id="availibility">
+      <question> Where is SchemaCrawler available? </question>
+      <answer>
+        <p>
+          SchemaCrawler is available as a download from
+          <a href="https://sourceforge.net/project/showfiles.php?group_id=148383"> SourceForge </a>
+          .
+        </p>
+      </answer>
+    </faq>
+    <faq id="tech-support">
+      <question> Is technical support available? </question>
+      <answer>
+        <p>
+          Technical support is not available for SchemaCrawler. Please post questions on the
+          <a href="http://sourceforge.net/forum/?group_id=148383">forums.</a>
+        </p>
+      </answer>
+    </faq>
+    <faq id="cost">
+      <question> Is SchemaCrawler free? </question>
+      <answer>
+        <p>
+          <img src="http://www.gnu.org/graphics/lgplv3-88x31.png" alt="LGPL" />
+          SchemaCrawler is free, licensed under the
+          <a href="http://www.gnu.org/licenses/lgpl-3.0.txt">GNU Lesser General Public License (LGPL),</a>
+          but
+          <a href="http://sourceforge.net/donate/index.php?group_id=148383"> donations </a>
+          are welcome.
+        </p>
+        <p>
+          <img src="http://www.gnu.org/graphics/gplv3-88x31.png" alt="GPL" />
+          SchemaCrawler is also distributed packaged for different database systems such as
+          <a href="http://www.microsoft.com/sqlserver">Microsoft SQL Server</a>
+          ,
+          <a href="http://www.mysql.com/">MySQL</a>
+          and
+          <a href="http://www.postgresql.org/">PostgreSQL</a>
+          . These pre-packaged distributions are distributed under the
+          <a href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License (GPL) license.</a>
+          The JDBC drivers that are packaged with these SchemaCrawler distributions are in their binary form, and retain
+          their original license.
+        </p>
+      </answer>
+    </faq>
+  </part>
 </faqs>
