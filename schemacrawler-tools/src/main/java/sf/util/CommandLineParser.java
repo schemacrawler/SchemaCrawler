@@ -457,26 +457,6 @@ public final class CommandLineParser
   }
 
   /**
-   * Get all the command line options.
-   * 
-   * @return Command line options
-   */
-  public Collection<Option<?>> getOptions()
-  {
-    final Collection<Option<?>> options = optionsMap.values();
-    final Collection<Option<?>> uniqueOptions = new HashSet<Option<?>>();
-
-    for (final Option<?> option: options)
-    {
-      if (!uniqueOptions.contains(option))
-      {
-        uniqueOptions.add(option);
-      }
-    }
-    return uniqueOptions;
-  }
-
-  /**
    * Remaining arguments, that are not parsed.
    * 
    * @return The non-option arguments
@@ -520,8 +500,7 @@ public final class CommandLineParser
   public void parse(final String[] args)
   {
     // Reset all options
-    final Collection<Option<?>> options = getOptions();
-    for (final Option<?> element: options)
+    for (final Option<?> element: optionsMap.values())
     {
       ((BaseOption<?>) element).reset();
     }
