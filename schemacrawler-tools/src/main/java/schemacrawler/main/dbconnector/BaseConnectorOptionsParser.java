@@ -21,7 +21,7 @@
 package schemacrawler.main.dbconnector;
 
 
-import schemacrawler.main.BaseCommandLineParser;
+import schemacrawler.main.BaseOptionsParser;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
 
@@ -31,7 +31,7 @@ import sf.util.CommandLineParser.StringOption;
  * @author sfatehi
  */
 abstract class BaseConnectorOptionsParser<O extends BaseConnectorOptions>
-  extends BaseCommandLineParser<O>
+  extends BaseOptionsParser<O>
 {
 
   protected final StringOption optionSchemaPattern = new StringOption(Option.NO_SHORT_FORM,

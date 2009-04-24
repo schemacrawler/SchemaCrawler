@@ -20,8 +20,6 @@
 package schemacrawler.main;
 
 
-import java.util.Arrays;
-
 import javax.sql.DataSource;
 
 import schemacrawler.main.dbconnector.BundledDriverDatabaseConnector;
@@ -31,7 +29,7 @@ import schemacrawler.main.dbconnector.PropertiesDataSourceDatabaseConnector;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.Command;
+import schemacrawler.tools.Commands;
 import schemacrawler.tools.OutputOptions;
 import sf.util.Utilities;
 
@@ -43,13 +41,13 @@ import sf.util.Utilities;
 public class SchemaCrawlerCommandLine
 {
 
-  private final Command[] commands;
+  private final Commands commands;
   private final Config config;
   private final SchemaCrawlerOptions schemaCrawlerOptions;
   private final OutputOptions outputOptions;
   private final DatabaseConnector databaseConnector;
 
-  public SchemaCrawlerCommandLine(final Command[] commands,
+  public SchemaCrawlerCommandLine(final Commands commands,
                                   final Config config,
                                   final DatabaseConnector databaseConnector,
                                   final OutputOptions outputOptions)
@@ -97,7 +95,7 @@ public class SchemaCrawlerCommandLine
     }
     else
     {
-      commands = new Command[0];
+      commands = new Commands();
       outputOptions = new OutputOptions();
     }
 
@@ -153,9 +151,9 @@ public class SchemaCrawlerCommandLine
    * 
    * @return Commands.
    */
-  public Command[] getCommands()
+  public Commands getCommands()
   {
-    return Arrays.asList(commands).toArray(new Command[commands.length]);
+    return commands;
   }
 
   /**

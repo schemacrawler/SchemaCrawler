@@ -31,7 +31,7 @@ import sf.util.CommandLineParser.StringOption;
  * @author Sualeh Fatehi
  */
 final class ConfigParser
-  extends BaseCommandLineParser<Config>
+  extends BaseOptionsParser<Config>
 {
 
   private final StringOption optionConfigFile = new StringOption('g',

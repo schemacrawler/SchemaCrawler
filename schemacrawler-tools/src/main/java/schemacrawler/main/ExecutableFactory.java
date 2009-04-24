@@ -29,6 +29,7 @@ import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.Command;
+import schemacrawler.tools.Commands;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.datatext.DataTextFormatOptions;
@@ -73,12 +74,12 @@ public final class ExecutableFactory
   {
     final Config config = commandLine.getConfig();
     final OutputOptions masterOutputOptions = commandLine.getOutputOptions();
-    final Command[] commands = commandLine.getCommands();
+    final Commands commands = commandLine.getCommands();
 
     final List<Executable<?>> executables = new ArrayList<Executable<?>>();
-    for (int i = 0; i < commands.length; i++)
+    for (int i = 0; i < commands.size(); i++)
     {
-      final Command command = commands[i];
+      final Command command = commands.get(i);
 
       final OutputOptions outputOptions = masterOutputOptions.duplicate();
       if (i == 0)
@@ -86,7 +87,7 @@ public final class ExecutableFactory
         // First command - no footer
         outputOptions.setNoFooter(true);
       }
-      else if (i == commands.length - 1)
+      else if (i == commands.size() - 1)
       {
         // Last command - no header, or info
         outputOptions.setNoHeader(true);

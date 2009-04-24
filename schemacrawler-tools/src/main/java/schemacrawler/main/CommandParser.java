@@ -21,10 +21,8 @@
 package schemacrawler.main;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import schemacrawler.tools.Command;
+import schemacrawler.tools.Commands;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import sf.util.Utilities;
 import sf.util.CommandLineParser.Option;
@@ -36,7 +34,7 @@ import sf.util.CommandLineParser.StringOption;
  * @author Sualeh Fatehi
  */
 final class CommandParser
-  extends BaseCommandLineParser<Command[]>
+  extends BaseOptionsParser<Commands>
 {
 
   private final StringOption optionCommand = new StringOption(Option.NO_SHORT_FORM,
@@ -49,7 +47,7 @@ final class CommandParser
   }
 
   @Override
-  protected Command[] getValue()
+  protected Commands getValue()
   {
     parse(new Option[] {
       optionCommand
@@ -58,11 +56,11 @@ final class CommandParser
     final String commandOptionValue = optionCommand.getValue();
     if (Utilities.isBlank(commandOptionValue))
     {
-      return new Command[0];
+      return new Commands();
     }
     final String[] commandStrings = commandOptionValue.split(",");
 
-    final List<Command> commands = new ArrayList<Command>(commandStrings.length);
+    final Commands commands = new Commands();
     for (final String commandString: commandStrings)
     {
       SchemaTextDetailType schemaTextDetailType;
@@ -78,7 +76,7 @@ final class CommandParser
       commands.add(new Command(commandString, isQuery));
     }
 
-    return commands.toArray(new Command[commands.size()]);
+    return commands;
   }
 
 }
