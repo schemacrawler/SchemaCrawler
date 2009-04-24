@@ -59,12 +59,34 @@ public final class CommandLineParser
                          final String longForm,
                          final T defaultValue)
     {
-      setShortForm(shortForm);
-      setLongForm(longForm);
+      if (shortForm != NO_SHORT_FORM)
+      {
+        if (!Character.isLetterOrDigit(shortForm))
+        {
+          throw new IllegalArgumentException("Illegal short form for option specified: "
+                                             + shortForm);
+        }
+        this.shortForm = new String(new char[] {
+          shortForm
+        });
+        hasShortForm = true;
+      }
+
+      if (!longForm.equals(NO_LONG_FORM))
+      {
+        if (longForm.length() == 0)
+        {
+          throw new IllegalArgumentException("Long form for option not specified");
+        }
+        this.longForm = longForm;
+        hasLongForm = true;
+      }
+
       if (!hasLongForm && !hasShortForm)
       {
         throw new IllegalArgumentException("Option cannot be defined");
       }
+
       this.defaultValue = defaultValue;
     }
 
@@ -178,37 +200,6 @@ public final class CommandLineParser
     void setValue(final String valueString)
     {
       value = parseValue(valueString);
-    }
-
-    private void setLongForm(final String longForm)
-    {
-      if (longForm.equals(NO_LONG_FORM))
-      {
-        return;
-      }
-      if (longForm.length() == 0)
-      {
-        throw new IllegalArgumentException("Long form for option not specified");
-      }
-      this.longForm = longForm;
-      hasLongForm = true;
-    }
-
-    private void setShortForm(final char shortForm)
-    {
-      if (shortForm == NO_SHORT_FORM)
-      {
-        return;
-      }
-      if (!Character.isLetterOrDigit(shortForm))
-      {
-        throw new IllegalArgumentException("Illegal short form for option specified: "
-                                           + shortForm);
-      }
-      this.shortForm = new String(new char[] {
-        shortForm
-      });
-      hasShortForm = true;
     }
   }
 

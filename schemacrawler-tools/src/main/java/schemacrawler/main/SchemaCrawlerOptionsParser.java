@@ -34,7 +34,7 @@ import sf.util.CommandLineParser.StringOption;
  * @author Sualeh Fatehi
  */
 final class SchemaCrawlerOptionsParser
-  extends BaseCommandLineParser<SchemaCrawlerOptions>
+  extends BaseOptionsParser<SchemaCrawlerOptions>
 {
 
   private final StringOption optionSchemaPattern = new StringOption(Option.NO_SHORT_FORM,

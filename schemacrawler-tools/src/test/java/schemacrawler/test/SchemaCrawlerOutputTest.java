@@ -47,6 +47,7 @@ import schemacrawler.main.dbconnector.TestUtilityDatabaseConnector;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.Command;
+import schemacrawler.tools.Commands;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.datatext.DataTextFormatOptions;
@@ -106,7 +107,7 @@ public class SchemaCrawlerOutputTest
   public void compareCompositeOutput()
     throws Exception
   {
-    final Command[][] commands = new Command[][] {
+    final Command[][] commandSets = new Command[][] {
         {
             new Command("maximum_schema", false),
             new Command("count", true),
@@ -125,7 +126,7 @@ public class SchemaCrawlerOutputTest
       {
         continue;
       }
-      for (final Command[] commandSet: commands)
+      for (final Command[] commandSet: commandSets)
       {
         final String referenceFile = commandSet[0].toString() + "."
                                      + outputFormat.name();
@@ -140,7 +141,13 @@ public class SchemaCrawlerOutputTest
         outputOptions.setNoHeader(false);
         outputOptions.setNoFooter(false);
 
-        final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(commandSet,
+        final Commands commands = new Commands();
+        for (int i = 0; i < commandSet.length; i++)
+        {
+          commands.add(commandSet[i]);
+        }
+
+        final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(commands,
                                                                                   new Config(),
                                                                                   dbConnector,
                                                                                   outputOptions);

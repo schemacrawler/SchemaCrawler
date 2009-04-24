@@ -33,7 +33,7 @@ import sf.util.CommandLineParser.StringOption;
  * @author Sualeh Fatehi
  */
 final class OutputOptionsParser
-  extends BaseCommandLineParser<OutputOptions>
+  extends BaseOptionsParser<OutputOptions>
 {
 
   private final StringOption optionOutputFormat = new StringOption(Option.NO_SHORT_FORM,

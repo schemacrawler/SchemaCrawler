@@ -21,7 +21,7 @@
 package schemacrawler.tools.integration.spring;
 
 
-import schemacrawler.main.BaseCommandLineParser;
+import schemacrawler.main.BaseOptionsParser;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
 
@@ -31,7 +31,7 @@ import sf.util.CommandLineParser.StringOption;
  * @author sfatehi
  */
 final class SpringOptionsParser
-  extends BaseCommandLineParser<SpringOptions>
+  extends BaseOptionsParser<SpringOptions>
 {
 
   private final StringOption optionContextFile = new StringOption('c',

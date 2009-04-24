@@ -30,7 +30,7 @@ import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.Command;
+import schemacrawler.tools.Commands;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.schematext.SchemaCrawlerExecutable;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
@@ -77,9 +77,9 @@ public abstract class SchemaExecutable
       .getSchemaCrawlerOptions();
     final OutputOptions outputOptions = commandLine.getOutputOptions();
 
-    final Command[] commands = commandLine.getCommands();
+    final Commands commands = commandLine.getCommands();
     final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType
-      .valueOf(commands[0].getName());
+      .valueOf(commands.getFirstComand().getName());
 
     final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(config,
                                                                       outputOptions,

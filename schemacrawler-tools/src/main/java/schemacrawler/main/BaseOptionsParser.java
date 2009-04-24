@@ -21,6 +21,7 @@
 package schemacrawler.main;
 
 
+import schemacrawler.schemacrawler.Options;
 import sf.util.CommandLineParser;
 import sf.util.CommandLineParser.Option;
 
@@ -28,15 +29,15 @@ import sf.util.CommandLineParser.Option;
  * Parses the command line.
  * 
  * @param <O>
- *        Object to be parsed from the command line.
+ *        Options to be parsed from the command line.
  * @author Sualeh Fatehi
  */
-public abstract class BaseCommandLineParser<O>
+public abstract class BaseOptionsParser<O extends Options>
 {
 
   private final String[] args;
 
-  protected BaseCommandLineParser(final String[] args)
+  protected BaseOptionsParser(final String[] args)
   {
     this.args = args;
   }

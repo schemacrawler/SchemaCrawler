@@ -42,6 +42,7 @@ import java.util.logging.Logger;
  */
 public final class Config
   extends HashMap<String, String>
+  implements Options
 {
 
   private static final long serialVersionUID = 8720699738076915453L;
