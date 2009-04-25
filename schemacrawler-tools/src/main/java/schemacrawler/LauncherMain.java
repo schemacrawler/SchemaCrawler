@@ -28,11 +28,15 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.Locale;
+import java.util.logging.Handler;
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
-import sf.util.CommandLineUtility;
+import sf.util.CommandLineParser;
 
 /**
  * A wrapper used to assemble the classpath before launching the actual
@@ -59,7 +63,7 @@ public final class LauncherMain
   public static void main(final String[] args)
   {
 
-    CommandLineUtility.setLogLevel(args);
+    setLogLevel(args);
 
     if (args.length == 0)
     {
@@ -174,6 +178,55 @@ public final class LauncherMain
     }
     return classpath;
 
+  }
+
+  /**
+   * Sets the application-wide log level.
+   * 
+   * @param logLevel
+   *        Log level to set
+   */
+  private static void setApplicationLogLevel(final Level logLevel)
+  {
+    final LogManager logManager = LogManager.getLogManager();
+    for (final Enumeration<String> loggerNames = logManager.getLoggerNames(); loggerNames
+      .hasMoreElements();)
+    {
+      final String loggerName = loggerNames.nextElement();
+      final Logger logger = logManager.getLogger(loggerName);
+      logger.setLevel(null);
+      final Handler[] handlers = logger.getHandlers();
+      for (final Handler handler: handlers)
+      {
+        handler.setLevel(logLevel);
+      }
+    }
+
+    final Logger rootLogger = Logger.getLogger("");
+    rootLogger.setLevel(logLevel);
+  }
+
+  /**
+   * Parses the command line, and sets the application log level.
+   * 
+   * @param args
+   *        Command line arguments
+   */
+  private static void setLogLevel(final String[] args)
+  {
+    final String OPTION_loglevel = "loglevel";
+
+    final CommandLineParser parser = new CommandLineParser();
+    parser
+      .addOption(new CommandLineParser.StringOption(CommandLineParser.Option.NO_SHORT_FORM,
+                                                    OPTION_loglevel,
+                                                    "OFF"));
+    parser.parse(args);
+
+    final String logLevelString = parser.getStringOptionValue(OPTION_loglevel);
+    final Level logLevel = Level.parse(logLevelString
+      .toUpperCase(Locale.ENGLISH));
+    setApplicationLogLevel(logLevel);
   }
 
   private static File toDir(final String directoryName)

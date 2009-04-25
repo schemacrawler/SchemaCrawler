@@ -27,7 +27,9 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
+import schemacrawler.Version;
 import schemacrawler.schemacrawler.Options;
+import sf.util.Utilities;
 
 public class ApplicationOptions
   implements Options
@@ -41,6 +43,7 @@ public class ApplicationOptions
 
   public void apply()
   {
+    showHelp();
     applyApplicationLogLevel();
   }
 
@@ -64,6 +67,12 @@ public class ApplicationOptions
     this.applicationLogLevel = applicationLogLevel;
   }
 
+  /**
+   * Set help resource.
+   * 
+   * @param helpResource
+   *        Resource file containing help text.
+   */
   public void setHelpResource(String helpResource)
   {
     this.helpResource = helpResource;
@@ -79,6 +88,11 @@ public class ApplicationOptions
    */
   private void applyApplicationLogLevel()
   {
+    if (applicationLogLevel == null)
+    {
+      return;
+    }
+
     final LogManager logManager = LogManager.getLogManager();
     for (final Enumeration<String> loggerNames = logManager.getLoggerNames(); loggerNames
       .hasMoreElements();)
@@ -95,6 +109,24 @@ public class ApplicationOptions
 
     final Logger rootLogger = Logger.getLogger("");
     rootLogger.setLevel(applicationLogLevel);
+  }
+
+  /**
+   * Does a quick check of the command line arguments to find any
+   * commonly used help options.
+   */
+  private void showHelp()
+  {
+    if (showHelp)
+    {
+      final byte[] text = Utilities.readFully(ApplicationOptions.class
+        .getResourceAsStream(helpResource));
+      final String info = new String(text);
+
+      System.out.println(Version.about());
+      System.out.println(info);
+      System.exit(0);
+    }
   }
 
 }

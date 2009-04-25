@@ -28,7 +28,6 @@ import java.util.List;
 import schemacrawler.Version;
 import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.main.SchemaCrawlerMain;
-import sf.util.CommandLineUtility;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -45,14 +44,10 @@ public final class Main
    */
   public static void main(final String[] args)
   {
-    CommandLineUtility.checkForHelp(args,
-                                    Version.about(),
-                                    "/schemacrawler-sqlite-readme.txt");
-    CommandLineUtility.setLogLevel(args);
-
     try
     {
       final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(addAdditionalArgs(args),
+                                                                                "/schemacrawler-sqlite-readme.txt",
                                                                                 "/schemacrawler-sqlite.config.properties");
       SchemaCrawlerMain.schemacrawler(commandLine, Version.about());
     }

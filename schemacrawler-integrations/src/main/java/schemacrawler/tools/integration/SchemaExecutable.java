@@ -24,7 +24,6 @@ import java.sql.Connection;
 
 import javax.sql.DataSource;
 
-import schemacrawler.Version;
 import schemacrawler.crawl.CachingCrawlHandler;
 import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.schema.Catalog;
@@ -35,7 +34,6 @@ import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.schematext.SchemaCrawlerExecutable;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextOptions;
-import sf.util.CommandLineUtility;
 
 /**
  * An executor that uses a template renderer to render a schema.
@@ -68,10 +66,8 @@ public abstract class SchemaExecutable
                                     final String helpResource)
     throws Exception
   {
-    CommandLineUtility.checkForHelp(args, Version.about(), helpResource);
-    CommandLineUtility.setLogLevel(args);
-
-    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args);
+    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
+                                                                              helpResource);
     final Config config = commandLine.getConfig();
     final SchemaCrawlerOptions schemaCrawlerOptions = commandLine
       .getSchemaCrawlerOptions();
