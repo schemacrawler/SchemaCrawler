@@ -24,7 +24,6 @@ package schemacrawler.tools.postgresql;
 import schemacrawler.Version;
 import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.main.SchemaCrawlerMain;
-import sf.util.CommandLineUtility;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -41,14 +40,10 @@ public final class Main
    */
   public static void main(final String[] args)
   {
-    CommandLineUtility.checkForHelp(args,
-                                    Version.about(),
-                                    "/schemacrawler-postgresql-readme.txt");
-    CommandLineUtility.setLogLevel(args);
-
     try
     {
       final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
+                                                                                "/schemacrawler-postgresql-readme.txt",
                                                                                 "/schemacrawler-postgresql.config.properties");
       SchemaCrawlerMain.schemacrawler(commandLine, Version.about());
     }

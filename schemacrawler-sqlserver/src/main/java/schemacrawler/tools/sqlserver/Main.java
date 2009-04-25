@@ -24,7 +24,6 @@ package schemacrawler.tools.sqlserver;
 import schemacrawler.Version;
 import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.main.SchemaCrawlerMain;
-import sf.util.CommandLineUtility;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -41,14 +40,10 @@ public final class Main
    */
   public static void main(final String[] args)
   {
-    CommandLineUtility.checkForHelp(args,
-                                    Version.about(),
-                                    "/schemacrawler-sqlserver-readme.txt");
-    CommandLineUtility.setLogLevel(args);
-
     try
     {
       final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
+                                                                                "/schemacrawler-sqlserver-readme.txt",
                                                                                 "/schemacrawler-sqlserver.config.properties");
       SchemaCrawlerMain.schemacrawler(commandLine, Version.about());
     }

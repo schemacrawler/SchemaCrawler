@@ -23,7 +23,6 @@ package schemacrawler;
 
 import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.main.SchemaCrawlerMain;
-import sf.util.CommandLineUtility;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -40,14 +39,10 @@ public final class Main
    */
   public static void main(final String[] args)
   {
-    CommandLineUtility.checkForHelp(args,
-                                    Version.about(),
-                                    "/schemacrawler-readme.txt");
-    CommandLineUtility.setLogLevel(args);
-
     try
     {
-      final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args);
+      final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
+                                                                                "/schemacrawler-readme.txt");
       SchemaCrawlerMain.schemacrawler(commandLine, Version.about());
     }
     catch (final Exception e)

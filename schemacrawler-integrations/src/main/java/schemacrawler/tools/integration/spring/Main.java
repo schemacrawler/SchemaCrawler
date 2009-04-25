@@ -26,9 +26,9 @@ import javax.sql.DataSource;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-import schemacrawler.Version;
+import schemacrawler.main.ApplicationOptions;
+import schemacrawler.main.ApplicationOptionsParser;
 import schemacrawler.tools.Executable;
-import sf.util.CommandLineUtility;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -45,13 +45,13 @@ public final class Main
    */
   public static void main(final String[] args)
   {
-    CommandLineUtility.checkForHelp(args,
-                                    Version.about(),
-                                    "/schemacrawler-spring-readme.txt");
-    CommandLineUtility.setLogLevel(args);
-
     try
     {
+      final ApplicationOptions applicationOptions = new ApplicationOptionsParser(args)
+        .getValue();
+      applicationOptions.setHelpResource("/schemacrawler-spring-readme.txt");
+      applicationOptions.apply();
+
       final SpringOptions springOptions = new SpringOptionsParser(args)
         .getValue();
       final ApplicationContext appContext = new FileSystemXmlApplicationContext(springOptions
