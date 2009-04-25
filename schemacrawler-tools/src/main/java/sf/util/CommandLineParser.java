@@ -61,11 +61,6 @@ public final class CommandLineParser
     {
       if (shortForm != NO_SHORT_FORM)
       {
-        if (!Character.isLetterOrDigit(shortForm))
-        {
-          throw new IllegalArgumentException("Illegal short form for option specified: "
-                                             + shortForm);
-        }
         this.shortForm = new String(new char[] {
           shortForm
         });
