@@ -24,7 +24,7 @@ package schemacrawler.schemacrawler;
 import java.util.Properties;
 
 /**
- * SchemaCrawler options.
+ * SchemaCrawler grep options.
  * 
  * @author Sualeh Fatehi
  */
