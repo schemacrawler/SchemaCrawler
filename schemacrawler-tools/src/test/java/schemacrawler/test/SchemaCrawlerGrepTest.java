@@ -119,7 +119,7 @@ public class SchemaCrawlerGrepTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
 
-    schemaCrawlerOptions
+    schemaCrawlerOptions.getGrepOptions()
       .setGrepColumnInclusionRule(new InclusionRule(".*\\..*\\.ID", ""));
     final CachingCrawlHandler crawlHandler = new CachingCrawlHandler(testUtility
       .getCatalogName());
