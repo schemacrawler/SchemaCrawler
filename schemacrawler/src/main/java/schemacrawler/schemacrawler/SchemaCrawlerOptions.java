@@ -58,13 +58,6 @@ public final class SchemaCrawlerOptions
   private static final String SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS = "schemacrawler.sort_alphabetically.table_foreignkeys";
   private static final String SC_SORT_ALPHABETICALLY_TABLE_COLUMNS = "schemacrawler.sort_alphabetically.table_columns";
 
-  private static final String SC_GREP_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.column.pattern.exclude";
-  private static final String SC_GREP_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.column.pattern.include";
-  private static final String SC_GREP_PROCEDURE_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.procedure.column.pattern.exclude";
-  private static final String SC_GREP_PROCEDURE_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.procedure.column.pattern.include";
-
-  private static final String SC_GREP_INVERT_MATCH = "schemacrawler.grep.invert-match";
-
   private static TableType[] copyTableTypes(final TableType[] tableTypes)
   {
     final TableType[] tableTypesCopy = new TableType[tableTypes.length];
@@ -90,9 +83,7 @@ public final class SchemaCrawlerOptions
   private SchemaInfoLevel schemaInfoLevel;
   private InformationSchemaViews informationSchemaViews;
 
-  private InclusionRule grepColumnInclusionRule;
-  private InclusionRule grepProcedureColumnInclusionRule;
-  private boolean grepInvertMatch;
+  private GrepOptions grepOptions;
 
   /**
    * Default options.
@@ -112,7 +103,15 @@ public final class SchemaCrawlerOptions
    */
   public SchemaCrawlerOptions(final Config config, final String partition)
   {
-    final Config configProperties = new Config(config);
+    final Config configProperties;
+    if (config == null)
+    {
+      configProperties = new Config();
+    }
+    else
+    {
+      configProperties = config;
+    }
 
     final String tableTypesString = configProperties
       .getStringValue(SC_TABLE_TYPES, DEFAULT_TABLE_TYPES);
@@ -161,18 +160,7 @@ public final class SchemaCrawlerOptions
     isAlphabeticalSortForProcedureColumns = configProperties
       .getBooleanValue(SC_SORT_ALPHABETICALLY_PROCEDURE_COLUMNS);
 
-    grepColumnInclusionRule = new InclusionRule(configProperties
-                                                  .getStringValue(SC_GREP_COLUMN_PATTERN_INCLUDE,
-                                                                  InclusionRule.ALL),
-                                                configProperties
-                                                  .getStringValue(SC_GREP_COLUMN_PATTERN_EXCLUDE,
-                                                                  InclusionRule.NONE));
-    grepProcedureColumnInclusionRule = new InclusionRule(configProperties
-      .getStringValue(SC_GREP_PROCEDURE_COLUMN_PATTERN_INCLUDE,
-                      InclusionRule.ALL), configProperties
-      .getStringValue(SC_GREP_PROCEDURE_COLUMN_PATTERN_EXCLUDE,
-                      InclusionRule.NONE));
-    grepInvertMatch = configProperties.getBooleanValue(SC_GREP_INVERT_MATCH);
+    grepOptions = new GrepOptions();
 
   }
 
@@ -197,24 +185,9 @@ public final class SchemaCrawlerOptions
     return columnInclusionRule;
   }
 
-  /**
-   * Gets the column inclusion rule for grep.
-   * 
-   * @return Column inclusion rule for grep.
-   */
-  public InclusionRule getGrepColumnInclusionRule()
+  public GrepOptions getGrepOptions()
   {
-    return grepColumnInclusionRule;
-  }
-
-  /**
-   * Gets the procedure column rule for grep.
-   * 
-   * @return Procedure column rule for grep.
-   */
-  public InclusionRule getGrepProcedureColumnInclusionRule()
-  {
-    return grepProcedureColumnInclusionRule;
+    return grepOptions;
   }
 
   /**
@@ -338,16 +311,6 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Whether to invert matches.
-   * 
-   * @return Whether to invert matches.
-   */
-  public boolean isGrepInvertMatch()
-  {
-    return grepInvertMatch;
-  }
-
-  /**
    * Whether stored procedures are output.
    * 
    * @return Whether stored procedures are output
@@ -416,45 +379,9 @@ public final class SchemaCrawlerOptions
     this.columnInclusionRule = columnInclusionRule;
   }
 
-  /**
-   * Sets the column inclusion rule for grep.
-   * 
-   * @param columnInclusionRule
-   *        Column inclusion rule for grep
-   */
-  public void setGrepColumnInclusionRule(final InclusionRule grepColumnInclusionRule)
+  public void setGrepOptions(final GrepOptions grepOptions)
   {
-    if (grepColumnInclusionRule == null)
-    {
-      throw new IllegalArgumentException("Cannot use null value in a setter");
-    }
-    this.grepColumnInclusionRule = grepColumnInclusionRule;
-  }
-
-  /**
-   * Set whether to invert matches.
-   * 
-   * @param invertMatch
-   *        Whether to invert matches.
-   */
-  public void setGrepInvertMatch(boolean grepInvertMatch)
-  {
-    this.grepInvertMatch = grepInvertMatch;
-  }
-
-  /**
-   * Sets the procedure column inclusion rule for grep.
-   * 
-   * @param procedureColumnInclusionRule
-   *        Procedure column inclusion rule for grep
-   */
-  public void setGrepProcedureColumnInclusionRule(final InclusionRule grepProcedureColumnInclusionRule)
-  {
-    if (grepProcedureColumnInclusionRule == null)
-    {
-      throw new IllegalArgumentException("Cannot use null value in a setter");
-    }
-    this.grepProcedureColumnInclusionRule = grepProcedureColumnInclusionRule;
+    this.grepOptions = grepOptions;
   }
 
   /**

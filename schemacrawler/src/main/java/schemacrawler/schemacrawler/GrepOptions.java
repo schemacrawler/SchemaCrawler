@@ -17,81 +17,104 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.grep;
+
+package schemacrawler.schemacrawler;
 
 
-import schemacrawler.schemacrawler.InclusionRule;
-import schemacrawler.tools.schematext.SchemaTextOptions;
+import java.util.Properties;
 
 /**
- * Additional options needed for grep.
+ * SchemaCrawler options.
  * 
  * @author Sualeh Fatehi
  */
-public class GrepOptions
-  extends SchemaTextOptions
+public final class GrepOptions
+  implements Options
 {
 
-  private static final long serialVersionUID = -1606027815351884928L;
+  private static final long serialVersionUID = -3557794862382066029L;
 
-  private InclusionRule tableInclusionRule;
-  private InclusionRule tableColumnInclusionRule;
-  private InclusionRule procedureInclusionRule;
-  private InclusionRule procedureColumnInclusionRule;
-  private boolean invertMatch;
+  private static final String SC_GREP_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.column.pattern.exclude";
+  private static final String SC_GREP_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.column.pattern.include";
+  private static final String SC_GREP_PROCEDURE_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.procedure.column.pattern.exclude";
+  private static final String SC_GREP_PROCEDURE_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.procedure.column.pattern.include";
+
+  private static final String SC_GREP_INVERT_MATCH = "schemacrawler.grep.invert-match";
+
+  private InclusionRule grepColumnInclusionRule;
+  private InclusionRule grepProcedureColumnInclusionRule;
+  private boolean grepInvertMatch;
 
   /**
-   * Creates default options.
+   * Default options.
    */
   public GrepOptions()
   {
-    tableInclusionRule = InclusionRule.INCLUDE_ALL_RULE;
-    tableColumnInclusionRule = InclusionRule.EXCLUDE_ALL_RULE;
-
-    procedureInclusionRule = InclusionRule.INCLUDE_ALL_RULE;
-    procedureColumnInclusionRule = InclusionRule.EXCLUDE_ALL_RULE;
-
-    invertMatch = false;
+    this(new Config());
   }
 
   /**
-   * Gets the column inclusion rule.
+   * Options from properties.
    * 
-   * @return Column inclusion rule.
+   * @param config
+   *        Configuration properties
    */
-  public InclusionRule getProcedureColumnInclusionRule()
+  public GrepOptions(final Config config)
   {
-    return procedureColumnInclusionRule;
+    final Config configProperties;
+    if (config == null)
+    {
+      configProperties = new Config();
+    }
+    else
+    {
+      configProperties = config;
+    }
+
+    grepColumnInclusionRule = new InclusionRule(configProperties
+                                                  .getStringValue(SC_GREP_COLUMN_PATTERN_INCLUDE,
+                                                                  InclusionRule.ALL),
+                                                configProperties
+                                                  .getStringValue(SC_GREP_COLUMN_PATTERN_EXCLUDE,
+                                                                  InclusionRule.NONE));
+    grepProcedureColumnInclusionRule = new InclusionRule(configProperties
+      .getStringValue(SC_GREP_PROCEDURE_COLUMN_PATTERN_INCLUDE,
+                      InclusionRule.ALL), configProperties
+      .getStringValue(SC_GREP_PROCEDURE_COLUMN_PATTERN_EXCLUDE,
+                      InclusionRule.NONE));
+    grepInvertMatch = configProperties.getBooleanValue(SC_GREP_INVERT_MATCH);
+
   }
 
   /**
-   * Gets the procedure inclusion rule.
+   * Options from properties.
    * 
-   * @return Procedure inclusion rule.
+   * @param properties
+   *        Configuration properties
    */
-  public InclusionRule getProcedureInclusionRule()
+  public GrepOptions(final Properties properties)
   {
-    return procedureInclusionRule;
+    this(new Config(properties));
   }
 
   /**
-   * Gets the column inclusion rule.
+   * Gets the column inclusion rule for grep.
    * 
-   * @return Column inclusion rule.
+   * @return Column inclusion rule for grep.
    */
-  public InclusionRule getTableColumnInclusionRule()
+  public InclusionRule getGrepColumnInclusionRule()
   {
-    return tableColumnInclusionRule;
+    return grepColumnInclusionRule;
   }
 
   /**
-   * Gets the table inclusion rule.
+   * Gets the procedure column rule for grep.
    * 
-   * @return Table inclusion rule.
+   * @return Procedure column rule for grep.
    */
-  public InclusionRule getTableInclusionRule()
+  public InclusionRule getGrepProcedureColumnInclusionRule()
   {
-    return tableInclusionRule;
+    return grepProcedureColumnInclusionRule;
   }
 
   /**
@@ -99,9 +122,24 @@ public class GrepOptions
    * 
    * @return Whether to invert matches.
    */
-  public boolean isInvertMatch()
+  public boolean isGrepInvertMatch()
   {
-    return invertMatch;
+    return grepInvertMatch;
+  }
+
+  /**
+   * Sets the column inclusion rule for grep.
+   * 
+   * @param columnInclusionRule
+   *        Column inclusion rule for grep
+   */
+  public void setGrepColumnInclusionRule(final InclusionRule grepColumnInclusionRule)
+  {
+    if (grepColumnInclusionRule == null)
+    {
+      throw new IllegalArgumentException("Cannot use null value in a setter");
+    }
+    this.grepColumnInclusionRule = grepColumnInclusionRule;
   }
 
   /**
@@ -110,81 +148,24 @@ public class GrepOptions
    * @param invertMatch
    *        Whether to invert matches.
    */
-  public void setInvertMatch(final boolean invertMatch)
+  public void setGrepInvertMatch(boolean grepInvertMatch)
   {
-    this.invertMatch = invertMatch;
+    this.grepInvertMatch = grepInvertMatch;
   }
 
   /**
-   * Sets the column inclusion rule.
+   * Sets the procedure column inclusion rule for grep.
    * 
    * @param procedureColumnInclusionRule
-   *        Column inclusion rule.
+   *        Procedure column inclusion rule for grep
    */
-  public void setProcedureColumnInclusionRule(final InclusionRule procedureColumnInclusionRule)
+  public void setGrepProcedureColumnInclusionRule(final InclusionRule grepProcedureColumnInclusionRule)
   {
-    if (procedureColumnInclusionRule == null)
+    if (grepProcedureColumnInclusionRule == null)
     {
-      this.procedureColumnInclusionRule = InclusionRule.EXCLUDE_ALL_RULE;
+      throw new IllegalArgumentException("Cannot use null value in a setter");
     }
-    else
-    {
-      this.procedureColumnInclusionRule = procedureColumnInclusionRule;
-    }
-  }
-
-  /**
-   * Sets the procedure inclusion rule.
-   * 
-   * @param procedureInclusionRule
-   *        Procedure inclusion rule.
-   */
-  public void setProcedureInclusionRule(final InclusionRule procedureInclusionRule)
-  {
-    if (procedureInclusionRule == null)
-    {
-      this.procedureInclusionRule = InclusionRule.INCLUDE_ALL_RULE;
-    }
-    else
-    {
-      this.procedureInclusionRule = procedureInclusionRule;
-    }
-  }
-
-  /**
-   * Sets the column inclusion rule.
-   * 
-   * @param tableColumnInclusionRule
-   *        Column inclusion rule.
-   */
-  public void setTableColumnInclusionRule(final InclusionRule tableColumnInclusionRule)
-  {
-    if (tableColumnInclusionRule == null)
-    {
-      this.tableColumnInclusionRule = InclusionRule.EXCLUDE_ALL_RULE;
-    }
-    else
-    {
-      this.tableColumnInclusionRule = tableColumnInclusionRule;
-    }
-  }
-
-  /**
-   * Sets the table inclusion rule.
-   * 
-   * @param tableInclusionRule
-   *        Table inclusion rule.
-   */
-  public void setTableInclusionRule(final InclusionRule tableInclusionRule)
-  {
-    if (tableInclusionRule == null)
-    {
-      this.tableInclusionRule = InclusionRule.INCLUDE_ALL_RULE;
-    }
-    else
-    {
-      this.tableInclusionRule = tableInclusionRule;
-    }
+    this.grepProcedureColumnInclusionRule = grepProcedureColumnInclusionRule;
   }
 
   /**
@@ -195,16 +176,12 @@ public class GrepOptions
   @Override
   public String toString()
   {
-    final StringBuffer buffer = new StringBuffer();
+    final StringBuilder buffer = new StringBuilder();
     buffer.append("GrepOptions[");
-    buffer.append("invertMatch=").append(invertMatch);
-    buffer.append(", tableInclusionRule=").append(tableInclusionRule);
-    buffer.append(", tableColumnInclusionRule=")
-      .append(tableColumnInclusionRule);
-    buffer.append(", procedureInclusionRule=").append(procedureInclusionRule);
-    buffer.append(", procedureColumnInclusionRule=")
-      .append(procedureColumnInclusionRule);
-    buffer.append("textFormatOptions=").append(super.toString());
+    buffer.append("grepColumnInclusionRule=").append(grepColumnInclusionRule);
+    buffer.append(", grepProcedureColumnInclusionRule=")
+      .append(grepProcedureColumnInclusionRule);
+    buffer.append(", grepInvertMatch=").append(grepInvertMatch);
     buffer.append("]");
     return buffer.toString();
   }
