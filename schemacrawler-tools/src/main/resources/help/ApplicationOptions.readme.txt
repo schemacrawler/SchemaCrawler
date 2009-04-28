@@ -1,0 +1,5 @@
+--- Application Options ---
+
+-loglevel <loglevel>
+		Log level - may be one of: 
+		OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL

@@ -1,0 +1,26 @@
+--- Command Options ---
+
+-command=<command>
+	Required, where <command> is a comma-separated list of:
+    brief_schema
+      If you only want to see table, view and procedure names
+    basic_schema
+      For more details of tables, views and procedures, including columns 
+      and primary keys
+    verbose_schema
+      For the most detail of the schema, including data types, indexes, 
+      foreign keys, and view and procedure definitions
+    maximum_schema
+      For maximum possible detail of the schema, including privileges, and 
+      details of privileges, triggers, and check constraints
+    count
+      To count rows in the tables
+    dump
+    	To select all rows from the tables, and output the data
+    <query_name>
+	    Query name, as specified in the configuration properties file
+			The query itself can contain the variables ${table} and ${tabletype}
+			or system properties referenced as ${<system-property-name>}.
+			Queries without any variables are executed exactly once. Queries
+			with variables are executed once for each table, with the variables
+			substituted.

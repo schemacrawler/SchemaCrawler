@@ -1,0 +1,15 @@
+--- Output Options ---
+
+-outputformat=<outputformat>
+	Optional, where <outputformat> is one of:
+    text
+      For text output (default)
+    html
+      For XHTML output
+    csv
+      For CSV output
+    dot
+      For DOT chart format output
+      
+-outputfile=<outputfile>
+	Optional - <outputfile> is the path to the output file
