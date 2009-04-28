@@ -47,7 +47,7 @@ final class ConfigParser
   }
 
   @Override
-  protected Config getValue()
+  protected Config getOptions()
   {
     parse(new Option[] {
         optionConfigFile, optionConfigOverrideFile
@@ -56,6 +56,12 @@ final class ConfigParser
     final String cfgFile = optionConfigFile.getValue();
     final String cfgOverrideFile = optionConfigOverrideFile.getValue();
     return Config.load(cfgFile, cfgOverrideFile);
+  }
+
+  @Override
+  protected String getHelpResource()
+  {
+    return "/help/ConfigurationOptions.readme.txt";
   }
 
 }

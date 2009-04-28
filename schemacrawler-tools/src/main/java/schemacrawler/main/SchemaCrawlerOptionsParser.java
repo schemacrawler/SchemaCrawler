@@ -63,7 +63,7 @@ final class SchemaCrawlerOptionsParser
   }
 
   @Override
-  protected SchemaCrawlerOptions getValue()
+  protected SchemaCrawlerOptions getOptions()
   {
     parse(new Option[] {
         optionSchemaPattern,
@@ -97,6 +97,12 @@ final class SchemaCrawlerOptionsParser
     }
 
     return options;
+  }
+
+  @Override
+  protected String getHelpResource()
+  {
+    return "/help/SchemaCrawlerOptions.readme.txt";
   }
 
 }

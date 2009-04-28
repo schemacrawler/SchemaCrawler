@@ -49,7 +49,7 @@ public final class PropertiesDataSourceDatabaseConnector
     super(providedConfig);
 
     final PropertiesDataSourceOptions options = new PropertiesDataSourceOptionsParser(args)
-      .getValue();
+      .getOptions();
 
     if (options.isUseJdbcConnection())
     {
