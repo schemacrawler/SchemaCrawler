@@ -47,7 +47,7 @@ final class CommandParser
   }
 
   @Override
-  protected Commands getValue()
+  protected Commands getOptions()
   {
     parse(new Option[] {
       optionCommand
@@ -77,6 +77,12 @@ final class CommandParser
     }
 
     return commands;
+  }
+
+  @Override
+  protected String getHelpResource()
+  {
+    return "/help/Commands.readme.txt";
   }
 
 }

@@ -58,8 +58,7 @@ final class OutputOptionsParser
   }
 
   @Override
-  @SuppressWarnings("boxing")
-  protected OutputOptions getValue()
+  protected OutputOptions getOptions()
   {
     parse(new Option[] {
         optionOutputFormat,
@@ -82,6 +81,12 @@ final class OutputOptionsParser
     outputOptions.setNoInfo(optionNoInfo.getValue());
 
     return outputOptions;
+  }
+
+  @Override
+  protected String getHelpResource()
+  {
+    return "/help/OutputOptions.readme.txt";
   }
 
 }

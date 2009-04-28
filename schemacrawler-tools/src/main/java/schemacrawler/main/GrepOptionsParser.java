@@ -55,7 +55,7 @@ final class GrepOptionsParser
   }
 
   @Override
-  protected GrepOptions getValue()
+  protected GrepOptions getOptions()
   {
     parse(new Option[] {
         optionGrepColumns, optionGrepProcedureColumns, optionGrepInvertMatch
@@ -84,6 +84,12 @@ final class GrepOptionsParser
     }
 
     return options;
+  }
+
+  @Override
+  protected String getHelpResource()
+  {
+    return "/help/GrepOptions.readme.txt";
   }
 
 }

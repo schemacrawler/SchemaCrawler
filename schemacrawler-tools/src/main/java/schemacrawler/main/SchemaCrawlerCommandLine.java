@@ -92,9 +92,9 @@ public class SchemaCrawlerCommandLine
     final ApplicationOptions applicationOptions;
     if (args != null && args.length > 0)
     {
-      applicationOptions = new ApplicationOptionsParser(args).getValue();
-      commands = new CommandParser(args).getValue();
-      outputOptions = new OutputOptionsParser(args).getValue();
+      applicationOptions = new ApplicationOptionsParser(args).getOptions();
+      commands = new CommandParser(args).getOptions();
+      outputOptions = new OutputOptionsParser(args).getOptions();
     }
     else
     {
@@ -117,7 +117,7 @@ public class SchemaCrawlerCommandLine
       {
         if (args != null && args.length > 0)
         {
-          config = new ConfigParser(args).getValue();
+          config = new ConfigParser(args).getOptions();
         }
         else
         {
@@ -136,7 +136,7 @@ public class SchemaCrawlerCommandLine
                                                           config,
                                                           databaseConnector
                                                             .getDataSourceName())
-      .getValue();
+      .getOptions();
   }
 
   /**

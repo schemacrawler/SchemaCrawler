@@ -46,7 +46,7 @@ public final class BundledDriverDatabaseConnector
     super(providedConfig);
 
     final BundledDriverOptions options = new BundledDriverOptionsParser(args)
-      .getValue();
+      .getOptions();
 
     // Check arguments
     // if (!options.hasUser())

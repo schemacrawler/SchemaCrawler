@@ -55,7 +55,7 @@ final class SpringOptionsParser
   }
 
   @Override
-  protected SpringOptions getValue()
+  protected SpringOptions getOptions()
   {
     parse(new Option[] {
         optionContextFile, optionExecutable, optionDataSourceName,
@@ -67,6 +67,12 @@ final class SpringOptionsParser
     options.setDataSourceName(optionDataSourceName.getValue());
 
     return options;
+  }
+
+  @Override
+  protected String getHelpResource()
+  {
+    return "/help/Commands.readme.txt";
   }
 
 }

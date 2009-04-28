@@ -57,7 +57,7 @@ final class PropertiesDataSourceOptionsParser
   }
 
   @Override
-  protected PropertiesDataSourceOptions getValue()
+  protected PropertiesDataSourceOptions getOptions()
   {
     parse(new Option[] {
         optionUseDefaultConnection,
@@ -79,6 +79,12 @@ final class PropertiesDataSourceOptionsParser
     options.setPassword(optionPassword.getValue());
 
     return options;
+  }
+
+  @Override
+  protected String getHelpResource()
+  {
+    return "/help/Commands.readme.txt";
   }
 
 }

@@ -48,12 +48,12 @@ public final class Main
     try
     {
       final ApplicationOptions applicationOptions = new ApplicationOptionsParser(args)
-        .getValue();
+        .getOptions();
       applicationOptions.setHelpResource("/schemacrawler-spring-readme.txt");
       applicationOptions.apply();
 
       final SpringOptions springOptions = new SpringOptionsParser(args)
-        .getValue();
+        .getOptions();
       final ApplicationContext appContext = new FileSystemXmlApplicationContext(springOptions
         .getContextFileName());
       final Executable<?> executable = (Executable<?>) appContext

@@ -51,7 +51,7 @@ public final class ApplicationOptionsParser
   }
 
   @Override
-  public ApplicationOptions getValue()
+  public ApplicationOptions getOptions()
   {
     parse(new Option[] {
         optionLogLevel, optionHelp1, optionHelp2
@@ -78,4 +78,11 @@ public final class ApplicationOptionsParser
 
     return options;
   }
+
+  @Override
+  protected String getHelpResource()
+  {
+    return "/help/ApplicationOptions.readme.txt";
+  }
+
 }
