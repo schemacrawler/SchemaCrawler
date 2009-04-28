@@ -1,0 +1,9 @@
+--- Optional Configuration Options ---
+
+-g <config-file> (short for -configfile <config-file>)
+    Reads SchemaCrawler configuration properties from <config-file> instead
+    of the default schemacrawler.config.properties
+
+-p <config-override-file> (short for -configoverridefile <config-override-file>)
+    Reads SchemaCrawler configuration properties from <config-override-file>
+    and overrides the properties from the configuration file
