@@ -15,4 +15,4 @@
     matches columns named STREET or PRICE in any table.
     
 -v (short for -invert-match)        
-    Inverts the match, and shows non-matching tables and columns.   
+    Optional, inverts the match, and shows non-matching tables and columns.   
