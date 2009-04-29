@@ -40,7 +40,7 @@ public class HelpOptions
   private final String resourceCommands = "/help/Commands.%s.txt";
   private final String resourceConfig = "/help/Config.txt";
   private final String resourceGrepOptions = "/help/GrepOptions.txt";
-  private CommandHelpType commandHelpType;
+  private CommandHelpType commandHelpType = CommandHelpType.complete;
   private String resourceOutputOptions = "/help/OutputOptions.txt";
   private boolean hideConfig;
 
