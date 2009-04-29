@@ -12,4 +12,4 @@
       For DOT chart format output
       
 -outputfile=<outputfile>
-	Optional - <outputfile> is the path to the output file
+	Optional, where <outputfile> is the path to the output file.

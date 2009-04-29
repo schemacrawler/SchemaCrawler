@@ -87,6 +87,8 @@ public class HelpOptions
   public void showHelp()
   {
     System.out.println(Version.about());
+    System.out.println();
+
     showHelp(resourceConnections);
     showHelp(String.format(resourceCommands, commandHelpType));
     showHelp(resourceGrepOptions);
