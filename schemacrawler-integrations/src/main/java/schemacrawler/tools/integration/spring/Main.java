@@ -28,7 +28,9 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import schemacrawler.main.ApplicationOptions;
 import schemacrawler.main.ApplicationOptionsParser;
+import schemacrawler.main.HelpOptions;
 import schemacrawler.tools.Executable;
+import sf.util.Utilities;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -49,8 +51,15 @@ public final class Main
     {
       final ApplicationOptions applicationOptions = new ApplicationOptionsParser(args)
         .getOptions();
-      applicationOptions.setHelpResource("/schemacrawler-spring-readme.txt");
-      applicationOptions.apply();
+      if (applicationOptions.isShowHelp())
+      {
+        final byte[] text = Utilities.readFully(HelpOptions.class
+          .getResourceAsStream("/schemacrawler-spring-readme.txt"));
+        System.out.println(new String(text));
+        System.exit(0);
+      }
+
+      applicationOptions.applyApplicationLogLevel();
 
       final SpringOptions springOptions = new SpringOptionsParser(args)
         .getOptions();

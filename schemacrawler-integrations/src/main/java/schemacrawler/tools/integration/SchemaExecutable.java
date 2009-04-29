@@ -25,6 +25,7 @@ import java.sql.Connection;
 import javax.sql.DataSource;
 
 import schemacrawler.crawl.CachingCrawlHandler;
+import schemacrawler.main.HelpOptions;
 import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
@@ -63,11 +64,11 @@ public abstract class SchemaExecutable
    *         On an exception
    */
   public final void executeOnSchema(final String[] args,
-                                    final String helpResource)
+                                    final HelpOptions helpOptions)
     throws Exception
   {
     final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
-                                                                              helpResource);
+                                                                              helpOptions);
     final Config config = commandLine.getConfig();
     final SchemaCrawlerOptions schemaCrawlerOptions = commandLine
       .getSchemaCrawlerOptions();

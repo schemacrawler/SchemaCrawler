@@ -67,10 +67,11 @@ public class SchemaCrawlerCommandLine
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  public SchemaCrawlerCommandLine(final String[] args, final String helpResource)
+  public SchemaCrawlerCommandLine(final String[] args,
+                                  final HelpOptions helpOptions)
     throws SchemaCrawlerException
   {
-    this(args, helpResource, null);
+    this(args, helpOptions, null);
   }
 
   /**
@@ -85,7 +86,7 @@ public class SchemaCrawlerCommandLine
    *         On an exception
    */
   public SchemaCrawlerCommandLine(final String[] args,
-                                  final String helpResource,
+                                  final HelpOptions helpOptions,
                                   final String configResource)
     throws SchemaCrawlerException
   {
@@ -102,9 +103,14 @@ public class SchemaCrawlerCommandLine
       commands = new Commands();
       outputOptions = new OutputOptions();
     }
-    applicationOptions.setHelpResource(helpResource);
-    applicationOptions.apply();
 
+    if (applicationOptions.isShowHelp())
+    {
+      helpOptions.showHelp();
+      System.exit(0);
+    }
+
+    applicationOptions.applyApplicationLogLevel();
     try
     {
       if (!Utilities.isBlank(configResource))

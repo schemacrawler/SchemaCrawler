@@ -21,6 +21,7 @@
 package schemacrawler;
 
 
+import schemacrawler.main.HelpOptions;
 import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.main.SchemaCrawlerMain;
 
@@ -42,7 +43,7 @@ public final class Main
     try
     {
       final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
-                                                                                "/schemacrawler-readme.txt");
+                                                                                new HelpOptions());
       SchemaCrawlerMain.schemacrawler(commandLine, Version.about());
     }
     catch (final Exception e)

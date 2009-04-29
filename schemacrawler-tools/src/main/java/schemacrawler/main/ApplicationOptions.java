@@ -27,9 +27,7 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
-import schemacrawler.Version;
 import schemacrawler.schemacrawler.Options;
-import sf.util.Utilities;
 
 public class ApplicationOptions
   implements Options
@@ -37,56 +35,13 @@ public class ApplicationOptions
 
   private static final long serialVersionUID = -2497570007150087268L;
 
-  private String helpResource;
   private Level applicationLogLevel;
   private boolean showHelp;
-
-  public void apply()
-  {
-    showHelp();
-    applyApplicationLogLevel();
-  }
-
-  public Level getApplicationLogLevel()
-  {
-    return applicationLogLevel;
-  }
-
-  public String getHelpResource()
-  {
-    return helpResource;
-  }
-
-  public boolean isShowHelp()
-  {
-    return showHelp;
-  }
-
-  public void setApplicationLogLevel(Level applicationLogLevel)
-  {
-    this.applicationLogLevel = applicationLogLevel;
-  }
-
-  /**
-   * Set help resource.
-   * 
-   * @param helpResource
-   *        Resource file containing help text.
-   */
-  public void setHelpResource(String helpResource)
-  {
-    this.helpResource = helpResource;
-  }
-
-  public void setShowHelp(boolean showHelp)
-  {
-    this.showHelp = showHelp;
-  }
 
   /**
    * Sets the application-wide log level.
    */
-  private void applyApplicationLogLevel()
+  public void applyApplicationLogLevel()
   {
     if (applicationLogLevel == null)
     {
@@ -111,22 +66,24 @@ public class ApplicationOptions
     rootLogger.setLevel(applicationLogLevel);
   }
 
-  /**
-   * Does a quick check of the command line arguments to find any
-   * commonly used help options.
-   */
-  private void showHelp()
+  public Level getApplicationLogLevel()
   {
-    if (showHelp)
-    {
-      final byte[] text = Utilities.readFully(ApplicationOptions.class
-        .getResourceAsStream(helpResource));
-      final String info = new String(text);
+    return applicationLogLevel;
+  }
 
-      System.out.println(Version.about());
-      System.out.println(info);
-      System.exit(0);
-    }
+  public boolean isShowHelp()
+  {
+    return showHelp;
+  }
+
+  public void setApplicationLogLevel(Level applicationLogLevel)
+  {
+    this.applicationLogLevel = applicationLogLevel;
+  }
+
+  public void setShowHelp(boolean showHelp)
+  {
+    this.showHelp = showHelp;
   }
 
 }

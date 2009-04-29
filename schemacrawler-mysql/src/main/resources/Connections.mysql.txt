@@ -1,0 +1,20 @@
+--- Connection Options ---
+
+-host=<host>
+	Host name. Optional, defaults to localhost.
+	
+-port=<port>
+	Port number. Optional, defaults to 1433.	
+
+-database=<database>
+	Database name.
+	
+-user=<user>
+	Database user name.
+
+-password=<password>
+	Database password.
+	
+-schemapattern=<schemapattern>
+	Optional, specifies the schema to use. Use _ to match a single character, 
+	and % to match many characters.
