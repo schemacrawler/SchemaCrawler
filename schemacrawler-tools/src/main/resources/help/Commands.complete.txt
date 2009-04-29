@@ -1,7 +1,7 @@
---- Command Options ---
+--- Commands ---
 
 -command=<command>
-	Required, where <command> is a comma-separated list of:
+  Required, where <command> is a comma-separated list of:
     brief_schema
       If you only want to see table, view and procedure names
     basic_schema
@@ -16,11 +16,11 @@
     count
       To count rows in the tables
     dump
-    	To select all rows from the tables, and output the data
+      To select all rows from the tables, and output the data
     <query_name>
-	    Query name, as specified in the configuration properties file
-			The query itself can contain the variables ${table} and ${tabletype}
-			or system properties referenced as ${<system-property-name>}.
-			Queries without any variables are executed exactly once. Queries
-			with variables are executed once for each table, with the variables
-			substituted.
+      Query name, as specified in the configuration properties file
+      The query itself can contain the variables ${table} and ${tabletype}
+      or system properties referenced as ${<system-property-name>}.
+      Queries without any variables are executed exactly once. Queries
+      with variables are executed once for each table, with the variables
+      substituted.

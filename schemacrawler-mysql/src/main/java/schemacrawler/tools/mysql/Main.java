@@ -24,6 +24,7 @@ package schemacrawler.tools.mysql;
 import schemacrawler.Version;
 import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.main.SchemaCrawlerMain;
+import schemacrawler.main.dbconnector.BundledDriverHelpOptions;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -43,7 +44,7 @@ public final class Main
     try
     {
       final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
-                                                                                "/schemacrawler-mysql-readme.txt",
+                                                                                new BundledDriverHelpOptions("Connections.mysql.txt"),
                                                                                 "/schemacrawler-mysql.config.properties");
       SchemaCrawlerMain.schemacrawler(commandLine, Version.about());
     }

@@ -21,6 +21,9 @@
 package schemacrawler;
 
 
+import schemacrawler.main.HelpOptions;
+import sf.util.Utilities;
+
 /**
  * Version information for this product. Has methods to obtain
  * information about the product, as well as a main method, so it can be
@@ -33,6 +36,14 @@ public final class Version
 
   private static final String PRODUCTNAME = "SchemaCrawler";
   private static final String VERSION = "6.3";
+  private static final String ABOUT;
+
+  static
+  {
+    final byte[] text = Utilities.readFully(HelpOptions.class
+      .getResourceAsStream("/help/SchemaCrawler.txt"));
+    ABOUT = new String(text);
+  }
 
   /**
    * Information about this product.
@@ -41,9 +52,10 @@ public final class Version
    */
   public static String about()
   {
-    return String.format("%s %s%nCopyright (c) 2000-2009, Sualeh Fatehi.",
+    return String.format("%s %s%nCopyright (c) 2000-2009, Sualeh Fatehi.%n%s",
                          PRODUCTNAME,
-                         VERSION);
+                         VERSION,
+                         ABOUT);
   }
 
   /**

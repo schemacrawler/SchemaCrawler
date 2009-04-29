@@ -28,6 +28,7 @@ import java.util.List;
 import schemacrawler.Version;
 import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.main.SchemaCrawlerMain;
+import schemacrawler.main.dbconnector.BundledDriverHelpOptions;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -47,7 +48,7 @@ public final class Main
     try
     {
       final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(addAdditionalArgs(args),
-                                                                                "/schemacrawler-sqlite-readme.txt",
+                                                                                new BundledDriverHelpOptions("Connections.sqlite.txt"),
                                                                                 "/schemacrawler-sqlite.config.properties");
       SchemaCrawlerMain.schemacrawler(commandLine, Version.about());
     }

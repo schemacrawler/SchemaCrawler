@@ -27,6 +27,8 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
+import schemacrawler.main.HelpOptions;
+import schemacrawler.main.HelpOptions.CommandHelpType;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.integration.SchemaExecutable;
@@ -64,7 +66,11 @@ public final class GraphExecutable
   public void main(final String[] args)
     throws Exception
   {
-    executeOnSchema(args, "/schemacrawler-dot-readme.txt");
+    final HelpOptions helpOptions = new HelpOptions();
+    helpOptions.setCommandHelpType(CommandHelpType.without_operations);
+    helpOptions.setResourceOutputOptions("/OutputOptions.dot.txt");
+
+    executeOnSchema(args, helpOptions);
   }
 
   @Override

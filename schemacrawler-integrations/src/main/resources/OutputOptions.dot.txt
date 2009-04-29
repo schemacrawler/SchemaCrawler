@@ -1,0 +1,8 @@
+--- Output Options ---
+
+-outputformat=<outputformat>
+	Where <outputformat> is one of bmp, dot, eps, gif, jpg, png, ps2, tiff.
+	If Graphviz dot is not found, then a dot file is produced.
+
+-outputfile=<outputfile>
+	<outputfile> is the path to the graph output file

@@ -1,0 +1,8 @@
+--- Output Options ---
+
+-outputformat=<outputformat>
+	Where <outputformat> is the file path or class path to the Velocity 
+	template
+
+-outputfile=<outputfile>
+	Optional - <outputfile> is the path to the output file
