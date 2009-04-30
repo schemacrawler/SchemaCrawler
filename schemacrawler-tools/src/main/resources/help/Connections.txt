@@ -1,28 +1,27 @@
---- Required Connection Options ---
+--- Connection Options ---
 
-One of:
+Required, one of:
 
 -c <connection_name> (short for -connection <connection_name>)
-    Uses a named connection
-    
+  Uses a named connection
+
 -d (short for -default)
-    Uses the default connection
+  Uses the default connection
 
 Or, the following:
 
 -driver=<driver-class-name>
-	Fully qualified name of the JDBC driver class.
-	
+  Fully qualified name of the JDBC driver class.
+
 -url=<url>
-	JDBC connection URL to the database.
-	
+  JDBC connection URL to the database.
+
 -user=<user>
-	Database user name.
+  Database user name.
 
 -password=<password>
-	Database password.
-	
+  Database password.
+
 -schemapattern=<schemapattern>
-	Optional, specifies the schema to use. Use _ to match a single character, 
-	and % to match many characters.
-	
+  Optional, specifies the schema to use. Use _ to match a single character,
+  and % to match many characters.

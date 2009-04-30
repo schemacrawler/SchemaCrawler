@@ -35,6 +35,8 @@ public class HelpOptions
   }
 
   private static final long serialVersionUID = -2497570007150087268L;
+
+  private final String title;
   private final String resourceApplicationOptions = "/help/ApplicationOptions.txt";
   private String resourceConnections = "/help/Connections.txt";
   private final String resourceCommands = "/help/Commands.%s.txt";
@@ -43,6 +45,11 @@ public class HelpOptions
   private CommandHelpType commandHelpType = CommandHelpType.complete;
   private String resourceOutputOptions = "/help/OutputOptions.txt";
   private boolean hideConfig;
+
+  public HelpOptions(final String title)
+  {
+    this.title = title;
+  }
 
   public CommandHelpType getCommandHelpType()
   {
@@ -69,6 +76,11 @@ public class HelpOptions
     this.commandHelpType = commandHelpType;
   }
 
+  public void setHideConfig(boolean hideConfig)
+  {
+    this.hideConfig = hideConfig;
+  }
+
   public void setResourceConnections(String resourceConnections)
   {
     this.resourceConnections = resourceConnections;
@@ -79,13 +91,14 @@ public class HelpOptions
     this.resourceOutputOptions = resourceOutputOptions;
   }
 
-  public void setHideConfig(boolean hideConfig)
+  public String getTitle()
   {
-    this.hideConfig = hideConfig;
+    return title;
   }
 
   public void showHelp()
   {
+    System.out.println(title);
     System.out.println(Version.about());
     System.out.println();
 

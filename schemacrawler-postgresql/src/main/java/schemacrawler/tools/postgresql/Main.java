@@ -44,7 +44,8 @@ public final class Main
     try
     {
       final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
-                                                                                new BundledDriverHelpOptions("/Connections.postgresql.txt"),
+                                                                                new BundledDriverHelpOptions("SchemaCrawler for PostgreSQL",
+                                                                                                             "/help/Connections.postgresql.txt"),
                                                                                 "/schemacrawler-postgresql.config.properties");
       SchemaCrawlerMain.schemacrawler(commandLine, Version.about());
     }

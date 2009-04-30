@@ -44,7 +44,8 @@ public final class Main
     try
     {
       final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
-                                                                                new BundledDriverHelpOptions("/Connections.sqlserver.txt"),
+                                                                                new BundledDriverHelpOptions("SchemaCrawler for Microsoft SQL Server",
+                                                                                                             "/help/Connections.sqlserver.txt"),
                                                                                 "/schemacrawler-sqlserver.config.properties");
       SchemaCrawlerMain.schemacrawler(commandLine, Version.about());
     }

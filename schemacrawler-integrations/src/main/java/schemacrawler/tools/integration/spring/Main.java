@@ -54,7 +54,7 @@ public final class Main
       if (applicationOptions.isShowHelp())
       {
         final byte[] text = Utilities.readFully(HelpOptions.class
-          .getResourceAsStream("/schemacrawler-spring-readme.txt"));
+          .getResourceAsStream("/help/SchemaCrawler.spring.txt"));
         System.out.println(new String(text));
         System.exit(0);
       }
