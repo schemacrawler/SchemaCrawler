@@ -43,7 +43,7 @@ public final class Main
     try
     {
       final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
-                                                                                new HelpOptions());
+                                                                                new HelpOptions(""));
       SchemaCrawlerMain.schemacrawler(commandLine, Version.about());
     }
     catch (final Exception e)

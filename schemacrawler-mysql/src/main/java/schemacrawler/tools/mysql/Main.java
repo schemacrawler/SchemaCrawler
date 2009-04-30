@@ -44,7 +44,8 @@ public final class Main
     try
     {
       final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
-                                                                                new BundledDriverHelpOptions("/Connections.mysql.txt"),
+                                                                                new BundledDriverHelpOptions("SchemaCrawler for MySQL",
+                                                                                                             "/help/Connections.mysql.txt"),
                                                                                 "/schemacrawler-mysql.config.properties");
       SchemaCrawlerMain.schemacrawler(commandLine, Version.about());
     }

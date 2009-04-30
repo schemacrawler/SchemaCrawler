@@ -66,9 +66,9 @@ public final class GraphExecutable
   public void main(final String[] args)
     throws Exception
   {
-    final HelpOptions helpOptions = new HelpOptions();
+    final HelpOptions helpOptions = new HelpOptions("SchemaCrawler - Graphing");
     helpOptions.setCommandHelpType(CommandHelpType.without_operations);
-    helpOptions.setResourceOutputOptions("/OutputOptions.dot.txt");
+    helpOptions.setResourceOutputOptions("/help/OutputOptions.dot.txt");
 
     executeOnSchema(args, helpOptions);
   }

@@ -51,9 +51,9 @@ public abstract class SchemaRenderer
   public void main(final String[] args)
     throws Exception
   {
-    final HelpOptions helpOptions = new HelpOptions();
+    final HelpOptions helpOptions = new HelpOptions("SchemaCrawler - Templating");
     helpOptions.setCommandHelpType(CommandHelpType.without_operations);
-    helpOptions.setResourceOutputOptions("/OutputOptions.templating.txt");
+    helpOptions.setResourceOutputOptions("/help/OutputOptions.templating.txt");
 
     executeOnSchema(args, helpOptions);
   }
