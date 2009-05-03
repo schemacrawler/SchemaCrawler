@@ -1,5 +1,9 @@
 --- Application Options ---
 
--loglevel <loglevel>
-  Optional, where log level is one of: 
+-loglevel=<loglevel>
+  Sets the logging granularity, where <loglevel> is one of: 
   OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL
+  Optional, default OFF
+
+-?, -h, -help, --help
+  Shows this help text

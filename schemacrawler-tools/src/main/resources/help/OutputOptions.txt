@@ -1,7 +1,7 @@
 --- Output Options ---
 
 -outputformat=<outputformat>
-	Optional, where <outputformat> is one of:
+  Format of the SchemaCrawler output, where <outputformat> is one of:
     text
       For text output (default)
     html
@@ -10,6 +10,8 @@
       For CSV output
     dot
       For DOT chart format output
+  Optional, defaults to text    
       
 -outputfile=<outputfile>
-	Optional, where <outputfile> is the path to the output file.
+  <outputfile> is the path to the output file
+  Optional, defaults to the console (stdout)

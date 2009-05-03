@@ -42,8 +42,7 @@ public final class ApplicationOptionsParser
                                                                "loglevel",
                                                                "OFF");
   private final BooleanOption optionHelp1 = new BooleanOption('?', "help");
-  private final BooleanOption optionHelp2 = new BooleanOption(CommandLineParser.Option.NO_SHORT_FORM,
-                                                              "-help");
+  private final BooleanOption optionHelp2 = new BooleanOption('h', "-help");
 
   public ApplicationOptionsParser(final String[] args)
   {
