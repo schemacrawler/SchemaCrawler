@@ -443,8 +443,8 @@ public final class DatabaseSchemaCrawler
                           final Procedure procedure)
   {
     final InclusionRule grepProcedureColumnInclusionRule = options
-      .getGrepOptions().getGrepProcedureColumnInclusionRule();
-    final boolean invertMatch = options.getGrepOptions().isGrepInvertMatch();
+      .getGrepProcedureColumnInclusionRule();
+    final boolean invertMatch = options.isGrepInvertMatch();
 
     boolean include = false;
     final ProcedureColumn[] columns = procedure.getColumns();
@@ -485,9 +485,9 @@ public final class DatabaseSchemaCrawler
    */
   private boolean include(final SchemaCrawlerOptions options, final Table table)
   {
-    final InclusionRule grepColumnInclusionRule = options.getGrepOptions()
+    final InclusionRule grepColumnInclusionRule = options
       .getGrepColumnInclusionRule();
-    final boolean invertMatch = options.getGrepOptions().isGrepInvertMatch();
+    final boolean invertMatch = options.isGrepInvertMatch();
 
     boolean include = false;
     final Column[] columns = table.getColumns();
