@@ -40,11 +40,11 @@
     
 -excludeinout=<regular-expression>
   <regular-expression> is a regular expression to match fully qualified 
-  inout names, in the form "SCHEMANAME.TABLENAME.INOUTNAME" - for example, 
-  -excludeinout=.*\.STREET|.*\.PRICE
-  matches inouts named STREET or PRICE in any table
-  inouts that match the pattern are not displayed
-  Optional, default is to show all inouts
+  parameter names - for example, 
+  -excludeinout=@p1|@p2
+  matches parameters named @p1 or @p2 in any procedure 
+  Parameters that match the pattern are not displayed
+  Optional, default is to show all parameters
         
 --- Grep Options ---
     

@@ -71,7 +71,7 @@ public final class SchemaCrawlerMain
     }
     else
     {
-      throw new SchemaCrawlerException("No commands specified");
+      throw new SchemaCrawlerException("No commands specified - re-run with -help for help");
     }
 
   }
