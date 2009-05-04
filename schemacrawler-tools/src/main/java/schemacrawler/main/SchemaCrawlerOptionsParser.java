@@ -112,9 +112,9 @@ final class SchemaCrawlerOptionsParser
     }
     if (optionExcludeColumns.isFound())
     {
-      final InclusionRule columnInclusionRule = new InclusionRule(optionExcludeColumns
-                                                                    .getValue(),
-                                                                  InclusionRule.NONE);
+      final InclusionRule columnInclusionRule = new InclusionRule(InclusionRule.ALL,
+                                                                  optionExcludeColumns
+                                                                    .getValue());
       options.setColumnInclusionRule(columnInclusionRule);
     }
 
@@ -127,9 +127,9 @@ final class SchemaCrawlerOptionsParser
     }
     if (optionExcludeProcedureColumns.isFound())
     {
-      final InclusionRule procedureColumnInclusionRule = new InclusionRule(optionExcludeProcedureColumns
-                                                                             .getValue(),
-                                                                           InclusionRule.NONE);
+      final InclusionRule procedureColumnInclusionRule = new InclusionRule(InclusionRule.ALL,
+                                                                           optionExcludeProcedureColumns
+                                                                             .getValue());
       options.setProcedureColumnInclusionRule(procedureColumnInclusionRule);
     }
 

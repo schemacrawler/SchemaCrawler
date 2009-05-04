@@ -24,7 +24,7 @@
     
 -excludecolumns=<regular-expression>
   <regular-expression> is a regular expression to match fully qualified 
-  column names, in the form "TABLENAME.COLUMNNAME" - for example, 
+  column names, in the form "SCHEMANAME.TABLENAME.COLUMNNAME" - for example, 
   -excludecolumns=.*\.STREET|.*\.PRICE
   matches columns named STREET or PRICE in any table
   Columns that match the pattern are not displayed
@@ -40,7 +40,7 @@
     
 -excludeinout=<regular-expression>
   <regular-expression> is a regular expression to match fully qualified 
-  inout names, in the form "TABLENAME.inoutNAME" - for example, 
+  inout names, in the form "SCHEMANAME.TABLENAME.INOUTNAME" - for example, 
   -excludeinout=.*\.STREET|.*\.PRICE
   matches inouts named STREET or PRICE in any table
   inouts that match the pattern are not displayed
@@ -50,14 +50,14 @@
     
 -grepcolumns=<regular-expression>
   <regular-expression> is a regular expression to match fully qualified 
-  column names, in the form "TABLENAME.COLUMNNAME" - for example,
+  column names, in the form "SCHEMANAME.TABLENAME.COLUMNNAME" - for example,
   -grepcolumns=.*\.STREET|.*\.PRICE
   matches columns named STREET or PRICE in any table
   Optional, default is no grep
    
 -grepinout=<regular-expression>
   <regular-expression> is a regular expression to match fully qualified 
-  inout names, in the form "TABLENAME.inoutNAME" - for example,
+  inout names, in the form "SCHEMANAME.TABLENAME.INOUTNAME" - for example,
   -grepinout=.*\.STREET|.*\.PRICE
   matches inouts named STREET or PRICE in any table
   Optional, default is no grep
