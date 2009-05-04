@@ -66,11 +66,7 @@ public final class ApplicationOptionsParser
       options.setApplicationLogLevel(applicationLogLevel);
     }
 
-    if (optionHelp1.getValue())
-    {
-      options.setShowHelp(true);
-    }
-    if (optionHelp2.getValue())
+    if (optionHelp1.getValue() || optionHelp2.getValue())
     {
       options.setShowHelp(true);
     }

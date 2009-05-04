@@ -1,18 +1,66 @@
+--- Filtering Options ---
+    
+-schemapattern=<schemapattern>
+  <schemapattern> is a pattern (which can include _ or %)
+  for the schemas to crawl
+  Optional, defaults to all schemas in the catalog
+  
+-table_types=<table_types>
+  <table_types> is a command separated list of table types of 
+  TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS
+  Optional, defaults to TABLE,VIEW
+  
+-show_stored_procedures
+  Whether to show procedures, or not
+  Optional, defaults to true
+  
+-tables=<regular-expression>
+  <regular-expression> is a regular expression to match table 
+  names - for example, 
+  -tables=C.*|P.*
+  matches any table whose names start with C or P
+  Tables that do not match the pattern are not displayed
+  Optional, defaults to showing all tables
+    
+-excludecolumns=<regular-expression>
+  <regular-expression> is a regular expression to match fully qualified 
+  column names, in the form "TABLENAME.COLUMNNAME" - for example, 
+  -excludecolumns=.*\.STREET|.*\.PRICE
+  matches columns named STREET or PRICE in any table
+  Columns that match the pattern are not displayed
+  Optional, default is to show all columns
+      
+-procedures=<regular-expression>
+  <regular-expression> is a regular expression to match procedure 
+  names - for example, 
+  -procedures=C.*|P.*
+  matches any procedure whose names start with C or P
+  Procedures that do not match the pattern are not displayed
+  Optional, defaults to showing all procedures
+    
+-excludeinout=<regular-expression>
+  <regular-expression> is a regular expression to match fully qualified 
+  inout names, in the form "TABLENAME.inoutNAME" - for example, 
+  -excludeinout=.*\.STREET|.*\.PRICE
+  matches inouts named STREET or PRICE in any table
+  inouts that match the pattern are not displayed
+  Optional, default is to show all inouts
+        
 --- Grep Options ---
     
--tables=<regular-expression>
-  Optional, where <regular-expression> is a regular expression to match table 
-  names.
-  For example, 
-  -tables C.*|P.*
-  matches any table whose names start with C or P.
-    
--columns=<regular-expression>
-  Optional, where <regular-expression> is a regular expression to match column 
-  names in the form "TABLENAME.COLUMNNAME".
-  For example,
-  -columns .*\.STREET|.*\.PRICE
-  matches columns named STREET or PRICE in any table.
-    
+-grepcolumns=<regular-expression>
+  <regular-expression> is a regular expression to match fully qualified 
+  column names, in the form "TABLENAME.COLUMNNAME" - for example,
+  -grepcolumns=.*\.STREET|.*\.PRICE
+  matches columns named STREET or PRICE in any table
+  Optional, default is no grep
+   
+-grepinout=<regular-expression>
+  <regular-expression> is a regular expression to match fully qualified 
+  inout names, in the form "TABLENAME.inoutNAME" - for example,
+  -grepinout=.*\.STREET|.*\.PRICE
+  matches inouts named STREET or PRICE in any table
+  Optional, default is no grep
+  
 -v (short for -invert-match)        
-  Optional, inverts the match, and shows non-matching tables and columns.   
+  Optional, inverts the match, and shows non-matching tables and columns

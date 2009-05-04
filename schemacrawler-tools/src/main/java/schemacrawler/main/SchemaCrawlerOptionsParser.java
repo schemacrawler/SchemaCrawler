@@ -54,10 +54,10 @@ final class SchemaCrawlerOptionsParser
                                                                  InclusionRule.ALL);
 
   private final StringOption optionGrepColumns = new StringOption(Option.NO_SHORT_FORM,
-                                                                  "grep-columns",
+                                                                  "grepcolumns",
                                                                   InclusionRule.NONE);
   private final StringOption optionGrepProcedureColumns = new StringOption(Option.NO_SHORT_FORM,
-                                                                           "grep-inout",
+                                                                           "grepinout",
                                                                            InclusionRule.NONE);
   private final BooleanOption optionGrepInvertMatch = new BooleanOption('v',
                                                                         "invert-match");

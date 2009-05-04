@@ -218,24 +218,6 @@ public final class CommandLineParser
       value = Boolean.FALSE;
     }
 
-    /**
-     * {@inheritDoc}
-     * 
-     * @see Option#isFound()
-     */
-    @Override
-    public boolean isFound()
-    {
-      if (value != null)
-      {
-        return value.booleanValue();
-      }
-      else
-      {
-        return Boolean.FALSE;
-      }
-    }
-
     @Override
     protected Boolean parseValue(final String valueString)
     {
