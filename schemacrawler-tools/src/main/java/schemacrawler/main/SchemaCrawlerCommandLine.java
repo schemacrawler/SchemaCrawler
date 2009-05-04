@@ -135,7 +135,8 @@ public class SchemaCrawlerCommandLine
     }
     catch (final DatabaseConnectorException e)
     {
-      throw new SchemaCrawlerException("Cannot create a database connector", e);
+      throw new SchemaCrawlerException("Cannot create a database connector - re-run with -help for help",
+                                       e);
     }
 
     schemaCrawlerOptions = new SchemaCrawlerOptionsParser(args,
