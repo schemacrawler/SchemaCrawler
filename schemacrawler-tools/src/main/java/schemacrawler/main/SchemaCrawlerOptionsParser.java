@@ -49,9 +49,16 @@ final class SchemaCrawlerOptionsParser
   private final StringOption optionTables = new StringOption(Option.NO_SHORT_FORM,
                                                              "tables",
                                                              InclusionRule.ALL);
+  private final StringOption optionExcludeColumns = new StringOption(Option.NO_SHORT_FORM,
+                                                                     "excludecolumns",
+                                                                     InclusionRule.NONE);
+
   private final StringOption optionProcedures = new StringOption(Option.NO_SHORT_FORM,
                                                                  "procedures",
                                                                  InclusionRule.ALL);
+  private final StringOption optionExcludeProcedureColumns = new StringOption(Option.NO_SHORT_FORM,
+                                                                              "excludeinout",
+                                                                              InclusionRule.NONE);
 
   private final StringOption optionGrepColumns = new StringOption(Option.NO_SHORT_FORM,
                                                                   "grepcolumns",
@@ -80,7 +87,9 @@ final class SchemaCrawlerOptionsParser
         optionTableTypes,
         optionShowStoredProcedures,
         optionTables,
+        optionExcludeColumns,
         optionProcedures,
+        optionExcludeProcedureColumns,
         optionGrepColumns,
         optionGrepProcedureColumns,
         optionGrepInvertMatch,
@@ -101,12 +110,27 @@ final class SchemaCrawlerOptionsParser
         .getValue(), InclusionRule.NONE);
       options.setTableInclusionRule(tableInclusionRule);
     }
+    if (optionExcludeColumns.isFound())
+    {
+      final InclusionRule columnInclusionRule = new InclusionRule(optionExcludeColumns
+                                                                    .getValue(),
+                                                                  InclusionRule.NONE);
+      options.setColumnInclusionRule(columnInclusionRule);
+    }
+
     if (optionProcedures.isFound())
     {
       final InclusionRule procedureInclusionRule = new InclusionRule(optionProcedures
                                                                        .getValue(),
                                                                      InclusionRule.NONE);
       options.setProcedureInclusionRule(procedureInclusionRule);
+    }
+    if (optionExcludeProcedureColumns.isFound())
+    {
+      final InclusionRule procedureColumnInclusionRule = new InclusionRule(optionExcludeProcedureColumns
+                                                                             .getValue(),
+                                                                           InclusionRule.NONE);
+      options.setProcedureColumnInclusionRule(procedureColumnInclusionRule);
     }
 
     if (optionGrepInvertMatch.isFound())
