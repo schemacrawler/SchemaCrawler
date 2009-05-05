@@ -21,9 +21,11 @@
           output,
           <a href="snapshot-examples/snapshot.html">XHTML,</a>
           or
-          <a href="snapshot-examples/snapshot.csv"> comma-separated text (CSV) </a>
-          . The XHTML output is a combination of valid XML (that can be manipulated by XML tools or XSLT), and HTML that
-          can be viewed in a browser.
+          <a href="snapshot-examples/snapshot.csv"> comma-separated text (CSV).</a>
+          The XHTML output is a combination of valid XML (that can be manipulated by XML tools or XSLT), and HTML that
+          can be viewed in a browser. SchemaCrawler can produce output in the
+          <a href=" http: / www.graphviz.org / doc / info / lang.html ">DOT format,</a>
+          which <a href="http://www.graphviz.org/">GraphViz</a> can convert into schema diagrams.
         </p>
       </answer>
     </faq>
@@ -38,101 +40,172 @@
         <p> SchemaCrawler can also manipulate your data. You can get counts of the rows in tables and views.
           SchemaCrawler can output all the data in your tables and views, or run specific SQL statements against table
           and views. SchemaCrawler can be fine-tuned using configuration files. </p>
-    <source><![CDATA[
-java -classpath <schemacrawler-jar>;<db-driver-jar> schemacrawler.Main [options]
+        <source><![CDATA[
+--- Connection Options ---
 
---- Optional Configuration Options ---
-
--g <config-file> (short for -configfile <config-file>)
-    Reads SchemaCrawler configuration properties from <config-file> instead
-    of the default schemacrawler.config.properties
-
--p <config-override-file> (short for -configoverridefile <config-override-file>)
-    Reads SchemaCrawler configuration properties from <config-override-file>
-    and overrides the properties from the configuration file
-
--loglevel <loglevel>
-  Log level - may be one of:
-  OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL
-
---- Required Connection Options ---
-
-One of:
+Required, one of:
 
 -c <connection_name> (short for -connection <connection_name>)
-    Uses a named connection
+  Uses a named connection
 
 -d (short for -default)
-    Uses the default connection
+  Uses the default connection
 
--x <connection_name> (short for -prompt <connection_name>)
-    Prompts for connection information, which is saved
-    into <connection_name>.properties
-
--a (short for -testall)
-    Tests all the connections defined in the configuration properties file,
-    but does not execute any commands
-
-Or, all of the following:
+Or, the following:
 
 -driver=<driver-class-name>
- Fully qualified name of the JDBC driver class.
+  Fully qualified name of the JDBC driver class.
 
 -url=<url>
- JDBC connection URL to the database.
+  JDBC connection URL to the database.
 
 -user=<user>
- Database user name.
+  Database user name.
 
 -password=<password>
- Database password.
+  Database password.
 
---- Command Options ---
+-schemapattern=<schemapattern>
+  Optional, specifies the schema to use. Use _ to match a single character,
+  and % to match many characters.
+
+--- Commands ---
 
 -command=<command>
- Required, where <command> is a comma-separated list of:
+  Required, where <command> is a comma-separated list of:
     brief_schema
-      If you only want to see table, view and procedure names
+      Shows only table, view and procedure names
     basic_schema
-      For more details of tables, views and procedures, including columns
+      Shows more details of tables, views and procedures, including columns 
       and primary keys
     verbose_schema
-      For the most detail of the schema, including data types, indexes,
+      Shows the most detail of the schema, including data types, indexes, 
       foreign keys, and view and procedure definitions
     maximum_schema
-      For maximum possible detail of the schema, including privileges, and
+      Shows maximum possible detail of the schema, including privileges, and 
       details of privileges, triggers, and check constraints
     count
-      To count rows in the tables
-    truncate
-      To truncate the tables
-    drop
-      To drop the tables
+      Shows counts of rows in the tables
     dump
-    To select all rows from the tables, and output the data
+      Shows data from all rows in the tables
     <query_name>
-     Query name, as specified in the configuration properties file
-   The query itself can contain the variables ${table} and ${tabletype}
-   or system properties referenced as ${<system-property-name>}.
-   Queries without any variables are executed exactly once. Queries
-   with variables are executed once for each table, with the variables
-   substituted.
+      Shows results of query <query_name>, as specified in the configuration 
+      properties file
+      The query itself can contain the variables ${table} and ${tabletype}
+      or system properties referenced as ${<system-property-name>}
+      Queries without any variables are executed exactly once; wueries
+      with variables are executed once for each table, with the variables
+      substituted
+
+--- Filtering Options ---
+    
+-schemapattern=<schemapattern>
+  <schemapattern> is a pattern (which can include _ or %)
+  for the schemas to crawl
+  Optional, defaults to all schemas in the catalog
+  
+-table_types=<table_types>
+  <table_types> is a command separated list of table types of 
+  TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS
+  Optional, defaults to TABLE,VIEW
+  
+-show_stored_procedures
+  Whether to show procedures, or not
+  Optional, defaults to true
+  
+-tables=<regular-expression>
+  <regular-expression> is a regular expression to match table 
+  names - for example, 
+  -tables=C.*|P.*
+  matches any table whose names start with C or P
+  Tables that do not match the pattern are not displayed
+  Optional, defaults to showing all tables
+    
+-excludecolumns=<regular-expression>
+  <regular-expression> is a regular expression to match fully qualified 
+  column names, in the form "SCHEMANAME.TABLENAME.COLUMNNAME" - for example, 
+  -excludecolumns=.*\.STREET|.*\.PRICE
+  matches columns named STREET or PRICE in any table
+  Columns that match the pattern are not displayed
+  Optional, default is to show all columns
+      
+-procedures=<regular-expression>
+  <regular-expression> is a regular expression to match procedure 
+  names - for example, 
+  -procedures=C.*|P.*
+  matches any procedure whose names start with C or P
+  Procedures that do not match the pattern are not displayed
+  Optional, defaults to showing all procedures
+    
+-excludeinout=<regular-expression>
+  <regular-expression> is a regular expression to match fully qualified 
+  parameter names - for example, 
+  -excludeinout=@p1|@p2
+  matches parameters named @p1 or @p2 in any procedure 
+  Parameters that match the pattern are not displayed
+  Optional, default is to show all parameters
+        
+--- Grep Options ---
+    
+-grepcolumns=<regular-expression>
+  <regular-expression> is a regular expression to match fully qualified 
+  column names, in the form "SCHEMANAME.TABLENAME.COLUMNNAME" - for example,
+  -grepcolumns=.*\.STREET|.*\.PRICE
+  matches columns named STREET or PRICE in any table
+  Optional, default is no grep
+   
+-grepinout=<regular-expression>
+  <regular-expression> is a regular expression to match fully qualified 
+  inout names, in the form "SCHEMANAME.TABLENAME.INOUTNAME" - for example,
+  -grepinout=.*\.STREET|.*\.PRICE
+  matches inouts named STREET or PRICE in any table
+  Optional, default is no grep
+  
+-v (short for -invert-match)        
+  Optional, inverts the match, and shows non-matching tables and columns
+
+--- Configuration Options ---
+
+-g=<config-file> (short for -configfile <config-file>)
+  Reads SchemaCrawler configuration properties from <config-file>
+  Optional, uses the default schemacrawler.config.properties file
+  in the current directory, or in-built default options
+
+-p=<config-override-file> (short for -configoverridefile <config-override-file>)
+  Reads SchemaCrawler configuration properties from 
+  <config-override-file> and overrides the properties from the 
+  configuration file
+  Optional, defaults to no overrides
 
 --- Output Options ---
 
 -outputformat=<outputformat>
- Optional, where <outputformat> is one of:
+  Format of the SchemaCrawler output, where <outputformat> is one of:
     text
       For text output (default)
     html
       For XHTML output
     csv
       For CSV output
-
+    dot
+      For DOT chart format output
+  Optional, defaults to text    
+      
 -outputfile=<outputfile>
- Optional - <outputfile> is the path to the output file
+  <outputfile> is the path to the output file
+  Optional, defaults to the console (stdout)
+
+--- Application Options ---
+
+-loglevel=<loglevel>
+  Sets the logging granularity, where <loglevel> is one of: 
+  OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL
+  Optional, default OFF
+
+-?, -h, -help, --help
+  Shows this help text
 ]]></source>
-   </answer>
+      </answer>
     </faq>
     <faq id="config">
       <question> What does a SchemaCrawler configuration file look like?  </question>
@@ -270,30 +343,10 @@ Or, all of the following:
         <p> SchemaCrawler Grep output is the same as the SchemaCrawler text output. </p>
       </answer>
     </faq>
-    <faq id="commands">
+    <faq id="grepcommands">
       <question> What are the SchemaCrawler Grep commands? </question>
-      <answer>
-    <source><![CDATA[
---- Grep Options ---
-
--tables=<regular-expression>
- Optional, where <regular-expression> is a regular expression to match table
- names.
- For example,
- -tables C.*|P.*
- matches any table whose names start with C or P.
-
--columns=<regular-expression>
- Optional, where <regular-expression> is a regular expression to match column
- names in the form "TABLENAME.COLUMNNAME".
- For example,
- -columns .*\.STREET|.*\.PRICE
- matches columns named STREET or PRICE in any table.
-
--v (short for -invert-match)
- Inverts the match, and shows non-matching tables and columns.
-]]></source>
-   </answer>
+      <answer><p>See the <a href="#commands">filtering and grep command-line options</a> above.</p>
+      </answer>
     </faq>
     <faq id="config">
       <question> What does a SchemaCrawler configuration file look like?  </question>

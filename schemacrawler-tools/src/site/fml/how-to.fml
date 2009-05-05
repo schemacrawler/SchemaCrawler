@@ -28,6 +28,10 @@
           . The include pattern is evaluated first, and the exclusions are made from the included tables or columns
           list.
         </p>
+        <p>
+          Also see the
+          <a href="faq.html#commands">filtering and grep command-line options.</a>
+        </p>
       </answer>
     </faq>
     <faq id="excluded-views">
@@ -42,6 +46,11 @@
           <code>schemacrawler.config.properties </code>
           file.
         </p>
+        <p>
+          The option in the configuration can be overridden by the -table_types command-line
+          option. Further, see the
+          <a href="faq.html#commands">details on the command-line options.</a>
+        </p>        
       </answer>
     </faq>
     <faq id="excluded-procedures">
@@ -56,6 +65,11 @@
           <code>schemacrawler.config.properties </code>
           file.
         </p>
+        <p>
+          The option in the configuration can be overridden by the -show_stored_procedures command-line
+          option. Further, see the
+          <a href="faq.html#commands">details on the command-line options.</a>
+        </p>
       </answer>
     </faq>
   </part>
@@ -63,7 +77,7 @@
     <title>Create diff-able Output</title>
     <faq id="sorting">
       <question>
-         How to sort columns, foreign-keys and indices alphabetically
+        How to sort columns, foreign-keys and indices alphabetically
       </question>
       <answer>
         <p>
@@ -91,7 +105,7 @@
     </faq>
     <faq id="ordinal-numbers">
       <question>
-         How to allow diffs of tables that have columns added in between
+        How to allow diffs of tables that have columns added in between
       </question>
       <answer>
         <p>
@@ -117,7 +131,7 @@
           <code>schemacrawler.config.properties </code>
           file.
         </p>
-				<source><![CDATA[
+        <source><![CDATA[
 schemacrawler.format.hide_primarykey_names=false
 schemacrawler.format.hide_foreignkey_names=false
 schemacrawler.format.hide_index_names=false
@@ -167,9 +181,9 @@ schemacrawler.format.hide_constraint_names=false
       <answer>
         <p>
           SchemaCrawler integrates with
-          <a href="http://www.graphviz.org/"> Graphviz </a>
+          <a href="http://www.graphviz.org/">Graphviz</a>
           to produce graph images. Install Graphviz, and run
-          <code>schemacrawler.tools.integration.graph.Main </code>
+          <code>schemacrawler.tools.integration.graph.Main</code>
           , with the correct options. See the graphing example in the
           <code>_distrib\graphing</code>
           directory for more details.
@@ -186,7 +200,7 @@ schemacrawler.format.hide_constraint_names=false
       <answer>
         <p>
           Read
-          <a href="http://www.devx.com/Java/Article/32443"> Java API Makes Database Metadata as Easily Accessible as POJOs </a>
+          <a href="http://www.devx.com/Java/Article/32443">Java API Makes Database Metadata as Easily Accessible as POJOs</a>
           for an introduction to the SchemaCrawler API. (This article may refer to an older release of the SchemaCrawler
           API, but the concepts are the same.) You can also browse the
           <a href="apidocs/index.html">javadocs</a>
@@ -201,7 +215,7 @@ schemacrawler.format.hide_constraint_names=false
         </p>
         <p>
           Or, if you are impatient, try code similar to the following:
-					<source><![CDATA[
+          <source><![CDATA[
 SchemaCrawlerOptions options = new SchemaCrawlerOptions();
 Catalog catalog =
   SchemaCrawlerUtility.getCatalog(connection, options);
@@ -218,8 +232,8 @@ for (Schema schema: catalog.getSchemas())
   }
 }
 ]]></source>
-				</p>
-			</answer>
+        </p>
+      </answer>
     </faq>
     <faq id="ant">
       <question>
@@ -243,15 +257,18 @@ for (Schema schema: catalog.getSchemas())
           </li>
           <li>
             config-override
-            Path to the configuration override file (default value - schemacrawler.config.override.properties)
+            Path to the configuration override file (default value -
+            schemacrawler.config.override.properties)
           </li>
           <li>
             db-driver-classpath
-            Database driver classpath (default value - value of the ant property value ${db-driver-classpath})
+            Database driver classpath (default value - value of the ant property value
+            ${db-driver-classpath})
           </li>
           <li>
             datasource
-            Datasource defined in the configuration (either the datasource, or the connection properties should be
+            Datasource defined in the configuration (either the datasource, or the connection properties
+            should be
             provided - if both sets are provided, the datasource is ignored)
           </li>
           <li>
@@ -322,7 +339,7 @@ for (Schema schema: catalog.getSchemas())
         </p>
         <p> Next, add a section to your Maven 2.0 project's pom.xml file, similar to that below, changing what needs to
           be changed: </p>
-				<source><![CDATA[
+        <source><![CDATA[
 <reporting>
   <plugins>
     <plugin>
@@ -340,9 +357,9 @@ for (Schema schema: catalog.getSchemas())
   </plugins>
 </reporting>
 ]]></source>
-				<p>
-					Run
-					<code>mvn site</code>
+        <p>
+          Run
+          <code>mvn site</code>
           . See the output produced in the
           <code>target/site</code>
           directory of your project.
