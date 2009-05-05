@@ -5,13 +5,20 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="6.3" date="2009-04-08">
+    <release version="6.3" date="2009-05-04">
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
         SchemaCrawler Grep functionality is built into the SchemaCrawler options, and the
-        SchemaCrawler command line. This means that all of the SchemaCrawler commands,
-        including graphing, will use grep options.
+        SchemaCrawler command-line. This means that all of the SchemaCrawler commands,
+        including graphing, will use filtering and grep options.
       ]]></action>
-    </release>  
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        SchemaCrawler command line option help has been re-written. New command-line
+        options are available.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        SchemaCrawler can produce Graphviz DOT files to generate schema diagrams.
+      ]]></action>      
+    </release>
     <release version="6.2" date="2009-04-08">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         A new feature to infer weak associations between tables, even if there is no foreign key.
