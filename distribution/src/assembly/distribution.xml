@@ -13,6 +13,7 @@
 	    make-binary-distribution,
 	    make-source-distribution,
 	    make-database-distributions,
+	    make-website-distribution,
 	    cleanup-distribution
 	  "
 	    description="Package all sub-project jars into the distributable jar" />
@@ -152,6 +153,17 @@
 
 	</target>
 
+	<target name="make-website-distribution">
+
+		<property name="website.location" location="${SchemaCrawler.home}/schemacrawler-tools/target/site" />
+		<mkdir dir="${website.location}"/>
+		<property name="website.zip.prefix" value="schemacrawler-${SchemaCrawler.version}-website" />
+		<delete file="${distribution.target}/${website.zip.prefix}.zip" />
+		<zip destfile="${distribution.target}/${website.zip.prefix}.zip">
+			<zipfileset dir="${website.location}" prefix="${website.zip.prefix}" defaultexcludes="yes"/>
+		</zip>
+
+	</target>
 
 	<target name="make-database-distributions">
 
