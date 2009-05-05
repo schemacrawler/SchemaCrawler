@@ -48,15 +48,15 @@ public final class SchemaCrawlerOptions
   private static final String SC_TABLE_PATTERN_EXCLUDE = "schemacrawler.table.pattern.exclude";
   private static final String SC_TABLE_PATTERN_INCLUDE = "schemacrawler.table.pattern.include";
 
-  private static final String SC_PROCEDURE_COLUMN_PATTERN_EXCLUDE = "schemacrawler.procedure.column.pattern.exclude";
-  private static final String SC_PROCEDURE_COLUMN_PATTERN_INCLUDE = "schemacrawler.procedure.column.pattern.include";
+  private static final String SC_PROCEDURE_COLUMN_PATTERN_EXCLUDE = "schemacrawler.procedure.inout.pattern.exclude";
+  private static final String SC_PROCEDURE_COLUMN_PATTERN_INCLUDE = "schemacrawler.procedure.inout.pattern.include";
   private static final String SC_PROCEDURE_PATTERN_EXCLUDE = "schemacrawler.procedure.pattern.exclude";
   private static final String SC_PROCEDURE_PATTERN_INCLUDE = "schemacrawler.procedure.pattern.include";
 
   private static final String SC_GREP_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.column.pattern.exclude";
   private static final String SC_GREP_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.column.pattern.include";
-  private static final String SC_GREP_PROCEDURE_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.procedure.column.pattern.exclude";
-  private static final String SC_GREP_PROCEDURE_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.procedure.column.pattern.include";
+  private static final String SC_GREP_PROCEDURE_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.procedure.inout.pattern.exclude";
+  private static final String SC_GREP_PROCEDURE_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.procedure.inout.pattern.include";
 
   private static final String SC_GREP_INVERT_MATCH = "schemacrawler.grep.invert-match";
 

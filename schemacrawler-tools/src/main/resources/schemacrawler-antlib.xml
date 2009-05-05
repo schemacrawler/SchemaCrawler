@@ -81,17 +81,25 @@
       description="Regular expression to select tables"
       default="" />
     <attribute
-      name="columns"
-      description="Regular expression to select columns"
+      name="excludecolumns"
+      description="Regular expression to exclude columns"
       default="" />
     <attribute
       name="procedures"
       description="Regular expression to select procedures"
       default="" />
     <attribute
-      name="inout"
-      description="Regular expression to select procedure parameters"
-      default="" />      
+      name="excludeinout"
+      description="Regular expression to exclude procedure parameters"
+      default="" />    
+    <attribute
+      name="grepcolumns"
+      description="Regular expression to grep columns"
+      default="" />  
+    <attribute
+      name="grepinout"
+      description="Regular expression to grep procedure parameters"
+      default="" />              
     <attribute
       name="invert-match"
       description="Whether to invert the matching tables"
@@ -130,9 +138,11 @@
         <arg value="-password=@{password}" />
         <arg value="-command=@{command}" />
         <arg value="-tables=@{tables}" />
-        <arg value="-columns=@{columns}" />
+        <arg value="-excludecolumns=@{excludecolumns}" />
         <arg value="-procedures=@{procedures}" />
-        <arg value="-inout=@{inout}" />        
+        <arg value="-excludeinout=@{excludeinout}" />  
+        <arg value="-grepcolumns=@{grepcolumns}" />              
+        <arg value="-grepinout=@{grepinout}" />
         <arg value="-v=@{invert-match}" />        
         <arg value="-noheader=@{no-header}" />
         <arg value="-nofooter=@{no-footer}" />
