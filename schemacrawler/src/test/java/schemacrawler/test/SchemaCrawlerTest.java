@@ -342,7 +342,7 @@ public class SchemaCrawlerTest
         }
     };
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.minimum());
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.basic());
 
     final Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
     final Schema[] schemas = catalog.getSchemas();
