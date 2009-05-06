@@ -79,7 +79,7 @@
     <attribute
       name="tables"
       description="Regular expression to select tables"
-      default="" />
+      default=".*" />
     <attribute
       name="excludecolumns"
       description="Regular expression to exclude columns"
@@ -87,7 +87,7 @@
     <attribute
       name="procedures"
       description="Regular expression to select procedures"
-      default="" />
+      default=".*" />
     <attribute
       name="excludeinout"
       description="Regular expression to exclude procedure parameters"
@@ -95,11 +95,11 @@
     <attribute
       name="grepcolumns"
       description="Regular expression to grep columns"
-      default="" />  
+      default=".*" />  
     <attribute
       name="grepinout"
       description="Regular expression to grep procedure parameters"
-      default="" />              
+      default=".*" />              
     <attribute
       name="invert-match"
       description="Whether to invert the matching tables"
