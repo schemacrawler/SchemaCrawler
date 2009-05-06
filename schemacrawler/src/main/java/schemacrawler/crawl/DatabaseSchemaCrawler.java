@@ -448,14 +448,21 @@ public final class DatabaseSchemaCrawler
 
     boolean include = false;
     final ProcedureColumn[] columns = procedure.getColumns();
-    for (final ProcedureColumn column: columns)
+    if (columns.length == 0)
     {
-      if (grepProcedureColumnInclusionRule.include(column.getFullName()))
+      include = true;
+    }
+    else
+    {
+      for (final ProcedureColumn column: columns)
       {
-        // We found a column that should be included,
-        // so handle the procedure
-        include = true;
-        break;
+        if (grepProcedureColumnInclusionRule.include(column.getFullName()))
+        {
+          // We found a column that should be included,
+          // so handle the procedure
+          include = true;
+          break;
+        }
       }
     }
     if (invertMatch)
@@ -484,14 +491,21 @@ public final class DatabaseSchemaCrawler
 
     boolean include = false;
     final Column[] columns = table.getColumns();
-    for (final Column column: columns)
+    if (columns.length == 0)
     {
-      if (grepColumnInclusionRule.include(column.getFullName()))
+      include = true;
+    }
+    else
+    {
+      for (final Column column: columns)
       {
-        // We found a column that should be included,
-        // so handle the table
-        include = true;
-        break;
+        if (grepColumnInclusionRule.include(column.getFullName()))
+        {
+          // We found a column that should be included,
+          // so handle the table
+          include = true;
+          break;
+        }
       }
     }
     if (invertMatch)
