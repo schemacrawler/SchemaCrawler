@@ -50,7 +50,7 @@ public class TableAnalyzer
     }
     else
     {
-      return string1.substring(0, index);
+      return string1.substring(0, index).toLowerCase();
     }
   }
 
@@ -71,17 +71,41 @@ public class TableAnalyzer
         if (commonPrefix != null && !commonPrefix.equals("")
             && commonPrefix.endsWith("_"))
         {
-          commonPrefix = commonPrefix.toLowerCase();
-          final int prevCount;
-          if (prefixesMap.containsKey(commonPrefix))
+          final List<String> splitCommonPrefixes = new ArrayList<String>();
+          final String[] splitPrefix = commonPrefix.split("_");
+          if (splitPrefix != null && splitPrefix.length > 0)
           {
-            prevCount = prefixesMap.get(commonPrefix);
+            for (int k = 0; k < splitPrefix.length; k++)
+            {
+              final StringBuilder buffer = new StringBuilder();
+              for (int l = 0; l < k; l++)
+              {
+                buffer.append(splitPrefix[l]).append("_");
+              }
+              if (buffer.length() > 0)
+              {
+                splitCommonPrefixes.add(buffer.toString());
+              }
+            }
           }
           else
           {
-            prevCount = 0;
+            splitCommonPrefixes.add(commonPrefix);
           }
-          prefixesMap.put(commonPrefix, prevCount + 1);
+
+          for (final String splitCommonPrefix: splitCommonPrefixes)
+          {
+            final int prevCount;
+            if (prefixesMap.containsKey(splitCommonPrefix))
+            {
+              prevCount = prefixesMap.get(splitCommonPrefix);
+            }
+            else
+            {
+              prevCount = 0;
+            }
+            prefixesMap.put(splitCommonPrefix, prevCount + 1);
+          }
         }
       }
     }

@@ -371,12 +371,6 @@ public final class SchemaTextFormatter
   public void handle(final WeakAssociations weakAssociations)
     throws SchemaCrawlerException
   {
-    final SchemaTextDetailType schemaTextDetailType = options
-      .getSchemaTextDetailType();
-    if (schemaTextDetailType != SchemaTextDetailType.maximum_schema)
-    {
-      return;
-    }
     if (weakAssociations == null
         || weakAssociations.getColumnPairs().length == 0)
     {
