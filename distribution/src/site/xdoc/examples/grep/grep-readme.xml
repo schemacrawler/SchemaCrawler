@@ -34,16 +34,16 @@
           </li>
           <li>
             Run
-            <span class="code">scgrep.cmd</span>
+            <span class="code">scgrep.cmd -help</span>
             (or
-            <span class="code">scgrep.sh</span>
+            <span class="code">scgrep.sh -help</span>
             on Unix) to see command line options.
           </li>
           <li>
             Run
-            <span class="code">scgrep.cmd -c hsqldb -show_stored_procedures=false -command=basic_schema -grepcolumns=.*\.PRICE</span>
+            <span class="code">scgrep.cmd -c hsqldb -show_stored_procedures=false -grepcolumns=.*\.PRICE</span>
             (or
-            <span class="code">scgrep.sh -c hsqldb -show_stored_procedures=false -command=basic_schema -grepcolumns=.*\.PRICE</span>
+            <span class="code">scgrep.sh -c hsqldb -show_stored_procedures=false -grepcolumns=.*\.PRICE</span>
             on Unix) to search for all tables with names starting with 'C'.
           </li>
         </ol>
