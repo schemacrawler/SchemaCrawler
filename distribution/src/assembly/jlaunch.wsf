@@ -81,7 +81,7 @@
       Set JarFiles = LibFolder.Files
 
       CreateLibClasspath = ""
-      CreateLibClasspath = CreateLibClasspath & WScriptShell.Environment("User").Item("CLASSPATH")
+      CreateLibClasspath = CreateLibClasspath & WScriptShell.Environment("User").Item("CLASSPATH") + ";"
       For Each JarFile In JarFiles
         If FileSystemObject.GetExtensionName(JarFile) = "jar" Then
           CreateLibClasspath = CreateLibClasspath + FileSystemObject.GetAbsolutePathName(JarFile) + ";"
