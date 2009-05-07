@@ -24,7 +24,6 @@ package schemacrawler.main;
 import schemacrawler.tools.Command;
 import schemacrawler.tools.Commands;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
-import sf.util.Utilities;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
 
@@ -39,7 +38,8 @@ final class CommandParser
 
   private final StringOption optionCommand = new StringOption(Option.NO_SHORT_FORM,
                                                               "command",
-                                                              "");
+                                                              SchemaTextDetailType.standard_schema
+                                                                .name());
 
   CommandParser(final String[] args)
   {
@@ -54,10 +54,6 @@ final class CommandParser
     });
 
     final String commandOptionValue = optionCommand.getValue();
-    if (Utilities.isBlank(commandOptionValue))
-    {
-      return new Commands();
-    }
     final String[] commandStrings = commandOptionValue.split(",");
 
     final Commands commands = new Commands();

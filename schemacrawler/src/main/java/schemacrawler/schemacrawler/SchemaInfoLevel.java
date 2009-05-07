@@ -77,6 +77,24 @@ public final class SchemaInfoLevel
   }
 
   /**
+   * Creates a new SchemaInfoLevel for standard schema information.
+   * 
+   * @return New SchemaInfoLevel
+   */
+  public static SchemaInfoLevel standard()
+  {
+    final SchemaInfoLevel standard = new SchemaInfoLevel();
+    standard.setRetrieveTables(true);
+    standard.setRetrieveProcedures(true);
+    standard.setRetrieveProcedureColumns(true);
+    standard.setRetrieveTableColumns(true);
+    standard.setRetrieveForeignKeys(true);
+    standard.setRetrieveIndices(true);
+    standard.setRetrieveWeakAssociations(true);
+    return standard;
+  }
+
+  /**
    * Creates a new SchemaInfoLevel for verbose schema information.
    * 
    * @return New SchemaInfoLevel
