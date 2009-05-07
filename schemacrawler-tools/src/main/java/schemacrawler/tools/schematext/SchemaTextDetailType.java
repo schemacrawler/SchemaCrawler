@@ -36,7 +36,9 @@ public enum SchemaTextDetailType
   /** Verbose column detail. */
   verbose_schema(SchemaInfoLevel.verbose()),
   /** Maximum column detail, everything supported by SchemaCrawler. */
-  maximum_schema(SchemaInfoLevel.maximum());
+  maximum_schema(SchemaInfoLevel.maximum()),
+  /** Standard column detail. */
+  standard_schema(SchemaInfoLevel.standard()), ;
 
   private final SchemaInfoLevel mappedToInfoLevel;
 

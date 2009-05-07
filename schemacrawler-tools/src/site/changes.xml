@@ -5,7 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="6.3" date="2009-05-04">
+    <release version="6.3" date="2009-05-08">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        If no commands are specified, defaults to standard_schema, which provides
+        the most commonly needed details of the schema.
+      ]]></action>    
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
         SchemaCrawler Grep functionality is built into the SchemaCrawler options, and the
         SchemaCrawler command-line. This means that all of the SchemaCrawler commands,
