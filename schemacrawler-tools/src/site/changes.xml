@@ -5,6 +5,14 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+    <release version="6.4" date="2009-05-10">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        New pre-packaged distribution, SchemaCrawler for SQLite.
+      ]]></action>    
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        Enhanced algorithm for finding weak associations.
+      ]]></action>     
+    </release>  
     <release version="6.3" date="2009-05-08">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         If no commands are specified, defaults to standard_schema, which provides
