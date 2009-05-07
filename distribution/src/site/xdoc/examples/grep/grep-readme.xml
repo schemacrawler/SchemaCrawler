@@ -41,9 +41,9 @@
           </li>
           <li>
             Run
-            <span class="code">scgrep.cmd -c hsqldb -tables=C.*</span>
+            <span class="code">scgrep.cmd -c hsqldb -show_stored_procedures=false -command=basic_schema -grepcolumns=.*\.PRICE</span>
             (or
-            <span class="code">scgrep.sh -c hsqldb -tables=C.*</span>
+            <span class="code">scgrep.sh -c hsqldb -show_stored_procedures=false -command=basic_schema -grepcolumns=.*\.PRICE</span>
             on Unix) to search for all tables with names starting with 'C'.
           </li>
         </ol>
