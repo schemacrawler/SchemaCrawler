@@ -55,6 +55,12 @@ final class BundledDriverOptionsParser
   }
 
   @Override
+  protected String getHelpResource()
+  {
+    return "/help/Commands.readme.txt";
+  }
+
+  @Override
   protected BundledDriverOptions getOptions()
   {
     parse(new Option[] {
@@ -75,12 +81,6 @@ final class BundledDriverOptionsParser
     options.setPassword(optionPassword.getValue());
 
     return options;
-  }
-
-  @Override
-  protected String getHelpResource()
-  {
-    return "/help/Commands.readme.txt";
   }
 
 }

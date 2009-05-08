@@ -445,7 +445,7 @@ public final class SchemaCrawlerOptions
    * @param invertMatch
    *        Whether to invert matches.
    */
-  public void setGrepInvertMatch(boolean grepInvertMatch)
+  public void setGrepInvertMatch(final boolean grepInvertMatch)
   {
     this.grepInvertMatch = grepInvertMatch;
   }

@@ -22,6 +22,7 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.WeakAssociations;
 

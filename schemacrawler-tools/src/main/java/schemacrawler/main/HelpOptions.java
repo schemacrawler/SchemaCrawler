@@ -66,34 +66,34 @@ public class HelpOptions
     return resourceOutputOptions;
   }
 
+  public String getTitle()
+  {
+    return title;
+  }
+
   public boolean isHideConfig()
   {
     return hideConfig;
   }
 
-  public void setCommandHelpType(CommandHelpType commandHelpType)
+  public void setCommandHelpType(final CommandHelpType commandHelpType)
   {
     this.commandHelpType = commandHelpType;
   }
 
-  public void setHideConfig(boolean hideConfig)
+  public void setHideConfig(final boolean hideConfig)
   {
     this.hideConfig = hideConfig;
   }
 
-  public void setResourceConnections(String resourceConnections)
+  public void setResourceConnections(final String resourceConnections)
   {
     this.resourceConnections = resourceConnections;
   }
 
-  public void setResourceOutputOptions(String resourceOutputOptions)
+  public void setResourceOutputOptions(final String resourceOutputOptions)
   {
     this.resourceOutputOptions = resourceOutputOptions;
-  }
-
-  public String getTitle()
-  {
-    return title;
   }
 
   public void showHelp()

@@ -51,7 +51,7 @@ final class MutableDatabaseInfo
   private final NamedObjectList<MutableColumnDataType> systemColumnDataTypes = new NamedObjectList<MutableColumnDataType>(NamedObjectSort.alphabetical);
 
   @Override
-  public boolean equals(Object obj)
+  public boolean equals(final Object obj)
   {
     if (this == obj)
     {
@@ -65,7 +65,7 @@ final class MutableDatabaseInfo
     {
       return false;
     }
-    MutableDatabaseInfo other = (MutableDatabaseInfo) obj;
+    final MutableDatabaseInfo other = (MutableDatabaseInfo) obj;
     if (catalogName == null)
     {
       if (other.catalogName != null)
@@ -178,12 +178,10 @@ final class MutableDatabaseInfo
   {
     final int prime = 31;
     int result = 1;
+    result = prime * result + (catalogName == null? 0: catalogName.hashCode());
+    result = prime * result + (productName == null? 0: productName.hashCode());
     result = prime * result
-             + ((catalogName == null)? 0: catalogName.hashCode());
-    result = prime * result
-             + ((productName == null)? 0: productName.hashCode());
-    result = prime * result
-             + ((productVersion == null)? 0: productVersion.hashCode());
+             + (productVersion == null? 0: productVersion.hashCode());
     return result;
   }
 
@@ -210,7 +208,7 @@ final class MutableDatabaseInfo
     dbProperties.put(name, value);
   }
 
-  void setCatalogName(String catalogName)
+  void setCatalogName(final String catalogName)
   {
     this.catalogName = catalogName;
   }

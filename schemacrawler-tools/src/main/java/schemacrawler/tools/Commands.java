@@ -28,6 +28,11 @@ public class Commands
     }
   }
 
+  public Command get(final int index)
+  {
+    return commands.get(index);
+  }
+
   public Command getFirstComand()
   {
     if (commands.size() > 0)
@@ -38,11 +43,6 @@ public class Commands
     {
       return null;
     }
-  }
-
-  public Command get(final int index)
-  {
-    return commands.get(index);
   }
 
   public Iterator<Command> iterator()

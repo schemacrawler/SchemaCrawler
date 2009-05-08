@@ -69,6 +69,11 @@ final class SchemaCrawlerOptionsParser
   private final BooleanOption optionGrepInvertMatch = new BooleanOption('v',
                                                                         "invert-match");
 
+  private final BooleanOption optionSortColumns = new BooleanOption(Option.NO_SHORT_FORM,
+                                                                    "sortcolumns");
+  private final BooleanOption optionSortInout = new BooleanOption(Option.NO_SHORT_FORM,
+                                                                  "sortinout");
+
   private final SchemaCrawlerOptions options;
 
   SchemaCrawlerOptionsParser(final String[] args,
@@ -77,6 +82,12 @@ final class SchemaCrawlerOptionsParser
   {
     super(args);
     options = new SchemaCrawlerOptions(config, partition);
+  }
+
+  @Override
+  protected String getHelpResource()
+  {
+    return "/help/SchemaCrawlerOptions.readme.txt";
   }
 
   @Override
@@ -93,6 +104,8 @@ final class SchemaCrawlerOptionsParser
         optionGrepColumns,
         optionGrepProcedureColumns,
         optionGrepInvertMatch,
+        optionSortColumns,
+        optionSortInout,
     });
 
     if (optionTableTypes.isFound())
@@ -155,13 +168,17 @@ final class SchemaCrawlerOptionsParser
         .setGrepProcedureColumnInclusionRule(grepProcedureColumnInclusionRule);
     }
 
-    return options;
-  }
+    if (optionSortColumns.isFound())
+    {
+      options.setAlphabeticalSortForTableColumns(optionSortColumns.getValue());
+    }
+    if (optionSortInout.isFound())
+    {
+      options
+        .setAlphabeticalSortForProcedureColumns(optionSortInout.getValue());
+    }
 
-  @Override
-  protected String getHelpResource()
-  {
-    return "/help/SchemaCrawlerOptions.readme.txt";
+    return options;
   }
 
 }

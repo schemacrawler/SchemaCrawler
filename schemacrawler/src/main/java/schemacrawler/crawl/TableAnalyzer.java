@@ -67,7 +67,7 @@ public class TableAnalyzer
       {
         final String table1 = tablesList.get(i).getName();
         final String table2 = tablesList.get(j).getName();
-        String commonPrefix = commonPrefix(table1, table2);
+        final String commonPrefix = commonPrefix(table1, table2);
         if (commonPrefix != null && !commonPrefix.equals("")
             && commonPrefix.endsWith("_"))
         {

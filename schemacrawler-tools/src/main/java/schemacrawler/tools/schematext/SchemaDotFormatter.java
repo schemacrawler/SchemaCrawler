@@ -161,7 +161,7 @@ public final class SchemaDotFormatter
   {
   }
 
-  public void handle(Table table)
+  public void handle(final Table table)
     throws SchemaCrawlerException
   {
     final String schemaName = table.getSchemaName();
@@ -237,7 +237,7 @@ public final class SchemaDotFormatter
     out.write(buffer.toString());
   }
 
-  public void handle(WeakAssociations weakAssociations)
+  public void handle(final WeakAssociations weakAssociations)
     throws SchemaCrawlerException
   {
     if (weakAssociations == null)

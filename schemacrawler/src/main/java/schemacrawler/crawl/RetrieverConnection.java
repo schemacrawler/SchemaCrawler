@@ -95,7 +95,7 @@ final class RetrieverConnection
     StringBuilder.append(String.format("catalogName=%s; ", catalogName));
     StringBuilder.append(String.format("schemaPattern=%s; ", schemaPattern));
     StringBuilder.append(String.format("informationSchemaViews=%s; ",
-                                      informationSchemaViews));
+                                       informationSchemaViews));
     return StringBuilder.toString();
   }
 

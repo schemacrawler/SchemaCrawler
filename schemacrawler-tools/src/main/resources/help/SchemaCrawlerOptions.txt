@@ -1,3 +1,11 @@
+--- Sort Options ---
+
+-sortcolumns
+  Sort columns in a table alphabetically
+
+-sortinout
+  Sort parameters in a stored procedure alphabetically
+  
 --- Filtering Options ---
     
 -schemapattern=<schemapattern>
