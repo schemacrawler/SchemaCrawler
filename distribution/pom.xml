@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
@@ -81,9 +80,9 @@
             <phase>package</phase>
             <configuration>
               <tasks>
-                <property name="SchemaCrawler.home" location=".."/>
-                <property name="SchemaCrawler.version" value="${project.version}"/>
-                <ant antfile="src\assembly\distribution.xml" target="make-distribution"/>
+                <property name="SchemaCrawler.home" location=".." />
+                <property name="SchemaCrawler.version" value="${project.version}" />
+                <ant antfile="src\assembly\distribution.xml" target="make-distribution" />
               </tasks>
             </configuration>
             <goals>
@@ -93,14 +92,14 @@
         </executions>
         <dependencies>
           <dependency>
-              <groupId>org.apache.ant</groupId>
-              <artifactId>ant</artifactId>
-              <version>1.7.0</version>
+            <groupId>org.apache.ant</groupId>
+            <artifactId>ant</artifactId>
+            <version>1.7.0</version>
           </dependency>
           <dependency>
-              <groupId>org.apache.ant</groupId>
-              <artifactId>ant-apache-regexp</artifactId>
-              <version>1.7.0</version>
+            <groupId>org.apache.ant</groupId>
+            <artifactId>ant-apache-regexp</artifactId>
+            <version>1.7.0</version>
           </dependency>
         </dependencies>
       </plugin>
