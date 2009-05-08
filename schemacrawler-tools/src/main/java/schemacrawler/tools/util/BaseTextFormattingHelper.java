@@ -233,8 +233,6 @@ abstract class BaseTextFormattingHelper
    * 
    * @param columnNames
    *        Column names
-   * @throws QueryExecutorException
-   *         On an exception
    */
   public String createRowHeader(final String[] columnNames)
   {

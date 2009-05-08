@@ -57,6 +57,12 @@ final class PropertiesDataSourceOptionsParser
   }
 
   @Override
+  protected String getHelpResource()
+  {
+    return "/help/Commands.readme.txt";
+  }
+
+  @Override
   protected PropertiesDataSourceOptions getOptions()
   {
     parse(new Option[] {
@@ -79,12 +85,6 @@ final class PropertiesDataSourceOptionsParser
     options.setPassword(optionPassword.getValue());
 
     return options;
-  }
-
-  @Override
-  protected String getHelpResource()
-  {
-    return "/help/Commands.readme.txt";
   }
 
 }

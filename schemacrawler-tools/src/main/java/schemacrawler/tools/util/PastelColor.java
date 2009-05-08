@@ -19,6 +19,7 @@
  */
 package schemacrawler.tools.util;
 
+
 import java.awt.Color;
 import java.io.Serializable;
 
@@ -49,16 +50,15 @@ public final class PastelColor
 
   public PastelColor shade()
   {
-    return new PastelColor(new Color(Math
-      .max((int) (color.getRed() * FACTOR), 0), Math.max((int) (color
-      .getGreen() * FACTOR), 0), Math
-      .max((int) (color.getBlue() * FACTOR), 0)));
+    return new PastelColor(new Color(Math.max((int) (color.getRed() * FACTOR),
+                                              0), Math.max((int) (color
+      .getGreen() * FACTOR), 0), Math.max((int) (color.getBlue() * FACTOR), 0)));
   }
 
   public PastelColor tint()
   {
-    return new PastelColor(new Color(Math
-      .min((int) (color.getRed() / FACTOR), 255), Math.min((int) (color
+    return new PastelColor(new Color(Math.min((int) (color.getRed() / FACTOR),
+                                              255), Math.min((int) (color
       .getGreen() / FACTOR), 255), Math.min((int) (color.getBlue() / FACTOR),
                                             255)));
   }
@@ -66,8 +66,7 @@ public final class PastelColor
   @Override
   public String toString()
   {
-    return "#"
-           + Integer.toHexString(color.getRGB()).substring(2).toUpperCase();
+    return "#" + Integer.toHexString(color.getRGB()).substring(2).toUpperCase();
   }
 
   private int colorValue()

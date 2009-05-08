@@ -58,6 +58,12 @@ final class OutputOptionsParser
   }
 
   @Override
+  protected String getHelpResource()
+  {
+    return "/help/OutputOptions.readme.txt";
+  }
+
+  @Override
   protected OutputOptions getOptions()
   {
     parse(new Option[] {
@@ -81,12 +87,6 @@ final class OutputOptionsParser
     outputOptions.setNoInfo(optionNoInfo.getValue());
 
     return outputOptions;
-  }
-
-  @Override
-  protected String getHelpResource()
-  {
-    return "/help/OutputOptions.readme.txt";
   }
 
 }

@@ -76,12 +76,12 @@ public class ApplicationOptions
     return showHelp;
   }
 
-  public void setApplicationLogLevel(Level applicationLogLevel)
+  public void setApplicationLogLevel(final Level applicationLogLevel)
   {
     this.applicationLogLevel = applicationLogLevel;
   }
 
-  public void setShowHelp(boolean showHelp)
+  public void setShowHelp(final boolean showHelp)
   {
     this.showHelp = showHelp;
   }
