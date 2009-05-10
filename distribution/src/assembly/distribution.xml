@@ -61,7 +61,7 @@
 
 		<!-- Copy config files -->
 		<copy todir="${distribution.staging.dir}/examples">
-			<fileset dir="${SchemaCrawler.home}/schemacrawler/src/main/resources">
+			<fileset dir="${SchemaCrawler.home}/schemacrawler-tools/src/site/resources/config">
 				<include name="*config*.properties" />
 			</fileset>
 			<fileset dir="${SchemaCrawler.home}/schemacrawler-integrations/src/test/resources">
