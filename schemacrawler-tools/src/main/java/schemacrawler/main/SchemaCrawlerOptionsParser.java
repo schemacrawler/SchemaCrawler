@@ -108,6 +108,11 @@ final class SchemaCrawlerOptionsParser
         optionSortInout,
     });
 
+    if (optionSchemaPattern.isFound())
+    {
+      options.setSchemaPattern(optionSchemaPattern.getValue());
+    }
+
     if (optionTableTypes.isFound())
     {
       options.setTableTypes(optionTableTypes.getValue());
