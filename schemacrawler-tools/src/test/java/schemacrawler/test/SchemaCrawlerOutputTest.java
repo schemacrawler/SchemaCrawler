@@ -142,9 +142,9 @@ public class SchemaCrawlerOutputTest
         outputOptions.setNoFooter(false);
 
         final Commands commands = new Commands();
-        for (int i = 0; i < commandSet.length; i++)
+        for (final Command element: commandSet)
         {
-          commands.add(commandSet[i]);
+          commands.add(element);
         }
 
         final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(commands,
