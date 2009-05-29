@@ -23,25 +23,25 @@
   Optional, defaults to true
   
 -tables=<regular-expression>
-  <regular-expression> is a regular expression to match table 
-  names - for example, 
-  -tables=C.*|P.*
+  <regular-expression> is a regular expression to match fully qualified table 
+  names, in the form "CATALOGNAME.SCHEMANAME.TABLENAME" - for example, 
+  -tables=.*\.C.*|.*\.P.*
   matches any table whose names start with C or P
   Tables that do not match the pattern are not displayed
   Optional, defaults to showing all tables
     
 -excludecolumns=<regular-expression>
-  <regular-expression> is a regular expression to match fully qualified 
-  column names, in the form "SCHEMANAME.TABLENAME.COLUMNNAME" - for example, 
+  <regular-expression> is a regular expression to match fully qualified column 
+  names, in the form "CATALOGNAME.SCHEMANAME.TABLENAME.COLUMNNAME" - for example, 
   -excludecolumns=.*\.STREET|.*\.PRICE
   matches columns named STREET or PRICE in any table
   Columns that match the pattern are not displayed
   Optional, default is to show all columns
       
 -procedures=<regular-expression>
-  <regular-expression> is a regular expression to match procedure 
-  names - for example, 
-  -procedures=C.*|P.*
+  <regular-expression> is a regular expression to match fully qualified procedure 
+  names, in the form "CATALOGNAME.SCHEMANAME.PROCEDURENAME" - for example, 
+  -procedures=.*\.C.*|.*\.P.*
   matches any procedure whose names start with C or P
   Procedures that do not match the pattern are not displayed
   Optional, defaults to showing all procedures

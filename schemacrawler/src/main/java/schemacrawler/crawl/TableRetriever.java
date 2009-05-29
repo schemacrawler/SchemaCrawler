@@ -319,17 +319,17 @@ final class TableRetriever
           .getString("TABLE_TYPE").toLowerCase(Locale.ENGLISH));
         final String remarks = results.getString(REMARKS);
 
-        if (tableInclusionRule.include(tableName))
+        final MutableTable table;
+        if (tableType == TableType.view)
         {
-          final MutableTable table;
-          if (tableType == TableType.view)
-          {
-            table = new MutableView(catalogName, schema, tableName);
-          }
-          else
-          {
-            table = new MutableTable(catalogName, schema, tableName);
-          }
+          table = new MutableView(catalogName, schema, tableName);
+        }
+        else
+        {
+          table = new MutableTable(catalogName, schema, tableName);
+        }
+        if (tableInclusionRule.include(table.getFullName()))
+        {
           table.setType(tableType);
           table.setRemarks(remarks);
 
