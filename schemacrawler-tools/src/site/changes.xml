@@ -5,6 +5,13 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+    <release version="6.5" date="2009-05-10">
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        To allow for more control on table selection, the -tables command line parameter
+        matches to the fully qualified table name, CATALOG.SCHEMA.TABLENAME.
+        Similarly for the -procedures command line parameter.
+      ]]></action>     
+    </release>    
     <release version="6.4" date="2009-05-10">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         New pre-packaged distribution, SchemaCrawler for SQLite.

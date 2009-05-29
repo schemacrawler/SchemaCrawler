@@ -157,11 +157,11 @@ final class ProcedureRetriever
         .getShort("PROCEDURE_TYPE", (short) ProcedureType.unknown.getId());
       final String remarks = results.getString(REMARKS);
 
-      if (procedureInclusionRule.include(procedureName))
+      final MutableProcedure procedure = new MutableProcedure(catalogName,
+                                                              schemaName,
+                                                              procedureName);
+      if (procedureInclusionRule.include(procedure.getFullName()))
       {
-        final MutableProcedure procedure = new MutableProcedure(catalogName,
-                                                                schemaName,
-                                                                procedureName);
         procedure.setType(ProcedureType.valueOf(procedureType));
         procedure.setRemarks(remarks);
 
