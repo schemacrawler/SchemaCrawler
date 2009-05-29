@@ -27,16 +27,12 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.crawl.CachingCrawlHandler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.schematext.SchemaCrawlerExecutable;
-import schemacrawler.tools.schematext.SchemaTextDetailType;
-import schemacrawler.tools.schematext.SchemaTextOptions;
 import schemacrawler.utility.test.TestUtility;
 
 public class SchemaCrawlerGrepTest
@@ -121,20 +117,8 @@ public class SchemaCrawlerGrepTest
 
     schemaCrawlerOptions
       .setGrepColumnInclusionRule(new InclusionRule(".*\\..*\\.ID", ""));
-    final CachingCrawlHandler crawlHandler = new CachingCrawlHandler(testUtility
-      .getCatalogName());
 
-    final SchemaTextOptions schemaTextOptions = new SchemaTextOptions();
-    schemaTextOptions
-      .setSchemaTextDetailType(SchemaTextDetailType.maximum_schema);
-
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable();
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setToolOptions(schemaTextOptions);
-    executable.setCrawlHandler(crawlHandler);
-    executable.execute(testUtility.getDataSource());
-
-    final Catalog catalog = crawlHandler.getCatalog();
+    final Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
     final Schema[] schemas = catalog.getSchemas();
     assertEquals("Schema count does not match", 2, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
@@ -169,4 +153,5 @@ public class SchemaCrawlerGrepTest
       }
     }
   }
+
 }
