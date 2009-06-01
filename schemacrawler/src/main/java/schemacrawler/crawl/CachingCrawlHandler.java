@@ -21,8 +21,8 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.Database;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
@@ -32,7 +32,7 @@ import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
- * Caches a crawled catalog internally.
+ * Caches a crawled database internally.
  * 
  * @author Sualeh Fatehi
  */
@@ -40,17 +40,17 @@ public final class CachingCrawlHandler
   implements CrawlHandler
 {
 
-  private final MutableCatalog catalog;
+  private final MutableDatabase database;
 
   /**
    * Creates a new caching crawl handler.
    * 
-   * @param catalogName
-   *        Catalog name
+   * @param databaseName
+   *        Database name
    */
-  public CachingCrawlHandler(final String catalogName)
+  public CachingCrawlHandler(final String databaseName)
   {
-    catalog = new MutableCatalog(catalogName);
+    database = new MutableDatabase(databaseName);
   }
 
   /**
@@ -76,13 +76,13 @@ public final class CachingCrawlHandler
   }
 
   /**
-   * Gets the entire catalog.
+   * Gets the entire database.
    * 
-   * @return Catalog
+   * @return Database
    */
-  public Catalog getCatalog()
+  public Database getDatabase()
   {
-    return catalog;
+    return database;
   }
 
   /**
@@ -92,10 +92,15 @@ public final class CachingCrawlHandler
    */
   public void handle(final ColumnDataType dataType)
   {
+    String catalogName = dataType.getCatalogName();
+    if (catalogName == null)
+    {
+      catalogName = "";
+    }
     final String schemaName = dataType.getSchemaName();
     if (schemaName != null)
     {
-      final MutableSchema schema = lookupOrCreateSchema(schemaName);
+      final MutableSchema schema = lookupOrCreateSchema(catalogName, schemaName);
       schema.addColumnDataType((MutableColumnDataType) dataType);
     }
   }
@@ -105,17 +110,17 @@ public final class CachingCrawlHandler
    */
   public void handle(final DatabaseInfo databaseInfo)
   {
-    catalog.setDatabaseInfo(databaseInfo);
+    database.setDatabaseInfo(databaseInfo);
   }
 
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.catalogcrawler.CrawlHandler#handle(catalogcrawler.catalog.JdbcDriverInfo)
+   * @see schemacrawler.databasecrawler.CrawlHandler#handle(databasecrawler.database.JdbcDriverInfo)
    */
   public void handle(final JdbcDriverInfo driverInfo)
   {
-    catalog.setJdbcDriverInfo(driverInfo);
+    database.setJdbcDriverInfo(driverInfo);
   }
 
   /**
@@ -125,8 +130,9 @@ public final class CachingCrawlHandler
    */
   public void handle(final Procedure procedure)
   {
+    final String catalogName = procedure.getCatalogName();
     final String schemaName = procedure.getSchemaName();
-    final MutableSchema schema = lookupOrCreateSchema(schemaName);
+    final MutableSchema schema = lookupOrCreateSchema(catalogName, schemaName);
     schema.addProcedure((MutableProcedure) procedure);
   }
 
@@ -137,8 +143,9 @@ public final class CachingCrawlHandler
    */
   public void handle(final Table table)
   {
+    final String catalogName = table.getCatalogName();
     final String schemaName = table.getSchemaName();
-    final MutableSchema schema = lookupOrCreateSchema(schemaName);
+    final MutableSchema schema = lookupOrCreateSchema(catalogName, schemaName);
     schema.addTable((MutableTable) table);
   }
 
@@ -150,17 +157,30 @@ public final class CachingCrawlHandler
   public void handle(final WeakAssociations weakAssociations)
     throws SchemaCrawlerException
   {
-    catalog.setWeakAssociations(weakAssociations);
+    database.setWeakAssociations(weakAssociations);
   }
 
   @Override
   public String toString()
   {
-    return catalog.toString();
+    return database.toString();
   }
 
-  private MutableSchema lookupOrCreateSchema(final String schemaName)
+  private MutableSchema lookupOrCreateSchema(final String catalogName,
+                                             final String schemaName)
   {
+    String catalogName1 = catalogName;
+    if (catalogName1 == null)
+    {
+      catalogName1 = "";
+    }
+    MutableCatalog catalog = database.lookupCatalog(catalogName1);
+    if (catalog == null)
+    {
+      catalog = new MutableCatalog(catalogName1);
+      database.addCatalog(catalog);
+    }
+
     MutableSchema schema = catalog.lookupSchema(schemaName);
     if (schema == null)
     {

@@ -22,13 +22,12 @@ package schemacrawler.utility;
 
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.crawl.CachingCrawlHandler;
 import schemacrawler.crawl.DatabaseSchemaCrawler;
-import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -45,25 +44,19 @@ public class SchemaCrawlerUtility
   private static final Logger LOGGER = Logger.getLogger(TestUtility.class
     .getName());
 
-  public static Catalog getCatalog(final Connection connection,
-                                   final SchemaCrawlerOptions schemaCrawlerOptions)
+  public static Database getDatabase(final Connection connection,
+                                     final SchemaCrawlerOptions schemaCrawlerOptions)
   {
     SchemaCrawler schemaCrawler;
     try
     {
-      final CachingCrawlHandler crawlHandler = new CachingCrawlHandler(connection
-        .getCatalog());
+      final CachingCrawlHandler crawlHandler = new CachingCrawlHandler("database");
       schemaCrawler = new DatabaseSchemaCrawler(connection);
       schemaCrawler.crawl(schemaCrawlerOptions, crawlHandler);
-      final Catalog catalog = crawlHandler.getCatalog();
+      final Database catalog = crawlHandler.getDatabase();
       return catalog;
     }
     catch (final SchemaCrawlerException e)
-    {
-      LOGGER.log(Level.SEVERE, e.getMessage(), e);
-      return null;
-    }
-    catch (final SQLException e)
     {
       LOGGER.log(Level.SEVERE, e.getMessage(), e);
       return null;

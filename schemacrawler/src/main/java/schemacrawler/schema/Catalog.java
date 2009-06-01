@@ -31,20 +31,6 @@ public interface Catalog
 {
 
   /**
-   * Gets the database information.
-   * 
-   * @return Database information
-   */
-  DatabaseInfo getDatabaseInfo();
-
-  /**
-   * Gets the JDBC driver information.
-   * 
-   * @return JDBC driver information
-   */
-  JdbcDriverInfo getJdbcDriverInfo();
-
-  /**
    * Gets a schema by name.
    * 
    * @param name
@@ -59,12 +45,5 @@ public interface Catalog
    * @return Schemas
    */
   Schema[] getSchemas();
-
-  /**
-   * Gets the weak table associations.
-   * 
-   * @return Weak table associations
-   */
-  WeakAssociations getWeakAssociations();
 
 }

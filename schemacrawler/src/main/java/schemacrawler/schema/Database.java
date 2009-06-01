@@ -18,59 +18,53 @@
  *
  */
 
-package schemacrawler.crawl;
+package schemacrawler.schema;
 
-
-import schemacrawler.schema.Catalog;
-import schemacrawler.schema.Schema;
 
 /**
  * Represents the database.
  * 
  * @author Sualeh Fatehi
  */
-class MutableCatalog
-  extends AbstractNamedObject
-  implements Catalog
+public interface Database
+  extends NamedObject
 {
 
-  private static final long serialVersionUID = 3258128063743931187L;
-
-  private final NamedObjectList<MutableSchema> schemas = new NamedObjectList<MutableSchema>(NamedObjectSort.alphabetical);
-
-  MutableCatalog(final String name)
-  {
-    super(name);
-  }
+  /**
+   * Gets the database information.
+   * 
+   * @return Database information
+   */
+  DatabaseInfo getDatabaseInfo();
 
   /**
-   * {@inheritDoc}
+   * Gets the JDBC driver information.
    * 
-   * @see schemacrawler.schema.Schema#getSchema(java.lang.String)
+   * @return JDBC driver information
    */
-  public Schema getSchema(final String name)
-  {
-    return lookupSchema(name);
-  }
+  JdbcDriverInfo getJdbcDriverInfo();
 
   /**
-   * {@inheritDoc}
+   * Gets a catalog by name.
    * 
-   * @see schemacrawler.schema.Schema#getSchemas()
+   * @param name
+   *        Name
+   * @return Catalog.
    */
-  public Schema[] getSchemas()
-  {
-    return schemas.getAll().toArray(new Schema[schemas.size()]);
-  }
+  Catalog getCatalog(String name);
 
-  void addSchema(final MutableSchema schema)
-  {
-    schemas.add(schema);
-  }
+  /**
+   * Gets the schemas.
+   * 
+   * @return Catalogs
+   */
+  Catalog[] getCatalogs();
 
-  MutableSchema lookupSchema(final String name)
-  {
-    return schemas.lookup(name);
-  }
+  /**
+   * Gets the weak table associations.
+   * 
+   * @return Weak table associations
+   */
+  WeakAssociations getWeakAssociations();
 
 }

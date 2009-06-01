@@ -28,7 +28,7 @@ import javax.sql.DataSource;
 import schemacrawler.crawl.CachingCrawlHandler;
 import schemacrawler.main.HelpOptions;
 import schemacrawler.main.HelpOptions.CommandHelpType;
-import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Database;
 
 /**
  * An executor that uses a template renderer to render a schema.
@@ -66,13 +66,14 @@ public abstract class SchemaRenderer
     final Connection connection = dataSource.getConnection();
     crawlHandler = new CachingCrawlHandler(connection.getCatalog());
     super.execute(dataSource);
-    final Catalog catalog = ((CachingCrawlHandler) crawlHandler).getCatalog();
+    final Database database = ((CachingCrawlHandler) crawlHandler)
+      .getDatabase();
 
     // Executable-specific work
     final Writer writer = toolOptions.getOutputOptions().openOutputWriter();
     final String templateName = toolOptions.getOutputOptions()
       .getOutputFormatValue();
-    render(templateName, catalog, writer);
+    render(templateName, database, writer);
     toolOptions.getOutputOptions().closeOutputWriter(writer);
   }
 
@@ -81,14 +82,14 @@ public abstract class SchemaRenderer
    * 
    * @param resource
    *        Location of the resource
-   * @param catalog
-   *        Catalog
+   * @param database
+   *        Database
    * @param writer
    *        Writer
    * @throws Exception
    */
   protected abstract void render(final String resource,
-                                 final Catalog catalog,
+                                 final Database database,
                                  final Writer writer)
     throws Exception;
 

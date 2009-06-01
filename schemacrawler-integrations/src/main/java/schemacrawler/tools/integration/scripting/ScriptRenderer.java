@@ -28,7 +28,7 @@ import java.io.Writer;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
-import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Database;
 import schemacrawler.tools.integration.SchemaRenderer;
 import sf.util.Utilities;
 
@@ -49,7 +49,7 @@ public final class ScriptRenderer
    */
   @Override
   protected void render(final String scriptFileName,
-                        final Catalog catalog,
+                        final Database database,
                         final Writer writer)
     throws Exception
   {
@@ -77,7 +77,7 @@ public final class ScriptRenderer
     }
 
     // Set the context
-    scriptEngine.put("catalog", catalog);
+    scriptEngine.put("catalog", database);
 
     // Evaluate the script
     scriptEngine.eval(new FileReader(scriptFile));
