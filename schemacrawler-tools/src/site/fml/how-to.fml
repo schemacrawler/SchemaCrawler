@@ -335,7 +335,7 @@ for (Schema schema: catalog.getSchemas())
         <p>
           Install the SchemaCrawler Maven plug-in by running the following command, and following the instructions that
           are printed out.
-          <code><![CDATA[java -cp schemacrawler-6.4.jar schemacrawler.tools.integration.maven.Main]]></code>
+          <code><![CDATA[java -cp schemacrawler-6.5.jar schemacrawler.tools.integration.maven.Main]]></code>
         </p>
         <p> Next, add a section to your Maven 2.0 project's pom.xml file, similar to that below, changing what needs to
           be changed: </p>

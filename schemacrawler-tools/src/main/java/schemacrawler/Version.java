@@ -35,7 +35,7 @@ public final class Version
 {
 
   private static final String PRODUCTNAME = "SchemaCrawler";
-  private static final String VERSION = "6.4";
+  private static final String VERSION = "6.5";
   private static final String ABOUT;
 
   static
