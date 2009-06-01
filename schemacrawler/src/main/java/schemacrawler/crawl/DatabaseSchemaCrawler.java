@@ -24,6 +24,7 @@ package schemacrawler.crawl;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -192,7 +193,12 @@ public final class DatabaseSchemaCrawler
       }
       if (infoLevel.isRetrieveUserDefinedColumnDataTypes())
       {
-        retriever.retrieveUserDefinedColumnDataTypes(columnDataTypes);
+        final Set<String> catalogNames = retrieverConnection.getCatalogNames();
+        for (final String catalogName: catalogNames)
+        {
+          retriever.retrieveUserDefinedColumnDataTypes(catalogName,
+                                                       columnDataTypes);
+        }
       }
     }
     catch (final SQLException e)
@@ -273,17 +279,29 @@ public final class DatabaseSchemaCrawler
       return;
     }
 
-    ProcedureRetriever retriever;
-    NamedObjectList<MutableProcedure> procedures;
+    final ProcedureRetriever retriever;
     try
     {
       retriever = new ProcedureRetriever(retrieverConnection);
-      final ProcedureExRetriever retrieverExtra = new ProcedureExRetriever(retrieverConnection);
-      procedures = retriever.retrieveProcedures(options
-        .getProcedureInclusionRule());
-      if (infoLevel.isRetrieveProcedureInformation())
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerException("Exception retrieving procedures", e);
+    }
+
+    final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>(NamedObjectSort.alphabetical);
+
+    try
+    {
+      for (final String catalogName: retrieverConnection.getCatalogNames())
       {
-        retrieverExtra.retrieveProcedureInformation(procedures);
+        final ProcedureExRetriever retrieverExtra = new ProcedureExRetriever(retrieverConnection);
+        retriever.retrieveProcedures(catalogName, options
+          .getProcedureInclusionRule(), procedures);
+        if (infoLevel.isRetrieveProcedureInformation())
+        {
+          retrieverExtra.retrieveProcedureInformation(procedures);
+        }
       }
     }
     catch (final SQLException e)
@@ -331,30 +349,42 @@ public final class DatabaseSchemaCrawler
       return;
     }
 
-    TableRetriever retriever;
-    TableExRetriever retrieverExtra;
-    NamedObjectList<MutableTable> tables;
+    final TableRetriever retriever;
+    final TableExRetriever retrieverExtra;
     try
     {
       retriever = new TableRetriever(retrieverConnection);
       retrieverExtra = new TableExRetriever(retrieverConnection);
-      tables = retriever.retrieveTables(options.getTableTypes(), options
-        .getTableInclusionRule());
-      if (infoLevel.isRetrieveCheckConstraintInformation())
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerException("Exception retrieving tables", e);
+    }
+
+    final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>(NamedObjectSort.alphabetical);
+
+    try
+    {
+      for (final String catalogName: retrieverConnection.getCatalogNames())
       {
-        retrieverExtra.retrieveCheckConstraintInformation(tables);
-      }
-      if (infoLevel.isRetrieveViewInformation())
-      {
-        retrieverExtra.retrieveViewInformation(tables);
-      }
-      if (infoLevel.isRetrieveTablePrivileges())
-      {
-        retrieverExtra.retrieveTablePrivileges(tables);
-      }
-      if (infoLevel.isRetrieveTriggerInformation())
-      {
-        retrieverExtra.retrieveTriggerInformation(tables);
+        retriever.retrieveTables(catalogName, options.getTableTypes(), options
+          .getTableInclusionRule(), tables);
+        if (infoLevel.isRetrieveCheckConstraintInformation())
+        {
+          retrieverExtra.retrieveCheckConstraintInformation(tables);
+        }
+        if (infoLevel.isRetrieveViewInformation())
+        {
+          retrieverExtra.retrieveViewInformation(tables);
+        }
+        if (infoLevel.isRetrieveTablePrivileges())
+        {
+          retrieverExtra.retrieveTablePrivileges(tables);
+        }
+        if (infoLevel.isRetrieveTriggerInformation())
+        {
+          retrieverExtra.retrieveTriggerInformation(tables);
+        }
       }
     }
     catch (final SQLException e)

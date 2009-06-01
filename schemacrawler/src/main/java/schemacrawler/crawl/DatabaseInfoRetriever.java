@@ -27,10 +27,8 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -91,7 +89,8 @@ final class DatabaseInfoRetriever
           final String name = derivePropertyName(method);
           final ResultSet results = (ResultSet) method.invoke(dbMetaData,
                                                               new Object[0]);
-          dbInfo.putProperty(name, readResultsVector(results));
+          dbInfo.putProperty(name, getRetrieverConnection()
+            .readResultsVector(results));
         }
         else if (isDatabasePropertyResultSetType(method))
         {
@@ -132,7 +131,7 @@ final class DatabaseInfoRetriever
     final DatabaseMetaData dbMetaData = getRetrieverConnection().getMetaData();
 
     final MutableDatabaseInfo dbInfo = new MutableDatabaseInfo();
-    dbInfo.setCatalogName(getRetrieverConnection().getCatalogName());
+    dbInfo.setCatalogName(dbMetaData.getConnection().getCatalog());
     dbInfo.setProductName(dbMetaData.getDatabaseProductName());
     dbInfo.setProductVersion(dbMetaData.getDatabaseProductVersion());
     return dbInfo;
@@ -149,8 +148,6 @@ final class DatabaseInfoRetriever
   void retrieveSystemColumnDataTypes(final ColumnDataTypes columnDataTypes)
     throws SQLException
   {
-    final String catalogName = getRetrieverConnection().getCatalogName();
-    final String schemaName = null;
     final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
       .getMetaData().getTypeInfo());
     try
@@ -178,8 +175,8 @@ final class DatabaseInfoRetriever
         final int maximumScale = results.getInt("MAXIMUM_SCALE", 0);
         final int numPrecisionRadix = results.getInt("NUM_PREC_RADIX", 0);
 
-        final MutableColumnDataType columnDataType = new MutableColumnDataType(catalogName,
-                                                                               schemaName,
+        final MutableColumnDataType columnDataType = new MutableColumnDataType(null,
+                                                                               null,
                                                                                typeName);
         columnDataType.setType(type);
         columnDataType.setPrecision(precision);
@@ -217,12 +214,12 @@ final class DatabaseInfoRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveUserDefinedColumnDataTypes(final ColumnDataTypes columnDataTypes)
+  void retrieveUserDefinedColumnDataTypes(final String catalogName,
+                                          final ColumnDataTypes columnDataTypes)
     throws SQLException
   {
-    final String catalogName = getRetrieverConnection().getCatalogName();
     final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
-      .getMetaData().getUDTs(getRetrieverConnection().getCatalogName(),
+      .getMetaData().getUDTs(catalogName,
                              getRetrieverConnection().getSchemaPattern(),
                              "%",
                              null));
@@ -334,33 +331,6 @@ final class DatabaseInfoRetriever
     final boolean isDatabasePropertyResultSetType = Arrays
       .binarySearch(databasePropertyResultSetTypes, method.getName()) >= 0;
     return isDatabasePropertyResultSetType;
-  }
-
-  /**
-   * Reads a single column result set as a list.
-   * 
-   * @param results
-   *        Result set
-   * @return List
-   * @throws SQLException
-   */
-  private List<String> readResultsVector(final ResultSet results)
-    throws SQLException
-  {
-    final List<String> values = new ArrayList<String>();
-    try
-    {
-      while (results.next())
-      {
-        final String value = results.getString(1);
-        values.add(value);
-      }
-    }
-    finally
-    {
-      results.close();
-    }
-    return values;
   }
 
   private void retrieveResultSetTypeProperty(final DatabaseMetaData dbMetaData,

@@ -99,13 +99,11 @@ final class TableExRetriever
       return;
     }
 
-    final String catalogName = getRetrieverConnection().getCatalogName();
     try
     {
       while (results.next())
       {
-        // final String catalogName =
-        // results.getString("CONSTRAINT_CATALOG");
+        final String catalogName = results.getString("CONSTRAINT_CATALOG");
         final String schemaName = results.getString("CONSTRAINT_SCHEMA");
         final String constraintName = results.getString("CONSTRAINT_NAME");
         LOGGER.log(Level.FINEST, "Retrieving constraint information for "
@@ -261,13 +259,11 @@ final class TableExRetriever
       return;
     }
 
-    final String catalogName = getRetrieverConnection().getCatalogName();
     try
     {
       while (results.next())
       {
-        // final String catalogName =
-        // results.getString("TRIGGER_CATALOG");
+        final String catalogName = results.getString("TRIGGER_CATALOG");
         final String schema = results.getString("TRIGGER_SCHEMA");
         final String triggerName = results.getString("TRIGGER_NAME");
         LOGGER.log(Level.FINEST, "Retrieving trigger information for "
@@ -426,11 +422,10 @@ final class TableExRetriever
     throws SQLException
   {
 
-    final String catalogName = getRetrieverConnection().getCatalogName();
     while (results.next())
     {
 
-      // final String catalogName = results.getString("TABLE_CAT");
+      final String catalogName = results.getString("TABLE_CAT");
       final String schemaName = results.getString("TABLE_SCHEM");
       final String name;
       if (privilegesForTable)
@@ -479,19 +474,17 @@ final class TableExRetriever
     final MetadataResultSet results;
 
     final boolean privilegesForTable = parent == null;
-    final String catalogName = getRetrieverConnection().getCatalogName();
-    final String schemaPattern = getRetrieverConnection().getSchemaPattern();
     final String privilegePattern = "%";
     if (privilegesForTable)
     {
       results = new MetadataResultSet(getRetrieverConnection().getMetaData()
-        .getTablePrivileges(catalogName, schemaPattern, privilegePattern));
+        .getTablePrivileges(null, null, privilegePattern));
     }
     else
     {
       results = new MetadataResultSet(getRetrieverConnection().getMetaData()
-        .getColumnPrivileges(catalogName,
-                             schemaPattern,
+        .getColumnPrivileges(parent.getCatalogName(),
+                             parent.getSchemaName(),
                              parent.getName(),
                              privilegePattern));
     }
@@ -504,5 +497,4 @@ final class TableExRetriever
       results.close();
     }
   }
-
 }
