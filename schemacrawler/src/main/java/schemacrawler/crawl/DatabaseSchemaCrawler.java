@@ -24,7 +24,7 @@ package schemacrawler.crawl;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Set;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -193,7 +193,7 @@ public final class DatabaseSchemaCrawler
       }
       if (infoLevel.isRetrieveUserDefinedColumnDataTypes())
       {
-        final Set<String> catalogNames = retrieverConnection.getCatalogNames();
+        final List<String> catalogNames = retrieverConnection.getCatalogNames();
         for (final String catalogName: catalogNames)
         {
           retriever.retrieveUserDefinedColumnDataTypes(catalogName,

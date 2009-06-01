@@ -51,7 +51,7 @@ final class RetrieverConnection
     .getLogger(RetrieverConnection.class.getName());
 
   private final DatabaseMetaData metaData;
-  private final Set<String> catalogNames;
+  private final List<String> catalogNames;
   private final String schemaPattern;
   private final InformationSchemaViews informationSchemaViews;
 
@@ -95,9 +95,11 @@ final class RetrieverConnection
     }
     if (catalogNames.size() == 0)
     {
-      catalogNames.add(null);
+      catalogNames.add(connection.getCatalog());
     }
-    this.catalogNames = Collections.unmodifiableSet(catalogNames);
+    final ArrayList<String> catalogNamesList = new ArrayList<String>(catalogNames);
+    Collections.sort(catalogNamesList);
+    this.catalogNames = Collections.unmodifiableList(catalogNamesList);
 
     this.schemaPattern = schemaCrawlerOptions.getSchemaPattern();
 
@@ -189,7 +191,7 @@ final class RetrieverConnection
     }
   }
 
-  Set<String> getCatalogNames()
+  List<String> getCatalogNames()
   {
     return catalogNames;
   }
