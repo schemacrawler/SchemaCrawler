@@ -39,7 +39,7 @@ final class SchemaCrawlerOptionsParser
 
   private final StringOption optionCatalogs = new StringOption(Option.NO_SHORT_FORM,
                                                                "catalogs",
-                                                               "");
+                                                               InclusionRule.NONE);
   private final StringOption optionSchemaPattern = new StringOption(Option.NO_SHORT_FORM,
                                                                     "schemapattern",
                                                                     "");

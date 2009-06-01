@@ -137,10 +137,10 @@ public final class SchemaCrawlerOptions
 
     catalogInclusionRule = new InclusionRule(configProperties
                                                .getStringValue(SC_CATALOG_PATTERN_INCLUDE,
-                                                               InclusionRule.ALL),
+                                                               InclusionRule.NONE),
                                              configProperties
                                                .getStringValue(SC_CATALOG_PATTERN_EXCLUDE,
-                                                               InclusionRule.NONE));
+                                                               InclusionRule.ALL));
     schemaPattern = partitionedConfig
       .getStringValue(OTHER_SCHEMA_PATTERN, null);
 
