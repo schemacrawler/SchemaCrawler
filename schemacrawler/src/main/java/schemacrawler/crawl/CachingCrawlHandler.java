@@ -166,8 +166,8 @@ public final class CachingCrawlHandler
     return database.toString();
   }
 
-  private MutableSchema lookupOrCreateSchema(final String catalogName,
-                                             final String schemaName)
+  private MutableSchema lookupSchema(final String catalogName,
+                                     final String schemaName)
   {
     String catalogName1 = catalogName;
     if (catalogName1 == null)

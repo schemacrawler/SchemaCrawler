@@ -108,16 +108,6 @@ final class RetrieverConnection
   }
 
   /**
-   * Gets the INFORMATION_SCHEMA views select SQL statements.
-   * 
-   * @return INFORMATION_SCHEMA views selects
-   */
-  public InformationSchemaViews getInformationSchemaViews()
-  {
-    return informationSchemaViews;
-  }
-
-  /**
    * Reads a single column result set as a list.
    * 
    * @param results
@@ -214,6 +204,16 @@ final class RetrieverConnection
       }
     }
     return connection;
+  }
+
+  /**
+   * Gets the INFORMATION_SCHEMA views select SQL statements.
+   * 
+   * @return INFORMATION_SCHEMA views selects
+   */
+  InformationSchemaViews getInformationSchemaViews()
+  {
+    return informationSchemaViews;
   }
 
   DatabaseMetaData getMetaData()

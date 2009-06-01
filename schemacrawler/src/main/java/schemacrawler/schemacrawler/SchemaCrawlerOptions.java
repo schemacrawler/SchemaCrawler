@@ -41,7 +41,11 @@ public final class SchemaCrawlerOptions
 
   private static final String SC_CATALOG_PATTERN_EXCLUDE = "schemacrawler.catalog.pattern.exclude";
   private static final String SC_CATALOG_PATTERN_INCLUDE = "schemacrawler.catalog.pattern.include";
+  private static final String SC_SCHEMA_PATTERN_EXCLUDE = "schemacrawler.schema.pattern.exclude";
+  private static final String SC_SCHEMA_PATTERN_INCLUDE = "schemacrawler.schema.pattern.include";
+
   private static final String OTHER_SCHEMA_PATTERN = "schemapattern";
+
   private static final String SC_TABLE_TYPES = "schemacrawler.table_types";
   private static final String SC_SHOW_STORED_PROCEDURES = "schemacrawler.show_stored_procedures";
 
@@ -75,6 +79,7 @@ public final class SchemaCrawlerOptions
   }
 
   private InclusionRule catalogInclusionRule;
+  private InclusionRule schemaInclusionRule;
   private String schemaPattern;
   private TableType[] tableTypes;
   private boolean showStoredProcedures;
@@ -141,6 +146,13 @@ public final class SchemaCrawlerOptions
                                              configProperties
                                                .getStringValue(SC_CATALOG_PATTERN_EXCLUDE,
                                                                InclusionRule.ALL));
+    schemaInclusionRule = new InclusionRule(configProperties
+                                              .getStringValue(SC_SCHEMA_PATTERN_INCLUDE,
+                                                              InclusionRule.ALL),
+                                            configProperties
+                                              .getStringValue(SC_SCHEMA_PATTERN_EXCLUDE,
+                                                              InclusionRule.NONE));
+
     schemaPattern = partitionedConfig
       .getStringValue(OTHER_SCHEMA_PATTERN, null);
 
@@ -273,6 +285,16 @@ public final class SchemaCrawlerOptions
   public InclusionRule getProcedureInclusionRule()
   {
     return procedureInclusionRule;
+  }
+
+  /**
+   * Gets the schema inclusion rule.
+   * 
+   * @return Schema inclusion rule.
+   */
+  public InclusionRule getSchemaInclusionRule()
+  {
+    return schemaInclusionRule;
   }
 
   /**
@@ -549,6 +571,21 @@ public final class SchemaCrawlerOptions
   }
 
   /**
+   * Sets the schema inclusion rule.
+   * 
+   * @param schemaInclusionRule
+   *        Schema inclusion rule
+   */
+  public void setSchemaInclusionRule(final InclusionRule schemaInclusionRule)
+  {
+    if (schemaInclusionRule == null)
+    {
+      throw new IllegalArgumentException("Cannot use null value in a setter");
+    }
+    this.schemaInclusionRule = schemaInclusionRule;
+  }
+
+  /**
    * Sets the schema information level, identifying to what level the
    * schema should be crawled.
    * 
@@ -658,6 +695,7 @@ public final class SchemaCrawlerOptions
     final StringBuilder buffer = new StringBuilder();
     buffer.append("SchemaCrawlerOptions[");
     buffer.append("catalogInclusionRule=").append(catalogInclusionRule);
+    buffer.append("schemaInclusionRule=").append(schemaInclusionRule);
     buffer.append("schemaPattern=").append(schemaPattern);
     buffer.append("tableInclusionRule=").append(tableInclusionRule);
     buffer.append(", columnInclusionRule=").append(columnInclusionRule);
