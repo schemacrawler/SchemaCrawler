@@ -39,6 +39,8 @@ public final class SchemaCrawlerOptions
 
   private static final long serialVersionUID = -3557794862382066029L;
 
+  private static final String SC_CATALOG_PATTERN_EXCLUDE = "schemacrawler.catalog.pattern.exclude";
+  private static final String SC_CATALOG_PATTERN_INCLUDE = "schemacrawler.catalog.pattern.include";
   private static final String OTHER_SCHEMA_PATTERN = "schemapattern";
   private static final String SC_TABLE_TYPES = "schemacrawler.table_types";
   private static final String SC_SHOW_STORED_PROCEDURES = "schemacrawler.show_stored_procedures";
@@ -72,6 +74,7 @@ public final class SchemaCrawlerOptions
     return tableTypesCopy;
   }
 
+  private InclusionRule catalogInclusionRule;
   private String schemaPattern;
   private TableType[] tableTypes;
   private boolean showStoredProcedures;
@@ -131,6 +134,13 @@ public final class SchemaCrawlerOptions
 
     final Config partitionedConfig = configProperties.partition(partition);
     informationSchemaViews = new InformationSchemaViews(partitionedConfig);
+
+    catalogInclusionRule = new InclusionRule(configProperties
+                                               .getStringValue(SC_CATALOG_PATTERN_INCLUDE,
+                                                               InclusionRule.ALL),
+                                             configProperties
+                                               .getStringValue(SC_CATALOG_PATTERN_EXCLUDE,
+                                                               InclusionRule.NONE));
     schemaPattern = partitionedConfig
       .getStringValue(OTHER_SCHEMA_PATTERN, null);
 
@@ -193,6 +203,16 @@ public final class SchemaCrawlerOptions
   public SchemaCrawlerOptions(final Properties properties)
   {
     this(new Config(properties), null);
+  }
+
+  /**
+   * Gets the catalog inclusion rule.
+   * 
+   * @return Catalog inclusion rule.
+   */
+  public InclusionRule getCatalogInclusionRule()
+  {
+    return catalogInclusionRule;
   }
 
   /**
@@ -410,6 +430,21 @@ public final class SchemaCrawlerOptions
   }
 
   /**
+   * Sets the catalog inclusion rule.
+   * 
+   * @param catalogInclusionRule
+   *        Catalog inclusion rule
+   */
+  public void setCatalogInclusionRule(final InclusionRule catalogInclusionRule)
+  {
+    if (catalogInclusionRule == null)
+    {
+      throw new IllegalArgumentException("Cannot use null value in a setter");
+    }
+    this.catalogInclusionRule = catalogInclusionRule;
+  }
+
+  /**
    * Sets the column inclusion rule.
    * 
    * @param columnInclusionRule
@@ -622,6 +657,8 @@ public final class SchemaCrawlerOptions
   {
     final StringBuilder buffer = new StringBuilder();
     buffer.append("SchemaCrawlerOptions[");
+    buffer.append("catalogInclusionRule=").append(catalogInclusionRule);
+    buffer.append("schemaPattern=").append(schemaPattern);
     buffer.append("tableInclusionRule=").append(tableInclusionRule);
     buffer.append(", columnInclusionRule=").append(columnInclusionRule);
     buffer.append(", showStoredProcedures=").append(showStoredProcedures);

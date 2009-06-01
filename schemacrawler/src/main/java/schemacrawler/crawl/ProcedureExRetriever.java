@@ -86,13 +86,11 @@ final class ProcedureExRetriever
       return;
     }
 
-    final String catalogName = getRetrieverConnection().getCatalogName();
     try
     {
       while (results.next())
       {
-        // final String catalogName =
-        // results.getString("ROUTINE_CATALOG");
+        final String catalogName = results.getString("ROUTINE_CATALOG");
         final String schemaName = results.getString("ROUTINE_SCHEMA");
         final String procedureName = results.getString("ROUTINE_NAME");
 

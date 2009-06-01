@@ -65,8 +65,7 @@ final class ProcedureRetriever
   {
 
     final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
-      .getMetaData().getProcedureColumns(getRetrieverConnection()
-                                           .getCatalogName(),
+      .getMetaData().getProcedureColumns(procedure.getCatalogName(),
                                          procedure.getSchemaName(),
                                          procedure.getName(),
                                          null));
@@ -127,14 +126,13 @@ final class ProcedureRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  NamedObjectList<MutableProcedure> retrieveProcedures(final InclusionRule procedureInclusionRule)
+  void retrieveProcedures(final String catalogName,
+                          final InclusionRule procedureInclusionRule,
+                          final NamedObjectList<MutableProcedure> procedures)
     throws SQLException
   {
-
-    final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>(NamedObjectSort.alphabetical);
-
     final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
-      .getMetaData().getProcedures(null,
+      .getMetaData().getProcedures(catalogName,
                                    getRetrieverConnection().getSchemaPattern(),
                                    "%"));
     try
@@ -146,7 +144,6 @@ final class ProcedureRetriever
       // Need this catch for the JDBC/ ODBC driver
       LOGGER.log(Level.WARNING, "", e);
     }
-    final String catalogName = getRetrieverConnection().getCatalogName();
     while (results.next())
     {
       // final String catalogName = results.getString("PROCEDURE_CAT");
@@ -171,9 +168,6 @@ final class ProcedureRetriever
       }
     }
     results.close();
-
-    return procedures;
-
   }
 
 }
