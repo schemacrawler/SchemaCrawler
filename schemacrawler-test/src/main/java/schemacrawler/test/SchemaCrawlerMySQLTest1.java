@@ -25,8 +25,9 @@ public class SchemaCrawlerMySQLTest1
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
     options.setSchemaInfoLevel(SchemaInfoLevel.verbose());
 
-    Catalog catalog = SchemaCrawlerUtility.getCatalog(dataSource
-      .getConnection(), options);
+    Catalog catalog = SchemaCrawlerUtility.getDatabase(dataSource
+                                                         .getConnection(),
+                                                       options).getCatalogs()[0];
 
     Schema[] schemas = catalog.getSchemas();
     for (Schema schema: schemas)

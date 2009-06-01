@@ -4,6 +4,7 @@ import javax.sql.DataSource;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
@@ -26,28 +27,31 @@ public final class ApiExample
     options.setAlphabeticalSortForTableColumns(true);
 
     // Get the schema definition
-    final Catalog catalog = SchemaCrawlerUtility.getCatalog(dataSource
+    final Database database = SchemaCrawlerUtility.getDatabase(dataSource
       .getConnection(), options);
 
-    for (final Schema schema: catalog.getSchemas())
+    for (final Catalog catalog: database.getCatalogs())
     {
-      System.out.println(schema);
-      for (final Table table: schema.getTables())
+      for (final Schema schema: catalog.getSchemas())
       {
-        System.out.print("o--> " + table);
-        if (table instanceof View)
+        System.out.println(catalog + "." + schema);
+        for (final Table table: schema.getTables())
         {
-          System.out.println(" (VIEW)");
-        }
-        else
-        {
-          System.out.println();
-        }
+          System.out.print("o--> " + table);
+          if (table instanceof View)
+          {
+            System.out.println(" (VIEW)");
+          }
+          else
+          {
+            System.out.println();
+          }
 
-        for (final Column column: table.getColumns())
-        {
-          System.out.println("     o--> " + column + " (" + column.getType()
-                             + ")");
+          for (final Column column: table.getColumns())
+          {
+            System.out.println("     o--> " + column + " (" + column.getType()
+                               + ")");
+          }
         }
       }
     }

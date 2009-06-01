@@ -31,8 +31,9 @@ public class SchemaCrawlerTest1
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions(properties);
     options.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-    Catalog catalog = SchemaCrawlerUtility.getCatalog(dataSource
-      .getConnection(), options);
+    Catalog catalog = SchemaCrawlerUtility.getDatabase(dataSource
+                                                         .getConnection(),
+                                                       options).getCatalogs()[0];
 
     Schema[] schemas = catalog.getSchemas();
     for (Schema schema: schemas)

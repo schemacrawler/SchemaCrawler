@@ -21,6 +21,7 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Database;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -33,11 +34,11 @@ public class CachedSchemaCrawler
   implements SchemaCrawler
 {
 
-  protected final Catalog catalog;
+  protected final Database database;
 
-  public CachedSchemaCrawler(final Catalog catalog)
+  public CachedSchemaCrawler(final Database database)
   {
-    this.catalog = catalog;
+    this.database = database;
   }
 
   public void crawl(final SchemaCrawlerOptions options,
@@ -48,34 +49,37 @@ public class CachedSchemaCrawler
     {
       throw new SchemaCrawlerException("No crawl handler specified");
     }
-    if (catalog == null)
+    if (database == null)
     {
       throw new SchemaCrawlerException("No schema loaded");
     }
 
     handler.begin();
-    handler.handle(catalog.getJdbcDriverInfo());
-    handler.handle(catalog.getDatabaseInfo());
-    for (final Schema schema: catalog.getSchemas())
+    handler.handle(database.getJdbcDriverInfo());
+    handler.handle(database.getDatabaseInfo());
+    for (final Catalog catalog: database.getCatalogs())
     {
-      for (final Table table: schema.getTables())
+      for (final Schema schema: catalog.getSchemas())
       {
-        handler.handle(table);
-      }
-      if (options == null || options.isShowStoredProcedures())
-      {
-        for (final Procedure procedure: schema.getProcedures())
+        for (final Table table: schema.getTables())
         {
-          handler.handle(procedure);
+          handler.handle(table);
+        }
+        if (options == null || options.isShowStoredProcedures())
+        {
+          for (final Procedure procedure: schema.getProcedures())
+          {
+            handler.handle(procedure);
+          }
         }
       }
     }
     handler.end();
   }
 
-  public Catalog getCatalog()
+  public Database getDatabase()
   {
-    return catalog;
+    return database;
   }
 
 }

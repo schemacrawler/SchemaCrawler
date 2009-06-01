@@ -6,7 +6,7 @@ import java.io.Reader;
 import java.io.Writer;
 
 import schemacrawler.crawl.CachedSchemaCrawler;
-import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 import com.thoughtworks.xstream.XStream;
@@ -15,14 +15,14 @@ public final class XmlSchemaCrawler
   extends CachedSchemaCrawler
 {
 
-  public XmlSchemaCrawler(final Catalog catalog)
+  public XmlSchemaCrawler(final Database database)
   {
-    super(catalog);
+    super(database);
   }
 
   public XmlSchemaCrawler(final Reader reader)
   {
-    super((Catalog) new XStream().fromXML(reader));
+    super((Database) new XStream().fromXML(reader));
   }
 
   public void save(final Writer writer)
@@ -32,12 +32,12 @@ public final class XmlSchemaCrawler
     {
       throw new SchemaCrawlerException("Writer not provided");
     }
-    if (catalog == null)
+    if (database == null)
     {
-      throw new SchemaCrawlerException("No cached schema");
+      throw new SchemaCrawlerException("No cached database");
     }
     final XStream xStream = new XStream();
-    xStream.toXML(catalog, writer);
+    xStream.toXML(database, writer);
     try
     {
       writer.flush();

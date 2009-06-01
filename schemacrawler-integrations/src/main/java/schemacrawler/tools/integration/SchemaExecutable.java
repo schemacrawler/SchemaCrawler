@@ -27,7 +27,7 @@ import javax.sql.DataSource;
 import schemacrawler.crawl.CachingCrawlHandler;
 import schemacrawler.main.HelpOptions;
 import schemacrawler.main.SchemaCrawlerCommandLine;
-import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.Commands;
@@ -90,14 +90,14 @@ public abstract class SchemaExecutable
   protected abstract void doExecute(final DataSource createDataSource)
     throws Exception;
 
-  protected final Catalog getCatalog(final DataSource dataSource)
+  protected final Database getCatalog(final DataSource dataSource)
     throws Exception
   {
     final Connection connection = dataSource.getConnection();
     crawlHandler = new CachingCrawlHandler(connection.getCatalog());
     execute(dataSource);
-    final Catalog catalog = ((CachingCrawlHandler) crawlHandler).getCatalog();
-    return catalog;
+    final Database database = ((CachingCrawlHandler) crawlHandler).getDatabase();
+    return database;
   }
 
 }

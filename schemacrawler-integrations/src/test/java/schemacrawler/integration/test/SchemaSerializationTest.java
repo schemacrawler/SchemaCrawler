@@ -39,6 +39,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
@@ -72,8 +73,11 @@ public class SchemaSerializationTest
     schemaCrawlerOptions.setShowStoredProcedures(true);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-    final Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
-    assertNotNull("Could not obtain catalog", catalog);
+    final Database database = testUtility.getDatabase(schemaCrawlerOptions);
+    assertNotNull("Could not obtain database", database);
+    assertTrue("Could not find any catalogs", database.getCatalogs().length > 0);
+
+    final Catalog catalog = database.getCatalogs()[0];
     assertTrue("Could not find any schemas", catalog.getSchemas().length > 0);
 
     final Schema schema = catalog.getSchema("PUBLIC");
@@ -84,7 +88,7 @@ public class SchemaSerializationTest
     XmlSchemaCrawler xmlSchemaCrawler;
     StringWriter writer;
 
-    xmlSchemaCrawler = new XmlSchemaCrawler(catalog);
+    xmlSchemaCrawler = new XmlSchemaCrawler(database);
     writer = new StringWriter();
     xmlSchemaCrawler.save(writer);
     writer.close();
@@ -94,9 +98,10 @@ public class SchemaSerializationTest
       .trim().length());
 
     xmlSchemaCrawler = new XmlSchemaCrawler(new StringReader(xmlSerializedCatalog1));
-    final Catalog deserializedCatalog = xmlSchemaCrawler.getCatalog();
+    final Database deserializedDatabase = xmlSchemaCrawler.getDatabase();
+    assertNotNull("No database deserialized", deserializedDatabase);
+    final Catalog deserializedCatalog = deserializedDatabase.getCatalogs()[0];
     assertNotNull("No catalog deserialized", deserializedCatalog);
-
     final Schema deserializedSchema = deserializedCatalog.getSchema("PUBLIC");
     assertNotNull("Could not obtain deserialized schema", deserializedSchema);
     assertEquals("Unexpected number of tables in the deserialized schema",
