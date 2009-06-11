@@ -21,10 +21,10 @@
 package schemacrawler.utility.datasource;
 
 
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Partitions properties by grouping properties with a given prefix. The
@@ -73,7 +73,7 @@ final class GroupedProperties
    */
   String[] groups()
   {
-    final Set<String> groups = new TreeSet<String>();
+    final Set<String> groups = new LinkedHashSet<String>();
 
     final Set<Object> keys = keySet();
     for (final Object object: keys)

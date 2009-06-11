@@ -28,12 +28,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.ResultsColumns;
+import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.TableType;
 import schemacrawler.schema.WeakAssociations;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.InclusionRule;
@@ -75,9 +77,15 @@ public final class DatabaseSchemaCrawler
       LOGGER.log(Level.WARNING, e.getMessage(), e);
       resultColumns = null;
     }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, e.getMessage(), e);
+      resultColumns = null;
+    }
     return resultColumns;
   }
 
+  private final MutableDatabase database;
   private final Connection connection;
 
   /**
@@ -97,16 +105,7 @@ public final class DatabaseSchemaCrawler
     }
     this.connection = connection;
 
-    // Check data source, and obtain the catalog name
-    try
-    {
-      connection.getCatalog();
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, e.getMessage(), e);
-      // NOTE: catalog remains null, which is ok for JDBC
-    }
+    database = new MutableDatabase("database");
   }
 
   /**
@@ -137,31 +136,36 @@ public final class DatabaseSchemaCrawler
 
       handler.begin();
 
-      final ColumnDataTypes columnDataTypes = crawlColumnDataTypes(retrieverConnection,
-                                                                   schemaCrawlerOptions);
+      crawlDatabaseInfo(retrieverConnection, schemaCrawlerOptions);
+      crawlJdbcDriverInfo(retrieverConnection, schemaCrawlerOptions);
+      handler.handle(database.getDatabaseInfo());
 
-      crawlJdbcDriverInfo(retrieverConnection, schemaCrawlerOptions, handler);
-
-      crawlDatabaseInfo(retrieverConnection,
-                        schemaCrawlerOptions,
-                        handler,
-                        columnDataTypes);
-
-      for (final MutableColumnDataType columnDataType: columnDataTypes)
+      crawlColumnDataTypes(retrieverConnection, schemaCrawlerOptions);
+      for (final ColumnDataType columnDataType: database
+        .getSystemColumnDataTypes())
       {
         handler.handle(columnDataType);
       }
+      for (final Catalog catalog: database.getCatalogs())
+      {
+        for (final Schema schema: catalog.getSchemas())
+        {
+          for (final ColumnDataType columnDataType: schema.getColumnDataTypes())
+          {
+            handler.handle(columnDataType);
+          }
+        }
+      }
 
-      crawlTables(retrieverConnection,
-                  schemaCrawlerOptions,
-                  handler,
-                  columnDataTypes);
-      crawlProcedures(retrieverConnection,
-                      schemaCrawlerOptions,
-                      handler,
-                      columnDataTypes);
+      crawlTables(retrieverConnection, schemaCrawlerOptions, handler);
+      crawlProcedures(retrieverConnection, schemaCrawlerOptions, handler);
 
       handler.end();
+
+      if (handler instanceof CachingCrawlHandler)
+      {
+        ((CachingCrawlHandler) handler).setDatabase(database);
+      }
     }
     catch (final SQLException e)
     {
@@ -178,26 +182,24 @@ public final class DatabaseSchemaCrawler
     }
   }
 
-  private ColumnDataTypes crawlColumnDataTypes(final RetrieverConnection retrieverConnection,
-                                               final SchemaCrawlerOptions options)
+  private void crawlColumnDataTypes(final RetrieverConnection retrieverConnection,
+                                    final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
   {
-    final ColumnDataTypes columnDataTypes = new ColumnDataTypes();
     try
     {
       final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
       final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection);
       if (infoLevel.isRetrieveColumnDataTypes())
       {
-        retriever.retrieveSystemColumnDataTypes(columnDataTypes);
+        retriever.retrieveSystemColumnDataTypes(database);
       }
       if (infoLevel.isRetrieveUserDefinedColumnDataTypes())
       {
         final List<String> catalogNames = retrieverConnection.getCatalogNames();
         for (final String catalogName: catalogNames)
         {
-          retriever.retrieveUserDefinedColumnDataTypes(catalogName,
-                                                       columnDataTypes);
+          retriever.retrieveUserDefinedColumnDataTypes(catalogName, database);
         }
       }
     }
@@ -206,69 +208,61 @@ public final class DatabaseSchemaCrawler
       throw new SchemaCrawlerException("Exception retrieving column data type information",
                                        e);
     }
-
-    return columnDataTypes;
   }
 
-  private MutableDatabaseInfo crawlDatabaseInfo(final RetrieverConnection retrieverConnection,
-                                                final SchemaCrawlerOptions options,
-                                                final CrawlHandler handler,
-                                                final ColumnDataTypes columnDataTypes)
+  private void crawlDatabaseInfo(final RetrieverConnection retrieverConnection,
+                                 final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
   {
-    MutableDatabaseInfo dbInfo;
     try
     {
+
       final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
       final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection);
-      dbInfo = retriever.retrieveDatabaseInfo();
+
+      retriever.retrieveCatalogs(database);
+      retriever.retrieveSchemas(database, options.getSchemaInclusionRule());
+
+      retriever.retrieveDatabaseInfo(database);
       if (infoLevel.isRetrieveDatabaseInfo())
       {
         if (infoLevel.isRetrieveAdditionalDatabaseInfo())
         {
-          retriever.retrieveAdditionalDatabaseInfo(dbInfo);
+          retriever.retrieveAdditionalDatabaseInfo(database);
         }
       }
-      dbInfo.setSystemColumnDataTypes(columnDataTypes
-        .lookupColumnDataTypes(null));
     }
     catch (final SQLException e)
     {
       throw new SchemaCrawlerException("Exception retrieving database information",
                                        e);
     }
-    handler.handle(dbInfo);
-
-    return dbInfo;
   }
 
   private void crawlJdbcDriverInfo(final RetrieverConnection retrieverConnection,
-                                   final SchemaCrawlerOptions options,
-                                   final CrawlHandler handler)
+                                   final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
   {
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
     if (infoLevel.isRetrieveJdbcDriverInfo())
     {
-      MutableJdbcDriverInfo driverInfo;
       try
       {
         final JdbcDriverInfoRetriever retriever = new JdbcDriverInfoRetriever(retrieverConnection);
-        driverInfo = retriever.retrieveJdbcDriverInfo();
+        retriever.retrieveJdbcDriverInfo(database);
       }
       catch (final SQLException e)
       {
         throw new SchemaCrawlerException("Exception retrieving JDBC driver information",
                                          e);
       }
-      handler.handle(driverInfo);
+
     }
   }
 
   private void crawlProcedures(final RetrieverConnection retrieverConnection,
                                final SchemaCrawlerOptions options,
-                               final CrawlHandler handler,
-                               final ColumnDataTypes columnDataTypes)
+                               final CrawlHandler handler)
     throws SchemaCrawlerException
   {
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
@@ -280,66 +274,53 @@ public final class DatabaseSchemaCrawler
     }
 
     final ProcedureRetriever retriever;
+    final ProcedureExRetriever retrieverExtra;
     try
     {
       retriever = new ProcedureRetriever(retrieverConnection);
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerException("Exception retrieving procedures", e);
-    }
-
-    final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>(NamedObjectSort.alphabetical);
-
-    try
-    {
+      retrieverExtra = new ProcedureExRetriever(retrieverConnection);
       for (final String catalogName: retrieverConnection.getCatalogNames())
       {
-        final ProcedureExRetriever retrieverExtra = new ProcedureExRetriever(retrieverConnection);
-        retriever.retrieveProcedures(catalogName, options
-          .getProcedureInclusionRule(), procedures);
-        if (infoLevel.isRetrieveProcedureInformation())
+        retriever.retrieveProcedures(database, catalogName, options
+          .getProcedureInclusionRule());
+      }
+      for (final MutableProcedure procedure: database.getAllProcedures())
+      {
+        if (infoLevel.isRetrieveProcedureColumns())
         {
-          retrieverExtra.retrieveProcedureInformation(procedures);
+          retriever.retrieveProcedureColumns(procedure, options
+            .getProcedureColumnInclusionRule());
         }
+        if (!include(options, procedure))
+        {
+          ((MutableSchema) procedure.getSchema()).removeProcedure(procedure
+            .getName());
+        }
+      }
+
+      if (infoLevel.isRetrieveProcedureInformation())
+      {
+        retrieverExtra.retrieveProcedureInformation(database);
+      }
+
+      for (final MutableProcedure procedure: database.getAllProcedures())
+      {
+        // Set comparators
+        procedure.setColumnComparator(NamedObjectSort
+          .getNamedObjectSort(options.isAlphabeticalSortForProcedureColumns()));
+        // Handle procedure
+        handler.handle(procedure);
       }
     }
     catch (final SQLException e)
     {
       throw new SchemaCrawlerException("Exception retrieving procedures", e);
-    }
-
-    for (final MutableProcedure procedure: procedures)
-    {
-      if (infoLevel.isRetrieveProcedureColumns())
-      {
-        try
-        {
-          retriever.retrieveProcedureColumns(procedure, options
-            .getProcedureColumnInclusionRule(), columnDataTypes);
-        }
-        catch (final SQLException e)
-        {
-          throw new SchemaCrawlerException("Error retrieving metadata for procedure "
-                                               + procedure,
-                                           e);
-        }
-      }
-      // set comparators
-      procedure.setColumnComparator(NamedObjectSort.getNamedObjectSort(options
-        .isAlphabeticalSortForProcedureColumns()));
-      // handle procedure
-      if (include(options, procedure))
-      {
-        handler.handle(procedure);
-      }
     }
   }
 
   private void crawlTables(final RetrieverConnection retrieverConnection,
                            final SchemaCrawlerOptions options,
-                           final CrawlHandler handler,
-                           final ColumnDataTypes columnDataTypes)
+                           final CrawlHandler handler)
     throws SchemaCrawlerException
   {
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
@@ -355,36 +336,80 @@ public final class DatabaseSchemaCrawler
     {
       retriever = new TableRetriever(retrieverConnection);
       retrieverExtra = new TableExRetriever(retrieverConnection);
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerException("Exception retrieving tables", e);
-    }
 
-    final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>(NamedObjectSort.alphabetical);
-
-    try
-    {
       for (final String catalogName: retrieverConnection.getCatalogNames())
       {
-        retriever.retrieveTables(catalogName, options.getTableTypes(), options
-          .getTableInclusionRule(), tables);
-        if (infoLevel.isRetrieveCheckConstraintInformation())
+        retriever.retrieveTables(database,
+                                 catalogName,
+                                 options.getTableTypes(),
+                                 options.getTableInclusionRule());
+      }
+
+      for (final MutableTable table: database.getAllTables())
+      {
+        if (infoLevel.isRetrieveTableColumns())
         {
-          retrieverExtra.retrieveCheckConstraintInformation(tables);
+          retriever.retrieveColumns(table, options.getColumnInclusionRule());
         }
-        if (infoLevel.isRetrieveViewInformation())
+        if (!include(options, table))
         {
-          retrieverExtra.retrieveViewInformation(tables);
+          ((MutableSchema) table.getSchema()).removeTable(table.getName());
         }
-        if (infoLevel.isRetrieveTablePrivileges())
+      }
+
+      if (infoLevel.isRetrieveCheckConstraintInformation())
+      {
+        retrieverExtra.retrieveCheckConstraintInformation(database);
+      }
+      if (infoLevel.isRetrieveTriggerInformation())
+      {
+        retrieverExtra.retrieveTriggerInformation(database);
+      }
+      if (infoLevel.isRetrieveViewInformation())
+      {
+        retrieverExtra.retrieveViewInformation(database);
+      }
+      if (infoLevel.isRetrieveTablePrivileges())
+      {
+        retrieverExtra.retrieveTablePrivileges(database);
+      }
+      if (infoLevel.isRetrieveTableColumnPrivileges())
+      {
+        retrieverExtra.retrieveTableColumnPrivileges(database);
+      }
+
+      for (final MutableTable table: database.getAllTables())
+      {
+        if (infoLevel.isRetrieveTableColumns())
         {
-          retrieverExtra.retrieveTablePrivileges(tables);
+          retriever.retrievePrimaryKeys(table);
+          if (infoLevel.isRetrieveIndices())
+          {
+            retriever.retrieveIndices(table, true);
+            retriever.retrieveIndices(table, false);
+          }
+          if (infoLevel.isRetrieveForeignKeys())
+          {
+            retriever.retrieveForeignKeys(database, table);
+          }
         }
-        if (infoLevel.isRetrieveTriggerInformation())
-        {
-          retrieverExtra.retrieveTriggerInformation(tables);
-        }
+        // Set comparators
+        table.setColumnComparator(NamedObjectSort.getNamedObjectSort(options
+          .isAlphabeticalSortForTableColumns()));
+        table.setForeignKeyComparator(NamedObjectSort
+          .getNamedObjectSort(options.isAlphabeticalSortForForeignKeys()));
+        table.setIndexComparator(NamedObjectSort.getNamedObjectSort(options
+          .isAlphabeticalSortForIndexes()));
+        // Handle table
+        handler.handle(table);
+      }
+
+      if (infoLevel.isRetrieveWeakAssociations())
+      {
+        final WeakAssociationsAnalyzer tableAnalyzer = new WeakAssociationsAnalyzer();
+        final WeakAssociations weakAssociations = tableAnalyzer
+          .analyzeTables(database);
+        handler.handle(weakAssociations);
       }
     }
     catch (final SQLException e)
@@ -392,70 +417,6 @@ public final class DatabaseSchemaCrawler
       throw new SchemaCrawlerException("Exception retrieving tables", e);
     }
 
-    for (final MutableTable table: tables)
-    {
-      if (infoLevel.isRetrieveTableColumns())
-      {
-        try
-        {
-          retriever.retrieveColumns(tables, table, options
-            .getColumnInclusionRule(), columnDataTypes);
-          retriever.retrievePrimaryKeys(table);
-          if (table.getType() != TableType.view)
-          {
-            if (infoLevel.isRetrieveForeignKeys())
-            {
-              retriever.retrieveForeignKeys(tables, table);
-            }
-            if (infoLevel.isRetrieveIndices())
-            {
-              retriever.retrieveIndices(table, true);
-              retriever.retrieveIndices(table, false);
-            }
-          }
-        }
-        catch (final SQLException e)
-        {
-          throw new SchemaCrawlerException("Error retrieving metadata for table "
-                                               + table,
-                                           e);
-        }
-        try
-        {
-          if (infoLevel.isRetrieveTableColumnPrivileges())
-          {
-            retrieverExtra.retrieveTableColumnPrivileges(table, table
-              .getColumnsList());
-          }
-        }
-        catch (final SQLException e)
-        {
-          LOGGER.log(Level.WARNING,
-                     "Error retrieving column privileges for table " + table,
-                     e);
-        }
-      }
-      // set comparators
-      table.setColumnComparator(NamedObjectSort.getNamedObjectSort(options
-        .isAlphabeticalSortForTableColumns()));
-      table.setForeignKeyComparator(NamedObjectSort.getNamedObjectSort(options
-        .isAlphabeticalSortForForeignKeys()));
-      table.setIndexComparator(NamedObjectSort.getNamedObjectSort(options
-        .isAlphabeticalSortForIndexes()));
-      // handle table
-      if (include(options, table))
-      {
-        handler.handle(table);
-      }
-    }
-
-    if (infoLevel.isRetrieveWeakAssociations())
-    {
-      final TableAnalyzer tableAnalyzer = new TableAnalyzer();
-      final WeakAssociations weakAssociations = tableAnalyzer
-        .analyzeTables(tables);
-      handler.handle(weakAssociations);
-    }
   }
 
   /**

@@ -21,10 +21,10 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.PrimaryKey;
+import schemacrawler.schema.Table;
 
 /**
  * Represents a primary key in a table.
@@ -46,7 +46,7 @@ class MutablePrimaryKey
    */
   MutablePrimaryKey(final Index index)
   {
-    super(index.getParent(), index.getName());
+    super((Table) index.getParent(), index.getName());
     setCardinality(index.getCardinality());
     setPages(index.getPages());
     setRemarks(index.getRemarks());
@@ -55,11 +55,11 @@ class MutablePrimaryKey
     // Copy columns
     for (final IndexColumn column: index.getColumns())
     {
-      addColumn(column.getOrdinalPosition(), (MutableIndexColumn) column);
+      addColumn((MutableIndexColumn) column);
     }
   }
 
-  MutablePrimaryKey(final String name, final DatabaseObject parent)
+  MutablePrimaryKey(final Table parent, final String name)
   {
     super(parent, name);
   }

@@ -101,7 +101,7 @@ public final class Utilities
     final int bufferSize = 2048;
     final ByteArrayOutputStream output = new ByteArrayOutputStream();
     final BufferedInputStream input = new BufferedInputStream(stream);
-    byte[] byteCode = new byte[0];
+    byte[] bytes = new byte[0];
 
     try
     {
@@ -113,7 +113,7 @@ public final class Utilities
         output.write(copyBuffer, 0, length);
       }
       output.flush();
-      byteCode = output.toByteArray();
+      bytes = output.toByteArray();
     }
     catch (final IOException e)
     {
@@ -132,7 +132,7 @@ public final class Utilities
       }
     }
 
-    return byteCode;
+    return bytes;
   }
 
   /**

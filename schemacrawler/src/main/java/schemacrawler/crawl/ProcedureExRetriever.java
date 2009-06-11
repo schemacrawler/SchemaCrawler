@@ -58,7 +58,7 @@ final class ProcedureExRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveProcedureInformation(final NamedObjectList<MutableProcedure> procedures)
+  void retrieveProcedureInformation(final MutableDatabase database)
     throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
@@ -74,6 +74,7 @@ final class ProcedureExRetriever
 
     final Connection connection = getDatabaseConnection();
     final Statement statement = connection.createStatement();
+    statement.setFetchSize(FETCHSIZE);
     MetadataResultSet results = null;
     try
     {
@@ -94,31 +95,22 @@ final class ProcedureExRetriever
         final String schemaName = results.getString("ROUTINE_SCHEMA");
         final String procedureName = results.getString("ROUTINE_NAME");
 
-        final MutableProcedure procedure = procedures.lookup(catalogName,
-                                                             schemaName,
-                                                             procedureName);
-        if (!belongsToSchema(procedure, catalogName, schemaName))
+        final MutableProcedure procedure = database
+          .lookupProcedure(catalogName, schemaName, procedureName);
+        if (procedure != null)
         {
-          LOGGER.log(Level.FINEST, "Procedure not found: " + procedureName);
-          continue;
+          LOGGER.log(Level.FINEST, "Retrieving procedure information for "
+                                   + procedureName);
+          final RoutineBodyType routineBodyType = RoutineBodyType
+            .valueOf(results.getString("ROUTINE_BODY")
+              .toLowerCase(Locale.ENGLISH));
+          final String definition = results.getString("ROUTINE_DEFINITION");
+
+          procedure.setRoutineBodyType(routineBodyType);
+          procedure.appendDefinition(definition);
+
+          procedure.addAttributes(results.getAttributes());
         }
-
-        LOGGER.log(Level.FINEST, "Retrieving procedure information for "
-                                 + procedureName);
-        final RoutineBodyType routineBodyType = RoutineBodyType.valueOf(results
-          .getString("ROUTINE_BODY").toLowerCase(Locale.ENGLISH));
-        String definition = results.getString("ROUTINE_DEFINITION");
-        final String text = procedure.getDefinition();
-
-        if (!(text == null || text.trim().length() == 0))
-        {
-          definition = procedure.getDefinition() + definition;
-        }
-
-        procedure.setRoutineBodyType(routineBodyType);
-        procedure.setDefinition(definition);
-
-        procedure.addAttributes(results.getAttributes());
       }
     }
     finally

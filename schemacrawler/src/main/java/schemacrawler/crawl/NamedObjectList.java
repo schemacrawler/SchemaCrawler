@@ -23,14 +23,15 @@ package schemacrawler.crawl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.Schema;
 
 /**
  * Ordered list of named objects, that can be searched associatively.
@@ -45,7 +46,7 @@ class NamedObjectList<N extends NamedObject>
 
   private NamedObjectSort sort;
   /** Needs to be sorted, so serialization does not break. */
-  private final SortedSet<N> objects;
+  private final Collection<N> objects;
 
   /**
    * Construct an initially empty ordered list of named objects, that
@@ -57,7 +58,7 @@ class NamedObjectList<N extends NamedObject>
   NamedObjectList(final NamedObjectSort sort)
   {
     this.sort = sort;
-    this.objects = new TreeSet<N>();
+    this.objects = new LinkedHashSet<N>();
   }
 
   /**
@@ -160,16 +161,7 @@ class NamedObjectList<N extends NamedObject>
 
   N lookup(final DatabaseObject databaseObject, final String name)
   {
-    final AbstractDatabaseObject parent = new AbstractDatabaseObject(databaseObject
-      .getCatalogName(),
-      databaseObject.getSchemaName(),
-      databaseObject.getName())
-    {
-
-      private static final long serialVersionUID = 2521419524823080025L;
-
-    };
-    return lookup(new AbstractDependantObject(parent, name)
+    return lookup(new AbstractDependantObject(databaseObject, name)
     {
 
       private static final long serialVersionUID = -6700397214465123353L;
@@ -183,11 +175,12 @@ class NamedObjectList<N extends NamedObject>
    *        Name
    * @return Named object
    */
-  @SuppressWarnings("serial")
-  N lookup(final String name)
+  N lookup(final Schema schema, final String name)
   {
-    return lookup(new AbstractNamedObject(name)
+    return lookup(new AbstractDatabaseObject(schema, name)
     {
+
+      private static final long serialVersionUID = 8132194191152494788L;
 
     });
   }
@@ -199,11 +192,12 @@ class NamedObjectList<N extends NamedObject>
    *        Name
    * @return Named object
    */
-  @SuppressWarnings("serial")
-  N lookup(final String catalogName, final String schemaName, final String name)
+  N lookup(final String name)
   {
-    return lookup(new AbstractDatabaseObject(catalogName, schemaName, name)
+    return lookup(new AbstractNamedObject(name)
     {
+
+      private static final long serialVersionUID = 7241388569507782902L;
 
     });
   }

@@ -80,11 +80,9 @@ public class SchemaCrawlerDeepTest
     final Table table0 = schema.getTables()[0];
     assertTrue("Could not find any columns", table0.getColumns().length > 0);
 
-    final MutableTable table1 = new MutableTable(table0.getCatalogName(),
-                                                 table0.getSchemaName(),
+    final MutableTable table1 = new MutableTable(table0.getSchema(),
                                                  "Test Table 1");
-    final MutableTable table2 = new MutableTable(table0.getCatalogName(),
-                                                 table0.getSchemaName(),
+    final MutableTable table2 = new MutableTable(table0.getSchema(),
                                                  "Test Table 2");
     final PrimaryKey primaryKey = table0.getPrimaryKey();
     table1.setPrimaryKey(primaryKey);

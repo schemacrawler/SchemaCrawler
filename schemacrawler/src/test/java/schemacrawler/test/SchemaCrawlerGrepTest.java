@@ -63,12 +63,13 @@ public class SchemaCrawlerGrepTest
     throws Exception
   {
     final String[] schemaNames = {
-        "PUBLIC", "SCHEMACRAWLER"
+        "INFORMATION_SCHEMA", "PUBLIC", "SCHEMACRAWLER"
     };
     final int[] tableCounts = {
-        4, 1
+        0, 4, 1
     };
     final String[][][] columnNames = {
+        {},
         {
             {
                 "CUSTOMER.ID",
@@ -96,7 +97,7 @@ public class SchemaCrawlerGrepTest
         }
     };
     final String[][][] columnDataTypes = {
-        {
+        {}, {
             {
                 "INTEGER", "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR"
             }, {
@@ -120,7 +121,7 @@ public class SchemaCrawlerGrepTest
 
     final Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
     final Schema[] schemas = catalog.getSchemas();
-    assertEquals("Schema count does not match", 2, schemas.length);
+    assertEquals("Schema count does not match", 3, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
       final Schema schema = schemas[schemaIdx];

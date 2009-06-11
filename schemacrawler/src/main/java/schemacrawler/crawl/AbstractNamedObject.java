@@ -21,9 +21,8 @@
 package schemacrawler.crawl;
 
 
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import schemacrawler.schema.NamedObject;
 
@@ -41,7 +40,7 @@ abstract class AbstractNamedObject
   private final String name;
 
   private String remarks;
-  private final SortedMap<String, Object> attributeMap = new TreeMap<String, Object>();
+  private final Map<String, Object> attributeMap = new LinkedHashMap<String, Object>();
   private final NamedObjectSort comparator = NamedObjectSort.alphabetical;
 
   AbstractNamedObject(final String name)
@@ -151,7 +150,6 @@ abstract class AbstractNamedObject
     final int prime = 31;
     int result = 1;
     result = prime * result + (name == null? 0: name.hashCode());
-    result = prime * result + super.hashCode();
     return result;
   }
 

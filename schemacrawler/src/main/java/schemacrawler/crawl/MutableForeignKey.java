@@ -27,6 +27,7 @@ import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.Schema;
 
 /**
  * Represents a foreign-key mapping to a primary key in another table.
@@ -45,11 +46,9 @@ class MutableForeignKey
   private ForeignKeyUpdateRule deleteRule;
   private ForeignKeyDeferrability deferrability;
 
-  MutableForeignKey(final String catalogName,
-                    final String schemaName,
-                    final String name)
+  MutableForeignKey(final Schema schema, final String name)
   {
-    super(catalogName, schemaName, name);
+    super(schema, name);
 
     // Default values
     updateRule = ForeignKeyUpdateRule.unknown;

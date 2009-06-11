@@ -27,6 +27,7 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Privilege;
+import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
@@ -52,11 +53,9 @@ class MutableTable
   private final NamedObjectList<MutableTrigger> triggers = new NamedObjectList<MutableTrigger>(NamedObjectSort.natural);
   private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>(NamedObjectSort.natural);
 
-  MutableTable(final String catalogName,
-               final String schemaName,
-               final String name)
+  MutableTable(final Schema schema, final String name)
   {
-    super(catalogName, schemaName, name);
+    super(schema, name);
     // Default values
     type = TableType.unknown;
   }
@@ -79,7 +78,7 @@ class MutableTable
    */
   public Column getColumn(final String name)
   {
-    return lookupColumn(name);
+    return columns.lookup(this, name);
   }
 
   /**
@@ -250,18 +249,6 @@ class MutableTable
   NamedObjectList<MutableColumn> getColumnsList()
   {
     return columns;
-  }
-
-  /**
-   * Looks up a column by name.
-   * 
-   * @param columnName
-   *        Column name
-   * @return Column, if found, or null
-   */
-  MutableColumn lookupColumn(final String columnName)
-  {
-    return columns.lookup(this, columnName);
   }
 
   /**

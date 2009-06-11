@@ -50,11 +50,11 @@ public class SchemaCrawlerUtility
     SchemaCrawler schemaCrawler;
     try
     {
-      final CachingCrawlHandler crawlHandler = new CachingCrawlHandler("database");
+      final CachingCrawlHandler crawlHandler = new CachingCrawlHandler();
       schemaCrawler = new DatabaseSchemaCrawler(connection);
       schemaCrawler.crawl(schemaCrawlerOptions, crawlHandler);
-      final Database catalog = crawlHandler.getDatabase();
-      return catalog;
+      final Database database = crawlHandler.getDatabase();
+      return database;
     }
     catch (final SchemaCrawlerException e)
     {

@@ -22,6 +22,7 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.CheckOptionType;
+import schemacrawler.schema.Schema;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.View;
 
@@ -37,15 +38,14 @@ class MutableView
 
   private static final long serialVersionUID = 3257290248802284852L;
 
-  private String definition;
+  private final StringBuilder definition;
   private CheckOptionType checkOption;
   private boolean updatable;
 
-  MutableView(final String catalogName,
-              final String schemaName,
-              final String name)
+  MutableView(final Schema schema, final String name)
   {
-    super(catalogName, schemaName, name);
+    super(schema, name);
+    definition = new StringBuilder();
   }
 
   /**
@@ -63,7 +63,7 @@ class MutableView
    */
   public String getDefinition()
   {
-    return definition;
+    return definition.toString();
   }
 
   /**
@@ -85,14 +85,17 @@ class MutableView
     return updatable;
   }
 
+  void appendDefinition(final String definition)
+  {
+    if (definition != null)
+    {
+      this.definition.append(definition);
+    }
+  }
+
   void setCheckOption(final CheckOptionType checkOption)
   {
     this.checkOption = checkOption;
-  }
-
-  void setDefinition(final String definition)
-  {
-    this.definition = definition;
   }
 
   @Override

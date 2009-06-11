@@ -27,7 +27,7 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface Schema
-  extends DatabaseObject
+  extends NamedObject
 {
 
   /**
@@ -50,6 +50,13 @@ public interface Schema
    * @return Column data types
    */
   ColumnDataType[] getColumnDataTypes();
+
+  /**
+   * Gets the full name, including the schema name.
+   * 
+   * @return Full name
+   */
+  String getFullName();
 
   /**
    * Gets a procedure by name.

@@ -21,19 +21,21 @@ import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 
-public class TableAnalyzer
+public class WeakAssociationsAnalyzer
 {
 
-  private static final Logger LOGGER = Logger.getLogger(TableAnalyzer.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(WeakAssociationsAnalyzer.class.getName());
 
-  public MutableWeakAssociations analyzeTables(final NamedObjectList<MutableTable> tables)
+  public MutableWeakAssociations analyzeTables(final MutableDatabase database)
   {
+    final NamedObjectList<MutableTable> tables = database.getAllTables();
+
     final Collection<String> prefixes = findTableNamePrefixes(tables);
     LOGGER.log(Level.FINE, "Table prefixes=" + prefixes);
 
-    final Map<String, Table> tableMatchMap = mapTableNameMatches(tables,
-                                                                 prefixes);
+    final Map<String, MutableTable> tableMatchMap = mapTableNameMatches(tables,
+                                                                        prefixes);
     LOGGER.log(Level.FINE, "Table matches map=" + tableMatchMap);
 
     final Map<String, ForeignKeyColumnMap> fkColumnsMap = mapForeignKeyColumns(tables);
@@ -172,7 +174,7 @@ public class TableAnalyzer
   }
 
   private MutableWeakAssociations findWeakAssociations(final NamedObjectList<MutableTable> tables,
-                                                       final Map<String, Table> tableMatchMap,
+                                                       final Map<String, MutableTable> tableMatchMap,
                                                        final Map<String, ForeignKeyColumnMap> fkColumnsMap)
   {
     final MutableWeakAssociations weakAssociations = new MutableWeakAssociations();
@@ -185,7 +187,7 @@ public class TableAnalyzer
         .entrySet())
       {
         final String matchColumnName = columnEntry.getKey();
-        final Table matchedTable = tableMatchMap.get(matchColumnName);
+        final MutableTable matchedTable = tableMatchMap.get(matchColumnName);
         final Column fkColumn = columnEntry.getValue();
         if (matchedTable != null && !fkColumn.getParent().equals(matchedTable))
         {
@@ -246,7 +248,7 @@ public class TableAnalyzer
     return -1;
   }
 
-  private Map<String, Column> mapColumnNameMatches(final Table table)
+  private Map<String, Column> mapColumnNameMatches(final MutableTable table)
   {
     final Map<String, Column> matchMap = new HashMap<String, Column>();
 
@@ -278,7 +280,7 @@ public class TableAnalyzer
   private Map<String, ForeignKeyColumnMap> mapForeignKeyColumns(final NamedObjectList<MutableTable> tables)
   {
     final Map<String, ForeignKeyColumnMap> fkColumnsMap = new HashMap<String, ForeignKeyColumnMap>();
-    for (final MutableTable table: tables)
+    for (final Table table: tables)
     {
       for (final ForeignKey fk: table.getForeignKeys())
       {
@@ -291,10 +293,10 @@ public class TableAnalyzer
     return fkColumnsMap;
   }
 
-  private Map<String, Table> mapTableNameMatches(final NamedObjectList<MutableTable> tables,
-                                                 final Collection<String> prefixes)
+  private Map<String, MutableTable> mapTableNameMatches(final NamedObjectList<MutableTable> tables,
+                                                        final Collection<String> prefixes)
   {
-    final Map<String, Table> matchMap = new HashMap<String, Table>();
+    final Map<String, MutableTable> matchMap = new HashMap<String, MutableTable>();
     for (final MutableTable table: tables)
     {
       for (final String prefix: prefixes)

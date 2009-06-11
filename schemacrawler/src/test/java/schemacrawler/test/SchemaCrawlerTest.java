@@ -24,6 +24,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -68,16 +72,70 @@ public class SchemaCrawlerTest
     testUtility.createMemoryDatabase();
   }
 
+  /**
+   * Reads the stream fully, and returns a byte array of data.
+   * 
+   * @param stream
+   *        Stream to read.
+   * @return Byte array
+   */
+  private static String read(final InputStream stream)
+  {
+    if (stream == null)
+    {
+      LOGGER.log(Level.WARNING,
+                 "Cannot read null input stream",
+                 new IOException("Cannot read null input stream"));
+      return "";
+    }
+    final int bufferSize = 2048;
+    final ByteArrayOutputStream output = new ByteArrayOutputStream();
+    final BufferedInputStream input = new BufferedInputStream(stream);
+    byte[] bytes = new byte[0];
+
+    try
+    {
+      int length;
+      final byte[] copyBuffer = new byte[bufferSize];
+
+      while (-1 != (length = input.read(copyBuffer)))
+      {
+        output.write(copyBuffer, 0, length);
+      }
+      output.flush();
+      bytes = output.toByteArray();
+    }
+    catch (final IOException e)
+    {
+      LOGGER.log(Level.WARNING, "Error reading input stream", e);
+    }
+    finally
+    {
+      try
+      {
+        output.close();
+        input.close();
+      }
+      catch (final IOException e)
+      {
+        LOGGER.log(Level.WARNING, "Error closing stream", e);
+      }
+    }
+
+    return new String(bytes);
+  }
+
   @Test
   public void columns()
   {
     final String[] schemaNames = {
-        "PUBLIC", "SCHEMACRAWLER"
+        "INFORMATION_SCHEMA", "PUBLIC", "SCHEMACRAWLER"
     };
     final int[] tableCounts = {
-        6, 2
+        0, 6, 2
     };
     final String[][][] columnNames = {
+        {},
         {
             {
                 "CUSTOMER.ID",
@@ -122,7 +180,7 @@ public class SchemaCrawlerTest
         }
     };
     final String[][][] columnDataTypes = {
-        {
+        {}, {
             {
                 "INTEGER", "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR"
             }, {
@@ -149,7 +207,7 @@ public class SchemaCrawlerTest
 
     final Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
     final Schema[] schemas = catalog.getSchemas();
-    assertEquals("Schema count does not match", 2, schemas.length);
+    assertEquals("Schema count does not match", 3, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
       final Schema schema = schemas[schemaIdx];
@@ -188,31 +246,31 @@ public class SchemaCrawlerTest
   {
 
     final int[] tableCounts = {
-        6, 2
+        0, 6, 2
     };
     final int[][] tableColumnCounts = {
-        {
+        {}, {
             5, 3, 3, 5, 3, 2
         }, {
             5, 3,
         }
     };
     final int[][] checkConstraints = {
-        {
+        {}, {
             0, 0, 0, 0, 0, 0
         }, {
             0, 0
         }
     };
     final int[][] indexCounts = {
-        {
+        {}, {
             0, 0, 2, 4, 0, 2
         }, {
             0, 0
         }
     };
     final int[][] fkCounts = {
-        {
+        {}, {
             1, 0, 2, 2, 1, 0
         }, {
             0, 0
@@ -223,7 +281,7 @@ public class SchemaCrawlerTest
 
     final Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
     final Schema[] schemas = catalog.getSchemas();
-    assertEquals("Schema count does not match", 2, schemas.length);
+    assertEquals("Schema count does not match", 3, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
       final Schema schema = schemas[schemaIdx];
@@ -256,16 +314,12 @@ public class SchemaCrawlerTest
 
   @Test
   public void procedureDefinitions()
+    throws Exception
   {
 
     final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
-    informationSchemaViews
-      .setRoutinesSql("SELECT " + "PROCEDURE_CAT AS ROUTINE_CATALOG, "
-                      + "PROCEDURE_SCHEM AS ROUTINE_SCHEMA, "
-                      + "PROCEDURE_NAME AS ROUTINE_NAME, "
-                      + "\'EXTERNAL\' AS ROUTINE_BODY, "
-                      + "SPECIFIC_NAME  AS ROUTINE_DEFINITION "
-                      + "FROM INFORMATION_SCHEMA.SYSTEM_PROCEDURES");
+    informationSchemaViews.setRoutinesSql(read(this.getClass()
+      .getResourceAsStream("/procedure_definitions.sql")));
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setShowStoredProcedures(true);
@@ -277,7 +331,8 @@ public class SchemaCrawlerTest
     assertTrue("No procedures found", procedures.length > 0);
     for (final Procedure procedure: procedures)
     {
-      assertNotNull("Procedure definition not found", procedure.getDefinition());
+      assertNotNull("Procedure definition is null, for "
+                    + procedure.getFullName(), procedure.getDefinition());
       assertFalse("Procedure definition not found", procedure.getDefinition()
         .trim().equals(""));
     }
@@ -319,9 +374,10 @@ public class SchemaCrawlerTest
   {
 
     final String[] schemaNames = {
-        "PUBLIC", "SCHEMACRAWLER"
+        "INFORMATION_SCHEMA", "PUBLIC", "SCHEMACRAWLER"
     };
     final String[][] tableNames = {
+        {},
         {
             "CUSTOMER",
             "CUSTOMERLIST",
@@ -335,7 +391,7 @@ public class SchemaCrawlerTest
         }
     };
     final String[][] tableTypes = {
-        {
+        {}, {
             "TABLE", "VIEW", "TABLE", "TABLE", "TABLE", "TABLE"
         }, {
             "TABLE", "TABLE"
@@ -346,7 +402,7 @@ public class SchemaCrawlerTest
 
     final Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
     final Schema[] schemas = catalog.getSchemas();
-    assertEquals("Schema count does not match", 2, schemas.length);
+    assertEquals("Schema count does not match", 3, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
       final Schema schema = schemas[schemaIdx];

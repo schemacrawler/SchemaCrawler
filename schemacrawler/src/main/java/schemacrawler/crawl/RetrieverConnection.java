@@ -68,7 +68,7 @@ final class RetrieverConnection
     {
       throw new SchemaCrawlerException("No connection provided");
     }
-    this.metaData = connection.getMetaData();
+    metaData = connection.getMetaData();
 
     final Set<String> catalogNames = new HashSet<String>();
     try
@@ -101,10 +101,9 @@ final class RetrieverConnection
     Collections.sort(catalogNamesList);
     this.catalogNames = Collections.unmodifiableList(catalogNamesList);
 
-    this.schemaPattern = schemaCrawlerOptions.getSchemaPattern();
+    schemaPattern = schemaCrawlerOptions.getSchemaPattern();
 
-    this.informationSchemaViews = schemaCrawlerOptions
-      .getInformationSchemaViews();
+    informationSchemaViews = schemaCrawlerOptions.getInformationSchemaViews();
   }
 
   /**

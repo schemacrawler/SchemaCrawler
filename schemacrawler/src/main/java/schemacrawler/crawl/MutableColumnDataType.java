@@ -24,6 +24,7 @@ package schemacrawler.crawl;
 import java.sql.Types;
 
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
 import schemacrawler.schema.SqlDataType;
 
@@ -59,11 +60,9 @@ final class MutableColumnDataType
   private ColumnDataType baseType;
   private String typeClassName;
 
-  MutableColumnDataType(final String catalogName,
-                        final String schemaName,
-                        final String name)
+  MutableColumnDataType(final Schema schema, final String name)
   {
-    super(catalogName, schemaName, name);
+    super(schema, name);
     // Default values
     searchable = SearchableType.unknown;
     type = SqlDataType.UNKNOWN;

@@ -20,8 +20,6 @@
 package schemacrawler.tools.integration;
 
 
-import java.sql.Connection;
-
 import javax.sql.DataSource;
 
 import schemacrawler.crawl.CachingCrawlHandler;
@@ -93,10 +91,10 @@ public abstract class SchemaExecutable
   protected final Database getCatalog(final DataSource dataSource)
     throws Exception
   {
-    final Connection connection = dataSource.getConnection();
-    crawlHandler = new CachingCrawlHandler(connection.getCatalog());
+    crawlHandler = new CachingCrawlHandler();
     execute(dataSource);
-    final Database database = ((CachingCrawlHandler) crawlHandler).getDatabase();
+    final Database database = ((CachingCrawlHandler) crawlHandler)
+      .getDatabase();
     return database;
   }
 

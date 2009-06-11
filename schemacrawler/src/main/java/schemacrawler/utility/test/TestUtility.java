@@ -202,6 +202,19 @@ public class TestUtility
     createDatabase("jdbc:hsqldb:mem:schemacrawler");
   }
 
+  public Catalog getCatalog(final SchemaCrawlerOptions schemaCrawlerOptions)
+  {
+    final Database database = getDatabase(schemaCrawlerOptions);
+
+    final Catalog catalog = database.getCatalogs()[0];
+    return catalog;
+  }
+
+  public String getCatalogName()
+  {
+    return catalogName;
+  }
+
   public Database getDatabase(final SchemaCrawlerOptions schemaCrawlerOptions)
   {
     try
@@ -217,11 +230,6 @@ public class TestUtility
     }
   }
 
-  public String getCatalogName()
-  {
-    return catalogName;
-  }
-
   /**
    * Gets the datasource.
    * 
@@ -230,14 +238,6 @@ public class TestUtility
   public DataSource getDataSource()
   {
     return dataSource;
-  }
-
-  public Catalog getCatalog(final SchemaCrawlerOptions schemaCrawlerOptions)
-  {
-    final Database database = getDatabase(schemaCrawlerOptions);
-
-    final Catalog catalog = database.getCatalogs()[0];
-    return catalog;
   }
 
   public Schema getSchema(final SchemaCrawlerOptions schemaCrawlerOptions,

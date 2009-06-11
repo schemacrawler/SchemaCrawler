@@ -31,10 +31,6 @@ public class NamedObjectTest
   @Test
   public void tableNames()
   {
-
-    final String[] catalogNames = new String[] {
-        "DATABASE1", "DATABASE2"
-    };
     final String[] schemaNames = new String[] {
         "DBO", "PUBLIC"
     };
@@ -42,14 +38,18 @@ public class NamedObjectTest
         "CUSTOMER", "CUSTOMERLIST", "INVOICE", "ITEM", "PRODUCT", "SUPPLIER"
     };
 
+    final MutableCatalog catalog = new MutableCatalog(new MutableDatabase("database"),
+                                                      "catalog");
+
     MutableTable table;
     final NamedObjectList<Table> tables = new NamedObjectList<Table>(NamedObjectSort.alphabetical);
 
     for (final String schemaName: schemaNames)
     {
+      final MutableSchema schema = new MutableSchema(catalog, schemaName);
       for (final String tableName: tableNames)
       {
-        table = new MutableTable(catalogNames[0], schemaName, tableName);
+        table = new MutableTable(schema, tableName);
         table.setType(TableType.table);
         tables.add(table);
       }

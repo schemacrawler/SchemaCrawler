@@ -29,18 +29,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.Schema;
+import schemacrawler.schemacrawler.InclusionRule;
 
-/**
- * Retriever of database metadata to get the details about the database
- * system.
- * 
- * @author Sualeh Fatehi
- */
 final class DatabaseInfoRetriever
   extends AbstractRetriever
 {
@@ -49,7 +47,6 @@ final class DatabaseInfoRetriever
     .getLogger(DatabaseInfoRetriever.class.getName());
 
   DatabaseInfoRetriever(final RetrieverConnection retrieverConnection)
-    throws SQLException
   {
     super(retrieverConnection);
   }
@@ -57,15 +54,17 @@ final class DatabaseInfoRetriever
   /**
    * Provides additional information on the database.
    * 
-   * @param dbInfo
+   * @param database
    *        Database information to add to
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveAdditionalDatabaseInfo(final MutableDatabaseInfo dbInfo)
-    throws SQLException
+  void retrieveAdditionalDatabaseInfo(final MutableDatabase database)
   {
     final DatabaseMetaData dbMetaData = getRetrieverConnection().getMetaData();
+    final MutableDatabaseInfo dbInfo = (MutableDatabaseInfo) database
+      .getDatabaseInfo();
+
     final Method[] methods = DatabaseMetaData.class.getMethods();
     for (final Method method: methods)
     {
@@ -119,35 +118,113 @@ final class DatabaseInfoRetriever
   }
 
   /**
+   * Retrieves catalog metadata according to the parameters specified.
+   * 
+   * @return A list of catalogs in the database that matech the pattern
+   */
+  void retrieveCatalogs(final MutableDatabase database)
+  {
+    final List<String> catalogNames = getRetrieverConnection()
+      .getCatalogNames();
+    for (final String catalogName: catalogNames)
+    {
+      LOGGER.log(Level.FINEST, "Retrieving catalog: " + catalogName);
+      final MutableCatalog catalog = new MutableCatalog(database, catalogName);
+      database.addCatalog(catalog);
+    }
+  }
+
+  /**
    * Provides information on the database.
    * 
-   * @return Database information
+   * @param database
+   *        Database
    * @throws SQLException
    *         On a SQL exception
    */
-  MutableDatabaseInfo retrieveDatabaseInfo()
+  void retrieveDatabaseInfo(final MutableDatabase database)
     throws SQLException
   {
     final DatabaseMetaData dbMetaData = getRetrieverConnection().getMetaData();
 
-    final MutableDatabaseInfo dbInfo = new MutableDatabaseInfo();
-    dbInfo.setCatalogName(dbMetaData.getConnection().getCatalog());
+    final MutableDatabaseInfo dbInfo = (MutableDatabaseInfo) database
+      .getDatabaseInfo();
+
     dbInfo.setProductName(dbMetaData.getDatabaseProductName());
     dbInfo.setProductVersion(dbMetaData.getDatabaseProductVersion());
-    return dbInfo;
+  }
+
+  /**
+   * Retrieves a list of schemas from the database, for the table
+   * specified.
+   * 
+   * @param table
+   *        Catalog for which data is required.
+   * @throws SQLException
+   *         On a SQL exception
+   */
+  void retrieveSchemas(final MutableDatabase database,
+                       final InclusionRule schemaInclusionRule)
+    throws SQLException
+  {
+    final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
+      .getMetaData().getSchemas());
+    try
+    {
+      while (results.next())
+      {
+        final String catalogName = results.getString("TABLE_CATALOG");
+        final String schemaName = results.getString("TABLE_SCHEM");
+        LOGGER.log(Level.FINE, String.format("Schema %s.%s",
+                                             catalogName,
+                                             schemaName));
+
+        final Catalog[] catalogs;
+        final Catalog catalog = database.getCatalog(catalogName);
+        if (catalog != null)
+        {
+          catalogs = new Catalog[] {
+            catalog
+          };
+        }
+        else
+        {
+          catalogs = database.getCatalogs();
+        }
+
+        for (final Catalog currentCatalog: catalogs)
+        {
+          final MutableSchema schema = new MutableSchema(currentCatalog,
+                                                         schemaName);
+          final String schemaFullName = schema.getFullName();
+          if (schemaInclusionRule.include(schemaFullName))
+          {
+            LOGGER.log(Level.FINEST, "Retrieving schema: " + schemaName);
+            ((MutableCatalog) currentCatalog).addSchema(schema);
+          }
+        }
+      }
+    }
+    finally
+    {
+      results.close();
+    }
+
   }
 
   /**
    * Retrieves column data type metadata.
    * 
-   * @param columnDataTypes
+   * @param database
    *        Column data types
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveSystemColumnDataTypes(final ColumnDataTypes columnDataTypes)
+  void retrieveSystemColumnDataTypes(final MutableDatabase database)
     throws SQLException
   {
+    final Schema schema = new MutableSchema(new MutableCatalog(database, ""),
+                                            "");
     final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
       .getMetaData().getTypeInfo());
     try
@@ -175,8 +252,7 @@ final class DatabaseInfoRetriever
         final int maximumScale = results.getInt("MAXIMUM_SCALE", 0);
         final int numPrecisionRadix = results.getInt("NUM_PREC_RADIX", 0);
 
-        final MutableColumnDataType columnDataType = new MutableColumnDataType(null,
-                                                                               null,
+        final MutableColumnDataType columnDataType = new MutableColumnDataType(schema,
                                                                                typeName);
         columnDataType.setType(type);
         columnDataType.setPrecision(precision);
@@ -196,7 +272,7 @@ final class DatabaseInfoRetriever
 
         columnDataType.addAttributes(results.getAttributes());
 
-        columnDataTypes.add(columnDataType);
+        database.addSystemColumnDataType(columnDataType);
       }
     }
     finally
@@ -215,7 +291,7 @@ final class DatabaseInfoRetriever
    *         On a SQL exception
    */
   void retrieveUserDefinedColumnDataTypes(final String catalogName,
-                                          final ColumnDataTypes columnDataTypes)
+                                          final MutableDatabase database)
     throws SQLException
   {
     final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
@@ -235,10 +311,19 @@ final class DatabaseInfoRetriever
         final String className = results.getString("CLASS_NAME");
         final String remarks = results.getString("REMARKS");
         final short baseTypeValue = results.getShort("BASE_TYPE", (short) 0);
-        final ColumnDataType baseType = columnDataTypes
+
+        final MutableSchema schema = database.lookupSchema(catalogName,
+                                                           schemaName);
+        if (schema == null)
+        {
+          LOGGER.log(Level.FINE, String.format("Cannot find schema, %s.%s",
+                                               catalogName,
+                                               schemaName));
+          continue;
+        }
+        final ColumnDataType baseType = schema
           .lookupColumnDataTypeByType(baseTypeValue);
-        final MutableColumnDataType columnDataType = new MutableColumnDataType(catalogName,
-                                                                               schemaName,
+        final MutableColumnDataType columnDataType = new MutableColumnDataType(schema,
                                                                                typeName);
         columnDataType.setUserDefined(true);
         columnDataType.setType(type);
@@ -248,7 +333,7 @@ final class DatabaseInfoRetriever
 
         columnDataType.addAttributes(results.getAttributes());
 
-        columnDataTypes.add(columnDataType);
+        schema.addColumnDataType(columnDataType);
       }
     }
     finally
@@ -348,4 +433,5 @@ final class DatabaseInfoRetriever
     });
     dbInfo.putProperty(name, propertyValue);
   }
+
 }

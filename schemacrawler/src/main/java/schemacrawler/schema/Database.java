@@ -21,28 +21,16 @@
 package schemacrawler.schema;
 
 
+import java.io.Serializable;
+
 /**
- * Represents the database.
+ * Database and connection information.
  * 
  * @author Sualeh Fatehi
  */
 public interface Database
-  extends NamedObject
+  extends Serializable
 {
-
-  /**
-   * Gets the database information.
-   * 
-   * @return Database information
-   */
-  DatabaseInfo getDatabaseInfo();
-
-  /**
-   * Gets the JDBC driver information.
-   * 
-   * @return JDBC driver information
-   */
-  JdbcDriverInfo getJdbcDriverInfo();
 
   /**
    * Gets a catalog by name.
@@ -51,7 +39,7 @@ public interface Database
    *        Name
    * @return Catalog.
    */
-  Catalog getCatalog(String name);
+  Catalog getCatalog(String catalogName);
 
   /**
    * Gets the schemas.
@@ -59,6 +47,22 @@ public interface Database
    * @return Catalogs
    */
   Catalog[] getCatalogs();
+
+  DatabaseInfo getDatabaseInfo();
+
+  /**
+   * Gets the column data types defined by the RDBMS system, by name.
+   * 
+   * @return Column data type
+   */
+  ColumnDataType getSystemColumnDataType(String name);
+
+  /**
+   * Gets the column data types defined by the RDBMS system.
+   * 
+   * @return Column data types
+   */
+  ColumnDataType[] getSystemColumnDataTypes();
 
   /**
    * Gets the weak table associations.

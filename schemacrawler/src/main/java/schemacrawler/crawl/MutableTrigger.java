@@ -23,8 +23,8 @@ package schemacrawler.crawl;
 
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.ConditionTimingType;
-import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.EventManipulationType;
+import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 
 /**
@@ -41,18 +41,20 @@ class MutableTrigger
 
   private EventManipulationType eventManipulationType;
   private int actionOrder;
-  private String actionCondition;
-  private String actionStatement;
+  private final StringBuilder actionCondition;
+  private final StringBuilder actionStatement;
   private ActionOrientationType actionOrientation;
   private ConditionTimingType conditionTiming;
 
-  MutableTrigger(final DatabaseObject parent, final String name)
+  MutableTrigger(final Table parent, final String name)
   {
     super(parent, name);
     // Default values
     eventManipulationType = EventManipulationType.unknown;
     actionOrientation = ActionOrientationType.unknown;
     conditionTiming = ConditionTimingType.unknown;
+    actionCondition = new StringBuilder();
+    actionStatement = new StringBuilder();
   }
 
   /**
@@ -60,7 +62,7 @@ class MutableTrigger
    */
   public String getActionCondition()
   {
-    return actionCondition;
+    return actionCondition.toString();
   }
 
   /**
@@ -84,7 +86,7 @@ class MutableTrigger
    */
   public String getActionStatement()
   {
-    return actionStatement;
+    return actionStatement.toString();
   }
 
   /**
@@ -103,9 +105,20 @@ class MutableTrigger
     return eventManipulationType;
   }
 
-  void setActionCondition(final String actionCondition)
+  void appendActionCondition(final String actionCondition)
   {
-    this.actionCondition = actionCondition;
+    if (actionCondition != null)
+    {
+      this.actionCondition.append(actionCondition);
+    }
+  }
+
+  void appendActionStatement(final String actionStatement)
+  {
+    if (actionStatement != null)
+    {
+      this.actionStatement.append(actionStatement);
+    }
   }
 
   void setActionOrder(final int actionOrder)
@@ -116,11 +129,6 @@ class MutableTrigger
   void setActionOrientation(final ActionOrientationType actionOrientation)
   {
     this.actionOrientation = actionOrientation;
-  }
-
-  void setActionStatement(final String actionStatement)
-  {
-    this.actionStatement = actionStatement;
   }
 
   void setConditionTiming(final ConditionTimingType conditionTiming)
