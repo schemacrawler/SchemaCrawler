@@ -41,7 +41,7 @@ final class ResultsRetriever
   private final ResultSetMetaData resultsMetaData;
 
   ResultsRetriever(final ResultSet resultSet)
-    throws SchemaCrawlerException
+    throws SchemaCrawlerException, SQLException
   {
     if (resultSet == null)
     {
@@ -74,6 +74,7 @@ final class ResultsRetriever
 
     try
     {
+      final MutableDatabase database = new MutableDatabase("results");
       final int columnCount = resultsMetaData.getColumnCount();
       for (int i = 1; i <= columnCount; i++)
       {
@@ -84,14 +85,17 @@ final class ResultsRetriever
         {
           tableName = "";
         }
-        final MutableTable table = new MutableTable(catalogName,
-                                                    schemaName,
-                                                    tableName);
+
+        final MutableCatalog catalog = new MutableCatalog(database, catalogName);
+        database.addCatalog(catalog);
+        final MutableSchema schema = new MutableSchema(catalog, schemaName);
+        catalog.addSchema(schema);
+        final MutableTable table = new MutableTable(schema, tableName);
+        schema.addTable(table);
 
         final String databaseSpecificTypeName = resultsMetaData
           .getColumnTypeName(i);
-        final MutableColumnDataType columnDataType = new MutableColumnDataType(catalogName,
-                                                                               schemaName,
+        final MutableColumnDataType columnDataType = new MutableColumnDataType(schema,
                                                                                databaseSpecificTypeName);
         columnDataType.setType(resultsMetaData.getColumnType(i));
         columnDataType.setTypeClassName(resultsMetaData.getColumnClassName(i));
@@ -101,8 +105,8 @@ final class ResultsRetriever
         columnDataType.setMinimumScale(scale);
 
         final String columnName = resultsMetaData.getColumnName(i);
-        final MutableResultsColumn column = new MutableResultsColumn(columnName,
-                                                                     table);
+        final MutableResultsColumn column = new MutableResultsColumn(table,
+                                                                     columnName);
         column.setOrdinalPosition(i);
         column.setType(columnDataType);
 

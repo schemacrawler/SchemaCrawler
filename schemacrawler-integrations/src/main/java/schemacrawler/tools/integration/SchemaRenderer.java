@@ -21,7 +21,6 @@ package schemacrawler.tools.integration;
 
 
 import java.io.Writer;
-import java.sql.Connection;
 
 import javax.sql.DataSource;
 
@@ -62,9 +61,7 @@ public abstract class SchemaRenderer
   protected void doExecute(final DataSource dataSource)
     throws Exception
   {
-    // Get the entire schema at once
-    final Connection connection = dataSource.getConnection();
-    crawlHandler = new CachingCrawlHandler(connection.getCatalog());
+    crawlHandler = new CachingCrawlHandler();
     super.execute(dataSource);
     final Database database = ((CachingCrawlHandler) crawlHandler)
       .getDatabase();

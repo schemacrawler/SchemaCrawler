@@ -65,15 +65,15 @@ abstract class AbstractRetriever
    * 
    * @param dbObject
    *        Database object to check
-   * @param catalog
+   * @param catalogName
    *        Database catalog to check against
-   * @param schema
+   * @param schemaName
    *        Database schema to check against
    * @return Whether the database object belongs to the specified schema
    */
   protected boolean belongsToSchema(final DatabaseObject dbObject,
-                                    final String catalog,
-                                    final String schema)
+                                    final String catalogName,
+                                    final String schemaName)
   {
     if (dbObject == null)
     {
@@ -82,17 +82,18 @@ abstract class AbstractRetriever
 
     boolean belongsToCatalog = true;
     boolean belongsToSchema = true;
-    final String dbObjectCatalog = dbObject.getCatalogName();
-    if (!(catalog == null || catalog.trim().length() == 0)
-        && !(dbObjectCatalog == null || dbObjectCatalog.trim().length() == 0)
-        && !catalog.equals(dbObjectCatalog))
+    final String dbObjectCatalogName = dbObject.getSchema().getCatalog()
+      .getName();
+    if (!(catalogName == null || catalogName.trim().length() == 0)
+        && !(dbObjectCatalogName == null || dbObjectCatalogName.trim().length() == 0)
+        && !catalogName.equals(dbObjectCatalogName))
     {
       belongsToCatalog = false;
     }
-    final String dbObjectSchema = dbObject.getSchemaName();
-    if (!(schema == null || schema.trim().length() == 0)
-        && !(dbObjectSchema == null || dbObjectSchema.trim().length() == 0)
-        && !schema.equals(dbObjectSchema))
+    final String dbObjectSchemaName = dbObject.getSchema().getName();
+    if (!(schemaName == null || schemaName.trim().length() == 0)
+        && !(dbObjectSchemaName == null || dbObjectSchemaName.trim().length() == 0)
+        && !schemaName.equals(dbObjectSchemaName))
     {
       belongsToSchema = false;
     }

@@ -31,6 +31,13 @@ public interface Catalog
 {
 
   /**
+   * Gets the database that this catalog belongs to.
+   * 
+   * @return Parent database
+   */
+  Database getDatabase();
+
+  /**
    * Gets a schema by name.
    * 
    * @param name

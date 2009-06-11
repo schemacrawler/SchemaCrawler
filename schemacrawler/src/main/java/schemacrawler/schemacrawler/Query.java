@@ -142,7 +142,7 @@ public final class Query
       {
         final String propertyKey = shrunkTemplate.substring(left + 2, right);
         keys.add(propertyKey);
-        // Destroy key, so we can find teh next one
+        // Destroy key, so we can find the next one
         shrunkTemplate = shrunkTemplate.substring(0, left) + ""
                          + shrunkTemplate.substring(right + 1);
       }
@@ -211,13 +211,11 @@ public final class Query
     final Properties tableProperties = new Properties();
     if (table != null)
     {
-      if (table.getCatalogName() != null)
+      if (table.getSchema() != null)
       {
-        tableProperties.setProperty("catalog", table.getCatalogName());
-      }
-      if (table.getSchemaName() != null)
-      {
-        tableProperties.setProperty("schema", table.getSchemaName());
+        tableProperties.setProperty("catalog", String.valueOf(table.getSchema()
+          .getCatalog().getName()));
+        tableProperties.setProperty("schema", table.getSchema().getName());
       }
       tableProperties.setProperty("table", table.getFullName());
       tableProperties.setProperty("columns", table.getColumnsListAsString());

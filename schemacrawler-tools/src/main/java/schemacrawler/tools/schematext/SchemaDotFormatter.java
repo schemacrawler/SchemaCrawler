@@ -34,8 +34,8 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
-import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
+import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.schema.WeakAssociations;
@@ -56,7 +56,7 @@ public final class SchemaDotFormatter
 
   private final SchemaTextOptions options;
   private final PrintWriter out;
-  private final Map<String, PastelColor> colorMap;
+  private final Map<Schema, PastelColor> colorMap;
 
   /**
    * Text formatting of schema.
@@ -83,7 +83,7 @@ public final class SchemaDotFormatter
       throw new SchemaCrawlerException("Could not obtain output writer", e);
     }
 
-    colorMap = new HashMap<String, PastelColor>();
+    colorMap = new HashMap<Schema, PastelColor>();
   }
 
   public void begin()
@@ -113,21 +113,10 @@ public final class SchemaDotFormatter
   public void handle(final DatabaseInfo databaseInfo)
     throws SchemaCrawlerException
   {
-    final String catalogName = databaseInfo.getCatalogName();
     final StringBuilder buffer = new StringBuilder();
     buffer
       .append("      <table border=\"1\" cellborder=\"0\" cellspacing=\"0\">")
       .append(NEWLINE);
-
-    if (catalogName != null)
-    {
-      buffer.append("        <tr>").append(NEWLINE);
-      buffer.append("          <td align=\"right\">Catalog:</td>")
-        .append(NEWLINE);
-      buffer.append("          <td align=\"left\">" + catalogName + "</td>")
-        .append(NEWLINE);
-      buffer.append("        </tr>").append(NEWLINE);
-    }
 
     buffer.append("        <tr>").append(NEWLINE);
     buffer.append("          <td align=\"right\">Database:</td>")
@@ -151,11 +140,6 @@ public final class SchemaDotFormatter
     out.println(graphLabel);
   }
 
-  public void handle(final JdbcDriverInfo driverInfo)
-    throws SchemaCrawlerException
-  {
-  }
-
   public void handle(final Procedure procedure)
     throws SchemaCrawlerException
   {
@@ -164,12 +148,12 @@ public final class SchemaDotFormatter
   public void handle(final Table table)
     throws SchemaCrawlerException
   {
-    final String schemaName = table.getSchemaName();
-    if (!colorMap.containsKey(schemaName))
+    final Schema schema = table.getSchema();
+    if (!colorMap.containsKey(schema))
     {
-      colorMap.put(schemaName, new PastelColor());
+      colorMap.put(schema, new PastelColor());
     }
-    final PastelColor bgcolor = colorMap.get(schemaName);
+    final PastelColor bgcolor = colorMap.get(schema);
     final PastelColor tableBgColor = bgcolor.shade();
     final StringBuilder buffer = new StringBuilder();
     final String tableName = table.getFullName();

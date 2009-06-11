@@ -165,12 +165,14 @@ public final class SchemaTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see CrawlHandler#handle(DatabaseInfo)
+   * @see CrawlHandler#handle(Database)
    */
   public void handle(final DatabaseInfo databaseInfo)
   {
 
     printHeaderObject("databaseInfo", databaseInfo);
+
+    printJdbcDriverInfo(databaseInfo.getJdbcDriverInfo());
 
     final SchemaTextDetailType schemaTextDetailType = options
       .getSchemaTextDetailType();
@@ -197,40 +199,7 @@ public final class SchemaTextFormatter
       out.print(formattingHelper.createObjectEnd());
       out.println();
     }
-
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.JdbcDriverInfo)
-   */
-  public void handle(final JdbcDriverInfo driverInfo)
-  {
-
-    printHeaderObject("driverInfo", driverInfo);
-
-    final SchemaTextDetailType schemaTextDetailType = options
-      .getSchemaTextDetailType();
-    if (schemaTextDetailType != SchemaTextDetailType.maximum_schema)
-    {
-      return;
-    }
-
-    final JdbcDriverProperty[] jdbcDriverProperties = driverInfo
-      .getDriverProperties();
-    if (jdbcDriverProperties.length > 0)
-    {
-      out.println();
-      for (final JdbcDriverProperty driverProperty: jdbcDriverProperties)
-      {
-        out.print(formattingHelper.createObjectStart(""));
-        printJdbcDriverProperty(driverProperty);
-        out.print(formattingHelper.createObjectEnd());
-      }
-      out.println();
-      out.println();
-    }
+    out.flush();
 
   }
 
@@ -554,7 +523,7 @@ public final class SchemaTextFormatter
 
   private void printHeaderObject(final String id, final Object object)
   {
-    if (!options.getOutputOptions().isNoInfo())
+    if (object != null && !options.getOutputOptions().isNoInfo())
     {
       out.println(formattingHelper.createHeader(id, object));
     }
@@ -587,6 +556,37 @@ public final class SchemaTextFormatter
         printTableColumns(index.getColumns());
       }
     }
+  }
+
+  private void printJdbcDriverInfo(final JdbcDriverInfo driverInfo)
+  {
+    if (driverInfo == null)
+    {
+      return;
+    }
+
+    final SchemaTextDetailType schemaTextDetailType = options
+      .getSchemaTextDetailType();
+    if (schemaTextDetailType != SchemaTextDetailType.maximum_schema)
+    {
+      return;
+    }
+
+    final JdbcDriverProperty[] jdbcDriverProperties = driverInfo
+      .getDriverProperties();
+    if (jdbcDriverProperties.length > 0)
+    {
+      out.println();
+      for (final JdbcDriverProperty driverProperty: jdbcDriverProperties)
+      {
+        out.print(formattingHelper.createObjectStart(""));
+        printJdbcDriverProperty(driverProperty);
+        out.print(formattingHelper.createObjectEnd());
+      }
+      out.println();
+      out.println();
+    }
+
   }
 
   private void printJdbcDriverProperty(final JdbcDriverProperty driverProperty)

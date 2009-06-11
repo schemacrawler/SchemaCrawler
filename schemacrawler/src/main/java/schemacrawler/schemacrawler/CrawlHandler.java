@@ -23,7 +23,6 @@ package schemacrawler.schemacrawler;
 
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.WeakAssociations;
@@ -67,23 +66,12 @@ public interface CrawlHandler
   /**
    * Handles information on the database schema.
    * 
-   * @param databaseInfo
+   * @param database
    *        Database information
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  void handle(DatabaseInfo databaseInfo)
-    throws SchemaCrawlerException;
-
-  /**
-   * Handles information on the JDBC driver.
-   * 
-   * @param driverInfo
-   *        JDBC driver information
-   * @throws SchemaCrawlerException
-   *         On an exception
-   */
-  void handle(JdbcDriverInfo driverInfo)
+  void handle(DatabaseInfo database)
     throws SchemaCrawlerException;
 
   /**

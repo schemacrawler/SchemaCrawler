@@ -6,6 +6,7 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexColumnSortSequence;
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Privilege;
 
 final class MutableIndexColumn
@@ -25,6 +26,27 @@ final class MutableIndexColumn
     super(column.getParent(), column.getName());
     this.index = index;
     this.column = column;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public int compareTo(final NamedObject obj)
+  {
+    final MutableIndexColumn other = (MutableIndexColumn) obj;
+    int comparison = 0;
+
+    if (comparison == 0)
+    {
+      comparison = indexOrdinalPosition - other.indexOrdinalPosition;
+    }
+    if (comparison == 0)
+    {
+      comparison = super.compareTo(other);
+    }
+
+    return comparison;
   }
 
   /**

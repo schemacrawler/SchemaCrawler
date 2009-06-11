@@ -22,6 +22,7 @@ package schemacrawler.crawl;
 
 
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -31,10 +32,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import schemacrawler.schema.ResultsColumn;
-import schemacrawler.schema.ResultsColumns;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
  * A wrapper around a JDBC resultset obtained from a database metadata
@@ -65,14 +62,13 @@ final class MetadataResultSet
     final Set<String> resultSetColumns = new HashSet<String>();
     try
     {
-      final ResultsRetriever resultsRetriever = new ResultsRetriever(resultSet);
-      final ResultsColumns resultColumns = resultsRetriever.retrieveResults();
-      for (final ResultsColumn resultColumn: resultColumns.getColumns())
+      final ResultSetMetaData rsMetaData = resultSet.getMetaData();
+      for (int i = 0; i < rsMetaData.getColumnCount(); i++)
       {
-        resultSetColumns.add(resultColumn.getName());
+        resultSetColumns.add(rsMetaData.getColumnName(i + 1));
       }
     }
-    catch (final SchemaCrawlerException e)
+    catch (final SQLException e)
     {
       LOGGER.log(Level.FINE, "Could not get columns list");
     }

@@ -34,7 +34,6 @@ import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutorException;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.WeakAssociations;
@@ -214,21 +213,11 @@ public final class OperationFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see CrawlHandler#handle(DatabaseInfo)
+   * @see CrawlHandler#handle(Database)
    */
   public void handle(final DatabaseInfo databaseInfo)
   {
     printHeaderObject("databaseInfo", databaseInfo);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.JdbcDriverInfo)
-   */
-  public void handle(final JdbcDriverInfo driverInfo)
-  {
-    printHeaderObject("driverInfo", driverInfo);
   }
 
   /**
@@ -359,7 +348,7 @@ public final class OperationFormatter
 
   private void printHeaderObject(final String id, final Object object)
   {
-    if (!options.getOutputOptions().isNoInfo())
+    if (object != null && !options.getOutputOptions().isNoInfo())
     {
       out.println(formattingHelper.createHeader(id, object));
     }

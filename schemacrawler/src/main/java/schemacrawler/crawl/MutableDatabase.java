@@ -21,32 +21,40 @@
 package schemacrawler.crawl;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.schema.JdbcDriverInfo;
+import schemacrawler.schema.Procedure;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.Table;
 import schemacrawler.schema.WeakAssociations;
 
 /**
- * Represents the database.
+ * Database and connection information. Created from metadata returned
+ * by a JDBC call, and other sources of information.
  * 
- * @author Sualeh Fatehi
+ * @author Sualeh Fatehi sualeh@hotmail.com
  */
-class MutableDatabase
+final class MutableDatabase
   extends AbstractNamedObject
   implements Database
 {
 
-  private static final long serialVersionUID = 3258128063743931187L;
+  private static final long serialVersionUID = 4051323422934251828L;
 
-  private DatabaseInfo databaseInfo;
-  private JdbcDriverInfo driverInfo;
-  private final NamedObjectList<MutableCatalog> catalogs = new NamedObjectList<MutableCatalog>(NamedObjectSort.alphabetical);
+  private final DatabaseInfo databaseInfo;
+  private final ColumnDataTypes systemColumnDataTypes = new ColumnDataTypes();
+  private final Map<String, MutableCatalog> catalogs = new HashMap<String, MutableCatalog>();
   private WeakAssociations weakAssociations;
 
   MutableDatabase(final String name)
   {
     super(name);
+    databaseInfo = new MutableDatabaseInfo();
   }
 
   /**
@@ -56,7 +64,7 @@ class MutableDatabase
    */
   public Catalog getCatalog(final String name)
   {
-    return lookupCatalog(name);
+    return catalogs.get(name);
   }
 
   /**
@@ -66,14 +74,9 @@ class MutableDatabase
    */
   public Catalog[] getCatalogs()
   {
-    return catalogs.getAll().toArray(new Catalog[catalogs.size()]);
+    return catalogs.values().toArray(new Catalog[catalogs.size()]);
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.Catalog#getDatabaseInfo()
-   */
   public DatabaseInfo getDatabaseInfo()
   {
     return databaseInfo;
@@ -82,11 +85,22 @@ class MutableDatabase
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.Catalog#getJdbcDriverInfo()
+   * @see schemacrawler.schema.Database#getSystemColumnDataType(java.lang.String)
    */
-  public JdbcDriverInfo getJdbcDriverInfo()
+  public ColumnDataType getSystemColumnDataType(final String name)
   {
-    return driverInfo;
+    return systemColumnDataTypes.lookup(name);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Database#getSystemColumnDataTypes()
+   */
+  public ColumnDataType[] getSystemColumnDataTypes()
+  {
+    return systemColumnDataTypes.getAll()
+      .toArray(new ColumnDataType[systemColumnDataTypes.size()]);
   }
 
   public WeakAssociations getWeakAssociations()
@@ -96,22 +110,94 @@ class MutableDatabase
 
   void addCatalog(final MutableCatalog catalog)
   {
-    catalogs.add(catalog);
+    if (catalog != null)
+    {
+      catalogs.put(catalog.getName(), catalog);
+    }
   }
 
-  MutableCatalog lookupCatalog(final String name)
+  void addSystemColumnDataType(final MutableColumnDataType columnDataType)
   {
-    return catalogs.lookup(name);
+    if (columnDataType != null)
+    {
+      systemColumnDataTypes.add(columnDataType);
+    }
   }
 
-  void setDatabaseInfo(final DatabaseInfo databaseInfo)
+  NamedObjectList<MutableProcedure> getAllProcedures()
   {
-    this.databaseInfo = databaseInfo;
+    final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>(NamedObjectSort.alphabetical);
+    for (final Catalog catalog: getCatalogs())
+    {
+      for (final Schema schema: catalog.getSchemas())
+      {
+        for (final Procedure procedure: schema.getProcedures())
+        {
+          procedures.add((MutableProcedure) procedure);
+        }
+      }
+    }
+
+    return procedures;
   }
 
-  void setJdbcDriverInfo(final JdbcDriverInfo driverInfo)
+  NamedObjectList<MutableTable> getAllTables()
   {
-    this.driverInfo = driverInfo;
+    final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>(NamedObjectSort.alphabetical);
+    for (final Catalog catalog: getCatalogs())
+    {
+      for (final Schema schema: catalog.getSchemas())
+      {
+        for (final Table table: schema.getTables())
+        {
+          tables.add((MutableTable) table);
+        }
+      }
+    }
+
+    return tables;
+  }
+
+  ColumnDataTypes getSystemColumnDataTypesList()
+  {
+    return systemColumnDataTypes;
+  }
+
+  MutableProcedure lookupProcedure(final String catalogName,
+                                   final String schemaName,
+                                   final String procedureName)
+  {
+    MutableProcedure procedure = null;
+    final MutableSchema schema = lookupSchema(catalogName, schemaName);
+    if (schema != null)
+    {
+      procedure = (MutableProcedure) schema.getProcedure(procedureName);
+    }
+    return procedure;
+  }
+
+  MutableSchema lookupSchema(final String catalogName, final String schemaName)
+  {
+    MutableSchema schema = null;
+    final Catalog catalog = getCatalog(catalogName);
+    if (catalog != null)
+    {
+      schema = (MutableSchema) catalog.getSchema(schemaName);
+    }
+    return schema;
+  }
+
+  MutableTable lookupTable(final String catalogName,
+                           final String schemaName,
+                           final String tableName)
+  {
+    MutableTable table = null;
+    final MutableSchema schema = lookupSchema(catalogName, schemaName);
+    if (schema != null)
+    {
+      table = (MutableTable) schema.getTable(tableName);
+    }
+    return table;
   }
 
   void setWeakAssociations(final WeakAssociations weakAssociations)

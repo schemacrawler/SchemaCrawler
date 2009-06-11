@@ -41,7 +41,7 @@ abstract class AbstractDependantObject
 
   AbstractDependantObject(final DatabaseObject parent, final String name)
   {
-    super(parent.getCatalogName(), parent.getSchemaName(), name);
+    super(parent.getSchema(), name);
     this.parent = parent;
   }
 

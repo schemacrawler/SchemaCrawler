@@ -33,21 +33,63 @@ import schemacrawler.schema.Table;
  * @author Sualeh Fatehi
  */
 class MutableSchema
-  extends AbstractDatabaseObject
+  extends AbstractNamedObject
   implements Schema
 {
 
   private static final long serialVersionUID = 3258128063743931187L;
 
   private final Catalog catalog;
-  private final NamedObjectList<MutableColumnDataType> columnDataTypes = new NamedObjectList<MutableColumnDataType>(NamedObjectSort.alphabetical);
+  private final ColumnDataTypes columnDataTypes = new ColumnDataTypes();
   private final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>(NamedObjectSort.alphabetical);
   private final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>(NamedObjectSort.alphabetical);
 
   MutableSchema(final Catalog catalog, final String name)
   {
-    super(catalog.getName(), name, name);
+    super(name);
     this.catalog = catalog;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#equals(java.lang.Object)
+   */
+  @Override
+  public boolean equals(final Object obj)
+  {
+    if (this == obj)
+    {
+      return true;
+    }
+    if (obj == null)
+    {
+      return false;
+    }
+    final MutableSchema other = (MutableSchema) obj;
+    if (catalog == null)
+    {
+      if (other.catalog != null)
+      {
+        return false;
+      }
+    }
+    else if (!catalog.equals(other.catalog))
+    {
+      return false;
+    }
+    if (getName() == null)
+    {
+      if (other.getName() != null)
+      {
+        return false;
+      }
+    }
+    else if (!getName().equals(other.getName()))
+    {
+      return false;
+    }
+    return true;
   }
 
   /**
@@ -73,7 +115,7 @@ class MutableSchema
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.DatabaseInfo#getSystemColumnDataTypes()
+   * @see schemacrawler.schema.Database#getSystemColumnDataTypes()
    */
   public ColumnDataType[] getColumnDataTypes()
   {
@@ -84,15 +126,15 @@ class MutableSchema
   /**
    * {@inheritDoc}
    * 
-   * @see Object#toString()
+   * @see schemacrawler.schema.Schema#getFullName()
    */
-  @Override
   public String getFullName()
   {
     final StringBuilder buffer = new StringBuilder();
-    if (getCatalogName() != null && getCatalogName().length() > 0)
+    final String catalogName = catalog.getName();
+    if (catalog != null && catalogName != null && catalogName.length() > 0)
     {
-      buffer.append(getCatalogName()).append(".");
+      buffer.append(catalogName).append(".");
     }
     if (getName() != null)
     {
@@ -141,9 +183,27 @@ class MutableSchema
     return tables.getAll().toArray(new Table[tables.size()]);
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#hashCode()
+   */
+  @Override
+  public int hashCode()
+  {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (catalog == null? 0: catalog.hashCode());
+    result = prime * result + super.hashCode();
+    return result;
+  }
+
   void addColumnDataType(final MutableColumnDataType columnDataType)
   {
-    columnDataTypes.add(columnDataType);
+    if (columnDataType != null)
+    {
+      columnDataTypes.add(columnDataType);
+    }
   }
 
   void addProcedure(final MutableProcedure procedure)
@@ -154,11 +214,6 @@ class MutableSchema
   void addTable(final MutableTable table)
   {
     tables.add(table);
-  }
-
-  NamedObjectList<MutableColumnDataType> getColumnDataTypesList()
-  {
-    return columnDataTypes;
   }
 
   MutableColumnDataType lookupByType(final int type)
@@ -175,6 +230,62 @@ class MutableSchema
       }
     }
     return columnDataType;
+  }
+
+  ColumnDataType lookupColumnDataTypeByType(final int type)
+  {
+    ColumnDataType columnDataType = columnDataTypes
+      .lookupColumnDataTypeByType(type);
+    if (columnDataType == null)
+    {
+      columnDataType = ((MutableDatabase) getCatalog().getDatabase())
+        .getSystemColumnDataTypesList().lookupColumnDataTypeByType(type);
+    }
+    return columnDataType;
+  }
+
+  /**
+   * Creates a data type from the JDBC data type id, and the database
+   * specific type name, if it does not exist.
+   * 
+   * @param jdbcDataType
+   *        JDBC data type
+   * @param databaseSpecificTypeName
+   *        Database specific type name
+   */
+  ColumnDataType lookupOrCreateColumnDataType(final int jdbcDataType,
+                                              final String databaseSpecificTypeName)
+  {
+    MutableColumnDataType columnDataType = columnDataTypes
+      .lookupColumnDataTypeByType(databaseSpecificTypeName);
+    if (columnDataType == null)
+    {
+      columnDataType = ((MutableDatabase) getCatalog().getDatabase())
+        .getSystemColumnDataTypesList()
+        .lookupColumnDataTypeByType(databaseSpecificTypeName);
+    }
+    // Create new data type, if needed
+    if (columnDataType == null)
+    {
+      if (columnDataType == null)
+      {
+        columnDataType = new MutableColumnDataType(this,
+                                                   databaseSpecificTypeName);
+        columnDataType.setType(jdbcDataType);
+        columnDataTypes.add(columnDataType);
+      }
+    }
+    return columnDataType;
+  }
+
+  void removeProcedure(final String procedureName)
+  {
+    procedures.remove(procedureName);
+  }
+
+  void removeTable(final String tableName)
+  {
+    tables.remove(tableName);
   }
 
 }

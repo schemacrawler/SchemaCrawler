@@ -25,6 +25,7 @@ import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.ProcedureType;
 import schemacrawler.schema.RoutineBodyType;
+import schemacrawler.schema.Schema;
 
 /**
  * Represents a database procedure. Created from metadata returned by a
@@ -42,16 +43,15 @@ final class MutableProcedure
   private ProcedureType procedureType;
   private final NamedObjectList<MutableProcedureColumn> columns = new NamedObjectList<MutableProcedureColumn>(NamedObjectSort.natural);
   private RoutineBodyType routineBodyType;
-  private String definition;
+  private final StringBuilder definition;
 
-  MutableProcedure(final String catalogName,
-                   final String schemaName,
-                   final String name)
+  MutableProcedure(final Schema schema, final String name)
   {
-    super(catalogName, schemaName, name);
+    super(schema, name);
     // Default values
     procedureType = ProcedureType.unknown;
     routineBodyType = RoutineBodyType.unknown;
+    definition = new StringBuilder();
   }
 
   /**
@@ -81,7 +81,7 @@ final class MutableProcedure
    */
   public String getDefinition()
   {
-    return definition;
+    return definition.toString();
   }
 
   /**
@@ -109,14 +109,17 @@ final class MutableProcedure
     columns.add(column);
   }
 
+  void appendDefinition(final String definition)
+  {
+    if (definition != null)
+    {
+      this.definition.append(definition);
+    }
+  }
+
   void setColumnComparator(final NamedObjectSort comparator)
   {
     columns.setSortOrder(comparator);
-  }
-
-  void setDefinition(final String definition)
-  {
-    this.definition = definition;
   }
 
   void setRoutineBodyType(final RoutineBodyType routineBodyType)

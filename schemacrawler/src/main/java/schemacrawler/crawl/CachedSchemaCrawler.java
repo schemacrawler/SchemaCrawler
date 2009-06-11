@@ -55,7 +55,6 @@ public class CachedSchemaCrawler
     }
 
     handler.begin();
-    handler.handle(database.getJdbcDriverInfo());
     handler.handle(database.getDatabaseInfo());
     for (final Catalog catalog: database.getCatalogs())
     {

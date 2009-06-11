@@ -52,15 +52,19 @@ final class JdbcDriverInfoRetriever
   /**
    * Provides information on the JDBC driver.
    * 
-   * @return JDBC driver information
+   * @param database
+   *        TODO
    * @throws SQLException
    *         On a SQL exception
    */
-  MutableJdbcDriverInfo retrieveJdbcDriverInfo()
+  void retrieveJdbcDriverInfo(final MutableDatabase database)
     throws SQLException
   {
     final DatabaseMetaData dbMetaData = getRetrieverConnection().getMetaData();
     final String url = dbMetaData.getURL();
+
+    final MutableDatabaseInfo dbInfo = (MutableDatabaseInfo) database
+      .getDatabaseInfo();
 
     final MutableJdbcDriverInfo driverInfo = new MutableJdbcDriverInfo();
 
@@ -87,7 +91,7 @@ final class JdbcDriverInfoRetriever
       LOGGER.log(Level.WARNING, "Could not obtain JDBC driver information", e);
     }
 
-    return driverInfo;
+    dbInfo.setJdbcDriverInfo(driverInfo);
   }
 
 }

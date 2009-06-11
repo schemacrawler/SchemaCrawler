@@ -32,13 +32,12 @@ import java.util.Map;
 public interface DatabaseInfo
   extends Serializable
 {
-
   /**
-   * Gets the name of the database.
+   * Gets the JDBC driver information.
    * 
-   * @return Name of the database
+   * @return JDBC driver information
    */
-  String getCatalogName();
+  JdbcDriverInfo getJdbcDriverInfo();
 
   /**
    * Gets the name of the RDBMS vendor and product.
@@ -69,19 +68,5 @@ public interface DatabaseInfo
    * @return Value of the property
    */
   Object getProperty(String name);
-
-  /**
-   * Gets the column data types defined by the RDBMS system, by name.
-   * 
-   * @return Column data type
-   */
-  ColumnDataType getSystemColumnDataType(String name);
-
-  /**
-   * Gets the column data types defined by the RDBMS system.
-   * 
-   * @return Column data types
-   */
-  ColumnDataType[] getSystemColumnDataTypes();
 
 }

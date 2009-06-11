@@ -23,12 +23,11 @@ package schemacrawler.crawl;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.JdbcDriverInfo;
 
 /**
  * Database and connection information. Created from metadata returned
@@ -44,11 +43,10 @@ final class MutableDatabaseInfo
 
   private static final String NEWLINE = System.getProperty("line.separator");
 
-  private String catalogName;
   private String productName;
   private String productVersion;
   private final SortedMap<String, Object> dbProperties = new TreeMap<String, Object>();
-  private final NamedObjectList<MutableColumnDataType> systemColumnDataTypes = new NamedObjectList<MutableColumnDataType>(NamedObjectSort.alphabetical);
+  private JdbcDriverInfo driverInfo;
 
   @Override
   public boolean equals(final Object obj)
@@ -66,17 +64,6 @@ final class MutableDatabaseInfo
       return false;
     }
     final MutableDatabaseInfo other = (MutableDatabaseInfo) obj;
-    if (catalogName == null)
-    {
-      if (other.catalogName != null)
-      {
-        return false;
-      }
-    }
-    else if (!catalogName.equals(other.catalogName))
-    {
-      return false;
-    }
     if (productName == null)
     {
       if (other.productName != null)
@@ -105,17 +92,17 @@ final class MutableDatabaseInfo
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.DatabaseInfo#getCatalogName()
+   * @see schemacrawler.schema.Catalog#getJdbcDriverInfo()
    */
-  public String getCatalogName()
+  public JdbcDriverInfo getJdbcDriverInfo()
   {
-    return catalogName;
+    return driverInfo;
   }
 
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.DatabaseInfo#getProductName()
+   * @see schemacrawler.schema.Database#getProductName()
    */
   public String getProductName()
   {
@@ -125,7 +112,7 @@ final class MutableDatabaseInfo
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.DatabaseInfo#getProductVersion()
+   * @see schemacrawler.schema.Database#getProductVersion()
    */
   public String getProductVersion()
   {
@@ -135,42 +122,21 @@ final class MutableDatabaseInfo
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.DatabaseInfo#getProperties()
+   * @see schemacrawler.schema.Database#getProperties()
    */
   public Map<String, Object> getProperties()
   {
-    return Collections.unmodifiableSortedMap(dbProperties);
+    return Collections.unmodifiableMap(dbProperties);
   }
 
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.DatabaseInfo#getProperty(java.lang.String)
+   * @see schemacrawler.schema.Database#getProperty(java.lang.String)
    */
   public Object getProperty(final String name)
   {
     return dbProperties.get(name);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.DatabaseInfo#getSystemColumnDataType(java.lang.String)
-   */
-  public ColumnDataType getSystemColumnDataType(final String name)
-  {
-    return systemColumnDataTypes.lookup(name);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.DatabaseInfo#getSystemColumnDataTypes()
-   */
-  public ColumnDataType[] getSystemColumnDataTypes()
-  {
-    return systemColumnDataTypes.getAll()
-      .toArray(new ColumnDataType[systemColumnDataTypes.size()]);
   }
 
   @Override
@@ -178,7 +144,6 @@ final class MutableDatabaseInfo
   {
     final int prime = 31;
     int result = 1;
-    result = prime * result + (catalogName == null? 0: catalogName.hashCode());
     result = prime * result + (productName == null? 0: productName.hashCode());
     result = prime * result
              + (productVersion == null? 0: productVersion.hashCode());
@@ -194,12 +159,12 @@ final class MutableDatabaseInfo
   public String toString()
   {
     final StringBuilder info = new StringBuilder();
-    if (getCatalogName() != null)
-    {
-      info.append("-- catalog: ").append(getCatalogName()).append(NEWLINE);
-    }
     info.append("-- database: ").append(getProductName()).append(" ")
       .append(getProductVersion()).append(NEWLINE);
+    if (driverInfo != null)
+    {
+      info.append(driverInfo);
+    }
     return info.toString();
   }
 
@@ -208,9 +173,9 @@ final class MutableDatabaseInfo
     dbProperties.put(name, value);
   }
 
-  void setCatalogName(final String catalogName)
+  void setJdbcDriverInfo(final JdbcDriverInfo driverInfo)
   {
-    this.catalogName = catalogName;
+    this.driverInfo = driverInfo;
   }
 
   void setProductName(final String productName)
@@ -221,17 +186,6 @@ final class MutableDatabaseInfo
   void setProductVersion(final String productVersion)
   {
     this.productVersion = productVersion;
-  }
-
-  void setSystemColumnDataTypes(final Set<MutableColumnDataType> columnDataTypes)
-  {
-    if (columnDataTypes != null)
-    {
-      for (final MutableColumnDataType columnDataType: columnDataTypes)
-      {
-        systemColumnDataTypes.add(columnDataType);
-      }
-    }
   }
 
 }

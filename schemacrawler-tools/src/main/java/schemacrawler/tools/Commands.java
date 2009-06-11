@@ -55,4 +55,10 @@ public class Commands
     return commands.size();
   }
 
+  @Override
+  public String toString()
+  {
+    return commands.toString();
+  }
+
 }

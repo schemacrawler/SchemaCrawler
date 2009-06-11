@@ -24,7 +24,6 @@ package schemacrawler.crawl;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.WeakAssociations;
@@ -40,17 +39,13 @@ public final class CachingCrawlHandler
   implements CrawlHandler
 {
 
-  private final MutableDatabase database;
+  private MutableDatabase database;
 
   /**
    * Creates a new caching crawl handler.
-   * 
-   * @param databaseName
-   *        Database name
    */
-  public CachingCrawlHandler(final String databaseName)
+  public CachingCrawlHandler()
   {
-    database = new MutableDatabase(databaseName);
   }
 
   /**
@@ -60,8 +55,7 @@ public final class CachingCrawlHandler
    */
   public void begin()
     throws SchemaCrawlerException
-  {
-    // do nothing
+  { // do nothing
   }
 
   /**
@@ -71,8 +65,7 @@ public final class CachingCrawlHandler
    */
   public void end()
     throws SchemaCrawlerException
-  {
-    // do nothing
+  { // do nothing
   }
 
   /**
@@ -91,36 +84,14 @@ public final class CachingCrawlHandler
    * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.ColumnDataType)
    */
   public void handle(final ColumnDataType dataType)
-  {
-    String catalogName = dataType.getCatalogName();
-    if (catalogName == null)
-    {
-      catalogName = "";
-    }
-    final String schemaName = dataType.getSchemaName();
-    if (schemaName != null)
-    {
-      final MutableSchema schema = lookupOrCreateSchema(catalogName, schemaName);
-      schema.addColumnDataType((MutableColumnDataType) dataType);
-    }
+  { // do nothing
   }
 
   /**
    * {@inheritDoc}
    */
   public void handle(final DatabaseInfo databaseInfo)
-  {
-    database.setDatabaseInfo(databaseInfo);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.databasecrawler.CrawlHandler#handle(databasecrawler.database.JdbcDriverInfo)
-   */
-  public void handle(final JdbcDriverInfo driverInfo)
-  {
-    database.setJdbcDriverInfo(driverInfo);
+  { // do nothing
   }
 
   /**
@@ -129,11 +100,7 @@ public final class CachingCrawlHandler
    * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.Procedure)
    */
   public void handle(final Procedure procedure)
-  {
-    final String catalogName = procedure.getCatalogName();
-    final String schemaName = procedure.getSchemaName();
-    final MutableSchema schema = lookupOrCreateSchema(catalogName, schemaName);
-    schema.addProcedure((MutableProcedure) procedure);
+  { // do nothing
   }
 
   /**
@@ -142,11 +109,7 @@ public final class CachingCrawlHandler
    * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.Table)
    */
   public void handle(final Table table)
-  {
-    final String catalogName = table.getCatalogName();
-    final String schemaName = table.getSchemaName();
-    final MutableSchema schema = lookupOrCreateSchema(catalogName, schemaName);
-    schema.addTable((MutableTable) table);
+  { // do nothing
   }
 
   /**
@@ -156,38 +119,12 @@ public final class CachingCrawlHandler
    */
   public void handle(final WeakAssociations weakAssociations)
     throws SchemaCrawlerException
-  {
-    database.setWeakAssociations(weakAssociations);
+  { // do nothing
   }
 
-  @Override
-  public String toString()
+  void setDatabase(final MutableDatabase database)
   {
-    return database.toString();
-  }
-
-  private MutableSchema lookupSchema(final String catalogName,
-                                     final String schemaName)
-  {
-    String catalogName1 = catalogName;
-    if (catalogName1 == null)
-    {
-      catalogName1 = "";
-    }
-    MutableCatalog catalog = database.lookupCatalog(catalogName1);
-    if (catalog == null)
-    {
-      catalog = new MutableCatalog(catalogName1);
-      database.addCatalog(catalog);
-    }
-
-    MutableSchema schema = catalog.lookupSchema(schemaName);
-    if (schema == null)
-    {
-      schema = new MutableSchema(catalog, schemaName);
-      catalog.addSchema(schema);
-    }
-    return schema;
+    this.database = database;
   }
 
 }
