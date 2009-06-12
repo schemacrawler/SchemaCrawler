@@ -34,6 +34,7 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.custommonkey.xmlunit.Validator;
+import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -76,6 +77,7 @@ public class SchemaCrawlerOutputTest
   {
     TestUtility.setApplicationLogLevel();
     testUtility.createMemoryDatabase();
+    XMLUnit.setControlEntityResolver(new LocalEntityResolver());
   }
 
   private static boolean contentEquals(final Reader input1, final Reader input2)
