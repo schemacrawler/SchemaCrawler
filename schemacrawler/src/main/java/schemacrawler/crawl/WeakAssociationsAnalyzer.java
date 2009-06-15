@@ -90,10 +90,7 @@ public class WeakAssociationsAnalyzer
               }
             }
           }
-          else
-          {
-            splitCommonPrefixes.add(commonPrefix);
-          }
+          splitCommonPrefixes.add(commonPrefix);
 
           for (final String splitCommonPrefix: splitCommonPrefixes)
           {
