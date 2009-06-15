@@ -21,7 +21,7 @@
 package schemacrawler.crawl;
 
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import schemacrawler.schema.Catalog;
@@ -48,7 +48,7 @@ final class MutableDatabase
 
   private final DatabaseInfo databaseInfo;
   private final ColumnDataTypes systemColumnDataTypes = new ColumnDataTypes();
-  private final Map<String, MutableCatalog> catalogs = new HashMap<String, MutableCatalog>();
+  private final Map<String, MutableCatalog> catalogs = new LinkedHashMap<String, MutableCatalog>();
   private WeakAssociations weakAssociations;
 
   MutableDatabase(final String name)
