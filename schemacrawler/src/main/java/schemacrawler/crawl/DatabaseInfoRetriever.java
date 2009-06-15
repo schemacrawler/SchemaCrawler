@@ -210,6 +210,16 @@ final class DatabaseInfoRetriever
       results.close();
     }
 
+    for (final Catalog catalog: database.getCatalogs())
+    {
+      if (catalog.getSchemas().length == 0)
+      {
+        final MutableCatalog mutableCatalog = (MutableCatalog) catalog;
+        final MutableSchema schema = new MutableSchema(mutableCatalog, null);
+        mutableCatalog.addSchema(schema);
+      }
+    }
+
   }
 
   /**
