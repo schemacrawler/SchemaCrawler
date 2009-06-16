@@ -23,11 +23,11 @@ package schemacrawler.crawl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
@@ -47,7 +47,7 @@ class NamedObjectList<N extends NamedObject>
 
   private NamedObjectSort sort;
   /** Needs to be sorted, so serialization does not break. */
-  private final Collection<N> objects;
+  private final Set<N> objects;
 
   /**
    * Construct an initially empty ordered list of named objects, that
