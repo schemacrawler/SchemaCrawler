@@ -30,7 +30,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Options;
-import sf.util.Utilities;
 
 /**
  * Contains output options.
@@ -80,7 +79,7 @@ public final class OutputOptions
     }
     outputFormatValue = outputFormat.name();
 
-    if (!Utilities.isBlank(outputFilename))
+    if (!schemacrawler.utility.Utility.isBlank(outputFilename))
     {
       outputFile = new File(outputFilename);
     }
@@ -103,7 +102,7 @@ public final class OutputOptions
   {
     this.outputFormatValue = outputFormatValue;
 
-    if (!Utilities.isBlank(outputFilename))
+    if (!schemacrawler.utility.Utility.isBlank(outputFilename))
     {
       outputFile = new File(outputFilename);
     }

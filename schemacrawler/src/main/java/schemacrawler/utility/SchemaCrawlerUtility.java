@@ -31,7 +31,6 @@ import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.utility.test.TestUtility;
 
 /**
  * SchemaCrawler utility methods.
@@ -41,8 +40,8 @@ import schemacrawler.utility.test.TestUtility;
 public class SchemaCrawlerUtility
 {
 
-  private static final Logger LOGGER = Logger.getLogger(TestUtility.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(TestDatabaseUtility.class.getName());
 
   public static Database getDatabase(final Connection connection,
                                      final SchemaCrawlerOptions schemaCrawlerOptions)

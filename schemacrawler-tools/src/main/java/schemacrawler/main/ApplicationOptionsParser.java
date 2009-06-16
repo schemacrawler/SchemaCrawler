@@ -24,7 +24,6 @@ package schemacrawler.main;
 import java.util.logging.Level;
 
 import sf.util.CommandLineParser;
-import sf.util.Utilities;
 import sf.util.CommandLineParser.BooleanOption;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
@@ -59,7 +58,7 @@ public final class ApplicationOptionsParser
     final ApplicationOptions options = new ApplicationOptions();
 
     final String logLevelString = optionLogLevel.getValue();
-    if (!Utilities.isBlank(logLevelString))
+    if (!schemacrawler.utility.Utility.isBlank(logLevelString))
     {
       final Level applicationLogLevel = Level.parse(logLevelString
         .toUpperCase());

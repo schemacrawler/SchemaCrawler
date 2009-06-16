@@ -30,7 +30,6 @@ import schemacrawler.main.ApplicationOptions;
 import schemacrawler.main.ApplicationOptionsParser;
 import schemacrawler.main.HelpOptions;
 import schemacrawler.tools.Executable;
-import sf.util.Utilities;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -53,8 +52,9 @@ public final class Main
         .getOptions();
       if (applicationOptions.isShowHelp())
       {
-        final byte[] text = Utilities.readFully(HelpOptions.class
-          .getResourceAsStream("/help/SchemaCrawler.spring.txt"));
+        final byte[] text = schemacrawler.utility.Utility
+          .readFully(HelpOptions.class
+            .getResourceAsStream("/help/SchemaCrawler.spring.txt"));
         System.out.println(new String(text));
         System.exit(0);
       }

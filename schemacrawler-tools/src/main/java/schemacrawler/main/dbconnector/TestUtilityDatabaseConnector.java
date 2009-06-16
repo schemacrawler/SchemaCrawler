@@ -3,13 +3,13 @@ package schemacrawler.main.dbconnector;
 
 import javax.sql.DataSource;
 
-import schemacrawler.utility.test.TestUtility;
+import schemacrawler.utility.TestDatabaseUtility;
 
 public class TestUtilityDatabaseConnector
   implements DatabaseConnector
 {
 
-  private final TestUtility testUtility;
+  private final TestDatabaseUtility testUtility;
 
   /**
    * Adapts a test utility instance to a DatabaseConnector. The
@@ -19,7 +19,7 @@ public class TestUtilityDatabaseConnector
    * @param testUtility
    *        Test utility
    */
-  public TestUtilityDatabaseConnector(final TestUtility testUtility)
+  public TestUtilityDatabaseConnector(final TestDatabaseUtility testUtility)
   {
     this.testUtility = testUtility;
   }

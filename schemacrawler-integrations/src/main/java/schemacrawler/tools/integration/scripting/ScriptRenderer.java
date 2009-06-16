@@ -30,7 +30,7 @@ import javax.script.ScriptEngineManager;
 
 import schemacrawler.schema.Database;
 import schemacrawler.tools.integration.SchemaRenderer;
-import sf.util.Utilities;
+import sf.util.Utility;
 
 /**
  * Main executor for the scripting engine integration.
@@ -53,7 +53,7 @@ public final class ScriptRenderer
                         final Writer writer)
     throws Exception
   {
-    if (Utilities.isBlank(scriptFileName))
+    if (schemacrawler.utility.Utility.isBlank(scriptFileName))
     {
       throw new Exception("No script file provided");
     }
@@ -66,7 +66,7 @@ public final class ScriptRenderer
     // Create a new instance of the engine
     final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
     ScriptEngine scriptEngine = scriptEngineManager
-      .getEngineByExtension(Utilities.getFileExtension(scriptFile));
+      .getEngineByExtension(Utility.getFileExtension(scriptFile));
     if (scriptEngine == null)
     {
       scriptEngine = scriptEngineManager.getEngineByName("JavaScript");

@@ -22,7 +22,6 @@ package schemacrawler.tools.util;
 
 
 import schemacrawler.tools.OutputFormat;
-import sf.util.Utilities;
 
 /**
  * Methods to format entire rows of output as text.
@@ -87,7 +86,7 @@ public class PlainTextFormattingHelper
   public String createObjectStart(final String name)
   {
     String objectStart = "";
-    if (!Utilities.isBlank(name))
+    if (!schemacrawler.utility.Utility.isBlank(name))
     {
       objectStart = objectStart + NEWLINE + name + NEWLINE + DASHED_SEPARATOR;
     }

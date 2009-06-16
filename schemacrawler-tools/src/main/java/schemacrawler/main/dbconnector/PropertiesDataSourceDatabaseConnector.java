@@ -23,8 +23,6 @@ package schemacrawler.main.dbconnector;
 
 import java.util.Map;
 
-import sf.util.Utilities;
-
 /**
  * Parses a command line, and creates a data-source.
  */
@@ -69,7 +67,7 @@ public final class PropertiesDataSourceDatabaseConnector
       final String connectionName = options.getConnection();
       // Use default connection if no connection is specified
       if (!options.isUseDefaultConnection()
-          && !Utilities.isBlank(connectionName))
+          && !schemacrawler.utility.Utility.isBlank(connectionName))
       {
         configPut("defaultconnection", connectionName);
       }

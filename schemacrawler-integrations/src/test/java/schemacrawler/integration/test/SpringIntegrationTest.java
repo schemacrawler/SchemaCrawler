@@ -40,12 +40,12 @@ import schemacrawler.tools.Executable;
 import schemacrawler.tools.datatext.DataTextFormatOptions;
 import schemacrawler.tools.operation.OperationOptions;
 import schemacrawler.tools.schematext.SchemaTextOptions;
-import schemacrawler.utility.test.TestUtility;
+import schemacrawler.utility.TestDatabaseUtility;
 
 public class SpringIntegrationTest
 {
 
-  private static TestUtility testUtility = new TestUtility();
+  private static TestDatabaseUtility testUtility = new TestDatabaseUtility();
 
   @AfterClass
   public static void afterAllTests()
@@ -56,7 +56,7 @@ public class SpringIntegrationTest
   @BeforeClass
   public static void beforeAllTests()
   {
-    TestUtility.setApplicationLogLevel();
+    TestDatabaseUtility.disableApplicationLogging();
     testUtility.createMemoryDatabase();
   }
 
