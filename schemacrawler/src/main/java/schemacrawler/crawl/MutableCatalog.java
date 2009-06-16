@@ -66,7 +66,12 @@ class MutableCatalog
    */
   public Schema getSchema(final String name)
   {
-    return lookupSchema(name);
+    MutableSchema schema = schemas.get(name);
+    if (schema == null && name == null)
+    {
+      schema = schemas.get("");
+    }
+    return schema;
   }
 
   /**
@@ -85,11 +90,6 @@ class MutableCatalog
     {
       schemas.put(schema.getName(), schema);
     }
-  }
-
-  MutableSchema lookupSchema(final String name)
-  {
-    return schemas.get(name);
   }
 
 }
