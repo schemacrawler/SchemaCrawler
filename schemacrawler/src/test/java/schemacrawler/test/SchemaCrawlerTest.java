@@ -24,10 +24,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,6 +44,7 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.utility.TestDatabaseUtility;
+import schemacrawler.utility.Utility;
 
 public class SchemaCrawlerTest
 {
@@ -70,59 +67,6 @@ public class SchemaCrawlerTest
   {
     TestDatabaseUtility.disableApplicationLogging();
     testUtility.createMemoryDatabase();
-  }
-
-  /**
-   * Reads the stream fully, and returns a byte array of data.
-   * 
-   * @param stream
-   *        Stream to read.
-   * @return Byte array
-   */
-  private static String read(final InputStream stream)
-  {
-    if (stream == null)
-    {
-      LOGGER.log(Level.WARNING,
-                 "Cannot read null input stream",
-                 new IOException("Cannot read null input stream"));
-      return "";
-    }
-    final int bufferSize = 2048;
-    final ByteArrayOutputStream output = new ByteArrayOutputStream();
-    final BufferedInputStream input = new BufferedInputStream(stream);
-    byte[] bytes = new byte[0];
-
-    try
-    {
-      int length;
-      final byte[] copyBuffer = new byte[bufferSize];
-
-      while (-1 != (length = input.read(copyBuffer)))
-      {
-        output.write(copyBuffer, 0, length);
-      }
-      output.flush();
-      bytes = output.toByteArray();
-    }
-    catch (final IOException e)
-    {
-      LOGGER.log(Level.WARNING, "Error reading input stream", e);
-    }
-    finally
-    {
-      try
-      {
-        output.close();
-        input.close();
-      }
-      catch (final IOException e)
-      {
-        LOGGER.log(Level.WARNING, "Error closing stream", e);
-      }
-    }
-
-    return new String(bytes);
   }
 
   @Test
@@ -318,7 +262,7 @@ public class SchemaCrawlerTest
   {
 
     final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
-    informationSchemaViews.setRoutinesSql(read(this.getClass()
+    informationSchemaViews.setRoutinesSql(Utility.readFully(this.getClass()
       .getResourceAsStream("/procedure_definitions.sql")));
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();

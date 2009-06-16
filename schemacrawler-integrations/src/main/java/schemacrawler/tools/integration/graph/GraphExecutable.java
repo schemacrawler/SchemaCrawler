@@ -49,10 +49,8 @@ public final class GraphExecutable
 
   private static String dotError()
   {
-    final byte[] text = schemacrawler.utility.Utility
-      .readFully(HtmlFormattingHelper.class
-        .getResourceAsStream("/dot.error.txt"));
-    return new String(text);
+    return schemacrawler.utility.Utility.readFully(HtmlFormattingHelper.class
+      .getResourceAsStream("/dot.error.txt"));
   }
 
   /**

@@ -89,9 +89,8 @@ public final class SchemaDotFormatter
   public void begin()
     throws SchemaCrawlerException
   {
-    final byte[] text = schemacrawler.utility.Utility
-      .readFully(HtmlFormattingHelper.class
-        .getResourceAsStream("/dot.header.txt"));
+    final String text = Utility.readFully(HtmlFormattingHelper.class
+      .getResourceAsStream("/dot.header.txt"));
     out.println(new String(text));
   }
 

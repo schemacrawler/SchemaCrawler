@@ -20,10 +20,11 @@
 package schemacrawler.utility;
 
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -50,7 +51,19 @@ public final class Utility
    */
   public static boolean isBlank(final String text)
   {
-    return text == null || text.trim().length() == 0;
+    final int textLength;
+    if (text == null || (textLength = text.length()) == 0)
+    {
+      return true;
+    }
+    for (int i = 0; i < textLength; i++)
+    {
+      if (!Character.isWhitespace(text.charAt(i)))
+      {
+        return false;
+      }
+    }
+    return true;
   }
 
   /**
@@ -60,50 +73,42 @@ public final class Utility
    *        Stream to read.
    * @return Byte array
    */
-  public static byte[] readFully(final InputStream stream)
+  public static String readFully(final InputStream stream)
   {
     if (stream == null)
     {
       LOGGER.log(Level.WARNING,
                  "Cannot read null input stream",
                  new IOException("Cannot read null input stream"));
-      return new byte[0];
+      return "";
     }
-    final int bufferSize = 2048;
-    final ByteArrayOutputStream output = new ByteArrayOutputStream();
-    final BufferedInputStream input = new BufferedInputStream(stream);
-    byte[] bytes = new byte[0];
+
+    final StringBuilder out = new StringBuilder();
 
     try
     {
-      int length;
-      final byte[] copyBuffer = new byte[bufferSize];
-
-      while (-1 != (length = input.read(copyBuffer)))
+      final char[] buffer = new char[0x10000];
+      final Reader reader = new InputStreamReader(stream, "UTF-8");
+      int read;
+      do
       {
-        output.write(copyBuffer, 0, length);
-      }
-      output.flush();
-      bytes = output.toByteArray();
+        read = reader.read(buffer, 0, buffer.length);
+        if (read > 0)
+        {
+          out.append(buffer, 0, read);
+        }
+      } while (read >= 0);
+    }
+    catch (final UnsupportedEncodingException e)
+    {
+      LOGGER.log(Level.WARNING, e.getMessage(), e);
     }
     catch (final IOException e)
     {
-      LOGGER.log(Level.WARNING, "Error reading input stream", e);
-    }
-    finally
-    {
-      try
-      {
-        output.close();
-        input.close();
-      }
-      catch (final IOException e)
-      {
-        LOGGER.log(Level.WARNING, "Error closing stream", e);
-      }
+      LOGGER.log(Level.WARNING, "Could not read stream", e);
     }
 
-    return bytes;
+    return out.toString();
   }
 
   /**

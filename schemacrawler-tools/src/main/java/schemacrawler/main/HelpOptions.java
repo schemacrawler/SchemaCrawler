@@ -23,6 +23,7 @@ package schemacrawler.main;
 
 import schemacrawler.Version;
 import schemacrawler.schemacrawler.Options;
+import schemacrawler.utility.Utility;
 
 public class HelpOptions
   implements Options
@@ -118,9 +119,9 @@ public class HelpOptions
     {
       return;
     }
-    final byte[] text = schemacrawler.utility.Utility
-      .readFully(HelpOptions.class.getResourceAsStream(helpResource));
-    System.out.println(new String(text));
+    final String helpText = Utility.readFully(HelpOptions.class
+      .getResourceAsStream(helpResource));
+    System.out.println(helpText);
   }
 
 }

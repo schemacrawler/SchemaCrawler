@@ -21,13 +21,9 @@
 package schemacrawler.utility;
 
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.Reader;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
@@ -103,39 +99,6 @@ public class TestDatabaseUtility
   {
     final TestDatabaseUtility testUtility = new TestDatabaseUtility();
     testUtility.createDatabase();
-  }
-
-  /**
-   * Reads the stream fully, and returns a byte array of data.
-   * 
-   * @param stream
-   *        Stream to read.
-   * @return Byte array
-   */
-  private static String readFully(final Reader reader)
-  {
-    if (reader == null)
-    {
-      return "";
-    }
-
-    final StringBuilder buffer = new StringBuilder();
-    try
-    {
-      final BufferedReader in = new BufferedReader(reader);
-      String line;
-      while ((line = in.readLine()) != null)
-      {
-        buffer.append(line).append(NEWLINE);
-      }
-      in.close();
-    }
-    catch (final IOException e)
-    {
-      LOGGER.log(Level.WARNING, "Error reading input stream", e);
-    }
-
-    return buffer.toString();
   }
 
   private static void setApplicationLogLevel(final Level logLevel)
@@ -366,10 +329,10 @@ public class TestDatabaseUtility
     try
     {
       // Load schema script file
-      final String script = readFully(new InputStreamReader(TestDatabaseUtility.class
-        .getResourceAsStream("/schemacrawler.test.sql")));
-      final String otherScript = readFully(new InputStreamReader(TestDatabaseUtility.class
-        .getResourceAsStream("/schemacrawler.test.other.sql")));
+      final String script = Utility.readFully(TestDatabaseUtility.class
+        .getResourceAsStream("/schemacrawler.test.sql"));
+      final String otherScript = Utility.readFully(TestDatabaseUtility.class
+        .getResourceAsStream("/schemacrawler.test.other.sql"));
       if (dataSource != null)
       {
         connection = dataSource.getConnection();
