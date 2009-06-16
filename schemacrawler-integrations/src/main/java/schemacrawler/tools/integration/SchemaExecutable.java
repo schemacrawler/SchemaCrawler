@@ -88,7 +88,7 @@ public abstract class SchemaExecutable
   protected abstract void doExecute(final DataSource createDataSource)
     throws Exception;
 
-  protected final Database getCatalog(final DataSource dataSource)
+  protected final Database getDatabase(final DataSource dataSource)
     throws Exception
   {
     crawlHandler = new CachingCrawlHandler();
