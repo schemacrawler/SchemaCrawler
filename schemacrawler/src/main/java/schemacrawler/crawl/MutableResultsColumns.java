@@ -60,7 +60,7 @@ class MutableResultsColumns
    */
   public ResultsColumn[] getColumns()
   {
-    return columns.getAll().toArray(new ResultsColumn[columns.size()]);
+    return columns.values().toArray(new ResultsColumn[columns.size()]);
   }
 
   /**

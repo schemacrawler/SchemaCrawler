@@ -119,7 +119,7 @@ class MutableSchema
    */
   public ColumnDataType[] getColumnDataTypes()
   {
-    return columnDataTypes.getAll().toArray(new ColumnDataType[columnDataTypes
+    return columnDataTypes.values().toArray(new ColumnDataType[columnDataTypes
       .size()]);
   }
 
@@ -160,7 +160,7 @@ class MutableSchema
    */
   public Procedure[] getProcedures()
   {
-    return procedures.getAll().toArray(new Procedure[procedures.size()]);
+    return procedures.values().toArray(new Procedure[procedures.size()]);
   }
 
   /**
@@ -180,7 +180,7 @@ class MutableSchema
    */
   public Table[] getTables()
   {
-    return tables.getAll().toArray(new Table[tables.size()]);
+    return tables.values().toArray(new Table[tables.size()]);
   }
 
   /**
@@ -219,7 +219,7 @@ class MutableSchema
   MutableColumnDataType lookupByType(final int type)
   {
     MutableColumnDataType columnDataType = null;
-    final MutableColumnDataType[] allColumnDataTypes = columnDataTypes.getAll()
+    final MutableColumnDataType[] allColumnDataTypes = columnDataTypes.values()
       .toArray(new MutableColumnDataType[columnDataTypes.size()]);
     for (final MutableColumnDataType currentColumnDataType: allColumnDataTypes)
     {

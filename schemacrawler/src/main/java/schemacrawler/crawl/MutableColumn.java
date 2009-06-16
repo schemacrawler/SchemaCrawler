@@ -66,7 +66,7 @@ class MutableColumn
    */
   public Privilege[] getPrivileges()
   {
-    return privileges.getAll().toArray(new Privilege[privileges.size()]);
+    return privileges.values().toArray(new Privilege[privileges.size()]);
   }
 
   /**

@@ -62,7 +62,7 @@ public class WeakAssociationsAnalyzer
   private Collection<String> findTableNamePrefixes(final NamedObjectList<MutableTable> tables)
   {
     final SortedMap<String, Integer> prefixesMap = new TreeMap<String, Integer>();
-    final List<MutableTable> tablesList = tables.getAll();
+    final List<MutableTable> tablesList = tables.values();
     for (int i = 0; i < tables.size(); i++)
     {
       for (int j = i + 1; j < tables.size(); j++)
@@ -175,7 +175,7 @@ public class WeakAssociationsAnalyzer
                                                        final Map<String, ForeignKeyColumnMap> fkColumnsMap)
   {
     final MutableWeakAssociations weakAssociations = new MutableWeakAssociations();
-    final List<MutableTable> tablesList = tables.getAll();
+    final List<MutableTable> tablesList = tables.values();
     for (final MutableTable table: tablesList)
     {
       final Map<String, Column> columnNameMatchesMap = mapColumnNameMatches(table);

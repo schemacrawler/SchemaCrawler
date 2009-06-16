@@ -71,7 +71,7 @@ final class MutableProcedure
    */
   public ProcedureColumn[] getColumns()
   {
-    return columns.getAll().toArray(new ProcedureColumn[columns.size()]);
+    return columns.values().toArray(new ProcedureColumn[columns.size()]);
   }
 
   /**

@@ -21,9 +21,6 @@
 package schemacrawler.crawl;
 
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Database;
@@ -48,7 +45,7 @@ final class MutableDatabase
 
   private final DatabaseInfo databaseInfo;
   private final ColumnDataTypes systemColumnDataTypes = new ColumnDataTypes();
-  private final Map<String, MutableCatalog> catalogs = new LinkedHashMap<String, MutableCatalog>();
+  private final NamedObjectList<MutableCatalog> catalogs = new NamedObjectList<MutableCatalog>(NamedObjectSort.alphabetical);
   private WeakAssociations weakAssociations;
 
   MutableDatabase(final String name)
@@ -64,12 +61,7 @@ final class MutableDatabase
    */
   public Catalog getCatalog(final String name)
   {
-    MutableCatalog catalog = catalogs.get(name);
-    if (catalog == null && name == null)
-    {
-      catalog = catalogs.get("");
-    }
-    return catalog;
+    return catalogs.lookup(name);
   }
 
   /**
@@ -104,7 +96,7 @@ final class MutableDatabase
    */
   public ColumnDataType[] getSystemColumnDataTypes()
   {
-    return systemColumnDataTypes.getAll()
+    return systemColumnDataTypes.values()
       .toArray(new ColumnDataType[systemColumnDataTypes.size()]);
   }
 
@@ -115,10 +107,7 @@ final class MutableDatabase
 
   void addCatalog(final MutableCatalog catalog)
   {
-    if (catalog != null)
-    {
-      catalogs.put(catalog.getName(), catalog);
-    }
+    catalogs.add(catalog);
   }
 
   void addSystemColumnDataType(final MutableColumnDataType columnDataType)

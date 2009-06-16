@@ -67,7 +67,7 @@ class MutableTable
    */
   public CheckConstraint[] getCheckConstraints()
   {
-    return checkConstraints.getAll()
+    return checkConstraints.values()
       .toArray(new CheckConstraint[checkConstraints.size()]);
   }
 
@@ -88,7 +88,7 @@ class MutableTable
    */
   public Column[] getColumns()
   {
-    return columns.getAll().toArray(new Column[columns.size()]);
+    return columns.values().toArray(new Column[columns.size()]);
   }
 
   /**
@@ -134,7 +134,7 @@ class MutableTable
    */
   public ForeignKey[] getForeignKeys()
   {
-    return foreignKeys.getAll().toArray(new ForeignKey[foreignKeys.size()]);
+    return foreignKeys.values().toArray(new ForeignKey[foreignKeys.size()]);
   }
 
   /**
@@ -163,7 +163,7 @@ class MutableTable
         setPrimaryKey(new MutablePrimaryKey(index));
       }
     }
-    return indices.getAll().toArray(new Index[indices.size()]);
+    return indices.values().toArray(new Index[indices.size()]);
   }
 
   /**
@@ -183,7 +183,7 @@ class MutableTable
    */
   public Privilege[] getPrivileges()
   {
-    return privileges.getAll().toArray(new Privilege[privileges.size()]);
+    return privileges.values().toArray(new Privilege[privileges.size()]);
   }
 
   /**
@@ -203,7 +203,7 @@ class MutableTable
    */
   public Trigger[] getTriggers()
   {
-    return triggers.getAll().toArray(new Trigger[triggers.size()]);
+    return triggers.values().toArray(new Trigger[triggers.size()]);
   }
 
   /**
