@@ -22,6 +22,7 @@ package schemacrawler.tools.util;
 
 
 import schemacrawler.tools.OutputFormat;
+import schemacrawler.utility.Utility;
 
 /**
  * Methods to format entire rows of output as HTML.
@@ -42,10 +43,8 @@ public final class HtmlFormattingHelper
 
   private static String htmlHeader()
   {
-    final byte[] text = schemacrawler.utility.Utility
-      .readFully(HtmlFormattingHelper.class
-        .getResourceAsStream("/schemacrawler-output.css"));
-    final String styleSheet = new String(text);
+    final String styleSheet = Utility.readFully(HtmlFormattingHelper.class
+      .getResourceAsStream("/schemacrawler-output.css"));
 
     final String header = ""
                           + "<?xml version='1.0' encoding='UTF-8'?>"
