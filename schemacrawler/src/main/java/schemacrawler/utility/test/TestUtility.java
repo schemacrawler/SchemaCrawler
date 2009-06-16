@@ -197,7 +197,7 @@ public class TestUtility
     }
     else
     {
-      out = new PrintWriter(new NullWriter(), true);
+      out = null;
     }
     createDatabase("jdbc:hsqldb:mem:schemacrawler");
   }
