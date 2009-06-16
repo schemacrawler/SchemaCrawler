@@ -27,6 +27,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import schemacrawler.schema.Table;
+import schemacrawler.utility.Utility;
 
 /**
  * A SQL query. May be parameterized with ant-like variable references.
@@ -166,7 +167,7 @@ public final class Query
    */
   public Query(final String name, final String query)
   {
-    if (name == null || name.length() == 0)
+    if (Utility.isBlank(name))
     {
       throw new IllegalArgumentException("No name provided for the query");
     }

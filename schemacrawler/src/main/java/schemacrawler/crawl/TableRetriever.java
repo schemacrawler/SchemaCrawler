@@ -37,6 +37,7 @@ import schemacrawler.schema.IndexType;
 import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.utility.Utility;
 
 /**
  * A retriever uses database metadata to get the details about the
@@ -336,7 +337,7 @@ final class TableRetriever
       while (results.next())
       {
         String foreignKeyName = results.getString("FK_NAME");
-        if (foreignKeyName == null || foreignKeyName.length() == 0)
+        if (Utility.isBlank(foreignKeyName))
         {
           foreignKeyName = UNKNOWN;
         }
@@ -419,12 +420,12 @@ final class TableRetriever
         // final String schemaName = results.getString("TABLE_SCHEM");
         // final String tableName = results.getString("TABLE_NAME");
         String indexName = results.getString("INDEX_NAME");
-        if (indexName == null || indexName.length() == 0)
+        if (Utility.isBlank(indexName))
         {
           indexName = UNKNOWN;
         }
         final String columnName = results.getString(COLUMN_NAME);
-        if (columnName == null || columnName.trim().length() == 0)
+        if (Utility.isBlank(columnName))
         {
           continue;
         }

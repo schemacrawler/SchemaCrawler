@@ -26,6 +26,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
+import schemacrawler.utility.Utility;
+
 /**
  * Specifies inclusion and exclusion patterns that can be applied to the
  * names of database objects.
@@ -153,7 +155,7 @@ public final class InclusionRule
   public boolean include(final String name)
   {
     boolean include = false;
-    if (!(name == null || name.trim().length() == 0))
+    if (!Utility.isBlank(name))
     {
       if (!patternInclude.matcher(name).matches())
       {

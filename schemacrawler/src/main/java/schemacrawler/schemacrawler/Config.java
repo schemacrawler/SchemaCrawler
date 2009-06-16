@@ -35,6 +35,8 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.utility.Utility;
+
 /**
  * Configuration properties.
  * 
@@ -82,7 +84,7 @@ public final class Config
     {
       for (final String configFilename: configFilenames)
       {
-        if (!(configFilename == null || configFilename.trim().length() == 0))
+        if (!Utility.isBlank(configFilename))
         {
           configProperties = loadProperties(configProperties,
                                             new File(configFilename));
