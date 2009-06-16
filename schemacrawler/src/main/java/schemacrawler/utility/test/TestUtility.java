@@ -23,6 +23,7 @@ package schemacrawler.utility.test;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -31,6 +32,7 @@ import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Properties;
 import java.util.logging.Handler;
@@ -315,10 +317,20 @@ public class TestUtility
     setupSchema(dataSource);
   }
 
+  /**
+   * Delete files from the previous run of the database server.
+   */
   private void deleteServerFiles(final String stem)
   {
-    final File[] files = new File(".")
-      .listFiles(new HSQLDBServerFilesFilter(stem));
+    final File[] files = new File(".").listFiles(new FilenameFilter()
+    {
+      public boolean accept(final File dir, final String name)
+      {
+        return Arrays.asList(new String[] {
+            stem + ".lck", stem + ".log", stem + ".properties",
+        }).contains(name);
+      }
+    });
     for (final File file: files)
     {
       if (!file.isDirectory() && !file.isHidden())
