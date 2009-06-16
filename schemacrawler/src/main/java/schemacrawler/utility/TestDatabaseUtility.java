@@ -57,11 +57,6 @@ public class TestDatabaseUtility
 
   private static final Level DEBUG_loglevel = Level.OFF;
 
-  /**
-   * System specific line separator character.
-   */
-  private static final String NEWLINE = System.getProperty("line.separator");
-
   private static final Logger LOGGER = Logger
     .getLogger(TestDatabaseUtility.class.getName());
 
