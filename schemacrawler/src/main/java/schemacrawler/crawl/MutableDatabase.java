@@ -64,7 +64,12 @@ final class MutableDatabase
    */
   public Catalog getCatalog(final String name)
   {
-    return catalogs.get(name);
+    MutableCatalog catalog = catalogs.get(name);
+    if (catalog == null && name == null)
+    {
+      catalog = catalogs.get("");
+    }
+    return catalog;
   }
 
   /**
