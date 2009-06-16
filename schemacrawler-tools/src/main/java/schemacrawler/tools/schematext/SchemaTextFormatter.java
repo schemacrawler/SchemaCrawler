@@ -59,6 +59,7 @@ import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 import schemacrawler.tools.util.PlainTextFormattingHelper;
 import schemacrawler.tools.util.TextFormattingHelper;
+import schemacrawler.utility.Utility;
 
 /**
  * Text formatting of schema.
@@ -623,7 +624,7 @@ public final class SchemaTextFormatter
       {
         pkName = name;
       }
-      if (pkName == null)
+      if (Utility.isBlank(pkName))
       {
         pkName = "";
       }

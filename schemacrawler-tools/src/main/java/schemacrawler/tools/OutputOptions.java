@@ -30,6 +30,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Options;
+import schemacrawler.utility.Utility;
 
 /**
  * Contains output options.
@@ -320,7 +321,7 @@ public final class OutputOptions
    */
   public void setOutputFileName(final String outputFileName)
   {
-    if (outputFileName == null)
+    if (Utility.isBlank(outputFileName))
     {
       throw new IllegalArgumentException("Cannot set null output file name");
     }

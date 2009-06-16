@@ -27,6 +27,7 @@ import java.sql.SQLException;
 
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.utility.Utility;
 
 /**
  * A retriever uses database metadata to get the details about a result
@@ -81,7 +82,7 @@ final class ResultsRetriever
         final String catalogName = resultsMetaData.getCatalogName(i);
         final String schemaName = resultsMetaData.getSchemaName(i);
         String tableName = resultsMetaData.getTableName(i);
-        if (tableName == null)
+        if (Utility.isBlank(tableName))
         {
           tableName = "";
         }

@@ -44,6 +44,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 import schemacrawler.tools.util.PastelColor;
+import schemacrawler.utility.Utility;
 
 public final class SchemaDotFormatter
   implements CrawlHandler
@@ -261,7 +262,7 @@ public final class SchemaDotFormatter
       arrowtail = "crowodot";
     }
     final String style;
-    if (associationName == null || associationName.equals(""))
+    if (Utility.isBlank(associationName))
     {
       style = "dashed";
     }
