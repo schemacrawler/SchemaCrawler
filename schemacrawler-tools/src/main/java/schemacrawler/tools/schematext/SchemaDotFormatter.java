@@ -44,7 +44,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 import schemacrawler.tools.util.PastelColor;
-import sf.util.Utilities;
 
 public final class SchemaDotFormatter
   implements CrawlHandler
@@ -89,8 +88,9 @@ public final class SchemaDotFormatter
   public void begin()
     throws SchemaCrawlerException
   {
-    final byte[] text = Utilities.readFully(HtmlFormattingHelper.class
-      .getResourceAsStream("/dot.header.txt"));
+    final byte[] text = schemacrawler.utility.Utility
+      .readFully(HtmlFormattingHelper.class
+        .getResourceAsStream("/dot.header.txt"));
     out.println(new String(text));
   }
 

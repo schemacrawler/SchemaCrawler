@@ -22,7 +22,6 @@ package schemacrawler.tools.util;
 
 
 import schemacrawler.tools.OutputFormat;
-import sf.util.Utilities;
 
 /**
  * Methods to format entire rows of output as HTML.
@@ -43,8 +42,9 @@ public final class HtmlFormattingHelper
 
   private static String htmlHeader()
   {
-    final byte[] text = Utilities.readFully(HtmlFormattingHelper.class
-      .getResourceAsStream("/schemacrawler-output.css"));
+    final byte[] text = schemacrawler.utility.Utility
+      .readFully(HtmlFormattingHelper.class
+        .getResourceAsStream("/schemacrawler-output.css"));
     final String styleSheet = new String(text);
 
     final String header = ""
@@ -109,7 +109,7 @@ public final class HtmlFormattingHelper
   public String createObjectStart(final String name)
   {
     String objectStart = "<table>" + NEWLINE;
-    if (!Utilities.isBlank(name))
+    if (!schemacrawler.utility.Utility.isBlank(name))
     {
       objectStart = objectStart + "  <caption>" + name + "</caption>" + NEWLINE;
     }

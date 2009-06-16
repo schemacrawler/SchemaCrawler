@@ -26,7 +26,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import schemacrawler.Version;
-import sf.util.Utilities;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -52,11 +51,11 @@ public final class Main
   {
     byte[] text;
     //
-    text = Utilities.readFully(Main.class
+    text = schemacrawler.utility.Utility.readFully(Main.class
       .getResourceAsStream("/" + MAVEN_PLUGIN_POM_FILENAME));
     pluginPom = new String(text);
     //
-    text = Utilities.readFully(Main.class
+    text = schemacrawler.utility.Utility.readFully(Main.class
       .getResourceAsStream("/" + MAVEN_PLUGIN_INSTRUCTONS_FILENAME));
     instructions = new String(text);
   }

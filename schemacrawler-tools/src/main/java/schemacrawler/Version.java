@@ -22,7 +22,6 @@ package schemacrawler;
 
 
 import schemacrawler.main.HelpOptions;
-import sf.util.Utilities;
 
 /**
  * Version information for this product. Has methods to obtain
@@ -40,8 +39,9 @@ public final class Version
 
   static
   {
-    final byte[] text = Utilities.readFully(HelpOptions.class
-      .getResourceAsStream("/help/SchemaCrawler.txt"));
+    final byte[] text = schemacrawler.utility.Utility
+      .readFully(HelpOptions.class
+        .getResourceAsStream("/help/SchemaCrawler.txt"));
     ABOUT = new String(text);
   }
 

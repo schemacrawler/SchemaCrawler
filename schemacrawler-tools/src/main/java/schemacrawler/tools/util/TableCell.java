@@ -21,7 +21,6 @@ package schemacrawler.tools.util;
 
 
 import schemacrawler.tools.OutputFormat;
-import sf.util.Utilities;
 
 /**
  * Represents an HTML table row.
@@ -145,7 +144,7 @@ final class TableCell
     {
       buffer.append(" colspan='").append(colSpan).append("'");
     }
-    if (!Utilities.isBlank(styleClass))
+    if (!schemacrawler.utility.Utility.isBlank(styleClass))
     {
       buffer.append(" class='").append(styleClass).append("'");
     }

@@ -21,7 +21,6 @@ package schemacrawler.main.dbconnector;
 
 
 import schemacrawler.schemacrawler.Options;
-import sf.util.Utilities;
 
 /**
  * Additional options needed for Spring.
@@ -60,12 +59,12 @@ abstract class BaseConnectorOptions
 
   public final boolean hasSchemaPattern()
   {
-    return !Utilities.isBlank(schemapattern);
+    return !schemacrawler.utility.Utility.isBlank(schemapattern);
   }
 
   public final boolean hasUser()
   {
-    return !Utilities.isBlank(user);
+    return !schemacrawler.utility.Utility.isBlank(user);
   }
 
   public final void setPassword(final String password)

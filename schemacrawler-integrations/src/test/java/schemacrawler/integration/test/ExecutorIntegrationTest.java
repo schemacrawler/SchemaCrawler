@@ -36,12 +36,12 @@ import schemacrawler.tools.integration.freemarker.FreeMarkerRenderer;
 import schemacrawler.tools.integration.velocity.VelocityRenderer;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextOptions;
-import schemacrawler.utility.test.TestUtility;
+import schemacrawler.utility.TestDatabaseUtility;
 
 public class ExecutorIntegrationTest
 {
 
-  private static TestUtility testUtility = new TestUtility();
+  private static TestDatabaseUtility testUtility = new TestDatabaseUtility();
 
   @AfterClass
   public static void afterAllTests()
@@ -52,7 +52,7 @@ public class ExecutorIntegrationTest
   @BeforeClass
   public static void beforeAllTests()
   {
-    TestUtility.setApplicationLogLevel();
+    TestDatabaseUtility.disableApplicationLogging();
     testUtility.createMemoryDatabase();
   }
 

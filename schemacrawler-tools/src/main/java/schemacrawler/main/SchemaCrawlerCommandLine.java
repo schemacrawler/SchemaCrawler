@@ -31,7 +31,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.Commands;
 import schemacrawler.tools.OutputOptions;
-import sf.util.Utilities;
 
 /**
  * Utility for parsing the SchemaCrawler command line.
@@ -113,7 +112,7 @@ public class SchemaCrawlerCommandLine
     applicationOptions.applyApplicationLogLevel();
     try
     {
-      if (!Utilities.isBlank(configResource))
+      if (!schemacrawler.utility.Utility.isBlank(configResource))
       {
         config = Config.load(SchemaCrawlerCommandLine.class
           .getResourceAsStream(configResource));

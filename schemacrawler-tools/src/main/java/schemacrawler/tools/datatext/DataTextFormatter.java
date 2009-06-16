@@ -42,7 +42,6 @@ import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 import schemacrawler.tools.util.PlainTextFormattingHelper;
 import schemacrawler.tools.util.TextFormattingHelper;
-import sf.util.Utilities;
 
 /**
  * Text formatting of data.
@@ -297,7 +296,7 @@ public final class DataTextFormatter
         final Clob clob = (Clob) columnData;
         in = new BufferedInputStream(clob.getAsciiStream());
       }
-      lobData = new String(Utilities.readFully(in));
+      lobData = new String(schemacrawler.utility.Utility.readFully(in));
       return lobData;
     }
     catch (final SQLException e)

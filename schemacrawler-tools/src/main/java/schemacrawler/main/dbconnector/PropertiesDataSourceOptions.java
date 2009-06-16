@@ -20,8 +20,6 @@
 package schemacrawler.main.dbconnector;
 
 
-import sf.util.Utilities;
-
 /**
  * Additional options needed for Spring.
  * 
@@ -60,7 +58,8 @@ public class PropertiesDataSourceOptions
 
   public boolean isUseJdbcConnection()
   {
-    return !Utilities.isBlank(driver) && !Utilities.isBlank(connectionUrl);
+    return !schemacrawler.utility.Utility.isBlank(driver)
+           && !schemacrawler.utility.Utility.isBlank(connectionUrl);
   }
 
   public void setConnection(final String connection)

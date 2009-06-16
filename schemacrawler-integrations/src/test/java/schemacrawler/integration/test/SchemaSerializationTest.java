@@ -44,13 +44,13 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.integration.xml.XmlSchemaCrawler;
-import schemacrawler.utility.test.TestUtility;
+import schemacrawler.utility.TestDatabaseUtility;
 
 import com.thoughtworks.xstream.XStream;
 
 public class SchemaSerializationTest
 {
-  private static TestUtility testUtility = new TestUtility();
+  private static TestDatabaseUtility testUtility = new TestDatabaseUtility();
 
   @AfterClass
   public static void afterAllTests()
@@ -61,7 +61,7 @@ public class SchemaSerializationTest
   @BeforeClass
   public static void beforeAllTests()
   {
-    TestUtility.setApplicationLogLevel();
+    TestDatabaseUtility.disableApplicationLogging();
     testUtility.createMemoryDatabase();
   }
 

@@ -23,7 +23,6 @@ package schemacrawler.tools.util;
 
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.util.TableCell.Align;
-import sf.util.Utilities;
 
 /**
  * Methods to format entire rows of output as HTML.
@@ -89,7 +88,7 @@ abstract class BaseTextFormattingHelper
     final int typeWidth = 28;
 
     final TableRow row = new TableRow(outputFormat);
-    if (Utilities.isBlank(ordinal))
+    if (schemacrawler.utility.Utility.isBlank(ordinal))
     {
       row.add(new TableCell("", "ordinal", outputFormat));
     }

@@ -17,15 +17,17 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package sf.util;
+package schemacrawler.utility;
 
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.logging.Handler;
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 /**
@@ -33,42 +35,11 @@ import java.util.logging.Logger;
  * 
  * @author Sualeh Fatehi
  */
-public final class Utilities
+public final class Utility
 {
 
-  private static final Logger LOGGER = Logger.getLogger(Utilities.class
-    .getName());
-
-  public static File changeFileExtension(final File file, final String ext)
-  {
-    final String oldExt = getFileExtension(file);
-    final String oldFileName = file.getName();
-    final String newFileName = oldFileName.substring(0, (oldFileName
-      .lastIndexOf(oldExt) - 1))
-                               + ext;
-    return new File(file.getParentFile(), newFileName);
-  }
-
-  public static String getFileExtension(final File file)
-  {
-    final String ext;
-    if (file != null)
-    {
-      final String scriptFileName = file.getName();
-      ext = scriptFileName.lastIndexOf(".") == -1
-                                                 ? ""
-                                                 : scriptFileName
-                                                   .substring(scriptFileName
-                                                                .lastIndexOf(".") + 1,
-                                                              scriptFileName
-                                                                .length());
-    }
-    else
-    {
-      ext = "";
-    }
-    return ext;
-  }
+  private static final Logger LOGGER = Logger
+    .getLogger(Utility.class.getName());
 
   /**
    * Checks if the text is null or empty.
@@ -136,11 +107,33 @@ public final class Utilities
   }
 
   /**
-   * Confound instantiation.
+   * Sets the application-wide log level.
+   * 
+   * @param logLevel
+   *        Log level to set
    */
-  private Utilities()
+  public static void setApplicationLogLevel(final Level logLevel)
   {
-    // intentionally left blank
+    final LogManager logManager = LogManager.getLogManager();
+    for (final Enumeration<String> loggerNames = logManager.getLoggerNames(); loggerNames
+      .hasMoreElements();)
+    {
+      final String loggerName = loggerNames.nextElement();
+      final Logger logger = logManager.getLogger(loggerName);
+      logger.setLevel(null);
+      final Handler[] handlers = logger.getHandlers();
+      for (final Handler handler: handlers)
+      {
+        handler.setLevel(logLevel);
+      }
+    }
+
+    final Logger rootLogger = Logger.getLogger("");
+    rootLogger.setLevel(logLevel);
+  }
+
+  private Utility()
+  { // Prevent instantiation
   }
 
 }

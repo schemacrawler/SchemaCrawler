@@ -33,7 +33,7 @@ import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.integration.SchemaExecutable;
 import schemacrawler.tools.util.HtmlFormattingHelper;
-import sf.util.Utilities;
+import sf.util.Utility;
 
 /**
  * Main executor for the graphing integration.
@@ -49,8 +49,9 @@ public final class GraphExecutable
 
   private static String dotError()
   {
-    final byte[] text = Utilities.readFully(HtmlFormattingHelper.class
-      .getResourceAsStream("/dot.error.txt"));
+    final byte[] text = schemacrawler.utility.Utility
+      .readFully(HtmlFormattingHelper.class
+        .getResourceAsStream("/dot.error.txt"));
     return new String(text);
   }
 
@@ -85,8 +86,8 @@ public final class GraphExecutable
       final String outputFormat = outputOptions.getOutputFormatValue();
       if (outputFormat.equalsIgnoreCase("dot"))
       {
-        writeDotFile(dataSource, Utilities.changeFileExtension(outputFile,
-                                                               ".dot"));
+        writeDotFile(dataSource, Utility
+          .changeFileExtension(outputFile, ".dot"));
       }
       else
       {
@@ -101,8 +102,7 @@ public final class GraphExecutable
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not write diagram", e);
-      writeDotFile(dataSource, Utilities
-        .changeFileExtension(outputFile, ".dot"));
+      writeDotFile(dataSource, Utility.changeFileExtension(outputFile, ".dot"));
       System.out.println(dotError());
     }
   }

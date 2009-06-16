@@ -37,12 +37,12 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.utility.test.TestUtility;
+import schemacrawler.utility.TestDatabaseUtility;
 
 public class SchemaCrawlerDeepTest
 {
 
-  private static TestUtility testUtility = new TestUtility();
+  private static TestDatabaseUtility testUtility = new TestDatabaseUtility();
 
   @AfterClass
   public static void afterAllTests()
@@ -55,7 +55,7 @@ public class SchemaCrawlerDeepTest
   public static void beforeAllTests()
     throws ClassNotFoundException
   {
-    TestUtility.setApplicationLogLevel();
+    TestDatabaseUtility.disableApplicationLogging();
     testUtility.createMemoryDatabase();
   }
 

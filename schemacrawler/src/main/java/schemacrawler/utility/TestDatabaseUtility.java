@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.utility.test;
+package schemacrawler.utility;
 
 
 import java.io.BufferedReader;
@@ -48,7 +48,6 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.utility.SchemaCrawlerUtility;
 import schemacrawler.utility.datasource.PropertiesDataSource;
 
 /**
@@ -57,7 +56,7 @@ import schemacrawler.utility.datasource.PropertiesDataSource;
  * @author sfatehi
  */
 @SuppressWarnings("unchecked")
-public class TestUtility
+public class TestDatabaseUtility
 {
 
   private static final Level DEBUG_loglevel = Level.OFF;
@@ -67,8 +66,8 @@ public class TestUtility
    */
   private static final String NEWLINE = System.getProperty("line.separator");
 
-  private static final Logger LOGGER = Logger.getLogger(TestUtility.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(TestDatabaseUtility.class.getName());
 
   private static final boolean DEBUG = false;
 
@@ -86,6 +85,11 @@ public class TestUtility
     }
   }
 
+  public static void disableApplicationLogging()
+  {
+    setApplicationLogLevel(DEBUG_loglevel);
+  }
+
   /**
    * Starts up a test database in server mode.
    * 
@@ -97,13 +101,8 @@ public class TestUtility
   public static void main(final String[] args)
     throws Exception
   {
-    final TestUtility testUtility = new TestUtility();
+    final TestDatabaseUtility testUtility = new TestDatabaseUtility();
     testUtility.createDatabase();
-  }
-
-  public static void setApplicationLogLevel()
-  {
-    setApplicationLogLevel(DEBUG_loglevel);
   }
 
   /**
@@ -367,9 +366,9 @@ public class TestUtility
     try
     {
       // Load schema script file
-      final String script = readFully(new InputStreamReader(TestUtility.class
+      final String script = readFully(new InputStreamReader(TestDatabaseUtility.class
         .getResourceAsStream("/schemacrawler.test.sql")));
-      final String otherScript = readFully(new InputStreamReader(TestUtility.class
+      final String otherScript = readFully(new InputStreamReader(TestDatabaseUtility.class
         .getResourceAsStream("/schemacrawler.test.other.sql")));
       if (dataSource != null)
       {

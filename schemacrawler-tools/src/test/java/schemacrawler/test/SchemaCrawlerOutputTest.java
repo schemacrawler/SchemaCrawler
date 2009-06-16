@@ -63,7 +63,7 @@ import schemacrawler.tools.operation.OperationOptions;
 import schemacrawler.tools.schematext.SchemaCrawlerExecutable;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextOptions;
-import schemacrawler.utility.test.TestUtility;
+import schemacrawler.utility.TestDatabaseUtility;
 
 public class SchemaCrawlerOutputTest
 {
@@ -92,7 +92,7 @@ public class SchemaCrawlerOutputTest
 
   }
 
-  private static TestUtility testUtility = new TestUtility();
+  private static TestDatabaseUtility testUtility = new TestDatabaseUtility();
 
   @AfterClass
   public static void afterAllTests()
@@ -103,7 +103,7 @@ public class SchemaCrawlerOutputTest
   @BeforeClass
   public static void beforeAllTests()
   {
-    TestUtility.setApplicationLogLevel();
+    TestDatabaseUtility.disableApplicationLogging();
     testUtility.createMemoryDatabase();
     XMLUnit.setControlEntityResolver(new LocalEntityResolver());
   }
