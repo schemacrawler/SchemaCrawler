@@ -29,11 +29,8 @@ import java.sql.Driver;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.Properties;
-import java.util.logging.Handler;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import javax.sql.DataSource;
@@ -78,7 +75,7 @@ public class TestDatabaseUtility
 
   public static void disableApplicationLogging()
   {
-    setApplicationLogLevel(DEBUG_loglevel);
+    Utility.setApplicationLogLevel(DEBUG_loglevel);
   }
 
   /**
@@ -94,26 +91,6 @@ public class TestDatabaseUtility
   {
     final TestDatabaseUtility testUtility = new TestDatabaseUtility();
     testUtility.createDatabase();
-  }
-
-  private static void setApplicationLogLevel(final Level logLevel)
-  {
-    final LogManager logManager = LogManager.getLogManager();
-    for (final Enumeration<String> loggerNames = logManager.getLoggerNames(); loggerNames
-      .hasMoreElements();)
-    {
-      final String loggerName = loggerNames.nextElement();
-      final Logger logger = logManager.getLogger(loggerName);
-      logger.setLevel(null);
-      final Handler[] handlers = logger.getHandlers();
-      for (final Handler handler: handlers)
-      {
-        handler.setLevel(logLevel);
-      }
-    }
-
-    final Logger rootLogger = Logger.getLogger("");
-    rootLogger.setLevel(logLevel);
   }
 
   private String catalogName;
