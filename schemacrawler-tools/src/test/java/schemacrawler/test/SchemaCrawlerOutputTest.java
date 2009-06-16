@@ -27,6 +27,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -38,6 +39,9 @@ import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.xml.sax.EntityResolver;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutor;
@@ -63,6 +67,30 @@ import schemacrawler.utility.test.TestUtility;
 
 public class SchemaCrawlerOutputTest
 {
+
+  private static class LocalEntityResolver
+    implements EntityResolver
+  {
+
+    public InputSource resolveEntity(final String publicId,
+                                     final String systemId)
+      throws SAXException, IOException
+    {
+      final String localResource = "/xhtml1"
+                                   + systemId.substring(systemId
+                                     .lastIndexOf('/'));
+      final InputStream entityStream = LocalEntityResolver.class
+        .getResourceAsStream(localResource);
+      if (entityStream == null)
+      {
+        final String message = "Could not load " + localResource;
+        System.err.println(message);
+        throw new IOException(message);
+      }
+      return new InputSource(entityStream);
+    }
+
+  }
 
   private static TestUtility testUtility = new TestUtility();
 
@@ -334,5 +362,4 @@ public class SchemaCrawlerOutputTest
     final Validator validator = new Validator(new FileReader(outputFilename));
     validator.assertIsValid();
   }
-
 }
