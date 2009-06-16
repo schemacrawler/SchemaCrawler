@@ -114,7 +114,7 @@ class MutableIndex
    */
   public IndexColumn[] getColumns()
   {
-    return columns.getAll().toArray(new IndexColumn[columns.size()]);
+    return columns.values().toArray(new IndexColumn[columns.size()]);
   }
 
   /**

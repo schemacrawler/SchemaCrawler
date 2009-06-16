@@ -150,7 +150,7 @@ final class MutableJdbcDriverInfo
    */
   public JdbcDriverProperty[] getDriverProperties()
   {
-    return jdbcDriverProperties.getAll()
+    return jdbcDriverProperties.values()
       .toArray(new JdbcDriverProperty[jdbcDriverProperties.size()]);
   }
 

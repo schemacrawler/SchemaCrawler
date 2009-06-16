@@ -21,9 +21,6 @@
 package schemacrawler.crawl;
 
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
@@ -41,7 +38,7 @@ class MutableCatalog
   private static final long serialVersionUID = 3258128063743931187L;
 
   private final Database database;
-  private final Map<String, MutableSchema> schemas = new LinkedHashMap<String, MutableSchema>();
+  private final NamedObjectList<MutableSchema> schemas = new NamedObjectList<MutableSchema>(NamedObjectSort.alphabetical);
 
   MutableCatalog(final Database database, final String name)
   {
@@ -66,12 +63,7 @@ class MutableCatalog
    */
   public Schema getSchema(final String name)
   {
-    MutableSchema schema = schemas.get(name);
-    if (schema == null && name == null)
-    {
-      schema = schemas.get("");
-    }
-    return schema;
+    return schemas.lookup(name);
   }
 
   /**
@@ -86,10 +78,7 @@ class MutableCatalog
 
   void addSchema(final MutableSchema schema)
   {
-    if (schema != null)
-    {
-      schemas.put(schema.getName(), schema);
-    }
+    schemas.add(schema);
   }
 
 }

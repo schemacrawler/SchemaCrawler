@@ -32,6 +32,7 @@ import java.util.List;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
+import schemacrawler.utility.Utility;
 
 /**
  * Ordered list of named objects, that can be searched associatively.
@@ -118,7 +119,7 @@ class NamedObjectList<N extends NamedObject>
    */
   public Iterator<N> iterator()
   {
-    return getAll().iterator();
+    return values().iterator();
   }
 
   /**
@@ -129,7 +130,7 @@ class NamedObjectList<N extends NamedObject>
   @Override
   public String toString()
   {
-    return getAll().toString();
+    return values().toString();
   }
 
   /**
@@ -140,7 +141,7 @@ class NamedObjectList<N extends NamedObject>
    */
   void add(final N namedObject)
   {
-    if (namedObject == null || namedObject.getName() == null)
+    if (namedObject == null)
     {
       throw new IllegalArgumentException("Cannot add an object to the list");
     }
@@ -152,7 +153,7 @@ class NamedObjectList<N extends NamedObject>
    * 
    * @return All named objects
    */
-  List<N> getAll()
+  List<N> values()
   {
     final List<N> all = new ArrayList<N>(objects);
     Collections.sort(all, sort);
@@ -232,9 +233,14 @@ class NamedObjectList<N extends NamedObject>
     {
       return null;
     }
+    final boolean hasBlankName = Utility.isBlank(namedObject.getName());
     for (final N listItem: objects)
     {
-      if (namedObject.equals(listItem))
+      if (hasBlankName && Utility.isBlank(listItem.getName()))
+      {
+        return listItem;
+      }
+      else if (namedObject.equals(listItem))
       {
         return listItem;
       }

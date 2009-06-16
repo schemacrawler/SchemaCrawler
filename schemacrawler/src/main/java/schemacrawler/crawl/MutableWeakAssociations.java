@@ -46,7 +46,7 @@ class MutableWeakAssociations
    */
   public ForeignKeyColumnMap[] getColumnPairs()
   {
-    return columnPairs.getAll().toArray(new ForeignKeyColumnMap[columnPairs
+    return columnPairs.values().toArray(new ForeignKeyColumnMap[columnPairs
       .size()]);
   }
 
