@@ -84,11 +84,21 @@ public final class SqlDataType
       try
       {
         javaSqlTypesProperties.load(javaSqlTypesStream);
-        javaSqlTypesStream.close();
       }
       catch (final IOException e)
       {
         LOGGER.log(Level.WARNING, "Could not read internal resource", e);
+      }
+      finally
+      {
+        try
+        {
+          javaSqlTypesStream.close();
+        }
+        catch (final IOException e)
+        {
+          // Ignore
+        }
       }
       for (final Entry<Object, Object> entry: javaSqlTypesProperties.entrySet())
       {

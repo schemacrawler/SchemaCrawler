@@ -22,7 +22,9 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
+import schemacrawler.utility.Utility;
 
 /**
  * Represents a database object.
@@ -85,18 +87,19 @@ abstract class AbstractDatabaseObject
     final StringBuilder buffer = new StringBuilder();
     if (schema != null)
     {
-      if (schema != null)
+      final NamedObject catalog = schema.getParent();
+      if (catalog != null)
       {
-        final String catalogName = schema.getParent().getName();
-        if (catalogName != null && catalogName.length() > 0)
+        final String catalogName = catalog.getName();
+        if (Utility.isBlank(catalogName))
         {
           buffer.append(catalogName).append(".");
         }
-        final String schemaName = schema.getName();
-        if (schemaName != null && schemaName.length() > 0)
-        {
-          buffer.append(schemaName).append(".");
-        }
+      }
+      final String schemaName = schema.getName();
+      if (schemaName != null && schemaName.length() > 0)
+      {
+        buffer.append(schemaName).append(".");
       }
     }
     if (getName() != null)

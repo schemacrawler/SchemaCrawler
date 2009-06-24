@@ -149,13 +149,10 @@ abstract class AbstractRetriever
     // Create new data type, if needed
     if (columnDataType == null)
     {
-      if (columnDataType == null)
-      {
-        columnDataType = new MutableColumnDataType(schema,
-                                                   databaseSpecificTypeName);
-        columnDataType.setType(jdbcDataType);
-        schema.addColumnDataType(columnDataType);
-      }
+      columnDataType = new MutableColumnDataType(schema,
+                                                 databaseSpecificTypeName);
+      columnDataType.setType(jdbcDataType);
+      schema.addColumnDataType(columnDataType);
     }
     return columnDataType;
   }
