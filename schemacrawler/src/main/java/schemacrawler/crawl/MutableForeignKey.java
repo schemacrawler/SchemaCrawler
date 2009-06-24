@@ -148,12 +148,7 @@ class MutableForeignKey
     fkColumnPair.setKeySequence(keySequence);
     fkColumnPair.setPrimaryKeyColumn(pkColumn);
     fkColumnPair.setForeignKeyColumn(fkColumn);
-    addColumnPair(fkColumnPair);
-  }
-
-  void addColumnPair(final MutableForeignKeyColumnMap columnPair)
-  {
-    columnPairs.add(columnPair);
+    columnPairs.add(fkColumnPair);
   }
 
   final void setDeferrability(final ForeignKeyDeferrability deferrability)

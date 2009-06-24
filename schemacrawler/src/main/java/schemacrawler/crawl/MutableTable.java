@@ -245,11 +245,6 @@ class MutableTable
     triggers.add(trigger);
   }
 
-  NamedObjectList<MutableColumn> getColumnsList()
-  {
-    return columns;
-  }
-
   /**
    * Looks up a trigger by name.
    * 
@@ -260,11 +255,6 @@ class MutableTable
   MutableTrigger lookupTrigger(final String triggerName)
   {
     return triggers.lookup(this, triggerName);
-  }
-
-  void setCheckConstraintComparator(final NamedObjectSort comparator)
-  {
-    checkConstraints.setSortOrder(comparator);
   }
 
   void setColumnComparator(final NamedObjectSort comparator)
@@ -285,11 +275,6 @@ class MutableTable
   void setPrimaryKey(final MutablePrimaryKey primaryKey)
   {
     this.primaryKey = primaryKey;
-  }
-
-  void setTriggerComparator(final NamedObjectSort comparator)
-  {
-    triggers.setSortOrder(comparator);
   }
 
   void setType(final TableType type)
