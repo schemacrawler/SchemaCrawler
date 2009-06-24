@@ -49,7 +49,7 @@ final class BundledDriverOptionsParser
    * 
    * @param args
    */
-  public BundledDriverOptionsParser(final String[] args)
+  BundledDriverOptionsParser(final String[] args)
   {
     super(args);
   }

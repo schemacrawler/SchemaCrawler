@@ -35,11 +35,11 @@ public final class HtmlFormattingHelper
   /**
    * HTML footer.
    */
-  public static final String HTML_FOOTER = "</body>" + NEWLINE + "</html>";
+  private static final String HTML_FOOTER = "</body>" + NEWLINE + "</html>";
   /**
    * HTML header.
    */
-  public static final String HTML_HEADER = htmlHeader();
+  private static final String HTML_HEADER = htmlHeader();
 
   private static String htmlHeader()
   {

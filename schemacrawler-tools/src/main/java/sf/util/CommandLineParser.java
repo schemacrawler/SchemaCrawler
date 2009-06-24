@@ -46,12 +46,12 @@ public final class CommandLineParser
     implements Option<T>
   {
 
-    protected String shortForm;
-    protected String longForm;
-    protected boolean hasShortForm;
-    protected boolean hasLongForm;
+    private String shortForm;
+    private String longForm;
+    private boolean hasShortForm;
+    private boolean hasLongForm;
     protected T value;
-    protected T defaultValue;
+    private final T defaultValue;
 
     protected BaseOption(final char shortForm,
                          final String longForm,

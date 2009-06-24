@@ -96,7 +96,7 @@ public class HelpOptions
     this.resourceOutputOptions = resourceOutputOptions;
   }
 
-  public void showHelp()
+  void showHelp()
   {
     System.out.println(title);
     System.out.println(Version.about());

@@ -66,7 +66,7 @@ import schemacrawler.utility.Utility;
  * 
  * @author Sualeh Fatehi
  */
-public final class SchemaTextFormatter
+final class SchemaTextFormatter
   implements CrawlHandler
 {
 

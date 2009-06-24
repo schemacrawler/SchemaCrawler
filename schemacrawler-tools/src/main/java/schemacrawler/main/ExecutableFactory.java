@@ -46,7 +46,7 @@ import schemacrawler.tools.schematext.SchemaTextOptions;
  * 
  * @author Sualeh Fatehi
  */
-public final class ExecutableFactory
+final class ExecutableFactory
 {
   /**
    * An enumeration of available tools.

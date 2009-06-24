@@ -13,7 +13,7 @@ final class SchemaTextFactory
    * @param options
    *        Options for text formatting of schema
    */
-  public final static CrawlHandler createSchemaTextCrawlHandler(final SchemaTextOptions options)
+  final static CrawlHandler createSchemaTextCrawlHandler(final SchemaTextOptions options)
     throws SchemaCrawlerException
   {
     if (options == null)

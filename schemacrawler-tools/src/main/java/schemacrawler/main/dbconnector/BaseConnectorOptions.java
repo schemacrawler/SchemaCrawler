@@ -52,21 +52,6 @@ abstract class BaseConnectorOptions
     return user;
   }
 
-  public final boolean hasPassword()
-  {
-    return password != null;
-  }
-
-  public final boolean hasSchemaPattern()
-  {
-    return !schemacrawler.utility.Utility.isBlank(schemapattern);
-  }
-
-  public final boolean hasUser()
-  {
-    return !schemacrawler.utility.Utility.isBlank(user);
-  }
-
   public final void setPassword(final String password)
   {
     this.password = password;
@@ -80,6 +65,16 @@ abstract class BaseConnectorOptions
   public final void setUser(final String user)
   {
     this.user = user;
+  }
+
+  protected final boolean hasPassword()
+  {
+    return password != null;
+  }
+
+  protected final boolean hasSchemaPattern()
+  {
+    return !schemacrawler.utility.Utility.isBlank(schemapattern);
   }
 
 }
