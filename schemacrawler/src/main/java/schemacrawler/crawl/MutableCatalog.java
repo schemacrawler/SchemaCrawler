@@ -22,7 +22,6 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 
 /**
@@ -37,10 +36,10 @@ class MutableCatalog
 
   private static final long serialVersionUID = 3258128063743931187L;
 
-  private final Database database;
+  private final MutableDatabase database;
   private final NamedObjectList<MutableSchema> schemas = new NamedObjectList<MutableSchema>(NamedObjectSort.alphabetical);
 
-  MutableCatalog(final Database database, final String name)
+  MutableCatalog(final MutableDatabase database, final String name)
   {
     super(name);
     this.database = database;
@@ -51,7 +50,7 @@ class MutableCatalog
    * 
    * @see schemacrawler.schema.Catalog#getDatabase()
    */
-  public Database getDatabase()
+  public MutableDatabase getDatabase()
   {
     return database;
   }
@@ -61,7 +60,7 @@ class MutableCatalog
    * 
    * @see schemacrawler.schema.Schema#getSchema(java.lang.String)
    */
-  public Schema getSchema(final String name)
+  public MutableSchema getSchema(final String name)
   {
     return schemas.lookup(name);
   }

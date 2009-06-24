@@ -52,10 +52,11 @@ final class TableRetriever
   private static final Logger LOGGER = Logger.getLogger(TableRetriever.class
     .getName());
 
-  TableRetriever(final RetrieverConnection retrieverConnection)
+  TableRetriever(final RetrieverConnection retrieverConnection,
+                 final MutableDatabase database)
     throws SQLException
   {
-    super(retrieverConnection);
+    super(retrieverConnection, database);
   }
 
   /**
@@ -140,8 +141,7 @@ final class TableRetriever
 
   }
 
-  void retrieveForeignKeys(final MutableDatabase database,
-                           final MutableTable table)
+  void retrieveForeignKeys(final MutableTable table)
     throws SQLException
   {
 
@@ -152,11 +152,11 @@ final class TableRetriever
 
     results = new MetadataResultSet(metaData.getImportedKeys(table.getSchema()
       .getCatalog().getName(), table.getSchema().getName(), table.getName()));
-    createForeignKeys(results, database, foreignKeys);
+    createForeignKeys(results, foreignKeys);
 
     results = new MetadataResultSet(metaData.getExportedKeys(table.getSchema()
       .getCatalog().getName(), table.getSchema().getName(), table.getName()));
-    createForeignKeys(results, database, foreignKeys);
+    createForeignKeys(results, foreignKeys);
   }
 
   void retrieveIndices(final MutableTable table, final boolean unique)
@@ -213,15 +213,14 @@ final class TableRetriever
         final String primaryKeyName = results.getString("PK_NAME");
         final int keySequence = Integer.parseInt(results.getString(KEY_SEQ));
 
-        primaryKey = (MutablePrimaryKey) table.getPrimaryKey();
+        primaryKey = table.getPrimaryKey();
         if (primaryKey == null)
         {
           primaryKey = new MutablePrimaryKey(table, primaryKeyName);
         }
 
         // Register primary key information
-        final MutableColumn column = (MutableColumn) table
-          .getColumn(columnName);
+        final MutableColumn column = table.getColumn(columnName);
         if (column != null)
         {
           column.setPartOfPrimaryKey(true);
@@ -261,8 +260,7 @@ final class TableRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveTables(final MutableDatabase database,
-                      final String catalogName,
+  void retrieveTables(final String catalogName,
                       final TableType[] tableTypes,
                       final InclusionRule tableInclusionRule)
     throws SQLException
@@ -293,8 +291,7 @@ final class TableRetriever
           .getString("TABLE_TYPE").toLowerCase(Locale.ENGLISH));
         final String remarks = results.getString(REMARKS);
 
-        final MutableSchema schema = database.lookupSchema(catalogName,
-                                                           schemaName);
+        final MutableSchema schema = lookupSchema(catalogName, schemaName);
         if (schema == null)
         {
           LOGGER.log(Level.FINE, String.format("Cannot find schema, %s.%s",
@@ -328,7 +325,6 @@ final class TableRetriever
   }
 
   private void createForeignKeys(final MetadataResultSet results,
-                                 final MutableDatabase database,
                                  final NamedObjectList<MutableForeignKey> foreignKeys)
     throws SQLException
   {
@@ -346,8 +342,8 @@ final class TableRetriever
         final String pkTableSchemaName = results.getString("PKTABLE_SCHEM");
         final String pkTableName = results.getString("PKTABLE_NAME");
         final String pkColumnName = results.getString("PKCOLUMN_NAME");
-        final MutableSchema pkSchema = database
-          .lookupSchema(pkTableCatalogName, pkTableSchemaName);
+        final MutableSchema pkSchema = lookupSchema(pkTableCatalogName,
+                                                    pkTableSchemaName);
         if (pkSchema == null)
         {
           LOGGER.log(Level.FINE, String.format("Cannot find schema, %s.%s",
@@ -377,13 +373,11 @@ final class TableRetriever
                                                 .getId());
         final int deferrability = results
           .getInt("DEFERRABILITY", ForeignKeyDeferrability.unknown.getId());
-        final MutableColumn pkColumn = lookupOrCreateColumn(database,
-                                                            pkTableCatalogName,
+        final MutableColumn pkColumn = lookupOrCreateColumn(pkTableCatalogName,
                                                             pkTableSchemaName,
                                                             pkTableName,
                                                             pkColumnName);
-        final MutableColumn fkColumn = lookupOrCreateColumn(database,
-                                                            fkTableCatalogName,
+        final MutableColumn fkColumn = lookupOrCreateColumn(fkTableCatalogName,
                                                             fkTableSchemaName,
                                                             fkTableName,
                                                             fkColumnName);
@@ -430,7 +424,7 @@ final class TableRetriever
           continue;
         }
 
-        MutableIndex index = (MutableIndex) table.getIndex(indexName);
+        MutableIndex index = table.getIndex(indexName);
         if (index == null)
         {
           index = new MutableIndex(table, indexName);
@@ -444,8 +438,7 @@ final class TableRetriever
         final int cardinality = results.getInt("CARDINALITY", 0);
         final int pages = results.getInt("PAGES", 0);
 
-        final MutableColumn column = (MutableColumn) table
-          .getColumn(columnName);
+        final MutableColumn column = table.getColumn(columnName);
         if (column != null)
         {
           column.setPartOfUniqueIndex(uniqueIndex);
@@ -470,25 +463,44 @@ final class TableRetriever
     }
   }
 
+  private MutableColumn lookupOrCreateColumn(final MutableTable table,
+                                             final String columnName,
+                                             final boolean add)
+  {
+    MutableColumn column = null;
+    if (table != null)
+    {
+      column = table.getColumn(columnName);
+    }
+    if (column == null)
+    {
+      column = new MutableColumn(table, columnName);
+      if (add)
+      {
+        table.addColumn(column);
+      }
+    }
+    return column;
+  }
+
   /**
    * Looks up a column in the database. If the column and table are not
    * found, they are created, and added to the schema. This is prevent
    * foreign key relationships from having a null pointer.
    */
-  private MutableColumn lookupOrCreateColumn(final MutableDatabase database,
-                                             final String catalogName,
+  private MutableColumn lookupOrCreateColumn(final String catalogName,
                                              final String schemaName,
                                              final String tableName,
                                              final String columnName)
   {
     MutableColumn column = null;
-    final MutableSchema schema = database.lookupSchema(catalogName, schemaName);
+    final MutableSchema schema = lookupSchema(catalogName, schemaName);
     if (schema != null)
     {
-      MutableTable table = (MutableTable) schema.getTable(tableName);
+      MutableTable table = schema.getTable(tableName);
       if (table != null)
       {
-        column = (MutableColumn) table.getColumn(columnName);
+        column = table.getColumn(columnName);
       }
       else
       {
@@ -498,26 +510,6 @@ final class TableRetriever
       if (column == null)
       {
         column = new MutableColumn(table, columnName);
-        table.addColumn(column);
-      }
-    }
-    return column;
-  }
-
-  private MutableColumn lookupOrCreateColumn(final MutableTable table,
-                                             final String columnName,
-                                             final boolean add)
-  {
-    MutableColumn column = null;
-    if (table != null)
-    {
-      column = (MutableColumn) table.getColumn(columnName);
-    }
-    if (column == null)
-    {
-      column = new MutableColumn(table, columnName);
-      if (add)
-      {
         table.addColumn(column);
       }
     }

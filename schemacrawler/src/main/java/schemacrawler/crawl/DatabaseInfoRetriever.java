@@ -46,9 +46,10 @@ final class DatabaseInfoRetriever
   private static final Logger LOGGER = Logger
     .getLogger(DatabaseInfoRetriever.class.getName());
 
-  DatabaseInfoRetriever(final RetrieverConnection retrieverConnection)
+  DatabaseInfoRetriever(final RetrieverConnection retrieverConnection,
+                        final MutableDatabase database)
   {
-    super(retrieverConnection);
+    super(retrieverConnection, database);
   }
 
   /**
@@ -59,11 +60,10 @@ final class DatabaseInfoRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveAdditionalDatabaseInfo(final MutableDatabase database)
+  void retrieveAdditionalDatabaseInfo()
   {
     final DatabaseMetaData dbMetaData = getRetrieverConnection().getMetaData();
-    final MutableDatabaseInfo dbInfo = (MutableDatabaseInfo) database
-      .getDatabaseInfo();
+    final MutableDatabaseInfo dbInfo = database.getDatabaseInfo();
 
     final Method[] methods = DatabaseMetaData.class.getMethods();
     for (final Method method: methods)
@@ -122,7 +122,7 @@ final class DatabaseInfoRetriever
    * 
    * @return A list of catalogs in the database that matech the pattern
    */
-  void retrieveCatalogs(final MutableDatabase database)
+  void retrieveCatalogs()
   {
     final List<String> catalogNames = getRetrieverConnection()
       .getCatalogNames();
@@ -142,13 +142,12 @@ final class DatabaseInfoRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveDatabaseInfo(final MutableDatabase database)
+  void retrieveDatabaseInfo()
     throws SQLException
   {
     final DatabaseMetaData dbMetaData = getRetrieverConnection().getMetaData();
 
-    final MutableDatabaseInfo dbInfo = (MutableDatabaseInfo) database
-      .getDatabaseInfo();
+    final MutableDatabaseInfo dbInfo = database.getDatabaseInfo();
 
     dbInfo.setProductName(dbMetaData.getDatabaseProductName());
     dbInfo.setProductVersion(dbMetaData.getDatabaseProductVersion());
@@ -163,8 +162,7 @@ final class DatabaseInfoRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveSchemas(final MutableDatabase database,
-                       final InclusionRule schemaInclusionRule)
+  void retrieveSchemas(final InclusionRule schemaInclusionRule)
     throws SQLException
   {
     final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
@@ -179,20 +177,20 @@ final class DatabaseInfoRetriever
                                              catalogName,
                                              schemaName));
 
-        final Catalog[] catalogs;
-        final Catalog catalog = database.getCatalog(catalogName);
+        final MutableCatalog[] catalogs;
+        final MutableCatalog catalog = database.getCatalog(catalogName);
         if (catalog != null)
         {
-          catalogs = new Catalog[] {
+          catalogs = new MutableCatalog[] {
             catalog
           };
         }
         else
         {
-          catalogs = database.getCatalogs();
+          catalogs = (MutableCatalog[]) database.getCatalogs();
         }
 
-        for (final Catalog currentCatalog: catalogs)
+        for (final MutableCatalog currentCatalog: catalogs)
         {
           final MutableSchema schema = new MutableSchema(currentCatalog,
                                                          schemaName);
@@ -200,7 +198,7 @@ final class DatabaseInfoRetriever
           if (schemaInclusionRule.include(schemaFullName))
           {
             LOGGER.log(Level.FINEST, "Retrieving schema: " + schemaName);
-            ((MutableCatalog) currentCatalog).addSchema(schema);
+            (currentCatalog).addSchema(schema);
           }
         }
       }
@@ -230,7 +228,7 @@ final class DatabaseInfoRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveSystemColumnDataTypes(final MutableDatabase database)
+  void retrieveSystemColumnDataTypes()
     throws SQLException
   {
     final Schema schema = new MutableSchema(new MutableCatalog(database, ""),
@@ -300,8 +298,7 @@ final class DatabaseInfoRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveUserDefinedColumnDataTypes(final String catalogName,
-                                          final MutableDatabase database)
+  void retrieveUserDefinedColumnDataTypes(final String catalogName)
     throws SQLException
   {
     final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
@@ -322,8 +319,7 @@ final class DatabaseInfoRetriever
         final String remarks = results.getString("REMARKS");
         final short baseTypeValue = results.getShort("BASE_TYPE", (short) 0);
 
-        final MutableSchema schema = database.lookupSchema(catalogName,
-                                                           schemaName);
+        final MutableSchema schema = lookupSchema(catalogName, schemaName);
         if (schema == null)
         {
           LOGGER.log(Level.FINE, String.format("Cannot find schema, %s.%s",

@@ -25,7 +25,6 @@ import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
-import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -45,7 +44,7 @@ class MutableTable
   private static final long serialVersionUID = 3257290248802284852L;
 
   private TableType type;
-  private PrimaryKey primaryKey;
+  private MutablePrimaryKey primaryKey;
   private final NamedObjectList<MutableColumn> columns = new NamedObjectList<MutableColumn>(NamedObjectSort.natural);
   private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<MutableForeignKey>(NamedObjectSort.natural);
   private final NamedObjectList<MutableIndex> indices = new NamedObjectList<MutableIndex>(NamedObjectSort.natural);
@@ -76,7 +75,7 @@ class MutableTable
    * 
    * @see schemacrawler.schema.Table#getColumn(java.lang.String)
    */
-  public Column getColumn(final String name)
+  public MutableColumn getColumn(final String name)
   {
     return columns.lookup(this, name);
   }
@@ -122,7 +121,7 @@ class MutableTable
    * 
    * @see schemacrawler.schema.Table#getForeignKey(java.lang.String)
    */
-  public ForeignKey getForeignKey(final String name)
+  public MutableForeignKey getForeignKey(final String name)
   {
     return foreignKeys.lookup(this, name);
   }
@@ -142,7 +141,7 @@ class MutableTable
    * 
    * @see schemacrawler.schema.Table#getIndex(java.lang.String)
    */
-  public Index getIndex(final String name)
+  public MutableIndex getIndex(final String name)
   {
     return indices.lookup(this, name);
   }
@@ -171,7 +170,7 @@ class MutableTable
    * 
    * @see Table#getPrimaryKey()
    */
-  public PrimaryKey getPrimaryKey()
+  public MutablePrimaryKey getPrimaryKey()
   {
     return primaryKey;
   }
@@ -191,7 +190,7 @@ class MutableTable
    * 
    * @see schemacrawler.schema.Table#getTrigger(java.lang.String)
    */
-  public Trigger getTrigger(final String name)
+  public MutableTrigger getTrigger(final String name)
   {
     return lookupTrigger(name);
   }
@@ -283,7 +282,7 @@ class MutableTable
     indices.setSortOrder(comparator);
   }
 
-  void setPrimaryKey(final PrimaryKey primaryKey)
+  void setPrimaryKey(final MutablePrimaryKey primaryKey)
   {
     this.primaryKey = primaryKey;
   }

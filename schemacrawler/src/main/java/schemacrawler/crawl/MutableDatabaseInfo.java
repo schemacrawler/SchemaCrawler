@@ -27,7 +27,6 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.schema.JdbcDriverInfo;
 
 /**
  * Database and connection information. Created from metadata returned
@@ -46,7 +45,7 @@ final class MutableDatabaseInfo
   private String productName;
   private String productVersion;
   private final SortedMap<String, Object> dbProperties = new TreeMap<String, Object>();
-  private JdbcDriverInfo driverInfo;
+  private MutableJdbcDriverInfo driverInfo;
 
   @Override
   public boolean equals(final Object obj)
@@ -94,7 +93,7 @@ final class MutableDatabaseInfo
    * 
    * @see schemacrawler.schema.Catalog#getJdbcDriverInfo()
    */
-  public JdbcDriverInfo getJdbcDriverInfo()
+  public MutableJdbcDriverInfo getJdbcDriverInfo()
   {
     return driverInfo;
   }
@@ -173,7 +172,7 @@ final class MutableDatabaseInfo
     dbProperties.put(name, value);
   }
 
-  void setJdbcDriverInfo(final JdbcDriverInfo driverInfo)
+  void setJdbcDriverInfo(final MutableJdbcDriverInfo driverInfo)
   {
     this.driverInfo = driverInfo;
   }

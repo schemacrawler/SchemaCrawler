@@ -21,7 +21,6 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
@@ -39,12 +38,12 @@ class MutableSchema
 
   private static final long serialVersionUID = 3258128063743931187L;
 
-  private final Catalog catalog;
+  private final MutableCatalog catalog;
   private final ColumnDataTypes columnDataTypes = new ColumnDataTypes();
   private final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>(NamedObjectSort.alphabetical);
   private final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>(NamedObjectSort.alphabetical);
 
-  MutableSchema(final Catalog catalog, final String name)
+  MutableSchema(final MutableCatalog catalog, final String name)
   {
     super(name);
     this.catalog = catalog;
@@ -97,7 +96,7 @@ class MutableSchema
    * 
    * @see schemacrawler.schema.Schema#getCatalog()
    */
-  public Catalog getCatalog()
+  public MutableCatalog getCatalog()
   {
     return catalog;
   }
@@ -107,7 +106,7 @@ class MutableSchema
    * 
    * @see schemacrawler.schema.Schema#getColumnDataType(java.lang.String)
    */
-  public ColumnDataType getColumnDataType(final String name)
+  public MutableColumnDataType getColumnDataType(final String name)
   {
     return columnDataTypes.lookup(name);
   }
@@ -148,7 +147,7 @@ class MutableSchema
    * 
    * @see schemacrawler.schema.Schema#getProcedure(java.lang.String)
    */
-  public Procedure getProcedure(final String name)
+  public MutableProcedure getProcedure(final String name)
   {
     return procedures.lookup(name);
   }
@@ -168,7 +167,7 @@ class MutableSchema
    * 
    * @see schemacrawler.schema.Schema#getTable(java.lang.String)
    */
-  public Table getTable(final String name)
+  public MutableTable getTable(final String name)
   {
     return tables.lookup(name);
   }
@@ -238,7 +237,7 @@ class MutableSchema
       .lookupColumnDataTypeByType(type);
     if (columnDataType == null)
     {
-      columnDataType = ((MutableDatabase) getCatalog().getDatabase())
+      columnDataType = (getCatalog().getDatabase())
         .getSystemColumnDataTypesList().lookupColumnDataTypeByType(type);
     }
     return columnDataType;
@@ -260,7 +259,7 @@ class MutableSchema
       .lookupColumnDataTypeByType(databaseSpecificTypeName);
     if (columnDataType == null)
     {
-      columnDataType = ((MutableDatabase) getCatalog().getDatabase())
+      columnDataType = (getCatalog().getDatabase())
         .getSystemColumnDataTypesList()
         .lookupColumnDataTypeByType(databaseSpecificTypeName);
     }

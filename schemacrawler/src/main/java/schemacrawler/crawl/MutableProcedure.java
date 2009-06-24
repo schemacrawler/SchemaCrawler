@@ -59,7 +59,7 @@ final class MutableProcedure
    * 
    * @see schemacrawler.schema.Procedure#getColumn(java.lang.String)
    */
-  public ProcedureColumn getColumn(final String name)
+  public MutableProcedureColumn getColumn(final String name)
   {
     return columns.lookup(this, name);
   }

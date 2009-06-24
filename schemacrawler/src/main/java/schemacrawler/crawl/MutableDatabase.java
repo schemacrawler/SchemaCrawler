@@ -24,11 +24,9 @@ package schemacrawler.crawl;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Database;
-import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.WeakAssociations;
 
 /**
  * Database and connection information. Created from metadata returned
@@ -43,10 +41,10 @@ final class MutableDatabase
 
   private static final long serialVersionUID = 4051323422934251828L;
 
-  private final DatabaseInfo databaseInfo;
+  private final MutableDatabaseInfo databaseInfo;
   private final ColumnDataTypes systemColumnDataTypes = new ColumnDataTypes();
   private final NamedObjectList<MutableCatalog> catalogs = new NamedObjectList<MutableCatalog>(NamedObjectSort.alphabetical);
-  private WeakAssociations weakAssociations;
+  private MutableWeakAssociations weakAssociations;
 
   MutableDatabase(final String name)
   {
@@ -59,7 +57,7 @@ final class MutableDatabase
    * 
    * @see schemacrawler.schema.Catalog#getCatalog(java.lang.String)
    */
-  public Catalog getCatalog(final String name)
+  public MutableCatalog getCatalog(final String name)
   {
     return catalogs.lookup(name);
   }
@@ -74,7 +72,7 @@ final class MutableDatabase
     return catalogs.values().toArray(new Catalog[catalogs.size()]);
   }
 
-  public DatabaseInfo getDatabaseInfo()
+  public MutableDatabaseInfo getDatabaseInfo()
   {
     return databaseInfo;
   }
@@ -84,7 +82,7 @@ final class MutableDatabase
    * 
    * @see schemacrawler.schema.Database#getSystemColumnDataType(java.lang.String)
    */
-  public ColumnDataType getSystemColumnDataType(final String name)
+  public MutableColumnDataType getSystemColumnDataType(final String name)
   {
     return systemColumnDataTypes.lookup(name);
   }
@@ -100,7 +98,7 @@ final class MutableDatabase
       .toArray(new ColumnDataType[systemColumnDataTypes.size()]);
   }
 
-  public WeakAssociations getWeakAssociations()
+  public MutableWeakAssociations getWeakAssociations()
   {
     return weakAssociations;
   }
@@ -157,44 +155,7 @@ final class MutableDatabase
     return systemColumnDataTypes;
   }
 
-  MutableProcedure lookupProcedure(final String catalogName,
-                                   final String schemaName,
-                                   final String procedureName)
-  {
-    MutableProcedure procedure = null;
-    final MutableSchema schema = lookupSchema(catalogName, schemaName);
-    if (schema != null)
-    {
-      procedure = (MutableProcedure) schema.getProcedure(procedureName);
-    }
-    return procedure;
-  }
-
-  MutableSchema lookupSchema(final String catalogName, final String schemaName)
-  {
-    MutableSchema schema = null;
-    final Catalog catalog = getCatalog(catalogName);
-    if (catalog != null)
-    {
-      schema = (MutableSchema) catalog.getSchema(schemaName);
-    }
-    return schema;
-  }
-
-  MutableTable lookupTable(final String catalogName,
-                           final String schemaName,
-                           final String tableName)
-  {
-    MutableTable table = null;
-    final MutableSchema schema = lookupSchema(catalogName, schemaName);
-    if (schema != null)
-    {
-      table = (MutableTable) schema.getTable(tableName);
-    }
-    return table;
-  }
-
-  void setWeakAssociations(final WeakAssociations weakAssociations)
+  void setWeakAssociations(final MutableWeakAssociations weakAssociations)
   {
     this.weakAssociations = weakAssociations;
   }
