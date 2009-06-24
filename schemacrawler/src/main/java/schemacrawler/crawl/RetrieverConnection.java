@@ -106,33 +106,6 @@ final class RetrieverConnection
     informationSchemaViews = schemaCrawlerOptions.getInformationSchemaViews();
   }
 
-  /**
-   * Reads a single column result set as a list.
-   * 
-   * @param results
-   *        Result set
-   * @return List
-   * @throws SQLException
-   */
-  public List<String> readResultsVector(final ResultSet results)
-    throws SQLException
-  {
-    final List<String> values = new ArrayList<String>();
-    try
-    {
-      while (results.next())
-      {
-        final String value = results.getString(1);
-        values.add(value);
-      }
-    }
-    finally
-    {
-      results.close();
-    }
-    return values;
-  }
-
   @Override
   public String toString()
   {
@@ -153,6 +126,33 @@ final class RetrieverConnection
   {
     super.finalize();
     close();
+  }
+
+  /**
+   * Reads a single column result set as a list.
+   * 
+   * @param results
+   *        Result set
+   * @return List
+   * @throws SQLException
+   */
+  protected List<String> readResultsVector(final ResultSet results)
+    throws SQLException
+  {
+    final List<String> values = new ArrayList<String>();
+    try
+    {
+      while (results.next())
+      {
+        final String value = results.getString(1);
+        values.add(value);
+      }
+    }
+    finally
+    {
+      results.close();
+    }
+    return values;
   }
 
   /**

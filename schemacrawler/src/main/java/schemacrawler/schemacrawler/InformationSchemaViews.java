@@ -59,7 +59,7 @@ public final class InformationSchemaViews
    * @param informationSchemaViewsSql
    *        Map of information schema view definitions.
    */
-  public InformationSchemaViews(final Map<String, String> informationSchemaViewsSql)
+  InformationSchemaViews(final Map<String, String> informationSchemaViewsSql)
   {
     informationSchemaQueries = new HashMap<String, Query>();
     if (informationSchemaViewsSql != null)

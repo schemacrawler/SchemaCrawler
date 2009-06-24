@@ -36,7 +36,6 @@ import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.WeakAssociations;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawler;
@@ -407,10 +406,9 @@ public final class DatabaseSchemaCrawler
 
       if (infoLevel.isRetrieveWeakAssociations())
       {
-        final WeakAssociationsAnalyzer tableAnalyzer = new WeakAssociationsAnalyzer();
-        final WeakAssociations weakAssociations = tableAnalyzer
-          .analyzeTables(database);
-        handler.handle(weakAssociations);
+        final WeakAssociationsAnalyzer tableAnalyzer = new WeakAssociationsAnalyzer(database);
+        tableAnalyzer.analyzeTables();
+        handler.handle(database.getWeakAssociations());
       }
     }
     catch (final SQLException e)

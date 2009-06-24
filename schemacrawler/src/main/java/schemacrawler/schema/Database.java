@@ -21,7 +21,6 @@
 package schemacrawler.schema;
 
 
-
 /**
  * Database and connection information.
  * 

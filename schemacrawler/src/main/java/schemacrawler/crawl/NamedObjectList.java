@@ -31,7 +31,6 @@ import java.util.Set;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
-import schemacrawler.schema.Schema;
 import schemacrawler.utility.Utility;
 
 /**
@@ -154,23 +153,6 @@ class NamedObjectList<N extends NamedObject>
     {
 
       private static final long serialVersionUID = -6700397214465123353L;
-    });
-  }
-
-  /**
-   * Looks up a named object by name.
-   * 
-   * @param name
-   *        Name
-   * @return Named object
-   */
-  N lookup(final Schema schema, final String name)
-  {
-    return lookup(new AbstractDatabaseObject(schema, name)
-    {
-
-      private static final long serialVersionUID = 8132194191152494788L;
-
     });
   }
 

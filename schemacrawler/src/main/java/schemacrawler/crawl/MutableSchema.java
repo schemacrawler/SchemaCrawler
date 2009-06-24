@@ -152,22 +152,6 @@ class MutableSchema
     tables.add(table);
   }
 
-  MutableColumnDataType lookupByType(final int type)
-  {
-    MutableColumnDataType columnDataType = null;
-    final MutableColumnDataType[] allColumnDataTypes = columnDataTypes.values()
-      .toArray(new MutableColumnDataType[columnDataTypes.size()]);
-    for (final MutableColumnDataType currentColumnDataType: allColumnDataTypes)
-    {
-      if (type == currentColumnDataType.getType())
-      {
-        columnDataType = currentColumnDataType;
-        break;
-      }
-    }
-    return columnDataType;
-  }
-
   MutableColumnDataType lookupColumnDataTypeByType(final int type)
   {
     return columnDataTypes.lookupColumnDataTypeByType(type);

@@ -20,14 +20,22 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
+import schemacrawler.utility.Inflection;
 
-public class WeakAssociationsAnalyzer
+final class WeakAssociationsAnalyzer
 {
 
   private static final Logger LOGGER = Logger
     .getLogger(WeakAssociationsAnalyzer.class.getName());
 
-  public MutableWeakAssociations analyzeTables(final MutableDatabase database)
+  private final MutableDatabase database;
+
+  WeakAssociationsAnalyzer(final MutableDatabase database)
+  {
+    this.database = database;
+  }
+
+  void analyzeTables()
   {
     final NamedObjectList<MutableTable> tables = database.getAllTables();
 
@@ -40,7 +48,11 @@ public class WeakAssociationsAnalyzer
 
     final Map<String, ForeignKeyColumnMap> fkColumnsMap = mapForeignKeyColumns(tables);
 
-    return findWeakAssociations(tables, tableMatchMap, fkColumnsMap);
+    final MutableWeakAssociations weakAssociations = findWeakAssociations(tables,
+                                                                          tableMatchMap,
+                                                                          fkColumnsMap);
+
+    database.setWeakAssociations(weakAssociations);
   }
 
   private String commonPrefix(final String string1, final String string2)

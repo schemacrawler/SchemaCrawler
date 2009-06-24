@@ -43,22 +43,10 @@ public final class InclusionRule
   /** Include everything. */
   public static final String ALL = ".*";
 
-  /** Exclude nothing */
-  private static final Pattern NONE_PATTERN = Pattern.compile(NONE);
-  /** Include everything. */
-  private static final Pattern ALL_PATTERN = Pattern.compile(ALL);
-
   private static final Logger LOGGER = Logger.getLogger(InclusionRule.class
     .getName());
 
   private static final long serialVersionUID = 3443758881974362293L;
-
-  /** Exclude all, include none. */
-  public static final InclusionRule EXCLUDE_ALL_RULE = new InclusionRule(NONE_PATTERN,
-                                                                         ALL_PATTERN);
-  /** Include all. */
-  public static final InclusionRule INCLUDE_ALL_RULE = new InclusionRule(ALL_PATTERN,
-                                                                         NONE_PATTERN);
 
   private final Pattern patternInclude;
   private final Pattern patternExclude;
