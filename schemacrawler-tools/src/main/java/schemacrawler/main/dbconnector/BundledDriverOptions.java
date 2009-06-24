@@ -25,7 +25,7 @@ package schemacrawler.main.dbconnector;
  * 
  * @author Sualeh Fatehi
  */
-public class BundledDriverOptions
+final class BundledDriverOptions
   extends BaseConnectorOptions
 {
 
@@ -50,32 +50,32 @@ public class BundledDriverOptions
     return port;
   }
 
-  public boolean hasDatabase()
+  protected boolean hasDatabase()
   {
     return database != null;
   }
 
-  public boolean hasHost()
+  protected boolean hasHost()
   {
     return host != null;
   }
 
-  public boolean hasPort()
+  protected boolean hasPort()
   {
     return port > 0;
   }
 
-  public void setDatabase(final String database)
+  void setDatabase(final String database)
   {
     this.database = database;
   }
 
-  public void setHost(final String host)
+  void setHost(final String host)
   {
     this.host = host;
   }
 
-  public void setPort(final int port)
+  void setPort(final int port)
   {
     this.port = port;
   }

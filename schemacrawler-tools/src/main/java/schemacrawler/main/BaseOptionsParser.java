@@ -22,7 +22,6 @@ package schemacrawler.main;
 
 
 import schemacrawler.schemacrawler.Options;
-import schemacrawler.utility.Utility;
 import sf.util.CommandLineParser;
 import sf.util.CommandLineParser.Option;
 
@@ -41,14 +40,6 @@ public abstract class BaseOptionsParser<O extends Options>
   protected BaseOptionsParser(final String[] args)
   {
     this.args = args;
-  }
-
-  public void describe()
-  {
-    final String info = Utility.readFully(ApplicationOptions.class
-      .getResourceAsStream(getHelpResource()));
-
-    System.out.println(info);
   }
 
   /**

@@ -49,7 +49,7 @@ abstract class BaseTextFormattingHelper
     return dashedSeparator.toString();
   }
 
-  final OutputFormat outputFormat;
+  private final OutputFormat outputFormat;
 
   BaseTextFormattingHelper(final OutputFormat outputFormat)
   {

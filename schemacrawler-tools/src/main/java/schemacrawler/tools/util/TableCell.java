@@ -42,11 +42,6 @@ final class TableCell
   private final Align align;
   private final String text;
 
-  TableCell(final OutputFormat outputFormat)
-  {
-    this("", "", outputFormat);
-  }
-
   TableCell(final String text,
             final int characterWidth,
             final Align align,

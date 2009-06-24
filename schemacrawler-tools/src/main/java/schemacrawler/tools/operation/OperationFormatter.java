@@ -51,7 +51,7 @@ import schemacrawler.tools.util.TextFormattingHelper;
  * 
  * @author Sualeh Fatehi
  */
-public final class OperationFormatter
+final class OperationFormatter
   implements CrawlHandler
 {
 
@@ -74,10 +74,10 @@ public final class OperationFormatter
    * @param options
    *        Options for text formatting of operations output
    */
-  public OperationFormatter(final OperationOptions options,
-                            final Query query,
-                            final Connection connection,
-                            final DataHandler dataHandler)
+  OperationFormatter(final OperationOptions options,
+                     final Query query,
+                     final Connection connection,
+                     final DataHandler dataHandler)
     throws SchemaCrawlerException
   {
     if (options == null)

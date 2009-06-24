@@ -46,7 +46,7 @@ import schemacrawler.tools.util.HtmlFormattingHelper;
 import schemacrawler.tools.util.PastelColor;
 import schemacrawler.utility.Utility;
 
-public final class SchemaDotFormatter
+final class SchemaDotFormatter
   implements CrawlHandler
 {
   private static final Logger LOGGER = Logger

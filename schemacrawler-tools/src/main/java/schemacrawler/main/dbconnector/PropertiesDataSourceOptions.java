@@ -25,7 +25,7 @@ package schemacrawler.main.dbconnector;
  * 
  * @author Sualeh Fatehi
  */
-public class PropertiesDataSourceOptions
+final class PropertiesDataSourceOptions
   extends BaseConnectorOptions
 {
 
@@ -36,48 +36,48 @@ public class PropertiesDataSourceOptions
   private String driver;
   private String connectionUrl;
 
-  public String getConnection()
+  protected String getConnection()
   {
     return connection;
   }
 
-  public String getConnectionUrl()
+  protected String getConnectionUrl()
   {
     return connectionUrl;
   }
 
-  public String getDriver()
+  protected String getDriver()
   {
     return driver;
   }
 
-  public boolean isUseDefaultConnection()
+  protected boolean isUseDefaultConnection()
   {
     return useDefaultConnection;
   }
 
-  public boolean isUseJdbcConnection()
+  protected boolean isUseJdbcConnection()
   {
     return !schemacrawler.utility.Utility.isBlank(driver)
            && !schemacrawler.utility.Utility.isBlank(connectionUrl);
   }
 
-  public void setConnection(final String connection)
+  void setConnection(final String connection)
   {
     this.connection = connection;
   }
 
-  public void setConnectionUrl(final String connectionUrl)
+  void setConnectionUrl(final String connectionUrl)
   {
     this.connectionUrl = connectionUrl;
   }
 
-  public void setDriver(final String driver)
+  void setDriver(final String driver)
   {
     this.driver = driver;
   }
 
-  public void setUseDefaultConnection(final boolean useDefaultConnection)
+  void setUseDefaultConnection(final boolean useDefaultConnection)
   {
     this.useDefaultConnection = useDefaultConnection;
   }

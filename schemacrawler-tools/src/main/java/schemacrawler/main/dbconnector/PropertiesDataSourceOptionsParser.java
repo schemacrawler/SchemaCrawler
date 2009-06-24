@@ -51,7 +51,7 @@ final class PropertiesDataSourceOptionsParser
    * 
    * @param args
    */
-  public PropertiesDataSourceOptionsParser(final String[] args)
+  PropertiesDataSourceOptionsParser(final String[] args)
   {
     super(args);
   }

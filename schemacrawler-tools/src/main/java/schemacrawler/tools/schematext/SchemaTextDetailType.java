@@ -54,7 +54,7 @@ public enum SchemaTextDetailType
    *        SchemaTextDetailType to check against
    * @return Yes if this is greater or equal to
    */
-  public boolean isGreaterThanOrEqualTo(final SchemaTextDetailType schemaTextDetailType)
+  boolean isGreaterThanOrEqualTo(final SchemaTextDetailType schemaTextDetailType)
   {
     if (schemaTextDetailType != null)
     {
@@ -71,7 +71,7 @@ public enum SchemaTextDetailType
    * 
    * @return Enumeration value
    */
-  public SchemaInfoLevel mapToInfoLevel()
+  SchemaInfoLevel mapToInfoLevel()
   {
     return mappedToInfoLevel;
   }
