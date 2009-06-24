@@ -21,7 +21,6 @@
 package schemacrawler;
 
 
-import schemacrawler.main.HelpOptions;
 import schemacrawler.utility.Utility;
 
 /**
@@ -36,7 +35,7 @@ public final class Version
 
   private static final String PRODUCTNAME = "SchemaCrawler";
   private static final String VERSION = "7.0";
-  private static final String ABOUT = Utility.readFully(HelpOptions.class
+  private static final String ABOUT = Utility.readFully(Version.class
     .getResourceAsStream("/help/SchemaCrawler.txt"));
 
   /**
