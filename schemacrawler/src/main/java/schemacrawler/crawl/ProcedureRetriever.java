@@ -65,7 +65,7 @@ final class ProcedureRetriever
   {
 
     final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
-      .getMetaData().getProcedureColumns(procedure.getSchema().getCatalog()
+      .getMetaData().getProcedureColumns(procedure.getSchema().getParent()
                                            .getName(),
                                          procedure.getSchema().getName(),
                                          procedure.getName(),
@@ -101,8 +101,8 @@ final class ProcedureRetriever
           column.setOrdinalPosition(ordinalNumber++);
           column
             .setProcedureColumnType(ProcedureColumnType.valueOf(columnType));
-          column.setType(((MutableSchema) procedure.getSchema())
-            .lookupOrCreateColumnDataType(dataType, typeName));
+          column.setType(lookupOrCreateColumnDataType((MutableSchema) procedure
+            .getSchema(), dataType, typeName));
           column.setSize(length);
           column.setPrecision(precision);
           column.setNullable(isNullable);

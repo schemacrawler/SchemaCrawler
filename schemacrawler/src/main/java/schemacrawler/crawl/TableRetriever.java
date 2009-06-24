@@ -74,7 +74,7 @@ final class TableRetriever
   {
 
     final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
-      .getMetaData().getColumns(table.getSchema().getCatalog().getName(),
+      .getMetaData().getColumns(table.getSchema().getParent().getName(),
                                 table.getSchema().getName(),
                                 table.getName(),
                                 null));
@@ -117,8 +117,8 @@ final class TableRetriever
           final String remarks = results.getString(REMARKS);
 
           column.setOrdinalPosition(ordinalPosition);
-          column.setType(((MutableSchema) table.getSchema())
-            .lookupOrCreateColumnDataType(dataType, typeName));
+          column.setType(lookupOrCreateColumnDataType((MutableSchema) table
+            .getSchema(), dataType, typeName));
           column.setSize(size);
           column.setDecimalDigits(decimalDigits);
           column.setRemarks(remarks);
@@ -151,11 +151,11 @@ final class TableRetriever
     final DatabaseMetaData metaData = getRetrieverConnection().getMetaData();
 
     results = new MetadataResultSet(metaData.getImportedKeys(table.getSchema()
-      .getCatalog().getName(), table.getSchema().getName(), table.getName()));
+      .getParent().getName(), table.getSchema().getName(), table.getName()));
     createForeignKeys(results, foreignKeys);
 
     results = new MetadataResultSet(metaData.getExportedKeys(table.getSchema()
-      .getCatalog().getName(), table.getSchema().getName(), table.getName()));
+      .getParent().getName(), table.getSchema().getName(), table.getName()));
     createForeignKeys(results, foreignKeys);
   }
 
@@ -181,7 +181,7 @@ final class TableRetriever
     {
       LOGGER.log(Level.FINE, "Using getIndexInfo()");
       results = new MetadataResultSet(getRetrieverConnection().getMetaData()
-        .getIndexInfo(table.getSchema().getCatalog().getName(),
+        .getIndexInfo(table.getSchema().getParent().getName(),
                       table.getSchema().getName(),
                       table.getName(),
                       unique,
@@ -199,7 +199,7 @@ final class TableRetriever
     try
     {
       results = getRetrieverConnection().getMetaData()
-        .getPrimaryKeys(table.getSchema().getCatalog().getName(),
+        .getPrimaryKeys(table.getSchema().getParent().getName(),
                         table.getSchema().getName(),
                         table.getName());
 

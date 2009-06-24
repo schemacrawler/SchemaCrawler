@@ -21,7 +21,6 @@
 package schemacrawler.schema;
 
 
-import java.io.Serializable;
 
 /**
  * Database and connection information.
@@ -29,7 +28,7 @@ import java.io.Serializable;
  * @author Sualeh Fatehi
  */
 public interface Database
-  extends Serializable
+  extends NamedObject
 {
 
   /**

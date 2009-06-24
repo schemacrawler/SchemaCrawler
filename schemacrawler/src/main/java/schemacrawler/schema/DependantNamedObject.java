@@ -22,28 +22,20 @@ package schemacrawler.schema;
 
 
 /**
- * Represents the database.
+ * Represents the dependent of a database object, such as a column or an
+ * index, which are dependents of a table.
  * 
  * @author Sualeh Fatehi
  */
-public interface Catalog
-  extends DependantNamedObject
+public interface DependantNamedObject
+  extends NamedObject
 {
 
   /**
-   * Gets a schema by name.
+   * Gets the parent named object.
    * 
-   * @param name
-   *        Name
-   * @return Schema.
+   * @return Parent named object
    */
-  Schema getSchema(String name);
-
-  /**
-   * Gets the schemas.
-   * 
-   * @return Schemas
-   */
-  Schema[] getSchemas();
+  NamedObject getParent();
 
 }

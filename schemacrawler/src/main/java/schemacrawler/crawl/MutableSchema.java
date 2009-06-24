@@ -22,9 +22,11 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.utility.Utility;
 
 /**
  * Represents the database schema.
@@ -32,73 +34,19 @@ import schemacrawler.schema.Table;
  * @author Sualeh Fatehi
  */
 class MutableSchema
-  extends AbstractNamedObject
+  extends AbstractDependantNamedObject
   implements Schema
 {
 
   private static final long serialVersionUID = 3258128063743931187L;
 
-  private final MutableCatalog catalog;
   private final ColumnDataTypes columnDataTypes = new ColumnDataTypes();
   private final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>(NamedObjectSort.alphabetical);
   private final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>(NamedObjectSort.alphabetical);
 
-  MutableSchema(final MutableCatalog catalog, final String name)
+  MutableSchema(final AbstractNamedObject parent, final String name)
   {
-    super(name);
-    this.catalog = catalog;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#equals(java.lang.Object)
-   */
-  @Override
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
-      return true;
-    }
-    if (obj == null)
-    {
-      return false;
-    }
-    final MutableSchema other = (MutableSchema) obj;
-    if (catalog == null)
-    {
-      if (other.catalog != null)
-      {
-        return false;
-      }
-    }
-    else if (!catalog.equals(other.catalog))
-    {
-      return false;
-    }
-    if (getName() == null)
-    {
-      if (other.getName() != null)
-      {
-        return false;
-      }
-    }
-    else if (!getName().equals(other.getName()))
-    {
-      return false;
-    }
-    return true;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.Schema#getCatalog()
-   */
-  public MutableCatalog getCatalog()
-  {
-    return catalog;
+    super(parent, name);
   }
 
   /**
@@ -130,10 +78,14 @@ class MutableSchema
   public String getFullName()
   {
     final StringBuilder buffer = new StringBuilder();
-    final String catalogName = catalog.getName();
-    if (catalog != null && catalogName != null && catalogName.length() > 0)
+    final NamedObject catalog = getParent();
+    if (catalog != null)
     {
-      buffer.append(catalogName).append(".");
+      final String catalogName = catalog.getName();
+      if (!Utility.isBlank(catalogName))
+      {
+        buffer.append(catalogName).append(".");
+      }
     }
     if (getName() != null)
     {
@@ -182,21 +134,6 @@ class MutableSchema
     return tables.values().toArray(new Table[tables.size()]);
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#hashCode()
-   */
-  @Override
-  public int hashCode()
-  {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (catalog == null? 0: catalog.hashCode());
-    result = prime * result + super.hashCode();
-    return result;
-  }
-
   void addColumnDataType(final MutableColumnDataType columnDataType)
   {
     if (columnDataType != null)
@@ -231,50 +168,14 @@ class MutableSchema
     return columnDataType;
   }
 
-  ColumnDataType lookupColumnDataTypeByType(final int type)
+  MutableColumnDataType lookupColumnDataTypeByType(final int type)
   {
-    ColumnDataType columnDataType = columnDataTypes
-      .lookupColumnDataTypeByType(type);
-    if (columnDataType == null)
-    {
-      columnDataType = (getCatalog().getDatabase())
-        .getSystemColumnDataTypesList().lookupColumnDataTypeByType(type);
-    }
-    return columnDataType;
+    return columnDataTypes.lookupColumnDataTypeByType(type);
   }
 
-  /**
-   * Creates a data type from the JDBC data type id, and the database
-   * specific type name, if it does not exist.
-   * 
-   * @param jdbcDataType
-   *        JDBC data type
-   * @param databaseSpecificTypeName
-   *        Database specific type name
-   */
-  ColumnDataType lookupOrCreateColumnDataType(final int jdbcDataType,
-                                              final String databaseSpecificTypeName)
+  MutableColumnDataType lookupColumnDataTypeByType(final String databaseSpecificTypeName)
   {
-    MutableColumnDataType columnDataType = columnDataTypes
-      .lookupColumnDataTypeByType(databaseSpecificTypeName);
-    if (columnDataType == null)
-    {
-      columnDataType = (getCatalog().getDatabase())
-        .getSystemColumnDataTypesList()
-        .lookupColumnDataTypeByType(databaseSpecificTypeName);
-    }
-    // Create new data type, if needed
-    if (columnDataType == null)
-    {
-      if (columnDataType == null)
-      {
-        columnDataType = new MutableColumnDataType(this,
-                                                   databaseSpecificTypeName);
-        columnDataType.setType(jdbcDataType);
-        columnDataTypes.add(columnDataType);
-      }
-    }
-    return columnDataType;
+    return columnDataTypes.lookupColumnDataTypeByType(databaseSpecificTypeName);
   }
 
   void removeProcedure(final String procedureName)

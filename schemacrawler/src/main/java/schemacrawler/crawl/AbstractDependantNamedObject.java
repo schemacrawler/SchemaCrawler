@@ -21,27 +21,28 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.DatabaseObject;
-import schemacrawler.schema.Schema;
+import schemacrawler.schema.DependantNamedObject;
+import schemacrawler.schema.NamedObject;
 
 /**
- * Represents a database object.
+ * Represents the dependent of a named object, such as a catalog or a
+ * schema.
  * 
  * @author Sualeh Fatehi
  */
-abstract class AbstractDatabaseObject
+abstract class AbstractDependantNamedObject
   extends AbstractNamedObject
-  implements DatabaseObject
+  implements DependantNamedObject
 {
 
-  private static final long serialVersionUID = 3099561832386790624L;
+  private static final long serialVersionUID = -4327208866052082457L;
 
-  private final Schema schema;
+  private final NamedObject parent;
 
-  AbstractDatabaseObject(final Schema schema, final String name)
+  AbstractDependantNamedObject(final NamedObject parent, final String name)
   {
     super(name);
-    this.schema = schema;
+    this.parent = parent;
   }
 
   /**
@@ -60,15 +61,15 @@ abstract class AbstractDatabaseObject
     {
       return false;
     }
-    final AbstractDatabaseObject other = (AbstractDatabaseObject) obj;
-    if (schema == null)
+    final AbstractDependantNamedObject other = (AbstractDependantNamedObject) obj;
+    if (parent == null)
     {
-      if (other.schema != null)
+      if (other.parent != null)
       {
         return false;
       }
     }
-    else if (!schema.equals(other.schema))
+    else if (!parent.equals(other.parent))
     {
       return false;
     }
@@ -78,42 +79,11 @@ abstract class AbstractDatabaseObject
   /**
    * {@inheritDoc}
    * 
-   * @see Object#toString()
+   * @see schemacrawler.schema.DependantNamedObject#getParent()
    */
-  public String getFullName()
+  public final NamedObject getParent()
   {
-    final StringBuilder buffer = new StringBuilder();
-    if (schema != null)
-    {
-      if (schema != null)
-      {
-        final String catalogName = schema.getParent().getName();
-        if (catalogName != null && catalogName.length() > 0)
-        {
-          buffer.append(catalogName).append(".");
-        }
-        final String schemaName = schema.getName();
-        if (schemaName != null && schemaName.length() > 0)
-        {
-          buffer.append(schemaName).append(".");
-        }
-      }
-    }
-    if (getName() != null)
-    {
-      buffer.append(getName());
-    }
-    return buffer.toString();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.DatabaseObject#getSchema()
-   */
-  public final Schema getSchema()
-  {
-    return schema;
+    return parent;
   }
 
   /**
@@ -126,20 +96,9 @@ abstract class AbstractDatabaseObject
   {
     final int prime = 31;
     int result = super.hashCode();
-    result = prime * result + (schema == null? 0: schema.hashCode());
+    result = prime * result + (parent == null? 0: parent.hashCode());
     result = prime * result + super.hashCode();
     return result;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return getFullName();
   }
 
 }

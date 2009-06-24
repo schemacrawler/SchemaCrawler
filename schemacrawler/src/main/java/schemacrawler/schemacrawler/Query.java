@@ -215,7 +215,7 @@ public final class Query
       if (table.getSchema() != null)
       {
         tableProperties.setProperty("catalog", String.valueOf(table.getSchema()
-          .getCatalog().getName()));
+          .getParent().getName()));
         tableProperties.setProperty("schema", table.getSchema().getName());
       }
       tableProperties.setProperty("table", table.getFullName());
