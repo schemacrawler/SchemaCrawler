@@ -50,10 +50,11 @@ final class TableExRetriever
   private static final Logger LOGGER = Logger.getLogger(TableExRetriever.class
     .getName());
 
-  TableExRetriever(final RetrieverConnection retrieverConnection)
+  TableExRetriever(final RetrieverConnection retrieverConnection,
+                   final MutableDatabase database)
     throws SQLException
   {
-    super(retrieverConnection);
+    super(retrieverConnection, database);
   }
 
   /**
@@ -65,7 +66,7 @@ final class TableExRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveCheckConstraintInformation(final MutableDatabase database)
+  void retrieveCheckConstraintInformation()
     throws SQLException
   {
     final Map<String, MutableCheckConstraint> checkConstraintsMap = new HashMap<String, MutableCheckConstraint>();
@@ -113,9 +114,9 @@ final class TableExRetriever
         // results.getString("TABLE_SCHEMA");
         final String tableName = results.getString("TABLE_NAME");
 
-        final MutableTable table = database.lookupTable(catalogName,
-                                                        schemaName,
-                                                        tableName);
+        final MutableTable table = lookupTable(catalogName,
+                                               schemaName,
+                                               tableName);
         if (table == null)
         {
           LOGGER.log(Level.FINE, String.format("Cannot find table, %s.%s.%s",
@@ -211,7 +212,7 @@ final class TableExRetriever
 
   }
 
-  void retrieveTableColumnPrivileges(final MutableDatabase database)
+  void retrieveTableColumnPrivileges()
     throws SQLException
   {
     MetadataResultSet results = null;
@@ -219,7 +220,7 @@ final class TableExRetriever
     {
       results = new MetadataResultSet(getRetrieverConnection().getMetaData()
         .getColumnPrivileges(null, null, "%", "%"));
-      createPrivileges(results, database, true);
+      createPrivileges(results, true);
     }
     finally
     {
@@ -230,7 +231,7 @@ final class TableExRetriever
     }
   }
 
-  void retrieveTablePrivileges(final MutableDatabase database)
+  void retrieveTablePrivileges()
     throws SQLException
   {
     MetadataResultSet results = null;
@@ -238,7 +239,7 @@ final class TableExRetriever
     {
       results = new MetadataResultSet(getRetrieverConnection().getMetaData()
         .getTablePrivileges(null, null, "%"));
-      createPrivileges(results, database, false);
+      createPrivileges(results, false);
     }
     finally
     {
@@ -258,7 +259,7 @@ final class TableExRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveTriggerInformation(final MutableDatabase database)
+  void retrieveTriggerInformation()
     throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
@@ -303,9 +304,9 @@ final class TableExRetriever
         // .getString("EVENT_OBJECT_SCHEMA");
         final String tableName = results.getString("EVENT_OBJECT_TABLE");
 
-        final MutableTable table = database.lookupTable(catalogName,
-                                                        schemaName,
-                                                        tableName);
+        final MutableTable table = lookupTable(catalogName,
+                                               schemaName,
+                                               tableName);
         if (table == null)
         {
           LOGGER.log(Level.FINE, String.format("Cannot find table, %s.%s.%s",
@@ -370,7 +371,7 @@ final class TableExRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveViewInformation(final MutableDatabase database)
+  void retrieveViewInformation()
     throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
@@ -407,8 +408,9 @@ final class TableExRetriever
         final String schemaName = results.getString("TABLE_SCHEMA");
         final String viewName = results.getString("TABLE_NAME");
 
-        final MutableView view = (MutableView) database
-          .lookupTable(catalogName, schemaName, viewName);
+        final MutableView view = (MutableView) lookupTable(catalogName,
+                                                           schemaName,
+                                                           viewName);
         if (view == null)
         {
           LOGGER.log(Level.FINE, String.format("Cannot find table, %s.%s.%s",
@@ -440,7 +442,6 @@ final class TableExRetriever
   }
 
   private void createPrivileges(final MetadataResultSet results,
-                                final MutableDatabase database,
                                 final boolean privilegesForColumn)
     throws SQLException
   {
@@ -460,9 +461,7 @@ final class TableExRetriever
         columnName = null;
       }
 
-      final MutableTable table = database.lookupTable(catalogName,
-                                                      schemaName,
-                                                      tableName);
+      final MutableTable table = lookupTable(catalogName, schemaName, tableName);
       if (table == null)
       {
         LOGGER.log(Level.FINE, String.format("Cannot find schema, %s.%s.%s",
@@ -472,7 +471,7 @@ final class TableExRetriever
         continue;
       }
 
-      final MutableColumn column = (MutableColumn) table.getColumn(columnName);
+      final MutableColumn column = table.getColumn(columnName);
       if (privilegesForColumn && column == null)
       {
         LOGGER.log(Level.FINE, String.format("Cannot find column, %s.%s.%s.%s",

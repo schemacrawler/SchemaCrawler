@@ -43,10 +43,11 @@ final class JdbcDriverInfoRetriever
   private static final Logger LOGGER = Logger
     .getLogger(JdbcDriverInfoRetriever.class.getName());
 
-  JdbcDriverInfoRetriever(final RetrieverConnection retrieverConnection)
+  JdbcDriverInfoRetriever(final RetrieverConnection retrieverConnection,
+                          final MutableDatabase database)
     throws SQLException
   {
-    super(retrieverConnection);
+    super(retrieverConnection, database);
   }
 
   /**
@@ -57,14 +58,13 @@ final class JdbcDriverInfoRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveJdbcDriverInfo(final MutableDatabase database)
+  void retrieveJdbcDriverInfo()
     throws SQLException
   {
     final DatabaseMetaData dbMetaData = getRetrieverConnection().getMetaData();
     final String url = dbMetaData.getURL();
 
-    final MutableDatabaseInfo dbInfo = (MutableDatabaseInfo) database
-      .getDatabaseInfo();
+    final MutableDatabaseInfo dbInfo = database.getDatabaseInfo();
 
     final MutableJdbcDriverInfo driverInfo = new MutableJdbcDriverInfo();
 

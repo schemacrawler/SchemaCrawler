@@ -189,17 +189,18 @@ public final class DatabaseSchemaCrawler
     try
     {
       final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
-      final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection);
+      final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection,
+                                                                        database);
       if (infoLevel.isRetrieveColumnDataTypes())
       {
-        retriever.retrieveSystemColumnDataTypes(database);
+        retriever.retrieveSystemColumnDataTypes();
       }
       if (infoLevel.isRetrieveUserDefinedColumnDataTypes())
       {
         final List<String> catalogNames = retrieverConnection.getCatalogNames();
         for (final String catalogName: catalogNames)
         {
-          retriever.retrieveUserDefinedColumnDataTypes(catalogName, database);
+          retriever.retrieveUserDefinedColumnDataTypes(catalogName);
         }
       }
     }
@@ -218,17 +219,18 @@ public final class DatabaseSchemaCrawler
     {
 
       final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
-      final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection);
+      final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection,
+                                                                        database);
 
-      retriever.retrieveCatalogs(database);
-      retriever.retrieveSchemas(database, options.getSchemaInclusionRule());
+      retriever.retrieveCatalogs();
+      retriever.retrieveSchemas(options.getSchemaInclusionRule());
 
-      retriever.retrieveDatabaseInfo(database);
+      retriever.retrieveDatabaseInfo();
       if (infoLevel.isRetrieveDatabaseInfo())
       {
         if (infoLevel.isRetrieveAdditionalDatabaseInfo())
         {
-          retriever.retrieveAdditionalDatabaseInfo(database);
+          retriever.retrieveAdditionalDatabaseInfo();
         }
       }
     }
@@ -248,8 +250,9 @@ public final class DatabaseSchemaCrawler
     {
       try
       {
-        final JdbcDriverInfoRetriever retriever = new JdbcDriverInfoRetriever(retrieverConnection);
-        retriever.retrieveJdbcDriverInfo(database);
+        final JdbcDriverInfoRetriever retriever = new JdbcDriverInfoRetriever(retrieverConnection,
+                                                                              database);
+        retriever.retrieveJdbcDriverInfo();
       }
       catch (final SQLException e)
       {
@@ -277,11 +280,11 @@ public final class DatabaseSchemaCrawler
     final ProcedureExRetriever retrieverExtra;
     try
     {
-      retriever = new ProcedureRetriever(retrieverConnection);
-      retrieverExtra = new ProcedureExRetriever(retrieverConnection);
+      retriever = new ProcedureRetriever(retrieverConnection, database);
+      retrieverExtra = new ProcedureExRetriever(retrieverConnection, database);
       for (final String catalogName: retrieverConnection.getCatalogNames())
       {
-        retriever.retrieveProcedures(database, catalogName, options
+        retriever.retrieveProcedures(catalogName, options
           .getProcedureInclusionRule());
       }
       for (final MutableProcedure procedure: database.getAllProcedures())
@@ -300,7 +303,7 @@ public final class DatabaseSchemaCrawler
 
       if (infoLevel.isRetrieveProcedureInformation())
       {
-        retrieverExtra.retrieveProcedureInformation(database);
+        retrieverExtra.retrieveProcedureInformation();
       }
 
       for (final MutableProcedure procedure: database.getAllProcedures())
@@ -334,15 +337,13 @@ public final class DatabaseSchemaCrawler
     final TableExRetriever retrieverExtra;
     try
     {
-      retriever = new TableRetriever(retrieverConnection);
-      retrieverExtra = new TableExRetriever(retrieverConnection);
+      retriever = new TableRetriever(retrieverConnection, database);
+      retrieverExtra = new TableExRetriever(retrieverConnection, database);
 
       for (final String catalogName: retrieverConnection.getCatalogNames())
       {
-        retriever.retrieveTables(database,
-                                 catalogName,
-                                 options.getTableTypes(),
-                                 options.getTableInclusionRule());
+        retriever.retrieveTables(catalogName, options.getTableTypes(), options
+          .getTableInclusionRule());
       }
 
       for (final MutableTable table: database.getAllTables())
@@ -359,23 +360,23 @@ public final class DatabaseSchemaCrawler
 
       if (infoLevel.isRetrieveCheckConstraintInformation())
       {
-        retrieverExtra.retrieveCheckConstraintInformation(database);
+        retrieverExtra.retrieveCheckConstraintInformation();
       }
       if (infoLevel.isRetrieveTriggerInformation())
       {
-        retrieverExtra.retrieveTriggerInformation(database);
+        retrieverExtra.retrieveTriggerInformation();
       }
       if (infoLevel.isRetrieveViewInformation())
       {
-        retrieverExtra.retrieveViewInformation(database);
+        retrieverExtra.retrieveViewInformation();
       }
       if (infoLevel.isRetrieveTablePrivileges())
       {
-        retrieverExtra.retrieveTablePrivileges(database);
+        retrieverExtra.retrieveTablePrivileges();
       }
       if (infoLevel.isRetrieveTableColumnPrivileges())
       {
-        retrieverExtra.retrieveTableColumnPrivileges(database);
+        retrieverExtra.retrieveTableColumnPrivileges();
       }
 
       for (final MutableTable table: database.getAllTables())
@@ -390,7 +391,7 @@ public final class DatabaseSchemaCrawler
           }
           if (infoLevel.isRetrieveForeignKeys())
           {
-            retriever.retrieveForeignKeys(database, table);
+            retriever.retrieveForeignKeys(table);
           }
         }
         // Set comparators

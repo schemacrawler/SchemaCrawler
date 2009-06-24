@@ -23,6 +23,7 @@ package schemacrawler.crawl;
 
 import java.sql.Connection;
 
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.utility.Utility;
 
@@ -49,15 +50,18 @@ abstract class AbstractRetriever
   protected static final int FETCHSIZE = 5;
 
   private final RetrieverConnection retrieverConnection;
+  protected final MutableDatabase database;
 
   AbstractRetriever()
   {
-    this(null);
+    this(null, null);
   }
 
-  AbstractRetriever(final RetrieverConnection retrieverConnection)
+  AbstractRetriever(final RetrieverConnection retrieverConnection,
+                    final MutableDatabase database)
   {
     this.retrieverConnection = retrieverConnection;
+    this.database = database;
   }
 
   /**
@@ -107,6 +111,44 @@ abstract class AbstractRetriever
   protected RetrieverConnection getRetrieverConnection()
   {
     return retrieverConnection;
+  }
+
+  protected MutableProcedure lookupProcedure(final String catalogName,
+                                             final String schemaName,
+                                             final String procedureName)
+  {
+    MutableProcedure procedure = null;
+    final MutableSchema schema = lookupSchema(catalogName, schemaName);
+    if (schema != null)
+    {
+      procedure = schema.getProcedure(procedureName);
+    }
+    return procedure;
+  }
+
+  protected MutableSchema lookupSchema(final String catalogName,
+                                       final String schemaName)
+  {
+    MutableSchema schema = null;
+    final Catalog catalog = database.getCatalog(catalogName);
+    if (catalog != null)
+    {
+      schema = (MutableSchema) catalog.getSchema(schemaName);
+    }
+    return schema;
+  }
+
+  protected MutableTable lookupTable(final String catalogName,
+                                     final String schemaName,
+                                     final String tableName)
+  {
+    MutableTable table = null;
+    final MutableSchema schema = lookupSchema(catalogName, schemaName);
+    if (schema != null)
+    {
+      table = schema.getTable(tableName);
+    }
+    return table;
   }
 
 }

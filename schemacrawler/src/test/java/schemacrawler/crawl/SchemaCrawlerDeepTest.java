@@ -31,7 +31,6 @@ import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
-import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -84,7 +83,8 @@ public class SchemaCrawlerDeepTest
                                                  "Test Table 1");
     final MutableTable table2 = new MutableTable(table0.getSchema(),
                                                  "Test Table 2");
-    final PrimaryKey primaryKey = table0.getPrimaryKey();
+    final MutablePrimaryKey primaryKey = (MutablePrimaryKey) table0
+      .getPrimaryKey();
     table1.setPrimaryKey(primaryKey);
     table2.setPrimaryKey(primaryKey);
     for (final Column column: table0.getColumns())

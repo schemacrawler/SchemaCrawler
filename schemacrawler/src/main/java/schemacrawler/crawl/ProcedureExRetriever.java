@@ -44,10 +44,11 @@ final class ProcedureExRetriever
   private static final Logger LOGGER = Logger
     .getLogger(ProcedureExRetriever.class.getName());
 
-  ProcedureExRetriever(final RetrieverConnection retrieverConnection)
+  ProcedureExRetriever(final RetrieverConnection retrieverConnection,
+                       final MutableDatabase database)
     throws SQLException
   {
-    super(retrieverConnection);
+    super(retrieverConnection, database);
   }
 
   /**
@@ -58,7 +59,7 @@ final class ProcedureExRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveProcedureInformation(final MutableDatabase database)
+  void retrieveProcedureInformation()
     throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
@@ -95,8 +96,9 @@ final class ProcedureExRetriever
         final String schemaName = results.getString("ROUTINE_SCHEMA");
         final String procedureName = results.getString("ROUTINE_NAME");
 
-        final MutableProcedure procedure = database
-          .lookupProcedure(catalogName, schemaName, procedureName);
+        final MutableProcedure procedure = lookupProcedure(catalogName,
+                                                           schemaName,
+                                                           procedureName);
         if (procedure != null)
         {
           LOGGER.log(Level.FINEST, "Retrieving procedure information for "

@@ -43,10 +43,11 @@ final class ProcedureRetriever
   private static final Logger LOGGER = Logger
     .getLogger(ProcedureRetriever.class.getName());
 
-  ProcedureRetriever(final RetrieverConnection retrieverConnection)
+  ProcedureRetriever(final RetrieverConnection retrieverConnection,
+                     final MutableDatabase database)
     throws SQLException
   {
-    super(retrieverConnection);
+    super(retrieverConnection, database);
   }
 
   /**
@@ -133,8 +134,7 @@ final class ProcedureRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveProcedures(final MutableDatabase database,
-                          final String catalogName,
+  void retrieveProcedures(final String catalogName,
                           final InclusionRule procedureInclusionRule)
     throws SQLException
   {
@@ -164,8 +164,7 @@ final class ProcedureRetriever
           .getShort("PROCEDURE_TYPE", (short) ProcedureType.unknown.getId());
         final String remarks = results.getString(REMARKS);
 
-        final MutableSchema schema = database.lookupSchema(catalogName,
-                                                           schemaName);
+        final MutableSchema schema = lookupSchema(catalogName, schemaName);
         if (schema == null)
         {
           LOGGER.log(Level.FINE, String.format("Cannot find schema, %s.%s",

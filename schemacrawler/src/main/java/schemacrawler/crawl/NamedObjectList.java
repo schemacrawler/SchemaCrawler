@@ -148,18 +148,6 @@ class NamedObjectList<N extends NamedObject>
     objects.add(namedObject);
   }
 
-  /**
-   * Gets all named objects in the list, in sorted order.
-   * 
-   * @return All named objects
-   */
-  List<N> values()
-  {
-    final List<N> all = new ArrayList<N>(objects);
-    Collections.sort(all, sort);
-    return Collections.unmodifiableList(all);
-  }
-
   N lookup(final DatabaseObject databaseObject, final String name)
   {
     return lookup(new AbstractDependantObject(databaseObject, name)
@@ -225,6 +213,18 @@ class NamedObjectList<N extends NamedObject>
   int size()
   {
     return objects.size();
+  }
+
+  /**
+   * Gets all named objects in the list, in sorted order.
+   * 
+   * @return All named objects
+   */
+  List<N> values()
+  {
+    final List<N> all = new ArrayList<N>(objects);
+    Collections.sort(all, sort);
+    return Collections.unmodifiableList(all);
   }
 
   private N lookup(final NamedObject namedObject)
