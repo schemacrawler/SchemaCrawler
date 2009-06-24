@@ -198,7 +198,7 @@ final class DatabaseInfoRetriever
           if (schemaInclusionRule.include(schemaFullName))
           {
             LOGGER.log(Level.FINEST, "Retrieving schema: " + schemaName);
-            (currentCatalog).addSchema(schema);
+            currentCatalog.addSchema(schema);
           }
         }
       }
@@ -327,8 +327,8 @@ final class DatabaseInfoRetriever
                                                schemaName));
           continue;
         }
-        final ColumnDataType baseType = schema
-          .lookupColumnDataTypeByType(baseTypeValue);
+        final ColumnDataType baseType = lookupColumnDataTypeByType(schema,
+                                                                   baseTypeValue);
         final MutableColumnDataType columnDataType = new MutableColumnDataType(schema,
                                                                                typeName);
         columnDataType.setUserDefined(true);

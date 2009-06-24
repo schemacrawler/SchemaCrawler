@@ -27,15 +27,8 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface Schema
-  extends NamedObject
+  extends DependantNamedObject
 {
-
-  /**
-   * Gets the catalog that this schema belongs to.
-   * 
-   * @return Parent catalog
-   */
-  Catalog getCatalog();
 
   /**
    * Gets the column data types defined in the schema, by name.

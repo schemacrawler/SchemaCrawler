@@ -30,29 +30,17 @@ import schemacrawler.schema.Schema;
  * @author Sualeh Fatehi
  */
 class MutableCatalog
-  extends AbstractNamedObject
+  extends AbstractDependantNamedObject
   implements Catalog
 {
 
   private static final long serialVersionUID = 3258128063743931187L;
 
-  private final MutableDatabase database;
   private final NamedObjectList<MutableSchema> schemas = new NamedObjectList<MutableSchema>(NamedObjectSort.alphabetical);
 
-  MutableCatalog(final MutableDatabase database, final String name)
+  MutableCatalog(final AbstractNamedObject parent, final String name)
   {
-    super(name);
-    this.database = database;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.Catalog#getDatabase()
-   */
-  public MutableDatabase getDatabase()
-  {
-    return database;
+    super(parent, name);
   }
 
   /**

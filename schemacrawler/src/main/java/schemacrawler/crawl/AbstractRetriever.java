@@ -87,7 +87,7 @@ abstract class AbstractRetriever
 
     boolean belongsToCatalog = true;
     boolean belongsToSchema = true;
-    final String dbObjectCatalogName = dbObject.getSchema().getCatalog()
+    final String dbObjectCatalogName = dbObject.getSchema().getParent()
       .getName();
     if (!Utility.isBlank(catalogName) && !Utility.isBlank(dbObjectCatalogName)
         && !catalogName.equals(dbObjectCatalogName))
@@ -111,6 +111,53 @@ abstract class AbstractRetriever
   protected RetrieverConnection getRetrieverConnection()
   {
     return retrieverConnection;
+  }
+
+  protected MutableColumnDataType lookupColumnDataTypeByType(final MutableSchema schema,
+                                                             final int type)
+  {
+    MutableColumnDataType columnDataType = schema
+      .lookupColumnDataTypeByType(type);
+    if (columnDataType == null)
+    {
+      columnDataType = database.getSystemColumnDataTypesList()
+        .lookupColumnDataTypeByType(type);
+    }
+    return columnDataType;
+  }
+
+  /**
+   * Creates a data type from the JDBC data type id, and the database
+   * specific type name, if it does not exist.
+   * 
+   * @param jdbcDataType
+   *        JDBC data type
+   * @param databaseSpecificTypeName
+   *        Database specific type name
+   */
+  protected MutableColumnDataType lookupOrCreateColumnDataType(final MutableSchema schema,
+                                                               final int jdbcDataType,
+                                                               final String databaseSpecificTypeName)
+  {
+    MutableColumnDataType columnDataType = schema
+      .lookupColumnDataTypeByType(databaseSpecificTypeName);
+    if (columnDataType == null)
+    {
+      columnDataType = database.getSystemColumnDataTypesList()
+        .lookupColumnDataTypeByType(databaseSpecificTypeName);
+    }
+    // Create new data type, if needed
+    if (columnDataType == null)
+    {
+      if (columnDataType == null)
+      {
+        columnDataType = new MutableColumnDataType(schema,
+                                                   databaseSpecificTypeName);
+        columnDataType.setType(jdbcDataType);
+        schema.addColumnDataType(columnDataType);
+      }
+    }
+    return columnDataType;
   }
 
   protected MutableProcedure lookupProcedure(final String catalogName,
