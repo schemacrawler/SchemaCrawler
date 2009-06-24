@@ -198,7 +198,8 @@ final class WeakAssociationsAnalyzer
         final String matchColumnName = columnEntry.getKey();
         final MutableTable matchedTable = tableMatchMap.get(matchColumnName);
         final Column fkColumn = columnEntry.getValue();
-        if (matchedTable != null && !fkColumn.getParent().equals(matchedTable))
+        if (matchedTable != null && fkColumn != null
+            && !fkColumn.getParent().equals(matchedTable))
         {
           // Check if the table association is already expressed as a
           // foreign key
@@ -211,7 +212,7 @@ final class WeakAssociationsAnalyzer
             // Ensure that we associate to the primary key
             final Map<String, Column> pkColumnNameMatchesMap = mapColumnNameMatches(matchedTable);
             final Column pkColumn = pkColumnNameMatchesMap.get("id");
-            if (pkColumn != null && fkColumn != null)
+            if (pkColumn != null)
             {
               final ColumnDataType fkColumnType = fkColumn.getType();
               final ColumnDataType pkColumnType = pkColumn.getType();
