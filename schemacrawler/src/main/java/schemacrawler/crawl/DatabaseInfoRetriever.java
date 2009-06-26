@@ -187,7 +187,12 @@ final class DatabaseInfoRetriever
         }
         else
         {
-          catalogs = (MutableCatalog[]) database.getCatalogs();
+          final Catalog[] databaseCatalogs = database.getCatalogs();
+          catalogs = new MutableCatalog[databaseCatalogs.length];
+          for (int i = 0; i < databaseCatalogs.length; i++)
+          {
+            catalogs[i] = (MutableCatalog) databaseCatalogs[i];
+          }
         }
 
         for (final MutableCatalog currentCatalog: catalogs)
