@@ -92,7 +92,8 @@ public final class Main
                                  + "-Dpackaging=maven-plugin "
                                  + "-Dfile=schemacrawler-"
                                  + Version.getVersion() + ".jar "
-                                 + "-DpomFile=schemacrawler-maven-plugin.pom ";
+                                 + "-DpomFile=schemacrawler-maven-plugin.pom "
+                                 + "-DcreateChecksum=true";
     final File installScriptFile = writeStringToFile(INSTALL_MAVEN_PLUGIN_SCRIPT_FILESTEM
                                                          + shellExt,
                                                      installScript);

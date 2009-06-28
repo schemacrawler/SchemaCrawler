@@ -23,6 +23,7 @@ package schemacrawler.crawl;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DependantObject;
+import schemacrawler.utility.Utility;
 
 /**
  * Represents the dependent of a database object, such as a column or an
@@ -85,11 +86,11 @@ abstract class AbstractDependantObject
   public String getFullName()
   {
     final StringBuilder buffer = new StringBuilder();
-    if (parent != null && parent.getFullName().length() > 0)
+    if (parent != null && !Utility.isBlank(parent.getFullName()))
     {
       buffer.append(parent.getFullName()).append(".");
     }
-    if (getName() != null)
+    if (!Utility.isBlank(getName()))
     {
       buffer.append(getName());
     }
