@@ -5,7 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="6.5" date="2009-05-10">
+    <release version="7.0" date="2009-07-10">
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        Major restructuring of the API, with the introduction of a Database object that contains
+        all of the database metadata, and containing catalog and schema objects.
+      ]]></action>       
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
         To allow for more control on table selection, the -tables command line parameter
         matches to the fully qualified table name, CATALOG.SCHEMA.TABLENAME.
