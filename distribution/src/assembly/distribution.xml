@@ -147,6 +147,7 @@
 				<exclude name="**/*.log" />
 				<exclude name="**/*.lck" />
 				<exclude name="**/*.ser" />
+				<exclude name="**/*.zip" />
 				<exclude name="*.html" />
 			</zipfileset>
 		</zip>
