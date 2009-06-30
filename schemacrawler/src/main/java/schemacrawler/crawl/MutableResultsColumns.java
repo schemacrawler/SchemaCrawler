@@ -21,6 +21,9 @@
 package schemacrawler.crawl;
 
 
+import java.util.Arrays;
+import java.util.Iterator;
+
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
 
@@ -87,6 +90,11 @@ class MutableResultsColumns
       columnsList = buffer.toString();
     }
     return columnsList;
+  }
+
+  public Iterator<ResultsColumn> iterator()
+  {
+    return Arrays.asList(getColumns()).iterator();
   }
 
   void addColumn(final MutableResultsColumn column)
