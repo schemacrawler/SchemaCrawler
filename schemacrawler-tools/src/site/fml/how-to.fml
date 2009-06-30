@@ -83,7 +83,8 @@
         <p>
           Change the configuration for the SchemaCrawler "sort alphabetically" properties in the
           <code>schemacrawler.config.properties </code>
-          file.
+          file. Also see the
+          <a href="faq.html#commands">sorting command-line options.</a>
         </p>
       </answer>
     </faq>
@@ -149,7 +150,7 @@ schemacrawler.format.hide_constraint_names=false
       <answer>
         <p>
           When SchemaCrawler is used with J2SE 6 and above, it has built-in support to be used with JavaScript scripts.
-          Write a JavaScript file, assuming that a "catalog" variable containing the database schema will be available.
+          Write a JavaScript file, assuming that a "database" variable containing the database schema will be available.
           Run
           <code>schemacrawler.tools.integration.scripting.Main </code>
           , with the correct options. See the example in the
@@ -216,18 +217,25 @@ schemacrawler.format.hide_constraint_names=false
         <p>
           Or, if you are impatient, try code similar to the following:
           <source><![CDATA[
-SchemaCrawlerOptions options = new SchemaCrawlerOptions();
-Catalog catalog =
-  SchemaCrawlerUtility.getCatalog(connection, options);
-for (Schema schema: catalog.getSchemas())
+final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
+// Set what details are required in the schema - this affects the
+// time taken to crawl the schema
+options.setSchemaInfoLevel(SchemaInfoLevel.standard());
+
+final Database database = SchemaCrawlerUtility.getDatabase(connection, options);
+
+for (final Catalog catalog: database.getCatalogs())
 {
-  System.out.println(schema);
-  for (Table table: schema.getTables())
+  for (final Schema schema: catalog.getSchemas())
   {
-    System.out.println("o--> " + table);
-    for (Column column: table.getColumns())
+    System.out.println(schema);
+    for (final Table table: schema.getTables())
     {
-      System.out.println("     o--> " + column);
+      System.out.print("o--> " + table);
+      for (final Column column: table.getColumns())
+      {
+        System.out.println("     o--> " + column);
+      }
     }
   }
 }
@@ -345,7 +353,7 @@ for (Schema schema: catalog.getSchemas())
     <plugin>
       <groupId>schemacrawler</groupId>
       <artifactId>schemacrawler-maven-plugin</artifactId>
-      <version>4.0</version>
+      <version>7.0</version>
       <configuration>
         <schemacrawler.config>schemacrawler.config.properties</schemacrawler.config>
         <schemacrawler.datasource>hsqldb</schemacrawler.datasource>
