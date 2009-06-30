@@ -21,10 +21,12 @@
 package schemacrawler.crawl;
 
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import schemacrawler.schema.NamedObject;
+import schemacrawler.utility.Utility;
 
 /**
  * Represents a named object.
@@ -46,16 +48,6 @@ abstract class AbstractNamedObject
   AbstractNamedObject(final String name)
   {
     this.name = name;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.NamedObject#addAttributes(java.util.Map)
-   */
-  public final void addAttributes(final Map<String, Object> values)
-  {
-    attributeMap.putAll(values);
   }
 
   /**
@@ -112,6 +104,16 @@ abstract class AbstractNamedObject
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schema.NamedObject#getAttributes()
+   */
+  public Map<String, Object> getAttributes()
+  {
+    return Collections.unmodifiableMap(attributeMap);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see schemacrawler.schema.NamedObject#getName()
    */
   public final String getName()
@@ -160,7 +162,17 @@ abstract class AbstractNamedObject
    */
   public final void setAttribute(final String name, final Object value)
   {
-    attributeMap.put(name, value);
+    if (!Utility.isBlank(name))
+    {
+      if (value == null)
+      {
+        attributeMap.remove(name);
+      }
+      else
+      {
+        attributeMap.put(name, value);
+      }
+    }
   }
 
   /**
@@ -172,6 +184,14 @@ abstract class AbstractNamedObject
   public String toString()
   {
     return name;
+  }
+
+  final void addAttributes(final Map<String, Object> values)
+  {
+    if (values != null)
+    {
+      attributeMap.putAll(values);
+    }
   }
 
   final void setRemarks(final String remarks)
