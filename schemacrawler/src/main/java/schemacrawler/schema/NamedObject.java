@@ -34,14 +34,6 @@ public interface NamedObject
 {
 
   /**
-   * Adds attributes from a map.
-   * 
-   * @param values
-   *        Attribute values to add.
-   */
-  void addAttributes(Map<String, Object> values);
-
-  /**
    * Gets an attribute.
    * 
    * @param name
@@ -49,6 +41,13 @@ public interface NamedObject
    * @return Attribute value.
    */
   Object getAttribute(String name);
+
+  /**
+   * Gets all attributes.
+   * 
+   * @return Map of attributes
+   */
+  Map<String, Object> getAttributes();
 
   /**
    * Getter for name of object.
