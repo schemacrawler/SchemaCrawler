@@ -91,7 +91,7 @@ final class SchemaDotFormatter
   {
     final String text = Utility.readFully(HtmlFormattingHelper.class
       .getResourceAsStream("/dot.header.txt"));
-    out.println(new String(text));
+    out.println(text);
   }
 
   public void end()
