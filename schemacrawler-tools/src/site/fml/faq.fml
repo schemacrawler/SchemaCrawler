@@ -24,7 +24,7 @@
           <a href="snapshot-examples/snapshot.csv"> comma-separated text (CSV).</a>
           The XHTML output is a combination of valid XML (that can be manipulated by XML tools or XSLT), and HTML that
           can be viewed in a browser. SchemaCrawler can produce output in the
-          <a href=" http: / www.graphviz.org / doc / info / lang.html ">DOT format,</a>
+          <a href="http://www.graphviz.org/doc/info/lang.html ">DOT format,</a>
           which <a href="http://www.graphviz.org/">GraphViz</a> can convert into schema diagrams.
         </p>
       </answer>
@@ -242,7 +242,8 @@ Or, the following:
       <question> What Java version does SchemaCrawler work with? </question>
       <answer>
         <p> SchemaCrawler works with J2SE 5 and above. SchemaCrawler does not depend on any Java libraries other than
-          the standard J2SE 5 runtime libraries and a JDBC driver. </p>
+          the standard J2SE 5 runtime libraries and a JDBC driver. However, J2SE 6 is required for JavaScript scripting using the
+          SchemaCrawler API.</p>
       </answer>
     </faq>
     <faq id="supported-os">

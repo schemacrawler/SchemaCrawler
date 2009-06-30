@@ -77,7 +77,7 @@ public final class ScriptRenderer
     }
 
     // Set the context
-    scriptEngine.put("catalog", database);
+    scriptEngine.put("database", database);
 
     // Evaluate the script
     scriptEngine.eval(new FileReader(scriptFile));

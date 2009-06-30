@@ -116,7 +116,7 @@ public final class VelocityRenderer
 
     // Set the context
     final VelocityContext context = new VelocityContext();
-    context.put("catalog", database);
+    context.put("database", database);
 
     // Evaluate the template
     final Template template = ve.getTemplate(templateLocation);
