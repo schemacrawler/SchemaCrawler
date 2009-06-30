@@ -342,15 +342,6 @@ final class TableRetriever
         final String pkTableSchemaName = results.getString("PKTABLE_SCHEM");
         final String pkTableName = results.getString("PKTABLE_NAME");
         final String pkColumnName = results.getString("PKCOLUMN_NAME");
-        final MutableSchema pkSchema = lookupSchema(pkTableCatalogName,
-                                                    pkTableSchemaName);
-        if (pkSchema == null)
-        {
-          LOGGER.log(Level.FINE, String.format("Cannot find schema, %s.%s",
-                                               pkTableCatalogName,
-                                               pkTableSchemaName));
-          continue;
-        }
 
         final String fkTableCatalogName = results.getString("FKTABLE_CAT");
         final String fkTableSchemaName = results.getString("FKTABLE_SCHEM");
@@ -360,7 +351,7 @@ final class TableRetriever
         MutableForeignKey foreignKey = foreignKeys.lookup(foreignKeyName);
         if (foreignKey == null)
         {
-          foreignKey = new MutableForeignKey(pkSchema, foreignKeyName);
+          foreignKey = new MutableForeignKey(foreignKeyName);
           foreignKeys.add(foreignKey);
         }
 

@@ -22,7 +22,6 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.Column;
-import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.NamedObject;
 
@@ -33,7 +32,7 @@ import schemacrawler.schema.NamedObject;
  * @author Sualeh Fatehi
  */
 final class MutableForeignKeyColumnMap
-  extends AbstractDependantObject
+  extends AbstractDependantNamedObject
   implements ForeignKeyColumnMap
 {
 
@@ -43,7 +42,7 @@ final class MutableForeignKeyColumnMap
   private Column primaryKeyColumn;
   private int keySequence;
 
-  MutableForeignKeyColumnMap(final DatabaseObject parent, final String name)
+  MutableForeignKeyColumnMap(final NamedObject parent, final String name)
   {
     super(parent, name);
   }
