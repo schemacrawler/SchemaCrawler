@@ -283,7 +283,7 @@ final class DataTextFormatter
   private String readLob(final Object columnData)
   {
     BufferedInputStream in = null;
-    String lobData = BINARY;
+    final String lobData;
     try
     {
       if (columnData instanceof Blob)
@@ -296,13 +296,13 @@ final class DataTextFormatter
         final Clob clob = (Clob) columnData;
         in = new BufferedInputStream(clob.getAsciiStream());
       }
-      lobData = new String(schemacrawler.utility.Utility.readFully(in));
+      lobData = schemacrawler.utility.Utility.readFully(in);
       return lobData;
     }
     catch (final SQLException e)
     {
       LOGGER.log(Level.FINE, "Could not read binary data", e);
-      return lobData;
+      return BINARY;
     }
 
   }
