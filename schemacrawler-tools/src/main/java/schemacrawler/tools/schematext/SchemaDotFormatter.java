@@ -31,6 +31,7 @@ import java.util.logging.Logger;
 import schemacrawler.Version;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
@@ -38,7 +39,6 @@ import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
-import schemacrawler.schema.WeakAssociations;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.OutputOptions;
@@ -221,7 +221,7 @@ final class SchemaDotFormatter
     out.write(buffer.toString());
   }
 
-  public void handle(final WeakAssociations weakAssociations)
+  public void handle(final ColumnMap[] weakAssociations)
     throws SchemaCrawlerException
   {
     if (weakAssociations == null)
@@ -229,11 +229,10 @@ final class SchemaDotFormatter
       return;
     }
 
-    for (final ForeignKeyColumnMap foreignKeyColumnMap: weakAssociations
-      .getColumnPairs())
+    for (final ColumnMap columnMap: weakAssociations)
     {
-      final Column primaryKeyColumn = foreignKeyColumnMap.getPrimaryKeyColumn();
-      final Column foreignKeyColumn = foreignKeyColumnMap.getForeignKeyColumn();
+      final Column primaryKeyColumn = columnMap.getPrimaryKeyColumn();
+      final Column foreignKeyColumn = columnMap.getForeignKeyColumn();
       out.write(printColumnAssociation("", primaryKeyColumn, foreignKeyColumn));
     }
   }

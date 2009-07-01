@@ -33,10 +33,10 @@ import java.util.logging.Logger;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutorException;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.WeakAssociations;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -296,7 +296,7 @@ final class OperationFormatter
    * 
    * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.WeakAssociations)
    */
-  public void handle(final WeakAssociations weakAssociations)
+  public void handle(final ColumnMap[] weakAssociations)
     throws SchemaCrawlerException
   {
     // Ignore

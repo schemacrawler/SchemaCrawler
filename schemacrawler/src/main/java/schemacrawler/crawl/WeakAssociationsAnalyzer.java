@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.PrimaryKey;
@@ -29,10 +30,10 @@ final class WeakAssociationsAnalyzer
     .getLogger(WeakAssociationsAnalyzer.class.getName());
 
   private final MutableDatabase database;
-  private final MutableWeakAssociations weakAssociations;
+  private final List<ColumnMap> weakAssociations;
 
   WeakAssociationsAnalyzer(final MutableDatabase database,
-                           final MutableWeakAssociations weakAssociations)
+                           final List<ColumnMap> weakAssociations)
   {
     this.database = database;
     this.weakAssociations = weakAssociations;
@@ -220,11 +221,14 @@ final class WeakAssociationsAnalyzer
                 LOGGER.log(Level.FINE, "Found weak association "
                                        + fkColumn.getFullName() + " --> "
                                        + pkColumn.getFullName());
+                final MutableColumnMap columnMap = new MutableColumnMap(pkColumn,
+                                                                        fkColumn);
+
                 ((MutableTable) pkColumn.getParent())
-                  .addWeakAssociation(pkColumn, fkColumn);
+                  .addWeakAssociation(columnMap);
                 ((MutableTable) fkColumn.getParent())
-                  .addWeakAssociation(pkColumn, fkColumn);
-                weakAssociations.addColumnPair(pkColumn, fkColumn);
+                  .addWeakAssociation(columnMap);
+                weakAssociations.add(columnMap);
               }
             }
           }

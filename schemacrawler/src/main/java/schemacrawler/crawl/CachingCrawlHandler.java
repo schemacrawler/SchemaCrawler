@@ -22,11 +22,11 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.WeakAssociations;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
@@ -89,6 +89,16 @@ public final class CachingCrawlHandler
 
   /**
    * {@inheritDoc}
+   * 
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.WeakAssociations)
+   */
+  public void handle(final ColumnMap[] weakAssociations)
+    throws SchemaCrawlerException
+  { // do nothing
+  }
+
+  /**
+   * {@inheritDoc}
    */
   public void handle(final DatabaseInfo databaseInfo)
   { // do nothing
@@ -109,16 +119,6 @@ public final class CachingCrawlHandler
    * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.Table)
    */
   public void handle(final Table table)
-  { // do nothing
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.WeakAssociations)
-   */
-  public void handle(final WeakAssociations weakAssociations)
-    throws SchemaCrawlerException
   { // do nothing
   }
 

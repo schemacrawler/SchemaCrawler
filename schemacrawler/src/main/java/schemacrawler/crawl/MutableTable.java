@@ -21,8 +21,13 @@
 package schemacrawler.crawl;
 
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Privilege;
@@ -51,13 +56,13 @@ class MutableTable
   private final NamedObjectList<MutableCheckConstraint> checkConstraints = new NamedObjectList<MutableCheckConstraint>(NamedObjectSort.natural);
   private final NamedObjectList<MutableTrigger> triggers = new NamedObjectList<MutableTrigger>(NamedObjectSort.natural);
   private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>(NamedObjectSort.natural);
-  private final MutableWeakAssociations weakAssociations;
+  private final Set<MutableColumnMap> weakAssociations;
 
   MutableTable(final Schema schema, final String name)
   {
     super(schema, name);
     // Default values
-    weakAssociations = new MutableWeakAssociations();
+    weakAssociations = new LinkedHashSet<MutableColumnMap>();
     type = TableType.unknown;
   }
 
@@ -222,9 +227,12 @@ class MutableTable
    * 
    * @see schemacrawler.schema.Table#getWeakAssociations()
    */
-  public MutableWeakAssociations getWeakAssociations()
+  public ColumnMap[] getWeakAssociations()
   {
-    return weakAssociations;
+    final ColumnMap[] columnMaps = weakAssociations
+      .toArray(new ColumnMap[weakAssociations.size()]);
+    Arrays.sort(columnMaps);
+    return columnMaps;
   }
 
   void addCheckConstraint(final MutableCheckConstraint checkConstraint)
@@ -257,9 +265,12 @@ class MutableTable
     triggers.add(trigger);
   }
 
-  void addWeakAssociation(final Column pkColumn, final Column fkColumn)
+  void addWeakAssociation(final MutableColumnMap columnMap)
   {
-    weakAssociations.addColumnPair(pkColumn, fkColumn);
+    if (columnMap != null)
+    {
+      weakAssociations.add(columnMap);
+    }
   }
 
   /**
