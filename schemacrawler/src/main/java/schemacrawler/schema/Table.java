@@ -129,4 +129,10 @@ public interface Table
    */
   TableType getType();
 
+  /**
+   * Weak column associations that are derived by SchemaCrawler from the
+   * column names.
+   */
+  WeakAssociations getWeakAssociations();
+
 }

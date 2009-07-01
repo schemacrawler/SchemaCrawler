@@ -406,9 +406,11 @@ public final class DatabaseSchemaCrawler
 
       if (infoLevel.isRetrieveWeakAssociations())
       {
-        final WeakAssociationsAnalyzer tableAnalyzer = new WeakAssociationsAnalyzer(database);
+        final MutableWeakAssociations weakAssociations = new MutableWeakAssociations();
+        final WeakAssociationsAnalyzer tableAnalyzer = new WeakAssociationsAnalyzer(database,
+                                                                                    weakAssociations);
         tableAnalyzer.analyzeTables();
-        handler.handle(database.getWeakAssociations());
+        handler.handle(weakAssociations);
       }
     }
     catch (final SQLException e)

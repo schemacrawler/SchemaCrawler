@@ -29,10 +29,13 @@ final class WeakAssociationsAnalyzer
     .getLogger(WeakAssociationsAnalyzer.class.getName());
 
   private final MutableDatabase database;
+  private final MutableWeakAssociations weakAssociations;
 
-  WeakAssociationsAnalyzer(final MutableDatabase database)
+  WeakAssociationsAnalyzer(final MutableDatabase database,
+                           final MutableWeakAssociations weakAssociations)
   {
     this.database = database;
+    this.weakAssociations = weakAssociations;
   }
 
   void analyzeTables()
@@ -48,11 +51,7 @@ final class WeakAssociationsAnalyzer
 
     final Map<String, ForeignKeyColumnMap> fkColumnsMap = mapForeignKeyColumns(tables);
 
-    final MutableWeakAssociations weakAssociations = findWeakAssociations(tables,
-                                                                          tableMatchMap,
-                                                                          fkColumnsMap);
-
-    database.setWeakAssociations(weakAssociations);
+    findWeakAssociations(tables, tableMatchMap, fkColumnsMap);
   }
 
   private String commonPrefix(final String string1, final String string2)
@@ -182,11 +181,10 @@ final class WeakAssociationsAnalyzer
     return prefixes;
   }
 
-  private MutableWeakAssociations findWeakAssociations(final NamedObjectList<MutableTable> tables,
-                                                       final Map<String, MutableTable> tableMatchMap,
-                                                       final Map<String, ForeignKeyColumnMap> fkColumnsMap)
+  private void findWeakAssociations(final NamedObjectList<MutableTable> tables,
+                                    final Map<String, MutableTable> tableMatchMap,
+                                    final Map<String, ForeignKeyColumnMap> fkColumnsMap)
   {
-    final MutableWeakAssociations weakAssociations = new MutableWeakAssociations();
     final List<MutableTable> tablesList = tables.values();
     for (final MutableTable table: tablesList)
     {
@@ -222,6 +220,10 @@ final class WeakAssociationsAnalyzer
                 LOGGER.log(Level.FINE, "Found weak association "
                                        + fkColumn.getFullName() + " --> "
                                        + pkColumn.getFullName());
+                ((MutableTable) pkColumn.getParent())
+                  .addWeakAssociation(pkColumn, fkColumn);
+                ((MutableTable) fkColumn.getParent())
+                  .addWeakAssociation(pkColumn, fkColumn);
                 weakAssociations.addColumnPair(pkColumn, fkColumn);
               }
             }
@@ -229,8 +231,6 @@ final class WeakAssociationsAnalyzer
         }
       }
     }
-
-    return weakAssociations;
   }
 
   private int indexOfDifference(final String string1, final String string2)

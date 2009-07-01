@@ -62,11 +62,4 @@ public interface Database
    */
   ColumnDataType[] getSystemColumnDataTypes();
 
-  /**
-   * Gets the weak table associations.
-   * 
-   * @return Weak table associations
-   */
-  WeakAssociations getWeakAssociations();
-
 }
