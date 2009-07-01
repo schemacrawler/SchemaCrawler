@@ -44,7 +44,6 @@ final class MutableDatabase
   private final MutableDatabaseInfo databaseInfo;
   private final ColumnDataTypes systemColumnDataTypes = new ColumnDataTypes();
   private final NamedObjectList<MutableCatalog> catalogs = new NamedObjectList<MutableCatalog>(NamedObjectSort.alphabetical);
-  private MutableWeakAssociations weakAssociations;
 
   MutableDatabase(final String name)
   {
@@ -98,11 +97,6 @@ final class MutableDatabase
       .toArray(new ColumnDataType[systemColumnDataTypes.size()]);
   }
 
-  public MutableWeakAssociations getWeakAssociations()
-  {
-    return weakAssociations;
-  }
-
   void addCatalog(final MutableCatalog catalog)
   {
     catalogs.add(catalog);
@@ -153,11 +147,6 @@ final class MutableDatabase
   ColumnDataTypes getSystemColumnDataTypesList()
   {
     return systemColumnDataTypes;
-  }
-
-  void setWeakAssociations(final MutableWeakAssociations weakAssociations)
-  {
-    this.weakAssociations = weakAssociations;
   }
 
 }

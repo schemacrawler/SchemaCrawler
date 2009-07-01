@@ -51,11 +51,13 @@ class MutableTable
   private final NamedObjectList<MutableCheckConstraint> checkConstraints = new NamedObjectList<MutableCheckConstraint>(NamedObjectSort.natural);
   private final NamedObjectList<MutableTrigger> triggers = new NamedObjectList<MutableTrigger>(NamedObjectSort.natural);
   private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>(NamedObjectSort.natural);
+  private final MutableWeakAssociations weakAssociations;
 
   MutableTable(final Schema schema, final String name)
   {
     super(schema, name);
     // Default values
+    weakAssociations = new MutableWeakAssociations();
     type = TableType.unknown;
   }
 
@@ -215,6 +217,16 @@ class MutableTable
     return type;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Table#getWeakAssociations()
+   */
+  public MutableWeakAssociations getWeakAssociations()
+  {
+    return weakAssociations;
+  }
+
   void addCheckConstraint(final MutableCheckConstraint checkConstraint)
   {
     checkConstraints.add(checkConstraint);
@@ -243,6 +255,11 @@ class MutableTable
   void addTrigger(final MutableTrigger trigger)
   {
     triggers.add(trigger);
+  }
+
+  void addWeakAssociation(final Column pkColumn, final Column fkColumn)
+  {
+    weakAssociations.addColumnPair(pkColumn, fkColumn);
   }
 
   /**
