@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * Implementation of Rails' <a href='http://api.rubyonrails.org/classes/ActiveSupport/CoreExtensions/String/Inflections.html'>Inflectio
- * n s < / a > to handle singularization and pluralization of 'Rails
+ * Implementation of Rails' <a href='http://api.rubyonrails.org/classes/ActiveSupport/CoreExtensions/String/Inflections.html'>Inflect
+ * i o n s < / a > to handle singularization and pluralization of 'Rails
  * strings'. Copied from <a
  * href='http://code.google.com/p/rogueweb/'>rogueweb</a>'s port of
  * Rails to Java.

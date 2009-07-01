@@ -24,6 +24,7 @@ package schemacrawler.crawl;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +32,7 @@ import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.ResultsColumns;
@@ -406,11 +408,12 @@ public final class DatabaseSchemaCrawler
 
       if (infoLevel.isRetrieveWeakAssociations())
       {
-        final MutableWeakAssociations weakAssociations = new MutableWeakAssociations();
+        final List<ColumnMap> weakAssociations = new ArrayList<ColumnMap>();
         final WeakAssociationsAnalyzer tableAnalyzer = new WeakAssociationsAnalyzer(database,
                                                                                     weakAssociations);
         tableAnalyzer.analyzeTables();
-        handler.handle(weakAssociations);
+        handler.handle(weakAssociations.toArray(new ColumnMap[weakAssociations
+          .size()]));
       }
     }
     catch (final SQLException e)

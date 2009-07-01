@@ -133,6 +133,6 @@ public interface Table
    * Weak column associations that are derived by SchemaCrawler from the
    * column names.
    */
-  WeakAssociations getWeakAssociations();
+  ColumnMap[] getWeakAssociations();
 
 }

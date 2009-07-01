@@ -34,6 +34,7 @@ import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.EventManipulationType;
@@ -51,7 +52,6 @@ import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
-import schemacrawler.schema.WeakAssociations;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.OutputFormat;
@@ -340,11 +340,10 @@ final class SchemaTextFormatter
    * 
    * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.WeakAssociations)
    */
-  public void handle(final WeakAssociations weakAssociations)
+  public void handle(final ColumnMap[] weakAssociations)
     throws SchemaCrawlerException
   {
-    if (weakAssociations == null
-        || weakAssociations.getColumnPairs().length == 0)
+    if (weakAssociations == null || weakAssociations.length == 0)
     {
       return;
     }
@@ -352,7 +351,7 @@ final class SchemaTextFormatter
     out.print(formattingHelper.createObjectStart(""));
     out
       .println(formattingHelper.createNameRow("", "[weak associations]", true));
-    printColumnPairs("", weakAssociations.getColumnPairs());
+    printColumnPairs("", weakAssociations);
     out.print(formattingHelper.createObjectEnd());
   }
 
@@ -423,9 +422,9 @@ final class SchemaTextFormatter
    * @param columnPairs
    */
   private void printColumnPairs(final String tableName,
-                                final ForeignKeyColumnMap[] columnPairs)
+                                final ColumnMap[] columnPairs)
   {
-    for (final ForeignKeyColumnMap columnPair: columnPairs)
+    for (final ColumnMap columnPair: columnPairs)
     {
       final Column pkColumn;
       final Column fkColumn;
@@ -449,10 +448,12 @@ final class SchemaTextFormatter
       {
         fkColumnName = fkColumn.getFullName();
       }
-      final int keySequence = columnPair.getKeySequence();
       String keySequenceString = "";
-      if (options.isShowOrdinalNumbers())
+      if (columnPair instanceof ForeignKeyColumnMap
+          && options.isShowOrdinalNumbers())
       {
+        final int keySequence = ((ForeignKeyColumnMap) columnPair)
+          .getKeySequence();
         keySequenceString = String.format("%2d", keySequence);
       }
       out.println(formattingHelper.createDetailRow(keySequenceString,

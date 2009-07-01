@@ -28,15 +28,8 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface ForeignKeyColumnMap
-  extends DependantNamedObject
+  extends DependantNamedObject, ColumnMap
 {
-
-  /**
-   * Gets the foreign key column.
-   * 
-   * @return Foreign key column
-   */
-  Column getForeignKeyColumn();
 
   /**
    * Gets the sequence in the foreign key.
@@ -44,12 +37,5 @@ public interface ForeignKeyColumnMap
    * @return Foreign key sequence
    */
   int getKeySequence();
-
-  /**
-   * Gets the primary key column.
-   * 
-   * @return Primary key column
-   */
-  Column getPrimaryKeyColumn();
 
 }

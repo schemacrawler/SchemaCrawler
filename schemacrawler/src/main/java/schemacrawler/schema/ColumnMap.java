@@ -24,20 +24,27 @@ package schemacrawler.schema;
 import java.io.Serializable;
 
 /**
- * Represents a a set of weak (or inferred) foreign-key mappings to a
- * primary key in another table.
+ * Represents a single column mapping from a primary key column to a
+ * foreign key column.
  * 
  * @author Sualeh Fatehi
  */
-public interface WeakAssociations
+public interface ColumnMap
   extends Serializable
 {
 
   /**
-   * Gets the list of column pairs.
+   * Gets the foreign key column.
    * 
-   * @return Column pairs
+   * @return Foreign key column
    */
-  ForeignKeyColumnMap[] getColumnPairs();
+  Column getForeignKeyColumn();
+
+  /**
+   * Gets the primary key column.
+   * 
+   * @return Primary key column
+   */
+  Column getPrimaryKeyColumn();
 
 }

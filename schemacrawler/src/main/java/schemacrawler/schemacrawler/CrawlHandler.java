@@ -22,10 +22,10 @@ package schemacrawler.schemacrawler;
 
 
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.WeakAssociations;
 
 /**
  * Handler for SchemaCrawler.
@@ -64,6 +64,17 @@ public interface CrawlHandler
     throws SchemaCrawlerException;
 
   /**
+   * Provides information on the database schema.
+   * 
+   * @param weakAssociations
+   *        Table associations information
+   * @throws SchemaCrawlerException
+   *         On an exception
+   */
+  void handle(ColumnMap[] weakAssociations)
+    throws SchemaCrawlerException;
+
+  /**
    * Handles information on the database schema.
    * 
    * @param database
@@ -94,17 +105,6 @@ public interface CrawlHandler
    *         On an exception
    */
   void handle(Table table)
-    throws SchemaCrawlerException;
-
-  /**
-   * Provides information on the database schema.
-   * 
-   * @param weakAssociations
-   *        Table associations information
-   * @throws SchemaCrawlerException
-   *         On an exception
-   */
-  void handle(WeakAssociations weakAssociations)
     throws SchemaCrawlerException;
 
 }
