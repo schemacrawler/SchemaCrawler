@@ -54,8 +54,8 @@ public class TestDatabase
 
   private static final Level DEBUG_loglevel = Level.OFF;
 
-  private static final Logger LOGGER = Logger
-    .getLogger(TestDatabase.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(TestDatabase.class
+    .getName());
 
   private static final boolean DEBUG = false;
 
@@ -293,22 +293,22 @@ public class TestDatabase
     Statement statement = null;
     try
     {
-      // Load schema script file
-      final String script = Utility.readFully(TestDatabase.class
-        .getResourceAsStream("/schemacrawler.test.sql"));
-      final String otherScript = Utility.readFully(TestDatabase.class
-        .getResourceAsStream("/schemacrawler.test.other.sql"));
+      final String[] scriptResources = new String[] {
+          "/schemacrawler.test.sql",
+          "/schemacrawler.test.extra.sql",
+          "/schemacrawler.test.other.sql"
+      };
       if (dataSource != null)
       {
         connection = dataSource.getConnection();
         statement = connection.createStatement();
-
-        statement.execute(script);
-        connection.commit();
-
-        statement.execute(otherScript);
-        connection.commit();
-
+        for (final String scriptResource: scriptResources)
+        {
+          final String script = Utility.readFully(TestDatabase.class
+            .getResourceAsStream(scriptResource));
+          statement.execute(script);
+          connection.commit();
+        }
         connection.close();
       }
     }
