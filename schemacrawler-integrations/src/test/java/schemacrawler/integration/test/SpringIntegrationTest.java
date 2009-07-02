@@ -96,6 +96,22 @@ public class SpringIntegrationTest
 
   @SuppressWarnings("unchecked")
   @Test
+  public void testExecutableForJavaScript()
+    throws Exception
+  {
+    final String outputFilename = File.createTempFile("schemacrawler", "test")
+      .getAbsolutePath();
+
+    final Executable<SchemaTextOptions> executable = (Executable<SchemaTextOptions>) appContext
+      .getBean("executableForJavaScript");
+    executable.getToolOptions().getOutputOptions()
+      .setOutputFileName(outputFilename);
+
+    executeAndCheckForOutputFile(executable, outputFilename);
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
   public void testExecutableForQuery()
     throws Exception
   {
