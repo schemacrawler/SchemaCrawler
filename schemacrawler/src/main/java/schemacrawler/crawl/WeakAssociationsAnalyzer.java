@@ -21,6 +21,7 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableAssociationType;
 import schemacrawler.utility.Inflection;
 
 final class WeakAssociationsAnalyzer
@@ -296,7 +297,7 @@ final class WeakAssociationsAnalyzer
     final Map<String, ForeignKeyColumnMap> fkColumnsMap = new HashMap<String, ForeignKeyColumnMap>();
     for (final Table table: tables)
     {
-      for (final ForeignKey fk: table.getForeignKeys())
+      for (final ForeignKey fk: table.getForeignKeys(TableAssociationType.all))
       {
         for (final ForeignKeyColumnMap fkMap: fk.getColumnPairs())
         {
