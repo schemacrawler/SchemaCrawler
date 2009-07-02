@@ -21,18 +21,22 @@
 package schemacrawler.crawl;
 
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.ForeignKey;
+import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableAssociationType;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
 
@@ -136,11 +140,63 @@ class MutableTable
   /**
    * {@inheritDoc}
    * 
-   * @see Table#getForeignKeys()
+   * @see schemacrawler.schema.Table#getForeignKeys()
    */
   public ForeignKey[] getForeignKeys()
   {
-    return foreignKeys.values().toArray(new ForeignKey[foreignKeys.size()]);
+    return getForeignKeys(TableAssociationType.all);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Table#getForeignKeys(schemacrawler.schema.TableAssociationType)
+   */
+  public ForeignKey[] getForeignKeys(final TableAssociationType tableAssociationType)
+  {
+    final List<MutableForeignKey> foreignKeysList = new ArrayList<MutableForeignKey>(foreignKeys
+      .values());
+    for (final Iterator<MutableForeignKey> iterator = foreignKeysList
+      .iterator(); iterator.hasNext();)
+    {
+      if (tableAssociationType != null)
+      {
+        final MutableForeignKey mutableForeignKey = iterator.next();
+        final ForeignKeyColumnMap[] columnPairs = mutableForeignKey
+          .getColumnPairs();
+        boolean isExportedKey = false;
+        boolean isImportedKey = false;
+        for (final ForeignKeyColumnMap columnPair: columnPairs)
+        {
+          if (columnPair.getPrimaryKeyColumn().getParent().equals(this))
+          {
+            isExportedKey = true;
+          }
+          if (columnPair.getForeignKeyColumn().getParent().equals(this))
+          {
+            isImportedKey = true;
+          }
+        }
+        switch (tableAssociationType)
+        {
+          case exported:
+            if (!isExportedKey)
+            {
+              iterator.remove();
+            }
+            break;
+          case imported:
+            if (!isImportedKey)
+            {
+              iterator.remove();
+            }
+            break;
+          default:
+            break;
+        }
+      }
+    }
+    return foreignKeysList.toArray(new ForeignKey[foreignKeysList.size()]);
   }
 
   /**
@@ -222,17 +278,46 @@ class MutableTable
     return type;
   }
 
+  public ColumnMap[] getWeakAssociations()
+  {
+    return getWeakAssociations(TableAssociationType.all);
+  }
+
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.Table#getWeakAssociations()
+   * @see schemacrawler.schema.Table#getWeakAssociations(schemacrawler.schema.TableAssociationType)
    */
-  public ColumnMap[] getWeakAssociations()
+  public ColumnMap[] getWeakAssociations(final TableAssociationType tableAssociationType)
   {
-    final ColumnMap[] columnMaps = weakAssociations
-      .toArray(new ColumnMap[weakAssociations.size()]);
-    Arrays.sort(columnMaps);
-    return columnMaps;
+    final List<MutableColumnMap> weakAssociationsList = new ArrayList<MutableColumnMap>(weakAssociations);
+    if (tableAssociationType != null)
+    {
+      for (final Iterator<MutableColumnMap> iterator = weakAssociationsList
+        .iterator(); iterator.hasNext();)
+      {
+        final ColumnMap weakAssociation = iterator.next();
+        switch (tableAssociationType)
+        {
+          case exported:
+            if (!weakAssociation.getPrimaryKeyColumn().getParent().equals(this))
+            {
+              iterator.remove();
+            }
+            break;
+          case imported:
+            if (!weakAssociation.getForeignKeyColumn().getParent().equals(this))
+            {
+              iterator.remove();
+            }
+            break;
+          default:
+            break;
+        }
+      }
+    }
+    return weakAssociationsList.toArray(new ColumnMap[weakAssociationsList
+      .size()]);
   }
 
   void addCheckConstraint(final MutableCheckConstraint checkConstraint)
