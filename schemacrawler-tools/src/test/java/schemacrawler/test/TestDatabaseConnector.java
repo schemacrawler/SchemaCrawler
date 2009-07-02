@@ -1,27 +1,29 @@
-package schemacrawler.main.dbconnector;
+package schemacrawler.test;
 
 
 import javax.sql.DataSource;
 
+import schemacrawler.main.dbconnector.DatabaseConnector;
+import schemacrawler.main.dbconnector.DatabaseConnectorException;
 import schemacrawler.utility.TestDatabase;
 
-public class TestUtilityDatabaseConnector
+public class TestDatabaseConnector
   implements DatabaseConnector
 {
 
-  private final TestDatabase testUtility;
+  private final TestDatabase testDatabase;
 
   /**
    * Adapts a test utility instance to a DatabaseConnector. The
    * assumption is that the underlying test utility data-source has
    * already been created.
    * 
-   * @param testUtility
+   * @param testDatabase
    *        Test utility
    */
-  public TestUtilityDatabaseConnector(final TestDatabase testUtility)
+  public TestDatabaseConnector(final TestDatabase testDatabase)
   {
-    this.testUtility = testUtility;
+    this.testDatabase = testDatabase;
   }
 
   /**
@@ -32,7 +34,7 @@ public class TestUtilityDatabaseConnector
   public DataSource createDataSource()
     throws DatabaseConnectorException
   {
-    return testUtility.getDataSource();
+    return testDatabase.getDataSource();
   }
 
   /**
@@ -42,7 +44,7 @@ public class TestUtilityDatabaseConnector
    */
   public String getDataSourceName()
   {
-    return "TestUtilityDataSource";
+    return getClass().getSimpleName();
   }
 
   public boolean hasDataSourceName()
