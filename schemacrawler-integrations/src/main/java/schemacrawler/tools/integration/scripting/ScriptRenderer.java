@@ -76,10 +76,12 @@ public final class ScriptRenderer
       throw new RuntimeException("Script engine not found");
     }
 
-    // Set the context
+    // Set up the context
+    scriptEngine.getContext().setWriter(writer);
     scriptEngine.put("database", database);
 
     // Evaluate the script
     scriptEngine.eval(new FileReader(scriptFile));
   }
+
 }

@@ -144,6 +144,7 @@
     <property name="website.location" location="${SchemaCrawler.home}/schemacrawler-tools/target/site" />
     <property name="website.apidocs.location" location="${SchemaCrawler.home}/schemacrawler/target/site/apidocs" />
     <mkdir dir="${website.location}" />
+    <mkdir dir="${website.apidocs.location}" />
     <property name="website.zip.prefix" value="schemacrawler-${SchemaCrawler.version}-website" />
     <delete file="${distribution.target}/${website.zip.prefix}.zip" />
     <zip destfile="${distribution.target}/${website.zip.prefix}.zip">
@@ -153,7 +154,7 @@
       </zipfileset>
       <zipfileset dir="${website.apidocs.location}" prefix="${website.zip.prefix}/apidocs" defaultexcludes="yes">
         <include name="**/*.*" />
-      </zipfileset>      
+      </zipfileset>
     </zip>
 
   </target>
