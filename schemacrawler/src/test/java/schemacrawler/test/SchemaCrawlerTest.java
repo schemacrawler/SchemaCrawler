@@ -43,7 +43,7 @@ import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
-import schemacrawler.utility.TestDatabaseUtility;
+import schemacrawler.utility.TestDatabase;
 import schemacrawler.utility.Utility;
 
 public class SchemaCrawlerTest
@@ -52,7 +52,7 @@ public class SchemaCrawlerTest
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerTest.class
     .getName());
 
-  private static TestDatabaseUtility testUtility = new TestDatabaseUtility();
+  private static TestDatabase testUtility = new TestDatabase();
 
   @AfterClass
   public static void afterAllTests()
@@ -65,7 +65,7 @@ public class SchemaCrawlerTest
   public static void beforeAllTests()
     throws ClassNotFoundException
   {
-    TestDatabaseUtility.disableApplicationLogging();
+    TestDatabase.disableApplicationLogging();
     testUtility.createMemoryDatabase();
   }
 
