@@ -35,7 +35,7 @@ import org.junit.Test;
 import schemacrawler.crawl.DatabaseSchemaCrawler;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
-import schemacrawler.utility.TestDatabaseUtility;
+import schemacrawler.utility.TestDatabase;
 
 public class ResultColumnsTest
 {
@@ -43,7 +43,7 @@ public class ResultColumnsTest
   private static final Logger LOGGER = Logger.getLogger(ResultColumnsTest.class
     .getName());
 
-  private static TestDatabaseUtility testUtility = new TestDatabaseUtility();
+  private static TestDatabase testUtility = new TestDatabase();
 
   @AfterClass
   public static void afterAllTests()
@@ -56,7 +56,7 @@ public class ResultColumnsTest
   public static void beforeAllTests()
     throws ClassNotFoundException
   {
-    TestDatabaseUtility.disableApplicationLogging();
+    TestDatabase.disableApplicationLogging();
     testUtility.createMemoryDatabase();
   }
 

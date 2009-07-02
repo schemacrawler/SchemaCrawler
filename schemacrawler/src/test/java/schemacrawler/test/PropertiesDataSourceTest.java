@@ -24,12 +24,12 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.utility.TestDatabaseUtility;
+import schemacrawler.utility.TestDatabase;
 
 public class PropertiesDataSourceTest
 {
 
-  private static TestDatabaseUtility testUtility = new TestDatabaseUtility();
+  private static TestDatabase testUtility = new TestDatabase();
 
   @AfterClass
   public static void afterAllTests()
@@ -40,7 +40,7 @@ public class PropertiesDataSourceTest
   @BeforeClass
   public static void beforeAllTests()
   {
-    TestDatabaseUtility.disableApplicationLogging();
+    TestDatabase.disableApplicationLogging();
     testUtility.createMemoryDatabase();
   }
 

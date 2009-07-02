@@ -49,13 +49,13 @@ import schemacrawler.utility.datasource.PropertiesDataSource;
  * @author sfatehi
  */
 @SuppressWarnings("unchecked")
-public class TestDatabaseUtility
+public class TestDatabase
 {
 
   private static final Level DEBUG_loglevel = Level.OFF;
 
   private static final Logger LOGGER = Logger
-    .getLogger(TestDatabaseUtility.class.getName());
+    .getLogger(TestDatabase.class.getName());
 
   private static final boolean DEBUG = false;
 
@@ -89,11 +89,9 @@ public class TestDatabaseUtility
   public static void main(final String[] args)
     throws Exception
   {
-    final TestDatabaseUtility testUtility = new TestDatabaseUtility();
+    final TestDatabase testUtility = new TestDatabase();
     testUtility.createDatabase();
   }
-
-  private String catalogName;
 
   private DataSource dataSource;
   private PrintWriter out;
@@ -101,7 +99,7 @@ public class TestDatabaseUtility
   /**
    * Load driver, and create database, schema and data.
    */
-  public void createDatabase()
+  private void createDatabase()
   {
     LOGGER.log(Level.FINE, toString() + " - Setting up database");
     // Attempt to delete the database files
@@ -144,11 +142,6 @@ public class TestDatabaseUtility
 
     final Catalog catalog = database.getCatalogs()[0];
     return catalog;
-  }
-
-  public String getCatalogName()
-  {
-    return catalogName;
   }
 
   public Database getDatabase(final SchemaCrawlerOptions schemaCrawlerOptions)
@@ -301,16 +294,13 @@ public class TestDatabaseUtility
     try
     {
       // Load schema script file
-      final String script = Utility.readFully(TestDatabaseUtility.class
+      final String script = Utility.readFully(TestDatabase.class
         .getResourceAsStream("/schemacrawler.test.sql"));
-      final String otherScript = Utility.readFully(TestDatabaseUtility.class
+      final String otherScript = Utility.readFully(TestDatabase.class
         .getResourceAsStream("/schemacrawler.test.other.sql"));
       if (dataSource != null)
       {
         connection = dataSource.getConnection();
-
-        catalogName = connection.getCatalog();
-
         statement = connection.createStatement();
 
         statement.execute(script);

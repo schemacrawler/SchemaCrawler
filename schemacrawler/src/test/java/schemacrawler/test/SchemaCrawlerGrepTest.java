@@ -33,7 +33,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.utility.TestDatabaseUtility;
+import schemacrawler.utility.TestDatabase;
 
 public class SchemaCrawlerGrepTest
 {
@@ -41,7 +41,7 @@ public class SchemaCrawlerGrepTest
   private static final Logger LOGGER = Logger
     .getLogger(SchemaCrawlerGrepTest.class.getName());
 
-  private static TestDatabaseUtility testUtility = new TestDatabaseUtility();
+  private static TestDatabase testUtility = new TestDatabase();
 
   @AfterClass
   public static void afterAllTests()
@@ -54,7 +54,7 @@ public class SchemaCrawlerGrepTest
   public static void beforeAllTests()
     throws ClassNotFoundException
   {
-    TestDatabaseUtility.disableApplicationLogging();
+    TestDatabase.disableApplicationLogging();
     testUtility.createMemoryDatabase();
   }
 

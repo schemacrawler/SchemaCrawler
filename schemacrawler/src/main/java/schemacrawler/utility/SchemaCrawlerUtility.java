@@ -41,7 +41,7 @@ public class SchemaCrawlerUtility
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(TestDatabaseUtility.class.getName());
+    .getLogger(TestDatabase.class.getName());
 
   public static Database getDatabase(final Connection connection,
                                      final SchemaCrawlerOptions schemaCrawlerOptions)
