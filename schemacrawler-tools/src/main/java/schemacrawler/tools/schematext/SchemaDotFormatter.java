@@ -110,6 +110,22 @@ final class SchemaDotFormatter
   {
   }
 
+  public void handle(final ColumnMap[] weakAssociations)
+    throws SchemaCrawlerException
+  {
+    if (weakAssociations == null)
+    {
+      return;
+    }
+
+    for (final ColumnMap columnMap: weakAssociations)
+    {
+      final Column primaryKeyColumn = columnMap.getPrimaryKeyColumn();
+      final Column foreignKeyColumn = columnMap.getForeignKeyColumn();
+      out.write(printColumnAssociation("", primaryKeyColumn, foreignKeyColumn));
+    }
+  }
+
   public void handle(final DatabaseInfo databaseInfo)
     throws SchemaCrawlerException
   {
@@ -219,22 +235,6 @@ final class SchemaDotFormatter
 
     buffer.append(NEWLINE).append(NEWLINE);
     out.write(buffer.toString());
-  }
-
-  public void handle(final ColumnMap[] weakAssociations)
-    throws SchemaCrawlerException
-  {
-    if (weakAssociations == null)
-    {
-      return;
-    }
-
-    for (final ColumnMap columnMap: weakAssociations)
-    {
-      final Column primaryKeyColumn = columnMap.getPrimaryKeyColumn();
-      final Column foreignKeyColumn = columnMap.getForeignKeyColumn();
-      out.write(printColumnAssociation("", primaryKeyColumn, foreignKeyColumn));
-    }
   }
 
   private String printColumnAssociation(final String associationName,

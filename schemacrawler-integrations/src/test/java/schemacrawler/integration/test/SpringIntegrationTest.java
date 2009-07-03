@@ -39,6 +39,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.Executable;
+import schemacrawler.tools.integration.graph.GraphExecutable;
 import schemacrawler.utility.TestDatabase;
 import sf.util.TestUtility;
 
@@ -70,7 +71,7 @@ public class SpringIntegrationTest
     for (final String beanDefinitionName: appContext.getBeanDefinitionNames())
     {
       final Object bean = appContext.getBean(beanDefinitionName);
-      if (bean instanceof Executable<?>)
+      if (bean instanceof Executable<?> && !(bean instanceof GraphExecutable))
       {
         executeAndCheckForOutputFile(beanDefinitionName,
                                      (Executable<?>) bean,

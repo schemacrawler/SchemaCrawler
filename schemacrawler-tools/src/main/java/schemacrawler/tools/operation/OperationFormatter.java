@@ -213,6 +213,17 @@ final class OperationFormatter
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.WeakAssociations)
+   */
+  public void handle(final ColumnMap[] weakAssociations)
+    throws SchemaCrawlerException
+  {
+    // Ignore
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see CrawlHandler#handle(Database)
    */
   public void handle(final DatabaseInfo databaseInfo)
@@ -289,17 +300,6 @@ final class OperationFormatter
       }
     }
 
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.WeakAssociations)
-   */
-  public void handle(final ColumnMap[] weakAssociations)
-    throws SchemaCrawlerException
-  {
-    // Ignore
   }
 
   private String getMessage(final double aggregate)

@@ -165,6 +165,26 @@ final class SchemaTextFormatter
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.WeakAssociations)
+   */
+  public void handle(final ColumnMap[] weakAssociations)
+    throws SchemaCrawlerException
+  {
+    if (weakAssociations == null || weakAssociations.length == 0)
+    {
+      return;
+    }
+
+    out.print(formattingHelper.createObjectStart(""));
+    out
+      .println(formattingHelper.createNameRow("", "[weak associations]", true));
+    printColumnPairs("", weakAssociations);
+    out.print(formattingHelper.createObjectEnd());
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see CrawlHandler#handle(Database)
    */
   public void handle(final DatabaseInfo databaseInfo)
@@ -289,7 +309,8 @@ final class SchemaTextFormatter
                                                           underscore);
 
     if (schemaTextDetailType != SchemaTextDetailType.brief_schema
-        || (schemaTextDetailType == SchemaTextDetailType.brief_schema && tableCount == 0))
+        || schemaTextDetailType == SchemaTextDetailType.brief_schema
+        && tableCount == 0)
     {
       out.print(formattingHelper.createObjectStart(""));
     }
@@ -333,26 +354,6 @@ final class SchemaTextFormatter
     out.flush();
 
     tableCount = tableCount + 1;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.WeakAssociations)
-   */
-  public void handle(final ColumnMap[] weakAssociations)
-    throws SchemaCrawlerException
-  {
-    if (weakAssociations == null || weakAssociations.length == 0)
-    {
-      return;
-    }
-
-    out.print(formattingHelper.createObjectStart(""));
-    out
-      .println(formattingHelper.createNameRow("", "[weak associations]", true));
-    printColumnPairs("", weakAssociations);
-    out.print(formattingHelper.createObjectEnd());
   }
 
   private String negate(final boolean positive, final String text)

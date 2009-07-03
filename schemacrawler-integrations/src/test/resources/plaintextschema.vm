@@ -1,4 +1,20 @@
-#foreach($table in $catalog.getSchema("PUBLIC").tables)- $table
-#foreach($column in $table.columns) - $column
+$database.databaseInfo
+#foreach($catalog in $database.catalogs)
+#foreach($schema in $catalog.schemas)
+#foreach($table in $schema.tables)
+#if ($table.type == "table")
+CREATE TABLE $table.name
+(
+#foreach($column in $table.columns)
+#if($velocityCount > 1)
+,
+#end
+  $column.name $column.type#if(!$column.isNullable()) NOT NULL#end
+#end
+
+);
+
+#end 
+#end
 #end
 #end

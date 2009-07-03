@@ -28,6 +28,7 @@ import schemacrawler.crawl.CachingCrawlHandler;
 import schemacrawler.main.HelpOptions;
 import schemacrawler.main.HelpOptions.CommandHelpType;
 import schemacrawler.schema.Database;
+import schemacrawler.tools.schematext.SchemaCrawlerExecutable;
 
 /**
  * An executor that uses a template renderer to render a schema.
@@ -35,7 +36,7 @@ import schemacrawler.schema.Database;
  * @author sfatehi
  */
 public abstract class SchemaRenderer
-  extends SchemaExecutable
+  extends SchemaCrawlerExecutable
 {
 
   /**
@@ -57,8 +58,13 @@ public abstract class SchemaRenderer
     executeOnSchema(args, helpOptions);
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.schematext.SchemaCrawlerExecutable#execute(javax.sql.DataSource)
+   */
   @Override
-  protected void doExecute(final DataSource dataSource)
+  public final void execute(final DataSource dataSource)
     throws Exception
   {
     crawlHandler = new CachingCrawlHandler();

@@ -31,7 +31,7 @@ import schemacrawler.main.HelpOptions;
 import schemacrawler.main.HelpOptions.CommandHelpType;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.integration.SchemaExecutable;
+import schemacrawler.tools.schematext.SchemaCrawlerExecutable;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 import sf.util.Utility;
 
@@ -41,7 +41,7 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 public final class GraphExecutable
-  extends SchemaExecutable
+  extends SchemaCrawlerExecutable
 {
 
   private static final Logger LOGGER = Logger.getLogger(GraphExecutable.class
@@ -72,8 +72,13 @@ public final class GraphExecutable
     executeOnSchema(args, helpOptions);
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.schematext.SchemaCrawlerExecutable#execute(javax.sql.DataSource)
+   */
   @Override
-  protected void doExecute(final DataSource dataSource)
+  public void execute(final DataSource dataSource)
     throws Exception
   {
     final OutputOptions outputOptions = toolOptions.getOutputOptions();
@@ -114,7 +119,7 @@ public final class GraphExecutable
       outputOptions.setOutputFileName(dotFile.getAbsolutePath());
       toolOptions.setOutputOptions(outputOptions);
 
-      execute(dataSource);
+      super.execute(dataSource);
     }
     catch (final Exception e)
     {
