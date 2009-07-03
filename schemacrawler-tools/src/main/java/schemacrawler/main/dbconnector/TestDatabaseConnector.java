@@ -1,10 +1,8 @@
-package schemacrawler.test;
+package schemacrawler.main.dbconnector;
 
 
 import javax.sql.DataSource;
 
-import schemacrawler.main.dbconnector.DatabaseConnector;
-import schemacrawler.main.dbconnector.DatabaseConnectorException;
 import schemacrawler.utility.TestDatabase;
 
 public class TestDatabaseConnector
