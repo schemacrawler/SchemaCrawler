@@ -48,6 +48,7 @@ import schemacrawler.execute.QueryExecutor;
 import schemacrawler.execute.QueryExecutorException;
 import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.main.SchemaCrawlerMain;
+import schemacrawler.main.dbconnector.TestDatabaseConnector;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.Command;
