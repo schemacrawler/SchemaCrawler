@@ -162,7 +162,7 @@ public class SchemaCrawlerOutputTest
           }
         }
 
-        Utility.compareOutput(referenceFile, testOutputFile, failures);
+        TestUtility.compareOutput(referenceFile, testOutputFile, failures);
       }
     }
 
