@@ -59,6 +59,7 @@ import schemacrawler.tools.schematext.SchemaCrawlerExecutable;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextOptions;
 import schemacrawler.utility.TestDatabase;
+import sf.util.TestUtility;
 
 public class SchemaCrawlerOutputTest
 {
