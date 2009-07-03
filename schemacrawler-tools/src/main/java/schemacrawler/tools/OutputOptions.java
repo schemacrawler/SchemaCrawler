@@ -264,7 +264,8 @@ public final class OutputOptions
     {
       final FileWriter fileWriter = new FileWriter(outputFile, appendOutput);
       writer = new PrintWriter(fileWriter, /* autoFlush = */true);
-      LOGGER.log(Level.FINER, "Output writer to console opened");
+      LOGGER.log(Level.FINER, "Output writer opened to file, "
+                              + outputFile.getAbsolutePath());
     }
     return writer;
   }
