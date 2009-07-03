@@ -20,7 +20,7 @@
 package schemacrawler.tools.integration.spring;
 
 
-import schemacrawler.tools.ToolOptions;
+import schemacrawler.schemacrawler.Options;
 
 /**
  * Additional options needed for Spring.
@@ -28,7 +28,7 @@ import schemacrawler.tools.ToolOptions;
  * @author Sualeh Fatehi
  */
 public class SpringOptions
-  implements ToolOptions
+  implements Options
 {
 
   private static final long serialVersionUID = 5125868244511892692L;

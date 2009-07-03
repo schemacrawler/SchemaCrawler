@@ -1,0 +1,63 @@
+
+
+            
+          	SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES
+            
+					
+------------------------------------------------------------------------
+TABLE_CAT,TABLE_SCHEM,TABLE_NAME,TABLE_TYPE,REMARKS,TYPE_CAT,TYPE_SCHEM,TYPE_NAME,SELF_REFERENCING_COL_NAME,REF_GENERATION,HSQLDB_TYPE,READ_ONLY
+<null>,INFORMATION_SCHEMA,SYSTEM_ALIASES,SYSTEM TABLE,the aliases defined within this database,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_ALLTYPEINFO,SYSTEM TABLE,a description of all non user-defined data types known to this database and the level of support for them in various capacities,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_AUTHORIZATIONS,SYSTEM TABLE,one row for each user and one row for each role ,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_BESTROWIDENTIFIER,SYSTEM TABLE,"for each accessible table defined within this database, the optimal set of visible columns that uniquely identifies a row",<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_CACHEINFO,SYSTEM TABLE,the current state of the system row caching mechanism,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_CATALOGS,SYSTEM TABLE,the accessible catalogs defined within this database,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_CHECK_COLUMN_USAGE,SYSTEM TABLE,"one row for each column identified by a <column reference> contained in the <search condition> of a check constraint, domain constraint, or assertion.",<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_CHECK_CONSTRAINTS,SYSTEM TABLE,"one row for each domain constraint, table check constraint, and assertion.",<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_CHECK_ROUTINE_USAGE,SYSTEM TABLE,"one row for each SQL-invoked routine identified as the subject routine of either a <routine invocation>, a <method reference>, a  <method invocation>, or a <static method invocation>  contained in an <assertion definition>, a <domain constraint>, or a <table constraint definition>.",<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_CHECK_TABLE_USAGE,SYSTEM TABLE,"one row for each table identified by a <table name> simply contained in a <table reference> contained in the <search condition> of a check constraint, domain constraint, or assertion.",<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_CLASSPRIVILEGES,SYSTEM TABLE,"the visible user level access permissions for each Java class providing implementation for each accessible callable procedure, SQL function, trigger body and UDT method defined within this database",<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_COLLATIONS,SYSTEM TABLE,one row for each character collation descriptor.,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_COLUMNPRIVILEGES,SYSTEM TABLE,the visible user level access permissions of each visible column of each accessible table defined within this database,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_COLUMNS,SYSTEM TABLE,the visible columns of each accessible table defined within this database,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_CROSSREFERENCE,SYSTEM TABLE,a description of how the accessible tables defined within this database import visible columns to enforce referential integrity,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_INDEXINFO,SYSTEM TABLE,information about the indicies of each accessible table defined within this database,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_PRIMARYKEYS,SYSTEM TABLE,the visible columns of the primary key of each accessible table defined within this database,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_PROCEDURECOLUMNS,SYSTEM TABLE,"a description of the return type, parameters and result columns of each accessible callable procedure, SQL function, trigger body and UDT method defined within this database",<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_PROCEDURES,SYSTEM TABLE,"the procedures, SQL functions, trigger body routines and UDT methods defined within the database",<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_PROPERTIES,SYSTEM TABLE,the static and dynamic system properties and operating parameters of this database,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_ROLE_AUTHORIZATION_DESCRIPTORS,SYSTEM TABLE,one row for each role granted directly to a grantee,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_SCHEMAS,SYSTEM TABLE,the accessible schemas defined within this database,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_SCHEMATA,SYSTEM TABLE,one row for each schema.,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_SEQUENCES,SYSTEM TABLE,one row for each external sequence generator,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_SESSIONINFO,SYSTEM TABLE,information about the current database session,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_SESSIONS,SYSTEM TABLE,the visible sessions open in this database,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_SUPERTABLES,SYSTEM TABLE,the table hierarchies defined in this database. Only the immediate super type/sub type relationship is modeled,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_SUPERTYPES,SYSTEM TABLE,the user-defined type (UDT) hierarchies defined in this database. Only the immediate super type/sub type relationship is modeled,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_TABLEPRIVILEGES,SYSTEM TABLE,the visible user level access permissions for each accessible table defined within this database,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_TABLES,SYSTEM TABLE,the accessible tables defined within this database,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_TABLETYPES,SYSTEM TABLE,the types of tables that can be created/found within this database,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_TABLE_CONSTRAINTS,SYSTEM TABLE,one row for each table constraint associated with a table,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_TEXTTABLES,SYSTEM TABLE,the data source descriptors of the accessible TEXT TABLE objects defined within this database,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_TRIGGERCOLUMNS,SYSTEM TABLE,the column usage of visible triggers defined within this database,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_TRIGGERS,SYSTEM TABLE,the visible triggers defined within this database,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_TYPEINFO,SYSTEM TABLE,a description of predefined table column data types known to this database,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_UDTATTRIBUTES,SYSTEM TABLE,a description of the attributes of the user-defined types (UDTs) that are available in this database,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_UDTS,SYSTEM TABLE,the user-defined types that are available within this database,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_USAGE_PRIVILEGES,SYSTEM TABLE,one row for each usage privilege descriptor.,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_USERS,SYSTEM TABLE,users defined within this database,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_VERSIONCOLUMNS,SYSTEM TABLE,the visible columns of the accessible tables that are automatically updated when any value in a row is updated,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_VIEWS,SYSTEM TABLE,the view descriptors of the accessible views defined within this database,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_VIEW_COLUMN_USAGE,SYSTEM TABLE,one row for each column of a table that is explicitly or implicitly referenced in the <query expression> of the view being described.,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_VIEW_ROUTINE_USAGE,SYSTEM TABLE,"one row for each SQL-invoked routine identified as the subject routine of either a <routine invocation>, a <method reference>, a <method invocation>, or a <static method invocation> contained in a <view definition>",<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,INFORMATION_SCHEMA,SYSTEM_VIEW_TABLE_USAGE,SYSTEM TABLE,one row for each table identified by a <table name> simply contained in a <table reference> that is contained in the <query expression> of a view,<null>,<null>,<null>,<null>,<null>,MEMORY,true
+<null>,PUBLIC,CUSTOMER,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
+<null>,PUBLIC,INVOICE,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
+<null>,PUBLIC,ITEM,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
+<null>,PUBLIC,PRODUCT,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
+<null>,PUBLIC,SUPPLIER,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
+<null>,SCHEMACRAWLER,ITEM,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
+<null>,SCHEMACRAWLER,PRODUCT2,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
+<null>,PUBLIC,CUSTOMERLIST,VIEW,<null>,<null>,<null>,<null>,<null>,<null>,<null>,true
+
+

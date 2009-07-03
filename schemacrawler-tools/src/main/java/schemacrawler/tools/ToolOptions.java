@@ -30,5 +30,8 @@ import schemacrawler.schemacrawler.Options;
 public interface ToolOptions
   extends Options
 {
+  OutputOptions getOutputOptions();
+
+  void setOutputOptions(OutputOptions outputOptions);
 
 }
