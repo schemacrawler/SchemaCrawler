@@ -39,9 +39,6 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.Executable;
-import schemacrawler.tools.datatext.DataTextFormatOptions;
-import schemacrawler.tools.operation.OperationOptions;
-import schemacrawler.tools.schematext.SchemaTextOptions;
 import schemacrawler.utility.TestDatabase;
 import sf.util.TestUtility;
 
@@ -72,9 +69,12 @@ public class SpringIntegrationTest
     final List<String> failures = new ArrayList<String>();
     for (final String beanDefinitionName: appContext.getBeanDefinitionNames())
     {
-      if (beanDefinitionName.startsWith("executable"))
+      final Object bean = appContext.getBean(beanDefinitionName);
+      if (bean instanceof Executable<?>)
       {
-        executeAndCheckForOutputFile(beanDefinitionName, failures);
+        executeAndCheckForOutputFile(beanDefinitionName,
+                                     (Executable<?>) bean,
+                                     failures);
       }
     }
     if (failures.size() > 0)
@@ -82,102 +82,6 @@ public class SpringIntegrationTest
       System.err.println(failures);
       fail(failures.toString());
     }
-  }
-
-  @SuppressWarnings("unchecked")
-  @Test
-  public void testExecutableForCount()
-    throws Exception
-  {
-    final String outputFilename = File.createTempFile("schemacrawler", "test")
-      .getAbsolutePath();
-
-    final Executable<OperationOptions> executable = (Executable<OperationOptions>) appContext
-      .getBean("executableForCount");
-    executable.getToolOptions().getOutputOptions()
-      .setOutputFileName(outputFilename);
-
-    executeAndCheckForOutputFile(executable, outputFilename);
-  }
-
-  @SuppressWarnings("unchecked")
-  @Test
-  public void testExecutableForFreeMarker()
-    throws Exception
-  {
-    final String outputFilename = File.createTempFile("schemacrawler", "test")
-      .getAbsolutePath();
-
-    final Executable<SchemaTextOptions> executable = (Executable<SchemaTextOptions>) appContext
-      .getBean("executableForFreeMarker");
-    executable.getToolOptions().getOutputOptions()
-      .setOutputFileName(outputFilename);
-
-    executeAndCheckForOutputFile(executable, outputFilename);
-  }
-
-  @SuppressWarnings("unchecked")
-  @Test
-  public void testExecutableForJavaScript()
-    throws Exception
-  {
-    final String outputFilename = File.createTempFile("schemacrawler", "test")
-      .getAbsolutePath();
-
-    final Executable<SchemaTextOptions> executable = (Executable<SchemaTextOptions>) appContext
-      .getBean("executableForJavaScript");
-    executable.getToolOptions().getOutputOptions()
-      .setOutputFileName(outputFilename);
-
-    executeAndCheckForOutputFile(executable, outputFilename);
-  }
-
-  @SuppressWarnings("unchecked")
-  @Test
-  public void testExecutableForQuery()
-    throws Exception
-  {
-    final String outputFilename = File.createTempFile("schemacrawler", "test")
-      .getAbsolutePath();
-
-    final Executable<DataTextFormatOptions> executable = (Executable<DataTextFormatOptions>) appContext
-      .getBean("executableForQuery");
-    executable.getToolOptions().getOutputOptions()
-      .setOutputFileName(outputFilename);
-
-    executeAndCheckForOutputFile(executable, outputFilename);
-  }
-
-  @SuppressWarnings("unchecked")
-  @Test
-  public void testExecutableForSchema()
-    throws Exception
-  {
-    final String outputFilename = File.createTempFile("schemacrawler", "test")
-      .getAbsolutePath();
-
-    final Executable<SchemaTextOptions> executable = (Executable<SchemaTextOptions>) appContext
-      .getBean("executableForSchema");
-    executable.getToolOptions().getOutputOptions()
-      .setOutputFileName(outputFilename);
-
-    executeAndCheckForOutputFile(executable, outputFilename);
-  }
-
-  @SuppressWarnings("unchecked")
-  @Test
-  public void testExecutableForVelocity()
-    throws Exception
-  {
-    final String outputFilename = File.createTempFile("schemacrawler", "test")
-      .getAbsolutePath();
-
-    final Executable<SchemaTextOptions> executable = (Executable<SchemaTextOptions>) appContext
-      .getBean("executableForVelocity");
-    executable.getToolOptions().getOutputOptions()
-      .setOutputFileName(outputFilename);
-
-    executeAndCheckForOutputFile(executable, outputFilename);
   }
 
   @Test
@@ -196,30 +100,14 @@ public class SpringIntegrationTest
     assertEquals(6, schema.getTables().length);
   }
 
-  private void executeAndCheckForOutputFile(final Executable<?> executable,
-                                            final String outputFilename)
-    throws Exception
-  {
-    executable.execute(testUtility.getDataSource());
-
-    final File outputFile = new File(outputFilename);
-    assertTrue(outputFile.exists());
-    assertTrue(outputFile.length() > 0);
-    if (!outputFile.delete())
-    {
-      fail("Cannot delete output file");
-    }
-  }
-
   private void executeAndCheckForOutputFile(final String executableName,
+                                            final Executable<?> executable,
                                             final List<String> failures)
     throws Exception
   {
     final String outputFilename = File.createTempFile("schemacrawler", "test")
       .getAbsolutePath();
 
-    final Executable<?> executable = (Executable<?>) appContext
-      .getBean(executableName);
     executable.getToolOptions().getOutputOptions()
       .setOutputFileName(outputFilename);
     executable.execute(testUtility.getDataSource());
