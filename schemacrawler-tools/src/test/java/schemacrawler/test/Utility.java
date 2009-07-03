@@ -27,9 +27,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
-
-
 public class Utility
 {
 
@@ -45,12 +42,22 @@ public class Utility
     if (!contentEquals)
     {
       final File testOutputLocalFile = new File("./", referenceFile);
-      FileUtils.copyFile(testOutputFile, testOutputLocalFile);
-      final String message = "Expected file contents in "
-                             + testOutputLocalFile.getAbsolutePath();
+      final boolean renamed = testOutputFile.renameTo(testOutputLocalFile);
+      final String message;
+      if (renamed)
+      {
+        message = "Expected file contents in "
+                  + testOutputLocalFile.getAbsolutePath();
+      }
+      else
+      {
+        message = "Expected file contents in "
+                  + testOutputFile.getAbsolutePath();
+      }
       failures.add(message);
     }
-    FileUtils.deleteQuietly(testOutputFile);
+    testOutputFile.deleteOnExit();
+    testOutputFile.delete();
   }
 
   private static boolean contentEquals(final Reader input1, final Reader input2)
