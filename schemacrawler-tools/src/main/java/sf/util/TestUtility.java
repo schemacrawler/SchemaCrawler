@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.test;
+package sf.util;
 
 
 import java.io.BufferedReader;
@@ -36,7 +36,7 @@ public class TestUtility
     throws Exception
   {
     final boolean contentEquals = contentEquals(new FileReader(testOutputFile),
-                                                new InputStreamReader(SchemaCrawlerOutputTest.class
+                                                new InputStreamReader(TestUtility.class
                                                   .getResourceAsStream("/"
                                                                        + referenceFile)));
     if (!contentEquals)
