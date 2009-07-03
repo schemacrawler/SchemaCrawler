@@ -27,7 +27,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
 
-public class Utility
+public class TestUtility
 {
 
   public static void compareOutput(final String referenceFile,
@@ -85,7 +85,7 @@ public class Utility
     return line2 == null;
   }
 
-  private Utility()
+  private TestUtility()
   {
     // Prevent instantiation
   }
