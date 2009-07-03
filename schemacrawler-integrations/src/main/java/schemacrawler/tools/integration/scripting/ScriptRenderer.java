@@ -23,6 +23,9 @@ package schemacrawler.tools.integration.scripting;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.Writer;
 
 import javax.script.ScriptEngine;
@@ -57,10 +60,24 @@ public final class ScriptRenderer
     {
       throw new Exception("No script file provided");
     }
+    final Reader reader;
     final File scriptFile = new File(scriptFileName);
-    if (!scriptFile.exists() || !scriptFile.canRead())
+    if (scriptFile.exists() && scriptFile.canRead())
     {
-      throw new Exception("Cannot read script file, " + scriptFileName);
+      reader = new FileReader(scriptFile);
+    }
+    else
+    {
+      final InputStream inputStream = ScriptRenderer.class
+        .getResourceAsStream("/" + scriptFileName);
+      if (inputStream != null)
+      {
+        reader = new InputStreamReader(inputStream);
+      }
+      else
+      {
+        throw new Exception("Cannot load script, " + scriptFileName);
+      }
     }
 
     // Create a new instance of the engine
@@ -81,7 +98,7 @@ public final class ScriptRenderer
     scriptEngine.put("database", database);
 
     // Evaluate the script
-    scriptEngine.eval(new FileReader(scriptFile));
+    scriptEngine.eval(reader);
   }
 
 }
