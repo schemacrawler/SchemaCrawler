@@ -95,7 +95,7 @@ public final class FreeMarkerRenderer
 
     // Create the root hash
     final Map<String, Object> objectMap = new HashMap<String, Object>();
-    objectMap.put("catalog", database);
+    objectMap.put("database", database);
 
     // Evaluate the template
     final Template template = cfg.getTemplate(templateLocation);
