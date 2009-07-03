@@ -1,11 +1,13 @@
-package schemacrawler.main.dbconnector;
+package schemacrawler.test;
 
 
 import javax.sql.DataSource;
 
+import schemacrawler.main.dbconnector.DatabaseConnector;
+import schemacrawler.main.dbconnector.DatabaseConnectorException;
 import schemacrawler.utility.TestDatabase;
 
-public class TestDatabaseConnector
+public class InMemoryDatabaseConnector
   implements DatabaseConnector
 {
 
@@ -19,7 +21,7 @@ public class TestDatabaseConnector
    * @param testDatabase
    *        Test utility
    */
-  public TestDatabaseConnector(final TestDatabase testDatabase)
+  public InMemoryDatabaseConnector(final TestDatabase testDatabase)
   {
     this.testDatabase = testDatabase;
   }
