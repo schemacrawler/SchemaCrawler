@@ -26,6 +26,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -41,6 +43,7 @@ import schemacrawler.tools.datatext.DataTextFormatOptions;
 import schemacrawler.tools.operation.OperationOptions;
 import schemacrawler.tools.schematext.SchemaTextOptions;
 import schemacrawler.utility.TestDatabase;
+import sf.util.TestUtility;
 
 public class SpringIntegrationTest
 {
@@ -61,6 +64,25 @@ public class SpringIntegrationTest
   }
 
   private final ApplicationContext appContext = new ClassPathXmlApplicationContext("context.xml");
+
+  @Test
+  public void testExecutables()
+    throws Exception
+  {
+    final List<String> failures = new ArrayList<String>();
+    for (final String beanDefinitionName: appContext.getBeanDefinitionNames())
+    {
+      if (beanDefinitionName.startsWith("executable"))
+      {
+        executeAndCheckForOutputFile(beanDefinitionName, failures);
+      }
+    }
+    if (failures.size() > 0)
+    {
+      System.err.println(failures);
+      fail(failures.toString());
+    }
+  }
 
   @SuppressWarnings("unchecked")
   @Test
@@ -187,6 +209,26 @@ public class SpringIntegrationTest
     {
       fail("Cannot delete output file");
     }
+  }
+
+  private void executeAndCheckForOutputFile(final String executableName,
+                                            final List<String> failures)
+    throws Exception
+  {
+    final String outputFilename = File.createTempFile("schemacrawler", "test")
+      .getAbsolutePath();
+
+    final Executable<?> executable = (Executable<?>) appContext
+      .getBean(executableName);
+    executable.getToolOptions().getOutputOptions()
+      .setOutputFileName(outputFilename);
+    executable.execute(testUtility.getDataSource());
+
+    final File testOutputFile = new File(outputFilename);
+    assertTrue(testOutputFile.exists());
+    assertTrue(testOutputFile.length() > 0);
+    TestUtility
+      .compareOutput(executableName + ".txt", testOutputFile, failures);
   }
 
 }
