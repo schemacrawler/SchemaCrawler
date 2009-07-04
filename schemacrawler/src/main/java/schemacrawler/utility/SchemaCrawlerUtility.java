@@ -40,8 +40,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 public class SchemaCrawlerUtility
 {
 
-  private static final Logger LOGGER = Logger
-    .getLogger(TestDatabase.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(TestDatabase.class
+    .getName());
 
   public static Database getDatabase(final Connection connection,
                                      final SchemaCrawlerOptions schemaCrawlerOptions)

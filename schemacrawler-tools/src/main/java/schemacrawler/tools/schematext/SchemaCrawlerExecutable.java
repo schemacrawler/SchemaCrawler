@@ -23,11 +23,9 @@ package schemacrawler.tools.schematext;
 
 import javax.sql.DataSource;
 
-import schemacrawler.crawl.CachingCrawlHandler;
 import schemacrawler.crawl.DatabaseSchemaCrawler;
 import schemacrawler.main.HelpOptions;
 import schemacrawler.main.SchemaCrawlerCommandLine;
-import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawler;
@@ -52,6 +50,24 @@ public class SchemaCrawlerExecutable
   public SchemaCrawlerExecutable()
   {
     toolOptions = new SchemaTextOptions();
+  }
+
+  @Override
+  public void execute(final DataSource dataSource)
+    throws Exception
+  {
+    schemaCrawlerOptions.setSchemaInfoLevel(toolOptions
+      .getSchemaTextDetailType().mapToInfoLevel());
+
+    CrawlHandler handler = crawlHandler;
+    if (handler == null)
+    {
+      handler = SchemaTextFactory.createSchemaTextCrawlHandler(toolOptions);
+    }
+
+    final SchemaCrawler crawler = new DatabaseSchemaCrawler(dataSource
+      .getConnection());
+    crawler.crawl(schemaCrawlerOptions, handler);
   }
 
   /**
@@ -87,24 +103,6 @@ public class SchemaCrawlerExecutable
     setSchemaCrawlerOptions(schemaCrawlerOptions);
     setToolOptions(schemaTextOptions);
     execute(commandLine.createDataSource());
-  }
-
-  @Override
-  public void execute(DataSource dataSource)
-    throws Exception
-  {
-    schemaCrawlerOptions.setSchemaInfoLevel(toolOptions
-      .getSchemaTextDetailType().mapToInfoLevel());
-
-    CrawlHandler handler = crawlHandler;
-    if (handler == null)
-    {
-      handler = SchemaTextFactory.createSchemaTextCrawlHandler(toolOptions);
-    }
-
-    final SchemaCrawler crawler = new DatabaseSchemaCrawler(dataSource
-      .getConnection());
-    crawler.crawl(schemaCrawlerOptions, handler);
   }
 
 }

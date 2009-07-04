@@ -97,29 +97,6 @@ public class TestDatabase
   private PrintWriter out;
 
   /**
-   * Load driver, and create database, schema and data.
-   */
-  private void createDatabase()
-  {
-    LOGGER.log(Level.FINE, toString() + " - Setting up database");
-    // Attempt to delete the database files
-    final String serverFileStem = "hsqldb.schemacrawler";
-    deleteServerFiles(serverFileStem);
-    // Start the server
-    Server.main(new String[] {
-        "-database.0",
-        serverFileStem,
-        "-dbname.0",
-        "schemacrawler",
-        "-silent",
-        "false",
-        "-trace",
-        "true"
-    });
-    createDatabase("jdbc:hsqldb:hsql://localhost/schemacrawler");
-  }
-
-  /**
    * Create database in memory.
    */
   public void createMemoryDatabase()
@@ -228,6 +205,29 @@ public class TestDatabase
         }
       }
     }
+  }
+
+  /**
+   * Load driver, and create database, schema and data.
+   */
+  private void createDatabase()
+  {
+    LOGGER.log(Level.FINE, toString() + " - Setting up database");
+    // Attempt to delete the database files
+    final String serverFileStem = "hsqldb.schemacrawler";
+    deleteServerFiles(serverFileStem);
+    // Start the server
+    Server.main(new String[] {
+        "-database.0",
+        serverFileStem,
+        "-dbname.0",
+        "schemacrawler",
+        "-silent",
+        "false",
+        "-trace",
+        "true"
+    });
+    createDatabase("jdbc:hsqldb:hsql://localhost/schemacrawler");
   }
 
   private void createDatabase(final String url)
