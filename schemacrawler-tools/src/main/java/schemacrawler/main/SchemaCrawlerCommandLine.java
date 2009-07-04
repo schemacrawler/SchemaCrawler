@@ -20,6 +20,9 @@
 package schemacrawler.main;
 
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.sql.DataSource;
 
 import schemacrawler.main.dbconnector.BundledDriverDatabaseConnector;
@@ -39,6 +42,9 @@ import schemacrawler.tools.OutputOptions;
  */
 public class SchemaCrawlerCommandLine
 {
+
+  private static final Logger LOGGER = Logger
+    .getLogger(SchemaCrawlerCommandLine.class.getName());
 
   private final Commands commands;
   private final Config config;
@@ -110,6 +116,7 @@ public class SchemaCrawlerCommandLine
     }
 
     applicationOptions.applyApplicationLogLevel();
+    LOGGER.log(Level.FINE, String.valueOf(args));
     try
     {
       if (!schemacrawler.utility.Utility.isBlank(configResource))
