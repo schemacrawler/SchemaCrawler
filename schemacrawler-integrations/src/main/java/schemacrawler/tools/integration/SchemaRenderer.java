@@ -40,25 +40,6 @@ public abstract class SchemaRenderer
 {
 
   /**
-   * Get connection parameters, and creates a connection, and crawls the
-   * schema.
-   * 
-   * @param args
-   *        Arguments passed into the program from the command line.
-   * @throws Exception
-   *         On an exception
-   */
-  public void main(final String[] args)
-    throws Exception
-  {
-    final HelpOptions helpOptions = new HelpOptions("SchemaCrawler - Templating");
-    helpOptions.setCommandHelpType(CommandHelpType.without_operations);
-    helpOptions.setResourceOutputOptions("/help/OutputOptions.templating.txt");
-
-    executeOnSchema(args, helpOptions);
-  }
-
-  /**
    * {@inheritDoc}
    * 
    * @see schemacrawler.tools.schematext.SchemaCrawlerExecutable#execute(javax.sql.DataSource)
@@ -78,6 +59,25 @@ public abstract class SchemaRenderer
       .getOutputFormatValue();
     render(templateName, database, writer);
     toolOptions.getOutputOptions().closeOutputWriter(writer);
+  }
+
+  /**
+   * Get connection parameters, and creates a connection, and crawls the
+   * schema.
+   * 
+   * @param args
+   *        Arguments passed into the program from the command line.
+   * @throws Exception
+   *         On an exception
+   */
+  public void main(final String[] args)
+    throws Exception
+  {
+    final HelpOptions helpOptions = new HelpOptions("SchemaCrawler - Templating");
+    helpOptions.setCommandHelpType(CommandHelpType.without_operations);
+    helpOptions.setResourceOutputOptions("/help/OutputOptions.templating.txt");
+
+    executeOnSchema(args, helpOptions);
   }
 
   /**
