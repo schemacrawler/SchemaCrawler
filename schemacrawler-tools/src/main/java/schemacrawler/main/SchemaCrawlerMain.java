@@ -57,7 +57,6 @@ public final class SchemaCrawlerMain
     throws Exception
   {
     LOGGER.log(Level.CONFIG, about);
-    LOGGER.log(Level.CONFIG, "Commandline: " + commandLine);
     final List<Executable<?>> executables = ExecutableFactory
       .createExecutables(commandLine);
     if (executables.size() > 0)
