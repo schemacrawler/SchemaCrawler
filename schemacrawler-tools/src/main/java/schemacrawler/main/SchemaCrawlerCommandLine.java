@@ -20,6 +20,7 @@
 package schemacrawler.main;
 
 
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -116,7 +117,7 @@ public class SchemaCrawlerCommandLine
     }
 
     applicationOptions.applyApplicationLogLevel();
-    LOGGER.log(Level.FINE, String.valueOf(args));
+    LOGGER.log(Level.FINE, "Command line: " + Arrays.asList(args));
     try
     {
       if (!schemacrawler.utility.Utility.isBlank(configResource))
