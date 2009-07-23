@@ -106,8 +106,8 @@ final class TableExRetriever
         final String catalogName = results.getString("CONSTRAINT_CATALOG");
         final String schemaName = results.getString("CONSTRAINT_SCHEMA");
         final String constraintName = results.getString("CONSTRAINT_NAME");
-        LOGGER.log(Level.FINEST, "Retrieving constraint information for "
-                                 + constraintName);
+        LOGGER.log(Level.FINER, "Retrieving constraint information for "
+                                + constraintName);
         // final String tableCatalogName =
         // results.getString("TABLE_CATALOG");
         // final String tableSchemaName =
@@ -173,8 +173,8 @@ final class TableExRetriever
         // final String schemaName =
         // results.getString("CONSTRAINT_SCHEMA");
         final String constraintName = results.getString("CONSTRAINT_NAME");
-        LOGGER.log(Level.FINEST, "Retrieving constraint definition for "
-                                 + constraintName);
+        LOGGER.log(Level.FINER, "Retrieving constraint definition for "
+                                + constraintName);
         String definition = results.getString("CHECK_CLAUSE");
 
         final MutableCheckConstraint checkConstraint = checkConstraintsMap
@@ -295,8 +295,8 @@ final class TableExRetriever
         final String catalogName = results.getString("TRIGGER_CATALOG");
         final String schemaName = results.getString("TRIGGER_SCHEMA");
         final String triggerName = results.getString("TRIGGER_NAME");
-        LOGGER.log(Level.FINEST, "Retrieving trigger information for "
-                                 + triggerName);
+        LOGGER.log(Level.FINER, "Retrieving trigger information for "
+                                + triggerName);
 
         // final String eventObjectCatalog = results
         // .getString("EVENT_OBJECT_CATALOG");
@@ -420,7 +420,7 @@ final class TableExRetriever
           continue;
         }
 
-        LOGGER.log(Level.FINEST, "Retrieving view information for " + viewName);
+        LOGGER.log(Level.FINER, "Retrieving view information for " + viewName);
         final String definition = results.getString("VIEW_DEFINITION");
         final CheckOptionType checkOption = CheckOptionType.valueOf(results
           .getString("CHECK_OPTION").toLowerCase(Locale.ENGLISH));
@@ -464,21 +464,22 @@ final class TableExRetriever
       final MutableTable table = lookupTable(catalogName, schemaName, tableName);
       if (table == null)
       {
-        LOGGER.log(Level.FINE, String.format("Cannot find schema, %s.%s.%s",
-                                             catalogName,
-                                             schemaName,
-                                             table));
+        LOGGER.log(Level.FINEST, String.format("Cannot find table: %s.%s.%s",
+                                               catalogName,
+                                               schemaName,
+                                               tableName));
         continue;
       }
 
       final MutableColumn column = table.getColumn(columnName);
       if (privilegesForColumn && column == null)
       {
-        LOGGER.log(Level.FINE, String.format("Cannot find column, %s.%s.%s.%s",
-                                             catalogName,
-                                             schemaName,
-                                             tableName,
-                                             columnName));
+        LOGGER.log(Level.FINEST, String
+          .format("Cannot find column, %s.%s.%s.%s",
+                  catalogName,
+                  schemaName,
+                  tableName,
+                  columnName));
         continue;
       }
 

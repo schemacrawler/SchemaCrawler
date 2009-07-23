@@ -72,6 +72,8 @@ final class DatabaseInfoRetriever
       {
         if (isDatabasePropertyMethod(method))
         {
+          LOGGER.log(Level.FINER, String
+            .format("Retrieving database property using method: %s", method));
           final String name = derivePropertyName(method);
           Object value = method.invoke(dbMetaData, new Object[0]);
           if (value != null && name.endsWith("s") && value instanceof String)
@@ -85,6 +87,8 @@ final class DatabaseInfoRetriever
         }
         else if (isDatabasePropertiesResultSetMethod(method))
         {
+          LOGGER.log(Level.FINER, String
+            .format("Retrieving database property using method: %s", method));
           final String name = derivePropertyName(method);
           final ResultSet results = (ResultSet) method.invoke(dbMetaData,
                                                               new Object[0]);
@@ -128,7 +132,7 @@ final class DatabaseInfoRetriever
       .getCatalogNames();
     for (final String catalogName: catalogNames)
     {
-      LOGGER.log(Level.FINEST, "Retrieving catalog: " + catalogName);
+      LOGGER.log(Level.FINER, "Retrieving catalog: " + catalogName);
       final MutableCatalog catalog = new MutableCatalog(database, catalogName);
       database.addCatalog(catalog);
     }
@@ -173,9 +177,9 @@ final class DatabaseInfoRetriever
       {
         final String catalogName = results.getString("TABLE_CATALOG");
         final String schemaName = results.getString("TABLE_SCHEM");
-        LOGGER.log(Level.FINE, String.format("Schema %s.%s",
-                                             catalogName,
-                                             schemaName));
+        LOGGER.log(Level.FINER, String.format("Retrieving schema: %s.%s",
+                                              catalogName,
+                                              schemaName));
 
         final MutableCatalog[] catalogs;
         final MutableCatalog catalog = database.getCatalog(catalogName);
@@ -202,7 +206,6 @@ final class DatabaseInfoRetriever
           final String schemaFullName = schema.getFullName();
           if (schemaInclusionRule.include(schemaFullName))
           {
-            LOGGER.log(Level.FINEST, "Retrieving schema: " + schemaName);
             currentCatalog.addSchema(schema);
           }
         }
@@ -246,8 +249,11 @@ final class DatabaseInfoRetriever
       {
         final String typeName = results.getString("TYPE_NAME");
         final int type = results.getInt("DATA_TYPE", 0);
-        LOGGER.log(Level.FINEST, "Retrieving data type: " + typeName
-                                 + ", with type id: " + type);
+        LOGGER
+          .log(Level.FINER, String
+            .format("Retrieving data type: %s (with type id %d)",
+                    typeName,
+                    type));
         final long precision = results.getLong("PRECISION", 0L);
         final String literalPrefix = results.getString("LITERAL_PREFIX");
         final String literalSuffix = results.getString("LITERAL_SUFFIX");
@@ -318,7 +324,7 @@ final class DatabaseInfoRetriever
         // final String catalogName = results.getString("TYPE_CAT");
         final String schemaName = results.getString("TYPE_SCHEM");
         final String typeName = results.getString("TYPE_NAME");
-        LOGGER.log(Level.FINEST, "Retrieving data type: " + typeName);
+        LOGGER.log(Level.FINER, "Retrieving data type: " + typeName);
         final short type = results.getShort("DATA_TYPE", (short) 0);
         final String className = results.getString("CLASS_NAME");
         final String remarks = results.getString("REMARKS");
@@ -436,6 +442,8 @@ final class DatabaseInfoRetriever
                                              final String resultSetTypeName)
     throws IllegalAccessException, InvocationTargetException
   {
+    LOGGER.log(Level.FINER, String
+      .format("Retrieving database property using method: %s", method));
     final String name = derivePropertyName(method) + "ResultSet"
                         + resultSetTypeName;
     Boolean propertyValue = null;

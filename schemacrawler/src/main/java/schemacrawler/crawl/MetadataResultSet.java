@@ -105,6 +105,25 @@ final class MetadataResultSet
     results.close();
   }
 
+  String currentRowToString()
+  {
+    final Map<String, String> currentRow = new HashMap<String, String>();
+    for (final String columnName: resultSetColumns)
+    {
+      Object columnData;
+      try
+      {
+        columnData = results.getObject(columnName);
+      }
+      catch (SQLException e)
+      {
+        columnData = null;
+      }
+      currentRow.put(columnName, String.valueOf(columnData));
+    }
+    return currentRow.toString();
+  }
+
   /**
    * Gets unread (and therefore unmapped) columns from the database
    * metadata resultset, and makes them available as addiiotnal

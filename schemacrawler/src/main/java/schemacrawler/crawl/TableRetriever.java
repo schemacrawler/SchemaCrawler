@@ -92,6 +92,9 @@ final class TableRetriever
         final String schemaName = results.getString("TABLE_SCHEM");
         final String tableName = results.getString("TABLE_NAME");
         final String columnName = results.getString(COLUMN_NAME);
+        LOGGER.log(Level.FINER, String.format("Retrieving column: %s.%s",
+                                              tableName,
+                                              columnName));
 
         MutableColumn column;
 
@@ -104,7 +107,6 @@ final class TableRetriever
             && table.getName().equals(tableName)
             && belongsToSchema(table, columnCatalogName, schemaName))
         {
-          LOGGER.log(Level.FINEST, "Retrieving column: " + columnName);
           column = lookupOrCreateColumn(table, columnName, true/* add */);
 
           final int ordinalPosition = results.getInt(ORDINAL_POSITION, 0);
@@ -179,7 +181,6 @@ final class TableRetriever
     }
     else
     {
-      LOGGER.log(Level.FINE, "Using getIndexInfo()");
       results = new MetadataResultSet(getRetrieverConnection().getMetaData()
         .getIndexInfo(table.getSchema().getParent().getName(),
                       table.getSchema().getName(),
@@ -286,7 +287,9 @@ final class TableRetriever
         // final String catalogName = results.getString("TABLE_CAT");
         final String schemaName = results.getString("TABLE_SCHEM");
         final String tableName = results.getString(TABLE_NAME);
-        LOGGER.log(Level.FINEST, "Retrieving table: " + tableName);
+        LOGGER.log(Level.FINER, String.format("Retrieving table: %s.%s",
+                                              schemaName,
+                                              tableName));
         final TableType tableType = TableType.valueOf(results
           .getString("TABLE_TYPE").toLowerCase(Locale.ENGLISH));
         final String remarks = results.getString(REMARKS);
@@ -337,6 +340,8 @@ final class TableRetriever
         {
           foreignKeyName = UNKNOWN;
         }
+        LOGGER.log(Level.FINER, String.format("Retrieving foreign key: %s",
+                                              foreignKeyName));
 
         final String pkTableCatalogName = results.getString("PKTABLE_CAT");
         final String pkTableSchemaName = results.getString("PKTABLE_SCHEM");
@@ -409,6 +414,8 @@ final class TableRetriever
         {
           indexName = UNKNOWN;
         }
+        LOGGER.log(Level.FINER, String.format("Retrieving index: %s.%s", table
+          .getFullName(), indexName));
         final String columnName = results.getString(COLUMN_NAME);
         if (Utility.isBlank(columnName))
         {
@@ -468,6 +475,8 @@ final class TableRetriever
       column = new MutableColumn(table, columnName);
       if (add)
       {
+        LOGGER.log(Level.FINER, String.format("Adding column to table: %s",
+                                              column.getFullName()));
         table.addColumn(column);
       }
     }
@@ -501,6 +510,9 @@ final class TableRetriever
       if (column == null)
       {
         column = new MutableColumn(table, columnName);
+        LOGGER.log(Level.FINER, String
+          .format("Adding referenced foreign key column to table: %s", column
+            .getFullName()));
         table.addColumn(column);
       }
     }

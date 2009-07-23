@@ -379,7 +379,7 @@ public final class PropertiesDataSource
   private void testConnection()
   {
 
-    LOGGER.log(Level.FINE, "Attempting connection...");
+    LOGGER.log(Level.FINEST, "Attempting connection...");
 
     Connection connection = null;
     try
@@ -421,7 +421,7 @@ public final class PropertiesDataSource
       }
     }
 
-    LOGGER.log(Level.FINE, "Connection successful.");
+    LOGGER.log(Level.FINE, "Database connection opened - " + connection);
     LOGGER.log(Level.INFO, NEWLINE + toString());
 
   }
