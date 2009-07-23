@@ -87,8 +87,7 @@ final class ProcedureRetriever
             && procedure.getName().equals(procedureName)
             && belongsToSchema(procedure, columnCatalogName, schemaName))
         {
-          LOGGER
-            .log(Level.FINEST, "Retrieving procedure column: " + columnName);
+          LOGGER.log(Level.FINER, "Retrieving procedure column: " + columnName);
           final short columnType = results.getShort("COLUMN_TYPE", (short) 0);
           final int dataType = results.getInt(DATA_TYPE, 0);
           final String typeName = results.getString(TYPE_NAME);
@@ -159,7 +158,7 @@ final class ProcedureRetriever
         // results.getString("PROCEDURE_CAT");
         final String schemaName = results.getString("PROCEDURE_SCHEM");
         final String procedureName = results.getString("PROCEDURE_NAME");
-        LOGGER.log(Level.FINEST, "Retrieving procedure: " + procedureName);
+        LOGGER.log(Level.FINER, "Retrieving procedure: " + procedureName);
         final short procedureType = results
           .getShort("PROCEDURE_TYPE", (short) ProcedureType.unknown.getId());
         final String remarks = results.getString(REMARKS);
