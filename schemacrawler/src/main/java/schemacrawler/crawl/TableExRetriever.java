@@ -212,14 +212,17 @@ final class TableExRetriever
 
   }
 
-  void retrieveTableColumnPrivileges()
+  void retrieveTableColumnPrivileges(final MutableTable table)
     throws SQLException
   {
     MetadataResultSet results = null;
     try
     {
       results = new MetadataResultSet(getRetrieverConnection().getMetaData()
-        .getColumnPrivileges(null, null, "%", "%"));
+        .getColumnPrivileges(table.getSchema().getParent().getName(),
+                             table.getSchema().getName(),
+                             table.getName(),
+                             "%"));
       createPrivileges(results, true);
     }
     finally
@@ -231,14 +234,16 @@ final class TableExRetriever
     }
   }
 
-  void retrieveTablePrivileges()
+  void retrieveTablePrivileges(final MutableTable table)
     throws SQLException
   {
     MetadataResultSet results = null;
     try
     {
       results = new MetadataResultSet(getRetrieverConnection().getMetaData()
-        .getTablePrivileges(null, null, "%"));
+        .getTablePrivileges(table.getSchema().getParent().getName(),
+                            table.getSchema().getName(),
+                            table.getName()));
       createPrivileges(results, false);
     }
     finally
@@ -484,6 +489,12 @@ final class TableExRetriever
       }
 
       final String privilegeName = results.getString("PRIVILEGE");
+      if (privilegesForColumn && column == null)
+      {
+        LOGGER.log(Level.FINER, String.format("Retrieving privilege: %s.%s",
+                                              tableName,
+                                              columnName));
+      }
       final String grantor = results.getString("GRANTOR");
       final String grantee = results.getString("GRANTEE");
       final boolean isGrantable = results.getBoolean("IS_GRANTABLE");
