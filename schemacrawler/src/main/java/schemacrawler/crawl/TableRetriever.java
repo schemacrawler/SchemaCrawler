@@ -340,8 +340,7 @@ final class TableRetriever
         {
           foreignKeyName = UNKNOWN;
         }
-        LOGGER.log(Level.FINER, String.format("Retrieving foreign key: %s",
-                                              foreignKeyName));
+        LOGGER.log(Level.FINER, "Retrieving foreign key: " + foreignKeyName);
 
         final String pkTableCatalogName = results.getString("PKTABLE_CAT");
         final String pkTableSchemaName = results.getString("PKTABLE_SCHEM");

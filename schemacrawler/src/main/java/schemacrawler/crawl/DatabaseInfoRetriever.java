@@ -72,8 +72,8 @@ final class DatabaseInfoRetriever
       {
         if (isDatabasePropertyMethod(method))
         {
-          LOGGER.log(Level.FINER, String
-            .format("Retrieving database property using method: %s", method));
+          LOGGER.log(Level.FINER, "Retrieving database property using method: "
+                                  + method);
           final String name = derivePropertyName(method);
           Object value = method.invoke(dbMetaData, new Object[0]);
           if (value != null && name.endsWith("s") && value instanceof String)
@@ -87,8 +87,8 @@ final class DatabaseInfoRetriever
         }
         else if (isDatabasePropertiesResultSetMethod(method))
         {
-          LOGGER.log(Level.FINER, String
-            .format("Retrieving database property using method: %s", method));
+          LOGGER.log(Level.FINER, "Retrieving database property using method: "
+                                  + method);
           final String name = derivePropertyName(method);
           final ResultSet results = (ResultSet) method.invoke(dbMetaData,
                                                               new Object[0]);
@@ -442,8 +442,8 @@ final class DatabaseInfoRetriever
                                              final String resultSetTypeName)
     throws IllegalAccessException, InvocationTargetException
   {
-    LOGGER.log(Level.FINER, String
-      .format("Retrieving database property using method: %s", method));
+    LOGGER.log(Level.FINER, "Retrieving database property using method: "
+                            + method);
     final String name = derivePropertyName(method) + "ResultSet"
                         + resultSetTypeName;
     Boolean propertyValue = null;

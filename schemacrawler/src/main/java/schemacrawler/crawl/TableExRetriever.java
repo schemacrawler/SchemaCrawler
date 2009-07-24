@@ -106,8 +106,7 @@ final class TableExRetriever
         final String catalogName = results.getString("CONSTRAINT_CATALOG");
         final String schemaName = results.getString("CONSTRAINT_SCHEMA");
         final String constraintName = results.getString("CONSTRAINT_NAME");
-        LOGGER.log(Level.FINER, "Retrieving constraint information for "
-                                + constraintName);
+        LOGGER.log(Level.FINER, "Retrieving constraint: " + constraintName);
         // final String tableCatalogName =
         // results.getString("TABLE_CATALOG");
         // final String tableSchemaName =
@@ -173,7 +172,7 @@ final class TableExRetriever
         // final String schemaName =
         // results.getString("CONSTRAINT_SCHEMA");
         final String constraintName = results.getString("CONSTRAINT_NAME");
-        LOGGER.log(Level.FINER, "Retrieving constraint definition for "
+        LOGGER.log(Level.FINER, "Retrieving constraint definition: "
                                 + constraintName);
         String definition = results.getString("CHECK_CLAUSE");
 
@@ -300,8 +299,7 @@ final class TableExRetriever
         final String catalogName = results.getString("TRIGGER_CATALOG");
         final String schemaName = results.getString("TRIGGER_SCHEMA");
         final String triggerName = results.getString("TRIGGER_NAME");
-        LOGGER.log(Level.FINER, "Retrieving trigger information for "
-                                + triggerName);
+        LOGGER.log(Level.FINER, "Retrieving trigger: " + triggerName);
 
         // final String eventObjectCatalog = results
         // .getString("EVENT_OBJECT_CATALOG");
@@ -425,7 +423,7 @@ final class TableExRetriever
           continue;
         }
 
-        LOGGER.log(Level.FINER, "Retrieving view information for " + viewName);
+        LOGGER.log(Level.FINER, "Retrieving view information: " + viewName);
         final String definition = results.getString("VIEW_DEFINITION");
         final CheckOptionType checkOption = CheckOptionType.valueOf(results
           .getString("CHECK_OPTION").toLowerCase(Locale.ENGLISH));

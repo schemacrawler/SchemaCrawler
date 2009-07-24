@@ -101,7 +101,7 @@ final class ProcedureExRetriever
                                                            procedureName);
         if (procedure != null)
         {
-          LOGGER.log(Level.FINER, "Retrieving procedure information for "
+          LOGGER.log(Level.FINER, "Retrieving procedure information: "
                                   + procedureName);
           final RoutineBodyType routineBodyType = RoutineBodyType
             .valueOf(results.getString("ROUTINE_BODY")
