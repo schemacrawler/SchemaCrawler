@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="SchemaCrawler">
+  <version/>
   <bannerLeft>
     <name>SchemaCrawler</name>
     <src>images/schemacrawler.png</src>
@@ -34,12 +35,6 @@
         name="How-tos"
         href="how-to.html" />
       <item
-        name="Using INFORMATION_SCHEMA Views"
-        href="INFORMATION_SCHEMA.html" />
-      <item
-        name="SchemaCrawler Grep"
-        href="schemacrawler_grep.html" />
-      <item
         name="Donations"
         href="http://sourceforge.net/donate/index.php?group_id=148383" />
       <item
@@ -55,6 +50,14 @@
         name="Project Page on SourceForge"
         href="http://sourceforge.net/projects/schemacrawler/" />
     </menu>
-    ${reports}
+    <menu name="SchemaCrawler Special Features">
+      <item
+        name="Using INFORMATION_SCHEMA Views"
+        href="INFORMATION_SCHEMA.html" />
+      <item
+        name="SchemaCrawler Grep"
+        href="schemacrawler_grep.html" />
+    </menu>    
+    <menu ref="reports" />
   </body>
 </project>
