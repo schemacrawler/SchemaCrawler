@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+    <release version="7.1" date="2009-08-10">
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        More efficient retrieval of privileges.
+      ]]></action>       
+    </release>     
     <release version="7.0" date="2009-07-10">
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
         Major restructuring of the API, with the introduction of a Database object that contains

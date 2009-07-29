@@ -28,7 +28,6 @@ import schemacrawler.crawl.CachingCrawlHandler;
 import schemacrawler.main.HelpOptions;
 import schemacrawler.main.HelpOptions.CommandHelpType;
 import schemacrawler.schema.Database;
-import schemacrawler.tools.schematext.SchemaCrawlerExecutable;
 
 /**
  * An executor that uses a template renderer to render a schema.
@@ -36,20 +35,15 @@ import schemacrawler.tools.schematext.SchemaCrawlerExecutable;
  * @author sfatehi
  */
 public abstract class SchemaRenderer
-  extends SchemaCrawlerExecutable
+  extends SchemaCrawlerIntegrationsExecutable
 {
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.schematext.SchemaCrawlerExecutable#execute(javax.sql.DataSource)
-   */
   @Override
-  public final void execute(final DataSource dataSource)
+  public final void doExecute(final DataSource dataSource)
     throws Exception
   {
     crawlHandler = new CachingCrawlHandler();
-    super.execute(dataSource);
+    execute(dataSource);
     final Database database = ((CachingCrawlHandler) crawlHandler)
       .getDatabase();
 
@@ -61,23 +55,14 @@ public abstract class SchemaRenderer
     toolOptions.getOutputOptions().closeOutputWriter(writer);
   }
 
-  /**
-   * Get connection parameters, and creates a connection, and crawls the
-   * schema.
-   * 
-   * @param args
-   *        Arguments passed into the program from the command line.
-   * @throws Exception
-   *         On an exception
-   */
-  public void main(final String[] args)
-    throws Exception
+  @Override
+  protected HelpOptions getHelpOptions()
   {
     final HelpOptions helpOptions = new HelpOptions("SchemaCrawler - Templating");
     helpOptions.setCommandHelpType(CommandHelpType.without_operations);
     helpOptions.setResourceOutputOptions("/help/OutputOptions.templating.txt");
 
-    executeOnSchema(args, helpOptions);
+    return helpOptions;
   }
 
   /**

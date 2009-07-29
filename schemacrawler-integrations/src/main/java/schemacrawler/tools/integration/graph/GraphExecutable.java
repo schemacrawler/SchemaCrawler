@@ -31,7 +31,7 @@ import schemacrawler.main.HelpOptions;
 import schemacrawler.main.HelpOptions.CommandHelpType;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.schematext.SchemaCrawlerExecutable;
+import schemacrawler.tools.integration.SchemaCrawlerIntegrationsExecutable;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 import sf.util.Utility;
 
@@ -41,7 +41,7 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 public final class GraphExecutable
-  extends SchemaCrawlerExecutable
+  extends SchemaCrawlerIntegrationsExecutable
 {
 
   private static final Logger LOGGER = Logger.getLogger(GraphExecutable.class
@@ -53,13 +53,8 @@ public final class GraphExecutable
       .getResourceAsStream("/dot.error.txt"));
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.schematext.SchemaCrawlerExecutable#execute(javax.sql.DataSource)
-   */
   @Override
-  public void execute(final DataSource dataSource)
+  public void doExecute(final DataSource dataSource)
     throws Exception
   {
     final OutputOptions outputOptions = toolOptions.getOutputOptions();
@@ -91,23 +86,14 @@ public final class GraphExecutable
     }
   }
 
-  /**
-   * Get connection parameters, and creates a connection, and crawls the
-   * schema.
-   * 
-   * @param args
-   *        Arguments passed into the program from the command line.
-   * @throws Exception
-   *         On an exception
-   */
-  public void main(final String[] args)
-    throws Exception
+  @Override
+  protected HelpOptions getHelpOptions()
   {
     final HelpOptions helpOptions = new HelpOptions("SchemaCrawler - Graphing");
     helpOptions.setCommandHelpType(CommandHelpType.without_operations);
     helpOptions.setResourceOutputOptions("/help/OutputOptions.dot.txt");
 
-    executeOnSchema(args, helpOptions);
+    return helpOptions;
   }
 
   private void writeDotFile(final DataSource dataSource, final File dotFile)
@@ -119,7 +105,7 @@ public final class GraphExecutable
       outputOptions.setOutputFileName(dotFile.getAbsolutePath());
       toolOptions.setOutputOptions(outputOptions);
 
-      super.execute(dataSource);
+      execute(dataSource);
     }
     catch (final Exception e)
     {

@@ -41,7 +41,7 @@ public abstract class Executable<O extends ToolOptions>
   /**
    * Creates an executable with some default options.
    */
-  public Executable()
+  protected Executable()
   {
     schemaCrawlerOptions = new SchemaCrawlerOptions();
   }

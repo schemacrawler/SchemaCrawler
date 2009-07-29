@@ -75,19 +75,16 @@ final class ExecutableFactory
     final Config config = commandLine.getConfig();
     final OutputOptions masterOutputOptions = commandLine.getOutputOptions();
     final Commands commands = commandLine.getCommands();
-
     final List<Executable<?>> executables = new ArrayList<Executable<?>>();
-    for (int i = 0; i < commands.size(); i++)
+    for (final Command command: commands)
     {
-      final Command command = commands.get(i);
-
       final OutputOptions outputOptions = masterOutputOptions.duplicate();
-      if (i == 0)
+      if (commands.isFirstCommand(command))
       {
         // First command - no footer
         outputOptions.setNoFooter(true);
       }
-      else if (i == commands.size() - 1)
+      else if (commands.isLastCommand(command))
       {
         // Last command - no header, or info
         outputOptions.setNoHeader(true);
