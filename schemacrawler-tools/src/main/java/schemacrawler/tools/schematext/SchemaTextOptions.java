@@ -22,6 +22,7 @@ package schemacrawler.tools.schematext;
 
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.BaseToolOptions;
 import schemacrawler.tools.OutputOptions;
 
@@ -243,6 +244,14 @@ public class SchemaTextOptions
     {
       this.schemaTextDetailType = schemaTextDetailType;
     }
+  }
+
+  /**
+   * Gets the SchemaInfoLevel implied by the SchemaTextDetailType.
+   */
+  public SchemaInfoLevel getSchemaInfoLevel()
+  {
+    return schemaTextDetailType.mapToInfoLevel();
   }
 
   /**

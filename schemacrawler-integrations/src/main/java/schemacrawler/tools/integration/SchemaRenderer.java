@@ -25,9 +25,11 @@ import java.io.Writer;
 import javax.sql.DataSource;
 
 import schemacrawler.crawl.CachingCrawlHandler;
+import schemacrawler.crawl.DatabaseSchemaCrawler;
 import schemacrawler.main.HelpOptions;
 import schemacrawler.main.HelpOptions.CommandHelpType;
 import schemacrawler.schema.Database;
+import schemacrawler.schemacrawler.SchemaCrawler;
 
 /**
  * An executor that uses a template renderer to render a schema.
@@ -35,17 +37,25 @@ import schemacrawler.schema.Database;
  * @author sfatehi
  */
 public abstract class SchemaRenderer
-  extends SchemaCrawlerIntegrationsExecutable
+  extends IntegrationsExecutable
 {
 
   @Override
-  public final void doExecute(final DataSource dataSource)
+  public final void execute(final DataSource dataSource)
     throws Exception
   {
-    crawlHandler = new CachingCrawlHandler();
-    execute(dataSource);
-    final Database database = ((CachingCrawlHandler) crawlHandler)
-      .getDatabase();
+    if (dataSource == null)
+    {
+      throw new IllegalArgumentException("No data-source provided");
+    }
+
+    schemaCrawlerOptions.setSchemaInfoLevel(toolOptions.getSchemaInfoLevel());
+
+    final CachingCrawlHandler handler = new CachingCrawlHandler();
+    final SchemaCrawler crawler = new DatabaseSchemaCrawler(dataSource
+      .getConnection());
+    crawler.crawl(schemaCrawlerOptions, handler);
+    final Database database = handler.getDatabase();
 
     // Executable-specific work
     final Writer writer = toolOptions.getOutputOptions().openOutputWriter();
