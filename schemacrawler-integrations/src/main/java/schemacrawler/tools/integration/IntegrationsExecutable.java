@@ -21,15 +21,15 @@
 package schemacrawler.tools.integration;
 
 
-import javax.sql.DataSource;
+import java.util.Iterator;
 
 import schemacrawler.main.HelpOptions;
 import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.Command;
 import schemacrawler.tools.Commands;
+import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.schematext.SchemaCrawlerExecutable;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextOptions;
 
@@ -38,8 +38,8 @@ import schemacrawler.tools.schematext.SchemaTextOptions;
  * 
  * @author Sualeh Fatehi
  */
-public abstract class SchemaCrawlerIntegrationsExecutable
-  extends SchemaCrawlerExecutable
+public abstract class IntegrationsExecutable
+  extends Executable<SchemaTextOptions>
 {
 
   /**
@@ -56,27 +56,34 @@ public abstract class SchemaCrawlerIntegrationsExecutable
   {
     final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
                                                                               getHelpOptions());
-    final Config config = commandLine.getConfig();
-    final SchemaCrawlerOptions schemaCrawlerOptions = commandLine
-      .getSchemaCrawlerOptions();
-    final OutputOptions outputOptions = commandLine.getOutputOptions();
 
+    schemaCrawlerOptions = commandLine.getSchemaCrawlerOptions();
+
+    final OutputOptions outputOptions = commandLine.getOutputOptions();
     final Commands commands = commandLine.getCommands();
     final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType
-      .valueOf(commands.iterator().next().getName());
+      .valueOf(getCommand(commands));
+    final Config config = commandLine.getConfig();
+    toolOptions = new SchemaTextOptions(config,
+                                        outputOptions,
+                                        schemaTextDetailType);
 
-    final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(config,
-                                                                      outputOptions,
-                                                                      schemaTextDetailType);
-
-    setSchemaCrawlerOptions(schemaCrawlerOptions);
-    setToolOptions(schemaTextOptions);
-    doExecute(commandLine.createDataSource());
+    execute(commandLine.createDataSource());
   }
 
-  protected abstract void doExecute(final DataSource dataSource)
-    throws Exception;
-
   protected abstract HelpOptions getHelpOptions();
+
+  /**
+   * Expect one command (further, of type schema text.
+   */
+  private String getCommand(final Commands commands)
+  {
+    final Iterator<Command> iterator = commands.iterator();
+    if (!iterator.hasNext())
+    {
+      throw new IllegalArgumentException("No commands specified");
+    }
+    return iterator.next().getName();
+  }
 
 }

@@ -5,7 +5,7 @@ import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.OutputFormat;
 
-final class SchemaTextFactory
+public final class SchemaTextFactory
 {
   /**
    * Text formatting of schema.
@@ -13,7 +13,7 @@ final class SchemaTextFactory
    * @param options
    *        Options for text formatting of schema
    */
-  final static CrawlHandler createSchemaTextCrawlHandler(final SchemaTextOptions options)
+  public final static CrawlHandler createSchemaTextCrawlHandler(final SchemaTextOptions options)
     throws SchemaCrawlerException
   {
     if (options == null)

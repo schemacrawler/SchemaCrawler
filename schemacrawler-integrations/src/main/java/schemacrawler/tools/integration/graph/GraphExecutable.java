@@ -27,11 +27,15 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
+import schemacrawler.crawl.DatabaseSchemaCrawler;
 import schemacrawler.main.HelpOptions;
 import schemacrawler.main.HelpOptions.CommandHelpType;
+import schemacrawler.schemacrawler.CrawlHandler;
+import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.integration.SchemaCrawlerIntegrationsExecutable;
+import schemacrawler.tools.integration.IntegrationsExecutable;
+import schemacrawler.tools.schematext.SchemaTextFactory;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 import sf.util.Utility;
 
@@ -41,7 +45,7 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 public final class GraphExecutable
-  extends SchemaCrawlerIntegrationsExecutable
+  extends IntegrationsExecutable
 {
 
   private static final Logger LOGGER = Logger.getLogger(GraphExecutable.class
@@ -54,9 +58,14 @@ public final class GraphExecutable
   }
 
   @Override
-  public void doExecute(final DataSource dataSource)
+  public void execute(final DataSource dataSource)
     throws Exception
   {
+    if (dataSource == null)
+    {
+      throw new IllegalArgumentException("No data-source provided");
+    }
+
     final OutputOptions outputOptions = toolOptions.getOutputOptions();
     final File outputFile = outputOptions.getOutputFile();
 
@@ -105,7 +114,13 @@ public final class GraphExecutable
       outputOptions.setOutputFileName(dotFile.getAbsolutePath());
       toolOptions.setOutputOptions(outputOptions);
 
-      execute(dataSource);
+      schemaCrawlerOptions.setSchemaInfoLevel(toolOptions.getSchemaInfoLevel());
+
+      final CrawlHandler handler = SchemaTextFactory
+        .createSchemaTextCrawlHandler(toolOptions);
+      final SchemaCrawler crawler = new DatabaseSchemaCrawler(dataSource
+        .getConnection());
+      crawler.crawl(schemaCrawlerOptions, handler);
     }
     catch (final Exception e)
     {

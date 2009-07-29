@@ -56,13 +56,16 @@ public class SchemaCrawlerExecutable
       throw new IllegalArgumentException("No data-source provided");
     }
 
-    schemaCrawlerOptions.setSchemaInfoLevel(toolOptions
-      .getSchemaTextDetailType().mapToInfoLevel());
+    schemaCrawlerOptions.setSchemaInfoLevel(toolOptions.getSchemaInfoLevel());
 
-    CrawlHandler handler = crawlHandler;
-    if (handler == null)
+    final CrawlHandler handler;
+    if (crawlHandler == null)
     {
       handler = SchemaTextFactory.createSchemaTextCrawlHandler(toolOptions);
+    }
+    else
+    {
+      handler = crawlHandler;
     }
 
     final SchemaCrawler crawler = new DatabaseSchemaCrawler(dataSource
