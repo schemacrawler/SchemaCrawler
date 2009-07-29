@@ -148,7 +148,9 @@ public final class PropertiesDataSource
     params.setProperty(USER, username);
     params.setProperty(PASSWORD, password);
 
-    return jdbcDriver.connect(url, params);
+    final Connection connection = jdbcDriver.connect(url, params);
+    LOGGER.log(Level.FINE, "Database connection opened - " + connection);
+    return connection;
 
   }
 
@@ -353,6 +355,7 @@ public final class PropertiesDataSource
     url = connectionParams.getProperty(URL);
 
     testConnection();
+    LOGGER.log(Level.INFO, NEWLINE + toString());
   }
 
   private String getConnectionParamsInfo()
@@ -378,9 +381,6 @@ public final class PropertiesDataSource
 
   private void testConnection()
   {
-
-    LOGGER.log(Level.FINEST, "Attempting connection...");
-
     Connection connection = null;
     try
     {
@@ -410,6 +410,7 @@ public final class PropertiesDataSource
         if (connection != null)
         {
           connection.close();
+          LOGGER.log(Level.FINE, "Database connection closed - " + connection);
         }
       }
       catch (final SQLException e)
@@ -420,10 +421,6 @@ public final class PropertiesDataSource
         throw new RuntimeException(errorMessage, e);
       }
     }
-
-    LOGGER.log(Level.FINE, "Database connection opened - " + connection);
-    LOGGER.log(Level.INFO, NEWLINE + toString());
-
   }
 
 }
