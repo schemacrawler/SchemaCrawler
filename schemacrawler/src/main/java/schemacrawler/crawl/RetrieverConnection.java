@@ -50,7 +50,7 @@ final class RetrieverConnection
   private static final Logger LOGGER = Logger
     .getLogger(RetrieverConnection.class.getName());
 
-  private final DatabaseMetaData metaData;
+  private final Connection connection;
   private final List<String> catalogNames;
   private final String schemaPattern;
   private final InformationSchemaViews informationSchemaViews;
@@ -68,13 +68,17 @@ final class RetrieverConnection
     {
       throw new SchemaCrawlerException("No connection provided");
     }
-    metaData = connection.getMetaData();
+    if (connection.isClosed())
+    {
+      throw new SchemaCrawlerException("Connection is closed");
+    }
+    this.connection = connection;
 
     final Set<String> catalogNames = new HashSet<String>();
     try
     {
-      catalogNames.addAll(new HashSet<String>(readResultsVector(metaData
-        .getCatalogs())));
+      catalogNames.addAll(new HashSet<String>(readResultsVector(connection
+        .getMetaData().getCatalogs())));
       catalogNames.add(connection.getCatalog());
     }
     catch (final SQLException e)
@@ -187,21 +191,6 @@ final class RetrieverConnection
 
   Connection getConnection()
   {
-    Connection connection = null;
-    if (metaData != null)
-    {
-      try
-      {
-        connection = metaData.getConnection();
-      }
-      catch (final SQLException e)
-      {
-        LOGGER.log(Level.WARNING,
-                   "Could not obtain database connection from metadata",
-                   e);
-        connection = null;
-      }
-    }
     return connection;
   }
 
@@ -216,8 +205,9 @@ final class RetrieverConnection
   }
 
   DatabaseMetaData getMetaData()
+    throws SQLException
   {
-    return metaData;
+    return connection.getMetaData();
   }
 
   String getSchemaPattern()

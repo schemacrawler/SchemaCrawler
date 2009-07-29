@@ -61,6 +61,7 @@ final class DatabaseInfoRetriever
    *         On a SQL exception
    */
   void retrieveAdditionalDatabaseInfo()
+    throws SQLException
   {
     final DatabaseMetaData dbMetaData = getRetrieverConnection().getMetaData();
     final MutableDatabaseInfo dbInfo = database.getDatabaseInfo();
