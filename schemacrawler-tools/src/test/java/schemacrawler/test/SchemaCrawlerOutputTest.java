@@ -44,6 +44,7 @@ import schemacrawler.execute.QueryExecutor;
 import schemacrawler.execute.QueryExecutorException;
 import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.main.SchemaCrawlerMain;
+import schemacrawler.main.dbconnector.DatabaseConnector;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.Command;
@@ -118,7 +119,7 @@ public class SchemaCrawlerOutputTest
             new Command("brief_schema", false), new Command("count", true),
         }
     };
-    final InMemoryDatabaseConnector dbConnector = new InMemoryDatabaseConnector(testUtility);
+    final DatabaseConnector dbConnector = new InMemoryDatabaseConnector(testUtility);
 
     final List<String> failures = new ArrayList<String>();
     for (final OutputFormat outputFormat: OutputFormat.values())

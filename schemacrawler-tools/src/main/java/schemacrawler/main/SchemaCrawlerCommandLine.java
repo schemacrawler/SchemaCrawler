@@ -196,16 +196,6 @@ public class SchemaCrawlerCommandLine
     return outputOptions.duplicate();
   }
 
-  /**
-   * Gets the partition in the config.
-   * 
-   * @return Partition in the config
-   */
-  public String getPartition()
-  {
-    return databaseConnector.getDataSourceName();
-  }
-
   public SchemaCrawlerOptions getSchemaCrawlerOptions()
   {
     return schemaCrawlerOptions;

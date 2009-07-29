@@ -7,7 +7,7 @@ import java.util.List;
 
 import schemacrawler.schemacrawler.Options;
 
-public class Commands
+public final class Commands
   implements Iterable<Command>, Options
 {
 
@@ -28,31 +28,35 @@ public class Commands
     }
   }
 
-  public Command get(final int index)
+  public boolean isFirstCommand(final Command command)
   {
-    return commands.get(index);
-  }
-
-  public Command getFirstComand()
-  {
-    if (commands.size() > 0)
+    if (command != null)
     {
-      return commands.get(0);
+      final Command firstCommand = commands.get(0);
+      return firstCommand.equals(command);
     }
     else
     {
-      return null;
+      return false;
+    }
+  }
+
+  public boolean isLastCommand(final Command command)
+  {
+    if (command != null)
+    {
+      final Command lastCommand = commands.get(commands.size() - 1);
+      return lastCommand.equals(command);
+    }
+    else
+    {
+      return false;
     }
   }
 
   public Iterator<Command> iterator()
   {
     return commands.iterator();
-  }
-
-  public int size()
-  {
-    return commands.size();
   }
 
   @Override

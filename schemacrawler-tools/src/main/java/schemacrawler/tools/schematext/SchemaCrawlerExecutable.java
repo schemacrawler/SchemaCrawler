@@ -24,15 +24,9 @@ package schemacrawler.tools.schematext;
 import javax.sql.DataSource;
 
 import schemacrawler.crawl.DatabaseSchemaCrawler;
-import schemacrawler.main.HelpOptions;
-import schemacrawler.main.SchemaCrawlerCommandLine;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawler;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.Commands;
 import schemacrawler.tools.Executable;
-import schemacrawler.tools.OutputOptions;
 
 /**
  * Basic SchemaCrawler executor.
@@ -42,6 +36,7 @@ import schemacrawler.tools.OutputOptions;
 public class SchemaCrawlerExecutable
   extends Executable<SchemaTextOptions>
 {
+
   protected CrawlHandler crawlHandler;
 
   /**
@@ -53,9 +48,14 @@ public class SchemaCrawlerExecutable
   }
 
   @Override
-  public void execute(final DataSource dataSource)
+  public final void execute(final DataSource dataSource)
     throws Exception
   {
+    if (dataSource == null)
+    {
+      throw new IllegalArgumentException("No data-source provided");
+    }
+
     schemaCrawlerOptions.setSchemaInfoLevel(toolOptions
       .getSchemaTextDetailType().mapToInfoLevel());
 
@@ -68,41 +68,6 @@ public class SchemaCrawlerExecutable
     final SchemaCrawler crawler = new DatabaseSchemaCrawler(dataSource
       .getConnection());
     crawler.crawl(schemaCrawlerOptions, handler);
-  }
-
-  /**
-   * Get connection parameters, and creates a connection, and crawls the
-   * schema.
-   * 
-   * @param args
-   *        Arguments passed into the program from the command line.
-   * @param helpResource
-   *        A resource for help text
-   * @throws Exception
-   *         On an exception
-   */
-  public final void executeOnSchema(final String[] args,
-                                    final HelpOptions helpOptions)
-    throws Exception
-  {
-    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
-                                                                              helpOptions);
-    final Config config = commandLine.getConfig();
-    final SchemaCrawlerOptions schemaCrawlerOptions = commandLine
-      .getSchemaCrawlerOptions();
-    final OutputOptions outputOptions = commandLine.getOutputOptions();
-
-    final Commands commands = commandLine.getCommands();
-    final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType
-      .valueOf(commands.getFirstComand().getName());
-
-    final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(config,
-                                                                      outputOptions,
-                                                                      schemaTextDetailType);
-
-    setSchemaCrawlerOptions(schemaCrawlerOptions);
-    setToolOptions(schemaTextOptions);
-    execute(commandLine.createDataSource());
   }
 
 }

@@ -59,7 +59,7 @@ public final class SchemaCrawlerMain
     LOGGER.log(Level.CONFIG, about);
     final List<Executable<?>> executables = ExecutableFactory
       .createExecutables(commandLine);
-    if (executables.size() > 0)
+    if (!executables.isEmpty())
     {
       for (final Executable<?> executable: executables)
       {
