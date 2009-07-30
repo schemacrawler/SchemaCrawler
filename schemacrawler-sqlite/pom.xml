@@ -3,7 +3,7 @@
   <parent>
     <groupId>schemacrawler</groupId>
     <artifactId>schemacrawler-all</artifactId>
-    <version>7.0</version>
+    <version>7.1</version>
   </parent>
   <groupId>schemacrawler</groupId>
   <artifactId>schemacrawler-sqlite</artifactId>
