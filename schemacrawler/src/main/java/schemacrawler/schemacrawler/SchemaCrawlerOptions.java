@@ -21,7 +21,6 @@
 package schemacrawler.schemacrawler;
 
 
-import java.util.Arrays;
 import java.util.Properties;
 
 import schemacrawler.schema.TableType;
@@ -682,39 +681,6 @@ public final class SchemaCrawlerOptions
   public void setTableTypesString(final String tableTypesString)
   {
     setTableTypes(tableTypesString);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    final StringBuilder buffer = new StringBuilder();
-    buffer.append("SchemaCrawlerOptions[");
-    buffer.append("catalogInclusionRule=").append(catalogInclusionRule);
-    buffer.append("schemaInclusionRule=").append(schemaInclusionRule);
-    buffer.append("schemaPattern=").append(schemaPattern);
-    buffer.append("tableInclusionRule=").append(tableInclusionRule);
-    buffer.append(", columnInclusionRule=").append(columnInclusionRule);
-    buffer.append(", showStoredProcedures=").append(showStoredProcedures);
-    if (tableTypes == null)
-    {
-      buffer.append(", tableTypes=").append("null");
-    }
-    else
-    {
-      buffer.append(", tableTypes=").append(Arrays.asList(tableTypes)
-        .toString());
-    }
-    buffer.append(", grepColumnInclusionRule=").append(grepColumnInclusionRule);
-    buffer.append(", grepProcedureColumnInclusionRule=")
-      .append(grepProcedureColumnInclusionRule);
-    buffer.append(", grepInvertMatch=").append(grepInvertMatch);
-    buffer.append("]");
-    return buffer.toString();
   }
 
 }

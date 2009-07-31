@@ -21,9 +21,13 @@
 package schemacrawler.tools;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.sql.DataSource;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.utility.ObjectToString;
 
 /**
  * A SchemaCrawler tools executable unit.
@@ -105,14 +109,12 @@ public abstract class Executable<O extends ToolOptions>
    * @see Object#toString()
    */
   @Override
-  public String toString()
+  public final String toString()
   {
-    final StringBuilder buffer = new StringBuilder();
-    buffer.append("Executable[");
-    buffer.append("; ").append(schemaCrawlerOptions);
-    buffer.append("; ").append(toolOptions);
-    buffer.append("]");
-    return buffer.toString();
+    final Map<String, Object> fields = new HashMap<String, Object>();
+    fields.put("schemaCrawlerOptions", schemaCrawlerOptions);
+    fields.put("toolOptions", toolOptions);
+    return ObjectToString.toString(this, fields);
   }
 
 }

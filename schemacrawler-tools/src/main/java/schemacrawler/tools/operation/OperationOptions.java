@@ -120,20 +120,4 @@ public final class OperationOptions
     this.operation = operation;
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    final StringBuilder buffer = new StringBuilder();
-    buffer.append("OperatorOptions[");
-    buffer.append("operation=").append(operation);
-    buffer.append(", outputOptions=").append(getOutputOptions());
-    buffer.append("]");
-    return buffer.toString();
-  }
-
 }

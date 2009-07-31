@@ -157,21 +157,4 @@ public class DataTextFormatOptions
     this.showLobs = showLobs;
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    final StringBuilder buffer = new StringBuilder();
-    buffer.append("DataTextFormatOptions[");
-    buffer.append("mergeRows=").append(mergeRows);
-    buffer.append(", showLobs=").append(showLobs);
-    buffer.append(", outputOptions=").append(getOutputOptions());
-    buffer.append("]");
-    return buffer.toString();
-  }
-
 }

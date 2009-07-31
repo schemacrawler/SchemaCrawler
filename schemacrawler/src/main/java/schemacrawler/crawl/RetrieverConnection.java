@@ -110,17 +110,6 @@ final class RetrieverConnection
     informationSchemaViews = schemaCrawlerOptions.getInformationSchemaViews();
   }
 
-  @Override
-  public String toString()
-  {
-    final StringBuilder StringBuilder = new StringBuilder();
-    StringBuilder.append(String.format("catalogNames=%s; ", catalogNames));
-    StringBuilder.append(String.format("schemaPattern=%s; ", schemaPattern));
-    StringBuilder.append(String.format("informationSchemaViews=%s; ",
-                                       informationSchemaViews));
-    return StringBuilder.toString();
-  }
-
   /**
    * @see java.lang.Object#finalize()
    */
