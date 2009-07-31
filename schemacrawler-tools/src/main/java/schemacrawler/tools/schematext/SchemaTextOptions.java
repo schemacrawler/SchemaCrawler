@@ -276,24 +276,4 @@ public class SchemaTextOptions
     this.showStandardColumnTypeNames = showStandardColumnTypeNames;
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    final StringBuilder buffer = new StringBuilder();
-    buffer.append("TextFormatOptions[");
-    buffer.append("hideIndexNames=").append(hideConstraintNames);
-    buffer.append(", showStandardColumnTypeNames=")
-      .append(showStandardColumnTypeNames);
-    buffer.append(", showOrdinalNumbers=").append(showOrdinalNumbers);
-    buffer.append(", schemaTextDetailType=").append(schemaTextDetailType);
-    buffer.append(", outputOptions=").append(getOutputOptions());
-    buffer.append("]");
-    return buffer.toString();
-  }
-
 }

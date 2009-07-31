@@ -173,12 +173,11 @@ public final class InclusionRule
   @Override
   public String toString()
   {
-    final StringBuilder buffer = new StringBuilder();
-    buffer.append("InclusionRule[");
-    buffer.append("patternInclude=").append(patternInclude.pattern());
-    buffer.append(", patternExclude=").append(patternExclude.pattern());
-    buffer.append("]");
-    return buffer.toString();
+    return String.format("%s@%h-[:include:%s:exclude:%s:]",
+                         this.getClass().getSimpleName(),
+                         System.identityHashCode(this),
+                         patternInclude.pattern(),
+                         patternExclude.pattern());
   }
 
 }

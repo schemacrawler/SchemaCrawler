@@ -40,8 +40,6 @@ public final class Query
 
   private static final long serialVersionUID = 2820769346069413473L;
 
-  private static final String NEWLINE = System.getProperty("line.separator");
-
   /**
    * Interpolate substrings into system property values. Substrings of
    * the form ${<i>propname</i>} are interpolated into the text of the
@@ -250,7 +248,7 @@ public final class Query
   @Override
   public String toString()
   {
-    return name + ":" + NEWLINE + query;
+    return name + ":" + query;
   }
 
 }

@@ -344,28 +344,4 @@ public final class OutputOptions
     this.outputFormatValue = outputFormatValue;
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    final StringBuilder buffer = new StringBuilder();
-    buffer.append("OutputOptions[");
-    buffer.append("outputFormat=").append(getOutputFormat());
-    buffer.append("; outputFormatValue=").append(outputFormatValue);
-    if (outputFile != null)
-    {
-      buffer.append("; outputFile=").append(outputFile.getAbsolutePath());
-    }
-    buffer.append("; appendOutput=").append(appendOutput);
-    buffer.append("; noHeader=").append(noHeader);
-    buffer.append("; noFooter=").append(noFooter);
-    buffer.append("; noInfo=").append(noInfo);
-    buffer.append("]");
-    return buffer.toString();
-  }
-
 }

@@ -133,16 +133,4 @@ public final class QueryExecutor
 
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return "QueryExecutor{" + "dataSource=" + dataSource + ", handler="
-           + handler + "}";
-  }
-
 }

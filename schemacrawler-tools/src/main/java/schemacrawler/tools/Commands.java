@@ -8,7 +8,7 @@ import java.util.List;
 import schemacrawler.schemacrawler.Options;
 
 public final class Commands
-  implements Iterable<Command>, Options
+  implements Options, Iterable<Command>
 {
 
   private static final long serialVersionUID = -3450943894546747834L;
@@ -57,12 +57,6 @@ public final class Commands
   public Iterator<Command> iterator()
   {
     return commands.iterator();
-  }
-
-  @Override
-  public String toString()
-  {
-    return commands.toString();
   }
 
 }

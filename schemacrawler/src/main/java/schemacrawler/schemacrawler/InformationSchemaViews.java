@@ -267,15 +267,4 @@ public final class InformationSchemaViews
                                  new Query(KEY_INFORMATION_SCHEMA_VIEWS, sql));
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return informationSchemaQueries.toString();
-  }
-
 }
