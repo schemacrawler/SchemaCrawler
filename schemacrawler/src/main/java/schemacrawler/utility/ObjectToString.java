@@ -30,6 +30,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,9 +48,10 @@ public class ObjectToString
     {
       return "null";
     }
+    final int indent = 0;
 
     final StringBuilder buffer = new StringBuilder();
-    appendObject(object, 0, buffer);
+    appendObject(object, indent, buffer);
     return buffer.toString();
   }
 
@@ -59,19 +62,20 @@ public class ObjectToString
     {
       return "null";
     }
+    final int indent = 0;
 
     final StringBuilder buffer = new StringBuilder();
-    appendHeader(object, 0, buffer);
+    appendHeader(object, indent, buffer);
     if (fields != null && !fields.isEmpty())
     {
       for (final Entry<String, Object> field: fields.entrySet())
       {
         buffer.append("  ").append(field.getKey()).append(": ");
-        appendObject(field.getValue(), 1, buffer);
-        buffer.append("\n");
+        appendObject(field.getValue(), indent + 1, buffer);
+        buffer.append(Utility.NEWLINE);
       }
     }
-    appendFooter(0, buffer);
+    appendFooter(indent, buffer);
 
     return buffer.toString();
   }
@@ -84,7 +88,7 @@ public class ObjectToString
    *        The class of object parameter
    */
   private static final void appendFields(final Object object,
-                                         final int level,
+                                         final int indent,
                                          final StringBuilder buffer)
   {
     if (object == null)
@@ -105,19 +109,9 @@ public class ObjectToString
           {
             fieldValue = Arrays.toString((Object[]) fieldValue);
           }
-          else if (Map.class.isAssignableFrom(fieldType))
-          {
-            final StringBuilder mapBuffer = new StringBuilder();
-            for (Map.Entry<?, ?> mapEntry: ((Map<?, ?>) ((Map<?, ?>) fieldValue)).entrySet())
-            {
-              mapBuffer.append("\n").append(indent(level + 2)).append(mapEntry
-                .getKey()).append(": ").append(mapEntry.getValue());
-            }
-            fieldValue = mapBuffer.toString();
-          }
         }
 
-        buffer.append(indent(level)).append("  ").append(fieldName)
+        buffer.append(indent(indent)).append("  ").append(fieldName)
           .append(": ");
         if (fieldType.isPrimitive() || fieldType.isEnum()
             || fieldValue instanceof String || fieldValue == null
@@ -127,9 +121,9 @@ public class ObjectToString
         }
         else
         {
-          appendObject(fieldValue, level + 1, buffer);
+          appendObject(fieldValue, indent + 1, buffer);
         }
-        buffer.append("\n");
+        buffer.append(Utility.NEWLINE);
       }
       catch (final Exception e)
       {
@@ -138,31 +132,44 @@ public class ObjectToString
     }
   }
 
-  private static final void appendFooter(final int level,
+  private static final void appendFooter(final int indent,
                                          final StringBuilder buffer)
   {
-    buffer.append(indent(level)).append("]");
+    buffer.append(indent(indent)).append("]");
   }
 
   private static final void appendHeader(final Object object,
-                                         final int level,
+                                         final int indent,
                                          final StringBuilder buffer)
   {
     if (object != null)
     {
-      buffer.append(indent(level)).append(object.getClass().getName())
+      buffer.append(indent(indent)).append(object.getClass().getName())
         .append('@').append(Integer
-          .toHexString(System.identityHashCode(object))).append("[\n");
+          .toHexString(System.identityHashCode(object))).append("[")
+        .append(Utility.NEWLINE);
     }
   }
 
   private static final void appendObject(final Object object,
-                                         final int level,
+                                         final int indent,
                                          final StringBuilder buffer)
   {
-    appendHeader(object, level, buffer);
-    appendFields(object, level, buffer);
-    appendFooter(level, buffer);
+    if (Map.class.isAssignableFrom(object.getClass()))
+    {
+      final Set<Map.Entry> mapEntries = new TreeMap((Map) object).entrySet();
+      for (final Map.Entry mapEntry: mapEntries)
+      {
+        buffer.append(Utility.NEWLINE).append(indent(indent)).append(mapEntry
+          .getKey()).append(": ").append(mapEntry.getValue());
+      }
+    }
+    else
+    {
+      appendHeader(object, 0, buffer);
+      appendFields(object, indent, buffer);
+      appendFooter(indent, buffer);
+    }
   }
 
   private static final boolean definesToString(final Object object)
@@ -256,11 +263,11 @@ public class ObjectToString
     return allFields.toArray(new Field[allFields.size()]);
   }
 
-  private static final char[] indent(final int level)
+  private static final char[] indent(final int indent)
   {
-    if (level >= 0)
+    if (indent >= 0)
     {
-      final char[] indentChars = new char[level * 2];
+      final char[] indentChars = new char[indent * 2];
       Arrays.fill(indentChars, ' ');
       return indentChars;
     }

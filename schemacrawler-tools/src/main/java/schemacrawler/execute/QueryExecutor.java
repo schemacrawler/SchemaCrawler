@@ -120,7 +120,7 @@ public final class QueryExecutor
         if (connection != null)
         {
           connection.close();
-          LOGGER.log(Level.FINE, "Database connection closed - " + connection);
+          LOGGER.log(Level.INFO, "Database connection closed - " + connection);
         }
       }
       catch (final SQLException e)

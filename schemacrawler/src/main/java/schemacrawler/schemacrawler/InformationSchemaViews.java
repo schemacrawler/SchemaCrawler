@@ -24,6 +24,8 @@ package schemacrawler.schemacrawler;
 import java.util.HashMap;
 import java.util.Map;
 
+import schemacrawler.utility.ObjectToString;
+
 /**
  * The database specific views to get additional database metadata in a
  * standard format.
@@ -265,6 +267,12 @@ public final class InformationSchemaViews
   {
     informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_VIEWS,
                                  new Query(KEY_INFORMATION_SCHEMA_VIEWS, sql));
+  }
+
+  @Override
+  public String toString()
+  {
+    return ObjectToString.toString(informationSchemaQueries);
   }
 
 }

@@ -160,12 +160,11 @@ final class RetrieverConnection
   {
     try
     {
-      final Connection connection = getConnection();
       if (connection != null && !connection.isClosed())
       {
         connection.close();
       }
-      LOGGER.log(Level.FINE, "Database connection closed - " + connection);
+      LOGGER.log(Level.INFO, "Database connection closed - " + connection);
     }
     catch (final SQLException e)
     {

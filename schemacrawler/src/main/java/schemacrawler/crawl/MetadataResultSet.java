@@ -115,7 +115,7 @@ final class MetadataResultSet
       {
         columnData = results.getObject(columnName);
       }
-      catch (SQLException e)
+      catch (final SQLException e)
       {
         columnData = null;
       }

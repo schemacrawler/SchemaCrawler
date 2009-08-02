@@ -153,7 +153,7 @@ public class SchemaCrawlerOutputTest
                                                                                   new Config(),
                                                                                   dbConnector,
                                                                                   outputOptions);
-        SchemaCrawlerMain.schemacrawler(commandLine, "");
+        SchemaCrawlerMain.schemacrawler(commandLine);
 
         if (outputFormat == OutputFormat.html)
         {
