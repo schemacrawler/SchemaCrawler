@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import schemacrawler.Version;
 import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.main.SchemaCrawlerMain;
 import schemacrawler.main.dbconnector.BundledDriverHelpOptions;
@@ -51,7 +50,7 @@ public final class Main
                                                                                 new BundledDriverHelpOptions("SchemaCrawler for SQLite",
                                                                                                              "/help/Connections.sqlite.txt"),
                                                                                 "/schemacrawler-sqlite.config.properties");
-      SchemaCrawlerMain.schemacrawler(commandLine, Version.about());
+      SchemaCrawlerMain.schemacrawler(commandLine);
     }
     catch (final Exception e)
     {

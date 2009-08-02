@@ -35,6 +35,7 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.utility.ObjectToString;
 import schemacrawler.utility.Utility;
 
 /**
@@ -292,6 +293,12 @@ public final class Config
     }
 
     return partition;
+  }
+
+  @Override
+  public String toString()
+  {
+    return ObjectToString.toString(this);
   }
 
 }

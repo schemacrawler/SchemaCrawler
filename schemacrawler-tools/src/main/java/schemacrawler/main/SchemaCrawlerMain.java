@@ -47,24 +47,20 @@ public final class SchemaCrawlerMain
    * 
    * @param commandLine
    *        Command line arguments
-   * @param about
-   *        About message
    * @throws Exception
    *         On an exception
    */
-  public static void schemacrawler(final SchemaCrawlerCommandLine commandLine,
-                                   final String about)
+  public static void schemacrawler(final SchemaCrawlerCommandLine commandLine)
     throws Exception
   {
-    LOGGER.log(Level.CONFIG, about);
     final List<Executable<?>> executables = ExecutableFactory
       .createExecutables(commandLine);
     if (!executables.isEmpty())
     {
       for (final Executable<?> executable: executables)
       {
-        LOGGER.log(Level.CONFIG, executable.toString());
         final DataSource dataSource = commandLine.createDataSource();
+        LOGGER.log(Level.CONFIG, executable.toString());
         executable.execute(dataSource);
       }
     }

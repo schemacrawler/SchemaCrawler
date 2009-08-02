@@ -26,6 +26,7 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
+import schemacrawler.Version;
 import schemacrawler.main.dbconnector.BundledDriverDatabaseConnector;
 import schemacrawler.main.dbconnector.DatabaseConnector;
 import schemacrawler.main.dbconnector.DatabaseConnectorException;
@@ -117,7 +118,8 @@ public class SchemaCrawlerCommandLine
     }
 
     applicationOptions.applyApplicationLogLevel();
-    LOGGER.log(Level.FINE, "Command line: " + Arrays.asList(args));
+    LOGGER.log(Level.INFO, Version.about());
+    LOGGER.log(Level.CONFIG, "Command line: " + Arrays.asList(args));
     try
     {
       if (!schemacrawler.utility.Utility.isBlank(configResource))

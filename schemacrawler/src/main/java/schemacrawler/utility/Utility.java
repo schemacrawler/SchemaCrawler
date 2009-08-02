@@ -43,6 +43,11 @@ public final class Utility
     .getLogger(Utility.class.getName());
 
   /**
+   * System specific line separator character.
+   */
+  public static final String NEWLINE = System.getProperty("line.separator");
+
+  /**
    * Checks if the text is null or empty.
    * 
    * @param text

@@ -26,13 +26,17 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.Driver;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.sql.DataSource;
+
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.utility.ObjectToString;
+import schemacrawler.utility.Utility;
 
 /**
  * A DataSource that creates connections by reading a properties file.
@@ -42,11 +46,6 @@ import javax.sql.DataSource;
 public final class PropertiesDataSource
   implements DataSource
 {
-
-  /**
-   * System specific line separator character.
-   */
-  private static final String NEWLINE = System.getProperty("line.separator");
 
   private static final String DRIVER = "driver";
   private static final String URL = "url";
@@ -149,7 +148,7 @@ public final class PropertiesDataSource
     params.setProperty(PASSWORD, password);
 
     final Connection connection = jdbcDriver.connect(url, params);
-    LOGGER.log(Level.FINE, "Database connection opened - " + connection);
+    LOGGER.log(Level.INFO, "Database connection opened - " + connection);
     return connection;
 
   }
@@ -285,15 +284,16 @@ public final class PropertiesDataSource
   @Override
   public String toString()
   {
+    final Map<String, String> toStringMap = new HashMap<String, String>();
+    toStringMap.put("database product", String.format("%s %s",
+                                                      databaseProductName,
+                                                      databaseProductVersion));
+    toStringMap.put("driver", String.format("%s - %s %s", jdbcDriver.getClass()
+      .getName(), driverName, driverVersion));
+    toStringMap.put("connection", url);
+    toStringMap.put("user", connectionParams.getProperty(USER));
 
-    final StringBuilder info = new StringBuilder();
-    info.append("-- database product: ").append(databaseProductName)
-      .append(" ").append(databaseProductVersion).append(NEWLINE)
-      .append("-- driver: ").append(jdbcDriver.getClass().getName())
-      .append(" - ").append(driverName).append(" ").append(driverVersion)
-      .append(NEWLINE).append("-- connection: ").append(url);
-    return info.toString();
-
+    return ObjectToString.toString(toStringMap);
   }
 
   /**
@@ -336,9 +336,7 @@ public final class PropertiesDataSource
     logWriter = new PrintWriter(System.err);
 
     connectionParams = substitutedProperties;
-
-    LOGGER.log(Level.FINE, "Using connection \"" + connectionName + "\"");
-    LOGGER.log(Level.FINE, getConnectionParamsInfo());
+    LOGGER.log(Level.FINE, getConnectionParamsInfo(connectionName));
 
     try
     {
@@ -355,28 +353,19 @@ public final class PropertiesDataSource
     url = connectionParams.getProperty(URL);
 
     testConnection();
-    LOGGER.log(Level.INFO, NEWLINE + toString());
+    LOGGER.log(Level.INFO, Utility.NEWLINE + toString());
   }
 
-  private String getConnectionParamsInfo()
+  private String getConnectionParamsInfo(final String connectionName)
   {
+    final Config connectionConfig = new Config(connectionParams);
+    connectionConfig.remove(PASSWORD);
+    connectionConfig.put("connectionName", connectionName);
 
     final StringBuilder buffer = new StringBuilder();
-    buffer.append("Connection parameters:");
-    final Set<Map.Entry<Object, Object>> entries = connectionParams.entrySet();
-    for (final Map.Entry<Object, Object> entry: entries)
-    {
-      final String key = (String) entry.getKey();
-      final String value = (String) entry.getValue();
-      if (!key.equalsIgnoreCase(PASSWORD))
-      {
-        buffer.append(NEWLINE).append("-- ").append(key).append(": ")
-          .append(value);
-      }
-    }
+    buffer.append("Connection parameters:").append(connectionConfig);
 
     return buffer.toString();
-
   }
 
   private void testConnection()
@@ -410,7 +399,7 @@ public final class PropertiesDataSource
         if (connection != null)
         {
           connection.close();
-          LOGGER.log(Level.FINE, "Database connection closed - " + connection);
+          LOGGER.log(Level.INFO, "Database connection closed - " + connection);
         }
       }
       catch (final SQLException e)

@@ -190,7 +190,7 @@ final class OperationFormatter
     try
     {
       connection.close();
-      LOGGER.log(Level.FINER, "Database connection closed - " + connection);
+      LOGGER.log(Level.INFO, "Database connection closed - " + connection);
     }
     catch (final SQLException e)
     {

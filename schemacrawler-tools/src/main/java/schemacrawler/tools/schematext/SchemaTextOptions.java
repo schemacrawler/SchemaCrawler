@@ -115,6 +115,14 @@ public class SchemaTextOptions
   }
 
   /**
+   * Gets the SchemaInfoLevel implied by the SchemaTextDetailType.
+   */
+  public SchemaInfoLevel getSchemaInfoLevel()
+  {
+    return schemaTextDetailType.mapToInfoLevel();
+  }
+
+  /**
    * Schema text detail type.
    * 
    * @return Schema text detail type
@@ -244,14 +252,6 @@ public class SchemaTextOptions
     {
       this.schemaTextDetailType = schemaTextDetailType;
     }
-  }
-
-  /**
-   * Gets the SchemaInfoLevel implied by the SchemaTextDetailType.
-   */
-  public SchemaInfoLevel getSchemaInfoLevel()
-  {
-    return schemaTextDetailType.mapToInfoLevel();
   }
 
   /**

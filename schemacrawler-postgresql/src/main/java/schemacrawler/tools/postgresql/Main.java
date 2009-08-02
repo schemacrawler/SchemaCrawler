@@ -21,7 +21,6 @@
 package schemacrawler.tools.postgresql;
 
 
-import schemacrawler.Version;
 import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.main.SchemaCrawlerMain;
 import schemacrawler.main.dbconnector.BundledDriverHelpOptions;
@@ -47,7 +46,7 @@ public final class Main
                                                                                 new BundledDriverHelpOptions("SchemaCrawler for PostgreSQL",
                                                                                                              "/help/Connections.postgresql.txt"),
                                                                                 "/schemacrawler-postgresql.config.properties");
-      SchemaCrawlerMain.schemacrawler(commandLine, Version.about());
+      SchemaCrawlerMain.schemacrawler(commandLine);
     }
     catch (final Exception e)
     {
