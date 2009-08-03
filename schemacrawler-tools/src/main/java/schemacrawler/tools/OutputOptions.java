@@ -128,17 +128,18 @@ public final class OutputOptions
         try
         {
           writer.close();
-          LOGGER.log(Level.FINER, "Output writer closed");
+          LOGGER.log(Level.INFO, "Closed output writer to file, "
+                                 + outputFile.getAbsolutePath());
         }
         catch (final IOException e)
         {
-          LOGGER.log(Level.FINER, "Exception closing output writer", e);
+          LOGGER.log(Level.WARNING, "Exception closing output writer", e);
         }
       }
     }
     else
     {
-      LOGGER.log(Level.FINER,
+      LOGGER.log(Level.INFO,
                  "Not closing output writer, since output is to console");
     }
   }
@@ -258,14 +259,14 @@ public final class OutputOptions
     if (outputFile == null)
     {
       writer = new PrintWriter(System.out, /* autoFlush = */true);
-      LOGGER.log(Level.FINER, "Output writer to console opened");
+      LOGGER.log(Level.INFO, "Opened output writer to console");
     }
     else
     {
       final FileWriter fileWriter = new FileWriter(outputFile, appendOutput);
       writer = new PrintWriter(fileWriter, /* autoFlush = */true);
-      LOGGER.log(Level.FINER, "Output writer opened to file, "
-                              + outputFile.getAbsolutePath());
+      LOGGER.log(Level.INFO, "Opened output writer to file, "
+                             + outputFile.getAbsolutePath());
     }
     return writer;
   }

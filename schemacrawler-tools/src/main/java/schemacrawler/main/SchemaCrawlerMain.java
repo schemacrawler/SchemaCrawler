@@ -55,20 +55,17 @@ public final class SchemaCrawlerMain
   {
     final List<Executable<?>> executables = ExecutableFactory
       .createExecutables(commandLine);
-    if (!executables.isEmpty())
-    {
-      for (final Executable<?> executable: executables)
-      {
-        final DataSource dataSource = commandLine.createDataSource();
-        LOGGER.log(Level.CONFIG, executable.toString());
-        executable.execute(dataSource);
-      }
-    }
-    else
+    if (executables.isEmpty())
     {
       throw new SchemaCrawlerException("No commands specified - re-run with -help for help");
     }
 
+    final DataSource dataSource = commandLine.createDataSource();
+    for (final Executable<?> executable: executables)
+    {
+      LOGGER.log(Level.CONFIG, executable.toString());
+      executable.execute(dataSource);
+    }
   }
 
   private SchemaCrawlerMain()

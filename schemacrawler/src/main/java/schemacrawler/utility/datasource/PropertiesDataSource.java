@@ -148,7 +148,7 @@ public final class PropertiesDataSource
     params.setProperty(PASSWORD, password);
 
     final Connection connection = jdbcDriver.connect(url, params);
-    LOGGER.log(Level.INFO, "Database connection opened - " + connection);
+    LOGGER.log(Level.INFO, "Opened database connection, " + connection);
     return connection;
 
   }
@@ -399,7 +399,7 @@ public final class PropertiesDataSource
         if (connection != null)
         {
           connection.close();
-          LOGGER.log(Level.INFO, "Database connection closed - " + connection);
+          LOGGER.log(Level.INFO, "Closed database connection, " + connection);
         }
       }
       catch (final SQLException e)
