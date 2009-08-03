@@ -88,8 +88,7 @@ public class OperationExecutable
       query = operation.getQuery();
     }
 
-    final SchemaCrawler crawler = new DatabaseSchemaCrawler(dataSource
-      .getConnection());
+    final SchemaCrawler crawler = new DatabaseSchemaCrawler(connection);
     crawler.crawl(schemaCrawlerOptions,
                   new OperationFormatter(toolOptions,
                                          query,

@@ -120,4 +120,14 @@ public final class Command
     return isQuery;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#toString()
+   */
+  public String toString()
+  {
+    return name;
+  }
+
 }
