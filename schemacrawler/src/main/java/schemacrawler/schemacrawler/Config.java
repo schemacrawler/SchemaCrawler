@@ -109,22 +109,14 @@ public final class Config
   {
     try
     {
-      if (propertiesFile.exists())
-      {
-        final InputStream propertiesStream = new BufferedInputStream(new FileInputStream(propertiesFile));
-        loadProperties(properties, propertiesStream);
-      }
-      else
-      {
-        LOGGER.log(Level.CONFIG, "Cannot load properties file "
-                                 + propertiesFile);
-      }
+      final InputStream propertiesStream = new BufferedInputStream(new FileInputStream(propertiesFile));
+      loadProperties(properties, propertiesStream);
     }
     catch (final FileNotFoundException e)
     {
-      LOGGER.log(Level.WARNING,
-                 "Cannot find properties file " + propertiesFile,
-                 e);
+      LOGGER.log(Level.WARNING, "Cannot load properties from file, "
+                                + propertiesFile.getAbsolutePath());
+      LOGGER.log(Level.FINEST, e.getMessage(), e);
     }
     return properties;
   }

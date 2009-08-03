@@ -65,6 +65,8 @@ public final class GraphExecutable
       throw new IllegalArgumentException("No connection provided");
     }
 
+    initialize();
+
     final OutputOptions outputOptions = toolOptions.getOutputOptions();
     final File outputFile = outputOptions.getOutputFile();
 
@@ -112,8 +114,6 @@ public final class GraphExecutable
       outputOptions.setOutputFormatValue(OutputFormat.dot.name());
       outputOptions.setOutputFileName(dotFile.getAbsolutePath());
       toolOptions.setOutputOptions(outputOptions);
-
-      schemaCrawlerOptions.setSchemaInfoLevel(toolOptions.getSchemaInfoLevel());
 
       final CrawlHandler handler = SchemaTextFactory
         .createSchemaTextCrawlHandler(toolOptions);

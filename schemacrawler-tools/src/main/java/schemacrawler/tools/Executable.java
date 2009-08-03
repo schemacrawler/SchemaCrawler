@@ -22,8 +22,6 @@ package schemacrawler.tools;
 
 
 import java.sql.Connection;
-import java.util.HashMap;
-import java.util.Map;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.ObjectToString;
@@ -38,15 +36,25 @@ import schemacrawler.utility.ObjectToString;
 public abstract class Executable<O extends ToolOptions>
 {
 
+  private final String name;
   protected SchemaCrawlerOptions schemaCrawlerOptions;
   protected O toolOptions;
 
   /**
    * Creates an executable with some default options.
    */
-  protected Executable()
+  protected Executable(final String name)
   {
+    this.name = name;
     schemaCrawlerOptions = new SchemaCrawlerOptions();
+  }
+
+  /**
+   * @return the name
+   */
+  public String getName()
+  {
+    return name;
   }
 
   /**
@@ -110,10 +118,16 @@ public abstract class Executable<O extends ToolOptions>
   @Override
   public final String toString()
   {
-    final Map<String, Object> fields = new HashMap<String, Object>();
-    fields.put("schemaCrawlerOptions", schemaCrawlerOptions);
-    fields.put("toolOptions", toolOptions);
-    return ObjectToString.toString(this, fields);
+    initialize();
+    return ObjectToString.toString(this);
+  }
+
+  /**
+   * Initializes the executable before execution.
+   */
+  protected final void initialize()
+  {
+    schemaCrawlerOptions.setSchemaInfoLevel(toolOptions.getSchemaInfoLevel());
   }
 
 }

@@ -48,7 +48,7 @@ import schemacrawler.tools.util.TextFormattingHelper;
  * 
  * @author Sualeh Fatehi
  */
-final class DataTextFormatter
+public final class DataTextFormatter
   implements DataHandler
 {
 
@@ -67,7 +67,7 @@ final class DataTextFormatter
    * @param options
    *        Options for text formatting of data
    */
-  DataTextFormatter(final DataTextFormatOptions options)
+  public DataTextFormatter(final DataTextFormatOptions options)
     throws SchemaCrawlerException
   {
     if (options == null)

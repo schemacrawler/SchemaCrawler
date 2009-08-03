@@ -39,6 +39,16 @@ public class OperationExecutable
   extends Executable<OperationOptions>
 {
 
+  public OperationExecutable()
+  {
+    this(OperationExecutable.class.getSimpleName());
+  }
+
+  public OperationExecutable(String name)
+  {
+    super(name);
+  }
+
   /**
    * {@inheritDoc}
    * <p>
@@ -53,6 +63,12 @@ public class OperationExecutable
   public void execute(final Connection connection)
     throws Exception
   {
+    if (connection == null)
+    {
+      throw new IllegalArgumentException("No connection provided");
+    }
+    initialize();
+
     final DataHandler operationDataHandler = DataToolsExecutable
       .createDataHandler(toolOptions);
 

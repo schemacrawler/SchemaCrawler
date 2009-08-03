@@ -23,6 +23,7 @@ package schemacrawler.tools.datatext;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.Query;
+import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.BaseToolOptions;
 import schemacrawler.tools.OutputOptions;
 
@@ -98,6 +99,11 @@ public class DataTextFormatOptions
   public Query getQuery()
   {
     return query;
+  }
+
+  public final SchemaInfoLevel getSchemaInfoLevel()
+  {
+    return SchemaInfoLevel.standard();
   }
 
   /**

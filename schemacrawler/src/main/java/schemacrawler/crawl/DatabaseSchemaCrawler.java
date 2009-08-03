@@ -123,6 +123,10 @@ public final class DatabaseSchemaCrawler
     {
       throw new SchemaCrawlerException("No crawl handler specified");
     }
+    if (options.getSchemaInfoLevel() == null)
+    {
+      throw new SchemaCrawlerException("No schema info level specified");
+    }
 
     RetrieverConnection retrieverConnection = null;
     try

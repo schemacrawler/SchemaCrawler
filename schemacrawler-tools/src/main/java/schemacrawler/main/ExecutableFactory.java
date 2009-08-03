@@ -113,7 +113,8 @@ final class ExecutableFactory
           final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(config,
                                                                             outputOptions,
                                                                             schemaTextDetailType);
-          final SchemaCrawlerExecutable schemaCrawlerExecutable = new SchemaCrawlerExecutable();
+          final SchemaCrawlerExecutable schemaCrawlerExecutable = new SchemaCrawlerExecutable(command
+            .getName());
           schemaCrawlerExecutable.setToolOptions(schemaTextOptions);
           executable = schemaCrawlerExecutable;
           break;
@@ -134,7 +135,8 @@ final class ExecutableFactory
                                                     outputOptions,
                                                     queryName);
           }
-          final OperationExecutable operationExecutable = new OperationExecutable();
+          final OperationExecutable operationExecutable = new OperationExecutable(command
+            .getName());
           operationExecutable.setToolOptions(operationOptions);
           executable = operationExecutable;
           break;
@@ -143,7 +145,8 @@ final class ExecutableFactory
           final DataTextFormatOptions dataTextFormatOptions = new DataTextFormatOptions(config,
                                                                                         outputOptions,
                                                                                         queryName);
-          final DataToolsExecutable dataToolsExecutable = new DataToolsExecutable();
+          final DataToolsExecutable dataToolsExecutable = new DataToolsExecutable(command
+            .getName());
           dataToolsExecutable.setToolOptions(dataTextFormatOptions);
           executable = dataToolsExecutable;
           break;

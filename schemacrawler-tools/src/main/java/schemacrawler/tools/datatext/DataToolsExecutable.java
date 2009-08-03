@@ -50,14 +50,25 @@ public class DataToolsExecutable
   public static DataHandler createDataHandler(final DataTextFormatOptions options)
     throws SchemaCrawlerException
   {
-
-    if (options.getOutputOptions().getOutputFormat() == null)
+    try
     {
-      return null;
+      final DataHandler handler = new DataTextFormatter(options);
+      return handler;
     }
+    catch (final Exception e)
+    {
+      throw new SchemaCrawlerException(e.getMessage(), e);
+    }
+  }
 
-    final DataHandler handler = new DataTextFormatter(options);
-    return handler;
+  public DataToolsExecutable()
+  {
+    this(null);
+  }
+
+  public DataToolsExecutable(final String name)
+  {
+    super(name);
   }
 
   /**
@@ -69,7 +80,13 @@ public class DataToolsExecutable
   public void execute(final Connection connection)
     throws Exception
   {
-    final DataHandler dataHandler = createDataHandler(toolOptions);
+    if (connection == null)
+    {
+      throw new IllegalArgumentException("No connection provided");
+    }
+    initialize();
+
+    final DataHandler dataHandler = new DataTextFormatter(toolOptions);
     final QueryExecutor executor = new QueryExecutor(connection, dataHandler);
     executor.executeSQL(toolOptions.getQuery().getQuery());
   }
