@@ -41,12 +41,10 @@ import org.xml.sax.SAXException;
 
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutor;
-import schemacrawler.execute.QueryExecutorException;
 import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.main.SchemaCrawlerMain;
 import schemacrawler.main.dbconnector.DatabaseConnector;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.Command;
 import schemacrawler.tools.Commands;
 import schemacrawler.tools.OutputFormat;
@@ -191,7 +189,7 @@ public class SchemaCrawlerOutputTest
 
     final OperationExecutable executable = new OperationExecutable();
     executable.setToolOptions(operatorOptions);
-    executable.execute(testUtility.getDataSource());
+    executable.execute(testUtility.getConnection());
 
     final File outputFile = new File(outputFilename);
     if (!outputFile.delete())
@@ -219,7 +217,7 @@ public class SchemaCrawlerOutputTest
 
     final OperationExecutable executable = new OperationExecutable();
     executable.setToolOptions(operatorOptions);
-    executable.execute(testUtility.getDataSource());
+    executable.execute(testUtility.getConnection());
 
     final Validator validator = new Validator(new FileReader(outputFilename));
     validator.assertIsValid();
@@ -227,7 +225,7 @@ public class SchemaCrawlerOutputTest
 
   @Test
   public void dataOutput()
-    throws IOException, SchemaCrawlerException, QueryExecutorException
+    throws Exception
   {
     final String outputFilename = File.createTempFile("schemacrawler", "test")
       .getAbsolutePath();
@@ -240,7 +238,7 @@ public class SchemaCrawlerOutputTest
     final DataHandler dataHandler = DataToolsExecutable
       .createDataHandler(textFormatOptions);
     final QueryExecutor executor = new QueryExecutor(testUtility
-      .getDataSource(), dataHandler);
+      .getConnection(), dataHandler);
     executor.executeSQL("SELECT COUNT(*) FROM CUSTOMER");
 
     final File outputFile = new File(outputFilename);
@@ -269,7 +267,7 @@ public class SchemaCrawlerOutputTest
 
     final OperationExecutable executable = new OperationExecutable();
     executable.setToolOptions(operatorOptions);
-    executable.execute(testUtility.getDataSource());
+    executable.execute(testUtility.getConnection());
 
     final Validator validator = new Validator(new FileReader(outputFilename));
     validator.assertIsValid();
@@ -289,7 +287,7 @@ public class SchemaCrawlerOutputTest
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable();
     executable.setToolOptions(textFormatOptions);
-    executable.execute(testUtility.getDataSource());
+    executable.execute(testUtility.getConnection());
 
     final File outputFile = new File(outputFilename);
     if (!outputFile.delete())
@@ -317,7 +315,7 @@ public class SchemaCrawlerOutputTest
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable();
     executable.setToolOptions(textFormatOptions);
-    executable.execute(testUtility.getDataSource());
+    executable.execute(testUtility.getConnection());
 
     final Validator validator = new Validator(new FileReader(outputFilename));
     validator.assertIsValid();

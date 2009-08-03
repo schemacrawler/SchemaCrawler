@@ -87,7 +87,7 @@ public class ExecutorIntegrationTest
                                                                       SchemaTextDetailType.basic_schema);
     executable.setToolOptions(schemaTextOptions);
 
-    executable.execute(testUtility.getDataSource());
+    executable.execute(testUtility.getConnection());
 
     // Check post-conditions
     final File outputFile = outputOptions.getOutputFile();

@@ -21,11 +21,10 @@
 package schemacrawler.main;
 
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.sql.DataSource;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.Executable;
@@ -60,12 +59,14 @@ public final class SchemaCrawlerMain
       throw new SchemaCrawlerException("No commands specified - re-run with -help for help");
     }
 
-    final DataSource dataSource = commandLine.createDataSource();
+    final Connection connection = commandLine.createConnection();
     for (final Executable<?> executable: executables)
     {
       LOGGER.log(Level.CONFIG, executable.toString());
-      executable.execute(dataSource);
+      executable.execute(connection);
     }
+    connection.close();
+    LOGGER.log(Level.INFO, "Closed database connection, " + connection);
   }
 
   private SchemaCrawlerMain()

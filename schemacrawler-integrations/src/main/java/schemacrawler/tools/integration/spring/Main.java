@@ -21,6 +21,11 @@
 package schemacrawler.tools.integration.spring;
 
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.sql.DataSource;
 
 import org.springframework.context.ApplicationContext;
@@ -38,6 +43,8 @@ import schemacrawler.utility.Utility;
 public final class Main
 {
 
+  private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
+
   /**
    * Get connection parameters, and creates a connection, and crawls the
    * schema.
@@ -47,6 +54,7 @@ public final class Main
    */
   public static void main(final String[] args)
   {
+    Connection connection = null;
     try
     {
       final ApplicationOptions applicationOptions = new ApplicationOptionsParser(args)
@@ -69,11 +77,30 @@ public final class Main
         .getBean(springOptions.getExecutableName());
       final DataSource dataSource = (DataSource) appContext
         .getBean(springOptions.getDataSourceName());
-      executable.execute(dataSource);
+      connection = dataSource.getConnection();
+      executable.execute(connection);
     }
     catch (final Exception e)
     {
       e.printStackTrace();
+    }
+    finally
+    {
+      try
+      {
+        if (connection != null)
+        {
+          connection.close();
+          LOGGER.log(Level.INFO, "Closed database connection, " + connection);
+        }
+      }
+      catch (final SQLException e)
+      {
+        final String errorMessage = e.getMessage();
+        LOGGER.log(Level.WARNING, "Could not close the connection: "
+                                  + errorMessage);
+        throw new RuntimeException(errorMessage, e);
+      }
     }
   }
 

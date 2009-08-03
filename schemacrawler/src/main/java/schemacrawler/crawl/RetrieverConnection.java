@@ -111,17 +111,6 @@ final class RetrieverConnection
   }
 
   /**
-   * @see java.lang.Object#finalize()
-   */
-  @Override
-  protected void finalize()
-    throws Throwable
-  {
-    super.finalize();
-    close();
-  }
-
-  /**
    * Reads a single column result set as a list.
    * 
    * @param results
@@ -146,30 +135,6 @@ final class RetrieverConnection
       results.close();
     }
     return values;
-  }
-
-  /**
-   * Releases the <code>Connection</code> object's database and JDBC
-   * resources immediately instead of waiting for them to be
-   * automatically released.
-   * 
-   * @throws SQLException
-   *         On a database access error
-   */
-  void close()
-  {
-    try
-    {
-      if (connection != null && !connection.isClosed())
-      {
-        connection.close();
-      }
-      LOGGER.log(Level.INFO, "Closed database connection, " + connection);
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, "Could not close database connection", e);
-    }
   }
 
   List<String> getCatalogNames()

@@ -21,8 +21,7 @@ package schemacrawler.tools.integration;
 
 
 import java.io.Writer;
-
-import javax.sql.DataSource;
+import java.sql.Connection;
 
 import schemacrawler.crawl.CachingCrawlHandler;
 import schemacrawler.crawl.DatabaseSchemaCrawler;
@@ -41,19 +40,18 @@ public abstract class SchemaRenderer
 {
 
   @Override
-  public final void execute(final DataSource dataSource)
+  public final void execute(final Connection connection)
     throws Exception
   {
-    if (dataSource == null)
+    if (connection == null)
     {
-      throw new IllegalArgumentException("No data-source provided");
+      throw new IllegalArgumentException("No connection provided");
     }
 
     schemaCrawlerOptions.setSchemaInfoLevel(toolOptions.getSchemaInfoLevel());
 
     final CachingCrawlHandler handler = new CachingCrawlHandler();
-    final SchemaCrawler crawler = new DatabaseSchemaCrawler(dataSource
-      .getConnection());
+    final SchemaCrawler crawler = new DatabaseSchemaCrawler(connection);
     crawler.crawl(schemaCrawlerOptions, handler);
     final Database database = handler.getDatabase();
 

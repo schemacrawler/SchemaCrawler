@@ -174,13 +174,6 @@ public final class DatabaseSchemaCrawler
       LOGGER.log(Level.WARNING, "Database access error: " + errorMessage);
       throw new SchemaCrawlerException(errorMessage, e);
     }
-    finally
-    {
-      if (retrieverConnection != null)
-      {
-        retrieverConnection.close();
-      }
-    }
   }
 
   private void crawlColumnDataTypes(final RetrieverConnection retrieverConnection,

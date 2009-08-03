@@ -46,8 +46,9 @@ public class PropertiesDataSourceTest
 
   @Test
   public void makeConnection()
+    throws Exception
   {
-    assertNotNull(testUtility.getDataSource());
+    assertNotNull(testUtility.getConnection());
   }
 
 }

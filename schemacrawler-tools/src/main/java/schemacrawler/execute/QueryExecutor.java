@@ -25,8 +25,6 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.sql.DataSource;
-
 import schemacrawler.schemacrawler.Query;
 
 /**
@@ -40,7 +38,7 @@ public final class QueryExecutor
   private static final Logger LOGGER = Logger.getLogger(QueryExecutor.class
     .getName());
 
-  private final DataSource dataSource;
+  private final Connection connection;
   private final DataHandler handler;
 
   /**
@@ -53,15 +51,15 @@ public final class QueryExecutor
    * @throws QueryExecutorException
    *         On query execution error
    */
-  public QueryExecutor(final DataSource dataSource, final DataHandler handler)
+  public QueryExecutor(final Connection connection, final DataHandler handler)
     throws QueryExecutorException
   {
 
-    if (dataSource == null)
+    if (connection == null)
     {
-      throw new QueryExecutorException("No data source provided");
+      throw new QueryExecutorException("No connection provided");
     }
-    this.dataSource = dataSource;
+    this.connection = connection;
 
     if (handler == null)
     {
@@ -87,12 +85,10 @@ public final class QueryExecutor
     final Query query = new Query("Ad hoc query", queryString);
     LOGGER.fine("Executing: " + query);
 
-    Connection connection = null;
     Statement statement = null;
     ResultSet resultSet = null;
     try
     {
-      connection = dataSource.getConnection();
       statement = connection.createStatement();
       resultSet = statement.executeQuery(query.getQuery());
 
@@ -116,11 +112,6 @@ public final class QueryExecutor
         if (resultSet != null)
         {
           resultSet.close();
-        }
-        if (connection != null)
-        {
-          connection.close();
-          LOGGER.log(Level.INFO, "Closed database connection, " + connection);
         }
       }
       catch (final SQLException e)

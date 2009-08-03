@@ -21,10 +21,9 @@
 package schemacrawler.tools;
 
 
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.sql.DataSource;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.ObjectToString;
@@ -53,12 +52,12 @@ public abstract class Executable<O extends ToolOptions>
   /**
    * Executes main functionality for SchemaCrawler.
    * 
-   * @param dataSource
-   *        Data-source
+   * @param connection
+   *        Database connection
    * @throws Exception
    *         On an exception
    */
-  public abstract void execute(DataSource dataSource)
+  public abstract void execute(Connection connection)
     throws Exception;
 
   /**

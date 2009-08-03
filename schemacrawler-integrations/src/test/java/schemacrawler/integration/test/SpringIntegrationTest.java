@@ -111,7 +111,7 @@ public class SpringIntegrationTest
 
     executable.getToolOptions().getOutputOptions()
       .setOutputFileName(outputFilename);
-    executable.execute(testUtility.getDataSource());
+    executable.execute(testUtility.getConnection());
 
     final File testOutputFile = new File(outputFilename);
     assertTrue(testOutputFile.exists());

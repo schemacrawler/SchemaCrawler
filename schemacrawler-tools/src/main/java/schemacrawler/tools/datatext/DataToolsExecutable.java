@@ -21,7 +21,7 @@
 package schemacrawler.tools.datatext;
 
 
-import javax.sql.DataSource;
+import java.sql.Connection;
 
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutor;
@@ -66,11 +66,11 @@ public class DataToolsExecutable
    * @see schemacrawler.tools.Executable#execute(javax.sql.DataSource)
    */
   @Override
-  public void execute(final DataSource dataSource)
+  public void execute(final Connection connection)
     throws Exception
   {
     final DataHandler dataHandler = createDataHandler(toolOptions);
-    final QueryExecutor executor = new QueryExecutor(dataSource, dataHandler);
+    final QueryExecutor executor = new QueryExecutor(connection, dataHandler);
     executor.executeSQL(toolOptions.getQuery().getQuery());
   }
 
