@@ -34,9 +34,7 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.utility.ObjectToString;
-import schemacrawler.utility.Utility;
 
 /**
  * A DataSource that creates connections by reading a properties file.
@@ -57,16 +55,7 @@ public final class PropertiesDataSource
   private static final Logger LOGGER = Logger
     .getLogger(PropertiesDataSource.class.getName());
 
-  private String url;
-  private Properties connectionParams;
-  private int loginTimeout;
-  private Driver jdbcDriver;
-
-  private String databaseProductName;
-  private String databaseProductVersion;
-  private String driverName;
-  private String driverVersion;
-
+  private final Connection connection;
   private PrintWriter logWriter;
 
   /**
@@ -80,7 +69,7 @@ public final class PropertiesDataSource
    */
   public PropertiesDataSource(final Properties properties)
   {
-    constructPropertiesDataSource(properties, null);
+    this(properties, null);
   }
 
   /**
@@ -98,127 +87,57 @@ public final class PropertiesDataSource
   public PropertiesDataSource(final Properties properties,
                               final String connectionName)
   {
-    constructPropertiesDataSource(properties, connectionName);
+    logWriter = new PrintWriter(System.err);
+
+    final Map<String, String> connectionParams = getConnectionParameters(properties,
+                                                                         connectionName);
+    logConnectionParams(connectionParams);
+
+    connection = openDatabaseConnection(connectionParams);
+    logConnectionInfo();
   }
 
   /**
-   * Attempts to establish a connection with the data source that this
-   * <code>DataSource</code> object represents.
+   * {@inheritDoc}
    * 
-   * @return a connection to the data source
-   * @throws SQLException
-   *         if a database access error occurs
+   * @see javax.sql.DataSource#getConnection()
    */
   public Connection getConnection()
     throws SQLException
   {
-
-    final String username = connectionParams.getProperty(USER);
-    final String password = connectionParams.getProperty(PASSWORD);
-
-    return getConnection(username, password);
-
+    return connection;
   }
 
   /**
-   * Attempts to establish a connection with the data source that this
-   * <code>DataSource</code> object represents.
+   * {@inheritDoc}
    * 
-   * @param username
-   *        the database user on whose behalf the connection is being
-   *        made
-   * @param password
-   *        the user's password
-   * @return a connection to the data source
-   * @throws SQLException
-   *         if a database access error occurs
+   * @see javax.sql.DataSource#getConnection(java.lang.String,
+   *      java.lang.String)
    */
   public Connection getConnection(final String username, final String password)
     throws SQLException
   {
-
-    if (username == null || password == null)
-    {
-      throw new SQLException("Null username or password");
-    }
-
-    final Properties params = new Properties();
-
-    params.setProperty(USER, username);
-    params.setProperty(PASSWORD, password);
-
-    final Connection connection = jdbcDriver.connect(url, params);
-    LOGGER.log(Level.INFO, "Opened database connection, " + connection);
-    return connection;
-
+    throw new SQLException("Not supported");
   }
 
   /**
-   * Gets the name of the JDBC driver class.
+   * {@inheritDoc}
    * 
-   * @return Name of the JDBC driver class.
-   */
-  public String getJdbcDriverClass()
-  {
-    return jdbcDriver.getClass().getName();
-  }
-
-  /**
-   * Gets the maximum time in seconds that this data source can wait
-   * while attempting to connect to a database. A value of zero means
-   * that the timeout is the default system timeout if there is one;
-   * otherwise, it means that there is no timeout. When a
-   * <code>DataSource</code> object is created, the login timeout is
-   * initially zero.
-   * 
-   * @return the data source login time limit
-   * @see #setLoginTimeout
+   * @see javax.sql.DataSource#getLoginTimeout()
    */
   public int getLoginTimeout()
   {
-    return loginTimeout;
+    return 0;
   }
 
   /**
-   * Retrieves the log writer for this <code>DataSource</code> object.
-   * The log writer is a character output stream to which all logging
-   * and tracing messages for this data source will be printed. This
-   * includes messages printed by the methods of this object, messages
-   * printed by methods of other objects manufactured by this object,
-   * and so on. Messages printed to a data source specific log writer
-   * are not printed to the log writer associated with the
-   * <code>java.sql.Drivermanager</code> class. When a
-   * <code>DataSource</code> object is created, the log writer is
-   * initially null; in other words, the default is for logging to be
-   * disabled.
+   * {@inheritDoc}
    * 
-   * @return the log writer for this data source or null if logging is
-   *         disabled
-   * @see #setLogWriter
+   * @see javax.sql.DataSource#getLogWriter()
    */
   public PrintWriter getLogWriter()
   {
     return logWriter;
-  }
-
-  /**
-   * Gets the database connection URL.
-   * 
-   * @return Database connection URL
-   */
-  public String getUrl()
-  {
-    return url;
-  }
-
-  /**
-   * Get the username for the database connection.
-   * 
-   * @return Username for the database connection
-   */
-  public String getUser()
-  {
-    return connectionParams.getProperty(USER);
   }
 
   /**
@@ -233,67 +152,27 @@ public final class PropertiesDataSource
   }
 
   /**
-   * Sets the maximum time in seconds that this data source will wait
-   * while attempting to connect to a database. A value of zero
-   * specifies that the timeout is the default system timeout if there
-   * is one; otherwise, it specifies that there is no timeout. When a
-   * <code>DataSource</code> object is created, the login timeout is
-   * initially zero.
+   * {@inheritDoc}
    * 
-   * @param seconds
-   *        the data source login time limit
-   * @see #getLoginTimeout
+   * @see javax.sql.DataSource#setLoginTimeout(int)
    */
   public void setLoginTimeout(final int seconds)
+    throws SQLException
   {
-    loginTimeout = seconds;
+    // Not implemented
   }
 
   /**
-   * Sets the log writer for this <code>DataSource</code> object to the
-   * given <code>java.io.PrintWriter</code> object. The log writer is a
-   * character output stream to which all logging and tracing messages
-   * for this data source will be printed. This includes messages
-   * printed by the methods of this object, messages printed by methods
-   * of other objects manufactured by this object, and so on. Messages
-   * printed to a data source- specific log writer are not printed to
-   * the log writer associated with the
-   * <code>java.sql.Drivermanager</code> class. When a
-   * <code>DataSource</code> object is created the log writer is
-   * initially null; in other words, the default is for logging to be
-   * disabled.
+   * {@inheritDoc}
    * 
-   * @param out
-   *        the new log writer; to disable logging, set to null
-   * @see #getLogWriter
+   * @see javax.sql.DataSource#setLogWriter(java.io.PrintWriter)
    */
   public void setLogWriter(final PrintWriter out)
   {
     if (out != null)
     {
       logWriter = out;
-      // DriverManager.setLogWriter(out);
     }
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    final Map<String, String> toStringMap = new HashMap<String, String>();
-    toStringMap.put("database product", String.format("%s %s",
-                                                      databaseProductName,
-                                                      databaseProductVersion));
-    toStringMap.put("driver", String.format("%s - %s %s", jdbcDriver.getClass()
-      .getName(), driverName, driverVersion));
-    toStringMap.put("connection", url);
-    toStringMap.put("user", connectionParams.getProperty(USER));
-
-    return ObjectToString.toString(toStringMap);
   }
 
   /**
@@ -307,108 +186,105 @@ public final class PropertiesDataSource
     throw new SQLException("Not implemented");
   }
 
-  private void constructPropertiesDataSource(final Properties properties,
-                                             final String connectionName)
+  private Map<String, String> getConnectionParameters(final Properties properties,
+                                                      final String connectionName)
   {
     final String defaultConnection = properties.getProperty(DEFAULTCONNECTION,
                                                             "");
     String useConnectionName = connectionName;
 
-    // get the subgroup of the properties for the given connection
+    // Get the sub-group of the properties for the given connection
     if (connectionName == null)
     {
       useConnectionName = defaultConnection;
     }
 
     final GroupedProperties groups = new GroupedProperties(properties);
-
-    // check if the connection name is defined
+    // Check if the connection name is defined
     if (!groups.isGroup(useConnectionName))
     {
       throw new IllegalArgumentException("Connection not defined: "
                                          + useConnectionName);
     }
 
-    // create substituted properties
-    final SubstitutableProperties substitutedProperties = new SubstitutableProperties(groups
+    // Create substituted properties
+    final SubstitutableProperties substitutableProperties = new SubstitutableProperties(groups
       .subgroup(useConnectionName));
-
-    logWriter = new PrintWriter(System.err);
-
-    connectionParams = substitutedProperties;
-    LOGGER.log(Level.FINE, getConnectionParamsInfo(connectionName));
-
-    try
+    // Ensure that the property substitution happens correctly
+    final Map<String, String> connectionParams = new HashMap<String, String>();
+    for (final Object keyObject: substitutableProperties.keySet())
     {
-      final String driver = connectionParams.getProperty(DRIVER);
-      final Class<?> jdbcDriverClass = Class.forName(driver);
-      jdbcDriver = (Driver) jdbcDriverClass.newInstance();
+      final String key = String.valueOf(keyObject);
+      connectionParams.put(key, substitutableProperties.getProperty(key));
     }
-    catch (final Exception e)
-    {
-      throw new RuntimeException("Driver class not be initialized - "
-                                 + e.getLocalizedMessage(), e);
-    }
-
-    url = connectionParams.getProperty(URL);
-
-    testConnection();
-    LOGGER.log(Level.INFO, Utility.NEWLINE + toString());
+    return connectionParams;
   }
 
-  private String getConnectionParamsInfo(final String connectionName)
+  private void logConnectionInfo()
   {
-    final Config connectionConfig = new Config(connectionParams);
-    connectionConfig.remove(PASSWORD);
-    connectionConfig.put("connectionName", connectionName);
-
-    final StringBuilder buffer = new StringBuilder();
-    buffer.append("Connection parameters:").append(connectionConfig);
-
-    return buffer.toString();
-  }
-
-  private void testConnection()
-  {
-    Connection connection = null;
     try
     {
-      connection = getConnection();
-      if (connection == null)
-      {
-        throw new RuntimeException("Could not establish a connection");
-      }
-      // set metadata properties
       final DatabaseMetaData metaData = connection.getMetaData();
-      databaseProductName = metaData.getDatabaseProductName();
-      databaseProductVersion = metaData.getDatabaseProductVersion();
-      driverName = metaData.getDriverName();
-      driverVersion = metaData.getDriverVersion();
+      final Map<String, String> infoMap = new HashMap<String, String>();
+      infoMap.put("catalog", connection.getCatalog());
+      infoMap.put("database product", String.format("%s %s", metaData
+        .getDatabaseProductName(), metaData.getDatabaseProductVersion()));
+      infoMap.put("driver", String.format("%s %s",
+                                          metaData.getDriverName(),
+                                          metaData.getDriverVersion()));
+
+      LOGGER
+        .log(Level.INFO, "Connected to:" + ObjectToString.toString(infoMap));
     }
     catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not obtain connection metadata", e);
+    }
+  }
+
+  private void logConnectionParams(final Map<String, String> connectionParams)
+  {
+    final Map<String, String> connectionParamsMap = new HashMap<String, String>(connectionParams);
+    connectionParamsMap.remove(PASSWORD);
+    LOGGER.log(Level.CONFIG, "Connection parameters:"
+                             + ObjectToString.toString(connectionParamsMap));
+  }
+
+  private Connection openDatabaseConnection(final Map<String, String> connectionParams)
+  {
+    try
+    {
+      final String driver = connectionParams.get(DRIVER);
+      final Class<?> jdbcDriverClass = Class.forName(driver);
+      final Driver jdbcDriver = (Driver) jdbcDriverClass.newInstance();
+
+      final String url = connectionParams.get(URL);
+      final String username = connectionParams.get(USER);
+      final String password = connectionParams.get(PASSWORD);
+
+      if (username == null || password == null)
+      {
+        throw new SQLException("Null username or password");
+      }
+
+      final Properties connectProps = new Properties();
+      connectProps.setProperty(USER, username);
+      connectProps.setProperty(PASSWORD, password);
+
+      final Connection connection = jdbcDriver.connect(url, connectProps);
+      if (connection == null)
+      {
+        throw new SQLException("Could not establish a connection");
+      }
+      LOGGER.log(Level.INFO, "Opened database connection, " + connection);
+      return connection;
+    }
+    catch (final Exception e)
     {
       final String errorMessage = e.getMessage();
       LOGGER.log(Level.SEVERE, "Could not establish a connection: "
                                + errorMessage);
       throw new RuntimeException(errorMessage, e);
-    }
-    finally
-    {
-      try
-      {
-        if (connection != null)
-        {
-          connection.close();
-          LOGGER.log(Level.INFO, "Closed database connection, " + connection);
-        }
-      }
-      catch (final SQLException e)
-      {
-        final String errorMessage = e.getMessage();
-        LOGGER.log(Level.WARNING, "Could not close the connection: "
-                                  + errorMessage);
-        throw new RuntimeException(errorMessage, e);
-      }
     }
   }
 

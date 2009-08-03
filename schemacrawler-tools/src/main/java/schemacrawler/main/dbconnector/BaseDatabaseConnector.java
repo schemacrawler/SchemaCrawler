@@ -63,32 +63,6 @@ abstract class BaseDatabaseConnector
     config = providedConfig;
   }
 
-  private void createDataSource()
-    throws DatabaseConnectorException
-  {
-    if (dataSource == null)
-    {
-      try
-      {
-        final Properties properties = new Properties();
-        for (final Entry<String, String> entry: config.entrySet())
-        {
-          final String key = entry.getKey();
-          final String value = entry.getValue();
-          if (key != null && value != null)
-          {
-            properties.setProperty(key, value);
-          }
-        }
-        dataSource = new PropertiesDataSource(properties);
-      }
-      catch (final Exception e)
-      {
-        throw new DatabaseConnectorException(e);
-      }
-    }
-  }
-
   /**
    * {@inheritDoc}
    * 
@@ -132,6 +106,32 @@ abstract class BaseDatabaseConnector
   protected void configPut(final String key, final String value)
   {
     config.put(key, value);
+  }
+
+  private void createDataSource()
+    throws DatabaseConnectorException
+  {
+    if (dataSource == null)
+    {
+      try
+      {
+        final Properties properties = new Properties();
+        for (final Entry<String, String> entry: config.entrySet())
+        {
+          final String key = entry.getKey();
+          final String value = entry.getValue();
+          if (key != null && value != null)
+          {
+            properties.setProperty(key, value);
+          }
+        }
+        dataSource = new PropertiesDataSource(properties);
+      }
+      catch (final Exception e)
+      {
+        throw new DatabaseConnectorException(e);
+      }
+    }
   }
 
 }

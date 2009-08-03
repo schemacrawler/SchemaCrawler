@@ -55,31 +55,6 @@ public class ObjectToString
     return buffer.toString();
   }
 
-  public static final String toString(final Object object,
-                                      final Map<String, Object> fields)
-  {
-    if (object == null)
-    {
-      return "null";
-    }
-    final int indent = 0;
-
-    final StringBuilder buffer = new StringBuilder();
-    appendHeader(object, indent, buffer);
-    if (fields != null && !fields.isEmpty())
-    {
-      for (final Entry<String, Object> field: fields.entrySet())
-      {
-        buffer.append("  ").append(field.getKey()).append(": ");
-        appendObject(field.getValue(), indent + 1, buffer);
-        buffer.append(Utility.NEWLINE);
-      }
-    }
-    appendFooter(indent, buffer);
-
-    return buffer.toString();
-  }
-
   /**
    * Appends the fields and values defined by the given object of the
    * given class.

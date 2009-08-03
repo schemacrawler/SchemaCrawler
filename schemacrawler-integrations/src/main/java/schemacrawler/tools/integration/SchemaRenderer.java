@@ -48,7 +48,7 @@ public abstract class SchemaRenderer
       throw new IllegalArgumentException("No connection provided");
     }
 
-    schemaCrawlerOptions.setSchemaInfoLevel(toolOptions.getSchemaInfoLevel());
+    initialize();
 
     final CachingCrawlHandler handler = new CachingCrawlHandler();
     final SchemaCrawler crawler = new DatabaseSchemaCrawler(connection);

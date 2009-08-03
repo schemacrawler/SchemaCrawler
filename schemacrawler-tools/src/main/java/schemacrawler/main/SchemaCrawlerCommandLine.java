@@ -168,7 +168,7 @@ public class SchemaCrawlerCommandLine
     {
       return databaseConnector.createConnection();
     }
-    catch (DatabaseConnectorException e)
+    catch (final DatabaseConnectorException e)
     {
       throw new SchemaCrawlerException("Could not create a database connection",
                                        e);

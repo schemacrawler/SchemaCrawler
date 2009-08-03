@@ -87,7 +87,6 @@ final class SubstitutableProperties
     }
 
     return value;
-
   }
 
   private String substituteVariables(final String template)

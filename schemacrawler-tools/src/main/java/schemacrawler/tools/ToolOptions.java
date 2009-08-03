@@ -21,6 +21,7 @@ package schemacrawler.tools;
 
 
 import schemacrawler.schemacrawler.Options;
+import schemacrawler.schemacrawler.SchemaInfoLevel;
 
 /**
  * Tag interface for all tool-specific options.
@@ -30,7 +31,13 @@ import schemacrawler.schemacrawler.Options;
 public interface ToolOptions
   extends Options
 {
+
   OutputOptions getOutputOptions();
+
+  /**
+   * Gets the SchemaInfoLevel for the tool.
+   */
+  SchemaInfoLevel getSchemaInfoLevel();
 
   void setOutputOptions(OutputOptions outputOptions);
 

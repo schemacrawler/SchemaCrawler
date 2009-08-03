@@ -42,9 +42,15 @@ public class SchemaCrawlerExecutable
   /**
    * Sets up default options.
    */
+  public SchemaCrawlerExecutable(final String name)
+  {
+    super(name);
+    toolOptions = new SchemaTextOptions();
+  }
+
   public SchemaCrawlerExecutable()
   {
-    toolOptions = new SchemaTextOptions();
+    this(SchemaCrawlerExecutable.class.getSimpleName());
   }
 
   @Override
@@ -56,7 +62,7 @@ public class SchemaCrawlerExecutable
       throw new IllegalArgumentException("No connection provided");
     }
 
-    schemaCrawlerOptions.setSchemaInfoLevel(toolOptions.getSchemaInfoLevel());
+    initialize();
 
     final CrawlHandler handler;
     if (crawlHandler == null)

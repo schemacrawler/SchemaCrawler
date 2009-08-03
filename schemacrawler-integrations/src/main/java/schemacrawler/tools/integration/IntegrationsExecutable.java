@@ -46,6 +46,11 @@ public abstract class IntegrationsExecutable
   extends Executable<SchemaTextOptions>
 {
 
+  protected IntegrationsExecutable()
+  {
+    super(IntegrationsExecutable.class.getSimpleName());
+  }
+
   private static final Logger LOGGER = Logger
     .getLogger(IntegrationsExecutable.class.getName());
 
