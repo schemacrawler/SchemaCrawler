@@ -164,7 +164,7 @@ final class RetrieverConnection
       {
         connection.close();
       }
-      LOGGER.log(Level.INFO, "Database connection closed - " + connection);
+      LOGGER.log(Level.INFO, "Closed database connection, " + connection);
     }
     catch (final SQLException e)
     {
