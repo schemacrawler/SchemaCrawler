@@ -22,10 +22,9 @@ package schemacrawler.tools.integration.graph;
 
 
 import java.io.File;
+import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.sql.DataSource;
 
 import schemacrawler.crawl.DatabaseSchemaCrawler;
 import schemacrawler.main.HelpOptions;
@@ -58,12 +57,12 @@ public final class GraphExecutable
   }
 
   @Override
-  public void execute(final DataSource dataSource)
+  public void execute(final Connection connection)
     throws Exception
   {
-    if (dataSource == null)
+    if (connection == null)
     {
-      throw new IllegalArgumentException("No data-source provided");
+      throw new IllegalArgumentException("No connection provided");
     }
 
     final OutputOptions outputOptions = toolOptions.getOutputOptions();
@@ -74,7 +73,7 @@ public final class GraphExecutable
       final String outputFormat = outputOptions.getOutputFormatValue();
       if (outputFormat.equalsIgnoreCase("dot"))
       {
-        writeDotFile(dataSource, Utility
+        writeDotFile(connection, Utility
           .changeFileExtension(outputFile, ".dot"));
       }
       else
@@ -83,14 +82,14 @@ public final class GraphExecutable
         dotFile.deleteOnExit();
 
         final GraphGenerator dot = new GraphGenerator();
-        writeDotFile(dataSource, dotFile);
+        writeDotFile(connection, dotFile);
         dot.generateDiagram(dotFile, outputFormat, outputFile);
       }
     }
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not write diagram", e);
-      writeDotFile(dataSource, Utility.changeFileExtension(outputFile, ".dot"));
+      writeDotFile(connection, Utility.changeFileExtension(outputFile, ".dot"));
       System.out.println(dotError());
     }
   }
@@ -105,7 +104,7 @@ public final class GraphExecutable
     return helpOptions;
   }
 
-  private void writeDotFile(final DataSource dataSource, final File dotFile)
+  private void writeDotFile(final Connection connection, final File dotFile)
   {
     try
     {
@@ -118,8 +117,7 @@ public final class GraphExecutable
 
       final CrawlHandler handler = SchemaTextFactory
         .createSchemaTextCrawlHandler(toolOptions);
-      final SchemaCrawler crawler = new DatabaseSchemaCrawler(dataSource
-        .getConnection());
+      final SchemaCrawler crawler = new DatabaseSchemaCrawler(connection);
       crawler.crawl(schemaCrawlerOptions, handler);
     }
     catch (final Exception e)

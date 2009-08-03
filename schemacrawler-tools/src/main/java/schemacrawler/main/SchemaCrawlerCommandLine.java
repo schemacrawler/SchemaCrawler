@@ -20,11 +20,10 @@
 package schemacrawler.main;
 
 
+import java.sql.Connection;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.sql.DataSource;
 
 import schemacrawler.Version;
 import schemacrawler.main.dbconnector.BundledDriverDatabaseConnector;
@@ -156,16 +155,24 @@ public class SchemaCrawlerCommandLine
   }
 
   /**
-   * Creates the datasource.
+   * Creates the connection.
    * 
-   * @return Datasource
+   * @return Database connection
    * @throws DatabaseConnectorException
    *         On an exception
    */
-  public DataSource createDataSource()
-    throws DatabaseConnectorException
+  public Connection createConnection()
+    throws SchemaCrawlerException
   {
-    return databaseConnector.createDataSource();
+    try
+    {
+      return databaseConnector.createConnection();
+    }
+    catch (DatabaseConnectorException e)
+    {
+      throw new SchemaCrawlerException("Could not create a database connection",
+                                       e);
+    }
   }
 
   /**

@@ -21,6 +21,8 @@
 package schemacrawler.main.dbconnector;
 
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Map.Entry;
@@ -37,6 +39,7 @@ abstract class BaseDatabaseConnector
 {
 
   private final Map<String, String> config;
+  private DataSource dataSource;
 
   /**
    * Parses a command line, and creates a data-source.
@@ -60,31 +63,48 @@ abstract class BaseDatabaseConnector
     config = providedConfig;
   }
 
+  private void createDataSource()
+    throws DatabaseConnectorException
+  {
+    if (dataSource == null)
+    {
+      try
+      {
+        final Properties properties = new Properties();
+        for (final Entry<String, String> entry: config.entrySet())
+        {
+          final String key = entry.getKey();
+          final String value = entry.getValue();
+          if (key != null && value != null)
+          {
+            properties.setProperty(key, value);
+          }
+        }
+        dataSource = new PropertiesDataSource(properties);
+      }
+      catch (final Exception e)
+      {
+        throw new DatabaseConnectorException(e);
+      }
+    }
+  }
+
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.main.dbconnector.DatabaseConnector#createDataSource()
+   * @see schemacrawler.main.dbconnector.DatabaseConnector#createConnection()
    */
-  public final DataSource createDataSource()
+  public final Connection createConnection()
     throws DatabaseConnectorException
   {
     try
     {
-      final Properties properties = new Properties();
-      for (final Entry<String, String> entry: config.entrySet())
-      {
-        final String key = entry.getKey();
-        final String value = entry.getValue();
-        if (key != null && value != null)
-        {
-          properties.setProperty(key, value);
-        }
-      }
-      return new PropertiesDataSource(properties);
+      createDataSource();
+      return dataSource.getConnection();
     }
-    catch (final Exception e)
+    catch (final SQLException e)
     {
-      throw new DatabaseConnectorException(e);
+      throw new DatabaseConnectorException("Could not create connection", e);
     }
   }
 

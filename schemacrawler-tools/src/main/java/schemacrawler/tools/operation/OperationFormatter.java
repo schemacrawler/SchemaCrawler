@@ -186,18 +186,6 @@ final class OperationFormatter
       LOGGER.log(Level.WARNING, "Cannot end data handler: " + errorMessage);
       throw new SchemaCrawlerException(errorMessage, e);
     }
-
-    try
-    {
-      connection.close();
-      LOGGER.log(Level.INFO, "Closed database connection, " + connection);
-    }
-    catch (final SQLException e)
-    {
-      final String errorMessage = e.getMessage();
-      LOGGER.log(Level.WARNING, "Cannot close connection: " + errorMessage);
-      throw new SchemaCrawlerException(errorMessage, e);
-    }
   }
 
   /**

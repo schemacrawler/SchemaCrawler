@@ -126,7 +126,7 @@ public class TestDatabase
     try
     {
       final Database database = SchemaCrawlerUtility
-        .getDatabase(getDataSource().getConnection(), schemaCrawlerOptions);
+        .getDatabase(getConnection(), schemaCrawlerOptions);
       return database;
     }
     catch (final SQLException e)
@@ -137,13 +137,15 @@ public class TestDatabase
   }
 
   /**
-   * Gets the datasource.
+   * Gets the connection.
    * 
-   * @return Datasource
+   * @return Connection
+   * @throws SQLException
    */
-  public DataSource getDataSource()
+  public Connection getConnection()
+    throws SQLException
   {
-    return dataSource;
+    return dataSource.getConnection();
   }
 
   public Schema getSchema(final SchemaCrawlerOptions schemaCrawlerOptions,

@@ -1,7 +1,8 @@
 package schemacrawler.test;
 
 
-import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import schemacrawler.main.dbconnector.DatabaseConnector;
 import schemacrawler.main.dbconnector.DatabaseConnectorException;
@@ -31,10 +32,17 @@ public class InMemoryDatabaseConnector
    * 
    * @see schemacrawler.main.dbconnector.DatabaseConnector#createDataSource()
    */
-  public DataSource createDataSource()
+  public Connection createConnection()
     throws DatabaseConnectorException
   {
-    return testDatabase.getDataSource();
+    try
+    {
+      return testDatabase.getConnection();
+    }
+    catch (SQLException e)
+    {
+      throw new DatabaseConnectorException("Could not create a connection");
+    }
   }
 
   /**

@@ -21,7 +21,11 @@
 package schemacrawler.tools.integration;
 
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.main.HelpOptions;
 import schemacrawler.main.SchemaCrawlerCommandLine;
@@ -41,6 +45,9 @@ import schemacrawler.tools.schematext.SchemaTextOptions;
 public abstract class IntegrationsExecutable
   extends Executable<SchemaTextOptions>
 {
+
+  private static final Logger LOGGER = Logger
+    .getLogger(IntegrationsExecutable.class.getName());
 
   /**
    * Get connection parameters, and creates a connection, and crawls the
@@ -68,7 +75,24 @@ public abstract class IntegrationsExecutable
                                         outputOptions,
                                         schemaTextDetailType);
 
-    execute(commandLine.createDataSource());
+    final Connection connection = commandLine.createConnection();
+    execute(connection);
+
+    try
+    {
+      if (connection != null)
+      {
+        connection.close();
+        LOGGER.log(Level.INFO, "Closed database connection, " + connection);
+      }
+    }
+    catch (final SQLException e)
+    {
+      final String errorMessage = e.getMessage();
+      LOGGER.log(Level.WARNING, "Could not close the connection: "
+                                + errorMessage);
+      throw new RuntimeException(errorMessage, e);
+    }
   }
 
   protected abstract HelpOptions getHelpOptions();

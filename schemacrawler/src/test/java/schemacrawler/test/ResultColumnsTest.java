@@ -82,7 +82,7 @@ public class ResultColumnsTest
                        + "  CUSTOMER.FIRSTNAME, " + "  CUSTOMER.LASTNAME, "
                        + "  CUSTOMER.STREET, " + "  CUSTOMER.CITY "
                        + "ORDER BY " + "  SUM(INVOICE.TOTAL) DESC";
-    final Connection connection = testUtility.getDataSource().getConnection();
+    final Connection connection = testUtility.getConnection();
     final Statement statement = connection.createStatement();
     final ResultSet resultSet = statement.executeQuery(sql);
 
