@@ -44,7 +44,7 @@ public class OperationExecutable
     this(OperationExecutable.class.getSimpleName());
   }
 
-  public OperationExecutable(String name)
+  public OperationExecutable(final String name)
   {
     super(name);
   }

@@ -65,12 +65,13 @@ public class SchemaCrawlerTest
   public static void beforeAllTests()
     throws ClassNotFoundException
   {
-    TestDatabase.disableApplicationLogging();
+    TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();
   }
 
   @Test
   public void columns()
+    throws Exception
   {
     final String[] schemaNames = {
         "INFORMATION_SCHEMA", "PUBLIC", "SCHEMACRAWLER"
@@ -187,6 +188,7 @@ public class SchemaCrawlerTest
 
   @Test
   public void counts()
+    throws Exception
   {
 
     final int[] tableCounts = {
@@ -285,6 +287,7 @@ public class SchemaCrawlerTest
 
   @Test
   public void schemaEquals()
+    throws Exception
   {
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -315,6 +318,7 @@ public class SchemaCrawlerTest
 
   @Test
   public void tables()
+    throws Exception
   {
 
     final String[] schemaNames = {
@@ -371,6 +375,7 @@ public class SchemaCrawlerTest
 
   @Test
   public void triggers()
+    throws Exception
   {
 
     // Set up information schema properties
@@ -418,6 +423,7 @@ public class SchemaCrawlerTest
 
   @Test
   public void viewDefinitions()
+    throws Exception
   {
     final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
     informationSchemaViews

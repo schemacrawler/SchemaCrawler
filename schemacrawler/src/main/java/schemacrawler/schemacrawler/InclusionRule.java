@@ -142,26 +142,41 @@ public final class InclusionRule
    */
   public boolean include(final String name)
   {
+
+    final String actionMessage;
     boolean include = false;
     if (!Utility.isBlank(name))
     {
       if (!patternInclude.matcher(name).matches())
       {
-        LOGGER
-          .log(Level.FINE, "Excluding " + name
-                           + " since it does not match the include pattern");
+        actionMessage = "Excluding " + name
+                        + " since it does not match the include pattern";
       }
       else if (patternExclude.matcher(name).matches())
       {
-        LOGGER.log(Level.FINE, "Excluding " + name
-                               + " since it matches the exclude pattern");
+        actionMessage = "Excluding " + name
+                        + " since it matches the exclude pattern";
       }
       else
       {
-        LOGGER.log(Level.FINE, "Including " + name);
+        actionMessage = "Including " + name;
         include = true;
       }
     }
+    else
+    {
+      actionMessage = "Excluding, since name is bank";
+    }
+
+    if (LOGGER.isLoggable(Level.FINE))
+    {
+      final StackTraceElement caller = new Exception().getStackTrace()[1];
+      LOGGER.logp(Level.FINE,
+                  caller.getClassName(),
+                  caller.getMethodName(),
+                  actionMessage);
+    }
+
     return include;
   }
 

@@ -52,7 +52,7 @@ public class ExecutorIntegrationTest
   @BeforeClass
   public static void beforeAllTests()
   {
-    TestDatabase.disableApplicationLogging();
+    TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();
   }
 

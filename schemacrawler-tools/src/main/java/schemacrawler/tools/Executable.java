@@ -50,14 +50,6 @@ public abstract class Executable<O extends ToolOptions>
   }
 
   /**
-   * @return the name
-   */
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
    * Executes main functionality for SchemaCrawler.
    * 
    * @param connection
@@ -67,6 +59,14 @@ public abstract class Executable<O extends ToolOptions>
    */
   public abstract void execute(Connection connection)
     throws Exception;
+
+  /**
+   * @return the name
+   */
+  public String getName()
+  {
+    return name;
+  }
 
   /**
    * Gets the schema crawler options.

@@ -292,7 +292,7 @@ public final class DatabaseSchemaCrawler
           retriever.retrieveProcedureColumns(procedure, options
             .getProcedureColumnInclusionRule());
         }
-        if (!include(options, procedure))
+        if (!grepMatch(options, procedure))
         {
           ((MutableSchema) procedure.getSchema()).removeProcedure(procedure
             .getName());
@@ -350,7 +350,7 @@ public final class DatabaseSchemaCrawler
         {
           retriever.retrieveColumns(table, options.getColumnInclusionRule());
         }
-        if (!include(options, table))
+        if (!grepMatch(options, table))
         {
           ((MutableSchema) table.getSchema()).removeTable(table.getName());
         }
@@ -432,8 +432,8 @@ public final class DatabaseSchemaCrawler
    *        Procedure to check
    * @return Whether the column should be included
    */
-  private boolean include(final SchemaCrawlerOptions options,
-                          final Procedure procedure)
+  private boolean grepMatch(final SchemaCrawlerOptions options,
+                            final Procedure procedure)
   {
     final InclusionRule grepProcedureColumnInclusionRule = options
       .getGrepProcedureColumnInclusionRule();
@@ -462,6 +462,13 @@ public final class DatabaseSchemaCrawler
     {
       include = !include;
     }
+
+    if (!include)
+    {
+      LOGGER.log(Level.FINE, "Removing procedure " + procedure
+                             + " since it does not match the grep pattern");
+    }
+
     return include;
   }
 
@@ -476,7 +483,8 @@ public final class DatabaseSchemaCrawler
    *        Table to check
    * @return Whether the column should be included
    */
-  private boolean include(final SchemaCrawlerOptions options, final Table table)
+  private boolean grepMatch(final SchemaCrawlerOptions options,
+                            final Table table)
   {
     final InclusionRule grepColumnInclusionRule = options
       .getGrepColumnInclusionRule();
@@ -494,8 +502,8 @@ public final class DatabaseSchemaCrawler
       {
         if (grepColumnInclusionRule.include(column.getFullName()))
         {
-          // We found a column that should be included,
-          // so handle the table
+          // We found a column that should be included, so handle the
+          // table
           include = true;
           break;
         }
@@ -505,6 +513,13 @@ public final class DatabaseSchemaCrawler
     {
       include = !include;
     }
+
+    if (!include)
+    {
+      LOGGER.log(Level.FINE, "Removing table " + table
+                             + " since it does not match the grep pattern");
+    }
+
     return include;
   }
 

@@ -39,7 +39,7 @@ public class InMemoryDatabaseConnector
     {
       return testDatabase.getConnection();
     }
-    catch (SQLException e)
+    catch (final SQLException e)
     {
       throw new DatabaseConnectorException("Could not create a connection");
     }

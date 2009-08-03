@@ -24,7 +24,7 @@ package schemacrawler.utility.datasource;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.Driver;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,7 +55,7 @@ public final class PropertiesDataSource
   private static final Logger LOGGER = Logger
     .getLogger(PropertiesDataSource.class.getName());
 
-  private final Connection connection;
+  private final Map<String, String> connectionParams;
   private PrintWriter logWriter;
 
   /**
@@ -89,12 +89,9 @@ public final class PropertiesDataSource
   {
     logWriter = new PrintWriter(System.err);
 
-    final Map<String, String> connectionParams = getConnectionParameters(properties,
-                                                                         connectionName);
+    connectionParams = getConnectionParameters(properties, connectionName);
     logConnectionParams(connectionParams);
-
-    connection = openDatabaseConnection(connectionParams);
-    logConnectionInfo();
+    loadDriver(connectionParams);
   }
 
   /**
@@ -105,7 +102,9 @@ public final class PropertiesDataSource
   public Connection getConnection()
     throws SQLException
   {
-    return connection;
+    final String username = connectionParams.get(USER);
+    final String password = connectionParams.get(PASSWORD);
+    return getConnection(username, password);
   }
 
   /**
@@ -117,7 +116,16 @@ public final class PropertiesDataSource
   public Connection getConnection(final String username, final String password)
     throws SQLException
   {
-    throw new SQLException("Not supported");
+    final String url = connectionParams.get(URL);
+    final Connection connection = DriverManager.getConnection(url,
+                                                              username,
+                                                              password);
+    if (connection == null)
+    {
+      throw new SQLException("Could not establish a connection");
+    }
+    logConnectionInfo(connection);
+    return connection;
   }
 
   /**
@@ -220,7 +228,23 @@ public final class PropertiesDataSource
     return connectionParams;
   }
 
-  private void logConnectionInfo()
+  private void loadDriver(final Map<String, String> connectionParams)
+  {
+    try
+    {
+      final String driver = connectionParams.get(DRIVER);
+      Class.forName(driver);
+    }
+    catch (final Exception e)
+    {
+      final String errorMessage = e.getMessage();
+      LOGGER.log(Level.SEVERE, "Could not establish a connection: "
+                               + errorMessage);
+      throw new RuntimeException(errorMessage, e);
+    }
+  }
+
+  private void logConnectionInfo(final Connection connection)
   {
     try
     {
@@ -233,8 +257,8 @@ public final class PropertiesDataSource
                                           metaData.getDriverName(),
                                           metaData.getDriverVersion()));
 
-      LOGGER
-        .log(Level.INFO, "Connected to:" + ObjectToString.toString(infoMap));
+      LOGGER.log(Level.INFO, "Opened database connection, " + connection
+                             + ObjectToString.toString(infoMap));
     }
     catch (final SQLException e)
     {
@@ -248,44 +272,6 @@ public final class PropertiesDataSource
     connectionParamsMap.remove(PASSWORD);
     LOGGER.log(Level.CONFIG, "Connection parameters:"
                              + ObjectToString.toString(connectionParamsMap));
-  }
-
-  private Connection openDatabaseConnection(final Map<String, String> connectionParams)
-  {
-    try
-    {
-      final String driver = connectionParams.get(DRIVER);
-      final Class<?> jdbcDriverClass = Class.forName(driver);
-      final Driver jdbcDriver = (Driver) jdbcDriverClass.newInstance();
-
-      final String url = connectionParams.get(URL);
-      final String username = connectionParams.get(USER);
-      final String password = connectionParams.get(PASSWORD);
-
-      if (username == null || password == null)
-      {
-        throw new SQLException("Null username or password");
-      }
-
-      final Properties connectProps = new Properties();
-      connectProps.setProperty(USER, username);
-      connectProps.setProperty(PASSWORD, password);
-
-      final Connection connection = jdbcDriver.connect(url, connectProps);
-      if (connection == null)
-      {
-        throw new SQLException("Could not establish a connection");
-      }
-      LOGGER.log(Level.INFO, "Opened database connection, " + connection);
-      return connection;
-    }
-    catch (final Exception e)
-    {
-      final String errorMessage = e.getMessage();
-      LOGGER.log(Level.SEVERE, "Could not establish a connection: "
-                               + errorMessage);
-      throw new RuntimeException(errorMessage, e);
-    }
   }
 
 }

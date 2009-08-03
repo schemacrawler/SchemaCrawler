@@ -503,8 +503,8 @@ final class TableRetriever
       }
       else
       {
+        // Create the table, but do not add it to the schema
         table = new MutableTable(schema, tableName);
-        schema.addTable(table);
       }
       if (column == null)
       {

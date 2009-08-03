@@ -98,7 +98,7 @@ public class SchemaCrawlerOutputTest
   @BeforeClass
   public static void beforeAllTests()
   {
-    TestDatabase.disableApplicationLogging();
+    TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();
     XMLUnit.setControlEntityResolver(new LocalEntityResolver());
   }
