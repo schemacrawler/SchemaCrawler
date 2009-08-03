@@ -8,7 +8,21 @@
     <release version="7.1" date="2009-08-10">
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
         More efficient retrieval of privileges.
-      ]]></action>       
+      ]]></action>     
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        Better log messages, including for database connections, 
+        and inclusion of table and columns in the output.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        More efficient use of database connections, 
+        including a change to the Executable.execute method to take
+    		a database connection, rather than a data-source.
+      ]]></action>   
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Ensure that the pooled connection is closed, rather than the original
+        database connection. This allows SchemaCrawler to play well with
+        pooled connections.
+      ]]></action>                 
     </release>     
     <release version="7.0" date="2009-07-10">
       <action dev="Sualeh Fatehi" type="update"><![CDATA[

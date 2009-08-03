@@ -50,12 +50,13 @@ public class SortingTest
   public static void beforeAllTests()
     throws Exception
   {
-    TestDatabase.disableApplicationLogging();
+    TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();
   }
 
   @Test
   public void columnSort()
+    throws Exception
   {
 
     final String[] sortedAlpha = new String[] {
@@ -71,6 +72,7 @@ public class SortingTest
 
   @Test
   public void fkSort()
+    throws Exception
   {
 
     final String[] sortedAlpha = new String[] {
@@ -86,6 +88,7 @@ public class SortingTest
 
   @Test
   public void indexSort()
+    throws Exception
   {
 
     final String[] sortedAlpha = new String[] {
@@ -102,6 +105,7 @@ public class SortingTest
   @SuppressWarnings("boxing")
   private void checkColumnSort(final String[] expectedValues,
                                final boolean sortAlphabetically)
+    throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setAlphabeticalSortForTableColumns(sortAlphabetically);
@@ -128,6 +132,7 @@ public class SortingTest
   @SuppressWarnings("boxing")
   private void checkFkSort(final String[] expectedValues,
                            final boolean sortAlphabetically)
+    throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setAlphabeticalSortForForeignKeys(sortAlphabetically);
@@ -156,6 +161,7 @@ public class SortingTest
 
   private void checkIndexSort(final String[] expectedValues,
                               final boolean sortAlphabetically)
+    throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setAlphabeticalSortForIndexes(sortAlphabetically);

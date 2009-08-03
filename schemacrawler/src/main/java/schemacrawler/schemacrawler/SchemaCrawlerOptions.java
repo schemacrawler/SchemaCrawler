@@ -304,7 +304,14 @@ public final class SchemaCrawlerOptions
    */
   public SchemaInfoLevel getSchemaInfoLevel()
   {
-    return schemaInfoLevel;
+    if (schemaInfoLevel == null)
+    {
+      return SchemaInfoLevel.standard();
+    }
+    else
+    {
+      return schemaInfoLevel;
+    }
   }
 
   /**

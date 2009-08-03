@@ -54,7 +54,7 @@ public class SchemaCrawlerGrepTest
   public static void beforeAllTests()
     throws ClassNotFoundException
   {
-    TestDatabase.disableApplicationLogging();
+    TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();
   }
 

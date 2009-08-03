@@ -40,6 +40,7 @@ import org.hsqldb.Server;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.datasource.PropertiesDataSource;
 
@@ -52,7 +53,7 @@ import schemacrawler.utility.datasource.PropertiesDataSource;
 public class TestDatabase
 {
 
-  private static final Level DEBUG_loglevel = Level.OFF;
+  private static final Level DEBUG_LOG_LEVEL = Level.OFF;
 
   private static final Logger LOGGER = Logger.getLogger(TestDatabase.class
     .getName());
@@ -73,9 +74,9 @@ public class TestDatabase
     }
   }
 
-  public static void disableApplicationLogging()
+  public static void initializeApplicationLogging()
   {
-    Utility.setApplicationLogLevel(DEBUG_loglevel);
+    Utility.setApplicationLogLevel(DEBUG_LOG_LEVEL);
   }
 
   /**
@@ -114,26 +115,11 @@ public class TestDatabase
   }
 
   public Catalog getCatalog(final SchemaCrawlerOptions schemaCrawlerOptions)
+    throws SchemaCrawlerException, SQLException
   {
     final Database database = getDatabase(schemaCrawlerOptions);
-
     final Catalog catalog = database.getCatalogs()[0];
     return catalog;
-  }
-
-  public Database getDatabase(final SchemaCrawlerOptions schemaCrawlerOptions)
-  {
-    try
-    {
-      final Database database = SchemaCrawlerUtility
-        .getDatabase(getConnection(), schemaCrawlerOptions);
-      return database;
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.SEVERE, "Could not obtain a connection", e);
-      return null;
-    }
   }
 
   /**
@@ -148,8 +134,17 @@ public class TestDatabase
     return dataSource.getConnection();
   }
 
+  public Database getDatabase(final SchemaCrawlerOptions schemaCrawlerOptions)
+    throws SchemaCrawlerException, SQLException
+  {
+    final Database database = SchemaCrawlerUtility
+      .getDatabase(getConnection(), schemaCrawlerOptions);
+    return database;
+  }
+
   public Schema getSchema(final SchemaCrawlerOptions schemaCrawlerOptions,
                           final String schemaName)
+    throws SchemaCrawlerException, SQLException
   {
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
 

@@ -23,6 +23,7 @@ import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableAssociationType;
 import schemacrawler.utility.Inflection;
+import schemacrawler.utility.ObjectToString;
 
 final class WeakAssociationsAnalyzer
 {
@@ -49,7 +50,8 @@ final class WeakAssociationsAnalyzer
 
     final Map<String, MutableTable> tableMatchMap = mapTableNameMatches(tables,
                                                                         prefixes);
-    LOGGER.log(Level.FINE, "Table matches map=" + tableMatchMap);
+    LOGGER.log(Level.FINE, "Table matches map:"
+                           + ObjectToString.toString(tableMatchMap));
 
     final Map<String, ForeignKeyColumnMap> fkColumnsMap = mapForeignKeyColumns(tables);
 

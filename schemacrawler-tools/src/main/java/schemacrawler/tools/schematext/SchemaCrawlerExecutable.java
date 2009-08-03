@@ -39,6 +39,11 @@ public class SchemaCrawlerExecutable
 
   protected CrawlHandler crawlHandler;
 
+  public SchemaCrawlerExecutable()
+  {
+    this(SchemaCrawlerExecutable.class.getSimpleName());
+  }
+
   /**
    * Sets up default options.
    */
@@ -46,11 +51,6 @@ public class SchemaCrawlerExecutable
   {
     super(name);
     toolOptions = new SchemaTextOptions();
-  }
-
-  public SchemaCrawlerExecutable()
-  {
-    this(SchemaCrawlerExecutable.class.getSimpleName());
   }
 
   @Override

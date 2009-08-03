@@ -40,7 +40,7 @@ public class PropertiesDataSourceTest
   @BeforeClass
   public static void beforeAllTests()
   {
-    TestDatabase.disableApplicationLogging();
+    TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();
   }
 

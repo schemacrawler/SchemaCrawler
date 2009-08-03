@@ -21,7 +21,6 @@
 package schemacrawler.tools.util;
 
 
-
 /**
  * Methods to format entire rows of output.
  * 

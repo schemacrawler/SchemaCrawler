@@ -46,13 +46,13 @@ public abstract class IntegrationsExecutable
   extends Executable<SchemaTextOptions>
 {
 
+  private static final Logger LOGGER = Logger
+    .getLogger(IntegrationsExecutable.class.getName());
+
   protected IntegrationsExecutable()
   {
     super(IntegrationsExecutable.class.getSimpleName());
   }
-
-  private static final Logger LOGGER = Logger
-    .getLogger(IntegrationsExecutable.class.getName());
 
   /**
    * Get connection parameters, and creates a connection, and crawls the

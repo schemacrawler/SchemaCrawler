@@ -54,12 +54,13 @@ public class SchemaCrawlerDeepTest
   public static void beforeAllTests()
     throws ClassNotFoundException
   {
-    TestDatabase.disableApplicationLogging();
+    TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();
   }
 
   @Test
   public void tableEquals()
+    throws Exception
   {
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();

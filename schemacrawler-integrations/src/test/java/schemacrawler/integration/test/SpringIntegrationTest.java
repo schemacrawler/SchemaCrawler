@@ -57,7 +57,7 @@ public class SpringIntegrationTest
   @BeforeClass
   public static void beforeAllTests()
   {
-    TestDatabase.disableApplicationLogging();
+    TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();
   }
 
@@ -87,6 +87,7 @@ public class SpringIntegrationTest
 
   @Test
   public void testSchema()
+    throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = (SchemaCrawlerOptions) appContext
       .getBean("schemaCrawlerOptions");
