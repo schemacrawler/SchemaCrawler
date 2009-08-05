@@ -237,10 +237,7 @@ public final class PropertiesDataSource
     }
     catch (final Exception e)
     {
-      final String errorMessage = e.getMessage();
-      LOGGER.log(Level.SEVERE, "Could not establish a connection: "
-                               + errorMessage);
-      throw new RuntimeException(errorMessage, e);
+      throw new RuntimeException("Could not establish a connection", e);
     }
   }
 
@@ -248,17 +245,20 @@ public final class PropertiesDataSource
   {
     try
     {
-      final DatabaseMetaData metaData = connection.getMetaData();
-      final Map<String, String> infoMap = new HashMap<String, String>();
-      infoMap.put("catalog", connection.getCatalog());
-      infoMap.put("database product", String.format("%s %s", metaData
-        .getDatabaseProductName(), metaData.getDatabaseProductVersion()));
-      infoMap.put("driver", String.format("%s %s",
-                                          metaData.getDriverName(),
-                                          metaData.getDriverVersion()));
+      if (LOGGER.isLoggable(Level.INFO))
+      {
+        final DatabaseMetaData metaData = connection.getMetaData();
+        final Map<String, String> infoMap = new HashMap<String, String>();
+        infoMap.put("catalog", connection.getCatalog());
+        infoMap.put("database product", String.format("%s %s", metaData
+          .getDatabaseProductName(), metaData.getDatabaseProductVersion()));
+        infoMap.put("driver", String.format("%s %s",
+                                            metaData.getDriverName(),
+                                            metaData.getDriverVersion()));
 
-      LOGGER.log(Level.INFO, "Opened database connection, " + connection
-                             + ObjectToString.toString(infoMap));
+        LOGGER.log(Level.INFO, "Opened database connection, " + connection
+                               + ObjectToString.toString(infoMap));
+      }
     }
     catch (final SQLException e)
     {
@@ -268,10 +268,14 @@ public final class PropertiesDataSource
 
   private void logConnectionParams(final Map<String, String> connectionParams)
   {
-    final Map<String, String> connectionParamsMap = new HashMap<String, String>(connectionParams);
-    connectionParamsMap.remove(PASSWORD);
-    LOGGER.log(Level.CONFIG, "Connection parameters:"
-                             + ObjectToString.toString(connectionParamsMap));
+    if (LOGGER.isLoggable(Level.CONFIG))
+    {
+      final Map<String, String> connectionParamsMap = new HashMap<String, String>(connectionParams);
+      connectionParamsMap.remove(PASSWORD);
+
+      LOGGER.log(Level.CONFIG, "Connection parameters:"
+                               + ObjectToString.toString(connectionParamsMap));
+    }
   }
 
 }

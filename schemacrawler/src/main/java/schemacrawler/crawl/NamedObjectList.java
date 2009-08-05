@@ -46,7 +46,7 @@ class NamedObjectList<N extends NamedObject>
 
   private NamedObjectSort sort;
   /** Needs to be sorted, so serialization does not break. */
-  private final Set<N> objects;
+  private final Set<N> objects = new LinkedHashSet<N>();
 
   /**
    * Construct an initially empty ordered list of named objects, that
@@ -58,57 +58,6 @@ class NamedObjectList<N extends NamedObject>
   NamedObjectList(final NamedObjectSort sort)
   {
     this.sort = sort;
-    this.objects = new LinkedHashSet<N>();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#equals(java.lang.Object)
-   */
-  @SuppressWarnings("unchecked")
-  @Override
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
-      return true;
-    }
-    if (obj == null)
-    {
-      return false;
-    }
-    if (!(obj instanceof NamedObjectList))
-    {
-      return false;
-    }
-    final NamedObjectList<N> other = (NamedObjectList<N>) obj;
-    if (objects == null)
-    {
-      if (other.objects != null)
-      {
-        return false;
-      }
-    }
-    else if (!objects.equals(other.objects))
-    {
-      return false;
-    }
-    return true;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#hashCode()
-   */
-  @Override
-  public int hashCode()
-  {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (objects == null? 0: objects.hashCode());
-    return result;
   }
 
   /**

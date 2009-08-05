@@ -47,47 +47,6 @@ final class MutableDatabaseInfo
   private final SortedMap<String, Object> dbProperties = new TreeMap<String, Object>();
   private MutableJdbcDriverInfo driverInfo;
 
-  @Override
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
-      return true;
-    }
-    if (obj == null)
-    {
-      return false;
-    }
-    if (getClass() != obj.getClass())
-    {
-      return false;
-    }
-    final MutableDatabaseInfo other = (MutableDatabaseInfo) obj;
-    if (productName == null)
-    {
-      if (other.productName != null)
-      {
-        return false;
-      }
-    }
-    else if (!productName.equals(other.productName))
-    {
-      return false;
-    }
-    if (productVersion == null)
-    {
-      if (other.productVersion != null)
-      {
-        return false;
-      }
-    }
-    else if (!productVersion.equals(other.productVersion))
-    {
-      return false;
-    }
-    return true;
-  }
-
   /**
    * {@inheritDoc}
    * 
@@ -136,17 +95,6 @@ final class MutableDatabaseInfo
   public Object getProperty(final String name)
   {
     return dbProperties.get(name);
-  }
-
-  @Override
-  public int hashCode()
-  {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (productName == null? 0: productName.hashCode());
-    result = prime * result
-             + (productVersion == null? 0: productVersion.hashCode());
-    return result;
   }
 
   /**

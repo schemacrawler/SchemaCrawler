@@ -48,74 +48,6 @@ final class MutableJdbcDriverInfo
   /**
    * {@inheritDoc}
    * 
-   * @see java.lang.Object#equals(java.lang.Object)
-   */
-  @Override
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
-      return true;
-    }
-    if (obj == null)
-    {
-      return false;
-    }
-    if (getClass() != obj.getClass())
-    {
-      return false;
-    }
-    final MutableJdbcDriverInfo other = (MutableJdbcDriverInfo) obj;
-    if (connectionUrl == null)
-    {
-      if (other.connectionUrl != null)
-      {
-        return false;
-      }
-    }
-    else if (!connectionUrl.equals(other.connectionUrl))
-    {
-      return false;
-    }
-    if (driverName == null)
-    {
-      if (other.driverName != null)
-      {
-        return false;
-      }
-    }
-    else if (!driverName.equals(other.driverName))
-    {
-      return false;
-    }
-    if (driverVersion == null)
-    {
-      if (other.driverVersion != null)
-      {
-        return false;
-      }
-    }
-    else if (!driverVersion.equals(other.driverVersion))
-    {
-      return false;
-    }
-    if (driverClassName == null)
-    {
-      if (other.driverClassName != null)
-      {
-        return false;
-      }
-    }
-    else if (!driverClassName.equals(other.driverClassName))
-    {
-      return false;
-    }
-    return true;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see schemacrawler.schema.JdbcDriverInfo#getConnectionUrl()
    */
   public String getConnectionUrl()
@@ -162,26 +94,6 @@ final class MutableJdbcDriverInfo
   public String getDriverVersion()
   {
     return driverVersion;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#hashCode()
-   */
-  @Override
-  public int hashCode()
-  {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result
-             + (connectionUrl == null? 0: connectionUrl.hashCode());
-    result = prime * result + (driverName == null? 0: driverName.hashCode());
-    result = prime * result
-             + (driverVersion == null? 0: driverVersion.hashCode());
-    result = prime * result
-             + (driverClassName == null? 0: driverClassName.hashCode());
-    return result;
   }
 
   /**
