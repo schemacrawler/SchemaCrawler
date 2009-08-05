@@ -366,6 +366,14 @@ public final class DatabaseSchemaCrawler
       {
         retrieverExtra.retrieveViewInformation();
       }
+      if (infoLevel.isRetrieveTablePrivileges())
+      {
+        retrieverExtra.retrieveTablePrivileges();
+      }
+      if (infoLevel.isRetrieveTableColumnPrivileges())
+      {
+        retrieverExtra.retrieveTableColumnPrivileges();
+      }
 
       for (final MutableTable table: database.getAllTables())
       {
@@ -381,16 +389,7 @@ public final class DatabaseSchemaCrawler
           {
             retriever.retrieveForeignKeys(table);
           }
-          if (infoLevel.isRetrieveTableColumnPrivileges())
-          {
-            retrieverExtra.retrieveTableColumnPrivileges(table);
-          }
         }
-        if (infoLevel.isRetrieveTablePrivileges())
-        {
-          retrieverExtra.retrieveTablePrivileges(table);
-        }
-
         // Set comparators
         table.setColumnComparator(NamedObjectSort.getNamedObjectSort(options
           .isAlphabeticalSortForTableColumns()));

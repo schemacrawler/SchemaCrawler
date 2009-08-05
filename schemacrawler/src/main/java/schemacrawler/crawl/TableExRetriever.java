@@ -211,17 +211,14 @@ final class TableExRetriever
 
   }
 
-  void retrieveTableColumnPrivileges(final MutableTable table)
+  void retrieveTableColumnPrivileges()
     throws SQLException
   {
     MetadataResultSet results = null;
     try
     {
       results = new MetadataResultSet(getRetrieverConnection().getMetaData()
-        .getColumnPrivileges(table.getSchema().getParent().getName(),
-                             table.getSchema().getName(),
-                             table.getName(),
-                             "%"));
+        .getColumnPrivileges(null, null, "%", "%"));
       createPrivileges(results, true);
     }
     finally
@@ -233,16 +230,14 @@ final class TableExRetriever
     }
   }
 
-  void retrieveTablePrivileges(final MutableTable table)
+  void retrieveTablePrivileges()
     throws SQLException
   {
     MetadataResultSet results = null;
     try
     {
       results = new MetadataResultSet(getRetrieverConnection().getMetaData()
-        .getTablePrivileges(table.getSchema().getParent().getName(),
-                            table.getSchema().getName(),
-                            table.getName()));
+        .getTablePrivileges(null, null, "%"));
       createPrivileges(results, false);
     }
     finally
@@ -467,32 +462,16 @@ final class TableExRetriever
       final MutableTable table = lookupTable(catalogName, schemaName, tableName);
       if (table == null)
       {
-        LOGGER.log(Level.FINEST, String.format("Cannot find table: %s.%s.%s",
-                                               catalogName,
-                                               schemaName,
-                                               tableName));
         continue;
       }
 
       final MutableColumn column = table.getColumn(columnName);
       if (privilegesForColumn && column == null)
       {
-        LOGGER.log(Level.FINEST, String
-          .format("Cannot find column, %s.%s.%s.%s",
-                  catalogName,
-                  schemaName,
-                  tableName,
-                  columnName));
         continue;
       }
 
       final String privilegeName = results.getString("PRIVILEGE");
-      if (privilegesForColumn && column == null)
-      {
-        LOGGER.log(Level.FINER, String.format("Retrieving privilege: %s.%s",
-                                              tableName,
-                                              columnName));
-      }
       final String grantor = results.getString("GRANTOR");
       final String grantee = results.getString("GRANTEE");
       final boolean isGrantable = results.getBoolean("IS_GRANTABLE");
