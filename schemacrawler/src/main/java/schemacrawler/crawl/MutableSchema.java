@@ -151,14 +151,14 @@ class MutableSchema
     return columnDataTypes.lookupColumnDataTypeByType(databaseSpecificTypeName);
   }
 
-  void removeProcedure(final String procedureName)
+  void removeProcedure(final Procedure procedure)
   {
-    procedures.remove(procedureName);
+    procedures.remove(procedure);
   }
 
-  void removeTable(final String tableName)
+  void removeTable(final Table table)
   {
-    tables.remove(tableName);
+    tables.remove(table);
   }
 
   private final void buildFullName()

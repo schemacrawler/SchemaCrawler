@@ -122,13 +122,12 @@ class NamedObjectList<N extends NamedObject>
     });
   }
 
-  @SuppressWarnings("serial")
-  N remove(final String name)
+  void remove(final NamedObject namedObject)
   {
-    return remove(new AbstractNamedObject(name)
+    if (namedObject != null)
     {
-
-    });
+      objects.remove(namedObject);
+    }
   }
 
   void setSortOrder(final NamedObjectSort sort)
@@ -173,24 +172,6 @@ class NamedObjectList<N extends NamedObject>
       }
       else if (namedObject.equals(listItem))
       {
-        return listItem;
-      }
-    }
-    return null;
-  }
-
-  private N remove(final NamedObject namedObject)
-  {
-    if (namedObject == null)
-    {
-      return null;
-    }
-    for (final Iterator<N> iterator = objects.iterator(); iterator.hasNext();)
-    {
-      final N listItem = iterator.next();
-      if (namedObject.equals(listItem))
-      {
-        iterator.remove();
         return listItem;
       }
     }
