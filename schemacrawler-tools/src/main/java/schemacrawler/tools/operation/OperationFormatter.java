@@ -140,9 +140,7 @@ final class OperationFormatter
     }
     catch (final SQLException e)
     {
-      final String errorMessage = e.getMessage();
-      LOGGER.log(Level.WARNING, "Connection is closed: " + errorMessage);
-      throw new SchemaCrawlerException(errorMessage, e);
+      throw new SchemaCrawlerException("Connection is closed", e);
     }
 
     if (!options.getOutputOptions().isNoHeader())
@@ -182,9 +180,7 @@ final class OperationFormatter
     }
     catch (final QueryExecutorException e)
     {
-      final String errorMessage = e.getMessage();
-      LOGGER.log(Level.WARNING, "Cannot end data handler: " + errorMessage);
-      throw new SchemaCrawlerException(errorMessage, e);
+      throw new SchemaCrawlerException("Cannot end data handler", e);
     }
   }
 

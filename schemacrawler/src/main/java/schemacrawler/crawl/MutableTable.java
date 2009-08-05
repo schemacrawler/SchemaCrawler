@@ -52,7 +52,7 @@ class MutableTable
 
   private static final long serialVersionUID = 3257290248802284852L;
 
-  private TableType type;
+  private TableType type = TableType.unknown;// Default value
   private MutablePrimaryKey primaryKey;
   private final NamedObjectList<MutableColumn> columns = new NamedObjectList<MutableColumn>(NamedObjectSort.natural);
   private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<MutableForeignKey>(NamedObjectSort.natural);
@@ -60,14 +60,11 @@ class MutableTable
   private final NamedObjectList<MutableCheckConstraint> checkConstraints = new NamedObjectList<MutableCheckConstraint>(NamedObjectSort.natural);
   private final NamedObjectList<MutableTrigger> triggers = new NamedObjectList<MutableTrigger>(NamedObjectSort.natural);
   private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>(NamedObjectSort.natural);
-  private final Set<MutableColumnMap> weakAssociations;
+  private final Set<MutableColumnMap> weakAssociations = new LinkedHashSet<MutableColumnMap>();
 
   MutableTable(final Schema schema, final String name)
   {
     super(schema, name);
-    // Default values
-    weakAssociations = new LinkedHashSet<MutableColumnMap>();
-    type = TableType.unknown;
   }
 
   /**

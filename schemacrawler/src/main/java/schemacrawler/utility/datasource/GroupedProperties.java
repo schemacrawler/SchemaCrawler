@@ -21,7 +21,7 @@
 package schemacrawler.utility.datasource;
 
 
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -73,7 +73,7 @@ final class GroupedProperties
    */
   String[] groups()
   {
-    final Set<String> groups = new LinkedHashSet<String>();
+    final Set<String> groups = new HashSet<String>();
 
     final Set<Object> keys = keySet();
     for (final Object object: keys)

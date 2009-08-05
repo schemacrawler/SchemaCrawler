@@ -27,7 +27,6 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
@@ -70,7 +69,7 @@ final class MetadataResultSet
     }
     catch (final SQLException e)
     {
-      LOGGER.log(Level.FINE, "Could not get columns list");
+      LOGGER.log(Level.WARNING, "Could not get columns list");
     }
     this.resultSetColumns = Collections.unmodifiableSet(resultSetColumns);
 
@@ -133,30 +132,25 @@ final class MetadataResultSet
    */
   Map<String, Object> getAttributes()
   {
-    final Set<String> resultSetColumns = new HashSet<String>(this.resultSetColumns);
-    // Get unused columns
-    for (final Iterator<String> iterator = resultSetColumns.iterator(); iterator
-      .hasNext();)
+    final Set<String> unusedResultSetColumns = new HashSet<String>(resultSetColumns);
+    // Retain unused columns
+    for (final String readColumn: readColumns)
     {
-      final String columnName = iterator.next();
-      if (readColumns.contains(columnName))
-      {
-        iterator.remove();
-      }
+      unusedResultSetColumns.remove(readColumn);
     }
     // Set attributes
     final Map<String, Object> attributes = new HashMap<String, Object>();
-    for (final String columnName: resultSetColumns)
+    for (final String unusedColumnName: unusedResultSetColumns)
     {
       try
       {
-        final Object value = results.getObject(columnName);
-        attributes.put(columnName, value);
+        final Object value = results.getObject(unusedColumnName);
+        attributes.put(unusedColumnName, value);
       }
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING, "Could not read value for column "
-                                  + columnName, e);
+                                  + unusedColumnName, e);
       }
     }
     return attributes;

@@ -118,7 +118,7 @@ public class SchemaCrawlerCommandLine
 
     applicationOptions.applyApplicationLogLevel();
     LOGGER.log(Level.INFO, Version.about());
-    LOGGER.log(Level.CONFIG, "Command line: " + Arrays.asList(args));
+    LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
     try
     {
       if (!schemacrawler.utility.Utility.isBlank(configResource))

@@ -46,12 +46,14 @@ final class WeakAssociationsAnalyzer
     final NamedObjectList<MutableTable> tables = database.getAllTables();
 
     final Collection<String> prefixes = findTableNamePrefixes(tables);
-    LOGGER.log(Level.FINE, "Table prefixes=" + prefixes);
-
     final Map<String, MutableTable> tableMatchMap = mapTableNameMatches(tables,
                                                                         prefixes);
-    LOGGER.log(Level.FINE, "Table matches map:"
-                           + ObjectToString.toString(tableMatchMap));
+    if (LOGGER.isLoggable(Level.FINE))
+    {
+      LOGGER.log(Level.FINE, "Table prefixes=" + prefixes);
+      LOGGER.log(Level.FINE, "Table matches map:"
+                             + ObjectToString.toString(tableMatchMap));
+    }
 
     final Map<String, ForeignKeyColumnMap> fkColumnsMap = mapForeignKeyColumns(tables);
 
@@ -221,9 +223,9 @@ final class WeakAssociationsAnalyzer
               if (pkColumnType != null && fkColumnType != null
                   && fkColumnType.getType() == pkColumnType.getType())
               {
-                LOGGER.log(Level.FINE, "Found weak association "
-                                       + fkColumn.getFullName() + " --> "
-                                       + pkColumn.getFullName());
+                LOGGER.log(Level.FINE, String
+                  .format("Found weak association: %s --> %s", fkColumn
+                    .getFullName(), pkColumn.getFullName()));
                 final MutableColumnMap columnMap = new MutableColumnMap(pkColumn,
                                                                         fkColumn);
 
