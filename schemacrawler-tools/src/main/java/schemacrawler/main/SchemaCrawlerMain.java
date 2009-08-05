@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.Executable;
 
 /**
@@ -54,10 +53,6 @@ public final class SchemaCrawlerMain
   {
     final List<Executable<?>> executables = ExecutableFactory
       .createExecutables(commandLine);
-    if (executables.isEmpty())
-    {
-      throw new SchemaCrawlerException("No commands specified - re-run with -help for help");
-    }
 
     final Connection connection = commandLine.createConnection();
     for (final Executable<?> executable: executables)
