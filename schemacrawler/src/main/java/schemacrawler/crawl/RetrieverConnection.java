@@ -51,6 +51,7 @@ final class RetrieverConnection
     .getLogger(RetrieverConnection.class.getName());
 
   private final Connection connection;
+  private final DatabaseMetaData metaData;
   private final List<String> catalogNames;
   private final String schemaPattern;
   private final InformationSchemaViews informationSchemaViews;
@@ -73,6 +74,7 @@ final class RetrieverConnection
       throw new SchemaCrawlerException("Connection is closed");
     }
     this.connection = connection;
+    this.metaData = connection.getMetaData();
 
     final Set<String> catalogNames = new HashSet<String>();
     try
@@ -158,9 +160,8 @@ final class RetrieverConnection
   }
 
   DatabaseMetaData getMetaData()
-    throws SQLException
   {
-    return connection.getMetaData();
+    return metaData;
   }
 
   String getSchemaPattern()
