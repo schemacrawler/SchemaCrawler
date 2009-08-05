@@ -283,7 +283,9 @@ public final class DatabaseSchemaCrawler
         retriever.retrieveProcedures(catalogName, options
           .getProcedureInclusionRule());
       }
-      for (final MutableProcedure procedure: database.getAllProcedures())
+      final NamedObjectList<MutableProcedure> allProcedures = database
+        .getAllProcedures();
+      for (final MutableProcedure procedure: allProcedures)
       {
         if (infoLevel.isRetrieveProcedureColumns())
         {
@@ -292,8 +294,8 @@ public final class DatabaseSchemaCrawler
         }
         if (!grepMatch(options, procedure))
         {
-          ((MutableSchema) procedure.getSchema()).removeProcedure(procedure
-            .getName());
+          ((MutableSchema) procedure.getSchema()).removeProcedure(procedure);
+          allProcedures.remove(procedure);
         }
       }
 
@@ -302,7 +304,7 @@ public final class DatabaseSchemaCrawler
         retrieverExtra.retrieveProcedureInformation();
       }
 
-      for (final MutableProcedure procedure: database.getAllProcedures())
+      for (final MutableProcedure procedure: allProcedures)
       {
         // Set comparators
         procedure.setColumnComparator(NamedObjectSort
@@ -342,7 +344,8 @@ public final class DatabaseSchemaCrawler
           .getTableInclusionRule());
       }
 
-      for (final MutableTable table: database.getAllTables())
+      final NamedObjectList<MutableTable> allTables = database.getAllTables();
+      for (final MutableTable table: allTables)
       {
         if (infoLevel.isRetrieveTableColumns())
         {
@@ -350,7 +353,8 @@ public final class DatabaseSchemaCrawler
         }
         if (!grepMatch(options, table))
         {
-          ((MutableSchema) table.getSchema()).removeTable(table.getName());
+          ((MutableSchema) table.getSchema()).removeTable(table);
+          allTables.remove(table);
         }
       }
 
@@ -375,7 +379,7 @@ public final class DatabaseSchemaCrawler
         retrieverExtra.retrieveTableColumnPrivileges();
       }
 
-      for (final MutableTable table: database.getAllTables())
+      for (final MutableTable table: allTables)
       {
         if (infoLevel.isRetrieveTableColumns())
         {

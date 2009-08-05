@@ -216,9 +216,10 @@ class MutableTable
     if (primaryKey != null)
     {
       final String primaryKeyName = primaryKey.getName();
-      final MutableIndex index = indices.remove(primaryKeyName);
+      final MutableIndex index = indices.lookup(primaryKeyName);
       if (index != null)
       {
+        indices.remove(index);
         setPrimaryKey(new MutablePrimaryKey(index));
       }
     }
