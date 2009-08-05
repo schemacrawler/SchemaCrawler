@@ -38,11 +38,13 @@ abstract class AbstractDatabaseObject
   private static final long serialVersionUID = 3099561832386790624L;
 
   private final Schema schema;
+  private final String fullName;
 
   AbstractDatabaseObject(final Schema schema, final String name)
   {
     super(name);
     this.schema = schema;
+    this.fullName = buildFullName();
   }
 
   /**
@@ -83,16 +85,7 @@ abstract class AbstractDatabaseObject
    */
   public String getFullName()
   {
-    final StringBuilder buffer = new StringBuilder();
-    if (schema != null && !Utility.isBlank(schema.getFullName()))
-    {
-      buffer.append(schema.getFullName()).append(".");
-    }
-    if (!Utility.isBlank(getName()))
-    {
-      buffer.append(getName());
-    }
-    return buffer.toString();
+    return fullName;
   }
 
   /**
@@ -129,6 +122,20 @@ abstract class AbstractDatabaseObject
   public String toString()
   {
     return getFullName();
+  }
+
+  private final String buildFullName()
+  {
+    final StringBuilder buffer = new StringBuilder();
+    if (schema != null && !Utility.isBlank(schema.getFullName()))
+    {
+      buffer.append(schema.getFullName()).append(".");
+    }
+    if (!Utility.isBlank(getName()))
+    {
+      buffer.append(getName());
+    }
+    return buffer.toString();
   }
 
 }

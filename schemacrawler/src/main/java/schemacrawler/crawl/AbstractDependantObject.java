@@ -39,11 +39,13 @@ abstract class AbstractDependantObject
   private static final long serialVersionUID = -4327208866052082457L;
 
   private final DatabaseObject parent;
+  private final String fullName;
 
   AbstractDependantObject(final DatabaseObject parent, final String name)
   {
     super(parent.getSchema(), name);
     this.parent = parent;
+    this.fullName = buildFullName();
   }
 
   /**
@@ -80,21 +82,11 @@ abstract class AbstractDependantObject
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.DependantObject#getFullName()
+   * @see schemacrawler.crawl.AbstractDatabaseObject#getFullName()
    */
-  @Override
   public String getFullName()
   {
-    final StringBuilder buffer = new StringBuilder();
-    if (parent != null && !Utility.isBlank(parent.getFullName()))
-    {
-      buffer.append(parent.getFullName()).append(".");
-    }
-    if (!Utility.isBlank(getName()))
-    {
-      buffer.append(getName());
-    }
-    return buffer.toString();
+    return fullName;
   }
 
   /**
@@ -131,6 +123,20 @@ abstract class AbstractDependantObject
   public String toString()
   {
     return getFullName();
+  }
+
+  private final String buildFullName()
+  {
+    final StringBuilder buffer = new StringBuilder();
+    if (parent != null && !Utility.isBlank(parent.getFullName()))
+    {
+      buffer.append(parent.getFullName()).append(".");
+    }
+    if (!Utility.isBlank(getName()))
+    {
+      buffer.append(getName());
+    }
+    return buffer.toString();
   }
 
 }
