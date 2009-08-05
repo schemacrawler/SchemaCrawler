@@ -40,7 +40,7 @@ class MutableSchema
 
   private static final long serialVersionUID = 3258128063743931187L;
 
-  private final String fullName;
+  private transient String fullName;
 
   private final ColumnDataTypes columnDataTypes = new ColumnDataTypes();
   private final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>(NamedObjectSort.alphabetical);
@@ -49,7 +49,6 @@ class MutableSchema
   MutableSchema(final AbstractNamedObject parent, final String name)
   {
     super(parent, name);
-    this.fullName = buildFullName();
   }
 
   /**
@@ -80,6 +79,7 @@ class MutableSchema
    */
   public String getFullName()
   {
+    buildFullName();
     return fullName;
   }
 
@@ -161,28 +161,26 @@ class MutableSchema
     tables.remove(tableName);
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.Schema#getFullName()
-   */
-  private final String buildFullName()
+  private final void buildFullName()
   {
-    final StringBuilder buffer = new StringBuilder();
-    final NamedObject catalog = getParent();
-    if (catalog != null)
+    if (fullName == null)
     {
-      final String catalogName = catalog.getName();
-      if (!Utility.isBlank(catalogName))
+      final StringBuilder buffer = new StringBuilder();
+      final NamedObject catalog = getParent();
+      if (catalog != null)
       {
-        buffer.append(catalogName).append(".");
+        final String catalogName = catalog.getName();
+        if (!Utility.isBlank(catalogName))
+        {
+          buffer.append(catalogName).append(".");
+        }
       }
+      if (getName() != null)
+      {
+        buffer.append(getName());
+      }
+      fullName = buffer.toString();
     }
-    if (getName() != null)
-    {
-      buffer.append(getName());
-    }
-    return buffer.toString();
   }
 
 }

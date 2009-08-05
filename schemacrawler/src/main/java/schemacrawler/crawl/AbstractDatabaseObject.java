@@ -38,13 +38,14 @@ abstract class AbstractDatabaseObject
   private static final long serialVersionUID = 3099561832386790624L;
 
   private final Schema schema;
-  private final String fullName;
+
+  private transient String fullName;
+  private transient int hashCode;
 
   AbstractDatabaseObject(final Schema schema, final String name)
   {
     super(name);
     this.schema = schema;
-    this.fullName = buildFullName();
   }
 
   /**
@@ -85,6 +86,7 @@ abstract class AbstractDatabaseObject
    */
   public String getFullName()
   {
+    buildFullName();
     return fullName;
   }
 
@@ -106,11 +108,8 @@ abstract class AbstractDatabaseObject
   @Override
   public int hashCode()
   {
-    final int prime = 31;
-    int result = super.hashCode();
-    result = prime * result + (schema == null? 0: schema.hashCode());
-    result = prime * result + super.hashCode();
-    return result;
+    buildHashCode();
+    return hashCode;
   }
 
   /**
@@ -124,18 +123,33 @@ abstract class AbstractDatabaseObject
     return getFullName();
   }
 
-  private final String buildFullName()
+  private final void buildFullName()
   {
-    final StringBuilder buffer = new StringBuilder();
-    if (schema != null && !Utility.isBlank(schema.getFullName()))
+    if (fullName == null)
     {
-      buffer.append(schema.getFullName()).append(".");
+      final StringBuilder buffer = new StringBuilder();
+      if (schema != null && !Utility.isBlank(schema.getFullName()))
+      {
+        buffer.append(schema.getFullName()).append(".");
+      }
+      if (!Utility.isBlank(getName()))
+      {
+        buffer.append(getName());
+      }
+      fullName = buffer.toString();
     }
-    if (!Utility.isBlank(getName()))
+  }
+
+  private void buildHashCode()
+  {
+    if (hashCode == 0)
     {
-      buffer.append(getName());
+      final int prime = 31;
+      int result = super.hashCode();
+      result = prime * result + (schema == null? 0: schema.hashCode());
+      result = prime * result + super.hashCode();
+      hashCode = result;
     }
-    return buffer.toString();
   }
 
 }

@@ -39,6 +39,8 @@ abstract class AbstractDependantNamedObject
 
   private final NamedObject parent;
 
+  private transient int hashCode;
+
   AbstractDependantNamedObject(final NamedObject parent, final String name)
   {
     super(name);
@@ -94,11 +96,20 @@ abstract class AbstractDependantNamedObject
   @Override
   public int hashCode()
   {
-    final int prime = 31;
-    int result = super.hashCode();
-    result = prime * result + (parent == null? 0: parent.hashCode());
-    result = prime * result + super.hashCode();
-    return result;
+    buildHashCode();
+    return hashCode;
+  }
+
+  private void buildHashCode()
+  {
+    if (hashCode == 0)
+    {
+      final int prime = 31;
+      int result = super.hashCode();
+      result = prime * result + (parent == null? 0: parent.hashCode());
+      result = prime * result + super.hashCode();
+      hashCode = result;
+    }
   }
 
 }

@@ -23,6 +23,8 @@ package schemacrawler.tools;
 
 import java.io.Serializable;
 
+import schemacrawler.utility.Utility;
+
 /**
  * A single command from the command line.
  * 
@@ -47,6 +49,10 @@ public final class Command
    */
   public Command(final String name, final boolean isQuery)
   {
+    if (Utility.isBlank(name))
+    {
+      throw new IllegalArgumentException("No command name provided");
+    }
     this.name = name;
     this.isQuery = isQuery;
   }
@@ -104,10 +110,7 @@ public final class Command
   @Override
   public int hashCode()
   {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (name == null? 0: name.hashCode());
-    return result;
+    return name.hashCode();
   }
 
   /**
