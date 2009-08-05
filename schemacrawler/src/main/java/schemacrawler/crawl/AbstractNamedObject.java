@@ -45,6 +45,8 @@ abstract class AbstractNamedObject
   private final Map<String, Object> attributeMap = new LinkedHashMap<String, Object>();
   private final NamedObjectSort comparator = NamedObjectSort.alphabetical;
 
+  private transient int hashCode;
+
   AbstractNamedObject(final String name)
   {
     this.name = name;
@@ -139,7 +141,8 @@ abstract class AbstractNamedObject
   @Override
   public int hashCode()
   {
-    return (name == null? super.hashCode(): name.hashCode());
+    buildHashCode();
+    return hashCode;
   }
 
   /**
@@ -190,6 +193,14 @@ abstract class AbstractNamedObject
     else
     {
       this.remarks = remarks;
+    }
+  }
+
+  private void buildHashCode()
+  {
+    if (hashCode == 0)
+    {
+      hashCode = (name == null? super.hashCode(): name.hashCode());
     }
   }
 

@@ -39,13 +39,14 @@ abstract class AbstractDependantObject
   private static final long serialVersionUID = -4327208866052082457L;
 
   private final DatabaseObject parent;
-  private final String fullName;
+  private transient String fullName;
+
+  private transient int hashCode;
 
   AbstractDependantObject(final DatabaseObject parent, final String name)
   {
     super(parent.getSchema(), name);
     this.parent = parent;
-    this.fullName = buildFullName();
   }
 
   /**
@@ -86,6 +87,7 @@ abstract class AbstractDependantObject
    */
   public String getFullName()
   {
+    buildFullName();
     return fullName;
   }
 
@@ -107,11 +109,20 @@ abstract class AbstractDependantObject
   @Override
   public int hashCode()
   {
-    final int prime = 31;
-    int result = super.hashCode();
-    result = prime * result + (parent == null? 0: parent.hashCode());
-    result = prime * result + super.hashCode();
-    return result;
+    buildHashCode();
+    return hashCode;
+  }
+
+  private void buildHashCode()
+  {
+    if (hashCode == 0)
+    {
+      final int prime = 31;
+      int result = super.hashCode();
+      result = prime * result + (parent == null? 0: parent.hashCode());
+      result = prime * result + super.hashCode();
+      hashCode = result;
+    }
   }
 
   /**
@@ -125,18 +136,21 @@ abstract class AbstractDependantObject
     return getFullName();
   }
 
-  private final String buildFullName()
+  private final void buildFullName()
   {
-    final StringBuilder buffer = new StringBuilder();
-    if (parent != null && !Utility.isBlank(parent.getFullName()))
+    if (fullName == null)
     {
-      buffer.append(parent.getFullName()).append(".");
+      final StringBuilder buffer = new StringBuilder();
+      if (parent != null && !Utility.isBlank(parent.getFullName()))
+      {
+        buffer.append(parent.getFullName()).append(".");
+      }
+      if (!Utility.isBlank(getName()))
+      {
+        buffer.append(getName());
+      }
+      fullName = buffer.toString();
     }
-    if (!Utility.isBlank(getName()))
-    {
-      buffer.append(getName());
-    }
-    return buffer.toString();
   }
 
 }
