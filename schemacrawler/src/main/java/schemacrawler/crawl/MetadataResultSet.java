@@ -32,6 +32,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.utility.Utility;
+
 /**
  * A wrapper around a JDBC resultset obtained from a database metadata
  * call. This allows type-safe methods to obtain boolean, integer and
@@ -173,7 +175,7 @@ final class MetadataResultSet
       try
       {
         stringValue = results.getString(columnName);
-        if (!isBlank(stringValue))
+        if (!Utility.isBlank(stringValue))
         {
           try
           {
@@ -334,14 +336,9 @@ final class MetadataResultSet
     return results.next();
   }
 
-  private boolean isBlank(final String text)
-  {
-    return text == null || text.trim().length() == 0;
-  }
-
   private boolean useColumn(final String columnName)
   {
-    final boolean useColumn = !isBlank(columnName);
+    final boolean useColumn = columnName != null;
     if (useColumn)
     {
       readColumns.add(columnName);
