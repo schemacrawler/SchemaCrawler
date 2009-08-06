@@ -113,18 +113,6 @@ abstract class AbstractDependantObject
     return hashCode;
   }
 
-  private void buildHashCode()
-  {
-    if (hashCode == 0)
-    {
-      final int prime = 31;
-      int result = super.hashCode();
-      result = prime * result + (parent == null? 0: parent.hashCode());
-      result = prime * result + super.hashCode();
-      hashCode = result;
-    }
-  }
-
   /**
    * {@inheritDoc}
    * 
@@ -150,6 +138,18 @@ abstract class AbstractDependantObject
         buffer.append(getName());
       }
       fullName = buffer.toString();
+    }
+  }
+
+  private void buildHashCode()
+  {
+    if (hashCode == 0)
+    {
+      final int prime = 31;
+      int result = super.hashCode();
+      result = prime * result + (parent == null? 0: parent.hashCode());
+      result = prime * result + super.hashCode();
+      hashCode = result;
     }
   }
 
