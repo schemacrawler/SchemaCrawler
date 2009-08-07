@@ -45,19 +45,4 @@ class ColumnDataTypes
     return columnDataType;
   }
 
-  MutableColumnDataType lookupColumnDataTypeByType(final String databaseSpecificTypeName)
-  {
-    MutableColumnDataType columnDataType = null;
-    for (final MutableColumnDataType currentColumnDataType: this)
-    {
-      if (currentColumnDataType.getDatabaseSpecificTypeName()
-        .equals(databaseSpecificTypeName))
-      {
-        columnDataType = currentColumnDataType;
-        break;
-      }
-    }
-    return columnDataType;
-  }
-
 }

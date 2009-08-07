@@ -140,11 +140,11 @@ abstract class AbstractRetriever
                                                                final String databaseSpecificTypeName)
   {
     MutableColumnDataType columnDataType = schema
-      .lookupColumnDataTypeByType(databaseSpecificTypeName);
+      .getColumnDataType(databaseSpecificTypeName);
     if (columnDataType == null)
     {
-      columnDataType = database.getSystemColumnDataTypesList()
-        .lookupColumnDataTypeByType(databaseSpecificTypeName);
+      columnDataType = database
+        .getSystemColumnDataType(databaseSpecificTypeName);
     }
     // Create new data type, if needed
     if (columnDataType == null)
