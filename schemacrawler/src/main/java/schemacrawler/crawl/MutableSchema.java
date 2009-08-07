@@ -146,11 +146,6 @@ class MutableSchema
     return columnDataTypes.lookupColumnDataTypeByType(type);
   }
 
-  MutableColumnDataType lookupColumnDataTypeByType(final String databaseSpecificTypeName)
-  {
-    return columnDataTypes.lookupColumnDataTypeByType(databaseSpecificTypeName);
-  }
-
   void removeProcedure(final Procedure procedure)
   {
     procedures.remove(procedure);
