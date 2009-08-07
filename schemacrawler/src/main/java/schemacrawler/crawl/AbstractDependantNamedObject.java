@@ -55,6 +55,10 @@ abstract class AbstractDependantNamedObject
   @Override
   public boolean equals(final Object obj)
   {
+    if (!super.equals(obj))
+    {
+      return false;
+    }
     if (this == obj)
     {
       return true;
@@ -75,7 +79,7 @@ abstract class AbstractDependantNamedObject
     {
       return false;
     }
-    return super.equals(obj);
+    return true;
   }
 
   /**
