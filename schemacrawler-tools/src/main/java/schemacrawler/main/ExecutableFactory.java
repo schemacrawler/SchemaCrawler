@@ -28,6 +28,7 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.Command;
 import schemacrawler.tools.Commands;
 import schemacrawler.tools.Executable;
@@ -105,6 +106,8 @@ final class ExecutableFactory
       final Executable<?> executable;
 
       final ToolType toolType = determineToolType(command, config);
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(commandLine
+        .getSchemaCrawlerOptions());
       switch (toolType)
       {
         case schema_text:
@@ -116,6 +119,7 @@ final class ExecutableFactory
           final SchemaCrawlerExecutable schemaCrawlerExecutable = new SchemaCrawlerExecutable(command
             .getName());
           schemaCrawlerExecutable.setToolOptions(schemaTextOptions);
+          schemaCrawlerExecutable.setSchemaCrawlerOptions(schemaCrawlerOptions);
           executable = schemaCrawlerExecutable;
           break;
         case operation:
@@ -135,9 +139,11 @@ final class ExecutableFactory
                                                     outputOptions,
                                                     queryName);
           }
+          schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.operator());
           final OperationExecutable operationExecutable = new OperationExecutable(command
             .getName());
           operationExecutable.setToolOptions(operationOptions);
+          operationExecutable.setSchemaCrawlerOptions(schemaCrawlerOptions);
           executable = operationExecutable;
           break;
         case data_text:
@@ -145,18 +151,16 @@ final class ExecutableFactory
           final DataTextFormatOptions dataTextFormatOptions = new DataTextFormatOptions(config,
                                                                                         outputOptions,
                                                                                         queryName);
+          schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.operator());
           final DataToolsExecutable dataToolsExecutable = new DataToolsExecutable(command
             .getName());
           dataToolsExecutable.setToolOptions(dataTextFormatOptions);
+          dataToolsExecutable.setSchemaCrawlerOptions(schemaCrawlerOptions);
           executable = dataToolsExecutable;
           break;
         default:
           throw new IllegalArgumentException("Could not find the tool type");
       }
-      final SchemaCrawlerOptions schemaCrawlerOptions = commandLine
-        .getSchemaCrawlerOptions();
-      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-
       executables.add(executable);
     }
 
