@@ -77,6 +77,22 @@ public final class SchemaInfoLevel
   }
 
   /**
+   * Creates a new SchemaInfoLevel for operations.
+   * 
+   * @return New SchemaInfoLevel
+   */
+  public static SchemaInfoLevel operator()
+  {
+    final SchemaInfoLevel operator = new SchemaInfoLevel();
+    operator.setRetrieveDatabaseInfo(true);
+    operator.setRetrieveColumnDataTypes(true);
+    operator.setRetrieveUserDefinedColumnDataTypes(true);
+    operator.setRetrieveTableColumns(true);
+    operator.setRetrieveTables(true);
+    return operator;
+  }
+
+  /**
    * Creates a new SchemaInfoLevel for standard schema information.
    * 
    * @return New SchemaInfoLevel
