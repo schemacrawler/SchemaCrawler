@@ -57,6 +57,9 @@
       <item
         name="SchemaCrawler Grep"
         href="schemacrawler_grep.html" />
+      <item
+        name="SchemaCrawler Database Diagramming"
+        href="schemacrawler_diagramming.html" />        
     </menu>    
     <menu ref="reports" />
   </body>
