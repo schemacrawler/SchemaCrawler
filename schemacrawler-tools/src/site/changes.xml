@@ -7,9 +7,6 @@
   <body>
     <release version="7.1" date="2009-08-10">
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
-        More efficient retrieval of privileges.
-      ]]></action>     
-      <action dev="Sualeh Fatehi" type="update"><![CDATA[
         Better log messages, including for database connections, 
         and inclusion of table and columns in the output.
       ]]></action>

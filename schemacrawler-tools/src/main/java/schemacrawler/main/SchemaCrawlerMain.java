@@ -54,17 +54,27 @@ public final class SchemaCrawlerMain
     final List<Executable<?>> executables = ExecutableFactory
       .createExecutables(commandLine);
 
-    final Connection connection = commandLine.createConnection();
-    for (final Executable<?> executable: executables)
+    Connection connection = null;
+    try
     {
-      if (LOGGER.isLoggable(Level.CONFIG))
+      connection = commandLine.createConnection();
+      for (final Executable<?> executable: executables)
       {
-        LOGGER.log(Level.CONFIG, executable.toString());
+        if (LOGGER.isLoggable(Level.CONFIG))
+        {
+          LOGGER.log(Level.CONFIG, executable.toString());
+        }
+        executable.execute(connection);
       }
-      executable.execute(connection);
     }
-    connection.close();
-    LOGGER.log(Level.INFO, "Closed database connection, " + connection);
+    finally
+    {
+      if (connection != null)
+      {
+        connection.close();
+        LOGGER.log(Level.INFO, "Closed database connection, " + connection);
+      }
+    }
   }
 
   private SchemaCrawlerMain()

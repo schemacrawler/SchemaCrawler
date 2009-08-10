@@ -22,6 +22,10 @@ package schemacrawler.tools;
 
 
 import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.sql.DataSource;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.ObjectToString;
@@ -35,6 +39,9 @@ import schemacrawler.utility.ObjectToString;
  */
 public abstract class Executable<O extends ToolOptions>
 {
+
+  private static final Logger LOGGER = Logger.getLogger(Executable.class
+    .getName());
 
   private final String name;
   protected SchemaCrawlerOptions schemaCrawlerOptions;
@@ -59,6 +66,38 @@ public abstract class Executable<O extends ToolOptions>
    */
   public abstract void execute(Connection connection)
     throws Exception;
+
+  /**
+   * Executes main functionality for SchemaCrawler.
+   * 
+   * @param dataSource
+   *        Data-source
+   * @throws Exception
+   *         On an exception
+   */
+  public final void execute(final DataSource dataSource)
+    throws Exception
+  {
+    if (dataSource == null)
+    {
+      throw new IllegalArgumentException("No data-source provided");
+    }
+    Connection connection = null;
+    try
+    {
+      connection = dataSource.getConnection();
+      LOGGER.log(Level.INFO, "Obtained database connection, " + connection);
+      execute(connection);
+    }
+    finally
+    {
+      if (connection != null)
+      {
+        connection.close();
+        LOGGER.log(Level.INFO, "Closed database connection, " + connection);
+      }
+    }
+  }
 
   /**
    * @return the name

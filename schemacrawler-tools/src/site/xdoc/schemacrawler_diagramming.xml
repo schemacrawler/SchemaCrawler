@@ -1,0 +1,30 @@
+<!DOCTYPE document PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+  "http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+  <properties>
+    <title>SchemaCrawler Database Diagramming</title>
+    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
+  </properties>
+  <body>
+    <section name="SchemaCrawler Database Diagramming">
+      <subsection name="SchemaCrawler Database Diagramming">
+        <p>
+          SchemaCrawler is a command-line tool that allows you to search your database for tables and columns
+          that match
+          a regular expression, much like the standard
+          <a href="http://en.wikipedia.org/wiki/Grep">grep</a>
+          tool.
+        </p>
+        <p>
+          The SchemaCrawler command-line allows filtering tables, columns, and procedures based on regular expressions,
+          in addition to the grep functionality.
+        </p>
+        <p>
+          For more details, see the
+          <a href="faq.html#whats-schemacrawler-grep">FAQ</a>
+          .
+        </p>
+      </subsection>
+    </section>
+  </body>
+</document>
