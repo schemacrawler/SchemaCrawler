@@ -168,26 +168,42 @@ final class TableRetriever
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
 
+    Statement statement = null;
     MetadataResultSet results = null;
-    if (informationSchemaViews.hasIndexInfoSql())
+    try
     {
-      final String indexInfoSql = informationSchemaViews.getIndexInfo()
-        .getQueryForTable(table);
-      LOGGER.log(Level.FINE, "Using getIndexInfo SQL:\n" + indexInfoSql);
-      final Connection connection = getDatabaseConnection();
-      final Statement statement = connection.createStatement();
-      results = new MetadataResultSet(statement.executeQuery(indexInfoSql));
-      createIndices(table, results);
+      if (informationSchemaViews.hasIndexInfoSql())
+      {
+        final String indexInfoSql = informationSchemaViews.getIndexInfo()
+          .getQueryForTable(table);
+        LOGGER.log(Level.FINE, "Using getIndexInfo SQL:\n" + indexInfoSql);
+        final Connection connection = getDatabaseConnection();
+        statement = connection.createStatement();
+        statement.setFetchSize(FETCHSIZE);
+        results = new MetadataResultSet(statement.executeQuery(indexInfoSql));
+        createIndices(table, results);
+      }
+      else
+      {
+        results = new MetadataResultSet(getRetrieverConnection().getMetaData()
+          .getIndexInfo(table.getSchema().getParent().getName(),
+                        table.getSchema().getName(),
+                        table.getName(),
+                        unique,
+                        true/* approximate */));
+        createIndices(table, results);
+      }
     }
-    else
+    finally
     {
-      results = new MetadataResultSet(getRetrieverConnection().getMetaData()
-        .getIndexInfo(table.getSchema().getParent().getName(),
-                      table.getSchema().getName(),
-                      table.getName(),
-                      unique,
-                      true/* approximate */));
-      createIndices(table, results);
+      if (results != null)
+      {
+        results.close();
+      }
+      if (statement != null)
+      {
+        statement.close();
+      }
     }
 
   }
