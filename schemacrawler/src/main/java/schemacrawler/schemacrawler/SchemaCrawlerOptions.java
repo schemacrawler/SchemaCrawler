@@ -217,36 +217,6 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Copy constructor.
-   */
-  public SchemaCrawlerOptions(final SchemaCrawlerOptions options)
-  {
-    this();
-    if (options != null)
-    {
-      catalogInclusionRule = options.getCatalogInclusionRule();
-      columnInclusionRule = options.getColumnInclusionRule();
-      grepColumnInclusionRule = options.getGrepColumnInclusionRule();
-      grepProcedureColumnInclusionRule = options
-        .getGrepProcedureColumnInclusionRule();
-      informationSchemaViews = options.getInformationSchemaViews();
-      procedureColumnInclusionRule = options.getProcedureColumnInclusionRule();
-      procedureInclusionRule = options.getProcedureInclusionRule();
-      schemaInclusionRule = options.getSchemaInclusionRule();
-      schemaInfoLevel = options.getSchemaInfoLevel();
-      schemaPattern = options.getSchemaPattern();
-      tableInclusionRule = options.getTableInclusionRule();
-      tableTypes = options.getTableTypes();
-      isAlphabeticalSortForForeignKeys = isAlphabeticalSortForForeignKeys();
-      isAlphabeticalSortForIndexes = isAlphabeticalSortForIndexes();
-      isAlphabeticalSortForProcedureColumns = isAlphabeticalSortForProcedureColumns();
-      isAlphabeticalSortForTableColumns = isAlphabeticalSortForTableColumns();
-      grepInvertMatch = isGrepInvertMatch();
-      showStoredProcedures = isShowStoredProcedures();
-    }
-  }
-
-  /**
    * Gets the catalog inclusion rule.
    * 
    * @return Catalog inclusion rule.

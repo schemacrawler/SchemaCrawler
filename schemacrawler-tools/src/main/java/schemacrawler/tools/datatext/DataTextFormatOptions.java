@@ -103,7 +103,13 @@ public class DataTextFormatOptions
 
   public final SchemaInfoLevel getSchemaInfoLevel()
   {
-    return SchemaInfoLevel.standard();
+    final SchemaInfoLevel schemaInfoLevel = new SchemaInfoLevel();
+    schemaInfoLevel.setRetrieveDatabaseInfo(true);
+    schemaInfoLevel.setRetrieveColumnDataTypes(true);
+    schemaInfoLevel.setRetrieveUserDefinedColumnDataTypes(true);
+    schemaInfoLevel.setRetrieveTableColumns(true);
+    schemaInfoLevel.setRetrieveTables(true);
+    return schemaInfoLevel;
   }
 
   /**
