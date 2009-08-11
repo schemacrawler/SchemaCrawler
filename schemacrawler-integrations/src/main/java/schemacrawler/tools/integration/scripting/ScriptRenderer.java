@@ -44,6 +44,11 @@ public final class ScriptRenderer
   extends SchemaRenderer
 {
 
+  public ScriptRenderer()
+  {
+    super(ScriptRenderer.class.getSimpleName());
+  }
+
   /**
    * {@inheritDoc}
    * 

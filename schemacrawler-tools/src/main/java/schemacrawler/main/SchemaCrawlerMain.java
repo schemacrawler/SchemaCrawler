@@ -60,10 +60,6 @@ public final class SchemaCrawlerMain
       connection = commandLine.createConnection();
       for (final Executable<?> executable: executables)
       {
-        if (LOGGER.isLoggable(Level.CONFIG))
-        {
-          LOGGER.log(Level.CONFIG, executable.toString());
-        }
         executable.execute(connection);
       }
     }

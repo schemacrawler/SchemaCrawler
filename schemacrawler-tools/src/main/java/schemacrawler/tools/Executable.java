@@ -157,7 +157,6 @@ public abstract class Executable<O extends ToolOptions>
   @Override
   public final String toString()
   {
-    initialize();
     return ObjectToString.toString(this);
   }
 
@@ -167,6 +166,10 @@ public abstract class Executable<O extends ToolOptions>
   protected final void initialize()
   {
     schemaCrawlerOptions.setSchemaInfoLevel(toolOptions.getSchemaInfoLevel());
+    if (LOGGER.isLoggable(Level.CONFIG))
+    {
+      LOGGER.log(Level.CONFIG, this.toString());
+    }
   }
 
 }

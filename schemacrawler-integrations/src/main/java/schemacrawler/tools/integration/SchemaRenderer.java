@@ -39,6 +39,11 @@ public abstract class SchemaRenderer
   extends IntegrationsExecutable
 {
 
+  protected SchemaRenderer(final String name)
+  {
+    super(name);
+  }
+
   @Override
   public final void execute(final Connection connection)
     throws Exception
