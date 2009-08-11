@@ -49,9 +49,9 @@ public abstract class IntegrationsExecutable
   private static final Logger LOGGER = Logger
     .getLogger(IntegrationsExecutable.class.getName());
 
-  protected IntegrationsExecutable()
+  protected IntegrationsExecutable(final String name)
   {
-    super(IntegrationsExecutable.class.getSimpleName());
+    super(name);
   }
 
   /**
@@ -100,8 +100,6 @@ public abstract class IntegrationsExecutable
     }
   }
 
-  protected abstract HelpOptions getHelpOptions();
-
   /**
    * Expect one command (further, of type schema text.
    */
@@ -114,5 +112,7 @@ public abstract class IntegrationsExecutable
     }
     return iterator.next().getName();
   }
+
+  protected abstract HelpOptions getHelpOptions();
 
 }
