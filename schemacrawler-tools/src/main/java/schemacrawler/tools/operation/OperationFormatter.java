@@ -277,6 +277,10 @@ final class OperationFormatter
         {
           results.close();
         }
+        if (statement != null)
+        {
+          statement.close();
+        }
       }
       catch (final SQLException e)
       {
