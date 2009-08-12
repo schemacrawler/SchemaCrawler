@@ -24,9 +24,10 @@
     <query_name>
       Shows results of query <query_name>, as specified in the configuration 
       properties file
-      The query itself can contain the variables ${table} and ${tabletype}
-      or system properties referenced as ${<system-property-name>}
-      Queries without any variables are executed exactly once; wueries
+      The query itself can contain the variables ${table}, ${columns} 
+      and ${tabletype},  or system properties referenced as 
+      ${<system-property-name>}
+      Queries without any variables are executed exactly once; queries
       with variables are executed once for each table, with the variables
       substituted
   Optional, default is standard_schema
