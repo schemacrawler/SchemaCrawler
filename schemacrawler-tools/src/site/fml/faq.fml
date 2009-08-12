@@ -282,60 +282,19 @@ Or, the following:
         </p>
       </answer>
     </faq>
-    <faq id="api">
-      <question> Can SchemaCrawler be used programmatically? </question>
-      <answer>
-        <p> SchemaCrawler is an API that improves on the standard JDBC metadata facilities. SchemaCrawler provides an
-          easy to use set of plain old Java objects (POJOs) that represent your database schema. </p>
-        <p>
-          Read
-          <a href="http://www.devx.com/Java/Article/32443"> Java API Makes Database Metadata as Easily Accessible as POJOs </a>
-          for an introduction to the SchemaCrawler API. (This article may refer to an older release of the SchemaCrawler
-          API, but the concepts are the same.) You can also browse the
-          <a href="apidocs/index.html">javadocs.</a>
-        </p>
-        <p>
-          <i>
-            See the example in the
-            <code>examples\api</code>
-            directory.
-          </i>
-        </p>
-      </answer>
-    </faq>
-    <faq id="javascript">
-      <question> Can SchemaCrawler be used with scripting languages? </question>
-      <answer>
-        <p> When SchemaCrawler is used with J2SE 6 and above, it has built-in support to be used with JavaScript
-          scripts. </p>
-        <p>
-          <i>
-            See the example in the
-            <code>examples\javascript</code>
-            directory.
-          </i>
-        </p>
-      </answer>
-    </faq>
-    <faq id="integrations">
-      <question> Can SchemaCrawler be used integrated with other programs?  </question>
+  </part>
+  <part id="graphing">
+    <title>SchemaCrawler Database Diagrams</title>
+    <faq id="whats-schemacrawler-grep">
+      <question> What is a SchemaCrawler database diagram? </question>
       <answer>
         <p>
-          SchemaCrawler can be integrated with other programs, but this requires some Java programming. SchemaCrawler is
-          designed to be used programmatically with the
-          <a href="http://www.springframework.org/">Spring Framework</a>
-          . Examples are provided in the
-          <code>examples\spring</code>
-          directory.
-        </p>
-        <p>
-          SchemaCrawler comes pre-built with integration with
-          <a href="http://velocity.apache.org/">Apache Velocity.</a>
-          This allows you to specify your own templates for formatting the schema. Examples are provided in the
-          <code>examples\velocity</code>
-          directory. Database diagrams can be generated using the integration with
+          SchemaCrawler can generate entity-relationship diagrams with
           <a href="http://www.graphviz.org/">Graphviz</a>
-          .
+          . You can filter out tables, columns, and procedures based on regular expressions,
+          using the
+          <a href="#grep">grep</a>
+          functionality.
         </p>
       </answer>
     </faq>
@@ -384,6 +343,75 @@ Or, the following:
         <p>
           The SchemaCrawler Grep configuration file is the same as the
           <a href="config/schemacrawler.config.properties"> SchemaCrawler configuration file. </a>
+        </p>
+      </answer>
+    </faq>
+  </part>
+  <part id="features">
+    <title>SchemaCrawler Features</title>
+    <faq id="weak-associations">
+      <question> What are weak associations? </question>
+      <answer>
+        <p>
+          Weak associations are inferred associations between tables, similar to forign keys, even if there is no
+          foreign key defined in the database between the tables. Ruby on Rails table schemes are supported, as well as
+          other simple naming conventions. Table name prefixes are automatically detected. Weak associations are output
+          in the graphs as a dotted line, and are also output in the text formats.
+        </p>
+      </answer>
+    </faq>
+    <faq id="javascript">
+      <question> Can SchemaCrawler be used with scripting languages? </question>
+      <answer>
+        <p> When SchemaCrawler is used with J2SE 6 and above, it has built-in support to be used with JavaScript
+          scripts. </p>
+        <p>
+          <i>
+            See the example in the
+            <code>examples\javascript</code>
+            directory.
+          </i>
+        </p>
+      </answer>
+    </faq>
+    <faq id="api">
+      <question> Can SchemaCrawler be used programmatically? </question>
+      <answer>
+        <p> SchemaCrawler is an API that improves on the standard JDBC metadata facilities. SchemaCrawler provides an
+          easy to use set of plain old Java objects (POJOs) that represent your database schema. </p>
+        <p>
+          Read
+          <a href="http://www.devx.com/Java/Article/32443"> Java API Makes Database Metadata as Easily Accessible as POJOs </a>
+          for an introduction to the SchemaCrawler API. (This article may refer to an older release of the SchemaCrawler
+          API, but the concepts are the same.) You can also browse the
+          <a href="apidocs/index.html">javadocs.</a>
+        </p>
+        <p>
+          <i>
+            See the example in the
+            <code>examples\api</code>
+            directory.
+          </i>
+        </p>
+      </answer>
+    </faq>
+    <faq id="integrations">
+      <question> Can SchemaCrawler be used integrated with other programs?  </question>
+      <answer>
+        <p>
+          SchemaCrawler can be integrated with other programs, but this requires some Java programming. SchemaCrawler is
+          designed to be used programmatically with the
+          <a href="http://www.springframework.org/">Spring Framework</a>
+          . Examples are provided in the
+          <code>examples\spring</code>
+          directory.
+        </p>
+        <p>
+          SchemaCrawler comes pre-built with integration with
+          <a href="http://velocity.apache.org/">Apache Velocity.</a>
+          This allows you to specify your own templates for formatting the schema. Examples are provided in the
+          <code>examples\velocity</code>
+          directory.
         </p>
       </answer>
     </faq>
