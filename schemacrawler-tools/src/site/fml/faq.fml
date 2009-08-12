@@ -97,8 +97,9 @@ Or, the following:
     <query_name>
       Shows results of query <query_name>, as specified in the configuration 
       properties file
-      The query itself can contain the variables ${table} and ${tabletype}
-      or system properties referenced as ${<system-property-name>}
+      The query itself can contain the variables ${table}, ${columns} 
+      and ${tabletype},  or system properties referenced as 
+      ${<system-property-name>}
       Queries without any variables are executed exactly once; wueries
       with variables are executed once for each table, with the variables
       substituted
