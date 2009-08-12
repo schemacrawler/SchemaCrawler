@@ -50,7 +50,7 @@
           The option in the configuration can be overridden by the -table_types command-line
           option. Further, see the
           <a href="faq.html#commands">details on the command-line options.</a>
-        </p>        
+        </p>
       </answer>
     </faq>
     <faq id="excluded-procedures">
@@ -67,7 +67,8 @@
         </p>
         <p>
           The option in the configuration can be overridden by the -show_stored_procedures command-line
-          option. Further, see the
+          option. Further,
+          see the
           <a href="faq.html#commands">details on the command-line options.</a>
         </p>
       </answer>
@@ -185,10 +186,14 @@ schemacrawler.format.hide_constraint_names=false
           <a href="http://www.graphviz.org/">Graphviz</a>
           to produce graph images. Install Graphviz, and run
           <code>schemacrawler.tools.integration.graph.Main</code>
-          , with the correct options. See the graphing example in the
+          , with the correct options, for example,
+          <code>-outputformat png -outputfile=graph.png</code>
+          . See the graphing example in the
           <code>_distrib\graphing</code>
           directory for more details.
+          An example of a SchemaCrawler database diagram:
         </p>
+        <img src="images/graph.png" width="100%" alt="SchemaCrawler database diagram" />
       </answer>
     </faq>
   </part>
