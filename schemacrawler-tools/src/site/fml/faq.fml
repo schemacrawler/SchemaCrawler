@@ -285,7 +285,7 @@ Or, the following:
   </part>
   <part id="graphing">
     <title>SchemaCrawler Database Diagrams</title>
-    <faq id="whats-schemacrawler-grep">
+    <faq id="graphing">
       <question> What is a SchemaCrawler database diagram? </question>
       <answer>
         <p>
@@ -293,7 +293,7 @@ Or, the following:
           <a href="http://www.graphviz.org/">Graphviz</a>
           . You can filter out tables, columns, and procedures based on regular expressions,
           using the
-          <a href="#grep">grep</a>
+          <a href="#whats-schemacrawler-grep">grep</a>
           functionality.
         </p>
       </answer>
