@@ -25,7 +25,9 @@
           The XHTML output is a combination of valid XML (that can be manipulated by XML tools or XSLT), and HTML that
           can be viewed in a browser. SchemaCrawler can produce output in the
           <a href="http://www.graphviz.org/doc/info/lang.html ">DOT format,</a>
-          which <a href="http://www.graphviz.org/">GraphViz</a> can convert into schema diagrams.
+          which
+          <a href="http://www.graphviz.org/">GraphViz</a>
+          can convert into schema diagrams.
         </p>
       </answer>
     </faq>
@@ -242,7 +244,8 @@ Or, the following:
       <question> What Java version does SchemaCrawler work with? </question>
       <answer>
         <p> SchemaCrawler works with J2SE 5 and above. SchemaCrawler does not depend on any Java libraries other than
-          the standard J2SE 5 runtime libraries and a JDBC driver. However, J2SE 6 is required for JavaScript scripting using the
+          the standard J2SE 5 runtime libraries and a JDBC driver. However, J2SE 6 is required for JavaScript scripting
+          using the
           SchemaCrawler API.</p>
       </answer>
     </faq>
@@ -336,6 +339,15 @@ Or, the following:
         </p>
       </answer>
     </faq>
+    <faq id="graph-output">
+      <question> What does a SchemaCrawler database diagram look like? </question>
+      <answer>
+        <p>
+          An example of a SchemaCrawler database diagram:
+        </p>
+        <img src="images/graph.png" width="100%" alt="SchemaCrawler database diagram" />
+      </answer>
+    </faq>
   </part>
   <part id="grep">
     <title>SchemaCrawler Grep</title>
@@ -358,7 +370,12 @@ Or, the following:
     </faq>
     <faq id="grepcommands">
       <question> What are the SchemaCrawler Grep commands? </question>
-      <answer><p>See the <a href="#commands">filtering and grep command-line options</a> above.</p>
+      <answer>
+        <p>
+          See the
+          <a href="#commands">filtering and grep command-line options</a>
+          above.
+        </p>
       </answer>
     </faq>
     <faq id="config">
