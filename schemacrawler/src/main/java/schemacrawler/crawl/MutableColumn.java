@@ -62,6 +62,16 @@ class MutableColumn
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schema.Column#getPrivilege(java.lang.String)
+   */
+  public MutablePrivilege getPrivilege(final String name)
+  {
+    return privileges.lookup(this, name);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see Column#getPrivileges()
    */
   public Privilege[] getPrivileges()

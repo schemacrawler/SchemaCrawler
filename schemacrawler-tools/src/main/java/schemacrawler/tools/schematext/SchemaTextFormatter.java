@@ -52,6 +52,7 @@ import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
+import schemacrawler.schema.Privilege.Grant;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.OutputFormat;
@@ -646,23 +647,18 @@ final class SchemaTextFormatter
     {
       if (privilege != null)
       {
-        String privilegeType = "privilege";
-        if (privilege.isGrantable())
-        {
-          privilegeType = "grantable " + privilegeType;
-        }
-        final String grantedFrom = privilege.getGrantor()
-                                   + formattingHelper.createArrow()
-                                   + privilege.getGrantee();
         out.println(formattingHelper.createEmptyRow());
-
-        final String privilegeName = privilege.getName();
-        final String privilegeDetails = "[" + privilegeType + "]";
-        out.println(formattingHelper.createNameRow(privilegeName,
-                                                   privilegeDetails,
+        out.println(formattingHelper.createNameRow(privilege.getName(),
+                                                   "[privilege]",
                                                    false));
-
-        out.println(formattingHelper.createDetailRow("", grantedFrom, ""));
+        for (final Grant grant: privilege.getGrants())
+        {
+          final String grantedFrom = grant.getGrantor()
+                                     + formattingHelper.createArrow()
+                                     + grant.getGrantee()
+                                     + (grant.isGrantable()? " (grantable)": "");
+          out.println(formattingHelper.createDetailRow("", grantedFrom, ""));
+        }
       }
     }
   }

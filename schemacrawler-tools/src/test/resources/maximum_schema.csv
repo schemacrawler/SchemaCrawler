@@ -384,17 +384,17 @@ SYS_IDX_46,[primary key]
 FK_INVOICE_CUSTOMER,"[foreign key, with no action]"
 "",ID --> PUBLIC.INVOICE.CUSTOMERID,""
 ""
-DELETE,[grantable privilege]
-"",DBA --> SA,""
+DELETE,[privilege]
+"",DBA --> SA (grantable),""
 ""
-INSERT,[grantable privilege]
-"",DBA --> SA,""
+INSERT,[privilege]
+"",DBA --> SA (grantable),""
 ""
-SELECT,[grantable privilege]
-"",DBA --> SA,""
+SELECT,[privilege]
+"",DBA --> SA (grantable),""
 ""
-UPDATE,[grantable privilege]
-"",DBA --> SA,""
+UPDATE,[privilege]
+"",DBA --> SA (grantable),""
 
 
 PUBLIC.CUSTOMERLIST,[view]
@@ -403,17 +403,17 @@ PUBLIC.CUSTOMERLIST,[view]
 "",FIRSTNAME,VARCHAR(255)
 "",LASTNAME,VARCHAR(255)
 ""
-DELETE,[grantable privilege]
-"",DBA --> SA,""
+DELETE,[privilege]
+"",DBA --> SA (grantable),""
 ""
-INSERT,[grantable privilege]
-"",DBA --> SA,""
+INSERT,[privilege]
+"",DBA --> SA (grantable),""
 ""
-SELECT,[grantable privilege]
-"",DBA --> SA,""
+SELECT,[privilege]
+"",DBA --> SA (grantable),""
 ""
-UPDATE,[grantable privilege]
-"",DBA --> SA,""
+UPDATE,[privilege]
+"",DBA --> SA (grantable),""
 ""
 
 
@@ -438,17 +438,17 @@ INDEX_INVOICE_CUSTOMER,[non-unique index]
 SYS_IDX_50,[non-unique index]
 "",CUSTOMERID,ascending
 ""
-DELETE,[grantable privilege]
-"",DBA --> SA,""
+DELETE,[privilege]
+"",DBA --> SA (grantable),""
 ""
-INSERT,[grantable privilege]
-"",DBA --> SA,""
+INSERT,[privilege]
+"",DBA --> SA (grantable),""
 ""
-SELECT,[grantable privilege]
-"",DBA --> SA,""
+SELECT,[privilege]
+"",DBA --> SA (grantable),""
 ""
-UPDATE,[grantable privilege]
-"",DBA --> SA,""
+UPDATE,[privilege]
+"",DBA --> SA (grantable),""
 
 
 PUBLIC.ITEM,[table]
@@ -481,17 +481,17 @@ INDEX_ITEM_PRODUCT,[non-unique index]
 SYS_IDX_55,[non-unique index]
 "",PRODUCTID,ascending
 ""
-DELETE,[grantable privilege]
-"",DBA --> SA,""
+DELETE,[privilege]
+"",DBA --> SA (grantable),""
 ""
-INSERT,[grantable privilege]
-"",DBA --> SA,""
+INSERT,[privilege]
+"",DBA --> SA (grantable),""
 ""
-SELECT,[grantable privilege]
-"",DBA --> SA,""
+SELECT,[privilege]
+"",DBA --> SA (grantable),""
 ""
-UPDATE,[grantable privilege]
-"",DBA --> SA,""
+UPDATE,[privilege]
+"",DBA --> SA (grantable),""
 
 
 PUBLIC.PRODUCT,[table]
@@ -506,17 +506,17 @@ SYS_IDX_47,[primary key]
 FK_A_ITEM_PRODUCT,"[foreign key, with no action]"
 "",ID --> PUBLIC.ITEM.PRODUCTID,""
 ""
-DELETE,[grantable privilege]
-"",DBA --> SA,""
+DELETE,[privilege]
+"",DBA --> SA (grantable),""
 ""
-INSERT,[grantable privilege]
-"",DBA --> SA,""
+INSERT,[privilege]
+"",DBA --> SA (grantable),""
 ""
-SELECT,[grantable privilege]
-"",DBA --> SA,""
+SELECT,[privilege]
+"",DBA --> SA (grantable),""
 ""
-UPDATE,[grantable privilege]
-"",DBA --> SA,""
+UPDATE,[privilege]
+"",DBA --> SA (grantable),""
 
 
 PUBLIC.SUPPLIER,[table]
@@ -532,17 +532,17 @@ INDEX_A_SUPPLIER,[non-unique index]
 "",SUPPLIER_NAME,ascending
 "",SUPPLIER_ID,ascending
 ""
-DELETE,[grantable privilege]
-"",DBA --> SA,""
+DELETE,[privilege]
+"",DBA --> SA (grantable),""
 ""
-INSERT,[grantable privilege]
-"",DBA --> SA,""
+INSERT,[privilege]
+"",DBA --> SA (grantable),""
 ""
-SELECT,[grantable privilege]
-"",DBA --> SA,""
+SELECT,[privilege]
+"",DBA --> SA (grantable),""
 ""
-UPDATE,[grantable privilege]
-"",DBA --> SA,""
+UPDATE,[privilege]
+"",DBA --> SA (grantable),""
 
 
 SCHEMACRAWLER.ITEM,[table]
@@ -557,17 +557,17 @@ SYS_IDX_59,[primary key]
 "",INVOICEID,ascending
 "",ITEM,ascending
 ""
-DELETE,[grantable privilege]
-"",DBA --> SA,""
+DELETE,[privilege]
+"",DBA --> SA (grantable),""
 ""
-INSERT,[grantable privilege]
-"",DBA --> SA,""
+INSERT,[privilege]
+"",DBA --> SA (grantable),""
 ""
-SELECT,[grantable privilege]
-"",DBA --> SA,""
+SELECT,[privilege]
+"",DBA --> SA (grantable),""
 ""
-UPDATE,[grantable privilege]
-"",DBA --> SA,""
+UPDATE,[privilege]
+"",DBA --> SA (grantable),""
 
 
 SCHEMACRAWLER.PRODUCT2,[table]
@@ -579,17 +579,17 @@ SCHEMACRAWLER.PRODUCT2,[table]
 SYS_IDX_61,[primary key]
 "",ID,ascending
 ""
-DELETE,[grantable privilege]
-"",DBA --> SA,""
+DELETE,[privilege]
+"",DBA --> SA (grantable),""
 ""
-INSERT,[grantable privilege]
-"",DBA --> SA,""
+INSERT,[privilege]
+"",DBA --> SA (grantable),""
 ""
-SELECT,[grantable privilege]
-"",DBA --> SA,""
+SELECT,[privilege]
+"",DBA --> SA (grantable),""
 ""
-UPDATE,[grantable privilege]
-"",DBA --> SA,""
+UPDATE,[privilege]
+"",DBA --> SA (grantable),""
 
 
 "",[weak associations]

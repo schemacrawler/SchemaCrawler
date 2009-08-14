@@ -38,6 +38,15 @@ public interface Column
   String getDefaultValue();
 
   /**
+   * Gets a privilege by name.
+   * 
+   * @param name
+   *        Name
+   * @return Privilege.
+   */
+  Privilege getPrivilege(String name);
+
+  /**
    * Gets the list of privileges for the table.
    * 
    * @return Privileges for the table

@@ -239,6 +239,16 @@ class MutableTable
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schema.Table#getPrivilege(java.lang.String)
+   */
+  public MutablePrivilege getPrivilege(final String name)
+  {
+    return privileges.lookup(this, name);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see Table#getPrivileges()
    */
   public Privilege[] getPrivileges()
