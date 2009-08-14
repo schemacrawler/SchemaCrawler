@@ -43,8 +43,8 @@ class MutableSchema
   private transient String fullName;
 
   private final ColumnDataTypes columnDataTypes = new ColumnDataTypes();
-  private final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>(NamedObjectSort.alphabetical);
-  private final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>(NamedObjectSort.alphabetical);
+  private final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>();
+  private final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>();
 
   MutableSchema(final AbstractNamedObject parent, final String name)
   {
@@ -90,7 +90,7 @@ class MutableSchema
    */
   public MutableProcedure getProcedure(final String name)
   {
-    return procedures.lookup(name);
+    return procedures.lookup(this, name);
   }
 
   /**
@@ -110,7 +110,7 @@ class MutableSchema
    */
   public MutableTable getTable(final String name)
   {
-    return tables.lookup(name);
+    return tables.lookup(this, name);
   }
 
   /**

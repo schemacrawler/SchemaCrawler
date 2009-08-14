@@ -54,12 +54,12 @@ class MutableTable
 
   private TableType type = TableType.unknown;// Default value
   private MutablePrimaryKey primaryKey;
-  private final NamedObjectList<MutableColumn> columns = new NamedObjectList<MutableColumn>(NamedObjectSort.natural);
-  private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<MutableForeignKey>(NamedObjectSort.natural);
-  private final NamedObjectList<MutableIndex> indices = new NamedObjectList<MutableIndex>(NamedObjectSort.natural);
-  private final NamedObjectList<MutableCheckConstraint> checkConstraints = new NamedObjectList<MutableCheckConstraint>(NamedObjectSort.natural);
-  private final NamedObjectList<MutableTrigger> triggers = new NamedObjectList<MutableTrigger>(NamedObjectSort.natural);
-  private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>(NamedObjectSort.natural);
+  private final NamedObjectList<MutableColumn> columns = new NamedObjectList<MutableColumn>();
+  private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<MutableForeignKey>();
+  private final NamedObjectList<MutableIndex> indices = new NamedObjectList<MutableIndex>();
+  private final NamedObjectList<MutableCheckConstraint> checkConstraints = new NamedObjectList<MutableCheckConstraint>();
+  private final NamedObjectList<MutableTrigger> triggers = new NamedObjectList<MutableTrigger>();
+  private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>();
   private final Set<MutableColumnMap> weakAssociations = new LinkedHashSet<MutableColumnMap>();
 
   MutableTable(final Schema schema, final String name)
@@ -216,7 +216,7 @@ class MutableTable
     if (primaryKey != null)
     {
       final String primaryKeyName = primaryKey.getName();
-      final MutableIndex index = indices.lookup(primaryKeyName);
+      final MutableIndex index = indices.lookup(this, primaryKeyName);
       if (index != null)
       {
         indices.remove(index);

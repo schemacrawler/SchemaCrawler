@@ -50,6 +50,13 @@ public interface NamedObject
   Map<String, Object> getAttributes();
 
   /**
+   * Getter for fully qualified name of object.
+   * 
+   * @return Fully qualified of the object
+   */
+  String getFullName();
+
+  /**
    * Getter for name of object.
    * 
    * @return Name of the object

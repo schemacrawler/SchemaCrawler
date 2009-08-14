@@ -43,7 +43,7 @@ final class MutableJdbcDriverInfo
   private String driverVersion;
   private String connectionUrl;
   private boolean jdbcCompliant;
-  private final NamedObjectList<MutableJdbcDriverProperty> jdbcDriverProperties = new NamedObjectList<MutableJdbcDriverProperty>(NamedObjectSort.alphabetical);
+  private final NamedObjectList<MutableJdbcDriverProperty> jdbcDriverProperties = new NamedObjectList<MutableJdbcDriverProperty>();
 
   /**
    * {@inheritDoc}

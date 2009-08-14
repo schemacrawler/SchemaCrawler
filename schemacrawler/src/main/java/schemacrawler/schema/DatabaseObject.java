@@ -31,13 +31,6 @@ public interface DatabaseObject
 {
 
   /**
-   * Gets the full name, including the schema name.
-   * 
-   * @return Full name
-   */
-  String getFullName();
-
-  /**
    * Gets the database schema.
    * 
    * @return Database schema

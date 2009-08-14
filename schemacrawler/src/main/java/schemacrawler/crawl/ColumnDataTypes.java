@@ -28,7 +28,7 @@ class ColumnDataTypes
 
   ColumnDataTypes()
   {
-    super(NamedObjectSort.alphabetical);
+    super();
   }
 
   MutableColumnDataType lookupColumnDataTypeByType(final int type)

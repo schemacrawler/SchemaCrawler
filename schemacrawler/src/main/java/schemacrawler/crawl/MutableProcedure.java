@@ -41,7 +41,7 @@ final class MutableProcedure
   private static final long serialVersionUID = 3906925686089134130L;
 
   private ProcedureType procedureType;
-  private final NamedObjectList<MutableProcedureColumn> columns = new NamedObjectList<MutableProcedureColumn>(NamedObjectSort.natural);
+  private final NamedObjectList<MutableProcedureColumn> columns = new NamedObjectList<MutableProcedureColumn>();
   private RoutineBodyType routineBodyType;
   private final StringBuilder definition;
 

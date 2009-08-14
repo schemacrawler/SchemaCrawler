@@ -40,7 +40,7 @@ class MutableIndex
 
   private static final long serialVersionUID = 4051326747138079028L;
 
-  private final NamedObjectList<MutableIndexColumn> columns = new NamedObjectList<MutableIndexColumn>(NamedObjectSort.natural);
+  private final NamedObjectList<MutableIndexColumn> columns = new NamedObjectList<MutableIndexColumn>();
   private boolean isUnique;
   private IndexType type;
   private int cardinality;
