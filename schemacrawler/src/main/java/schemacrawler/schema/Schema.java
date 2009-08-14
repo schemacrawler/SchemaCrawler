@@ -45,13 +45,6 @@ public interface Schema
   ColumnDataType[] getColumnDataTypes();
 
   /**
-   * Gets the full name, including the schema name.
-   * 
-   * @return Full name
-   */
-  String getFullName();
-
-  /**
    * Gets a procedure by name.
    * 
    * @param name

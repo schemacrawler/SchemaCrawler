@@ -43,7 +43,7 @@ final class MutableDatabase
 
   private final MutableDatabaseInfo databaseInfo;
   private final ColumnDataTypes systemColumnDataTypes = new ColumnDataTypes();
-  private final NamedObjectList<MutableCatalog> catalogs = new NamedObjectList<MutableCatalog>(NamedObjectSort.alphabetical);
+  private final NamedObjectList<MutableCatalog> catalogs = new NamedObjectList<MutableCatalog>();
 
   MutableDatabase(final String name)
   {
@@ -112,7 +112,7 @@ final class MutableDatabase
 
   NamedObjectList<MutableProcedure> getAllProcedures()
   {
-    final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>(NamedObjectSort.alphabetical);
+    final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>();
     for (final Catalog catalog: getCatalogs())
     {
       for (final Schema schema: catalog.getSchemas())
@@ -129,7 +129,7 @@ final class MutableDatabase
 
   NamedObjectList<MutableTable> getAllTables()
   {
-    final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>(NamedObjectSort.alphabetical);
+    final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>();
     for (final Catalog catalog: getCatalogs())
     {
       for (final Schema schema: catalog.getSchemas())

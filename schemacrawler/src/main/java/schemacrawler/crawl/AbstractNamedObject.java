@@ -126,6 +126,16 @@ abstract class AbstractNamedObject
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schema.NamedObject#getFullName()
+   */
+  public String getFullName()
+  {
+    return name;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see schemacrawler.schema.DatabaseObject#getRemarks()
    */
   public final String getRemarks()

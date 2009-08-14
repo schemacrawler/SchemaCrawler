@@ -147,7 +147,7 @@ final class TableRetriever
     throws SQLException
   {
 
-    final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<MutableForeignKey>(NamedObjectSort.alphabetical);
+    final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<MutableForeignKey>();
     MetadataResultSet results;
 
     final DatabaseMetaData metaData = getRetrieverConnection().getMetaData();

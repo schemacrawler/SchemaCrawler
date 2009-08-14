@@ -460,8 +460,8 @@ PUBLIC.INSERT                                [procedure, returns result]
 
 PUBLIC.java.lang.Math.abs                    [procedure, returns result]
 ------------------------------------------------------------------------
-  @p0                               DOUBLE(8, 17), result       
-  @p1                               DOUBLE(8, 17), in           
+  @p0                               BIGINT, result              
+  @p1                               BIGINT, in                  
 
 
 PUBLIC.java.lang.Math.acos                   [procedure, returns result]
@@ -503,9 +503,9 @@ PUBLIC.java.lang.Math.ceil                   [procedure, returns result]
 
 PUBLIC.java.lang.Math.copySign               [procedure, returns result]
 ------------------------------------------------------------------------
-  @p0                               DOUBLE(8, 17), result       
-  @p1                               DOUBLE(8, 17), in           
-  @p2                               DOUBLE(8, 17), in           
+  @p0                               FLOAT(8, 17), result        
+  @p1                               FLOAT(8, 17), in            
+  @p2                               FLOAT(8, 17), in            
 
 
 PUBLIC.java.lang.Math.cos                    [procedure, returns result]
@@ -541,7 +541,7 @@ PUBLIC.java.lang.Math.floor                  [procedure, returns result]
 PUBLIC.java.lang.Math.getExponent            [procedure, returns result]
 ------------------------------------------------------------------------
   @p0                               INTEGER, result             
-  @p1                               DOUBLE(8, 17), in           
+  @p1                               FLOAT(8, 17), in            
 
 
 PUBLIC.java.lang.Math.hypot                  [procedure, returns result]
@@ -578,29 +578,29 @@ PUBLIC.java.lang.Math.log1p                  [procedure, returns result]
 
 PUBLIC.java.lang.Math.max                    [procedure, returns result]
 ------------------------------------------------------------------------
-  @p0                               DOUBLE(8, 17), result       
-  @p1                               DOUBLE(8, 17), in           
-  @p2                               DOUBLE(8, 17), in           
+  @p0                               BIGINT, result              
+  @p1                               BIGINT, in                  
+  @p2                               BIGINT, in                  
 
 
 PUBLIC.java.lang.Math.min                    [procedure, returns result]
 ------------------------------------------------------------------------
-  @p0                               DOUBLE(8, 17), result       
-  @p1                               DOUBLE(8, 17), in           
-  @p2                               DOUBLE(8, 17), in           
+  @p0                               BIGINT, result              
+  @p1                               BIGINT, in                  
+  @p2                               BIGINT, in                  
 
 
 PUBLIC.java.lang.Math.nextAfter              [procedure, returns result]
 ------------------------------------------------------------------------
-  @p0                               DOUBLE(8, 17), result       
-  @p1                               DOUBLE(8, 17), in           
+  @p0                               FLOAT(8, 17), result        
+  @p1                               FLOAT(8, 17), in            
   @p2                               DOUBLE(8, 17), in           
 
 
 PUBLIC.java.lang.Math.nextUp                 [procedure, returns result]
 ------------------------------------------------------------------------
-  @p0                               DOUBLE(8, 17), result       
-  @p1                               DOUBLE(8, 17), in           
+  @p0                               FLOAT(8, 17), result        
+  @p1                               FLOAT(8, 17), in            
 
 
 PUBLIC.java.lang.Math.pow                    [procedure, returns result]
@@ -623,21 +623,21 @@ PUBLIC.java.lang.Math.rint                   [procedure, returns result]
 
 PUBLIC.java.lang.Math.round                  [procedure, returns result]
 ------------------------------------------------------------------------
-  @p0                               BIGINT, result              
-  @p1                               DOUBLE(8, 17), in           
+  @p0                               INTEGER, result             
+  @p1                               FLOAT(8, 17), in            
 
 
 PUBLIC.java.lang.Math.scalb                  [procedure, returns result]
 ------------------------------------------------------------------------
-  @p0                               DOUBLE(8, 17), result       
-  @p1                               DOUBLE(8, 17), in           
+  @p0                               FLOAT(8, 17), result        
+  @p1                               FLOAT(8, 17), in            
   @p2                               INTEGER, in                 
 
 
 PUBLIC.java.lang.Math.signum                 [procedure, returns result]
 ------------------------------------------------------------------------
-  @p0                               DOUBLE(8, 17), result       
-  @p1                               DOUBLE(8, 17), in           
+  @p0                               FLOAT(8, 17), result        
+  @p1                               FLOAT(8, 17), in            
 
 
 PUBLIC.java.lang.Math.sin                    [procedure, returns result]
@@ -684,8 +684,8 @@ PUBLIC.java.lang.Math.toRadians              [procedure, returns result]
 
 PUBLIC.java.lang.Math.ulp                    [procedure, returns result]
 ------------------------------------------------------------------------
-  @p0                               DOUBLE(8, 17), result       
-  @p1                               DOUBLE(8, 17), in           
+  @p0                               FLOAT(8, 17), result        
+  @p1                               FLOAT(8, 17), in            
 
 
 PUBLIC.LCASE                                 [procedure, returns result]

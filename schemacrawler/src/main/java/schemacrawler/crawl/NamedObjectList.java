@@ -25,11 +25,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
-import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.utility.Utility;
 
@@ -44,21 +43,9 @@ class NamedObjectList<N extends NamedObject>
 
   private static final long serialVersionUID = 3257847666804142128L;
 
-  private NamedObjectSort sort;
+  private NamedObjectSort sort = NamedObjectSort.natural;
   /** Needs to be sorted, so serialization does not break. */
-  private final Set<N> objects = new LinkedHashSet<N>();
-
-  /**
-   * Construct an initially empty ordered list of named objects, that
-   * can be searched associatively.
-   * 
-   * @param sort
-   *        Comparator for named objects, or null for no sorting
-   */
-  NamedObjectList(final NamedObjectSort sort)
-  {
-    this.sort = sort;
-  }
+  private final Map<String, N> objects = new LinkedHashMap<String, N>();
 
   /**
    * {@inheritDoc}
@@ -91,18 +78,36 @@ class NamedObjectList<N extends NamedObject>
   {
     if (namedObject == null)
     {
-      throw new IllegalArgumentException("Cannot add an object to the list");
+      throw new IllegalArgumentException("Cannot add a null object to the list");
     }
-    objects.add(namedObject);
+    String key = namedObject.getFullName();
+    if (Utility.isBlank(key))
+    {
+      key = "";
+    }
+    objects.put(key, namedObject);
   }
 
-  N lookup(final DatabaseObject databaseObject, final String name)
+  N lookup(final NamedObject namedObject, final String name)
   {
-    return lookup(new AbstractDependantObject(databaseObject, name)
+    final StringBuilder buffer = new StringBuilder(256);
+    if (namedObject != null)
     {
-
-      private static final long serialVersionUID = -6700397214465123353L;
-    });
+      final String fullName = namedObject.getFullName();
+      if (!Utility.isBlank(fullName))
+      {
+        buffer.append(fullName).append(".");
+      }
+    }
+    if (Utility.isBlank(name))
+    {
+      buffer.append("");
+    }
+    else
+    {
+      buffer.append(name);
+    }
+    return objects.get(buffer.toString());
   }
 
   /**
@@ -112,21 +117,21 @@ class NamedObjectList<N extends NamedObject>
    *        Name
    * @return Named object
    */
-  N lookup(final String name)
+  N lookup(final String fullName)
   {
-    return lookup(new AbstractNamedObject(name)
+    String key = fullName;
+    if (Utility.isBlank(key))
     {
-
-      private static final long serialVersionUID = 7241388569507782902L;
-
-    });
+      key = "";
+    }
+    return objects.get(key);
   }
 
   void remove(final NamedObject namedObject)
   {
     if (namedObject != null)
     {
-      objects.remove(namedObject);
+      objects.remove(namedObject.getFullName());
     }
   }
 
@@ -152,30 +157,9 @@ class NamedObjectList<N extends NamedObject>
    */
   List<N> values()
   {
-    final List<N> all = new ArrayList<N>(objects);
+    final List<N> all = new ArrayList<N>(objects.values());
     Collections.sort(all, sort);
     return Collections.unmodifiableList(all);
-  }
-
-  private N lookup(final NamedObject namedObject)
-  {
-    if (namedObject == null)
-    {
-      return null;
-    }
-    final boolean hasBlankName = Utility.isBlank(namedObject.getName());
-    for (final N listItem: objects)
-    {
-      if (hasBlankName && Utility.isBlank(listItem.getName()))
-      {
-        return listItem;
-      }
-      else if (namedObject.equals(listItem))
-      {
-        return listItem;
-      }
-    }
-    return null;
   }
 
 }

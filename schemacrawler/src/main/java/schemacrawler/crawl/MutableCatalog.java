@@ -36,7 +36,7 @@ class MutableCatalog
 
   private static final long serialVersionUID = 3258128063743931187L;
 
-  private final NamedObjectList<MutableSchema> schemas = new NamedObjectList<MutableSchema>(NamedObjectSort.alphabetical);
+  private final NamedObjectList<MutableSchema> schemas = new NamedObjectList<MutableSchema>();
 
   MutableCatalog(final AbstractNamedObject parent, final String name)
   {
@@ -50,7 +50,7 @@ class MutableCatalog
    */
   public MutableSchema getSchema(final String name)
   {
-    return schemas.lookup(name);
+    return schemas.lookup(this, name);
   }
 
   /**

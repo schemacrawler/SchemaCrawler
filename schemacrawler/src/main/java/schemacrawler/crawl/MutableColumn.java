@@ -42,7 +42,7 @@ class MutableColumn
   private boolean isPartOfPrimaryKey;
   private boolean isPartOfUniqueIndex;
   private MutableColumn referencedColumn;
-  private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>(NamedObjectSort.natural);
+  private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>();
 
   MutableColumn(final DatabaseObject parent, final String name)
   {

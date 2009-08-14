@@ -42,7 +42,7 @@ public class NamedObjectTest
                                                       "catalog");
 
     MutableTable table;
-    final NamedObjectList<Table> tables = new NamedObjectList<Table>(NamedObjectSort.alphabetical);
+    final NamedObjectList<Table> tables = new NamedObjectList<Table>();
 
     for (final String schemaName: schemaNames)
     {
