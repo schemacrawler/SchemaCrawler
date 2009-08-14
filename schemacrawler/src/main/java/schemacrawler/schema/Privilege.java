@@ -21,6 +21,8 @@
 package schemacrawler.schema;
 
 
+import java.io.Serializable;
+
 /**
  * Represents a privilege of a table or column.
  * 
@@ -30,25 +32,33 @@ public interface Privilege
   extends DependantObject
 {
 
-  /**
-   * Gets the grantee.
-   * 
-   * @return Grantee
-   */
-  String getGrantee();
+  Grant[] getGrants();
 
-  /**
-   * Gets the grantor.
-   * 
-   * @return Grantor
-   */
-  String getGrantor();
+  public interface Grant
+    extends Serializable
+  {
 
-  /**
-   * If the privilege is grantable.
-   * 
-   * @return Is grantable
-   */
-  boolean isGrantable();
+    /**
+     * Gets the grantee.
+     * 
+     * @return Grantee
+     */
+    String getGrantee();
+
+    /**
+     * Gets the grantor.
+     * 
+     * @return Grantor
+     */
+    String getGrantor();
+
+    /**
+     * If the privilege is grantable.
+     * 
+     * @return Is grantable
+     */
+    boolean isGrantable();
+
+  }
 
 }

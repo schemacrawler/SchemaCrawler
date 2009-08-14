@@ -102,6 +102,16 @@ final class MutableIndexColumn
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schema.Column#getPrivilege(java.lang.String)
+   */
+  public Privilege getPrivilege(final String name)
+  {
+    return column.getPrivilege(name);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see schemacrawler.schema.Column#getPrivileges()
    */
   public Privilege[] getPrivileges()

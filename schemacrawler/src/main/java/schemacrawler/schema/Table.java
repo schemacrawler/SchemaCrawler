@@ -118,6 +118,15 @@ public interface Table
   PrimaryKey getPrimaryKey();
 
   /**
+   * Gets a privilege by name.
+   * 
+   * @param name
+   *        Name
+   * @return Privilege.
+   */
+  Privilege getPrivilege(String name);
+
+  /**
    * Gets the list of privileges.
    * 
    * @return Privileges for the table.

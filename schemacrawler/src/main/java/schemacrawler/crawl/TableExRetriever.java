@@ -481,17 +481,33 @@ final class TableExRetriever
       final MutablePrivilege privilege;
       if (privilegesForColumn)
       {
-        privilege = new MutablePrivilege(column, privilegeName);
+        final MutablePrivilege columnPrivilege = column
+          .getPrivilege(privilegeName);
+        if (columnPrivilege == null)
+        {
+          privilege = new MutablePrivilege(column, privilegeName);
+          column.addPrivilege(privilege);
+        }
+        else
+        {
+          privilege = columnPrivilege;
+        }
       }
       else
       {
-        privilege = new MutablePrivilege(table, privilegeName);
+        final MutablePrivilege tablePrivilege = table
+          .getPrivilege(privilegeName);
+        if (tablePrivilege == null)
+        {
+          privilege = new MutablePrivilege(table, privilegeName);
+          table.addPrivilege(privilege);
+        }
+        else
+        {
+          privilege = tablePrivilege;
+        }
       }
-
-      privilege.setGrantor(grantor);
-      privilege.setGrantee(grantee);
-      privilege.setGrantable(isGrantable);
-
+      privilege.addGrant(grantor, grantee, isGrantable);
       privilege.addAttributes(results.getAttributes());
 
       if (privilegesForColumn)

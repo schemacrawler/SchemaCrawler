@@ -21,8 +21,13 @@
 package schemacrawler.crawl;
 
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Privilege;
+import schemacrawler.utility.Utility;
 
 /**
  * Represents a privilege of a table or column.
@@ -34,60 +39,161 @@ final class MutablePrivilege
   implements Privilege
 {
 
-  private static final long serialVersionUID = -1117664231494271886L;
+  private final class PrivilegeGrant
+    implements Grant, Comparable<Grant>
+  {
 
-  private String grantor;
-  private String grantee;
-  private boolean isGrantable;
+    private static final long serialVersionUID = 356151825191631484L;
+
+    private final String grantor;
+    private final String grantee;
+    private final boolean isGrantable;
+
+    PrivilegeGrant(final String grantor,
+                   final String grantee,
+                   final boolean isGrantable)
+    {
+      this.grantor = grantor;
+      this.grantee = grantee;
+      this.isGrantable = isGrantable;
+    }
+
+    public int compareTo(final Grant otherGrant)
+    {
+      int compare = 0;
+      if (compare == 0)
+      {
+        compare = grantor.compareTo(otherGrant.getGrantor());
+      }
+      if (compare == 0)
+      {
+        compare = grantee.compareTo(otherGrant.getGrantee());
+      }
+      return compare;
+    }
+
+    @Override
+    public boolean equals(final Object obj)
+    {
+      if (this == obj)
+      {
+        return true;
+      }
+      if (obj == null)
+      {
+        return false;
+      }
+      if (getClass() != obj.getClass())
+      {
+        return false;
+      }
+      final PrivilegeGrant other = (PrivilegeGrant) obj;
+      if (!getOuterType().equals(other.getOuterType()))
+      {
+        return false;
+      }
+      if (grantee == null)
+      {
+        if (other.grantee != null)
+        {
+          return false;
+        }
+      }
+      else if (!grantee.equals(other.grantee))
+      {
+        return false;
+      }
+      if (grantor == null)
+      {
+        if (other.grantor != null)
+        {
+          return false;
+        }
+      }
+      else if (!grantor.equals(other.grantor))
+      {
+        return false;
+      }
+      if (isGrantable != other.isGrantable)
+      {
+        return false;
+      }
+      return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see schemacrawler.schema.Privilege#getGrantee()
+     */
+    public String getGrantee()
+    {
+      return grantee;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see schemacrawler.schema.Privilege#getGrantor()
+     */
+    public String getGrantor()
+    {
+      return grantor;
+    }
+
+    @Override
+    public int hashCode()
+    {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + getOuterType().hashCode();
+      result = prime * result + (grantee == null? 0: grantee.hashCode());
+      result = prime * result + (grantor == null? 0: grantor.hashCode());
+      result = prime * result + (isGrantable? 1231: 1237);
+      return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see schemacrawler.schema.Privilege#isGrantable()
+     */
+    public boolean isGrantable()
+    {
+      return isGrantable;
+    }
+
+    private MutablePrivilege getOuterType()
+    {
+      return MutablePrivilege.this;
+    }
+
+  }
+
+  private final Set<Grant> grants = new LinkedHashSet<Grant>();
+
+  private static final long serialVersionUID = -1117664231494271886L;
 
   MutablePrivilege(final DatabaseObject parent, final String name)
   {
     super(parent, name);
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.Privilege#getGrantee()
-   */
-  public String getGrantee()
+  public Grant[] getGrants()
   {
-    return grantee;
+    final Grant[] grantsArray = grants.toArray(new Grant[grants.size()]);
+    Arrays.sort(grantsArray);
+    return grantsArray;
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.Privilege#getGrantor()
-   */
-  public String getGrantor()
+  void addGrant(final String grantor,
+                final String grantee,
+                final boolean isGrantable)
   {
-    return grantor;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.Privilege#isGrantable()
-   */
-  public boolean isGrantable()
-  {
-    return isGrantable;
-  }
-
-  void setGrantable(final boolean grantable)
-  {
-    isGrantable = grantable;
-  }
-
-  void setGrantee(final String grantee)
-  {
-    this.grantee = grantee;
-  }
-
-  void setGrantor(final String grantor)
-  {
-    this.grantor = grantor;
+    if (!Utility.isBlank(grantor) && !Utility.isBlank(grantee))
+    {
+      grants.add(new PrivilegeGrant(grantor, grantee, isGrantable));
+    }
   }
 
 }
