@@ -75,7 +75,6 @@ final class ProcedureExRetriever
 
     final Connection connection = getDatabaseConnection();
     final Statement statement = connection.createStatement();
-    statement.setFetchSize(FETCHSIZE);
     MetadataResultSet results = null;
     try
     {

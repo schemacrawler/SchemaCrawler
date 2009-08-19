@@ -85,7 +85,6 @@ final class TableExRetriever
 
     final Connection connection = getDatabaseConnection();
     Statement statement = connection.createStatement();
-    statement.setFetchSize(FETCHSIZE);
     MetadataResultSet results = null;
     try
     {
@@ -162,7 +161,6 @@ final class TableExRetriever
 
     // Get check constraint definitions
     statement = connection.createStatement();
-    statement.setFetchSize(FETCHSIZE);
     results = new MetadataResultSet(statement
       .executeQuery(checkConstraintInformationSql));
     try
@@ -276,7 +274,6 @@ final class TableExRetriever
 
     final Connection connection = getDatabaseConnection();
     final Statement statement = connection.createStatement();
-    statement.setFetchSize(FETCHSIZE);
     MetadataResultSet results = null;
     try
     {
@@ -387,7 +384,6 @@ final class TableExRetriever
 
     final Connection connection = getDatabaseConnection();
     final Statement statement = connection.createStatement();
-    statement.setFetchSize(FETCHSIZE);
     MetadataResultSet results = null;
     try
     {
@@ -445,7 +441,6 @@ final class TableExRetriever
                                 final boolean privilegesForColumn)
     throws SQLException
   {
-    results.setFetchSize(FETCHSIZE);
     while (results.next())
     {
       final String catalogName = results.getString("TABLE_CAT");
