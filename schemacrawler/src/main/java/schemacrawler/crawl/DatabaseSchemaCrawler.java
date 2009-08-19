@@ -377,7 +377,8 @@ public final class DatabaseSchemaCrawler
 
       for (final MutableTable table: allTables)
       {
-        if (infoLevel.isRetrieveTableColumns())
+        if (!(table instanceof MutableView)
+            && infoLevel.isRetrieveTableColumns())
         {
           retriever.retrievePrimaryKeys(table);
           if (infoLevel.isRetrieveIndices())
