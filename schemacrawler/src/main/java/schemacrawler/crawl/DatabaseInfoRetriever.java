@@ -271,7 +271,7 @@ final class DatabaseInfoRetriever
         final String literalSuffix = results.getString("LITERAL_SUFFIX");
         final String createParameters = results.getString("CREATE_PARAMS");
         final boolean isNullable = results
-          .getInt(NULLABLE, DatabaseMetaData.typeNullableUnknown) == DatabaseMetaData.typeNullable;
+          .getInt("NULLABLE", DatabaseMetaData.typeNullableUnknown) == DatabaseMetaData.typeNullable;
         final boolean isCaseSensitive = results.getBoolean("CASE_SENSITIVE");
         final int searchable = results.getInt("SEARCHABLE", -1);
         final boolean isUnsigned = results.getBoolean("UNSIGNED_ATTRIBUTE");
