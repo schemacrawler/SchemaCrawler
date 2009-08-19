@@ -445,11 +445,11 @@ final class TableExRetriever
     {
       final String catalogName = results.getString("TABLE_CAT");
       final String schemaName = results.getString("TABLE_SCHEM");
-      final String tableName = results.getString(TABLE_NAME);
+      final String tableName = results.getString("TABLE_NAME");
       final String columnName;
       if (privilegesForColumn)
       {
-        columnName = results.getString(COLUMN_NAME);
+        columnName = results.getString("COLUMN_NAME");
       }
       else
       {

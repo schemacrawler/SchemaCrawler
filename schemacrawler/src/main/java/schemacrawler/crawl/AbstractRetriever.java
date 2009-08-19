@@ -36,15 +36,6 @@ import schemacrawler.utility.Utility;
 abstract class AbstractRetriever
 {
 
-  protected static final String COLUMN_NAME = "COLUMN_NAME";
-
-  protected static final String DATA_TYPE = "DATA_TYPE";
-  protected static final String KEY_SEQ = "KEY_SEQ";
-  protected static final String NULLABLE = "NULLABLE";
-  protected static final String ORDINAL_POSITION = "ORDINAL_POSITION";
-  protected static final String REMARKS = "REMARKS";
-  protected static final String TABLE_NAME = "TABLE_NAME";
-  protected static final String TYPE_NAME = "TYPE_NAME";
   protected static final String UNKNOWN = "<unknown>";
 
   private final RetrieverConnection retrieverConnection;

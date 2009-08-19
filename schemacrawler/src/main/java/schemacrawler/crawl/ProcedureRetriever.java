@@ -78,7 +78,7 @@ final class ProcedureRetriever
         final String columnCatalogName = results.getString("PROCEDURE_CAT");
         final String schemaName = results.getString("PROCEDURE_SCHEM");
         final String procedureName = results.getString("PROCEDURE_NAME");
-        final String columnName = results.getString(COLUMN_NAME);
+        final String columnName = results.getString("COLUMN_NAME");
 
         final MutableProcedureColumn column = new MutableProcedureColumn(procedure,
                                                                          columnName);
@@ -89,14 +89,14 @@ final class ProcedureRetriever
         {
           LOGGER.log(Level.FINER, "Retrieving procedure column: " + columnName);
           final short columnType = results.getShort("COLUMN_TYPE", (short) 0);
-          final int dataType = results.getInt(DATA_TYPE, 0);
-          final String typeName = results.getString(TYPE_NAME);
+          final int dataType = results.getInt("DATA_TYPE", 0);
+          final String typeName = results.getString("TYPE_NAME");
           final int length = results.getInt("LENGTH", 0);
           final int precision = results.getInt("PRECISION", 0);
           final boolean isNullable = results
-            .getShort(NULLABLE,
+            .getShort("NULLABLE",
                       (short) DatabaseMetaData.procedureNullableUnknown) == DatabaseMetaData.procedureNullable;
-          final String remarks = results.getString(REMARKS);
+          final String remarks = results.getString("REMARKS");
           column.setOrdinalPosition(ordinalNumber++);
           column
             .setProcedureColumnType(ProcedureColumnType.valueOf(columnType));
@@ -152,7 +152,7 @@ final class ProcedureRetriever
         LOGGER.log(Level.FINER, "Retrieving procedure: " + procedureName);
         final short procedureType = results
           .getShort("PROCEDURE_TYPE", (short) ProcedureType.unknown.getId());
-        final String remarks = results.getString(REMARKS);
+        final String remarks = results.getString("REMARKS");
 
         final MutableSchema schema = lookupSchema(catalogName, schemaName);
         if (schema == null)

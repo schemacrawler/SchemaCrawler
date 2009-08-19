@@ -91,7 +91,7 @@ final class TableRetriever
         final String columnCatalogName = results.getString("TABLE_CAT");
         final String schemaName = results.getString("TABLE_SCHEM");
         final String tableName = results.getString("TABLE_NAME");
-        final String columnName = results.getString(COLUMN_NAME);
+        final String columnName = results.getString("COLUMN_NAME");
         LOGGER.log(Level.FINER, String.format("Retrieving column: %s.%s",
                                               tableName,
                                               columnName));
@@ -109,14 +109,14 @@ final class TableRetriever
         {
           column = lookupOrCreateColumn(table, columnName, true/* add */);
 
-          final int ordinalPosition = results.getInt(ORDINAL_POSITION, 0);
-          final int dataType = results.getInt(DATA_TYPE, 0);
-          final String typeName = results.getString(TYPE_NAME);
+          final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
+          final int dataType = results.getInt("DATA_TYPE", 0);
+          final String typeName = results.getString("TYPE_NAME");
           final int size = results.getInt("COLUMN_SIZE", 0);
           final int decimalDigits = results.getInt("DECIMAL_DIGITS", 0);
           final boolean isNullable = results
-            .getInt(NULLABLE, DatabaseMetaData.columnNullableUnknown) == DatabaseMetaData.columnNullable;
-          final String remarks = results.getString(REMARKS);
+            .getInt("NULLABLE", DatabaseMetaData.columnNullableUnknown) == DatabaseMetaData.columnNullable;
+          final String remarks = results.getString("REMARKS");
 
           column.setOrdinalPosition(ordinalPosition);
           column.setType(lookupOrCreateColumnDataType((MutableSchema) table
@@ -225,9 +225,9 @@ final class TableRetriever
         // final String catalogName = results.getString("TABLE_CAT");
         // final String schemaName = results.getString("TABLE_SCHEM");
         // final String tableName = results.getString("TABLE_NAME");
-        final String columnName = results.getString(COLUMN_NAME);
+        final String columnName = results.getString("COLUMN_NAME");
         final String primaryKeyName = results.getString("PK_NAME");
-        final int keySequence = Integer.parseInt(results.getString(KEY_SEQ));
+        final int keySequence = Integer.parseInt(results.getString("KEY_SEQ"));
 
         primaryKey = table.getPrimaryKey();
         if (primaryKey == null)
@@ -292,13 +292,13 @@ final class TableRetriever
       {
         // final String catalogName = results.getString("TABLE_CAT");
         final String schemaName = results.getString("TABLE_SCHEM");
-        final String tableName = results.getString(TABLE_NAME);
+        final String tableName = results.getString("TABLE_NAME");
         LOGGER.log(Level.FINER, String.format("Retrieving table: %s.%s",
                                               schemaName,
                                               tableName));
         final TableType tableType = TableType.valueOf(results
           .getString("TABLE_TYPE").toLowerCase(Locale.ENGLISH));
-        final String remarks = results.getString(REMARKS);
+        final String remarks = results.getString("REMARKS");
 
         final MutableSchema schema = lookupSchema(catalogName, schemaName);
         if (schema == null)
@@ -365,7 +365,7 @@ final class TableRetriever
           foreignKeys.add(foreignKey);
         }
 
-        final int keySequence = results.getInt(KEY_SEQ, 0);
+        final int keySequence = results.getInt("KEY_SEQ", 0);
         final int updateRule = results.getInt("UPDATE_RULE",
                                               ForeignKeyUpdateRule.unknown
                                                 .getId());
@@ -421,7 +421,7 @@ final class TableRetriever
         }
         LOGGER.log(Level.FINER, String.format("Retrieving index: %s.%s", table
           .getFullName(), indexName));
-        final String columnName = results.getString(COLUMN_NAME);
+        final String columnName = results.getString("COLUMN_NAME");
         if (Utility.isBlank(columnName))
         {
           continue;
@@ -436,7 +436,7 @@ final class TableRetriever
 
         final boolean uniqueIndex = !results.getBoolean("NON_UNIQUE");
         final int type = results.getInt("TYPE", IndexType.unknown.getId());
-        final int ordinalPosition = results.getInt(ORDINAL_POSITION, 0);
+        final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
         final String sortSequence = results.getString("ASC_OR_DESC");
         final int cardinality = results.getInt("CARDINALITY", 0);
         final int pages = results.getInt("PAGES", 0);
