@@ -179,7 +179,6 @@ final class TableRetriever
         LOGGER.log(Level.FINE, "Using getIndexInfo SQL:\n" + indexInfoSql);
         final Connection connection = getDatabaseConnection();
         statement = connection.createStatement();
-        statement.setFetchSize(FETCHSIZE);
         results = new MetadataResultSet(statement.executeQuery(indexInfoSql));
         createIndices(table, results);
       }
@@ -287,15 +286,6 @@ final class TableRetriever
                  getRetrieverConnection().getSchemaPattern(),
                  "%",
                  TableType.toStrings(tableTypes));
-    try
-    {
-      results.setFetchSize(FETCHSIZE);
-    }
-    catch (final NullPointerException e)
-    {
-      // Need this catch for the JDBC/ ODBC driver
-      LOGGER.log(Level.WARNING, "", e);
-    }
     try
     {
       while (results.next())

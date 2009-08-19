@@ -48,6 +48,8 @@ final class MetadataResultSet
   private static final Logger LOGGER = Logger.getLogger(MetadataResultSet.class
     .getName());
 
+  private static final int FETCHSIZE = 20;
+
   private final ResultSet results;
   private final Set<String> resultSetColumns;
   private Set<String> readColumns;
@@ -59,6 +61,19 @@ final class MetadataResultSet
       throw new IllegalArgumentException("Cannot use null results");
     }
     results = resultSet;
+    try
+    {
+      results.setFetchSize(FETCHSIZE);
+    }
+    catch (final NullPointerException e)
+    {
+      // Need this catch for the JDBC/ ODBC driver
+      LOGGER.log(Level.WARNING, "", e);
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not set fetch size", e);
+    }
 
     final Set<String> resultSetColumns = new HashSet<String>();
     try

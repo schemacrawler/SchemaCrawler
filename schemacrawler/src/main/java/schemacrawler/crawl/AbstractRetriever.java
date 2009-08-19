@@ -47,8 +47,6 @@ abstract class AbstractRetriever
   protected static final String TYPE_NAME = "TYPE_NAME";
   protected static final String UNKNOWN = "<unknown>";
 
-  protected static final int FETCHSIZE = 20;
-
   private final RetrieverConnection retrieverConnection;
   protected final MutableDatabase database;
 

@@ -143,15 +143,6 @@ final class ProcedureRetriever
                                    "%"));
     try
     {
-      results.setFetchSize(FETCHSIZE);
-    }
-    catch (final NullPointerException e)
-    {
-      // Need this catch for the JDBC/ ODBC driver
-      LOGGER.log(Level.WARNING, "", e);
-    }
-    try
-    {
       while (results.next())
       {
         // final String catalogName =
