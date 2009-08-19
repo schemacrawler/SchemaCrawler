@@ -87,6 +87,8 @@ final class RetrieverConnection
     {
       LOGGER.log(Level.WARNING, "", e);
     }
+    LOGGER.log(Level.FINE, "All catalogs: " + catalogNames);
+
     for (final Iterator<String> catalogNamesIterator = catalogNames.iterator(); catalogNamesIterator
       .hasNext();)
     {
