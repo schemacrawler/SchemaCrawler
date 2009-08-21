@@ -22,6 +22,8 @@ package schemacrawler.crawl;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -33,10 +35,12 @@ import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.Index;
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableAssociationType;
+import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
 
@@ -52,7 +56,7 @@ class MutableTable
 
   private static final long serialVersionUID = 3257290248802284852L;
 
-  private TableType type = TableType.unknown;// Default value
+  private TableType type = TableType.unknown; // Default value
   private MutablePrimaryKey primaryKey;
   private final NamedObjectList<MutableColumn> columns = new NamedObjectList<MutableColumn>();
   private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<MutableForeignKey>();
@@ -153,10 +157,11 @@ class MutableTable
   {
     final List<MutableForeignKey> foreignKeysList = new ArrayList<MutableForeignKey>(foreignKeys
       .values());
-    for (final Iterator<MutableForeignKey> iterator = foreignKeysList
-      .iterator(); iterator.hasNext();)
+    if (tableAssociationType != null
+        && tableAssociationType != TableAssociationType.all)
     {
-      if (tableAssociationType != null)
+      for (final Iterator<MutableForeignKey> iterator = foreignKeysList
+        .iterator(); iterator.hasNext();)
       {
         final MutableForeignKey mutableForeignKey = iterator.next();
         final ForeignKeyColumnMap[] columnPairs = mutableForeignKey
@@ -194,6 +199,53 @@ class MutableTable
       }
     }
     return foreignKeysList.toArray(new ForeignKey[foreignKeysList.size()]);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Table#getRelatedTables(schemacrawler.schema.TableRelationshipType)
+   */
+  public Table[] getRelatedTables(final TableRelationshipType tableRelationshipType)
+  {
+    final Set<MutableTable> relatedTables = new HashSet<MutableTable>();
+    if (tableRelationshipType != null
+        && tableRelationshipType != TableRelationshipType.none)
+    {
+      final List<MutableForeignKey> foreignKeysList = new ArrayList<MutableForeignKey>(foreignKeys
+        .values());
+      for (final Iterator<MutableForeignKey> iterator = foreignKeysList
+        .iterator(); iterator.hasNext();)
+      {
+        final MutableForeignKey mutableForeignKey = iterator.next();
+        for (final ForeignKeyColumnMap columnPair: mutableForeignKey
+          .getColumnPairs())
+        {
+          final MutableTable parentTable = (MutableTable) columnPair
+            .getPrimaryKeyColumn().getParent();
+          final MutableTable childTable = (MutableTable) columnPair
+            .getForeignKeyColumn().getParent();
+          switch (tableRelationshipType)
+          {
+            case parent:
+              if (this.equals(childTable))
+              {
+                relatedTables.add(parentTable);
+              }
+              break;
+            case child:
+              if (this.equals(parentTable))
+              {
+                relatedTables.add(childTable);
+              }
+              break;
+            default:
+              break;
+          }
+        }
+      }
+    }
+    return relatedTables.toArray(new Table[relatedTables.size()]);
   }
 
   /**
@@ -364,6 +416,45 @@ class MutableTable
     {
       weakAssociations.add(columnMap);
     }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public int compareTo(final NamedObject obj)
+  {
+    if (obj == null)
+    {
+      return -1;
+    }
+
+    final MutableTable other = (MutableTable) obj;
+    int comparison = 0;
+
+    if (comparison == 0)
+    {
+      if (Arrays.asList(this.getRelatedTables(TableRelationshipType.child))
+        .contains(other))
+      {
+        comparison = -1;
+      }
+      else if (Arrays.asList(this
+        .getRelatedTables(TableRelationshipType.parent)).contains(other))
+      {
+        comparison = 1;
+      }
+    }
+    if (comparison == 0)
+    {
+      comparison = this.type.compareTo(other.getType());
+    }
+    if (comparison == 0)
+    {
+      comparison = super.compareTo(other);
+    }
+
+    return comparison;
   }
 
   /**

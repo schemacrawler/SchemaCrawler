@@ -66,6 +66,11 @@ class MutableForeignKey
   @Override
   public int compareTo(final NamedObject obj)
   {
+    if (obj == null)
+    {
+      return -1;
+    }
+
     final ForeignKey other = (ForeignKey) obj;
     int comparison = 0;
     final ForeignKeyColumnMap[] thisColumnPairs = getColumnPairs();
