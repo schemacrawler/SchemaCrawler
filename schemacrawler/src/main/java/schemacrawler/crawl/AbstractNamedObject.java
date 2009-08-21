@@ -43,7 +43,6 @@ abstract class AbstractNamedObject
 
   private String remarks;
   private final Map<String, Object> attributeMap = new LinkedHashMap<String, Object>();
-  private final NamedObjectSort comparator = NamedObjectSort.alphabetical;
 
   private transient int hashCode;
 
@@ -59,7 +58,12 @@ abstract class AbstractNamedObject
    */
   public int compareTo(final NamedObject obj)
   {
-    return comparator.compare(this, obj);
+    if (obj == null)
+    {
+      return -1;
+    }
+
+    return NamedObjectSort.alphabetical.compare(this, obj);
   }
 
   /**

@@ -24,7 +24,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
 import java.util.Locale;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -370,6 +372,59 @@ public class SchemaCrawlerTest
                      tableTypes[schemaIdx][tableIdx],
                      table.getType().toString().toUpperCase(Locale.ENGLISH));
       }
+    }
+  }
+
+  @Test
+  public void tablesSort()
+    throws Exception
+  {
+
+    final String[][] tableNames = {
+        {},
+        {
+            "CUSTOMER",
+            "INVOICE",
+            "ITEM",
+            "PRODUCT",
+            "SUPPLIER",
+            "CUSTOMERLIST",
+        },
+        {
+            "ITEM", "PRODUCT2"
+        }
+    };
+    final Random rnd = new Random();
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.basic());
+
+    final Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
+    final Schema[] schemas = catalog.getSchemas();
+    assertEquals("Schema count does not match", 3, schemas.length);
+    final Schema schema = schemas[1];
+    final Table[] tables = schema.getTables();
+    for (int i = 0; i < 10; i++)
+    {
+      // for (int tableIdx = 0; tableIdx < tables.size(); tableIdx++)
+      // {
+      // final Table table = tables.get(tableIdx);
+      // assertEquals("Table name does not match in iteration " + i,
+      // tableNames[schemaIdx][tableIdx],
+      // table.getName());
+      // }
+
+      // Shuffle array, and sort it again
+      for (int k = tables.length; k > 1; k--)
+      {
+        final int i1 = k - 1;
+        final int i2 = rnd.nextInt(k);
+        final Table tmp = tables[i1];
+        tables[i1] = tables[i2];
+        tables[i2] = tmp;
+      }
+      Arrays.sort(tables);
+      System.err.println("Iteration #" + i + ": " + Arrays.toString(tables));
     }
   }
 

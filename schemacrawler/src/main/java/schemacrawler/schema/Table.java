@@ -95,6 +95,18 @@ public interface Table
   ForeignKey[] getForeignKeys(TableAssociationType tableAssociationType);
 
   /**
+   * Gets the tables related to this one, based on the specified
+   * relationship type. Child tables are those who have a foreign key
+   * from this table. Parent tables are those to which this table has a
+   * foreign key.
+   * 
+   * @param tableRelationshipType
+   *        Table relationship type
+   * @return Related tables.
+   */
+  Table[] getRelatedTables(final TableRelationshipType tableRelationshipType);
+
+  /**
    * Gets an index by name.
    * 
    * @param name

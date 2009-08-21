@@ -36,8 +36,8 @@ enum NamedObjectSort
     public int compare(final NamedObject namedObject1,
                        final NamedObject namedObject2)
     {
-      return namedObject1.toString().compareToIgnoreCase(namedObject2
-        .toString());
+      return namedObject1.getFullName().compareToIgnoreCase(namedObject2
+        .getFullName());
     }
   },
 

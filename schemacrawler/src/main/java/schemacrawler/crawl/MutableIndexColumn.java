@@ -34,6 +34,11 @@ final class MutableIndexColumn
   @Override
   public int compareTo(final NamedObject obj)
   {
+    if (obj == null)
+    {
+      return -1;
+    }
+
     final MutableIndexColumn other = (MutableIndexColumn) obj;
     int comparison = 0;
 

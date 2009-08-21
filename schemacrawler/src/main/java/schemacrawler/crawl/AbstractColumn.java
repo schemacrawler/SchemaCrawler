@@ -56,6 +56,11 @@ abstract class AbstractColumn
   @Override
   public int compareTo(final NamedObject obj)
   {
+    if (obj == null)
+    {
+      return -1;
+    }
+
     final BaseColumn other = (BaseColumn) obj;
     int comparison = 0;
 
