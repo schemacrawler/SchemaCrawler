@@ -32,8 +32,6 @@ public interface Privilege
   extends DependantObject
 {
 
-  Grant[] getGrants();
-
   public interface Grant
     extends Serializable
   {
@@ -60,5 +58,7 @@ public interface Privilege
     boolean isGrantable();
 
   }
+
+  Grant[] getGrants();
 
 }

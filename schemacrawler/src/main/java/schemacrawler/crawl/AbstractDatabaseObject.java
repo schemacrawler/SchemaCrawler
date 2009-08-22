@@ -88,6 +88,7 @@ abstract class AbstractDatabaseObject
    * 
    * @see Object#toString()
    */
+  @Override
   public String getFullName()
   {
     buildFullName();

@@ -74,7 +74,7 @@ final class RetrieverConnection
       throw new SchemaCrawlerException("Connection is closed");
     }
     this.connection = connection;
-    this.metaData = connection.getMetaData();
+    metaData = connection.getMetaData();
 
     final Set<String> catalogNames = new HashSet<String>();
     try

@@ -89,6 +89,7 @@ abstract class AbstractDependantObject
    * 
    * @see schemacrawler.crawl.AbstractDatabaseObject#getFullName()
    */
+  @Override
   public String getFullName()
   {
     buildFullName();
