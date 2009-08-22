@@ -73,6 +73,45 @@ class MutableTable
 
   /**
    * {@inheritDoc}
+   */
+  @Override
+  public int compareTo(final NamedObject obj)
+  {
+    if (obj == null)
+    {
+      return -1;
+    }
+
+    final MutableTable other = (MutableTable) obj;
+    int comparison = 0;
+
+    if (comparison == 0)
+    {
+      if (Arrays.asList(getRelatedTables(TableRelationshipType.child))
+        .contains(other))
+      {
+        comparison = -1;
+      }
+      else if (Arrays.asList(getRelatedTables(TableRelationshipType.parent))
+        .contains(other))
+      {
+        comparison = 1;
+      }
+    }
+    if (comparison == 0)
+    {
+      comparison = type.compareTo(other.getType());
+    }
+    if (comparison == 0)
+    {
+      comparison = super.compareTo(other);
+    }
+
+    return comparison;
+  }
+
+  /**
+   * {@inheritDoc}
    * 
    * @see Table#getCheckConstraints()
    */
@@ -204,53 +243,6 @@ class MutableTable
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.Table#getRelatedTables(schemacrawler.schema.TableRelationshipType)
-   */
-  public Table[] getRelatedTables(final TableRelationshipType tableRelationshipType)
-  {
-    final Set<MutableTable> relatedTables = new HashSet<MutableTable>();
-    if (tableRelationshipType != null
-        && tableRelationshipType != TableRelationshipType.none)
-    {
-      final List<MutableForeignKey> foreignKeysList = new ArrayList<MutableForeignKey>(foreignKeys
-        .values());
-      for (final Iterator<MutableForeignKey> iterator = foreignKeysList
-        .iterator(); iterator.hasNext();)
-      {
-        final MutableForeignKey mutableForeignKey = iterator.next();
-        for (final ForeignKeyColumnMap columnPair: mutableForeignKey
-          .getColumnPairs())
-        {
-          final MutableTable parentTable = (MutableTable) columnPair
-            .getPrimaryKeyColumn().getParent();
-          final MutableTable childTable = (MutableTable) columnPair
-            .getForeignKeyColumn().getParent();
-          switch (tableRelationshipType)
-          {
-            case parent:
-              if (this.equals(childTable))
-              {
-                relatedTables.add(parentTable);
-              }
-              break;
-            case child:
-              if (this.equals(parentTable))
-              {
-                relatedTables.add(childTable);
-              }
-              break;
-            default:
-              break;
-          }
-        }
-      }
-    }
-    return relatedTables.toArray(new Table[relatedTables.size()]);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see schemacrawler.schema.Table#getIndex(java.lang.String)
    */
   public MutableIndex getIndex(final String name)
@@ -306,6 +298,51 @@ class MutableTable
   public Privilege[] getPrivileges()
   {
     return privileges.values().toArray(new Privilege[privileges.size()]);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Table#getRelatedTables(schemacrawler.schema.TableRelationshipType)
+   */
+  public Table[] getRelatedTables(final TableRelationshipType tableRelationshipType)
+  {
+    final Set<MutableTable> relatedTables = new HashSet<MutableTable>();
+    if (tableRelationshipType != null
+        && tableRelationshipType != TableRelationshipType.none)
+    {
+      final List<MutableForeignKey> foreignKeysList = new ArrayList<MutableForeignKey>(foreignKeys
+        .values());
+      for (final MutableForeignKey mutableForeignKey: foreignKeysList)
+      {
+        for (final ForeignKeyColumnMap columnPair: mutableForeignKey
+          .getColumnPairs())
+        {
+          final MutableTable parentTable = (MutableTable) columnPair
+            .getPrimaryKeyColumn().getParent();
+          final MutableTable childTable = (MutableTable) columnPair
+            .getForeignKeyColumn().getParent();
+          switch (tableRelationshipType)
+          {
+            case parent:
+              if (equals(childTable))
+              {
+                relatedTables.add(parentTable);
+              }
+              break;
+            case child:
+              if (equals(parentTable))
+              {
+                relatedTables.add(childTable);
+              }
+              break;
+            default:
+              break;
+          }
+        }
+      }
+    }
+    return relatedTables.toArray(new Table[relatedTables.size()]);
   }
 
   /**
@@ -416,45 +453,6 @@ class MutableTable
     {
       weakAssociations.add(columnMap);
     }
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public int compareTo(final NamedObject obj)
-  {
-    if (obj == null)
-    {
-      return -1;
-    }
-
-    final MutableTable other = (MutableTable) obj;
-    int comparison = 0;
-
-    if (comparison == 0)
-    {
-      if (Arrays.asList(this.getRelatedTables(TableRelationshipType.child))
-        .contains(other))
-      {
-        comparison = -1;
-      }
-      else if (Arrays.asList(this
-        .getRelatedTables(TableRelationshipType.parent)).contains(other))
-      {
-        comparison = 1;
-      }
-    }
-    if (comparison == 0)
-    {
-      comparison = this.type.compareTo(other.getType());
-    }
-    if (comparison == 0)
-    {
-      comparison = super.compareTo(other);
-    }
-
-    return comparison;
   }
 
   /**
