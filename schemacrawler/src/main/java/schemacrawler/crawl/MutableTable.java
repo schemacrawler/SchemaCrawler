@@ -71,10 +71,37 @@ class MutableTable
     super(schema, name);
   }
 
+  TableCategory getTableCategory()
+  {
+    final TableCategory tableCategory;
+    final int numImportedKeys = getForeignKeys(TableAssociationType.imported).length;
+    final int numExportedKeys = getForeignKeys(TableAssociationType.exported).length;
+    if (numImportedKeys == 0 && numExportedKeys == 0)
+    {
+      tableCategory = TableCategory.hasNoReferences;
+    }
+    else if (numImportedKeys == 0 && numExportedKeys > 0)
+    {
+      tableCategory = TableCategory.hasOnlyExportedKeys;
+    }
+    else if (numImportedKeys > 0 && numExportedKeys == 0)
+    {
+      tableCategory = TableCategory.hasOnlyImportedKeys;
+    }
+    else if (numImportedKeys > 0 && numExportedKeys > 0)
+    {
+      tableCategory = TableCategory.hasBothReferences;
+    }
+    else
+    {
+      tableCategory = TableCategory.hasNoReferences;
+    }
+    return tableCategory;
+  }
+
   /**
    * {@inheritDoc}
    */
-  @Override
   public int compareTo(final NamedObject obj)
   {
     if (obj == null)
@@ -87,6 +114,15 @@ class MutableTable
 
     if (comparison == 0)
     {
+      comparison = this.getType().compareTo(other.getType());
+    }
+    if (comparison == 0)
+    {
+      comparison = this.getTableCategory().compareTo(other.getTableCategory());
+    }
+    if (comparison == 0
+        && this.getTableCategory() == TableCategory.hasBothReferences)
+    {
       if (Arrays.asList(getRelatedTables(TableRelationshipType.child))
         .contains(other))
       {
@@ -97,10 +133,6 @@ class MutableTable
       {
         comparison = 1;
       }
-    }
-    if (comparison == 0)
-    {
-      comparison = type.compareTo(other.getType());
     }
     if (comparison == 0)
     {

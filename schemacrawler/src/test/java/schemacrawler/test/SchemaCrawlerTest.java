@@ -380,39 +380,93 @@ public class SchemaCrawlerTest
     throws Exception
   {
 
-    final String[][] tableNames = {
-        {},
-        {
-            "CUSTOMER",
-            "INVOICE",
-            "ITEM",
-            "PRODUCT",
-            "SUPPLIER",
-            "CUSTOMERLIST",
-        },
-        {
-            "ITEM", "PRODUCT2"
-        }
+    final String[] tableNames = {
+        "SUPPLIER", "CUSTOMER", "PRODUCT", "INVOICE", "ITEM", "CUSTOMERLIST",
     };
     final Random rnd = new Random();
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.basic());
 
     final Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
     final Schema[] schemas = catalog.getSchemas();
     assertEquals("Schema count does not match", 3, schemas.length);
     final Schema schema = schemas[1];
+
+    assertTrue("CUSTOMER -- CUSTOMER", schema.getTable("CUSTOMER")
+      .compareTo(schema.getTable("CUSTOMER")) == 0);
+    assertTrue("CUSTOMER -- PRODUCT", schema.getTable("CUSTOMER")
+      .compareTo(schema.getTable("PRODUCT")) < 0);
+    assertTrue("CUSTOMER -- INVOICE", schema.getTable("CUSTOMER")
+      .compareTo(schema.getTable("INVOICE")) < 0);
+    assertTrue("CUSTOMER -- ITEM", schema.getTable("CUSTOMER").compareTo(schema
+      .getTable("ITEM")) < 0);
+    assertTrue("CUSTOMER -- CUSTOMERLIST", schema.getTable("CUSTOMER")
+      .compareTo(schema.getTable("CUSTOMERLIST")) < 0);
+    assertTrue("CUSTOMER -- SUPPLIER", schema.getTable("CUSTOMER")
+      .compareTo(schema.getTable("SUPPLIER")) > 0);
+
+    assertTrue("PRODUCT -- PRODUCT", schema.getTable("PRODUCT")
+      .compareTo(schema.getTable("PRODUCT")) == 0);
+    assertTrue("PRODUCT -- INVOICE", schema.getTable("PRODUCT")
+      .compareTo(schema.getTable("INVOICE")) < 0);
+    assertTrue("PRODUCT -- ITEM", schema.getTable("PRODUCT").compareTo(schema
+      .getTable("ITEM")) < 0);
+    assertTrue("PRODUCT -- CUSTOMERLIST", schema.getTable("PRODUCT")
+      .compareTo(schema.getTable("CUSTOMERLIST")) < 0);
+    assertTrue("PRODUCT -- SUPPLIER", schema.getTable("PRODUCT")
+      .compareTo(schema.getTable("SUPPLIER")) > 0);
+    assertTrue("PRODUCT -- CUSTOMER", schema.getTable("PRODUCT")
+      .compareTo(schema.getTable("CUSTOMER")) > 0);
+
+    assertTrue("SUPPLIER -- SUPPLIER", schema.getTable("SUPPLIER")
+      .compareTo(schema.getTable("SUPPLIER")) == 0);
+    assertTrue("SUPPLIER -- CUSTOMER", schema.getTable("SUPPLIER")
+      .compareTo(schema.getTable("CUSTOMER")) < 0);
+    assertTrue("SUPPLIER -- PRODUCT", schema.getTable("SUPPLIER")
+      .compareTo(schema.getTable("PRODUCT")) < 0);
+    assertTrue("SUPPLIER -- INVOICE", schema.getTable("SUPPLIER")
+      .compareTo(schema.getTable("INVOICE")) < 0);
+    assertTrue("SUPPLIER -- ITEM", schema.getTable("SUPPLIER").compareTo(schema
+      .getTable("ITEM")) < 0);
+    assertTrue("SUPPLIER -- CUSTOMERLIST", schema.getTable("SUPPLIER")
+      .compareTo(schema.getTable("CUSTOMERLIST")) < 0);
+
+    assertTrue("INVOICE -- INVOICE", schema.getTable("INVOICE")
+      .compareTo(schema.getTable("INVOICE")) == 0);
+    assertTrue("INVOICE -- ITEM", schema.getTable("INVOICE").compareTo(schema
+      .getTable("ITEM")) < 0);
+    assertTrue("INVOICE -- CUSTOMERLIST", schema.getTable("INVOICE")
+      .compareTo(schema.getTable("CUSTOMERLIST")) < 0);
+    assertTrue("INVOICE -- SUPPLIER", schema.getTable("INVOICE")
+      .compareTo(schema.getTable("SUPPLIER")) > 0);
+    assertTrue("INVOICE -- CUSTOMER", schema.getTable("INVOICE")
+      .compareTo(schema.getTable("CUSTOMER")) > 0);
+    assertTrue("INVOICE -- PRODUCT", schema.getTable("INVOICE")
+      .compareTo(schema.getTable("PRODUCT")) > 0);
+
+    assertTrue("ITEM -- ITEM", schema.getTable("ITEM").compareTo(schema
+      .getTable("ITEM")) == 0);
+    assertTrue("ITEM -- CUSTOMERLIST", schema.getTable("ITEM").compareTo(schema
+      .getTable("CUSTOMERLIST")) < 0);
+    assertTrue("ITEM -- SUPPLIER", schema.getTable("ITEM").compareTo(schema
+      .getTable("SUPPLIER")) > 0);
+    assertTrue("ITEM -- CUSTOMER", schema.getTable("ITEM").compareTo(schema
+      .getTable("CUSTOMER")) > 0);
+    assertTrue("ITEM -- PRODUCT", schema.getTable("ITEM").compareTo(schema
+      .getTable("PRODUCT")) > 0);
+    assertTrue("ITEM -- INVOICE", schema.getTable("ITEM").compareTo(schema
+      .getTable("INVOICE")) > 0);
+
     final Table[] tables = schema.getTables();
     for (int i = 0; i < 10; i++)
     {
-      // for (int tableIdx = 0; tableIdx < tables.size(); tableIdx++)
-      // {
-      // final Table table = tables.get(tableIdx);
-      // assertEquals("Table name does not match in iteration " + i,
-      // tableNames[schemaIdx][tableIdx],
-      // table.getName());
-      // }
+      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
+      {
+        final Table table = tables[tableIdx];
+        assertEquals("Table name does not match in iteration " + i,
+                     tableNames[tableIdx],
+                     table.getName());
+      }
 
       // Shuffle array, and sort it again
       for (int k = tables.length; k > 1; k--)
@@ -424,7 +478,6 @@ public class SchemaCrawlerTest
         tables[i2] = tmp;
       }
       Arrays.sort(tables);
-      System.err.println("Iteration #" + i + ": " + Arrays.toString(tables));
     }
   }
 
