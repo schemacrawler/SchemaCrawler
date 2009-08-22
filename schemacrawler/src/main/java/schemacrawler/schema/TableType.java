@@ -33,20 +33,20 @@ public enum TableType
 
   /** Unknown */
   unknown,
-  /** Table */
-  table,
   /** System table */
   system_table,
   /** Global temporary */
   global_temporary,
   /** Local temporary */
   local_temporary,
+  /** Table */
+  table,
+  /** View */
+  view,
   /** Alias */
   alias,
   /** Synonym */
-  synonym,
-  /** View */
-  view, ;
+  synonym, ;
 
   /**
    * Converts an array of table types to an array of their corresponding
