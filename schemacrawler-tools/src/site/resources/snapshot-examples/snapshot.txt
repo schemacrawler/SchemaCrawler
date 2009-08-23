@@ -384,17 +384,17 @@ SYS_IDX_46                                                 [primary key]
 FK_INVOICE_CUSTOMER                        [foreign key, with no action]
   ID --> PUBLIC.INVOICE.CUSTOMERID                              
 
-DELETE                                             [grantable privilege]
-  DBA --> SA                                                    
+DELETE                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
-INSERT                                             [grantable privilege]
-  DBA --> SA                                                    
+INSERT                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
-SELECT                                             [grantable privilege]
-  DBA --> SA                                                    
+SELECT                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
-UPDATE                                             [grantable privilege]
-  DBA --> SA                                                    
+UPDATE                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
 SCTRIGGER                              [trigger, before delete, per row]
   CREATE TRIGGER SCTRIGGER BEFORE DELETE ON CUSTOMER FOR EACH ROW CALL "org.hsqldb.sample.TriggerSample"
@@ -406,17 +406,17 @@ PUBLIC.CUSTOMERLIST                                               [view]
   FIRSTNAME                         VARCHAR(255)                
   LASTNAME                          VARCHAR(255)                
 
-DELETE                                             [grantable privilege]
-  DBA --> SA                                                    
+DELETE                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
-INSERT                                             [grantable privilege]
-  DBA --> SA                                                    
+INSERT                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
-SELECT                                             [grantable privilege]
-  DBA --> SA                                                    
+SELECT                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
-UPDATE                                             [grantable privilege]
-  DBA --> SA                                                    
+UPDATE                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
                                                             [definition]
   SELECT ID, FIRSTNAME, LASTNAME FROM CUSTOMER
@@ -443,17 +443,17 @@ INDEX_INVOICE_CUSTOMER                                [non-unique index]
 SYS_IDX_50                                            [non-unique index]
   CUSTOMERID                        ascending                   
 
-DELETE                                             [grantable privilege]
-  DBA --> SA                                                    
+DELETE                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
-INSERT                                             [grantable privilege]
-  DBA --> SA                                                    
+INSERT                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
-SELECT                                             [grantable privilege]
-  DBA --> SA                                                    
+SELECT                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
-UPDATE                                             [grantable privilege]
-  DBA --> SA                                                    
+UPDATE                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
 
 PUBLIC.ITEM                                                      [table]
@@ -486,17 +486,17 @@ INDEX_ITEM_PRODUCT                                    [non-unique index]
 SYS_IDX_55                                            [non-unique index]
   PRODUCTID                         ascending                   
 
-DELETE                                             [grantable privilege]
-  DBA --> SA                                                    
+DELETE                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
-INSERT                                             [grantable privilege]
-  DBA --> SA                                                    
+INSERT                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
-SELECT                                             [grantable privilege]
-  DBA --> SA                                                    
+SELECT                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
-UPDATE                                             [grantable privilege]
-  DBA --> SA                                                    
+UPDATE                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
 
 PUBLIC.PRODUCT                                                   [table]
@@ -511,17 +511,17 @@ SYS_IDX_47                                                 [primary key]
 FK_A_ITEM_PRODUCT                          [foreign key, with no action]
   ID --> PUBLIC.ITEM.PRODUCTID                                  
 
-DELETE                                             [grantable privilege]
-  DBA --> SA                                                    
+DELETE                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
-INSERT                                             [grantable privilege]
-  DBA --> SA                                                    
+INSERT                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
-SELECT                                             [grantable privilege]
-  DBA --> SA                                                    
+SELECT                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
-UPDATE                                             [grantable privilege]
-  DBA --> SA                                                    
+UPDATE                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
 
 PUBLIC.SUPPLIER                                                  [table]
@@ -540,17 +540,17 @@ INDEX_A_SUPPLIER                                      [non-unique index]
 CHECK_UPPERCASE_SUPPLIER_NAME                         [check constraint]
   SUPPLIER.SUPPLIER_NAME=UPPER(SUPPLIER.SUPPLIER_NAME)
 
-DELETE                                             [grantable privilege]
-  DBA --> SA                                                    
+DELETE                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
-INSERT                                             [grantable privilege]
-  DBA --> SA                                                    
+INSERT                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
-SELECT                                             [grantable privilege]
-  DBA --> SA                                                    
+SELECT                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
-UPDATE                                             [grantable privilege]
-  DBA --> SA                                                    
+UPDATE                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
 
 PUBLIC.ABS                                   [procedure, returns result]
@@ -868,8 +868,8 @@ PUBLIC.INSERT                                [procedure, returns result]
 
 PUBLIC.java.lang.Math.abs                    [procedure, returns result]
 ------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17), in           
-  @p0                               DOUBLE(8, 17), result       
+  @p1                               BIGINT, in                  
+  @p0                               BIGINT, result              
 
                                                             [definition]
   java.lang.Math.abs(double)java.lang.Math.abs(float)java.lang.Math.abs(int)java.lang.Math.abs(long)
@@ -1024,9 +1024,9 @@ PUBLIC.java.lang.Math.log1p                  [procedure, returns result]
 
 PUBLIC.java.lang.Math.max                    [procedure, returns result]
 ------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17), in           
-  @p2                               DOUBLE(8, 17), in           
-  @p0                               DOUBLE(8, 17), result       
+  @p1                               BIGINT, in                  
+  @p2                               BIGINT, in                  
+  @p0                               BIGINT, result              
 
                                                             [definition]
   java.lang.Math.max(double,double)java.lang.Math.max(float,float)java.lang.Math.max(int,int)java.lang.Math.max(long,long)
@@ -1034,9 +1034,9 @@ PUBLIC.java.lang.Math.max                    [procedure, returns result]
 
 PUBLIC.java.lang.Math.min                    [procedure, returns result]
 ------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17), in           
-  @p2                               DOUBLE(8, 17), in           
-  @p0                               DOUBLE(8, 17), result       
+  @p1                               BIGINT, in                  
+  @p2                               BIGINT, in                  
+  @p0                               BIGINT, result              
 
                                                             [definition]
   java.lang.Math.min(double,double)java.lang.Math.min(float,float)java.lang.Math.min(int,int)java.lang.Math.min(long,long)
@@ -1071,8 +1071,8 @@ PUBLIC.java.lang.Math.rint                   [procedure, returns result]
 
 PUBLIC.java.lang.Math.round                  [procedure, returns result]
 ------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17), in           
-  @p0                               BIGINT, result              
+  @p1                               FLOAT(8, 17), in            
+  @p0                               INTEGER, result             
 
                                                             [definition]
   java.lang.Math.round(double)java.lang.Math.round(float)
@@ -1080,8 +1080,8 @@ PUBLIC.java.lang.Math.round                  [procedure, returns result]
 
 PUBLIC.java.lang.Math.signum                 [procedure, returns result]
 ------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17), in           
-  @p0                               DOUBLE(8, 17), result       
+  @p1                               FLOAT(8, 17), in            
+  @p0                               FLOAT(8, 17), result        
 
                                                             [definition]
   java.lang.Math.signum(double)java.lang.Math.signum(float)
@@ -1152,8 +1152,8 @@ PUBLIC.java.lang.Math.toRadians              [procedure, returns result]
 
 PUBLIC.java.lang.Math.ulp                    [procedure, returns result]
 ------------------------------------------------------------------------
-  @p1                               DOUBLE(8, 17), in           
-  @p0                               DOUBLE(8, 17), result       
+  @p1                               FLOAT(8, 17), in            
+  @p0                               FLOAT(8, 17), result        
 
                                                             [definition]
   java.lang.Math.ulp(double)java.lang.Math.ulp(float)

@@ -31,14 +31,31 @@ final class WeakAssociationsAnalyzer
   private static final Logger LOGGER = Logger
     .getLogger(WeakAssociationsAnalyzer.class.getName());
 
-  private final MutableDatabase database;
+  private final NamedObjectList<MutableTable> tables;
   private final List<ColumnMap> weakAssociations;
 
-  WeakAssociationsAnalyzer(final MutableDatabase database,
+  WeakAssociationsAnalyzer(final NamedObjectList<MutableTable> tables,
                            final List<ColumnMap> weakAssociations)
   {
-    this.database = database;
+    this.tables = tables;
     this.weakAssociations = weakAssociations;
+  }
+
+  void analyzeTables()
+  {
+    final Collection<String> prefixes = findTableNamePrefixes(tables);
+    final Map<String, MutableTable> tableMatchMap = mapTableNameMatches(tables,
+                                                                        prefixes);
+    if (LOGGER.isLoggable(Level.FINE))
+    {
+      LOGGER.log(Level.FINE, "Table prefixes=" + prefixes);
+      LOGGER.log(Level.FINE, "Table matches map:"
+                             + ObjectToString.toString(tableMatchMap));
+    }
+
+    final Map<String, ForeignKeyColumnMap> fkColumnsMap = mapForeignKeyColumns(tables);
+
+    findWeakAssociations(tables, tableMatchMap, fkColumnsMap);
   }
 
   private String commonPrefix(final String string1, final String string2)
@@ -312,25 +329,6 @@ final class WeakAssociationsAnalyzer
     }
     matchMap.remove("");
     return matchMap;
-  }
-
-  void analyzeTables()
-  {
-    final NamedObjectList<MutableTable> tables = database.getAllTables();
-
-    final Collection<String> prefixes = findTableNamePrefixes(tables);
-    final Map<String, MutableTable> tableMatchMap = mapTableNameMatches(tables,
-                                                                        prefixes);
-    if (LOGGER.isLoggable(Level.FINE))
-    {
-      LOGGER.log(Level.FINE, "Table prefixes=" + prefixes);
-      LOGGER.log(Level.FINE, "Table matches map:"
-                             + ObjectToString.toString(tableMatchMap));
-    }
-
-    final Map<String, ForeignKeyColumnMap> fkColumnsMap = mapForeignKeyColumns(tables);
-
-    findWeakAssociations(tables, tableMatchMap, fkColumnsMap);
   }
 
 }
