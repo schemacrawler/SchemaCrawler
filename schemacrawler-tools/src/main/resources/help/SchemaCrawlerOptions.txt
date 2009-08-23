@@ -1,10 +1,16 @@
 --- Sort Options ---
 
+-sorttables
+  Sort tables alphabetically
+  Optional, defaults to true
+  
 -sortcolumns
-  Sort columns in a table alphabetically
+  Sort columns in a table alphabetically, defaults to false
+  Optional, defaults to false
 
 -sortinout
   Sort parameters in a stored procedure alphabetically
+  Optional, defaults to false
   
 --- Filtering Options ---
     

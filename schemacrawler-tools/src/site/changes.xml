@@ -12,7 +12,12 @@
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Bug fix for obtaining indexes and foreign keys with the
         Oracle driver.
-      ]]></action>                 
+      ]]></action>   
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added natural sort order for tables, based on the foreign keys, and corresponding
+        new configuration option, and command-line switch, -sorttables.
+        Also added new API methods to get child and parent table, based on the foreign keys.
+      ]]></action>                    
     </release>    
     <release version="7.1" date="2009-08-12">
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
