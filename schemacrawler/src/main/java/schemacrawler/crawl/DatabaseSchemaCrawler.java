@@ -396,22 +396,20 @@ public final class DatabaseSchemaCrawler
       for (final Catalog catalog: database.getCatalogs())
       {
         final Schema[] schemas = catalog.getSchemas();
-        for (final Schema schema2: schemas)
+        for (final Schema schema: schemas)
         {
-          final MutableSchema schema = (MutableSchema) schema2;
-          schema.setTableComparator(NamedObjectSort.getNamedObjectSort(options
-            .isAlphabeticalSortForTables()));
+          ((MutableSchema) schema).setTableComparator(NamedObjectSort
+            .getNamedObjectSort(options.isAlphabeticalSortForTables()));
           final Table[] tables = schema.getTables();
-          for (final Table table2: tables)
+          for (final Table table: tables)
           {
-            final MutableTable table = (MutableTable) table2;
             // Set comparators
-            table.setColumnComparator(NamedObjectSort
+            ((MutableTable) table).setColumnComparator(NamedObjectSort
               .getNamedObjectSort(options.isAlphabeticalSortForTableColumns()));
-            table.setForeignKeyComparator(NamedObjectSort
+            ((MutableTable) table).setForeignKeyComparator(NamedObjectSort
               .getNamedObjectSort(options.isAlphabeticalSortForForeignKeys()));
-            table.setIndexComparator(NamedObjectSort.getNamedObjectSort(options
-              .isAlphabeticalSortForIndexes()));
+            ((MutableTable) table).setIndexComparator(NamedObjectSort
+              .getNamedObjectSort(options.isAlphabeticalSortForIndexes()));
             // Handle table
             handler.handle(table);
           }
