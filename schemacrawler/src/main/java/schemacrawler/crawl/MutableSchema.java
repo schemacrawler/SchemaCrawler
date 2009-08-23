@@ -124,28 +124,6 @@ class MutableSchema
     return tables.values().toArray(new Table[tables.size()]);
   }
 
-  private final void buildFullName()
-  {
-    if (fullName == null)
-    {
-      final StringBuilder buffer = new StringBuilder();
-      final NamedObject catalog = getParent();
-      if (catalog != null)
-      {
-        final String catalogName = catalog.getName();
-        if (!Utility.isBlank(catalogName))
-        {
-          buffer.append(catalogName).append(".");
-        }
-      }
-      if (getName() != null)
-      {
-        buffer.append(getName());
-      }
-      fullName = buffer.toString();
-    }
-  }
-
   void addColumnDataType(final MutableColumnDataType columnDataType)
   {
     if (columnDataType != null)
@@ -177,6 +155,33 @@ class MutableSchema
   void removeTable(final Table table)
   {
     tables.remove(table);
+  }
+
+  void setTableComparator(final NamedObjectSort comparator)
+  {
+    tables.setSortOrder(comparator);
+  }
+
+  private final void buildFullName()
+  {
+    if (fullName == null)
+    {
+      final StringBuilder buffer = new StringBuilder();
+      final NamedObject catalog = getParent();
+      if (catalog != null)
+      {
+        final String catalogName = catalog.getName();
+        if (!Utility.isBlank(catalogName))
+        {
+          buffer.append(catalogName).append(".");
+        }
+      }
+      if (getName() != null)
+      {
+        buffer.append(getName());
+      }
+      fullName = buffer.toString();
+    }
   }
 
 }

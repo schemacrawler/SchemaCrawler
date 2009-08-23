@@ -65,6 +65,7 @@ public final class SchemaCrawlerOptions
 
   private static final String SC_GREP_INVERT_MATCH = "schemacrawler.grep.invert-match";
 
+  private static final String SC_SORT_ALPHABETICALLY_TABLES = "schemacrawler.sort_alphabetically.tables";
   private static final String SC_SORT_ALPHABETICALLY_PROCEDURE_COLUMNS = "schemacrawler.sort_alphabetically.procedure_columns";
   private static final String SC_SORT_ALPHABETICALLY_TABLE_INDEXES = "schemacrawler.sort_alphabetically.table_indices";
   private static final String SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS = "schemacrawler.sort_alphabetically.table_foreignkeys";
@@ -93,6 +94,7 @@ public final class SchemaCrawlerOptions
   private InclusionRule grepProcedureColumnInclusionRule;
   private boolean grepInvertMatch;
 
+  private boolean isAlphabeticalSortForTables;
   private boolean isAlphabeticalSortForTableColumns;
   private boolean isAlphabeticalSortForForeignKeys;
   private boolean isAlphabeticalSortForIndexes;
@@ -194,6 +196,8 @@ public final class SchemaCrawlerOptions
                       InclusionRule.NONE));
     grepInvertMatch = configProperties.getBooleanValue(SC_GREP_INVERT_MATCH);
 
+    isAlphabeticalSortForTables = Boolean.parseBoolean(configProperties
+      .getStringValue(SC_SORT_ALPHABETICALLY_TABLES, "true"));
     isAlphabeticalSortForTableColumns = configProperties
       .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS);
     isAlphabeticalSortForForeignKeys = configProperties
@@ -387,6 +391,16 @@ public final class SchemaCrawlerOptions
   }
 
   /**
+   * Whether tables are alphabetically sorted.
+   * 
+   * @return Whether tables are alphabetically sorted
+   */
+  public boolean isAlphabeticalSortForTables()
+  {
+    return isAlphabeticalSortForTables;
+  }
+
+  /**
    * Whether to invert matches.
    * 
    * @return Whether to invert matches.
@@ -448,6 +462,17 @@ public final class SchemaCrawlerOptions
   public void setAlphabeticalSortForTableColumns(final boolean alphabeticalSort)
   {
     isAlphabeticalSortForTableColumns = alphabeticalSort;
+  }
+
+  /**
+   * Sets whether tables should be alphabetically sorted.
+   * 
+   * @param alphabeticalSort
+   *        Alphabetical sort
+   */
+  public void setAlphabeticalSortForTables(final boolean alphabeticalSort)
+  {
+    isAlphabeticalSortForTables = alphabeticalSort;
   }
 
   /**

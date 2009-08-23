@@ -386,6 +386,7 @@ public class SchemaCrawlerTest
     final Random rnd = new Random();
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setAlphabeticalSortForTables(false);
 
     final Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
     final Schema[] schemas = catalog.getSchemas();

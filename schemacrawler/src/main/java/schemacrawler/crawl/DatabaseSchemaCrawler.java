@@ -391,21 +391,37 @@ public final class DatabaseSchemaCrawler
             retriever.retrieveForeignKeys(table);
           }
         }
-        // Set comparators
-        table.setColumnComparator(NamedObjectSort.getNamedObjectSort(options
-          .isAlphabeticalSortForTableColumns()));
-        table.setForeignKeyComparator(NamedObjectSort
-          .getNamedObjectSort(options.isAlphabeticalSortForForeignKeys()));
-        table.setIndexComparator(NamedObjectSort.getNamedObjectSort(options
-          .isAlphabeticalSortForIndexes()));
-        // Handle table
-        handler.handle(table);
+      }
+
+      for (final Catalog catalog: database.getCatalogs())
+      {
+        final Schema[] schemas = catalog.getSchemas();
+        for (final Schema schema2: schemas)
+        {
+          final MutableSchema schema = (MutableSchema) schema2;
+          schema.setTableComparator(NamedObjectSort.getNamedObjectSort(options
+            .isAlphabeticalSortForTables()));
+          final Table[] tables = schema.getTables();
+          for (final Table table2: tables)
+          {
+            final MutableTable table = (MutableTable) table2;
+            // Set comparators
+            table.setColumnComparator(NamedObjectSort
+              .getNamedObjectSort(options.isAlphabeticalSortForTableColumns()));
+            table.setForeignKeyComparator(NamedObjectSort
+              .getNamedObjectSort(options.isAlphabeticalSortForForeignKeys()));
+            table.setIndexComparator(NamedObjectSort.getNamedObjectSort(options
+              .isAlphabeticalSortForIndexes()));
+            // Handle table
+            handler.handle(table);
+          }
+        }
       }
 
       if (infoLevel.isRetrieveWeakAssociations())
       {
         final List<ColumnMap> weakAssociations = new ArrayList<ColumnMap>();
-        final WeakAssociationsAnalyzer tableAnalyzer = new WeakAssociationsAnalyzer(database,
+        final WeakAssociationsAnalyzer tableAnalyzer = new WeakAssociationsAnalyzer(allTables,
                                                                                     weakAssociations);
         tableAnalyzer.analyzeTables();
         handler.handle(weakAssociations.toArray(new ColumnMap[weakAssociations
