@@ -73,6 +73,8 @@ final class SchemaCrawlerOptionsParser
   private final BooleanOption optionGrepInvertMatch = new BooleanOption('v',
                                                                         "invert-match");
 
+  private final BooleanOption optionSortTables = new BooleanOption(Option.NO_SHORT_FORM,
+                                                                   "sorttables");
   private final BooleanOption optionSortColumns = new BooleanOption(Option.NO_SHORT_FORM,
                                                                     "sortcolumns");
   private final BooleanOption optionSortInout = new BooleanOption(Option.NO_SHORT_FORM,
@@ -109,6 +111,7 @@ final class SchemaCrawlerOptionsParser
         optionGrepColumns,
         optionGrepProcedureColumns,
         optionGrepInvertMatch,
+        optionSortTables,
         optionSortColumns,
         optionSortInout,
     });
@@ -188,6 +191,10 @@ final class SchemaCrawlerOptionsParser
     if (optionSortColumns.isFound())
     {
       options.setAlphabeticalSortForTableColumns(optionSortColumns.getValue());
+    }
+    if (optionSortTables.isFound())
+    {
+      options.setAlphabeticalSortForTables(optionSortTables.getValue());
     }
     if (optionSortInout.isFound())
     {
