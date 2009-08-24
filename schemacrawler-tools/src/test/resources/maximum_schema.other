@@ -600,14 +600,14 @@ UPDATE                                                       [privilege]
 
 Row Count
 ------------------------------------------------------------------------
-CUSTOMER                                                         50 rows
-CUSTOMERLIST                                                     50 rows
-INVOICE                                                          50 rows
-ITEM                                                            650 rows
-PRODUCT                                                          50 rows
-SUPPLIER                                                          1 rows
-ITEM                                                             20 rows
-PRODUCT2                                                         11 rows
+PUBLIC.CUSTOMER                                                  50 rows
+PUBLIC.CUSTOMERLIST                                              50 rows
+PUBLIC.INVOICE                                                   50 rows
+PUBLIC.ITEM                                                     650 rows
+PUBLIC.PRODUCT                                                   50 rows
+PUBLIC.SUPPLIER                                                   1 rows
+SCHEMACRAWLER.ITEM                                               20 rows
+SCHEMACRAWLER.PRODUCT2                                           11 rows
 
 
 

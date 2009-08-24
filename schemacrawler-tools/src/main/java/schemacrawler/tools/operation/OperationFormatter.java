@@ -330,8 +330,9 @@ final class OperationFormatter
     }
     final String message = getMessage(aggregate);
     //
-    out
-      .println(formattingHelper.createNameRow(table.getName(), message, false));
+    out.println(formattingHelper.createNameRow(table.getFullName(),
+                                               message,
+                                               false));
   }
 
   private void printHeaderObject(final String id, final Object object)
