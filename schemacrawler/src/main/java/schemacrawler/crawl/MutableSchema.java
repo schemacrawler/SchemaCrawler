@@ -157,9 +157,9 @@ class MutableSchema
     tables.remove(table);
   }
 
-  void setTableComparator(final NamedObjectSort comparator)
+  void setTablesSortOrder(final NamedObjectSort sort)
   {
-    tables.setSortOrder(comparator);
+    tables.setSortOrder(sort);
   }
 
   private final void buildFullName()

@@ -393,26 +393,24 @@ public final class DatabaseSchemaCrawler
         }
       }
 
-      for (final Catalog catalog: database.getCatalogs())
+      // Set the sort order for tables after all the foreign keys have
+      // been obtained, since the natural sort order depends on the
+      // foreign keys
+      allTables.setSortOrder(NamedObjectSort.getNamedObjectSort(options
+        .isAlphabeticalSortForTables()));
+      for (final MutableTable table: allTables)
       {
-        for (final Schema schema: catalog.getSchemas())
-        {
-          // Set comparators
-          ((MutableSchema) schema).setTableComparator(NamedObjectSort
-            .getNamedObjectSort(options.isAlphabeticalSortForTables()));
-          for (final Table table: schema.getTables())
-          {
-            // Set comparators
-            ((MutableTable) table).setColumnComparator(NamedObjectSort
-              .getNamedObjectSort(options.isAlphabeticalSortForTableColumns()));
-            ((MutableTable) table).setForeignKeyComparator(NamedObjectSort
-              .getNamedObjectSort(options.isAlphabeticalSortForForeignKeys()));
-            ((MutableTable) table).setIndexComparator(NamedObjectSort
-              .getNamedObjectSort(options.isAlphabeticalSortForIndexes()));
-            // Handle table
-            handler.handle(table);
-          }
-        }
+        // Set comparators
+        ((MutableSchema) table.getSchema()).setTablesSortOrder(NamedObjectSort
+          .getNamedObjectSort(options.isAlphabeticalSortForTables()));
+        ((MutableTable) table).setColumnsSortOrder(NamedObjectSort
+          .getNamedObjectSort(options.isAlphabeticalSortForTableColumns()));
+        ((MutableTable) table).setForeignKeysSortOrder(NamedObjectSort
+          .getNamedObjectSort(options.isAlphabeticalSortForForeignKeys()));
+        ((MutableTable) table).setIndicesSortOrder(NamedObjectSort
+          .getNamedObjectSort(options.isAlphabeticalSortForIndexes()));
+        // Handle table
+        handler.handle(table);
       }
 
       if (infoLevel.isRetrieveWeakAssociations())
