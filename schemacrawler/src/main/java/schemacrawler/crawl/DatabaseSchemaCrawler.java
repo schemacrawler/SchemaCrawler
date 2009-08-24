@@ -375,6 +375,15 @@ public final class DatabaseSchemaCrawler
         retrieverExtra.retrieveTableColumnPrivileges();
       }
 
+      final NamedObjectSort tablesSort = NamedObjectSort
+        .getNamedObjectSort(options.isAlphabeticalSortForTables());
+      if (tablesSort == NamedObjectSort.natural
+          && !infoLevel.isRetrieveForeignKeys())
+      {
+        LOGGER
+          .log(Level.WARNING,
+               "Foreign-keys are not being retrieved, so tables cannot be sorted using the natural sort order");
+      }
       for (final MutableTable table: allTables)
       {
         final boolean isView = table instanceof MutableView;
@@ -391,24 +400,22 @@ public final class DatabaseSchemaCrawler
             retriever.retrieveForeignKeys(table);
           }
         }
-      }
-
-      // Set the sort order for tables after all the foreign keys have
-      // been obtained, since the natural sort order depends on the
-      // foreign keys
-      allTables.setSortOrder(NamedObjectSort.getNamedObjectSort(options
-        .isAlphabeticalSortForTables()));
-      for (final MutableTable table: allTables)
-      {
         // Set comparators
-        ((MutableSchema) table.getSchema()).setTablesSortOrder(NamedObjectSort
-          .getNamedObjectSort(options.isAlphabeticalSortForTables()));
+        ((MutableSchema) table.getSchema()).setTablesSortOrder(tablesSort);
         ((MutableTable) table).setColumnsSortOrder(NamedObjectSort
           .getNamedObjectSort(options.isAlphabeticalSortForTableColumns()));
         ((MutableTable) table).setForeignKeysSortOrder(NamedObjectSort
           .getNamedObjectSort(options.isAlphabeticalSortForForeignKeys()));
         ((MutableTable) table).setIndicesSortOrder(NamedObjectSort
           .getNamedObjectSort(options.isAlphabeticalSortForIndexes()));
+      }
+
+      // Set the sort order for tables after all the foreign keys have
+      // been obtained, since the natural sort order depends on the
+      // foreign keys
+      allTables.setSortOrder(tablesSort);
+      for (final MutableTable table: allTables)
+      {
         // Handle table
         handler.handle(table);
       }
