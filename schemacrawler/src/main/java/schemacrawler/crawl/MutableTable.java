@@ -512,19 +512,19 @@ class MutableTable
     return triggers.lookup(this, triggerName);
   }
 
-  void setColumnComparator(final NamedObjectSort comparator)
+  void setColumnsSortOrder(final NamedObjectSort sort)
   {
-    columns.setSortOrder(comparator);
+    columns.setSortOrder(sort);
   }
 
-  void setForeignKeyComparator(final NamedObjectSort comparator)
+  void setForeignKeysSortOrder(final NamedObjectSort sort)
   {
-    foreignKeys.setSortOrder(comparator);
+    foreignKeys.setSortOrder(sort);
   }
 
-  void setIndexComparator(final NamedObjectSort comparator)
+  void setIndicesSortOrder(final NamedObjectSort sort)
   {
-    indices.setSortOrder(comparator);
+    indices.setSortOrder(sort);
   }
 
   void setPrimaryKey(final MutablePrimaryKey primaryKey)
