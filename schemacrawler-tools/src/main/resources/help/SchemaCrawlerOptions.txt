@@ -1,15 +1,18 @@
 --- Sort Options ---
 
--sorttables
+-sorttables=<boolean>
   Sort tables alphabetically
+  <boolean> can be true or false
   Optional, defaults to true
   
--sortcolumns
+-sortcolumns=<boolean>
   Sort columns in a table alphabetically, defaults to false
+  <boolean> can be true or false
   Optional, defaults to false
 
--sortinout
+-sortinout=<boolean>
   Sort parameters in a stored procedure alphabetically
+  <boolean> can be true or false
   Optional, defaults to false
   
 --- Filtering Options ---
