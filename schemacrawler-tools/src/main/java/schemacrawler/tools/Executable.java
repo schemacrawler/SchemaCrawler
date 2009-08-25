@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 import javax.sql.DataSource;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.utility.ObjectToString;
 
 /**
@@ -165,7 +166,18 @@ public abstract class Executable<O extends ToolOptions>
    */
   protected final void initialize()
   {
-    schemaCrawlerOptions.setSchemaInfoLevel(toolOptions.getSchemaInfoLevel());
+    final SchemaInfoLevel infoLevel = toolOptions.getSchemaInfoLevel();
+    if (!schemaCrawlerOptions.isAlphabeticalSortForTables()
+        && !infoLevel.isRetrieveForeignKeys())
+    {
+      infoLevel.setRetrieveTableColumns(true);
+      infoLevel.setRetrieveForeignKeys(true);
+      LOGGER
+        .log(Level.WARNING,
+             "Adjusted schema info level to retrieve foreign-keys, so tables can be sorted using the natural sort order");
+    }
+    schemaCrawlerOptions.setSchemaInfoLevel(infoLevel);
+
     if (LOGGER.isLoggable(Level.CONFIG))
     {
       LOGGER.log(Level.CONFIG, this.toString());
