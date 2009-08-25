@@ -165,23 +165,18 @@ class MutableTable
    */
   public String getColumnsListAsString()
   {
-    String columnsList = "";
     final Column[] columnsArray = getColumns();
-    if (columnsArray != null && columnsArray.length > 0)
+    final StringBuilder buffer = new StringBuilder();
+    for (int i = 0; i < columnsArray.length; i++)
     {
-      final StringBuilder buffer = new StringBuilder();
-      for (int i = 0; i < columnsArray.length; i++)
+      final Column column = columnsArray[i];
+      if (i > 0)
       {
-        if (i > 0)
-        {
-          buffer.append(", ");
-        }
-        final Column column = columnsArray[i];
-        buffer.append(column.getName());
+        buffer.append(", ");
       }
-      columnsList = buffer.toString();
+      buffer.append(column.getName());
     }
-    return columnsList;
+    return buffer.toString();
   }
 
   /**

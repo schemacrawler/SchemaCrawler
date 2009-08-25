@@ -26,6 +26,7 @@ import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
+import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.utility.Utility;
 
@@ -150,6 +151,25 @@ public final class Query
     return keys;
   }
 
+  private static String getOrderByColumnsListAsString(final Table table)
+  {
+    final Column[] columnsArray = table.getColumns();
+    final StringBuilder buffer = new StringBuilder();
+    for (int i = 0; i < columnsArray.length; i++)
+    {
+      final Column column = columnsArray[i];
+      if (!column.getType().isBinaryType())
+      {
+        if (i > 0)
+        {
+          buffer.append(", ");
+        }
+        buffer.append(column.getName());
+      }
+    }
+    return buffer.toString();
+  }
+
   private final String name;
 
   private final String query;
@@ -170,7 +190,8 @@ public final class Query
       throw new IllegalArgumentException("No name provided for the query");
     }
     this.name = name;
-    if (query == null || query.length() == 0)
+
+    if (Utility.isBlank(query))
     {
       throw new IllegalArgumentException("No SQL provided for query '" + name
                                          + "'");
@@ -218,6 +239,8 @@ public final class Query
       }
       tableProperties.setProperty("table", table.getFullName());
       tableProperties.setProperty("columns", table.getColumnsListAsString());
+      tableProperties.setProperty("orderbycolumns",
+                                  getOrderByColumnsListAsString(table));
       tableProperties.setProperty("tabletype", table.getType().toString());
     }
 
