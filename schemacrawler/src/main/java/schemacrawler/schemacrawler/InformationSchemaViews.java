@@ -45,7 +45,7 @@ public final class InformationSchemaViews
   private static final String KEY_INFORMATION_SCHEMA_ROUTINES = "select.INFORMATION_SCHEMA.ROUTINES";
   private static final String KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS = "select.INFORMATION_SCHEMA.CHECK_CONSTRAINTS";
 
-  private final Map<String, Query> informationSchemaQueries;
+  private final Map<String, String> informationSchemaQueries;
 
   /**
    * Creates empty information schema views.
@@ -63,7 +63,7 @@ public final class InformationSchemaViews
    */
   InformationSchemaViews(final Map<String, String> informationSchemaViewsSql)
   {
-    informationSchemaQueries = new HashMap<String, Query>();
+    informationSchemaQueries = new HashMap<String, String>();
     if (informationSchemaViewsSql != null)
     {
       final String[] keys = new String[] {
@@ -80,9 +80,8 @@ public final class InformationSchemaViews
         {
           try
           {
-            final Query query = new Query(key, informationSchemaViewsSql
+            informationSchemaQueries.put(key, informationSchemaViewsSql
               .get(key));
-            informationSchemaQueries.put(key, query);
           }
           catch (final IllegalArgumentException e)
           {
@@ -101,8 +100,7 @@ public final class InformationSchemaViews
    */
   public Query getCheckConstraints()
   {
-    return informationSchemaQueries
-      .get(KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS);
+    return getQuery(KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS);
   }
 
   /**
@@ -112,7 +110,7 @@ public final class InformationSchemaViews
    */
   public Query getIndexInfo()
   {
-    return informationSchemaQueries.get(KEY_GET_INDEX_INFO);
+    return getQuery(KEY_GET_INDEX_INFO);
   }
 
   /**
@@ -123,7 +121,7 @@ public final class InformationSchemaViews
    */
   public Query getRoutines()
   {
-    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_ROUTINES);
+    return getQuery(KEY_INFORMATION_SCHEMA_ROUTINES);
   }
 
   /**
@@ -133,8 +131,7 @@ public final class InformationSchemaViews
    */
   public Query getTableConstraints()
   {
-    return informationSchemaQueries
-      .get(KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS);
+    return getQuery(KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS);
   }
 
   /**
@@ -144,7 +141,7 @@ public final class InformationSchemaViews
    */
   public Query getTriggers()
   {
-    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_TRIGGERS);
+    return getQuery(KEY_INFORMATION_SCHEMA_TRIGGERS);
   }
 
   /**
@@ -154,7 +151,7 @@ public final class InformationSchemaViews
    */
   public Query getViews()
   {
-    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_VIEWS);
+    return getQuery(KEY_INFORMATION_SCHEMA_VIEWS);
   }
 
   public boolean hasCheckConstraintsSql()
@@ -200,9 +197,7 @@ public final class InformationSchemaViews
    */
   public void setCheckConstraintsSql(final String sql)
   {
-    informationSchemaQueries
-      .put(KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS,
-           new Query(KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS, sql));
+    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS, sql);
   }
 
   /**
@@ -213,8 +208,7 @@ public final class InformationSchemaViews
    */
   public void setIndexInfoSql(final String sql)
   {
-    informationSchemaQueries.put(KEY_GET_INDEX_INFO,
-                                 new Query(KEY_GET_INDEX_INFO, sql));
+    informationSchemaQueries.put(KEY_GET_INDEX_INFO, sql);
   }
 
   /**
@@ -226,9 +220,7 @@ public final class InformationSchemaViews
    */
   public void setRoutinesSql(final String sql)
   {
-    informationSchemaQueries
-      .put(KEY_INFORMATION_SCHEMA_ROUTINES,
-           new Query(KEY_INFORMATION_SCHEMA_ROUTINES, sql));
+    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_ROUTINES, sql);
   }
 
   /**
@@ -239,9 +231,7 @@ public final class InformationSchemaViews
    */
   public void setTableConstraintsSql(final String sql)
   {
-    informationSchemaQueries
-      .put(KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS,
-           new Query(KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS, sql));
+    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS, sql);
   }
 
   /**
@@ -252,9 +242,7 @@ public final class InformationSchemaViews
    */
   public void setTriggersSql(final String sql)
   {
-    informationSchemaQueries
-      .put(KEY_INFORMATION_SCHEMA_TRIGGERS,
-           new Query(KEY_INFORMATION_SCHEMA_TRIGGERS, sql));
+    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_TRIGGERS, sql);
   }
 
   /**
@@ -265,14 +253,27 @@ public final class InformationSchemaViews
    */
   public void setViewsSql(final String sql)
   {
-    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_VIEWS,
-                                 new Query(KEY_INFORMATION_SCHEMA_VIEWS, sql));
+    informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_VIEWS, sql);
   }
 
   @Override
   public String toString()
   {
     return ObjectToString.toString(informationSchemaQueries);
+  }
+
+  private Query getQuery(final String key)
+  {
+    final Query query;
+    if (informationSchemaQueries.containsKey(key))
+    {
+      query = new Query(key, informationSchemaQueries.get(key));
+    }
+    else
+    {
+      query = null;
+    }
+    return query;
   }
 
 }

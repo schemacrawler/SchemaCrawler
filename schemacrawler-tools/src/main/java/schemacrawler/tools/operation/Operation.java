@@ -33,7 +33,7 @@ public enum Operation
   count("Row Count", "SELECT COUNT(*) FROM ${table}",
     "{0,choice,0#empty|0<{0,number,integer} rows}"),
   /** Dump operation */
-  dump("Dump", "SELECT ${columns} FROM ${table} ORDER BY ${columns}", ""),
+  dump("Dump", "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}", ""),
   /** Query-over operation */
   queryover("", "Query Over Table", "{0,choice,0#-|0<{0,number,integer}}");
 
