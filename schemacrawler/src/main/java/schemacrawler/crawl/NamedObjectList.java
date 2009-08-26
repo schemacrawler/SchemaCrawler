@@ -80,34 +80,14 @@ class NamedObjectList<N extends NamedObject>
     {
       throw new IllegalArgumentException("Cannot add a null object to the list");
     }
-    String key = namedObject.getFullName();
-    if (Utility.isBlank(key))
-    {
-      key = "";
-    }
+    final String key = makeLookupKey(namedObject);
     objects.put(key, namedObject);
   }
 
   N lookup(final NamedObject namedObject, final String name)
   {
-    final StringBuilder buffer = new StringBuilder(256);
-    if (namedObject != null)
-    {
-      final String fullName = namedObject.getFullName();
-      if (!Utility.isBlank(fullName))
-      {
-        buffer.append(fullName).append(".");
-      }
-    }
-    if (Utility.isBlank(name))
-    {
-      buffer.append("");
-    }
-    else
-    {
-      buffer.append(name);
-    }
-    return objects.get(buffer.toString());
+    final String key = makeLookupKey(namedObject, name);
+    return objects.get(key);
   }
 
   /**
@@ -119,11 +99,7 @@ class NamedObjectList<N extends NamedObject>
    */
   N lookup(final String fullName)
   {
-    String key = fullName;
-    if (Utility.isBlank(key))
-    {
-      key = "";
-    }
+    final String key = makeLookupKey(fullName);
     return objects.get(key);
   }
 
@@ -131,7 +107,7 @@ class NamedObjectList<N extends NamedObject>
   {
     if (namedObject != null)
     {
-      objects.remove(namedObject.getFullName());
+      objects.remove(makeLookupKey(namedObject));
     }
   }
 
@@ -160,6 +136,50 @@ class NamedObjectList<N extends NamedObject>
     final List<N> all = new ArrayList<N>(objects.values());
     Collections.sort(all, sort);
     return Collections.unmodifiableList(all);
+  }
+
+  private String makeLookupKey(final NamedObject namedObject)
+  {
+    final String key;
+    if (Utility.isBlank(namedObject.getName()))
+    {
+      key = "";
+    }
+    else
+    {
+      key = namedObject.getFullName();
+    }
+    return key;
+  }
+
+  private String makeLookupKey(final NamedObject namedObject, final String name)
+  {
+    final StringBuilder buffer = new StringBuilder(256);
+    if (!Utility.isBlank(name))
+    {
+      buffer.append(makeLookupKey(namedObject));
+      if (buffer.length() > 0 && !Utility.isBlank(name))
+      {
+        buffer.append(".");
+      }
+      buffer.append(name);
+    }
+    final String key = buffer.toString();
+    return key;
+  }
+
+  private String makeLookupKey(final String fullName)
+  {
+    final String key;
+    if (Utility.isBlank(fullName))
+    {
+      key = "";
+    }
+    else
+    {
+      key = fullName;
+    }
+    return key;
   }
 
 }
