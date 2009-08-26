@@ -154,17 +154,22 @@ class NamedObjectList<N extends NamedObject>
 
   private String makeLookupKey(final NamedObject namedObject, final String name)
   {
-    final StringBuilder buffer = new StringBuilder(256);
-    if (!Utility.isBlank(name))
+    final String key;
+    if (Utility.isBlank(name))
     {
+      key = "";
+    }
+    else
+    {
+      final StringBuilder buffer = new StringBuilder(256);
       buffer.append(makeLookupKey(namedObject));
-      if (buffer.length() > 0 && !Utility.isBlank(name))
+      if (buffer.length() > 0)
       {
         buffer.append(".");
       }
       buffer.append(name);
+      key = buffer.toString();
     }
-    final String key = buffer.toString();
     return key;
   }
 
