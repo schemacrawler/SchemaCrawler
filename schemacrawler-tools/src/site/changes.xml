@@ -16,7 +16,7 @@
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added natural sort order for tables, based on the foreign keys, and corresponding
         new configuration option, and command-line switch, -sorttables.
-        Also added new API methods to get child and parent table, based on the foreign keys.
+        Also added new API methods to get child and parent tables, based on the foreign keys.
       ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Handle null schemas for databases that do not support schemas, such as MySQL.
