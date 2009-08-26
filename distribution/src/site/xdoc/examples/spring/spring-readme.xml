@@ -42,34 +42,18 @@
 						<span class="code">spring.cmd</span>
 						(or
 						<span class="code">spring.sh</span>
-						on Unix) to see command line options.
-					</li>
-					<li>
-						Run
-						<span class="code">
-							spring.cmd -c context.xml -x executableForSchema
-						</span>
-						(or
-						<span class="code">
-							spring.sh -c context.xml -x executableForSchema
-						</span>
-						on Unix).
-					</li>
+						on Unix) to see Spring integration.
+					</li>          
 				</ol>
 			</subsection>
 			<subsection name="How to Experiment">
 				<ol type="1">
+          <li>
+            Study the Spring beans in <code>context.xml</code>, and modify the ant task in
+            <code>spring.xml</code> to use different executable.
+          </li>
 					<li>
-						Try modifying the command line to use the other
-						executables defined in context.xml.
-					</li>
-					<li>
-						Redirect the output of SchemaCrawler into a
-						file, by running
-						<span class="code">
-							spring.cmd -c context.xml -x executableForSchema &gt; file.txt
-						</span>
-						.
+						RUn Spring integration from the command-line.
 					</li>
 				</ol>
 			</subsection>
