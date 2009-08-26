@@ -17,7 +17,13 @@
         Added natural sort order for tables, based on the foreign keys, and corresponding
         new configuration option, and command-line switch, -sorttables.
         Also added new API methods to get child and parent table, based on the foreign keys.
-      ]]></action>                    
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Handle null schemas for databases that do not support schemas, such as MySQL.
+      ]]></action>   
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Allow data dumps when tables contain binary objects, by fixing the SELECT sort order.
+      ]]></action>                                
     </release>    
     <release version="7.1" date="2009-08-12">
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
