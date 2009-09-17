@@ -1,5 +1,4 @@
-<?xml version="1.0"?>
-<project>
+<?xml version="1.0"?><project>
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>schemacrawler</groupId>
@@ -7,9 +6,9 @@
     <version>7.3</version>
   </parent>
   <groupId>schemacrawler</groupId>
-  <artifactId>schemacrawler-postgresql</artifactId>
+  <artifactId>schemacrawler-oracle</artifactId>
   <packaging>jar</packaging>
-  <name>SchemaCrawler for PostgreSQL</name>
+  <name>SchemaCrawler for Oracle</name>
   <licenses>
     <license>
       <name>GNU General Public License</name>
@@ -22,11 +21,6 @@
       <artifactId>schemacrawler-tools</artifactId>
       <version>${project.version}</version>
     </dependency>
-    <dependency>
-        <groupId>postgresql</groupId>
-        <artifactId>postgresql</artifactId>
-        <version>8.3-603.jdbc4</version>
-    </dependency>
   </dependencies>
   <build>
     <plugins>
@@ -36,7 +30,7 @@
           <archive>
             <index>true</index>
             <manifest>
-              <mainClass>schemacrawler.tools.postgresql.Main</mainClass>
+              <mainClass>schemacrawler.tools.oracle.Main</mainClass>
               <addClasspath>true</addClasspath>
             </manifest>
             <manifestEntries>
@@ -45,7 +39,7 @@
             </manifestEntries>
           </archive>
         </configuration>
-      </plugin>        
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>

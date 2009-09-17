@@ -161,7 +161,9 @@
 
   <target name="make-database-distributions">
 
+    <create-database-distrib database="derby" />
     <create-database-distrib database="mysql" />
+    <create-database-distrib database="oracle" />
     <create-database-distrib database="postgresql" />
     <create-database-distrib database="sqlserver" />
     <create-database-distrib database="sqlite" />
