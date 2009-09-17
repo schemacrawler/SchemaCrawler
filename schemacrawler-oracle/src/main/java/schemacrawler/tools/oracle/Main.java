@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.tools.derby;
+package schemacrawler.tools.oracle;
 
 
 import schemacrawler.main.SchemaCrawlerCommandLine;
