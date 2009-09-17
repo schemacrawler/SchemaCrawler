@@ -4,7 +4,7 @@
   <groupId>schemacrawler</groupId>
   <artifactId>schemacrawler-all</artifactId>
   <packaging>pom</packaging>
-  <version>7.2</version>
+  <version>7.3</version>
   <name>SchemaCrawler [All]</name>
   <description>SchemaCrawler is an API that improves on the standard JDBC metadata. SchemaCrawler is also a command-line tool to output your database schema and data in a readable form. The output is designed to be diff-ed with previous versions of your database schema.</description>
   <inceptionYear>2003</inceptionYear>
@@ -38,10 +38,12 @@
     <module>schemacrawler-tools</module>
     <module>schemacrawler-integrations</module>
     <module>schemacrawler-maven-plugin</module>
-    <module>schemacrawler-sqlserver</module>
+    <module>schemacrawler-derby</module>
     <module>schemacrawler-mysql</module>
+    <module>schemacrawler-oracle</module>
     <module>schemacrawler-postgresql</module>
     <module>schemacrawler-sqlite</module>
+    <module>schemacrawler-sqlserver</module>
     <module>distribution</module>
   </modules>
   <dependencies>
@@ -65,7 +67,7 @@
     </dependency>
   </dependencies>
 	<properties>
-		<schemacrawler.version>7.2</schemacrawler.version>
+		<schemacrawler.version>7.3</schemacrawler.version>
 	</properties>
   <build>
     <plugins>

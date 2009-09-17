@@ -24,7 +24,7 @@
       <directory>src/main/resources</directory>
       <outputDirectory></outputDirectory>
       <includes>
-        <include>derby.*</include>
+        <include>oracle.*</include>
       </includes>
      </fileSet>
   </fileSets>

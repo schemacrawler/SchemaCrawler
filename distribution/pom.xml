@@ -5,7 +5,7 @@
   <parent>
     <groupId>schemacrawler</groupId>
     <artifactId>schemacrawler-all</artifactId>
-    <version>7.2</version>
+    <version>7.3</version>
   </parent>
   <groupId>schemacrawler</groupId>
   <artifactId>distribution</artifactId>
@@ -34,12 +34,17 @@
     </dependency>
     <dependency>
       <groupId>schemacrawler</groupId>
-      <artifactId>schemacrawler-sqlserver</artifactId>
+      <artifactId>schemacrawler-derby</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>schemacrawler</groupId>
       <artifactId>schemacrawler-mysql</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>schemacrawler</groupId>
+      <artifactId>schemacrawler-oracle</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
@@ -50,6 +55,11 @@
     <dependency>
       <groupId>schemacrawler</groupId>
       <artifactId>schemacrawler-sqlite</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>schemacrawler</groupId>
+      <artifactId>schemacrawler-sqlserver</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>
