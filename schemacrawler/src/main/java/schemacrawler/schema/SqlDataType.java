@@ -21,18 +21,7 @@
 package schemacrawler.schema;
 
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
-import java.lang.reflect.Field;
-import java.sql.Types;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Map.Entry;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * A wrapper around java.sql.Types.
@@ -40,111 +29,23 @@ import java.util.logging.Logger;
  * @author Sualeh Fatehi
  */
 public final class SqlDataType
-  implements Serializable
+  implements Serializable, Comparable<SqlDataType>
 {
 
-  private static final Logger LOGGER = Logger.getLogger(SqlDataType.class
-    .getName());
-
-  /** Unknown SQL data type. */
-  public static final SqlDataType UNKNOWN = new SqlDataType(Integer.MAX_VALUE,
-                                                            "<UNKNOWN>");
-
   private static final long serialVersionUID = 2614819974745473431L;
-
-  private static final Map<Integer, SqlDataType> JAVA_SQL_TYPES = getJavaSqlTypes();
-
-  /**
-   * The java.sql.Types type .
-   * 
-   * @param type
-   *        java.sql.Types type
-   * @return java.sql.Types type
-   */
-  public static SqlDataType lookupSqlDataType(final int type)
-  {
-    SqlDataType sqlDataType = JAVA_SQL_TYPES.get(Integer.valueOf(type));
-    if (sqlDataType == null)
-    {
-      sqlDataType = UNKNOWN;
-    }
-    return sqlDataType;
-  }
-
-  private static Map<Integer, SqlDataType> getJavaSqlTypes()
-  {
-
-    final Map<Integer, SqlDataType> javaSqlTypes = new HashMap<Integer, SqlDataType>();
-
-    final InputStream javaSqlTypesStream = SqlDataType.class
-      .getResourceAsStream("/java.sql.Types.properties");
-    if (javaSqlTypesStream != null)
-    {
-      final Properties javaSqlTypesProperties = new Properties();
-      try
-      {
-        javaSqlTypesProperties.load(javaSqlTypesStream);
-      }
-      catch (final IOException e)
-      {
-        LOGGER.log(Level.WARNING, "Could not read internal resource", e);
-      }
-      finally
-      {
-        try
-        {
-          javaSqlTypesStream.close();
-        }
-        catch (final IOException e)
-        {
-          // Ignore
-        }
-      }
-      for (final Entry<Object, Object> entry: javaSqlTypesProperties.entrySet())
-      {
-        if (entry.getKey() != null && entry.getValue() != null)
-        {
-          final Integer type = Integer.parseInt(entry.getKey().toString());
-          javaSqlTypes.put(type, new SqlDataType(type, entry.getValue()
-            .toString()));
-        }
-      }
-    }
-
-    if (javaSqlTypes.isEmpty())
-    {
-      final Field[] staticFields = Types.class.getFields();
-      for (final Field field: staticFields)
-      {
-        try
-        {
-          final String fieldName = field.getName();
-          final Integer fieldValue = (Integer) field.get(null);
-          javaSqlTypes.put(fieldValue, new SqlDataType(fieldValue, fieldName));
-        }
-        catch (final SecurityException e)
-        {
-          LOGGER.log(Level.WARNING, "Could not access java.sql.Types", e);
-          continue;
-        }
-        catch (final IllegalAccessException e)
-        {
-          LOGGER.log(Level.WARNING, "Could not access java.sql.Types", e);
-          continue;
-        }
-      }
-    }
-
-    return Collections.unmodifiableMap(javaSqlTypes);
-  }
 
   private final int type;
   private final String typeName;
 
-  private SqlDataType(final int type, final String typeName)
+  SqlDataType(final int type, final String typeName)
   {
     this.type = type;
     this.typeName = typeName;
+  }
+
+  public int compareTo(final SqlDataType otherSqlDataType)
+  {
+    return typeName.compareTo(otherSqlDataType.typeName);
   }
 
   @Override
@@ -214,7 +115,7 @@ public final class SqlDataType
   @Override
   public String toString()
   {
-    return String.format("%s[%d]", typeName, type);
+    return String.format("%s=%d", typeName, type);
   }
 
 }
