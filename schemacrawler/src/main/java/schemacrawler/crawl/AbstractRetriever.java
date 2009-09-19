@@ -140,7 +140,7 @@ abstract class AbstractRetriever
     {
       columnDataType = new MutableColumnDataType(schema,
                                                  databaseSpecificTypeName);
-      columnDataType.setType(jdbcDataType);
+      columnDataType.setType(jdbcDataType, null);
       schema.addColumnDataType(columnDataType);
     }
     return columnDataType;

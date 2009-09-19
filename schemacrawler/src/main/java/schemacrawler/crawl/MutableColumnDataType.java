@@ -27,6 +27,8 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
 import schemacrawler.schema.SqlDataType;
+import schemacrawler.schema.SqlDataTypeUtility;
+import schemacrawler.utility.Utility;
 
 /**
  * Represents a column type. Provides the java.sql.Types type, the
@@ -65,7 +67,7 @@ final class MutableColumnDataType
     super(schema, name);
     // Default values
     searchable = SearchableType.unknown;
-    type = SqlDataType.UNKNOWN;
+    type = SqlDataTypeUtility.UNKNOWN;
     createParameters = "";
   }
 
@@ -398,14 +400,17 @@ final class MutableColumnDataType
     this.searchable = SearchableType.valueOf(searchable);
   }
 
-  void setType(final int type)
+  void setType(final int type, final String typeClassName)
   {
-    this.type = SqlDataType.lookupSqlDataType(type);
-  }
-
-  void setTypeClassName(final String typeClassName)
-  {
-    this.typeClassName = typeClassName;
+    this.type = SqlDataTypeUtility.lookupSqlDataType(type);
+    if (!Utility.isBlank(typeClassName))
+    {
+      this.typeClassName = typeClassName;
+    }
+    else
+    {
+      this.typeClassName = SqlDataTypeUtility.lookupMappedJavaClassName(type);
+    }
   }
 
   void setUnsigned(final boolean unsignedAttribute)

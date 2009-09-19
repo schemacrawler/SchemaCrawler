@@ -287,7 +287,7 @@ final class DatabaseInfoRetriever
 
         final MutableColumnDataType columnDataType = new MutableColumnDataType(schema,
                                                                                typeName);
-        columnDataType.setType(type);
+        columnDataType.setType(type, null);
         columnDataType.setPrecision(precision);
         columnDataType.setLiteralPrefix(literalPrefix);
         columnDataType.setLiteralSuffix(literalSuffix);
@@ -357,8 +357,7 @@ final class DatabaseInfoRetriever
         final MutableColumnDataType columnDataType = new MutableColumnDataType(schema,
                                                                                typeName);
         columnDataType.setUserDefined(true);
-        columnDataType.setType(type);
-        columnDataType.setTypeClassName(className);
+        columnDataType.setType(type, className);
         columnDataType.setBaseType(baseType);
         columnDataType.setRemarks(remarks);
 
