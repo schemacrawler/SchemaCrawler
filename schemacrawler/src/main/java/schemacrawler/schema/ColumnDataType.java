@@ -120,6 +120,13 @@ public interface ColumnDataType
    * 
    * @return The Java class for the type
    */
+  Class<?> getTypeClass();
+
+  /**
+   * Gets the Java class name for the type.
+   * 
+   * @return The Java class name for the type
+   */
   String getTypeClassName();
 
   /**
