@@ -168,7 +168,8 @@ class MutableSchema
     {
       final StringBuilder buffer = new StringBuilder();
       final NamedObject catalog = getParent();
-      final boolean hasCatalogName = catalog != null && !Utility.isBlank(catalog.getName());
+      final boolean hasCatalogName = catalog != null
+                                     && !Utility.isBlank(catalog.getName());
       if (hasCatalogName)
       {
         buffer.append(catalog.getName());

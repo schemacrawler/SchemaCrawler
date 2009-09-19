@@ -402,12 +402,12 @@ public final class DatabaseSchemaCrawler
         }
         // Set comparators
         ((MutableSchema) table.getSchema()).setTablesSortOrder(tablesSort);
-        ((MutableTable) table).setColumnsSortOrder(NamedObjectSort
-          .getNamedObjectSort(options.isAlphabeticalSortForTableColumns()));
-        ((MutableTable) table).setForeignKeysSortOrder(NamedObjectSort
+        table.setColumnsSortOrder(NamedObjectSort.getNamedObjectSort(options
+          .isAlphabeticalSortForTableColumns()));
+        table.setForeignKeysSortOrder(NamedObjectSort
           .getNamedObjectSort(options.isAlphabeticalSortForForeignKeys()));
-        ((MutableTable) table).setIndicesSortOrder(NamedObjectSort
-          .getNamedObjectSort(options.isAlphabeticalSortForIndexes()));
+        table.setIndicesSortOrder(NamedObjectSort.getNamedObjectSort(options
+          .isAlphabeticalSortForIndexes()));
       }
 
       // Set the sort order for tables after all the foreign keys have

@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.schema;
+package schemacrawler.crawl;
 
 
 import java.io.File;
@@ -50,17 +50,13 @@ import java.util.logging.Logger;
  * 
  * @author Sualeh Fatehi
  */
-public final class SqlDataTypeUtility
+public final class JavaSqlTypesUtility
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(SqlDataTypeUtility.class.getName());
+    .getLogger(JavaSqlTypesUtility.class.getName());
 
-  /** Unknown SQL data type. */
-  public static final SqlDataType UNKNOWN = new SqlDataType(Integer.MAX_VALUE,
-                                                            "<UNKNOWN>");
-
-  private static final Map<Integer, SqlDataType> JAVA_SQL_TYPES = getJavaSqlTypes();
+  private static final Map<Integer, JavaSqlType> JAVA_SQL_TYPES = getJavaSqlTypes();
   private static final Map<String, Class<?>> TYPE_CLASS_NAME_MAP = getTypeClassNameMap();
 
   /**
@@ -72,7 +68,7 @@ public final class SqlDataTypeUtility
    */
   public static Class<?> lookupMappedJavaClass(final int type)
   {
-    final SqlDataType sqlDataType = lookupSqlDataType(type);
+    final JavaSqlType sqlDataType = lookupSqlDataType(type);
     return TYPE_CLASS_NAME_MAP.get(sqlDataType.getTypeName());
   }
 
@@ -103,12 +99,12 @@ public final class SqlDataTypeUtility
    *        java.sql.Types type
    * @return java.sql.Types type
    */
-  public static SqlDataType lookupSqlDataType(final int type)
+  public static JavaSqlType lookupSqlDataType(final int type)
   {
-    SqlDataType sqlDataType = JAVA_SQL_TYPES.get(Integer.valueOf(type));
+    JavaSqlType sqlDataType = JAVA_SQL_TYPES.get(Integer.valueOf(type));
     if (sqlDataType == null)
     {
-      sqlDataType = UNKNOWN;
+      sqlDataType = JavaSqlType.UNKNOWN;
     }
     return sqlDataType;
   }
@@ -128,10 +124,10 @@ public final class SqlDataTypeUtility
 
     writer.write(String.format("# java.sql.Types from Java %s %s\n", System
       .getProperty("java.version"), System.getProperty("java.vendor")));
-    final List<SqlDataType> javaSqlTypes = new ArrayList<SqlDataType>(obtainJavaSqlTypes()
+    final List<JavaSqlType> javaSqlTypes = new ArrayList<JavaSqlType>(obtainJavaSqlTypes()
       .values());
     Collections.sort(javaSqlTypes);
-    for (final SqlDataType sqlDataType: javaSqlTypes)
+    for (final JavaSqlType sqlDataType: javaSqlTypes)
     {
       writer.write(String.format("%s\n", sqlDataType));
     }
@@ -139,12 +135,12 @@ public final class SqlDataTypeUtility
     writer.close();
   }
 
-  private static Map<Integer, SqlDataType> getJavaSqlTypes()
+  private static Map<Integer, JavaSqlType> getJavaSqlTypes()
   {
 
-    final Map<Integer, SqlDataType> javaSqlTypes = new HashMap<Integer, SqlDataType>();
+    final Map<Integer, JavaSqlType> javaSqlTypes = new HashMap<Integer, JavaSqlType>();
 
-    final InputStream javaSqlTypesStream = SqlDataTypeUtility.class
+    final InputStream javaSqlTypesStream = JavaSqlTypesUtility.class
       .getResourceAsStream("/java.sql.Types.properties");
     if (javaSqlTypesStream != null)
     {
@@ -174,7 +170,7 @@ public final class SqlDataTypeUtility
         {
           final Integer type = Integer.parseInt(entry.getValue().toString());
           final String typeName = entry.getKey().toString();
-          javaSqlTypes.put(type, new SqlDataType(type, typeName));
+          javaSqlTypes.put(type, new JavaSqlType(type, typeName));
         }
       }
     }
@@ -219,9 +215,9 @@ public final class SqlDataTypeUtility
     return typeClassNameMap;
   }
 
-  private static Map<Integer, SqlDataType> obtainJavaSqlTypes()
+  private static Map<Integer, JavaSqlType> obtainJavaSqlTypes()
   {
-    final Map<Integer, SqlDataType> javaSqlTypes = new HashMap<Integer, SqlDataType>();
+    final Map<Integer, JavaSqlType> javaSqlTypes = new HashMap<Integer, JavaSqlType>();
     final Field[] javaSqlTypesFields = Types.class.getFields();
     for (final Field field: javaSqlTypesFields)
     {
@@ -229,7 +225,7 @@ public final class SqlDataTypeUtility
       {
         final String fieldName = field.getName();
         final Integer fieldValue = (Integer) field.get(null);
-        javaSqlTypes.put(fieldValue, new SqlDataType(fieldValue, fieldName));
+        javaSqlTypes.put(fieldValue, new JavaSqlType(fieldValue, fieldName));
       }
       catch (final SecurityException e)
       {
@@ -245,7 +241,7 @@ public final class SqlDataTypeUtility
     return javaSqlTypes;
   }
 
-  private SqlDataTypeUtility()
+  private JavaSqlTypesUtility()
   {
   }
 
