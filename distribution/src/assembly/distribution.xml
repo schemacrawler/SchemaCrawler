@@ -134,6 +134,8 @@
         <exclude name="**/*.ser" />
         <exclude name="**/*.zip" />
         <exclude name="*.html" />
+        <exclude name="workspace/**" />
+        <exclude name="*.epf" />
       </zipfileset>
     </zip>
 
