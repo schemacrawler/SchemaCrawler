@@ -226,7 +226,8 @@ public final class JavaSqlTypesUtility
               javaSqlTypeClass = null;
             }
           }
-          catch (final Throwable e)
+          catch (final Throwable e) // A number of exceptions or errors
+          // could occur
           {
             LOGGER.log(Level.WARNING, "Cannot load class, "
                                       + javaSqlTypesClassName, e);
