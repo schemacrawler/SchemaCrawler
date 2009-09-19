@@ -21,6 +21,7 @@
 package schemacrawler.crawl;
 
 
+import schemacrawler.crawl.JavaSqlTypesUtility.JavaSqlTypeGroup;
 import schemacrawler.schema.BaseColumn;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DatabaseObject;
@@ -135,19 +136,16 @@ abstract class AbstractColumn
       return "";
     }
 
-    boolean needWidth = true;
-    if (columnDataType.isTemporalType() || columnDataType.isBinaryType()
-        || columnDataType.isIntegralType())
-    {
-      needWidth = false;
-    }
+    final JavaSqlTypeGroup typeGroup = JavaSqlTypesUtility
+      .lookupSqlDataTypeGroup(columnDataType.getType());
+    final boolean needWidth = (typeGroup == JavaSqlTypeGroup.character || typeGroup == JavaSqlTypeGroup.real);
 
     final StringBuilder columnWidthBuffer = new StringBuilder();
     if (needWidth)
     {
       columnWidthBuffer.append("(");
       columnWidthBuffer.append(size);
-      if (columnDataType.isRealType())
+      if (typeGroup == JavaSqlTypeGroup.real)
       {
         columnWidthBuffer.append(", ").append(getDecimalDigits());
       }
