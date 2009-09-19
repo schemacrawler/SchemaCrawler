@@ -26,8 +26,6 @@ import java.sql.Types;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
-import schemacrawler.schema.SqlDataType;
-import schemacrawler.schema.SqlDataTypeUtility;
 import schemacrawler.utility.Utility;
 
 /**
@@ -44,7 +42,7 @@ final class MutableColumnDataType
   private static final long serialVersionUID = 3688503281676530744L;
 
   private boolean userDefined;
-  private SqlDataType type;
+  private JavaSqlType type;
   private long precision;
   private String literalPrefix;
   private String literalSuffix;
@@ -67,7 +65,7 @@ final class MutableColumnDataType
     super(schema, name);
     // Default values
     searchable = SearchableType.unknown;
-    type = SqlDataTypeUtility.UNKNOWN;
+    type = JavaSqlType.UNKNOWN;
     createParameters = "";
   }
 
@@ -402,14 +400,14 @@ final class MutableColumnDataType
 
   void setType(final int type, final String typeClassName)
   {
-    this.type = SqlDataTypeUtility.lookupSqlDataType(type);
+    this.type = JavaSqlTypesUtility.lookupSqlDataType(type);
     if (!Utility.isBlank(typeClassName))
     {
       this.typeClassName = typeClassName;
     }
     else
     {
-      this.typeClassName = SqlDataTypeUtility.lookupMappedJavaClassName(type);
+      this.typeClassName = JavaSqlTypesUtility.lookupMappedJavaClassName(type);
     }
   }
 

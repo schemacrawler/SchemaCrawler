@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.schema;
+package schemacrawler.crawl;
 
 
 import java.io.Serializable;
@@ -28,8 +28,8 @@ import java.io.Serializable;
  * 
  * @author Sualeh Fatehi
  */
-public final class SqlDataType
-  implements Serializable, Comparable<SqlDataType>
+public final class JavaSqlType
+  implements Serializable, Comparable<JavaSqlType>
 {
 
   private static final long serialVersionUID = 2614819974745473431L;
@@ -37,13 +37,17 @@ public final class SqlDataType
   private final int type;
   private final String typeName;
 
-  SqlDataType(final int type, final String typeName)
+  /** Unknown SQL data type. */
+  public static final JavaSqlType UNKNOWN = new JavaSqlType(Integer.MAX_VALUE,
+                                                            "<UNKNOWN>");
+
+  JavaSqlType(final int type, final String typeName)
   {
     this.type = type;
     this.typeName = typeName;
   }
 
-  public int compareTo(final SqlDataType otherSqlDataType)
+  public int compareTo(final JavaSqlType otherSqlDataType)
   {
     return typeName.compareTo(otherSqlDataType.typeName);
   }
@@ -63,7 +67,7 @@ public final class SqlDataType
     {
       return false;
     }
-    final SqlDataType other = (SqlDataType) obj;
+    final JavaSqlType other = (JavaSqlType) obj;
     if (type != other.type)
     {
       return false;
