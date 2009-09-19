@@ -5,6 +5,16 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+    <release version="7.3" date="2009-09-21">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added support for mapping of SQL data type to Java classes. This includes the
+        new JavaSqlType class, and the JavaSqlTypesUtility. A new method, getTypeClass(), 
+        has been added to ColumnDataType.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added SchemaCrawler for Apache Derby, that is packaged for Apache Derby.
+      ]]></action>                                 
+    </release>    
     <release version="7.2" date="2009-08-21">
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
         Better modeling of privileges and grants.
