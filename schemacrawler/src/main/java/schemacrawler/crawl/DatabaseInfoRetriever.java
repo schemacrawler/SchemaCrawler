@@ -262,12 +262,11 @@ final class DatabaseInfoRetriever
       while (results.next())
       {
         final String typeName = results.getString("TYPE_NAME");
-        final int type = results.getInt("DATA_TYPE", 0);
-        LOGGER
-          .log(Level.FINER, String
-            .format("Retrieving data type: %s (with type id %d)",
-                    typeName,
-                    type));
+        final int dataType = results.getInt("DATA_TYPE", 0);
+        LOGGER.log(Level.FINER, String
+          .format("Retrieving data type: %s (with type id %d)",
+                  typeName,
+                  dataType));
         final long precision = results.getLong("PRECISION", 0L);
         final String literalPrefix = results.getString("LITERAL_PREFIX");
         final String literalSuffix = results.getString("LITERAL_SUFFIX");
@@ -287,7 +286,9 @@ final class DatabaseInfoRetriever
 
         final MutableColumnDataType columnDataType = new MutableColumnDataType(schema,
                                                                                typeName);
-        columnDataType.setType(type, null);
+        // Set the Java SQL type code, but no mapped Java class is
+        // available, so use the defaults
+        columnDataType.setType(dataType, null);
         columnDataType.setPrecision(precision);
         columnDataType.setLiteralPrefix(literalPrefix);
         columnDataType.setLiteralSuffix(literalSuffix);
@@ -339,7 +340,7 @@ final class DatabaseInfoRetriever
         final String schemaName = results.getString("TYPE_SCHEM");
         final String typeName = results.getString("TYPE_NAME");
         LOGGER.log(Level.FINER, "Retrieving data type: " + typeName);
-        final short type = results.getShort("DATA_TYPE", (short) 0);
+        final short dataType = results.getShort("DATA_TYPE", (short) 0);
         final String className = results.getString("CLASS_NAME");
         final String remarks = results.getString("REMARKS");
         final short baseTypeValue = results.getShort("BASE_TYPE", (short) 0);
@@ -357,7 +358,7 @@ final class DatabaseInfoRetriever
         final MutableColumnDataType columnDataType = new MutableColumnDataType(schema,
                                                                                typeName);
         columnDataType.setUserDefined(true);
-        columnDataType.setType(type, className);
+        columnDataType.setType(dataType, className);
         columnDataType.setBaseType(baseType);
         columnDataType.setRemarks(remarks);
 
