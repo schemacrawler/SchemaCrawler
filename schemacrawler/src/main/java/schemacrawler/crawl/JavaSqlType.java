@@ -34,22 +34,46 @@ public final class JavaSqlType
 
   private static final long serialVersionUID = 2614819974745473431L;
 
-  private final int type;
-  private final String typeName;
+  private final int javaSqlType;
+  private final String javaSqlTypeName;
+  private final String javaSqlTypeMappedClassName;
+  private final Class<?> javaSqlTypeMappedClass;
 
   /** Unknown SQL data type. */
   public static final JavaSqlType UNKNOWN = new JavaSqlType(Integer.MAX_VALUE,
-                                                            "<UNKNOWN>");
+                                                            "<UNKNOWN>",
+                                                            void.class);
 
-  JavaSqlType(final int type, final String typeName)
+  JavaSqlType(final int javaSqlType,
+              final String javaSqlTypeName,
+              final Class<?> javaSqlTypeMappedClass)
   {
-    this.type = type;
-    this.typeName = typeName;
+    this.javaSqlType = javaSqlType;
+    this.javaSqlTypeName = javaSqlTypeName;
+    this.javaSqlTypeMappedClass = javaSqlTypeMappedClass;
+    if (javaSqlTypeMappedClass != null)
+    {
+      javaSqlTypeMappedClassName = javaSqlTypeMappedClass.getCanonicalName();
+    }
+    else
+    {
+      javaSqlTypeMappedClassName = null;
+    }
+  }
+
+  JavaSqlType(final int javaSqlType,
+              final String javaSqlTypeName,
+              final String javaSqlTypeMappedClassName)
+  {
+    this.javaSqlType = javaSqlType;
+    this.javaSqlTypeName = javaSqlTypeName;
+    javaSqlTypeMappedClass = null;
+    this.javaSqlTypeMappedClassName = javaSqlTypeMappedClassName;
   }
 
   public int compareTo(final JavaSqlType otherSqlDataType)
   {
-    return typeName.compareTo(otherSqlDataType.typeName);
+    return javaSqlTypeName.compareTo(otherSqlDataType.javaSqlTypeName);
   }
 
   @Override
@@ -68,18 +92,30 @@ public final class JavaSqlType
       return false;
     }
     final JavaSqlType other = (JavaSqlType) obj;
-    if (type != other.type)
+    if (javaSqlType != other.javaSqlType)
     {
       return false;
     }
-    if (typeName == null)
+    if (javaSqlTypeMappedClass == null)
     {
-      if (other.typeName != null)
+      if (other.javaSqlTypeMappedClass != null)
       {
         return false;
       }
     }
-    else if (!typeName.equals(other.typeName))
+    else if (!javaSqlTypeMappedClass.getCanonicalName()
+      .equals(other.javaSqlTypeMappedClass.getCanonicalName()))
+    {
+      return false;
+    }
+    if (javaSqlTypeName == null)
+    {
+      if (other.javaSqlTypeName != null)
+      {
+        return false;
+      }
+    }
+    else if (!javaSqlTypeName.equals(other.javaSqlTypeName))
     {
       return false;
     }
@@ -91,9 +127,19 @@ public final class JavaSqlType
    * 
    * @return java.sql.Types type
    */
-  public int getType()
+  public int getJavaSqlType()
   {
-    return type;
+    return javaSqlType;
+  }
+
+  public Class<?> getJavaSqlTypeMappedClass()
+  {
+    return javaSqlTypeMappedClass;
+  }
+
+  public String getJavaSqlTypeMappedClassName()
+  {
+    return javaSqlTypeMappedClassName;
   }
 
   /**
@@ -101,9 +147,9 @@ public final class JavaSqlType
    * 
    * @return java.sql.Types type names
    */
-  public String getTypeName()
+  public String getJavaSqlTypeName()
   {
-    return typeName;
+    return javaSqlTypeName;
   }
 
   @Override
@@ -111,15 +157,24 @@ public final class JavaSqlType
   {
     final int prime = 31;
     int result = 1;
-    result = prime * result + type;
-    result = prime * result + (typeName == null? 0: typeName.hashCode());
+    result = prime * result + javaSqlType;
+    result = prime
+             * result
+             + (javaSqlTypeMappedClass == null? 0: javaSqlTypeMappedClass
+               .hashCode());
+    result = prime * result
+             + (javaSqlTypeName == null? 0: javaSqlTypeName.hashCode());
     return result;
   }
 
   @Override
   public String toString()
   {
-    return String.format("%s=%d", typeName, type);
+    return String.format("%s\t%d\t%s",
+                         javaSqlTypeName,
+                         javaSqlType,
+                         javaSqlTypeMappedClass != null? javaSqlTypeMappedClass
+                           .getCanonicalName(): javaSqlTypeMappedClassName);
   }
 
 }

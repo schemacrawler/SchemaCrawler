@@ -42,7 +42,7 @@ final class MutableColumnDataType
   private static final long serialVersionUID = 3688503281676530744L;
 
   private boolean userDefined;
-  private JavaSqlType type;
+  private JavaSqlType javaSqlType;
   private long precision;
   private String literalPrefix;
   private String literalSuffix;
@@ -65,7 +65,7 @@ final class MutableColumnDataType
     super(schema, name);
     // Default values
     searchable = SearchableType.unknown;
-    type = JavaSqlType.UNKNOWN;
+    javaSqlType = JavaSqlType.UNKNOWN;
     createParameters = "";
   }
 
@@ -186,7 +186,7 @@ final class MutableColumnDataType
    */
   public int getType()
   {
-    return type.getType();
+    return javaSqlType.getJavaSqlType();
   }
 
   /**
@@ -206,7 +206,7 @@ final class MutableColumnDataType
    */
   public String getTypeName()
   {
-    return type.getTypeName();
+    return javaSqlType.getJavaSqlTypeName();
   }
 
   /**
@@ -400,14 +400,17 @@ final class MutableColumnDataType
 
   void setType(final int type, final String typeClassName)
   {
-    this.type = JavaSqlTypesUtility.lookupSqlDataType(type);
+    javaSqlType = JavaSqlTypesUtility.lookupSqlDataType(type);
     if (!Utility.isBlank(typeClassName))
     {
       this.typeClassName = typeClassName;
     }
     else
     {
-      this.typeClassName = JavaSqlTypesUtility.lookupMappedJavaClassName(type);
+      if (javaSqlType != null)
+      {
+        this.typeClassName = javaSqlType.getJavaSqlTypeMappedClassName();
+      }
     }
   }
 
