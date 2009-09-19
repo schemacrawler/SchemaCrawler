@@ -244,6 +244,7 @@ final class MutableColumnDataType
    * 
    * @see schemacrawler.schema.ColumnDataType#isBinaryType()
    */
+  @Deprecated
   public boolean isBinaryType()
   {
     return JavaSqlTypesUtility.lookupSqlDataTypeGroup(javaSqlType) == JavaSqlTypeGroup.binary;
@@ -264,6 +265,7 @@ final class MutableColumnDataType
    * 
    * @see schemacrawler.schema.ColumnDataType#isCharacterType()
    */
+  @Deprecated
   public boolean isCharacterType()
   {
     return JavaSqlTypesUtility.lookupSqlDataTypeGroup(javaSqlType) == JavaSqlTypeGroup.character;
@@ -277,7 +279,7 @@ final class MutableColumnDataType
   @Deprecated
   public boolean isDateType()
   {
-    return isTemporalType();
+    return JavaSqlTypesUtility.lookupSqlDataTypeGroup(javaSqlType) == JavaSqlTypeGroup.temporal;
   }
 
   /**
@@ -295,6 +297,7 @@ final class MutableColumnDataType
    * 
    * @see schemacrawler.schema.ColumnDataType#isIntegralType()
    */
+  @Deprecated
   public boolean isIntegralType()
   {
     return JavaSqlTypesUtility.lookupSqlDataTypeGroup(javaSqlType) == JavaSqlTypeGroup.integer;
@@ -315,19 +318,10 @@ final class MutableColumnDataType
    * 
    * @see schemacrawler.schema.ColumnDataType#isRealType()
    */
+  @Deprecated
   public boolean isRealType()
   {
     return JavaSqlTypesUtility.lookupSqlDataTypeGroup(javaSqlType) == JavaSqlTypeGroup.real;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.ColumnDataType#isTemporalType()
-   */
-  public boolean isTemporalType()
-  {
-    return JavaSqlTypesUtility.lookupSqlDataTypeGroup(javaSqlType) == JavaSqlTypeGroup.temporal;
   }
 
   /**
