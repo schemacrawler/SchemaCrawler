@@ -119,13 +119,13 @@ abstract class AbstractRetriever
    * Creates a data type from the JDBC data type id, and the database
    * specific type name, if it does not exist.
    * 
-   * @param jdbcDataType
+   * @param javaSqlType
    *        JDBC data type
    * @param databaseSpecificTypeName
    *        Database specific type name
    */
   protected MutableColumnDataType lookupOrCreateColumnDataType(final MutableSchema schema,
-                                                               final int jdbcDataType,
+                                                               final int javaSqlType,
                                                                final String databaseSpecificTypeName)
   {
     MutableColumnDataType columnDataType = schema
@@ -140,7 +140,9 @@ abstract class AbstractRetriever
     {
       columnDataType = new MutableColumnDataType(schema,
                                                  databaseSpecificTypeName);
-      columnDataType.setType(jdbcDataType, null);
+      // Set the Java SQL type code, but no mapped Java class is
+      // available, so use the defaults
+      columnDataType.setType(javaSqlType, null);
       schema.addColumnDataType(columnDataType);
     }
     return columnDataType;
