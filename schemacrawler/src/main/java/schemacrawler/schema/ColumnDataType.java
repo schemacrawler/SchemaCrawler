@@ -165,10 +165,11 @@ public interface ColumnDataType
   boolean isCharacterType();
 
   /**
-   * If the type is a date type.
+   * If the type is a date or time type. (Use isTemporalType() instead.)
    * 
-   * @return If the type is a date type
+   * @return If the type is a date or time type
    */
+  @Deprecated
   boolean isDateType();
 
   /**
@@ -198,6 +199,13 @@ public interface ColumnDataType
    * @return If the type is a real number type
    */
   boolean isRealType();
+
+  /**
+   * If the type is a date or time type.
+   * 
+   * @return If the type is a date or time type
+   */
+  boolean isTemporalType();
 
   /**
    * Whether the data type is unsigned.
