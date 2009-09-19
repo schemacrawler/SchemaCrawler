@@ -21,10 +21,10 @@
 package schemacrawler.crawl;
 
 
-import java.sql.Types;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.crawl.JavaSqlTypesUtility.JavaSqlTypeGroup;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
@@ -246,9 +246,7 @@ final class MutableColumnDataType
    */
   public boolean isBinaryType()
   {
-    final int type = getType();
-    return type == Types.CLOB || type == Types.BLOB
-           || type == Types.LONGVARBINARY || type == Types.OTHER;
+    return JavaSqlTypesUtility.lookupSqlDataTypeGroup(javaSqlType) == JavaSqlTypeGroup.binary;
   }
 
   /**
@@ -268,9 +266,7 @@ final class MutableColumnDataType
    */
   public boolean isCharacterType()
   {
-    final int type = getType();
-    return type == Types.CHAR || type == Types.LONGVARCHAR
-           || type == Types.VARCHAR || type == Types.CLOB;
+    return JavaSqlTypesUtility.lookupSqlDataTypeGroup(javaSqlType) == JavaSqlTypeGroup.character;
   }
 
   /**
@@ -278,10 +274,10 @@ final class MutableColumnDataType
    * 
    * @see schemacrawler.schema.ColumnDataType#isDateType()
    */
+  @Deprecated
   public boolean isDateType()
   {
-    final int type = getType();
-    return type == Types.TIMESTAMP || type == Types.TIME || type == Types.DATE;
+    return isTemporalType();
   }
 
   /**
@@ -301,9 +297,7 @@ final class MutableColumnDataType
    */
   public boolean isIntegralType()
   {
-    final int type = getType();
-    return type == Types.INTEGER || type == Types.BIGINT
-           || type == Types.SMALLINT || type == Types.TINYINT;
+    return JavaSqlTypesUtility.lookupSqlDataTypeGroup(javaSqlType) == JavaSqlTypeGroup.integer;
   }
 
   /**
@@ -323,9 +317,17 @@ final class MutableColumnDataType
    */
   public boolean isRealType()
   {
-    final int type = getType();
-    return type == Types.DECIMAL || type == Types.FLOAT || type == Types.REAL
-           || type == Types.DOUBLE || type == Types.NUMERIC;
+    return JavaSqlTypesUtility.lookupSqlDataTypeGroup(javaSqlType) == JavaSqlTypeGroup.real;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.ColumnDataType#isTemporalType()
+   */
+  public boolean isTemporalType()
+  {
+    return JavaSqlTypesUtility.lookupSqlDataTypeGroup(javaSqlType) == JavaSqlTypeGroup.temporal;
   }
 
   /**

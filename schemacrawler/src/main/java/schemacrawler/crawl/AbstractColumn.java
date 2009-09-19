@@ -136,7 +136,7 @@ abstract class AbstractColumn
     }
 
     boolean needWidth = true;
-    if (columnDataType.isDateType() || columnDataType.isBinaryType()
+    if (columnDataType.isTemporalType() || columnDataType.isBinaryType()
         || columnDataType.isIntegralType())
     {
       needWidth = false;
