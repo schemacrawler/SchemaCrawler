@@ -889,7 +889,7 @@ PUBLIC.org.hsqldb.Library.difference         [procedure, returns result]
 
 PUBLIC.org.hsqldb.Library.getAutoCommit      [procedure, returns result]
 ------------------------------------------------------------------------
-  @p0                               BOOLEAN(1), result          
+  @p0                               BOOLEAN, result             
 
 
 PUBLIC.org.hsqldb.Library.getDatabaseFullProductVersion  [procedure, returns result]
@@ -945,17 +945,17 @@ PUBLIC.org.hsqldb.Library.insert             [procedure, returns result]
 
 PUBLIC.org.hsqldb.Library.isReadOnlyConnection  [procedure, returns result]
 ------------------------------------------------------------------------
-  @p0                               BOOLEAN(1), result          
+  @p0                               BOOLEAN, result             
 
 
 PUBLIC.org.hsqldb.Library.isReadOnlyDatabase  [procedure, returns result]
 ------------------------------------------------------------------------
-  @p0                               BOOLEAN(1), result          
+  @p0                               BOOLEAN, result             
 
 
 PUBLIC.org.hsqldb.Library.isReadOnlyDatabaseFiles  [procedure, returns result]
 ------------------------------------------------------------------------
-  @p0                               BOOLEAN(1), result          
+  @p0                               BOOLEAN, result             
 
 
 PUBLIC.org.hsqldb.Library.lcase              [procedure, returns result]
@@ -1148,8 +1148,8 @@ PUBLIC.org.hsqldb.Library.trim               [procedure, returns result]
   @p0                               LONGVARCHAR, result         
   @p1                               LONGVARCHAR, in             
   @p2                               LONGVARCHAR, in             
-  @p3                               BOOLEAN(1), in              
-  @p4                               BOOLEAN(1), in              
+  @p3                               BOOLEAN, in                 
+  @p4                               BOOLEAN, in                 
 
 
 PUBLIC.org.hsqldb.Library.truncate           [procedure, returns result]
