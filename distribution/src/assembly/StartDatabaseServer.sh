@@ -1,1 +1,1 @@
-java -cp hsqldb.jar;schemacrawler-7.3.jar schemacrawler.utility.TestDatabase
+java -cp hsqldb.jar;schemacrawler-7.4.jar schemacrawler.utility.TestDatabase
