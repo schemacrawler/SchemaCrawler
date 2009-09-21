@@ -10,7 +10,7 @@
       <plugin>
         <groupId>schemacrawler</groupId>
         <artifactId>schemacrawler-maven-plugin</artifactId>
-        <version>7.3</version>
+        <version>7.4</version>
         <configuration>
           <schemacrawler.config>schemacrawler.config.properties</schemacrawler.config>
           <schemacrawler.datasource>hsqldb</schemacrawler.datasource>
