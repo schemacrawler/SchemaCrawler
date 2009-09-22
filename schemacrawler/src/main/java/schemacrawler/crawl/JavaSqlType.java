@@ -31,6 +31,23 @@ public final class JavaSqlType
   implements Serializable, Comparable<JavaSqlType>
 {
 
+  public enum JavaSqlTypeGroup
+  {
+
+    unknown,
+    binary,
+    bit,
+    character,
+    id,
+    integer,
+    real,
+    reference,
+    temporal,
+    url,
+    xml;
+
+  }
+
   private static final long serialVersionUID = 2614819974745473431L;
 
   private final int javaSqlType;

@@ -21,6 +21,7 @@
 package schemacrawler.crawl;
 
 
+import schemacrawler.crawl.JavaSqlType.JavaSqlTypeGroup;
 import schemacrawler.schema.BaseColumn;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DatabaseObject;
