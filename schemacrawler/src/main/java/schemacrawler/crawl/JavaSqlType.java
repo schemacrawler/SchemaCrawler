@@ -17,7 +17,6 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-
 package schemacrawler.crawl;
 
 
@@ -38,18 +37,23 @@ public final class JavaSqlType
   private final String javaSqlTypeName;
   private final String javaSqlTypeMappedClassName;
   private final Class<?> javaSqlTypeMappedClass;
+  private final JavaSqlTypeGroup javaSqlTypeGroup;
 
   /** Unknown SQL data type. */
   public static final JavaSqlType UNKNOWN = new JavaSqlType(Integer.MAX_VALUE,
                                                             "<UNKNOWN>",
-                                                            void.class);
+                                                            void.class,
+                                                            JavaSqlTypeGroup.unknown);
 
   JavaSqlType(final int javaSqlType,
               final String javaSqlTypeName,
-              final Class<?> javaSqlTypeMappedClass)
+              final Class<?> javaSqlTypeMappedClass,
+              final JavaSqlTypeGroup javaSqlTypeGroup)
   {
     this.javaSqlType = javaSqlType;
     this.javaSqlTypeName = javaSqlTypeName;
+    this.javaSqlTypeGroup = javaSqlTypeGroup;
+    //
     this.javaSqlTypeMappedClass = javaSqlTypeMappedClass;
     if (javaSqlTypeMappedClass != null)
     {
@@ -59,14 +63,18 @@ public final class JavaSqlType
     {
       javaSqlTypeMappedClassName = null;
     }
+
   }
 
   JavaSqlType(final int javaSqlType,
               final String javaSqlTypeName,
-              final String javaSqlTypeMappedClassName)
+              final String javaSqlTypeMappedClassName,
+              final JavaSqlTypeGroup javaSqlTypeGroup)
   {
     this.javaSqlType = javaSqlType;
     this.javaSqlTypeName = javaSqlTypeName;
+    this.javaSqlTypeGroup = javaSqlTypeGroup;
+    //
     javaSqlTypeMappedClass = null;
     this.javaSqlTypeMappedClassName = javaSqlTypeMappedClassName;
   }
@@ -132,6 +140,11 @@ public final class JavaSqlType
     return javaSqlType;
   }
 
+  public JavaSqlTypeGroup getJavaSqlTypeGroup()
+  {
+    return javaSqlTypeGroup;
+  }
+
   public Class<?> getJavaSqlTypeMappedClass()
   {
     return javaSqlTypeMappedClass;
@@ -170,11 +183,12 @@ public final class JavaSqlType
   @Override
   public String toString()
   {
-    return String.format("%s\t%d\t%s",
+    return String.format("%s\t%d\t%s\t%s",
                          javaSqlTypeName,
                          javaSqlType,
                          javaSqlTypeMappedClass != null? javaSqlTypeMappedClass
-                           .getCanonicalName(): javaSqlTypeMappedClassName);
+                           .getCanonicalName(): javaSqlTypeMappedClassName,
+                         javaSqlTypeGroup);
   }
 
 }

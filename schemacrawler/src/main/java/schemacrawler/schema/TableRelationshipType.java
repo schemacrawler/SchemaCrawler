@@ -23,6 +23,8 @@ package schemacrawler.schema;
 public enum TableRelationshipType
 {
 
-  none, parent, child;
+  none,
+  parent,
+  child;
 
 }

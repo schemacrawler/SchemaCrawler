@@ -144,38 +144,11 @@ public interface ColumnDataType
   boolean isAutoIncrementable();
 
   /**
-   * If the type is a binary type. (Use
-   * JavaSqlTypesUtility.lookupSqlDataTypeGroup(int).)
-   * 
-   * @return If the type is a binary type
-   */
-  @Deprecated
-  boolean isBinaryType();
-
-  /**
    * Whether the data type is case-sensitive.
    * 
    * @return Whether the data type is case-sensitive
    */
   boolean isCaseSensitive();
-
-  /**
-   * If the type is a character type. (Use
-   * JavaSqlTypesUtility.lookupSqlDataTypeGroup(int).)
-   * 
-   * @return If the type is a character type
-   */
-  @Deprecated
-  boolean isCharacterType();
-
-  /**
-   * If the type is a date or time type. (Use
-   * JavaSqlTypesUtility.lookupSqlDataTypeGroup(int).)
-   * 
-   * @return If the type is a date or time type
-   */
-  @Deprecated
-  boolean isDateType();
 
   /**
    * Whether the data type has a fixed precision scale.
@@ -185,29 +158,11 @@ public interface ColumnDataType
   boolean isFixedPrecisionScale();
 
   /**
-   * If the type is an integer type. (Use
-   * JavaSqlTypesUtility.lookupSqlDataTypeGroup(int).)
-   * 
-   * @return If the type is an integer type
-   */
-  @Deprecated
-  boolean isIntegralType();
-
-  /**
    * Whether the data type is nullable.
    * 
    * @return Whether the data type is nullable
    */
   boolean isNullable();
-
-  /**
-   * If the type is a real number type. (Use
-   * JavaSqlTypesUtility.lookupSqlDataTypeGroup(int).)
-   * 
-   * @return If the type is a real number type
-   */
-  @Deprecated
-  boolean isRealType();
 
   /**
    * Whether the data type is unsigned.
