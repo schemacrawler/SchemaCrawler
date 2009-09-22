@@ -39,6 +39,8 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.crawl.JavaSqlType.JavaSqlTypeGroup;
+
 /**
  * Utility to work with java.sql.Types, and Java class name mappings.
  * 

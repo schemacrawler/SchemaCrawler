@@ -26,8 +26,8 @@ import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
-import schemacrawler.crawl.JavaSqlTypeGroup;
 import schemacrawler.crawl.JavaSqlTypesUtility;
+import schemacrawler.crawl.JavaSqlType.JavaSqlTypeGroup;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.utility.Utility;
