@@ -26,6 +26,8 @@ import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
+import schemacrawler.crawl.JavaSqlTypeGroup;
+import schemacrawler.crawl.JavaSqlTypesUtility;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.utility.Utility;
@@ -158,7 +160,9 @@ public final class Query
     for (int i = 0; i < columnsArray.length; i++)
     {
       final Column column = columnsArray[i];
-      if (!column.getType().isBinaryType())
+      final JavaSqlTypeGroup javaSqlTypeGroup = JavaSqlTypesUtility
+        .lookupSqlDataType(column.getType().getType()).getJavaSqlTypeGroup();
+      if (javaSqlTypeGroup != JavaSqlTypeGroup.binary)
       {
         if (i > 0)
         {

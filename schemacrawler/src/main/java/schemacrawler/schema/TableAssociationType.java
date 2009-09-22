@@ -22,5 +22,7 @@ package schemacrawler.schema;
 
 public enum TableAssociationType
 {
-  all, exported, imported;
+  all,
+  exported,
+  imported;
 }

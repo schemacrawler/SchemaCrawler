@@ -1,4 +1,4 @@
-#Sun Jun 07 22:02:50 EDT 2009
+#Mon Sep 21 21:03:33 EDT 2009
 eclipse.preferences.version=1
 org.eclipse.jdt.core.compiler.codegen.inlineJsrBytecode=enabled
 org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.5
@@ -20,7 +20,7 @@ org.eclipse.jdt.core.formatter.alignment_for_assignment=0
 org.eclipse.jdt.core.formatter.alignment_for_binary_expression=18
 org.eclipse.jdt.core.formatter.alignment_for_compact_if=16
 org.eclipse.jdt.core.formatter.alignment_for_conditional_expression=18
-org.eclipse.jdt.core.formatter.alignment_for_enum_constants=50
+org.eclipse.jdt.core.formatter.alignment_for_enum_constants=51
 org.eclipse.jdt.core.formatter.alignment_for_expressions_in_array_initializer=50
 org.eclipse.jdt.core.formatter.alignment_for_multiple_fields=16
 org.eclipse.jdt.core.formatter.alignment_for_parameters_in_constructor_declaration=82

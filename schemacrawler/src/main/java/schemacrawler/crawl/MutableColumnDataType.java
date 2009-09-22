@@ -24,7 +24,6 @@ package schemacrawler.crawl;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.crawl.JavaSqlTypesUtility.JavaSqlTypeGroup;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
@@ -242,44 +241,11 @@ final class MutableColumnDataType
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.ColumnDataType#isBinaryType()
-   */
-  @Deprecated
-  public boolean isBinaryType()
-  {
-    return JavaSqlTypesUtility.lookupSqlDataTypeGroup(javaSqlType) == JavaSqlTypeGroup.binary;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see schemacrawler.schema.ColumnDataType#isCaseSensitive()
    */
   public boolean isCaseSensitive()
   {
     return caseSensitive;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.ColumnDataType#isCharacterType()
-   */
-  @Deprecated
-  public boolean isCharacterType()
-  {
-    return JavaSqlTypesUtility.lookupSqlDataTypeGroup(javaSqlType) == JavaSqlTypeGroup.character;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.ColumnDataType#isDateType()
-   */
-  @Deprecated
-  public boolean isDateType()
-  {
-    return JavaSqlTypesUtility.lookupSqlDataTypeGroup(javaSqlType) == JavaSqlTypeGroup.temporal;
   }
 
   /**
@@ -295,33 +261,11 @@ final class MutableColumnDataType
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.ColumnDataType#isIntegralType()
-   */
-  @Deprecated
-  public boolean isIntegralType()
-  {
-    return JavaSqlTypesUtility.lookupSqlDataTypeGroup(javaSqlType) == JavaSqlTypeGroup.integer;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see schemacrawler.schema.ColumnDataType#isNullable()
    */
   public boolean isNullable()
   {
     return nullable;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.ColumnDataType#isRealType()
-   */
-  @Deprecated
-  public boolean isRealType()
-  {
-    return JavaSqlTypesUtility.lookupSqlDataTypeGroup(javaSqlType) == JavaSqlTypeGroup.real;
   }
 
   /**
