@@ -21,25 +21,18 @@
 package schemacrawler.crawl;
 
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Writer;
-import java.lang.reflect.Field;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
-import java.util.TreeMap;
 import java.util.Map.Entry;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.crawl.JavaSqlType.JavaSqlTypeGroup;
+import schemacrawler.schemacrawler.Config;
 
 /**
  * Utility to work with java.sql.Types, and Java class name mappings.
@@ -52,7 +45,15 @@ public final class JavaSqlTypesUtility
   private static final Logger LOGGER = Logger
     .getLogger(JavaSqlTypesUtility.class.getName());
 
-  private static final Map<Integer, JavaSqlType> JAVA_SQL_TYPES = readJavaSqlTypes();
+  private static final Map<Integer, JavaSqlType> JAVA_SQL_TYPES_BY_TYPE;
+  private static final Map<String, JavaSqlType> JAVA_SQL_TYPES_BY_TYPE_NAME;
+
+  static
+  {
+    final List<JavaSqlType> javaSqlTypes = readJavaSqlTypes();
+    JAVA_SQL_TYPES_BY_TYPE = mapJavaSqlTypesByType(javaSqlTypes);
+    JAVA_SQL_TYPES_BY_TYPE_NAME = mapJavaSqlTypesByTypeName(javaSqlTypes);
+  }
 
   /**
    * Lookup java.sql.Types type, and return more detailed information,
@@ -64,7 +65,25 @@ public final class JavaSqlTypesUtility
    */
   public static JavaSqlType lookupSqlDataType(final int type)
   {
-    JavaSqlType sqlDataType = JAVA_SQL_TYPES.get(type);
+    JavaSqlType sqlDataType = JAVA_SQL_TYPES_BY_TYPE.get(type);
+    if (sqlDataType == null)
+    {
+      sqlDataType = JavaSqlType.UNKNOWN;
+    }
+    return sqlDataType;
+  }
+
+  /**
+   * Lookup java.sql.Types type, and return more detailed information,
+   * including the mapped Java class.
+   * 
+   * @param typeName
+   *        java.sql.Types type name
+   * @return JavaSqlType type
+   */
+  public static JavaSqlType lookupSqlDataType(final String typeName)
+  {
+    JavaSqlType sqlDataType = JAVA_SQL_TYPES_BY_TYPE_NAME.get(typeName);
     if (sqlDataType == null)
     {
       sqlDataType = JavaSqlType.UNKNOWN;
@@ -75,129 +94,72 @@ public final class JavaSqlTypesUtility
   public static void main(final String[] args)
     throws IOException
   {
-    System.err.println(String.format("Java %s %s\n", System
-      .getProperty("java.version"), System.getProperty("java.vendor")));
-
-    if (args.length > 0)
+    for (final JavaSqlType javaSqlType: readJavaSqlTypes())
     {
-      writeJavaSqlTypes(new File(args[0]));
+      System.out.println(javaSqlType);
     }
-    else
+  }
+
+  private static Map<Integer, JavaSqlType> mapJavaSqlTypesByType(final List<JavaSqlType> javaSqlTypes)
+  {
+    final Map<Integer, JavaSqlType> javaSqlTypesByTypeMap = new HashMap<Integer, JavaSqlType>();
+    if (javaSqlTypes != null)
     {
-      for (final JavaSqlType javaSqlType: JAVA_SQL_TYPES.values())
+      for (final JavaSqlType javaSqlType: javaSqlTypes)
       {
-        System.out.println(javaSqlType);
+        javaSqlTypesByTypeMap.put(javaSqlType.getJavaSqlType(), javaSqlType);
       }
     }
-
+    return Collections.unmodifiableMap(javaSqlTypesByTypeMap);
   }
 
-  /**
-   * Map java.sql.Types to Java classes. Since this information is not
-   * available in the JDK, we need to hard-code it.
-   * 
-   * @see <a
-   *      href="http://java.sun.com/j2se/1.4.2/docs/guide/jdbc/getstart/mapping.html#1004791">Mapping
-   *      SQL and Java Types</a>
-   */
-  private static Map<String, Class<?>> getJavaSqlTypesPrimitivesClassMap()
+  private static Map<String, JavaSqlType> mapJavaSqlTypesByTypeName(final List<JavaSqlType> javaSqlTypes)
   {
-    final Map<String, Class<?>> javaSqlTypesClassMap = new TreeMap<String, Class<?>>();
-
-    javaSqlTypesClassMap.put("BIGINT", long.class);
-    javaSqlTypesClassMap.put("BINARY", byte[].class);
-    javaSqlTypesClassMap.put("BIT", boolean.class);
-    javaSqlTypesClassMap.put("BOOLEAN", boolean.class);
-    javaSqlTypesClassMap.put("CHAR", String.class);
-    javaSqlTypesClassMap.put("DATALINK", java.net.URL.class);
-    javaSqlTypesClassMap.put("DECIMAL", java.math.BigDecimal.class);
-    javaSqlTypesClassMap.put("DOUBLE", double.class);
-    javaSqlTypesClassMap.put("FLOAT", double.class);
-    javaSqlTypesClassMap.put("INTEGER", int.class);
-    javaSqlTypesClassMap.put("JAVA_OBJECT", Object.class);
-    javaSqlTypesClassMap.put("LONGNVARCHAR", String.class);
-    javaSqlTypesClassMap.put("LONGVARBINARY", byte[].class);
-    javaSqlTypesClassMap.put("LONGVARCHAR", String.class);
-    javaSqlTypesClassMap.put("NCHAR", String.class);
-    javaSqlTypesClassMap.put("NULL", void.class);
-    javaSqlTypesClassMap.put("NUMERIC", java.math.BigDecimal.class);
-    javaSqlTypesClassMap.put("NVARCHAR", String.class);
-    javaSqlTypesClassMap.put("OTHER", Object.class);
-    javaSqlTypesClassMap.put("REAL", float.class);
-    javaSqlTypesClassMap.put("SMALLINT", short.class);
-    javaSqlTypesClassMap.put("TINYINT", byte.class);
-    javaSqlTypesClassMap.put("VARBINARY", byte[].class);
-    javaSqlTypesClassMap.put("VARCHAR", String.class);
-
-    return Collections.unmodifiableMap(javaSqlTypesClassMap);
+    final Map<String, JavaSqlType> javaSqlTypesByTypeNameMap = new HashMap<String, JavaSqlType>();
+    if (javaSqlTypes != null)
+    {
+      for (final JavaSqlType javaSqlType: javaSqlTypes)
+      {
+        javaSqlTypesByTypeNameMap.put(javaSqlType.getJavaSqlTypeName(),
+                                      javaSqlType);
+      }
+    }
+    return Collections.unmodifiableMap(javaSqlTypesByTypeNameMap);
   }
 
-  private static Map<Integer, JavaSqlType> readJavaSqlTypes()
+  private static List<JavaSqlType> readJavaSqlTypes()
   {
     final Map<String, JavaSqlTypeGroup> javaSqlTypeGroupsMap = readJavaSqlTypesGroupsMap();
-    final Map<String, Class<?>> javaSqlTypesClassMap = getJavaSqlTypesPrimitivesClassMap();
-    final Properties javaSqlTypesClassNames = readJavaSqlTypesClassNameMap();
-    final Map<Integer, JavaSqlType> javaSqlTypes = new HashMap<Integer, JavaSqlType>();
-    final Properties javaSqlTypesProperties = readPropertiesResource("/java.sql.Types.properties");
-    for (final Entry<Object, Object> javaSqlTypesEntry: javaSqlTypesProperties
+    final Map<String, String> javaSqlTypesClassNames = readJavaSqlTypesClassNameMap();
+    final Map<String, String> javaSqlTypesProperties = readPropertiesResource("/java.sql.Types.properties");
+
+    final List<JavaSqlType> javaSqlTypes = new ArrayList<JavaSqlType>();
+
+    for (final Entry<String, String> javaSqlTypesEntry: javaSqlTypesProperties
       .entrySet())
     {
       if (javaSqlTypesEntry.getKey() != null
           && javaSqlTypesEntry.getValue() != null)
       {
         final Integer javaSqlType = Integer.parseInt(javaSqlTypesEntry
-          .getValue().toString());
-        final String javaSqlTypeName = javaSqlTypesEntry.getKey().toString();
-        Class<?> javaSqlTypeClass;
+          .getValue());
+        final String javaSqlTypeName = javaSqlTypesEntry.getKey();
         final String javaSqlTypesClassName = javaSqlTypesClassNames
-          .getProperty(javaSqlTypeName);
+          .get(javaSqlTypeName);
         final JavaSqlTypeGroup javaSqlTypeGroup = javaSqlTypeGroupsMap
           .get(javaSqlTypeName);
 
-        try
-        {
-          if (javaSqlTypesClassName != null)
-          {
-            javaSqlTypeClass = Class.forName(javaSqlTypesClassName);
-          }
-          else
-          {
-            javaSqlTypeClass = null;
-          }
-        }
-        catch (final Throwable e) // A number of exceptions or errors
-        // could occur
-        {
-          LOGGER.log(Level.WARNING, "Cannot load class, "
-                                    + javaSqlTypesClassName, e);
-          javaSqlTypeClass = null;
-        }
-        if (javaSqlTypeClass == null)
-        {
-          javaSqlTypeClass = javaSqlTypesClassMap.get(javaSqlTypeName);
-        }
-
-        if (javaSqlTypeClass != null)
-        {
-          javaSqlTypes.put(javaSqlType, new JavaSqlType(javaSqlType,
-                                                        javaSqlTypeName,
-                                                        javaSqlTypeClass,
-                                                        javaSqlTypeGroup));
-        }
-        else
-        {
-          javaSqlTypes.put(javaSqlType, new JavaSqlType(javaSqlType,
-                                                        javaSqlTypeName,
-                                                        javaSqlTypesClassName,
-                                                        javaSqlTypeGroup));
-        }
+        javaSqlTypes.add(new JavaSqlType(javaSqlType,
+                                         javaSqlTypeName,
+                                         javaSqlTypesClassName,
+                                         javaSqlTypeGroup));
       }
     }
 
-    return Collections.unmodifiableMap(javaSqlTypes);
+    return Collections.unmodifiableList(javaSqlTypes);
   }
 
-  private static Properties readJavaSqlTypesClassNameMap()
+  private static Map<String, String> readJavaSqlTypesClassNameMap()
   {
     return readPropertiesResource("/java.sql.Types.mappings.properties");
   }
@@ -205,16 +167,15 @@ public final class JavaSqlTypesUtility
   private static Map<String, JavaSqlTypeGroup> readJavaSqlTypesGroupsMap()
   {
     final Map<String, JavaSqlTypeGroup> javaSqlTypesGroupsMap = new HashMap<String, JavaSqlTypeGroup>();
-    final Properties javaSqlTypesGroups = readPropertiesResource("/java.sql.Types.groups.properties");
-    for (final Entry<Object, Object> javaSqlTypesGroupsEntry: javaSqlTypesGroups
+    final Map<String, String> javaSqlTypesGroups = readPropertiesResource("/java.sql.Types.groups.properties");
+    for (final Entry<String, String> javaSqlTypesGroupsEntry: javaSqlTypesGroups
       .entrySet())
     {
       try
       {
-        final String javaSqlTypeName = javaSqlTypesGroupsEntry.getKey()
-          .toString();
+        final String javaSqlTypeName = javaSqlTypesGroupsEntry.getKey();
         final JavaSqlTypeGroup group = JavaSqlTypeGroup
-          .valueOf(javaSqlTypesGroupsEntry.getValue().toString());
+          .valueOf(javaSqlTypesGroupsEntry.getValue());
         javaSqlTypesGroupsMap.put(javaSqlTypeName, group);
       }
       catch (final Exception e)
@@ -225,89 +186,20 @@ public final class JavaSqlTypesUtility
     return Collections.unmodifiableMap(javaSqlTypesGroupsMap);
   }
 
-  private static Properties readPropertiesResource(final String resource)
+  private static Map<String, String> readPropertiesResource(final String resource)
   {
-    final Properties properties = new Properties();
+    final Map<String, String> properties;
     final InputStream inputStream = JavaSqlTypesUtility.class
       .getResourceAsStream(resource);
     if (inputStream != null)
     {
-      try
-      {
-        properties.load(inputStream);
-      }
-      catch (final IOException e)
-      {
-        LOGGER.log(Level.WARNING, "Could not read internal resource, "
-                                  + resource, e);
-      }
-      finally
-      {
-        try
-        {
-          inputStream.close();
-        }
-        catch (final IOException e)
-        {
-          // Ignore
-        }
-      }
+      properties = Config.load(inputStream);
+    }
+    else
+    {
+      properties = Collections.EMPTY_MAP;
     }
     return properties;
-  }
-
-  private static void writeJavaSqlTypes(final File file)
-    throws IOException
-  {
-    if (file == null || !file.canWrite())
-    {
-      LOGGER.log(Level.WARNING, "Cannot write to file, " + file);
-      return;
-    }
-
-    final Map<String, JavaSqlTypeGroup> javaSqlTypeGroupsMap = readJavaSqlTypesGroupsMap();
-    final Map<String, Class<?>> javaSqlTypesClassMap = getJavaSqlTypesPrimitivesClassMap();
-    final List<JavaSqlType> javaSqlTypes = new ArrayList<JavaSqlType>();
-    final Field[] javaSqlTypesFields = Types.class.getFields();
-    for (final Field field: javaSqlTypesFields)
-    {
-      try
-      {
-        final String javaSqlTypeName = field.getName();
-        final Integer javaSqlType = (Integer) field.get(null);
-        final Class<?> javaSqlTypeClass = javaSqlTypesClassMap
-          .get(javaSqlTypeName);
-        final JavaSqlTypeGroup javaSqlTypeGroup = javaSqlTypeGroupsMap
-          .get(javaSqlTypeName);
-        javaSqlTypes.add(new JavaSqlType(javaSqlType,
-                                         javaSqlTypeName,
-                                         javaSqlTypeClass,
-                                         javaSqlTypeGroup));
-      }
-      catch (final SecurityException e)
-      {
-        LOGGER.log(Level.WARNING, "Could not access java.sql.Types", e);
-        continue;
-      }
-      catch (final IllegalAccessException e)
-      {
-        LOGGER.log(Level.WARNING, "Could not access java.sql.Types", e);
-        continue;
-      }
-    }
-    Collections.sort(javaSqlTypes);
-
-    final Writer writer = new FileWriter(file);
-    writer.write(String.format("# java.sql.Types from Java %s %s\n", System
-      .getProperty("java.version"), System.getProperty("java.vendor")));
-    for (final JavaSqlType sqlDataType: javaSqlTypes)
-    {
-      writer.write(String.format("%s=%d\n",
-                                 sqlDataType.getJavaSqlTypeName(),
-                                 sqlDataType.getJavaSqlType()));
-    }
-    writer.flush();
-    writer.close();
   }
 
   private JavaSqlTypesUtility()

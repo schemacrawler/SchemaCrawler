@@ -53,35 +53,13 @@ public final class JavaSqlType
   private final int javaSqlType;
   private final String javaSqlTypeName;
   private final String javaSqlTypeMappedClassName;
-  private final Class<?> javaSqlTypeMappedClass;
   private final JavaSqlTypeGroup javaSqlTypeGroup;
 
   /** Unknown SQL data type. */
   public static final JavaSqlType UNKNOWN = new JavaSqlType(Integer.MAX_VALUE,
                                                             "<UNKNOWN>",
-                                                            void.class,
+                                                            null,
                                                             JavaSqlTypeGroup.unknown);
-
-  JavaSqlType(final int javaSqlType,
-              final String javaSqlTypeName,
-              final Class<?> javaSqlTypeMappedClass,
-              final JavaSqlTypeGroup javaSqlTypeGroup)
-  {
-    this.javaSqlType = javaSqlType;
-    this.javaSqlTypeName = javaSqlTypeName;
-    this.javaSqlTypeGroup = javaSqlTypeGroup;
-    //
-    this.javaSqlTypeMappedClass = javaSqlTypeMappedClass;
-    if (javaSqlTypeMappedClass != null)
-    {
-      javaSqlTypeMappedClassName = javaSqlTypeMappedClass.getCanonicalName();
-    }
-    else
-    {
-      javaSqlTypeMappedClassName = null;
-    }
-
-  }
 
   JavaSqlType(final int javaSqlType,
               final String javaSqlTypeName,
@@ -91,8 +69,6 @@ public final class JavaSqlType
     this.javaSqlType = javaSqlType;
     this.javaSqlTypeName = javaSqlTypeName;
     this.javaSqlTypeGroup = javaSqlTypeGroup;
-    //
-    javaSqlTypeMappedClass = null;
     this.javaSqlTypeMappedClassName = javaSqlTypeMappedClassName;
   }
 
@@ -102,48 +78,29 @@ public final class JavaSqlType
   }
 
   @Override
-  public boolean equals(final Object obj)
+  public boolean equals(Object obj)
   {
-    if (this == obj)
+    if (this == obj) return true;
+    if (obj == null) return false;
+    if (getClass() != obj.getClass()) return false;
+    JavaSqlType other = (JavaSqlType) obj;
+    if (javaSqlType != other.javaSqlType) return false;
+    if (javaSqlTypeGroup == null)
     {
-      return true;
+      if (other.javaSqlTypeGroup != null) return false;
     }
-    if (obj == null)
+    else if (!javaSqlTypeGroup.equals(other.javaSqlTypeGroup)) return false;
+    if (javaSqlTypeMappedClassName == null)
     {
-      return false;
+      if (other.javaSqlTypeMappedClassName != null) return false;
     }
-    if (getClass() != obj.getClass())
-    {
-      return false;
-    }
-    final JavaSqlType other = (JavaSqlType) obj;
-    if (javaSqlType != other.javaSqlType)
-    {
-      return false;
-    }
-    if (javaSqlTypeMappedClass == null)
-    {
-      if (other.javaSqlTypeMappedClass != null)
-      {
-        return false;
-      }
-    }
-    else if (!javaSqlTypeMappedClass.getCanonicalName()
-      .equals(other.javaSqlTypeMappedClass.getCanonicalName()))
-    {
-      return false;
-    }
+    else if (!javaSqlTypeMappedClassName
+      .equals(other.javaSqlTypeMappedClassName)) return false;
     if (javaSqlTypeName == null)
     {
-      if (other.javaSqlTypeName != null)
-      {
-        return false;
-      }
+      if (other.javaSqlTypeName != null) return false;
     }
-    else if (!javaSqlTypeName.equals(other.javaSqlTypeName))
-    {
-      return false;
-    }
+    else if (!javaSqlTypeName.equals(other.javaSqlTypeName)) return false;
     return true;
   }
 
@@ -160,11 +117,6 @@ public final class JavaSqlType
   public JavaSqlTypeGroup getJavaSqlTypeGroup()
   {
     return javaSqlTypeGroup;
-  }
-
-  public Class<?> getJavaSqlTypeMappedClass()
-  {
-    return javaSqlTypeMappedClass;
   }
 
   public String getJavaSqlTypeMappedClassName()
@@ -188,12 +140,16 @@ public final class JavaSqlType
     final int prime = 31;
     int result = 1;
     result = prime * result + javaSqlType;
+    result = prime * result
+             + ((javaSqlTypeGroup == null)? 0: javaSqlTypeGroup.hashCode());
     result = prime
              * result
-             + (javaSqlTypeMappedClass == null? 0: javaSqlTypeMappedClass
-               .hashCode());
+             + ((javaSqlTypeMappedClassName == null)
+                                                    ? 0
+                                                    : javaSqlTypeMappedClassName
+                                                      .hashCode());
     result = prime * result
-             + (javaSqlTypeName == null? 0: javaSqlTypeName.hashCode());
+             + ((javaSqlTypeName == null)? 0: javaSqlTypeName.hashCode());
     return result;
   }
 
@@ -203,8 +159,7 @@ public final class JavaSqlType
     return String.format("%s\t%d\t%s\t%s",
                          javaSqlTypeName,
                          javaSqlType,
-                         javaSqlTypeMappedClass != null? javaSqlTypeMappedClass
-                           .getCanonicalName(): javaSqlTypeMappedClassName,
+                         javaSqlTypeMappedClassName,
                          javaSqlTypeGroup);
   }
 
