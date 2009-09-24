@@ -75,28 +75,28 @@ public final class JavaSqlTypesGenerationUtility
   private static Map<String, String> getJavaSqlTypesClassNameMap()
   {
     final Map<String, Class<?>> javaSqlTypesPrimitivesClassMap = new TreeMap<String, Class<?>>();
-    javaSqlTypesPrimitivesClassMap.put("BIGINT", long.class);
+    javaSqlTypesPrimitivesClassMap.put("BIGINT", Long.class);
     javaSqlTypesPrimitivesClassMap.put("BINARY", byte[].class);
-    javaSqlTypesPrimitivesClassMap.put("BIT", boolean.class);
-    javaSqlTypesPrimitivesClassMap.put("BOOLEAN", boolean.class);
+    javaSqlTypesPrimitivesClassMap.put("BIT", Boolean.class);
+    javaSqlTypesPrimitivesClassMap.put("BOOLEAN", Boolean.class);
     javaSqlTypesPrimitivesClassMap.put("CHAR", String.class);
     javaSqlTypesPrimitivesClassMap.put("DATALINK", java.net.URL.class);
     javaSqlTypesPrimitivesClassMap.put("DECIMAL", java.math.BigDecimal.class);
-    javaSqlTypesPrimitivesClassMap.put("DISTINCT", java.lang.Object.class);
-    javaSqlTypesPrimitivesClassMap.put("DOUBLE", double.class);
-    javaSqlTypesPrimitivesClassMap.put("FLOAT", double.class);
-    javaSqlTypesPrimitivesClassMap.put("INTEGER", int.class);
+    javaSqlTypesPrimitivesClassMap.put("DISTINCT", Object.class);
+    javaSqlTypesPrimitivesClassMap.put("DOUBLE", Double.class);
+    javaSqlTypesPrimitivesClassMap.put("FLOAT", Double.class);
+    javaSqlTypesPrimitivesClassMap.put("INTEGER", Integer.class);
     javaSqlTypesPrimitivesClassMap.put("JAVA_OBJECT", Object.class);
     javaSqlTypesPrimitivesClassMap.put("LONGNVARCHAR", String.class);
     javaSqlTypesPrimitivesClassMap.put("LONGVARBINARY", byte[].class);
     javaSqlTypesPrimitivesClassMap.put("LONGVARCHAR", String.class);
     javaSqlTypesPrimitivesClassMap.put("NCHAR", String.class);
-    javaSqlTypesPrimitivesClassMap.put("NULL", void.class);
+    javaSqlTypesPrimitivesClassMap.put("NULL", Void.class);
     javaSqlTypesPrimitivesClassMap.put("NUMERIC", java.math.BigDecimal.class);
     javaSqlTypesPrimitivesClassMap.put("NVARCHAR", String.class);
     javaSqlTypesPrimitivesClassMap.put("OTHER", Object.class);
-    javaSqlTypesPrimitivesClassMap.put("REAL", float.class);
-    javaSqlTypesPrimitivesClassMap.put("SMALLINT", short.class);
+    javaSqlTypesPrimitivesClassMap.put("REAL", Float.class);
+    javaSqlTypesPrimitivesClassMap.put("SMALLINT", Short.class);
     javaSqlTypesPrimitivesClassMap.put("TINYINT", byte.class);
     javaSqlTypesPrimitivesClassMap.put("VARBINARY", byte[].class);
     javaSqlTypesPrimitivesClassMap.put("VARCHAR", String.class);
