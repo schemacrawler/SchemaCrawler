@@ -34,7 +34,7 @@ public final class Version
 {
 
   private static final String PRODUCTNAME = "SchemaCrawler";
-  private static final String VERSION = "7.4";
+  private static final String VERSION = "7.3.1";
   private static final String ABOUT = Utility.readFully(Version.class
     .getResourceAsStream("/help/SchemaCrawler.txt"));
 
