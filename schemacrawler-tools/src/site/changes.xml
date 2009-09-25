@@ -5,7 +5,20 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="7.3" date="2009-09-21">
+    <release version="7.3.1" date="2009-09-24">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Enhancement to the JavaSqlType class, to contain the SQL type group. New lookup 
+        by data-type name added to JavaSqlTypesUtility. 
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Removed method, getTypeClass(), from ColumnDataType.
+      ]]></action>      
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Removed deprecated methods for grouping SQL data types (such as isReal()) 
+        from the ColumnDataType class.
+      ]]></action>                                 
+    </release>     
+    <release version="7.3" date="2009-09-19">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added support for mapping of SQL data type to Java classes. This includes the
         new JavaSqlType class, and the JavaSqlTypesUtility. A new method, getTypeClass(), 
