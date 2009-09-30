@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.crawl;
+package schemacrawler.utility;
 
 
 import java.io.File;
@@ -38,7 +38,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.crawl.JavaSqlType.JavaSqlTypeGroup;
-import schemacrawler.utility.Utility;
 
 /**
  * Utility to work with java.sql.Types, and Java class name mappings.
@@ -185,24 +184,16 @@ public final class JavaSqlTypesGenerationUtility
       return;
     }
 
+    final Map<String, Integer> javaSqlTypesMap = new HashMap<String, Integer>();
     final Map<String, JavaSqlTypeGroup> javaSqlTypeGroupsMap = getJavaSqlTypesGroupsMap();
     final Map<String, String> javaSqlTypesClassMap = getJavaSqlTypesClassNameMap();
-    final List<JavaSqlType> javaSqlTypes = new ArrayList<JavaSqlType>();
-    final Field[] javaSqlTypesFields = Types.class.getFields();
-    for (final Field field: javaSqlTypesFields)
+    for (final Field field: Types.class.getFields())
     {
       try
       {
         final String javaSqlTypeName = field.getName();
         final Integer javaSqlType = (Integer) field.get(null);
-        final String javaSqlTypeClassName = javaSqlTypesClassMap
-          .get(javaSqlTypeName);
-        final JavaSqlTypeGroup javaSqlTypeGroup = javaSqlTypeGroupsMap
-          .get(javaSqlTypeName);
-        javaSqlTypes.add(new JavaSqlType(javaSqlType,
-                                         javaSqlTypeName,
-                                         javaSqlTypeClassName,
-                                         javaSqlTypeGroup));
+        javaSqlTypesMap.put(javaSqlTypeName, javaSqlType);
       }
       catch (final SecurityException e)
       {
@@ -215,32 +206,37 @@ public final class JavaSqlTypesGenerationUtility
         continue;
       }
     }
-    Collections.sort(javaSqlTypes);
 
     final Writer[] writers = new Writer[3];
     writers[0] = startWriting(directory, "java.sql.Types.properties");
     writers[1] = startWriting(directory, "java.sql.Types.mappings.properties");
     writers[2] = startWriting(directory, "java.sql.Types.groups.properties");
 
-    for (final JavaSqlType sqlDataType: javaSqlTypes)
+    final List<String> javaSqlTypeNames = new ArrayList<String>(javaSqlTypesMap
+      .keySet());
+    Collections.sort(javaSqlTypeNames);
+    for (final String javaSqlTypeName: javaSqlTypeNames)
     {
-      writers[0].write(String.format("%s=%d\n", sqlDataType
-        .getJavaSqlTypeName(), sqlDataType.getJavaSqlType()));
+      writers[0].write(String.format("%s=%d\n",
+                                     javaSqlTypeName,
+                                     javaSqlTypesMap.get(javaSqlTypeName)));
       //
-      final String javaSqlTypeMappedClassName = sqlDataType
-        .getJavaSqlTypeMappedClassName();
+      final String javaSqlTypeMappedClassName = javaSqlTypesClassMap
+        .get(javaSqlTypeName);
       if (!Utility.isBlank(javaSqlTypeMappedClassName))
       {
-        writers[1].write(String.format("%s=%s\n", sqlDataType
-          .getJavaSqlTypeName(), javaSqlTypeMappedClassName));
+        writers[1].write(String.format("%s=%s\n",
+                                       javaSqlTypeName,
+                                       javaSqlTypeMappedClassName));
       }
       //
-      final JavaSqlTypeGroup javaSqlTypeGroup = sqlDataType
-        .getJavaSqlTypeGroup();
+      final JavaSqlTypeGroup javaSqlTypeGroup = javaSqlTypeGroupsMap
+        .get(javaSqlTypeName);
       if (javaSqlTypeGroup != null)
       {
-        writers[2].write(String.format("%s=%s\n", sqlDataType
-          .getJavaSqlTypeName(), javaSqlTypeGroup.name()));
+        writers[2].write(String.format("%s=%s\n",
+                                       javaSqlTypeName,
+                                       javaSqlTypeGroup.name()));
       }
     }
     for (final Writer writer: writers)

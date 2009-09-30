@@ -21,8 +21,6 @@
 package schemacrawler.crawl;
 
 
-import java.util.logging.Logger;
-
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
@@ -40,9 +38,6 @@ final class MutableColumnDataType
 {
 
   private static final long serialVersionUID = 3688503281676530744L;
-
-  private static final Logger LOGGER = Logger
-    .getLogger(MutableColumnDataType.class.getName());
 
   // Fields related to the java.sql.Types type
   private int javaSqlType;
