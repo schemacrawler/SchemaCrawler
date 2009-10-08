@@ -70,7 +70,7 @@
     <copy file="${SchemaCrawler.home}/schemacrawler-test/src/main/java/ApiExample.java" todir="${distribution.staging.dir}/examples/api" />
 
     <!-- Copy database server -->
-    <get src="http://voxel.dl.sourceforge.net/sourceforge/hsqldb/hsqldb_1_8_0_10.zip" dest="hsqldb_1_8_0_10.zip" verbose="true" usetimestamp="true" />
+    <get src="http://downloads.sourceforge.net/project/hsqldb/hsqldb/hsqldb_1_8_0/hsqldb_1_8_0_10.zip" dest="hsqldb_1_8_0_10.zip" verbose="true" usetimestamp="true" />
     <unzip src="hsqldb_1_8_0_10.zip" dest="${distribution.staging.dir}/examples">
       <patternset>
         <include name="**/hsqldb.jar" />
