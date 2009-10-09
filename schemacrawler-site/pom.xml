@@ -1,0 +1,33 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>schemacrawler</groupId>
+    <artifactId>schemacrawler-all</artifactId>
+    <version>7.4</version>
+  </parent>
+  <groupId>schemacrawler</groupId>
+  <artifactId>schemacrawler-site</artifactId>
+  <packaging>pom</packaging>
+  <name>SchemaCrawler Website</name>
+  <licenses>
+    <license>
+      <name>GNU General Public License</name>
+      <url>http://www.gnu.org/copyleft/gpl.html</url>
+    </license>
+  </licenses>
+  <dependencies>
+    <dependency>
+      <groupId>schemacrawler</groupId>
+      <artifactId>schemacrawler-integrations</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
+  <packaging>pom</packaging>
+  <distributionManagement>
+    <site>
+      <id>website</id>
+      <url>scp://webhost.company.com/www/website</url>
+    </site>
+  </distributionManagement>
+</project>
