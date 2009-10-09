@@ -1,0 +1,71 @@
+<!DOCTYPE document PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+  "http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+ <properties>
+  <title>SchemaCrawler</title>
+  <author
+   email="sualeh@hotmail.com">Sualeh Fatehi</author>
+ </properties>
+ <body>
+  <section
+   name="Getting Started">
+   <subsection
+    name="FAQs">
+    Before downloading SchemaCrawler, be sure to read the
+    <a
+     href="faq.html">FAQs</a>
+    .
+   </subsection>
+   <subsection
+    name="Examples">
+    <p>
+     The first thing to try after downloading the SchemaCrawler
+     distribution is the examples. Several examples on how to use
+     SchemaCrawler on the command line, as an ant task or Maven plugin,
+     as
+     an API, as well as how to use the
+     <a
+      href="http://velocity.apache.org/">Apache Velocity</a>
+     (templating) integration and how to create database diagrams with 
+     <a
+      href="http://www.graphviz.org/">Graphviz</a>
+     are provided in the
+     <code>_distrib/examples</code>
+     directory.
+    </p>
+   </subsection>
+   <subsection
+    name="How-tos">
+    <p>
+     Once you start getting comfortable with SchemaCrawler, and need to
+     know more about how to do things, read the
+     <a
+      href="how-to.html">how-tos</a>
+     section.
+    </p>
+   </subsection>
+   <subsection
+    name="Whitepapers and Documentation">
+    <p>To read more about SchemaCrawler, you can read:</p>
+    <ul>
+     <li>
+      <a
+       href="http://www.devx.com/Java/Article/32443">
+       Java API Makes Database Metadata as Easily Accessible as
+       POJOs
+            </a>
+      for an introduction to the SchemaCrawler API. (This article may
+      refer to an older release of the SchemaCrawler API, but the
+      concepts are the same.)
+     </li>
+     <li>
+      The SchemaCrawler API
+      <a
+       href="apidocs/index.html">javadocs</a>
+      .
+     </li>
+    </ul>
+   </subsection>
+  </section>
+ </body>
+</document>
