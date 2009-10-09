@@ -54,7 +54,7 @@
 
     <!-- Copy config files -->
     <copy todir="${distribution.staging.dir}/examples">
-      <fileset dir="${SchemaCrawler.home}/schemacrawler-tools/src/site/resources/config">
+      <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
         <include name="*config*.properties" />
       </fileset>
       <fileset dir="${SchemaCrawler.home}/schemacrawler-integrations/src/test/resources">
@@ -143,7 +143,7 @@
 
   <target name="make-website-distribution">
 
-    <property name="website.location" location="${SchemaCrawler.home}/schemacrawler-tools/target/site" />
+    <property name="website.location" location="${SchemaCrawler.home}/schemacrawler-site/target/site" />
     <property name="website.apidocs.location" location="${SchemaCrawler.home}/schemacrawler/target/site/apidocs" />
     <mkdir dir="${website.location}" />
     <mkdir dir="${website.apidocs.location}" />
