@@ -44,7 +44,9 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 import schemacrawler.tools.util.PastelColor;
+import schemacrawler.utility.MetaDataUtility;
 import schemacrawler.utility.Utility;
+import schemacrawler.utility.MetaDataUtility.Connectivity;
 
 final class SchemaDotFormatter
   implements CrawlHandler
@@ -241,23 +243,28 @@ final class SchemaDotFormatter
                                         final Column primaryKeyColumn,
                                         final Column foreignKeyColumn)
   {
-    final String arrowhead;
-    if (foreignKeyColumn.isNullable())
+    final Connectivity connectivity = MetaDataUtility
+      .getConnectivity(foreignKeyColumn);
+    final String pkSymbol = "teetee";
+    final String fkSymbol;
+    if (connectivity != null)
     {
-      arrowhead = "odottee";
+      switch (connectivity)
+      {
+        case OneToOne:
+          fkSymbol = "teeodot";
+          break;
+        case OneToMany:
+          fkSymbol = "crowodot";
+          break;
+        default:
+          fkSymbol = "none";
+          break;
+      }
     }
     else
     {
-      arrowhead = "teetee";
-    }
-    final String arrowtail;
-    if (foreignKeyColumn.isPartOfUniqueIndex())
-    {
-      arrowtail = "teeodot";
-    }
-    else
-    {
-      arrowtail = "crowodot";
+      fkSymbol = "none";
     }
     final String style;
     if (Utility.isBlank(associationName))
@@ -277,8 +284,8 @@ final class SchemaDotFormatter
               foreignKeyColumn.getName(),
               associationName,
               style,
-              arrowhead,
-              arrowtail);
+              fkSymbol,
+              pkSymbol);
   }
 
 }

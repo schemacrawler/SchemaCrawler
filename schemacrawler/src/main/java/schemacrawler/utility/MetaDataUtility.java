@@ -23,6 +23,7 @@ package schemacrawler.utility;
 
 import schemacrawler.crawl.JavaSqlType;
 import schemacrawler.crawl.JavaSqlTypesUtility;
+import schemacrawler.schema.Column;
 
 /**
  * SchemaCrawler utility methods.
@@ -31,6 +32,13 @@ import schemacrawler.crawl.JavaSqlTypesUtility;
  */
 public class MetaDataUtility
 {
+
+  public enum Connectivity
+  {
+    OneToOne,
+    OneToMany;
+  }
+
   /**
    * Lookup java.sql.Types type, and return more detailed information,
    * including the mapped Java class.
@@ -55,6 +63,22 @@ public class MetaDataUtility
   public static JavaSqlType lookupSqlDataType(final String typeName)
   {
     return JavaSqlTypesUtility.lookupSqlDataType(typeName);
+  }
+
+  public static Connectivity getConnectivity(final Column fkColumn)
+  {
+    if (fkColumn == null)
+    {
+      return null;
+    }
+    if (fkColumn.isPartOfPrimaryKey() || fkColumn.isPartOfUniqueIndex())
+    {
+      return Connectivity.OneToOne;
+    }
+    else
+    {
+      return Connectivity.OneToMany;
+    }
   }
 
   private MetaDataUtility()
