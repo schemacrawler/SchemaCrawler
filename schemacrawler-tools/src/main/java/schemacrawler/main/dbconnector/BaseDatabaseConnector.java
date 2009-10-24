@@ -78,7 +78,7 @@ abstract class BaseDatabaseConnector
     }
     catch (final SQLException e)
     {
-      throw new DatabaseConnectorException("Could not create connection", e);
+      throw new DatabaseConnectorException(e);
     }
   }
 
