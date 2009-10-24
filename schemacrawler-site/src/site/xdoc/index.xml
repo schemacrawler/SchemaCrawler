@@ -6,14 +6,17 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <section name="SchemaCrawler">
+    <section name="About SchemaCrawler">
       <subsection name="SchemaCrawler">
         <p>
           SchemaCrawler is an open-source Java API that makes working with database metadata as easy as working with
           plain old Java
-          objects. SchemaCrawler is also a command-line tool to output your database schema and data in a
+          objects.</p>
+        <p>
+          SchemaCrawler is also a command-line tool to output your database schema and data in a
           readable form.
-          The output is designed to be
+          The output
+          is designed to be
           <a href="http://en.wikipedia.org/wiki/Diff">diff-ed</a>
           with previous versions of your database schema.
         </p>
@@ -109,7 +112,8 @@ for (final Catalog catalog: database.getCatalogs())
       </subsection>
       <subsection name="SchemaCrawler Command Line">
         <p>
-          SchemaCrawler comes with a set of command line tools that allow database metadata to be output as plain text, CSV, or
+          SchemaCrawler comes with a set of command line tools that allow database metadata to be output as plain text,
+          CSV, or
           HTML. All formats are designed to be easy to
           <a href="http://en.wikipedia.org/wiki/Diff">diff</a>
           , or find differences with other schemas that may
