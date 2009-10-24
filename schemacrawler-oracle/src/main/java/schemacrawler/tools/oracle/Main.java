@@ -43,9 +43,9 @@ public final class Main
     try
     {
       final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
-                                                                                new BundledDriverHelpOptions("SchemaCrawler for Apache Derby",
-                                                                                                             "/help/Connections.derby.txt"),
-                                                                                "/schemacrawler-derby.config.properties");
+                                                                                new BundledDriverHelpOptions("SchemaCrawler for Oracle",
+                                                                                                             "/help/Connections.oracle.txt"),
+                                                                                "/schemacrawler-oracle.config.properties");
       SchemaCrawlerMain.schemacrawler(commandLine);
     }
     catch (final Exception e)
