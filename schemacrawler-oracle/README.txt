@@ -2,6 +2,10 @@ SchemaCrawler
 http://sourceforge.net/projects/schemacrawler
 Copyright (c) 2000-2009, Sualeh Fatehi.
 
+IMPORTANT: Please download a copy of the Oracle thin JDBC driver from:
+http://www.oracle.com/technology/software/tech/java/sqlj_jdbc/index.html
+and place the jar file into the lib directory of the distribution.
+
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License, or (at your option) any later
