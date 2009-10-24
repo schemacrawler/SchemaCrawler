@@ -6,10 +6,18 @@
     <faq id="whats-schemacrawler">
       <question> What is SchemaCrawler? </question>
       <answer>
-        <p>SchemaCrawler is an API that improves on the standard JDBC metadata.</p>
-        <p> SchemaCrawler is also a command-line tool, written in Java to output your database schema and data in a
-          human readable form. SchemaCrawler output is designed to be diff-ed with previous versions of your database
-          schema or data. </p>
+        <p>
+          SchemaCrawler is an open-source Java API that makes working with database metadata as easy as working with
+          plain old Java
+          objects.</p>
+        <p>
+          SchemaCrawler is also a command-line tool to output your database schema and data in a
+          readable form.
+          The output
+          is designed to be
+          <a href="http://en.wikipedia.org/wiki/Diff">diff-ed</a>
+          with previous versions of your database schema.
+        </p>
       </answer>
     </faq>
     <faq id="output">
