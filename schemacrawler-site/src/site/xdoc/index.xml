@@ -112,20 +112,35 @@ for (final Catalog catalog: database.getCatalogs())
       </subsection>
       <subsection name="SchemaCrawler Command Line">
         <p>
-          SchemaCrawler comes with a set of command line tools that allow database metadata to be output as plain text,
-          CSV, or
-          HTML. All formats are designed to be easy to
+
+          SchemaCrawler comes with a set of command line tools that allow database metadata to be output as
+          <a href="snapshot-examples/snapshot.txt">plain text</a>
+          ,
+          <a href="snapshot-examples/snapshot.html">XHTML,</a>
+          or
+          <a href="snapshot-examples/snapshot.csv"> comma-separated text (CSV).</a>
+          The XHTML output is a combination of valid XML (that can be manipulated by XML tools or XSLT), and HTML that
+          can be viewed in a browser.
+          All formats are designed to be easy to
           <a href="http://en.wikipedia.org/wiki/Diff">diff</a>
           , or find differences with other schemas that may
-          have been output in the same format. SchemaCrawler has
+          have been output in the same format.
+        </p>
+        <p>
+          SchemaCrawler has
           powerful
           <a href="http://en.wikipedia.org/wiki/Grep">grep</a>
           functionality that allows you to
-          search for table and column names using regular expressions. Finally,
+          search for table and column names using regular expressions.
+        </p>
+        <p>
+          Finally,
           SchemaCrawler is capable of creating
           entity-relationship diagrams in
-          <a href="http://www.graphviz.org/">Graphviz</a>
-          dot format.
+          <a href="http://www.graphviz.org/doc/info/lang.html ">DOT format,</a>
+          which
+          <a href="http://www.graphviz.org/">GraphViz</a>
+          can convert into schema diagrams.
         </p>
       </subsection>
     </section>
