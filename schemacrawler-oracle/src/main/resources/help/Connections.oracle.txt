@@ -4,7 +4,7 @@
 	Host name. Optional, defaults to localhost.
 	
 -port=<port>
-	Port number. Optional, defaults to 1433.	
+	Port number. Optional, defaults to 1521.	
 
 -database=<database>
 	Database name.
