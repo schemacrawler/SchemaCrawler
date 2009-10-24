@@ -1,4 +1,5 @@
-<?xml version="1.0"?><project>
+<?xml version="1.0"?>
+<project>
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>schemacrawler</groupId>
@@ -20,6 +21,12 @@
       <groupId>schemacrawler</groupId>
       <artifactId>schemacrawler-tools</artifactId>
       <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>oracle</groupId>
+      <artifactId>oracle-jdbc</artifactId>
+      <version>11.1.0.7.0</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
   <build>
