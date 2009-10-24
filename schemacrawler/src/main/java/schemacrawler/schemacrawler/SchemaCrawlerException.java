@@ -22,7 +22,7 @@ package schemacrawler.schemacrawler;
 
 
 /**
- * Exception for the crawler.
+ * Exception for the SchemaCrawler.
  */
 public class SchemaCrawlerException
   extends Exception
@@ -31,11 +31,7 @@ public class SchemaCrawlerException
   private static final long serialVersionUID = 3257848770627713076L;
 
   /**
-   * General exception for SchemaCrawler.
-   * 
-   * @see Exception#Exception(java.lang.String)
-   * @param message
-   *        Exception message
+   * {@inheritDoc}
    */
   public SchemaCrawlerException(final String message)
   {
@@ -43,18 +39,19 @@ public class SchemaCrawlerException
   }
 
   /**
-   * Constructs a new exception with the specified detail message and
-   * cause.
-   * 
-   * @see Exception#Exception(java.lang.String, java.lang.Throwable)
-   * @param message
-   *        Error message
-   * @param cause
-   *        Cause of exception
+   * {@inheritDoc}
    */
   public SchemaCrawlerException(final String message, final Throwable cause)
   {
     super(message + ": " + cause.getMessage(), cause);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public SchemaCrawlerException(Throwable cause)
+  {
+    super(cause.getMessage(), cause);
   }
 
 }

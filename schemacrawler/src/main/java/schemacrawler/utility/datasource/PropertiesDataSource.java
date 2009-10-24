@@ -117,13 +117,22 @@ public final class PropertiesDataSource
     throws SQLException
   {
     final String url = connectionParams.get(URL);
-    final Connection connection = DriverManager.getConnection(url,
-                                                              username,
-                                                              password);
+    Connection connection;
+    try
+    {
+      connection = DriverManager.getConnection(url, username, password);
+    }
+    catch (SQLException e)
+    {
+      throw new SQLException("Could not establish a connection with \"" + url
+                             + "\": " + e.getMessage(), e);
+    }
     if (connection == null)
     {
-      throw new SQLException("Could not establish a connection");
+      throw new SQLException("Could not establish a connection with \"" + url
+                             + "\"");
     }
+
     logConnectionInfo(connection);
     return connection;
   }
