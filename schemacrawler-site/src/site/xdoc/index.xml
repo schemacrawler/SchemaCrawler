@@ -112,7 +112,6 @@ for (final Catalog catalog: database.getCatalogs())
       </subsection>
       <subsection name="SchemaCrawler Command Line">
         <p>
-
           SchemaCrawler comes with a set of command line tools that allow database metadata to be output as
           <a href="snapshot-examples/snapshot.txt">plain text</a>
           ,
