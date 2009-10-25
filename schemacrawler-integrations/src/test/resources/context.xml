@@ -74,21 +74,19 @@
 	<bean id="informationSchemaViews" class="schemacrawler.schemacrawler.InformationSchemaViews">
 		<property name="routinesSql">
 			<value>
-        <![CDATA[
+        <![CDATA[              
             SELECT 
-              ROUTINE_CATALOG, 
-              ROUTINE_SCHEMA, 
-              ROUTINE_NAME, 
-              ROUTINE_BODY, 
-              ROUTINE_DEFINITION 
+              PROCEDURE_CAT AS ROUTINE_CATALOG, 
+              PROCEDURE_SCHEM AS ROUTINE_SCHEMA, 
+              PROCEDURE_NAME AS ROUTINE_NAME,
+              'UNKNOWN' AS ROUTINE_BODY, 
+              '' AS ROUTINE_DEFINITION 
             FROM 
-              INFORMATION_SCHEMA.ROUTINES 
-            WHERE 
-              ROUTINE_TYPE='PROCEDURE' 
+              INFORMATION_SCHEMA.SYSTEM_PROCEDURES 
             ORDER BY 
-              ROUTINE_CATALOG, 
-              ROUTINE_SCHEMA, 
-              ROUTINE_NAME
+              PROCEDURE_CAT, 
+              PROCEDURE_SCHEM, 
+              PROCEDURE_NAME
             ]]>
 			</value>
 		</property>
@@ -98,7 +96,7 @@
             SELECT 
               * 
             FROM 
-              INFORMATION_SCHEMA.VIEWS 
+              INFORMATION_SCHEMA.SYSTEM_VIEWS 
             ORDER BY 
               TABLE_CATALOG, 
               TABLE_SCHEMA, 
@@ -112,7 +110,7 @@
             SELECT 
               * 
             FROM 
-              INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+              INFORMATION_SCHEMA.SYSTEM_TABLE_CONSTRAINTS
             ]]>
 			</value>
 		</property>

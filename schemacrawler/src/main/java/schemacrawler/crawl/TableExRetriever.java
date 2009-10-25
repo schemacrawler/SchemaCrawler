@@ -84,10 +84,11 @@ final class TableExRetriever
       .getTableConstraints().getQuery();
 
     final Connection connection = getDatabaseConnection();
-    Statement statement = connection.createStatement();
+    Statement statement = null;
     MetadataResultSet results = null;
     try
     {
+      statement = connection.createStatement();
       results = new MetadataResultSet(statement
         .executeQuery(tableConstraintsInformationSql));
 
@@ -143,8 +144,14 @@ final class TableExRetriever
     }
     finally
     {
-      statement.close();
-      results.close();
+      if (statement != null)
+      {
+        statement.close();
+      }
+      if (results != null)
+      {
+        results.close();
+      }
     }
 
     if (!informationSchemaViews.hasCheckConstraintsSql())
@@ -193,8 +200,14 @@ final class TableExRetriever
     }
     finally
     {
-      statement.close();
-      results.close();
+      if (statement != null)
+      {
+        statement.close();
+      }
+      if (results != null)
+      {
+        results.close();
+      }
     }
 
     // Add check constraints to tables
@@ -434,7 +447,10 @@ final class TableExRetriever
     finally
     {
       statement.close();
-      results.close();
+      if (results != null)
+      {
+        results.close();
+      }
     }
 
   }
