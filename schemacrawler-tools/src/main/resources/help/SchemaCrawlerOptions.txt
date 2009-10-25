@@ -17,9 +17,26 @@
   
 --- Filtering Options ---
     
+-catalogs=<regular-expression>
+  <regular-expression> is a regular expression to match catalog names 
+  for example, 
+  -catalogs=.*\.C.*|.*\.P.*
+  matches any catalogs whose names start with C or P
+  Catalogs that do not match the pattern are not displayed
+  Optional, defaults to showing all catalogs
+     
+-schemas=<regular-expression>
+  <regular-expression> is a regular expression to match schema names 
+  for example, 
+  -schemas=.*\.C.*|.*\.P.*
+  matches any schemas whose names start with C or P
+  Schemas that do not match the pattern are not displayed
+  Optional, defaults to showing all schemas
+        
 -schemapattern=<schemapattern>
-  <schemapattern> is a pattern (which can include _ or %)
-  for the schemas to crawl
+  <schemapattern> is a JDBC pattern (which can include _ or %)
+  for the schemas to crawl and optimizes the retrieval of
+  tables
   Optional, defaults to all schemas in the catalog
   
 -table_types=<table_types>
@@ -27,7 +44,7 @@
   TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS
   Optional, defaults to TABLE,VIEW
   
--show_stored_procedures
+-show_stored_procedures=<boolean>
   Whether to show procedures, or not
   Optional, defaults to true
   
@@ -35,7 +52,7 @@
   <regular-expression> is a regular expression to match fully qualified table 
   names, in the form "CATALOGNAME.SCHEMANAME.TABLENAME" - for example, 
   -tables=.*\.C.*|.*\.P.*
-  matches any table whose names start with C or P
+  matches any tables whose names start with C or P
   Tables that do not match the pattern are not displayed
   Optional, defaults to showing all tables
     
@@ -51,7 +68,7 @@
   <regular-expression> is a regular expression to match fully qualified procedure 
   names, in the form "CATALOGNAME.SCHEMANAME.PROCEDURENAME" - for example, 
   -procedures=.*\.C.*|.*\.P.*
-  matches any procedure whose names start with C or P
+  matches any procedures whose names start with C or P
   Procedures that do not match the pattern are not displayed
   Optional, defaults to showing all procedures
     
