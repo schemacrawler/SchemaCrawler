@@ -55,6 +55,7 @@ final class RetrieverConnection
   private final List<String> catalogNames;
   private final String schemaPattern;
   private final InformationSchemaViews informationSchemaViews;
+  private final boolean supportsCatalogs;
 
   RetrieverConnection(final Connection connection,
                       final SchemaCrawlerOptions options)
@@ -76,29 +77,33 @@ final class RetrieverConnection
     this.connection = connection;
     metaData = connection.getMetaData();
 
+    supportsCatalogs = metaData.supportsCatalogsInTableDefinitions();
     final Set<String> catalogNames = new HashSet<String>();
-    try
+    if (supportsCatalogs)
     {
-      catalogNames.addAll(new HashSet<String>(readResultsVector(connection
-        .getMetaData().getCatalogs())));
-      catalogNames.add(connection.getCatalog());
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, "", e);
-    }
-    LOGGER.log(Level.FINE, "All catalogs: " + catalogNames);
-
-    for (final Iterator<String> catalogNamesIterator = catalogNames.iterator(); catalogNamesIterator
-      .hasNext();)
-    {
-      final String catalogName = catalogNamesIterator.next();
-      final InclusionRule catalogInclusionRule = options
-        .getCatalogInclusionRule();
-      if (catalogInclusionRule != null
-          && !catalogInclusionRule.include(catalogName))
+      try
       {
-        catalogNamesIterator.remove();
+        catalogNames.addAll(new HashSet<String>(readResultsVector(metaData
+          .getCatalogs())));
+        catalogNames.add(connection.getCatalog());
+      }
+      catch (final SQLException e)
+      {
+        LOGGER.log(Level.WARNING, "", e);
+      }
+      LOGGER.log(Level.FINE, "All catalogs: " + catalogNames);
+
+      for (final Iterator<String> catalogNamesIterator = catalogNames
+        .iterator(); catalogNamesIterator.hasNext();)
+      {
+        final String catalogName = catalogNamesIterator.next();
+        final InclusionRule catalogInclusionRule = options
+          .getCatalogInclusionRule();
+        if (catalogInclusionRule != null
+            && !catalogInclusionRule.include(catalogName))
+        {
+          catalogNamesIterator.remove();
+        }
       }
     }
     if (catalogNames.size() == 0)
@@ -112,33 +117,6 @@ final class RetrieverConnection
     schemaPattern = schemaCrawlerOptions.getSchemaPattern();
 
     informationSchemaViews = schemaCrawlerOptions.getInformationSchemaViews();
-  }
-
-  /**
-   * Reads a single column result set as a list.
-   * 
-   * @param results
-   *        Result set
-   * @return List
-   * @throws SQLException
-   */
-  protected List<String> readResultsVector(final ResultSet results)
-    throws SQLException
-  {
-    final List<String> values = new ArrayList<String>();
-    try
-    {
-      while (results.next())
-      {
-        final String value = results.getString(1);
-        values.add(value);
-      }
-    }
-    finally
-    {
-      results.close();
-    }
-    return values;
   }
 
   List<String> getCatalogNames()
@@ -169,6 +147,38 @@ final class RetrieverConnection
   String getSchemaPattern()
   {
     return schemaPattern;
+  }
+
+  boolean isSupportsCatalogs()
+  {
+    return supportsCatalogs;
+  }
+
+  /**
+   * Reads a single column result set as a list.
+   * 
+   * @param results
+   *        Result set
+   * @return List
+   * @throws SQLException
+   */
+  List<String> readResultsVector(final ResultSet results)
+    throws SQLException
+  {
+    final List<String> values = new ArrayList<String>();
+    try
+    {
+      while (results.next())
+      {
+        final String value = results.getString(1);
+        values.add(value);
+      }
+    }
+    finally
+    {
+      results.close();
+    }
+    return values;
   }
 
 }

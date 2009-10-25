@@ -187,9 +187,19 @@ final class DatabaseInfoRetriever
       .getMetaData().getSchemas());
     try
     {
+      final boolean supportsCatalogs = getRetrieverConnection()
+        .isSupportsCatalogs();
       while (results.next())
       {
-        final String catalogName = results.getString("TABLE_CATALOG");
+        final String catalogName;
+        if (supportsCatalogs)
+        {
+          catalogName = results.getString("TABLE_CATALOG");
+        }
+        else
+        {
+          catalogName = null;
+        }
         final String schemaName = results.getString("TABLE_SCHEM");
         LOGGER.log(Level.FINER, String.format("Retrieving schema: %s.%s",
                                               catalogName,
