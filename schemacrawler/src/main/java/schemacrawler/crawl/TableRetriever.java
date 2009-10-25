@@ -23,7 +23,6 @@ package schemacrawler.crawl;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Locale;
@@ -72,15 +71,15 @@ final class TableRetriever
                        final InclusionRule columnInclusionRule)
     throws SQLException
   {
-
-    final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
-      .getMetaData().getColumns(table.getSchema().getParent().getName(),
-                                table.getSchema().getName(),
-                                table.getName(),
-                                null));
-
+    MetadataResultSet results = null;
     try
     {
+      results = new MetadataResultSet(getRetrieverConnection().getMetaData()
+        .getColumns(table.getSchema().getParent().getName(),
+                    table.getSchema().getName(),
+                    table.getName(),
+                    null));
+
       while (results.next())
       {
         // Get the "COLUMN_DEF" value first as it the Oracle drivers
@@ -136,9 +135,18 @@ final class TableRetriever
         }
       }
     }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not retrieve columns for table " + table
+                                + ":" + e.getMessage());
+      throw e;
+    }
     finally
     {
-      results.close();
+      if (results != null)
+      {
+        results.close();
+      }
     }
 
   }
@@ -193,6 +201,12 @@ final class TableRetriever
         createIndices(table, results);
       }
     }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not retrieve indices for table " + table
+                                + ":" + e.getMessage());
+      throw e;
+    }
     finally
     {
       if (results != null)
@@ -211,13 +225,13 @@ final class TableRetriever
     throws SQLException
   {
 
-    ResultSet results = null;
+    MetadataResultSet results = null;
     try
     {
-      results = getRetrieverConnection().getMetaData()
+      results = new MetadataResultSet(getRetrieverConnection().getMetaData()
         .getPrimaryKeys(table.getSchema().getParent().getName(),
                         table.getSchema().getName(),
-                        table.getName());
+                        table.getName()));
 
       MutablePrimaryKey primaryKey;
       while (results.next())
@@ -251,6 +265,12 @@ final class TableRetriever
         table.setPrimaryKey(primaryKey);
       }
     }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not retrieve primary keys for table "
+                                + table + ":" + e.getMessage());
+      throw e;
+    }
     finally
     {
       if (results != null)
@@ -281,13 +301,15 @@ final class TableRetriever
                       final InclusionRule tableInclusionRule)
     throws SQLException
   {
-    final ResultSet results = getRetrieverConnection().getMetaData()
-      .getTables(catalogName,
-                 getRetrieverConnection().getSchemaPattern(),
-                 "%",
-                 TableType.toStrings(tableTypes));
+    MetadataResultSet results = null;
     try
     {
+      results = new MetadataResultSet(getRetrieverConnection().getMetaData()
+        .getTables(catalogName,
+                   getRetrieverConnection().getSchemaPattern(),
+                   "%",
+                   TableType.toStrings(tableTypes)));
+
       while (results.next())
       {
         // final String catalogName = results.getString("TABLE_CAT");
@@ -329,7 +351,10 @@ final class TableRetriever
     }
     finally
     {
-      results.close();
+      if (results != null)
+      {
+        results.close();
+      }
     }
   }
 

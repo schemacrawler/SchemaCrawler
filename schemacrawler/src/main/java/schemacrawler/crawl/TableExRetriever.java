@@ -90,17 +90,7 @@ final class TableExRetriever
     {
       results = new MetadataResultSet(statement
         .executeQuery(tableConstraintsInformationSql));
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING,
-                 "Could not retrieve check constraint information",
-                 e);
-      return;
-    }
 
-    try
-    {
       while (results.next())
       {
         final String catalogName = results.getString("CONSTRAINT_CATALOG");
@@ -143,6 +133,13 @@ final class TableExRetriever
           checkConstraintsMap.put(constraintName, checkConstraint);
         }
       }
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING,
+                 "Could not retrieve check constraint information",
+                 e);
+      return;
     }
     finally
     {
@@ -221,6 +218,12 @@ final class TableExRetriever
         .getColumnPrivileges(null, null, "%", "%"));
       createPrivileges(results, true);
     }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not retrieve table column privileges:"
+                                + e.getMessage());
+      return;
+    }
     finally
     {
       if (results != null)
@@ -239,6 +242,11 @@ final class TableExRetriever
       results = new MetadataResultSet(getRetrieverConnection().getMetaData()
         .getTablePrivileges(null, null, "%"));
       createPrivileges(results, false);
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not retrieve table privileges", e);
+      return;
     }
     finally
     {
@@ -279,15 +287,7 @@ final class TableExRetriever
     {
       results = new MetadataResultSet(statement
         .executeQuery(triggerInformationSql));
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, "Could not retrieve trigger information", e);
-      return;
-    }
 
-    try
-    {
       while (results.next())
       {
         final String catalogName = results.getString("TRIGGER_CATALOG");
@@ -351,6 +351,11 @@ final class TableExRetriever
 
       }
     }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not retrieve trigger information", e);
+      return;
+    }
     finally
     {
       results.close();
@@ -389,15 +394,7 @@ final class TableExRetriever
     {
       results = new MetadataResultSet(statement
         .executeQuery(viewInformationSql));
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, "Could not retrieve view information", e);
-      return;
-    }
 
-    try
-    {
       while (results.next())
       {
         final String catalogName = results.getString("TABLE_CATALOG");
@@ -428,6 +425,11 @@ final class TableExRetriever
 
         view.addAttributes(results.getAttributes());
       }
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not retrieve view information", e);
+      return;
     }
     finally
     {
