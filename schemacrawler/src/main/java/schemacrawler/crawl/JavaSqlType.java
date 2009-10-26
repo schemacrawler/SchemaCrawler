@@ -78,29 +78,59 @@ public final class JavaSqlType
   }
 
   @Override
-  public boolean equals(Object obj)
+  public boolean equals(final Object obj)
   {
-    if (this == obj) return true;
-    if (obj == null) return false;
-    if (getClass() != obj.getClass()) return false;
-    JavaSqlType other = (JavaSqlType) obj;
-    if (javaSqlType != other.javaSqlType) return false;
+    if (this == obj)
+    {
+      return true;
+    }
+    if (obj == null)
+    {
+      return false;
+    }
+    if (getClass() != obj.getClass())
+    {
+      return false;
+    }
+    final JavaSqlType other = (JavaSqlType) obj;
+    if (javaSqlType != other.javaSqlType)
+    {
+      return false;
+    }
     if (javaSqlTypeGroup == null)
     {
-      if (other.javaSqlTypeGroup != null) return false;
+      if (other.javaSqlTypeGroup != null)
+      {
+        return false;
+      }
     }
-    else if (!javaSqlTypeGroup.equals(other.javaSqlTypeGroup)) return false;
+    else if (!javaSqlTypeGroup.equals(other.javaSqlTypeGroup))
+    {
+      return false;
+    }
     if (javaSqlTypeMappedClassName == null)
     {
-      if (other.javaSqlTypeMappedClassName != null) return false;
+      if (other.javaSqlTypeMappedClassName != null)
+      {
+        return false;
+      }
     }
     else if (!javaSqlTypeMappedClassName
-      .equals(other.javaSqlTypeMappedClassName)) return false;
+      .equals(other.javaSqlTypeMappedClassName))
+    {
+      return false;
+    }
     if (javaSqlTypeName == null)
     {
-      if (other.javaSqlTypeName != null) return false;
+      if (other.javaSqlTypeName != null)
+      {
+        return false;
+      }
     }
-    else if (!javaSqlTypeName.equals(other.javaSqlTypeName)) return false;
+    else if (!javaSqlTypeName.equals(other.javaSqlTypeName))
+    {
+      return false;
+    }
     return true;
   }
 
@@ -141,15 +171,14 @@ public final class JavaSqlType
     int result = 1;
     result = prime * result + javaSqlType;
     result = prime * result
-             + ((javaSqlTypeGroup == null)? 0: javaSqlTypeGroup.hashCode());
+             + (javaSqlTypeGroup == null? 0: javaSqlTypeGroup.hashCode());
     result = prime
              * result
-             + ((javaSqlTypeMappedClassName == null)
-                                                    ? 0
-                                                    : javaSqlTypeMappedClassName
-                                                      .hashCode());
+             + (javaSqlTypeMappedClassName == null? 0
+                                                  : javaSqlTypeMappedClassName
+                                                    .hashCode());
     result = prime * result
-             + ((javaSqlTypeName == null)? 0: javaSqlTypeName.hashCode());
+             + (javaSqlTypeName == null? 0: javaSqlTypeName.hashCode());
     return result;
   }
 

@@ -21,8 +21,6 @@
 package schemacrawler.schemacrawler;
 
 
-import java.util.Properties;
-
 import schemacrawler.schema.TableType;
 
 /**

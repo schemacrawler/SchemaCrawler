@@ -39,6 +39,22 @@ public class MetaDataUtility
     OneToMany;
   }
 
+  public static Connectivity getConnectivity(final Column fkColumn)
+  {
+    if (fkColumn == null)
+    {
+      return null;
+    }
+    if (fkColumn.isPartOfPrimaryKey() || fkColumn.isPartOfUniqueIndex())
+    {
+      return Connectivity.OneToOne;
+    }
+    else
+    {
+      return Connectivity.OneToMany;
+    }
+  }
+
   /**
    * Lookup java.sql.Types type, and return more detailed information,
    * including the mapped Java class.
@@ -63,22 +79,6 @@ public class MetaDataUtility
   public static JavaSqlType lookupSqlDataType(final String typeName)
   {
     return JavaSqlTypesUtility.lookupSqlDataType(typeName);
-  }
-
-  public static Connectivity getConnectivity(final Column fkColumn)
-  {
-    if (fkColumn == null)
-    {
-      return null;
-    }
-    if (fkColumn.isPartOfPrimaryKey() || fkColumn.isPartOfUniqueIndex())
-    {
-      return Connectivity.OneToOne;
-    }
-    else
-    {
-      return Connectivity.OneToMany;
-    }
   }
 
   private MetaDataUtility()

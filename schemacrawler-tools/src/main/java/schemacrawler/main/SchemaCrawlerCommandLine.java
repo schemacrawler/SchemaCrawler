@@ -147,8 +147,7 @@ public class SchemaCrawlerCommandLine
                                        e);
     }
 
-    schemaCrawlerOptions = new SchemaCrawlerOptionsParser(args,
-                                                          config)
+    schemaCrawlerOptions = new SchemaCrawlerOptionsParser(args, config)
       .getOptions();
   }
 
