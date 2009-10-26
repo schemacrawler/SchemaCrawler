@@ -42,7 +42,6 @@ import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.utility.datasource.PropertiesDataSource;
 
 /**
  * Sets up a database schema for tests and examples.
@@ -266,16 +265,13 @@ public class TestDatabase
 
   private void makeDataSource(final String url)
   {
-    final String dataSourceName = "schemacrawler";
-
     final Properties connectionProperties = new Properties();
-    connectionProperties.setProperty(dataSourceName + ".driver",
-                                     JDBC_DRIVER_CLASS.getName());
-    connectionProperties.setProperty(dataSourceName + ".url", url);
-    connectionProperties.setProperty(dataSourceName + ".user", "sa");
-    connectionProperties.setProperty(dataSourceName + ".password", "");
+    connectionProperties.setProperty("driver", JDBC_DRIVER_CLASS.getName());
+    connectionProperties.setProperty("url", url);
+    connectionProperties.setProperty("user", "sa");
+    connectionProperties.setProperty("password", "");
 
-    dataSource = new PropertiesDataSource(connectionProperties, dataSourceName);
+    dataSource = new PropertiesDataSource(connectionProperties);
   }
 
   /**

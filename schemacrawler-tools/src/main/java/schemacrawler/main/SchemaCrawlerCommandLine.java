@@ -148,9 +148,7 @@ public class SchemaCrawlerCommandLine
     }
 
     schemaCrawlerOptions = new SchemaCrawlerOptionsParser(args,
-                                                          config,
-                                                          databaseConnector
-                                                            .getDataSourceName())
+                                                          config)
       .getOptions();
   }
 

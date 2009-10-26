@@ -86,12 +86,10 @@ final class SchemaCrawlerOptionsParser
 
   private final SchemaCrawlerOptions options;
 
-  SchemaCrawlerOptionsParser(final String[] args,
-                             final Config config,
-                             final String partition)
+  SchemaCrawlerOptionsParser(final String[] args, final Config config)
   {
     super(args);
-    options = new SchemaCrawlerOptions(config, partition);
+    options = new SchemaCrawlerOptions(config);
   }
 
   @Override

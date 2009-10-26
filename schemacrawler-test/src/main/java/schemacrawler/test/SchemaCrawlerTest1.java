@@ -9,10 +9,11 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.utility.PropertiesDataSource;
 import schemacrawler.utility.SchemaCrawlerUtility;
-import schemacrawler.utility.datasource.PropertiesDataSource;
 
 public class SchemaCrawlerTest1
 {
@@ -22,13 +23,13 @@ public class SchemaCrawlerTest1
   {
     final DataSource dataSource = makeDataSource();
 
-    final Properties properties = new Properties();
-    properties.setProperty("schemacrawler.table_types", "TABLE");
-    properties.setProperty("schemacrawler.show_stored_procedures", "false");
-    properties.setProperty("schemacrawler.table.pattern.include", ".*");
-    properties.setProperty("schemacrawler.table.pattern.exclude", "");
+    final Config config = new Config();
+    config.put("schemacrawler.table_types", "TABLE");
+    config.put("schemacrawler.show_stored_procedures", "false");
+    config.put("schemacrawler.table.pattern.include", ".*");
+    config.put("schemacrawler.table.pattern.exclude", "");
 
-    final SchemaCrawlerOptions options = new SchemaCrawlerOptions(properties);
+    final SchemaCrawlerOptions options = new SchemaCrawlerOptions(config);
     options.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
     Catalog catalog = SchemaCrawlerUtility.getDatabase(dataSource
@@ -56,18 +57,14 @@ public class SchemaCrawlerTest1
 
   private static DataSource makeDataSource()
   {
-    final String datasourceName = "schemacrawler";
-
     final Properties connectionProperties = new Properties();
-    connectionProperties.setProperty(datasourceName + ".driver",
-                                     "org.hsqldb.jdbcDriver");
+    connectionProperties.setProperty("driver", "org.hsqldb.jdbcDriver");
     connectionProperties
-      .setProperty(datasourceName + ".url",
-                   "jdbc:hsqldb:hsql://localhost:9001/schemacrawler");
-    connectionProperties.setProperty(datasourceName + ".user", "sa");
-    connectionProperties.setProperty(datasourceName + ".password", "");
+      .setProperty("url", "jdbc:hsqldb:hsql://localhost:9001/schemacrawler");
+    connectionProperties.setProperty("user", "sa");
+    connectionProperties.setProperty("password", "");
 
-    return new PropertiesDataSource(connectionProperties, datasourceName);
+    return new PropertiesDataSource(connectionProperties);
   }
 
 }

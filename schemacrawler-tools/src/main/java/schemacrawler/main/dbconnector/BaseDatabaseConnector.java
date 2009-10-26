@@ -23,13 +23,13 @@ package schemacrawler.main.dbconnector;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Map;
 import java.util.Properties;
 import java.util.Map.Entry;
 
 import javax.sql.DataSource;
 
-import schemacrawler.utility.datasource.PropertiesDataSource;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.utility.PropertiesDataSource;
 
 /**
  * Parses a command line, and creates a data-source.
@@ -38,7 +38,7 @@ abstract class BaseDatabaseConnector
   implements DatabaseConnector
 {
 
-  private final Map<String, String> config;
+  private final Config config;
   private DataSource dataSource;
 
   /**
@@ -51,7 +51,7 @@ abstract class BaseDatabaseConnector
    * @throws DatabaseConnectorException
    *         On an exception
    */
-  protected BaseDatabaseConnector(final Map<String, String> providedConfig)
+  protected BaseDatabaseConnector(final Config providedConfig)
     throws DatabaseConnectorException
   {
     if (providedConfig == null)
@@ -82,30 +82,14 @@ abstract class BaseDatabaseConnector
     }
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.main.dbconnector.DatabaseConnector#getDataSourceName()
-   */
-  public String getDataSourceName()
-  {
-    return config.get("defaultconnection");
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.main.dbconnector.DatabaseConnector#hasDataSourceName()
-   */
-  public boolean hasDataSourceName()
-  {
-    final String dataSourceName = getDataSourceName();
-    return dataSourceName != null && dataSourceName.trim().length() > 0;
-  }
-
   protected void configPut(final String key, final String value)
   {
     config.put(key, value);
+  }
+
+  protected void substituteVariables()
+  {
+    config.substituteVariables();
   }
 
   private void createDataSource()

@@ -45,19 +45,4 @@ public class InMemoryDatabaseConnector
     }
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.main.dbconnector.DatabaseConnector#getDataSourceName()
-   */
-  public String getDataSourceName()
-  {
-    return getClass().getSimpleName();
-  }
-
-  public boolean hasDataSourceName()
-  {
-    return true;
-  }
-
 }

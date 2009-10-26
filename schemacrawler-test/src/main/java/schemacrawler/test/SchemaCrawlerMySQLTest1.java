@@ -11,8 +11,8 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.utility.PropertiesDataSource;
 import schemacrawler.utility.SchemaCrawlerUtility;
-import schemacrawler.utility.datasource.PropertiesDataSource;
 
 public class SchemaCrawlerMySQLTest1
 {
@@ -50,18 +50,15 @@ public class SchemaCrawlerMySQLTest1
 
   private static DataSource makeDataSource()
   {
-    final String datasourceName = "schemacrawler";
-
     final Properties connectionProperties = new Properties();
-    connectionProperties.setProperty(datasourceName + ".driver",
-                                     "com.mysql.jdbc.Driver");
+    connectionProperties.setProperty("driver", "com.mysql.jdbc.Driver");
     connectionProperties
-      .setProperty(datasourceName + ".url",
+      .setProperty("url",
                    "jdbc:mysql://localhost:3306/schemacrawler;useInformationSchema=true");
-    connectionProperties.setProperty(datasourceName + ".user", "root");
-    connectionProperties.setProperty(datasourceName + ".password", "");
+    connectionProperties.setProperty("user", "root");
+    connectionProperties.setProperty("password", "");
 
-    return new PropertiesDataSource(connectionProperties, datasourceName);
+    return new PropertiesDataSource(connectionProperties);
   }
 
 }
