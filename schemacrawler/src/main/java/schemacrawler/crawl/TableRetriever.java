@@ -204,7 +204,7 @@ final class TableRetriever
     catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve indices for table " + table
-                                + ":" + e.getMessage());
+                                + ": " + e.getMessage());
       throw e;
     }
     finally
@@ -268,7 +268,7 @@ final class TableRetriever
     catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve primary keys for table "
-                                + table + ":" + e.getMessage());
+                                + table + ": " + e.getMessage());
       throw e;
     }
     finally
