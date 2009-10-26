@@ -124,8 +124,9 @@ public final class PropertiesDataSource
     }
     catch (SQLException e)
     {
-      throw new SQLException("Could not establish a connection with \"" + url
-                             + "\": " + e.getMessage(), e);
+      LOGGER.log(Level.WARNING, "Could not establish a connection with \""
+                                + url + "\": " + e.getMessage());
+      throw e;
     }
     if (connection == null)
     {
