@@ -49,7 +49,7 @@ public class SchemaCrawlerException
   /**
    * {@inheritDoc}
    */
-  public SchemaCrawlerException(Throwable cause)
+  public SchemaCrawlerException(final Throwable cause)
   {
     super(cause.getMessage(), cause);
   }

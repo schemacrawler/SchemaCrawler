@@ -498,6 +498,39 @@ class MutableTable
     return triggers.lookup(this, triggerName);
   }
 
+  void replacePrimaryKey()
+  {
+    if (primaryKey == null)
+    {
+      return;
+    }
+
+    final String primaryKeyName = primaryKey.getName();
+    final MutableIndex index = indices.lookup(this, primaryKeyName);
+    if (index != null)
+    {
+      boolean indexHasPkColumns = false;
+      final IndexColumn[] pkColumns = primaryKey.getColumns();
+      final IndexColumn[] indexColumns = index.getColumns();
+      if (pkColumns.length == indexColumns.length)
+      {
+        for (int i = 0; i < indexColumns.length; i++)
+        {
+          if (!pkColumns[i].equals(indexColumns[i]))
+          {
+            break;
+          }
+        }
+        indexHasPkColumns = true;
+      }
+      if (indexHasPkColumns)
+      {
+        indices.remove(index);
+        setPrimaryKey(new MutablePrimaryKey(index));
+      }
+    }
+  }
+
   void setColumnsSortOrder(final NamedObjectSort sort)
   {
     columns.setSortOrder(sort);
@@ -525,36 +558,6 @@ class MutableTable
       throw new IllegalArgumentException("Null table type");
     }
     this.type = type;
-  }
-
-  void replacePrimaryKey()
-  {
-    if (primaryKey == null) return;
-
-    final String primaryKeyName = primaryKey.getName();
-    final MutableIndex index = indices.lookup(this, primaryKeyName);
-    if (index != null)
-    {
-      boolean indexHasPkColumns = false;
-      final IndexColumn[] pkColumns = primaryKey.getColumns();
-      final IndexColumn[] indexColumns = index.getColumns();
-      if (pkColumns.length == indexColumns.length)
-      {
-        for (int i = 0; i < indexColumns.length; i++)
-        {
-          if (!pkColumns[i].equals(indexColumns[i]))
-          {
-            break;
-          }
-        }
-        indexHasPkColumns = true;
-      }
-      if (indexHasPkColumns)
-      {
-        indices.remove(index);
-        setPrimaryKey(new MutablePrimaryKey(index));
-      }
-    }
   }
 
 }
