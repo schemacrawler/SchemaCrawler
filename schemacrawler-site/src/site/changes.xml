@@ -11,7 +11,10 @@
       ]]></action>  
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed issue with index sort order of primary key columns. 
-      ]]></action>                                    
+      ]]></action> 
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        Updated website with new front page.
+      ]]></action>                                         
     </release>   
     <release version="7.3.1" date="2009-09-24">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
