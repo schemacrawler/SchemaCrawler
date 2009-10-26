@@ -117,7 +117,7 @@ final class ProcedureRetriever
     catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve columns for procedure "
-                                + procedure + ":" + e.getMessage());
+                                + procedure + ": " + e.getMessage());
       throw e;
     }
     finally
