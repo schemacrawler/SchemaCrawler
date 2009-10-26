@@ -22,18 +22,4 @@ public interface DatabaseConnector
   Connection createConnection()
     throws DatabaseConnectorException;
 
-  /**
-   * Gets the name of the datasource.
-   * 
-   * @return Datasource name.
-   */
-  String getDataSourceName();
-
-  /**
-   * Whether the name of the datasource has been defined.
-   * 
-   * @return Whether the name of the datasource has been defined.
-   */
-  boolean hasDataSourceName();
-
 }

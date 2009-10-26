@@ -20,7 +20,7 @@
 package schemacrawler.main.dbconnector;
 
 
-import java.util.Map;
+import schemacrawler.schemacrawler.Config;
 
 /**
  * Parses a command line, and creates a data-source.
@@ -40,7 +40,7 @@ public final class BundledDriverDatabaseConnector
    *         On an exception
    */
   public BundledDriverDatabaseConnector(final String[] args,
-                                        final Map<String, String> providedConfig)
+                                        final Config providedConfig)
     throws DatabaseConnectorException
   {
     super(providedConfig);
@@ -59,32 +59,28 @@ public final class BundledDriverDatabaseConnector
       throw new DatabaseConnectorException("Please provide the password");
     }
 
-    final String dataSourceName = getDataSourceName();
     if (options.hasHost())
     {
-      configPut(dataSourceName + ".host", options.getHost());
+      configPut("host", options.getHost());
     }
     if (options.hasPort())
     {
-      configPut(dataSourceName + ".port", String.valueOf(options.getPort()));
+      configPut("port", String.valueOf(options.getPort()));
     }
     if (options.hasDatabase())
     {
-      configPut(dataSourceName + ".database", options.getDatabase());
+      configPut("database", options.getDatabase());
     }
 
     if (options.hasSchemaPattern())
     {
-      configPut(dataSourceName + ".schemapattern", options.getSchemapattern());
+      configPut("schemapattern", options.getSchemapattern());
     }
 
-    configPut(dataSourceName + ".user", options.getUser());
-    configPut(dataSourceName + ".password", options.getPassword());
+    configPut("user", options.getUser());
+    configPut("password", options.getPassword());
 
-    if (!hasDataSourceName())
-    {
-      throw new DatabaseConnectorException("No datasource name provided");
-    }
+    substituteVariables();
   }
 
 }

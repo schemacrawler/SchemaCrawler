@@ -325,6 +325,7 @@ public final class Config
   {
     if (Utility.isBlank(prefix))
     {
+      substituteVariables();
       return this;
     }
 
@@ -341,13 +342,19 @@ public final class Config
       }
     }
 
-    for (final Map.Entry<String, String> entry: partition.entrySet())
-    {
-      partition.put(entry.getKey(), substituteVariables(entry.getValue(),
-                                                        partition));
-    }
-
+    partition.substituteVariables();
     return partition;
+  }
+
+  /**
+   * Substitutes variables in this config.
+   */
+  public void substituteVariables()
+  {
+    for (final Map.Entry<String, String> entry: entrySet())
+    {
+      put(entry.getKey(), substituteVariables(entry.getValue(), this));
+    }
   }
 
   @Override

@@ -108,7 +108,7 @@ public final class SchemaCrawlerOptions
    */
   public SchemaCrawlerOptions()
   {
-    this(new Config(), null);
+    this(new Config());
   }
 
   /**
@@ -119,7 +119,7 @@ public final class SchemaCrawlerOptions
    * @param partition
    *        Partition for information schema
    */
-  public SchemaCrawlerOptions(final Config config, final String partition)
+  public SchemaCrawlerOptions(final Config config)
   {
     final Config configProperties;
     if (config == null)
@@ -138,8 +138,7 @@ public final class SchemaCrawlerOptions
     showStoredProcedures = configProperties
       .getBooleanValue(SC_SHOW_STORED_PROCEDURES);
 
-    final Config partitionedConfig = configProperties.partition(partition);
-    informationSchemaViews = new InformationSchemaViews(partitionedConfig);
+    informationSchemaViews = new InformationSchemaViews(config);
 
     catalogInclusionRule = new InclusionRule(configProperties
                                                .getStringValue(SC_CATALOG_PATTERN_INCLUDE,
@@ -154,8 +153,7 @@ public final class SchemaCrawlerOptions
                                               .getStringValue(SC_SCHEMA_PATTERN_EXCLUDE,
                                                               InclusionRule.NONE));
 
-    schemaPattern = partitionedConfig
-      .getStringValue(OTHER_SCHEMA_PATTERN, null);
+    schemaPattern = config.getStringValue(OTHER_SCHEMA_PATTERN, null);
 
     tableInclusionRule = new InclusionRule(configProperties
                                              .getStringValue(SC_TABLE_PATTERN_INCLUDE,
@@ -207,17 +205,6 @@ public final class SchemaCrawlerOptions
     isAlphabeticalSortForProcedureColumns = configProperties
       .getBooleanValue(SC_SORT_ALPHABETICALLY_PROCEDURE_COLUMNS);
 
-  }
-
-  /**
-   * Options from properties.
-   * 
-   * @param properties
-   *        Configuration properties
-   */
-  public SchemaCrawlerOptions(final Properties properties)
-  {
-    this(new Config(properties), null);
   }
 
   /**

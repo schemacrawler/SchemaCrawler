@@ -21,7 +21,7 @@
 package schemacrawler.main.dbconnector;
 
 
-import java.util.Map;
+import schemacrawler.schemacrawler.Config;
 
 /**
  * Parses a command line, and creates a data-source.
@@ -41,7 +41,7 @@ public final class PropertiesDataSourceDatabaseConnector
    *         On an exception
    */
   public PropertiesDataSourceDatabaseConnector(final String[] args,
-                                               final Map<String, String> providedConfig)
+                                               final Config providedConfig)
     throws DatabaseConnectorException
   {
     super(providedConfig);
@@ -51,31 +51,27 @@ public final class PropertiesDataSourceDatabaseConnector
 
     if (options.isUseJdbcConnection())
     {
-      final String dataSourceName = "PropertiesDataSourceConnection";
-      configPut("defaultconnection", dataSourceName);
-      configPut(dataSourceName + ".driver", options.getDriver());
-      configPut(dataSourceName + ".url", options.getConnectionUrl());
+      configPut("driver", options.getDriver());
+      configPut("url", options.getConnectionUrl());
       if (options.hasSchemaPattern())
       {
-        configPut(dataSourceName + ".schemapattern", options.getSchemapattern());
+        configPut("schemapattern", options.getSchemapattern());
       }
-      configPut(dataSourceName + ".user", options.getUser());
-      configPut(dataSourceName + ".password", options.getPassword());
+      configPut("user", options.getUser());
+      configPut("password", options.getPassword());
     }
     else
     {
-      final String connectionName = options.getConnection();
-      // Use default connection if no connection is specified
-      if (!options.isUseDefaultConnection()
-          && !schemacrawler.utility.Utility.isBlank(connectionName))
+      final String connectionName;
+      if (options.isUseDefaultConnection())
       {
-        configPut("defaultconnection", connectionName);
+        connectionName = providedConfig.get("defaultconnection");
       }
-    }
-
-    if (!hasDataSourceName())
-    {
-      throw new DatabaseConnectorException("No datasource name provided");
+      else
+      {
+        connectionName = options.getConnection();
+      }
+      providedConfig.putAll(providedConfig.partition(connectionName));
     }
   }
 

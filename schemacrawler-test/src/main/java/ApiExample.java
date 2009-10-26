@@ -10,8 +10,8 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.utility.PropertiesDataSource;
 import schemacrawler.utility.SchemaCrawlerUtility;
-import schemacrawler.utility.datasource.PropertiesDataSource;
 
 public final class ApiExample
 {
@@ -65,18 +65,14 @@ public final class ApiExample
 
   private static DataSource makeDataSource()
   {
-    final String datasourceName = "schemacrawler";
-
     final Properties connectionProperties = new Properties();
-    connectionProperties.setProperty(datasourceName + ".driver",
-                                     "org.hsqldb.jdbcDriver");
+    connectionProperties.setProperty("driver", "org.hsqldb.jdbcDriver");
     connectionProperties
-      .setProperty(datasourceName + ".url",
-                   "jdbc:hsqldb:hsql://localhost:9001/schemacrawler");
-    connectionProperties.setProperty(datasourceName + ".user", "sa");
-    connectionProperties.setProperty(datasourceName + ".password", "");
+      .setProperty("url", "jdbc:hsqldb:hsql://localhost:9001/schemacrawler");
+    connectionProperties.setProperty("user", "sa");
+    connectionProperties.setProperty("password", "");
 
-    return new PropertiesDataSource(connectionProperties, datasourceName);
+    return new PropertiesDataSource(connectionProperties);
   }
 
 }
