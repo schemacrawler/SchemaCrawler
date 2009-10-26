@@ -89,7 +89,7 @@ abstract class BaseDatabaseConnector
 
   protected void substituteVariables()
   {
-    config.substituteVariables();
+    ConfigUtility.substituteVariables(config);
   }
 
   private void createDataSource()
