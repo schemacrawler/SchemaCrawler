@@ -35,6 +35,7 @@ import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.Index;
+import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Schema;
@@ -269,16 +270,6 @@ class MutableTable
    */
   public Index[] getIndices()
   {
-    if (primaryKey != null)
-    {
-      final String primaryKeyName = primaryKey.getName();
-      final MutableIndex index = indices.lookup(this, primaryKeyName);
-      if (index != null)
-      {
-        indices.remove(index);
-        setPrimaryKey(new MutablePrimaryKey(index));
-      }
-    }
     return indices.values().toArray(new Index[indices.size()]);
   }
 
@@ -534,6 +525,36 @@ class MutableTable
       throw new IllegalArgumentException("Null table type");
     }
     this.type = type;
+  }
+
+  void replacePrimaryKey()
+  {
+    if (primaryKey == null) return;
+
+    final String primaryKeyName = primaryKey.getName();
+    final MutableIndex index = indices.lookup(this, primaryKeyName);
+    if (index != null)
+    {
+      boolean indexHasPkColumns = false;
+      final IndexColumn[] pkColumns = primaryKey.getColumns();
+      final IndexColumn[] indexColumns = index.getColumns();
+      if (pkColumns.length == indexColumns.length)
+      {
+        for (int i = 0; i < indexColumns.length; i++)
+        {
+          if (!pkColumns[i].equals(indexColumns[i]))
+          {
+            break;
+          }
+        }
+        indexHasPkColumns = true;
+      }
+      if (indexHasPkColumns)
+      {
+        indices.remove(index);
+        setPrimaryKey(new MutablePrimaryKey(index));
+      }
+    }
   }
 
 }
