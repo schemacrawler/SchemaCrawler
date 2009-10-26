@@ -221,7 +221,7 @@ final class TableRetriever
 
   }
 
-  void retrievePrimaryKeys(final MutableTable table)
+  void retrievePrimaryKey(final MutableTable table)
     throws SQLException
   {
 

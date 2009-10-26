@@ -389,11 +389,13 @@ public final class DatabaseSchemaCrawler
         final boolean isView = table instanceof MutableView;
         if (!isView && infoLevel.isRetrieveTableColumns())
         {
-          retriever.retrievePrimaryKeys(table);
+          retriever.retrievePrimaryKey(table);
           if (infoLevel.isRetrieveIndices())
           {
             retriever.retrieveIndices(table, true);
             retriever.retrieveIndices(table, false);
+            //
+            table.replacePrimaryKey();
           }
           if (infoLevel.isRetrieveForeignKeys())
           {
