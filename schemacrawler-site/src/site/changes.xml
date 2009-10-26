@@ -5,6 +5,14 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+    <release version="7.4" date="2009-09-24">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added new pre-packaged SchemaCrawler for Oracle. 
+      ]]></action>  
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed issue with index sort order of primary key columns. 
+      ]]></action>                                    
+    </release>   
     <release version="7.3.1" date="2009-09-24">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Enhancement to the JavaSqlType class, to contain the SQL type group. New lookup 
