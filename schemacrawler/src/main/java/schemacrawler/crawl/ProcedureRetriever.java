@@ -64,15 +64,16 @@ final class ProcedureRetriever
     throws SQLException
   {
 
-    final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
-      .getMetaData().getProcedureColumns(procedure.getSchema().getParent()
-                                           .getName(),
-                                         procedure.getSchema().getName(),
-                                         procedure.getName(),
-                                         null));
+    MetadataResultSet results = null;
     int ordinalNumber = 0;
     try
     {
+      results = new MetadataResultSet(getRetrieverConnection().getMetaData()
+        .getProcedureColumns(procedure.getSchema().getParent().getName(),
+                             procedure.getSchema().getName(),
+                             procedure.getName(),
+                             null));
+
       while (results.next())
       {
         final String columnCatalogName = results.getString("PROCEDURE_CAT");
@@ -113,9 +114,18 @@ final class ProcedureRetriever
         }
       }
     }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not retrieve columns for procedure "
+                                + procedure + ":" + e.getMessage());
+      throw e;
+    }
     finally
     {
-      results.close();
+      if (results != null)
+      {
+        results.close();
+      }
     }
 
   }
@@ -137,12 +147,14 @@ final class ProcedureRetriever
                           final InclusionRule procedureInclusionRule)
     throws SQLException
   {
-    final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
-      .getMetaData().getProcedures(catalogName,
-                                   getRetrieverConnection().getSchemaPattern(),
-                                   "%"));
+    MetadataResultSet results = null;
     try
     {
+      results = new MetadataResultSet(getRetrieverConnection().getMetaData()
+        .getProcedures(catalogName,
+                       getRetrieverConnection().getSchemaPattern(),
+                       "%"));
+
       while (results.next())
       {
         // final String catalogName =
@@ -177,7 +189,10 @@ final class ProcedureRetriever
     }
     finally
     {
-      results.close();
+      if (results != null)
+      {
+        results.close();
+      }
     }
   }
 
