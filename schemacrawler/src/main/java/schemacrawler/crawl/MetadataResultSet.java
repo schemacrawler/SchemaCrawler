@@ -322,6 +322,10 @@ final class MetadataResultSet
       try
       {
         value = results.getString(columnName);
+        if (results.wasNull())
+        {
+          value = null;
+        }
       }
       catch (final SQLException e)
       {
