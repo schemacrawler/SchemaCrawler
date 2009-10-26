@@ -71,7 +71,8 @@ public final class PropertiesDataSourceDatabaseConnector
       {
         connectionName = options.getConnection();
       }
-      providedConfig.putAll(providedConfig.partition(connectionName));
+      providedConfig.putAll(ConfigUtility.partition(providedConfig,
+                                                    connectionName));
     }
   }
 
