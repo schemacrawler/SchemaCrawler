@@ -180,6 +180,63 @@ public final class Config
     return propertiesMap;
   }
 
+  private static String substituteVariables(final String template,
+                                            final Map<String, String> map)
+  {
+    if (Utility.isBlank(template) || map == null)
+    {
+      return template;
+    }
+
+    final String DELIMITER_START = "${";
+    final String DELIMITER_END = "}";
+
+    final StringBuilder buffer = new StringBuilder();
+    int currentPosition = 0;
+    int delimiterStartPosition;
+    int delimiterEndPosition;
+
+    while (true)
+    {
+      delimiterStartPosition = template.indexOf(DELIMITER_START,
+                                                currentPosition);
+      if (delimiterStartPosition == -1)
+      {
+        if (currentPosition == 0)
+        {
+          // No substitutions required at all
+          return template;
+        }
+        // No more substitutions
+        buffer.append(template.substring(currentPosition, template.length()));
+        return buffer.toString();
+      }
+      else
+      {
+        buffer.append(template.substring(currentPosition,
+                                         delimiterStartPosition));
+        delimiterEndPosition = template.indexOf(DELIMITER_END,
+                                                delimiterStartPosition);
+        if (delimiterEndPosition == -1)
+        {
+          throw new IllegalArgumentException(template
+                                             + " does not have a closing brace");
+        }
+        delimiterStartPosition = delimiterStartPosition
+                                 + DELIMITER_START.length();
+        final String key = template.substring(delimiterStartPosition,
+                                              delimiterEndPosition);
+        final String value = map.get(key);
+        if (value != null)
+        {
+          buffer.append(value);
+        }
+        // Advance current position
+        currentPosition = delimiterEndPosition + DELIMITER_END.length();
+      }
+    }
+  }
+
   /**
    * Creates an empty config.
    */
@@ -266,7 +323,7 @@ public final class Config
    */
   public Config partition(final String prefix)
   {
-    if (prefix == null || prefix.length() == 0)
+    if (Utility.isBlank(prefix))
     {
       return this;
     }
@@ -282,6 +339,12 @@ public final class Config
         final String unprefixed = key.substring(dottedPrefix.length());
         partition.put(unprefixed, entry.getValue());
       }
+    }
+
+    for (final Map.Entry<String, String> entry: partition.entrySet())
+    {
+      partition.put(entry.getKey(), substituteVariables(entry.getValue(),
+                                                        partition));
     }
 
     return partition;
