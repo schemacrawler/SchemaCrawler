@@ -1456,7 +1456,7 @@ PUBLIC.org.hsqldb.Library.difference,"[procedure, returns result]"
 
 PUBLIC.org.hsqldb.Library.getAutoCommit,"[procedure, returns result]"
 ------------------------------------------------------------------------
-"",@p0,"BOOLEAN(1), result"
+"",@p0,"BOOLEAN, result"
 ""
 "",[definition]
 "",org.hsqldb.Library.getAutoCommit(java.sql.Connection)
@@ -1542,7 +1542,7 @@ PUBLIC.org.hsqldb.Library.insert,"[procedure, returns result]"
 
 PUBLIC.org.hsqldb.Library.isReadOnlyConnection,"[procedure, returns result]"
 ------------------------------------------------------------------------
-"",@p0,"BOOLEAN(1), result"
+"",@p0,"BOOLEAN, result"
 ""
 "",[definition]
 "",org.hsqldb.Library.isReadOnlyConnection(java.sql.Connection)
@@ -1550,7 +1550,7 @@ PUBLIC.org.hsqldb.Library.isReadOnlyConnection,"[procedure, returns result]"
 
 PUBLIC.org.hsqldb.Library.isReadOnlyDatabase,"[procedure, returns result]"
 ------------------------------------------------------------------------
-"",@p0,"BOOLEAN(1), result"
+"",@p0,"BOOLEAN, result"
 ""
 "",[definition]
 "",org.hsqldb.Library.isReadOnlyDatabase(java.sql.Connection)
@@ -1558,7 +1558,7 @@ PUBLIC.org.hsqldb.Library.isReadOnlyDatabase,"[procedure, returns result]"
 
 PUBLIC.org.hsqldb.Library.isReadOnlyDatabaseFiles,"[procedure, returns result]"
 ------------------------------------------------------------------------
-"",@p0,"BOOLEAN(1), result"
+"",@p0,"BOOLEAN, result"
 ""
 "",[definition]
 "",org.hsqldb.Library.isReadOnlyDatabaseFiles(java.sql.Connection)
@@ -1840,8 +1840,8 @@ PUBLIC.org.hsqldb.Library.trim,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p1,"LONGVARCHAR, in"
 "",@p2,"LONGVARCHAR, in"
-"",@p3,"BOOLEAN(1), in"
-"",@p4,"BOOLEAN(1), in"
+"",@p3,"BOOLEAN, in"
+"",@p4,"BOOLEAN, in"
 "",@p0,"LONGVARCHAR, result"
 ""
 "",[definition]
@@ -2157,12 +2157,12 @@ PUBLIC.YEAR,"[procedure, returns result]"
 
 Row Count
 ------------------------------------------------------------------------
-CUSTOMER,50 rows
-CUSTOMERLIST,50 rows
-INVOICE,50 rows
-ITEM,650 rows
-PRODUCT,50 rows
-SUPPLIER,1 rows
+PUBLIC.CUSTOMER,50 rows
+PUBLIC.CUSTOMERLIST,50 rows
+PUBLIC.INVOICE,50 rows
+PUBLIC.ITEM,650 rows
+PUBLIC.PRODUCT,50 rows
+PUBLIC.SUPPLIER,1 rows
 
 
 

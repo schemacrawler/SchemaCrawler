@@ -930,16 +930,6 @@ PUBLIC.java.lang.Math.ceil                   [procedure, returns result]
   java.lang.Math.ceil(double)
 
 
-PUBLIC.java.lang.Math.copySign               [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               FLOAT(8, 17), in            
-  @p2                               FLOAT(8, 17), in            
-  @p0                               FLOAT(8, 17), result        
-
-                                                            [definition]
-  java.lang.Math.copySign(double,double)java.lang.Math.copySign(float,float)
-
-
 PUBLIC.java.lang.Math.cos                    [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               DOUBLE(8, 17), in           
@@ -983,15 +973,6 @@ PUBLIC.java.lang.Math.floor                  [procedure, returns result]
 
                                                             [definition]
   java.lang.Math.floor(double)
-
-
-PUBLIC.java.lang.Math.getExponent            [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               FLOAT(8, 17), in            
-  @p0                               INTEGER, result             
-
-                                                            [definition]
-  java.lang.Math.getExponent(double)java.lang.Math.getExponent(float)
 
 
 PUBLIC.java.lang.Math.hypot                  [procedure, returns result]
@@ -1061,25 +1042,6 @@ PUBLIC.java.lang.Math.min                    [procedure, returns result]
   java.lang.Math.min(double,double)java.lang.Math.min(float,float)java.lang.Math.min(int,int)java.lang.Math.min(long,long)
 
 
-PUBLIC.java.lang.Math.nextAfter              [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               FLOAT(8, 17), in            
-  @p2                               DOUBLE(8, 17), in           
-  @p0                               FLOAT(8, 17), result        
-
-                                                            [definition]
-  java.lang.Math.nextAfter(double,double)java.lang.Math.nextAfter(float,double)
-
-
-PUBLIC.java.lang.Math.nextUp                 [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               FLOAT(8, 17), in            
-  @p0                               FLOAT(8, 17), result        
-
-                                                            [definition]
-  java.lang.Math.nextUp(double)java.lang.Math.nextUp(float)
-
-
 PUBLIC.java.lang.Math.pow                    [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               DOUBLE(8, 17), in           
@@ -1114,16 +1076,6 @@ PUBLIC.java.lang.Math.round                  [procedure, returns result]
 
                                                             [definition]
   java.lang.Math.round(double)java.lang.Math.round(float)
-
-
-PUBLIC.java.lang.Math.scalb                  [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               FLOAT(8, 17), in            
-  @p2                               INTEGER, in                 
-  @p0                               FLOAT(8, 17), result        
-
-                                                            [definition]
-  java.lang.Math.scalb(double,int)java.lang.Math.scalb(float,int)
 
 
 PUBLIC.java.lang.Math.signum                 [procedure, returns result]
