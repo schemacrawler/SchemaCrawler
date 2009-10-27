@@ -84,11 +84,25 @@ public final class PropertiesDataSource
   public Connection getConnection()
     throws SQLException
   {
+    final String username = properties.getProperty(USER);
+    final String password = properties.getProperty(PASSWORD);
+    return getConnection(username, password);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see javax.sql.DataSource#getConnection(java.lang.String,
+   *      java.lang.String)
+   */
+  public Connection getConnection(final String username, final String password)
+    throws SQLException
+  {
     final String url = properties.getProperty(URL);
     Connection connection;
     try
     {
-      connection = DriverManager.getConnection(url, properties);
+      connection = DriverManager.getConnection(url, username, password);
     }
     catch (final SQLException e)
     {
@@ -104,20 +118,6 @@ public final class PropertiesDataSource
 
     logConnectionInfo(connection);
     return connection;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see javax.sql.DataSource#getConnection(java.lang.String,
-   *      java.lang.String)
-   */
-  public Connection getConnection(final String username, final String password)
-    throws SQLException
-  {
-    properties.setProperty(USER, username);
-    properties.setProperty(PASSWORD, password);
-    return getConnection();
   }
 
   /**
