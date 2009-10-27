@@ -46,12 +46,4 @@ public class SchemaCrawlerException
     super(message + ": " + cause.getMessage(), cause);
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  public SchemaCrawlerException(final Throwable cause)
-  {
-    super(cause.getMessage(), cause);
-  }
-
 }
