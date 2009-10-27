@@ -22,8 +22,9 @@ package schemacrawler.schemacrawler;
 
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Properties;
+import java.util.Map;
 import java.util.Set;
 
 import schemacrawler.crawl.JavaSqlTypesUtility;
@@ -58,7 +59,8 @@ public final class Query
    */
   private static String expandTemplateFromProperties(final String template)
   {
-    return expandTemplateFromProperties(template, System.getProperties());
+    return expandTemplateFromProperties(template, new Config(System
+      .getProperties()));
   }
 
   /**
@@ -77,7 +79,7 @@ public final class Query
    * @return Expanded template
    */
   private static String expandTemplateFromProperties(final String template,
-                                                     final Properties properties)
+                                                     final Map<String, String> properties)
   {
 
     if (template == null)
@@ -101,7 +103,7 @@ public final class Query
       {
         // Evaluate this property value
         final String propertyKey = expandedTemplate.substring(left + 2, right);
-        Object propertyValue = properties.get(propertyKey);
+        String propertyValue = properties.get(propertyKey);
         if (propertyValue == null)
         {
           propertyValue = "";
@@ -232,20 +234,19 @@ public final class Query
    */
   public String getQueryForTable(final Table table)
   {
-    final Properties tableProperties = new Properties();
+    final Map<String, String> tableProperties = new HashMap<String, String>();
     if (table != null)
     {
       if (table.getSchema() != null)
       {
-        tableProperties.setProperty("catalog", String.valueOf(table.getSchema()
-          .getParent().getName()));
-        tableProperties.setProperty("schema", table.getSchema().getName());
+        tableProperties.put("catalog", table.getSchema().getParent().getName());
+        tableProperties.put("schema", table.getSchema().getName());
       }
-      tableProperties.setProperty("table", table.getFullName());
-      tableProperties.setProperty("columns", table.getColumnsListAsString());
-      tableProperties.setProperty("orderbycolumns",
-                                  getOrderByColumnsListAsString(table));
-      tableProperties.setProperty("tabletype", table.getType().toString());
+      tableProperties.put("table", table.getFullName());
+      tableProperties.put("columns", table.getColumnsListAsString());
+      tableProperties.put("orderbycolumns",
+                          getOrderByColumnsListAsString(table));
+      tableProperties.put("tabletype", table.getType().toString());
     }
 
     String sql = query;
