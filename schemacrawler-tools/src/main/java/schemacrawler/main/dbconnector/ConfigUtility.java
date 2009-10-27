@@ -21,9 +21,9 @@
 package schemacrawler.main.dbconnector;
 
 
+import java.util.HashMap;
 import java.util.Map;
 
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.utility.Utility;
 
 /**
@@ -52,7 +52,7 @@ public final class ConfigUtility
     }
 
     final String dottedPrefix = prefix + ".";
-    final Config partition = new Config();
+    final Map<String, String> partition = new HashMap<String, String>();
     for (final Map.Entry<String, String> entry: config.entrySet())
     {
       final String key = entry.getKey();

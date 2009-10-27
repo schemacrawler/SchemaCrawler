@@ -20,7 +20,7 @@
 package schemacrawler.main.dbconnector;
 
 
-import schemacrawler.schemacrawler.Config;
+import java.util.Map;
 
 /**
  * Parses a command line, and creates a data-source.
@@ -40,7 +40,7 @@ public final class BundledDriverDatabaseConnector
    *         On an exception
    */
   public BundledDriverDatabaseConnector(final String[] args,
-                                        final Config providedConfig)
+                                        final Map<String, String> providedConfig)
     throws DatabaseConnectorException
   {
     super(providedConfig);
