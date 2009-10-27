@@ -23,12 +23,12 @@ package schemacrawler.main.dbconnector;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Map.Entry;
 
 import javax.sql.DataSource;
 
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.utility.PropertiesDataSource;
 
 /**
@@ -38,7 +38,7 @@ abstract class BaseDatabaseConnector
   implements DatabaseConnector
 {
 
-  private final Config config;
+  private final Map<String, String> config;
   private DataSource dataSource;
 
   /**
@@ -51,7 +51,7 @@ abstract class BaseDatabaseConnector
    * @throws DatabaseConnectorException
    *         On an exception
    */
-  protected BaseDatabaseConnector(final Config providedConfig)
+  protected BaseDatabaseConnector(final Map<String, String> providedConfig)
     throws DatabaseConnectorException
   {
     if (providedConfig == null)
