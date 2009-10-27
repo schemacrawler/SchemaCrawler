@@ -167,7 +167,8 @@ public class SchemaCrawlerCommandLine
     }
     catch (final DatabaseConnectorException e)
     {
-      throw new SchemaCrawlerException(e);
+      throw new SchemaCrawlerException("Could not create a database connection",
+                                       e);
     }
   }
 
