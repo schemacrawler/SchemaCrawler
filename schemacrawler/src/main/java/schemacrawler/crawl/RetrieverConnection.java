@@ -106,9 +106,16 @@ final class RetrieverConnection
         }
       }
     }
-    if (catalogNames.size() == 0)
+    if (catalogNames.isEmpty())
     {
-      catalogNames.add(connection.getCatalog());
+      if (supportsCatalogs)
+      {
+        catalogNames.add(connection.getCatalog());
+      }
+      else
+      {
+        catalogNames.add(null);
+      }
     }
     final ArrayList<String> catalogNamesList = new ArrayList<String>(catalogNames);
     Collections.sort(catalogNamesList);
