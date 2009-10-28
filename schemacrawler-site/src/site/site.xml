@@ -19,7 +19,7 @@
         href="http://sourceforge.net/donate/index.php?group_id=148383" />
       <item
         name="Download"
-        href="http://sourceforge.net/project/showfiles.php?group_id=148383" />
+        href="http://sourceforge.net/projects/schemacrawler/files/" />
     </links>
     <menu name="SchemaCrawler">
       <item
@@ -39,7 +39,7 @@
         href="http://sourceforge.net/donate/index.php?group_id=148383" />
       <item
         name="Download"
-        href="http://sourceforge.net/project/showfiles.php?group_id=148383" />
+        href="http://sourceforge.net/projects/schemacrawler/files/" />
       <item
         name="Change History"
         href="changes-report.html" />
@@ -48,7 +48,7 @@
         href="apidocs/index.html" />
       <item
         name="Source Code"
-        href="http://sourceforge.net/svn/?group_id=148383" />
+        href="http://sourceforge.net/scm/?type=svn&group_id=148383" />
       <item
         name="Project Page on SourceForge"
         href="http://sourceforge.net/projects/schemacrawler/" />
@@ -62,8 +62,8 @@
         href="schemacrawler_grep.html" />
       <item
         name="SchemaCrawler Database Diagramming"
-        href="schemacrawler_diagramming.html" />        
-    </menu>    
+        href="schemacrawler_diagramming.html" />
+    </menu>
     <menu ref="reports" />
   </body>
 </project>
