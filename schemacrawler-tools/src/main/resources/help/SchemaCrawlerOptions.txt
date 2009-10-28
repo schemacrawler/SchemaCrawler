@@ -36,7 +36,8 @@
 -schemapattern=<schemapattern>
   <schemapattern> is a JDBC pattern (which can include _ or %)
   for the schemas to crawl and optimizes the retrieval of
-  tables
+  tables; if the -schemas option is used, then it is best
+  to specify this option in addition
   Optional, defaults to all schemas in the catalog
   
 -table_types=<table_types>

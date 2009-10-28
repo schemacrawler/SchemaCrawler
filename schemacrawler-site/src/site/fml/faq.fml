@@ -132,9 +132,27 @@ Or, the following:
   
 --- Filtering Options ---
     
+-catalogs=<regular-expression>
+  <regular-expression> is a regular expression to match catalog names 
+  for example, 
+  -catalogs=.*\.C.*|.*\.P.*
+  matches any catalogs whose names start with C or P
+  Catalogs that do not match the pattern are not displayed
+  Optional, defaults to showing all catalogs
+     
+-schemas=<regular-expression>
+  <regular-expression> is a regular expression to match schema names 
+  for example, 
+  -schemas=.*\.C.*|.*\.P.*
+  matches any schemas whose names start with C or P
+  Schemas that do not match the pattern are not displayed
+  Optional, defaults to showing all schemas
+        
 -schemapattern=<schemapattern>
-  <schemapattern> is a pattern (which can include _ or %)
-  for the schemas to crawl
+  <schemapattern> is a JDBC pattern (which can include _ or %)
+  for the schemas to crawl and optimizes the retrieval of
+  tables; if the -schemas option is used, then it is best
+  to specify this option in addition
   Optional, defaults to all schemas in the catalog
   
 -table_types=<table_types>
