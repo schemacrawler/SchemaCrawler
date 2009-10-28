@@ -44,6 +44,9 @@
         name="Change History"
         href="changes-report.html" />
       <item
+        name="Javadocs"
+        href="apidocs/index.html" />
+      <item
         name="Source Code"
         href="http://sourceforge.net/svn/?group_id=148383" />
       <item
