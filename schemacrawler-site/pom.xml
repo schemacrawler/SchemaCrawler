@@ -1,6 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>schemacrawler</groupId>
 		<artifactId>schemacrawler-all</artifactId>
@@ -10,8 +13,6 @@
 	<artifactId>schemacrawler-site</artifactId>
 	<packaging>pom</packaging>
 	<name>SchemaCrawler Website</name>
-  <description>SchemaCrawler is an API that improves on the standard JDBC metadata.</description>
-  <url>http://sourceforge.net/projects/schemacrawler</url>
 	<dependencies>
 		<dependency>
 			<groupId>schemacrawler</groupId>
@@ -24,20 +25,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>surefire-report-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <configuration>
-          <quiet>true</quiet>
-          <show>public</show>
-          <stylesheetfile>${basedir}/src/javadoc/javadocs.css</stylesheetfile>
-          <link>http://java.sun.com/j2se/1.5.0/docs/api</link>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -53,19 +40,6 @@
           </reportSet>
         </reportSets>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jxr-plugin</artifactId>
-        <configuration>
-          <aggregate>false</aggregate>
-        </configuration>
-      </plugin>
     </plugins>
   </reporting>
-	<distributionManagement>
-		<site>
-			<id>website</id>
-			<url>scp://webhost.company.com/www/website</url>
-		</site>
-	</distributionManagement>
 </project>
