@@ -12,6 +12,10 @@
       <![CDATA[http://sourceforge.net/sflogo.php?group_id=148383&type=5]]>
     </src>
   </bannerRight>
+  <poweredBy>
+    <logo name="Maven" href="http://maven.apache.org/"
+          img="http://maven.apache.org/images/logos/maven-button-1.png"/>
+  </poweredBy>
   <body>
     <links>
       <item
