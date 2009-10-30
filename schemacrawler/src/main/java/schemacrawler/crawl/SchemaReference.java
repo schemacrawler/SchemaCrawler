@@ -84,16 +84,6 @@ final class SchemaReference
     return true;
   }
 
-  public String getCatalogName()
-  {
-    return catalogName;
-  }
-
-  public String getSchemaName()
-  {
-    return schemaName;
-  }
-
   /**
    * {@inheritDoc}
    * 
@@ -115,10 +105,20 @@ final class SchemaReference
     return getFullName();
   }
 
+  String getCatalogName()
+  {
+    return catalogName;
+  }
+
   final String getFullName()
   {
     return (catalogName != null? catalogName + ".": "")
            + (schemaName != null? schemaName: "");
+  }
+
+  String getSchemaName()
+  {
+    return schemaName;
   }
 
 }
