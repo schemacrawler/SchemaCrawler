@@ -25,8 +25,9 @@ import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Enumeration;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -69,7 +70,7 @@ public class DatabaseConnectionOptions
   private String password;
   private final Properties properties = new Properties();
 
-  public DatabaseConnectionOptions(final Properties properties)
+  public DatabaseConnectionOptions(final Map<String, String> properties)
     throws SchemaCrawlerException
   {
     if (properties == null)
@@ -77,28 +78,20 @@ public class DatabaseConnectionOptions
       throw new SchemaCrawlerException("No connection properties provided");
     }
 
-    connectionUrl = properties.getProperty(URL);
+    connectionUrl = properties.get(URL);
     if (Utility.isBlank(connectionUrl))
     {
       throw new SchemaCrawlerException("No database connection URL provided");
     }
-    loadJdbcDriver(properties.getProperty(DRIVER));
+    loadJdbcDriver(properties.get(DRIVER));
 
-    user = properties.getProperty(USER);
-    password = properties.getProperty(PASSWORD);
+    user = properties.get(USER);
+    password = properties.get(PASSWORD);
     copyOtherConnectionProperties(properties);
   }
 
   public DatabaseConnectionOptions(final String jdbcDriverClassName,
                                    final String connectionUrl)
-    throws SchemaCrawlerException
-  {
-    this(jdbcDriverClassName, connectionUrl, null);
-  }
-
-  public DatabaseConnectionOptions(final String jdbcDriverClassName,
-                                   final String connectionUrl,
-                                   final Properties properties)
     throws SchemaCrawlerException
   {
     if (Utility.isBlank(connectionUrl))
@@ -112,7 +105,6 @@ public class DatabaseConnectionOptions
     {
       user = properties.getProperty(USER);
       password = properties.getProperty(PASSWORD);
-      copyOtherConnectionProperties(properties);
     }
   }
 
@@ -167,19 +159,17 @@ public class DatabaseConnectionOptions
     this.user = user;
   }
 
-  private void copyOtherConnectionProperties(final Properties properties)
+  private void copyOtherConnectionProperties(final Map<String, String> properties)
   {
     if (properties != null)
     {
-      final Enumeration propertyNames = properties.propertyNames();
-      while (propertyNames.hasMoreElements())
+      for (final Entry<String, String> property: properties.entrySet())
       {
-        final String propertyName = (String) propertyNames.nextElement();
+        final String propertyName = property.getKey();
         if (!(DRIVER.equals(propertyName) || URL.equals(propertyName)
               || USER.equals(propertyName) || PASSWORD.equals(propertyName)))
         {
-          this.properties.setProperty(propertyName, properties
-            .getProperty(propertyName));
+          this.properties.setProperty(propertyName, property.getValue());
         }
       }
     }

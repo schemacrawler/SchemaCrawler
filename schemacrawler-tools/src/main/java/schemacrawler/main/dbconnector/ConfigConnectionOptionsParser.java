@@ -50,8 +50,7 @@ public final class ConfigConnectionOptionsParser
    * 
    * @param args
    */
-  public ConfigConnectionOptionsParser(final String[] args,
-                                           final Config config)
+  public ConfigConnectionOptionsParser(final String[] args, final Config config)
   {
     super(args, config);
   }
@@ -96,7 +95,7 @@ public final class ConfigConnectionOptionsParser
 
     ConfigUtility.substituteVariables(databaseConnectionConfig);
 
-    return createOptionsFromConfig(databaseConnectionConfig);
+    return new DatabaseConnectionOptions(databaseConnectionConfig);
   }
 
 }
