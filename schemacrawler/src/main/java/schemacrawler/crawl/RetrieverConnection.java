@@ -26,7 +26,6 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -39,9 +38,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
  */
 final class RetrieverConnection
 {
-
-  private static final Logger LOGGER = Logger
-    .getLogger(RetrieverConnection.class.getName());
 
   private final Connection connection;
   private final DatabaseMetaData metaData;
@@ -103,8 +99,7 @@ final class RetrieverConnection
     return supportsCatalogs;
   }
 
-  void cacheSchema(final SchemaReference schemaName,
-                     final MutableSchema schema)
+  void cacheSchema(final SchemaReference schemaName, final MutableSchema schema)
   {
     schemaRefsCache.put(schemaName, schema);
   }
