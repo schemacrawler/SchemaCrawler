@@ -46,9 +46,16 @@ public final class Main
   {
     try
     {
+      final BundledDriverHelpOptions helpOptions = new BundledDriverHelpOptions("SchemaCrawler for SQLite",
+                                                                                "/help/Connections.sqlite.txt");
+      if (args.length == 0)
+      {
+        helpOptions.showHelp();
+        System.exit(0);
+      }
+
       final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(addAdditionalArgs(args),
-                                                                                new BundledDriverHelpOptions("SchemaCrawler for SQLite",
-                                                                                                             "/help/Connections.sqlite.txt"),
+                                                                                helpOptions,
                                                                                 "/schemacrawler-sqlite.config.properties");
       SchemaCrawlerMain.schemacrawler(commandLine);
     }
