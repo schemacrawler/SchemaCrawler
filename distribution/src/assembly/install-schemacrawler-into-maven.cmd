@@ -1,1 +1,1 @@
-mvn install:install-file -DgroupId=schemacrawler -DartifactId=schemacrawler -Dversion=7.4 -Dpackaging=jar -Dfile=lib/schemacrawler-7.4.jar -DgeneratePom=true -DcreateChecksum=true
+mvn install:install-file -DgroupId=schemacrawler -DartifactId=schemacrawler -Dversion=7.5 -Dpackaging=jar -Dfile=lib/schemacrawler-7.5.jar -DgeneratePom=true -DcreateChecksum=true
