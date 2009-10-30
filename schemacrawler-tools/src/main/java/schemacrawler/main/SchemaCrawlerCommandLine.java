@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 import schemacrawler.Version;
 import schemacrawler.main.dbconnector.BundledDriverConnectionOptionsParser;
 import schemacrawler.main.dbconnector.CommandLineConnectionOptionsParser;
-import schemacrawler.main.dbconnector.ConfigConnectorOptionsParser;
+import schemacrawler.main.dbconnector.ConfigConnectionOptionsParser;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -145,7 +145,7 @@ public class SchemaCrawlerCommandLine
         .getOptions();
       if (connectionOptions == null)
       {
-        connectionOptions = new ConfigConnectorOptionsParser(args, config)
+        connectionOptions = new ConfigConnectionOptionsParser(args, config)
           .getOptions();
       }
       this.connectionOptions = connectionOptions;

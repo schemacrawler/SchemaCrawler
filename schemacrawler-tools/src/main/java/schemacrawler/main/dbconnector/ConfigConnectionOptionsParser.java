@@ -35,8 +35,8 @@ import sf.util.CommandLineParser.StringOption;
  * 
  * @author sfatehi
  */
-public final class ConfigConnectorOptionsParser
-  extends BaseConnectorOptionsParser
+public final class ConfigConnectionOptionsParser
+  extends BaseDatabaseConnectionOptionsParser
 {
 
   private final BooleanOption optionUseDefaultConnection = new BooleanOption('d',
@@ -50,7 +50,7 @@ public final class ConfigConnectorOptionsParser
    * 
    * @param args
    */
-  public ConfigConnectorOptionsParser(final String[] args,
+  public ConfigConnectionOptionsParser(final String[] args,
                                            final Config config)
   {
     super(args, config);
