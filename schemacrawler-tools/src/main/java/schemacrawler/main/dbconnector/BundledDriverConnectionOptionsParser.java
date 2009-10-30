@@ -52,7 +52,8 @@ public final class BundledDriverConnectionOptionsParser
    * 
    * @param args
    */
-  public BundledDriverConnectionOptionsParser(final String[] args, final Config config)
+  public BundledDriverConnectionOptionsParser(final String[] args,
+                                              final Config config)
   {
     super(args, config);
   }
@@ -95,7 +96,7 @@ public final class BundledDriverConnectionOptionsParser
 
     ConfigUtility.substituteVariables(config);
 
-    return createOptionsFromConfig(config);
+    return new DatabaseConnectionOptions(config);
   }
 
 }
