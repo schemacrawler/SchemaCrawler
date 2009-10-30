@@ -29,7 +29,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Locale;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -56,17 +58,57 @@ final class DatabaseInfoRetriever
    *        Method
    * @return Method name
    */
-  private String derivePropertyName(final Method method)
+  private String derivePropertyDescription(final Method method)
   {
+
+    final Map<String, String> acronymsMap = new HashMap<String, String>();
+    acronymsMap.put("JDBC", "Jdbc");
+    acronymsMap.put("ANSI", "Ansi");
+    acronymsMap.put("SQL", "Sql");
+    acronymsMap.put("URL", "Url");
+
     final String get = "get";
-    String name = method.getName();
-    if (name.startsWith(get))
+    String description = method.getName();
+    if (description.startsWith(get))
     {
-      name = name.substring(get.length());
+      description = description.substring(get.length());
     }
-    // Capitalize the first letter
-    name = name.substring(0, 1).toUpperCase(Locale.ENGLISH) + name.substring(1);
-    return name;
+
+    for (final Entry<String, String> acronym: acronymsMap.entrySet())
+    {
+      description = description
+        .replaceAll(acronym.getKey(), acronym.getValue());
+    }
+
+    final int strLen = description.length();
+    final StringBuilder buffer = new StringBuilder(strLen);
+    for (int i = 0; i < strLen; i++)
+    {
+      final char ch = description.charAt(i);
+      if (i == 0)
+      {
+        buffer.append(Character.toUpperCase(ch));
+      }
+      else if (Character.isUpperCase(ch) || Character.isTitleCase(ch))
+      {
+        buffer.append(' ').append(Character.toLowerCase(ch));
+      }
+      else if (Character.isLowerCase(ch))
+      {
+        buffer.append(ch);
+      }
+    }
+    description = buffer.toString();
+
+    for (final Entry<String, String> acronym: acronymsMap.entrySet())
+    {
+      description = description.replaceAll(acronym.getValue().toLowerCase(),
+                                           acronym.getKey());
+      description = description
+        .replaceAll(acronym.getValue(), acronym.getKey());
+    }
+
+    return description;
   }
 
   /**
@@ -131,13 +173,13 @@ final class DatabaseInfoRetriever
                                              final String resultSetTypeName)
     throws IllegalAccessException, InvocationTargetException
   {
-    final String name = derivePropertyName(method) + "ResultSet"
-                        + resultSetTypeName;
+    final String description = derivePropertyDescription(method) + " for "
+                               + resultSetTypeName + " result sets";
     Boolean propertyValue = null;
     propertyValue = (Boolean) method.invoke(dbMetaData, new Object[] {
       Integer.valueOf(resultSetType)
     });
-    dbInfo.putProperty(name, propertyValue);
+    dbInfo.putProperty(description, propertyValue);
   }
 
   /**
@@ -166,16 +208,17 @@ final class DatabaseInfoRetriever
             LOGGER.log(Level.FINER,
                        "Retrieving database property using method: " + method);
           }
-          final String name = derivePropertyName(method);
+          final String description = derivePropertyDescription(method);
           Object value = method.invoke(dbMetaData, new Object[0]);
-          if (value != null && name.endsWith("s") && value instanceof String)
+          if (value != null && description.endsWith("s")
+              && value instanceof String)
           {
             // Probably a comma-separated list
             value = Collections.unmodifiableList(Arrays.asList(((String) value)
               .split(",")));
           }
           // Add to the properties map
-          dbInfo.putProperty(name, value);
+          dbInfo.putProperty(description, value);
         }
         else if (isDatabasePropertiesResultSetMethod(method))
         {
@@ -184,7 +227,7 @@ final class DatabaseInfoRetriever
             LOGGER.log(Level.FINER,
                        "Retrieving database property using method: " + method);
           }
-          final String name = derivePropertyName(method);
+          final String name = derivePropertyDescription(method);
           final ResultSet results = (ResultSet) method.invoke(dbMetaData,
                                                               new Object[0]);
           dbInfo.putProperty(name, readResultsVector(results));
@@ -200,17 +243,17 @@ final class DatabaseInfoRetriever
                                         dbInfo,
                                         method,
                                         ResultSet.TYPE_FORWARD_ONLY,
-                                        "TypeForwardOnly");
+                                        "TYPE_FORWARD_ONLY");
           retrieveResultSetTypeProperty(dbMetaData,
                                         dbInfo,
                                         method,
                                         ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                        "TypeScrollInsensitive");
+                                        "TYPE_SCROLL_INSENSITIVE");
           retrieveResultSetTypeProperty(dbMetaData,
                                         dbInfo,
                                         method,
                                         ResultSet.TYPE_SCROLL_SENSITIVE,
-                                        "TypeScrollSensitive");
+                                        "TYPE_SCROLL_SENSITIVE");
         }
       }
       catch (final Exception e)
