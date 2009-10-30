@@ -72,12 +72,6 @@ public final class BundledDriverConnectionOptionsParser
         optionHost, optionPort, optionDatabase, optionUser, optionPassword,
     });
 
-    // Check arguments
-    if (!optionPassword.isFound())
-    {
-      throw new SchemaCrawlerException("Please provide the password");
-    }
-
     if (optionHost.isFound())
     {
       config.put("host", optionHost.getValue());

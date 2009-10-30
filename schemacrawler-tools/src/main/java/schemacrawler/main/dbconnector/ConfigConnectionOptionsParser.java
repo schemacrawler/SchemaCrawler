@@ -72,12 +72,6 @@ public final class ConfigConnectionOptionsParser
         optionPassword,
     });
 
-    // Check arguments
-    if (!optionPassword.isFound())
-    {
-      throw new SchemaCrawlerException("Please provide the password");
-    }
-
     final String connectionName;
     if (optionUseDefaultConnection.getValue())
     {

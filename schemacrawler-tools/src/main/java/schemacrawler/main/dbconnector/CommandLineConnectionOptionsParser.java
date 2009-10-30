@@ -68,12 +68,6 @@ public final class CommandLineConnectionOptionsParser
         optionDriver, optionConnectionUrl, optionUser, optionPassword,
     });
 
-    // Check arguments
-    if (!optionPassword.isFound())
-    {
-      throw new SchemaCrawlerException("Please provide the password");
-    }
-
     final DatabaseConnectionOptions conenctionOptions;
     if (optionDriver.isFound() && optionConnectionUrl.isFound())
     {
