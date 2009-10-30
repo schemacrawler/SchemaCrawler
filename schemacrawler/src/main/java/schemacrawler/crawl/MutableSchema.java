@@ -124,6 +124,30 @@ class MutableSchema
     return tables.values().toArray(new Table[tables.size()]);
   }
 
+  private final void buildFullName()
+  {
+    if (fullName == null)
+    {
+      final StringBuilder buffer = new StringBuilder();
+      final NamedObject catalog = getParent();
+      final boolean hasCatalogName = catalog != null
+                                     && !Utility.isBlank(catalog.getName());
+      if (hasCatalogName)
+      {
+        buffer.append(catalog.getName());
+      }
+      if (getName() != null)
+      {
+        if (hasCatalogName)
+        {
+          buffer.append(".");
+        }
+        buffer.append(getName());
+      }
+      fullName = buffer.toString();
+    }
+  }
+
   void addColumnDataType(final MutableColumnDataType columnDataType)
   {
     if (columnDataType != null)
@@ -160,30 +184,6 @@ class MutableSchema
   void setTablesSortOrder(final NamedObjectSort sort)
   {
     tables.setSortOrder(sort);
-  }
-
-  private final void buildFullName()
-  {
-    if (fullName == null)
-    {
-      final StringBuilder buffer = new StringBuilder();
-      final NamedObject catalog = getParent();
-      final boolean hasCatalogName = catalog != null
-                                     && !Utility.isBlank(catalog.getName());
-      if (hasCatalogName)
-      {
-        buffer.append(catalog.getName());
-      }
-      if (getName() != null)
-      {
-        if (hasCatalogName)
-        {
-          buffer.append(".");
-        }
-        buffer.append(getName());
-      }
-      fullName = buffer.toString();
-    }
   }
 
 }

@@ -137,6 +137,7 @@ public final class DatabaseSchemaCrawler
 
       handler.begin();
 
+      crawlSchemas(retrieverConnection, schemaCrawlerOptions);
       crawlDatabaseInfo(retrieverConnection, schemaCrawlerOptions);
       crawlJdbcDriverInfo(retrieverConnection, schemaCrawlerOptions);
       handler.handle(database.getDatabaseInfo());
@@ -189,10 +190,10 @@ public final class DatabaseSchemaCrawler
       }
       if (infoLevel.isRetrieveUserDefinedColumnDataTypes())
       {
-        final List<String> catalogNames = retrieverConnection.getCatalogNames();
-        for (final String catalogName: catalogNames)
+        for (final SchemaReference schemaNameObject: retriever.getSchemaNames())
         {
-          retriever.retrieveUserDefinedColumnDataTypes(catalogName);
+          retriever.retrieveUserDefinedColumnDataTypes(schemaNameObject
+            .getSchemaName(), schemaNameObject.getSchemaName());
         }
       }
     }
@@ -213,9 +214,6 @@ public final class DatabaseSchemaCrawler
       final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
       final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection,
                                                                         database);
-
-      retriever.retrieveCatalogs();
-      retriever.retrieveSchemas(options.getSchemaInclusionRule());
 
       retriever.retrieveDatabaseInfo();
       if (infoLevel.isRetrieveDatabaseInfo())
@@ -274,10 +272,11 @@ public final class DatabaseSchemaCrawler
     {
       retriever = new ProcedureRetriever(retrieverConnection, database);
       retrieverExtra = new ProcedureExRetriever(retrieverConnection, database);
-      for (final String catalogName: retrieverConnection.getCatalogNames())
+      for (final SchemaReference schemaNameObject: retriever.getSchemaNames())
       {
-        retriever.retrieveProcedures(catalogName, options
-          .getProcedureInclusionRule());
+        retriever.retrieveProcedures(schemaNameObject.getCatalogName(),
+                                     schemaNameObject.getSchemaName(),
+                                     options.getProcedureInclusionRule());
       }
       final NamedObjectList<MutableProcedure> allProcedures = database
         .getAllProcedures();
@@ -315,6 +314,25 @@ public final class DatabaseSchemaCrawler
     }
   }
 
+  private void crawlSchemas(final RetrieverConnection retrieverConnection,
+                            final SchemaCrawlerOptions options)
+    throws SchemaCrawlerException
+  {
+    try
+    {
+      final SchemaRetriever retriever = new SchemaRetriever(retrieverConnection,
+                                                            database);
+
+      retriever.retrieveSchemas(options.getCatalogInclusionRule(), options
+        .getSchemaInclusionRule());
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerException("Exception retrieving database information",
+                                       e);
+    }
+  }
+
   private void crawlTables(final RetrieverConnection retrieverConnection,
                            final SchemaCrawlerOptions options,
                            final CrawlHandler handler)
@@ -334,10 +352,12 @@ public final class DatabaseSchemaCrawler
       retriever = new TableRetriever(retrieverConnection, database);
       retrieverExtra = new TableExRetriever(retrieverConnection, database);
 
-      for (final String catalogName: retrieverConnection.getCatalogNames())
+      for (final SchemaReference schemaNameObject: retriever.getSchemaNames())
       {
-        retriever.retrieveTables(catalogName, options.getTableTypes(), options
-          .getTableInclusionRule());
+        retriever.retrieveTables(schemaNameObject.getCatalogName(),
+                                 schemaNameObject.getSchemaName(),
+                                 options.getTableTypes(),
+                                 options.getTableInclusionRule());
       }
 
       final NamedObjectList<MutableTable> allTables = database.getAllTables();

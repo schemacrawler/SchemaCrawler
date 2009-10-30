@@ -21,6 +21,9 @@
 package schemacrawler.main.dbconnector;
 
 
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.utility.DatabaseConnectionOptions;
 import sf.util.CommandLineParser.NumberOption;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
@@ -30,8 +33,8 @@ import sf.util.CommandLineParser.StringOption;
  * 
  * @author sfatehi
  */
-final class BundledDriverOptionsParser
-  extends BaseConnectorOptionsParser<BundledDriverOptions>
+public final class BundledDriverConnectionOptionsParser
+  extends BaseConnectorOptionsParser
 {
 
   private final StringOption optionHost = new StringOption(Option.NO_SHORT_FORM,
@@ -49,9 +52,9 @@ final class BundledDriverOptionsParser
    * 
    * @param args
    */
-  BundledDriverOptionsParser(final String[] args)
+  public BundledDriverConnectionOptionsParser(final String[] args, final Config config)
   {
-    super(args);
+    super(args, config);
   }
 
   @Override
@@ -61,26 +64,38 @@ final class BundledDriverOptionsParser
   }
 
   @Override
-  protected BundledDriverOptions getOptions()
+  public DatabaseConnectionOptions getOptions()
+    throws SchemaCrawlerException
   {
     parse(new Option[] {
-        optionHost,
-        optionPort,
-        optionDatabase,
-        optionSchemaPattern,
-        optionUser,
-        optionPassword,
+        optionHost, optionPort, optionDatabase, optionUser, optionPassword,
     });
 
-    final BundledDriverOptions options = new BundledDriverOptions();
-    options.setHost(optionHost.getValue());
-    options.setPort(optionPort.getValue().intValue());
-    options.setDatabase(optionDatabase.getValue());
-    options.setSchemapattern(optionSchemaPattern.getValue());
-    options.setUser(optionUser.getValue());
-    options.setPassword(optionPassword.getValue());
+    // Check arguments
+    if (!optionPassword.isFound())
+    {
+      throw new SchemaCrawlerException("Please provide the password");
+    }
 
-    return options;
+    if (optionHost.isFound())
+    {
+      config.put("host", optionHost.getValue());
+    }
+    if (optionPort.isFound())
+    {
+      config.put("port", String.valueOf(optionPort.getValue().intValue()));
+    }
+    if (optionDatabase.isFound())
+    {
+      config.put("database", optionDatabase.getValue());
+    }
+
+    config.put("user", optionUser.getValue());
+    config.put("password", optionPassword.getValue());
+
+    ConfigUtility.substituteVariables(config);
+
+    return createOptionsFromConfig(config);
   }
 
 }

@@ -32,7 +32,6 @@
       datasource="hsqldb"
       db-driver-classpath="db-driver-classpath"
       command="verbose_schema,count"
-      schemapattern="%"
       outputfile="${outputfile}"
       append="true"/>
 

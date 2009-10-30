@@ -61,7 +61,7 @@ final class JdbcDriverInfoRetriever
   void retrieveJdbcDriverInfo()
     throws SQLException
   {
-    final DatabaseMetaData dbMetaData = getRetrieverConnection().getMetaData();
+    final DatabaseMetaData dbMetaData = getMetaData();
     final String url = dbMetaData.getURL();
 
     final MutableDatabaseInfo dbInfo = database.getDatabaseInfo();

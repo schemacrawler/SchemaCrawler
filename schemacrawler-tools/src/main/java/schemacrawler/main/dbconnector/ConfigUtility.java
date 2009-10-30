@@ -31,7 +31,7 @@ import schemacrawler.utility.Utility;
  * 
  * @author Sualeh Fatehi
  */
-public final class ConfigUtility
+final class ConfigUtility
 {
 
   /**
@@ -42,8 +42,8 @@ public final class ConfigUtility
    *        Prefix to group by.
    * @return Partitioned properties.
    */
-  public static Map<String, String> partition(final Map<String, String> config,
-                                              final String prefix)
+  static Map<String, String> partition(final Map<String, String> config,
+                                       final String prefix)
   {
     if (Utility.isBlank(prefix))
     {
@@ -70,7 +70,7 @@ public final class ConfigUtility
   /**
    * Substitutes variables in the provided config.
    */
-  public static void substituteVariables(final Map<String, String> config)
+  static void substituteVariables(final Map<String, String> config)
   {
     for (final Map.Entry<String, String> entry: config.entrySet())
     {

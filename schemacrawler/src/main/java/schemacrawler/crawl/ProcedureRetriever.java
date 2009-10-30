@@ -68,7 +68,7 @@ final class ProcedureRetriever
     int ordinalNumber = 0;
     try
     {
-      results = new MetadataResultSet(getRetrieverConnection().getMetaData()
+      results = new MetadataResultSet(getMetaData()
         .getProcedureColumns(procedure.getSchema().getParent().getName(),
                              procedure.getSchema().getName(),
                              procedure.getName(),
@@ -144,22 +144,23 @@ final class ProcedureRetriever
    *         On a SQL exception
    */
   void retrieveProcedures(final String catalogName,
+                          final String schemaName,
                           final InclusionRule procedureInclusionRule)
     throws SQLException
   {
     MetadataResultSet results = null;
     try
     {
-      results = new MetadataResultSet(getRetrieverConnection().getMetaData()
-        .getProcedures(catalogName,
-                       getRetrieverConnection().getSchemaPattern(),
-                       "%"));
+      results = new MetadataResultSet(getMetaData().getProcedures(catalogName,
+                                                                  schemaName,
+                                                                  "%"));
 
       while (results.next())
       {
         // final String catalogName =
         // results.getString("PROCEDURE_CAT");
-        final String schemaName = results.getString("PROCEDURE_SCHEM");
+        // final String schemaName =
+        // results.getString("PROCEDURE_SCHEM");
         final String procedureName = results.getString("PROCEDURE_NAME");
         LOGGER.log(Level.FINER, "Retrieving procedure: " + procedureName);
         final short procedureType = results

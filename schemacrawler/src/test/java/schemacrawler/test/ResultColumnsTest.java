@@ -54,7 +54,7 @@ public class ResultColumnsTest
 
   @BeforeClass
   public static void beforeAllTests()
-    throws ClassNotFoundException
+    throws Exception
   {
     TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();

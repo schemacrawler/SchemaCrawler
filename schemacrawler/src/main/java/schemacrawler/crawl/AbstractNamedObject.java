@@ -190,6 +190,14 @@ abstract class AbstractNamedObject
     return name;
   }
 
+  private void buildHashCode()
+  {
+    if (hashCode == 0)
+    {
+      hashCode = name == null? super.hashCode(): name.hashCode();
+    }
+  }
+
   final void addAttributes(final Map<String, Object> values)
   {
     if (values != null)
@@ -207,14 +215,6 @@ abstract class AbstractNamedObject
     else
     {
       this.remarks = remarks;
-    }
-  }
-
-  private void buildHashCode()
-  {
-    if (hashCode == 0)
-    {
-      hashCode = name == null? super.hashCode(): name.hashCode();
     }
   }
 

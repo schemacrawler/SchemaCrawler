@@ -78,7 +78,7 @@ public class DatabaseConnectionOptions
       throw new SchemaCrawlerException("No connection properties provided");
     }
 
-    connectionUrl = (String) properties.getProperty(URL);
+    connectionUrl = properties.getProperty(URL);
     if (Utility.isBlank(connectionUrl))
     {
       throw new SchemaCrawlerException("No database connection URL provided");
@@ -152,6 +152,12 @@ public class DatabaseConnectionOptions
     return user;
   }
 
+  public Connection createConnection()
+    throws SQLException
+  {
+    return DriverManager.getConnection(connectionUrl, user, password);
+  }
+
   public void setPassword(final String password)
   {
     this.password = password;
@@ -177,21 +183,6 @@ public class DatabaseConnectionOptions
             .getProperty(propertyName));
         }
       }
-    }
-  }
-
-  public Connection newConnection()
-    throws SchemaCrawlerException
-  {
-    try
-    {
-      return DriverManager.getConnection(connectionUrl, user, password);
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerException("Could not connect using database connection URL, "
-                                           + connectionUrl,
-                                       e);
     }
   }
 

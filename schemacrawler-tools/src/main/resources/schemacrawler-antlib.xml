@@ -32,11 +32,7 @@
     <attribute
       name="url"
       description="Database connection string"
-      default="" />
-    <attribute
-      name="schemapattern"
-      description="Schema pattern"
-      default="" />      
+      default="" />     
     <attribute
       name="user"
       description="Database connection user name"
@@ -133,7 +129,6 @@
         <arg value="-c=@{datasource}" />
         <arg value="-driver=@{driver}" />
         <arg value="-url=@{url}" />
-				<arg value="-schemapattern=@{schemapattern}" />
         <arg value="-user=@{user}" />
         <arg value="-password=@{password}" />
         <arg value="-command=@{command}" />

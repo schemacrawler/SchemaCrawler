@@ -21,20 +21,22 @@ package schemacrawler.main;
 
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.Version;
-import schemacrawler.main.dbconnector.BundledDriverDatabaseConnector;
-import schemacrawler.main.dbconnector.DatabaseConnector;
-import schemacrawler.main.dbconnector.DatabaseConnectorException;
-import schemacrawler.main.dbconnector.PropertiesDataSourceDatabaseConnector;
+import schemacrawler.main.dbconnector.BundledDriverConnectionOptionsParser;
+import schemacrawler.main.dbconnector.CommandLineConnectionOptionsParser;
+import schemacrawler.main.dbconnector.ConfigConnectorOptionsParser;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.Commands;
 import schemacrawler.tools.OutputOptions;
+import schemacrawler.utility.DatabaseConnectionOptions;
+import schemacrawler.utility.Utility;
 
 /**
  * Utility for parsing the SchemaCrawler command line.
@@ -51,16 +53,16 @@ public class SchemaCrawlerCommandLine
   private final Config config;
   private final SchemaCrawlerOptions schemaCrawlerOptions;
   private final OutputOptions outputOptions;
-  private final DatabaseConnector databaseConnector;
+  private final DatabaseConnectionOptions connectionOptions;
 
   public SchemaCrawlerCommandLine(final Commands commands,
                                   final Config config,
-                                  final DatabaseConnector databaseConnector,
+                                  final DatabaseConnectionOptions connectionOptions,
                                   final OutputOptions outputOptions)
   {
     this.commands = commands;
     this.config = config;
-    this.databaseConnector = databaseConnector;
+    this.connectionOptions = connectionOptions;
     this.outputOptions = outputOptions;
     schemaCrawlerOptions = new SchemaCrawlerOptions();
   }
@@ -119,32 +121,34 @@ public class SchemaCrawlerCommandLine
     applicationOptions.applyApplicationLogLevel();
     LOGGER.log(Level.INFO, Version.about());
     LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
-    try
+
+    if (!Utility.isBlank(configResource))
     {
-      if (!schemacrawler.utility.Utility.isBlank(configResource))
+      config = Config.load(SchemaCrawlerCommandLine.class
+        .getResourceAsStream(configResource));
+      connectionOptions = new BundledDriverConnectionOptionsParser(args, config)
+        .getOptions();
+    }
+    else
+    {
+      if (args != null && args.length > 0)
       {
-        config = Config.load(SchemaCrawlerCommandLine.class
-          .getResourceAsStream(configResource));
-        databaseConnector = new BundledDriverDatabaseConnector(args, config);
+        config = new ConfigParser(args).getOptions();
       }
       else
       {
-        if (args != null && args.length > 0)
-        {
-          config = new ConfigParser(args).getOptions();
-        }
-        else
-        {
-          config = new Config();
-        }
-        databaseConnector = new PropertiesDataSourceDatabaseConnector(args,
-                                                                      config);
+        config = new Config();
       }
-    }
-    catch (final DatabaseConnectorException e)
-    {
-      throw new SchemaCrawlerException("Cannot create a database connector - re-run with -help for help",
-                                       e);
+
+      DatabaseConnectionOptions connectionOptions = new CommandLineConnectionOptionsParser(args,
+                                                                                           config)
+        .getOptions();
+      if (connectionOptions == null)
+      {
+        connectionOptions = new ConfigConnectorOptionsParser(args, config)
+          .getOptions();
+      }
+      this.connectionOptions = connectionOptions;
     }
 
     schemaCrawlerOptions = new SchemaCrawlerOptionsParser(args, config)
@@ -159,17 +163,9 @@ public class SchemaCrawlerCommandLine
    *         On an exception
    */
   public Connection createConnection()
-    throws SchemaCrawlerException
+    throws SQLException
   {
-    try
-    {
-      return databaseConnector.createConnection();
-    }
-    catch (final DatabaseConnectorException e)
-    {
-      throw new SchemaCrawlerException("Could not create a database connection",
-                                       e);
-    }
+    return connectionOptions.createConnection();
   }
 
   /**

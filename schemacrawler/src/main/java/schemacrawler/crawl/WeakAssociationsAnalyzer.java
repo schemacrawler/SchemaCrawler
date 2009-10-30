@@ -41,23 +41,6 @@ final class WeakAssociationsAnalyzer
     this.weakAssociations = weakAssociations;
   }
 
-  void analyzeTables()
-  {
-    final Collection<String> prefixes = findTableNamePrefixes(tables);
-    final Map<String, MutableTable> tableMatchMap = mapTableNameMatches(tables,
-                                                                        prefixes);
-    if (LOGGER.isLoggable(Level.FINE))
-    {
-      LOGGER.log(Level.FINE, "Table prefixes=" + prefixes);
-      LOGGER.log(Level.FINE, "Table matches map:"
-                             + ObjectToString.toString(tableMatchMap));
-    }
-
-    final Map<String, ForeignKeyColumnMap> fkColumnsMap = mapForeignKeyColumns(tables);
-
-    findWeakAssociations(tables, tableMatchMap, fkColumnsMap);
-  }
-
   private String commonPrefix(final String string1, final String string2)
   {
     final int index = indexOfDifference(string1, string2);
@@ -329,6 +312,23 @@ final class WeakAssociationsAnalyzer
     }
     matchMap.remove("");
     return matchMap;
+  }
+
+  void analyzeTables()
+  {
+    final Collection<String> prefixes = findTableNamePrefixes(tables);
+    final Map<String, MutableTable> tableMatchMap = mapTableNameMatches(tables,
+                                                                        prefixes);
+    if (LOGGER.isLoggable(Level.FINE))
+    {
+      LOGGER.log(Level.FINE, "Table prefixes=" + prefixes);
+      LOGGER.log(Level.FINE, "Table matches map:"
+                             + ObjectToString.toString(tableMatchMap));
+    }
+
+    final Map<String, ForeignKeyColumnMap> fkColumnsMap = mapForeignKeyColumns(tables);
+
+    findWeakAssociations(tables, tableMatchMap, fkColumnsMap);
   }
 
 }
