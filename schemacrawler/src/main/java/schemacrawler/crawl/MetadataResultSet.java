@@ -93,20 +93,6 @@ final class MetadataResultSet
     readColumns = new HashSet<String>();
   }
 
-  /**
-   * Set fetch size for results.
-   * 
-   * @param rows
-   *        Number of rows to fetch
-   * @throws SQLException
-   *         On an exception
-   */
-  public void setFetchSize(final int rows)
-    throws SQLException
-  {
-    results.setFetchSize(rows);
-  }
-
   private boolean useColumn(final String columnName)
   {
     final boolean useColumn = columnName != null;
