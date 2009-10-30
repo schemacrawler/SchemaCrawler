@@ -43,163 +43,163 @@ user,[driver property]
 
 
 
-AllProceduresAreCallable,true
-AllTablesAreSelectable,true
-CatalogSeparator,""
-CatalogTerm,""
+All procedures are callable,true
+All tables are selectable,true
+Catalog separator,""
+Catalog term,""
 Catalogs,[]
-DataDefinitionCausesTransactionCommit,true
-DataDefinitionIgnoredInTransactions,false
-DatabaseMajorVersion,1
-DatabaseMinorVersion,8
-DatabaseProductName,HSQL Database Engine
-DatabaseProductVersion,1.8.0
-DefaultTransactionIsolation,1
-DeletesAreDetectedResultSetTypeForwardOnly,false
-DeletesAreDetectedResultSetTypeScrollInsensitive,false
-DeletesAreDetectedResultSetTypeScrollSensitive,false
-DoesMaxRowSizeIncludeBlobs,true
-DriverMajorVersion,1
-DriverMinorVersion,8
-DriverName,HSQL Database Engine Driver
-DriverVersion,1.8.0
-ExtraNameCharacters,[]
-IdentifierQuoteString,"68"
-InsertsAreDetectedResultSetTypeForwardOnly,false
-InsertsAreDetectedResultSetTypeScrollInsensitive,false
-InsertsAreDetectedResultSetTypeScrollSensitive,false
-IsCatalogAtStart,false
-IsReadOnly,false
-JDBCMajorVersion,3
-JDBCMinorVersion,0
-LocatorsUpdateCopy,false
-MaxBinaryLiteralLength,0
-MaxCatalogNameLength,0
-MaxCharLiteralLength,0
-MaxColumnNameLength,0
-MaxColumnsInGroupBy,0
-MaxColumnsInIndex,0
-MaxColumnsInOrderBy,0
-MaxColumnsInSelect,0
-MaxColumnsInTable,0
-MaxConnections,0
-MaxCursorNameLength,0
-MaxIndexLength,0
-MaxProcedureNameLength,0
-MaxRowSize,0
-MaxSchemaNameLength,0
-MaxStatementLength,0
-MaxStatements,0
-MaxTableNameLength,0
-MaxTablesInSelect,0
-MaxUserNameLength,0
-NullPlusNonNullIsNull,true
-NullsAreSortedAtEnd,false
-NullsAreSortedAtStart,false
-NullsAreSortedHigh,false
-NullsAreSortedLow,true
-NumericFunctions,"[ABS, ACOS, ASIN, ATAN, ATAN2, CEILING, COS, COT, DEGREES, EXP, FLOOR, LOG, LOG10, MOD, PI, POWER, RADIANS, RAND, ROUND, SIGN, SIN, SQRT, TAN, TRUNCATE, BITAND, BITOR, BITXOR, ROUNDMAGIC]"
-OthersInsertsAreVisibleResultSetTypeForwardOnly,false
-OthersInsertsAreVisibleResultSetTypeScrollInsensitive,false
-OthersInsertsAreVisibleResultSetTypeScrollSensitive,false
-OthersUpdatesAreVisibleResultSetTypeForwardOnly,false
-OthersUpdatesAreVisibleResultSetTypeScrollInsensitive,false
-OthersUpdatesAreVisibleResultSetTypeScrollSensitive,false
-OwnDeletesAreVisibleResultSetTypeForwardOnly,false
-OwnDeletesAreVisibleResultSetTypeScrollInsensitive,false
-OwnDeletesAreVisibleResultSetTypeScrollSensitive,false
-OwnInsertsAreVisibleResultSetTypeForwardOnly,false
-OwnInsertsAreVisibleResultSetTypeScrollInsensitive,false
-OwnInsertsAreVisibleResultSetTypeScrollSensitive,false
-OwnUpdatesAreVisibleResultSetTypeForwardOnly,false
-OwnUpdatesAreVisibleResultSetTypeScrollInsensitive,false
-OwnUpdatesAreVisibleResultSetTypeScrollSensitive,false
-ProcedureTerm,""
-ResultSetHoldability,1
-SQLKeywords,"[BEFORE, BIGINT, BINARY, CACHED, DATETIME, LIMIT, LONGVARBINARY, LONGVARCHAR, OBJECT, OTHER, SAVEPOINT, TEMP, TEXT, TOP, TRIGGER, TINYINT, VARBINARY, VARCHAR_IGNORECASE]"
-SQLStateType,2
-SchemaTerm,SCHEMA
+Data definition causes transaction commit,true
+Data definition ignored in transactions,false
+Database major version,1
+Database minor version,8
+Database product name,HSQL Database Engine
+Database product version,1.8.0
+Default transaction isolation,1
+Deletes are detected for TYPE_FORWARD_ONLY result sets,false
+Deletes are detected for TYPE_SCROLL_INSENSITIVE result sets,false
+Deletes are detected for TYPE_SCROLL_SENSITIVE result sets,false
+Does max row size include blobs,true
+Driver major version,1
+Driver minor version,8
+Driver name,HSQL Database Engine Driver
+Driver version,1.8.0
+Extra name characters,[]
+Identifier quote string,"68"
+Inserts are detected for TYPE_FORWARD_ONLY result sets,false
+Inserts are detected for TYPE_SCROLL_INSENSITIVE result sets,false
+Inserts are detected for TYPE_SCROLL_SENSITIVE result sets,false
+Is catalog at start,false
+Is read only,false
+JDBC major version,3
+JDBC minor version,0
+Locators update copy,false
+Max binary literal length,0
+Max catalog name length,0
+Max char literal length,0
+Max column name length,0
+Max columns in group by,0
+Max columns in index,0
+Max columns in order by,0
+Max columns in select,0
+Max columns in table,0
+Max connections,0
+Max cursor name length,0
+Max index length,0
+Max procedure name length,0
+Max row size,0
+Max schema name length,0
+Max statement length,0
+Max statements,0
+Max table name length,0
+Max tables in select,0
+Max user name length,0
+Null plus non null is null,true
+Nulls are sorted at end,false
+Nulls are sorted at start,false
+Nulls are sorted high,false
+Nulls are sorted low,true
+Numeric functions,"[ABS, ACOS, ASIN, ATAN, ATAN2, CEILING, COS, COT, DEGREES, EXP, FLOOR, LOG, LOG10, MOD, PI, POWER, RADIANS, RAND, ROUND, SIGN, SIN, SQRT, TAN, TRUNCATE, BITAND, BITOR, BITXOR, ROUNDMAGIC]"
+Others inserts are visible for TYPE_FORWARD_ONLY result sets,false
+Others inserts are visible for TYPE_SCROLL_INSENSITIVE result sets,false
+Others inserts are visible for TYPE_SCROLL_SENSITIVE result sets,false
+Others updates are visible for TYPE_FORWARD_ONLY result sets,false
+Others updates are visible for TYPE_SCROLL_INSENSITIVE result sets,false
+Others updates are visible for TYPE_SCROLL_SENSITIVE result sets,false
+Own deletes are visible for TYPE_FORWARD_ONLY result sets,false
+Own deletes are visible for TYPE_SCROLL_INSENSITIVE result sets,false
+Own deletes are visible for TYPE_SCROLL_SENSITIVE result sets,false
+Own inserts are visible for TYPE_FORWARD_ONLY result sets,false
+Own inserts are visible for TYPE_SCROLL_INSENSITIVE result sets,false
+Own inserts are visible for TYPE_SCROLL_SENSITIVE result sets,false
+Own updates are visible for TYPE_FORWARD_ONLY result sets,false
+Own updates are visible for TYPE_SCROLL_INSENSITIVE result sets,false
+Own updates are visible for TYPE_SCROLL_SENSITIVE result sets,false
+Procedure term,""
+Result set holdability,1
+SQL keywords,"[BEFORE, BIGINT, BINARY, CACHED, DATETIME, LIMIT, LONGVARBINARY, LONGVARCHAR, OBJECT, OTHER, SAVEPOINT, TEMP, TEXT, TOP, TRIGGER, TINYINT, VARBINARY, VARCHAR_IGNORECASE]"
+SQL state type,2
+Schema term,SCHEMA
 Schemas,"[INFORMATION_SCHEMA, PUBLIC, SCHEMACRAWLER]"
-SearchStringEscape,\
-StoresLowerCaseIdentifiers,false
-StoresLowerCaseQuotedIdentifiers,false
-StoresMixedCaseIdentifiers,false
-StoresMixedCaseQuotedIdentifiers,false
-StoresUpperCaseIdentifiers,true
-StoresUpperCaseQuotedIdentifiers,false
-StringFunctions,"[ASCII, BIT_LENGTH, CHAR, CHAR_LENGTH, CHARACTER_LENGTH, CONCAT, DIFFERENCE, HEXTORAW, INSERT, LCASE, LEFT, LENGTH, LOCATE, LTRIM, OCTET_LENGTH, RAWTOHEX, REPEAT, REPLACE, RIGHT, RTRIM, SOUNDEX, SPACE, SUBSTR, SUBSTRING, UCASE, LOWER, UPPER]"
-SupportsANSI92EntryLevelSQL,false
-SupportsANSI92FullSQL,false
-SupportsANSI92IntermediateSQL,false
-SupportsAlterTableWithAddColumn,true
-SupportsAlterTableWithDropColumn,true
-SupportsBatchUpdates,true
-SupportsCatalogsInDataManipulation,false
-SupportsCatalogsInIndexDefinitions,false
-SupportsCatalogsInPrivilegeDefinitions,false
-SupportsCatalogsInProcedureCalls,false
-SupportsCatalogsInTableDefinitions,false
-SupportsColumnAliasing,true
-SupportsConvert,true
-SupportsCoreSQLGrammar,true
-SupportsCorrelatedSubqueries,true
-SupportsDataDefinitionAndDataManipulationTransactions,false
-SupportsDataManipulationTransactionsOnly,true
-SupportsDifferentTableCorrelationNames,true
-SupportsExpressionsInOrderBy,true
-SupportsExtendedSQLGrammar,false
-SupportsFullOuterJoins,false
-SupportsGetGeneratedKeys,false
-SupportsGroupBy,true
-SupportsGroupByBeyondSelect,true
-SupportsGroupByUnrelated,true
-SupportsIntegrityEnhancementFacility,true
-SupportsLikeEscapeClause,true
-SupportsLimitedOuterJoins,true
-SupportsMinimumSQLGrammar,false
-SupportsMixedCaseIdentifiers,false
-SupportsMixedCaseQuotedIdentifiers,true
-SupportsMultipleOpenResults,false
-SupportsMultipleResultSets,false
-SupportsMultipleTransactions,true
-SupportsNamedParameters,true
-SupportsNonNullableColumns,true
-SupportsOpenCursorsAcrossCommit,false
-SupportsOpenCursorsAcrossRollback,false
-SupportsOpenStatementsAcrossCommit,true
-SupportsOpenStatementsAcrossRollback,true
-SupportsOrderByUnrelated,true
-SupportsOuterJoins,true
-SupportsPositionedDelete,false
-SupportsPositionedUpdate,false
-SupportsResultSetTypeResultSetTypeForwardOnly,true
-SupportsResultSetTypeResultSetTypeScrollInsensitive,true
-SupportsResultSetTypeResultSetTypeScrollSensitive,false
-SupportsSavepoints,true
-SupportsSchemasInDataManipulation,false
-SupportsSchemasInIndexDefinitions,true
-SupportsSchemasInPrivilegeDefinitions,true
-SupportsSchemasInProcedureCalls,false
-SupportsSchemasInTableDefinitions,true
-SupportsSelectForUpdate,false
-SupportsStatementPooling,false
-SupportsStoredProcedures,true
-SupportsSubqueriesInComparisons,true
-SupportsSubqueriesInExists,true
-SupportsSubqueriesInIns,true
-SupportsSubqueriesInQuantifieds,true
-SupportsTableCorrelationNames,true
-SupportsTransactions,true
-SupportsUnion,true
-SupportsUnionAll,true
-SystemFunctions,"[DATABASE, USER, IDENTITY]"
-TableTypes,"[GLOBAL TEMPORARY, SYSTEM TABLE, TABLE, VIEW]"
-TimeDateFunctions,"[CURDATE, CURTIME, DATEDIFF, DAYNAME, DAY, DAYOFMONTH, DAYOFWEEK, DAYOFYEAR, HOUR, MINUTE, MONTH, MONTHNAME, NOW, QUARTER, SECOND, WEEK, YEAR, TO_CHAR]"
-TypeInfo,"[TINYINT, BIGINT, LONGVARBINARY, VARBINARY, BINARY, LONGVARCHAR, CHAR, NUMERIC, DECIMAL, INTEGER, SMALLINT, FLOAT, REAL, DOUBLE, VARCHAR, VARCHAR_IGNORECASE, BOOLEAN, DATE, TIME, TIMESTAMP, OTHER]"
+Search string escape,\
+Stores lower case identifiers,false
+Stores lower case quoted identifiers,false
+Stores mixed case identifiers,false
+Stores mixed case quoted identifiers,false
+Stores upper case identifiers,true
+Stores upper case quoted identifiers,false
+String functions,"[ASCII, BIT_LENGTH, CHAR, CHAR_LENGTH, CHARACTER_LENGTH, CONCAT, DIFFERENCE, HEXTORAW, INSERT, LCASE, LEFT, LENGTH, LOCATE, LTRIM, OCTET_LENGTH, RAWTOHEX, REPEAT, REPLACE, RIGHT, RTRIM, SOUNDEX, SPACE, SUBSTR, SUBSTRING, UCASE, LOWER, UPPER]"
+Supports ANSI entry level SQL,false
+Supports ANSI full SQL,false
+Supports ANSI intermediate SQL,false
+Supports alter table with add column,true
+Supports alter table with drop column,true
+Supports batch updates,true
+Supports catalogs in data manipulation,false
+Supports catalogs in index definitions,false
+Supports catalogs in privilege definitions,false
+Supports catalogs in procedure calls,false
+Supports catalogs in table definitions,false
+Supports column aliasing,true
+Supports convert,true
+Supports core SQL grammar,true
+Supports correlated subqueries,true
+Supports data definition and data manipulation transactions,false
+Supports data manipulation transactions only,true
+Supports different table correlation names,true
+Supports expressions in order by,true
+Supports extended SQL grammar,false
+Supports full outer joins,false
+Supports get generated keys,false
+Supports group by,true
+Supports group by beyond select,true
+Supports group by unrelated,true
+Supports integrity enhancement facility,true
+Supports like escape clause,true
+Supports limited outer joins,true
+Supports minimum SQL grammar,false
+Supports mixed case identifiers,false
+Supports mixed case quoted identifiers,true
+Supports multiple open results,false
+Supports multiple result sets,false
+Supports multiple transactions,true
+Supports named parameters,true
+Supports non nullable columns,true
+Supports open cursors across commit,false
+Supports open cursors across rollback,false
+Supports open statements across commit,true
+Supports open statements across rollback,true
+Supports order by unrelated,true
+Supports outer joins,true
+Supports positioned delete,false
+Supports positioned update,false
+Supports result set type for TYPE_FORWARD_ONLY result sets,true
+Supports result set type for TYPE_SCROLL_INSENSITIVE result sets,true
+Supports result set type for TYPE_SCROLL_SENSITIVE result sets,false
+Supports savepoints,true
+Supports schemas in data manipulation,false
+Supports schemas in index definitions,true
+Supports schemas in privilege definitions,true
+Supports schemas in procedure calls,false
+Supports schemas in table definitions,true
+Supports select for update,false
+Supports statement pooling,false
+Supports stored procedures,true
+Supports subqueries in comparisons,true
+Supports subqueries in exists,true
+Supports subqueries in ins,true
+Supports subqueries in quantifieds,true
+Supports table correlation names,true
+Supports transactions,true
+Supports union,true
+Supports union all,true
+System functions,"[DATABASE, USER, IDENTITY]"
+Table types,"[GLOBAL TEMPORARY, SYSTEM TABLE, TABLE, VIEW]"
+Time date functions,"[CURDATE, CURTIME, DATEDIFF, DAYNAME, DAY, DAYOFMONTH, DAYOFWEEK, DAYOFYEAR, HOUR, MINUTE, MONTH, MONTHNAME, NOW, QUARTER, SECOND, WEEK, YEAR, TO_CHAR]"
+Type info,"[TINYINT, BIGINT, LONGVARBINARY, VARBINARY, BINARY, LONGVARCHAR, CHAR, NUMERIC, DECIMAL, INTEGER, SMALLINT, FLOAT, REAL, DOUBLE, VARCHAR, VARCHAR_IGNORECASE, BOOLEAN, DATE, TIME, TIMESTAMP, OTHER]"
 URL,jdbc:hsqldb:hsql://localhost:9001/schemacrawler
-UserName,SA
-UsesLocalFilePerTable,false
-UsesLocalFiles,false
+User name,SA
+Uses local file per table,false
+Uses local files,false
 
 
 BIGINT,[data type]
@@ -395,9 +395,6 @@ SELECT,[privilege]
 ""
 UPDATE,[privilege]
 "",DBA --> SA (grantable),""
-""
-SCTRIGGER,"[trigger, before delete, per row]"
-"","CREATE TRIGGER SCTRIGGER BEFORE DELETE ON CUSTOMER FOR EACH ROW CALL 68org.hsqldb.sample.TriggerSample68"
 
 
 PUBLIC.CUSTOMERLIST,[view]
@@ -418,8 +415,6 @@ SELECT,[privilege]
 UPDATE,[privilege]
 "",DBA --> SA (grantable),""
 ""
-"",[definition]
-"","SELECT ID, FIRSTNAME, LASTNAME FROM CUSTOMER"
 
 
 PUBLIC.INVOICE,[table]
@@ -537,8 +532,30 @@ INDEX_A_SUPPLIER,[non-unique index]
 "",SUPPLIER_NAME,ascending
 "",SUPPLIER_ID,ascending
 ""
-CHECK_UPPERCASE_SUPPLIER_NAME,[check constraint]
-"",SUPPLIER.SUPPLIER_NAME=UPPER(SUPPLIER.SUPPLIER_NAME)
+DELETE,[privilege]
+"",DBA --> SA (grantable),""
+""
+INSERT,[privilege]
+"",DBA --> SA (grantable),""
+""
+SELECT,[privilege]
+"",DBA --> SA (grantable),""
+""
+UPDATE,[privilege]
+"",DBA --> SA (grantable),""
+
+
+SCHEMACRAWLER.ITEM,[table]
+------------------------------------------------------------------------
+"",INVOICEID,INTEGER not null
+"",ITEM,INTEGER not null
+"",PRODUCTID,INTEGER
+"",QUANTITY,INTEGER
+"",COST,"FLOAT(17, 0)"
+""
+SYS_IDX_59,[primary key]
+"",INVOICEID,ascending
+"",ITEM,ascending
 ""
 DELETE,[privilege]
 "",DBA --> SA (grantable),""
@@ -553,13 +570,38 @@ UPDATE,[privilege]
 "",DBA --> SA (grantable),""
 
 
+SCHEMACRAWLER.PRODUCT2,[table]
+------------------------------------------------------------------------
+"",ID,INTEGER not null
+"",NAME,VARCHAR(255)
+"",PRICE,"FLOAT(17, 0)"
+""
+SYS_IDX_61,[primary key]
+"",ID,ascending
+""
+DELETE,[privilege]
+"",DBA --> SA (grantable),""
+""
+INSERT,[privilege]
+"",DBA --> SA (grantable),""
+""
+SELECT,[privilege]
+"",DBA --> SA (grantable),""
+""
+UPDATE,[privilege]
+"",DBA --> SA (grantable),""
+
+
+"",[weak associations]
+------------------------------------------------------------------------
+"",PUBLIC.PRODUCT.ID --> SCHEMACRAWLER.ITEM.PRODUCTID,""
+"",PUBLIC.INVOICE.ID --> SCHEMACRAWLER.ITEM.INVOICEID,""
+
 PUBLIC.ABS,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",org.hsqldb.Library.abs(double)
 
 
 PUBLIC.ACOS,"[procedure, returns result]"
@@ -567,8 +609,6 @@ PUBLIC.ACOS,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.acos(double)
 
 
 PUBLIC.ASCII,"[procedure, returns result]"
@@ -576,8 +616,6 @@ PUBLIC.ASCII,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.ascii(java.lang.String)
 
 
 PUBLIC.ASIN,"[procedure, returns result]"
@@ -585,8 +623,6 @@ PUBLIC.ASIN,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.asin(double)
 
 
 PUBLIC.ATAN,"[procedure, returns result]"
@@ -594,8 +630,6 @@ PUBLIC.ATAN,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.atan(double)
 
 
 PUBLIC.ATAN2,"[procedure, returns result]"
@@ -604,8 +638,6 @@ PUBLIC.ATAN2,"[procedure, returns result]"
 "",@p2,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"","java.lang.Math.atan2(double,double)"
 
 
 PUBLIC.BIT_LENGTH,"[procedure, returns result]"
@@ -613,8 +645,6 @@ PUBLIC.BIT_LENGTH,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.bitLength(java.lang.String)
 
 
 PUBLIC.BITAND,"[procedure, returns result]"
@@ -623,8 +653,6 @@ PUBLIC.BITAND,"[procedure, returns result]"
 "",@p2,"INTEGER, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.bitand(int,int)"
 
 
 PUBLIC.BITOR,"[procedure, returns result]"
@@ -633,8 +661,6 @@ PUBLIC.BITOR,"[procedure, returns result]"
 "",@p2,"INTEGER, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.bitor(int,int)"
 
 
 PUBLIC.BITXOR,"[procedure, returns result]"
@@ -643,8 +669,6 @@ PUBLIC.BITXOR,"[procedure, returns result]"
 "",@p2,"INTEGER, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.bitxor(int,int)"
 
 
 PUBLIC.CEILING,"[procedure, returns result]"
@@ -652,8 +676,6 @@ PUBLIC.CEILING,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.ceil(double)
 
 
 PUBLIC.CHAR,"[procedure, returns result]"
@@ -661,8 +683,6 @@ PUBLIC.CHAR,"[procedure, returns result]"
 "",@p1,"INTEGER, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.character(int)
 
 
 PUBLIC.CHAR_LENGTH,"[procedure, returns result]"
@@ -670,8 +690,6 @@ PUBLIC.CHAR_LENGTH,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.length(java.lang.String)
 
 
 PUBLIC.CHARACTER_LENGTH,"[procedure, returns result]"
@@ -679,8 +697,6 @@ PUBLIC.CHARACTER_LENGTH,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.length(java.lang.String)
 
 
 PUBLIC.CONCAT,"[procedure, returns result]"
@@ -689,8 +705,6 @@ PUBLIC.CONCAT,"[procedure, returns result]"
 "",@p2,"LONGVARCHAR, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.concat(java.lang.String,java.lang.String)"
 
 
 PUBLIC.COS,"[procedure, returns result]"
@@ -698,8 +712,6 @@ PUBLIC.COS,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.cos(double)
 
 
 PUBLIC.COT,"[procedure, returns result]"
@@ -707,32 +719,24 @@ PUBLIC.COT,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",org.hsqldb.Library.cot(double)
 
 
 PUBLIC.CURDATE,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p0,"DATE, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.curdate(java.sql.Connection)
 
 
 PUBLIC.CURTIME,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p0,"TIME, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.curtime(java.sql.Connection)
 
 
 PUBLIC.DATABASE,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.database(java.sql.Connection)
 
 
 PUBLIC.DATEDIFF,"[procedure, returns result]"
@@ -742,8 +746,6 @@ PUBLIC.DATEDIFF,"[procedure, returns result]"
 "",@p3,"TIMESTAMP, in"
 "",@p0,"BIGINT, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.datediff(java.lang.String,java.sql.Timestamp,java.sql.Timestamp)"
 
 
 PUBLIC.DAY,"[procedure, returns result]"
@@ -751,8 +753,6 @@ PUBLIC.DAY,"[procedure, returns result]"
 "",@p1,"DATE, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.dayofmonth(java.sql.Date)
 
 
 PUBLIC.DAYNAME,"[procedure, returns result]"
@@ -760,8 +760,6 @@ PUBLIC.DAYNAME,"[procedure, returns result]"
 "",@p1,"DATE, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.dayname(java.sql.Date)
 
 
 PUBLIC.DAYOFMONTH,"[procedure, returns result]"
@@ -769,8 +767,6 @@ PUBLIC.DAYOFMONTH,"[procedure, returns result]"
 "",@p1,"DATE, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.dayofmonth(java.sql.Date)
 
 
 PUBLIC.DAYOFWEEK,"[procedure, returns result]"
@@ -778,8 +774,6 @@ PUBLIC.DAYOFWEEK,"[procedure, returns result]"
 "",@p1,"DATE, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.dayofweek(java.sql.Date)
 
 
 PUBLIC.DAYOFYEAR,"[procedure, returns result]"
@@ -787,8 +781,6 @@ PUBLIC.DAYOFYEAR,"[procedure, returns result]"
 "",@p1,"DATE, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.dayofyear(java.sql.Date)
 
 
 PUBLIC.DEGREES,"[procedure, returns result]"
@@ -796,8 +788,6 @@ PUBLIC.DEGREES,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.toDegrees(double)
 
 
 PUBLIC.DIFFERENCE,"[procedure, returns result]"
@@ -806,8 +796,6 @@ PUBLIC.DIFFERENCE,"[procedure, returns result]"
 "",@p2,"LONGVARCHAR, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.difference(java.lang.String,java.lang.String)"
 
 
 PUBLIC.EXP,"[procedure, returns result]"
@@ -815,8 +803,6 @@ PUBLIC.EXP,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.exp(double)
 
 
 PUBLIC.FLOOR,"[procedure, returns result]"
@@ -824,8 +810,6 @@ PUBLIC.FLOOR,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.floor(double)
 
 
 PUBLIC.HEXTORAW,"[procedure, returns result]"
@@ -833,8 +817,6 @@ PUBLIC.HEXTORAW,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.hexToRaw(java.lang.String)
 
 
 PUBLIC.HOUR,"[procedure, returns result]"
@@ -842,16 +824,12 @@ PUBLIC.HOUR,"[procedure, returns result]"
 "",@p1,"TIME, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.hour(java.sql.Time)
 
 
 PUBLIC.IDENTITY,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.identity()
 
 
 PUBLIC.INSERT,"[procedure, returns result]"
@@ -862,8 +840,6 @@ PUBLIC.INSERT,"[procedure, returns result]"
 "",@p4,"LONGVARCHAR, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.insert(java.lang.String,int,int,java.lang.String)"
 
 
 PUBLIC.java.lang.Math.abs,"[procedure, returns result]"
@@ -871,8 +847,6 @@ PUBLIC.java.lang.Math.abs,"[procedure, returns result]"
 "",@p1,"BIGINT, in"
 "",@p0,"BIGINT, result"
 ""
-"",[definition]
-"",java.lang.Math.abs(double)java.lang.Math.abs(float)java.lang.Math.abs(int)java.lang.Math.abs(long)
 
 
 PUBLIC.java.lang.Math.acos,"[procedure, returns result]"
@@ -880,8 +854,6 @@ PUBLIC.java.lang.Math.acos,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.acos(double)
 
 
 PUBLIC.java.lang.Math.asin,"[procedure, returns result]"
@@ -889,8 +861,6 @@ PUBLIC.java.lang.Math.asin,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.asin(double)
 
 
 PUBLIC.java.lang.Math.atan,"[procedure, returns result]"
@@ -898,8 +868,6 @@ PUBLIC.java.lang.Math.atan,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.atan(double)
 
 
 PUBLIC.java.lang.Math.atan2,"[procedure, returns result]"
@@ -908,8 +876,6 @@ PUBLIC.java.lang.Math.atan2,"[procedure, returns result]"
 "",@p2,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"","java.lang.Math.atan2(double,double)"
 
 
 PUBLIC.java.lang.Math.cbrt,"[procedure, returns result]"
@@ -917,8 +883,6 @@ PUBLIC.java.lang.Math.cbrt,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.cbrt(double)
 
 
 PUBLIC.java.lang.Math.ceil,"[procedure, returns result]"
@@ -926,8 +890,6 @@ PUBLIC.java.lang.Math.ceil,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.ceil(double)
 
 
 PUBLIC.java.lang.Math.cos,"[procedure, returns result]"
@@ -935,8 +897,6 @@ PUBLIC.java.lang.Math.cos,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.cos(double)
 
 
 PUBLIC.java.lang.Math.cosh,"[procedure, returns result]"
@@ -944,8 +904,6 @@ PUBLIC.java.lang.Math.cosh,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.cosh(double)
 
 
 PUBLIC.java.lang.Math.exp,"[procedure, returns result]"
@@ -953,8 +911,6 @@ PUBLIC.java.lang.Math.exp,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.exp(double)
 
 
 PUBLIC.java.lang.Math.expm1,"[procedure, returns result]"
@@ -962,8 +918,6 @@ PUBLIC.java.lang.Math.expm1,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.expm1(double)
 
 
 PUBLIC.java.lang.Math.floor,"[procedure, returns result]"
@@ -971,8 +925,6 @@ PUBLIC.java.lang.Math.floor,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.floor(double)
 
 
 PUBLIC.java.lang.Math.hypot,"[procedure, returns result]"
@@ -981,8 +933,6 @@ PUBLIC.java.lang.Math.hypot,"[procedure, returns result]"
 "",@p2,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"","java.lang.Math.hypot(double,double)"
 
 
 PUBLIC.java.lang.Math.IEEEremainder,"[procedure, returns result]"
@@ -991,8 +941,6 @@ PUBLIC.java.lang.Math.IEEEremainder,"[procedure, returns result]"
 "",@p2,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"","java.lang.Math.IEEEremainder(double,double)"
 
 
 PUBLIC.java.lang.Math.log,"[procedure, returns result]"
@@ -1000,8 +948,6 @@ PUBLIC.java.lang.Math.log,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.log(double)
 
 
 PUBLIC.java.lang.Math.log10,"[procedure, returns result]"
@@ -1009,8 +955,6 @@ PUBLIC.java.lang.Math.log10,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.log10(double)
 
 
 PUBLIC.java.lang.Math.log1p,"[procedure, returns result]"
@@ -1018,8 +962,6 @@ PUBLIC.java.lang.Math.log1p,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.log1p(double)
 
 
 PUBLIC.java.lang.Math.max,"[procedure, returns result]"
@@ -1028,8 +970,6 @@ PUBLIC.java.lang.Math.max,"[procedure, returns result]"
 "",@p2,"BIGINT, in"
 "",@p0,"BIGINT, result"
 ""
-"",[definition]
-"","java.lang.Math.max(double,double)java.lang.Math.max(float,float)java.lang.Math.max(int,int)java.lang.Math.max(long,long)"
 
 
 PUBLIC.java.lang.Math.min,"[procedure, returns result]"
@@ -1038,8 +978,6 @@ PUBLIC.java.lang.Math.min,"[procedure, returns result]"
 "",@p2,"BIGINT, in"
 "",@p0,"BIGINT, result"
 ""
-"",[definition]
-"","java.lang.Math.min(double,double)java.lang.Math.min(float,float)java.lang.Math.min(int,int)java.lang.Math.min(long,long)"
 
 
 PUBLIC.java.lang.Math.pow,"[procedure, returns result]"
@@ -1048,16 +986,12 @@ PUBLIC.java.lang.Math.pow,"[procedure, returns result]"
 "",@p2,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"","java.lang.Math.pow(double,double)"
 
 
 PUBLIC.java.lang.Math.random,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.random()
 
 
 PUBLIC.java.lang.Math.rint,"[procedure, returns result]"
@@ -1065,8 +999,6 @@ PUBLIC.java.lang.Math.rint,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.rint(double)
 
 
 PUBLIC.java.lang.Math.round,"[procedure, returns result]"
@@ -1074,8 +1006,6 @@ PUBLIC.java.lang.Math.round,"[procedure, returns result]"
 "",@p1,"FLOAT(8, 17), in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",java.lang.Math.round(double)java.lang.Math.round(float)
 
 
 PUBLIC.java.lang.Math.signum,"[procedure, returns result]"
@@ -1083,8 +1013,6 @@ PUBLIC.java.lang.Math.signum,"[procedure, returns result]"
 "",@p1,"FLOAT(8, 17), in"
 "",@p0,"FLOAT(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.signum(double)java.lang.Math.signum(float)
 
 
 PUBLIC.java.lang.Math.sin,"[procedure, returns result]"
@@ -1092,8 +1020,6 @@ PUBLIC.java.lang.Math.sin,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.sin(double)
 
 
 PUBLIC.java.lang.Math.sinh,"[procedure, returns result]"
@@ -1101,8 +1027,6 @@ PUBLIC.java.lang.Math.sinh,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.sinh(double)
 
 
 PUBLIC.java.lang.Math.sqrt,"[procedure, returns result]"
@@ -1110,8 +1034,6 @@ PUBLIC.java.lang.Math.sqrt,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.sqrt(double)
 
 
 PUBLIC.java.lang.Math.tan,"[procedure, returns result]"
@@ -1119,8 +1041,6 @@ PUBLIC.java.lang.Math.tan,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.tan(double)
 
 
 PUBLIC.java.lang.Math.tanh,"[procedure, returns result]"
@@ -1128,8 +1048,6 @@ PUBLIC.java.lang.Math.tanh,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.tanh(double)
 
 
 PUBLIC.java.lang.Math.toDegrees,"[procedure, returns result]"
@@ -1137,8 +1055,6 @@ PUBLIC.java.lang.Math.toDegrees,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.toDegrees(double)
 
 
 PUBLIC.java.lang.Math.toRadians,"[procedure, returns result]"
@@ -1146,8 +1062,6 @@ PUBLIC.java.lang.Math.toRadians,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.toRadians(double)
 
 
 PUBLIC.java.lang.Math.ulp,"[procedure, returns result]"
@@ -1155,8 +1069,6 @@ PUBLIC.java.lang.Math.ulp,"[procedure, returns result]"
 "",@p1,"FLOAT(8, 17), in"
 "",@p0,"FLOAT(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.ulp(double)java.lang.Math.ulp(float)
 
 
 PUBLIC.LCASE,"[procedure, returns result]"
@@ -1164,8 +1076,6 @@ PUBLIC.LCASE,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.lcase(java.lang.String)
 
 
 PUBLIC.LEFT,"[procedure, returns result]"
@@ -1174,8 +1084,6 @@ PUBLIC.LEFT,"[procedure, returns result]"
 "",@p2,"INTEGER, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.left(java.lang.String,int)"
 
 
 PUBLIC.LENGTH,"[procedure, returns result]"
@@ -1183,8 +1091,6 @@ PUBLIC.LENGTH,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.length(java.lang.String)
 
 
 PUBLIC.LOCATE,"[procedure, returns result]"
@@ -1194,8 +1100,6 @@ PUBLIC.LOCATE,"[procedure, returns result]"
 "",@p3,"INTEGER, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.locate(java.lang.String,java.lang.String,java.lang.Integer)"
 
 
 PUBLIC.LOG,"[procedure, returns result]"
@@ -1203,8 +1107,6 @@ PUBLIC.LOG,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.log(double)
 
 
 PUBLIC.LOG10,"[procedure, returns result]"
@@ -1212,8 +1114,6 @@ PUBLIC.LOG10,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",org.hsqldb.Library.log10(double)
 
 
 PUBLIC.LOWER,"[procedure, returns result]"
@@ -1221,8 +1121,6 @@ PUBLIC.LOWER,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.lcase(java.lang.String)
 
 
 PUBLIC.LTRIM,"[procedure, returns result]"
@@ -1230,8 +1128,6 @@ PUBLIC.LTRIM,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.ltrim(java.lang.String)
 
 
 PUBLIC.MINUTE,"[procedure, returns result]"
@@ -1239,8 +1135,6 @@ PUBLIC.MINUTE,"[procedure, returns result]"
 "",@p1,"TIME, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.minute(java.sql.Time)
 
 
 PUBLIC.MOD,"[procedure, returns result]"
@@ -1249,8 +1143,6 @@ PUBLIC.MOD,"[procedure, returns result]"
 "",@p2,"INTEGER, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.mod(int,int)"
 
 
 PUBLIC.MONTH,"[procedure, returns result]"
@@ -1258,8 +1150,6 @@ PUBLIC.MONTH,"[procedure, returns result]"
 "",@p1,"DATE, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.month(java.sql.Date)
 
 
 PUBLIC.MONTHNAME,"[procedure, returns result]"
@@ -1267,16 +1157,12 @@ PUBLIC.MONTHNAME,"[procedure, returns result]"
 "",@p1,"DATE, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.monthname(java.sql.Date)
 
 
 PUBLIC.NOW,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p0,"TIMESTAMP, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.now(java.sql.Connection)
 
 
 PUBLIC.OCTET_LENGTH,"[procedure, returns result]"
@@ -1284,8 +1170,6 @@ PUBLIC.OCTET_LENGTH,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.octetLength(java.lang.String)
 
 
 PUBLIC.org.hsqldb.Library.abs,"[procedure, returns result]"
@@ -1293,8 +1177,6 @@ PUBLIC.org.hsqldb.Library.abs,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",org.hsqldb.Library.abs(double)
 
 
 PUBLIC.org.hsqldb.Library.ascii,"[procedure, returns result]"
@@ -1302,8 +1184,6 @@ PUBLIC.org.hsqldb.Library.ascii,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.ascii(java.lang.String)
 
 
 PUBLIC.org.hsqldb.Library.bitand,"[procedure, returns result]"
@@ -1312,8 +1192,6 @@ PUBLIC.org.hsqldb.Library.bitand,"[procedure, returns result]"
 "",@p2,"INTEGER, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.bitand(int,int)"
 
 
 PUBLIC.org.hsqldb.Library.bitLength,"[procedure, returns result]"
@@ -1321,8 +1199,6 @@ PUBLIC.org.hsqldb.Library.bitLength,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.bitLength(java.lang.String)
 
 
 PUBLIC.org.hsqldb.Library.bitor,"[procedure, returns result]"
@@ -1331,8 +1207,6 @@ PUBLIC.org.hsqldb.Library.bitor,"[procedure, returns result]"
 "",@p2,"INTEGER, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.bitor(int,int)"
 
 
 PUBLIC.org.hsqldb.Library.bitxor,"[procedure, returns result]"
@@ -1341,8 +1215,6 @@ PUBLIC.org.hsqldb.Library.bitxor,"[procedure, returns result]"
 "",@p2,"INTEGER, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.bitxor(int,int)"
 
 
 PUBLIC.org.hsqldb.Library.character,"[procedure, returns result]"
@@ -1350,8 +1222,6 @@ PUBLIC.org.hsqldb.Library.character,"[procedure, returns result]"
 "",@p1,"INTEGER, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.character(int)
 
 
 PUBLIC.org.hsqldb.Library.concat,"[procedure, returns result]"
@@ -1360,8 +1230,6 @@ PUBLIC.org.hsqldb.Library.concat,"[procedure, returns result]"
 "",@p2,"LONGVARCHAR, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.concat(java.lang.String,java.lang.String)"
 
 
 PUBLIC.org.hsqldb.Library.cot,"[procedure, returns result]"
@@ -1369,32 +1237,24 @@ PUBLIC.org.hsqldb.Library.cot,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",org.hsqldb.Library.cot(double)
 
 
 PUBLIC.org.hsqldb.Library.curdate,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p0,"DATE, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.curdate(java.sql.Connection)
 
 
 PUBLIC.org.hsqldb.Library.curtime,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p0,"TIME, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.curtime(java.sql.Connection)
 
 
 PUBLIC.org.hsqldb.Library.database,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.database(java.sql.Connection)
 
 
 PUBLIC.org.hsqldb.Library.datediff,"[procedure, returns result]"
@@ -1404,8 +1264,6 @@ PUBLIC.org.hsqldb.Library.datediff,"[procedure, returns result]"
 "",@p3,"TIMESTAMP, in"
 "",@p0,"BIGINT, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.datediff(java.lang.String,java.sql.Timestamp,java.sql.Timestamp)"
 
 
 PUBLIC.org.hsqldb.Library.dayname,"[procedure, returns result]"
@@ -1413,8 +1271,6 @@ PUBLIC.org.hsqldb.Library.dayname,"[procedure, returns result]"
 "",@p1,"DATE, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.dayname(java.sql.Date)
 
 
 PUBLIC.org.hsqldb.Library.dayofmonth,"[procedure, returns result]"
@@ -1422,8 +1278,6 @@ PUBLIC.org.hsqldb.Library.dayofmonth,"[procedure, returns result]"
 "",@p1,"DATE, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.dayofmonth(java.sql.Date)
 
 
 PUBLIC.org.hsqldb.Library.dayofweek,"[procedure, returns result]"
@@ -1431,8 +1285,6 @@ PUBLIC.org.hsqldb.Library.dayofweek,"[procedure, returns result]"
 "",@p1,"DATE, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.dayofweek(java.sql.Date)
 
 
 PUBLIC.org.hsqldb.Library.dayofyear,"[procedure, returns result]"
@@ -1440,8 +1292,6 @@ PUBLIC.org.hsqldb.Library.dayofyear,"[procedure, returns result]"
 "",@p1,"DATE, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.dayofyear(java.sql.Date)
 
 
 PUBLIC.org.hsqldb.Library.difference,"[procedure, returns result]"
@@ -1450,56 +1300,42 @@ PUBLIC.org.hsqldb.Library.difference,"[procedure, returns result]"
 "",@p2,"LONGVARCHAR, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.difference(java.lang.String,java.lang.String)"
 
 
 PUBLIC.org.hsqldb.Library.getAutoCommit,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p0,"BOOLEAN, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.getAutoCommit(java.sql.Connection)
 
 
 PUBLIC.org.hsqldb.Library.getDatabaseFullProductVersion,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.getDatabaseFullProductVersion()
 
 
 PUBLIC.org.hsqldb.Library.getDatabaseMajorVersion,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.getDatabaseMajorVersion()
 
 
 PUBLIC.org.hsqldb.Library.getDatabaseMinorVersion,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.getDatabaseMinorVersion()
 
 
 PUBLIC.org.hsqldb.Library.getDatabaseProductName,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.getDatabaseProductName()
 
 
 PUBLIC.org.hsqldb.Library.getDatabaseProductVersion,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.getDatabaseProductVersion()
 
 
 PUBLIC.org.hsqldb.Library.hexToRaw,"[procedure, returns result]"
@@ -1507,8 +1343,6 @@ PUBLIC.org.hsqldb.Library.hexToRaw,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.hexToRaw(java.lang.String)
 
 
 PUBLIC.org.hsqldb.Library.hour,"[procedure, returns result]"
@@ -1516,16 +1350,12 @@ PUBLIC.org.hsqldb.Library.hour,"[procedure, returns result]"
 "",@p1,"TIME, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.hour(java.sql.Time)
 
 
 PUBLIC.org.hsqldb.Library.identity,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.identity()
 
 
 PUBLIC.org.hsqldb.Library.insert,"[procedure, returns result]"
@@ -1536,32 +1366,24 @@ PUBLIC.org.hsqldb.Library.insert,"[procedure, returns result]"
 "",@p4,"LONGVARCHAR, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.insert(java.lang.String,int,int,java.lang.String)"
 
 
 PUBLIC.org.hsqldb.Library.isReadOnlyConnection,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p0,"BOOLEAN, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.isReadOnlyConnection(java.sql.Connection)
 
 
 PUBLIC.org.hsqldb.Library.isReadOnlyDatabase,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p0,"BOOLEAN, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.isReadOnlyDatabase(java.sql.Connection)
 
 
 PUBLIC.org.hsqldb.Library.isReadOnlyDatabaseFiles,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p0,"BOOLEAN, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.isReadOnlyDatabaseFiles(java.sql.Connection)
 
 
 PUBLIC.org.hsqldb.Library.lcase,"[procedure, returns result]"
@@ -1569,8 +1391,6 @@ PUBLIC.org.hsqldb.Library.lcase,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.lcase(java.lang.String)
 
 
 PUBLIC.org.hsqldb.Library.left,"[procedure, returns result]"
@@ -1579,8 +1399,6 @@ PUBLIC.org.hsqldb.Library.left,"[procedure, returns result]"
 "",@p2,"INTEGER, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.left(java.lang.String,int)"
 
 
 PUBLIC.org.hsqldb.Library.length,"[procedure, returns result]"
@@ -1588,8 +1406,6 @@ PUBLIC.org.hsqldb.Library.length,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.length(java.lang.String)
 
 
 PUBLIC.org.hsqldb.Library.locate,"[procedure, returns result]"
@@ -1599,8 +1415,6 @@ PUBLIC.org.hsqldb.Library.locate,"[procedure, returns result]"
 "",@p3,"INTEGER, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.locate(java.lang.String,java.lang.String,java.lang.Integer)"
 
 
 PUBLIC.org.hsqldb.Library.log10,"[procedure, returns result]"
@@ -1608,8 +1422,6 @@ PUBLIC.org.hsqldb.Library.log10,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",org.hsqldb.Library.log10(double)
 
 
 PUBLIC.org.hsqldb.Library.ltrim,"[procedure, returns result]"
@@ -1617,8 +1429,6 @@ PUBLIC.org.hsqldb.Library.ltrim,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.ltrim(java.lang.String)
 
 
 PUBLIC.org.hsqldb.Library.minute,"[procedure, returns result]"
@@ -1626,8 +1436,6 @@ PUBLIC.org.hsqldb.Library.minute,"[procedure, returns result]"
 "",@p1,"TIME, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.minute(java.sql.Time)
 
 
 PUBLIC.org.hsqldb.Library.mod,"[procedure, returns result]"
@@ -1636,8 +1444,6 @@ PUBLIC.org.hsqldb.Library.mod,"[procedure, returns result]"
 "",@p2,"INTEGER, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.mod(int,int)"
 
 
 PUBLIC.org.hsqldb.Library.month,"[procedure, returns result]"
@@ -1645,8 +1451,6 @@ PUBLIC.org.hsqldb.Library.month,"[procedure, returns result]"
 "",@p1,"DATE, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.month(java.sql.Date)
 
 
 PUBLIC.org.hsqldb.Library.monthname,"[procedure, returns result]"
@@ -1654,16 +1458,12 @@ PUBLIC.org.hsqldb.Library.monthname,"[procedure, returns result]"
 "",@p1,"DATE, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.monthname(java.sql.Date)
 
 
 PUBLIC.org.hsqldb.Library.now,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p0,"TIMESTAMP, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.now(java.sql.Connection)
 
 
 PUBLIC.org.hsqldb.Library.octetLength,"[procedure, returns result]"
@@ -1671,16 +1471,12 @@ PUBLIC.org.hsqldb.Library.octetLength,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.octetLength(java.lang.String)
 
 
 PUBLIC.org.hsqldb.Library.pi,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",org.hsqldb.Library.pi()
 
 
 PUBLIC.org.hsqldb.Library.position,"[procedure, returns result]"
@@ -1689,8 +1485,6 @@ PUBLIC.org.hsqldb.Library.position,"[procedure, returns result]"
 "",@p2,"LONGVARCHAR, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.position(java.lang.String,java.lang.String)"
 
 
 PUBLIC.org.hsqldb.Library.quarter,"[procedure, returns result]"
@@ -1698,8 +1492,6 @@ PUBLIC.org.hsqldb.Library.quarter,"[procedure, returns result]"
 "",@p1,"DATE, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.quarter(java.sql.Date)
 
 
 PUBLIC.org.hsqldb.Library.rand,"[procedure, returns result]"
@@ -1707,8 +1499,6 @@ PUBLIC.org.hsqldb.Library.rand,"[procedure, returns result]"
 "",@p1,"INTEGER, in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",org.hsqldb.Library.rand(java.lang.Integer)
 
 
 PUBLIC.org.hsqldb.Library.rawToHex,"[procedure, returns result]"
@@ -1716,8 +1506,6 @@ PUBLIC.org.hsqldb.Library.rawToHex,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.rawToHex(java.lang.String)
 
 
 PUBLIC.org.hsqldb.Library.repeat,"[procedure, returns result]"
@@ -1726,8 +1514,6 @@ PUBLIC.org.hsqldb.Library.repeat,"[procedure, returns result]"
 "",@p2,"INTEGER, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.repeat(java.lang.String,java.lang.Integer)"
 
 
 PUBLIC.org.hsqldb.Library.replace,"[procedure, returns result]"
@@ -1737,8 +1523,6 @@ PUBLIC.org.hsqldb.Library.replace,"[procedure, returns result]"
 "",@p3,"LONGVARCHAR, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.replace(java.lang.String,java.lang.String,java.lang.String)"
 
 
 PUBLIC.org.hsqldb.Library.right,"[procedure, returns result]"
@@ -1747,8 +1531,6 @@ PUBLIC.org.hsqldb.Library.right,"[procedure, returns result]"
 "",@p2,"INTEGER, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.right(java.lang.String,int)"
 
 
 PUBLIC.org.hsqldb.Library.round,"[procedure, returns result]"
@@ -1757,8 +1539,6 @@ PUBLIC.org.hsqldb.Library.round,"[procedure, returns result]"
 "",@p2,"INTEGER, in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"","org.hsqldb.Library.round(double,int)"
 
 
 PUBLIC.org.hsqldb.Library.roundMagic,"[procedure, returns result]"
@@ -1766,8 +1546,6 @@ PUBLIC.org.hsqldb.Library.roundMagic,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",org.hsqldb.Library.roundMagic(double)
 
 
 PUBLIC.org.hsqldb.Library.rtrim,"[procedure, returns result]"
@@ -1775,8 +1553,6 @@ PUBLIC.org.hsqldb.Library.rtrim,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.rtrim(java.lang.String)
 
 
 PUBLIC.org.hsqldb.Library.second,"[procedure, returns result]"
@@ -1784,8 +1560,6 @@ PUBLIC.org.hsqldb.Library.second,"[procedure, returns result]"
 "",@p1,"TIME, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.second(java.sql.Time)
 
 
 PUBLIC.org.hsqldb.Library.sign,"[procedure, returns result]"
@@ -1793,8 +1567,6 @@ PUBLIC.org.hsqldb.Library.sign,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.sign(double)
 
 
 PUBLIC.org.hsqldb.Library.soundex,"[procedure, returns result]"
@@ -1802,8 +1574,6 @@ PUBLIC.org.hsqldb.Library.soundex,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.soundex(java.lang.String)
 
 
 PUBLIC.org.hsqldb.Library.space,"[procedure, returns result]"
@@ -1811,8 +1581,6 @@ PUBLIC.org.hsqldb.Library.space,"[procedure, returns result]"
 "",@p1,"INTEGER, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.space(int)
 
 
 PUBLIC.org.hsqldb.Library.substring,"[procedure, returns result]"
@@ -1822,8 +1590,6 @@ PUBLIC.org.hsqldb.Library.substring,"[procedure, returns result]"
 "",@p3,"INTEGER, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.substring(java.lang.String,int,java.lang.Integer)"
 
 
 PUBLIC.org.hsqldb.Library.to_char,"[procedure, returns result]"
@@ -1832,8 +1598,6 @@ PUBLIC.org.hsqldb.Library.to_char,"[procedure, returns result]"
 "",@p2,"LONGVARCHAR, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.to_char(java.util.Date,java.lang.String)"
 
 
 PUBLIC.org.hsqldb.Library.trim,"[procedure, returns result]"
@@ -1844,8 +1608,6 @@ PUBLIC.org.hsqldb.Library.trim,"[procedure, returns result]"
 "",@p4,"BOOLEAN, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.trim(java.lang.String,java.lang.String,boolean,boolean)"
 
 
 PUBLIC.org.hsqldb.Library.truncate,"[procedure, returns result]"
@@ -1854,8 +1616,6 @@ PUBLIC.org.hsqldb.Library.truncate,"[procedure, returns result]"
 "",@p2,"INTEGER, in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"","org.hsqldb.Library.truncate(double,int)"
 
 
 PUBLIC.org.hsqldb.Library.ucase,"[procedure, returns result]"
@@ -1863,16 +1623,12 @@ PUBLIC.org.hsqldb.Library.ucase,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.ucase(java.lang.String)
 
 
 PUBLIC.org.hsqldb.Library.user,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.user(java.sql.Connection)
 
 
 PUBLIC.org.hsqldb.Library.week,"[procedure, returns result]"
@@ -1880,8 +1636,6 @@ PUBLIC.org.hsqldb.Library.week,"[procedure, returns result]"
 "",@p1,"DATE, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.week(java.sql.Date)
 
 
 PUBLIC.org.hsqldb.Library.year,"[procedure, returns result]"
@@ -1889,16 +1643,12 @@ PUBLIC.org.hsqldb.Library.year,"[procedure, returns result]"
 "",@p1,"DATE, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.year(java.sql.Date)
 
 
 PUBLIC.PI,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",org.hsqldb.Library.pi()
 
 
 PUBLIC.POWER,"[procedure, returns result]"
@@ -1907,8 +1657,6 @@ PUBLIC.POWER,"[procedure, returns result]"
 "",@p2,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"","java.lang.Math.pow(double,double)"
 
 
 PUBLIC.QUARTER,"[procedure, returns result]"
@@ -1916,8 +1664,6 @@ PUBLIC.QUARTER,"[procedure, returns result]"
 "",@p1,"DATE, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.quarter(java.sql.Date)
 
 
 PUBLIC.RADIANS,"[procedure, returns result]"
@@ -1925,16 +1671,12 @@ PUBLIC.RADIANS,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.toRadians(double)
 
 
 PUBLIC.RAND,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.random()
 
 
 PUBLIC.RAWTOHEX,"[procedure, returns result]"
@@ -1942,8 +1684,6 @@ PUBLIC.RAWTOHEX,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.rawToHex(java.lang.String)
 
 
 PUBLIC.REPEAT,"[procedure, returns result]"
@@ -1952,8 +1692,6 @@ PUBLIC.REPEAT,"[procedure, returns result]"
 "",@p2,"INTEGER, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.repeat(java.lang.String,java.lang.Integer)"
 
 
 PUBLIC.REPLACE,"[procedure, returns result]"
@@ -1963,8 +1701,6 @@ PUBLIC.REPLACE,"[procedure, returns result]"
 "",@p3,"LONGVARCHAR, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.replace(java.lang.String,java.lang.String,java.lang.String)"
 
 
 PUBLIC.RIGHT,"[procedure, returns result]"
@@ -1973,8 +1709,6 @@ PUBLIC.RIGHT,"[procedure, returns result]"
 "",@p2,"INTEGER, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.right(java.lang.String,int)"
 
 
 PUBLIC.ROUND,"[procedure, returns result]"
@@ -1983,8 +1717,6 @@ PUBLIC.ROUND,"[procedure, returns result]"
 "",@p2,"INTEGER, in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"","org.hsqldb.Library.round(double,int)"
 
 
 PUBLIC.ROUNDMAGIC,"[procedure, returns result]"
@@ -1992,8 +1724,6 @@ PUBLIC.ROUNDMAGIC,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",org.hsqldb.Library.roundMagic(double)
 
 
 PUBLIC.RTRIM,"[procedure, returns result]"
@@ -2001,8 +1731,6 @@ PUBLIC.RTRIM,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.rtrim(java.lang.String)
 
 
 PUBLIC.SECOND,"[procedure, returns result]"
@@ -2010,8 +1738,6 @@ PUBLIC.SECOND,"[procedure, returns result]"
 "",@p1,"TIME, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.second(java.sql.Time)
 
 
 PUBLIC.SIGN,"[procedure, returns result]"
@@ -2019,8 +1745,6 @@ PUBLIC.SIGN,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.sign(double)
 
 
 PUBLIC.SIN,"[procedure, returns result]"
@@ -2028,8 +1752,6 @@ PUBLIC.SIN,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.sin(double)
 
 
 PUBLIC.SOUNDEX,"[procedure, returns result]"
@@ -2037,8 +1759,6 @@ PUBLIC.SOUNDEX,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.soundex(java.lang.String)
 
 
 PUBLIC.SPACE,"[procedure, returns result]"
@@ -2046,8 +1766,6 @@ PUBLIC.SPACE,"[procedure, returns result]"
 "",@p1,"INTEGER, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.space(int)
 
 
 PUBLIC.SQRT,"[procedure, returns result]"
@@ -2055,8 +1773,6 @@ PUBLIC.SQRT,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.sqrt(double)
 
 
 PUBLIC.SUBSTR,"[procedure, returns result]"
@@ -2066,8 +1782,6 @@ PUBLIC.SUBSTR,"[procedure, returns result]"
 "",@p3,"INTEGER, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.substring(java.lang.String,int,java.lang.Integer)"
 
 
 PUBLIC.SUBSTRING,"[procedure, returns result]"
@@ -2077,8 +1791,6 @@ PUBLIC.SUBSTRING,"[procedure, returns result]"
 "",@p3,"INTEGER, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.substring(java.lang.String,int,java.lang.Integer)"
 
 
 PUBLIC.TAN,"[procedure, returns result]"
@@ -2086,8 +1798,6 @@ PUBLIC.TAN,"[procedure, returns result]"
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"",java.lang.Math.tan(double)
 
 
 PUBLIC.TO_CHAR,"[procedure, returns result]"
@@ -2096,8 +1806,6 @@ PUBLIC.TO_CHAR,"[procedure, returns result]"
 "",@p2,"LONGVARCHAR, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"","org.hsqldb.Library.to_char(java.util.Date,java.lang.String)"
 
 
 PUBLIC.TRUNCATE,"[procedure, returns result]"
@@ -2106,8 +1814,6 @@ PUBLIC.TRUNCATE,"[procedure, returns result]"
 "",@p2,"INTEGER, in"
 "",@p0,"DOUBLE(8, 17), result"
 ""
-"",[definition]
-"","org.hsqldb.Library.truncate(double,int)"
 
 
 PUBLIC.UCASE,"[procedure, returns result]"
@@ -2115,8 +1821,6 @@ PUBLIC.UCASE,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.ucase(java.lang.String)
 
 
 PUBLIC.UPPER,"[procedure, returns result]"
@@ -2124,16 +1828,12 @@ PUBLIC.UPPER,"[procedure, returns result]"
 "",@p1,"LONGVARCHAR, in"
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.ucase(java.lang.String)
 
 
 PUBLIC.USER,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p0,"LONGVARCHAR, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.user(java.sql.Connection)
 
 
 PUBLIC.WEEK,"[procedure, returns result]"
@@ -2141,8 +1841,6 @@ PUBLIC.WEEK,"[procedure, returns result]"
 "",@p1,"DATE, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.week(java.sql.Date)
 
 
 PUBLIC.YEAR,"[procedure, returns result]"
@@ -2150,8 +1848,6 @@ PUBLIC.YEAR,"[procedure, returns result]"
 "",@p1,"DATE, in"
 "",@p0,"INTEGER, result"
 ""
-"",[definition]
-"",org.hsqldb.Library.year(java.sql.Date)
 
 
 
@@ -2163,6 +1859,8 @@ PUBLIC.INVOICE,50 rows
 PUBLIC.ITEM,650 rows
 PUBLIC.PRODUCT,50 rows
 PUBLIC.SUPPLIER,1 rows
+SCHEMACRAWLER.ITEM,20 rows
+SCHEMACRAWLER.PRODUCT2,11 rows
 
 
 
@@ -3053,5 +2751,48 @@ SUPPLIER_ID,SUPPLIER_NAME
 
 
 
-6 tables.
+ITEM
+------------------------------------------------------------------------
+INVOICEID,ITEM,PRODUCTID,QUANTITY,COST
+0,0,7,12,12.6
+0,1,14,19,18.6
+0,2,47,3,26.7
+0,3,1,9,37.2
+0,4,47,1,26.7
+0,5,12,15,25.2
+0,6,16,9,29.1
+0,7,7,10,12.6
+0,8,0,23,8.1
+0,9,35,4,11.4
+0,10,4,8,19.2
+0,11,12,4,25.2
+0,12,1,11,37.2
+1,0,40,8,4.2
+1,1,0,9,8.1
+1,2,19,6,16.5
+1,3,38,8,32.4
+1,4,16,16,29.1
+1,5,25,9,24.3
+1,6,25,19,24.3
+
+
+
+PRODUCT2
+------------------------------------------------------------------------
+ID,NAME,PRICE
+0,Iron Iron,5.4
+1,Chair Shoe,24.8
+2,Telephone Clock,24.8
+3,Chair Chair,25.4
+4,Ice Tea Shoe,12.8
+5,Clock Clock,23.6
+6,Ice Tea Chair,9.8
+7,Telephone Shoe,8.4
+8,Ice Tea Clock,22.6
+9,Clock Telephone,17.2
+10,Telephone Ice Tea,20.4
+
+
+
+8 tables.
 
