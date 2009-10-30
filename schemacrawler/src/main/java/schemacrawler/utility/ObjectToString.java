@@ -25,6 +25,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -137,6 +138,34 @@ public class ObjectToString
         buffer.append(Utility.NEWLINE).append(indent(indent)).append(mapEntry
           .getKey()).append(": ").append(mapEntry.getValue());
       }
+    }
+    else if (Collection.class.isAssignableFrom(object.getClass()))
+    {
+      for (final Iterator<?> iterator = ((Collection<?>) ((Collection<?>) object))
+        .iterator(); iterator.hasNext();)
+      {
+        Object item = (Object) iterator.next();
+        buffer.append(item);
+        if (iterator.hasNext())
+        {
+          buffer.append(", ");
+        }
+      }
+    }
+    else if (Arrays.asList(new Class[] {
+        Integer.class,
+        Long.class,
+        Double.class,
+        Float.class,
+        Boolean.class,
+        Character.class,
+        Byte.class,
+        Void.class,
+        Short.class,
+        String.class
+    }).contains(object.getClass()))
+    {
+      buffer.append(object.toString());
     }
     else
     {

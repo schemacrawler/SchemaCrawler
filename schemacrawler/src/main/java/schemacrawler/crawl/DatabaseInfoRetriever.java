@@ -227,10 +227,10 @@ final class DatabaseInfoRetriever
             LOGGER.log(Level.FINER,
                        "Retrieving database property using method: " + method);
           }
-          final String name = derivePropertyDescription(method);
+          final String description = derivePropertyDescription(method);
           final ResultSet results = (ResultSet) method.invoke(dbMetaData,
                                                               new Object[0]);
-          dbInfo.putProperty(name, readResultsVector(results));
+          dbInfo.putProperty(description, readResultsVector(results));
         }
         else if (isDatabasePropertyResultSetType(method))
         {

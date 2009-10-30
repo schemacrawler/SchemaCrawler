@@ -47,7 +47,7 @@ All procedures are callable,true
 All tables are selectable,true
 Catalog separator,""
 Catalog term,""
-Catalogs,[]
+Catalogs,""
 Data definition causes transaction commit,true
 Data definition ignored in transactions,false
 Database major version,1
@@ -63,7 +63,7 @@ Driver major version,1
 Driver minor version,8
 Driver name,HSQL Database Engine Driver
 Driver version,1.8.0
-Extra name characters,[]
+Extra name characters,""
 Identifier quote string,"68"
 Inserts are detected for TYPE_FORWARD_ONLY result sets,false
 Inserts are detected for TYPE_SCROLL_INSENSITIVE result sets,false
@@ -98,7 +98,7 @@ Nulls are sorted at end,false
 Nulls are sorted at start,false
 Nulls are sorted high,false
 Nulls are sorted low,true
-Numeric functions,"[ABS, ACOS, ASIN, ATAN, ATAN2, CEILING, COS, COT, DEGREES, EXP, FLOOR, LOG, LOG10, MOD, PI, POWER, RADIANS, RAND, ROUND, SIGN, SIN, SQRT, TAN, TRUNCATE, BITAND, BITOR, BITXOR, ROUNDMAGIC]"
+Numeric functions,"ABS, ACOS, ASIN, ATAN, ATAN2, CEILING, COS, COT, DEGREES, EXP, FLOOR, LOG, LOG10, MOD, PI, POWER, RADIANS, RAND, ROUND, SIGN, SIN, SQRT, TAN, TRUNCATE, BITAND, BITOR, BITXOR, ROUNDMAGIC"
 Others inserts are visible for TYPE_FORWARD_ONLY result sets,false
 Others inserts are visible for TYPE_SCROLL_INSENSITIVE result sets,false
 Others inserts are visible for TYPE_SCROLL_SENSITIVE result sets,false
@@ -116,10 +116,10 @@ Own updates are visible for TYPE_SCROLL_INSENSITIVE result sets,false
 Own updates are visible for TYPE_SCROLL_SENSITIVE result sets,false
 Procedure term,""
 Result set holdability,1
-SQL keywords,"[BEFORE, BIGINT, BINARY, CACHED, DATETIME, LIMIT, LONGVARBINARY, LONGVARCHAR, OBJECT, OTHER, SAVEPOINT, TEMP, TEXT, TOP, TRIGGER, TINYINT, VARBINARY, VARCHAR_IGNORECASE]"
+SQL keywords,"BEFORE, BIGINT, BINARY, CACHED, DATETIME, LIMIT, LONGVARBINARY, LONGVARCHAR, OBJECT, OTHER, SAVEPOINT, TEMP, TEXT, TOP, TRIGGER, TINYINT, VARBINARY, VARCHAR_IGNORECASE"
 SQL state type,2
 Schema term,SCHEMA
-Schemas,"[INFORMATION_SCHEMA, PUBLIC, SCHEMACRAWLER]"
+Schemas,"INFORMATION_SCHEMA, PUBLIC, SCHEMACRAWLER"
 Search string escape,\
 Stores lower case identifiers,false
 Stores lower case quoted identifiers,false
@@ -127,7 +127,7 @@ Stores mixed case identifiers,false
 Stores mixed case quoted identifiers,false
 Stores upper case identifiers,true
 Stores upper case quoted identifiers,false
-String functions,"[ASCII, BIT_LENGTH, CHAR, CHAR_LENGTH, CHARACTER_LENGTH, CONCAT, DIFFERENCE, HEXTORAW, INSERT, LCASE, LEFT, LENGTH, LOCATE, LTRIM, OCTET_LENGTH, RAWTOHEX, REPEAT, REPLACE, RIGHT, RTRIM, SOUNDEX, SPACE, SUBSTR, SUBSTRING, UCASE, LOWER, UPPER]"
+String functions,"ASCII, BIT_LENGTH, CHAR, CHAR_LENGTH, CHARACTER_LENGTH, CONCAT, DIFFERENCE, HEXTORAW, INSERT, LCASE, LEFT, LENGTH, LOCATE, LTRIM, OCTET_LENGTH, RAWTOHEX, REPEAT, REPLACE, RIGHT, RTRIM, SOUNDEX, SPACE, SUBSTR, SUBSTRING, UCASE, LOWER, UPPER"
 Supports ANSI entry level SQL,false
 Supports ANSI full SQL,false
 Supports ANSI intermediate SQL,false
@@ -192,10 +192,10 @@ Supports table correlation names,true
 Supports transactions,true
 Supports union,true
 Supports union all,true
-System functions,"[DATABASE, USER, IDENTITY]"
-Table types,"[GLOBAL TEMPORARY, SYSTEM TABLE, TABLE, VIEW]"
-Time date functions,"[CURDATE, CURTIME, DATEDIFF, DAYNAME, DAY, DAYOFMONTH, DAYOFWEEK, DAYOFYEAR, HOUR, MINUTE, MONTH, MONTHNAME, NOW, QUARTER, SECOND, WEEK, YEAR, TO_CHAR]"
-Type info,"[TINYINT, BIGINT, LONGVARBINARY, VARBINARY, BINARY, LONGVARCHAR, CHAR, NUMERIC, DECIMAL, INTEGER, SMALLINT, FLOAT, REAL, DOUBLE, VARCHAR, VARCHAR_IGNORECASE, BOOLEAN, DATE, TIME, TIMESTAMP, OTHER]"
+System functions,"DATABASE, USER, IDENTITY"
+Table types,"GLOBAL TEMPORARY, SYSTEM TABLE, TABLE, VIEW"
+Time date functions,"CURDATE, CURTIME, DATEDIFF, DAYNAME, DAY, DAYOFMONTH, DAYOFWEEK, DAYOFYEAR, HOUR, MINUTE, MONTH, MONTHNAME, NOW, QUARTER, SECOND, WEEK, YEAR, TO_CHAR"
+Type info,"TINYINT, BIGINT, LONGVARBINARY, VARBINARY, BINARY, LONGVARCHAR, CHAR, NUMERIC, DECIMAL, INTEGER, SMALLINT, FLOAT, REAL, DOUBLE, VARCHAR, VARCHAR_IGNORECASE, BOOLEAN, DATE, TIME, TIMESTAMP, OTHER"
 URL,jdbc:hsqldb:hsql://localhost:9001/schemacrawler
 User name,SA
 Uses local file per table,false
