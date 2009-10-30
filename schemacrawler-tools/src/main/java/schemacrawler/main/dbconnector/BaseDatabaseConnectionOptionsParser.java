@@ -37,7 +37,7 @@ import sf.util.CommandLineParser.StringOption;
  * 
  * @author sfatehi
  */
-abstract class BaseConnectorOptionsParser
+abstract class BaseDatabaseConnectionOptionsParser
   extends BaseOptionsParser<DatabaseConnectionOptions>
 {
 
@@ -55,7 +55,7 @@ abstract class BaseConnectorOptionsParser
    * 
    * @param args
    */
-  protected BaseConnectorOptionsParser(final String[] args, final Config config)
+  protected BaseDatabaseConnectionOptionsParser(final String[] args, final Config config)
   {
     super(args);
     this.config = config;

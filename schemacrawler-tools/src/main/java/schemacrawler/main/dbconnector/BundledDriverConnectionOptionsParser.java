@@ -34,7 +34,7 @@ import sf.util.CommandLineParser.StringOption;
  * @author sfatehi
  */
 public final class BundledDriverConnectionOptionsParser
-  extends BaseConnectorOptionsParser
+  extends BaseDatabaseConnectionOptionsParser
 {
 
   private final StringOption optionHost = new StringOption(Option.NO_SHORT_FORM,

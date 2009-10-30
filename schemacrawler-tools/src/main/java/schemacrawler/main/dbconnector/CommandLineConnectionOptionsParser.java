@@ -33,7 +33,7 @@ import sf.util.CommandLineParser.StringOption;
  * @author sfatehi
  */
 public final class CommandLineConnectionOptionsParser
-  extends BaseConnectorOptionsParser
+  extends BaseDatabaseConnectionOptionsParser
 {
 
   private final StringOption optionDriver = new StringOption(Option.NO_SHORT_FORM,
