@@ -21,10 +21,6 @@
 package schemacrawler.tools.sqlite;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.main.SchemaCrawlerMain;
 import schemacrawler.main.dbconnector.BundledDriverHelpOptions;
@@ -46,16 +42,9 @@ public final class Main
   {
     try
     {
-      final BundledDriverHelpOptions helpOptions = new BundledDriverHelpOptions("SchemaCrawler for SQLite",
-                                                                                "/help/Connections.sqlite.txt");
-      if (args.length == 0)
-      {
-        helpOptions.showHelp();
-        System.exit(0);
-      }
-
-      final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(addAdditionalArgs(args),
-                                                                                helpOptions,
+      final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
+                                                                                new BundledDriverHelpOptions("SchemaCrawler for SQLite",
+                                                                                                             "/help/Connections.sqlite.txt"),
                                                                                 "/schemacrawler-sqlite.config.properties");
       SchemaCrawlerMain.schemacrawler(commandLine);
     }
@@ -63,14 +52,6 @@ public final class Main
     {
       e.printStackTrace();
     }
-  }
-
-  private static String[] addAdditionalArgs(final String[] args)
-  {
-    final List<String> argsList = new ArrayList<String>(Arrays.asList(args));
-    argsList.add("-user=");
-    argsList.add("-password=");
-    return argsList.toArray(new String[argsList.size()]);
   }
 
   private Main()
