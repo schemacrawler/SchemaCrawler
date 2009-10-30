@@ -26,8 +26,6 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Map;
-import java.util.Properties;
-import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -68,7 +66,6 @@ public class DatabaseConnectionOptions
   private final String connectionUrl;
   private String user;
   private String password;
-  private final Properties properties = new Properties();
 
   public DatabaseConnectionOptions(final Map<String, String> properties)
     throws SchemaCrawlerException
@@ -87,7 +84,6 @@ public class DatabaseConnectionOptions
 
     user = properties.get(USER);
     password = properties.get(PASSWORD);
-    copyOtherConnectionProperties(properties);
   }
 
   public DatabaseConnectionOptions(final String jdbcDriverClassName,
@@ -100,12 +96,6 @@ public class DatabaseConnectionOptions
     }
     this.connectionUrl = connectionUrl;
     loadJdbcDriver(jdbcDriverClassName);
-
-    if (properties != null)
-    {
-      user = properties.getProperty(USER);
-      password = properties.getProperty(PASSWORD);
-    }
   }
 
   public String getConnectionUrl()
@@ -133,11 +123,6 @@ public class DatabaseConnectionOptions
     return password;
   }
 
-  public Properties getProperties()
-  {
-    return new Properties(properties);
-  }
-
   public String getUser()
   {
     return user;
@@ -157,22 +142,6 @@ public class DatabaseConnectionOptions
   public void setUser(final String user)
   {
     this.user = user;
-  }
-
-  private void copyOtherConnectionProperties(final Map<String, String> properties)
-  {
-    if (properties != null)
-    {
-      for (final Entry<String, String> property: properties.entrySet())
-      {
-        final String propertyName = property.getKey();
-        if (!(DRIVER.equals(propertyName) || URL.equals(propertyName)
-              || USER.equals(propertyName) || PASSWORD.equals(propertyName)))
-        {
-          this.properties.setProperty(propertyName, property.getValue());
-        }
-      }
-    }
   }
 
 }
