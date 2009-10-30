@@ -31,11 +31,11 @@ import schemacrawler.main.dbconnector.BundledDriverConnectionOptionsParser;
 import schemacrawler.main.dbconnector.CommandLineConnectionOptionsParser;
 import schemacrawler.main.dbconnector.ConfigConnectorOptionsParser;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.Commands;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.utility.DatabaseConnectionOptions;
 import schemacrawler.utility.Utility;
 
 /**
