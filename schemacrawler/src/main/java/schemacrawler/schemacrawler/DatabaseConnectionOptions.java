@@ -131,6 +131,14 @@ public class DatabaseConnectionOptions
   public Connection createConnection()
     throws SQLException
   {
+    if (user == null)
+    {
+      LOGGER.log(Level.WARNING, "Database user is not provided");
+    }
+    if (password == null)
+    {
+      LOGGER.log(Level.WARNING, "Database password is not provided");
+    }
     return DriverManager.getConnection(connectionUrl, user, password);
   }
 
