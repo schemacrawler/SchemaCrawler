@@ -60,6 +60,7 @@ import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 import schemacrawler.tools.util.PlainTextFormattingHelper;
 import schemacrawler.tools.util.TextFormattingHelper;
+import schemacrawler.utility.ObjectToString;
 import schemacrawler.utility.Utility;
 
 /**
@@ -215,7 +216,8 @@ final class SchemaTextFormatter
         {
           value = "";
         }
-        out.println(formattingHelper.createNameValueRow(key, value.toString()));
+        out.println(formattingHelper.createNameValueRow(key, ObjectToString
+          .toString(value)));
       }
       out.print(formattingHelper.createObjectEnd());
       out.println();
