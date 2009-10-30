@@ -1,3 +1,5 @@
+--- Commands ---
+
 -command=<command>
   Where <command> is a comma-separated list of:
     standard_schema

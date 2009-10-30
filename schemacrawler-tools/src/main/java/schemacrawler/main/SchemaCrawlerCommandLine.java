@@ -112,7 +112,7 @@ public class SchemaCrawlerCommandLine
       outputOptions = new OutputOptions();
     }
 
-    if (applicationOptions.isShowHelp())
+    if (args.length == 0 || applicationOptions.isShowHelp())
     {
       helpOptions.showHelp();
       System.exit(0);
