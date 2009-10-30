@@ -47,7 +47,6 @@ final class ConfigUtility
   {
     if (Utility.isBlank(prefix))
     {
-      substituteVariables(config);
       return config;
     }
 
@@ -62,7 +61,6 @@ final class ConfigUtility
         partition.put(unprefixed, entry.getValue());
       }
     }
-    substituteVariables(partition);
 
     return partition;
   }
