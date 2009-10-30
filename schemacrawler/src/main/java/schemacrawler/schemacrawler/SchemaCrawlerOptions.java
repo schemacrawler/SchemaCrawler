@@ -41,8 +41,6 @@ public final class SchemaCrawlerOptions
   private static final String SC_SCHEMA_PATTERN_EXCLUDE = "schemacrawler.schema.pattern.exclude";
   private static final String SC_SCHEMA_PATTERN_INCLUDE = "schemacrawler.schema.pattern.include";
 
-  private static final String OTHER_SCHEMA_PATTERN = "schemapattern";
-
   private static final String SC_TABLE_TYPES = "schemacrawler.table_types";
   private static final String SC_SHOW_STORED_PROCEDURES = "schemacrawler.show_stored_procedures";
 
@@ -78,7 +76,6 @@ public final class SchemaCrawlerOptions
 
   private InclusionRule catalogInclusionRule;
   private InclusionRule schemaInclusionRule;
-  private String schemaPattern;
   private TableType[] tableTypes;
   private boolean showStoredProcedures;
 
@@ -150,8 +147,6 @@ public final class SchemaCrawlerOptions
                                             configProperties
                                               .getStringValue(SC_SCHEMA_PATTERN_EXCLUDE,
                                                               InclusionRule.NONE));
-
-    schemaPattern = config.getStringValue(OTHER_SCHEMA_PATTERN, null);
 
     tableInclusionRule = new InclusionRule(configProperties
                                              .getStringValue(SC_TABLE_PATTERN_INCLUDE,
@@ -301,17 +296,6 @@ public final class SchemaCrawlerOptions
     {
       return schemaInfoLevel;
     }
-  }
-
-  /**
-   * Gets the schema pattern.
-   * 
-   * @return Schema name pattern
-   * @see SchemaCrawlerOptions#setSchemaPattern(String)
-   */
-  public String getSchemaPattern()
-  {
-    return schemaPattern;
   }
 
   /**
@@ -604,20 +588,6 @@ public final class SchemaCrawlerOptions
   public void setSchemaInfoLevel(final SchemaInfoLevel schemaInfoLevel)
   {
     this.schemaInfoLevel = schemaInfoLevel;
-  }
-
-  /**
-   * Sets the schema pattern.
-   * 
-   * @param schemaPattern
-   *        A schema name pattern; must match the schema name as it is
-   *        stored in the database; "" retrieves those without a schema;
-   *        <code>null</code> means that the schema name should not be
-   *        used to narrow the search.
-   */
-  public void setSchemaPattern(final String schemaPattern)
-  {
-    this.schemaPattern = schemaPattern;
   }
 
   /**

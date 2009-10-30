@@ -1,7 +1,3 @@
-import java.util.Properties;
-
-import javax.sql.DataSource;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Database;
@@ -10,7 +6,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
-import schemacrawler.utility.PropertiesDataSource;
+import schemacrawler.utility.DatabaseConnectionOptions;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
 public final class ApiExample
@@ -20,7 +16,10 @@ public final class ApiExample
     throws Exception
   {
     // Create a database connection
-    final DataSource dataSource = makeDataSource();
+    final DatabaseConnectionOptions connectionOptions = new DatabaseConnectionOptions("org.hsqldb.jdbcDriver",
+                                                                                      "jdbc:hsqldb:hsql://localhost:9001/schemacrawler");
+    connectionOptions.setUser("sa");
+    connectionOptions.setPassword("");
 
     // Create the options
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
@@ -32,8 +31,8 @@ public final class ApiExample
     options.setAlphabeticalSortForTableColumns(true);
 
     // Get the schema definition
-    final Database database = SchemaCrawlerUtility.getDatabase(dataSource
-      .getConnection(), options);
+    final Database database = SchemaCrawlerUtility
+      .getDatabase(connectionOptions.createConnection(), options);
 
     for (final Catalog catalog: database.getCatalogs())
     {
@@ -61,18 +60,6 @@ public final class ApiExample
       }
     }
 
-  }
-
-  private static DataSource makeDataSource()
-  {
-    final Properties connectionProperties = new Properties();
-    connectionProperties.setProperty("driver", "org.hsqldb.jdbcDriver");
-    connectionProperties
-      .setProperty("url", "jdbc:hsqldb:hsql://localhost:9001/schemacrawler");
-    connectionProperties.setProperty("user", "sa");
-    connectionProperties.setProperty("password", "");
-
-    return new PropertiesDataSource(connectionProperties);
   }
 
 }

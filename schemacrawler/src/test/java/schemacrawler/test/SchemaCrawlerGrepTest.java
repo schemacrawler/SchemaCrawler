@@ -52,7 +52,7 @@ public class SchemaCrawlerGrepTest
 
   @BeforeClass
   public static void beforeAllTests()
-    throws ClassNotFoundException
+    throws Exception
   {
     TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();

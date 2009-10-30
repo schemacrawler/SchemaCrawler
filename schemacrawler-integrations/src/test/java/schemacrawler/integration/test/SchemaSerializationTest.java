@@ -60,6 +60,7 @@ public class SchemaSerializationTest
 
   @BeforeClass
   public static void beforeAllTests()
+    throws Exception
   {
     TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();

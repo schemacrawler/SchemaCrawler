@@ -122,7 +122,7 @@ public final class PropertiesDataSource
     {
       connection = DriverManager.getConnection(url, username, password);
     }
-    catch (SQLException e)
+    catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING, "Could not establish a connection with \""
                                 + url + "\": " + e.getMessage());

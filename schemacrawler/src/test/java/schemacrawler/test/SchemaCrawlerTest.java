@@ -65,7 +65,7 @@ public class SchemaCrawlerTest
 
   @BeforeClass
   public static void beforeAllTests()
-    throws ClassNotFoundException
+    throws Exception
   {
     TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();

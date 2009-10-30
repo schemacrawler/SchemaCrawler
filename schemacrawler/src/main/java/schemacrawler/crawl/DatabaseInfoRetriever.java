@@ -29,15 +29,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.InclusionRule;
 
 final class DatabaseInfoRetriever
   extends AbstractRetriever
@@ -50,338 +47,6 @@ final class DatabaseInfoRetriever
                         final MutableDatabase database)
   {
     super(retrieverConnection, database);
-  }
-
-  /**
-   * Provides additional information on the database.
-   * 
-   * @param database
-   *        Database information to add to
-   * @throws SQLException
-   *         On a SQL exception
-   */
-  void retrieveAdditionalDatabaseInfo()
-    throws SQLException
-  {
-    final DatabaseMetaData dbMetaData = getRetrieverConnection().getMetaData();
-    final MutableDatabaseInfo dbInfo = database.getDatabaseInfo();
-
-    final Method[] methods = DatabaseMetaData.class.getMethods();
-    for (final Method method: methods)
-    {
-      try
-      {
-        if (isDatabasePropertyMethod(method))
-        {
-          if (LOGGER.isLoggable(Level.FINE))
-          {
-            LOGGER.log(Level.FINER,
-                       "Retrieving database property using method: " + method);
-          }
-          final String name = derivePropertyName(method);
-          Object value = method.invoke(dbMetaData, new Object[0]);
-          if (value != null && name.endsWith("s") && value instanceof String)
-          {
-            // Probably a comma-separated list
-            value = Collections.unmodifiableList(Arrays.asList(((String) value)
-              .split(",")));
-          }
-          // Add to the properties map
-          dbInfo.putProperty(name, value);
-        }
-        else if (isDatabasePropertiesResultSetMethod(method))
-        {
-          if (LOGGER.isLoggable(Level.FINE))
-          {
-            LOGGER.log(Level.FINER,
-                       "Retrieving database property using method: " + method);
-          }
-          final String name = derivePropertyName(method);
-          final ResultSet results = (ResultSet) method.invoke(dbMetaData,
-                                                              new Object[0]);
-          dbInfo.putProperty(name, getRetrieverConnection()
-            .readResultsVector(results));
-        }
-        else if (isDatabasePropertyResultSetType(method))
-        {
-          if (LOGGER.isLoggable(Level.FINE))
-          {
-            LOGGER.log(Level.FINER,
-                       "Retrieving database property using method: " + method);
-          }
-          retrieveResultSetTypeProperty(dbMetaData,
-                                        dbInfo,
-                                        method,
-                                        ResultSet.TYPE_FORWARD_ONLY,
-                                        "TypeForwardOnly");
-          retrieveResultSetTypeProperty(dbMetaData,
-                                        dbInfo,
-                                        method,
-                                        ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                        "TypeScrollInsensitive");
-          retrieveResultSetTypeProperty(dbMetaData,
-                                        dbInfo,
-                                        method,
-                                        ResultSet.TYPE_SCROLL_SENSITIVE,
-                                        "TypeScrollSensitive");
-        }
-      }
-      catch (final Exception e)
-      {
-        LOGGER.log(Level.FINE, "Could not execute method, " + method, e);
-      }
-    }
-  }
-
-  /**
-   * Retrieves catalog metadata according to the parameters specified.
-   * 
-   * @return A list of catalogs in the database that matech the pattern
-   */
-  void retrieveCatalogs()
-  {
-    final List<String> catalogNames = getRetrieverConnection()
-      .getCatalogNames();
-    for (final String catalogName: catalogNames)
-    {
-      LOGGER.log(Level.FINER, "Retrieving catalog: " + catalogName);
-      final MutableCatalog catalog = new MutableCatalog(database, catalogName);
-      database.addCatalog(catalog);
-    }
-  }
-
-  /**
-   * Provides information on the database.
-   * 
-   * @param database
-   *        Database
-   * @throws SQLException
-   *         On a SQL exception
-   */
-  void retrieveDatabaseInfo()
-    throws SQLException
-  {
-    final DatabaseMetaData dbMetaData = getRetrieverConnection().getMetaData();
-
-    final MutableDatabaseInfo dbInfo = database.getDatabaseInfo();
-
-    dbInfo.setProductName(dbMetaData.getDatabaseProductName());
-    dbInfo.setProductVersion(dbMetaData.getDatabaseProductVersion());
-  }
-
-  /**
-   * Retrieves a list of schemas from the database, for the table
-   * specified.
-   * 
-   * @param tableSort
-   *        TODO
-   * @param table
-   *        Catalog for which data is required.
-   * @throws SQLException
-   *         On a SQL exception
-   */
-  void retrieveSchemas(final InclusionRule schemaInclusionRule)
-    throws SQLException
-  {
-    final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
-      .getMetaData().getSchemas());
-    try
-    {
-      final boolean supportsCatalogs = getRetrieverConnection()
-        .isSupportsCatalogs();
-      while (results.next())
-      {
-        final String catalogName;
-        if (supportsCatalogs)
-        {
-          catalogName = results.getString("TABLE_CATALOG");
-        }
-        else
-        {
-          catalogName = null;
-        }
-        final String schemaName = results.getString("TABLE_SCHEM");
-        LOGGER.log(Level.FINER, String.format("Retrieving schema: %s.%s",
-                                              catalogName,
-                                              schemaName));
-
-        final MutableCatalog[] catalogs;
-        final MutableCatalog catalog = database.getCatalog(catalogName);
-        if (catalog != null)
-        {
-          catalogs = new MutableCatalog[] {
-            catalog
-          };
-        }
-        else
-        {
-          final Catalog[] databaseCatalogs = database.getCatalogs();
-          catalogs = new MutableCatalog[databaseCatalogs.length];
-          for (int i = 0; i < databaseCatalogs.length; i++)
-          {
-            catalogs[i] = (MutableCatalog) databaseCatalogs[i];
-          }
-        }
-
-        for (final MutableCatalog currentCatalog: catalogs)
-        {
-          final MutableSchema schema = new MutableSchema(currentCatalog,
-                                                         schemaName);
-          final String schemaFullName = schema.getFullName();
-          if (schemaInclusionRule.include(schemaFullName))
-          {
-            currentCatalog.addSchema(schema);
-          }
-        }
-      }
-    }
-    finally
-    {
-      results.close();
-    }
-
-    for (final Catalog catalog: database.getCatalogs())
-    {
-      if (catalog.getSchemas().length == 0)
-      {
-        final MutableCatalog mutableCatalog = (MutableCatalog) catalog;
-        final MutableSchema schema = new MutableSchema(mutableCatalog, null);
-        mutableCatalog.addSchema(schema);
-      }
-    }
-
-  }
-
-  /**
-   * Retrieves column data type metadata.
-   * 
-   * @param database
-   *        Column data types
-   * @throws SQLException
-   *         On a SQL exception
-   */
-  void retrieveSystemColumnDataTypes()
-    throws SQLException
-  {
-    final Schema schema = new MutableSchema(new MutableCatalog(database, ""),
-                                            "");
-    final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
-      .getMetaData().getTypeInfo());
-    try
-    {
-      while (results.next())
-      {
-        final String typeName = results.getString("TYPE_NAME");
-        final int dataType = results.getInt("DATA_TYPE", 0);
-        LOGGER.log(Level.FINER, String
-          .format("Retrieving data type: %s (with type id %d)",
-                  typeName,
-                  dataType));
-        final long precision = results.getLong("PRECISION", 0L);
-        final String literalPrefix = results.getString("LITERAL_PREFIX");
-        final String literalSuffix = results.getString("LITERAL_SUFFIX");
-        final String createParameters = results.getString("CREATE_PARAMS");
-        final boolean isNullable = results
-          .getInt("NULLABLE", DatabaseMetaData.typeNullableUnknown) == DatabaseMetaData.typeNullable;
-        final boolean isCaseSensitive = results.getBoolean("CASE_SENSITIVE");
-        final int searchable = results.getInt("SEARCHABLE", -1);
-        final boolean isUnsigned = results.getBoolean("UNSIGNED_ATTRIBUTE");
-        final boolean isFixedPrecisionScale = results
-          .getBoolean("FIXED_PREC_SCALE");
-        final boolean isAutoIncremented = results.getBoolean("AUTO_INCREMENT");
-        final String localTypeName = results.getString("LOCAL_TYPE_NAME");
-        final int minimumScale = results.getInt("MINIMUM_SCALE", 0);
-        final int maximumScale = results.getInt("MAXIMUM_SCALE", 0);
-        final int numPrecisionRadix = results.getInt("NUM_PREC_RADIX", 0);
-
-        final MutableColumnDataType columnDataType = new MutableColumnDataType(schema,
-                                                                               typeName);
-        // Set the Java SQL type code, but no mapped Java class is
-        // available, so use the defaults
-        columnDataType.setType(dataType, null);
-        columnDataType.setPrecision(precision);
-        columnDataType.setLiteralPrefix(literalPrefix);
-        columnDataType.setLiteralSuffix(literalSuffix);
-        columnDataType.setCreateParameters(createParameters);
-        columnDataType.setNullable(isNullable);
-        columnDataType.setCaseSensitive(isCaseSensitive);
-        columnDataType.setSearchable(searchable);
-        columnDataType.setUnsigned(isUnsigned);
-        columnDataType.setFixedPrecisionScale(isFixedPrecisionScale);
-        columnDataType.setAutoIncrementable(isAutoIncremented);
-        columnDataType.setLocalTypeName(localTypeName);
-        columnDataType.setMinimumScale(minimumScale);
-        columnDataType.setMaximumScale(maximumScale);
-        columnDataType.setNumPrecisionRadix(numPrecisionRadix);
-
-        columnDataType.addAttributes(results.getAttributes());
-
-        database.addSystemColumnDataType(columnDataType);
-      }
-    }
-    finally
-    {
-      results.close();
-    }
-
-  }
-
-  /**
-   * Retrieves user defined column data type metadata.
-   * 
-   * @param dbInfo
-   *        Database info
-   * @throws SQLException
-   *         On a SQL exception
-   */
-  void retrieveUserDefinedColumnDataTypes(final String catalogName)
-    throws SQLException
-  {
-    final MetadataResultSet results = new MetadataResultSet(getRetrieverConnection()
-      .getMetaData().getUDTs(catalogName,
-                             getRetrieverConnection().getSchemaPattern(),
-                             "%",
-                             null));
-    try
-    {
-      while (results.next())
-      {
-        // final String catalogName = results.getString("TYPE_CAT");
-        final String schemaName = results.getString("TYPE_SCHEM");
-        final String typeName = results.getString("TYPE_NAME");
-        LOGGER.log(Level.FINER, "Retrieving data type: " + typeName);
-        final short dataType = results.getShort("DATA_TYPE", (short) 0);
-        final String className = results.getString("CLASS_NAME");
-        final String remarks = results.getString("REMARKS");
-        final short baseTypeValue = results.getShort("BASE_TYPE", (short) 0);
-
-        final MutableSchema schema = lookupSchema(catalogName, schemaName);
-        if (schema == null)
-        {
-          LOGGER.log(Level.FINE, String.format("Cannot find schema, %s.%s",
-                                               catalogName,
-                                               schemaName));
-          continue;
-        }
-        final ColumnDataType baseType = lookupColumnDataTypeByType(schema,
-                                                                   baseTypeValue);
-        final MutableColumnDataType columnDataType = new MutableColumnDataType(schema,
-                                                                               typeName);
-        columnDataType.setUserDefined(true);
-        columnDataType.setType(dataType, className);
-        columnDataType.setBaseType(baseType);
-        columnDataType.setRemarks(remarks);
-
-        columnDataType.addAttributes(results.getAttributes());
-
-        schema.addColumnDataType(columnDataType);
-      }
-    }
-    finally
-    {
-      results.close();
-    }
-
   }
 
   /**
@@ -473,6 +138,235 @@ final class DatabaseInfoRetriever
       Integer.valueOf(resultSetType)
     });
     dbInfo.putProperty(name, propertyValue);
+  }
+
+  /**
+   * Provides additional information on the database.
+   * 
+   * @param database
+   *        Database information to add to
+   * @throws SQLException
+   *         On a SQL exception
+   */
+  void retrieveAdditionalDatabaseInfo()
+    throws SQLException
+  {
+    final DatabaseMetaData dbMetaData = getMetaData();
+    final MutableDatabaseInfo dbInfo = database.getDatabaseInfo();
+
+    final Method[] methods = DatabaseMetaData.class.getMethods();
+    for (final Method method: methods)
+    {
+      try
+      {
+        if (isDatabasePropertyMethod(method))
+        {
+          if (LOGGER.isLoggable(Level.FINE))
+          {
+            LOGGER.log(Level.FINER,
+                       "Retrieving database property using method: " + method);
+          }
+          final String name = derivePropertyName(method);
+          Object value = method.invoke(dbMetaData, new Object[0]);
+          if (value != null && name.endsWith("s") && value instanceof String)
+          {
+            // Probably a comma-separated list
+            value = Collections.unmodifiableList(Arrays.asList(((String) value)
+              .split(",")));
+          }
+          // Add to the properties map
+          dbInfo.putProperty(name, value);
+        }
+        else if (isDatabasePropertiesResultSetMethod(method))
+        {
+          if (LOGGER.isLoggable(Level.FINE))
+          {
+            LOGGER.log(Level.FINER,
+                       "Retrieving database property using method: " + method);
+          }
+          final String name = derivePropertyName(method);
+          final ResultSet results = (ResultSet) method.invoke(dbMetaData,
+                                                              new Object[0]);
+          dbInfo.putProperty(name, readResultsVector(results));
+        }
+        else if (isDatabasePropertyResultSetType(method))
+        {
+          if (LOGGER.isLoggable(Level.FINE))
+          {
+            LOGGER.log(Level.FINER,
+                       "Retrieving database property using method: " + method);
+          }
+          retrieveResultSetTypeProperty(dbMetaData,
+                                        dbInfo,
+                                        method,
+                                        ResultSet.TYPE_FORWARD_ONLY,
+                                        "TypeForwardOnly");
+          retrieveResultSetTypeProperty(dbMetaData,
+                                        dbInfo,
+                                        method,
+                                        ResultSet.TYPE_SCROLL_INSENSITIVE,
+                                        "TypeScrollInsensitive");
+          retrieveResultSetTypeProperty(dbMetaData,
+                                        dbInfo,
+                                        method,
+                                        ResultSet.TYPE_SCROLL_SENSITIVE,
+                                        "TypeScrollSensitive");
+        }
+      }
+      catch (final Exception e)
+      {
+        LOGGER.log(Level.FINE, "Could not execute method, " + method, e);
+      }
+    }
+  }
+
+  /**
+   * Provides information on the database.
+   * 
+   * @param database
+   *        Database
+   * @throws SQLException
+   *         On a SQL exception
+   */
+  void retrieveDatabaseInfo()
+    throws SQLException
+  {
+    final DatabaseMetaData dbMetaData = getMetaData();
+
+    final MutableDatabaseInfo dbInfo = database.getDatabaseInfo();
+
+    dbInfo.setProductName(dbMetaData.getDatabaseProductName());
+    dbInfo.setProductVersion(dbMetaData.getDatabaseProductVersion());
+  }
+
+  /**
+   * Retrieves column data type metadata.
+   * 
+   * @param database
+   *        Column data types
+   * @throws SQLException
+   *         On a SQL exception
+   */
+  void retrieveSystemColumnDataTypes()
+    throws SQLException
+  {
+    final Schema schema = new MutableSchema(new MutableCatalog(database, ""),
+                                            "");
+    final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getTypeInfo());
+    try
+    {
+      while (results.next())
+      {
+        final String typeName = results.getString("TYPE_NAME");
+        final int dataType = results.getInt("DATA_TYPE", 0);
+        LOGGER.log(Level.FINER, String
+          .format("Retrieving data type: %s (with type id %d)",
+                  typeName,
+                  dataType));
+        final long precision = results.getLong("PRECISION", 0L);
+        final String literalPrefix = results.getString("LITERAL_PREFIX");
+        final String literalSuffix = results.getString("LITERAL_SUFFIX");
+        final String createParameters = results.getString("CREATE_PARAMS");
+        final boolean isNullable = results
+          .getInt("NULLABLE", DatabaseMetaData.typeNullableUnknown) == DatabaseMetaData.typeNullable;
+        final boolean isCaseSensitive = results.getBoolean("CASE_SENSITIVE");
+        final int searchable = results.getInt("SEARCHABLE", -1);
+        final boolean isUnsigned = results.getBoolean("UNSIGNED_ATTRIBUTE");
+        final boolean isFixedPrecisionScale = results
+          .getBoolean("FIXED_PREC_SCALE");
+        final boolean isAutoIncremented = results.getBoolean("AUTO_INCREMENT");
+        final String localTypeName = results.getString("LOCAL_TYPE_NAME");
+        final int minimumScale = results.getInt("MINIMUM_SCALE", 0);
+        final int maximumScale = results.getInt("MAXIMUM_SCALE", 0);
+        final int numPrecisionRadix = results.getInt("NUM_PREC_RADIX", 0);
+
+        final MutableColumnDataType columnDataType = new MutableColumnDataType(schema,
+                                                                               typeName);
+        // Set the Java SQL type code, but no mapped Java class is
+        // available, so use the defaults
+        columnDataType.setType(dataType, null);
+        columnDataType.setPrecision(precision);
+        columnDataType.setLiteralPrefix(literalPrefix);
+        columnDataType.setLiteralSuffix(literalSuffix);
+        columnDataType.setCreateParameters(createParameters);
+        columnDataType.setNullable(isNullable);
+        columnDataType.setCaseSensitive(isCaseSensitive);
+        columnDataType.setSearchable(searchable);
+        columnDataType.setUnsigned(isUnsigned);
+        columnDataType.setFixedPrecisionScale(isFixedPrecisionScale);
+        columnDataType.setAutoIncrementable(isAutoIncremented);
+        columnDataType.setLocalTypeName(localTypeName);
+        columnDataType.setMinimumScale(minimumScale);
+        columnDataType.setMaximumScale(maximumScale);
+        columnDataType.setNumPrecisionRadix(numPrecisionRadix);
+
+        columnDataType.addAttributes(results.getAttributes());
+
+        database.addSystemColumnDataType(columnDataType);
+      }
+    }
+    finally
+    {
+      results.close();
+    }
+
+  }
+
+  /**
+   * Retrieves user defined column data type metadata.
+   * 
+   * @param dbInfo
+   *        Database info
+   * @throws SQLException
+   *         On a SQL exception
+   */
+  void retrieveUserDefinedColumnDataTypes(final String catalogName,
+                                          final String schemaName)
+    throws SQLException
+  {
+    final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getUDTs(catalogName, schemaName, "%", null));
+    try
+    {
+      while (results.next())
+      {
+        // final String catalogName = results.getString("TYPE_CAT");
+        // final String schemaName = results.getString("TYPE_SCHEM");
+        final String typeName = results.getString("TYPE_NAME");
+        LOGGER.log(Level.FINER, "Retrieving data type: " + typeName);
+        final short dataType = results.getShort("DATA_TYPE", (short) 0);
+        final String className = results.getString("CLASS_NAME");
+        final String remarks = results.getString("REMARKS");
+        final short baseTypeValue = results.getShort("BASE_TYPE", (short) 0);
+
+        final MutableSchema schema = lookupSchema(catalogName, schemaName);
+        if (schema == null)
+        {
+          LOGGER.log(Level.FINE, String.format("Cannot find schema, %s.%s",
+                                               catalogName,
+                                               schemaName));
+          continue;
+        }
+        final ColumnDataType baseType = lookupColumnDataTypeByType(schema,
+                                                                   baseTypeValue);
+        final MutableColumnDataType columnDataType = new MutableColumnDataType(schema,
+                                                                               typeName);
+        columnDataType.setUserDefined(true);
+        columnDataType.setType(dataType, className);
+        columnDataType.setBaseType(baseType);
+        columnDataType.setRemarks(remarks);
+
+        columnDataType.addAttributes(results.getAttributes());
+
+        schema.addColumnDataType(columnDataType);
+      }
+    }
+    finally
+    {
+      results.close();
+    }
+
   }
 
 }

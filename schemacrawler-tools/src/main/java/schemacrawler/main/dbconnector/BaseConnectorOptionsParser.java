@@ -21,7 +21,14 @@
 package schemacrawler.main.dbconnector;
 
 
+import java.util.Map;
+import java.util.Properties;
+import java.util.Map.Entry;
+
 import schemacrawler.main.BaseOptionsParser;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.utility.DatabaseConnectionOptions;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
 
@@ -30,13 +37,10 @@ import sf.util.CommandLineParser.StringOption;
  * 
  * @author sfatehi
  */
-abstract class BaseConnectorOptionsParser<O extends BaseConnectorOptions>
-  extends BaseOptionsParser<O>
+abstract class BaseConnectorOptionsParser
+  extends BaseOptionsParser<DatabaseConnectionOptions>
 {
 
-  protected final StringOption optionSchemaPattern = new StringOption(Option.NO_SHORT_FORM,
-                                                                      "schemapattern",
-                                                                      null);
   protected final StringOption optionUser = new StringOption(Option.NO_SHORT_FORM,
                                                              "user",
                                                              null);
@@ -44,14 +48,34 @@ abstract class BaseConnectorOptionsParser<O extends BaseConnectorOptions>
                                                                  "password",
                                                                  "");
 
+  protected final Config config;
+
   /**
    * Parses the command line into options.
    * 
    * @param args
    */
-  protected BaseConnectorOptionsParser(final String[] args)
+  protected BaseConnectorOptionsParser(final String[] args, final Config config)
   {
     super(args);
+    this.config = config;
+  }
+
+  static DatabaseConnectionOptions createOptionsFromConfig(final Map<String, String> databaseConnectionConfig)
+    throws SchemaCrawlerException
+  {
+    final Properties properties = new Properties();
+    for (final Entry<String, String> entry: databaseConnectionConfig.entrySet())
+    {
+      final String key = entry.getKey();
+      final String value = entry.getValue();
+      if (key != null && value != null)
+      {
+        properties.setProperty(key, value);
+      }
+    }
+
+    return new DatabaseConnectionOptions(properties);
   }
 
 }

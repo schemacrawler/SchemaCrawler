@@ -75,10 +75,6 @@ Or, the following:
 -password=<password>
   Database password.
 
--schemapattern=<schemapattern>
-  Optional, specifies the schema to use. Use _ to match a single character,
-  and % to match many characters.
-
 --- Commands ---
 
 -command=<command>

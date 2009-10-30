@@ -43,7 +43,6 @@ import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutor;
 import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.main.SchemaCrawlerMain;
-import schemacrawler.main.dbconnector.DatabaseConnector;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.Command;
 import schemacrawler.tools.Commands;
@@ -97,6 +96,7 @@ public class SchemaCrawlerOutputTest
 
   @BeforeClass
   public static void beforeAllTests()
+    throws Exception
   {
     TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();
@@ -117,7 +117,6 @@ public class SchemaCrawlerOutputTest
             new Command("brief_schema", false), new Command("count", true),
         }
     };
-    final DatabaseConnector dbConnector = new InMemoryDatabaseConnector(testUtility);
 
     final List<String> failures = new ArrayList<String>();
     for (final OutputFormat outputFormat: OutputFormat.values())
@@ -149,7 +148,8 @@ public class SchemaCrawlerOutputTest
 
         final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(commands,
                                                                                   new Config(),
-                                                                                  dbConnector,
+                                                                                  testUtility
+                                                                                    .getDatabaseConnectionOptions(),
                                                                                   outputOptions);
         SchemaCrawlerMain.schemacrawler(commandLine);
 

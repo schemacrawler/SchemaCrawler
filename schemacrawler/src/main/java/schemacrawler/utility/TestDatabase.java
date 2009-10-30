@@ -23,17 +23,13 @@ package schemacrawler.utility;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.sql.DataSource;
 
 import org.hsqldb.Server;
 
@@ -56,8 +52,6 @@ public class TestDatabase
 
   private static final Logger LOGGER = Logger.getLogger(TestDatabase.class
     .getName());
-
-  private static final boolean DEBUG = false;
 
   private static final Class<Driver> JDBC_DRIVER_CLASS;
   static
@@ -93,23 +87,17 @@ public class TestDatabase
     testUtility.createDatabase();
   }
 
-  private DataSource dataSource;
-  private PrintWriter out;
+  private DatabaseConnectionOptions connectionOptions;
 
   /**
    * Create database in memory.
+   * 
+   * @throws SchemaCrawlerException
    */
   public void createMemoryDatabase()
+    throws SchemaCrawlerException
   {
     LOGGER.log(Level.FINE, toString() + " - Setting up in-memory database");
-    if (DEBUG)
-    {
-      out = new PrintWriter(System.out, true);
-    }
-    else
-    {
-      out = null;
-    }
     createDatabase("jdbc:hsqldb:mem:schemacrawler");
   }
 
@@ -130,7 +118,7 @@ public class TestDatabase
   public Connection getConnection()
     throws SQLException
   {
-    return dataSource.getConnection();
+    return connectionOptions.createConnection();
   }
 
   public Database getDatabase(final SchemaCrawlerOptions schemaCrawlerOptions)
@@ -139,6 +127,11 @@ public class TestDatabase
     final Database database = SchemaCrawlerUtility
       .getDatabase(getConnection(), schemaCrawlerOptions);
     return database;
+  }
+
+  public DatabaseConnectionOptions getDatabaseConnectionOptions()
+  {
+    return connectionOptions;
   }
 
   public Schema getSchema(final SchemaCrawlerOptions schemaCrawlerOptions,
@@ -160,16 +153,16 @@ public class TestDatabase
     Statement statement = null;
     try
     {
-      if (dataSource != null)
+      if (connectionOptions != null)
       {
-        connection = dataSource.getConnection();
+        connection = connectionOptions.createConnection();
         if (connection != null)
         {
           statement = connection.createStatement();
           statement.execute("SHUTDOWN");
           connection.close();
         }
-        dataSource = null;
+        connectionOptions = null;
       }
     }
     catch (final SQLException e)
@@ -205,8 +198,11 @@ public class TestDatabase
 
   /**
    * Load driver, and create database, schema and data.
+   * 
+   * @throws SchemaCrawlerException
    */
   private void createDatabase()
+    throws SchemaCrawlerException
   {
     LOGGER.log(Level.FINE, toString() + " - Setting up database");
     // Attempt to delete the database files
@@ -227,17 +223,10 @@ public class TestDatabase
   }
 
   private void createDatabase(final String url)
+    throws SchemaCrawlerException
   {
     makeDataSource(url);
-    try
-    {
-      dataSource.setLogWriter(out);
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.FINE, "Could not set log writer", e);
-    }
-    setupSchema(dataSource);
+    setupSchema(connectionOptions);
   }
 
   /**
@@ -264,14 +253,12 @@ public class TestDatabase
   }
 
   private void makeDataSource(final String url)
+    throws SchemaCrawlerException
   {
-    final Properties connectionProperties = new Properties();
-    connectionProperties.setProperty("driver", JDBC_DRIVER_CLASS.getName());
-    connectionProperties.setProperty("url", url);
-    connectionProperties.setProperty("user", "sa");
-    connectionProperties.setProperty("password", "");
-
-    dataSource = new PropertiesDataSource(connectionProperties);
+    connectionOptions = new DatabaseConnectionOptions(JDBC_DRIVER_CLASS
+      .getName(), url);
+    connectionOptions.setUser("sa");
+    connectionOptions.setPassword("");
   }
 
   /**
@@ -280,7 +267,7 @@ public class TestDatabase
    * @param dataSource
    *        Datasource
    */
-  private void setupSchema(final DataSource dataSource)
+  private void setupSchema(final DatabaseConnectionOptions dataSource)
   {
     Connection connection = null;
     Statement statement = null;
@@ -293,7 +280,7 @@ public class TestDatabase
       };
       if (dataSource != null)
       {
-        connection = dataSource.getConnection();
+        connection = dataSource.createConnection();
         statement = connection.createStatement();
         for (final String scriptResource: scriptResources)
         {

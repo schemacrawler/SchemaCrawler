@@ -44,10 +44,6 @@ final class SchemaCrawlerOptionsParser
                                                               "schemas",
                                                               InclusionRule.NONE);
 
-  private final StringOption optionSchemaPattern = new StringOption(Option.NO_SHORT_FORM,
-                                                                    "schemapattern",
-                                                                    "");
-
   private final BooleanOption optionShowStoredProcedures = new BooleanOption(Option.NO_SHORT_FORM,
                                                                              "show_stored_procedures");
   private final StringOption optionTableTypes = new StringOption(Option.NO_SHORT_FORM,
@@ -104,7 +100,6 @@ final class SchemaCrawlerOptionsParser
     parse(new Option[] {
         optionCatalogs,
         optionSchemas,
-        optionSchemaPattern,
         optionTableTypes,
         optionShowStoredProcedures,
         optionTables,
@@ -131,10 +126,6 @@ final class SchemaCrawlerOptionsParser
       final InclusionRule schemaInclusionRule = new InclusionRule(optionSchemas
         .getValue(), InclusionRule.NONE);
       options.setSchemaInclusionRule(schemaInclusionRule);
-    }
-    if (optionSchemaPattern.isFound())
-    {
-      options.setSchemaPattern(optionSchemaPattern.getValue());
     }
 
     if (optionTableTypes.isFound())

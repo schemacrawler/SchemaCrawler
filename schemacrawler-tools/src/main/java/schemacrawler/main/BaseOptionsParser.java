@@ -22,6 +22,7 @@ package schemacrawler.main;
 
 
 import schemacrawler.schemacrawler.Options;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.CommandLineParser;
 import sf.util.CommandLineParser.Option;
 
@@ -52,7 +53,8 @@ public abstract class BaseOptionsParser<O extends Options>
    * 
    * @return Command line options
    */
-  protected abstract O getOptions();
+  protected abstract O getOptions()
+    throws SchemaCrawlerException;
 
   protected void parse(final CommandLineParser.Option<?>[] options)
   {

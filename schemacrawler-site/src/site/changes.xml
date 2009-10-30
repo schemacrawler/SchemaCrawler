@@ -5,6 +5,12 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+    <release version="7.5" date="2009-11-10">
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        Removed command line switch, -schemapattern, and the schemapattern option. Use
+        the -schemas command line switch instead.
+      ]]></action>                                       
+    </release>  
     <release version="7.4" date="2009-09-24">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added new pre-packaged SchemaCrawler for Oracle. 

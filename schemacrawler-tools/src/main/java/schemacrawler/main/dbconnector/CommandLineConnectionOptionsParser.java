@@ -21,7 +21,9 @@
 package schemacrawler.main.dbconnector;
 
 
-import sf.util.CommandLineParser.BooleanOption;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.utility.DatabaseConnectionOptions;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
 
@@ -30,15 +32,10 @@ import sf.util.CommandLineParser.StringOption;
  * 
  * @author sfatehi
  */
-final class PropertiesDataSourceOptionsParser
-  extends BaseConnectorOptionsParser<PropertiesDataSourceOptions>
+public final class CommandLineConnectionOptionsParser
+  extends BaseConnectorOptionsParser
 {
 
-  private final BooleanOption optionUseDefaultConnection = new BooleanOption('d',
-                                                                             "default");
-  private final StringOption optionConnection = new StringOption('c',
-                                                                 "connection",
-                                                                 null);
   private final StringOption optionDriver = new StringOption(Option.NO_SHORT_FORM,
                                                              "driver",
                                                              null);
@@ -51,9 +48,10 @@ final class PropertiesDataSourceOptionsParser
    * 
    * @param args
    */
-  PropertiesDataSourceOptionsParser(final String[] args)
+  public CommandLineConnectionOptionsParser(final String[] args,
+                                            final Config config)
   {
-    super(args);
+    super(args, config);
   }
 
   @Override
@@ -63,28 +61,36 @@ final class PropertiesDataSourceOptionsParser
   }
 
   @Override
-  protected PropertiesDataSourceOptions getOptions()
+  public DatabaseConnectionOptions getOptions()
+    throws SchemaCrawlerException
   {
     parse(new Option[] {
-        optionUseDefaultConnection,
-        optionConnection,
-        optionDriver,
-        optionConnectionUrl,
-        optionSchemaPattern,
-        optionUser,
-        optionPassword,
+        optionDriver, optionConnectionUrl, optionUser, optionPassword,
     });
 
-    final PropertiesDataSourceOptions options = new PropertiesDataSourceOptions();
-    options.setUseDefaultConnection(optionUseDefaultConnection.getValue());
-    options.setConnection(optionConnection.getValue());
-    options.setConnectionUrl(optionConnectionUrl.getValue());
-    options.setDriver(optionDriver.getValue());
-    options.setSchemapattern(optionSchemaPattern.getValue());
-    options.setUser(optionUser.getValue());
-    options.setPassword(optionPassword.getValue());
+    // Check arguments
+    if (!optionPassword.isFound())
+    {
+      throw new SchemaCrawlerException("Please provide the password");
+    }
 
-    return options;
+    final DatabaseConnectionOptions conenctionOptions;
+    if (optionDriver.isFound() && optionConnectionUrl.isFound())
+    {
+      final String jdbcDriverClassName = optionDriver.getValue();
+      final String connectionUrl = optionConnectionUrl.getValue();
+
+      conenctionOptions = new DatabaseConnectionOptions(jdbcDriverClassName,
+                                                        connectionUrl);
+      conenctionOptions.setUser(optionUser.getValue());
+      conenctionOptions.setPassword(optionPassword.getValue());
+
+      return conenctionOptions;
+    }
+    else
+    {
+      return null;
+    }
   }
 
 }

@@ -23,18 +23,11 @@ package schemacrawler.crawl;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.logging.Level;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
-import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -52,10 +45,9 @@ final class RetrieverConnection
 
   private final Connection connection;
   private final DatabaseMetaData metaData;
-  private final List<String> catalogNames;
-  private final String schemaPattern;
   private final InformationSchemaViews informationSchemaViews;
   private final boolean supportsCatalogs;
+  protected final Map<SchemaReference, MutableSchema> schemaRefsCache;
 
   RetrieverConnection(final Connection connection,
                       final SchemaCrawlerOptions options)
@@ -76,59 +68,9 @@ final class RetrieverConnection
     }
     this.connection = connection;
     metaData = connection.getMetaData();
-
     supportsCatalogs = metaData.supportsCatalogsInTableDefinitions();
-    final Set<String> catalogNames = new HashSet<String>();
-    if (supportsCatalogs)
-    {
-      try
-      {
-        catalogNames.addAll(new HashSet<String>(readResultsVector(metaData
-          .getCatalogs())));
-        catalogNames.add(connection.getCatalog());
-      }
-      catch (final SQLException e)
-      {
-        LOGGER.log(Level.WARNING, "", e);
-      }
-      LOGGER.log(Level.FINE, "All catalogs: " + catalogNames);
-
-      for (final Iterator<String> catalogNamesIterator = catalogNames
-        .iterator(); catalogNamesIterator.hasNext();)
-      {
-        final String catalogName = catalogNamesIterator.next();
-        final InclusionRule catalogInclusionRule = options
-          .getCatalogInclusionRule();
-        if (catalogInclusionRule != null
-            && !catalogInclusionRule.include(catalogName))
-        {
-          catalogNamesIterator.remove();
-        }
-      }
-    }
-    if (catalogNames.isEmpty())
-    {
-      if (supportsCatalogs)
-      {
-        catalogNames.add(connection.getCatalog());
-      }
-      else
-      {
-        catalogNames.add(null);
-      }
-    }
-    final ArrayList<String> catalogNamesList = new ArrayList<String>(catalogNames);
-    Collections.sort(catalogNamesList);
-    this.catalogNames = Collections.unmodifiableList(catalogNamesList);
-
-    schemaPattern = schemaCrawlerOptions.getSchemaPattern();
-
+    schemaRefsCache = new HashMap<SchemaReference, MutableSchema>();
     informationSchemaViews = schemaCrawlerOptions.getInformationSchemaViews();
-  }
-
-  List<String> getCatalogNames()
-  {
-    return catalogNames;
   }
 
   Connection getConnection()
@@ -151,9 +93,9 @@ final class RetrieverConnection
     return metaData;
   }
 
-  String getSchemaPattern()
+  Map<SchemaReference, MutableSchema> getSchemaNamesMap()
   {
-    return schemaPattern;
+    return schemaRefsCache;
   }
 
   boolean isSupportsCatalogs()
@@ -161,31 +103,10 @@ final class RetrieverConnection
     return supportsCatalogs;
   }
 
-  /**
-   * Reads a single column result set as a list.
-   * 
-   * @param results
-   *        Result set
-   * @return List
-   * @throws SQLException
-   */
-  List<String> readResultsVector(final ResultSet results)
-    throws SQLException
+  void cacheSchema(final SchemaReference schemaName,
+                     final MutableSchema schema)
   {
-    final List<String> values = new ArrayList<String>();
-    try
-    {
-      while (results.next())
-      {
-        final String value = results.getString(1);
-        values.add(value);
-      }
-    }
-    finally
-    {
-      results.close();
-    }
-    return values;
+    schemaRefsCache.put(schemaName, schema);
   }
 
 }

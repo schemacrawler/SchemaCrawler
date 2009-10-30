@@ -26,19 +26,12 @@
   Optional, defaults to showing all catalogs
      
 -schemas=<regular-expression>
-  <regular-expression> is a regular expression to match schema names 
-  for example, 
+  <regular-expression> is a regular expression to match fully qualified schema 
+  namess, in the form "CATALOGNAME.SCHEMANAME" - for example,
   -schemas=.*\.C.*|.*\.P.*
   matches any schemas whose names start with C or P
   Schemas that do not match the pattern are not displayed
   Optional, defaults to showing all schemas
-        
--schemapattern=<schemapattern>
-  <schemapattern> is a JDBC pattern (which can include _ or %)
-  for the schemas to crawl and optimizes the retrieval of
-  tables; if the -schemas option is used, then it is best
-  to specify this option in addition
-  Optional, defaults to all schemas in the catalog
   
 -table_types=<table_types>
   <table_types> is a command separated list of table types of 

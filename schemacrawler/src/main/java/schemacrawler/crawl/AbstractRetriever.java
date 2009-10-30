@@ -22,8 +22,13 @@ package schemacrawler.crawl;
 
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.utility.Utility;
 
@@ -97,9 +102,19 @@ abstract class AbstractRetriever
     return retrieverConnection.getConnection();
   }
 
+  protected DatabaseMetaData getMetaData()
+  {
+    return retrieverConnection.getMetaData();
+  }
+
   protected RetrieverConnection getRetrieverConnection()
   {
     return retrieverConnection;
+  }
+
+  protected Set<SchemaReference> getSchemaNames()
+  {
+    return retrieverConnection.getSchemaNamesMap().keySet();
   }
 
   protected MutableColumnDataType lookupColumnDataTypeByType(final MutableSchema schema,
@@ -164,12 +179,8 @@ abstract class AbstractRetriever
   protected MutableSchema lookupSchema(final String catalogName,
                                        final String schemaName)
   {
-    MutableSchema schema = null;
-    final Catalog catalog = database.getCatalog(catalogName);
-    if (catalog != null)
-    {
-      schema = (MutableSchema) catalog.getSchema(schemaName);
-    }
+    final MutableSchema schema = retrieverConnection.getSchemaNamesMap()
+      .get(new SchemaReference(catalogName, schemaName));
     return schema;
   }
 
@@ -184,6 +195,33 @@ abstract class AbstractRetriever
       table = schema.getTable(tableName);
     }
     return table;
+  }
+
+  /**
+   * Reads a single column result set as a list.
+   * 
+   * @param results
+   *        Result set
+   * @return List
+   * @throws SQLException
+   */
+  List<String> readResultsVector(final ResultSet results)
+    throws SQLException
+  {
+    final List<String> values = new ArrayList<String>();
+    try
+    {
+      while (results.next())
+      {
+        final String value = results.getString(1);
+        values.add(value);
+      }
+    }
+    finally
+    {
+      results.close();
+    }
+    return values;
   }
 
 }
