@@ -24,8 +24,8 @@ package schemacrawler.main.dbconnector;
 import java.util.Map;
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.utility.DatabaseConnectionOptions;
 import sf.util.CommandLineParser.BooleanOption;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;

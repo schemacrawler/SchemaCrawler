@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.utility;
+package schemacrawler.schemacrawler;
 
 
 import java.sql.Connection;
@@ -30,8 +30,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schemacrawler.Options;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.utility.Utility;
 
 public class DatabaseConnectionOptions
   implements Options
