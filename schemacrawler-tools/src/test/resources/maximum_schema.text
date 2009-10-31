@@ -43,163 +43,163 @@ user                                                   [driver property]
 
 
 
-AllProceduresAreCallable              true
-AllTablesAreSelectable                true
-CatalogSeparator                      
-CatalogTerm                           
-Catalogs                              []
-DataDefinitionCausesTransactionCommit  true
-DataDefinitionIgnoredInTransactions   false
-DatabaseMajorVersion                  1
-DatabaseMinorVersion                  8
-DatabaseProductName                   HSQL Database Engine
-DatabaseProductVersion                1.8.0
-DefaultTransactionIsolation           1
-DeletesAreDetectedResultSetTypeForwardOnly  false
-DeletesAreDetectedResultSetTypeScrollInsensitive  false
-DeletesAreDetectedResultSetTypeScrollSensitive  false
-DoesMaxRowSizeIncludeBlobs            true
-DriverMajorVersion                    1
-DriverMinorVersion                    8
-DriverName                            HSQL Database Engine Driver
-DriverVersion                         1.8.0
-ExtraNameCharacters                   []
-IdentifierQuoteString                 "
-InsertsAreDetectedResultSetTypeForwardOnly  false
-InsertsAreDetectedResultSetTypeScrollInsensitive  false
-InsertsAreDetectedResultSetTypeScrollSensitive  false
-IsCatalogAtStart                      false
-IsReadOnly                            false
-JDBCMajorVersion                      3
-JDBCMinorVersion                      0
-LocatorsUpdateCopy                    false
-MaxBinaryLiteralLength                0
-MaxCatalogNameLength                  0
-MaxCharLiteralLength                  0
-MaxColumnNameLength                   0
-MaxColumnsInGroupBy                   0
-MaxColumnsInIndex                     0
-MaxColumnsInOrderBy                   0
-MaxColumnsInSelect                    0
-MaxColumnsInTable                     0
-MaxConnections                        0
-MaxCursorNameLength                   0
-MaxIndexLength                        0
-MaxProcedureNameLength                0
-MaxRowSize                            0
-MaxSchemaNameLength                   0
-MaxStatementLength                    0
-MaxStatements                         0
-MaxTableNameLength                    0
-MaxTablesInSelect                     0
-MaxUserNameLength                     0
-NullPlusNonNullIsNull                 true
-NullsAreSortedAtEnd                   false
-NullsAreSortedAtStart                 false
-NullsAreSortedHigh                    false
-NullsAreSortedLow                     true
-NumericFunctions                      [ABS, ACOS, ASIN, ATAN, ATAN2, CEILING, COS, COT, DEGREES, EXP, FLOOR, LOG, LOG10, MOD, PI, POWER, RADIANS, RAND, ROUND, SIGN, SIN, SQRT, TAN, TRUNCATE, BITAND, BITOR, BITXOR, ROUNDMAGIC]
-OthersInsertsAreVisibleResultSetTypeForwardOnly  false
-OthersInsertsAreVisibleResultSetTypeScrollInsensitive  false
-OthersInsertsAreVisibleResultSetTypeScrollSensitive  false
-OthersUpdatesAreVisibleResultSetTypeForwardOnly  false
-OthersUpdatesAreVisibleResultSetTypeScrollInsensitive  false
-OthersUpdatesAreVisibleResultSetTypeScrollSensitive  false
-OwnDeletesAreVisibleResultSetTypeForwardOnly  false
-OwnDeletesAreVisibleResultSetTypeScrollInsensitive  false
-OwnDeletesAreVisibleResultSetTypeScrollSensitive  false
-OwnInsertsAreVisibleResultSetTypeForwardOnly  false
-OwnInsertsAreVisibleResultSetTypeScrollInsensitive  false
-OwnInsertsAreVisibleResultSetTypeScrollSensitive  false
-OwnUpdatesAreVisibleResultSetTypeForwardOnly  false
-OwnUpdatesAreVisibleResultSetTypeScrollInsensitive  false
-OwnUpdatesAreVisibleResultSetTypeScrollSensitive  false
-ProcedureTerm                         
-ResultSetHoldability                  1
-SQLKeywords                           [BEFORE, BIGINT, BINARY, CACHED, DATETIME, LIMIT, LONGVARBINARY, LONGVARCHAR, OBJECT, OTHER, SAVEPOINT, TEMP, TEXT, TOP, TRIGGER, TINYINT, VARBINARY, VARCHAR_IGNORECASE]
-SQLStateType                          2
-SchemaTerm                            SCHEMA
-Schemas                               [INFORMATION_SCHEMA, PUBLIC, SCHEMACRAWLER]
-SearchStringEscape                    \
-StoresLowerCaseIdentifiers            false
-StoresLowerCaseQuotedIdentifiers      false
-StoresMixedCaseIdentifiers            false
-StoresMixedCaseQuotedIdentifiers      false
-StoresUpperCaseIdentifiers            true
-StoresUpperCaseQuotedIdentifiers      false
-StringFunctions                       [ASCII, BIT_LENGTH, CHAR, CHAR_LENGTH, CHARACTER_LENGTH, CONCAT, DIFFERENCE, HEXTORAW, INSERT, LCASE, LEFT, LENGTH, LOCATE, LTRIM, OCTET_LENGTH, RAWTOHEX, REPEAT, REPLACE, RIGHT, RTRIM, SOUNDEX, SPACE, SUBSTR, SUBSTRING, UCASE, LOWER, UPPER]
-SupportsANSI92EntryLevelSQL           false
-SupportsANSI92FullSQL                 false
-SupportsANSI92IntermediateSQL         false
-SupportsAlterTableWithAddColumn       true
-SupportsAlterTableWithDropColumn      true
-SupportsBatchUpdates                  true
-SupportsCatalogsInDataManipulation    false
-SupportsCatalogsInIndexDefinitions    false
-SupportsCatalogsInPrivilegeDefinitions  false
-SupportsCatalogsInProcedureCalls      false
-SupportsCatalogsInTableDefinitions    false
-SupportsColumnAliasing                true
-SupportsConvert                       true
-SupportsCoreSQLGrammar                true
-SupportsCorrelatedSubqueries          true
-SupportsDataDefinitionAndDataManipulationTransactions  false
-SupportsDataManipulationTransactionsOnly  true
-SupportsDifferentTableCorrelationNames  true
-SupportsExpressionsInOrderBy          true
-SupportsExtendedSQLGrammar            false
-SupportsFullOuterJoins                false
-SupportsGetGeneratedKeys              false
-SupportsGroupBy                       true
-SupportsGroupByBeyondSelect           true
-SupportsGroupByUnrelated              true
-SupportsIntegrityEnhancementFacility  true
-SupportsLikeEscapeClause              true
-SupportsLimitedOuterJoins             true
-SupportsMinimumSQLGrammar             false
-SupportsMixedCaseIdentifiers          false
-SupportsMixedCaseQuotedIdentifiers    true
-SupportsMultipleOpenResults           false
-SupportsMultipleResultSets            false
-SupportsMultipleTransactions          true
-SupportsNamedParameters               true
-SupportsNonNullableColumns            true
-SupportsOpenCursorsAcrossCommit       false
-SupportsOpenCursorsAcrossRollback     false
-SupportsOpenStatementsAcrossCommit    true
-SupportsOpenStatementsAcrossRollback  true
-SupportsOrderByUnrelated              true
-SupportsOuterJoins                    true
-SupportsPositionedDelete              false
-SupportsPositionedUpdate              false
-SupportsResultSetTypeResultSetTypeForwardOnly  true
-SupportsResultSetTypeResultSetTypeScrollInsensitive  true
-SupportsResultSetTypeResultSetTypeScrollSensitive  false
-SupportsSavepoints                    true
-SupportsSchemasInDataManipulation     false
-SupportsSchemasInIndexDefinitions     true
-SupportsSchemasInPrivilegeDefinitions  true
-SupportsSchemasInProcedureCalls       false
-SupportsSchemasInTableDefinitions     true
-SupportsSelectForUpdate               false
-SupportsStatementPooling              false
-SupportsStoredProcedures              true
-SupportsSubqueriesInComparisons       true
-SupportsSubqueriesInExists            true
-SupportsSubqueriesInIns               true
-SupportsSubqueriesInQuantifieds       true
-SupportsTableCorrelationNames         true
-SupportsTransactions                  true
-SupportsUnion                         true
-SupportsUnionAll                      true
-SystemFunctions                       [DATABASE, USER, IDENTITY]
-TableTypes                            [GLOBAL TEMPORARY, SYSTEM TABLE, TABLE, VIEW]
-TimeDateFunctions                     [CURDATE, CURTIME, DATEDIFF, DAYNAME, DAY, DAYOFMONTH, DAYOFWEEK, DAYOFYEAR, HOUR, MINUTE, MONTH, MONTHNAME, NOW, QUARTER, SECOND, WEEK, YEAR, TO_CHAR]
-TypeInfo                              [TINYINT, BIGINT, LONGVARBINARY, VARBINARY, BINARY, LONGVARCHAR, CHAR, NUMERIC, DECIMAL, INTEGER, SMALLINT, FLOAT, REAL, DOUBLE, VARCHAR, VARCHAR_IGNORECASE, BOOLEAN, DATE, TIME, TIMESTAMP, OTHER]
+All procedures are callable           true
+All tables are selectable             true
+Catalog separator                     
+Catalog term                          
+Catalogs                              
+Data definition causes transaction commit  true
+Data definition ignored in transactions  false
+Database major version                1
+Database minor version                8
+Database product name                 HSQL Database Engine
+Database product version              1.8.0
+Default transaction isolation         1
+Deletes are detected for TYPE_FORWARD_ONLY result sets  false
+Deletes are detected for TYPE_SCROLL_INSENSITIVE result sets  false
+Deletes are detected for TYPE_SCROLL_SENSITIVE result sets  false
+Does max row size include blobs       true
+Driver major version                  1
+Driver minor version                  8
+Driver name                           HSQL Database Engine Driver
+Driver version                        1.8.0
+Extra name characters                 
+Identifier quote string               "
+Inserts are detected for TYPE_FORWARD_ONLY result sets  false
+Inserts are detected for TYPE_SCROLL_INSENSITIVE result sets  false
+Inserts are detected for TYPE_SCROLL_SENSITIVE result sets  false
+Is catalog at start                   false
+Is read only                          false
+JDBC major version                    3
+JDBC minor version                    0
+Locators update copy                  false
+Max binary literal length             0
+Max catalog name length               0
+Max char literal length               0
+Max column name length                0
+Max columns in group by               0
+Max columns in index                  0
+Max columns in order by               0
+Max columns in select                 0
+Max columns in table                  0
+Max connections                       0
+Max cursor name length                0
+Max index length                      0
+Max procedure name length             0
+Max row size                          0
+Max schema name length                0
+Max statement length                  0
+Max statements                        0
+Max table name length                 0
+Max tables in select                  0
+Max user name length                  0
+Null plus non null is null            true
+Nulls are sorted at end               false
+Nulls are sorted at start             false
+Nulls are sorted high                 false
+Nulls are sorted low                  true
+Numeric functions                     ABS, ACOS, ASIN, ATAN, ATAN2, CEILING, COS, COT, DEGREES, EXP, FLOOR, LOG, LOG10, MOD, PI, POWER, RADIANS, RAND, ROUND, SIGN, SIN, SQRT, TAN, TRUNCATE, BITAND, BITOR, BITXOR, ROUNDMAGIC
+Others inserts are visible for TYPE_FORWARD_ONLY result sets  false
+Others inserts are visible for TYPE_SCROLL_INSENSITIVE result sets  false
+Others inserts are visible for TYPE_SCROLL_SENSITIVE result sets  false
+Others updates are visible for TYPE_FORWARD_ONLY result sets  false
+Others updates are visible for TYPE_SCROLL_INSENSITIVE result sets  false
+Others updates are visible for TYPE_SCROLL_SENSITIVE result sets  false
+Own deletes are visible for TYPE_FORWARD_ONLY result sets  false
+Own deletes are visible for TYPE_SCROLL_INSENSITIVE result sets  false
+Own deletes are visible for TYPE_SCROLL_SENSITIVE result sets  false
+Own inserts are visible for TYPE_FORWARD_ONLY result sets  false
+Own inserts are visible for TYPE_SCROLL_INSENSITIVE result sets  false
+Own inserts are visible for TYPE_SCROLL_SENSITIVE result sets  false
+Own updates are visible for TYPE_FORWARD_ONLY result sets  false
+Own updates are visible for TYPE_SCROLL_INSENSITIVE result sets  false
+Own updates are visible for TYPE_SCROLL_SENSITIVE result sets  false
+Procedure term                        
+Result set holdability                1
+SQL keywords                          BEFORE, BIGINT, BINARY, CACHED, DATETIME, LIMIT, LONGVARBINARY, LONGVARCHAR, OBJECT, OTHER, SAVEPOINT, TEMP, TEXT, TOP, TRIGGER, TINYINT, VARBINARY, VARCHAR_IGNORECASE
+SQL state type                        2
+Schema term                           SCHEMA
+Schemas                               INFORMATION_SCHEMA, PUBLIC, SCHEMACRAWLER
+Search string escape                  \
+Stores lower case identifiers         false
+Stores lower case quoted identifiers  false
+Stores mixed case identifiers         false
+Stores mixed case quoted identifiers  false
+Stores upper case identifiers         true
+Stores upper case quoted identifiers  false
+String functions                      ASCII, BIT_LENGTH, CHAR, CHAR_LENGTH, CHARACTER_LENGTH, CONCAT, DIFFERENCE, HEXTORAW, INSERT, LCASE, LEFT, LENGTH, LOCATE, LTRIM, OCTET_LENGTH, RAWTOHEX, REPEAT, REPLACE, RIGHT, RTRIM, SOUNDEX, SPACE, SUBSTR, SUBSTRING, UCASE, LOWER, UPPER
+Supports ANSI entry level SQL         false
+Supports ANSI full SQL                false
+Supports ANSI intermediate SQL        false
+Supports alter table with add column  true
+Supports alter table with drop column  true
+Supports batch updates                true
+Supports catalogs in data manipulation  false
+Supports catalogs in index definitions  false
+Supports catalogs in privilege definitions  false
+Supports catalogs in procedure calls  false
+Supports catalogs in table definitions  false
+Supports column aliasing              true
+Supports convert                      true
+Supports core SQL grammar             true
+Supports correlated subqueries        true
+Supports data definition and data manipulation transactions  false
+Supports data manipulation transactions only  true
+Supports different table correlation names  true
+Supports expressions in order by      true
+Supports extended SQL grammar         false
+Supports full outer joins             false
+Supports get generated keys           false
+Supports group by                     true
+Supports group by beyond select       true
+Supports group by unrelated           true
+Supports integrity enhancement facility  true
+Supports like escape clause           true
+Supports limited outer joins          true
+Supports minimum SQL grammar          false
+Supports mixed case identifiers       false
+Supports mixed case quoted identifiers  true
+Supports multiple open results        false
+Supports multiple result sets         false
+Supports multiple transactions        true
+Supports named parameters             true
+Supports non nullable columns         true
+Supports open cursors across commit   false
+Supports open cursors across rollback  false
+Supports open statements across commit  true
+Supports open statements across rollback  true
+Supports order by unrelated           true
+Supports outer joins                  true
+Supports positioned delete            false
+Supports positioned update            false
+Supports result set type for TYPE_FORWARD_ONLY result sets  true
+Supports result set type for TYPE_SCROLL_INSENSITIVE result sets  true
+Supports result set type for TYPE_SCROLL_SENSITIVE result sets  false
+Supports savepoints                   true
+Supports schemas in data manipulation  false
+Supports schemas in index definitions  true
+Supports schemas in privilege definitions  true
+Supports schemas in procedure calls   false
+Supports schemas in table definitions  true
+Supports select for update            false
+Supports statement pooling            false
+Supports stored procedures            true
+Supports subqueries in comparisons    true
+Supports subqueries in exists         true
+Supports subqueries in ins            true
+Supports subqueries in quantifieds    true
+Supports table correlation names      true
+Supports transactions                 true
+Supports union                        true
+Supports union all                    true
+System functions                      DATABASE, USER, IDENTITY
+Table types                           GLOBAL TEMPORARY, SYSTEM TABLE, TABLE, VIEW
+Time date functions                   CURDATE, CURTIME, DATEDIFF, DAYNAME, DAY, DAYOFMONTH, DAYOFWEEK, DAYOFYEAR, HOUR, MINUTE, MONTH, MONTHNAME, NOW, QUARTER, SECOND, WEEK, YEAR, TO_CHAR
+Type info                             TINYINT, BIGINT, LONGVARBINARY, VARBINARY, BINARY, LONGVARCHAR, CHAR, NUMERIC, DECIMAL, INTEGER, SMALLINT, FLOAT, REAL, DOUBLE, VARCHAR, VARCHAR_IGNORECASE, BOOLEAN, DATE, TIME, TIMESTAMP, OTHER
 URL                                   jdbc:hsqldb:mem:schemacrawler
-UserName                              SA
-UsesLocalFilePerTable                 false
-UsesLocalFiles                        false
+User name                             SA
+Uses local file per table             false
+Uses local files                      false
 
 
 BIGINT                                                       [data type]
