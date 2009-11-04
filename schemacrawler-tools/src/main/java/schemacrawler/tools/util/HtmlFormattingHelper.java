@@ -126,4 +126,16 @@ public final class HtmlFormattingHelper
     return String.format("<pre id=\'%s\'>%n%s</pre>", id, text);
   }
 
+  public String createSectionHeader(final String sectionHeader)
+  {
+    if (!schemacrawler.utility.Utility.isBlank(sectionHeader))
+    {
+      return String.format("<h2>%s</h2>\n", sectionHeader);
+    }
+    else
+    {
+      return "";
+    }
+  }
+
 }

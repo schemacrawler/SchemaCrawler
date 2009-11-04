@@ -59,12 +59,6 @@ public final class BundledDriverConnectionOptionsParser
   }
 
   @Override
-  protected String getHelpResource()
-  {
-    return "/help/Commands.readme.txt";
-  }
-
-  @Override
   public DatabaseConnectionOptions getOptions()
     throws SchemaCrawlerException
   {
@@ -91,6 +85,12 @@ public final class BundledDriverConnectionOptionsParser
     ConfigUtility.substituteVariables(config);
 
     return new DatabaseConnectionOptions(config);
+  }
+
+  @Override
+  protected String getHelpResource()
+  {
+    return "/help/Commands.readme.txt";
   }
 
 }

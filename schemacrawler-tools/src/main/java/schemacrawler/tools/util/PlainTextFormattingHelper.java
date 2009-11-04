@@ -104,4 +104,17 @@ public class PlainTextFormattingHelper
     return NEWLINE + text;
   }
 
+  public String createSectionHeader(final String sectionHeader)
+  {
+    if (!schemacrawler.utility.Utility.isBlank(sectionHeader))
+    {
+      return NEWLINE + sectionHeader + NEWLINE + DOUBLE_DASHED_SEPARATOR
+             + NEWLINE;
+    }
+    else
+    {
+      return "";
+    }
+  }
+
 }

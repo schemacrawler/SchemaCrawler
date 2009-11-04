@@ -37,7 +37,7 @@ public interface TextFormattingHelper
    * @param id
    *        HTML id
    */
-  public String createHeader(final String id, final Object object);
+  public String createPreformattedObject(final String id, final Object object);
 
   /**
    * Called to handle the row output. Handler to be implemented by
@@ -153,5 +153,10 @@ public interface TextFormattingHelper
    * Creates a pre-formatted text section.
    */
   String createPreformattedText(String id, String text);
+
+  /**
+   * Creates a section header.
+   */
+  String createSectionHeader(String sectionHeader);
 
 }

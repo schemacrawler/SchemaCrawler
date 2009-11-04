@@ -72,13 +72,18 @@ final class SchemaTextFormatter
   implements CrawlHandler
 {
 
+  private enum CrawlPhase
+  {
+    none, datbaseInfo, columnDataTypes, tables, procedures, weakAssociations,
+  }
+
   private static final Logger LOGGER = Logger
     .getLogger(SchemaTextFormatter.class.getName());
 
   private final SchemaTextOptions options;
   private final PrintWriter out;
   private final TextFormattingHelper formattingHelper;
-
+  private CrawlPhase crawlPhase;
   private int tableCount;
 
   /**
@@ -116,6 +121,7 @@ final class SchemaTextFormatter
       throw new SchemaCrawlerException("Could not obtain output writer", e);
     }
 
+    crawlPhase = CrawlPhase.none;
   }
 
   /**
@@ -159,6 +165,12 @@ final class SchemaTextFormatter
   public void handle(final ColumnDataType columnDataType)
     throws SchemaCrawlerException
   {
+    if (crawlPhase != CrawlPhase.columnDataTypes)
+    {
+      printSectionHeader("Data Types");
+      crawlPhase = CrawlPhase.columnDataTypes;
+    }
+
     out.print(formattingHelper.createObjectStart(""));
     printColumnDataType(columnDataType);
     out.print(formattingHelper.createObjectEnd());
@@ -176,6 +188,11 @@ final class SchemaTextFormatter
     {
       return;
     }
+    if (crawlPhase != CrawlPhase.weakAssociations)
+    {
+      printSectionHeader("Weak Associations");
+      crawlPhase = CrawlPhase.weakAssociations;
+    }
 
     out.print(formattingHelper.createObjectStart(""));
     out
@@ -191,6 +208,11 @@ final class SchemaTextFormatter
    */
   public void handle(final DatabaseInfo databaseInfo)
   {
+    if (crawlPhase != CrawlPhase.datbaseInfo)
+    {
+      printSectionHeader("Database Information");
+      crawlPhase = CrawlPhase.datbaseInfo;
+    }
 
     printHeaderObject("databaseInfo", databaseInfo);
 
@@ -234,6 +256,13 @@ final class SchemaTextFormatter
    */
   public void handle(final Procedure procedure)
   {
+
+    if (crawlPhase != CrawlPhase.procedures)
+    {
+      printSectionHeader("Procedures");
+      crawlPhase = CrawlPhase.procedures;
+    }
+
     final SchemaTextDetailType schemaTextDetailType = options
       .getSchemaTextDetailType();
     if (schemaTextDetailType != SchemaTextDetailType.brief_schema)
@@ -301,6 +330,13 @@ final class SchemaTextFormatter
    */
   public void handle(final Table table)
   {
+
+    if (crawlPhase != CrawlPhase.tables)
+    {
+      printSectionHeader("Tables");
+      crawlPhase = CrawlPhase.tables;
+    }
+
     final SchemaTextDetailType schemaTextDetailType = options
       .getSchemaTextDetailType();
 
@@ -533,7 +569,7 @@ final class SchemaTextFormatter
   {
     if (object != null && !options.getOutputOptions().isNoInfo())
     {
-      out.println(formattingHelper.createHeader(id, object));
+      out.println(formattingHelper.createPreformattedObject(id, object));
     }
   }
 
@@ -663,6 +699,17 @@ final class SchemaTextFormatter
         }
       }
     }
+  }
+
+  private void printSectionHeader(final String sectionHeader)
+  {
+    out.println(formattingHelper.createEmptyRow());
+
+    if (schemacrawler.utility.Utility.isBlank(sectionHeader))
+    {
+      return;
+    }
+    out.println(formattingHelper.createSectionHeader(sectionHeader));
   }
 
   private void printTableColumns(final Column[] columns)

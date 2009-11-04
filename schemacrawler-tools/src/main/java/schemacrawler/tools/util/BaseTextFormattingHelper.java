@@ -37,14 +37,15 @@ abstract class BaseTextFormattingHelper
    * System specific line separator character.
    */
   protected static final String NEWLINE = System.getProperty("line.separator");
-  protected static final String DASHED_SEPARATOR = dashedSeparator();
+  protected static final String DASHED_SEPARATOR = separator('-');
+  protected static final String DOUBLE_DASHED_SEPARATOR = separator('=');
 
-  private static String dashedSeparator()
+  private static String separator(final char separatorChar)
   {
     final StringBuilder dashedSeparator = new StringBuilder();
     for (int i = 0; i < 72; i++)
     {
-      dashedSeparator.append('-');
+      dashedSeparator.append(separatorChar);
     }
     return dashedSeparator.toString();
   }
@@ -119,25 +120,6 @@ abstract class BaseTextFormattingHelper
   }
 
   /**
-   * Prints information.
-   * 
-   * @param object
-   *        Object to print
-   * @param out
-   *        Output writer
-   */
-  public String createHeader(final String id, final Object object)
-  {
-    final StringBuilder buffer = new StringBuilder();
-    buffer.append(DASHED_SEPARATOR).append(NEWLINE);
-    buffer.append(object.toString()).append(NEWLINE);
-    buffer.append(DASHED_SEPARATOR).append(NEWLINE);
-    buffer.append(NEWLINE).append(NEWLINE);
-
-    return createPreformattedText(id, buffer.toString());
-  }
-
-  /**
    * {@inheritDoc}
    * 
    * @see schemacrawler.tools.util.TextFormattingHelper#createNameRow(java.lang.String,
@@ -201,6 +183,25 @@ abstract class BaseTextFormattingHelper
     row.add(new TableCell(name, nameWidth, Align.left, 1, "", outputFormat));
     row.add(new TableCell(value, "", outputFormat));
     return row.toString();
+  }
+
+  /**
+   * Prints information.
+   * 
+   * @param object
+   *        Object to print
+   * @param out
+   *        Output writer
+   */
+  public String createPreformattedObject(final String id, final Object object)
+  {
+    final StringBuilder buffer = new StringBuilder();
+    buffer.append(DASHED_SEPARATOR).append(NEWLINE);
+    buffer.append(object.toString()).append(NEWLINE);
+    buffer.append(DASHED_SEPARATOR).append(NEWLINE);
+    buffer.append(NEWLINE).append(NEWLINE);
+
+    return createPreformattedText(id, buffer.toString());
   }
 
   /**

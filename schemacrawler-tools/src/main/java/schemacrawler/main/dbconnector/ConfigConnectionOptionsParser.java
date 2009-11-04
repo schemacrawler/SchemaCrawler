@@ -56,12 +56,6 @@ public final class ConfigConnectionOptionsParser
   }
 
   @Override
-  protected String getHelpResource()
-  {
-    return "/help/Commands.readme.txt";
-  }
-
-  @Override
   public DatabaseConnectionOptions getOptions()
     throws SchemaCrawlerException
   {
@@ -90,6 +84,12 @@ public final class ConfigConnectionOptionsParser
     ConfigUtility.substituteVariables(databaseConnectionConfig);
 
     return new DatabaseConnectionOptions(databaseConnectionConfig);
+  }
+
+  @Override
+  protected String getHelpResource()
+  {
+    return "/help/Commands.readme.txt";
   }
 
 }

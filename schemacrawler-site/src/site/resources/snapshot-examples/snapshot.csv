@@ -1,4 +1,9 @@
 
+""
+
+Database Information
+------------------------------------------------------------------------
+
 
 ------------------------------------------------------------------------
 -- database: HSQL Database Engine 1.8.0
@@ -202,6 +207,11 @@ Uses local file per table,false
 Uses local files,false
 
 
+""
+
+Data Types
+------------------------------------------------------------------------
+
 BIGINT,[data type]
 "",based on,BIGINT
 "",not user defined
@@ -369,6 +379,11 @@ VARCHAR_IGNORECASE,[data type]
 "",nullable
 "",not auto-incrementable
 "",searchable
+
+""
+
+Tables
+------------------------------------------------------------------------
 
 PUBLIC.CUSTOMER,[table]
 ------------------------------------------------------------------------
@@ -592,10 +607,20 @@ UPDATE,[privilege]
 "",DBA --> SA (grantable),""
 
 
+""
+
+Weak Associations
+------------------------------------------------------------------------
+
 "",[weak associations]
 ------------------------------------------------------------------------
 "",PUBLIC.PRODUCT.ID --> SCHEMACRAWLER.ITEM.PRODUCTID,""
 "",PUBLIC.INVOICE.ID --> SCHEMACRAWLER.ITEM.INVOICEID,""
+
+""
+
+Procedures
+------------------------------------------------------------------------
 
 PUBLIC.ABS,"[procedure, returns result]"
 ------------------------------------------------------------------------
