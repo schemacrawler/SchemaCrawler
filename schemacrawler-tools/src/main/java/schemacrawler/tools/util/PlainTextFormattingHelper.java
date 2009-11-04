@@ -109,39 +109,39 @@ public class PlainTextFormattingHelper
   {
     if (!schemacrawler.utility.Utility.isBlank(sectionHeader))
     {
-      final String DOUBLE_DASHED_SEPARATOR = separator("-=-");
+      final String defaultSeparator = separator("=");
 
       final String prefix;
       final String separator;
       if (type == null)
       {
-        prefix = NEWLINE;
-        separator = DOUBLE_DASHED_SEPARATOR;
+        prefix = NEWLINE + NEWLINE;
+        separator = defaultSeparator;
       }
       else
       {
         switch (type)
         {
           case title:
-            prefix = NEWLINE;
-            separator = separator("=");
+            prefix = NEWLINE + NEWLINE;
+            separator = separator("_");
             break;
           case heading1:
-            prefix = NEWLINE;
-            separator = DOUBLE_DASHED_SEPARATOR;
+            prefix = NEWLINE + NEWLINE;
+            separator = defaultSeparator;
             break;
           case heading2:
             prefix = "";
-            separator = separator("--=-");
+            separator = separator("-=-");
             break;
           default:
-            prefix = NEWLINE;
-            separator = DOUBLE_DASHED_SEPARATOR;
+            prefix = NEWLINE + NEWLINE;
+            separator = defaultSeparator;
             break;
         }
       }
-      return NEWLINE + NEWLINE + prefix + sectionHeader + NEWLINE + separator
-             + NEWLINE + NEWLINE;
+      return NEWLINE + prefix + sectionHeader + NEWLINE + separator + NEWLINE
+             + NEWLINE;
     }
     else
     {
