@@ -130,7 +130,8 @@ public final class HtmlFormattingHelper
   {
     if (!schemacrawler.utility.Utility.isBlank(sectionHeader))
     {
-      return String.format("<h2>%s</h2>\n", sectionHeader);
+      return String.format("<p>&nbsp;</p><p>&nbsp;</p><h2>%s</h2>\n",
+                           sectionHeader);
     }
     else
     {

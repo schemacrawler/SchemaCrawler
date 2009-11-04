@@ -703,12 +703,6 @@ final class SchemaTextFormatter
 
   private void printSectionHeader(final String sectionHeader)
   {
-    out.println(formattingHelper.createEmptyRow());
-
-    if (schemacrawler.utility.Utility.isBlank(sectionHeader))
-    {
-      return;
-    }
     out.println(formattingHelper.createSectionHeader(sectionHeader));
   }
 
