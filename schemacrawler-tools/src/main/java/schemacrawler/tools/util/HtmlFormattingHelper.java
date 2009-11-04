@@ -126,17 +126,49 @@ public final class HtmlFormattingHelper
     return String.format("<pre id=\'%s\'>%n%s</pre>", id, text);
   }
 
-  public String createSectionHeader(final String sectionHeader)
+  public String createSectionHeader(final SectionHeaderType type,
+                                    final String sectionHeader)
   {
     if (!schemacrawler.utility.Utility.isBlank(sectionHeader))
     {
-      return String.format("<p>&nbsp;</p><p>&nbsp;</p><h2>%s</h2>\n",
-                           sectionHeader);
+      final String prefix;
+      final String headerTag;
+      if (type == null)
+      {
+        prefix = "<p>&nbsp;</p>";
+        headerTag = "h2";
+      }
+      else
+      {
+        switch (type)
+        {
+          case title:
+            prefix = "<p>&nbsp;</p>";
+            headerTag = "h1";
+            break;
+          case heading1:
+            prefix = "<p>&nbsp;</p>";
+            headerTag = "h2";
+            break;
+          case heading2:
+            prefix = "";
+            headerTag = "h3";
+            break;
+          default:
+            prefix = "<p>&nbsp;</p>";
+            headerTag = "h2";
+            break;
+        }
+      }
+      return String.format("<p>&nbsp;</p>%s\n<%s>%s</%s>\n",
+                           prefix,
+                           headerTag,
+                           sectionHeader,
+                           headerTag);
     }
     else
     {
       return "";
     }
   }
-
 }

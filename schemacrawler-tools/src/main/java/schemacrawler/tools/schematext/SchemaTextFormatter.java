@@ -60,6 +60,7 @@ import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 import schemacrawler.tools.util.PlainTextFormattingHelper;
 import schemacrawler.tools.util.TextFormattingHelper;
+import schemacrawler.tools.util.TextFormattingHelper.SectionHeaderType;
 import schemacrawler.utility.ObjectToString;
 import schemacrawler.utility.Utility;
 
@@ -74,7 +75,7 @@ final class SchemaTextFormatter
 
   private enum CrawlPhase
   {
-    none, datbaseInfo, columnDataTypes, tables, procedures, weakAssociations,
+    none, databaseInfo, columnDataTypes, tables, procedures, weakAssociations,
   }
 
   private static final Logger LOGGER = Logger
@@ -167,7 +168,8 @@ final class SchemaTextFormatter
   {
     if (crawlPhase != CrawlPhase.columnDataTypes)
     {
-      printSectionHeader("Data Types");
+      out.println(formattingHelper
+        .createSectionHeader(SectionHeaderType.heading1, "Data Types"));
       crawlPhase = CrawlPhase.columnDataTypes;
     }
 
@@ -190,7 +192,8 @@ final class SchemaTextFormatter
     }
     if (crawlPhase != CrawlPhase.weakAssociations)
     {
-      printSectionHeader("Weak Associations");
+      out.println(formattingHelper
+        .createSectionHeader(SectionHeaderType.heading1, "Weak Associations"));
       crawlPhase = CrawlPhase.weakAssociations;
     }
 
@@ -208,14 +211,22 @@ final class SchemaTextFormatter
    */
   public void handle(final DatabaseInfo databaseInfo)
   {
-    if (crawlPhase != CrawlPhase.datbaseInfo)
+    if (crawlPhase != CrawlPhase.databaseInfo)
     {
-      printSectionHeader("Database Information");
-      crawlPhase = CrawlPhase.datbaseInfo;
+      out
+        .println(formattingHelper
+          .createSectionHeader(SectionHeaderType.heading1,
+                               "Database Information"));
+      crawlPhase = CrawlPhase.databaseInfo;
     }
 
+    out.println(formattingHelper
+      .createSectionHeader(SectionHeaderType.heading2, "Database Information"));
     printHeaderObject("databaseInfo", databaseInfo);
 
+    out.println(formattingHelper
+      .createSectionHeader(SectionHeaderType.heading2,
+                           "JDBC Driver Information"));
     printJdbcDriverInfo(databaseInfo.getJdbcDriverInfo());
 
     final SchemaTextDetailType schemaTextDetailType = options
@@ -225,6 +236,9 @@ final class SchemaTextFormatter
       return;
     }
 
+    out.println(formattingHelper
+      .createSectionHeader(SectionHeaderType.heading2,
+                           "Database Characteristics"));
     final Set<Map.Entry<String, Object>> propertySet = databaseInfo
       .getProperties().entrySet();
     if (propertySet.size() > 0)
@@ -259,7 +273,8 @@ final class SchemaTextFormatter
 
     if (crawlPhase != CrawlPhase.procedures)
     {
-      printSectionHeader("Procedures");
+      out.println(formattingHelper
+        .createSectionHeader(SectionHeaderType.heading1, "Procedures"));
       crawlPhase = CrawlPhase.procedures;
     }
 
@@ -333,7 +348,8 @@ final class SchemaTextFormatter
 
     if (crawlPhase != CrawlPhase.tables)
     {
-      printSectionHeader("Tables");
+      out.println(formattingHelper
+        .createSectionHeader(SectionHeaderType.heading1, "Tables"));
       crawlPhase = CrawlPhase.tables;
     }
 
@@ -699,11 +715,6 @@ final class SchemaTextFormatter
         }
       }
     }
-  }
-
-  private void printSectionHeader(final String sectionHeader)
-  {
-    out.println(formattingHelper.createSectionHeader(sectionHeader));
   }
 
   private void printTableColumns(final Column[] columns)
