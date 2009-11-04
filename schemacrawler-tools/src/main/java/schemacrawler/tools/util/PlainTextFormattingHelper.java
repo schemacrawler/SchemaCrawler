@@ -108,8 +108,8 @@ public class PlainTextFormattingHelper
   {
     if (!schemacrawler.utility.Utility.isBlank(sectionHeader))
     {
-      return NEWLINE + sectionHeader + NEWLINE + DOUBLE_DASHED_SEPARATOR
-             + NEWLINE;
+      return NEWLINE + NEWLINE + NEWLINE + sectionHeader + NEWLINE
+             + DOUBLE_DASHED_SEPARATOR + NEWLINE + NEWLINE;
     }
     else
     {

@@ -147,6 +147,8 @@ final class OperationFormatter
     {
       out.println(formattingHelper.createDocumentStart());
     }
+    out.println(formattingHelper.createSectionHeader(options.getOperation()
+      .getDescription()));
   }
 
   /**
