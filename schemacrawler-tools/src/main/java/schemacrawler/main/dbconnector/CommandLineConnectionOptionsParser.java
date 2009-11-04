@@ -55,12 +55,6 @@ public final class CommandLineConnectionOptionsParser
   }
 
   @Override
-  protected String getHelpResource()
-  {
-    return "/help/Commands.readme.txt";
-  }
-
-  @Override
   public DatabaseConnectionOptions getOptions()
     throws SchemaCrawlerException
   {
@@ -85,6 +79,12 @@ public final class CommandLineConnectionOptionsParser
     {
       return null;
     }
+  }
+
+  @Override
+  protected String getHelpResource()
+  {
+    return "/help/Commands.readme.txt";
   }
 
 }

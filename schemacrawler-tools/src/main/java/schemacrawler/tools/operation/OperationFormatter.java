@@ -339,7 +339,7 @@ final class OperationFormatter
   {
     if (object != null && !options.getOutputOptions().isNoInfo())
     {
-      out.println(formattingHelper.createHeader(id, object));
+      out.println(formattingHelper.createPreformattedObject(id, object));
     }
   }
 

@@ -5,63 +5,75 @@
   <title>SchemaCrawler Output</title>
   <style type='text/css'>
 .underscore {
-  border-bottom: 1px solid Black;
+	border-bottom: 1px solid Black;
 }
 
 .name {
-  font-weight: bold;
-  width: 150px;
+	font-weight: bold;
+	width: 150px;
 }
 
 .description {
-  text-align: right;
-  width: 450px;
+	text-align: right;
+	width: 450px;
 }
 
 .ordinal {
-  width: 20px;
+	width: 20px;
 }
 
 .subname {
-  width: 150px;
+	width: 150px;
 }
 
 .type {
-  width: 150px;
+	width: 150px;
 }
 
 .definition {
-  width: 580px;
-  white-space: pre;
+	width: 580px;
+	white-space: pre;
 }
 
-body,p,pre,table,th,td,caption {
-  text-align: left;
-  font-family: Trebuchet MS;
-  font-size: 8pt;
+.section {
+	width: 600px;
+	font-size: 9pt;
+	font-weight: bold;
+}
+
+body, p, pre, table, th, td, caption {
+	text-align: left;
+	font-family: Trebuchet MS;
+	font-size: 8pt;
 }
 
 table,th,td {
-  border: 1px solid silver;
-  border-collapse: collapse;
-  vertical-align: top;
-  padding: 2px;
+	border: 1px solid silver;
+	border-collapse: collapse;
+	vertical-align: top;
+	padding: 2px;
 }
 
 table {
-  width: 600px;
+	width: 600px;
 }
 
 caption {
-  font-weight: bold;
+	font-weight: bold;
 }
 
 hr {
-  height: 1px;
+	height: 1px;
 }
+
   </style>
 </head>
 <body>
+
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+<h2>Database Information</h2>
 
 <pre id='databaseInfo'>
 ------------------------------------------------------------------------
@@ -829,6 +841,11 @@ hr {
 </table>
 <p></p>
 
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+<h2>Data Types</h2>
+
 <table>
 	<tr>
 		<td colspan='2' class='name'>BIGINT</td>
@@ -1501,6 +1518,11 @@ hr {
 	</tr>
 </table>
 <p></p>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+<h2>Tables</h2>
+
 <table>
 	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.CUSTOMER</td>
@@ -2357,6 +2379,11 @@ hr {
 </table>
 <p></p>
 
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+<h2>Weak Associations</h2>
+
 <table>
 	<tr>
 		<td colspan='2' class='name underscore'></td>
@@ -2374,6 +2401,11 @@ hr {
 	</tr>
 </table>
 <p></p>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+<h2>Procedures</h2>
+
 <table>
 	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.ABS</td>
