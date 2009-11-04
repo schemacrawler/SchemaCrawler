@@ -104,12 +104,44 @@ public class PlainTextFormattingHelper
     return NEWLINE + text;
   }
 
-  public String createSectionHeader(final String sectionHeader)
+  public String createSectionHeader(final SectionHeaderType type,
+                                    final String sectionHeader)
   {
     if (!schemacrawler.utility.Utility.isBlank(sectionHeader))
     {
-      return NEWLINE + NEWLINE + NEWLINE + sectionHeader + NEWLINE
-             + DOUBLE_DASHED_SEPARATOR + NEWLINE + NEWLINE;
+      final String DOUBLE_DASHED_SEPARATOR = separator("-=-");
+
+      final String prefix;
+      final String separator;
+      if (type == null)
+      {
+        prefix = NEWLINE;
+        separator = DOUBLE_DASHED_SEPARATOR;
+      }
+      else
+      {
+        switch (type)
+        {
+          case title:
+            prefix = NEWLINE;
+            separator = separator("=");
+            break;
+          case heading1:
+            prefix = NEWLINE;
+            separator = DOUBLE_DASHED_SEPARATOR;
+            break;
+          case heading2:
+            prefix = "";
+            separator = separator("--=-");
+            break;
+          default:
+            prefix = NEWLINE;
+            separator = DOUBLE_DASHED_SEPARATOR;
+            break;
+        }
+      }
+      return NEWLINE + NEWLINE + prefix + sectionHeader + NEWLINE + separator
+             + NEWLINE + NEWLINE;
     }
     else
     {

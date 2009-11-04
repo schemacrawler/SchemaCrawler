@@ -21,6 +21,7 @@
 package schemacrawler.tools.util;
 
 
+import schemacrawler.execute.QueryExecutorException;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.util.TableCell.Align;
 
@@ -37,15 +38,14 @@ abstract class BaseTextFormattingHelper
    * System specific line separator character.
    */
   protected static final String NEWLINE = System.getProperty("line.separator");
-  protected static final String DASHED_SEPARATOR = separator('-');
-  protected static final String DOUBLE_DASHED_SEPARATOR = separator('=');
+  protected static final String DASHED_SEPARATOR = separator("-");
 
-  private static String separator(final char separatorChar)
+  static String separator(final String pattern)
   {
     final StringBuilder dashedSeparator = new StringBuilder();
-    for (int i = 0; i < 72; i++)
+    for (int i = 0; i < 72 / pattern.length(); i++)
     {
-      dashedSeparator.append(separatorChar);
+      dashedSeparator.append(pattern);
     }
     return dashedSeparator.toString();
   }
