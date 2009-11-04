@@ -1,8 +1,16 @@
 
-""
+
+
 
 Database Information
-------------------------------------------------------------------------
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+
+
+
+Database Information
+--=---=---=---=---=---=---=---=---=---=---=---=---=---=---=---=---=---=-
+
 
 
 ------------------------------------------------------------------------
@@ -13,6 +21,12 @@ Database Information
 -- jdbc compliant: false
 ------------------------------------------------------------------------
 
+
+
+
+
+JDBC Driver Information
+--=---=---=---=---=---=---=---=---=---=---=---=---=---=---=---=---=---=-
 
 
 
@@ -46,6 +60,12 @@ user,[driver property]
 "",required
 "",value,null
 
+
+
+
+
+Database Characteristics
+--=---=---=---=---=---=---=---=---=---=---=---=---=---=---=---=---=---=-
 
 
 All procedures are callable,true
@@ -207,10 +227,12 @@ Uses local file per table,false
 Uses local files,false
 
 
-""
+
+
 
 Data Types
-------------------------------------------------------------------------
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
 
 BIGINT,[data type]
 "",based on,BIGINT
@@ -380,10 +402,12 @@ VARCHAR_IGNORECASE,[data type]
 "",not auto-incrementable
 "",searchable
 
-""
+
+
 
 Tables
-------------------------------------------------------------------------
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
 
 PUBLIC.CUSTOMER,[table]
 ------------------------------------------------------------------------
@@ -607,20 +631,24 @@ UPDATE,[privilege]
 "",DBA --> SA (grantable),""
 
 
-""
+
+
 
 Weak Associations
-------------------------------------------------------------------------
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
 
 "",[weak associations]
 ------------------------------------------------------------------------
 "",PUBLIC.PRODUCT.ID --> SCHEMACRAWLER.ITEM.PRODUCTID,""
 "",PUBLIC.INVOICE.ID --> SCHEMACRAWLER.ITEM.INVOICEID,""
 
-""
+
+
 
 Procedures
-------------------------------------------------------------------------
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
 
 PUBLIC.ABS,"[procedure, returns result]"
 ------------------------------------------------------------------------
@@ -917,6 +945,14 @@ PUBLIC.java.lang.Math.ceil,"[procedure, returns result]"
 ""
 
 
+PUBLIC.java.lang.Math.copySign,"[procedure, returns result]"
+------------------------------------------------------------------------
+"",@p1,"FLOAT(8, 17), in"
+"",@p2,"FLOAT(8, 17), in"
+"",@p0,"FLOAT(8, 17), result"
+""
+
+
 PUBLIC.java.lang.Math.cos,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p1,"DOUBLE(8, 17), in"
@@ -949,6 +985,13 @@ PUBLIC.java.lang.Math.floor,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
+""
+
+
+PUBLIC.java.lang.Math.getExponent,"[procedure, returns result]"
+------------------------------------------------------------------------
+"",@p1,"FLOAT(8, 17), in"
+"",@p0,"INTEGER, result"
 ""
 
 
@@ -1005,6 +1048,21 @@ PUBLIC.java.lang.Math.min,"[procedure, returns result]"
 ""
 
 
+PUBLIC.java.lang.Math.nextAfter,"[procedure, returns result]"
+------------------------------------------------------------------------
+"",@p1,"FLOAT(8, 17), in"
+"",@p2,"DOUBLE(8, 17), in"
+"",@p0,"FLOAT(8, 17), result"
+""
+
+
+PUBLIC.java.lang.Math.nextUp,"[procedure, returns result]"
+------------------------------------------------------------------------
+"",@p1,"FLOAT(8, 17), in"
+"",@p0,"FLOAT(8, 17), result"
+""
+
+
 PUBLIC.java.lang.Math.pow,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p1,"DOUBLE(8, 17), in"
@@ -1030,6 +1088,14 @@ PUBLIC.java.lang.Math.round,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p1,"FLOAT(8, 17), in"
 "",@p0,"INTEGER, result"
+""
+
+
+PUBLIC.java.lang.Math.scalb,"[procedure, returns result]"
+------------------------------------------------------------------------
+"",@p1,"FLOAT(8, 17), in"
+"",@p2,"INTEGER, in"
+"",@p0,"FLOAT(8, 17), result"
 ""
 
 
@@ -1876,6 +1942,13 @@ PUBLIC.YEAR,"[procedure, returns result]"
 
 
 
+
+
+Row Count
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+
+
 Row Count
 ------------------------------------------------------------------------
 PUBLIC.CUSTOMER,50 rows
@@ -1886,6 +1959,13 @@ PUBLIC.PRODUCT,50 rows
 PUBLIC.SUPPLIER,1 rows
 SCHEMACRAWLER.ITEM,20 rows
 SCHEMACRAWLER.PRODUCT2,11 rows
+
+
+
+
+
+Dump
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 
 
