@@ -20,8 +20,8 @@
 
 package schemacrawler.tools.util;
 
-import schemacrawler.execute.QueryExecutorException;
 
+import schemacrawler.execute.QueryExecutorException;
 
 /**
  * Methods to format entire rows of output.
@@ -35,16 +35,6 @@ public interface TextFormattingHelper
   {
     title, subTitle, section;
   }
-
-  /**
-   * Prints information.
-   * 
-   * @param object
-   *        Object to print
-   * @param id
-   *        HTML id
-   */
-  public String createPreformattedObject(final String id, final Object object);
 
   /**
    * Called to handle the row output. Handler to be implemented by
@@ -117,6 +107,11 @@ public interface TextFormattingHelper
   String createEmptyRow();
 
   /**
+   * Creates a section header.
+   */
+  String createHeader(DocumentHeaderType type, String header);
+
+  /**
    * Create a name and description row.
    * 
    * @param name
@@ -160,10 +155,5 @@ public interface TextFormattingHelper
    * Creates a pre-formatted text section.
    */
   String createPreformattedText(String id, String text);
-
-  /**
-   * Creates a section header.
-   */
-  String createHeader(DocumentHeaderType type, String header);
 
 }
