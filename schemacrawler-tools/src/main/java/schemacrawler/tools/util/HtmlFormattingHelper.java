@@ -90,42 +90,6 @@ public final class HtmlFormattingHelper
     return HTML_HEADER;
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.util.TextFormattingHelper#createObjectEnd()
-   */
-  public String createObjectEnd()
-  {
-    return "</table>" + NEWLINE + "<p></p>" + NEWLINE;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.util.TextFormattingHelper#createObjectStart(java.lang.String)
-   */
-  public String createObjectStart(final String name)
-  {
-    String objectStart = "<table>" + NEWLINE;
-    if (!schemacrawler.utility.Utility.isBlank(name))
-    {
-      objectStart = objectStart + "  <caption>" + name + "</caption>" + NEWLINE;
-    }
-    return objectStart;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.util.TextFormattingHelper#createPreformattedText(java.lang.String,
-   *      java.lang.String)
-   */
-  public String createPreformattedText(final String id, final String text)
-  {
-    return String.format("<pre id=\'%s\'>%n%s</pre>", id, text);
-  }
-
   public String createHeader(final DocumentHeaderType type, final String header)
   {
     if (!schemacrawler.utility.Utility.isBlank(header))
@@ -169,5 +133,41 @@ public final class HtmlFormattingHelper
     {
       return "";
     }
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createObjectEnd()
+   */
+  public String createObjectEnd()
+  {
+    return "</table>" + NEWLINE + "<p></p>" + NEWLINE;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createObjectStart(java.lang.String)
+   */
+  public String createObjectStart(final String name)
+  {
+    String objectStart = "<table>" + NEWLINE;
+    if (!schemacrawler.utility.Utility.isBlank(name))
+    {
+      objectStart = objectStart + "  <caption>" + name + "</caption>" + NEWLINE;
+    }
+    return objectStart;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createPreformattedText(java.lang.String,
+   *      java.lang.String)
+   */
+  public String createPreformattedText(final String id, final String text)
+  {
+    return String.format("<pre id=\'%s\'>%n%s</pre>", id, text);
   }
 }

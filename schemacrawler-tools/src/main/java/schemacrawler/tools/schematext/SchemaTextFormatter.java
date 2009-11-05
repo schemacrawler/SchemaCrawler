@@ -168,8 +168,8 @@ final class SchemaTextFormatter
   {
     if (crawlPhase != CrawlPhase.columnDataTypes)
     {
-      out.println(formattingHelper
-        .createHeader(DocumentHeaderType.subTitle, "Data Types"));
+      out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
+                                                "Data Types"));
       crawlPhase = CrawlPhase.columnDataTypes;
     }
 
@@ -192,8 +192,8 @@ final class SchemaTextFormatter
     }
     if (crawlPhase != CrawlPhase.weakAssociations)
     {
-      out.println(formattingHelper
-        .createHeader(DocumentHeaderType.subTitle, "Weak Associations"));
+      out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
+                                                "Weak Associations"));
       crawlPhase = CrawlPhase.weakAssociations;
     }
 
@@ -213,21 +213,13 @@ final class SchemaTextFormatter
   {
     if (crawlPhase != CrawlPhase.databaseInfo)
     {
-      out
-        .println(formattingHelper
-          .createHeader(DocumentHeaderType.subTitle,
-                               "Database Information"));
       crawlPhase = CrawlPhase.databaseInfo;
     }
 
-    out.println(formattingHelper
-      .createHeader(DocumentHeaderType.section, "Database Information"));
-    printHeaderObject("databaseInfo", databaseInfo);
+    out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
+                                              "Database Information"));
 
-    out.println(formattingHelper
-      .createHeader(DocumentHeaderType.section,
-                           "JDBC Driver Information"));
-    printJdbcDriverInfo(databaseInfo.getJdbcDriverInfo());
+    printDatabaseInfo(databaseInfo);
 
     final SchemaTextDetailType schemaTextDetailType = options
       .getSchemaTextDetailType();
@@ -236,9 +228,8 @@ final class SchemaTextFormatter
       return;
     }
 
-    out.println(formattingHelper
-      .createHeader(DocumentHeaderType.section,
-                           "Database Characteristics"));
+    out.println(formattingHelper.createHeader(DocumentHeaderType.section,
+                                              "Database Characteristics"));
     final Set<Map.Entry<String, Object>> propertySet = databaseInfo
       .getProperties().entrySet();
     if (propertySet.size() > 0)
@@ -273,8 +264,8 @@ final class SchemaTextFormatter
 
     if (crawlPhase != CrawlPhase.procedures)
     {
-      out.println(formattingHelper
-        .createHeader(DocumentHeaderType.subTitle, "Procedures"));
+      out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
+                                                "Procedures"));
       crawlPhase = CrawlPhase.procedures;
     }
 
@@ -348,8 +339,8 @@ final class SchemaTextFormatter
 
     if (crawlPhase != CrawlPhase.tables)
     {
-      out.println(formattingHelper
-        .createHeader(DocumentHeaderType.subTitle, "Tables"));
+      out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
+                                                "Tables"));
       crawlPhase = CrawlPhase.tables;
     }
 
@@ -521,6 +512,72 @@ final class SchemaTextFormatter
     }
   }
 
+  private void printDatabaseInfo(final DatabaseInfo dbInfo)
+  {
+    if (dbInfo == null)
+    {
+      return;
+    }
+
+    final SchemaTextDetailType schemaTextDetailType = options
+      .getSchemaTextDetailType();
+    if (schemaTextDetailType != SchemaTextDetailType.maximum_schema)
+    {
+      return;
+    }
+
+    out.println(formattingHelper.createHeader(DocumentHeaderType.section,
+                                              "Database Information"));
+
+    out.print(formattingHelper.createObjectStart(""));
+    out.println(formattingHelper.createNameValueRow("database", dbInfo
+      .getProductName()));
+    out.println(formattingHelper.createNameValueRow("database version", dbInfo
+      .getProductVersion()));
+    out.print(formattingHelper.createObjectEnd());
+    out.println();
+
+    final JdbcDriverInfo driverInfo = dbInfo.getJdbcDriverInfo();
+    if (driverInfo == null)
+    {
+      return;
+    }
+
+    out.println(formattingHelper.createHeader(DocumentHeaderType.section,
+                                              "JDBC Driver Information"));
+
+    out.print(formattingHelper.createObjectStart(""));
+    out.println(formattingHelper.createNameValueRow("driver", driverInfo
+      .getDriverName()));
+    out.println(formattingHelper.createNameValueRow("driver version",
+                                                    driverInfo
+                                                      .getDriverVersion()));
+    out.println(formattingHelper.createNameValueRow("is JDBC compliant",
+                                                    Boolean.toString(driverInfo
+                                                      .isJdbcCompliant())));
+    out.println(formattingHelper.createNameValueRow("url", driverInfo
+      .getConnectionUrl()));
+    out.print(formattingHelper.createObjectEnd());
+    out.println();
+
+    out.println(formattingHelper.createHeader(DocumentHeaderType.section,
+                                              "JDBC Driver Properties"));
+
+    final JdbcDriverProperty[] jdbcDriverProperties = driverInfo
+      .getDriverProperties();
+    if (jdbcDriverProperties.length > 0)
+    {
+      for (final JdbcDriverProperty driverProperty: jdbcDriverProperties)
+      {
+        out.print(formattingHelper.createObjectStart(""));
+        printJdbcDriverProperty(driverProperty);
+        out.print(formattingHelper.createObjectEnd());
+      }
+      out.println();
+    }
+
+  }
+
   private void printDefinition(final String definition)
   {
     out.println(formattingHelper.createEmptyRow());
@@ -581,14 +638,6 @@ final class SchemaTextFormatter
     }
   }
 
-  private void printHeaderObject(final String id, final Object object)
-  {
-    if (object != null && !options.getOutputOptions().isNoInfo())
-    {
-      out.println(formattingHelper.createPreformattedObject(id, object));
-    }
-  }
-
   private void printIndices(final Index[] indices)
   {
     for (final Index index: indices)
@@ -616,37 +665,6 @@ final class SchemaTextFormatter
         printTableColumns(index.getColumns());
       }
     }
-  }
-
-  private void printJdbcDriverInfo(final JdbcDriverInfo driverInfo)
-  {
-    if (driverInfo == null)
-    {
-      return;
-    }
-
-    final SchemaTextDetailType schemaTextDetailType = options
-      .getSchemaTextDetailType();
-    if (schemaTextDetailType != SchemaTextDetailType.maximum_schema)
-    {
-      return;
-    }
-
-    final JdbcDriverProperty[] jdbcDriverProperties = driverInfo
-      .getDriverProperties();
-    if (jdbcDriverProperties.length > 0)
-    {
-      out.println();
-      for (final JdbcDriverProperty driverProperty: jdbcDriverProperties)
-      {
-        out.print(formattingHelper.createObjectStart(""));
-        printJdbcDriverProperty(driverProperty);
-        out.print(formattingHelper.createObjectEnd());
-      }
-      out.println();
-      out.println();
-    }
-
   }
 
   private void printJdbcDriverProperty(final JdbcDriverProperty driverProperty)

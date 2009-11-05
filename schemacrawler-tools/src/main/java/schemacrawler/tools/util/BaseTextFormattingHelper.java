@@ -21,6 +21,7 @@
 package schemacrawler.tools.util;
 
 
+import schemacrawler.execute.QueryExecutorException;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.util.TableCell.Align;
 
@@ -182,25 +183,6 @@ abstract class BaseTextFormattingHelper
     row.add(new TableCell(name, nameWidth, Align.left, 1, "", outputFormat));
     row.add(new TableCell(value, "", outputFormat));
     return row.toString();
-  }
-
-  /**
-   * Prints information.
-   * 
-   * @param object
-   *        Object to print
-   * @param out
-   *        Output writer
-   */
-  public String createPreformattedObject(final String id, final Object object)
-  {
-    final StringBuilder buffer = new StringBuilder();
-    buffer.append(DASHED_SEPARATOR).append(NEWLINE);
-    buffer.append(object.toString()).append(NEWLINE);
-    buffer.append(DASHED_SEPARATOR).append(NEWLINE);
-    buffer.append(NEWLINE).append(NEWLINE);
-
-    return createPreformattedText(id, buffer.toString());
   }
 
   /**

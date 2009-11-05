@@ -148,9 +148,9 @@ final class OperationFormatter
     {
       out.println(formattingHelper.createDocumentStart());
     }
-    out.println(formattingHelper
-      .createHeader(DocumentHeaderType.subTitle, options.getOperation()
-        .getDescription()));
+    out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
+                                              options.getOperation()
+                                                .getDescription()));
   }
 
   /**
@@ -216,7 +216,7 @@ final class OperationFormatter
    */
   public void handle(final DatabaseInfo databaseInfo)
   {
-    printHeaderObject("databaseInfo", databaseInfo);
+    printDatabaseInfo(databaseInfo);
   }
 
   /**
@@ -339,12 +339,26 @@ final class OperationFormatter
                                                false));
   }
 
-  private void printHeaderObject(final String id, final Object object)
+  private void printDatabaseInfo(final DatabaseInfo dbInfo)
   {
-    if (object != null && !options.getOutputOptions().isNoInfo())
+    if (dbInfo == null)
     {
-      out.println(formattingHelper.createPreformattedObject(id, object));
+      return;
     }
+
+    out.println(formattingHelper.createHeader(DocumentHeaderType.section,
+                                              "Database Information"));
+
+    out.println();
+    out.print(formattingHelper.createObjectStart(""));
+    out.println(formattingHelper.createNameRow("", "[database]", true));
+    out.println(formattingHelper.createDefinitionRow(dbInfo.getProductName()));
+    out.println(formattingHelper.createNameRow("", "[version]", true));
+    out.println(formattingHelper
+      .createDefinitionRow(dbInfo.getProductVersion()));
+    out.print(formattingHelper.createObjectEnd());
+    out.println();
+
   }
 
 }

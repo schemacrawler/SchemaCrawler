@@ -11,21 +11,24 @@ Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 
-
-------------------------------------------------------------------------
--- database: HSQL Database Engine 1.8.0
--- driver: HSQL Database Engine Driver 1.8.0
--- driver class: org.hsqldb.jdbcDriver
--- url: jdbc:hsqldb:hsql://localhost:9001/schemacrawler
--- jdbc compliant: false
-------------------------------------------------------------------------
-
+database                              HSQL Database Engine
+database version                      1.8.0
 
 
 
 JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
+
+driver                                HSQL Database Engine Driver
+driver version                        1.8.0
+is JDBC compliant                     false
+url                                   jdbc:hsqldb:hsql://localhost:9001/schemacrawler
+
+
+
+JDBC Driver Properties
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 
 default_schema                                         [driver property]
@@ -57,7 +60,6 @@ user                                                   [driver property]
   
   required
   value                             null                        
-
 
 
 
@@ -1946,6 +1948,20 @@ Row Count
 
 
 
+Database Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+
+
+                                                              [database]
+------------------------------------------------------------------------
+  HSQL Database Engine
+                                                               [version]
+------------------------------------------------------------------------
+  1.8.0
+
+
+
 Row Count
 ------------------------------------------------------------------------
 PUBLIC.CUSTOMER                                                  50 rows
@@ -1963,6 +1979,20 @@ SCHEMACRAWLER.PRODUCT2                                           11 rows
 
 Dump
 ========================================================================
+
+
+
+Database Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+
+
+                                                              [database]
+------------------------------------------------------------------------
+  HSQL Database Engine
+                                                               [version]
+------------------------------------------------------------------------
+  1.8.0
 
 
 

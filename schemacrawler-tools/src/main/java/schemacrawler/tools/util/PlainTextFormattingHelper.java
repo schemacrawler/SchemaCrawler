@@ -68,42 +68,6 @@ public class PlainTextFormattingHelper
     return "";
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.util.TextFormattingHelper#createObjectEnd()
-   */
-  public String createObjectEnd()
-  {
-    return NEWLINE;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.util.TextFormattingHelper#createObjectStart(java.lang.String)
-   */
-  public String createObjectStart(final String name)
-  {
-    String objectStart = "";
-    if (!schemacrawler.utility.Utility.isBlank(name))
-    {
-      objectStart = objectStart + NEWLINE + name + NEWLINE + DASHED_SEPARATOR;
-    }
-    return objectStart;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.util.TextFormattingHelper#createPreformattedText(java.lang.String,
-   *      java.lang.String)
-   */
-  public String createPreformattedText(final String id, final String text)
-  {
-    return NEWLINE + text;
-  }
-
   public String createHeader(final DocumentHeaderType type, final String header)
   {
     if (!schemacrawler.utility.Utility.isBlank(header))
@@ -146,6 +110,42 @@ public class PlainTextFormattingHelper
     {
       return "";
     }
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createObjectEnd()
+   */
+  public String createObjectEnd()
+  {
+    return NEWLINE;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createObjectStart(java.lang.String)
+   */
+  public String createObjectStart(final String name)
+  {
+    String objectStart = "";
+    if (!schemacrawler.utility.Utility.isBlank(name))
+    {
+      objectStart = objectStart + NEWLINE + name + NEWLINE + DASHED_SEPARATOR;
+    }
+    return objectStart;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.util.TextFormattingHelper#createPreformattedText(java.lang.String,
+   *      java.lang.String)
+   */
+  public String createPreformattedText(final String id, final String text)
+  {
+    return NEWLINE + text;
   }
 
 }
