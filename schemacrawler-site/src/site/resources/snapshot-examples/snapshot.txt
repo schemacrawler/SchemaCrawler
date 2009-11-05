@@ -16,6 +16,170 @@ database version                      1.8.0
 
 
 
+Database Characteristics
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+
+ JDBC major version                   3
+ JDBC minor version                   0
+ SQL keywords                         BEFORE, BIGINT, BINARY, CACHED, DATETIME, LIMIT, LONGVARBINARY, LONGVARCHAR, OBJECT, OTHER, SAVEPOINT, TEMP, TEXT, TOP, TRIGGER, TINYINT, VARBINARY, VARCHAR_IGNORECASE
+ SQL state type                       2
+ URL                                  jdbc:hsqldb:hsql://localhost:9001/schemacrawler
+ catalog separator                    
+ catalog term                         
+ catalogs                             
+ database major version               1
+ database minor version               8
+ database product name                HSQL Database Engine
+ database product version             1.8.0
+ default transaction isolation        1
+ driver major version                 1
+ driver minor version                 8
+ driver name                          HSQL Database Engine Driver
+ driver version                       1.8.0
+ extra name characters                
+ identifier quote string              "
+ max binary literal length            0
+ max catalog name length              0
+ max char literal length              0
+ max column name length               0
+ max columns in group by              0
+ max columns in index                 0
+ max columns in order by              0
+ max columns in select                0
+ max columns in table                 0
+ max connections                      0
+ max cursor name length               0
+ max index length                     0
+ max procedure name length            0
+ max row size                         0
+ max schema name length               0
+ max statement length                 0
+ max statements                       0
+ max table name length                0
+ max tables in select                 0
+ max user name length                 0
+ numeric functions                    ABS, ACOS, ASIN, ATAN, ATAN2, CEILING, COS, COT, DEGREES, EXP, FLOOR, LOG, LOG10, MOD, PI, POWER, RADIANS, RAND, ROUND, SIGN, SIN, SQRT, TAN, TRUNCATE, BITAND, BITOR, BITXOR, ROUNDMAGIC
+ procedure term                       
+ result set holdability               1
+ schema term                          SCHEMA
+ schemas                              INFORMATION_SCHEMA, PUBLIC, SCHEMACRAWLER
+ search string escape                 \
+ string functions                     ASCII, BIT_LENGTH, CHAR, CHAR_LENGTH, CHARACTER_LENGTH, CONCAT, DIFFERENCE, HEXTORAW, INSERT, LCASE, LEFT, LENGTH, LOCATE, LTRIM, OCTET_LENGTH, RAWTOHEX, REPEAT, REPLACE, RIGHT, RTRIM, SOUNDEX, SPACE, SUBSTR, SUBSTRING, UCASE, LOWER, UPPER
+ system functions                     DATABASE, USER, IDENTITY
+ table types                          GLOBAL TEMPORARY, SYSTEM TABLE, TABLE, VIEW
+ time date functions                  CURDATE, CURTIME, DATEDIFF, DAYNAME, DAY, DAYOFMONTH, DAYOFWEEK, DAYOFYEAR, HOUR, MINUTE, MONTH, MONTHNAME, NOW, QUARTER, SECOND, WEEK, YEAR, TO_CHAR
+ type info                            TINYINT, BIGINT, LONGVARBINARY, VARBINARY, BINARY, LONGVARCHAR, CHAR, NUMERIC, DECIMAL, INTEGER, SMALLINT, FLOAT, REAL, DOUBLE, VARCHAR, VARCHAR_IGNORECASE, BOOLEAN, DATE, TIME, TIMESTAMP, OTHER
+ user name                            SA
+all procedures are callable           true
+all tables are selectable             true
+data definition causes transaction commit  true
+data definition ignored in transactions  false
+deletes are detected for TYPE_FORWARD_ONLY result sets  false
+deletes are detected for TYPE_SCROLL_INSENSITIVE result sets  false
+deletes are detected for TYPE_SCROLL_SENSITIVE result sets  false
+does max row size include blobs       true
+inserts are detected for TYPE_FORWARD_ONLY result sets  false
+inserts are detected for TYPE_SCROLL_INSENSITIVE result sets  false
+inserts are detected for TYPE_SCROLL_SENSITIVE result sets  false
+is catalog at start                   false
+is read only                          false
+locators update copy                  false
+null plus non null is null            true
+nulls are sorted at end               false
+nulls are sorted at start             false
+nulls are sorted high                 false
+nulls are sorted low                  true
+others inserts are visible for TYPE_FORWARD_ONLY result sets  false
+others inserts are visible for TYPE_SCROLL_INSENSITIVE result sets  false
+others inserts are visible for TYPE_SCROLL_SENSITIVE result sets  false
+others updates are visible for TYPE_FORWARD_ONLY result sets  false
+others updates are visible for TYPE_SCROLL_INSENSITIVE result sets  false
+others updates are visible for TYPE_SCROLL_SENSITIVE result sets  false
+own deletes are visible for TYPE_FORWARD_ONLY result sets  false
+own deletes are visible for TYPE_SCROLL_INSENSITIVE result sets  false
+own deletes are visible for TYPE_SCROLL_SENSITIVE result sets  false
+own inserts are visible for TYPE_FORWARD_ONLY result sets  false
+own inserts are visible for TYPE_SCROLL_INSENSITIVE result sets  false
+own inserts are visible for TYPE_SCROLL_SENSITIVE result sets  false
+own updates are visible for TYPE_FORWARD_ONLY result sets  false
+own updates are visible for TYPE_SCROLL_INSENSITIVE result sets  false
+own updates are visible for TYPE_SCROLL_SENSITIVE result sets  false
+stores lower case identifiers         false
+stores lower case quoted identifiers  false
+stores mixed case identifiers         false
+stores mixed case quoted identifiers  false
+stores upper case identifiers         true
+stores upper case quoted identifiers  false
+supports ANSI entry level SQL         false
+supports ANSI full SQL                false
+supports ANSI intermediate SQL        false
+supports alter table with add column  true
+supports alter table with drop column  true
+supports batch updates                true
+supports catalogs in data manipulation  false
+supports catalogs in index definitions  false
+supports catalogs in privilege definitions  false
+supports catalogs in procedure calls  false
+supports catalogs in table definitions  false
+supports column aliasing              true
+supports convert                      true
+supports core SQL grammar             true
+supports correlated subqueries        true
+supports data definition and data manipulation transactions  false
+supports data manipulation transactions only  true
+supports different table correlation names  true
+supports expressions in order by      true
+supports extended SQL grammar         false
+supports full outer joins             false
+supports get generated keys           false
+supports group by                     true
+supports group by beyond select       true
+supports group by unrelated           true
+supports integrity enhancement facility  true
+supports like escape clause           true
+supports limited outer joins          true
+supports minimum SQL grammar          false
+supports mixed case identifiers       false
+supports mixed case quoted identifiers  true
+supports multiple open results        false
+supports multiple result sets         false
+supports multiple transactions        true
+supports named parameters             true
+supports non nullable columns         true
+supports open cursors across commit   false
+supports open cursors across rollback  false
+supports open statements across commit  true
+supports open statements across rollback  true
+supports order by unrelated           true
+supports outer joins                  true
+supports positioned delete            false
+supports positioned update            false
+supports result set type for TYPE_FORWARD_ONLY result sets  true
+supports result set type for TYPE_SCROLL_INSENSITIVE result sets  true
+supports result set type for TYPE_SCROLL_SENSITIVE result sets  false
+supports savepoints                   true
+supports schemas in data manipulation  false
+supports schemas in index definitions  true
+supports schemas in privilege definitions  true
+supports schemas in procedure calls   false
+supports schemas in table definitions  true
+supports select for update            false
+supports statement pooling            false
+supports stored procedures            true
+supports subqueries in comparisons    true
+supports subqueries in exists         true
+supports subqueries in ins            true
+supports subqueries in quantifieds    true
+supports table correlation names      true
+supports transactions                 true
+supports union                        true
+supports union all                    true
+uses local file per table             false
+uses local files                      false
+
+
+
 JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
@@ -60,170 +224,6 @@ user                                                   [driver property]
   
   required
   value                             null                        
-
-
-
-Database Characteristics
--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
-
-
-All procedures are callable           true
-All tables are selectable             true
-Catalog separator                     
-Catalog term                          
-Catalogs                              
-Data definition causes transaction commit  true
-Data definition ignored in transactions  false
-Database major version                1
-Database minor version                8
-Database product name                 HSQL Database Engine
-Database product version              1.8.0
-Default transaction isolation         1
-Deletes are detected for TYPE_FORWARD_ONLY result sets  false
-Deletes are detected for TYPE_SCROLL_INSENSITIVE result sets  false
-Deletes are detected for TYPE_SCROLL_SENSITIVE result sets  false
-Does max row size include blobs       true
-Driver major version                  1
-Driver minor version                  8
-Driver name                           HSQL Database Engine Driver
-Driver version                        1.8.0
-Extra name characters                 
-Identifier quote string               "
-Inserts are detected for TYPE_FORWARD_ONLY result sets  false
-Inserts are detected for TYPE_SCROLL_INSENSITIVE result sets  false
-Inserts are detected for TYPE_SCROLL_SENSITIVE result sets  false
-Is catalog at start                   false
-Is read only                          false
-JDBC major version                    3
-JDBC minor version                    0
-Locators update copy                  false
-Max binary literal length             0
-Max catalog name length               0
-Max char literal length               0
-Max column name length                0
-Max columns in group by               0
-Max columns in index                  0
-Max columns in order by               0
-Max columns in select                 0
-Max columns in table                  0
-Max connections                       0
-Max cursor name length                0
-Max index length                      0
-Max procedure name length             0
-Max row size                          0
-Max schema name length                0
-Max statement length                  0
-Max statements                        0
-Max table name length                 0
-Max tables in select                  0
-Max user name length                  0
-Null plus non null is null            true
-Nulls are sorted at end               false
-Nulls are sorted at start             false
-Nulls are sorted high                 false
-Nulls are sorted low                  true
-Numeric functions                     ABS, ACOS, ASIN, ATAN, ATAN2, CEILING, COS, COT, DEGREES, EXP, FLOOR, LOG, LOG10, MOD, PI, POWER, RADIANS, RAND, ROUND, SIGN, SIN, SQRT, TAN, TRUNCATE, BITAND, BITOR, BITXOR, ROUNDMAGIC
-Others inserts are visible for TYPE_FORWARD_ONLY result sets  false
-Others inserts are visible for TYPE_SCROLL_INSENSITIVE result sets  false
-Others inserts are visible for TYPE_SCROLL_SENSITIVE result sets  false
-Others updates are visible for TYPE_FORWARD_ONLY result sets  false
-Others updates are visible for TYPE_SCROLL_INSENSITIVE result sets  false
-Others updates are visible for TYPE_SCROLL_SENSITIVE result sets  false
-Own deletes are visible for TYPE_FORWARD_ONLY result sets  false
-Own deletes are visible for TYPE_SCROLL_INSENSITIVE result sets  false
-Own deletes are visible for TYPE_SCROLL_SENSITIVE result sets  false
-Own inserts are visible for TYPE_FORWARD_ONLY result sets  false
-Own inserts are visible for TYPE_SCROLL_INSENSITIVE result sets  false
-Own inserts are visible for TYPE_SCROLL_SENSITIVE result sets  false
-Own updates are visible for TYPE_FORWARD_ONLY result sets  false
-Own updates are visible for TYPE_SCROLL_INSENSITIVE result sets  false
-Own updates are visible for TYPE_SCROLL_SENSITIVE result sets  false
-Procedure term                        
-Result set holdability                1
-SQL keywords                          BEFORE, BIGINT, BINARY, CACHED, DATETIME, LIMIT, LONGVARBINARY, LONGVARCHAR, OBJECT, OTHER, SAVEPOINT, TEMP, TEXT, TOP, TRIGGER, TINYINT, VARBINARY, VARCHAR_IGNORECASE
-SQL state type                        2
-Schema term                           SCHEMA
-Schemas                               INFORMATION_SCHEMA, PUBLIC, SCHEMACRAWLER
-Search string escape                  \
-Stores lower case identifiers         false
-Stores lower case quoted identifiers  false
-Stores mixed case identifiers         false
-Stores mixed case quoted identifiers  false
-Stores upper case identifiers         true
-Stores upper case quoted identifiers  false
-String functions                      ASCII, BIT_LENGTH, CHAR, CHAR_LENGTH, CHARACTER_LENGTH, CONCAT, DIFFERENCE, HEXTORAW, INSERT, LCASE, LEFT, LENGTH, LOCATE, LTRIM, OCTET_LENGTH, RAWTOHEX, REPEAT, REPLACE, RIGHT, RTRIM, SOUNDEX, SPACE, SUBSTR, SUBSTRING, UCASE, LOWER, UPPER
-Supports ANSI entry level SQL         false
-Supports ANSI full SQL                false
-Supports ANSI intermediate SQL        false
-Supports alter table with add column  true
-Supports alter table with drop column  true
-Supports batch updates                true
-Supports catalogs in data manipulation  false
-Supports catalogs in index definitions  false
-Supports catalogs in privilege definitions  false
-Supports catalogs in procedure calls  false
-Supports catalogs in table definitions  false
-Supports column aliasing              true
-Supports convert                      true
-Supports core SQL grammar             true
-Supports correlated subqueries        true
-Supports data definition and data manipulation transactions  false
-Supports data manipulation transactions only  true
-Supports different table correlation names  true
-Supports expressions in order by      true
-Supports extended SQL grammar         false
-Supports full outer joins             false
-Supports get generated keys           false
-Supports group by                     true
-Supports group by beyond select       true
-Supports group by unrelated           true
-Supports integrity enhancement facility  true
-Supports like escape clause           true
-Supports limited outer joins          true
-Supports minimum SQL grammar          false
-Supports mixed case identifiers       false
-Supports mixed case quoted identifiers  true
-Supports multiple open results        false
-Supports multiple result sets         false
-Supports multiple transactions        true
-Supports named parameters             true
-Supports non nullable columns         true
-Supports open cursors across commit   false
-Supports open cursors across rollback  false
-Supports open statements across commit  true
-Supports open statements across rollback  true
-Supports order by unrelated           true
-Supports outer joins                  true
-Supports positioned delete            false
-Supports positioned update            false
-Supports result set type for TYPE_FORWARD_ONLY result sets  true
-Supports result set type for TYPE_SCROLL_INSENSITIVE result sets  true
-Supports result set type for TYPE_SCROLL_SENSITIVE result sets  false
-Supports savepoints                   true
-Supports schemas in data manipulation  false
-Supports schemas in index definitions  true
-Supports schemas in privilege definitions  true
-Supports schemas in procedure calls   false
-Supports schemas in table definitions  true
-Supports select for update            false
-Supports statement pooling            false
-Supports stored procedures            true
-Supports subqueries in comparisons    true
-Supports subqueries in exists         true
-Supports subqueries in ins            true
-Supports subqueries in quantifieds    true
-Supports table correlation names      true
-Supports transactions                 true
-Supports union                        true
-Supports union all                    true
-System functions                      DATABASE, USER, IDENTITY
-Table types                           GLOBAL TEMPORARY, SYSTEM TABLE, TABLE, VIEW
-Time date functions                   CURDATE, CURTIME, DATEDIFF, DAYNAME, DAY, DAYOFMONTH, DAYOFWEEK, DAYOFYEAR, HOUR, MINUTE, MONTH, MONTHNAME, NOW, QUARTER, SECOND, WEEK, YEAR, TO_CHAR
-Type info                             TINYINT, BIGINT, LONGVARBINARY, VARBINARY, BINARY, LONGVARCHAR, CHAR, NUMERIC, DECIMAL, INTEGER, SMALLINT, FLOAT, REAL, DOUBLE, VARCHAR, VARCHAR_IGNORECASE, BOOLEAN, DATE, TIME, TIMESTAMP, OTHER
-URL                                   jdbc:hsqldb:hsql://localhost:9001/schemacrawler
-User name                             SA
-Uses local file per table             false
-Uses local files                      false
 
 
 

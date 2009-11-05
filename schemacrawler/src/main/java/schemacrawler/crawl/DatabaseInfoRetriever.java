@@ -31,6 +31,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,6 +45,18 @@ final class DatabaseInfoRetriever
 
   private static final Logger LOGGER = Logger
     .getLogger(DatabaseInfoRetriever.class.getName());
+
+  private static final Set<Entry<String, String>> acronyms;
+
+  static
+  {
+    final Map<String, String> acronymsMap = new HashMap<String, String>();
+    acronymsMap.put("JDBC", "Jdbc");
+    acronymsMap.put("ANSI", "Ansi");
+    acronymsMap.put("SQL", "Sql");
+    acronymsMap.put("URL", "Url");
+    acronyms = Collections.unmodifiableSet(acronymsMap.entrySet());
+  }
 
   DatabaseInfoRetriever(final RetrieverConnection retrieverConnection,
                         final MutableDatabase database)
@@ -61,12 +74,6 @@ final class DatabaseInfoRetriever
   private String derivePropertyDescription(final Method method)
   {
 
-    final Map<String, String> acronymsMap = new HashMap<String, String>();
-    acronymsMap.put("JDBC", "Jdbc");
-    acronymsMap.put("ANSI", "Ansi");
-    acronymsMap.put("SQL", "Sql");
-    acronymsMap.put("URL", "Url");
-
     final String get = "get";
     String description = method.getName();
     if (description.startsWith(get))
@@ -74,7 +81,7 @@ final class DatabaseInfoRetriever
       description = description.substring(get.length());
     }
 
-    for (final Entry<String, String> acronym: acronymsMap.entrySet())
+    for (final Entry<String, String> acronym: acronyms)
     {
       description = description
         .replaceAll(acronym.getKey(), acronym.getValue());
@@ -85,11 +92,7 @@ final class DatabaseInfoRetriever
     for (int i = 0; i < strLen; i++)
     {
       final char ch = description.charAt(i);
-      if (i == 0)
-      {
-        buffer.append(Character.toUpperCase(ch));
-      }
-      else if (Character.isUpperCase(ch) || Character.isTitleCase(ch))
+      if (Character.isUpperCase(ch) || Character.isTitleCase(ch))
       {
         buffer.append(' ').append(Character.toLowerCase(ch));
       }
@@ -100,7 +103,7 @@ final class DatabaseInfoRetriever
     }
     description = buffer.toString();
 
-    for (final Entry<String, String> acronym: acronymsMap.entrySet())
+    for (final Entry<String, String> acronym: acronyms)
     {
       description = description.replaceAll(acronym.getValue().toLowerCase(),
                                            acronym.getKey());
