@@ -60,7 +60,7 @@ import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 import schemacrawler.tools.util.PlainTextFormattingHelper;
 import schemacrawler.tools.util.TextFormattingHelper;
-import schemacrawler.tools.util.TextFormattingHelper.SectionHeaderType;
+import schemacrawler.tools.util.TextFormattingHelper.DocumentHeaderType;
 import schemacrawler.utility.ObjectToString;
 import schemacrawler.utility.Utility;
 
@@ -169,7 +169,7 @@ final class SchemaTextFormatter
     if (crawlPhase != CrawlPhase.columnDataTypes)
     {
       out.println(formattingHelper
-        .createSectionHeader(SectionHeaderType.heading1, "Data Types"));
+        .createHeader(DocumentHeaderType.subTitle, "Data Types"));
       crawlPhase = CrawlPhase.columnDataTypes;
     }
 
@@ -193,7 +193,7 @@ final class SchemaTextFormatter
     if (crawlPhase != CrawlPhase.weakAssociations)
     {
       out.println(formattingHelper
-        .createSectionHeader(SectionHeaderType.heading1, "Weak Associations"));
+        .createHeader(DocumentHeaderType.subTitle, "Weak Associations"));
       crawlPhase = CrawlPhase.weakAssociations;
     }
 
@@ -215,17 +215,17 @@ final class SchemaTextFormatter
     {
       out
         .println(formattingHelper
-          .createSectionHeader(SectionHeaderType.heading1,
+          .createHeader(DocumentHeaderType.subTitle,
                                "Database Information"));
       crawlPhase = CrawlPhase.databaseInfo;
     }
 
     out.println(formattingHelper
-      .createSectionHeader(SectionHeaderType.heading2, "Database Information"));
+      .createHeader(DocumentHeaderType.section, "Database Information"));
     printHeaderObject("databaseInfo", databaseInfo);
 
     out.println(formattingHelper
-      .createSectionHeader(SectionHeaderType.heading2,
+      .createHeader(DocumentHeaderType.section,
                            "JDBC Driver Information"));
     printJdbcDriverInfo(databaseInfo.getJdbcDriverInfo());
 
@@ -237,7 +237,7 @@ final class SchemaTextFormatter
     }
 
     out.println(formattingHelper
-      .createSectionHeader(SectionHeaderType.heading2,
+      .createHeader(DocumentHeaderType.section,
                            "Database Characteristics"));
     final Set<Map.Entry<String, Object>> propertySet = databaseInfo
       .getProperties().entrySet();
@@ -274,7 +274,7 @@ final class SchemaTextFormatter
     if (crawlPhase != CrawlPhase.procedures)
     {
       out.println(formattingHelper
-        .createSectionHeader(SectionHeaderType.heading1, "Procedures"));
+        .createHeader(DocumentHeaderType.subTitle, "Procedures"));
       crawlPhase = CrawlPhase.procedures;
     }
 
@@ -349,7 +349,7 @@ final class SchemaTextFormatter
     if (crawlPhase != CrawlPhase.tables)
     {
       out.println(formattingHelper
-        .createSectionHeader(SectionHeaderType.heading1, "Tables"));
+        .createHeader(DocumentHeaderType.subTitle, "Tables"));
       crawlPhase = CrawlPhase.tables;
     }
 

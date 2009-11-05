@@ -45,7 +45,7 @@ import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 import schemacrawler.tools.util.PlainTextFormattingHelper;
 import schemacrawler.tools.util.TextFormattingHelper;
-import schemacrawler.tools.util.TextFormattingHelper.SectionHeaderType;
+import schemacrawler.tools.util.TextFormattingHelper.DocumentHeaderType;
 
 /**
  * Text formatting of operations output.
@@ -149,7 +149,7 @@ final class OperationFormatter
       out.println(formattingHelper.createDocumentStart());
     }
     out.println(formattingHelper
-      .createSectionHeader(SectionHeaderType.heading1, options.getOperation()
+      .createHeader(DocumentHeaderType.subTitle, options.getOperation()
         .getDescription()));
   }
 
