@@ -104,10 +104,9 @@ public class PlainTextFormattingHelper
     return NEWLINE + text;
   }
 
-  public String createSectionHeader(final SectionHeaderType type,
-                                    final String sectionHeader)
+  public String createHeader(final DocumentHeaderType type, final String header)
   {
-    if (!schemacrawler.utility.Utility.isBlank(sectionHeader))
+    if (!schemacrawler.utility.Utility.isBlank(header))
     {
       final String defaultSeparator = separator("=");
 
@@ -126,11 +125,11 @@ public class PlainTextFormattingHelper
             prefix = NEWLINE + NEWLINE;
             separator = separator("_");
             break;
-          case heading1:
+          case subTitle:
             prefix = NEWLINE + NEWLINE;
             separator = defaultSeparator;
             break;
-          case heading2:
+          case section:
             prefix = "";
             separator = separator("-=-");
             break;
@@ -140,7 +139,7 @@ public class PlainTextFormattingHelper
             break;
         }
       }
-      return NEWLINE + prefix + sectionHeader + NEWLINE + separator + NEWLINE
+      return NEWLINE + prefix + header + NEWLINE + separator + NEWLINE
              + NEWLINE;
     }
     else

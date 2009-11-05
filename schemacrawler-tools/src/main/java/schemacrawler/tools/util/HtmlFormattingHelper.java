@@ -126,10 +126,9 @@ public final class HtmlFormattingHelper
     return String.format("<pre id=\'%s\'>%n%s</pre>", id, text);
   }
 
-  public String createSectionHeader(final SectionHeaderType type,
-                                    final String sectionHeader)
+  public String createHeader(final DocumentHeaderType type, final String header)
   {
-    if (!schemacrawler.utility.Utility.isBlank(sectionHeader))
+    if (!schemacrawler.utility.Utility.isBlank(header))
     {
       final String prefix;
       final String headerTag;
@@ -146,11 +145,11 @@ public final class HtmlFormattingHelper
             prefix = "<p>&nbsp;</p>";
             headerTag = "h1";
             break;
-          case heading1:
+          case subTitle:
             prefix = "<p>&nbsp;</p>";
             headerTag = "h2";
             break;
-          case heading2:
+          case section:
             prefix = "";
             headerTag = "h3";
             break;
@@ -163,7 +162,7 @@ public final class HtmlFormattingHelper
       return String.format("<p>&nbsp;</p>%s\n<%s>%s</%s>\n",
                            prefix,
                            headerTag,
-                           sectionHeader,
+                           header,
                            headerTag);
     }
     else

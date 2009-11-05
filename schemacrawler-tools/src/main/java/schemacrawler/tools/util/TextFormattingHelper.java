@@ -20,6 +20,8 @@
 
 package schemacrawler.tools.util;
 
+import schemacrawler.execute.QueryExecutorException;
+
 
 /**
  * Methods to format entire rows of output.
@@ -29,9 +31,9 @@ package schemacrawler.tools.util;
 public interface TextFormattingHelper
 {
 
-  enum SectionHeaderType
+  enum DocumentHeaderType
   {
-    title, heading1, heading2;
+    title, subTitle, section;
   }
 
   /**
@@ -162,6 +164,6 @@ public interface TextFormattingHelper
   /**
    * Creates a section header.
    */
-  String createSectionHeader(SectionHeaderType type, String sectionHeader);
+  String createHeader(DocumentHeaderType type, String header);
 
 }
