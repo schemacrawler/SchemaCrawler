@@ -216,40 +216,7 @@ final class SchemaTextFormatter
       crawlPhase = CrawlPhase.databaseInfo;
     }
 
-    out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                              "Database Information"));
-
     printDatabaseInfo(databaseInfo);
-
-    final SchemaTextDetailType schemaTextDetailType = options
-      .getSchemaTextDetailType();
-    if (schemaTextDetailType != SchemaTextDetailType.maximum_schema)
-    {
-      return;
-    }
-
-    out.println(formattingHelper.createHeader(DocumentHeaderType.section,
-                                              "Database Characteristics"));
-    final Set<Map.Entry<String, Object>> propertySet = databaseInfo
-      .getProperties().entrySet();
-    if (propertySet.size() > 0)
-    {
-      out.print(formattingHelper.createObjectStart(""));
-      for (final Map.Entry<String, Object> property: propertySet)
-      {
-        final String key = property.getKey();
-        Object value = property.getValue();
-        if (value == null)
-        {
-          value = "";
-        }
-        out.println(formattingHelper.createNameValueRow(key, ObjectToString
-          .toString(value)));
-      }
-      out.print(formattingHelper.createObjectEnd());
-      out.println();
-    }
-    out.flush();
 
   }
 
@@ -526,6 +493,9 @@ final class SchemaTextFormatter
       return;
     }
 
+    out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
+                                              "Database Information"));
+
     out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                               "Database Information"));
 
@@ -536,6 +506,29 @@ final class SchemaTextFormatter
       .getProductVersion()));
     out.print(formattingHelper.createObjectEnd());
     out.println();
+
+    out.println(formattingHelper.createHeader(DocumentHeaderType.section,
+                                              "Database Characteristics"));
+    final Set<Map.Entry<String, Object>> propertySet = dbInfo.getProperties()
+      .entrySet();
+    if (propertySet.size() > 0)
+    {
+      out.print(formattingHelper.createObjectStart(""));
+      for (final Map.Entry<String, Object> property: propertySet)
+      {
+        final String key = property.getKey();
+        Object value = property.getValue();
+        if (value == null)
+        {
+          value = "";
+        }
+        out.println(formattingHelper.createNameValueRow(key, ObjectToString
+          .toString(value)));
+      }
+      out.print(formattingHelper.createObjectEnd());
+      out.println();
+    }
+    out.flush();
 
     final JdbcDriverInfo driverInfo = dbInfo.getJdbcDriverInfo();
     if (driverInfo == null)
