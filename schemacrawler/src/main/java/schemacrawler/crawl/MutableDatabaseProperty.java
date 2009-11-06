@@ -110,19 +110,19 @@ class MutableDatabaseProperty
     {
       throw new IllegalArgumentException("No description provided");
     }
-    this.name = name;
+    this.name = name.trim();
     this.value = value;
   }
 
-  public int compareTo(final DatabaseProperty o)
+  public int compareTo(final DatabaseProperty otherDbProperty)
   {
-    if (o == null)
+    if (otherDbProperty == null)
     {
       return -1;
     }
     else
     {
-      return getName().compareTo(o.getName());
+      return getName().toLowerCase().compareTo(otherDbProperty.getName().toLowerCase());
     }
   }
 
