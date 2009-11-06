@@ -290,6 +290,50 @@ final class DatabaseInfoRetriever
   }
 
   /**
+   * Provides information on the JDBC driver.
+   * 
+   * @param database
+   *        TODO
+   * @throws SQLException
+   *         On a SQL exception
+   */
+  void retrieveJdbcDriverInfo()
+    throws SQLException
+  {
+    final DatabaseMetaData dbMetaData = getMetaData();
+    final String url = dbMetaData.getURL();
+
+    final MutableDatabaseInfo dbInfo = database.getDatabaseInfo();
+
+    final MutableJdbcDriverInfo driverInfo = new MutableJdbcDriverInfo();
+
+    driverInfo.setDriverName(dbMetaData.getDriverName());
+    driverInfo.setDriverVersion(dbMetaData.getDriverVersion());
+    driverInfo.setConnectionUrl(url);
+
+    try
+    {
+      final Driver jdbcDriver = DriverManager.getDriver(url);
+      driverInfo.setJdbcDriverClassName(jdbcDriver.getClass().getName());
+      driverInfo.setJdbcCompliant(jdbcDriver.jdbcCompliant());
+
+      final DriverPropertyInfo[] propertyInfo = jdbcDriver
+        .getPropertyInfo(url, new Properties());
+      for (final DriverPropertyInfo driverPropertyInfo: propertyInfo)
+      {
+        driverInfo
+          .addJdbcDriverProperty(new MutableJdbcDriverProperty(driverPropertyInfo));
+      }
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not obtain JDBC driver information", e);
+    }
+
+    dbInfo.setJdbcDriverInfo(driverInfo);
+  }
+
+  /**
    * Retrieves column data type metadata.
    * 
    * @param database
@@ -417,50 +461,6 @@ final class DatabaseInfoRetriever
       results.close();
     }
 
-  }
-
-  /**
-   * Provides information on the JDBC driver.
-   * 
-   * @param database
-   *        TODO
-   * @throws SQLException
-   *         On a SQL exception
-   */
-  void retrieveJdbcDriverInfo()
-    throws SQLException
-  {
-    final DatabaseMetaData dbMetaData = getMetaData();
-    final String url = dbMetaData.getURL();
-
-    final MutableDatabaseInfo dbInfo = database.getDatabaseInfo();
-
-    final MutableJdbcDriverInfo driverInfo = new MutableJdbcDriverInfo();
-
-    driverInfo.setDriverName(dbMetaData.getDriverName());
-    driverInfo.setDriverVersion(dbMetaData.getDriverVersion());
-    driverInfo.setConnectionUrl(url);
-
-    try
-    {
-      final Driver jdbcDriver = DriverManager.getDriver(url);
-      driverInfo.setJdbcDriverClassName(jdbcDriver.getClass().getName());
-      driverInfo.setJdbcCompliant(jdbcDriver.jdbcCompliant());
-
-      final DriverPropertyInfo[] propertyInfo = jdbcDriver
-        .getPropertyInfo(url, new Properties());
-      for (final DriverPropertyInfo driverPropertyInfo: propertyInfo)
-      {
-        driverInfo
-          .addJdbcDriverProperty(new MutableJdbcDriverProperty(driverPropertyInfo));
-      }
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, "Could not obtain JDBC driver information", e);
-    }
-
-    dbInfo.setJdbcDriverInfo(driverInfo);
   }
 
 }
