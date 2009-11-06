@@ -16,57 +16,6 @@ database version,1.8.0
 Database Characteristics
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
- JDBC major version,3
- JDBC minor version,0
- SQL keywords,"BEFORE, BIGINT, BINARY, CACHED, DATETIME, LIMIT, LONGVARBINARY, LONGVARCHAR, OBJECT, OTHER, SAVEPOINT, TEMP, TEXT, TOP, TRIGGER, TINYINT, VARBINARY, VARCHAR_IGNORECASE"
- SQL state type,2
- URL,jdbc:hsqldb:hsql://localhost:9001/schemacrawler
- catalog separator,""
- catalog term,""
- catalogs,""
- database major version,1
- database minor version,8
- database product name,HSQL Database Engine
- database product version,1.8.0
- default transaction isolation,1
- driver major version,1
- driver minor version,8
- driver name,HSQL Database Engine Driver
- driver version,1.8.0
- extra name characters,""
- identifier quote string,"68"
- max binary literal length,0
- max catalog name length,0
- max char literal length,0
- max column name length,0
- max columns in group by,0
- max columns in index,0
- max columns in order by,0
- max columns in select,0
- max columns in table,0
- max connections,0
- max cursor name length,0
- max index length,0
- max procedure name length,0
- max row size,0
- max schema name length,0
- max statement length,0
- max statements,0
- max table name length,0
- max tables in select,0
- max user name length,0
- numeric functions,"ABS, ACOS, ASIN, ATAN, ATAN2, CEILING, COS, COT, DEGREES, EXP, FLOOR, LOG, LOG10, MOD, PI, POWER, RADIANS, RAND, ROUND, SIGN, SIN, SQRT, TAN, TRUNCATE, BITAND, BITOR, BITXOR, ROUNDMAGIC"
- procedure term,""
- result set holdability,1
- schema term,SCHEMA
- schemas,"INFORMATION_SCHEMA, PUBLIC, SCHEMACRAWLER"
- search string escape,\
- string functions,"ASCII, BIT_LENGTH, CHAR, CHAR_LENGTH, CHARACTER_LENGTH, CONCAT, DIFFERENCE, HEXTORAW, INSERT, LCASE, LEFT, LENGTH, LOCATE, LTRIM, OCTET_LENGTH, RAWTOHEX, REPEAT, REPLACE, RIGHT, RTRIM, SOUNDEX, SPACE, SUBSTR, SUBSTRING, UCASE, LOWER, UPPER"
- system functions,"DATABASE, USER, IDENTITY"
- table types,"GLOBAL TEMPORARY, SYSTEM TABLE, TABLE, VIEW"
- time date functions,"CURDATE, CURTIME, DATEDIFF, DAYNAME, DAY, DAYOFMONTH, DAYOFWEEK, DAYOFYEAR, HOUR, MINUTE, MONTH, MONTHNAME, NOW, QUARTER, SECOND, WEEK, YEAR, TO_CHAR"
- type info,"TINYINT, BIGINT, LONGVARBINARY, VARBINARY, BINARY, LONGVARCHAR, CHAR, NUMERIC, DECIMAL, INTEGER, SMALLINT, FLOAT, REAL, DOUBLE, VARCHAR, VARCHAR_IGNORECASE, BOOLEAN, DATE, TIME, TIMESTAMP, OTHER"
- user name,SA
 all procedures are callable,true
 all tables are selectable,true
 data definition causes transaction commit,true
@@ -75,6 +24,57 @@ deletes are detected for TYPE_FORWARD_ONLY result sets,false
 deletes are detected for TYPE_SCROLL_INSENSITIVE result sets,false
 deletes are detected for TYPE_SCROLL_SENSITIVE result sets,false
 does max row size include blobs,true
+catalog separator,""
+catalog term,""
+catalogs,""
+database major version,1
+database minor version,8
+database product name,HSQL Database Engine
+database product version,1.8.0
+default transaction isolation,1
+driver major version,1
+driver minor version,8
+driver name,HSQL Database Engine Driver
+driver version,1.8.0
+extra name characters,""
+identifier quote string,"68"
+JDBC major version,3
+JDBC minor version,0
+max binary literal length,0
+max catalog name length,0
+max char literal length,0
+max column name length,0
+max columns in group by,0
+max columns in index,0
+max columns in order by,0
+max columns in select,0
+max columns in table,0
+max connections,0
+max cursor name length,0
+max index length,0
+max procedure name length,0
+max row size,0
+max schema name length,0
+max statement length,0
+max statements,0
+max table name length,0
+max tables in select,0
+max user name length,0
+numeric functions,"ABS, ACOS, ASIN, ATAN, ATAN2, CEILING, COS, COT, DEGREES, EXP, FLOOR, LOG, LOG10, MOD, PI, POWER, RADIANS, RAND, ROUND, SIGN, SIN, SQRT, TAN, TRUNCATE, BITAND, BITOR, BITXOR, ROUNDMAGIC"
+procedure term,""
+result set holdability,1
+SQL keywords,"BEFORE, BIGINT, BINARY, CACHED, DATETIME, LIMIT, LONGVARBINARY, LONGVARCHAR, OBJECT, OTHER, SAVEPOINT, TEMP, TEXT, TOP, TRIGGER, TINYINT, VARBINARY, VARCHAR_IGNORECASE"
+SQL state type,2
+schema term,SCHEMA
+schemas,"INFORMATION_SCHEMA, PUBLIC, SCHEMACRAWLER"
+search string escape,\
+string functions,"ASCII, BIT_LENGTH, CHAR, CHAR_LENGTH, CHARACTER_LENGTH, CONCAT, DIFFERENCE, HEXTORAW, INSERT, LCASE, LEFT, LENGTH, LOCATE, LTRIM, OCTET_LENGTH, RAWTOHEX, REPEAT, REPLACE, RIGHT, RTRIM, SOUNDEX, SPACE, SUBSTR, SUBSTRING, UCASE, LOWER, UPPER"
+system functions,"DATABASE, USER, IDENTITY"
+table types,"GLOBAL TEMPORARY, SYSTEM TABLE, TABLE, VIEW"
+time date functions,"CURDATE, CURTIME, DATEDIFF, DAYNAME, DAY, DAYOFMONTH, DAYOFWEEK, DAYOFYEAR, HOUR, MINUTE, MONTH, MONTHNAME, NOW, QUARTER, SECOND, WEEK, YEAR, TO_CHAR"
+type info,"TINYINT, BIGINT, LONGVARBINARY, VARBINARY, BINARY, LONGVARCHAR, CHAR, NUMERIC, DECIMAL, INTEGER, SMALLINT, FLOAT, REAL, DOUBLE, VARCHAR, VARCHAR_IGNORECASE, BOOLEAN, DATE, TIME, TIMESTAMP, OTHER"
+URL,jdbc:hsqldb:hsql://localhost:9001/schemacrawler
+user name,SA
 inserts are detected for TYPE_FORWARD_ONLY result sets,false
 inserts are detected for TYPE_SCROLL_INSENSITIVE result sets,false
 inserts are detected for TYPE_SCROLL_SENSITIVE result sets,false
@@ -107,9 +107,9 @@ stores mixed case identifiers,false
 stores mixed case quoted identifiers,false
 stores upper case identifiers,true
 stores upper case quoted identifiers,false
-supports ANSI entry level SQL,false
-supports ANSI full SQL,false
-supports ANSI intermediate SQL,false
+supports ANSI92 entry level SQL,false
+supports ANSI92 full SQL,false
+supports ANSI92 intermediate SQL,false
 supports alter table with add column,true
 supports alter table with drop column,true
 supports batch updates,true
