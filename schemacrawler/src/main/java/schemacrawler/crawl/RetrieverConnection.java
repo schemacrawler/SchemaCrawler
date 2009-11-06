@@ -69,6 +69,11 @@ final class RetrieverConnection
     informationSchemaViews = schemaCrawlerOptions.getInformationSchemaViews();
   }
 
+  void cacheSchema(final SchemaReference schemaName, final MutableSchema schema)
+  {
+    schemaRefsCache.put(schemaName, schema);
+  }
+
   Connection getConnection()
   {
     return connection;
@@ -97,11 +102,6 @@ final class RetrieverConnection
   boolean isSupportsCatalogs()
   {
     return supportsCatalogs;
-  }
-
-  void cacheSchema(final SchemaReference schemaName, final MutableSchema schema)
-  {
-    schemaRefsCache.put(schemaName, schema);
   }
 
 }

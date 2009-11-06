@@ -21,12 +21,12 @@
 package schemacrawler.crawl;
 
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedHashSet;
 
 import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.DatabaseProperty;
 
 /**
  * Database and connection information. Created from metadata returned
@@ -44,7 +44,7 @@ final class MutableDatabaseInfo
 
   private String productName;
   private String productVersion;
-  private final SortedMap<String, Object> dbProperties = new TreeMap<String, Object>();
+  private final Collection<DatabaseProperty> dbProperties = new LinkedHashSet<DatabaseProperty>();
   private MutableJdbcDriverInfo driverInfo;
 
   /**
@@ -82,19 +82,12 @@ final class MutableDatabaseInfo
    * 
    * @see schemacrawler.schema.Database#getProperties()
    */
-  public Map<String, Object> getProperties()
+  public DatabaseProperty[] getProperties()
   {
-    return Collections.unmodifiableMap(dbProperties);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.Database#getProperty(java.lang.String)
-   */
-  public Object getProperty(final String name)
-  {
-    return dbProperties.get(name);
+    final DatabaseProperty[] properties = dbProperties
+      .toArray(new DatabaseProperty[dbProperties.size()]);
+    Arrays.sort(properties);
+    return properties;
   }
 
   /**
@@ -115,9 +108,12 @@ final class MutableDatabaseInfo
     return info.toString();
   }
 
-  void putProperty(final String name, final Object value)
+  void addAll(final Collection<MutableDatabaseProperty> dbProperties)
   {
-    dbProperties.put(name, value);
+    if (dbProperties != null)
+    {
+      this.dbProperties.addAll(dbProperties);
+    }
   }
 
   void setJdbcDriverInfo(final MutableJdbcDriverInfo driverInfo)
