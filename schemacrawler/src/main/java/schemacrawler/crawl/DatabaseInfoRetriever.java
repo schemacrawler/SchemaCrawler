@@ -25,12 +25,16 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.DriverPropertyInfo;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.Map.Entry;
 import java.util.logging.Level;
@@ -413,6 +417,50 @@ final class DatabaseInfoRetriever
       results.close();
     }
 
+  }
+
+  /**
+   * Provides information on the JDBC driver.
+   * 
+   * @param database
+   *        TODO
+   * @throws SQLException
+   *         On a SQL exception
+   */
+  void retrieveJdbcDriverInfo()
+    throws SQLException
+  {
+    final DatabaseMetaData dbMetaData = getMetaData();
+    final String url = dbMetaData.getURL();
+
+    final MutableDatabaseInfo dbInfo = database.getDatabaseInfo();
+
+    final MutableJdbcDriverInfo driverInfo = new MutableJdbcDriverInfo();
+
+    driverInfo.setDriverName(dbMetaData.getDriverName());
+    driverInfo.setDriverVersion(dbMetaData.getDriverVersion());
+    driverInfo.setConnectionUrl(url);
+
+    try
+    {
+      final Driver jdbcDriver = DriverManager.getDriver(url);
+      driverInfo.setJdbcDriverClassName(jdbcDriver.getClass().getName());
+      driverInfo.setJdbcCompliant(jdbcDriver.jdbcCompliant());
+
+      final DriverPropertyInfo[] propertyInfo = jdbcDriver
+        .getPropertyInfo(url, new Properties());
+      for (final DriverPropertyInfo driverPropertyInfo: propertyInfo)
+      {
+        driverInfo
+          .addJdbcDriverProperty(new MutableJdbcDriverProperty(driverPropertyInfo));
+      }
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not obtain JDBC driver information", e);
+    }
+
+    dbInfo.setJdbcDriverInfo(driverInfo);
   }
 
 }
