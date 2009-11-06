@@ -21,7 +21,6 @@
 package schemacrawler.tools.schematext;
 
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +40,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 import schemacrawler.tools.util.PastelColor;
 import schemacrawler.utility.MetaDataUtility;
@@ -75,15 +73,7 @@ final class SchemaDotFormatter
     }
     this.options = options;
 
-    try
-    {
-      final OutputOptions outputOptions = options.getOutputOptions();
-      out = outputOptions.openOutputWriter();
-    }
-    catch (final IOException e)
-    {
-      throw new SchemaCrawlerException("Could not obtain output writer", e);
-    }
+    out = options.getOutputOptions().openOutputWriter();
 
     colorMap = new HashMap<Schema, PastelColor>();
   }

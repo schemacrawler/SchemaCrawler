@@ -21,7 +21,6 @@
 package schemacrawler.tools.operation;
 
 
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,19 +31,10 @@ import java.util.logging.Logger;
 
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutorException;
-import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.ColumnMap;
-import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.OutputFormat;
-import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.util.HtmlFormattingHelper;
-import schemacrawler.tools.util.PlainTextFormattingHelper;
-import schemacrawler.tools.util.TextFormattingHelper;
+import schemacrawler.tools.BaseFormatter;
 import schemacrawler.tools.util.TextFormattingHelper.DocumentHeaderType;
 
 /**
@@ -53,15 +43,11 @@ import schemacrawler.tools.util.TextFormattingHelper.DocumentHeaderType;
  * @author Sualeh Fatehi
  */
 final class OperationFormatter
-  implements CrawlHandler
+  extends BaseFormatter<OperationOptions>
 {
 
   private static final Logger LOGGER = Logger
     .getLogger(OperationFormatter.class.getName());
-
-  private final OperationOptions options;
-  private final PrintWriter out;
-  private final TextFormattingHelper formattingHelper;
 
   private final Connection connection;
   private final DataHandler dataHandler;
@@ -81,11 +67,7 @@ final class OperationFormatter
                      final DataHandler dataHandler)
     throws SchemaCrawlerException
   {
-    if (options == null)
-    {
-      throw new IllegalArgumentException("Options not provided");
-    }
-    this.options = options;
+    super(options, dataHandler.getPrintWriter());
 
     if (options.getOperation() == null)
     {
@@ -108,20 +90,8 @@ final class OperationFormatter
       throw new SchemaCrawlerException("No query provided");
     }
 
-    final OutputOptions outputOptions = options.getOutputOptions();
-    final OutputFormat outputFormat = outputOptions.getOutputFormat();
-    if (outputFormat == OutputFormat.html)
-    {
-      formattingHelper = new HtmlFormattingHelper(outputFormat);
-    }
-    else
-    {
-      formattingHelper = new PlainTextFormattingHelper(outputFormat);
-    }
-
     this.connection = connection;
     this.query = query;
-    out = dataHandler.getPrintWriter();
   }
 
   /**
@@ -186,48 +156,6 @@ final class OperationFormatter
     {
       throw new SchemaCrawlerException("Cannot end data handler", e);
     }
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.ColumnDataType)
-   */
-  public void handle(final ColumnDataType dataType)
-    throws SchemaCrawlerException
-  {
-    // Ignore
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.WeakAssociations)
-   */
-  public void handle(final ColumnMap[] weakAssociations)
-    throws SchemaCrawlerException
-  {
-    // Ignore
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see CrawlHandler#handle(Database)
-   */
-  public void handle(final DatabaseInfo databaseInfo)
-  {
-    printDatabaseInfo(databaseInfo);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see CrawlHandler#handle(Procedure)
-   */
-  public void handle(final Procedure procedure)
-  {
-    // Ignore
   }
 
   /**
@@ -339,28 +267,6 @@ final class OperationFormatter
     out.println(formattingHelper.createNameRow(table.getFullName(),
                                                message,
                                                false));
-  }
-
-  private void printDatabaseInfo(final DatabaseInfo dbInfo)
-  {
-    if (dbInfo == null)
-    {
-      return;
-    }
-
-    out.println(formattingHelper.createHeader(DocumentHeaderType.section,
-                                              "Database Information"));
-
-    out.println();
-    out.print(formattingHelper.createObjectStart(""));
-    out.println(formattingHelper.createNameRow("", "[database]", true));
-    out.println(formattingHelper.createDefinitionRow(dbInfo.getProductName()));
-    out.println(formattingHelper.createNameRow("", "[version]", true));
-    out.println(formattingHelper
-      .createDefinitionRow(dbInfo.getProductVersion()));
-    out.print(formattingHelper.createObjectEnd());
-    out.println();
-
   }
 
 }
