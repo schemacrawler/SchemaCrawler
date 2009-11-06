@@ -141,10 +141,10 @@ public class ObjectToString
     }
     else if (Collection.class.isAssignableFrom(object.getClass()))
     {
-      for (final Iterator<?> iterator = ((Collection<?>) ((Collection<?>) object))
+      for (final Iterator<?> iterator = ((Collection<?>) (Collection<?>) object)
         .iterator(); iterator.hasNext();)
       {
-        Object item = (Object) iterator.next();
+        final Object item = iterator.next();
         buffer.append(item);
         if (iterator.hasNext())
         {

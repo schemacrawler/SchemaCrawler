@@ -32,7 +32,7 @@ import schemacrawler.schema.JdbcDriverProperty;
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
 final class MutableJdbcDriverProperty
-  extends AbstractNamedObject
+  extends MutableDatabaseProperty
   implements JdbcDriverProperty
 {
 
@@ -40,15 +40,13 @@ final class MutableJdbcDriverProperty
 
   private final String description;
   private final boolean required;
-  private final String value;
   private final String[] choices;
 
   MutableJdbcDriverProperty(final DriverPropertyInfo driverPropertyInfo)
   {
-    super(driverPropertyInfo.name);
+    super(driverPropertyInfo.name, driverPropertyInfo.value);
     description = driverPropertyInfo.description;
     required = driverPropertyInfo.required;
-    value = driverPropertyInfo.value;
     choices = driverPropertyInfo.choices;
   }
 
@@ -74,6 +72,7 @@ final class MutableJdbcDriverProperty
    * 
    * @see schemacrawler.schema.JdbcDriverProperty#getDescription()
    */
+  @Override
   public String getDescription()
   {
     if (description != null)
@@ -91,11 +90,22 @@ final class MutableJdbcDriverProperty
    * 
    * @see schemacrawler.schema.JdbcDriverProperty#getValue()
    */
+  @Override
   public String getValue()
   {
-    if (getName().equalsIgnoreCase("password") && value != null)
+    final Object valueObject = super.getValue();
+    final String value;
+    if (valueObject == null)
     {
-      return "*****";
+      value = null;
+    }
+    else if (getName().equalsIgnoreCase("password"))
+    {
+      value = "*****";
+    }
+    else
+    {
+      value = String.valueOf(valueObject);
     }
     return value;
   }

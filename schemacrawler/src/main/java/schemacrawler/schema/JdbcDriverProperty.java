@@ -27,7 +27,7 @@ package schemacrawler.schema;
  * @author sfatehi
  */
 public interface JdbcDriverProperty
-  extends NamedObject
+  extends DatabaseProperty
 {
 
   /**
@@ -38,13 +38,6 @@ public interface JdbcDriverProperty
    * @return Available choices for the value of a property
    */
   String[] getChoices();
-
-  /**
-   * Gets the description of the property.
-   * 
-   * @return Description
-   */
-  String getDescription();
 
   /**
    * Gets the the current value of the property, based on a combination

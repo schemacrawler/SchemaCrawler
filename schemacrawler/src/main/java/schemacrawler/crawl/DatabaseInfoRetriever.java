@@ -30,13 +30,11 @@ import java.sql.DriverManager;
 import java.sql.DriverPropertyInfo;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
-import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,72 +48,10 @@ final class DatabaseInfoRetriever
   private static final Logger LOGGER = Logger
     .getLogger(DatabaseInfoRetriever.class.getName());
 
-  private static final Set<Entry<String, String>> acronyms;
-
-  static
-  {
-    final Map<String, String> acronymsMap = new HashMap<String, String>();
-    acronymsMap.put("JDBC", "Jdbc");
-    acronymsMap.put("ANSI", "Ansi");
-    acronymsMap.put("SQL", "Sql");
-    acronymsMap.put("URL", "Url");
-    acronyms = Collections.unmodifiableSet(acronymsMap.entrySet());
-  }
-
   DatabaseInfoRetriever(final RetrieverConnection retrieverConnection,
                         final MutableDatabase database)
   {
     super(retrieverConnection, database);
-  }
-
-  /**
-   * Derives the property name from the method name.
-   * 
-   * @param method
-   *        Method
-   * @return Method name
-   */
-  private String derivePropertyDescription(final Method method)
-  {
-
-    final String get = "get";
-    String description = method.getName();
-    if (description.startsWith(get))
-    {
-      description = description.substring(get.length());
-    }
-
-    for (final Entry<String, String> acronym: acronyms)
-    {
-      description = description
-        .replaceAll(acronym.getKey(), acronym.getValue());
-    }
-
-    final int strLen = description.length();
-    final StringBuilder buffer = new StringBuilder(strLen);
-    for (int i = 0; i < strLen; i++)
-    {
-      final char ch = description.charAt(i);
-      if (Character.isUpperCase(ch) || Character.isTitleCase(ch))
-      {
-        buffer.append(' ').append(Character.toLowerCase(ch));
-      }
-      else if (Character.isLowerCase(ch))
-      {
-        buffer.append(ch);
-      }
-    }
-    description = buffer.toString();
-
-    for (final Entry<String, String> acronym: acronyms)
-    {
-      description = description.replaceAll(acronym.getValue().toLowerCase(),
-                                           acronym.getKey());
-      description = description
-        .replaceAll(acronym.getValue(), acronym.getKey());
-    }
-
-    return description;
   }
 
   /**
@@ -173,20 +109,20 @@ final class DatabaseInfoRetriever
     return isDatabasePropertyResultSetType;
   }
 
-  private void retrieveResultSetTypeProperty(final DatabaseMetaData dbMetaData,
-                                             final MutableDatabaseInfo dbInfo,
-                                             final Method method,
-                                             final int resultSetType,
-                                             final String resultSetTypeName)
+  private MutableDatabaseProperty retrieveResultSetTypeProperty(final DatabaseMetaData dbMetaData,
+                                                                final MutableDatabaseInfo dbInfo,
+                                                                final Method method,
+                                                                final int resultSetType,
+                                                                final String resultSetTypeName)
     throws IllegalAccessException, InvocationTargetException
   {
-    final String description = derivePropertyDescription(method) + " for "
-                               + resultSetTypeName + " result sets";
+    final String name = method.getName() + "For" + resultSetTypeName
+                        + "ResultSets";
     Boolean propertyValue = null;
     propertyValue = (Boolean) method.invoke(dbMetaData, new Object[] {
       Integer.valueOf(resultSetType)
     });
-    dbInfo.putProperty(description, propertyValue);
+    return new MutableDatabaseProperty(name, propertyValue);
   }
 
   /**
@@ -203,6 +139,8 @@ final class DatabaseInfoRetriever
     final DatabaseMetaData dbMetaData = getMetaData();
     final MutableDatabaseInfo dbInfo = database.getDatabaseInfo();
 
+    final Collection<MutableDatabaseProperty> dbProperties = new ArrayList<MutableDatabaseProperty>();
+
     final Method[] methods = DatabaseMetaData.class.getMethods();
     for (final Method method: methods)
     {
@@ -215,9 +153,8 @@ final class DatabaseInfoRetriever
             LOGGER.log(Level.FINER,
                        "Retrieving database property using method: " + method);
           }
-          final String description = derivePropertyDescription(method);
           Object value = method.invoke(dbMetaData, new Object[0]);
-          if (value != null && description.endsWith("s")
+          if (value != null && method.getName().endsWith("s")
               && value instanceof String)
           {
             // Probably a comma-separated list
@@ -225,7 +162,8 @@ final class DatabaseInfoRetriever
               .split(",")));
           }
           // Add to the properties map
-          dbInfo.putProperty(description, value);
+          dbProperties
+            .add(new MutableDatabaseProperty(method.getName(), value));
         }
         else if (isDatabasePropertiesResultSetMethod(method))
         {
@@ -234,10 +172,11 @@ final class DatabaseInfoRetriever
             LOGGER.log(Level.FINER,
                        "Retrieving database property using method: " + method);
           }
-          final String description = derivePropertyDescription(method);
           final ResultSet results = (ResultSet) method.invoke(dbMetaData,
                                                               new Object[0]);
-          dbInfo.putProperty(description, readResultsVector(results));
+          dbProperties
+            .add(new MutableDatabaseProperty(method.getName(),
+                                             readResultsVector(results)));
         }
         else if (isDatabasePropertyResultSetType(method))
         {
@@ -246,21 +185,24 @@ final class DatabaseInfoRetriever
             LOGGER.log(Level.FINER,
                        "Retrieving database property using method: " + method);
           }
-          retrieveResultSetTypeProperty(dbMetaData,
-                                        dbInfo,
-                                        method,
-                                        ResultSet.TYPE_FORWARD_ONLY,
-                                        "TYPE_FORWARD_ONLY");
-          retrieveResultSetTypeProperty(dbMetaData,
-                                        dbInfo,
-                                        method,
-                                        ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                        "TYPE_SCROLL_INSENSITIVE");
-          retrieveResultSetTypeProperty(dbMetaData,
-                                        dbInfo,
-                                        method,
-                                        ResultSet.TYPE_SCROLL_SENSITIVE,
-                                        "TYPE_SCROLL_SENSITIVE");
+          dbProperties
+            .add(retrieveResultSetTypeProperty(dbMetaData,
+                                               dbInfo,
+                                               method,
+                                               ResultSet.TYPE_FORWARD_ONLY,
+                                               "TYPE_FORWARD_ONLY"));
+          dbProperties
+            .add(retrieveResultSetTypeProperty(dbMetaData,
+                                               dbInfo,
+                                               method,
+                                               ResultSet.TYPE_SCROLL_INSENSITIVE,
+                                               "TYPE_SCROLL_INSENSITIVE"));
+          dbProperties
+            .add(retrieveResultSetTypeProperty(dbMetaData,
+                                               dbInfo,
+                                               method,
+                                               ResultSet.TYPE_SCROLL_SENSITIVE,
+                                               "TYPE_SCROLL_SENSITIVE"));
         }
       }
       catch (final Exception e)
@@ -268,6 +210,9 @@ final class DatabaseInfoRetriever
         LOGGER.log(Level.FINE, "Could not execute method, " + method, e);
       }
     }
+
+    dbInfo.addAll(dbProperties);
+
   }
 
   /**

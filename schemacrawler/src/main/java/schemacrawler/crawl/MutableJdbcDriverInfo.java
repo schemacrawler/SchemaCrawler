@@ -21,6 +21,10 @@
 package schemacrawler.crawl;
 
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedHashSet;
+
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 
@@ -43,7 +47,7 @@ final class MutableJdbcDriverInfo
   private String driverVersion;
   private String connectionUrl;
   private boolean jdbcCompliant;
-  private final NamedObjectList<MutableJdbcDriverProperty> jdbcDriverProperties = new NamedObjectList<MutableJdbcDriverProperty>();
+  private final Collection<MutableJdbcDriverProperty> jdbcDriverProperties = new LinkedHashSet<MutableJdbcDriverProperty>();
 
   /**
    * {@inheritDoc}
@@ -82,8 +86,10 @@ final class MutableJdbcDriverInfo
    */
   public JdbcDriverProperty[] getDriverProperties()
   {
-    return jdbcDriverProperties.values()
+    final JdbcDriverProperty[] properties = jdbcDriverProperties
       .toArray(new JdbcDriverProperty[jdbcDriverProperties.size()]);
+    Arrays.sort(properties);
+    return properties;
   }
 
   /**

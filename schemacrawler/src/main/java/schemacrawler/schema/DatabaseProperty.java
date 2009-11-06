@@ -17,46 +17,34 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-
 package schemacrawler.schema;
 
 
 import java.io.Serializable;
 
-/**
- * Database and connection information.
- * 
- * @author Sualeh Fatehi
- */
-public interface DatabaseInfo
-  extends Serializable
+public interface DatabaseProperty
+  extends Serializable, Comparable<DatabaseProperty>
 {
-  /**
-   * Gets the JDBC driver information.
-   * 
-   * @return JDBC driver information
-   */
-  JdbcDriverInfo getJdbcDriverInfo();
 
   /**
-   * Gets the name of the RDBMS vendor and product.
+   * Gets the description of the property.
    * 
-   * @return Name of the RDBMS vendor and product
+   * @return Description
    */
-  String getProductName();
+  String getDescription();
 
   /**
-   * Gets the RDBMS product version.
+   * Gets the name of the property.
    * 
-   * @return RDBMS product version
+   * @return Name
    */
-  String getProductVersion();
+  String getName();
 
   /**
-   * Gets all database properties.
+   * Gets the value of the property.
    * 
-   * @return Map of properties
+   * @return Value
    */
-  DatabaseProperty[] getProperties();
+  Object getValue();
 
 }

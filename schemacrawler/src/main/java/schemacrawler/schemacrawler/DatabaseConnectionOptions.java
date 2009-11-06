@@ -98,6 +98,20 @@ public class DatabaseConnectionOptions
     loadJdbcDriver(jdbcDriverClassName);
   }
 
+  public Connection createConnection()
+    throws SQLException
+  {
+    if (user == null)
+    {
+      LOGGER.log(Level.WARNING, "Database user is not provided");
+    }
+    if (password == null)
+    {
+      LOGGER.log(Level.WARNING, "Database password is not provided");
+    }
+    return DriverManager.getConnection(connectionUrl, user, password);
+  }
+
   public String getConnectionUrl()
   {
     return connectionUrl;
@@ -126,20 +140,6 @@ public class DatabaseConnectionOptions
   public String getUser()
   {
     return user;
-  }
-
-  public Connection createConnection()
-    throws SQLException
-  {
-    if (user == null)
-    {
-      LOGGER.log(Level.WARNING, "Database user is not provided");
-    }
-    if (password == null)
-    {
-      LOGGER.log(Level.WARNING, "Database password is not provided");
-    }
-    return DriverManager.getConnection(connectionUrl, user, password);
   }
 
   public void setPassword(final String password)

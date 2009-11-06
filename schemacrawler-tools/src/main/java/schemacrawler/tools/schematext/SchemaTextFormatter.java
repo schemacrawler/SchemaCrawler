@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,6 +35,7 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
@@ -507,20 +506,18 @@ final class SchemaTextFormatter
     {
       out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                                 "Database Characteristics"));
-      final Set<Map.Entry<String, Object>> propertySet = dbInfo.getProperties()
-        .entrySet();
-      if (propertySet.size() > 0)
+      if (dbInfo.getProperties().length > 0)
       {
         out.print(formattingHelper.createObjectStart(""));
-        for (final Map.Entry<String, Object> property: propertySet)
+        for (final DatabaseProperty property: dbInfo.getProperties())
         {
-          final String key = property.getKey();
+          final String name = property.getDescription();
           Object value = property.getValue();
           if (value == null)
           {
             value = "";
           }
-          out.println(formattingHelper.createNameValueRow(key, ObjectToString
+          out.println(formattingHelper.createNameValueRow(name, ObjectToString
             .toString(value)));
         }
         out.print(formattingHelper.createObjectEnd());
