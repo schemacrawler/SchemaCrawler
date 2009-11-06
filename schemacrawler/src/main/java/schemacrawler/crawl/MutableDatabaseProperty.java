@@ -44,6 +44,9 @@ class MutableDatabaseProperty
     acronymsMap.put("ANSI", "Ansi");
     acronymsMap.put("SQL", "Sql");
     acronymsMap.put("URL", "Url");
+    acronymsMap.put("TYPE_FORWARD_ONLY", "Type_forward_only");
+    acronymsMap.put("TYPE_SCROLL_INSENSITIVE", "Type_scroll_insensitive");
+    acronymsMap.put("TYPE_SCROLL_SENSITIVE", "Type_scroll_sensitive");
     acronyms = Collections.unmodifiableSet(acronymsMap.entrySet());
   }
 
@@ -79,7 +82,7 @@ class MutableDatabaseProperty
       {
         buffer.append(' ').append(Character.toLowerCase(ch));
       }
-      else if (Character.isLowerCase(ch))
+      else
       {
         buffer.append(ch);
       }
