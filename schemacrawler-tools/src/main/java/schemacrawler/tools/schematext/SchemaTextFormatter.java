@@ -488,13 +488,10 @@ final class SchemaTextFormatter
 
     final SchemaTextDetailType schemaTextDetailType = options
       .getSchemaTextDetailType();
-    if (schemaTextDetailType != SchemaTextDetailType.maximum_schema)
-    {
-      return;
-    }
 
-    out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                              "Database Information"));
+    out.println(formattingHelper
+      .createHeader(DocumentHeaderType.subTitle,
+                    "Database and JDBC Driver Information"));
 
     out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                               "Database Information"));
@@ -505,30 +502,30 @@ final class SchemaTextFormatter
     out.println(formattingHelper.createNameValueRow("database version", dbInfo
       .getProductVersion()));
     out.print(formattingHelper.createObjectEnd());
-    out.println();
 
-    out.println(formattingHelper.createHeader(DocumentHeaderType.section,
-                                              "Database Characteristics"));
-    final Set<Map.Entry<String, Object>> propertySet = dbInfo.getProperties()
-      .entrySet();
-    if (propertySet.size() > 0)
+    if (schemaTextDetailType == SchemaTextDetailType.maximum_schema)
     {
-      out.print(formattingHelper.createObjectStart(""));
-      for (final Map.Entry<String, Object> property: propertySet)
+      out.println(formattingHelper.createHeader(DocumentHeaderType.section,
+                                                "Database Characteristics"));
+      final Set<Map.Entry<String, Object>> propertySet = dbInfo.getProperties()
+        .entrySet();
+      if (propertySet.size() > 0)
       {
-        final String key = property.getKey();
-        Object value = property.getValue();
-        if (value == null)
+        out.print(formattingHelper.createObjectStart(""));
+        for (final Map.Entry<String, Object> property: propertySet)
         {
-          value = "";
+          final String key = property.getKey();
+          Object value = property.getValue();
+          if (value == null)
+          {
+            value = "";
+          }
+          out.println(formattingHelper.createNameValueRow(key, ObjectToString
+            .toString(value)));
         }
-        out.println(formattingHelper.createNameValueRow(key, ObjectToString
-          .toString(value)));
+        out.print(formattingHelper.createObjectEnd());
       }
-      out.print(formattingHelper.createObjectEnd());
-      out.println();
     }
-    out.flush();
 
     final JdbcDriverInfo driverInfo = dbInfo.getJdbcDriverInfo();
     if (driverInfo == null)
@@ -551,24 +548,26 @@ final class SchemaTextFormatter
     out.println(formattingHelper.createNameValueRow("url", driverInfo
       .getConnectionUrl()));
     out.print(formattingHelper.createObjectEnd());
-    out.println();
 
-    out.println(formattingHelper.createHeader(DocumentHeaderType.section,
-                                              "JDBC Driver Properties"));
-
-    final JdbcDriverProperty[] jdbcDriverProperties = driverInfo
-      .getDriverProperties();
-    if (jdbcDriverProperties.length > 0)
+    if (schemaTextDetailType == SchemaTextDetailType.maximum_schema)
     {
-      for (final JdbcDriverProperty driverProperty: jdbcDriverProperties)
+      out.println(formattingHelper.createHeader(DocumentHeaderType.section,
+                                                "JDBC Driver Properties"));
+
+      final JdbcDriverProperty[] jdbcDriverProperties = driverInfo
+        .getDriverProperties();
+      if (jdbcDriverProperties.length > 0)
       {
-        out.print(formattingHelper.createObjectStart(""));
-        printJdbcDriverProperty(driverProperty);
-        out.print(formattingHelper.createObjectEnd());
+        for (final JdbcDriverProperty driverProperty: jdbcDriverProperties)
+        {
+          out.print(formattingHelper.createObjectStart(""));
+          printJdbcDriverProperty(driverProperty);
+          out.print(formattingHelper.createObjectEnd());
+        }
       }
-      out.println();
     }
 
+    out.flush();
   }
 
   private void printDefinition(final String definition)
