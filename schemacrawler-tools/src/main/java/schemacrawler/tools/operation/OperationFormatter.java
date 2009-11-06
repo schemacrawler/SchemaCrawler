@@ -196,6 +196,7 @@ final class OperationFormatter
   public void handle(final ColumnDataType dataType)
     throws SchemaCrawlerException
   {
+    // Ignore
   }
 
   /**
@@ -226,6 +227,7 @@ final class OperationFormatter
    */
   public void handle(final Procedure procedure)
   {
+    // Ignore
   }
 
   /**
