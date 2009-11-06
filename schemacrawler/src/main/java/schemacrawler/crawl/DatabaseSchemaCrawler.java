@@ -139,7 +139,6 @@ public final class DatabaseSchemaCrawler
 
       crawlSchemas(retrieverConnection, schemaCrawlerOptions);
       crawlDatabaseInfo(retrieverConnection, schemaCrawlerOptions);
-      crawlJdbcDriverInfo(retrieverConnection, schemaCrawlerOptions);
       handler.handle(database.getDatabaseInfo());
 
       crawlColumnDataTypes(retrieverConnection, schemaCrawlerOptions);
@@ -222,34 +221,16 @@ public final class DatabaseSchemaCrawler
         {
           retriever.retrieveAdditionalDatabaseInfo();
         }
+        if (infoLevel.isRetrieveJdbcDriverInfo())
+        {
+          retriever.retrieveJdbcDriverInfo();
+        }
       }
     }
     catch (final SQLException e)
     {
       throw new SchemaCrawlerException("Exception retrieving database information",
                                        e);
-    }
-  }
-
-  private void crawlJdbcDriverInfo(final RetrieverConnection retrieverConnection,
-                                   final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
-  {
-    final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
-    if (infoLevel.isRetrieveJdbcDriverInfo())
-    {
-      try
-      {
-        final JdbcDriverInfoRetriever retriever = new JdbcDriverInfoRetriever(retrieverConnection,
-                                                                              database);
-        retriever.retrieveJdbcDriverInfo();
-      }
-      catch (final SQLException e)
-      {
-        throw new SchemaCrawlerException("Exception retrieving JDBC driver information",
-                                         e);
-      }
-
     }
   }
 
