@@ -94,7 +94,7 @@ class MutableDatabaseProperty
         .replaceAll(acronym.getValue(), acronym.getKey());
     }
 
-    return description;
+    return description.trim();
   }
 
   private final String name;
