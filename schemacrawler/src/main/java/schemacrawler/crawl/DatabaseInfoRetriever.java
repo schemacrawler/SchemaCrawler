@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,6 +48,14 @@ final class DatabaseInfoRetriever
 
   private static final Logger LOGGER = Logger
     .getLogger(DatabaseInfoRetriever.class.getName());
+
+  private static final List<String> ignoreMethods = Arrays.asList(new String[] {
+      "getDatabaseProductName",
+      "getDatabaseProductVersion",
+      "getURL",
+      "getDriverName",
+      "getDriverVersion"
+  });
 
   DatabaseInfoRetriever(final RetrieverConnection retrieverConnection,
                         final MutableDatabase database)
@@ -146,6 +155,10 @@ final class DatabaseInfoRetriever
     {
       try
       {
+        if (ignoreMethods.contains(method.getName()))
+        {
+          continue;
+        }
         if (isDatabasePropertyMethod(method))
         {
           if (LOGGER.isLoggable(Level.FINE))

@@ -29,13 +29,9 @@ catalog term,""
 catalogs,""
 database major version,1
 database minor version,8
-database product name,HSQL Database Engine
-database product version,1.8.0
 default transaction isolation,1
 driver major version,1
 driver minor version,8
-driver name,HSQL Database Engine Driver
-driver version,1.8.0
 extra name characters,""
 identifier quote string,"68"
 JDBC major version,3
@@ -73,7 +69,6 @@ system functions,"DATABASE, USER, IDENTITY"
 table types,"GLOBAL TEMPORARY, SYSTEM TABLE, TABLE, VIEW"
 time date functions,"CURDATE, CURTIME, DATEDIFF, DAYNAME, DAY, DAYOFMONTH, DAYOFWEEK, DAYOFYEAR, HOUR, MINUTE, MONTH, MONTHNAME, NOW, QUARTER, SECOND, WEEK, YEAR, TO_CHAR"
 type info,"TINYINT, BIGINT, LONGVARBINARY, VARBINARY, BINARY, LONGVARCHAR, CHAR, NUMERIC, DECIMAL, INTEGER, SMALLINT, FLOAT, REAL, DOUBLE, VARCHAR, VARCHAR_IGNORECASE, BOOLEAN, DATE, TIME, TIMESTAMP, OTHER"
-URL,jdbc:hsqldb:hsql://localhost:9001/schemacrawler
 user name,SA
 inserts are detected for TYPE_FORWARD_ONLY result sets,false
 inserts are detected for TYPE_SCROLL_INSENSITIVE result sets,false
