@@ -22,7 +22,6 @@ package schemacrawler.tools.datatext;
 
 
 import java.io.BufferedInputStream;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Blob;
 import java.sql.Clob;
@@ -87,14 +86,7 @@ public final class DataTextFormatter
       formattingHelper = new PlainTextFormattingHelper(OutputFormat.csv);
     }
 
-    try
-    {
-      out = options.getOutputOptions().openOutputWriter();
-    }
-    catch (final IOException e)
-    {
-      throw new SchemaCrawlerException("Could not obtain output writer", e);
-    }
+    out = options.getOutputOptions().openOutputWriter();
 
   }
 

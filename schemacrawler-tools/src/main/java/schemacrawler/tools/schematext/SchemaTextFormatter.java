@@ -21,9 +21,6 @@
 package schemacrawler.tools.schematext;
 
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,8 +31,6 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.ConditionTimingType;
-import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
@@ -43,8 +38,6 @@ import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.IndexType;
-import schemacrawler.schema.JdbcDriverInfo;
-import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
@@ -52,15 +45,9 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schema.Privilege.Grant;
-import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.OutputFormat;
-import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.util.HtmlFormattingHelper;
-import schemacrawler.tools.util.PlainTextFormattingHelper;
-import schemacrawler.tools.util.TextFormattingHelper;
+import schemacrawler.tools.BaseFormatter;
 import schemacrawler.tools.util.TextFormattingHelper.DocumentHeaderType;
-import schemacrawler.utility.ObjectToString;
 import schemacrawler.utility.Utility;
 
 /**
@@ -69,7 +56,7 @@ import schemacrawler.utility.Utility;
  * @author Sualeh Fatehi
  */
 final class SchemaTextFormatter
-  implements CrawlHandler
+  extends BaseFormatter<SchemaTextOptions>
 {
 
   private enum CrawlPhase
@@ -80,9 +67,6 @@ final class SchemaTextFormatter
   private static final Logger LOGGER = Logger
     .getLogger(SchemaTextFormatter.class.getName());
 
-  private final SchemaTextOptions options;
-  private final PrintWriter out;
-  private final TextFormattingHelper formattingHelper;
   private CrawlPhase crawlPhase;
   private int tableCount;
 
@@ -95,32 +79,8 @@ final class SchemaTextFormatter
   SchemaTextFormatter(final SchemaTextOptions options)
     throws SchemaCrawlerException
   {
-    if (options == null)
-    {
-      throw new IllegalArgumentException("Options not provided");
-    }
-    this.options = options;
-
-    final OutputOptions outputOptions = options.getOutputOptions();
-    final OutputFormat outputFormat = outputOptions.getOutputFormat();
-    if (outputFormat == OutputFormat.html)
-    {
-      formattingHelper = new HtmlFormattingHelper(outputFormat);
-    }
-    else
-    {
-      formattingHelper = new PlainTextFormattingHelper(outputFormat);
-    }
-
-    try
-    {
-      out = outputOptions.openOutputWriter();
-    }
-    catch (final IOException e)
-    {
-      throw new SchemaCrawlerException("Could not obtain output writer", e);
-    }
-
+    super(options, options.getOutputOptions().openOutputWriter());
+    setVerboseDatabaseInfo(options.getSchemaTextDetailType() == SchemaTextDetailType.maximum_schema);
     crawlPhase = CrawlPhase.none;
   }
 
@@ -201,22 +161,6 @@ final class SchemaTextFormatter
       .println(formattingHelper.createNameRow("", "[weak associations]", true));
     printColumnPairs("", weakAssociations);
     out.print(formattingHelper.createObjectEnd());
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see CrawlHandler#handle(Database)
-   */
-  public void handle(final DatabaseInfo databaseInfo)
-  {
-    if (crawlPhase != CrawlPhase.databaseInfo)
-    {
-      crawlPhase = CrawlPhase.databaseInfo;
-    }
-
-    printDatabaseInfo(databaseInfo);
-
   }
 
   /**
@@ -478,95 +422,6 @@ final class SchemaTextFormatter
     }
   }
 
-  private void printDatabaseInfo(final DatabaseInfo dbInfo)
-  {
-    if (dbInfo == null)
-    {
-      return;
-    }
-
-    final SchemaTextDetailType schemaTextDetailType = options
-      .getSchemaTextDetailType();
-
-    out.println(formattingHelper
-      .createHeader(DocumentHeaderType.subTitle,
-                    "Database and JDBC Driver Information"));
-
-    out.println(formattingHelper.createHeader(DocumentHeaderType.section,
-                                              "Database Information"));
-
-    out.print(formattingHelper.createObjectStart(""));
-    out.println(formattingHelper.createNameValueRow("database", dbInfo
-      .getProductName()));
-    out.println(formattingHelper.createNameValueRow("database version", dbInfo
-      .getProductVersion()));
-    out.print(formattingHelper.createObjectEnd());
-
-    if (schemaTextDetailType == SchemaTextDetailType.maximum_schema)
-    {
-      out.println(formattingHelper.createHeader(DocumentHeaderType.section,
-                                                "Database Characteristics"));
-      if (dbInfo.getProperties().length > 0)
-      {
-        out.print(formattingHelper.createObjectStart(""));
-        for (final DatabaseProperty property: dbInfo.getProperties())
-        {
-          final String name = property.getDescription();
-          Object value = property.getValue();
-          if (value == null)
-          {
-            value = "";
-          }
-          out.println(formattingHelper.createNameValueRow(name, ObjectToString
-            .toString(value)));
-        }
-        out.print(formattingHelper.createObjectEnd());
-      }
-    }
-
-    final JdbcDriverInfo driverInfo = dbInfo.getJdbcDriverInfo();
-    if (driverInfo == null)
-    {
-      return;
-    }
-
-    out.println(formattingHelper.createHeader(DocumentHeaderType.section,
-                                              "JDBC Driver Information"));
-
-    out.print(formattingHelper.createObjectStart(""));
-    out.println(formattingHelper.createNameValueRow("driver", driverInfo
-      .getDriverName()));
-    out.println(formattingHelper.createNameValueRow("driver version",
-                                                    driverInfo
-                                                      .getDriverVersion()));
-    out.println(formattingHelper.createNameValueRow("is JDBC compliant",
-                                                    Boolean.toString(driverInfo
-                                                      .isJdbcCompliant())));
-    out.println(formattingHelper.createNameValueRow("url", driverInfo
-      .getConnectionUrl()));
-    out.print(formattingHelper.createObjectEnd());
-
-    if (schemaTextDetailType == SchemaTextDetailType.maximum_schema)
-    {
-      out.println(formattingHelper.createHeader(DocumentHeaderType.section,
-                                                "JDBC Driver Properties"));
-
-      final JdbcDriverProperty[] jdbcDriverProperties = driverInfo
-        .getDriverProperties();
-      if (jdbcDriverProperties.length > 0)
-      {
-        for (final JdbcDriverProperty driverProperty: jdbcDriverProperties)
-        {
-          out.print(formattingHelper.createObjectStart(""));
-          printJdbcDriverProperty(driverProperty);
-          out.print(formattingHelper.createObjectEnd());
-        }
-      }
-    }
-
-    out.flush();
-  }
-
   private void printDefinition(final String definition)
   {
     out.println(formattingHelper.createEmptyRow());
@@ -654,29 +509,6 @@ final class SchemaTextFormatter
         printTableColumns(index.getColumns());
       }
     }
-  }
-
-  private void printJdbcDriverProperty(final JdbcDriverProperty driverProperty)
-  {
-    final String choices = Arrays.asList(driverProperty.getChoices())
-      .toString();
-    final String required = (driverProperty.isRequired()? "": "not ")
-                            + "required";
-    String details = required;
-    if (driverProperty.getChoices() != null
-        && driverProperty.getChoices().length > 0)
-    {
-      details = details + "; choices " + choices;
-    }
-    final String value = driverProperty.getValue();
-
-    out.println(formattingHelper.createNameRow(driverProperty.getName(),
-                                               "[driver property]",
-                                               false));
-    out.println(formattingHelper.createDefinitionRow(driverProperty
-      .getDescription()));
-    out.println(formattingHelper.createDefinitionRow(details));
-    out.println(formattingHelper.createDetailRow("", "value", value));
   }
 
   private void printPrimaryKey(final Index primaryKey)

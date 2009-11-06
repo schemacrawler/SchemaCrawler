@@ -30,6 +30,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Options;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.utility.Utility;
 
 /**
@@ -253,20 +254,27 @@ public final class OutputOptions
    * @return Writer
    */
   public PrintWriter openOutputWriter()
-    throws IOException
+    throws SchemaCrawlerException
   {
     PrintWriter writer;
-    if (outputFile == null)
+    try
     {
-      writer = new PrintWriter(System.out, /* autoFlush = */true);
-      LOGGER.log(Level.INFO, "Opened output writer to console");
+      if (outputFile == null)
+      {
+        writer = new PrintWriter(System.out, /* autoFlush = */true);
+        LOGGER.log(Level.INFO, "Opened output writer to console");
+      }
+      else
+      {
+        final FileWriter fileWriter = new FileWriter(outputFile, appendOutput);
+        writer = new PrintWriter(fileWriter, /* autoFlush = */true);
+        LOGGER.log(Level.INFO, "Opened output writer to file, "
+                               + outputFile.getAbsolutePath());
+      }
     }
-    else
+    catch (final Exception e)
     {
-      final FileWriter fileWriter = new FileWriter(outputFile, appendOutput);
-      writer = new PrintWriter(fileWriter, /* autoFlush = */true);
-      LOGGER.log(Level.INFO, "Opened output writer to file, "
-                             + outputFile.getAbsolutePath());
+      throw new SchemaCrawlerException("Could not obtain output writer", e);
     }
     return writer;
   }
