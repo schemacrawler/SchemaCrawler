@@ -1,8 +1,7 @@
 
 
 
-
-Database Information
+Database and JDBC Driver Information
 ========================================================================
 
 
@@ -10,15 +9,12 @@ Database Information
 Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
-
 database,HSQL Database Engine
 database version,1.8.0
 
 
-
 Database Characteristics
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
-
 
  JDBC major version,3
  JDBC minor version,0
@@ -179,10 +175,8 @@ uses local file per table,false
 uses local files,false
 
 
-
 JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
-
 
 driver,HSQL Database Engine Driver
 driver version,1.8.0
@@ -190,10 +184,8 @@ is JDBC compliant,false
 url,jdbc:hsqldb:hsql://localhost:9001/schemacrawler
 
 
-
 JDBC Driver Properties
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
-
 
 default_schema,[driver property]
 "",""
@@ -224,8 +216,6 @@ user,[driver property]
 "",""
 "",required
 "",value,null
-
-
 
 
 
@@ -400,7 +390,6 @@ VARCHAR_IGNORECASE,[data type]
 "",nullable
 "",not auto-incrementable
 "",searchable
-
 
 
 
@@ -632,7 +621,6 @@ UPDATE,[privilege]
 
 
 
-
 Weak Associations
 ========================================================================
 
@@ -641,7 +629,6 @@ Weak Associations
 ------------------------------------------------------------------------
 "",PUBLIC.PRODUCT.ID --> SCHEMACRAWLER.ITEM.PRODUCTID,""
 "",PUBLIC.INVOICE.ID --> SCHEMACRAWLER.ITEM.INVOICEID,""
-
 
 
 
@@ -1942,7 +1929,6 @@ PUBLIC.YEAR,"[procedure, returns result]"
 
 
 
-
 Row Count
 ========================================================================
 
@@ -1950,7 +1936,6 @@ Row Count
 
 Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
-
 
 
 "",[database]
@@ -1976,7 +1961,6 @@ SCHEMACRAWLER.PRODUCT2,11 rows
 
 
 
-
 Dump
 ========================================================================
 
@@ -1984,7 +1968,6 @@ Dump
 
 Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
-
 
 
 "",[database]

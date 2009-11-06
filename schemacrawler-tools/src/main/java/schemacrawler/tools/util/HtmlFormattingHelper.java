@@ -123,7 +123,7 @@ public final class HtmlFormattingHelper
             break;
         }
       }
-      return String.format("<p>&nbsp;</p>%s\n<%s>%s</%s>\n",
+      return String.format("%s\n<%s>%s</%s>\n",
                            prefix,
                            headerTag,
                            header,

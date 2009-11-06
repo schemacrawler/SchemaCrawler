@@ -78,7 +78,7 @@ public class PlainTextFormattingHelper
       final String separator;
       if (type == null)
       {
-        prefix = NEWLINE + NEWLINE;
+        prefix = NEWLINE;
         separator = defaultSeparator;
       }
       else
@@ -86,11 +86,11 @@ public class PlainTextFormattingHelper
         switch (type)
         {
           case title:
-            prefix = NEWLINE + NEWLINE;
+            prefix = NEWLINE;
             separator = separator("_");
             break;
           case subTitle:
-            prefix = NEWLINE + NEWLINE;
+            prefix = NEWLINE;
             separator = defaultSeparator;
             break;
           case section:
@@ -98,13 +98,12 @@ public class PlainTextFormattingHelper
             separator = separator("-=-");
             break;
           default:
-            prefix = NEWLINE + NEWLINE;
+            prefix = NEWLINE;
             separator = defaultSeparator;
             break;
         }
       }
-      return NEWLINE + prefix + header + NEWLINE + separator + NEWLINE
-             + NEWLINE;
+      return NEWLINE + prefix + header + NEWLINE + separator + NEWLINE + prefix;
     }
     else
     {
