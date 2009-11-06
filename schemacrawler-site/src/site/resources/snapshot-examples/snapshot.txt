@@ -24,9 +24,9 @@ deletes are detected for TYPE_FORWARD_ONLY result sets  false
 deletes are detected for TYPE_SCROLL_INSENSITIVE result sets  false
 deletes are detected for TYPE_SCROLL_SENSITIVE result sets  false
 does max row size include blobs       true
+catalogs                              
 catalog separator                     
 catalog term                          
-catalogs                              
 database major version                1
 database minor version                8
 default transaction isolation         1
@@ -59,11 +59,11 @@ max user name length                  0
 numeric functions                     ABS, ACOS, ASIN, ATAN, ATAN2, CEILING, COS, COT, DEGREES, EXP, FLOOR, LOG, LOG10, MOD, PI, POWER, RADIANS, RAND, ROUND, SIGN, SIN, SQRT, TAN, TRUNCATE, BITAND, BITOR, BITXOR, ROUNDMAGIC
 procedure term                        
 result set holdability                1
+schemas                               INFORMATION_SCHEMA, PUBLIC, SCHEMACRAWLER
+schema term                           SCHEMA
+search string escape                  \
 SQL keywords                          BEFORE, BIGINT, BINARY, CACHED, DATETIME, LIMIT, LONGVARBINARY, LONGVARCHAR, OBJECT, OTHER, SAVEPOINT, TEMP, TEXT, TOP, TRIGGER, TINYINT, VARBINARY, VARCHAR_IGNORECASE
 SQL state type                        2
-schema term                           SCHEMA
-schemas                               INFORMATION_SCHEMA, PUBLIC, SCHEMACRAWLER
-search string escape                  \
 string functions                      ASCII, BIT_LENGTH, CHAR, CHAR_LENGTH, CHARACTER_LENGTH, CONCAT, DIFFERENCE, HEXTORAW, INSERT, LCASE, LEFT, LENGTH, LOCATE, LTRIM, OCTET_LENGTH, RAWTOHEX, REPEAT, REPLACE, RIGHT, RTRIM, SOUNDEX, SPACE, SUBSTR, SUBSTRING, UCASE, LOWER, UPPER
 system functions                      DATABASE, USER, IDENTITY
 table types                           GLOBAL TEMPORARY, SYSTEM TABLE, TABLE, VIEW
@@ -102,11 +102,11 @@ stores mixed case identifiers         false
 stores mixed case quoted identifiers  false
 stores upper case identifiers         true
 stores upper case quoted identifiers  false
+supports alter table with add column  true
+supports alter table with drop column  true
 supports ANSI92 entry level SQL       false
 supports ANSI92 full SQL              false
 supports ANSI92 intermediate SQL      false
-supports alter table with add column  true
-supports alter table with drop column  true
 supports batch updates                true
 supports catalogs in data manipulation  false
 supports catalogs in index definitions  false
