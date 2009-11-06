@@ -117,15 +117,15 @@ hr {
 		<td>true</td>
 	</tr>
 	<tr>
+		<td>catalogs</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>catalog separator</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>catalog term</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>catalogs</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -257,24 +257,24 @@ hr {
 		<td>1</td>
 	</tr>
 	<tr>
-		<td>SQL keywords</td>
-		<td>BEFORE, BIGINT, BINARY, CACHED, DATETIME, LIMIT, LONGVARBINARY, LONGVARCHAR, OBJECT, OTHER, SAVEPOINT, TEMP, TEXT, TOP, TRIGGER, TINYINT, VARBINARY, VARCHAR_IGNORECASE</td>
-	</tr>
-	<tr>
-		<td>SQL state type</td>
-		<td>2</td>
+		<td>schemas</td>
+		<td>INFORMATION_SCHEMA, PUBLIC, SCHEMACRAWLER</td>
 	</tr>
 	<tr>
 		<td>schema term</td>
 		<td>SCHEMA</td>
 	</tr>
 	<tr>
-		<td>schemas</td>
-		<td>INFORMATION_SCHEMA, PUBLIC, SCHEMACRAWLER</td>
-	</tr>
-	<tr>
 		<td>search string escape</td>
 		<td>\</td>
+	</tr>
+	<tr>
+		<td>SQL keywords</td>
+		<td>BEFORE, BIGINT, BINARY, CACHED, DATETIME, LIMIT, LONGVARBINARY, LONGVARCHAR, OBJECT, OTHER, SAVEPOINT, TEMP, TEXT, TOP, TRIGGER, TINYINT, VARBINARY, VARCHAR_IGNORECASE</td>
+	</tr>
+	<tr>
+		<td>SQL state type</td>
+		<td>2</td>
 	</tr>
 	<tr>
 		<td>string functions</td>
@@ -429,6 +429,14 @@ hr {
 		<td>false</td>
 	</tr>
 	<tr>
+		<td>supports alter table with add column</td>
+		<td>true</td>
+	</tr>
+	<tr>
+		<td>supports alter table with drop column</td>
+		<td>true</td>
+	</tr>
+	<tr>
 		<td>supports ANSI92 entry level SQL</td>
 		<td>false</td>
 	</tr>
@@ -439,14 +447,6 @@ hr {
 	<tr>
 		<td>supports ANSI92 intermediate SQL</td>
 		<td>false</td>
-	</tr>
-	<tr>
-		<td>supports alter table with add column</td>
-		<td>true</td>
-	</tr>
-	<tr>
-		<td>supports alter table with drop column</td>
-		<td>true</td>
 	</tr>
 	<tr>
 		<td>supports batch updates</td>
@@ -3299,32 +3299,6 @@ hr {
 
 <table>
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.java.lang.Math.copySign</td>
-		<td class='description underscore'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>@p1</td>
-		<td class='type'>FLOAT(8, 17), in</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>@p2</td>
-		<td class='type'>FLOAT(8, 17), in</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>@p0</td>
-		<td class='type'>FLOAT(8, 17), result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.java.lang.Math.cos</td>
 		<td class='description underscore'>[procedure, returns result]</td>
 	</tr>
@@ -3421,27 +3395,6 @@ hr {
 		<td class='ordinal'></td>
 		<td class='subname'>@p0</td>
 		<td class='type'>DOUBLE(8, 17), result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.java.lang.Math.getExponent</td>
-		<td class='description underscore'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>@p1</td>
-		<td class='type'>FLOAT(8, 17), in</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>@p0</td>
-		<td class='type'>INTEGER, result</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -3618,53 +3571,6 @@ hr {
 
 <table>
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.java.lang.Math.nextAfter</td>
-		<td class='description underscore'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>@p1</td>
-		<td class='type'>FLOAT(8, 17), in</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>@p2</td>
-		<td class='type'>DOUBLE(8, 17), in</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>@p0</td>
-		<td class='type'>FLOAT(8, 17), result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.java.lang.Math.nextUp</td>
-		<td class='description underscore'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>@p1</td>
-		<td class='type'>FLOAT(8, 17), in</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>@p0</td>
-		<td class='type'>FLOAT(8, 17), result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.java.lang.Math.pow</td>
 		<td class='description underscore'>[procedure, returns result]</td>
 	</tr>
@@ -3740,32 +3646,6 @@ hr {
 		<td class='ordinal'></td>
 		<td class='subname'>@p0</td>
 		<td class='type'>INTEGER, result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.java.lang.Math.scalb</td>
-		<td class='description underscore'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>@p1</td>
-		<td class='type'>FLOAT(8, 17), in</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>@p2</td>
-		<td class='type'>INTEGER, in</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>@p0</td>
-		<td class='type'>FLOAT(8, 17), result</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -6348,30 +6228,6 @@ hr {
 <p>&nbsp;</p>
 <h2>Row Count</h2>
 
-
-<h3>Database Information</h3>
-
-
-<table>
-	<tr>
-		<td colspan='2' class='name underscore'></td>
-		<td class='description underscore'>[database]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>HSQL Database Engine</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name underscore'></td>
-		<td class='description underscore'>[version]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>1.8.0</td>
-	</tr>
-</table>
-<p></p>
-
 <table>
   <caption>Row Count</caption>
 
@@ -6412,30 +6268,6 @@ hr {
 
 <p>&nbsp;</p>
 <h2>Dump</h2>
-
-
-<h3>Database Information</h3>
-
-
-<table>
-	<tr>
-		<td colspan='2' class='name underscore'></td>
-		<td class='description underscore'>[database]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>HSQL Database Engine</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name underscore'></td>
-		<td class='description underscore'>[version]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>1.8.0</td>
-	</tr>
-</table>
-<p></p>
 
 <table>
   <caption>CUSTOMER</caption>

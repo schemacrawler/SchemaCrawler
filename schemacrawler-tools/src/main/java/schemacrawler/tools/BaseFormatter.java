@@ -145,7 +145,7 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
   private void printDatabaseInfo(final DatabaseInfo dbInfo,
                                  final boolean verboseDatabaseInfo)
   {
-    if (dbInfo == null)
+    if (dbInfo == null || options.getOutputOptions().isNoInfo())
     {
       return;
     }
