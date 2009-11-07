@@ -53,6 +53,7 @@ final class DatabaseInfoRetriever
       "getDatabaseProductName",
       "getDatabaseProductVersion",
       "getURL",
+      "getUserName",
       "getDriverName",
       "getDriverVersion"
   });
@@ -229,6 +230,47 @@ final class DatabaseInfoRetriever
   }
 
   /**
+   * Provides information on the JDBC driver.
+   * 
+   * @param database
+   *        TODO
+   * @throws SQLException
+   *         On a SQL exception
+   */
+  void retrieveAdditionalJdbcDriverInfo()
+    throws SQLException
+  {
+    final DatabaseMetaData dbMetaData = getMetaData();
+    final String url = dbMetaData.getURL();
+
+    final MutableJdbcDriverInfo driverInfo = database.getDatabaseInfo()
+      .getJdbcDriverInfo();
+    if (driverInfo != null)
+    {
+      try
+      {
+        final Driver jdbcDriver = DriverManager.getDriver(url);
+        driverInfo.setJdbcDriverClassName(jdbcDriver.getClass().getName());
+        driverInfo.setJdbcCompliant(jdbcDriver.jdbcCompliant());
+
+        final DriverPropertyInfo[] propertyInfo = jdbcDriver
+          .getPropertyInfo(url, new Properties());
+        for (final DriverPropertyInfo driverPropertyInfo: propertyInfo)
+        {
+          driverInfo
+            .addJdbcDriverProperty(new MutableJdbcDriverProperty(driverPropertyInfo));
+        }
+      }
+      catch (final SQLException e)
+      {
+        LOGGER
+          .log(Level.WARNING, "Could not obtain JDBC driver information", e);
+      }
+    }
+
+  }
+
+  /**
    * Provides information on the database.
    * 
    * @param database
@@ -243,6 +285,7 @@ final class DatabaseInfoRetriever
 
     final MutableDatabaseInfo dbInfo = database.getDatabaseInfo();
 
+    dbInfo.setUserName(dbMetaData.getUserName());
     dbInfo.setProductName(dbMetaData.getDatabaseProductName());
     dbInfo.setProductVersion(dbMetaData.getDatabaseProductVersion());
   }
@@ -261,34 +304,15 @@ final class DatabaseInfoRetriever
     final DatabaseMetaData dbMetaData = getMetaData();
     final String url = dbMetaData.getURL();
 
-    final MutableDatabaseInfo dbInfo = database.getDatabaseInfo();
-
-    final MutableJdbcDriverInfo driverInfo = new MutableJdbcDriverInfo();
-
-    driverInfo.setDriverName(dbMetaData.getDriverName());
-    driverInfo.setDriverVersion(dbMetaData.getDriverVersion());
-    driverInfo.setConnectionUrl(url);
-
-    try
+    final MutableJdbcDriverInfo driverInfo = database.getDatabaseInfo()
+      .getJdbcDriverInfo();
+    if (driverInfo != null)
     {
-      final Driver jdbcDriver = DriverManager.getDriver(url);
-      driverInfo.setJdbcDriverClassName(jdbcDriver.getClass().getName());
-      driverInfo.setJdbcCompliant(jdbcDriver.jdbcCompliant());
-
-      final DriverPropertyInfo[] propertyInfo = jdbcDriver
-        .getPropertyInfo(url, new Properties());
-      for (final DriverPropertyInfo driverPropertyInfo: propertyInfo)
-      {
-        driverInfo
-          .addJdbcDriverProperty(new MutableJdbcDriverProperty(driverPropertyInfo));
-      }
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, "Could not obtain JDBC driver information", e);
+      driverInfo.setDriverName(dbMetaData.getDriverName());
+      driverInfo.setDriverVersion(dbMetaData.getDriverVersion());
+      driverInfo.setConnectionUrl(url);
     }
 
-    dbInfo.setJdbcDriverInfo(driverInfo);
   }
 
   /**

@@ -158,10 +158,13 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
                                               "Database Information"));
 
     out.print(formattingHelper.createObjectStart(""));
-    out.println(formattingHelper.createNameValueRow("database", dbInfo
-      .getProductName()));
-    out.println(formattingHelper.createNameValueRow("database version", dbInfo
-      .getProductVersion()));
+    out.println(formattingHelper.createNameValueRow("database product name",
+                                                    dbInfo.getProductName()));
+    out
+      .println(formattingHelper.createNameValueRow("database product version",
+                                                   dbInfo.getProductVersion()));
+    out.println(formattingHelper.createNameValueRow("database user name",
+                                                    dbInfo.getUserName()));
     out.print(formattingHelper.createObjectEnd());
 
     if (verboseDatabaseInfo)
@@ -196,7 +199,7 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
                                               "JDBC Driver Information"));
 
     out.print(formattingHelper.createObjectStart(""));
-    out.println(formattingHelper.createNameValueRow("driver", driverInfo
+    out.println(formattingHelper.createNameValueRow("driver name", driverInfo
       .getDriverName()));
     out.println(formattingHelper.createNameValueRow("driver version",
                                                     driverInfo

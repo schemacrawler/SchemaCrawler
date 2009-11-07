@@ -42,10 +42,11 @@ final class MutableDatabaseInfo
 
   private static final String NEWLINE = System.getProperty("line.separator");
 
+  private String userName;
   private String productName;
   private String productVersion;
   private final Collection<DatabaseProperty> dbProperties = new LinkedHashSet<DatabaseProperty>();
-  private MutableJdbcDriverInfo driverInfo;
+  private MutableJdbcDriverInfo driverInfo = new MutableJdbcDriverInfo();
 
   /**
    * {@inheritDoc}
@@ -93,6 +94,16 @@ final class MutableDatabaseInfo
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schema.DatabaseInfo#getUserName()
+   */
+  public String getUserName()
+  {
+    return userName;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see Object#toString()
    */
   @Override
@@ -129,6 +140,11 @@ final class MutableDatabaseInfo
   void setProductVersion(final String productVersion)
   {
     this.productVersion = productVersion;
+  }
+
+  void setUserName(String userName)
+  {
+    this.userName = userName;
   }
 
 }
