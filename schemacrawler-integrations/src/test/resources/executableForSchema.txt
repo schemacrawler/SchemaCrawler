@@ -1,3 +1,9 @@
+
+
+Data Types
+========================================================================
+
+
 BIGINT                                                       [data type]
   based on                          BIGINT                      
   not user defined
@@ -166,6 +172,12 @@ VARCHAR_IGNORECASE                                           [data type]
   not auto-incrementable
   searchable
 
+
+
+Tables
+========================================================================
+
+
 PUBLIC.CUSTOMER                                                  [table]
 ------------------------------------------------------------------------
   CITY                              VARCHAR(255)                
@@ -245,6 +257,12 @@ SCHEMACRAWLER.PRODUCT2                                           [table]
 
                                                            [primary key]
   ID                                ascending                   
+
+
+
+
+Procedures
+========================================================================
 
 
 PUBLIC.ABS                                   [procedure, returns result]
