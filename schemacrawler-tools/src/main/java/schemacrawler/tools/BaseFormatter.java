@@ -204,11 +204,14 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
     out.println(formattingHelper.createNameValueRow("driver version",
                                                     driverInfo
                                                       .getDriverVersion()));
+    out.println(formattingHelper.createNameValueRow("driver class name",
+                                                    driverInfo
+                                                      .getDriverClassName()));
+    out.println(formattingHelper.createNameValueRow("url", driverInfo
+      .getConnectionUrl()));
     out.println(formattingHelper.createNameValueRow("is JDBC compliant",
                                                     Boolean.toString(driverInfo
                                                       .isJdbcCompliant())));
-    out.println(formattingHelper.createNameValueRow("url", driverInfo
-      .getConnectionUrl()));
     out.print(formattingHelper.createObjectEnd());
 
     if (verboseDatabaseInfo)

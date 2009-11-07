@@ -175,8 +175,9 @@ JDBC Driver Information
 
 driver name,HSQL Database Engine Driver
 driver version,1.8.0
-is JDBC compliant,false
+driver class name,org.hsqldb.jdbcDriver
 url,jdbc:hsqldb:hsql://localhost:9001/schemacrawler
+is JDBC compliant,false
 
 
 JDBC Driver Properties
