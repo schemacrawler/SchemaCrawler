@@ -45,6 +45,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schema.Privilege.Grant;
+import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.BaseFormatter;
 import schemacrawler.tools.util.TextFormattingHelper.DocumentHeaderType;
@@ -59,16 +60,12 @@ final class SchemaTextFormatter
   extends BaseFormatter<SchemaTextOptions>
 {
 
-  private enum CrawlPhase
-  {
-    none, databaseInfo, columnDataTypes, tables, procedures, weakAssociations,
-  }
-
   private static final Logger LOGGER = Logger
     .getLogger(SchemaTextFormatter.class.getName());
 
-  private CrawlPhase crawlPhase;
   private int tableCount;
+  private int procedureCount;
+  private int columnDataTypeCount;
 
   /**
    * Text formatting of schema.
@@ -81,7 +78,6 @@ final class SchemaTextFormatter
   {
     super(options, options.getOutputOptions().openOutputWriter());
     setVerboseDatabaseInfo(options.getSchemaTextDetailType() == SchemaTextDetailType.maximum_schema);
-    crawlPhase = CrawlPhase.none;
   }
 
   /**
@@ -125,16 +121,19 @@ final class SchemaTextFormatter
   public void handle(final ColumnDataType columnDataType)
     throws SchemaCrawlerException
   {
-    if (crawlPhase != CrawlPhase.columnDataTypes)
+
+    if (columnDataTypeCount == 0)
     {
       out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                                 "Data Types"));
-      crawlPhase = CrawlPhase.columnDataTypes;
     }
 
     out.print(formattingHelper.createObjectStart(""));
     printColumnDataType(columnDataType);
     out.print(formattingHelper.createObjectEnd());
+
+    columnDataTypeCount++;
+
   }
 
   /**
@@ -149,16 +148,11 @@ final class SchemaTextFormatter
     {
       return;
     }
-    if (crawlPhase != CrawlPhase.weakAssociations)
-    {
-      out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                                "Weak Associations"));
-      crawlPhase = CrawlPhase.weakAssociations;
-    }
+
+    out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
+                                              "Weak Associations"));
 
     out.print(formattingHelper.createObjectStart(""));
-    out
-      .println(formattingHelper.createNameRow("", "[weak associations]", true));
     printColumnPairs("", weakAssociations);
     out.print(formattingHelper.createObjectEnd());
   }
@@ -172,11 +166,10 @@ final class SchemaTextFormatter
   public void handle(final Procedure procedure)
   {
 
-    if (crawlPhase != CrawlPhase.procedures)
+    if (procedureCount == 0)
     {
       out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                                 "Procedures"));
-      crawlPhase = CrawlPhase.procedures;
     }
 
     final SchemaTextDetailType schemaTextDetailType = options
@@ -236,6 +229,8 @@ final class SchemaTextFormatter
 
     out.flush();
 
+    procedureCount++;
+
   }
 
   /**
@@ -247,11 +242,10 @@ final class SchemaTextFormatter
   public void handle(final Table table)
   {
 
-    if (crawlPhase != CrawlPhase.tables)
+    if (tableCount == 0)
     {
       out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                                 "Tables"));
-      crawlPhase = CrawlPhase.tables;
     }
 
     final SchemaTextDetailType schemaTextDetailType = options
@@ -309,7 +303,8 @@ final class SchemaTextFormatter
     }
     out.flush();
 
-    tableCount = tableCount + 1;
+    tableCount++;
+
   }
 
   private String negate(final boolean positive, final String text)
