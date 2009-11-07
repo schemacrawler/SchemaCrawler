@@ -57,7 +57,7 @@ class MutableDatabaseProperty
    *        Method
    * @return Method name
    */
-  private static String derivePropertyDescription(final String name)
+  private static String createDescription(final String name)
   {
 
     final String get = "get";
@@ -101,7 +101,7 @@ class MutableDatabaseProperty
   }
 
   private final String name;
-
+  private final String description;
   private final Object value;
 
   MutableDatabaseProperty(final String name, final Object value)
@@ -111,6 +111,7 @@ class MutableDatabaseProperty
       throw new IllegalArgumentException("No description provided");
     }
     this.name = name.trim();
+    description = createDescription(name);
     this.value = value;
   }
 
@@ -122,7 +123,8 @@ class MutableDatabaseProperty
     }
     else
     {
-      return getName().toLowerCase().compareTo(otherDbProperty.getName().toLowerCase());
+      return getDescription().toLowerCase().compareTo(otherDbProperty
+        .getDescription().toLowerCase());
     }
   }
 
@@ -174,7 +176,7 @@ class MutableDatabaseProperty
    */
   public String getDescription()
   {
-    return derivePropertyDescription(name);
+    return description;
   }
 
   /**
