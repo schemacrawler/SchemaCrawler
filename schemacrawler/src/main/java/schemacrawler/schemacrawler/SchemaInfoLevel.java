@@ -40,7 +40,6 @@ public final class SchemaInfoLevel
   public static SchemaInfoLevel basic()
   {
     final SchemaInfoLevel basic = minimum();
-    basic.setRetrieveJdbcDriverInfo(true);
     basic.setRetrieveColumnDataTypes(true);
     basic.setRetrieveProcedureColumns(true);
     basic.setRetrieveTableColumns(true);
@@ -72,6 +71,7 @@ public final class SchemaInfoLevel
   {
     final SchemaInfoLevel minimum = new SchemaInfoLevel();
     minimum.setRetrieveDatabaseInfo(true);
+    minimum.setRetrieveJdbcDriverInfo(true);
     minimum.setRetrieveTables(true);
     minimum.setRetrieveProcedures(true);
     return minimum;
