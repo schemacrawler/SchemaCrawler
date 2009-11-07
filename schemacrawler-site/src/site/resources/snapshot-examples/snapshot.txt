@@ -19,24 +19,30 @@ Database Characteristics
 
 all procedures are callable           true
 all tables are selectable             true
+catalog separator                     
+catalog term                          
+catalogs                              
 data definition causes transaction commit  true
 data definition ignored in transactions  false
+database major version                1
+database minor version                8
+default transaction isolation         1
 deletes are detected for TYPE_FORWARD_ONLY result sets  false
 deletes are detected for TYPE_SCROLL_INSENSITIVE result sets  false
 deletes are detected for TYPE_SCROLL_SENSITIVE result sets  false
 does max row size include blobs       true
-catalogs                              
-catalog separator                     
-catalog term                          
-database major version                1
-database minor version                8
-default transaction isolation         1
 driver major version                  1
 driver minor version                  8
 extra name characters                 
 identifier quote string               "
+inserts are detected for TYPE_FORWARD_ONLY result sets  false
+inserts are detected for TYPE_SCROLL_INSENSITIVE result sets  false
+inserts are detected for TYPE_SCROLL_SENSITIVE result sets  false
+is catalog at start                   false
+is read only                          false
 JDBC major version                    3
 JDBC minor version                    0
+locators update copy                  false
 max binary literal length             0
 max catalog name length               0
 max char literal length               0
@@ -57,30 +63,12 @@ max statements                        0
 max table name length                 0
 max tables in select                  0
 max user name length                  0
-numeric functions                     ABS, ACOS, ASIN, ATAN, ATAN2, CEILING, COS, COT, DEGREES, EXP, FLOOR, LOG, LOG10, MOD, PI, POWER, RADIANS, RAND, ROUND, SIGN, SIN, SQRT, TAN, TRUNCATE, BITAND, BITOR, BITXOR, ROUNDMAGIC
-procedure term                        
-result set holdability                1
-schemas                               INFORMATION_SCHEMA, PUBLIC, SCHEMACRAWLER
-schema term                           SCHEMA
-search string escape                  \
-SQL keywords                          BEFORE, BIGINT, BINARY, CACHED, DATETIME, LIMIT, LONGVARBINARY, LONGVARCHAR, OBJECT, OTHER, SAVEPOINT, TEMP, TEXT, TOP, TRIGGER, TINYINT, VARBINARY, VARCHAR_IGNORECASE
-SQL state type                        2
-string functions                      ASCII, BIT_LENGTH, CHAR, CHAR_LENGTH, CHARACTER_LENGTH, CONCAT, DIFFERENCE, HEXTORAW, INSERT, LCASE, LEFT, LENGTH, LOCATE, LTRIM, OCTET_LENGTH, RAWTOHEX, REPEAT, REPLACE, RIGHT, RTRIM, SOUNDEX, SPACE, SUBSTR, SUBSTRING, UCASE, LOWER, UPPER
-system functions                      DATABASE, USER, IDENTITY
-table types                           GLOBAL TEMPORARY, SYSTEM TABLE, TABLE, VIEW
-time date functions                   CURDATE, CURTIME, DATEDIFF, DAYNAME, DAY, DAYOFMONTH, DAYOFWEEK, DAYOFYEAR, HOUR, MINUTE, MONTH, MONTHNAME, NOW, QUARTER, SECOND, WEEK, YEAR, TO_CHAR
-type info                             TINYINT, BIGINT, LONGVARBINARY, VARBINARY, BINARY, LONGVARCHAR, CHAR, NUMERIC, DECIMAL, INTEGER, SMALLINT, FLOAT, REAL, DOUBLE, VARCHAR, VARCHAR_IGNORECASE, BOOLEAN, DATE, TIME, TIMESTAMP, OTHER
-inserts are detected for TYPE_FORWARD_ONLY result sets  false
-inserts are detected for TYPE_SCROLL_INSENSITIVE result sets  false
-inserts are detected for TYPE_SCROLL_SENSITIVE result sets  false
-is catalog at start                   false
-is read only                          false
-locators update copy                  false
 null plus non null is null            true
 nulls are sorted at end               false
 nulls are sorted at start             false
 nulls are sorted high                 false
 nulls are sorted low                  true
+numeric functions                     ABS, ACOS, ASIN, ATAN, ATAN2, CEILING, COS, COT, DEGREES, EXP, FLOOR, LOG, LOG10, MOD, PI, POWER, RADIANS, RAND, ROUND, SIGN, SIN, SQRT, TAN, TRUNCATE, BITAND, BITOR, BITXOR, ROUNDMAGIC
 others inserts are visible for TYPE_FORWARD_ONLY result sets  false
 others inserts are visible for TYPE_SCROLL_INSENSITIVE result sets  false
 others inserts are visible for TYPE_SCROLL_SENSITIVE result sets  false
@@ -96,12 +84,20 @@ own inserts are visible for TYPE_SCROLL_SENSITIVE result sets  false
 own updates are visible for TYPE_FORWARD_ONLY result sets  false
 own updates are visible for TYPE_SCROLL_INSENSITIVE result sets  false
 own updates are visible for TYPE_SCROLL_SENSITIVE result sets  false
+procedure term                        
+result set holdability                1
+schema term                           SCHEMA
+schemas                               INFORMATION_SCHEMA, PUBLIC, SCHEMACRAWLER
+search string escape                  \
+SQL keywords                          BEFORE, BIGINT, BINARY, CACHED, DATETIME, LIMIT, LONGVARBINARY, LONGVARCHAR, OBJECT, OTHER, SAVEPOINT, TEMP, TEXT, TOP, TRIGGER, TINYINT, VARBINARY, VARCHAR_IGNORECASE
+SQL state type                        2
 stores lower case identifiers         false
 stores lower case quoted identifiers  false
 stores mixed case identifiers         false
 stores mixed case quoted identifiers  false
 stores upper case identifiers         true
 stores upper case quoted identifiers  false
+string functions                      ASCII, BIT_LENGTH, CHAR, CHAR_LENGTH, CHARACTER_LENGTH, CONCAT, DIFFERENCE, HEXTORAW, INSERT, LCASE, LEFT, LENGTH, LOCATE, LTRIM, OCTET_LENGTH, RAWTOHEX, REPEAT, REPLACE, RIGHT, RTRIM, SOUNDEX, SPACE, SUBSTR, SUBSTRING, UCASE, LOWER, UPPER
 supports alter table with add column  true
 supports alter table with drop column  true
 supports ANSI92 entry level SQL       false
@@ -166,6 +162,10 @@ supports table correlation names      true
 supports transactions                 true
 supports union                        true
 supports union all                    true
+system functions                      DATABASE, USER, IDENTITY
+table types                           GLOBAL TEMPORARY, SYSTEM TABLE, TABLE, VIEW
+time date functions                   CURDATE, CURTIME, DATEDIFF, DAYNAME, DAY, DAYOFMONTH, DAYOFWEEK, DAYOFYEAR, HOUR, MINUTE, MONTH, MONTHNAME, NOW, QUARTER, SECOND, WEEK, YEAR, TO_CHAR
+type info                             TINYINT, BIGINT, LONGVARBINARY, VARBINARY, BINARY, LONGVARCHAR, CHAR, NUMERIC, DECIMAL, INTEGER, SMALLINT, FLOAT, REAL, DOUBLE, VARCHAR, VARCHAR_IGNORECASE, BOOLEAN, DATE, TIME, TIMESTAMP, OTHER
 uses local file per table             false
 uses local files                      false
 
@@ -182,9 +182,14 @@ url                                   jdbc:hsqldb:hsql://localhost:9001/schemacr
 JDBC Driver Properties
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
-default_schema                                         [driver property]
+user                                                   [driver property]
   
-  not required; choices [true, false]
+  required
+  value                             null                        
+
+password                                               [driver property]
+  
+  required
   value                             null                        
 
 get_column_name                                        [driver property]
@@ -197,19 +202,14 @@ ifexists                                               [driver property]
   not required; choices [true, false]
   value                             null                        
 
-password                                               [driver property]
+default_schema                                         [driver property]
   
-  required
+  not required; choices [true, false]
   value                             null                        
 
 shutdown                                               [driver property]
   
   not required; choices [true, false]
-  value                             null                        
-
-user                                                   [driver property]
-  
-  required
   value                             null                        
 
 
