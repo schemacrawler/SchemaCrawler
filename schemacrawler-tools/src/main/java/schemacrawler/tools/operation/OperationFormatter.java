@@ -32,6 +32,7 @@ import java.util.logging.Logger;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutorException;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.BaseFormatter;
@@ -118,9 +119,7 @@ final class OperationFormatter
     {
       out.println(formattingHelper.createDocumentStart());
     }
-    out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                              options.getOperation()
-                                                .getDescription()));
+
   }
 
   /**
@@ -165,11 +164,17 @@ final class OperationFormatter
    */
   public void handle(final Table table)
   {
-    if (options.getOperation() == Operation.count && tableCount == 0)
+
+    if (tableCount == 0)
     {
-      out.println(formattingHelper.createObjectStart("Row Count"));
+      out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
+                                                options.getOperation()
+                                                  .getDescription()));
+      if (options.getOperation() == Operation.count)
+      {
+        out.println(formattingHelper.createObjectStart("Row Count"));
+      }
     }
-    tableCount++;
 
     final String sql = query.getQueryForTable(table);
     LOGGER.fine("Executing: " + sql);
@@ -221,6 +226,8 @@ final class OperationFormatter
         LOGGER.log(Level.WARNING, "Error releasing resources", e);
       }
     }
+
+    tableCount++;
 
   }
 
