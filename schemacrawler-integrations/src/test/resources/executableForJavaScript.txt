@@ -1,6 +1,6 @@
 -- database: HSQL Database Engine 1.8.0
 -- driver: HSQL Database Engine Driver 1.8.0
--- driver class: null
+-- driver class: org.hsqldb.jdbcDriver
 -- url: jdbc:hsqldb:mem:schemacrawler
 -- jdbc compliant: false
 INFORMATION_SCHEMA

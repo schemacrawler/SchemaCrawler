@@ -250,9 +250,6 @@ final class DatabaseInfoRetriever
       try
       {
         final Driver jdbcDriver = DriverManager.getDriver(url);
-        driverInfo.setJdbcDriverClassName(jdbcDriver.getClass().getName());
-        driverInfo.setJdbcCompliant(jdbcDriver.jdbcCompliant());
-
         final DriverPropertyInfo[] propertyInfo = jdbcDriver
           .getPropertyInfo(url, new Properties());
         for (final DriverPropertyInfo driverPropertyInfo: propertyInfo)
@@ -311,6 +308,9 @@ final class DatabaseInfoRetriever
       driverInfo.setDriverName(dbMetaData.getDriverName());
       driverInfo.setDriverVersion(dbMetaData.getDriverVersion());
       driverInfo.setConnectionUrl(url);
+      final Driver jdbcDriver = DriverManager.getDriver(url);
+      driverInfo.setJdbcDriverClassName(jdbcDriver.getClass().getName());
+      driverInfo.setJdbcCompliant(jdbcDriver.jdbcCompliant());
     }
 
   }
