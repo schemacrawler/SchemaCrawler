@@ -40,6 +40,7 @@ public final class SchemaInfoLevel
   public static SchemaInfoLevel basic()
   {
     final SchemaInfoLevel basic = minimum();
+    basic.setRetrieveJdbcDriverInfo(true);
     basic.setRetrieveColumnDataTypes(true);
     basic.setRetrieveProcedureColumns(true);
     basic.setRetrieveTableColumns(true);
@@ -54,7 +55,7 @@ public final class SchemaInfoLevel
   public static SchemaInfoLevel maximum()
   {
     final SchemaInfoLevel maximum = verbose();
-    maximum.setRetrieveJdbcDriverInfo(true);
+    maximum.setRetrieveAdditionalJdbcDriverInfo(true);
     maximum.setRetrieveTablePrivileges(true);
     maximum.setRetrieveTableColumnPrivileges(true);
     maximum.setRetrieveTriggerInformation(true);
@@ -84,6 +85,8 @@ public final class SchemaInfoLevel
   public static SchemaInfoLevel standard()
   {
     final SchemaInfoLevel standard = new SchemaInfoLevel();
+    standard.setRetrieveDatabaseInfo(true);
+    standard.setRetrieveJdbcDriverInfo(true);
     standard.setRetrieveTables(true);
     standard.setRetrieveProcedures(true);
     standard.setRetrieveProcedureColumns(true);
@@ -118,6 +121,7 @@ public final class SchemaInfoLevel
   private boolean retrieveProcedures;
   private boolean retrieveColumnDataTypes;
   private boolean retrieveAdditionalDatabaseInfo;
+  private boolean retrieveAdditionalJdbcDriverInfo;
   private boolean retrieveUserDefinedColumnDataTypes;
   private boolean retrieveProcedureColumns;
   private boolean retrieveProcedureInformation;
@@ -134,6 +138,11 @@ public final class SchemaInfoLevel
   public boolean isRetrieveAdditionalDatabaseInfo()
   {
     return retrieveAdditionalDatabaseInfo;
+  }
+
+  public boolean isRetrieveAdditionalJdbcDriverInfo()
+  {
+    return retrieveAdditionalJdbcDriverInfo;
   }
 
   public boolean isRetrieveCheckConstraintInformation()
@@ -224,6 +233,11 @@ public final class SchemaInfoLevel
   public void setRetrieveAdditionalDatabaseInfo(final boolean retrieveAdditionalDatabaseInfo)
   {
     this.retrieveAdditionalDatabaseInfo = retrieveAdditionalDatabaseInfo;
+  }
+
+  public void setRetrieveAdditionalJdbcDriverInfo(boolean retrieveAdditionalJdbcDriverInfo)
+  {
+    this.retrieveAdditionalJdbcDriverInfo = retrieveAdditionalJdbcDriverInfo;
   }
 
   public void setRetrieveCheckConstraintInformation(final boolean retrieveCheckConstraintInformation)

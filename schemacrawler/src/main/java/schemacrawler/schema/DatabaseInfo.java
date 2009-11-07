@@ -31,6 +31,14 @@ import java.io.Serializable;
 public interface DatabaseInfo
   extends Serializable
 {
+
+  /**
+   * Gets the user name as known to this database.
+   * 
+   * @return Database user name
+   */
+  String getUserName();
+
   /**
    * Gets the JDBC driver information.
    * 
