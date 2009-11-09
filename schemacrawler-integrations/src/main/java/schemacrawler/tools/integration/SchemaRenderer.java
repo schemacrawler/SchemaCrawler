@@ -64,7 +64,7 @@ public abstract class SchemaRenderer
     final Writer writer = toolOptions.getOutputOptions().openOutputWriter();
     final String templateName = toolOptions.getOutputOptions()
       .getOutputFormatValue();
-    render(templateName, database, writer);
+    render(connection, templateName, database, writer);
     toolOptions.getOutputOptions().closeOutputWriter(writer);
   }
 
@@ -89,7 +89,8 @@ public abstract class SchemaRenderer
    *        Writer
    * @throws Exception
    */
-  protected abstract void render(final String resource,
+  protected abstract void render(Connection connection,
+                                 final String resource,
                                  final Database database,
                                  final Writer writer)
     throws Exception;

@@ -23,6 +23,7 @@ package schemacrawler.tools.integration.velocity;
 
 import java.io.File;
 import java.io.Writer;
+import java.sql.Connection;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -71,7 +72,8 @@ public final class VelocityRenderer
    *      schemacrawler.schema.Schema, java.io.Writer)
    */
   @Override
-  protected void render(final String templateName,
+  protected void render(final Connection connection,
+                        final String templateName,
                         final Database database,
                         final Writer writer)
     throws Exception

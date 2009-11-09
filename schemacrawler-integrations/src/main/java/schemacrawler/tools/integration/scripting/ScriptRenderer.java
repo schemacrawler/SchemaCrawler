@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.Writer;
+import java.sql.Connection;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -56,7 +57,8 @@ public final class ScriptRenderer
    *      schemacrawler.schema.Schema, java.io.Writer)
    */
   @Override
-  protected void render(final String scriptFileName,
+  protected void render(final Connection connection,
+                        final String scriptFileName,
                         final Database database,
                         final Writer writer)
     throws Exception
@@ -101,6 +103,7 @@ public final class ScriptRenderer
     // Set up the context
     scriptEngine.getContext().setWriter(writer);
     scriptEngine.put("database", database);
+    scriptEngine.put("connection", connection);
 
     // Evaluate the script
     scriptEngine.eval(reader);
