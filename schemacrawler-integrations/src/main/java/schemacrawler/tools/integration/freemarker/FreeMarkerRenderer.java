@@ -23,6 +23,7 @@ package schemacrawler.tools.integration.freemarker;
 
 import java.io.File;
 import java.io.Writer;
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -62,7 +63,8 @@ public final class FreeMarkerRenderer
    *      schemacrawler.schema.Schema, java.io.Writer)
    */
   @Override
-  protected void render(final String templateName,
+  protected void render(final Connection connection,
+                        final String templateName,
                         final Database database,
                         final Writer writer)
     throws Exception
