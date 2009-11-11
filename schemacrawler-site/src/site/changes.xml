@@ -6,10 +6,17 @@
   </properties>
   <body>
     <release version="7.5" date="2009-11-10">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added ability to script the database, using JavaScript. A live connection is provided
+        to the JavaScript context for this purpose.
+      ]]></action>    
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
         Removed command line switch, -schemapattern, and the schemapattern option. Use
         the -schemas command line switch instead.
-      ]]></action>                                       
+      ]]></action>   
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        Added sections to SchemaCrawler output, to make it more readable.
+      ]]></action>                                          
     </release>  
     <release version="7.4" date="2009-09-24">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
