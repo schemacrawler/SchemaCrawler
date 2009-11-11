@@ -146,12 +146,13 @@ schemacrawler.format.hide_constraint_names=false
     <title>Integrations</title>
     <faq id="javascript">
       <question>
-        How to script with your database metadata
+        How to script with your database
       </question>
       <answer>
         <p>
           When SchemaCrawler is used with J2SE 6 and above, it has built-in support to be used with JavaScript scripts.
-          Write a JavaScript file, assuming that a "database" variable containing the database schema will be available.
+          Write your JavaScript file, assuming that a "database" variable containing the database schema will be available.
+          A "connection" variable will also be available, and you will be able to execute SQL against your database.
           Run
           <code>schemacrawler.tools.integration.scripting.Main </code>
           , with the correct options. See the example in the
