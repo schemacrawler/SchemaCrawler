@@ -19,7 +19,7 @@ var dropTables = function()
         catch (e)
         {
           println(e);
-          println("Not dropping any more tables");
+          println("(Not dropping any more tables, due to exception)");
           break;
         }
       }
