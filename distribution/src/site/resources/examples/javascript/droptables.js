@@ -1,6 +1,6 @@
 var dropTables = function()
 {
-  println(database.databaseInfo + "\n");
+  println(database.databaseInfo);
   var statement = connection.createStatement();
   var catalogs = database.catalogs;
   for ( var c = 0; c < catalogs.length; c++)
@@ -13,13 +13,13 @@ var dropTables = function()
       {
         try
         {
-          println("Attempting to drop table: " + tables[j].fullName + "\n");
+          println("Attempting to drop table: " + tables[j].fullName);
           statement.executeUpdate("DROP TABLE " + tables[j].fullName);
         }
         catch (e)
         {
           println(e);
-          println("Not dropping any more tables\n");
+          println("Not dropping any more tables");
           break;
         }
       }
