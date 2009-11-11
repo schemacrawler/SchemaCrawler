@@ -37,10 +37,10 @@
           </li>
           <li>
             Run
-            <span class="code">javascript.cmd tables.js
+            <span class="code">javascript.cmd droptables.js
             </span>
             (or
-            <span class="code">javascript.sh tables.js
+            <span class="code">javascript.sh droptables.js
             </span>
             on
             Unix).
