@@ -47,6 +47,19 @@ public final class Utility
    */
   public static final String NEWLINE = System.getProperty("line.separator");
 
+  public static String commonPrefix(final String string1, final String string2)
+  {
+    final int index = indexOfDifference(string1, string2);
+    if (index == -1)
+    {
+      return null;
+    }
+    else
+    {
+      return string1.substring(0, index).toLowerCase();
+    }
+  }
+
   /**
    * Checks if the text is null or empty.
    * 
@@ -140,6 +153,32 @@ public final class Utility
 
     final Logger rootLogger = Logger.getLogger("");
     rootLogger.setLevel(logLevel);
+  }
+
+  private static int indexOfDifference(final String string1,
+                                       final String string2)
+  {
+    if (string1 == string2)
+    {
+      return -1;
+    }
+    if (string1 == null || string2 == null)
+    {
+      return 0;
+    }
+    int i;
+    for (i = 0; i < string1.length() && i < string2.length(); ++i)
+    {
+      if (string1.charAt(i) != string2.charAt(i))
+      {
+        break;
+      }
+    }
+    if (i < string2.length() || i < string1.length())
+    {
+      return i;
+    }
+    return -1;
   }
 
   private Utility()
