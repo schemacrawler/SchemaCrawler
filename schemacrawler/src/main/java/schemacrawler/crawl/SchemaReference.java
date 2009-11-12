@@ -29,7 +29,6 @@ final class SchemaReference
   private static final long serialVersionUID = -5309848447599233878L;
 
   private final String catalogName;
-
   private final String schemaName;
 
   public SchemaReference(final String catalogName, final String schemaName)

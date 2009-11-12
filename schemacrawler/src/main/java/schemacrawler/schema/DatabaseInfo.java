@@ -33,13 +33,6 @@ public interface DatabaseInfo
 {
 
   /**
-   * Gets the user name as known to this database.
-   * 
-   * @return Database user name
-   */
-  String getUserName();
-
-  /**
    * Gets the JDBC driver information.
    * 
    * @return JDBC driver information
@@ -66,5 +59,12 @@ public interface DatabaseInfo
    * @return Map of properties
    */
   DatabaseProperty[] getProperties();
+
+  /**
+   * Gets the user name as known to this database.
+   * 
+   * @return Database user name
+   */
+  String getUserName();
 
 }
