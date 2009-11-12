@@ -24,6 +24,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.TableAssociationType;
 import schemacrawler.utility.Inflection;
 import schemacrawler.utility.ObjectToString;
+import schemacrawler.utility.Utility;
 
 final class WeakAssociationsAnalyzer
 {
@@ -58,19 +59,6 @@ final class WeakAssociationsAnalyzer
     findWeakAssociations(tables, tableMatchMap, fkColumnsMap);
   }
 
-  private String commonPrefix(final String string1, final String string2)
-  {
-    final int index = indexOfDifference(string1, string2);
-    if (index == -1)
-    {
-      return null;
-    }
-    else
-    {
-      return string1.substring(0, index).toLowerCase();
-    }
-  }
-
   /**
    * Finds table prefixes. A prefix ends with "_".
    */
@@ -84,7 +72,7 @@ final class WeakAssociationsAnalyzer
       {
         final String table1 = tablesList.get(i).getName();
         final String table2 = tablesList.get(j).getName();
-        final String commonPrefix = commonPrefix(table1, table2);
+        final String commonPrefix = Utility.commonPrefix(table1, table2);
         if (commonPrefix != null && !commonPrefix.equals("")
             && commonPrefix.endsWith("_"))
         {
@@ -238,31 +226,6 @@ final class WeakAssociationsAnalyzer
         }
       }
     }
-  }
-
-  private int indexOfDifference(final String string1, final String string2)
-  {
-    if (string1 == string2)
-    {
-      return -1;
-    }
-    if (string1 == null || string2 == null)
-    {
-      return 0;
-    }
-    int i;
-    for (i = 0; i < string1.length() && i < string2.length(); ++i)
-    {
-      if (string1.charAt(i) != string2.charAt(i))
-      {
-        break;
-      }
-    }
-    if (i < string2.length() || i < string1.length())
-    {
-      return i;
-    }
-    return -1;
   }
 
   private Map<String, Column> mapColumnNameMatches(final MutableTable table)
