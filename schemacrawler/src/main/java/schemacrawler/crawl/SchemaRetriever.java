@@ -60,65 +60,6 @@ final class SchemaRetriever
   }
 
   /**
-   * Retrieves catalog metadata according to the parameters specified.
-   * 
-   * @return A list of catalogs in the database that matches the pattern
-   */
-  private Set<String> retrieveCatalogs(final InclusionRule catalogInclusionRule)
-  {
-    final Set<String> catalogNames = new HashSet<String>();
-
-    String connectionCatalog;
-    try
-    {
-      connectionCatalog = getDatabaseConnection().getCatalog();
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, "", e);
-      connectionCatalog = null;
-    }
-
-    if (supportsCatalogs)
-    {
-      try
-      {
-        catalogNames.addAll(readResultsVector(getMetaData().getCatalogs()));
-        catalogNames.add(connectionCatalog);
-      }
-      catch (final SQLException e)
-      {
-        LOGGER.log(Level.WARNING, "", e);
-      }
-      LOGGER.log(Level.FINE, "All catalogs: " + catalogNames);
-
-      for (final Iterator<String> catalogNamesIterator = catalogNames
-        .iterator(); catalogNamesIterator.hasNext();)
-      {
-        final String catalogName = catalogNamesIterator.next();
-        if (catalogInclusionRule != null
-            && !catalogInclusionRule.include(catalogName))
-        {
-          catalogNamesIterator.remove();
-        }
-      }
-    }
-    if (catalogNames.isEmpty())
-    {
-      if (supportsCatalogs)
-      {
-        catalogNames.add(connectionCatalog);
-      }
-      else
-      {
-        catalogNames.add(null);
-      }
-    }
-
-    return catalogNames;
-  }
-
-  /**
    * Retrieves a list of schemas from the database.
    */
   void retrieveSchemas(final InclusionRule catalogInclusionRule,
@@ -206,6 +147,65 @@ final class SchemaRetriever
         catalog.addSchema(schema);
       }
     }
+  }
+
+  /**
+   * Retrieves catalog metadata according to the parameters specified.
+   * 
+   * @return A list of catalogs in the database that matches the pattern
+   */
+  private Set<String> retrieveCatalogs(final InclusionRule catalogInclusionRule)
+  {
+    final Set<String> catalogNames = new HashSet<String>();
+
+    String connectionCatalog;
+    try
+    {
+      connectionCatalog = getDatabaseConnection().getCatalog();
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "", e);
+      connectionCatalog = null;
+    }
+
+    if (supportsCatalogs)
+    {
+      try
+      {
+        catalogNames.addAll(readResultsVector(getMetaData().getCatalogs()));
+        catalogNames.add(connectionCatalog);
+      }
+      catch (final SQLException e)
+      {
+        LOGGER.log(Level.WARNING, "", e);
+      }
+      LOGGER.log(Level.FINE, "All catalogs: " + catalogNames);
+
+      for (final Iterator<String> catalogNamesIterator = catalogNames
+        .iterator(); catalogNamesIterator.hasNext();)
+      {
+        final String catalogName = catalogNamesIterator.next();
+        if (catalogInclusionRule != null
+            && !catalogInclusionRule.include(catalogName))
+        {
+          catalogNamesIterator.remove();
+        }
+      }
+    }
+    if (catalogNames.isEmpty())
+    {
+      if (supportsCatalogs)
+      {
+        catalogNames.add(connectionCatalog);
+      }
+      else
+      {
+        catalogNames.add(null);
+      }
+    }
+
+    return catalogNames;
   }
 
 }

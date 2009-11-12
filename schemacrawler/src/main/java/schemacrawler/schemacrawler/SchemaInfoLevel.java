@@ -235,7 +235,7 @@ public final class SchemaInfoLevel
     this.retrieveAdditionalDatabaseInfo = retrieveAdditionalDatabaseInfo;
   }
 
-  public void setRetrieveAdditionalJdbcDriverInfo(boolean retrieveAdditionalJdbcDriverInfo)
+  public void setRetrieveAdditionalJdbcDriverInfo(final boolean retrieveAdditionalJdbcDriverInfo)
   {
     this.retrieveAdditionalJdbcDriverInfo = retrieveAdditionalJdbcDriverInfo;
   }

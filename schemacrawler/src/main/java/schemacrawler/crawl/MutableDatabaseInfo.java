@@ -142,7 +142,7 @@ final class MutableDatabaseInfo
     this.productVersion = productVersion;
   }
 
-  void setUserName(String userName)
+  void setUserName(final String userName)
   {
     this.userName = userName;
   }
