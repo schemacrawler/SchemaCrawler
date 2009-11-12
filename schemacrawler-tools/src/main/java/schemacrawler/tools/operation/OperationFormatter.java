@@ -32,7 +32,6 @@ import java.util.logging.Logger;
 import schemacrawler.execute.DataHandler;
 import schemacrawler.execute.QueryExecutorException;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.BaseFormatter;
@@ -162,6 +161,7 @@ final class OperationFormatter
    * 
    * @see CrawlHandler#handle(Table)
    */
+  @Override
   public void handle(final Table table)
   {
 

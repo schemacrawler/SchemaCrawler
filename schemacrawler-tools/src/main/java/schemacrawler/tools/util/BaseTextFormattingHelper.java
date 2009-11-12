@@ -21,7 +21,6 @@
 package schemacrawler.tools.util;
 
 
-import schemacrawler.execute.QueryExecutorException;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.util.TableCell.Align;
 
