@@ -34,6 +34,48 @@ import schemacrawler.utility.Utility;
 final class ConfigUtility
 {
 
+  /**
+   * Gets a sub-group of properties - those that start with a given
+   * prefix. The prefix is removed in the result.
+   * 
+   * @param prefix
+   *        Prefix to group by.
+   * @return Partitioned properties.
+   */
+  static Map<String, String> partition(final Map<String, String> config,
+                                       final String prefix)
+  {
+    if (Utility.isBlank(prefix))
+    {
+      return config;
+    }
+
+    final String dottedPrefix = prefix + ".";
+    final Map<String, String> partition = new HashMap<String, String>();
+    for (final Map.Entry<String, String> entry: config.entrySet())
+    {
+      final String key = entry.getKey();
+      if (key.startsWith(dottedPrefix))
+      {
+        final String unprefixed = key.substring(dottedPrefix.length());
+        partition.put(unprefixed, entry.getValue());
+      }
+    }
+
+    return partition;
+  }
+
+  /**
+   * Substitutes variables in the provided config.
+   */
+  static void substituteVariables(final Map<String, String> config)
+  {
+    for (final Map.Entry<String, String> entry: config.entrySet())
+    {
+      config.put(entry.getKey(), substituteVariables(entry.getValue(), config));
+    }
+  }
+
   private static String substituteVariables(final String template,
                                             final Map<String, String> map)
   {
@@ -88,48 +130,6 @@ final class ConfigUtility
         // Advance current position
         currentPosition = delimiterEndPosition + DELIMITER_END.length();
       }
-    }
-  }
-
-  /**
-   * Gets a sub-group of properties - those that start with a given
-   * prefix. The prefix is removed in the result.
-   * 
-   * @param prefix
-   *        Prefix to group by.
-   * @return Partitioned properties.
-   */
-  static Map<String, String> partition(final Map<String, String> config,
-                                       final String prefix)
-  {
-    if (Utility.isBlank(prefix))
-    {
-      return config;
-    }
-
-    final String dottedPrefix = prefix + ".";
-    final Map<String, String> partition = new HashMap<String, String>();
-    for (final Map.Entry<String, String> entry: config.entrySet())
-    {
-      final String key = entry.getKey();
-      if (key.startsWith(dottedPrefix))
-      {
-        final String unprefixed = key.substring(dottedPrefix.length());
-        partition.put(unprefixed, entry.getValue());
-      }
-    }
-
-    return partition;
-  }
-
-  /**
-   * Substitutes variables in the provided config.
-   */
-  static void substituteVariables(final Map<String, String> config)
-  {
-    for (final Map.Entry<String, String> entry: config.entrySet())
-    {
-      config.put(entry.getKey(), substituteVariables(entry.getValue(), config));
     }
   }
 

@@ -45,7 +45,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schema.Privilege.Grant;
-import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.BaseFormatter;
 import schemacrawler.tools.util.TextFormattingHelper.DocumentHeaderType;
@@ -118,6 +117,7 @@ final class SchemaTextFormatter
                            + options.getOutputOptions().getOutputFile());
   }
 
+  @Override
   public void handle(final ColumnDataType columnDataType)
     throws SchemaCrawlerException
   {
@@ -141,6 +141,7 @@ final class SchemaTextFormatter
    * 
    * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.WeakAssociations)
    */
+  @Override
   public void handle(final ColumnMap[] weakAssociations)
     throws SchemaCrawlerException
   {
@@ -163,6 +164,7 @@ final class SchemaTextFormatter
    * @param procedure
    *        Procedure metadata.
    */
+  @Override
   public void handle(final Procedure procedure)
   {
 
@@ -239,6 +241,7 @@ final class SchemaTextFormatter
    * @param table
    *        Table metadata.
    */
+  @Override
   public void handle(final Table table)
   {
 
