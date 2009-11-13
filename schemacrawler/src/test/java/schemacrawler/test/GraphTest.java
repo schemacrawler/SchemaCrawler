@@ -21,20 +21,12 @@ package schemacrawler.test;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.logging.Logger;
-
 import org.junit.Test;
 
 import schemacrawler.utility.Graph;
-import schemacrawler.utility.TestDatabase;
 
 public class GraphTest
 {
-
-  private static final Logger LOGGER = Logger.getLogger(GraphTest.class
-    .getName());
-
-  private static TestDatabase testUtility = new TestDatabase();
 
   @Test
   public void cycles()
