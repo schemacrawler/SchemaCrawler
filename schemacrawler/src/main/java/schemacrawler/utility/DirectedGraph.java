@@ -21,13 +21,17 @@
 package schemacrawler.utility;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class Graph<T extends Comparable<T>>
+public class DirectedGraph<T extends Comparable<T>>
 {
 
   /**
@@ -118,12 +122,12 @@ public class Graph<T extends Comparable<T>>
     @Override
     public String toString()
     {
-      return "[" + from + " --> " + to + "]";
+      return "(" + from + " --> " + to + ")";
     }
 
-    private Graph getOuterType()
+    private DirectedGraph<?> getOuterType()
     {
-      return Graph.this;
+      return DirectedGraph.this;
     }
 
     Vertex<T> getFrom()
@@ -139,6 +143,16 @@ public class Graph<T extends Comparable<T>>
     TraversalState getTraversalState()
     {
       return traversalState;
+    }
+
+    boolean isFrom(final Vertex<T> vertex)
+    {
+      return vertex != null && vertex.equals(from);
+    }
+
+    boolean isTo(final Vertex<T> vertex)
+    {
+      return vertex != null && vertex.equals(to);
     }
 
     void setTraversalState(final TraversalState traversalState)
@@ -159,7 +173,7 @@ public class Graph<T extends Comparable<T>>
   {
 
     private final T value;
-    private TraversalState traversalState;
+    private TraversalState traversalState = TraversalState.notStarted;
 
     Vertex(final T value)
     {
@@ -168,6 +182,10 @@ public class Graph<T extends Comparable<T>>
 
     public int compareTo(final Vertex<T> otherVertex)
     {
+      if (value == null)
+      {
+        return -1;
+      }
       return value.compareTo(otherVertex.getValue());
     }
 
@@ -218,12 +236,12 @@ public class Graph<T extends Comparable<T>>
     @Override
     public String toString()
     {
-      return "[" + value + " (" + traversalState + ")]";
+      return value.toString();
     }
 
-    private Graph getOuterType()
+    private DirectedGraph getOuterType()
     {
-      return Graph.this;
+      return DirectedGraph.this;
     }
 
     TraversalState getTraversalState()
@@ -246,7 +264,7 @@ public class Graph<T extends Comparable<T>>
   private final Map<T, Vertex<T>> verticesMap;
   private final Set<DirectedEdge<T>> edges;
 
-  public Graph()
+  public DirectedGraph()
   {
     verticesMap = new HashMap<T, Vertex<T>>();
     edges = new HashSet<DirectedEdge<T>>();
@@ -312,15 +330,82 @@ public class Graph<T extends Comparable<T>>
     return false;
   }
 
+  public List<T> topologicalSort()
+    throws GraphException
+  {
+    if (containsCycle())
+    {
+      throw new GraphException("Graph contains a cycle, so cannot be topologically sorted");
+    }
+
+    final int collectionSize = verticesMap.size();
+
+    final Collection<Vertex<T>> vertices = new HashSet<Vertex<T>>(verticesMap
+      .values());
+    final HashSet<DirectedEdge<T>> edges = new HashSet<DirectedEdge<T>>(this.edges);
+    final List<T> sortedValues = new ArrayList<T>(collectionSize);
+
+    while (!vertices.isEmpty())
+    {
+      final List<Vertex<T>> startNodes = new ArrayList<Vertex<T>>(collectionSize);
+      for (final Vertex<T> vertex: vertices)
+      {
+        if (isStartNode(vertex, edges))
+        {
+          startNodes.add(vertex);
+        }
+      }
+      Collections.sort(startNodes);
+
+      for (final Vertex<T> vertex: startNodes)
+      {
+        // Save the vertex value
+        sortedValues.add(vertex.getValue());
+        // Remove all out edges
+        dropOutEdges(vertex, edges);
+        // Remove the vertex itself
+        vertices.remove(vertex);
+      }
+    }
+
+    return sortedValues;
+  }
+
+  private void dropOutEdges(final Vertex<T> vertex,
+                            final Set<DirectedEdge<T>> edges)
+  {
+    for (final Iterator<DirectedEdge<T>> iterator = edges.iterator(); iterator
+      .hasNext();)
+    {
+      final DirectedEdge<T> edge = iterator.next();
+      if (edge.isFrom(vertex))
+      {
+        iterator.remove();
+      }
+    }
+  }
+
+  private boolean isStartNode(final Vertex<T> vertex,
+                              final Set<DirectedEdge<T>> edges)
+  {
+    for (final DirectedEdge<T> edge: edges)
+    {
+      if (edge.isTo(vertex))
+      {
+        return false;
+      }
+    }
+    return true;
+  }
+
   private boolean visit(final Vertex<T> vertex)
   {
     vertex.setTraversalState(TraversalState.inProgress);
 
     for (final DirectedEdge<T> edge: edges)
     {
-      final Vertex<T> from = edge.getFrom();
       final Vertex<T> to = edge.getTo();
-      if (vertex.equals(from))
+      if (edge.isFrom(vertex))
       {
         if (to.getTraversalState() == TraversalState.inProgress)
         {
@@ -328,7 +413,7 @@ public class Graph<T extends Comparable<T>>
         }
         else if (to.getTraversalState() == TraversalState.notStarted)
         {
-          if (visit(to))
+          if (visit(edge.getTo()))
           {
             return true;
           }
