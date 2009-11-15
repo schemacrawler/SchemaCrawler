@@ -9,26 +9,29 @@
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added ability to script the database, using JavaScript. A live connection is provided
         to the JavaScript context for this purpose.
-      ]]></action>    
+      ]]></action>
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
         Removed command line switch, -schemapattern, and the schemapattern option. Use
         the -schemas command line switch instead.
-      ]]></action>   
+      ]]></action>
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
         Added sections to SchemaCrawler output, to make it more readable.
-      ]]></action>                                          
-    </release>  
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        Tables sort is done using graph algorithms, and includes cycle checks.
+      ]]></action>
+    </release>
     <release version="7.4" date="2009-09-24">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added new pre-packaged SchemaCrawler for Oracle. 
-      ]]></action>  
+      ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed issue with index sort order of primary key columns. 
-      ]]></action> 
+      ]]></action>
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
         Updated website with new front page.
-      ]]></action>                                         
-    </release>   
+      ]]></action>
+    </release>
     <release version="7.3.1" date="2009-09-24">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Enhancement to the JavaSqlType class, to contain the SQL type group. New lookup 
@@ -36,12 +39,12 @@
       ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Removed method, getTypeClass(), from ColumnDataType.
-      ]]></action>      
+      ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Removed deprecated methods for grouping SQL data types (such as isReal()) 
         from the ColumnDataType class.
-      ]]></action>                                 
-    </release>     
+      ]]></action>
+    </release>
     <release version="7.3" date="2009-09-19">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added support for mapping of SQL data type to Java classes. This includes the
@@ -50,8 +53,8 @@
       ]]></action>
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added SchemaCrawler for Apache Derby, that is packaged for Apache Derby.
-      ]]></action>                                 
-    </release>    
+      ]]></action>
+    </release>
     <release version="7.2" date="2009-08-21">
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
         Better modeling of privileges and grants.
@@ -59,7 +62,7 @@
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Bug fix for obtaining indexes and foreign keys with the
         Oracle driver.
-      ]]></action>   
+      ]]></action>
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added natural sort order for tables, based on the foreign keys, and corresponding
         new configuration option, and command-line switch, -sorttables.
@@ -67,11 +70,11 @@
       ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Handle null schemas for databases that do not support schemas, such as MySQL.
-      ]]></action>   
+      ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Allow data dumps when tables contain binary objects, by fixing the SELECT sort order.
-      ]]></action>                                
-    </release>    
+      ]]></action>
+    </release>
     <release version="7.1" date="2009-08-12">
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
         Better log messages, including for database connections, 
@@ -81,37 +84,37 @@
         More efficient use of database connections, 
         including a change to the Executable.execute method to take
     		a database connection, rather than a data-source.
-      ]]></action>   
+      ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Ensure that the pooled connection is closed, rather than the original
         database connection. This allows SchemaCrawler to play well with
         pooled connections.
-      ]]></action>                 
-    </release>     
+      ]]></action>
+    </release>
     <release version="7.0" date="2009-07-10">
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
         Major restructuring of the API, with the introduction of a Database object that contains
         all of the database metadata, and containing catalog and schema objects.
-      ]]></action>       
+      ]]></action>
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
         To allow for more control on table selection, the -tables command line parameter
         matches to the fully qualified table name, CATALOG.SCHEMA.TABLENAME.
         Similarly for the -procedures command line parameter.
-      ]]></action>     
-    </release>    
+      ]]></action>
+    </release>
     <release version="6.4" date="2009-05-10">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         New pre-packaged distribution, SchemaCrawler for SQLite.
-      ]]></action>    
+      ]]></action>
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
         Enhanced algorithm for finding weak associations.
-      ]]></action>     
-    </release>  
+      ]]></action>
+    </release>
     <release version="6.3" date="2009-05-08">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         If no commands are specified, defaults to standard_schema, which provides
         the most commonly needed details of the schema.
-      ]]></action>    
+      ]]></action>
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
         SchemaCrawler Grep functionality is built into the SchemaCrawler options, and the
         SchemaCrawler command-line. This means that all of the SchemaCrawler commands,
@@ -123,7 +126,7 @@
       ]]></action>
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         SchemaCrawler can produce Graphviz DOT files to generate schema diagrams.
-      ]]></action>      
+      ]]></action>
     </release>
     <release version="6.2" date="2009-04-08">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
