@@ -1,6 +1,7 @@
 package schemacrawler.crawl;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,15 +43,32 @@ final class TablesGraph
 
   }
 
+  /**
+   * Set the sort order for tables and views.
+   */
   void setTablesSortIndices()
   {
-    // Set the sort order
     try
     {
       final List<MutableTable> sortedTables = topologicalSort();
-      for (int i = 0; i < sortedTables.size(); i++)
+      final List<MutableView> sortedViews = new ArrayList<MutableView>();
+      int sortIndex = 0;
+      for (final MutableTable table: sortedTables)
       {
-        sortedTables.get(i).setSortIndex(i);
+        if (table instanceof MutableView)
+        {
+          sortedViews.add((MutableView) table);
+        }
+        else
+        {
+          table.setSortIndex(sortIndex);
+          sortIndex++;
+        }
+      }
+      for (final MutableView view: sortedViews)
+      {
+        view.setSortIndex(sortIndex);
+        sortIndex++;
       }
     }
     catch (GraphException e)
