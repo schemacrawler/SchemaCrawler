@@ -52,7 +52,7 @@ public class DirectedGraphTest
       final DirectedGraph<String> graph = makeGraph();
 
       assertArrayEquals("Test run #" + (i + 1), new String[] {
-          "A", "E", "B", "D", "C"
+          "E", "A", "D", "B", "C"
       }, graph.topologicalSort().toArray(new String[0]));
     }
   }
@@ -65,7 +65,7 @@ public class DirectedGraphTest
     graph.addDirectedEdge("C", "A");
 
     assertArrayEquals(new String[] {
-        "A", "E", "B", "D", "C"
+        "E", "A", "D", "B", "C"
     }, graph.topologicalSort().toArray(new String[0]));
   }
 

@@ -348,6 +348,21 @@ public class DirectedGraph<T extends Comparable>
     while (!vertices.isEmpty())
     {
       final List<Vertex<T>> startNodes = new ArrayList<Vertex<T>>(collectionSize);
+
+      final List<T> unattachedNodeValues = new ArrayList<T>(collectionSize);
+      for (final Iterator<Vertex<T>> iterator = vertices.iterator(); iterator
+        .hasNext();)
+      {
+        final Vertex<T> vertex = (Vertex<T>) iterator.next();
+        if (isUnattachedNode(vertex, edges))
+        {
+          unattachedNodeValues.add(vertex.getValue());
+          iterator.remove();
+        }
+      }
+      Collections.sort(unattachedNodeValues);
+      sortedValues.addAll(unattachedNodeValues);
+
       for (final Vertex<T> vertex: vertices)
       {
         if (isStartNode(vertex, edges))
@@ -383,6 +398,19 @@ public class DirectedGraph<T extends Comparable>
         iterator.remove();
       }
     }
+  }
+
+  private boolean isUnattachedNode(final Vertex<T> vertex,
+                                   final Set<DirectedEdge<T>> edges)
+  {
+    for (final DirectedEdge<T> edge: edges)
+    {
+      if (edge.isTo(vertex) || edge.isFrom(vertex))
+      {
+        return false;
+      }
+    }
+    return true;
   }
 
   private boolean isStartNode(final Vertex<T> vertex,
