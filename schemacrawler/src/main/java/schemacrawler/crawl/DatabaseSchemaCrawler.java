@@ -421,6 +421,9 @@ public final class DatabaseSchemaCrawler
       // been obtained, since the natural sort order depends on the
       // foreign keys
       allTables.setSortOrder(tablesSort);
+      final TablesGraph tablesGraph = new TablesGraph(allTables);
+      tablesGraph.setTablesSortIndices();
+
       for (final MutableTable table: allTables)
       {
         // Handle table

@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class DirectedGraph<T extends Comparable<T>>
+public class DirectedGraph<T extends Comparable>
 {
 
   /**
@@ -50,7 +50,7 @@ public class DirectedGraph<T extends Comparable<T>>
    * @param <T>
    *        Type of node object
    */
-  class DirectedEdge<T extends Comparable<T>>
+  class DirectedEdge<T extends Comparable>
   {
 
     private final Vertex<T> from;
@@ -168,7 +168,7 @@ public class DirectedGraph<T extends Comparable<T>>
    * @param <T>
    *        Type of node object
    */
-  class Vertex<T extends Comparable<T>>
+  class Vertex<T extends Comparable>
     implements Comparable<Vertex<T>>
   {
 

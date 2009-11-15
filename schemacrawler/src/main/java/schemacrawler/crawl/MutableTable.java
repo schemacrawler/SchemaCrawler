@@ -22,7 +22,6 @@ package schemacrawler.crawl;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -74,6 +73,7 @@ class MutableTable
   private final NamedObjectList<MutableTrigger> triggers = new NamedObjectList<MutableTrigger>();
   private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>();
   private final Set<MutableColumnMap> weakAssociations = new LinkedHashSet<MutableColumnMap>();
+  private int sortIndex;
 
   MutableTable(final Schema schema, final String name)
   {
@@ -96,29 +96,7 @@ class MutableTable
 
     if (comparison == 0)
     {
-      comparison = getSchema().compareTo(other.getSchema());
-    }
-    if (comparison == 0)
-    {
-      comparison = getType().compareTo(other.getType());
-    }
-    if (comparison == 0)
-    {
-      comparison = getTableCategory().compareTo(other.getTableCategory());
-    }
-    if (comparison == 0
-        && getTableCategory() == TableCategory.hasBothReferences)
-    {
-      if (Arrays.asList(getRelatedTables(TableRelationshipType.child))
-        .contains(other))
-      {
-        comparison = -1;
-      }
-      else if (Arrays.asList(getRelatedTables(TableRelationshipType.parent))
-        .contains(other))
-      {
-        comparison = 1;
-      }
+      comparison = sortIndex - other.sortIndex;
     }
     if (comparison == 0)
     {
@@ -458,6 +436,11 @@ class MutableTable
     }
   }
 
+  int getSortIndex()
+  {
+    return sortIndex;
+  }
+
   TableCategory getTableCategory()
   {
     final TableCategory tableCategory;
@@ -549,6 +532,11 @@ class MutableTable
   void setPrimaryKey(final MutablePrimaryKey primaryKey)
   {
     this.primaryKey = primaryKey;
+  }
+
+  void setSortIndex(final int sortIndex)
+  {
+    this.sortIndex = sortIndex;
   }
 
   void setType(final TableType type)
