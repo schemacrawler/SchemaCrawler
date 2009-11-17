@@ -63,7 +63,7 @@ public final class Main
       {
         final String text = Utility.readFully(HelpOptions.class
           .getResourceAsStream("/help/SchemaCrawler.spring.txt"));
-        System.out.println(new String(text));
+        System.out.println(text);
         System.exit(0);
       }
 

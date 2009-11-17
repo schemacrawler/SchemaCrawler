@@ -99,7 +99,7 @@ final class GraphGenerator
     }
     if (diagramFile == null)
     {
-      throw new IOException("Cannot write diagram file, " + diagramFile);
+      throw new IOException("Cannot write diagram file");
     }
 
     run("-q", "-T" + outputFormat, "-o", diagramFile.getAbsolutePath(), dotFile

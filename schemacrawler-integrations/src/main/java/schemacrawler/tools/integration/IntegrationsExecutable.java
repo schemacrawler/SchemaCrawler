@@ -100,6 +100,8 @@ public abstract class IntegrationsExecutable
     }
   }
 
+  protected abstract HelpOptions getHelpOptions();
+
   /**
    * Expect one command (further, of type schema text.
    */
@@ -112,7 +114,5 @@ public abstract class IntegrationsExecutable
     }
     return iterator.next().getName();
   }
-
-  protected abstract HelpOptions getHelpOptions();
 
 }
