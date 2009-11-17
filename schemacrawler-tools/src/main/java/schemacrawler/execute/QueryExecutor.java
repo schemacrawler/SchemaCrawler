@@ -26,6 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Query;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
  * Executes SQL.
@@ -52,18 +53,18 @@ public final class QueryExecutor
    *         On query execution error
    */
   public QueryExecutor(final Connection connection, final DataHandler handler)
-    throws QueryExecutorException
+    throws SchemaCrawlerException
   {
 
     if (connection == null)
     {
-      throw new QueryExecutorException("No connection provided");
+      throw new SchemaCrawlerException("No connection provided");
     }
     this.connection = connection;
 
     if (handler == null)
     {
-      throw new QueryExecutorException("No handler provided");
+      throw new SchemaCrawlerException("No handler provided");
     }
     this.handler = handler;
 
@@ -79,7 +80,7 @@ public final class QueryExecutor
    *         On query execution error
    */
   public void executeSQL(final String queryString)
-    throws QueryExecutorException
+    throws SchemaCrawlerException
   {
 
     final Query query = new Query("Ad hoc query", queryString);
@@ -98,7 +99,7 @@ public final class QueryExecutor
     }
     catch (final SQLException e)
     {
-      throw new QueryExecutorException(e.getMessage() + " - when executing - "
+      throw new SchemaCrawlerException(e.getMessage() + " - when executing - "
                                        + query, e);
     }
     finally

@@ -85,10 +85,10 @@ public class OperationExecutable
 
     final SchemaCrawler crawler = new DatabaseSchemaCrawler(connection);
     crawler.crawl(schemaCrawlerOptions,
-                  new OperationFormatter(toolOptions,
-                                         query,
-                                         connection,
-                                         operationDataHandler));
+                  new OperationHandler(toolOptions,
+                                       query,
+                                       connection,
+                                       operationDataHandler));
   }
 
 }

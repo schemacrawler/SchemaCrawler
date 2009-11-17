@@ -18,8 +18,10 @@
 package schemacrawler.execute;
 
 
-import java.io.PrintWriter;
 import java.sql.ResultSet;
+
+import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
  * Handler for SQL executor.
@@ -34,7 +36,7 @@ public interface DataHandler
    *         On an exception
    */
   void begin()
-    throws QueryExecutorException;
+    throws SchemaCrawlerException;
 
   /**
    * Handles the end of the execution.
@@ -43,14 +45,18 @@ public interface DataHandler
    *         On an exception
    */
   void end()
-    throws QueryExecutorException;
+    throws SchemaCrawlerException;
 
   /**
-   * Gets the output print writer.
+   * Handles information on the database schema.
    * 
-   * @return Print writer
+   * @param database
+   *        Database information
+   * @throws SchemaCrawlerException
+   *         On an exception
    */
-  PrintWriter getPrintWriter();
+  void handle(DatabaseInfo database)
+    throws SchemaCrawlerException;
 
   /**
    * Handles actual data.
@@ -61,6 +67,6 @@ public interface DataHandler
    *         On an exception
    */
   void handleData(final String title, final ResultSet rows)
-    throws QueryExecutorException;
+    throws SchemaCrawlerException;
 
 }

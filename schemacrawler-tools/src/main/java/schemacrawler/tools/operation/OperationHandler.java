@@ -25,35 +25,34 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.MessageFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.execute.DataHandler;
-import schemacrawler.execute.QueryExecutorException;
+import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.ColumnMap;
+import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.BaseFormatter;
-import schemacrawler.tools.util.TextFormattingHelper.DocumentHeaderType;
 
 /**
  * Text formatting of operations output.
  * 
  * @author Sualeh Fatehi
  */
-final class OperationFormatter
-  extends BaseFormatter<OperationOptions>
+final class OperationHandler
+  implements CrawlHandler
 {
 
-  private static final Logger LOGGER = Logger
-    .getLogger(OperationFormatter.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(OperationHandler.class
+    .getName());
 
   private final Connection connection;
   private final DataHandler dataHandler;
   private final Query query;
-
-  private int tableCount;
 
   /**
    * Text formatting of operations output.
@@ -61,20 +60,18 @@ final class OperationFormatter
    * @param options
    *        Options for text formatting of operations output
    */
-  OperationFormatter(final OperationOptions options,
-                     final Query query,
-                     final Connection connection,
-                     final DataHandler dataHandler)
+  OperationHandler(final OperationOptions options,
+                   final Query query,
+                   final Connection connection,
+                   final DataHandler dataHandler)
     throws SchemaCrawlerException
   {
-    super(options, dataHandler.getPrintWriter());
-
     if (options.getOperation() == null)
     {
       throw new SchemaCrawlerException("Cannot perform null operation");
     }
 
-    if (dataHandler == null && !(options.getOperation() == Operation.count))
+    if (dataHandler == null)
     {
       throw new SchemaCrawlerException("No data handler provided");
     }
@@ -104,7 +101,7 @@ final class OperationFormatter
   {
     try
     {
-      if (connection == null || connection.isClosed())
+      if (connection.isClosed())
       {
         throw new SchemaCrawlerException("Connection is closed");
       }
@@ -114,11 +111,7 @@ final class OperationFormatter
       throw new SchemaCrawlerException("Connection is closed", e);
     }
 
-    if (!options.getOutputOptions().isNoHeader())
-    {
-      out.println(formattingHelper.createDocumentStart());
-    }
-
+    dataHandler.begin();
   }
 
   /**
@@ -129,31 +122,51 @@ final class OperationFormatter
   public void end()
     throws SchemaCrawlerException
   {
-    if (options.getOperation() == Operation.count)
-    {
-      out.println(formattingHelper.createObjectEnd());
-    }
-    if (!options.getOutputOptions().isNoFooter())
-    {
-      out.println(formattingHelper.createPreformattedText("tableCount",
-                                                          tableCount
-                                                              + " tables."));
-      out.println(formattingHelper.createDocumentEnd());
-    }
-    out.flush();
-    //
-    options.getOutputOptions().closeOutputWriter(out);
-    try
-    {
-      if (dataHandler != null)
-      {
-        dataHandler.end();
-      }
-    }
-    catch (final QueryExecutorException e)
-    {
-      throw new SchemaCrawlerException("Cannot end data handler", e);
-    }
+    dataHandler.end();
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.ColumnDataType)
+   */
+  public void handle(final ColumnDataType dataType)
+    throws SchemaCrawlerException
+  {
+    // No-op
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.ColumnMap[])
+   */
+  public void handle(final ColumnMap[] weakAssociations)
+    throws SchemaCrawlerException
+  {
+    // No-op
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.DatabaseInfo)
+   */
+  public void handle(final DatabaseInfo database)
+    throws SchemaCrawlerException
+  {
+    dataHandler.handle(database);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.Procedure)
+   */
+  public void handle(final Procedure procedure)
+    throws SchemaCrawlerException
+  {
+    // No-op
   }
 
   /**
@@ -161,20 +174,9 @@ final class OperationFormatter
    * 
    * @see CrawlHandler#handle(Table)
    */
-  @Override
   public void handle(final Table table)
+    throws SchemaCrawlerException
   {
-
-    if (tableCount == 0)
-    {
-      out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                                options.getOperation()
-                                                  .getDescription()));
-      if (options.getOperation() == Operation.count)
-      {
-        out.println(formattingHelper.createObjectStart("Row Count"));
-      }
-    }
 
     final String sql = query.getQueryForTable(table);
     LOGGER.fine("Executing: " + sql);
@@ -189,22 +191,10 @@ final class OperationFormatter
       if (hasResults)
       {
         results = statement.getResultSet();
-        if (options.getOperation() == Operation.count)
-        {
-          handleAggregateOperationForTable(table, results);
-        }
-        else
-        {
-          dataHandler.handleData(table.getName(), results);
-        }
+        dataHandler.handleData(table.getFullName(), results);
       }
-      out.flush();
     }
     catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, "Error executing: " + sql, e);
-    }
-    catch (final QueryExecutorException e)
     {
       LOGGER.log(Level.WARNING, "Error executing: " + sql, e);
     }
@@ -226,54 +216,6 @@ final class OperationFormatter
         LOGGER.log(Level.WARNING, "Error releasing resources", e);
       }
     }
-
-    tableCount++;
-
-  }
-
-  private String getMessage(final double aggregate)
-  {
-
-    Number number;
-    if (Math.abs(aggregate - (int) aggregate) < 1E-10D)
-    {
-      number = Integer.valueOf((int) aggregate);
-    }
-    else
-    {
-      number = Double.valueOf(aggregate);
-    }
-    final String message = MessageFormat.format(options.getOperation()
-      .getCountMessageFormat(), new Object[] {
-      number
-    });
-    return message;
-  }
-
-  /**
-   * Handles an aggregate operation, such as a count, for a given table.
-   * 
-   * @param table
-   *        Table
-   * @param results
-   *        Results
-   * @throws SQLException
-   *         On an exception
-   */
-  private void handleAggregateOperationForTable(final Table table,
-                                                final ResultSet results)
-    throws SQLException
-  {
-    long aggregate = 0;
-    if (results.next())
-    {
-      aggregate = results.getLong(1);
-    }
-    final String message = getMessage(aggregate);
-    //
-    out.println(formattingHelper.createNameRow(table.getFullName(),
-                                               message,
-                                               false));
   }
 
 }
