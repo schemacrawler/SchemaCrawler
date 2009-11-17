@@ -18,9 +18,11 @@
 package schemacrawler.test;
 
 
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
 
 import org.junit.Test;
 
@@ -51,9 +53,9 @@ public class DirectedGraphTest
     {
       final DirectedGraph<String> graph = makeGraph();
 
-      assertArrayEquals("Test run #" + (i + 1), new String[] {
+      assertEquals("Test run #" + (i + 1), Arrays.asList(new String[] {
           "E", "A", "D", "B", "C"
-      }, graph.topologicalSort().toArray(new String[0]));
+      }), graph.topologicalSort());
     }
   }
 
@@ -64,9 +66,9 @@ public class DirectedGraphTest
     final DirectedGraph<String> graph = makeGraph();
     graph.addDirectedEdge("C", "A");
 
-    assertArrayEquals(new String[] {
+    assertEquals(Arrays.asList(new String[] {
         "E", "A", "D", "B", "C"
-    }, graph.topologicalSort().toArray(new String[0]));
+    }), graph.topologicalSort());
   }
 
   private DirectedGraph<String> makeGraph()

@@ -235,7 +235,7 @@ public class TestDatabase
    */
   private void deleteServerFiles(final String stem)
   {
-    final File[] files = new File(".").listFiles(new FilenameFilter()
+    final FilenameFilter serverFilesFilter = new FilenameFilter()
     {
       public boolean accept(final File dir, final String name)
       {
@@ -243,12 +243,18 @@ public class TestDatabase
             stem + ".lck", stem + ".log", stem + ".properties",
         }).contains(name);
       }
-    });
+    };
+
+    final File[] files = new File(".").listFiles(serverFilesFilter);
     for (final File file: files)
     {
       if (!file.isDirectory() && !file.isHidden())
       {
-        file.delete();
+        final boolean delete = file.delete();
+        if (!delete)
+        {
+          LOGGER.log(Level.FINE, "Could not delete " + file.getAbsolutePath());
+        }
       }
     }
   }

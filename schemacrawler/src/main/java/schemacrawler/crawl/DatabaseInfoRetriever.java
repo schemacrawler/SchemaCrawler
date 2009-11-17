@@ -148,9 +148,14 @@ final class DatabaseInfoRetriever
                                                "TYPE_SCROLL_SENSITIVE"));
         }
       }
-      catch (final Exception e)
+      catch (final IllegalAccessException e)
       {
         LOGGER.log(Level.FINE, "Could not execute method, " + method, e);
+      }
+      catch (final InvocationTargetException e)
+      {
+        LOGGER.log(Level.FINE, "Could not execute method, " + method, e
+          .getCause());
       }
     }
 

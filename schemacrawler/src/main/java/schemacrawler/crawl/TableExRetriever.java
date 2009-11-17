@@ -164,11 +164,13 @@ final class TableExRetriever
       .getCheckConstraints().getQuery();
 
     // Get check constraint definitions
-    statement = connection.createStatement();
-    results = new MetadataResultSet(statement
-      .executeQuery(checkConstraintInformationSql));
+    statement = null;
+    results = null;
     try
     {
+      statement = connection.createStatement();
+      results = new MetadataResultSet(statement
+        .executeQuery(checkConstraintInformationSql));
       while (results.next())
       {
         // final String catalogName =

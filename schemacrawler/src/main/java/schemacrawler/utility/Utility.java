@@ -158,10 +158,6 @@ public final class Utility
   private static int indexOfDifference(final String string1,
                                        final String string2)
   {
-    if (string1 == string2)
-    {
-      return -1;
-    }
     if (string1 == null || string2 == null)
     {
       return 0;

@@ -22,6 +22,7 @@ package schemacrawler.crawl;
 
 
 import java.sql.DriverPropertyInfo;
+import java.util.Arrays;
 
 import schemacrawler.schema.JdbcDriverProperty;
 
@@ -48,6 +49,44 @@ final class MutableJdbcDriverProperty
     description = driverPropertyInfo.description;
     required = driverPropertyInfo.required;
     choices = driverPropertyInfo.choices;
+  }
+
+  @Override
+  public boolean equals(final Object obj)
+  {
+    if (this == obj)
+    {
+      return true;
+    }
+    if (!super.equals(obj))
+    {
+      return false;
+    }
+    if (getClass() != obj.getClass())
+    {
+      return false;
+    }
+    final MutableJdbcDriverProperty other = (MutableJdbcDriverProperty) obj;
+    if (!Arrays.equals(choices, other.choices))
+    {
+      return false;
+    }
+    if (description == null)
+    {
+      if (other.description != null)
+      {
+        return false;
+      }
+    }
+    else if (!description.equals(other.description))
+    {
+      return false;
+    }
+    if (required != other.required)
+    {
+      return false;
+    }
+    return true;
   }
 
   /**
@@ -108,6 +147,17 @@ final class MutableJdbcDriverProperty
       value = String.valueOf(valueObject);
     }
     return value;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    final int prime = 31;
+    int result = super.hashCode();
+    result = prime * result + Arrays.hashCode(choices);
+    result = prime * result + (description == null? 0: description.hashCode());
+    result = prime * result + (required? 1231: 1237);
+    return result;
   }
 
   /**
