@@ -650,7 +650,7 @@ Dump
 
 
 
-CUSTOMER
+PUBLIC.CUSTOMER
 ------------------------------------------------------------------------
 ID,FIRSTNAME,LASTNAME,STREET,CITY
 0,Laura,Steel,429 Seventh Av.,Dallas
@@ -706,7 +706,7 @@ ID,FIRSTNAME,LASTNAME,STREET,CITY
 
 
 
-CUSTOMERLIST
+PUBLIC.CUSTOMERLIST
 ------------------------------------------------------------------------
 ID,FIRSTNAME,LASTNAME
 0,Laura,Steel
@@ -762,7 +762,7 @@ ID,FIRSTNAME,LASTNAME
 
 
 
-INVOICE
+PUBLIC.INVOICE
 ------------------------------------------------------------------------
 ID,CUSTOMERID,TOTAL
 0,0,2607.6
@@ -818,7 +818,7 @@ ID,CUSTOMERID,TOTAL
 
 
 
-ITEM
+PUBLIC.ITEM
 ------------------------------------------------------------------------
 INVOICEID,ITEM,PRODUCTID,QUANTITY,COST
 0,0,7,12,12.6
@@ -1474,7 +1474,7 @@ INVOICEID,ITEM,PRODUCTID,QUANTITY,COST
 
 
 
-PRODUCT
+PUBLIC.PRODUCT
 ------------------------------------------------------------------------
 ID,NAME,PRICE
 0,Iron Iron,5.4
@@ -1530,14 +1530,14 @@ ID,NAME,PRICE
 
 
 
-SUPPLIER
+PUBLIC.SUPPLIER
 ------------------------------------------------------------------------
 SUPPLIER_ID,SUPPLIER_NAME
 1,IBM
 
 
 
-ITEM
+SCHEMACRAWLER.ITEM
 ------------------------------------------------------------------------
 INVOICEID,ITEM,PRODUCTID,QUANTITY,COST
 0,0,7,12,12.6
@@ -1563,7 +1563,7 @@ INVOICEID,ITEM,PRODUCTID,QUANTITY,COST
 
 
 
-PRODUCT2
+SCHEMACRAWLER.PRODUCT2
 ------------------------------------------------------------------------
 ID,NAME,PRICE
 0,Iron Iron,5.4
@@ -1579,6 +1579,4 @@ ID,NAME,PRICE
 10,Telephone Ice Tea,20.4
 
 
-
-8 tables.
 

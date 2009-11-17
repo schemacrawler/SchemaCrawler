@@ -98,10 +98,22 @@ public class SchemaCrawlerCommandLine
                                   final String configResource)
     throws SchemaCrawlerException
   {
+    if (args == null || args.length == 0)
+    {
+      helpOptions.showHelp();
+      System.exit(0);
+    }
+
     final ApplicationOptions applicationOptions;
-    if (args != null && args.length > 0)
+    if (args.length > 0)
     {
       applicationOptions = new ApplicationOptionsParser(args).getOptions();
+      if (applicationOptions.isShowHelp())
+      {
+        helpOptions.showHelp();
+        System.exit(0);
+      }
+
       commands = new CommandParser(args).getOptions();
       outputOptions = new OutputOptionsParser(args).getOptions();
     }
@@ -110,12 +122,6 @@ public class SchemaCrawlerCommandLine
       applicationOptions = new ApplicationOptions();
       commands = new Commands();
       outputOptions = new OutputOptions();
-    }
-
-    if (args.length == 0 || applicationOptions.isShowHelp())
-    {
-      helpOptions.showHelp();
-      System.exit(0);
     }
 
     applicationOptions.applyApplicationLogLevel();

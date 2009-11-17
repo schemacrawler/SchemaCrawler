@@ -24,15 +24,10 @@ package schemacrawler.tools;
 import java.io.PrintWriter;
 import java.util.Arrays;
 
-import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
-import schemacrawler.schema.Procedure;
-import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 import schemacrawler.tools.util.PlainTextFormattingHelper;
@@ -46,7 +41,6 @@ import schemacrawler.utility.ObjectToString;
  * @author Sualeh Fatehi
  */
 public abstract class BaseFormatter<O extends BaseToolOptions>
-  implements CrawlHandler
 {
 
   protected final O options;
@@ -60,7 +54,7 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
    * @param options
    *        Options for text formatting of schema
    */
-  protected BaseFormatter(final O options, final PrintWriter out)
+  protected BaseFormatter(final O options)
     throws SchemaCrawlerException
   {
     if (options == null)
@@ -80,29 +74,7 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
       formattingHelper = new PlainTextFormattingHelper(outputFormat);
     }
 
-    if (out == null)
-    {
-      throw new IllegalArgumentException("Output writer not provided");
-    }
-    this.out = out;
-
-  }
-
-  public void handle(final ColumnDataType columnDataType)
-    throws SchemaCrawlerException
-  {
-    // No-op
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.WeakAssociations)
-   */
-  public void handle(final ColumnMap[] weakAssociations)
-    throws SchemaCrawlerException
-  {
-    // No-op
+    this.out = options.getOutputOptions().openOutputWriter();
   }
 
   /**
@@ -113,28 +85,6 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
   public void handle(final DatabaseInfo databaseInfo)
   {
     printDatabaseInfo(databaseInfo, verboseDatabaseInfo);
-  }
-
-  /**
-   * Provides information on the database schema.
-   * 
-   * @param procedure
-   *        Procedure metadata.
-   */
-  public void handle(final Procedure procedure)
-  {
-    // No-op
-  }
-
-  /**
-   * Provides information on the database schema.
-   * 
-   * @param table
-   *        Table metadata.
-   */
-  public void handle(final Table table)
-  {
-    // No-op
   }
 
   protected void setVerboseDatabaseInfo(final boolean verboseDatabaseInfo)
