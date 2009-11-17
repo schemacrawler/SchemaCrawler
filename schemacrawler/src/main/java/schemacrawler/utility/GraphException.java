@@ -24,21 +24,23 @@ public class GraphException
   extends Exception
 {
 
+  private static final long serialVersionUID = 3629161382294452029L;
+
   public GraphException()
   {
   }
 
-  public GraphException(String message, Throwable cause)
-  {
-    super(message, cause);
-  }
-
-  public GraphException(String message)
+  public GraphException(final String message)
   {
     super(message);
   }
 
-  public GraphException(Throwable cause)
+  public GraphException(final String message, final Throwable cause)
+  {
+    super(message, cause);
+  }
+
+  public GraphException(final Throwable cause)
   {
     super(cause);
   }

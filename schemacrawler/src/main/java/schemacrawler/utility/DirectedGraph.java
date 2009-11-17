@@ -35,16 +35,6 @@ public class DirectedGraph<T extends Comparable>
 {
 
   /**
-   * Traversal state when detecting cycle.
-   */
-  private enum TraversalState
-  {
-    notStarted,
-    inProgress,
-    complete;
-  }
-
-  /**
    * Directed edge in a graph.
    * 
    * @param <T>
@@ -125,11 +115,6 @@ public class DirectedGraph<T extends Comparable>
       return "(" + from + " --> " + to + ")";
     }
 
-    private DirectedGraph<?> getOuterType()
-    {
-      return DirectedGraph.this;
-    }
-
     Vertex<T> getFrom()
     {
       return from;
@@ -158,6 +143,11 @@ public class DirectedGraph<T extends Comparable>
     void setTraversalState(final TraversalState traversalState)
     {
       this.traversalState = traversalState;
+    }
+
+    private DirectedGraph<?> getOuterType()
+    {
+      return DirectedGraph.this;
     }
 
   }
@@ -239,11 +229,6 @@ public class DirectedGraph<T extends Comparable>
       return value.toString();
     }
 
-    private DirectedGraph getOuterType()
-    {
-      return DirectedGraph.this;
-    }
-
     TraversalState getTraversalState()
     {
       return traversalState;
@@ -259,6 +244,21 @@ public class DirectedGraph<T extends Comparable>
       this.traversalState = traversalState;
     }
 
+    private DirectedGraph getOuterType()
+    {
+      return DirectedGraph.this;
+    }
+
+  }
+
+  /**
+   * Traversal state when detecting cycle.
+   */
+  private enum TraversalState
+  {
+    notStarted,
+    inProgress,
+    complete;
   }
 
   private final Map<T, Vertex<T>> verticesMap;
@@ -353,7 +353,7 @@ public class DirectedGraph<T extends Comparable>
       for (final Iterator<Vertex<T>> iterator = vertices.iterator(); iterator
         .hasNext();)
       {
-        final Vertex<T> vertex = (Vertex<T>) iterator.next();
+        final Vertex<T> vertex = iterator.next();
         if (isUnattachedNode(vertex, edges))
         {
           unattachedNodeValues.add(vertex.getValue());
@@ -400,12 +400,12 @@ public class DirectedGraph<T extends Comparable>
     }
   }
 
-  private boolean isUnattachedNode(final Vertex<T> vertex,
-                                   final Set<DirectedEdge<T>> edges)
+  private boolean isStartNode(final Vertex<T> vertex,
+                              final Set<DirectedEdge<T>> edges)
   {
     for (final DirectedEdge<T> edge: edges)
     {
-      if (edge.isTo(vertex) || edge.isFrom(vertex))
+      if (edge.isTo(vertex))
       {
         return false;
       }
@@ -413,12 +413,12 @@ public class DirectedGraph<T extends Comparable>
     return true;
   }
 
-  private boolean isStartNode(final Vertex<T> vertex,
-                              final Set<DirectedEdge<T>> edges)
+  private boolean isUnattachedNode(final Vertex<T> vertex,
+                                   final Set<DirectedEdge<T>> edges)
   {
     for (final DirectedEdge<T> edge: edges)
     {
-      if (edge.isTo(vertex))
+      if (edge.isTo(vertex) || edge.isFrom(vertex))
       {
         return false;
       }

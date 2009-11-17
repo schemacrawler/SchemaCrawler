@@ -108,5 +108,8 @@ public class ResultColumnsTest
                    column.getType().getTypeName());
     }
 
+    resultSet.close();
+    statement.close();
+
   }
 }

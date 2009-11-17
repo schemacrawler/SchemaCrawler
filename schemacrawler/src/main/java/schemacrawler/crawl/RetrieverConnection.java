@@ -43,7 +43,7 @@ final class RetrieverConnection
   private final DatabaseMetaData metaData;
   private final InformationSchemaViews informationSchemaViews;
   private final boolean supportsCatalogs;
-  protected final Map<SchemaReference, MutableSchema> schemaRefsCache;
+  private final Map<SchemaReference, MutableSchema> schemaRefsCache;
 
   RetrieverConnection(final Connection connection,
                       final SchemaCrawlerOptions options)

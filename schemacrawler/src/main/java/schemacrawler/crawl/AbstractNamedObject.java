@@ -66,11 +66,6 @@ abstract class AbstractNamedObject
     return NamedObjectSort.alphabetical.compare(this, obj);
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#equals(java.lang.Object)
-   */
   @Override
   public boolean equals(final Object obj)
   {
@@ -79,6 +74,10 @@ abstract class AbstractNamedObject
       return true;
     }
     if (obj == null)
+    {
+      return false;
+    }
+    if (!(obj instanceof AbstractNamedObject))
     {
       return false;
     }
@@ -147,16 +146,13 @@ abstract class AbstractNamedObject
     return remarks;
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#hashCode()
-   */
   @Override
   public int hashCode()
   {
-    buildHashCode();
-    return hashCode;
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (name == null? 0: name.hashCode());
+    return result;
   }
 
   /**
@@ -207,14 +203,6 @@ abstract class AbstractNamedObject
     else
     {
       this.remarks = remarks;
-    }
-  }
-
-  private void buildHashCode()
-  {
-    if (hashCode == 0)
-    {
-      hashCode = name == null? super.hashCode(): name.hashCode();
     }
   }
 

@@ -24,6 +24,7 @@ package schemacrawler.crawl;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.Set;
 
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
@@ -45,7 +46,7 @@ final class MutableDatabaseInfo
   private String userName;
   private String productName;
   private String productVersion;
-  private final Collection<DatabaseProperty> dbProperties = new LinkedHashSet<DatabaseProperty>();
+  private final Set<DatabaseProperty> dbProperties = new LinkedHashSet<DatabaseProperty>();
   private MutableJdbcDriverInfo driverInfo = new MutableJdbcDriverInfo();
 
   /**

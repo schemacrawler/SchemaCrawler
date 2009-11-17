@@ -71,7 +71,7 @@ final class TablesGraph
         sortIndex++;
       }
     }
-    catch (GraphException e)
+    catch (final GraphException e)
     {
       LOGGER.log(Level.CONFIG, e.getMessage());
     }

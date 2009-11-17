@@ -29,6 +29,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.crawl.JavaSqlType.JavaSqlTypeGroup;
 import schemacrawler.schemacrawler.Config;
@@ -40,6 +42,9 @@ import schemacrawler.schemacrawler.Config;
  */
 public final class JavaSqlTypesUtility
 {
+
+  private static final Logger LOGGER = Logger
+    .getLogger(JavaSqlTypesUtility.class.getName());
 
   private static final Map<Integer, JavaSqlType> JAVA_SQL_TYPES_BY_TYPE;
   private static final Map<String, JavaSqlType> JAVA_SQL_TYPES_BY_TYPE_NAME;
@@ -176,6 +181,7 @@ public final class JavaSqlTypesUtility
       }
       catch (final Exception e)
       {
+        LOGGER.log(Level.WARNING, "Could not read java.sql.Types groups", e);
         continue;
       }
     }
