@@ -101,6 +101,16 @@ public final class GraphExecutable
     }
   }
 
+  @Override
+  protected HelpOptions getHelpOptions()
+  {
+    final HelpOptions helpOptions = new HelpOptions("SchemaCrawler - Graphing");
+    helpOptions.setCommandHelpType(CommandHelpType.without_operations);
+    helpOptions.setResourceOutputOptions("/help/OutputOptions.dot.txt");
+
+    return helpOptions;
+  }
+
   private void writeDotFile(final Connection connection, final File dotFile)
   {
     try
@@ -119,16 +129,6 @@ public final class GraphExecutable
     {
       LOGGER.log(Level.SEVERE, "Could not write diagram, " + dotFile, e);
     }
-  }
-
-  @Override
-  protected HelpOptions getHelpOptions()
-  {
-    final HelpOptions helpOptions = new HelpOptions("SchemaCrawler - Graphing");
-    helpOptions.setCommandHelpType(CommandHelpType.without_operations);
-    helpOptions.setResourceOutputOptions("/help/OutputOptions.dot.txt");
-
-    return helpOptions;
   }
 
 }
