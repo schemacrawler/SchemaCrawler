@@ -63,7 +63,12 @@ public final class DataTextFormatter
     throws SchemaCrawlerException
   {
     super(options);
-    operation = ((OperationOptions) options).getOperation();
+
+    if (options.getOperation() == null)
+    {
+      throw new SchemaCrawlerException("Cannot perform null operation");
+    }
+    operation = options.getOperation();
   }
 
   /**
@@ -267,7 +272,7 @@ public final class DataTextFormatter
     }
   }
 
-  private void iterateRowsAndMerge(final ResultSet rows,
+  private void iterateRowsAndMerge(final ResultSet resultSet,
                                    final String[] columnNames)
     throws SQLException, SchemaCrawlerException
   {
@@ -276,16 +281,16 @@ public final class DataTextFormatter
     List<String> currentRow;
     StringBuilder currentRowLastColumn = new StringBuilder();
     // write out the data
-    while (rows.next())
+    while (resultSet.next())
     {
       currentRow = new ArrayList<String>(columnCount - 1);
       for (int i = 0; i < columnCount - 1; i++)
       {
-        final Object columnData = rows.getObject(i + 1);
+        final Object columnData = resultSet.getObject(i + 1);
         final String columnDataString = convertColumnDataToString(columnData);
         currentRow.add(columnDataString);
       }
-      final Object lastColumnData = rows.getObject(columnCount);
+      final Object lastColumnData = resultSet.getObject(columnCount);
       final String lastColumnDataString = convertColumnDataToString(lastColumnData);
       if (currentRow.equals(previousRow))
       {
