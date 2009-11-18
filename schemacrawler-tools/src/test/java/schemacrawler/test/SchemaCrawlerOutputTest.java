@@ -39,11 +39,10 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import schemacrawler.execute.DataHandler;
-import schemacrawler.execute.QueryExecutor;
 import schemacrawler.main.SchemaCrawlerCommandLine;
 import schemacrawler.main.SchemaCrawlerMain;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.Query;
 import schemacrawler.tools.Command;
 import schemacrawler.tools.Commands;
 import schemacrawler.tools.OutputFormat;
@@ -234,12 +233,12 @@ public class SchemaCrawlerOutputTest
                                                                               new OutputOptions(OutputFormat.text,
                                                                                                 outputFilename),
                                                                               null);
+    textFormatOptions.setQuery(new Query("Customer Count",
+                                         "SELECT COUNT(*) FROM CUSTOMER"));
 
-    final DataHandler dataHandler = DataToolsExecutable
-      .createDataHandler(textFormatOptions);
-    final QueryExecutor executor = new QueryExecutor(testUtility
-      .getConnection(), dataHandler);
-    executor.executeSQL("SELECT COUNT(*) FROM CUSTOMER");
+    final DataToolsExecutable executable = new DataToolsExecutable();
+    executable.setToolOptions(textFormatOptions);
+    executable.execute(testUtility.getConnection());
 
     final File outputFile = new File(outputFilename);
     if (!outputFile.delete())

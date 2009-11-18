@@ -28,7 +28,6 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.execute.DataHandler;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.DatabaseInfo;
@@ -37,6 +36,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.datatext.DataTextFormatter;
 
 /**
  * Text formatting of operations output.
@@ -51,7 +51,7 @@ final class OperationHandler
     .getName());
 
   private final Connection connection;
-  private final DataHandler dataHandler;
+  private final DataTextFormatter dataFormatter;
   private final Query query;
 
   /**
@@ -62,8 +62,7 @@ final class OperationHandler
    */
   OperationHandler(final OperationOptions options,
                    final Query query,
-                   final Connection connection,
-                   final DataHandler dataHandler)
+                   final Connection connection)
     throws SchemaCrawlerException
   {
     if (options.getOperation() == null)
@@ -71,11 +70,7 @@ final class OperationHandler
       throw new SchemaCrawlerException("Cannot perform null operation");
     }
 
-    if (dataHandler == null)
-    {
-      throw new SchemaCrawlerException("No data handler provided");
-    }
-    this.dataHandler = dataHandler;
+    dataFormatter = new DataTextFormatter(options);
 
     if (connection == null)
     {
@@ -111,7 +106,7 @@ final class OperationHandler
       throw new SchemaCrawlerException("Connection is closed", e);
     }
 
-    dataHandler.begin();
+    dataFormatter.begin();
   }
 
   /**
@@ -122,7 +117,7 @@ final class OperationHandler
   public void end()
     throws SchemaCrawlerException
   {
-    dataHandler.end();
+    dataFormatter.end();
   }
 
   /**
@@ -155,7 +150,7 @@ final class OperationHandler
   public void handle(final DatabaseInfo database)
     throws SchemaCrawlerException
   {
-    dataHandler.handle(database);
+    dataFormatter.handle(database);
   }
 
   /**
@@ -191,7 +186,7 @@ final class OperationHandler
       if (hasResults)
       {
         results = statement.getResultSet();
-        dataHandler.handleData(table.getFullName(), results);
+        dataFormatter.handleData(table.getFullName(), results);
       }
     }
     catch (final SQLException e)

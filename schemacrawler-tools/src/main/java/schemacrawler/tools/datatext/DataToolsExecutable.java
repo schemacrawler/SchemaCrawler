@@ -22,9 +22,13 @@ package schemacrawler.tools.datatext;
 
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import schemacrawler.execute.DataHandler;
-import schemacrawler.execute.QueryExecutor;
+import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.Executable;
 
@@ -37,29 +41,8 @@ public class DataToolsExecutable
   extends Executable<DataTextFormatOptions>
 {
 
-  /**
-   * Instantiates a text formatter type of DataHandler from the mnemonic
-   * string.
-   * 
-   * @param options
-   *        Options
-   * @throws SchemaCrawlerException
-   *         On an exception
-   * @return CrawlHandler instance
-   */
-  public static DataHandler createDataHandler(final DataTextFormatOptions options)
-    throws SchemaCrawlerException
-  {
-    try
-    {
-      final DataHandler handler = new DataTextFormatter(options);
-      return handler;
-    }
-    catch (final Exception e)
-    {
-      throw new SchemaCrawlerException(e.getMessage(), e);
-    }
-  }
+  private static final Logger LOGGER = Logger
+    .getLogger(DataToolsExecutable.class.getName());
 
   public DataToolsExecutable()
   {
@@ -86,9 +69,46 @@ public class DataToolsExecutable
     }
     initialize();
 
-    final DataHandler dataHandler = new DataTextFormatter(toolOptions);
-    final QueryExecutor executor = new QueryExecutor(connection, dataHandler);
-    executor.executeQuery(toolOptions.getQuery());
+    final DataTextFormatter dataFormatter = new DataTextFormatter(toolOptions);
+    final Query query = toolOptions.getQuery();
+
+    Statement statement = null;
+    ResultSet resultSet = null;
+    try
+    {
+      LOGGER.fine("Executing: " + query);
+      statement = connection.createStatement();
+      resultSet = statement.executeQuery(query.getQuery());
+
+      dataFormatter.begin();
+      dataFormatter.handleData(query.getName(), resultSet);
+      dataFormatter.end();
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerException(e.getMessage() + " - when executing - "
+                                       + query, e);
+    }
+    finally
+    {
+      try
+      {
+        if (statement != null)
+        {
+          statement.close();
+        }
+        if (resultSet != null)
+        {
+          resultSet.close();
+        }
+      }
+      catch (final SQLException e)
+      {
+        LOGGER.log(Level.WARNING,
+                   "Connection resources could not be released",
+                   e);
+      }
+    }
   }
 
 }

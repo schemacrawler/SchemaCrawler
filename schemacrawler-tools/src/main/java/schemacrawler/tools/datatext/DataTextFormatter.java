@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.execute.DataHandler;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.BaseFormatter;
@@ -48,7 +47,6 @@ import schemacrawler.tools.util.TextFormattingHelper.DocumentHeaderType;
  */
 public final class DataTextFormatter
   extends BaseFormatter<DataTextFormatOptions>
-  implements DataHandler
 {
 
   private static final Logger LOGGER = Logger.getLogger(DataTextFormatter.class

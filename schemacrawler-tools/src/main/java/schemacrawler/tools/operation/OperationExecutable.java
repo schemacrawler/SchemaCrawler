@@ -24,11 +24,9 @@ package schemacrawler.tools.operation;
 import java.sql.Connection;
 
 import schemacrawler.crawl.DatabaseSchemaCrawler;
-import schemacrawler.execute.DataHandler;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.tools.Executable;
-import schemacrawler.tools.datatext.DataToolsExecutable;
 
 /**
  * Basic SchemaCrawler executor.
@@ -69,9 +67,6 @@ public class OperationExecutable
     }
     initialize();
 
-    final DataHandler operationDataHandler = DataToolsExecutable
-      .createDataHandler(toolOptions);
-
     final Operation operation = toolOptions.getOperation();
     Query query;
     if (operation == Operation.queryover)
@@ -84,11 +79,9 @@ public class OperationExecutable
     }
 
     final SchemaCrawler crawler = new DatabaseSchemaCrawler(connection);
-    crawler.crawl(schemaCrawlerOptions,
-                  new OperationHandler(toolOptions,
-                                       query,
-                                       connection,
-                                       operationDataHandler));
+    crawler.crawl(schemaCrawlerOptions, new OperationHandler(toolOptions,
+                                                             query,
+                                                             connection));
   }
 
 }
