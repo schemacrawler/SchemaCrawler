@@ -78,7 +78,6 @@ final class SchemaTextFormatter
     throws SchemaCrawlerException
   {
     super(options);
-    setVerboseDatabaseInfo(options.getSchemaTextDetailType() == SchemaTextDetailType.maximum_schema);
   }
 
   /**

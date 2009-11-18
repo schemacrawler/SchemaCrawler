@@ -28,6 +28,7 @@ import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
+import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 import schemacrawler.tools.util.PlainTextFormattingHelper;
@@ -46,7 +47,6 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
   protected final O options;
   protected final PrintWriter out;
   protected final TextFormattingHelper formattingHelper;
-  private boolean verboseDatabaseInfo;
 
   /**
    * Text formatting of operations and schema.
@@ -84,16 +84,11 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
    */
   public void handle(final DatabaseInfo databaseInfo)
   {
-    printDatabaseInfo(databaseInfo, verboseDatabaseInfo);
-  }
-
-  protected void setVerboseDatabaseInfo(final boolean verboseDatabaseInfo)
-  {
-    this.verboseDatabaseInfo = verboseDatabaseInfo;
+    printDatabaseInfo(databaseInfo, options.isPrintVerboseDatabaseInfo());
   }
 
   private void printDatabaseInfo(final DatabaseInfo dbInfo,
-                                 final boolean verboseDatabaseInfo)
+                                 final boolean printVerboseDatabaseInfo)
   {
     if (dbInfo == null || options.getOutputOptions().isNoInfo())
     {
@@ -117,7 +112,7 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
                                                     dbInfo.getUserName()));
     out.print(formattingHelper.createObjectEnd());
 
-    if (verboseDatabaseInfo)
+    if (printVerboseDatabaseInfo)
     {
       out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                                 "Database Characteristics"));
@@ -164,7 +159,7 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
                                                       .isJdbcCompliant())));
     out.print(formattingHelper.createObjectEnd());
 
-    if (verboseDatabaseInfo)
+    if (printVerboseDatabaseInfo)
     {
       out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                                 "JDBC Driver Properties"));

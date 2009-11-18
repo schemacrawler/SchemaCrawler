@@ -62,6 +62,8 @@ public abstract class BaseToolOptions
     return outputOptions;
   }
 
+  public abstract boolean isPrintVerboseDatabaseInfo();
+
   /**
    * Set output options.
    * 
