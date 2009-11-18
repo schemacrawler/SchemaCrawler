@@ -36,7 +36,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.datatext.DataTextFormatter;
 
 /**
  * Text formatting of operations output.
