@@ -88,7 +88,7 @@ public class DataToolsExecutable
 
     final DataHandler dataHandler = new DataTextFormatter(toolOptions);
     final QueryExecutor executor = new QueryExecutor(connection, dataHandler);
-    executor.executeSQL(toolOptions.getQuery().getQuery());
+    executor.executeQuery(toolOptions.getQuery());
   }
 
 }
