@@ -22,8 +22,10 @@ package schemacrawler.tools.operation;
 
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.Query;
+import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.tools.BaseToolOptions;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.datatext.DataTextFormatOptions;
 
 /**
  * Operator options.
@@ -31,7 +33,7 @@ import schemacrawler.tools.datatext.DataTextFormatOptions;
  * @author Sualeh Fatehi
  */
 public final class OperationOptions
-  extends DataTextFormatOptions
+  extends BaseToolOptions
 {
 
   private static final long serialVersionUID = -7977434852526746391L;
@@ -60,7 +62,20 @@ public final class OperationOptions
                           final OutputOptions outputOptions,
                           final Operation operation)
   {
-    super(config, outputOptions, null);
+    super(outputOptions);
+
+    if (config == null)
+    {
+      mergeRows = false;
+      showLobs = false;
+      query = null;
+    }
+    else
+    {
+      mergeRows = config.getBooleanValue(MERGE_ROWS);
+      showLobs = config.getBooleanValue(SHOW_LOBS);
+      query = null;
+    }
 
     if (operation == null)
     {
@@ -90,7 +105,27 @@ public final class OperationOptions
                           final OutputOptions outputOptions,
                           final String queryName)
   {
-    super(config, outputOptions, queryName);
+    super(outputOptions);
+
+    if (config == null)
+    {
+      mergeRows = false;
+      showLobs = false;
+      query = null;
+    }
+    else
+    {
+      mergeRows = config.getBooleanValue(MERGE_ROWS);
+      showLobs = config.getBooleanValue(SHOW_LOBS);
+      if (queryName != null && queryName.length() > 0)
+      {
+        query = new Query(queryName, config.get(queryName));
+      }
+      else
+      {
+        query = null;
+      }
+    }
 
     operation = Operation.queryover;
   }
@@ -118,6 +153,97 @@ public final class OperationOptions
       throw new IllegalArgumentException("Cannot set null operation");
     }
     this.operation = operation;
+  }
+
+  private static final String SHOW_LOBS = "schemacrawler.data.show_lobs";
+  private static final String MERGE_ROWS = "schemacrawler.data.merge_rows";
+
+  private boolean mergeRows;
+  private boolean showLobs;
+  private Query query;
+
+  /**
+   * Get the query.
+   * 
+   * @return The query
+   */
+  public Query getQuery()
+  {
+    return query;
+  }
+
+  public final SchemaInfoLevel getSchemaInfoLevel()
+  {
+    final SchemaInfoLevel schemaInfoLevel = new SchemaInfoLevel();
+    schemaInfoLevel.setRetrieveDatabaseInfo(true);
+    schemaInfoLevel.setRetrieveColumnDataTypes(true);
+    schemaInfoLevel.setRetrieveUserDefinedColumnDataTypes(true);
+    schemaInfoLevel.setRetrieveTableColumns(true);
+    schemaInfoLevel.setRetrieveTables(true);
+    return schemaInfoLevel;
+  }
+
+  /**
+   * Whether to merge similar rows.
+   * 
+   * @return Whether to merge similar rows.
+   */
+  public boolean isMergeRows()
+  {
+    return mergeRows;
+  }
+
+  @Override
+  public boolean isPrintVerboseDatabaseInfo()
+  {
+    return false;
+  }
+
+  /**
+   * Whether to show LOBs.
+   * 
+   * @return Whether to show LOBs.
+   */
+  public boolean isShowLobs()
+  {
+    return showLobs;
+  }
+
+  /**
+   * Whether to merge similar rows.
+   * 
+   * @param mergeRows
+   *        Whether to merge similar rows
+   */
+  public void setMergeRows(final boolean mergeRows)
+  {
+    this.mergeRows = mergeRows;
+  }
+
+  /**
+   * Query.
+   * 
+   * @param query
+   *        Query
+   */
+  public void setQuery(final Query query)
+  {
+    if (query == null)
+    {
+      throw new IllegalArgumentException("Cannot set null Query");
+    }
+    this.query = query;
+  }
+
+  /**
+   * Whether to show LOBs.
+   * 
+   * @param showLobs
+   *        Whether to show LOBs
+   */
+  public void setShowLobs(final boolean showLobs)
+  {
+    this.showLobs = showLobs;
   }
 
 }

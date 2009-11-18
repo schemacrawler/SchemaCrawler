@@ -25,14 +25,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.Command;
 import schemacrawler.tools.Commands;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.datatext.DataTextFormatOptions;
-import schemacrawler.tools.datatext.DataToolsExecutable;
 import schemacrawler.tools.operation.Operation;
 import schemacrawler.tools.operation.OperationExecutable;
 import schemacrawler.tools.operation.OperationOptions;
@@ -47,59 +44,6 @@ import schemacrawler.tools.schematext.SchemaTextOptions;
  */
 final class ExecutableFactory
 {
-  /**
-   * An enumeration of available tools.
-   */
-  private enum ToolType
-  {
-    /** Schema metadata to text. */
-    schema_text,
-    /** Operation. */
-    operation,
-    /** Data to text. */
-    data_text;
-  }
-
-  private static ToolType determineToolType(final Command command,
-                                            final Config config)
-  {
-    ToolType toolType;
-    if (!command.isQuery())
-    {
-      toolType = ToolType.schema_text;
-    }
-    else
-    {
-      Operation operation;
-      try
-      {
-        operation = Operation.valueOf(command.getName());
-      }
-      catch (final IllegalArgumentException e)
-      {
-        operation = null;
-      }
-      if (operation == null)
-      {
-        final Query query = new Query(command.getName(), config.get(command
-          .getName()));
-        if (query.isQueryOver())
-        {
-          toolType = ToolType.operation;
-        }
-        else
-        {
-          toolType = ToolType.data_text;
-        }
-      }
-      else
-      {
-        toolType = ToolType.operation;
-      }
-    }
-    return toolType;
-  }
-
   /**
    * Parses the command line.
    * 
@@ -143,54 +87,40 @@ final class ExecutableFactory
 
       final Executable<?> executable;
 
-      final ToolType toolType = determineToolType(command, config);
-      switch (toolType)
+      if (!command.isOperation())
       {
-        case schema_text:
-          final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType
-            .valueOf(command.getName());
-          final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(config,
-                                                                            outputOptions,
-                                                                            schemaTextDetailType);
-          final SchemaCrawlerExecutable schemaCrawlerExecutable = new SchemaCrawlerExecutable(command
-            .getName());
-          schemaCrawlerExecutable.setToolOptions(schemaTextOptions);
-          executable = schemaCrawlerExecutable;
-          break;
-        case operation:
-          Operation operation;
-          OperationOptions operationOptions;
-          try
-          {
-            operation = Operation.valueOf(command.getName());
-            operationOptions = new OperationOptions(config,
-                                                    outputOptions,
-                                                    operation);
-          }
-          catch (final IllegalArgumentException e)
-          {
-            final String queryName = command.getName();
-            operationOptions = new OperationOptions(config,
-                                                    outputOptions,
-                                                    queryName);
-          }
-          final OperationExecutable operationExecutable = new OperationExecutable(command
-            .getName());
-          operationExecutable.setToolOptions(operationOptions);
-          executable = operationExecutable;
-          break;
-        case data_text:
+        final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType
+          .valueOf(command.getName());
+        final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(config,
+                                                                          outputOptions,
+                                                                          schemaTextDetailType);
+        final SchemaCrawlerExecutable schemaCrawlerExecutable = new SchemaCrawlerExecutable(command
+          .getName());
+        schemaCrawlerExecutable.setToolOptions(schemaTextOptions);
+        executable = schemaCrawlerExecutable;
+      }
+      else
+      {
+        Operation operation;
+        OperationOptions operationOptions;
+        try
+        {
+          operation = Operation.valueOf(command.getName());
+          operationOptions = new OperationOptions(config,
+                                                  outputOptions,
+                                                  operation);
+        }
+        catch (final IllegalArgumentException e)
+        {
           final String queryName = command.getName();
-          final DataTextFormatOptions dataTextFormatOptions = new DataTextFormatOptions(config,
-                                                                                        outputOptions,
-                                                                                        queryName);
-          final DataToolsExecutable dataToolsExecutable = new DataToolsExecutable(command
-            .getName());
-          dataToolsExecutable.setToolOptions(dataTextFormatOptions);
-          executable = dataToolsExecutable;
-          break;
-        default:
-          throw new IllegalArgumentException("Could not find the tool type");
+          operationOptions = new OperationOptions(config,
+                                                  outputOptions,
+                                                  queryName);
+        }
+        final OperationExecutable operationExecutable = new OperationExecutable(command
+          .getName());
+        operationExecutable.setToolOptions(operationOptions);
+        executable = operationExecutable;
       }
       executable.setSchemaCrawlerOptions(commandLine.getSchemaCrawlerOptions());
       executables.add(executable);

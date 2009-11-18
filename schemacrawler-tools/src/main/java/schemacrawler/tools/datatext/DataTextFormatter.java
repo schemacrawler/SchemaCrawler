@@ -46,7 +46,7 @@ import schemacrawler.tools.util.TextFormattingHelper.DocumentHeaderType;
  * @author Sualeh Fatehi
  */
 public final class DataTextFormatter
-  extends BaseFormatter<DataTextFormatOptions>
+  extends BaseFormatter<OperationOptions>
 {
 
   private static final Logger LOGGER = Logger.getLogger(DataTextFormatter.class
@@ -62,19 +62,11 @@ public final class DataTextFormatter
    * @param options
    *        Options for text formatting of data
    */
-  public DataTextFormatter(final DataTextFormatOptions options)
+  public DataTextFormatter(final OperationOptions options)
     throws SchemaCrawlerException
   {
     super(options);
-
-    if (options instanceof OperationOptions)
-    {
-      operation = ((OperationOptions) options).getOperation();
-    }
-    else
-    {
-      operation = null;
-    }
+    operation = ((OperationOptions) options).getOperation();
   }
 
   /**

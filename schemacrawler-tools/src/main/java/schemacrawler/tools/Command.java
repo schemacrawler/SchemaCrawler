@@ -37,7 +37,7 @@ public final class Command
   private static final long serialVersionUID = -3877543572580583938L;
 
   private final String name;
-  private final boolean isQuery;
+  private final boolean isOperation;
 
   /**
    * Constructor.
@@ -47,14 +47,14 @@ public final class Command
    * @param isQuery
    *        Whether the command is a query.
    */
-  public Command(final String name, final boolean isQuery)
+  public Command(final String name, final boolean isOperation)
   {
     if (Utility.isBlank(name))
     {
       throw new IllegalArgumentException("No command name provided");
     }
     this.name = name;
-    this.isQuery = isQuery;
+    this.isOperation = isOperation;
   }
 
   /**
@@ -114,13 +114,13 @@ public final class Command
   }
 
   /**
-   * Is this an query?
+   * Is this an operation (or query)?
    * 
    * @return Tool type.
    */
-  public boolean isQuery()
+  public boolean isOperation()
   {
-    return isQuery;
+    return isOperation;
   }
 
   /**
