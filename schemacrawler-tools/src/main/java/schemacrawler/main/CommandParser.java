@@ -74,8 +74,8 @@ final class CommandParser
       {
         schemaTextDetailType = null;
       }
-      final boolean isQuery = schemaTextDetailType == null;
-      commands.add(new Command(commandString, isQuery));
+      final boolean isOperation = schemaTextDetailType == null;
+      commands.add(new Command(commandString, isOperation));
     }
 
     return commands;

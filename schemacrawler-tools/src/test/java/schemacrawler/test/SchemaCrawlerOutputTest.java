@@ -47,8 +47,6 @@ import schemacrawler.tools.Command;
 import schemacrawler.tools.Commands;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.datatext.DataTextFormatOptions;
-import schemacrawler.tools.datatext.DataToolsExecutable;
 import schemacrawler.tools.operation.Operation;
 import schemacrawler.tools.operation.OperationExecutable;
 import schemacrawler.tools.operation.OperationOptions;
@@ -229,14 +227,14 @@ public class SchemaCrawlerOutputTest
     final String outputFilename = File.createTempFile("schemacrawler", "test")
       .getAbsolutePath();
 
-    final DataTextFormatOptions textFormatOptions = new DataTextFormatOptions(new Config(),
-                                                                              new OutputOptions(OutputFormat.text,
-                                                                                                outputFilename),
-                                                                              null);
+    final OperationOptions textFormatOptions = new OperationOptions(new Config(),
+                                                                    new OutputOptions(OutputFormat.text,
+                                                                                      outputFilename),
+                                                                    (String) null);
     textFormatOptions.setQuery(new Query("Customer Count",
                                          "SELECT COUNT(*) FROM CUSTOMER"));
 
-    final DataToolsExecutable executable = new DataToolsExecutable();
+    final OperationExecutable executable = new OperationExecutable();
     executable.setToolOptions(textFormatOptions);
     executable.execute(testUtility.getConnection());
 

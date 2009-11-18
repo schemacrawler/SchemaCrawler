@@ -29,24 +29,22 @@ import schemacrawler.schemacrawler.Query;
 public enum Operation
 {
 
-  /** Count operation */
   count("Row Count", "SELECT COUNT(*) FROM ${table}",
     "{0,choice,0#empty|0<{0,number,integer} rows}"),
-  /** Dump operation */
   dump("Dump", "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}", ""),
-  /** Query-over operation */
-  queryover("", "Query Over Table", "{0,choice,0#-|0<{0,number,integer}}");
+  queryover("", "Query Over Table", "{0,choice,0#-|0<{0,number,integer}}"),
+  query("", "Query", ""), ;
 
   private final String description;
-  private final String query;
+  private final String queryString;
   private final String countMessageFormat;
 
   private Operation(final String description,
-                    final String query,
+                    final String queryString,
                     final String countMessageFormat)
   {
     this.description = description;
-    this.query = query;
+    this.queryString = queryString;
     this.countMessageFormat = countMessageFormat;
   }
 
@@ -77,7 +75,7 @@ public enum Operation
    */
   public Query getQuery()
   {
-    return new Query(name(), query);
+    return new Query(name(), queryString);
   }
 
 }
