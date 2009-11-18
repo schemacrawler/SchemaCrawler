@@ -79,17 +79,15 @@ public final class QueryExecutor
    * @throws QueryExecutorException
    *         On query execution error
    */
-  public void executeSQL(final String queryString)
+  public void executeQuery(final Query query)
     throws SchemaCrawlerException
   {
-
-    final Query query = new Query("Ad hoc query", queryString);
-    LOGGER.fine("Executing: " + query);
 
     Statement statement = null;
     ResultSet resultSet = null;
     try
     {
+      LOGGER.fine("Executing: " + query);
       statement = connection.createStatement();
       resultSet = statement.executeQuery(query.getQuery());
 
