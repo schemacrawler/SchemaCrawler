@@ -21,6 +21,8 @@
 package schemacrawler.tools.operation;
 
 
+import java.text.MessageFormat;
+
 import schemacrawler.schemacrawler.Query;
 
 /**
@@ -53,9 +55,11 @@ public enum Operation
    * 
    * @return Message format for the counts
    */
-  public String getCountMessageFormat()
+  public String getCountMessage(final Number number)
   {
-    return countMessageFormat;
+    return MessageFormat.format(countMessageFormat, new Object[] {
+      number
+    });
   }
 
   /**

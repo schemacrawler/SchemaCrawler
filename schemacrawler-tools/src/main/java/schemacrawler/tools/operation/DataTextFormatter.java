@@ -27,7 +27,6 @@ import java.sql.Clob;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -213,10 +212,7 @@ public final class DataTextFormatter
     {
       number = Double.valueOf(aggregate);
     }
-    final String message = MessageFormat.format(operation
-      .getCountMessageFormat(), new Object[] {
-      number
-    });
+    final String message = operation.getCountMessage(number);
     return message;
   }
 
