@@ -60,6 +60,46 @@ final class ExecutableFactory
     data_text;
   }
 
+  private static ToolType determineToolType(final Command command,
+                                            final Config config)
+  {
+    ToolType toolType;
+    if (!command.isQuery())
+    {
+      toolType = ToolType.schema_text;
+    }
+    else
+    {
+      Operation operation;
+      try
+      {
+        operation = Operation.valueOf(command.getName());
+      }
+      catch (final IllegalArgumentException e)
+      {
+        operation = null;
+      }
+      if (operation == null)
+      {
+        final Query query = new Query(command.getName(), config.get(command
+          .getName()));
+        if (query.isQueryOver())
+        {
+          toolType = ToolType.operation;
+        }
+        else
+        {
+          toolType = ToolType.data_text;
+        }
+      }
+      else
+      {
+        toolType = ToolType.operation;
+      }
+    }
+    return toolType;
+  }
+
   /**
    * Parses the command line.
    * 
@@ -157,46 +197,6 @@ final class ExecutableFactory
     }
 
     return executables;
-  }
-
-  private static ToolType determineToolType(final Command command,
-                                            final Config config)
-  {
-    ToolType toolType;
-    if (!command.isQuery())
-    {
-      toolType = ToolType.schema_text;
-    }
-    else
-    {
-      Operation operation;
-      try
-      {
-        operation = Operation.valueOf(command.getName());
-      }
-      catch (final IllegalArgumentException e)
-      {
-        operation = null;
-      }
-      if (operation == null)
-      {
-        final Query query = new Query(command.getName(), config.get(command
-          .getName()));
-        if (query.isQueryOver())
-        {
-          toolType = ToolType.operation;
-        }
-        else
-        {
-          toolType = ToolType.data_text;
-        }
-      }
-      else
-      {
-        toolType = ToolType.operation;
-      }
-    }
-    return toolType;
   }
 
   private ExecutableFactory()

@@ -172,6 +172,12 @@ public class SchemaTextOptions
     return hidePrimaryKeyNames;
   }
 
+  @Override
+  public boolean isPrintVerboseDatabaseInfo()
+  {
+    return schemaTextDetailType == SchemaTextDetailType.maximum_schema;
+  }
+
   /**
    * Whether to show ordinal numbers.
    * 

@@ -77,8 +77,6 @@ public final class DataTextFormatter
     {
       operation = null;
     }
-
-    setVerboseDatabaseInfo(false);
   }
 
   /**

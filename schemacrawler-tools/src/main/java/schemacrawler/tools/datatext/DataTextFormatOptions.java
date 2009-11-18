@@ -122,6 +122,12 @@ public class DataTextFormatOptions
     return mergeRows;
   }
 
+  @Override
+  public boolean isPrintVerboseDatabaseInfo()
+  {
+    return false;
+  }
+
   /**
    * Whether to show LOBs.
    * 
