@@ -59,30 +59,26 @@ final class OperationHandler
    * @param options
    *        Options for text formatting of operations output
    */
-  OperationHandler(final OperationOptions options,
-                   final Query query,
-                   final Connection connection)
+  OperationHandler(final OperationOptions options, final Connection connection)
     throws SchemaCrawlerException
   {
-    if (options.getOperation() == null)
-    {
-      throw new SchemaCrawlerException("Cannot perform null operation");
-    }
-
-    dataFormatter = new DataTextFormatter(options);
-
     if (connection == null)
     {
       throw new SchemaCrawlerException("No connection provided");
     }
+    this.connection = connection;
 
-    if (query == null)
+    if (options == null)
+    {
+      throw new SchemaCrawlerException("No operation options provided");
+    }
+    dataFormatter = new DataTextFormatter(options);
+
+    if (options.getQuery() == null)
     {
       throw new SchemaCrawlerException("No query provided");
     }
-
-    this.connection = connection;
-    this.query = query;
+    query = options.getQuery();
   }
 
   /**
@@ -116,6 +112,13 @@ final class OperationHandler
   public void end()
     throws SchemaCrawlerException
   {
+    if (!query.isQueryOver())
+    {
+      final String title = query.getName();
+      final String sql = query.getQuery();
+      executeSqlAndHandleData(title, sql);
+    }
+
     dataFormatter.end();
   }
 
@@ -171,10 +174,18 @@ final class OperationHandler
   public void handle(final Table table)
     throws SchemaCrawlerException
   {
+    if (query.isQueryOver())
+    {
+      final String title = table.getFullName();
+      final String sql = query.getQueryForTable(table);
+      executeSqlAndHandleData(title, sql);
+    }
+  }
 
-    final String sql = query.getQueryForTable(table);
-    LOGGER.fine("Executing: " + sql);
-
+  private void executeSqlAndHandleData(final String title, final String sql)
+    throws SchemaCrawlerException
+  {
+    LOGGER.fine(String.format("Executing query for %s: %s", title, sql));
     Statement statement = null;
     ResultSet results = null;
     try
@@ -185,7 +196,7 @@ final class OperationHandler
       if (hasResults)
       {
         results = statement.getResultSet();
-        dataFormatter.handleData(table.getFullName(), results);
+        dataFormatter.handleData(title, results);
       }
     }
     catch (final SQLException e)

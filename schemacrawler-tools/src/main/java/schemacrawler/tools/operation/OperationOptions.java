@@ -26,6 +26,7 @@ import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.BaseToolOptions;
 import schemacrawler.tools.OutputOptions;
+import schemacrawler.utility.Utility;
 
 /**
  * Operator options.
@@ -38,7 +39,13 @@ public final class OperationOptions
 
   private static final long serialVersionUID = -7977434852526746391L;
 
+  private static final String SHOW_LOBS = "schemacrawler.data.show_lobs";
+  private static final String MERGE_ROWS = "schemacrawler.data.merge_rows";
+
+  private boolean mergeRows;
+  private boolean showLobs;
   private Operation operation;
+  private Query query;
 
   /**
    * Operator options, defaults.
@@ -63,31 +70,19 @@ public final class OperationOptions
                           final Operation operation)
   {
     super(outputOptions);
-
-    if (config == null)
-    {
-      mergeRows = false;
-      showLobs = false;
-      query = null;
-    }
-    else
-    {
-      mergeRows = config.getBooleanValue(MERGE_ROWS);
-      showLobs = config.getBooleanValue(SHOW_LOBS);
-      query = null;
-    }
+    setFromConfig(config);
 
     if (operation == null)
     {
       this.operation = Operation.count;
     }
-    else if (operation != Operation.queryover)
+    else if (operation != Operation.query)
     {
       this.operation = operation;
     }
     else
     {
-      throw new IllegalArgumentException("No query specified for query over");
+      throw new IllegalArgumentException("Cannot set query operation - set the query instead");
     }
   }
 
@@ -106,28 +101,17 @@ public final class OperationOptions
                           final String queryName)
   {
     super(outputOptions);
+    setFromConfig(config);
 
-    if (config == null)
+    if (config != null && !Utility.isBlank(queryName))
     {
-      mergeRows = false;
-      showLobs = false;
-      query = null;
+      query = new Query(queryName, config.get(queryName));
     }
     else
     {
-      mergeRows = config.getBooleanValue(MERGE_ROWS);
-      showLobs = config.getBooleanValue(SHOW_LOBS);
-      if (queryName != null && queryName.length() > 0)
-      {
-        query = new Query(queryName, config.get(queryName));
-      }
-      else
-      {
-        query = null;
-      }
+      query = null;
     }
-
-    operation = Operation.queryover;
+    operation = Operation.query;
   }
 
   /**
@@ -141,45 +125,37 @@ public final class OperationOptions
   }
 
   /**
-   * Sets the operation.
-   * 
-   * @param operation
-   *        Operation
-   */
-  public void setOperation(final Operation operation)
-  {
-    if (operation == null)
-    {
-      throw new IllegalArgumentException("Cannot set null operation");
-    }
-    this.operation = operation;
-  }
-
-  private static final String SHOW_LOBS = "schemacrawler.data.show_lobs";
-  private static final String MERGE_ROWS = "schemacrawler.data.merge_rows";
-
-  private boolean mergeRows;
-  private boolean showLobs;
-  private Query query;
-
-  /**
    * Get the query.
    * 
    * @return The query
    */
   public Query getQuery()
   {
-    return query;
+    if (operation != Operation.query)
+    {
+      return operation.getQuery();
+    }
+    else
+    {
+      return query;
+    }
   }
 
   public final SchemaInfoLevel getSchemaInfoLevel()
   {
     final SchemaInfoLevel schemaInfoLevel = new SchemaInfoLevel();
     schemaInfoLevel.setRetrieveDatabaseInfo(true);
-    schemaInfoLevel.setRetrieveColumnDataTypes(true);
-    schemaInfoLevel.setRetrieveUserDefinedColumnDataTypes(true);
-    schemaInfoLevel.setRetrieveTableColumns(true);
-    schemaInfoLevel.setRetrieveTables(true);
+
+    // Retrieve tables only if the query requires it
+    final Query query = getQuery();
+    if (query == null || query.isQueryOver())
+    {
+      schemaInfoLevel.setRetrieveColumnDataTypes(true);
+      schemaInfoLevel.setRetrieveUserDefinedColumnDataTypes(true);
+      schemaInfoLevel.setRetrieveTableColumns(true);
+      schemaInfoLevel.setRetrieveTables(true);
+    }
+
     return schemaInfoLevel;
   }
 
@@ -221,6 +197,25 @@ public final class OperationOptions
   }
 
   /**
+   * Sets the operation.
+   * 
+   * @param operation
+   *        Operation
+   */
+  public void setOperation(final Operation operation)
+  {
+    if (operation == null)
+    {
+      throw new IllegalArgumentException("Cannot set null operation");
+    }
+    if (operation == Operation.query)
+    {
+      throw new IllegalArgumentException("Cannot set query operation - set the query instead");
+    }
+    this.operation = operation;
+  }
+
+  /**
    * Query.
    * 
    * @param query
@@ -230,8 +225,9 @@ public final class OperationOptions
   {
     if (query == null)
     {
-      throw new IllegalArgumentException("Cannot set null Query");
+      throw new IllegalArgumentException("Cannot set null query");
     }
+    operation = Operation.query;
     this.query = query;
   }
 
@@ -244,6 +240,20 @@ public final class OperationOptions
   public void setShowLobs(final boolean showLobs)
   {
     this.showLobs = showLobs;
+  }
+
+  private void setFromConfig(final Config config)
+  {
+    if (config == null)
+    {
+      mergeRows = false;
+      showLobs = false;
+    }
+    else
+    {
+      mergeRows = config.getBooleanValue(MERGE_ROWS);
+      showLobs = config.getBooleanValue(SHOW_LOBS);
+    }
   }
 
 }
