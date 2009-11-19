@@ -76,13 +76,9 @@ public final class OperationOptions
     {
       this.operation = Operation.count;
     }
-    else if (operation != Operation.query)
-    {
-      this.operation = operation;
-    }
     else
     {
-      throw new IllegalArgumentException("Cannot set query operation - set the query instead");
+      this.operation = operation;
     }
   }
 
@@ -111,7 +107,7 @@ public final class OperationOptions
     {
       query = null;
     }
-    operation = Operation.query;
+    operation = null;
   }
 
   /**
@@ -131,7 +127,7 @@ public final class OperationOptions
    */
   public Query getQuery()
   {
-    if (operation != Operation.query)
+    if (operation != null)
     {
       return operation.getQuery();
     }
@@ -204,14 +200,6 @@ public final class OperationOptions
    */
   public void setOperation(final Operation operation)
   {
-    if (operation == null)
-    {
-      throw new IllegalArgumentException("Cannot set null operation");
-    }
-    if (operation == Operation.query)
-    {
-      throw new IllegalArgumentException("Cannot set query operation - set the query instead");
-    }
     this.operation = operation;
   }
 
@@ -227,8 +215,8 @@ public final class OperationOptions
     {
       throw new IllegalArgumentException("Cannot set null query");
     }
-    operation = Operation.query;
     this.query = query;
+    operation = null;
   }
 
   /**
