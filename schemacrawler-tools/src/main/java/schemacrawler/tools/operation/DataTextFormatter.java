@@ -64,11 +64,6 @@ public final class DataTextFormatter
     throws SchemaCrawlerException
   {
     super(options);
-
-    if (options.getOperation() == null)
-    {
-      throw new SchemaCrawlerException("Cannot perform null operation");
-    }
     operation = options.getOperation();
   }
 
@@ -111,17 +106,21 @@ public final class DataTextFormatter
   {
     super.handle(databaseInfo);
 
-    // If this is an operation, print the operation headers,
-    // in preparation for data handling
     if (operation != null)
     {
       out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                                 operation.getDescription()));
-      if (operation == Operation.count)
-      {
-        out.println(formattingHelper.createObjectStart(operation
-          .getDescription()));
-      }
+    }
+    else
+    {
+      out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
+                                                "Query"));
+    }
+
+    if (operation == Operation.count)
+    {
+      out.println(formattingHelper
+        .createObjectStart(operation.getDescription()));
     }
   }
 
@@ -208,7 +207,6 @@ public final class DataTextFormatter
 
   private String getMessage(final double aggregate)
   {
-
     Number number;
     if (Math.abs(aggregate - (int) aggregate) < 1E-10D)
     {

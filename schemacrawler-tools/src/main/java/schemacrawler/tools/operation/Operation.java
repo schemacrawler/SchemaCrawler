@@ -31,13 +31,11 @@ import schemacrawler.schemacrawler.Query;
 public enum Operation
 {
 
-  /** Row Count */
+  /** Count operation */
   count("Row Count", "SELECT COUNT(*) FROM ${table}",
     "{0,choice,0#empty|0<{0,number,integer} rows}"),
-  /** Dump */
-  dump("Dump", "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}", ""),
-  /** Query */
-  query("Query", "", "{0,choice,0#-|0<{0,number,integer}}"), ;
+  /** Dump operation */
+  dump("Dump", "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}", ""), ;
 
   private final String description;
   private final String queryString;
@@ -81,14 +79,7 @@ public enum Operation
    */
   public Query getQuery()
   {
-    if (this == query)
-    {
-      return null;
-    }
-    else
-    {
-      return new Query(name(), queryString);
-    }
+    return new Query(name(), queryString);
   }
 
 }
