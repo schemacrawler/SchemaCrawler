@@ -88,7 +88,7 @@ abstract class BaseTextFormattingHelper
     final int typeWidth = 28;
 
     final TableRow row = new TableRow(outputFormat);
-    if (schemacrawler.utility.Utility.isBlank(ordinal))
+    if (sf.utility.Utility.isBlank(ordinal))
     {
       row.add(new TableCell("", "ordinal", outputFormat));
     }

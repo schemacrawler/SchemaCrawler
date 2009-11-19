@@ -33,8 +33,8 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.utility.Utility;
 import sf.util.CommandLineParser;
+import sf.utility.Utility;
 
 /**
  * A wrapper used to assemble the classpath before launching the actual

@@ -24,7 +24,7 @@ package schemacrawler.crawl;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
-import schemacrawler.utility.Utility;
+import sf.utility.Utility;
 
 /**
  * Represents a column type. Provides the java.sql.Types type, the

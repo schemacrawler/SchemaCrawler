@@ -139,7 +139,7 @@ final class TableCell
     {
       buffer.append(" colspan='").append(colSpan).append("'");
     }
-    if (!schemacrawler.utility.Utility.isBlank(styleClass))
+    if (!sf.utility.Utility.isBlank(styleClass))
     {
       buffer.append(" class='").append(styleClass).append("'");
     }

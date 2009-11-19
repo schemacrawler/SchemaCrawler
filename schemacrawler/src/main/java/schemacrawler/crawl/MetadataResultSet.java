@@ -32,7 +32,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.utility.Utility;
+import sf.utility.Utility;
 
 /**
  * A wrapper around a JDBC resultset obtained from a database metadata

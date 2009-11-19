@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.utility;
+package sf.utility;
 
 
 import java.util.ArrayList;

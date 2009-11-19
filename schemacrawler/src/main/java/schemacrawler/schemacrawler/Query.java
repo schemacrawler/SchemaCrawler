@@ -31,7 +31,7 @@ import schemacrawler.crawl.JavaSqlTypesUtility;
 import schemacrawler.crawl.JavaSqlType.JavaSqlTypeGroup;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
-import schemacrawler.utility.Utility;
+import sf.utility.Utility;
 
 /**
  * A SQL query. May be parameterized with ant-like variable references.

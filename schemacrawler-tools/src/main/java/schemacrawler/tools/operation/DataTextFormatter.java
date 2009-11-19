@@ -336,7 +336,7 @@ public final class DataTextFormatter
         final Clob clob = (Clob) columnData;
         in = new BufferedInputStream(clob.getAsciiStream());
       }
-      lobData = schemacrawler.utility.Utility.readFully(in);
+      lobData = sf.utility.Utility.readFully(in);
       return lobData;
     }
     catch (final SQLException e)

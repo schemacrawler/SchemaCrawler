@@ -39,6 +39,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import sf.utility.Utility;
 
 /**
  * Sets up a database schema for tests and examples.

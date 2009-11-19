@@ -63,7 +63,7 @@ public final class ScriptRenderer
                         final Writer writer)
     throws Exception
   {
-    if (schemacrawler.utility.Utility.isBlank(scriptFileName))
+    if (sf.utility.Utility.isBlank(scriptFileName))
     {
       throw new Exception("No script file provided");
     }

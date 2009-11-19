@@ -27,7 +27,7 @@ import java.sql.SQLException;
 
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.utility.Utility;
+import sf.utility.Utility;
 
 /**
  * A retriever uses database metadata to get the details about a result

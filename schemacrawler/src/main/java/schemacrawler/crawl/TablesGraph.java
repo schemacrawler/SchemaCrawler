@@ -8,8 +8,8 @@ import java.util.logging.Logger;
 
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
-import schemacrawler.utility.DirectedGraph;
-import schemacrawler.utility.GraphException;
+import sf.utility.DirectedGraph;
+import sf.utility.GraphException;
 
 final class TablesGraph
   extends DirectedGraph<MutableTable>

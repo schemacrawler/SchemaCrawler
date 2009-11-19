@@ -27,7 +27,7 @@ import java.util.Set;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Privilege;
-import schemacrawler.utility.Utility;
+import sf.utility.Utility;
 
 /**
  * Represents a privilege of a table or column.

@@ -35,8 +35,8 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.utility.ObjectToString;
-import schemacrawler.utility.Utility;
+import sf.utility.ObjectToString;
+import sf.utility.Utility;
 
 /**
  * Configuration properties.
