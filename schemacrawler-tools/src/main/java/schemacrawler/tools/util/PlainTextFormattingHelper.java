@@ -70,7 +70,7 @@ public class PlainTextFormattingHelper
 
   public String createHeader(final DocumentHeaderType type, final String header)
   {
-    if (!schemacrawler.utility.Utility.isBlank(header))
+    if (!sf.utility.Utility.isBlank(header))
     {
       final String defaultSeparator = separator("=");
 
@@ -129,7 +129,7 @@ public class PlainTextFormattingHelper
   public String createObjectStart(final String name)
   {
     String objectStart = "";
-    if (!schemacrawler.utility.Utility.isBlank(name))
+    if (!sf.utility.Utility.isBlank(name))
     {
       objectStart = objectStart + NEWLINE + name + NEWLINE + DASHED_SEPARATOR;
     }

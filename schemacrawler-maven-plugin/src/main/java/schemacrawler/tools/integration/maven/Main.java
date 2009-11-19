@@ -26,7 +26,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import schemacrawler.Version;
-import schemacrawler.utility.Utility;
+import sf.utility.Utility;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.

@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.utility;
+package sf.utility;
 
 
 import java.lang.reflect.AccessibleObject;

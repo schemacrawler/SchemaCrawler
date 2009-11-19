@@ -22,7 +22,7 @@ package schemacrawler.tools.util;
 
 
 import schemacrawler.tools.OutputFormat;
-import schemacrawler.utility.Utility;
+import sf.utility.Utility;
 
 /**
  * Methods to format entire rows of output as HTML.
@@ -92,7 +92,7 @@ public final class HtmlFormattingHelper
 
   public String createHeader(final DocumentHeaderType type, final String header)
   {
-    if (!schemacrawler.utility.Utility.isBlank(header))
+    if (!sf.utility.Utility.isBlank(header))
     {
       final String prefix;
       final String headerTag;
@@ -153,7 +153,7 @@ public final class HtmlFormattingHelper
   public String createObjectStart(final String name)
   {
     String objectStart = "<table>" + NEWLINE;
-    if (!schemacrawler.utility.Utility.isBlank(name))
+    if (!sf.utility.Utility.isBlank(name))
     {
       objectStart = objectStart + "  <caption>" + name + "</caption>" + NEWLINE;
     }

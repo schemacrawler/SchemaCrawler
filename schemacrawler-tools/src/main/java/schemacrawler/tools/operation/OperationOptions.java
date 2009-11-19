@@ -26,7 +26,7 @@ import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.BaseToolOptions;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.utility.Utility;
+import sf.utility.Utility;
 
 /**
  * Operator options.

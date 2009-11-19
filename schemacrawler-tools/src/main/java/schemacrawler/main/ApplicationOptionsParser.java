@@ -58,7 +58,7 @@ public final class ApplicationOptionsParser
     final ApplicationOptions options = new ApplicationOptions();
 
     final String logLevelString = optionLogLevel.getValue();
-    if (!schemacrawler.utility.Utility.isBlank(logLevelString))
+    if (!sf.utility.Utility.isBlank(logLevelString))
     {
       final Level applicationLogLevel = Level.parse(logLevelString
         .toUpperCase());

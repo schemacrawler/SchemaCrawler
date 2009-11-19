@@ -26,7 +26,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import schemacrawler.schema.NamedObject;
-import schemacrawler.utility.Utility;
+import sf.utility.Utility;
 
 /**
  * Represents a named object.
