@@ -553,9 +553,8 @@ final class SchemaTextFormatter
 
   private void printTableColumns(final Column[] columns)
   {
-    for (int i = 0; i < columns.length; i++)
+    for (final Column column: columns)
     {
-      final Column column = columns[i];
       final String columnName = column.getName();
 
       final String columnDetails;
@@ -578,7 +577,7 @@ final class SchemaTextFormatter
       String ordinalNumberString = "";
       if (options.isShowOrdinalNumbers())
       {
-        ordinalNumberString = String.valueOf(i + 1);
+        ordinalNumberString = String.valueOf(column.getOrdinalPosition());
       }
       out.println(formattingHelper.createDetailRow(ordinalNumberString,
                                                    columnName,

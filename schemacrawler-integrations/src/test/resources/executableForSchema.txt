@@ -6,11 +6,11 @@ Tables
 
 PUBLIC.CUSTOMER                                                  [table]
 ------------------------------------------------------------------------
-1   CITY                              VARCHAR(255)                
+5   CITY                              VARCHAR(255)                
 2   FIRSTNAME                         VARCHAR(255)                
-3   ID                                INTEGER not null            
-4   LASTNAME                          VARCHAR(255)                
-5   STREET                            VARCHAR(255)                
+1   ID                                INTEGER not null            
+3   LASTNAME                          VARCHAR(255)                
+4   STREET                            VARCHAR(255)                
 
 SYS_IDX_46                                                 [primary key]
 1   ID                                ascending                   
@@ -21,16 +21,16 @@ FK_INVOICE_CUSTOMER                        [foreign key, with no action]
 
 PUBLIC.CUSTOMERLIST                                               [view]
 ------------------------------------------------------------------------
-1   FIRSTNAME                         VARCHAR(255)                
-2   ID                                INTEGER                     
+2   FIRSTNAME                         VARCHAR(255)                
+1   ID                                INTEGER                     
 3   LASTNAME                          VARCHAR(255)                
 
 
 
 PUBLIC.INVOICE                                                   [table]
 ------------------------------------------------------------------------
-1   CUSTOMERID                        INTEGER                     
-2   ID                                INTEGER not null            
+2   CUSTOMERID                        INTEGER                     
+1   ID                                INTEGER not null            
 3   TOTAL                             FLOAT(17, 0)                
 
 SYS_IDX_48                                                 [primary key]
@@ -43,19 +43,19 @@ FK_INVOICE_CUSTOMER                        [foreign key, with no action]
  1  PUBLIC.CUSTOMER.ID --> CUSTOMERID                              
 
 INDEX_INVOICE_CUSTOMER                                [non-unique index]
-1   CUSTOMERID                        ascending                   
+2   CUSTOMERID                        ascending                   
 
 SYS_IDX_50                                            [non-unique index]
-1   CUSTOMERID                        ascending                   
+2   CUSTOMERID                        ascending                   
 
 
 PUBLIC.ITEM                                                      [table]
 ------------------------------------------------------------------------
-1   COST                              FLOAT(17, 0)                
-2   INVOICEID                         INTEGER not null            
-3   ITEM                              INTEGER not null            
-4   PRODUCTID                         INTEGER                     
-5   QUANTITY                          INTEGER                     
+5   COST                              FLOAT(17, 0)                
+1   INVOICEID                         INTEGER not null            
+2   ITEM                              INTEGER not null            
+3   PRODUCTID                         INTEGER                     
+4   QUANTITY                          INTEGER                     
 
 SYS_IDX_52                                                 [primary key]
 1   INVOICEID                         ascending                   
@@ -71,13 +71,13 @@ INDEX_ITEM_INVOICE                                    [non-unique index]
 1   INVOICEID                         ascending                   
 
 INDEX_ITEM_PRODUCT                                    [non-unique index]
-1   PRODUCTID                         ascending                   
+3   PRODUCTID                         ascending                   
 
 SYS_IDX_53                                            [non-unique index]
 1   INVOICEID                         ascending                   
 
 SYS_IDX_55                                            [non-unique index]
-1   PRODUCTID                         ascending                   
+3   PRODUCTID                         ascending                   
 
 
 PUBLIC.PRODUCT                                                   [table]
@@ -99,8 +99,8 @@ PUBLIC.SUPPLIER                                                  [table]
 2   SUPPLIER_NAME                     VARCHAR(255)                
 
 INDEX_A_SUPPLIER                                      [non-unique index]
-1   SUPPLIER_NAME                     ascending                   
-2   SUPPLIER_ID                       ascending                   
+2   SUPPLIER_NAME                     ascending                   
+1   SUPPLIER_ID                       ascending                   
 
 INDEX_B_SUPPLIER                                      [non-unique index]
 1   SUPPLIER_ID                       ascending                   
@@ -109,11 +109,11 @@ INDEX_B_SUPPLIER                                      [non-unique index]
 
 SCHEMACRAWLER.ITEM                                               [table]
 ------------------------------------------------------------------------
-1   COST                              FLOAT(17, 0)                
-2   INVOICEID                         INTEGER not null            
-3   ITEM                              INTEGER not null            
-4   PRODUCTID                         INTEGER                     
-5   QUANTITY                          INTEGER                     
+5   COST                              FLOAT(17, 0)                
+1   INVOICEID                         INTEGER not null            
+2   ITEM                              INTEGER not null            
+3   PRODUCTID                         INTEGER                     
+4   QUANTITY                          INTEGER                     
 
 SYS_IDX_59                                                 [primary key]
 1   INVOICEID                         ascending                   
