@@ -49,6 +49,7 @@ public final class DataTextFormatter
   private static final Logger LOGGER = Logger.getLogger(DataTextFormatter.class
     .getName());
 
+  private static final String NULL = "<null>";
   private static final String BINARY = "<binary>";
 
   private final Operation operation;
@@ -172,7 +173,7 @@ public final class DataTextFormatter
     String columnDataString;
     if (columnData == null)
     {
-      columnDataString = "<null>";
+      columnDataString = NULL;
     }
     else if (columnData instanceof Clob || columnData instanceof Blob)
     {
