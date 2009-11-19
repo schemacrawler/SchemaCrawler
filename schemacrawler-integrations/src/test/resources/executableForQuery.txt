@@ -1,9 +1,11 @@
 
 
-            
-          	SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES
-            
-					
+Query
+========================================================================
+
+
+
+select.tables
 ------------------------------------------------------------------------
 TABLE_CAT,TABLE_SCHEM,TABLE_NAME,TABLE_TYPE,REMARKS,TYPE_CAT,TYPE_SCHEM,TYPE_NAME,SELF_REFERENCING_COL_NAME,REF_GENERATION,HSQLDB_TYPE,READ_ONLY
 <null>,INFORMATION_SCHEMA,SYSTEM_ALIASES,SYSTEM TABLE,the aliases defined within this database,<null>,<null>,<null>,<null>,<null>,MEMORY,true

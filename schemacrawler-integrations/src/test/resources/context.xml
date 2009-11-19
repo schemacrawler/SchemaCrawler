@@ -132,7 +132,7 @@
 		<property name="outputOptions" ref="outputOptions" />
 	</bean>
 
-	<bean id="dataTextFormatOptions" class="schemacrawler.tools.datatext.DataTextFormatOptions">
+	<bean id="dataTextFormatOptions" class="schemacrawler.tools.operation.OperationOptions">
 		<property name="showLobs" value="true" />
 		<property name="mergeRows" value="true" />
 		<property name="query">
@@ -160,7 +160,7 @@
 		<property name="toolOptions" ref="operationOptions" />
 	</bean>
 
-	<bean id="executableForQuery" class="schemacrawler.tools.datatext.DataToolsExecutable">
+	<bean id="executableForQuery" class="schemacrawler.tools.operation.OperationExecutable">
 		<property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
 		<property name="toolOptions" ref="dataTextFormatOptions" />
 	</bean>
