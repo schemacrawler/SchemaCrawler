@@ -24,7 +24,6 @@ package schemacrawler.tools.operation;
 import java.sql.Connection;
 
 import schemacrawler.crawl.DatabaseSchemaCrawler;
-import schemacrawler.schemacrawler.Query;
 import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.tools.Executable;
 
@@ -51,9 +50,10 @@ public class OperationExecutable
    * {@inheritDoc}
    * <p>
    * Operations are crawl handlers that rely on query execution and
-   * result set formatting. Two connections are needed - one for the
-   * schema crawling, and another one for executing the query. The query
-   * is executed once per table, after variables are substituted.
+   * result set formatting. A connection is needed for the schema
+   * crawling, and for executing the query. "Query-over" queries are
+   * executed once per table, after variables are substituted. Other
+   * queries are executed just once.
    * 
    * @see schemacrawler.tools.Executable#execute(Connection)
    */
@@ -67,20 +67,8 @@ public class OperationExecutable
     }
     initialize();
 
-    final Operation operation = toolOptions.getOperation();
-    Query query;
-    if (operation == Operation.queryover)
-    {
-      query = toolOptions.getQuery();
-    }
-    else
-    {
-      query = operation.getQuery();
-    }
-
     final SchemaCrawler crawler = new DatabaseSchemaCrawler(connection);
     crawler.crawl(schemaCrawlerOptions, new OperationHandler(toolOptions,
-                                                             query,
                                                              connection));
   }
 
