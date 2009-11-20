@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.main;
+package schemacrawler.tools.main;
 
 
 import java.sql.Connection;
@@ -27,15 +27,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.Version;
-import schemacrawler.main.dbconnector.BundledDriverConnectionOptionsParser;
-import schemacrawler.main.dbconnector.CommandLineConnectionOptionsParser;
-import schemacrawler.main.dbconnector.ConfigConnectionOptionsParser;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.Commands;
 import schemacrawler.tools.OutputOptions;
+import schemacrawler.tools.main.dbconnector.BundledDriverConnectionOptionsParser;
+import schemacrawler.tools.main.dbconnector.CommandLineConnectionOptionsParser;
+import schemacrawler.tools.main.dbconnector.ConfigConnectionOptionsParser;
 import sf.util.Utility;
 
 /**

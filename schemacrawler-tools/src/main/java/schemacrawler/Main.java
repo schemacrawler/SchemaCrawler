@@ -21,9 +21,9 @@
 package schemacrawler;
 
 
-import schemacrawler.main.HelpOptions;
-import schemacrawler.main.SchemaCrawlerCommandLine;
-import schemacrawler.main.SchemaCrawlerMain;
+import schemacrawler.tools.main.HelpOptions;
+import schemacrawler.tools.main.SchemaCrawlerCommandLine;
+import schemacrawler.tools.main.SchemaCrawlerMain;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.

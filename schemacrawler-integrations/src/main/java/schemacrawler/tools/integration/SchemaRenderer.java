@@ -25,10 +25,10 @@ import java.sql.Connection;
 
 import schemacrawler.crawl.CachingCrawlHandler;
 import schemacrawler.crawl.DatabaseSchemaCrawler;
-import schemacrawler.main.HelpOptions;
-import schemacrawler.main.HelpOptions.CommandHelpType;
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawler;
+import schemacrawler.tools.main.HelpOptions;
+import schemacrawler.tools.main.HelpOptions.CommandHelpType;
 
 /**
  * An executor that uses a template renderer to render a schema.
