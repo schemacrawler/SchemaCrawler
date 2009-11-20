@@ -120,18 +120,14 @@ final class MutableJdbcDriverInfo
   @Override
   public String toString()
   {
-
     final StringBuilder info = new StringBuilder();
-
     info.append("-- driver: ").append(getDriverName()).append(" ")
       .append(getDriverVersion()).append(NEWLINE);
     info.append("-- driver class: ").append(getDriverClassName())
       .append(NEWLINE);
     info.append("-- url: ").append(getConnectionUrl()).append(NEWLINE);
     info.append("-- jdbc compliant: ").append(isJdbcCompliant());
-
     return info.toString();
-
   }
 
   /**

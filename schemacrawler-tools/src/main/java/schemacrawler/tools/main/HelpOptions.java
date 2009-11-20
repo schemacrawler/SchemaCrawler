@@ -21,7 +21,6 @@
 package schemacrawler.tools.main;
 
 
-import schemacrawler.Version;
 import schemacrawler.schemacrawler.Options;
 import sf.util.Utility;
 
@@ -36,6 +35,12 @@ public class HelpOptions
 
   private static final long serialVersionUID = -2497570007150087268L;
 
+  public static String about()
+  {
+    return Utility.readFully(HelpOptions.class
+      .getResourceAsStream("/help/SchemaCrawler.txt"));
+  }
+
   private final String title;
   private final String resourceApplicationOptions = "/help/ApplicationOptions.txt";
   private String resourceConnections = "/help/Connections.txt";
@@ -44,6 +49,7 @@ public class HelpOptions
   private final String resourceSchemaCrawlerOptions = "/help/SchemaCrawlerOptions.txt";
   private CommandHelpType commandHelpType = CommandHelpType.complete;
   private String resourceOutputOptions = "/help/OutputOptions.txt";
+
   private boolean hideConfig;
 
   public HelpOptions(final String title)
@@ -99,7 +105,7 @@ public class HelpOptions
   public void showHelp()
   {
     System.out.println(title);
-    System.out.println(Version.about());
+    System.out.println(about());
     System.out.println();
 
     showHelp(resourceConnections);

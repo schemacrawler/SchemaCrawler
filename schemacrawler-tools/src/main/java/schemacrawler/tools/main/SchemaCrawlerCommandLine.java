@@ -26,12 +26,10 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.Version;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.Commands;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.main.dbconnector.BundledDriverConnectionOptionsParser;
 import schemacrawler.tools.main.dbconnector.CommandLineConnectionOptionsParser;
@@ -125,7 +123,7 @@ public class SchemaCrawlerCommandLine
     }
 
     applicationOptions.applyApplicationLogLevel();
-    LOGGER.log(Level.INFO, Version.about());
+    LOGGER.log(Level.INFO, HelpOptions.about());
     LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
 
     if (!Utility.isBlank(configResource))

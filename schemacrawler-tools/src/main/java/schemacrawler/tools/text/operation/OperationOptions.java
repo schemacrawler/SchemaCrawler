@@ -23,9 +23,8 @@ package schemacrawler.tools.text.operation;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
-import schemacrawler.tools.BaseToolOptions;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.Query;
+import schemacrawler.tools.text.BaseToolOptions;
 import sf.util.Utility;
 
 /**

@@ -21,6 +21,10 @@
 package schemacrawler;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
+
 import sf.util.Utility;
 
 /**
@@ -34,9 +38,28 @@ public final class Version
 {
 
   private static final String PRODUCTNAME = "SchemaCrawler";
-  private static final String VERSION = "7.5";
-  private static final String ABOUT = Utility.readFully(Version.class
-    .getResourceAsStream("/help/SchemaCrawler.txt"));
+  private static final String VERSION;
+  private static final String ABOUT;
+
+  static
+  {
+    ABOUT = Utility.readFully(Version.class
+      .getResourceAsStream("/help/SchemaCrawler.txt"));
+
+    String[] productLine;
+    try
+    {
+      productLine = new BufferedReader(new StringReader(ABOUT)).readLine()
+        .split(" ");
+    }
+    catch (final IOException e)
+    {
+      productLine = new String[] {
+          PRODUCTNAME, ""
+      };
+    }
+    VERSION = productLine[1];
+  }
 
   /**
    * Information about this product.
@@ -45,10 +68,7 @@ public final class Version
    */
   public static String about()
   {
-    return String.format("%s %s%nCopyright (c) 2000-2009, Sualeh Fatehi.%n%s",
-                         PRODUCTNAME,
-                         VERSION,
-                         ABOUT);
+    return ABOUT;
   }
 
   /**

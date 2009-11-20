@@ -18,7 +18,10 @@
  *
  */
 
-package schemacrawler.tools;
+package schemacrawler.tools.text;
+
+import schemacrawler.tools.OutputOptions;
+import schemacrawler.tools.ToolOptions;
 
 
 /**

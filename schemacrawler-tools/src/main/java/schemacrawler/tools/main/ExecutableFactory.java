@@ -26,8 +26,6 @@ import java.util.List;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.Command;
-import schemacrawler.tools.Commands;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.text.operation.Operation;

@@ -1,6 +1,8 @@
 var printDb = function()
 {
+  println(database.schemaCrawlerInfo);
   println(database.databaseInfo);
+  println(database.jdbcDriverInfo);
   var catalogs = database.catalogs;
   for ( var c = 0; c < catalogs.length; c++)
   {
