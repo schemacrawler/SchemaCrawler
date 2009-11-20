@@ -28,6 +28,7 @@ import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
+import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.BaseToolOptions;
 import schemacrawler.tools.OutputFormat;
@@ -89,6 +90,27 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
     printDatabaseInfo(databaseInfo, options.isPrintVerboseDatabaseInfo());
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see CrawlHandler#handle(Database)
+   */
+  public void handle(final JdbcDriverInfo jdbcDriverInfo)
+  {
+    printJdbcDriverInfo(jdbcDriverInfo, options.isPrintVerboseDatabaseInfo());
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see CrawlHandler#handle(Database)
+   */
+  public void handle(final SchemaCrawlerInfo schemaCrawlerInfo)
+  {
+    printSchemaCrawlerInfo(schemaCrawlerInfo, options
+      .isPrintVerboseDatabaseInfo());
+  }
+
   private void printDatabaseInfo(final DatabaseInfo dbInfo,
                                  final boolean printVerboseDatabaseInfo)
   {
@@ -96,10 +118,6 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
     {
       return;
     }
-
-    out.println(formattingHelper
-      .createHeader(DocumentHeaderType.subTitle,
-                    "Database and JDBC Driver Information"));
 
     out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                               "Database Information"));
@@ -136,8 +154,13 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
       }
     }
 
-    final JdbcDriverInfo driverInfo = dbInfo.getJdbcDriverInfo();
-    if (driverInfo == null)
+    out.flush();
+  }
+
+  private void printJdbcDriverInfo(final JdbcDriverInfo driverInfo,
+                                   final boolean printVerboseDatabaseInfo)
+  {
+    if (driverInfo == null || options.getOutputOptions().isNoInfo())
     {
       return;
     }
@@ -203,6 +226,36 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
       .getDescription()));
     out.println(formattingHelper.createDefinitionRow(details));
     out.println(formattingHelper.createDetailRow("", "value", value));
+  }
+
+  private void printSchemaCrawlerInfo(final SchemaCrawlerInfo schemaCrawlerInfo,
+                                      final boolean printVerboseDatabaseInfo)
+  {
+    if (schemaCrawlerInfo == null || options.getOutputOptions().isNoInfo())
+    {
+      return;
+    }
+
+    if (printVerboseDatabaseInfo)
+    {
+      out.println(formattingHelper
+        .createHeader(DocumentHeaderType.subTitle,
+                      "Database and JDBC Driver Information"));
+
+      out.println(formattingHelper.createHeader(DocumentHeaderType.section,
+                                                "SchemaCrawler Information"));
+
+      out.print(formattingHelper.createObjectStart(""));
+      out.println(formattingHelper
+        .createNameValueRow("database product name", schemaCrawlerInfo
+          .getSchemaCrawlerProductName()));
+      out.println(formattingHelper
+        .createNameValueRow("database product version", schemaCrawlerInfo
+          .getSchemaCrawlerVersion()));
+      out.print(formattingHelper.createObjectEnd());
+    }
+
+    out.flush();
   }
 
 }
