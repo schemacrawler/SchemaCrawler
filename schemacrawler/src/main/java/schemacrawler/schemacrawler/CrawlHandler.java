@@ -24,7 +24,9 @@ package schemacrawler.schemacrawler;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
+import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
 
 /**
@@ -75,14 +77,25 @@ public interface CrawlHandler
     throws SchemaCrawlerException;
 
   /**
-   * Handles information on the database schema.
+   * Handles information on the database.
    * 
    * @param database
    *        Database information
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  void handle(DatabaseInfo database)
+  void handle(DatabaseInfo databaseInfo)
+    throws SchemaCrawlerException;
+
+  /**
+   * Handles information on the JDBC driver.
+   * 
+   * @param jdbcDriverInfo
+   *        JDBC driver information
+   * @throws SchemaCrawlerException
+   *         On an exception
+   */
+  void handle(JdbcDriverInfo jdbcDriverInfo)
     throws SchemaCrawlerException;
 
   /**
@@ -94,6 +107,17 @@ public interface CrawlHandler
    *         On an exception
    */
   void handle(Procedure procedure)
+    throws SchemaCrawlerException;
+
+  /**
+   * Handles information on SchemaCrawler.
+   * 
+   * @param schemaCrawlerInfo
+   *        SchemaCrawler information
+   * @throws SchemaCrawlerException
+   *         On an exception
+   */
+  void handle(SchemaCrawlerInfo schemaCrawlerInfo)
     throws SchemaCrawlerException;
 
   /**

@@ -33,13 +33,6 @@ public interface DatabaseInfo
 {
 
   /**
-   * Gets the JDBC driver information.
-   * 
-   * @return JDBC driver information
-   */
-  JdbcDriverInfo getJdbcDriverInfo();
-
-  /**
    * Gets the name of the RDBMS vendor and product.
    * 
    * @return Name of the RDBMS vendor and product

@@ -139,7 +139,9 @@ public final class DatabaseSchemaCrawler
 
       crawlSchemas(retrieverConnection, schemaCrawlerOptions);
       crawlDatabaseInfo(retrieverConnection, schemaCrawlerOptions);
+      handler.handle(database.getSchemaCrawlerInfo());
       handler.handle(database.getDatabaseInfo());
+      handler.handle(database.getJdbcDriverInfo());
 
       crawlColumnDataTypes(retrieverConnection, schemaCrawlerOptions);
       for (final ColumnDataType columnDataType: database

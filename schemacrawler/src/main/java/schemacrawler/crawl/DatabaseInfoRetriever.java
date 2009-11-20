@@ -130,19 +130,16 @@ final class DatabaseInfoRetriever
           }
           dbProperties
             .add(retrieveResultSetTypeProperty(dbMetaData,
-                                               dbInfo,
                                                method,
                                                ResultSet.TYPE_FORWARD_ONLY,
                                                "TYPE_FORWARD_ONLY"));
           dbProperties
             .add(retrieveResultSetTypeProperty(dbMetaData,
-                                               dbInfo,
                                                method,
                                                ResultSet.TYPE_SCROLL_INSENSITIVE,
                                                "TYPE_SCROLL_INSENSITIVE"));
           dbProperties
             .add(retrieveResultSetTypeProperty(dbMetaData,
-                                               dbInfo,
                                                method,
                                                ResultSet.TYPE_SCROLL_SENSITIVE,
                                                "TYPE_SCROLL_SENSITIVE"));
@@ -177,8 +174,7 @@ final class DatabaseInfoRetriever
     final DatabaseMetaData dbMetaData = getMetaData();
     final String url = dbMetaData.getURL();
 
-    final MutableJdbcDriverInfo driverInfo = database.getDatabaseInfo()
-      .getJdbcDriverInfo();
+    final MutableJdbcDriverInfo driverInfo = database.getJdbcDriverInfo();
     if (driverInfo != null)
     {
       try
@@ -235,8 +231,7 @@ final class DatabaseInfoRetriever
     final DatabaseMetaData dbMetaData = getMetaData();
     final String url = dbMetaData.getURL();
 
-    final MutableJdbcDriverInfo driverInfo = database.getDatabaseInfo()
-      .getJdbcDriverInfo();
+    final MutableJdbcDriverInfo driverInfo = database.getJdbcDriverInfo();
     if (driverInfo != null)
     {
       driverInfo.setDriverName(dbMetaData.getDriverName());
@@ -435,7 +430,6 @@ final class DatabaseInfoRetriever
   }
 
   private MutableDatabaseProperty retrieveResultSetTypeProperty(final DatabaseMetaData dbMetaData,
-                                                                final MutableDatabaseInfo dbInfo,
                                                                 final Method method,
                                                                 final int resultSetType,
                                                                 final String resultSetTypeName)

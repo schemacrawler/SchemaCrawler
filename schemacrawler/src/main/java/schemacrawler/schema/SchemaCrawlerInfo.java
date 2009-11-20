@@ -21,49 +21,36 @@
 package schemacrawler.schema;
 
 
+import java.io.Serializable;
+
 /**
  * Database and connection information.
  * 
  * @author Sualeh Fatehi
  */
-public interface Database
-  extends NamedObject
+public interface SchemaCrawlerInfo
+  extends Serializable
 {
 
   /**
-   * Gets a catalog by name.
+   * Gets the SchemaCrawler about text.
    * 
-   * @param name
-   *        Name
-   * @return Catalog.
+   * @return SchemaCrawler about text
    */
-  Catalog getCatalog(String catalogName);
+  String getSchemaCrawlerAbout();
 
   /**
-   * Gets the schemas.
+   * Gets the name of the SchemaCrawler product.
    * 
-   * @return Catalogs
+   * @return Name of the SchemaCrawler product
    */
-  Catalog[] getCatalogs();
-
-  DatabaseInfo getDatabaseInfo();
-
-  JdbcDriverInfo getJdbcDriverInfo();
-
-  SchemaCrawlerInfo getSchemaCrawlerInfo();
+  String getSchemaCrawlerProductName();
 
   /**
-   * Gets the column data types defined by the RDBMS system, by name.
+   * Gets the SchemaCrawler version.
    * 
-   * @return Column data type
+   * @return SchemaCrawler version
    */
-  ColumnDataType getSystemColumnDataType(String name);
-
-  /**
-   * Gets the column data types defined by the RDBMS system.
-   * 
-   * @return Column data types
-   */
-  ColumnDataType[] getSystemColumnDataTypes();
+  String getSchemaCrawlerVersion();
 
 }

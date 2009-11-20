@@ -25,7 +25,9 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
+import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -99,8 +101,20 @@ public final class CachingCrawlHandler
 
   /**
    * {@inheritDoc}
+   * 
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.DatabaseInfo)
    */
   public void handle(final DatabaseInfo databaseInfo)
+  { // do nothing
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.JdbcDriverInfo)
+   */
+  public void handle(final JdbcDriverInfo jdbcDriverInfo)
+    throws SchemaCrawlerException
   { // do nothing
   }
 
@@ -110,6 +124,16 @@ public final class CachingCrawlHandler
    * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.Procedure)
    */
   public void handle(final Procedure procedure)
+  { // do nothing
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.SchemaCrawlerInfo)
+   */
+  public void handle(final SchemaCrawlerInfo schemaCrawlerInfo)
+    throws SchemaCrawlerException
   { // do nothing
   }
 
