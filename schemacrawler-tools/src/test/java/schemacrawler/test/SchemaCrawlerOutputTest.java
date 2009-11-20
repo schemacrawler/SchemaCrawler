@@ -47,12 +47,12 @@ import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.Query;
 import schemacrawler.tools.main.SchemaCrawlerCommandLine;
 import schemacrawler.tools.main.SchemaCrawlerMain;
-import schemacrawler.tools.operation.Operation;
-import schemacrawler.tools.operation.OperationExecutable;
-import schemacrawler.tools.operation.OperationOptions;
-import schemacrawler.tools.schematext.SchemaCrawlerExecutable;
-import schemacrawler.tools.schematext.SchemaTextDetailType;
-import schemacrawler.tools.schematext.SchemaTextOptions;
+import schemacrawler.tools.text.operation.Operation;
+import schemacrawler.tools.text.operation.OperationExecutable;
+import schemacrawler.tools.text.operation.OperationOptions;
+import schemacrawler.tools.text.schema.SchemaCrawlerExecutable;
+import schemacrawler.tools.text.schema.SchemaTextDetailType;
+import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.utility.TestDatabase;
 import sf.util.TestUtility;
 

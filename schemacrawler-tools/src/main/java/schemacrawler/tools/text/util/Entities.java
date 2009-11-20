@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.util;
+package schemacrawler.tools.text.util;
 
 
 import java.util.Collections;

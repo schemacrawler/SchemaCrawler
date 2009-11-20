@@ -110,10 +110,10 @@
 
 
 
-  <bean id="executableForSchema" class="schemacrawler.tools.schematext.SchemaCrawlerExecutable">
+  <bean id="executableForSchema" class="schemacrawler.tools.text.schema.SchemaCrawlerExecutable">
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
     <property name="toolOptions">
-      <bean id="schemaTextOptions" class="schemacrawler.tools.schematext.SchemaTextOptions">
+      <bean id="schemaTextOptions" class="schemacrawler.tools.text.schema.SchemaTextOptions">
         <property name="showOrdinalNumbers" value="true" />
         <property name="showStandardColumnTypeNames" value="true" />
         <property name="hidePrimaryKeyNames" value="false" />
@@ -126,20 +126,20 @@
     </property>
   </bean>
 
-  <bean id="executableForCount" class="schemacrawler.tools.operation.OperationExecutable">
+  <bean id="executableForCount" class="schemacrawler.tools.text.operation.OperationExecutable">
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
     <property name="toolOptions">
-      <bean id="operationOptions" class="schemacrawler.tools.operation.OperationOptions">
+      <bean id="operationOptions" class="schemacrawler.tools.text.operation.OperationOptions">
         <property name="operation" value="count" />
         <property name="outputOptions" ref="outputOptions" />
       </bean>
     </property>
   </bean>
 
-  <bean id="executableForQuery" class="schemacrawler.tools.operation.OperationExecutable">
+  <bean id="executableForQuery" class="schemacrawler.tools.text.operation.OperationExecutable">
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
     <property name="toolOptions">
-      <bean id="queryTextFormatOptions" class="schemacrawler.tools.operation.OperationOptions">
+      <bean id="queryTextFormatOptions" class="schemacrawler.tools.text.operation.OperationOptions">
         <property name="showLobs" value="true" />
         <property name="mergeRows" value="true" />
         <property name="query">
@@ -157,10 +157,10 @@
     </property>
   </bean>
 
-  <bean id="executableForQueryOver" class="schemacrawler.tools.operation.OperationExecutable">
+  <bean id="executableForQueryOver" class="schemacrawler.tools.text.operation.OperationExecutable">
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
     <property name="toolOptions">
-      <bean id="queryOverTextFormatOptions" class="schemacrawler.tools.operation.OperationOptions">
+      <bean id="queryOverTextFormatOptions" class="schemacrawler.tools.text.operation.OperationOptions">
         <property name="showLobs" value="true" />
         <property name="mergeRows" value="true" />
         <property name="query">
@@ -181,7 +181,7 @@
   <bean id="executableForGraph" class="schemacrawler.tools.integration.graph.GraphExecutable">
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
     <property name="toolOptions">
-      <bean id="schemaTextOptionsForGraph" class="schemacrawler.tools.schematext.SchemaTextOptions">
+      <bean id="schemaTextOptionsForGraph" class="schemacrawler.tools.text.schema.SchemaTextOptions">
         <property name="schemaTextDetailType" value="basic_schema" />
         <property name="outputOptions" ref="outputOptions" />
       </bean>
@@ -191,7 +191,7 @@
   <bean id="executableForVelocity" class="schemacrawler.tools.integration.velocity.VelocityRenderer">
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
     <property name="toolOptions">
-      <bean id="schemaTextOptionsForVelocity" class="schemacrawler.tools.schematext.SchemaTextOptions">
+      <bean id="schemaTextOptionsForVelocity" class="schemacrawler.tools.text.schema.SchemaTextOptions">
         <property name="schemaTextDetailType" value="basic_schema" />
         <property name="outputOptions">
           <bean class="schemacrawler.tools.OutputOptions">
@@ -205,7 +205,7 @@
   <bean id="executableForFreeMarker" class="schemacrawler.tools.integration.freemarker.FreeMarkerRenderer">
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
     <property name="toolOptions">
-      <bean id="schemaTextOptionsForFreeMarker" class="schemacrawler.tools.schematext.SchemaTextOptions">
+      <bean id="schemaTextOptionsForFreeMarker" class="schemacrawler.tools.text.schema.SchemaTextOptions">
         <property name="schemaTextDetailType" value="basic_schema" />
         <property name="outputOptions">
           <bean id="outputOptionsForFreeMarker" class="schemacrawler.tools.OutputOptions">
@@ -219,7 +219,7 @@
   <bean id="executableForJavaScript" class="schemacrawler.tools.integration.scripting.ScriptRenderer">
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
     <property name="toolOptions">
-      <bean id="schemaTextOptionsForJavaScript" class="schemacrawler.tools.schematext.SchemaTextOptions">
+      <bean id="schemaTextOptionsForJavaScript" class="schemacrawler.tools.text.schema.SchemaTextOptions">
         <property name="schemaTextDetailType" value="basic_schema" />
         <property name="outputOptions">
           <bean id="outputOptionsForJavaScript" class="schemacrawler.tools.OutputOptions">

@@ -18,11 +18,11 @@
  *
  */
 
-package schemacrawler.tools.util;
+package schemacrawler.tools.text.util;
 
 
 import schemacrawler.tools.OutputFormat;
-import schemacrawler.tools.util.TableCell.Align;
+import schemacrawler.tools.text.util.TableCell.Align;
 
 /**
  * Methods to format entire rows of output as HTML.

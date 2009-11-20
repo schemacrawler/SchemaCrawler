@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.tools.operation;
+package schemacrawler.tools.text.operation;
 
 
 import schemacrawler.schemacrawler.Config;

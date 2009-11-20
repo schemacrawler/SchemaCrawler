@@ -34,8 +34,8 @@ import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.integration.IntegrationsExecutable;
 import schemacrawler.tools.main.HelpOptions;
 import schemacrawler.tools.main.HelpOptions.CommandHelpType;
-import schemacrawler.tools.schematext.SchemaTextFactory;
-import schemacrawler.tools.util.HtmlFormattingHelper;
+import schemacrawler.tools.text.schema.SchemaTextFactory;
+import schemacrawler.tools.text.util.HtmlFormattingHelper;
 import sf.util.FileUtility;
 
 /**

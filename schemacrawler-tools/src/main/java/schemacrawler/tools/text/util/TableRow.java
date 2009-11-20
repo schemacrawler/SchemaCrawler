@@ -18,14 +18,14 @@
  *
  */
 
-package schemacrawler.tools.util;
+package schemacrawler.tools.text.util;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
 import schemacrawler.tools.OutputFormat;
-import schemacrawler.tools.util.TableCell.Align;
+import schemacrawler.tools.text.util.TableCell.Align;
 
 /**
  * Represents an HTML table row.
