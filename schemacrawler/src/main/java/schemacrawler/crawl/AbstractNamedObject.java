@@ -44,8 +44,6 @@ abstract class AbstractNamedObject
   private String remarks;
   private final Map<String, Object> attributeMap = new LinkedHashMap<String, Object>();
 
-  private transient int hashCode;
-
   AbstractNamedObject(final String name)
   {
     this.name = name;

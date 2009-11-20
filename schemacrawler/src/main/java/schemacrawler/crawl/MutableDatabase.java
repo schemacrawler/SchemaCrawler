@@ -21,6 +21,7 @@
 package schemacrawler.crawl;
 
 
+import schemacrawler.Version;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Database;
@@ -42,6 +43,8 @@ final class MutableDatabase
   private static final long serialVersionUID = 4051323422934251828L;
 
   private final MutableDatabaseInfo databaseInfo;
+  private final MutableJdbcDriverInfo jdbcDriverInfo;
+  private final MutableSchemaCrawlerInfo schemaCrawlerInfo;
   private final ColumnDataTypes systemColumnDataTypes = new ColumnDataTypes();
   private final NamedObjectList<MutableCatalog> catalogs = new NamedObjectList<MutableCatalog>();
 
@@ -49,6 +52,10 @@ final class MutableDatabase
   {
     super(name);
     databaseInfo = new MutableDatabaseInfo();
+    jdbcDriverInfo = new MutableJdbcDriverInfo();
+    schemaCrawlerInfo = new MutableSchemaCrawlerInfo(Version.getProductName(),
+                                                     Version.getVersion(),
+                                                     Version.about());
   }
 
   /**
@@ -74,6 +81,26 @@ final class MutableDatabase
   public MutableDatabaseInfo getDatabaseInfo()
   {
     return databaseInfo;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Database#getJdbcDriverInfo()
+   */
+  public MutableJdbcDriverInfo getJdbcDriverInfo()
+  {
+    return jdbcDriverInfo;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Database#getSchemaCrawlerInfo()
+   */
+  public MutableSchemaCrawlerInfo getSchemaCrawlerInfo()
+  {
+    return schemaCrawlerInfo;
   }
 
   /**

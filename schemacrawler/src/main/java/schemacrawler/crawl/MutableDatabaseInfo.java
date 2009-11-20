@@ -47,17 +47,6 @@ final class MutableDatabaseInfo
   private String productName;
   private String productVersion;
   private final Set<DatabaseProperty> dbProperties = new LinkedHashSet<DatabaseProperty>();
-  private MutableJdbcDriverInfo driverInfo = new MutableJdbcDriverInfo();
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.Catalog#getJdbcDriverInfo()
-   */
-  public MutableJdbcDriverInfo getJdbcDriverInfo()
-  {
-    return driverInfo;
-  }
 
   /**
    * {@inheritDoc}
@@ -113,10 +102,6 @@ final class MutableDatabaseInfo
     final StringBuilder info = new StringBuilder();
     info.append("-- database: ").append(getProductName()).append(" ")
       .append(getProductVersion()).append(NEWLINE);
-    if (driverInfo != null)
-    {
-      info.append(driverInfo);
-    }
     return info.toString();
   }
 
@@ -126,11 +111,6 @@ final class MutableDatabaseInfo
     {
       this.dbProperties.addAll(dbProperties);
     }
-  }
-
-  void setJdbcDriverInfo(final MutableJdbcDriverInfo driverInfo)
-  {
-    this.driverInfo = driverInfo;
   }
 
   void setProductName(final String productName)
