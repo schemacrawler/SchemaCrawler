@@ -21,8 +21,8 @@
 package schemacrawler.main;
 
 
-import schemacrawler.tools.Command;
-import schemacrawler.tools.Commands;
+import schemacrawler.tools.options.Command;
+import schemacrawler.tools.options.Commands;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;

@@ -21,8 +21,8 @@
 package schemacrawler.main;
 
 
-import schemacrawler.tools.OutputFormat;
-import schemacrawler.tools.OutputOptions;
+import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.OutputOptions;
 import sf.util.CommandLineParser.BooleanOption;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;

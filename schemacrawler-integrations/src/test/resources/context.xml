@@ -55,7 +55,7 @@
     </property>
   </bean>
 
-  <bean id="outputOptions" class="schemacrawler.tools.OutputOptions">
+  <bean id="outputOptions" class="schemacrawler.tools.options.OutputOptions">
     <property name="appendOutput" value="false" />
     <property name="noFooter" value="true" />
     <property name="noHeader" value="true" />
@@ -143,7 +143,7 @@
         <property name="showLobs" value="true" />
         <property name="mergeRows" value="true" />
         <property name="query">
-          <bean class="schemacrawler.tools.Query">
+          <bean class="schemacrawler.tools.options.Query">
             <constructor-arg value="select.tables" />
             <constructor-arg>
               <value>
@@ -164,7 +164,7 @@
         <property name="showLobs" value="true" />
         <property name="mergeRows" value="true" />
         <property name="query">
-          <bean class="schemacrawler.tools.Query">
+          <bean class="schemacrawler.tools.options.Query">
             <constructor-arg value="select" />
             <constructor-arg>
               <value>
@@ -194,7 +194,7 @@
       <bean id="schemaTextOptionsForVelocity" class="schemacrawler.tools.schematext.SchemaTextOptions">
         <property name="schemaTextDetailType" value="basic_schema" />
         <property name="outputOptions">
-          <bean class="schemacrawler.tools.OutputOptions">
+          <bean class="schemacrawler.tools.options.OutputOptions">
             <property name="outputFormatValue" value="plaintextschema.vm" />
           </bean>
         </property>
@@ -208,7 +208,7 @@
       <bean id="schemaTextOptionsForFreeMarker" class="schemacrawler.tools.schematext.SchemaTextOptions">
         <property name="schemaTextDetailType" value="basic_schema" />
         <property name="outputOptions">
-          <bean id="outputOptionsForFreeMarker" class="schemacrawler.tools.OutputOptions">
+          <bean id="outputOptionsForFreeMarker" class="schemacrawler.tools.options.OutputOptions">
             <property name="outputFormatValue" value="plaintextschema.ftl" />
           </bean>
         </property>
@@ -222,7 +222,7 @@
       <bean id="schemaTextOptionsForJavaScript" class="schemacrawler.tools.schematext.SchemaTextOptions">
         <property name="schemaTextDetailType" value="basic_schema" />
         <property name="outputOptions">
-          <bean id="outputOptionsForJavaScript" class="schemacrawler.tools.OutputOptions">
+          <bean id="outputOptionsForJavaScript" class="schemacrawler.tools.options.OutputOptions">
             <property name="outputFormatValue" value="plaintextschema.js" />
           </bean>
         </property>

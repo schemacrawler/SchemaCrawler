@@ -31,9 +31,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.tools.Executable;
-import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.integration.freemarker.FreeMarkerRenderer;
 import schemacrawler.tools.integration.velocity.VelocityRenderer;
+import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.schematext.SchemaTextDetailType;
 import schemacrawler.tools.schematext.SchemaTextOptions;
 import schemacrawler.utility.TestDatabase;
