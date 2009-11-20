@@ -21,7 +21,7 @@
 package schemacrawler.tools.util;
 
 
-import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.OutputFormat;
 import sf.util.Utility;
 
 /**

@@ -3,7 +3,7 @@ package schemacrawler.tools.schematext;
 
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.OutputFormat;
 
 public final class SchemaTextFactory
 {
