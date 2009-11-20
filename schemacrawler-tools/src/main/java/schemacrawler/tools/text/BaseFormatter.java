@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.tools;
+package schemacrawler.tools.text;
 
 
 import java.io.PrintWriter;
@@ -29,10 +29,13 @@ import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.util.HtmlFormattingHelper;
-import schemacrawler.tools.util.PlainTextFormattingHelper;
-import schemacrawler.tools.util.TextFormattingHelper;
-import schemacrawler.tools.util.TextFormattingHelper.DocumentHeaderType;
+import schemacrawler.tools.BaseToolOptions;
+import schemacrawler.tools.OutputFormat;
+import schemacrawler.tools.OutputOptions;
+import schemacrawler.tools.text.util.HtmlFormattingHelper;
+import schemacrawler.tools.text.util.PlainTextFormattingHelper;
+import schemacrawler.tools.text.util.TextFormattingHelper;
+import schemacrawler.tools.text.util.TextFormattingHelper.DocumentHeaderType;
 import sf.util.ObjectToString;
 
 /**

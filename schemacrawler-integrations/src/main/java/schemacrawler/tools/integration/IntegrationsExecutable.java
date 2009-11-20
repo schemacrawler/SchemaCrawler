@@ -34,8 +34,8 @@ import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.main.HelpOptions;
 import schemacrawler.tools.main.SchemaCrawlerCommandLine;
-import schemacrawler.tools.schematext.SchemaTextDetailType;
-import schemacrawler.tools.schematext.SchemaTextOptions;
+import schemacrawler.tools.text.schema.SchemaTextDetailType;
+import schemacrawler.tools.text.schema.SchemaTextOptions;
 
 /**
  * Basic SchemaCrawler integrations executor.

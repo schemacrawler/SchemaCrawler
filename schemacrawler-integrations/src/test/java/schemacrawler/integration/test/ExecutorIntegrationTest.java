@@ -34,8 +34,8 @@ import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.integration.freemarker.FreeMarkerRenderer;
 import schemacrawler.tools.integration.velocity.VelocityRenderer;
-import schemacrawler.tools.schematext.SchemaTextDetailType;
-import schemacrawler.tools.schematext.SchemaTextOptions;
+import schemacrawler.tools.text.schema.SchemaTextDetailType;
+import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.utility.TestDatabase;
 
 public class ExecutorIntegrationTest

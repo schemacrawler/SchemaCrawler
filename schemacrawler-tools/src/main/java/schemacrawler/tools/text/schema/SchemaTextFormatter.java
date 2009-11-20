@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.tools.schematext;
+package schemacrawler.tools.text.schema;
 
 
 import java.util.Locale;
@@ -47,8 +47,8 @@ import schemacrawler.schema.View;
 import schemacrawler.schema.Privilege.Grant;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.BaseFormatter;
-import schemacrawler.tools.util.TextFormattingHelper.DocumentHeaderType;
+import schemacrawler.tools.text.BaseFormatter;
+import schemacrawler.tools.text.util.TextFormattingHelper.DocumentHeaderType;
 import sf.util.Utility;
 
 /**

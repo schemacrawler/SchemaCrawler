@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.tools.operation;
+package schemacrawler.tools.text.operation;
 
 
 import java.io.BufferedInputStream;
@@ -34,8 +34,8 @@ import java.util.logging.Logger;
 
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.BaseFormatter;
-import schemacrawler.tools.util.TextFormattingHelper.DocumentHeaderType;
+import schemacrawler.tools.text.BaseFormatter;
+import schemacrawler.tools.text.util.TextFormattingHelper.DocumentHeaderType;
 
 /**
  * Text formatting of data.
