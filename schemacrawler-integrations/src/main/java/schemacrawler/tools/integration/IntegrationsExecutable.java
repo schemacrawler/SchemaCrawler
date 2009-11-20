@@ -28,10 +28,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.Command;
-import schemacrawler.tools.Commands;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputOptions;
+import schemacrawler.tools.main.Command;
+import schemacrawler.tools.main.Commands;
 import schemacrawler.tools.main.HelpOptions;
 import schemacrawler.tools.main.SchemaCrawlerCommandLine;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;

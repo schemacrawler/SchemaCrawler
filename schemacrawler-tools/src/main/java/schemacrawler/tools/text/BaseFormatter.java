@@ -30,7 +30,6 @@ import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.BaseToolOptions;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.text.util.HtmlFormattingHelper;
@@ -236,24 +235,21 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
       return;
     }
 
-    if (printVerboseDatabaseInfo)
-    {
-      out.println(formattingHelper
-        .createHeader(DocumentHeaderType.subTitle,
-                      "Database and JDBC Driver Information"));
+    out.println(formattingHelper
+      .createHeader(DocumentHeaderType.subTitle,
+                    "Database and JDBC Driver Information"));
 
-      out.println(formattingHelper.createHeader(DocumentHeaderType.section,
-                                                "SchemaCrawler Information"));
+    out.println(formattingHelper.createHeader(DocumentHeaderType.section,
+                                              "SchemaCrawler Information"));
 
-      out.print(formattingHelper.createObjectStart(""));
-      out.println(formattingHelper
-        .createNameValueRow("database product name", schemaCrawlerInfo
-          .getSchemaCrawlerProductName()));
-      out.println(formattingHelper
-        .createNameValueRow("database product version", schemaCrawlerInfo
-          .getSchemaCrawlerVersion()));
-      out.print(formattingHelper.createObjectEnd());
-    }
+    out.print(formattingHelper.createObjectStart(""));
+    out.println(formattingHelper
+      .createNameValueRow("product name", schemaCrawlerInfo
+        .getSchemaCrawlerProductName()));
+    out.println(formattingHelper
+      .createNameValueRow("product version", schemaCrawlerInfo
+        .getSchemaCrawlerVersion()));
+    out.print(formattingHelper.createObjectEnd());
 
     out.flush();
   }

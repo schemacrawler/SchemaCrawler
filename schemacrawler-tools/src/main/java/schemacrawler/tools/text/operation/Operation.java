@@ -23,7 +23,6 @@ package schemacrawler.tools.text.operation;
 
 import java.text.MessageFormat;
 
-import schemacrawler.tools.Query;
 
 /**
  * Database operations.
