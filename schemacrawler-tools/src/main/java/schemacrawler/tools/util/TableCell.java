@@ -20,7 +20,7 @@
 package schemacrawler.tools.util;
 
 
-import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.OutputFormat;
 
 /**
  * Represents an HTML table row.

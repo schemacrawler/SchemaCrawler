@@ -34,8 +34,8 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.options.Commands;
-import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.Commands;
+import schemacrawler.tools.OutputOptions;
 import sf.util.Utility;
 
 /**

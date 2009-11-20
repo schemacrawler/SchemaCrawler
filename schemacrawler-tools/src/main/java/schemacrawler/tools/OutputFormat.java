@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.tools.options;
+package schemacrawler.tools;
 
 
 /**
