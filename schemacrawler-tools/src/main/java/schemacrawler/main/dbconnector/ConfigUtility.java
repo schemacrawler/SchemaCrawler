@@ -24,7 +24,7 @@ package schemacrawler.main.dbconnector;
 import java.util.HashMap;
 import java.util.Map;
 
-import sf.utility.Utility;
+import sf.util.Utility;
 
 /**
  * Configuration properties.

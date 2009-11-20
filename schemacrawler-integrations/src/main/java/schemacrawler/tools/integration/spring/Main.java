@@ -35,7 +35,7 @@ import schemacrawler.main.ApplicationOptions;
 import schemacrawler.main.ApplicationOptionsParser;
 import schemacrawler.main.HelpOptions;
 import schemacrawler.tools.Executable;
-import sf.utility.Utility;
+import sf.util.Utility;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.

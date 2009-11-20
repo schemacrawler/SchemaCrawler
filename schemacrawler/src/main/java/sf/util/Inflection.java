@@ -1,4 +1,4 @@
-package sf.utility;
+package sf.util;
 
 
 import java.util.ArrayList;

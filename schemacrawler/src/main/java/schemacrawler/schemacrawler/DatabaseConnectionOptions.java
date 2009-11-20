@@ -29,7 +29,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import sf.utility.Utility;
+import sf.util.Utility;
 
 public class DatabaseConnectionOptions
   implements Options

@@ -35,8 +35,8 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import sf.utility.ObjectToString;
-import sf.utility.Utility;
+import sf.util.ObjectToString;
+import sf.util.Utility;
 
 /**
  * Configuration properties.

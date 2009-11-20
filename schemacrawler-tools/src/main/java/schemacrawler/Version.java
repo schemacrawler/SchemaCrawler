@@ -21,7 +21,7 @@
 package schemacrawler;
 
 
-import sf.utility.Utility;
+import sf.util.Utility;
 
 /**
  * Version information for this product. Has methods to obtain

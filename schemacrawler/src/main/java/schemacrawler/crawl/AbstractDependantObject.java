@@ -23,7 +23,7 @@ package schemacrawler.crawl;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DependantObject;
-import sf.utility.Utility;
+import sf.util.Utility;
 
 /**
  * Represents the dependent of a database object, such as a column or an

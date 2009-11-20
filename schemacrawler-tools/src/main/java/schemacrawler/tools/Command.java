@@ -23,7 +23,7 @@ package schemacrawler.tools;
 
 import java.io.Serializable;
 
-import sf.utility.Utility;
+import sf.util.Utility;
 
 /**
  * A single command from the command line.

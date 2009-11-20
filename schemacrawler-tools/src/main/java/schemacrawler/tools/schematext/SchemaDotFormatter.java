@@ -44,7 +44,7 @@ import schemacrawler.tools.util.HtmlFormattingHelper;
 import schemacrawler.tools.util.PastelColor;
 import schemacrawler.utility.MetaDataUtility;
 import schemacrawler.utility.MetaDataUtility.Connectivity;
-import sf.utility.Utility;
+import sf.util.Utility;
 
 final class SchemaDotFormatter
   implements CrawlHandler

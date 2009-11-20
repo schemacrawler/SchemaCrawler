@@ -46,7 +46,7 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.utility.TestDatabase;
-import sf.utility.Utility;
+import sf.util.Utility;
 
 public class SchemaCrawlerTest
 {

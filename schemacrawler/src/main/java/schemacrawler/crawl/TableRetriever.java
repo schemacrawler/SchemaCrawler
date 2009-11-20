@@ -36,7 +36,7 @@ import schemacrawler.schema.IndexType;
 import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
-import sf.utility.Utility;
+import sf.util.Utility;
 
 /**
  * A retriever uses database metadata to get the details about the

@@ -27,7 +27,7 @@ import java.io.File;
  * 
  * @author Sualeh Fatehi
  */
-public final class Utility
+public final class FileUtility
 {
 
   public static File changeFileExtension(final File file, final String ext)
@@ -61,7 +61,7 @@ public final class Utility
     return ext;
   }
 
-  private Utility()
+  private FileUtility()
   { // Prevent instantiation
   }
 

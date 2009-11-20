@@ -26,7 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
-import sf.utility.Utility;
+import sf.util.Utility;
 
 /**
  * Specifies inclusion and exclusion patterns that can be applied to the
