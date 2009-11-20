@@ -98,9 +98,10 @@ public final class InformationSchemaViews
    * 
    * @return Table check constraints SQL.
    */
-  public Query getCheckConstraints()
+  public String getCheckConstraints()
   {
-    return getQuery(KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS);
+    return informationSchemaQueries
+      .get(KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS);
   }
 
   /**
@@ -108,9 +109,9 @@ public final class InformationSchemaViews
    * 
    * @return Index info constraints SQL.
    */
-  public Query getIndexInfo()
+  public String getIndexInfo()
   {
-    return getQuery(KEY_GET_INDEX_INFO);
+    return informationSchemaQueries.get(KEY_GET_INDEX_INFO);
   }
 
   /**
@@ -119,9 +120,9 @@ public final class InformationSchemaViews
    * 
    * @return Procedure defnitions SQL.
    */
-  public Query getRoutines()
+  public String getRoutines()
   {
-    return getQuery(KEY_INFORMATION_SCHEMA_ROUTINES);
+    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_ROUTINES);
   }
 
   /**
@@ -129,9 +130,10 @@ public final class InformationSchemaViews
    * 
    * @return Table constraints SQL.
    */
-  public Query getTableConstraints()
+  public String getTableConstraints()
   {
-    return getQuery(KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS);
+    return informationSchemaQueries
+      .get(KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS);
   }
 
   /**
@@ -139,9 +141,9 @@ public final class InformationSchemaViews
    * 
    * @return Trigger defnitions SQL.
    */
-  public Query getTriggers()
+  public String getTriggers()
   {
-    return getQuery(KEY_INFORMATION_SCHEMA_TRIGGERS);
+    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_TRIGGERS);
   }
 
   /**
@@ -149,9 +151,9 @@ public final class InformationSchemaViews
    * 
    * @return View defnitions SQL.
    */
-  public Query getViews()
+  public String getViews()
   {
-    return getQuery(KEY_INFORMATION_SCHEMA_VIEWS);
+    return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_VIEWS);
   }
 
   public boolean hasCheckConstraintsSql()
@@ -260,20 +262,6 @@ public final class InformationSchemaViews
   public String toString()
   {
     return ObjectToString.toString(informationSchemaQueries);
-  }
-
-  private Query getQuery(final String key)
-  {
-    final Query query;
-    if (informationSchemaQueries.containsKey(key))
-    {
-      query = new Query(key, informationSchemaQueries.get(key));
-    }
-    else
-    {
-      query = null;
-    }
-    return query;
   }
 
 }

@@ -187,7 +187,7 @@ final class TableRetriever
       if (informationSchemaViews.hasIndexInfoSql())
       {
         final String indexInfoSql = informationSchemaViews.getIndexInfo()
-          .getQueryForTable(table);
+          .replace("${table}", table.getFullName());
         LOGGER.log(Level.FINE, "Using getIndexInfo SQL:\n" + indexInfoSql);
         final Connection connection = getDatabaseConnection();
         statement = connection.createStatement();

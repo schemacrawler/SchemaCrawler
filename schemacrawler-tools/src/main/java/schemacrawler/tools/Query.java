@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.schemacrawler;
+package schemacrawler.tools;
 
 
 import java.io.Serializable;
@@ -31,6 +31,7 @@ import schemacrawler.crawl.JavaSqlTypesUtility;
 import schemacrawler.crawl.JavaSqlType.JavaSqlTypeGroup;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.Config;
 import sf.utility.Utility;
 
 /**
