@@ -31,7 +31,9 @@ import java.util.logging.Logger;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
+import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -158,9 +160,31 @@ final class OperationHandler
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.JdbcDriverInfo)
+   */
+  public void handle(final JdbcDriverInfo jdbcDriverInfo)
+    throws SchemaCrawlerException
+  {
+    // No-op
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.Procedure)
    */
   public void handle(final Procedure procedure)
+    throws SchemaCrawlerException
+  {
+    // No-op
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.SchemaCrawlerInfo)
+   */
+  public void handle(final SchemaCrawlerInfo schemaCrawlerInfo)
     throws SchemaCrawlerException
   {
     // No-op
