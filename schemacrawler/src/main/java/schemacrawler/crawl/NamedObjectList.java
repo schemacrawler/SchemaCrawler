@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 import schemacrawler.schema.NamedObject;
-import sf.utility.Utility;
+import sf.util.Utility;
 
 /**
  * Ordered list of named objects, that can be searched associatively.

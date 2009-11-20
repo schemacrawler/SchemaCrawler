@@ -26,7 +26,7 @@ import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import sf.utility.Utility;
+import sf.util.Utility;
 
 /**
  * Represents the database schema.

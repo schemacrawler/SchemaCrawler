@@ -23,7 +23,7 @@ package schemacrawler.main;
 
 import schemacrawler.Version;
 import schemacrawler.schemacrawler.Options;
-import sf.utility.Utility;
+import sf.util.Utility;
 
 public class HelpOptions
   implements Options
@@ -115,7 +115,7 @@ public class HelpOptions
 
   private void showHelp(final String helpResource)
   {
-    if (sf.utility.Utility.isBlank(helpResource))
+    if (sf.util.Utility.isBlank(helpResource))
     {
       return;
     }

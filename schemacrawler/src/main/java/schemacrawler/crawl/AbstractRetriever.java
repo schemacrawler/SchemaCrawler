@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Set;
 
 import schemacrawler.schema.DatabaseObject;
-import sf.utility.Utility;
+import sf.util.Utility;
 
 /**
  * Base class for retriever that uses database metadata to get the

@@ -34,7 +34,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import sf.util.CommandLineParser;
-import sf.utility.Utility;
+import sf.util.Utility;
 
 /**
  * A wrapper used to assemble the classpath before launching the actual

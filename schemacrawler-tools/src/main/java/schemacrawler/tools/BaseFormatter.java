@@ -33,7 +33,7 @@ import schemacrawler.tools.util.HtmlFormattingHelper;
 import schemacrawler.tools.util.PlainTextFormattingHelper;
 import schemacrawler.tools.util.TextFormattingHelper;
 import schemacrawler.tools.util.TextFormattingHelper.DocumentHeaderType;
-import sf.utility.ObjectToString;
+import sf.util.ObjectToString;
 
 /**
  * Text formatting of schema.

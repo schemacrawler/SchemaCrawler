@@ -27,7 +27,7 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import schemacrawler.schema.DatabaseProperty;
-import sf.utility.Utility;
+import sf.util.Utility;
 
 class MutableDatabaseProperty
   implements DatabaseProperty

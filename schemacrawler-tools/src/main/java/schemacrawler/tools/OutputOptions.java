@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.utility.Utility;
+import sf.util.Utility;
 
 /**
  * Contains output options.
@@ -81,7 +81,7 @@ public final class OutputOptions
     }
     outputFormatValue = outputFormat.name();
 
-    if (!sf.utility.Utility.isBlank(outputFilename))
+    if (!sf.util.Utility.isBlank(outputFilename))
     {
       outputFile = new File(outputFilename);
     }
@@ -104,7 +104,7 @@ public final class OutputOptions
   {
     this.outputFormatValue = outputFormatValue;
 
-    if (!sf.utility.Utility.isBlank(outputFilename))
+    if (!sf.util.Utility.isBlank(outputFilename))
     {
       outputFile = new File(outputFilename);
     }

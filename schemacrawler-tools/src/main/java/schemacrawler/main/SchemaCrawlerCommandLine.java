@@ -36,7 +36,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.Commands;
 import schemacrawler.tools.OutputOptions;
-import sf.utility.Utility;
+import sf.util.Utility;
 
 /**
  * Utility for parsing the SchemaCrawler command line.

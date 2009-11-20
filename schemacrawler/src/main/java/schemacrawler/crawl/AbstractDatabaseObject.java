@@ -23,7 +23,7 @@ package schemacrawler.crawl;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Schema;
-import sf.utility.Utility;
+import sf.util.Utility;
 
 /**
  * Represents a database object.

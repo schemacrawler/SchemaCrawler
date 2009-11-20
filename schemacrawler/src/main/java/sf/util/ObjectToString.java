@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package sf.utility;
+package sf.util;
 
 
 import java.lang.reflect.AccessibleObject;

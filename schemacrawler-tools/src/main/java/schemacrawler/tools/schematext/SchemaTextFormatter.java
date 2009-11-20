@@ -49,7 +49,7 @@ import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.BaseFormatter;
 import schemacrawler.tools.util.TextFormattingHelper.DocumentHeaderType;
-import sf.utility.Utility;
+import sf.util.Utility;
 
 /**
  * Text formatting of schema.
@@ -421,7 +421,7 @@ final class SchemaTextFormatter
   {
     out.println(formattingHelper.createEmptyRow());
 
-    if (sf.utility.Utility.isBlank(definition))
+    if (sf.util.Utility.isBlank(definition))
     {
       return;
     }
@@ -620,11 +620,11 @@ final class SchemaTextFormatter
                                                    triggerType,
                                                    false));
 
-        if (!sf.utility.Utility.isBlank(actionCondition))
+        if (!sf.util.Utility.isBlank(actionCondition))
         {
           out.println(formattingHelper.createDefinitionRow(actionCondition));
         }
-        if (!sf.utility.Utility.isBlank(actionStatement))
+        if (!sf.util.Utility.isBlank(actionStatement))
         {
           out.println(formattingHelper.createDefinitionRow(actionStatement));
         }

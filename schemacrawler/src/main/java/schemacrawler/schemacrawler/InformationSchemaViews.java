@@ -24,7 +24,7 @@ package schemacrawler.schemacrawler;
 import java.util.HashMap;
 import java.util.Map;
 
-import sf.utility.ObjectToString;
+import sf.util.ObjectToString;
 
 /**
  * The database specific views to get additional database metadata in a

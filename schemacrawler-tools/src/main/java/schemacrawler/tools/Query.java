@@ -32,7 +32,7 @@ import schemacrawler.crawl.JavaSqlType.JavaSqlTypeGroup;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Config;
-import sf.utility.Utility;
+import sf.util.Utility;
 
 /**
  * A SQL query. May be parameterized with ant-like variable references.

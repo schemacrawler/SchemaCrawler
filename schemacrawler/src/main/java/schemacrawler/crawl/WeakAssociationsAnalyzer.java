@@ -22,9 +22,9 @@ import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableAssociationType;
-import sf.utility.Inflection;
-import sf.utility.ObjectToString;
-import sf.utility.Utility;
+import sf.util.Inflection;
+import sf.util.ObjectToString;
+import sf.util.Utility;
 
 final class WeakAssociationsAnalyzer
 {
