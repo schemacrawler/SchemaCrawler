@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools;
+package schemacrawler.tools.options;
 
 
 import schemacrawler.schemacrawler.Options;

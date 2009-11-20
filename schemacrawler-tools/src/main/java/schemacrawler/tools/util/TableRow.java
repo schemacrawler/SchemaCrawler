@@ -24,7 +24,7 @@ package schemacrawler.tools.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import schemacrawler.tools.OutputFormat;
+import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.util.TableCell.Align;
 
 /**

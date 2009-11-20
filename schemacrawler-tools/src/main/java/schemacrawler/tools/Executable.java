@@ -29,6 +29,7 @@ import javax.sql.DataSource;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.tools.options.ToolOptions;
 import sf.util.ObjectToString;
 
 /**
