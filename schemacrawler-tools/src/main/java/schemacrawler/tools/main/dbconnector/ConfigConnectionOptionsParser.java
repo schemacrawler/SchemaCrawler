@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.main.dbconnector;
+package schemacrawler.tools.main.dbconnector;
 
 
 import java.util.Map;

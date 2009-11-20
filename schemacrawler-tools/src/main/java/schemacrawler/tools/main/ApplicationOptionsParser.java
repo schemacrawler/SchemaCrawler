@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.main;
+package schemacrawler.tools.main;
 
 
 import java.util.logging.Level;

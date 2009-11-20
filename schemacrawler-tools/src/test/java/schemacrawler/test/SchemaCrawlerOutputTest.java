@@ -39,14 +39,14 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import schemacrawler.main.SchemaCrawlerCommandLine;
-import schemacrawler.main.SchemaCrawlerMain;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.Command;
 import schemacrawler.tools.Commands;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.Query;
+import schemacrawler.tools.main.SchemaCrawlerCommandLine;
+import schemacrawler.tools.main.SchemaCrawlerMain;
 import schemacrawler.tools.operation.Operation;
 import schemacrawler.tools.operation.OperationExecutable;
 import schemacrawler.tools.operation.OperationOptions;

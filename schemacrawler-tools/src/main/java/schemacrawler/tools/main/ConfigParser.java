@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.main;
+package schemacrawler.tools.main;
 
 
 import schemacrawler.schemacrawler.Config;

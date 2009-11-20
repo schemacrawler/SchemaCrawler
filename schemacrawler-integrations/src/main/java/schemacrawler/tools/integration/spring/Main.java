@@ -31,10 +31,10 @@ import javax.sql.DataSource;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-import schemacrawler.main.ApplicationOptions;
-import schemacrawler.main.ApplicationOptionsParser;
-import schemacrawler.main.HelpOptions;
 import schemacrawler.tools.Executable;
+import schemacrawler.tools.main.ApplicationOptions;
+import schemacrawler.tools.main.ApplicationOptionsParser;
+import schemacrawler.tools.main.HelpOptions;
 import sf.util.Utility;
 
 /**

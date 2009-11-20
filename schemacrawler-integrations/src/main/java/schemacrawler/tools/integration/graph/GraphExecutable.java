@@ -27,13 +27,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.crawl.DatabaseSchemaCrawler;
-import schemacrawler.main.HelpOptions;
-import schemacrawler.main.HelpOptions.CommandHelpType;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.integration.IntegrationsExecutable;
+import schemacrawler.tools.main.HelpOptions;
+import schemacrawler.tools.main.HelpOptions.CommandHelpType;
 import schemacrawler.tools.schematext.SchemaTextFactory;
 import schemacrawler.tools.util.HtmlFormattingHelper;
 import sf.util.FileUtility;
