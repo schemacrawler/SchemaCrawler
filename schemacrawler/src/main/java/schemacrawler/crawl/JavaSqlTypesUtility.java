@@ -21,7 +21,6 @@
 package schemacrawler.crawl;
 
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -90,15 +89,6 @@ public final class JavaSqlTypesUtility
       sqlDataType = JavaSqlType.UNKNOWN;
     }
     return sqlDataType;
-  }
-
-  public static void main(final String[] args)
-    throws IOException
-  {
-    for (final JavaSqlType javaSqlType: readJavaSqlTypes())
-    {
-      System.out.println(javaSqlType);
-    }
   }
 
   private static Map<Integer, JavaSqlType> mapJavaSqlTypesByType(final List<JavaSqlType> javaSqlTypes)

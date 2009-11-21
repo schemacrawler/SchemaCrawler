@@ -81,7 +81,6 @@ public class SpringIntegrationTest
     }
     if (failures.size() > 0)
     {
-      System.err.println(failures);
       fail(failures.toString());
     }
   }
