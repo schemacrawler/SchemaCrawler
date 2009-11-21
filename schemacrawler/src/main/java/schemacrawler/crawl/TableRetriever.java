@@ -25,7 +25,9 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,6 +38,7 @@ import schemacrawler.schema.IndexType;
 import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
+import sf.util.TemplatingUtility;
 import sf.util.Utility;
 
 /**
@@ -186,8 +189,10 @@ final class TableRetriever
     {
       if (informationSchemaViews.hasIndexInfoSql())
       {
-        final String indexInfoSql = informationSchemaViews.getIndexInfo()
-          .replace("${table}", table.getFullName());
+        final Map<String, String> map = new HashMap<String, String>();
+        map.put("table", table.getFullName());
+        final String indexInfoSql = TemplatingUtility
+          .expandTemplate(informationSchemaViews.getIndexInfo(), map);
         LOGGER.log(Level.FINE, "Using getIndexInfo SQL:\n" + indexInfoSql);
         final Connection connection = getDatabaseConnection();
         statement = connection.createStatement();
