@@ -24,6 +24,7 @@ package schemacrawler.tools.main.dbconnector;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.ConfigUtility;
 import sf.util.CommandLineParser.NumberOption;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
