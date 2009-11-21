@@ -53,6 +53,38 @@ public class TemplatingTest
     assertEquals("Variable not found", sortedVariables.get(0), "another");
     assertEquals("Variable not found", sortedVariables.get(1), "one");
 
+    variables = TemplatingUtility
+      .extractTemplateVariables("Has $${unusual} variable");
+    sortedVariables = new ArrayList<String>(variables);
+    assertEquals("Incorrect number of variables found", variables.size(), 1);
+    assertEquals("Variable not found", sortedVariables.get(0), "unusual");
+
+    variables = TemplatingUtility
+      .extractTemplateVariables("Has ${unusual}} variable");
+    sortedVariables = new ArrayList<String>(variables);
+    assertEquals("Incorrect number of variables found", variables.size(), 1);
+    assertEquals("Variable not found", sortedVariables.get(0), "unusual");
+
+    variables = TemplatingUtility
+      .extractTemplateVariables("Has ${bad variable");
+    sortedVariables = new ArrayList<String>(variables);
+    assertEquals("Incorrect number of variables found", variables.size(), 0);
+
+    variables = TemplatingUtility
+      .extractTemplateVariables("Has ${good} and ${bad variable");
+    sortedVariables = new ArrayList<String>(variables);
+    assertEquals("Incorrect number of variables found", variables.size(), 1);
+    assertEquals("Variable not found", sortedVariables.get(0), "good");
+
+    variables = TemplatingUtility
+      .extractTemplateVariables("Has ${bad and ${good} variable");
+    sortedVariables = new ArrayList<String>(variables);
+    assertEquals("Incorrect number of variables found", variables.size(), 1);
+    assertEquals("Variable not found", sortedVariables.get(0), "bad and ${good");
+
+    variables = TemplatingUtility.extractTemplateVariables("Has bad} variable");
+    sortedVariables = new ArrayList<String>(variables);
+    assertEquals("Incorrect number of variables found", variables.size(), 0);
   }
 
 }

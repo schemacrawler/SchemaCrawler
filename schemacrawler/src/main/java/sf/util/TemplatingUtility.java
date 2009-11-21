@@ -140,6 +140,11 @@ public final class TemplatingUtility
         shrunkTemplate = shrunkTemplate.substring(0, left) + ""
                          + shrunkTemplate.substring(right + 1);
       }
+      else
+      {
+        // No ending baracket found
+        break;
+      }
     }
 
     return keys;
