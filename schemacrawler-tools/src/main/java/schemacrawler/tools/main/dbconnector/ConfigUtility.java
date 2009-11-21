@@ -36,7 +36,7 @@ final class ConfigUtility
   /**
    * Substitutes variables in the provided config.
    */
-  static void substituteVariables(final Map<String, String> config)
+  public static void substituteVariables(final Map<String, String> config)
   {
     for (final Map.Entry<String, String> entry: config.entrySet())
     {
@@ -44,8 +44,8 @@ final class ConfigUtility
     }
   }
 
-  private static String substituteVariables(final String template,
-                                            final Map<String, String> map)
+  public static String substituteVariables(final String template,
+                                           final Map<String, String> map)
   {
     if (Utility.isBlank(template) || map == null)
     {
