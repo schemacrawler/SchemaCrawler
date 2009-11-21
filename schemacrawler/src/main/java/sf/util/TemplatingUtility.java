@@ -82,9 +82,12 @@ public final class TemplatingUtility
           // No substitutions required at all
           return template;
         }
-        // No more substitutions
-        buffer.append(template.substring(currentPosition, template.length()));
-        return buffer.toString();
+        else
+        {
+          // No more substitutions
+          buffer.append(template.substring(currentPosition, template.length()));
+          return buffer.toString();
+        }
       }
       else
       {
@@ -92,22 +95,31 @@ public final class TemplatingUtility
                                          delimiterStartPosition));
         delimiterEndPosition = template.indexOf(DELIMITER_END,
                                                 delimiterStartPosition);
-        if (delimiterEndPosition == -1)
+        if (delimiterEndPosition > -1)
         {
-          throw new IllegalArgumentException(template
-                                             + " does not have a closing brace");
+          delimiterStartPosition = delimiterStartPosition
+                                   + DELIMITER_START.length();
+          final String key = template.substring(delimiterStartPosition,
+                                                delimiterEndPosition);
+          final String value = variablesMap.get(key);
+          if (value != null)
+          {
+            buffer.append(value);
+          }
+          else
+          {
+            // Do not substitute
+            buffer.append(DELIMITER_START).append(key).append(DELIMITER_END);
+          }
+          // Advance current position
+          currentPosition = delimiterEndPosition + DELIMITER_END.length();
         }
-        delimiterStartPosition = delimiterStartPosition
-                                 + DELIMITER_START.length();
-        final String key = template.substring(delimiterStartPosition,
-                                              delimiterEndPosition);
-        final String value = variablesMap.get(key);
-        if (value != null)
+        else
         {
-          buffer.append(value);
+          // End brace not found, so advance current position
+          buffer.append(DELIMITER_START);
+          currentPosition = delimiterStartPosition + DELIMITER_START.length();
         }
-        // Advance current position
-        currentPosition = delimiterEndPosition + DELIMITER_END.length();
       }
     }
   }
