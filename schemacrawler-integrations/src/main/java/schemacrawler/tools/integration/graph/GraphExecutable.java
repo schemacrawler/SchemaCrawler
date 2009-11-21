@@ -31,9 +31,9 @@ import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
+import schemacrawler.tools.integration.IntegrationHelpOptions;
 import schemacrawler.tools.integration.IntegrationsExecutable;
 import schemacrawler.tools.main.HelpOptions;
-import schemacrawler.tools.main.HelpOptions.CommandHelpType;
 import schemacrawler.tools.text.schema.SchemaTextFactory;
 import schemacrawler.tools.text.util.HtmlFormattingHelper;
 import sf.util.FileUtility;
@@ -80,8 +80,8 @@ public final class GraphExecutable
       final String outputFormat = outputOptions.getOutputFormatValue();
       if (outputFormat.equalsIgnoreCase("dot"))
       {
-        writeDotFile(connection, FileUtility
-          .changeFileExtension(outputFile, ".dot"));
+        writeDotFile(connection, FileUtility.changeFileExtension(outputFile,
+                                                                 ".dot"));
       }
       else
       {
@@ -96,7 +96,8 @@ public final class GraphExecutable
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not write diagram", e);
-      writeDotFile(connection, FileUtility.changeFileExtension(outputFile, ".dot"));
+      writeDotFile(connection, FileUtility.changeFileExtension(outputFile,
+                                                               ".dot"));
       System.out.println(dotError());
     }
   }
@@ -104,11 +105,8 @@ public final class GraphExecutable
   @Override
   protected HelpOptions getHelpOptions()
   {
-    final HelpOptions helpOptions = new HelpOptions("SchemaCrawler - Graphing");
-    helpOptions.setCommandHelpType(CommandHelpType.without_operations);
-    helpOptions.setResourceOutputOptions("/help/OutputOptions.dot.txt");
-
-    return helpOptions;
+    return new IntegrationHelpOptions("SchemaCrawler - Graphing",
+                                      "/help/OutputOptions.dot.txt");
   }
 
   private void writeDotFile(final Connection connection, final File dotFile)

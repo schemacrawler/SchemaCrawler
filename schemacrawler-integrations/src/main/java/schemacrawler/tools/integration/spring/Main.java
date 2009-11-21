@@ -34,7 +34,6 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.main.ApplicationOptions;
 import schemacrawler.tools.main.ApplicationOptionsParser;
-import schemacrawler.tools.main.HelpOptions;
 import sf.util.Utility;
 
 /**
@@ -61,7 +60,7 @@ public final class Main
         .getOptions();
       if (applicationOptions.isShowHelp())
       {
-        final String text = Utility.readFully(HelpOptions.class
+        final String text = Utility.readFully(Main.class
           .getResourceAsStream("/help/SchemaCrawler.spring.txt"));
         System.out.println(text);
         System.exit(0);

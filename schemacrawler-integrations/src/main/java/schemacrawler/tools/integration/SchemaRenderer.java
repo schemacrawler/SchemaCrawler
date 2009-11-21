@@ -28,7 +28,6 @@ import schemacrawler.crawl.DatabaseSchemaCrawler;
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.tools.main.HelpOptions;
-import schemacrawler.tools.main.HelpOptions.CommandHelpType;
 
 /**
  * An executor that uses a template renderer to render a schema.
@@ -71,11 +70,8 @@ public abstract class SchemaRenderer
   @Override
   protected HelpOptions getHelpOptions()
   {
-    final HelpOptions helpOptions = new HelpOptions("SchemaCrawler - Templating");
-    helpOptions.setCommandHelpType(CommandHelpType.without_operations);
-    helpOptions.setResourceOutputOptions("/help/OutputOptions.templating.txt");
-
-    return helpOptions;
+    return new IntegrationHelpOptions("SchemaCrawler - Templating",
+                                      "/help/OutputOptions.templating.txt");
   }
 
   /**
