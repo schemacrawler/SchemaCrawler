@@ -18,19 +18,17 @@
  *
  */
 
-package schemacrawler.tools.main.dbconnector;
+package sf.util;
 
 
 import java.util.Map;
-
-import sf.util.Utility;
 
 /**
  * Configuration properties.
  * 
  * @author Sualeh Fatehi
  */
-final class ConfigUtility
+public final class ConfigUtility
 {
 
   /**

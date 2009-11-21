@@ -37,4 +37,5 @@ public final class BundledDriverHelpOptions
     setCommandHelpType(CommandHelpType.without_query);
     setHideConfig(true);
   }
+
 }
