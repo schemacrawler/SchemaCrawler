@@ -18,14 +18,12 @@
  *
  */
 
-package schemacrawler.tools.main.dbconnector;
+package schemacrawler.tools.main;
 
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.ConfigUtility;
-import sf.util.CommandLineParser.NumberOption;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
 
@@ -34,27 +32,24 @@ import sf.util.CommandLineParser.StringOption;
  * 
  * @author sfatehi
  */
-public final class BundledDriverConnectionOptionsParser
+public final class CommandLineConnectionOptionsParser
   extends BaseDatabaseConnectionOptionsParser
 {
 
-  private final StringOption optionHost = new StringOption(Option.NO_SHORT_FORM,
-                                                           "host",
-                                                           null);
-  private final NumberOption<Integer> optionPort = new NumberOption<Integer>(Option.NO_SHORT_FORM,
-                                                                             "port",
-                                                                             0);
-  private final StringOption optionDatabase = new StringOption(Option.NO_SHORT_FORM,
-                                                               "database",
-                                                               "");
+  private final StringOption optionDriver = new StringOption(Option.NO_SHORT_FORM,
+                                                             "driver",
+                                                             null);
+  private final StringOption optionConnectionUrl = new StringOption(Option.NO_SHORT_FORM,
+                                                                    "url",
+                                                                    null);
 
   /**
    * Parses the command line into options.
    * 
    * @param args
    */
-  public BundledDriverConnectionOptionsParser(final String[] args,
-                                              final Config config)
+  public CommandLineConnectionOptionsParser(final String[] args,
+                                            final Config config)
   {
     super(args, config);
   }
@@ -64,28 +59,26 @@ public final class BundledDriverConnectionOptionsParser
     throws SchemaCrawlerException
   {
     parse(new Option[] {
-        optionHost, optionPort, optionDatabase, optionUser, optionPassword,
+        optionDriver, optionConnectionUrl, optionUser, optionPassword,
     });
 
-    if (optionHost.isFound())
+    final DatabaseConnectionOptions conenctionOptions;
+    if (optionDriver.isFound() && optionConnectionUrl.isFound())
     {
-      config.put("host", optionHost.getValue());
+      final String jdbcDriverClassName = optionDriver.getValue();
+      final String connectionUrl = optionConnectionUrl.getValue();
+
+      conenctionOptions = new DatabaseConnectionOptions(jdbcDriverClassName,
+                                                        connectionUrl);
+      conenctionOptions.setUser(optionUser.getValue());
+      conenctionOptions.setPassword(optionPassword.getValue());
+
+      return conenctionOptions;
     }
-    if (optionPort.isFound())
+    else
     {
-      config.put("port", String.valueOf(optionPort.getValue().intValue()));
+      return null;
     }
-    if (optionDatabase.isFound())
-    {
-      config.put("database", optionDatabase.getValue());
-    }
-
-    config.put("user", optionUser.getValue());
-    config.put("password", optionPassword.getValue());
-
-    ConfigUtility.substituteVariables(config);
-
-    return new DatabaseConnectionOptions(config);
   }
 
   @Override

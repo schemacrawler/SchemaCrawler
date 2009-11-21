@@ -31,9 +31,6 @@ import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.main.dbconnector.BundledDriverConnectionOptionsParser;
-import schemacrawler.tools.main.dbconnector.CommandLineConnectionOptionsParser;
-import schemacrawler.tools.main.dbconnector.ConfigConnectionOptionsParser;
 import sf.util.Utility;
 
 /**
