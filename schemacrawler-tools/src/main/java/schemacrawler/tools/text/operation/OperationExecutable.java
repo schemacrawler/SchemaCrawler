@@ -25,7 +25,9 @@ import java.sql.Connection;
 
 import schemacrawler.crawl.DatabaseSchemaCrawler;
 import schemacrawler.schemacrawler.SchemaCrawler;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.Executable;
+import schemacrawler.tools.ExecutionException;
 
 /**
  * Basic SchemaCrawler executor.
@@ -59,7 +61,7 @@ public class OperationExecutable
    */
   @Override
   public void execute(final Connection connection)
-    throws Exception
+    throws ExecutionException
   {
     if (connection == null)
     {
@@ -67,9 +69,16 @@ public class OperationExecutable
     }
     initialize();
 
-    final SchemaCrawler crawler = new DatabaseSchemaCrawler(connection);
-    crawler.crawl(schemaCrawlerOptions, new OperationHandler(toolOptions,
-                                                             connection));
+    try
+    {
+      final SchemaCrawler crawler = new DatabaseSchemaCrawler(connection);
+      crawler.crawl(schemaCrawlerOptions, new OperationHandler(toolOptions,
+                                                               connection));
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      throw new ExecutionException("Could not execute operation", e);
+    }
   }
 
 }

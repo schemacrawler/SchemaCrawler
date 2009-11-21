@@ -98,7 +98,6 @@ public final class Main
         final String errorMessage = e.getMessage();
         LOGGER.log(Level.WARNING, "Could not close the connection: "
                                   + errorMessage);
-        throw new RuntimeException(errorMessage, e);
       }
     }
   }

@@ -29,6 +29,7 @@ import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schema.SchemaCrawlerInfo;
+import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;

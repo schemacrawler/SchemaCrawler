@@ -46,7 +46,6 @@ import sf.util.Utility;
  * 
  * @author sfatehi
  */
-@SuppressWarnings("unchecked")
 public class TestDatabase
 {
 

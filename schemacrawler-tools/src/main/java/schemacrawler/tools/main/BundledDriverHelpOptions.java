@@ -21,7 +21,6 @@
 package schemacrawler.tools.main;
 
 
-
 public final class BundledDriverHelpOptions
   extends HelpOptions
 {

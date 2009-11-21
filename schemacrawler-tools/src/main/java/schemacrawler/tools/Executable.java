@@ -22,6 +22,7 @@ package schemacrawler.tools;
 
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -66,7 +67,7 @@ public abstract class Executable<O extends ToolOptions>
    *         On an exception
    */
   public abstract void execute(Connection connection)
-    throws Exception;
+    throws ExecutionException;
 
   /**
    * Executes main functionality for SchemaCrawler.
@@ -77,7 +78,7 @@ public abstract class Executable<O extends ToolOptions>
    *         On an exception
    */
   public final void execute(final DataSource dataSource)
-    throws Exception
+    throws ExecutionException
   {
     if (dataSource == null)
     {
@@ -86,7 +87,14 @@ public abstract class Executable<O extends ToolOptions>
     Connection connection = null;
     try
     {
-      connection = dataSource.getConnection();
+      try
+      {
+        connection = dataSource.getConnection();
+      }
+      catch (final SQLException e)
+      {
+        throw new ExecutionException("Could not create database connection", e);
+      }
       LOGGER.log(Level.INFO, "Obtained database connection, " + connection);
       execute(connection);
     }
@@ -94,8 +102,16 @@ public abstract class Executable<O extends ToolOptions>
     {
       if (connection != null)
       {
-        connection.close();
-        LOGGER.log(Level.INFO, "Closed database connection, " + connection);
+        try
+        {
+          connection.close();
+          LOGGER.log(Level.INFO, "Closed database connection, " + connection);
+        }
+        catch (final SQLException e)
+        {
+          LOGGER.log(Level.WARNING, "Could not close database connection, "
+                                    + connection, e);
+        }
       }
     }
   }

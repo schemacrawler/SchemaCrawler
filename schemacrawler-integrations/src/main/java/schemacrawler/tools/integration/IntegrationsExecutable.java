@@ -96,11 +96,8 @@ public abstract class IntegrationsExecutable
       final String errorMessage = e.getMessage();
       LOGGER.log(Level.WARNING, "Could not close the connection: "
                                 + errorMessage);
-      throw new RuntimeException(errorMessage, e);
     }
   }
-
-  protected abstract HelpOptions getHelpOptions();
 
   /**
    * Expect one command (further, of type schema text.
@@ -114,5 +111,7 @@ public abstract class IntegrationsExecutable
     }
     return iterator.next().getName();
   }
+
+  protected abstract HelpOptions getHelpOptions();
 
 }
