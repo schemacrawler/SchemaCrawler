@@ -5,7 +5,13 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <release version="7.5" date="2009-11-10">
+    <release version="7.5" date="2009-11-22">
+      <action dev="Sualeh Fatehi" type="update"><![CDATA[
+        Updates to all bundled database drivers.
+      ]]></action>      
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Bug-fix for obtaining MySQL foreign keys.
+      ]]></action>    
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added ability to script the database, using JavaScript. A live connection is provided
         to the JavaScript context for this purpose.
