@@ -74,9 +74,7 @@ public class SchemaCrawlerOutputTest
         .getResourceAsStream(localResource);
       if (entityStream == null)
       {
-        final String message = "Could not load " + localResource;
-        System.err.println(message);
-        throw new IOException(message);
+        throw new IOException("Could not load " + localResource);
       }
       return new InputSource(entityStream);
     }
@@ -165,7 +163,6 @@ public class SchemaCrawlerOutputTest
 
     if (failures.size() > 0)
     {
-      System.err.println(failures);
       fail(failures.toString());
     }
 
