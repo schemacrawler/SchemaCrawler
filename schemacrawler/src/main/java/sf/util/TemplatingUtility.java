@@ -36,15 +36,29 @@ import java.util.Map.Entry;
 public final class TemplatingUtility
 {
 
+  /**
+   * Expands a template using system properties. Variables in the
+   * template are in the form of ${variable}.
+   * 
+   * @param template
+   *        Template to expand.
+   */
   public static String expandTemplate(final String template)
   {
     return expandTemplate(template, propertiesMap(System.getProperties()));
   }
 
+  /**
+   * Expands a template using variable values in the provided map.
+   * Variables in the template are in the form of ${variable}.
+   * 
+   * @param template
+   *        Template to expand.
+   */
   public static String expandTemplate(final String template,
-                                      final Map<String, String> map)
+                                      final Map<String, String> variablesMap)
   {
-    if (Utility.isBlank(template) || map == null)
+    if (Utility.isBlank(template) || variablesMap == null)
     {
       return template;
     }
@@ -87,7 +101,7 @@ public final class TemplatingUtility
                                  + DELIMITER_START.length();
         final String key = template.substring(delimiterStartPosition,
                                               delimiterEndPosition);
-        final String value = map.get(key);
+        final String value = variablesMap.get(key);
         if (value != null)
         {
           buffer.append(value);
@@ -98,6 +112,13 @@ public final class TemplatingUtility
     }
   }
 
+  /**
+   * Extracts variables from the template. Variables are in the form of
+   * ${variable}.
+   * 
+   * @param template
+   *        Template to extract variables from.
+   */
   public static Set<String> extractTemplateVariables(final String template)
   {
 
@@ -125,13 +146,22 @@ public final class TemplatingUtility
   }
 
   /**
-   * Substitutes variables in the provided config.
+   * Does one pass over the values in the map, and expands each as a
+   * template, using the rest of the values in the same map. Variables
+   * in the template are in the form of ${variable}.
+   * 
+   * @param map
+   *        Map to expand.
    */
-  public static void substituteVariables(final Map<String, String> config)
+  public static void substituteVariables(final Map<String, String> variablesMap)
   {
-    for (final Map.Entry<String, String> entry: config.entrySet())
+    if (variablesMap != null)
     {
-      config.put(entry.getKey(), expandTemplate(entry.getValue(), config));
+      for (final Map.Entry<String, String> entry: variablesMap.entrySet())
+      {
+        variablesMap.put(entry.getKey(), expandTemplate(entry.getValue(),
+                                                        variablesMap));
+      }
     }
   }
 
