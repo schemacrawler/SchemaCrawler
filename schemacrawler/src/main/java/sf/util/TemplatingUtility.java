@@ -36,6 +36,9 @@ import java.util.Map.Entry;
 public final class TemplatingUtility
 {
 
+  private final static String DELIMITER_START = "${";
+  private final static String DELIMITER_END = "}";
+
   /**
    * Expands a template using system properties. Variables in the
    * template are in the form of ${variable}.
@@ -62,9 +65,6 @@ public final class TemplatingUtility
     {
       return template;
     }
-
-    final String DELIMITER_START = "${";
-    final String DELIMITER_END = "}";
 
     final StringBuilder buffer = new StringBuilder();
     int currentPosition = 0;
@@ -134,16 +134,16 @@ public final class TemplatingUtility
   public static Set<String> extractTemplateVariables(final String template)
   {
 
-    if (template == null)
+    if (Utility.isBlank(template))
     {
       return new HashSet<String>();
     }
 
     String shrunkTemplate = template;
     final Set<String> keys = new HashSet<String>();
-    for (int left; (left = shrunkTemplate.indexOf("${")) >= 0;)
+    for (int left; (left = shrunkTemplate.indexOf(DELIMITER_START)) >= 0;)
     {
-      final int right = shrunkTemplate.indexOf("}", left + 2);
+      final int right = shrunkTemplate.indexOf(DELIMITER_END, left + 2);
       if (right >= 0)
       {
         final String propertyKey = shrunkTemplate.substring(left + 2, right);
@@ -172,7 +172,7 @@ public final class TemplatingUtility
    */
   public static void substituteVariables(final Map<String, String> variablesMap)
   {
-    if (variablesMap != null)
+    if (variablesMap != null && !variablesMap.isEmpty())
     {
       for (final Map.Entry<String, String> entry: variablesMap.entrySet())
       {
