@@ -27,6 +27,8 @@ import schemacrawler.crawl.CachingCrawlHandler;
 import schemacrawler.crawl.DatabaseSchemaCrawler;
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawler;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.ExecutionException;
 import schemacrawler.tools.main.HelpOptions;
 
 /**
@@ -45,7 +47,7 @@ public abstract class SchemaRenderer
 
   @Override
   public final void execute(final Connection connection)
-    throws Exception
+    throws ExecutionException
   {
     if (connection == null)
     {
@@ -54,17 +56,24 @@ public abstract class SchemaRenderer
 
     initialize();
 
-    final CachingCrawlHandler handler = new CachingCrawlHandler();
-    final SchemaCrawler crawler = new DatabaseSchemaCrawler(connection);
-    crawler.crawl(schemaCrawlerOptions, handler);
-    final Database database = handler.getDatabase();
+    try
+    {
+      final CachingCrawlHandler handler = new CachingCrawlHandler();
+      final SchemaCrawler crawler = new DatabaseSchemaCrawler(connection);
+      crawler.crawl(schemaCrawlerOptions, handler);
+      final Database database = handler.getDatabase();
 
-    // Executable-specific work
-    final Writer writer = toolOptions.getOutputOptions().openOutputWriter();
-    final String templateName = toolOptions.getOutputOptions()
-      .getOutputFormatValue();
-    render(connection, templateName, database, writer);
-    toolOptions.getOutputOptions().closeOutputWriter(writer);
+      // Executable-specific work
+      final Writer writer = toolOptions.getOutputOptions().openOutputWriter();
+      final String templateName = toolOptions.getOutputOptions()
+        .getOutputFormatValue();
+      render(connection, templateName, database, writer);
+      toolOptions.getOutputOptions().closeOutputWriter(writer);
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      throw new ExecutionException("Could not execute renderer", e);
+    }
   }
 
   @Override
@@ -89,6 +98,6 @@ public abstract class SchemaRenderer
                                  final String resource,
                                  final Database database,
                                  final Writer writer)
-    throws Exception;
+    throws ExecutionException;
 
 }

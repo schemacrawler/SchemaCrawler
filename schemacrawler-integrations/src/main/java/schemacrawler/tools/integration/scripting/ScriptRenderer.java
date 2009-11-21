@@ -22,6 +22,7 @@ package schemacrawler.tools.integration.scripting;
 
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -31,8 +32,10 @@ import java.sql.Connection;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
 import schemacrawler.schema.Database;
+import schemacrawler.tools.ExecutionException;
 import schemacrawler.tools.integration.SchemaRenderer;
 import sf.util.FileUtility;
 
@@ -61,17 +64,25 @@ public final class ScriptRenderer
                         final String scriptFileName,
                         final Database database,
                         final Writer writer)
-    throws Exception
+    throws ExecutionException
   {
     if (sf.util.Utility.isBlank(scriptFileName))
     {
-      throw new Exception("No script file provided");
+      throw new ExecutionException("No script file provided");
     }
     final Reader reader;
     final File scriptFile = new File(scriptFileName);
     if (scriptFile.exists() && scriptFile.canRead())
     {
-      reader = new FileReader(scriptFile);
+      try
+      {
+        reader = new FileReader(scriptFile);
+      }
+      catch (final FileNotFoundException e)
+      {
+        throw new ExecutionException("Cannot load script, "
+                                     + scriptFile.getAbsolutePath());
+      }
     }
     else
     {
@@ -83,30 +94,37 @@ public final class ScriptRenderer
       }
       else
       {
-        throw new Exception("Cannot load script, " + scriptFileName);
+        throw new ExecutionException("Cannot load script, " + scriptFileName);
       }
     }
 
-    // Create a new instance of the engine
-    final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
-    ScriptEngine scriptEngine = scriptEngineManager
-      .getEngineByExtension(FileUtility.getFileExtension(scriptFile));
-    if (scriptEngine == null)
+    try
     {
-      scriptEngine = scriptEngineManager.getEngineByName("JavaScript");
+      // Create a new instance of the engine
+      final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
+      ScriptEngine scriptEngine = scriptEngineManager
+        .getEngineByExtension(FileUtility.getFileExtension(scriptFile));
+      if (scriptEngine == null)
+      {
+        scriptEngine = scriptEngineManager.getEngineByName("JavaScript");
+      }
+      if (scriptEngine == null)
+      {
+        throw new ExecutionException("Script engine not found");
+      }
+
+      // Set up the context
+      scriptEngine.getContext().setWriter(writer);
+      scriptEngine.put("database", database);
+      scriptEngine.put("connection", connection);
+
+      // Evaluate the script
+      scriptEngine.eval(reader);
     }
-    if (scriptEngine == null)
+    catch (final ScriptException e)
     {
-      throw new RuntimeException("Script engine not found");
+      throw new ExecutionException("Could not evaluate script", e);
     }
-
-    // Set up the context
-    scriptEngine.getContext().setWriter(writer);
-    scriptEngine.put("database", database);
-    scriptEngine.put("connection", connection);
-
-    // Evaluate the script
-    scriptEngine.eval(reader);
   }
 
 }

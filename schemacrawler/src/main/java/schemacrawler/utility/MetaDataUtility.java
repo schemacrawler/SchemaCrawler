@@ -30,7 +30,7 @@ import schemacrawler.schema.Column;
  * 
  * @author sfatehi
  */
-public class MetaDataUtility
+public final class MetaDataUtility
 {
 
   public enum Connectivity

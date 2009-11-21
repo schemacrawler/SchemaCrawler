@@ -61,6 +61,197 @@ final class TableRetriever
     super(retrieverConnection, database);
   }
 
+  private void createForeignKeys(final MetadataResultSet results,
+                                 final NamedObjectList<MutableForeignKey> foreignKeys)
+    throws SQLException
+  {
+    try
+    {
+      while (results.next())
+      {
+        String foreignKeyName = results.getString("FK_NAME");
+        if (Utility.isBlank(foreignKeyName))
+        {
+          foreignKeyName = UNKNOWN;
+        }
+        LOGGER.log(Level.FINER, "Retrieving foreign key: " + foreignKeyName);
+
+        final String pkTableCatalogName = results.getString("PKTABLE_CAT");
+        final String pkTableSchemaName = results.getString("PKTABLE_SCHEM");
+        final String pkTableName = results.getString("PKTABLE_NAME");
+        final String pkColumnName = results.getString("PKCOLUMN_NAME");
+
+        final String fkTableCatalogName = results.getString("FKTABLE_CAT");
+        final String fkTableSchemaName = results.getString("FKTABLE_SCHEM");
+        final String fkTableName = results.getString("FKTABLE_NAME");
+        final String fkColumnName = results.getString("FKCOLUMN_NAME");
+
+        MutableForeignKey foreignKey = foreignKeys.lookup(foreignKeyName);
+        if (foreignKey == null)
+        {
+          foreignKey = new MutableForeignKey(foreignKeyName);
+          foreignKeys.add(foreignKey);
+        }
+
+        final int keySequence = results.getInt("KEY_SEQ", 0);
+        final int updateRule = results.getInt("UPDATE_RULE",
+                                              ForeignKeyUpdateRule.unknown
+                                                .getId());
+        final int deleteRule = results.getInt("DELETE_RULE",
+                                              ForeignKeyUpdateRule.unknown
+                                                .getId());
+        final int deferrability = results
+          .getInt("DEFERRABILITY", ForeignKeyDeferrability.unknown.getId());
+        final MutableColumn pkColumn = lookupOrCreateColumn(pkTableCatalogName,
+                                                            pkTableSchemaName,
+                                                            pkTableName,
+                                                            pkColumnName);
+        final MutableColumn fkColumn = lookupOrCreateColumn(fkTableCatalogName,
+                                                            fkTableSchemaName,
+                                                            fkTableName,
+                                                            fkColumnName);
+        // Make a direct connection between the two columns
+        fkColumn.setReferencedColumn(pkColumn);
+        foreignKey.addColumnPair(keySequence, pkColumn, fkColumn);
+        foreignKey.setUpdateRule(ForeignKeyUpdateRule.valueOf(updateRule));
+        foreignKey.setDeleteRule(ForeignKeyUpdateRule.valueOf(deleteRule));
+        foreignKey.setDeferrability(ForeignKeyDeferrability
+          .valueOf(deferrability));
+
+        foreignKey.addAttributes(results.getAttributes());
+
+        ((MutableTable) pkColumn.getParent()).addForeignKey(foreignKey);
+        ((MutableTable) fkColumn.getParent()).addForeignKey(foreignKey);
+      }
+    }
+    finally
+    {
+      results.close();
+    }
+
+  }
+
+  private void createIndices(final MutableTable table,
+                             final MetadataResultSet results)
+    throws SQLException
+  {
+    try
+    {
+      while (results.next())
+      {
+        // final String catalogName = results.getString("TABLE_CAT");
+        // final String schemaName = results.getString("TABLE_SCHEM");
+        // final String tableName = results.getString("TABLE_NAME");
+        String indexName = results.getString("INDEX_NAME");
+        if (Utility.isBlank(indexName))
+        {
+          indexName = UNKNOWN;
+        }
+        LOGGER.log(Level.FINER, String.format("Retrieving index: %s.%s", table
+          .getFullName(), indexName));
+        final String columnName = results.getString("COLUMN_NAME");
+        if (Utility.isBlank(columnName))
+        {
+          continue;
+        }
+
+        MutableIndex index = table.getIndex(indexName);
+        if (index == null)
+        {
+          index = new MutableIndex(table, indexName);
+          table.addIndex(index);
+        }
+
+        final boolean uniqueIndex = !results.getBoolean("NON_UNIQUE");
+        final int type = results.getInt("TYPE", IndexType.unknown.getId());
+        final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
+        final String sortSequence = results.getString("ASC_OR_DESC");
+        final int cardinality = results.getInt("CARDINALITY", 0);
+        final int pages = results.getInt("PAGES", 0);
+
+        final MutableColumn column = table.getColumn(columnName);
+        if (column != null)
+        {
+          column.setPartOfUniqueIndex(uniqueIndex);
+          final MutableIndexColumn indexColumn = new MutableIndexColumn(index,
+                                                                        column);
+          indexColumn.setIndexOrdinalPosition(ordinalPosition);
+          indexColumn.setSortSequence(IndexColumnSortSequence
+            .valueOfFromCode(sortSequence));
+          //
+          index.addColumn(indexColumn);
+          index.setUnique(uniqueIndex);
+          index.setType(IndexType.valueOf(type));
+          index.setCardinality(cardinality);
+          index.setPages(pages);
+          index.addAttributes(results.getAttributes());
+        }
+      }
+    }
+    finally
+    {
+      results.close();
+    }
+  }
+
+  private MutableColumn lookupOrCreateColumn(final MutableTable table,
+                                             final String columnName,
+                                             final boolean add)
+  {
+    MutableColumn column = null;
+    if (table != null)
+    {
+      column = table.getColumn(columnName);
+    }
+    if (column == null)
+    {
+      column = new MutableColumn(table, columnName);
+      if (add)
+      {
+        LOGGER.log(Level.FINER, String.format("Adding column to table: %s",
+                                              column.getFullName()));
+        table.addColumn(column);
+      }
+    }
+    return column;
+  }
+
+  /**
+   * Looks up a column in the database. If the column and table are not
+   * found, they are created, and added to the schema. This is prevent
+   * foreign key relationships from having a null pointer.
+   */
+  private MutableColumn lookupOrCreateColumn(final String catalogName,
+                                             final String schemaName,
+                                             final String tableName,
+                                             final String columnName)
+  {
+    MutableColumn column = null;
+    final MutableSchema schema = lookupSchema(catalogName, schemaName);
+    if (schema != null)
+    {
+      MutableTable table = schema.getTable(tableName);
+      if (table != null)
+      {
+        column = table.getColumn(columnName);
+      }
+      else
+      {
+        // Create the table, but do not add it to the schema
+        table = new MutableTable(schema, tableName);
+      }
+      if (column == null)
+      {
+        column = new MutableColumn(table, columnName);
+        LOGGER.log(Level.FINER, String
+          .format("Adding referenced foreign key column to table: %s", column
+            .getFullName()));
+        table.addColumn(column);
+      }
+    }
+    return column;
+  }
+
   /**
    * Retrieves a list of columns from the database, for the table
    * specified.
@@ -366,197 +557,6 @@ final class TableRetriever
         results.close();
       }
     }
-  }
-
-  private void createForeignKeys(final MetadataResultSet results,
-                                 final NamedObjectList<MutableForeignKey> foreignKeys)
-    throws SQLException
-  {
-    try
-    {
-      while (results.next())
-      {
-        String foreignKeyName = results.getString("FK_NAME");
-        if (Utility.isBlank(foreignKeyName))
-        {
-          foreignKeyName = UNKNOWN;
-        }
-        LOGGER.log(Level.FINER, "Retrieving foreign key: " + foreignKeyName);
-
-        final String pkTableCatalogName = results.getString("PKTABLE_CAT");
-        final String pkTableSchemaName = results.getString("PKTABLE_SCHEM");
-        final String pkTableName = results.getString("PKTABLE_NAME");
-        final String pkColumnName = results.getString("PKCOLUMN_NAME");
-
-        final String fkTableCatalogName = results.getString("FKTABLE_CAT");
-        final String fkTableSchemaName = results.getString("FKTABLE_SCHEM");
-        final String fkTableName = results.getString("FKTABLE_NAME");
-        final String fkColumnName = results.getString("FKCOLUMN_NAME");
-
-        MutableForeignKey foreignKey = foreignKeys.lookup(foreignKeyName);
-        if (foreignKey == null)
-        {
-          foreignKey = new MutableForeignKey(foreignKeyName);
-          foreignKeys.add(foreignKey);
-        }
-
-        final int keySequence = results.getInt("KEY_SEQ", 0);
-        final int updateRule = results.getInt("UPDATE_RULE",
-                                              ForeignKeyUpdateRule.unknown
-                                                .getId());
-        final int deleteRule = results.getInt("DELETE_RULE",
-                                              ForeignKeyUpdateRule.unknown
-                                                .getId());
-        final int deferrability = results
-          .getInt("DEFERRABILITY", ForeignKeyDeferrability.unknown.getId());
-        final MutableColumn pkColumn = lookupOrCreateColumn(pkTableCatalogName,
-                                                            pkTableSchemaName,
-                                                            pkTableName,
-                                                            pkColumnName);
-        final MutableColumn fkColumn = lookupOrCreateColumn(fkTableCatalogName,
-                                                            fkTableSchemaName,
-                                                            fkTableName,
-                                                            fkColumnName);
-        // Make a direct connection between the two columns
-        fkColumn.setReferencedColumn(pkColumn);
-        foreignKey.addColumnPair(keySequence, pkColumn, fkColumn);
-        foreignKey.setUpdateRule(ForeignKeyUpdateRule.valueOf(updateRule));
-        foreignKey.setDeleteRule(ForeignKeyUpdateRule.valueOf(deleteRule));
-        foreignKey.setDeferrability(ForeignKeyDeferrability
-          .valueOf(deferrability));
-
-        foreignKey.addAttributes(results.getAttributes());
-
-        ((MutableTable) pkColumn.getParent()).addForeignKey(foreignKey);
-        ((MutableTable) fkColumn.getParent()).addForeignKey(foreignKey);
-      }
-    }
-    finally
-    {
-      results.close();
-    }
-
-  }
-
-  private void createIndices(final MutableTable table,
-                             final MetadataResultSet results)
-    throws SQLException
-  {
-    try
-    {
-      while (results.next())
-      {
-        // final String catalogName = results.getString("TABLE_CAT");
-        // final String schemaName = results.getString("TABLE_SCHEM");
-        // final String tableName = results.getString("TABLE_NAME");
-        String indexName = results.getString("INDEX_NAME");
-        if (Utility.isBlank(indexName))
-        {
-          indexName = UNKNOWN;
-        }
-        LOGGER.log(Level.FINER, String.format("Retrieving index: %s.%s", table
-          .getFullName(), indexName));
-        final String columnName = results.getString("COLUMN_NAME");
-        if (Utility.isBlank(columnName))
-        {
-          continue;
-        }
-
-        MutableIndex index = table.getIndex(indexName);
-        if (index == null)
-        {
-          index = new MutableIndex(table, indexName);
-          table.addIndex(index);
-        }
-
-        final boolean uniqueIndex = !results.getBoolean("NON_UNIQUE");
-        final int type = results.getInt("TYPE", IndexType.unknown.getId());
-        final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
-        final String sortSequence = results.getString("ASC_OR_DESC");
-        final int cardinality = results.getInt("CARDINALITY", 0);
-        final int pages = results.getInt("PAGES", 0);
-
-        final MutableColumn column = table.getColumn(columnName);
-        if (column != null)
-        {
-          column.setPartOfUniqueIndex(uniqueIndex);
-          final MutableIndexColumn indexColumn = new MutableIndexColumn(index,
-                                                                        column);
-          indexColumn.setIndexOrdinalPosition(ordinalPosition);
-          indexColumn.setSortSequence(IndexColumnSortSequence
-            .valueOfFromCode(sortSequence));
-          //
-          index.addColumn(indexColumn);
-          index.setUnique(uniqueIndex);
-          index.setType(IndexType.valueOf(type));
-          index.setCardinality(cardinality);
-          index.setPages(pages);
-          index.addAttributes(results.getAttributes());
-        }
-      }
-    }
-    finally
-    {
-      results.close();
-    }
-  }
-
-  private MutableColumn lookupOrCreateColumn(final MutableTable table,
-                                             final String columnName,
-                                             final boolean add)
-  {
-    MutableColumn column = null;
-    if (table != null)
-    {
-      column = table.getColumn(columnName);
-    }
-    if (column == null)
-    {
-      column = new MutableColumn(table, columnName);
-      if (add)
-      {
-        LOGGER.log(Level.FINER, String.format("Adding column to table: %s",
-                                              column.getFullName()));
-        table.addColumn(column);
-      }
-    }
-    return column;
-  }
-
-  /**
-   * Looks up a column in the database. If the column and table are not
-   * found, they are created, and added to the schema. This is prevent
-   * foreign key relationships from having a null pointer.
-   */
-  private MutableColumn lookupOrCreateColumn(final String catalogName,
-                                             final String schemaName,
-                                             final String tableName,
-                                             final String columnName)
-  {
-    MutableColumn column = null;
-    final MutableSchema schema = lookupSchema(catalogName, schemaName);
-    if (schema != null)
-    {
-      MutableTable table = schema.getTable(tableName);
-      if (table != null)
-      {
-        column = table.getColumn(columnName);
-      }
-      else
-      {
-        // Create the table, but do not add it to the schema
-        table = new MutableTable(schema, tableName);
-      }
-      if (column == null)
-      {
-        column = new MutableColumn(table, columnName);
-        LOGGER.log(Level.FINER, String
-          .format("Adding referenced foreign key column to table: %s", column
-            .getFullName()));
-        table.addColumn(column);
-      }
-    }
-    return column;
   }
 
 }

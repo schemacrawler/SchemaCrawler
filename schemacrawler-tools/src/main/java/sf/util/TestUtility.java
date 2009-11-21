@@ -28,7 +28,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
 
-public class TestUtility
+public final class TestUtility
 {
 
   public static void compareOutput(final String referenceFile,

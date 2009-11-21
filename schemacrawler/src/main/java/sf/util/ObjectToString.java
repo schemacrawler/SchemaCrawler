@@ -36,7 +36,7 @@ import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ObjectToString
+public final class ObjectToString
 {
 
   private static final Logger LOGGER = Logger.getLogger(ObjectToString.class

@@ -42,23 +42,6 @@ final class WeakAssociationsAnalyzer
     this.weakAssociations = weakAssociations;
   }
 
-  void analyzeTables()
-  {
-    final Collection<String> prefixes = findTableNamePrefixes(tables);
-    final Map<String, MutableTable> tableMatchMap = mapTableNameMatches(tables,
-                                                                        prefixes);
-    if (LOGGER.isLoggable(Level.FINE))
-    {
-      LOGGER.log(Level.FINE, "Table prefixes=" + prefixes);
-      LOGGER.log(Level.FINE, "Table matches map:"
-                             + ObjectToString.toString(tableMatchMap));
-    }
-
-    final Map<String, ForeignKeyColumnMap> fkColumnsMap = mapForeignKeyColumns(tables);
-
-    findWeakAssociations(tables, tableMatchMap, fkColumnsMap);
-  }
-
   /**
    * Finds table prefixes. A prefix ends with "_".
    */
@@ -292,6 +275,23 @@ final class WeakAssociationsAnalyzer
     }
     matchMap.remove("");
     return matchMap;
+  }
+
+  void analyzeTables()
+  {
+    final Collection<String> prefixes = findTableNamePrefixes(tables);
+    final Map<String, MutableTable> tableMatchMap = mapTableNameMatches(tables,
+                                                                        prefixes);
+    if (LOGGER.isLoggable(Level.FINE))
+    {
+      LOGGER.log(Level.FINE, "Table prefixes=" + prefixes);
+      LOGGER.log(Level.FINE, "Table matches map:"
+                             + ObjectToString.toString(tableMatchMap));
+    }
+
+    final Map<String, ForeignKeyColumnMap> fkColumnsMap = mapForeignKeyColumns(tables);
+
+    findWeakAssociations(tables, tableMatchMap, fkColumnsMap);
   }
 
 }

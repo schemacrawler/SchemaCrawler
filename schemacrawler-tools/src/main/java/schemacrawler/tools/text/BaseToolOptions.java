@@ -20,9 +20,9 @@
 
 package schemacrawler.tools.text;
 
+
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.ToolOptions;
-
 
 /**
  * Tool options.

@@ -36,6 +36,7 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
 
 import schemacrawler.schema.Database;
+import schemacrawler.tools.ExecutionException;
 import schemacrawler.tools.integration.SchemaRenderer;
 
 /**
@@ -76,7 +77,7 @@ public final class VelocityRenderer
                         final String templateName,
                         final Database database,
                         final Writer writer)
-    throws Exception
+    throws ExecutionException
   {
     // Set the file path, in case the template is a file template
     // This allows Velocity to load templates from any directory
@@ -90,47 +91,56 @@ public final class VelocityRenderer
       templateLocation = templateFilePath.getName();
     }
 
-    // Create a new instance of the engine
-    final VelocityEngine ve = new VelocityEngine();
+    try
+    {
+      // Create a new instance of the engine
+      final VelocityEngine ve = new VelocityEngine();
 
-    // Set up Velocity resource loaders for loading from the classpath,
-    // as well as the file system
-    // http://jakarta.apache.org/velocity/docs/developer-guide.html#
-    // Configuring%20Resource%20Loaders
-    final String fileResourceLoader = "file";
-    final String classpathResourceLoader = "classpath";
-    final Properties p = new Properties();
-    p.setProperty(RuntimeConstants.RESOURCE_LOADER, fileResourceLoader + ","
-                                                    + classpathResourceLoader);
-    setVelocityResourceLoaderProperty(p,
-                                      classpathResourceLoader,
-                                      "class",
-                                      ClasspathResourceLoader.class.getName());
-    setVelocityResourceLoaderProperty(p,
-                                      fileResourceLoader,
-                                      "class",
-                                      FileResourceLoader.class.getName());
-    setVelocityResourceLoaderProperty(p,
-                                      fileResourceLoader,
-                                      "path",
-                                      templatePath);
+      // Set up Velocity resource loaders for loading from the
+      // classpath,
+      // as well as the file system
+      // http://jakarta.apache.org/velocity/docs/developer-guide.html#
+      // Configuring%20Resource%20Loaders
+      final String fileResourceLoader = "file";
+      final String classpathResourceLoader = "classpath";
+      final Properties p = new Properties();
+      p
+        .setProperty(RuntimeConstants.RESOURCE_LOADER,
+                     fileResourceLoader + "," + classpathResourceLoader);
+      setVelocityResourceLoaderProperty(p,
+                                        classpathResourceLoader,
+                                        "class",
+                                        ClasspathResourceLoader.class.getName());
+      setVelocityResourceLoaderProperty(p,
+                                        fileResourceLoader,
+                                        "class",
+                                        FileResourceLoader.class.getName());
+      setVelocityResourceLoaderProperty(p,
+                                        fileResourceLoader,
+                                        "path",
+                                        templatePath);
 
-    LOGGER.log(Level.INFO, "Velocity configuration properties - "
-                           + p.toString());
+      LOGGER.log(Level.INFO, "Velocity configuration properties - "
+                             + p.toString());
 
-    // Initialize the engine
-    ve.init(p);
+      // Initialize the engine
+      ve.init(p);
 
-    // Set the context
-    final VelocityContext context = new VelocityContext();
-    context.put("database", database);
+      // Set the context
+      final VelocityContext context = new VelocityContext();
+      context.put("database", database);
 
-    // Evaluate the template
-    final Template template = ve.getTemplate(templateLocation);
-    template.merge(context, writer);
+      // Evaluate the template
+      final Template template = ve.getTemplate(templateLocation);
+      template.merge(context, writer);
 
-    writer.flush();
-    writer.close();
+      writer.flush();
+      writer.close();
+    }
+    catch (final Exception e)
+    {
+      throw new ExecutionException("Could not expand template", e);
+    }
   }
 
 }

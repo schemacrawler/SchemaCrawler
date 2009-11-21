@@ -18,40 +18,34 @@
  *
  */
 
-package schemacrawler.utility;
+package schemacrawler.tools;
 
 
-import java.sql.Connection;
-
-import schemacrawler.crawl.CachingCrawlHandler;
-import schemacrawler.crawl.DatabaseSchemaCrawler;
-import schemacrawler.schema.Database;
-import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 /**
- * SchemaCrawler utility methods.
- * 
- * @author sfatehi
+ * Exception for the SchemaCrawler.
  */
-public final class SchemaCrawlerUtility
+public class ExecutionException
+  extends SchemaCrawlerException
 {
 
-  public static Database getDatabase(final Connection connection,
-                                     final SchemaCrawlerOptions schemaCrawlerOptions)
-    throws SchemaCrawlerException
+  private static final long serialVersionUID = 3257848770627713076L;
+
+  /**
+   * {@inheritDoc}
+   */
+  public ExecutionException(final String message)
   {
-    final CachingCrawlHandler crawlHandler = new CachingCrawlHandler();
-    final SchemaCrawler schemaCrawler = new DatabaseSchemaCrawler(connection);
-    schemaCrawler.crawl(schemaCrawlerOptions, crawlHandler);
-    final Database database = crawlHandler.getDatabase();
-    return database;
+    super(message);
   }
 
-  private SchemaCrawlerUtility()
+  /**
+   * {@inheritDoc}
+   */
+  public ExecutionException(final String message, final Throwable cause)
   {
-    // Prevent instantiation
+    super(message + ": " + cause.getMessage(), cause);
   }
 
 }

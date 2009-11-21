@@ -29,6 +29,7 @@ import java.util.logging.Logger;
 import schemacrawler.crawl.DatabaseSchemaCrawler;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawler;
+import schemacrawler.tools.ExecutionException;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.integration.IntegrationHelpOptions;
@@ -63,7 +64,7 @@ public final class GraphExecutable
 
   @Override
   public void execute(final Connection connection)
-    throws Exception
+    throws ExecutionException
   {
     if (connection == null)
     {
@@ -102,13 +103,6 @@ public final class GraphExecutable
     }
   }
 
-  @Override
-  protected HelpOptions getHelpOptions()
-  {
-    return new IntegrationHelpOptions("SchemaCrawler - Graphing",
-                                      "/help/OutputOptions.dot.txt");
-  }
-
   private void writeDotFile(final Connection connection, final File dotFile)
   {
     try
@@ -127,6 +121,13 @@ public final class GraphExecutable
     {
       LOGGER.log(Level.SEVERE, "Could not write diagram, " + dotFile, e);
     }
+  }
+
+  @Override
+  protected HelpOptions getHelpOptions()
+  {
+    return new IntegrationHelpOptions("SchemaCrawler - Graphing",
+                                      "/help/OutputOptions.dot.txt");
   }
 
 }
