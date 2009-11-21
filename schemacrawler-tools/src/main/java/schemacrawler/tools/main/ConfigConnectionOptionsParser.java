@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.tools.main.dbconnector;
+package schemacrawler.tools.main;
 
 
 import java.util.HashMap;

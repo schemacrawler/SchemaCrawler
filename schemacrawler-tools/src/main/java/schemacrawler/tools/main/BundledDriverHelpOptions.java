@@ -18,10 +18,9 @@
  *
  */
 
-package schemacrawler.tools.main.dbconnector;
+package schemacrawler.tools.main;
 
 
-import schemacrawler.tools.main.HelpOptions;
 
 public final class BundledDriverHelpOptions
   extends HelpOptions

@@ -18,12 +18,11 @@
  *
  */
 
-package schemacrawler.tools.main.dbconnector;
+package schemacrawler.tools.main;
 
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
-import schemacrawler.tools.main.BaseOptionsParser;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
 
