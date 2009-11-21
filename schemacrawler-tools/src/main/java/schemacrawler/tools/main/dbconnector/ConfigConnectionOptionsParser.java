@@ -21,11 +21,13 @@
 package schemacrawler.tools.main.dbconnector;
 
 
+import java.util.HashMap;
 import java.util.Map;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.Utility;
 import sf.util.CommandLineParser.BooleanOption;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
@@ -39,8 +41,40 @@ public final class ConfigConnectionOptionsParser
   extends BaseDatabaseConnectionOptionsParser
 {
 
+  /**
+   * Gets a sub-group of properties - those that start with a given
+   * prefix. The prefix is removed in the result.
+   * 
+   * @param prefix
+   *        Prefix to group by.
+   * @return Partitioned properties.
+   */
+  private static Map<String, String> partition(final Map<String, String> config,
+                                               final String prefix)
+  {
+    if (Utility.isBlank(prefix))
+    {
+      return config;
+    }
+
+    final String dottedPrefix = prefix + ".";
+    final Map<String, String> partition = new HashMap<String, String>();
+    for (final Map.Entry<String, String> entry: config.entrySet())
+    {
+      final String key = entry.getKey();
+      if (key.startsWith(dottedPrefix))
+      {
+        final String unprefixed = key.substring(dottedPrefix.length());
+        partition.put(unprefixed, entry.getValue());
+      }
+    }
+
+    return partition;
+  }
+
   private final BooleanOption optionUseDefaultConnection = new BooleanOption('d',
                                                                              "default");
+
   private final StringOption optionConnection = new StringOption('c',
                                                                  "connection",
                                                                  null);
@@ -76,8 +110,8 @@ public final class ConfigConnectionOptionsParser
       connectionName = optionConnection.getValue();
     }
 
-    final Map<String, String> databaseConnectionConfig = ConfigUtility
-      .partition(config, connectionName);
+    final Map<String, String> databaseConnectionConfig = partition(config,
+                                                                   connectionName);
     databaseConnectionConfig.put("user", optionUser.getValue());
     databaseConnectionConfig.put("password", optionPassword.getValue());
 
@@ -91,5 +125,4 @@ public final class ConfigConnectionOptionsParser
   {
     return "/help/Commands.readme.txt";
   }
-
 }
