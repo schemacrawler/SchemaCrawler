@@ -21,29 +21,28 @@
 package sf.util;
 
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+import java.util.Map.Entry;
 
 /**
  * Configuration properties.
  * 
  * @author Sualeh Fatehi
  */
-public final class ConfigUtility
+public final class TemplatingUtility
 {
 
-  /**
-   * Substitutes variables in the provided config.
-   */
-  public static void substituteVariables(final Map<String, String> config)
+  public static String expandTemplate(final String template)
   {
-    for (final Map.Entry<String, String> entry: config.entrySet())
-    {
-      config.put(entry.getKey(), substituteVariables(entry.getValue(), config));
-    }
+    return expandTemplate(template, propertiesMap(System.getProperties()));
   }
 
-  public static String substituteVariables(final String template,
-                                           final Map<String, String> map)
+  public static String expandTemplate(final String template,
+                                      final Map<String, String> map)
   {
     if (Utility.isBlank(template) || map == null)
     {
@@ -99,7 +98,65 @@ public final class ConfigUtility
     }
   }
 
-  private ConfigUtility()
+  public static Set<String> extractTemplateVariables(final String template)
+  {
+
+    if (template == null)
+    {
+      return new HashSet<String>();
+    }
+
+    String shrunkTemplate = template;
+    final Set<String> keys = new HashSet<String>();
+    for (int left; (left = shrunkTemplate.indexOf("${")) >= 0;)
+    {
+      final int right = shrunkTemplate.indexOf("}", left + 2);
+      if (right >= 0)
+      {
+        final String propertyKey = shrunkTemplate.substring(left + 2, right);
+        keys.add(propertyKey);
+        // Destroy key, so we can find the next one
+        shrunkTemplate = shrunkTemplate.substring(0, left) + ""
+                         + shrunkTemplate.substring(right + 1);
+      }
+    }
+
+    return keys;
+  }
+
+  /**
+   * Substitutes variables in the provided config.
+   */
+  public static void substituteVariables(final Map<String, String> config)
+  {
+    for (final Map.Entry<String, String> entry: config.entrySet())
+    {
+      config.put(entry.getKey(), expandTemplate(entry.getValue(), config));
+    }
+  }
+
+  /**
+   * Copies properties into a map.
+   * 
+   * @param properties
+   *        Properties to copy
+   * @return Map of properties and values
+   */
+  private static Map<String, String> propertiesMap(final Properties properties)
+  {
+    final Map<String, String> propertiesMap = new HashMap<String, String>();
+    if (properties != null)
+    {
+      final Set<Entry<Object, Object>> entries = properties.entrySet();
+      for (final Entry<Object, Object> entry: entries)
+      {
+        propertiesMap.put((String) entry.getKey(), (String) entry.getValue());
+      }
+    }
+    return propertiesMap;
+  }
+
+  private TemplatingUtility()
   {
   }
 
