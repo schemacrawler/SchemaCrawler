@@ -23,7 +23,6 @@ package schemacrawler.tools.text.operation;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -31,7 +30,7 @@ import schemacrawler.crawl.JavaSqlTypesUtility;
 import schemacrawler.crawl.JavaSqlType.JavaSqlTypeGroup;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.Config;
+import sf.util.TemplatingUtility;
 import sf.util.Utility;
 
 /**
@@ -44,117 +43,6 @@ public final class Query
 {
 
   private static final long serialVersionUID = 2820769346069413473L;
-
-  /**
-   * Interpolate substrings into system property values. Substrings of
-   * the form ${<i>propname</i>} are interpolated into the text of the
-   * system property whose key matches <i>propname</i>. For example,
-   * expandProperties("hello.${user.name}.world") is "hello.foo.world"
-   * when called by a user named "foo". Property substrings can be
-   * nested. References to nonexistent system properties are
-   * interpolated to an empty string.
-   * 
-   * @param template
-   *        Template
-   * @return Expanded template
-   */
-  private static String expandTemplateFromProperties(final String template)
-  {
-    return expandTemplateFromProperties(template, new Config(System
-      .getProperties()));
-  }
-
-  /**
-   * Interpolate substrings into property values. Substrings of the form
-   * ${<i>propname</i>} are interpolated into the text of the system
-   * property whose key matches <i>propname</i>. For example,
-   * expandProperties("hello.${user.name}.world") is "hello.foo.world"
-   * when called by a user named "foo". Property substrings can be
-   * nested. References to nonexistent system properties are
-   * interpolated to an empty string.
-   * 
-   * @param template
-   *        Template
-   * @param properties
-   *        Properties to substitute in the template
-   * @return Expanded template
-   */
-  private static String expandTemplateFromProperties(final String template,
-                                                     final Map<String, String> properties)
-  {
-
-    if (template == null)
-    {
-      return null;
-    }
-
-    String expandedTemplate = template;
-    for (int left; (left = expandedTemplate.indexOf("${")) >= 0;)
-    {
-      final int inner = expandedTemplate.indexOf("${", left + 2);
-      final int right = expandedTemplate.indexOf("}", left + 2);
-      if (inner >= 0 && inner < right)
-      {
-        // Evaluate nested property value
-        expandedTemplate = expandedTemplate.substring(0, inner)
-                           + expandTemplateFromProperties(expandedTemplate
-                             .substring(inner));
-      }
-      else if (right >= 0)
-      {
-        // Evaluate this property value
-        final String propertyKey = expandedTemplate.substring(left + 2, right);
-        String propertyValue = properties.get(propertyKey);
-        if (propertyValue == null)
-        {
-          propertyValue = "";
-        }
-        expandedTemplate = expandedTemplate.substring(0, left) + propertyValue
-                           + expandedTemplate.substring(right + 1);
-      }
-      else
-      {
-        // Unmatched left delimiter - ignore
-        break;
-      }
-    }
-
-    return expandedTemplate;
-
-  }
-
-  /**
-   * Gets a list of template variables.
-   * 
-   * @param template
-   *        Template to extract variables from
-   * @return Set of variables
-   */
-  private static Set<String> extractTemplateVariables(final String template)
-  {
-
-    if (template == null)
-    {
-      return new HashSet<String>();
-    }
-
-    String shrunkTemplate = template;
-    final Set<String> keys = new HashSet<String>();
-    for (int left; (left = shrunkTemplate.indexOf("${")) >= 0;)
-    {
-      final int right = shrunkTemplate.indexOf("}", left + 2);
-      if (right >= 0)
-      {
-        final String propertyKey = shrunkTemplate.substring(left + 2, right);
-        keys.add(propertyKey);
-        // Destroy key, so we can find the next one
-        shrunkTemplate = shrunkTemplate.substring(0, left) + ""
-                         + shrunkTemplate.substring(right + 1);
-      }
-    }
-
-    return keys;
-  }
 
   private static String getOrderByColumnsListAsString(final Table table)
   {
@@ -223,7 +111,7 @@ public final class Query
    */
   public String getQuery()
   {
-    return expandTemplateFromProperties(query);
+    return TemplatingUtility.expandTemplate(query);
   }
 
   /**
@@ -251,8 +139,8 @@ public final class Query
     }
 
     String sql = query;
-    sql = expandTemplateFromProperties(sql, tableProperties);
-    sql = expandTemplateFromProperties(sql);
+    sql = TemplatingUtility.expandTemplate(sql, tableProperties);
+    sql = TemplatingUtility.expandTemplate(sql);
 
     return sql;
   }
@@ -265,7 +153,7 @@ public final class Query
    */
   public boolean isQueryOver()
   {
-    final Set<String> keys = extractTemplateVariables(query);
+    final Set<String> keys = TemplatingUtility.extractTemplateVariables(query);
     return keys.contains("table");
   }
 

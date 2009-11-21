@@ -24,7 +24,7 @@ package schemacrawler.tools.main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.ConfigUtility;
+import sf.util.TemplatingUtility;
 import sf.util.CommandLineParser.NumberOption;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
@@ -83,7 +83,7 @@ public final class BundledDriverConnectionOptionsParser
     config.put("user", optionUser.getValue());
     config.put("password", optionPassword.getValue());
 
-    ConfigUtility.substituteVariables(config);
+    TemplatingUtility.substituteVariables(config);
 
     return new DatabaseConnectionOptions(config);
   }

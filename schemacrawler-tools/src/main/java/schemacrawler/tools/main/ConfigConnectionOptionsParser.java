@@ -27,7 +27,7 @@ import java.util.Map;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.ConfigUtility;
+import sf.util.TemplatingUtility;
 import sf.util.Utility;
 import sf.util.CommandLineParser.BooleanOption;
 import sf.util.CommandLineParser.Option;
@@ -116,7 +116,7 @@ public final class ConfigConnectionOptionsParser
     databaseConnectionConfig.put("user", optionUser.getValue());
     databaseConnectionConfig.put("password", optionPassword.getValue());
 
-    ConfigUtility.substituteVariables(databaseConnectionConfig);
+    TemplatingUtility.substituteVariables(databaseConnectionConfig);
 
     return new DatabaseConnectionOptions(databaseConnectionConfig);
   }
