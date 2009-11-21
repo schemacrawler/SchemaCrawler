@@ -71,9 +71,9 @@ class NamedObjectList<N extends NamedObject>
   private String makeLookupKey(final NamedObject namedObject)
   {
     final String key;
-    if (Utility.isBlank(namedObject.getName()))
+    if (namedObject == null)
     {
-      key = "";
+      key = null;
     }
     else
     {
@@ -84,22 +84,22 @@ class NamedObjectList<N extends NamedObject>
 
   private String makeLookupKey(final NamedObject namedObject, final String name)
   {
+    final StringBuilder buffer = new StringBuilder(256);
+
     final String key;
-    if (Utility.isBlank(name))
+    final String namedObjectLookupKey = makeLookupKey(namedObject);
+
+    if (namedObjectLookupKey != null)
     {
-      key = "";
+      buffer.append(namedObjectLookupKey);
     }
-    else
+    if (buffer.length() > 0)
     {
-      final StringBuilder buffer = new StringBuilder(256);
-      buffer.append(makeLookupKey(namedObject));
-      if (buffer.length() > 0)
-      {
-        buffer.append(".");
-      }
-      buffer.append(name);
-      key = buffer.toString();
+      buffer.append(".");
     }
+    buffer.append(name);
+
+    key = buffer.toString();
     return key;
   }
 
@@ -108,7 +108,7 @@ class NamedObjectList<N extends NamedObject>
     final String key;
     if (Utility.isBlank(fullName))
     {
-      key = "";
+      key = null;
     }
     else
     {
