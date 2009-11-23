@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.text.BaseFormatter;
 import schemacrawler.tools.text.util.TextFormattingHelper.DocumentHeaderType;
@@ -102,9 +102,9 @@ public final class DataTextFormatter
   }
 
   @Override
-  public void handle(final DatabaseInfo databaseInfo)
+  public void handle(final JdbcDriverInfo driverInfo)
   {
-    super.handle(databaseInfo);
+    super.handle(driverInfo);
 
     if (operation != null)
     {
