@@ -164,7 +164,7 @@ final class OperationHandler
   public void handle(final JdbcDriverInfo jdbcDriverInfo)
     throws SchemaCrawlerException
   {
-    // No-op
+    dataFormatter.handle(jdbcDriverInfo);
   }
 
   /**
@@ -186,7 +186,7 @@ final class OperationHandler
   public void handle(final SchemaCrawlerInfo schemaCrawlerInfo)
     throws SchemaCrawlerException
   {
-    // No-op
+    dataFormatter.handle(schemaCrawlerInfo);
   }
 
   /**
