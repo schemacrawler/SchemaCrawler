@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <project
-  name="Graphing"
-  default="graphing"
+  name="diagram"
+  default="diagram"
   xmlns:ivy="antlib:fr.jayasoft.ivy.ant">
 
-  <description>Graphing - Integration of SchemaCrawler with GraphViz.</description>
+  <description>diagram - Integration of SchemaCrawler with GraphViz.</description>
   <property environment="env" />
 
   <!-- Step 1.
@@ -24,27 +24,27 @@
   </path>
 
   <!-- Step 3.
-    Define an ant task that uses the <schemacrawler-graphing> macro
+    Define an ant task that uses the <schemacrawler-diagram> macro
   -->
-  <target name="graphing">
+  <target name="diagram">
 
     <property
       name="graph-type"
       value="png" />
     <property
       name="outputfile"
-      value="schema-graph.png" />
+      location="schema-diagram.png" />
 
     <delete file="${outputfile}" />
 
-    <schemacrawler-graphing
+    <schemacrawler-diagram
       datasource="hsqldb"
       db-driver-classpath="db-driver-classpath"
-      command="verbose_schema"
+      command="standard_schema"
     	graph-type="${graph-type}"
       outputfile="${outputfile}" />
 
-    <echo message="Graph is in ${outputfile}" />
+    <echo message="Schema diagram is in ${outputfile}" />
 
   </target>
 

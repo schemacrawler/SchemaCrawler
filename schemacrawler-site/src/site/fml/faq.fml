@@ -316,9 +316,9 @@ Or, the following:
       </answer>
     </faq>
   </part>
-  <part id="graphing">
+  <part id="diagrams">
     <title>SchemaCrawler Database Diagrams</title>
-    <faq id="graphing">
+    <faq id="diagrams">
       <question> What is a SchemaCrawler database diagram? </question>
       <answer>
         <p>
@@ -331,13 +331,13 @@ Or, the following:
         </p>
       </answer>
     </faq>
-    <faq id="graph-output">
+    <faq id="diagram-output">
       <question> What does a SchemaCrawler database diagram look like? </question>
       <answer>
         <p>
           An example of a SchemaCrawler database diagram:
         </p>
-        <img src="images/graph.png" width="100%" alt="SchemaCrawler database diagram" />
+        <img src="images/diagram.png" width="100%" alt="SchemaCrawler database diagram" />
       </answer>
     </faq>
   </part>
