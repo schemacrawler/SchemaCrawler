@@ -2,13 +2,13 @@
   "http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
   <properties>
-    <title>SchemaCrawler - Graphing Example</title>
+    <title>SchemaCrawler - Diagram Example</title>
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
 	<body>
-		<section name="SchemaCrawler - Graphing Example">
+		<section name="SchemaCrawler - Diagram Example">
       <subsection name="Description">
-        <p>The graphing example demonstrates the integration of SchemaCrawler with
+        <p>The diagram example demonstrates the integration of SchemaCrawler with
           GraphViz.</p>
       </subsection>
       <subsection name="How to Run">
@@ -21,19 +21,19 @@
             path. </li>            
           <li> Copy the
             <span class="code">schemacrawler.config.properties</span> file into the
-            <span class="code">graphing</span> example directory. </li>
+            <span class="code">diagram</span> example directory. </li>
           <li>Start the database server by running StartDatabaseServer script from the
             distribution directory.</li>
           <li> Start a command shell in the
-            <span class="code">graphing</span> example directory. </li>
+            <span class="code">diagram</span> example directory. </li>
           <li> Run
-            <span class="code">graphing.cmd</span> (or
-            <span class="code">graphing.sh</span> on Unix). </li>
+            <span class="code">diagram.cmd</span> (or
+            <span class="code">diagram.sh</span> on Unix). </li>
         </ol>
       </subsection>
 			<subsection name="How to Experiment">
 				<ol>
-					<li>Try modifying the graph size to modify the output.</li>
+					<li>Try using include and exclude expressions in include and exclude certain tables.</li>
 				</ol>
 			</subsection>
 		</section>

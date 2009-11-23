@@ -194,7 +194,7 @@ schemacrawler.format.hide_constraint_names=false
 				</p>
 			</answer>
 		</faq>
-		<faq id="graphing">
+		<faq id="diagrams">
 			<question>
 				How to create a database diagram of your schema
       </question>
@@ -206,8 +206,8 @@ schemacrawler.format.hide_constraint_names=false
 					<code>schemacrawler.tools.integration.graph.Main</code>
 					, with the correct options, for example,
 					<code>-outputformat png -outputfile=graph.png</code>
-					. See the graphing example in the
-					<code>_distrib\graphing</code>
+					. See the diagram example in the
+					<code>_distrib\diagram</code>
 					directory for more details.
 					An example of a SchemaCrawler database diagram:
 				</p>

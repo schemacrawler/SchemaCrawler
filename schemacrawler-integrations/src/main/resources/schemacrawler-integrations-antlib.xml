@@ -100,7 +100,7 @@
         value="${basedir}" />
 
       <java
-        taskname="schemacrawler-graphing"
+        taskname="schemacrawler-diagram"
         classname="schemacrawler.tools.integration.graph.Main"
         logerror="true"
         failonerror="true">
@@ -128,6 +128,67 @@
 
   </macrodef>
 
+  <macrodef name="schemacrawler-diagram">
+
+    <!-- Attributes -->
+    <attribute
+      name="config"
+      default="schemacrawler.config.properties" />
+    <attribute
+      name="config-override"
+      default="schemacrawler.config.override.properties" />
+
+    <attribute name="datasource" />
+    <attribute
+      name="db-driver-classpath"
+      default="${db-driver-classpath}" />
+
+    <attribute name="command" />
+
+    <attribute name="graph-type" />
+    <attribute name="outputfile" />
+
+    <attribute
+      name="loglevel"
+      description="Log level - may be one of: OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL"
+      default="SEVERE" />
+
+    <sequential>
+
+      <!-- Required properties: -->
+      <property
+        name="schemacrawler.dir"
+        value="${basedir}" />
+
+      <java
+        taskname="schemacrawler-diagram"
+        classname="schemacrawler.tools.integration.graph.Main"
+        logerror="true"
+        failonerror="true">
+        <classpath>
+          <fileset dir="${schemacrawler.dir}">
+            <include name="*.jar" />
+          </fileset>
+          <path refid="@{db-driver-classpath}" />
+        </classpath>
+        <arg value="-g" />
+        <arg value="@{config}" />
+        <arg value="-p" />
+        <arg value="@{config-override}" />
+        <arg value="-c" />
+        <arg value="@{datasource}" />
+        <arg value="-command" />
+        <arg value="@{command}" />
+        <arg value="-outputformat" />
+        <arg value="@{graph-type}" />
+        <arg value="-outputfile" />
+        <arg value="@{outputfile}" />
+        <arg value="-loglevel=@{loglevel}" />
+      </java>
+    </sequential>
+
+  </macrodef>
+  
   <macrodef name="schemacrawler-spring">
 
     <!-- Attributes -->
