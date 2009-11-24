@@ -59,4 +59,10 @@ public final class Commands
     return commands.iterator();
   }
 
+  @Override
+  public String toString()
+  {
+    return commands.toString();
+  }
+
 }
