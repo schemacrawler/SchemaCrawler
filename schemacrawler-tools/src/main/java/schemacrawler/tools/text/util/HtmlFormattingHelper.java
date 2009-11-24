@@ -67,7 +67,7 @@ public final class HtmlFormattingHelper
 
   public String createArrow()
   {
-    return " &rarr; ";
+    return " \u2192 ";
   }
 
   /**
