@@ -21,6 +21,7 @@ package schemacrawler.test;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,49 +103,56 @@ public class TemplatingTest
     assertEquals("Incorrect number of variables found", 0, variables.size());
 
     variables = TemplatingUtility.extractTemplateVariables("${one} variable");
-    sortedVariables = new ArrayList<String>(variables);
+    sortedVariables = getSortedVariables(variables);
     assertEquals("Incorrect number of variables found", 1, variables.size());
     assertEquals("Variable not found", "one", sortedVariables.get(0));
 
     variables = TemplatingUtility
       .extractTemplateVariables("Has ${one} variable, and ${another} variable");
-    sortedVariables = new ArrayList<String>(variables);
+    sortedVariables = getSortedVariables(variables);
     assertEquals("Incorrect number of variables found", 2, variables.size());
     assertEquals("Variable not found", "another", sortedVariables.get(0));
     assertEquals("Variable not found", "one", sortedVariables.get(1));
 
     variables = TemplatingUtility
       .extractTemplateVariables("Has $${unusual} variable");
-    sortedVariables = new ArrayList<String>(variables);
+    sortedVariables = getSortedVariables(variables);
     assertEquals("Incorrect number of variables found", 1, variables.size());
     assertEquals("Variable not found", "unusual", sortedVariables.get(0));
 
     variables = TemplatingUtility
       .extractTemplateVariables("Has ${unusual}} variable");
-    sortedVariables = new ArrayList<String>(variables);
+    sortedVariables = getSortedVariables(variables);
     assertEquals("Incorrect number of variables found", 1, variables.size());
     assertEquals("Variable not found", "unusual", sortedVariables.get(0));
 
     variables = TemplatingUtility
       .extractTemplateVariables("Has ${bad variable");
-    sortedVariables = new ArrayList<String>(variables);
+    sortedVariables = getSortedVariables(variables);
     assertEquals("Incorrect number of variables found", 0, variables.size());
 
     variables = TemplatingUtility
       .extractTemplateVariables("Has ${good} and ${bad variable");
-    sortedVariables = new ArrayList<String>(variables);
+    sortedVariables = getSortedVariables(variables);
     assertEquals("Incorrect number of variables found", 1, variables.size());
     assertEquals("Variable not found", "good", sortedVariables.get(0));
 
     variables = TemplatingUtility
       .extractTemplateVariables("Has ${bad and ${good} variable");
-    sortedVariables = new ArrayList<String>(variables);
+    sortedVariables = getSortedVariables(variables);
     assertEquals("Incorrect number of variables found", 1, variables.size());
     assertEquals("Variable not found", "bad and ${good", sortedVariables.get(0));
 
     variables = TemplatingUtility.extractTemplateVariables("Has bad} variable");
-    sortedVariables = new ArrayList<String>(variables);
+    sortedVariables = getSortedVariables(variables);
     assertEquals("Incorrect number of variables found", 0, variables.size());
+  }
+
+  private List<String> getSortedVariables(final Set<String> variables)
+  {
+    final List<String> sortedVariables = new ArrayList<String>(variables);
+    Collections.sort(sortedVariables);
+    return sortedVariables;
   }
 
 }

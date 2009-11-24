@@ -68,55 +68,6 @@ class NamedObjectList<N extends NamedObject>
     return values().toString();
   }
 
-  private String makeLookupKey(final NamedObject namedObject)
-  {
-    final String key;
-    if (namedObject == null)
-    {
-      key = null;
-    }
-    else
-    {
-      key = namedObject.getFullName();
-    }
-    return key;
-  }
-
-  private String makeLookupKey(final NamedObject namedObject, final String name)
-  {
-    final StringBuilder buffer = new StringBuilder(256);
-
-    final String key;
-    final String namedObjectLookupKey = makeLookupKey(namedObject);
-
-    if (namedObjectLookupKey != null)
-    {
-      buffer.append(namedObjectLookupKey);
-    }
-    if (buffer.length() > 0)
-    {
-      buffer.append(".");
-    }
-    buffer.append(name);
-
-    key = buffer.toString();
-    return key;
-  }
-
-  private String makeLookupKey(final String fullName)
-  {
-    final String key;
-    if (Utility.isBlank(fullName))
-    {
-      key = null;
-    }
-    else
-    {
-      key = fullName;
-    }
-    return key;
-  }
-
   /**
    * Add a named object to the list.
    * 
@@ -185,6 +136,55 @@ class NamedObjectList<N extends NamedObject>
     final List<N> all = new ArrayList<N>(objects.values());
     Collections.sort(all, sort);
     return Collections.unmodifiableList(all);
+  }
+
+  private String makeLookupKey(final NamedObject namedObject)
+  {
+    final String key;
+    if (namedObject == null)
+    {
+      key = null;
+    }
+    else
+    {
+      key = namedObject.getFullName();
+    }
+    return key;
+  }
+
+  private String makeLookupKey(final NamedObject namedObject, final String name)
+  {
+    final StringBuilder buffer = new StringBuilder(256);
+
+    final String key;
+    final String namedObjectLookupKey = makeLookupKey(namedObject);
+
+    if (namedObjectLookupKey != null)
+    {
+      buffer.append(namedObjectLookupKey);
+    }
+    if (buffer.length() > 0)
+    {
+      buffer.append(".");
+    }
+    buffer.append(name);
+
+    key = buffer.toString();
+    return key;
+  }
+
+  private String makeLookupKey(final String fullName)
+  {
+    final String key;
+    if (Utility.isBlank(fullName))
+    {
+      key = null;
+    }
+    else
+    {
+      key = fullName;
+    }
+    return key;
   }
 
 }
