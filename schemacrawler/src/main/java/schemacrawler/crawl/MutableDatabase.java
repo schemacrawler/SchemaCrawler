@@ -21,7 +21,6 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.Version;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Database;
@@ -53,9 +52,7 @@ final class MutableDatabase
     super(name);
     databaseInfo = new MutableDatabaseInfo();
     jdbcDriverInfo = new MutableJdbcDriverInfo();
-    schemaCrawlerInfo = new MutableSchemaCrawlerInfo(Version.getProductName(),
-                                                     Version.getVersion(),
-                                                     Version.about());
+    schemaCrawlerInfo = new MutableSchemaCrawlerInfo();
   }
 
   /**

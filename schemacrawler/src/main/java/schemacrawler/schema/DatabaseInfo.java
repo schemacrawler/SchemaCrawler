@@ -49,7 +49,7 @@ public interface DatabaseInfo
   /**
    * Gets all database properties.
    * 
-   * @return Map of properties
+   * @return Database properties
    */
   DatabaseProperty[] getProperties();
 

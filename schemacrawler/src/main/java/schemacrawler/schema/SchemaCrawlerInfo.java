@@ -22,6 +22,7 @@ package schemacrawler.schema;
 
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * Database and connection information.
@@ -52,5 +53,12 @@ public interface SchemaCrawlerInfo
    * @return SchemaCrawler version
    */
   String getSchemaCrawlerVersion();
+
+  /**
+   * Gets all system properties.
+   * 
+   * @return Map of properties
+   */
+  Map<String, String> getSystemProperties();
 
 }

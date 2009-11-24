@@ -54,6 +54,7 @@ public final class SchemaInfoLevel
   public static SchemaInfoLevel maximum()
   {
     final SchemaInfoLevel maximum = verbose();
+    maximum.setRetrieveAdditionalSchemaCrawlerInfo(true);
     maximum.setRetrieveAdditionalJdbcDriverInfo(true);
     maximum.setRetrieveTablePrivileges(true);
     maximum.setRetrieveTableColumnPrivileges(true);
@@ -70,6 +71,7 @@ public final class SchemaInfoLevel
   public static SchemaInfoLevel minimum()
   {
     final SchemaInfoLevel minimum = new SchemaInfoLevel();
+    minimum.setRetrieveSchemaCrawlerInfo(true);
     minimum.setRetrieveDatabaseInfo(true);
     minimum.setRetrieveJdbcDriverInfo(true);
     minimum.setRetrieveTables(true);
@@ -85,6 +87,7 @@ public final class SchemaInfoLevel
   public static SchemaInfoLevel standard()
   {
     final SchemaInfoLevel standard = new SchemaInfoLevel();
+    standard.setRetrieveSchemaCrawlerInfo(true);
     standard.setRetrieveDatabaseInfo(true);
     standard.setRetrieveJdbcDriverInfo(true);
     standard.setRetrieveTables(true);
@@ -115,11 +118,13 @@ public final class SchemaInfoLevel
     return verbose;
   }
 
-  private boolean retrieveJdbcDriverInfo;
-  private boolean retrieveDatabaseInfo;
+  private boolean retrieveSchemaCrawlerInfo = true;
+  private boolean retrieveJdbcDriverInfo = true;
+  private boolean retrieveDatabaseInfo = true;
   private boolean retrieveTables;
   private boolean retrieveProcedures;
   private boolean retrieveColumnDataTypes;
+  private boolean retrieveAdditionalSchemaCrawlerInfo;
   private boolean retrieveAdditionalDatabaseInfo;
   private boolean retrieveAdditionalJdbcDriverInfo;
   private boolean retrieveUserDefinedColumnDataTypes;
@@ -143,6 +148,11 @@ public final class SchemaInfoLevel
   public boolean isRetrieveAdditionalJdbcDriverInfo()
   {
     return retrieveAdditionalJdbcDriverInfo;
+  }
+
+  public boolean isRetrieveAdditionalSchemaCrawlerInfo()
+  {
+    return retrieveAdditionalSchemaCrawlerInfo;
   }
 
   public boolean isRetrieveCheckConstraintInformation()
@@ -188,6 +198,11 @@ public final class SchemaInfoLevel
   public boolean isRetrieveProcedures()
   {
     return retrieveProcedures;
+  }
+
+  public boolean isRetrieveSchemaCrawlerInfo()
+  {
+    return retrieveSchemaCrawlerInfo;
   }
 
   public boolean isRetrieveTableColumnPrivileges()
@@ -240,6 +255,11 @@ public final class SchemaInfoLevel
     this.retrieveAdditionalJdbcDriverInfo = retrieveAdditionalJdbcDriverInfo;
   }
 
+  public void setRetrieveAdditionalSchemaCrawlerInfo(final boolean retrieveAdditionalSchemaCrawlerInfo)
+  {
+    this.retrieveAdditionalSchemaCrawlerInfo = retrieveAdditionalSchemaCrawlerInfo;
+  }
+
   public void setRetrieveCheckConstraintInformation(final boolean retrieveCheckConstraintInformation)
   {
     this.retrieveCheckConstraintInformation = retrieveCheckConstraintInformation;
@@ -283,6 +303,11 @@ public final class SchemaInfoLevel
   public void setRetrieveProcedures(final boolean retrieveProcedures)
   {
     this.retrieveProcedures = retrieveProcedures;
+  }
+
+  public void setRetrieveSchemaCrawlerInfo(final boolean retrieveSchemaCrawlerInfo)
+  {
+    this.retrieveSchemaCrawlerInfo = retrieveSchemaCrawlerInfo;
   }
 
   public void setRetrieveTableColumnPrivileges(final boolean retrieveTableColumnPrivileges)

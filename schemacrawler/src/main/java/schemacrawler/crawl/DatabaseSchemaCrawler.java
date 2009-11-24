@@ -216,6 +216,14 @@ public final class DatabaseSchemaCrawler
       final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection,
                                                                         database);
 
+      if (infoLevel.isRetrieveSchemaCrawlerInfo())
+      {
+        retriever.retrieveSchemaCrawlerInfo();
+        if (infoLevel.isRetrieveAdditionalSchemaCrawlerInfo())
+        {
+          retriever.retrieveAdditionalSchemaCrawlerInfo();
+        }
+      }
       if (infoLevel.isRetrieveDatabaseInfo())
       {
         retriever.retrieveDatabaseInfo();

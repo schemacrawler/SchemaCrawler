@@ -23,13 +23,15 @@ package schemacrawler.tools.text;
 
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.SortedMap;
+import java.util.TreeMap;
+import java.util.Map.Entry;
 
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schema.SchemaCrawlerInfo;
-import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
@@ -194,9 +196,8 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
       return;
     }
 
-    out.println(formattingHelper
-      .createHeader(DocumentHeaderType.subTitle,
-                    "Database and JDBC Driver Information"));
+    out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
+                                              "System Information"));
 
     out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                               "SchemaCrawler Information"));
@@ -209,6 +210,25 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
       .createNameValueRow("product version", schemaCrawlerInfo
         .getSchemaCrawlerVersion()));
     out.print(formattingHelper.createObjectEnd());
+
+    if (options.isPrintVerboseDatabaseInfo())
+    {
+      out.println(formattingHelper.createHeader(DocumentHeaderType.section,
+                                                "System Properties"));
+      final SortedMap<String, String> systemProperties = new TreeMap<String, String>(schemaCrawlerInfo
+        .getSystemProperties());
+      if (!systemProperties.isEmpty())
+      {
+        out.print(formattingHelper.createObjectStart(""));
+        for (final Entry<String, String> systemProperty: systemProperties
+          .entrySet())
+        {
+          out.println(formattingHelper.createNameValueRow(systemProperty
+            .getKey(), systemProperty.getValue()));
+        }
+        out.print(formattingHelper.createObjectEnd());
+      }
+    }
 
     out.flush();
   }

@@ -35,16 +35,6 @@ public class DirectedGraph<T extends Comparable<? super T>>
 {
 
   /**
-   * Traversal state when detecting cycle.
-   */
-  private enum TraversalState
-  {
-    notStarted,
-    inProgress,
-    complete;
-  }
-
-  /**
    * Directed edge in a graph.
    * 
    * @param <T>
@@ -125,11 +115,6 @@ public class DirectedGraph<T extends Comparable<? super T>>
       return "(" + from + " --> " + to + ")";
     }
 
-    private DirectedGraph<?> getOuterType()
-    {
-      return DirectedGraph.this;
-    }
-
     Vertex<T> getFrom()
     {
       return from;
@@ -158,6 +143,11 @@ public class DirectedGraph<T extends Comparable<? super T>>
     void setTraversalState(final TraversalState traversalState)
     {
       this.traversalState = traversalState;
+    }
+
+    private DirectedGraph<?> getOuterType()
+    {
+      return DirectedGraph.this;
     }
 
   }
@@ -239,11 +229,6 @@ public class DirectedGraph<T extends Comparable<? super T>>
       return value.toString();
     }
 
-    private DirectedGraph getOuterType()
-    {
-      return DirectedGraph.this;
-    }
-
     TraversalState getTraversalState()
     {
       return traversalState;
@@ -259,6 +244,21 @@ public class DirectedGraph<T extends Comparable<? super T>>
       this.traversalState = traversalState;
     }
 
+    private DirectedGraph getOuterType()
+    {
+      return DirectedGraph.this;
+    }
+
+  }
+
+  /**
+   * Traversal state when detecting cycle.
+   */
+  private enum TraversalState
+  {
+    notStarted,
+    inProgress,
+    complete;
   }
 
   private final Map<T, Vertex<T>> verticesMap;
