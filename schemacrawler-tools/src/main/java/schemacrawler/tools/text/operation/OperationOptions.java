@@ -140,6 +140,7 @@ public final class OperationOptions
   {
     final SchemaInfoLevel schemaInfoLevel = new SchemaInfoLevel();
     schemaInfoLevel.setRetrieveDatabaseInfo(true);
+    schemaInfoLevel.setRetrieveJdbcDriverInfo(true);
 
     // Retrieve tables only if the query requires it
     final Query query = getQuery();
