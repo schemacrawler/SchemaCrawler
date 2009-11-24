@@ -423,18 +423,7 @@ public final class Entities
                           HTML40_ENTITIES_MAP);
   }
 
-  private static Map<String, Integer> flipMap(final Map<Integer, String> charEntityMap)
-  {
-    final Map<String, Integer> workingEntityCharMap = new HashMap<String, Integer>();
-    for (final Map.Entry<Integer, String> charEntity: charEntityMap.entrySet())
-    {
-      workingEntityCharMap.put(charEntity.getValue(), charEntity.getKey());
-    }
-    return Collections.unmodifiableMap(workingEntityCharMap);
-  }
-
   private final Map<Integer, String> charEntityMap;
-  private final Map<String, Integer> entityCharMap;
 
   private Entities(final Map<Integer, String>... maps)
   {
@@ -444,108 +433,44 @@ public final class Entities
       workingCharEntityMap.putAll(map);
     }
     charEntityMap = Collections.unmodifiableMap(workingCharEntityMap);
-    entityCharMap = flipMap(charEntityMap);
   }
 
   /**
-   * Escapes the characters in a <code>String</code>.
+   * HTML escapes the characters in some text.
    * 
-   * @param str
-   *        The <code>String</code> to escape.
-   * @return A new escaped <code>String</code>.
+   * @param text
+   *        Text to escape.
+   * @return HTML-escaped text
    */
-  public String escape(final String str)
+  public String escape(final String text)
   {
-    // todo: rewrite to use a Writer
-    final StringBuilder buf = new StringBuilder(str.length() * 2);
-    int i;
-    for (i = 0; i < str.length(); ++i)
+    final StringBuilder buffer = new StringBuilder(text.length() * 2);
+    for (int i = 0; i < text.length(); ++i)
     {
-      final char ch = str.charAt(i);
+      final char ch = text.charAt(i);
       final String entityName = charEntityMap.get((int) ch);
       if (entityName == null)
       {
         if (ch > 0x7F)
         {
           final int intValue = ch;
-          buf.append("&#");
-          buf.append(intValue);
-          buf.append(';');
+          buffer.append("&#");
+          buffer.append(intValue);
+          buffer.append(';');
         }
         else
         {
-          buf.append(ch);
+          buffer.append(ch);
         }
       }
       else
       {
-        buf.append('&');
-        buf.append(entityName);
-        buf.append(';');
+        buffer.append('&');
+        buffer.append(entityName);
+        buffer.append(';');
       }
     }
-    return buf.toString();
-  }
-
-  /**
-   * Unescapes the entities in a <code>String</code>.
-   * 
-   * @param str
-   *        The <code>String</code> to escape.
-   * @return A new escaped <code>String</code>.
-   */
-  public String unescape(final String str)
-  {
-    final StringBuilder buf = new StringBuilder(str.length());
-    int i;
-    for (i = 0; i < str.length(); ++i)
-    {
-      final char ch = str.charAt(i);
-      if (ch == '&')
-      {
-        final int semi = str.indexOf(';', i + 1);
-        if (semi == -1)
-        {
-          buf.append(ch);
-          continue;
-        }
-        final String entityName = str.substring(i + 1, semi);
-        int entityValue;
-        if (entityName.charAt(0) == '#')
-        {
-          final char charAt1 = entityName.charAt(1);
-          if (charAt1 == 'x' || charAt1 == 'X')
-          {
-            entityValue = Integer.valueOf(entityName.substring(2), 16)
-              .intValue();
-          }
-          else
-          {
-            entityValue = Integer.parseInt(entityName.substring(1));
-          }
-        }
-        else
-        {
-          entityValue = entityCharMap.get(entityName);
-        }
-        if (entityValue == -1)
-        {
-          buf.append('&');
-          buf.append(entityName);
-          buf.append(';');
-        }
-        else
-        {
-          buf.append(entityValue);
-        }
-        i = semi;
-      }
-      else
-      {
-        buf.append(ch);
-      }
-    }
-    return buf.toString();
+    return buffer.toString();
   }
 
 }
