@@ -21,11 +21,11 @@ package schemacrawler.tools.text.util;
 
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 /**
- * Escapes entities.
+ * HTML escapes entities.
  * 
  * @author Sualeh Fatehi
  */
@@ -44,25 +44,25 @@ public final class Entities
 
   static
   {
-    final Map<Integer, String> BASIC_ENTITIES_MAP;
-    final Map<Integer, String> APOS_ENTITIES_MAP;
-    final Map<Integer, String> ISO8859_1_ENTITIES_MAP;
-    final Map<Integer, String> HTML40_ENTITIES_MAP;
+    final SortedMap<Integer, String> BASIC_ENTITIES_MAP;
+    final SortedMap<Integer, String> APOS_ENTITIES_MAP;
+    final SortedMap<Integer, String> ISO8859_1_ENTITIES_MAP;
+    final SortedMap<Integer, String> HTML40_ENTITIES_MAP;
 
-    final Map<Integer, String> map = new HashMap<Integer, String>();
+    SortedMap<Integer, String> map;
 
-    map.clear();
+    map = new TreeMap<Integer, String>();
     map.put(34, "quot");
     map.put(62, "gt");
     map.put(38, "amp");
     map.put(60, "lt");
-    BASIC_ENTITIES_MAP = Collections.unmodifiableMap(map);
+    BASIC_ENTITIES_MAP = Collections.unmodifiableSortedMap(map);
 
-    map.clear();
+    map = new TreeMap<Integer, String>();
     map.put(39, "apos");
-    APOS_ENTITIES_MAP = Collections.unmodifiableMap(map);
+    APOS_ENTITIES_MAP = Collections.unmodifiableSortedMap(map);
 
-    map.clear();
+    map = new TreeMap<Integer, String>();
     map.put(190, "frac34");
     map.put(246, "ouml");
     map.put(235, "euml");
@@ -255,9 +255,9 @@ public final class Entities
     map.put(174, "reg");
     map.put(217, "Ugrave");
     map.put(202, "Ecirc");
-    ISO8859_1_ENTITIES_MAP = Collections.unmodifiableMap(map);
+    ISO8859_1_ENTITIES_MAP = Collections.unmodifiableSortedMap(map);
 
-    map.clear();
+    map = new TreeMap<Integer, String>();
     map.put(8773, "cong");
     map.put(982, "piv");
     map.put(9002, "rang");
@@ -409,7 +409,7 @@ public final class Entities
     map.put(8217, "rsquo");
     map.put(732, "tilde");
     map.put(948, "delta");
-    HTML40_ENTITIES_MAP = Collections.unmodifiableMap(map);
+    HTML40_ENTITIES_MAP = Collections.unmodifiableSortedMap(map);
 
     /** XML character entities. */
     XML = new Entities(BASIC_ENTITIES_MAP, APOS_ENTITIES_MAP);
@@ -423,16 +423,16 @@ public final class Entities
                           HTML40_ENTITIES_MAP);
   }
 
-  private final Map<Integer, String> charEntityMap;
+  private final SortedMap<Integer, String> charEntityMap;
 
-  private Entities(final Map<Integer, String>... maps)
+  private Entities(final SortedMap<Integer, String>... maps)
   {
-    final Map<Integer, String> workingCharEntityMap = new HashMap<Integer, String>();
-    for (final Map<Integer, String> map: maps)
+    final SortedMap<Integer, String> workingCharEntityMap = new TreeMap<Integer, String>();
+    for (final SortedMap<Integer, String> map: maps)
     {
       workingCharEntityMap.putAll(map);
     }
-    charEntityMap = Collections.unmodifiableMap(workingCharEntityMap);
+    charEntityMap = Collections.unmodifiableSortedMap(workingCharEntityMap);
   }
 
   /**
