@@ -13,64 +13,6 @@ product name,SchemaCrawler
 product version,7.5
 
 
-System Properties
--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
-
-awt.toolkit,sun.awt.windows.WToolkit
-file.encoding,Cp1252
-file.encoding.pkg,sun.io
-file.separator,\
-java.awt.graphicsenv,sun.awt.Win32GraphicsEnvironment
-java.awt.printerjob,sun.awt.windows.WPrinterJob
-java.class.path,C:\Documents and Settings\sfatehi\My Documents\_Projects\SchemaCrawler\schemacrawler-tools\target\classes;C:\Documents and Settings\sfatehi\My Documents\_Projects\SchemaCrawler\schemacrawler\target\classes;C:\Documents and Settings\sfatehi\.m2\repository\hsqldb\hsqldb\1.8.0.7\hsqldb-1.8.0.7.jar
-java.class.version,49.0
-java.endorsed.dirs,C:\Program Files\Java\jdk1.5.0_14\jre\lib\endorsed
-java.ext.dirs,C:\Program Files\Java\jdk1.5.0_14\jre\lib\ext
-java.home,C:\Program Files\Java\jdk1.5.0_14\jre
-java.io.tmpdir,C:\DOCUME~1\sfatehi\LOCALS~1\Temp\
-java.library.path,C:\Program Files\Java\jdk1.5.0_14\bin;.;C:\WINDOWS\system32;C:\WINDOWS;C:/Program Files/Java/jdk1.5.0_14/bin/../jre/bin/client;C:/Program Files/Java/jdk1.5.0_14/bin/../jre/bin;C:\oraclexe\app\oracle\product\10.2.0\server\bin;C:\Perl\site\bin;C:\Perl\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\Microsoft SQL Server\80\Tools\BINN;C:\Program Files\cvsnt;C:\PROGRA~1\ULTRAE~1;C:\Program Files\IDM Computer Solutions\UltraEdit-32;C:\Program Files\Liquid Technologies\Liquid XML Studio 2009\XmlDataBinder7\Redist7\cpp\win32\bin;C:\cygwin\bin;C:\dev\utilities\tools\ant-1.6.1\bin;C:\Program Files\CVSNT\;C:\Program Files\Java\jdk1.5.0_14\bin;C:\air_sdk\bin;C:\sybase\DBISQL\bin;C:\sybase\DataAccess\ODBC\dll;C:\sybase\RPL-15_0\bin;C:\sybase\Shared\Sybase Central 4.3;C:\sybase\UAF-2_0\bin;C:\sybase\OCS-15_0\lib3p;C:\sybase\OCS-15_0\dll;C:\sybase\OCS-15_0\bin;C:\sybase\ASE-15_0\dll;C:\sybase\ASE-15_0\bin;C:\Program Files\Graphviz2.22\bin;C:\Program Files\TortoiseSVN\bin;c:\Firstwave CRM\32-bit;C:\cygwin\bin;C:\dev\utilities\tools\ant-1.6.1\bin;C:\apache-maven-2.2.1\bin;C:\Program Files\CVSNT\;C:\Program Files\Java\jdk1.5.0_14\bin;C:\air_sdk\bin;C:\Program Files\Graphviz2.20\bin
-java.runtime.name,"Java(TM) 2 Runtime Environment, Standard Edition"
-java.runtime.version,1.5.0_14-b03
-java.specification.name,Java Platform API Specification
-java.specification.vendor,Sun Microsystems Inc.
-java.specification.version,1.5
-java.vendor,Sun Microsystems Inc.
-java.vendor.url,http://java.sun.com/
-java.vendor.url.bug,http://java.sun.com/cgi-bin/bugreport.cgi
-java.version,1.5.0_14
-java.vm.info,"mixed mode, sharing"
-java.vm.name,Java HotSpot(TM) Client VM
-java.vm.specification.name,Java Virtual Machine Specification
-java.vm.specification.vendor,Sun Microsystems Inc.
-java.vm.specification.version,1.0
-java.vm.vendor,Sun Microsystems Inc.
-java.vm.version,1.5.0_14-b03
-line.separator,
-
-os.arch,x86
-os.name,Windows XP
-os.version,5.1
-path.separator,;
-sun.arch.data.model,32
-sun.boot.class.path,C:\Program Files\Java\jdk1.5.0_14\jre\lib\rt.jar;C:\Program Files\Java\jdk1.5.0_14\jre\lib\i18n.jar;C:\Program Files\Java\jdk1.5.0_14\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.5.0_14\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.5.0_14\jre\lib\jce.jar;C:\Program Files\Java\jdk1.5.0_14\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.5.0_14\jre\classes
-sun.boot.library.path,C:\Program Files\Java\jdk1.5.0_14\jre\bin
-sun.cpu.endian,little
-sun.cpu.isalist,""
-sun.desktop,windows
-sun.io.unicode.encoding,UnicodeLittle
-sun.java.launcher,SUN_STANDARD
-sun.jnu.encoding,Cp1252
-sun.management.compiler,HotSpot Client Compiler
-sun.os.patch.level,Service Pack 3
-user.country,US
-user.dir,C:\Documents and Settings\sfatehi\My Documents\_Projects\SchemaCrawler\schemacrawler-site\src\site\resources\snapshot-examples
-user.home,C:\Documents and Settings\sfatehi
-user.language,en
-user.name,sfatehi
-user.timezone,America/New_York
-user.variant,""
-
-
 Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
@@ -990,6 +932,14 @@ PUBLIC.java.lang.Math.ceil,"[procedure, returns result]"
 ""
 
 
+PUBLIC.java.lang.Math.copySign,"[procedure, returns result]"
+------------------------------------------------------------------------
+"",@p1,"FLOAT(8, 17), in"
+"",@p2,"FLOAT(8, 17), in"
+"",@p0,"FLOAT(8, 17), result"
+""
+
+
 PUBLIC.java.lang.Math.cos,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p1,"DOUBLE(8, 17), in"
@@ -1022,6 +972,13 @@ PUBLIC.java.lang.Math.floor,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p1,"DOUBLE(8, 17), in"
 "",@p0,"DOUBLE(8, 17), result"
+""
+
+
+PUBLIC.java.lang.Math.getExponent,"[procedure, returns result]"
+------------------------------------------------------------------------
+"",@p1,"FLOAT(8, 17), in"
+"",@p0,"INTEGER, result"
 ""
 
 
@@ -1078,6 +1035,21 @@ PUBLIC.java.lang.Math.min,"[procedure, returns result]"
 ""
 
 
+PUBLIC.java.lang.Math.nextAfter,"[procedure, returns result]"
+------------------------------------------------------------------------
+"",@p1,"FLOAT(8, 17), in"
+"",@p2,"DOUBLE(8, 17), in"
+"",@p0,"FLOAT(8, 17), result"
+""
+
+
+PUBLIC.java.lang.Math.nextUp,"[procedure, returns result]"
+------------------------------------------------------------------------
+"",@p1,"FLOAT(8, 17), in"
+"",@p0,"FLOAT(8, 17), result"
+""
+
+
 PUBLIC.java.lang.Math.pow,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p1,"DOUBLE(8, 17), in"
@@ -1103,6 +1075,14 @@ PUBLIC.java.lang.Math.round,"[procedure, returns result]"
 ------------------------------------------------------------------------
 "",@p1,"FLOAT(8, 17), in"
 "",@p0,"INTEGER, result"
+""
+
+
+PUBLIC.java.lang.Math.scalb,"[procedure, returns result]"
+------------------------------------------------------------------------
+"",@p1,"FLOAT(8, 17), in"
+"",@p2,"INTEGER, in"
+"",@p0,"FLOAT(8, 17), result"
 ""
 
 
