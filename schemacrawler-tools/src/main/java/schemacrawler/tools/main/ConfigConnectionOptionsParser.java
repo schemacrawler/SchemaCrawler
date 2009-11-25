@@ -113,8 +113,17 @@ public final class ConfigConnectionOptionsParser
 
     final Map<String, String> databaseConnectionConfig = partition(config,
                                                                    connectionName);
-    databaseConnectionConfig.put("user", optionUser.getValue());
-    databaseConnectionConfig.put("password", optionPassword.getValue());
+    final String user = optionUser.getValue();
+    if (user != null && !databaseConnectionConfig.containsKey("user"))
+    {
+      databaseConnectionConfig.put("user", user);
+    }
+
+    final String password = optionPassword.getValue();
+    if (password != null && !databaseConnectionConfig.containsKey("password"))
+    {
+      databaseConnectionConfig.put("password", password);
+    }
 
     TemplatingUtility.substituteVariables(databaseConnectionConfig);
 
