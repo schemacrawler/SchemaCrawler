@@ -24,7 +24,7 @@
   -->
   <target name="snapshot">
 
-    <property name="outputfile" value="snapshot.txt"/>
+    <property name="outputfile" location="snapshot.txt"/>
 
     <delete file="${outputfile}"/>
 
