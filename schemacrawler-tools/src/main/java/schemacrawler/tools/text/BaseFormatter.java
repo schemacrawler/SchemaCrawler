@@ -32,6 +32,7 @@ import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schema.SchemaCrawlerInfo;
+import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
@@ -213,12 +214,12 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
 
     if (options.isPrintVerboseDatabaseInfo())
     {
-      out.println(formattingHelper.createHeader(DocumentHeaderType.section,
-                                                "System Properties"));
       final SortedMap<String, String> systemProperties = new TreeMap<String, String>(schemaCrawlerInfo
         .getSystemProperties());
       if (!systemProperties.isEmpty())
       {
+        out.println(formattingHelper.createHeader(DocumentHeaderType.section,
+                                                  "System Properties"));
         out.print(formattingHelper.createObjectStart(""));
         for (final Entry<String, String> systemProperty: systemProperties
           .entrySet())
