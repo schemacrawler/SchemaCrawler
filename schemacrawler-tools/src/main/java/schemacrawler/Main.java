@@ -37,20 +37,15 @@ public final class Main
    * 
    * @param args
    *        Arguments passed into the program from the command line.
+   * @throws Exception
+   *         On an exception
    */
   public static void main(final String[] args)
+    throws Exception
   {
-    try
-    {
-      final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
-                                                                                new HelpOptions(""));
-      SchemaCrawlerMain.schemacrawler(commandLine);
-    }
-    catch (final Exception e)
-    {
-      // Print the stack trace for the benefit of the command line tools
-      e.printStackTrace();
-    }
+    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
+                                                                              new HelpOptions(""));
+    SchemaCrawlerMain.schemacrawler(commandLine);
   }
 
   private Main()
