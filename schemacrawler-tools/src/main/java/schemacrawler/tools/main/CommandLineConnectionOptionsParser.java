@@ -24,6 +24,7 @@ package schemacrawler.tools.main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.Utility;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
 
@@ -67,18 +68,24 @@ public final class CommandLineConnectionOptionsParser
     {
       final String jdbcDriverClassName = optionDriver.getValue();
       final String connectionUrl = optionConnectionUrl.getValue();
-
-      conenctionOptions = new DatabaseConnectionOptions(jdbcDriverClassName,
-                                                        connectionUrl);
-      conenctionOptions.setUser(optionUser.getValue());
-      conenctionOptions.setPassword(optionPassword.getValue());
-
-      return conenctionOptions;
+      if (Utility.isBlank(jdbcDriverClassName)
+          || Utility.isBlank(connectionUrl))
+      {
+        conenctionOptions = null;
+      }
+      else
+      {
+        conenctionOptions = new DatabaseConnectionOptions(jdbcDriverClassName,
+                                                          connectionUrl);
+        conenctionOptions.setUser(optionUser.getValue());
+        conenctionOptions.setPassword(optionPassword.getValue());
+      }
     }
     else
     {
-      return null;
+      conenctionOptions = null;
     }
+    return conenctionOptions;
   }
 
   @Override
