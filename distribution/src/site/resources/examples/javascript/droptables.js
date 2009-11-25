@@ -1,6 +1,8 @@
 var dropTables = function()
 {
+  println(database.schemaCrawlerInfo);
   println(database.databaseInfo);
+  println(database.jdbcDriverInfo);
   var statement = connection.createStatement();
   var catalogs = database.catalogs;
   for ( var c = 0; c < catalogs.length; c++)
@@ -9,18 +11,21 @@ var dropTables = function()
     for ( var i = 0; i < schemas.length; i++)
     {
       var tables = schemas[i].tables;
-      for ( var j = 0; j < tables.length; j++)
+      for ( var j = (tables.length - 1); j >= 0; j--)
       {
+        var table = tables[j];
+        var sql = "DROP " + table.type + " " + table.fullName;
+        println("Executing SQL: " + sql);
         try
         {
-          println("Attempting to drop table: " + tables[j].fullName);
-          statement.executeUpdate("DROP TABLE " + tables[j].fullName);
+          statement.executeUpdate(sql);
         }
         catch (e)
         {
-          println(e);
+          println("");
+          println(e.message);
           println("(Not dropping any more tables, due to exception)");
-          break;
+          return;
         }
       }
     }
