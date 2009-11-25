@@ -54,7 +54,6 @@ public final class SchemaInfoLevel
   public static SchemaInfoLevel maximum()
   {
     final SchemaInfoLevel maximum = verbose();
-    maximum.setRetrieveAdditionalSchemaCrawlerInfo(true);
     maximum.setRetrieveAdditionalJdbcDriverInfo(true);
     maximum.setRetrieveTablePrivileges(true);
     maximum.setRetrieveTableColumnPrivileges(true);
