@@ -67,7 +67,7 @@
       value="tables.vm" />
     <property
       name="outputfile"
-      value="table-script-by-velocity.sql" />
+      location="table-script-by-velocity.sql" />
 
     <delete file="${outputfile}" />
 
