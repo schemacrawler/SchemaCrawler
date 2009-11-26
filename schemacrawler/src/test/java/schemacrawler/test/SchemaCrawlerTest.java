@@ -40,6 +40,7 @@ import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableAssociationType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -224,6 +225,7 @@ public class SchemaCrawlerTest
             0, 0
         }
     };
+
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
@@ -256,6 +258,61 @@ public class SchemaCrawlerTest
                                    table.getFullName()),
                      fkCounts[schemaIdx][tableIdx],
                      table.getForeignKeys().length);
+      }
+    }
+  }
+
+  @Test
+  public void fkCounts()
+    throws Exception
+  {
+
+    final int[] tableCounts = {
+        0, 6, 2
+    };
+    final int[][] exportedFkCounts = {
+        {}, {
+            1, 0, 1, 0, 1, 0
+        }, {
+            0, 0
+        }
+    };
+    final int[][] importedFkCounts = {
+        {}, {
+            0, 0, 1, 2, 0, 0
+        }, {
+            0, 0
+        }
+    };
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+
+    final Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
+    final Schema[] schemas = catalog.getSchemas();
+    assertEquals("Schema count does not match", 3, schemas.length);
+    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
+    {
+      final Schema schema = schemas[schemaIdx];
+      final Table[] tables = schema.getTables();
+      assertEquals("Table count does not match",
+                   tableCounts[schemaIdx],
+                   tables.length);
+      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
+      {
+        final Table table = tables[tableIdx];
+        assertEquals(String
+                       .format("Table %s %s foreign key count does not match",
+                               table.getFullName(),
+                               TableAssociationType.exported),
+                     exportedFkCounts[schemaIdx][tableIdx],
+                     table.getForeignKeys(TableAssociationType.exported).length);
+        assertEquals(String
+                       .format("Table %s %s foreign key count does not match",
+                               table.getFullName(),
+                               TableAssociationType.imported),
+                     importedFkCounts[schemaIdx][tableIdx],
+                     table.getForeignKeys(TableAssociationType.imported).length);
       }
     }
   }
