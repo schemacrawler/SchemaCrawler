@@ -61,6 +61,23 @@ public interface Table
   String getColumnsListAsString();
 
   /**
+   * Gets the list of exported foreign keys. That is, only those whose
+   * primary key is referenced in another table.
+   * 
+   * @return Exported foreign keys of the table.
+   */
+  ForeignKey[] getExportedForeignKeys();
+
+  /**
+   * Gets a list of exported weak column associations that are derived
+   * by SchemaCrawler from the column names. That is, only those whose
+   * primary key is referenced in another table.
+   * 
+   * @return Exported weak associations for the table
+   */
+  ColumnMap[] getExportedWeakAssociations();
+
+  /**
    * Gets a foreign key by name.
    * 
    * @param name
@@ -78,21 +95,21 @@ public interface Table
   ForeignKey[] getForeignKeys();
 
   /**
-   * Gets the list of foreign keys.
+   * Gets the list of imported foreign keys. That is, only those that
+   * reference a primary key another table.
    * 
-   * @param tableAssociationType
-   *        Specifies what kind of foreign keys are to be returned, one
-   *        of
-   *        <ul>
-   *        <li>all</li>
-   *        <li>exported, that is, only those whose primary key is
-   *        referenced in another table</li>
-   *        <li>imported, that is, only those that reference a primary
-   *        key another table</li>
-   *        </ul>
-   * @return Foreign keys of the table.
+   * @return Imported foreign keys of the table.
    */
-  ForeignKey[] getForeignKeys(TableAssociationType tableAssociationType);
+  ForeignKey[] getImportedForeignKeys();
+
+  /**
+   * Gets a list of imported weak column associations that are derived
+   * by SchemaCrawler from the column names. That is, only those that
+   * reference a primary key another table.
+   * 
+   * @return Imported weak associations for the table
+   */
+  ColumnMap[] getImportedWeakAssociations();
 
   /**
    * Gets an index by name.
@@ -169,30 +186,12 @@ public interface Table
   TableType getType();
 
   /**
-   * Weak column associations that are derived by SchemaCrawler from the
-   * column names. Same as calling
+   * Gets a list of exported weak column associations that are derived
+   * by SchemaCrawler from the column names. Same as calling
    * getWeakAssociations(TableAssociationType.all).
    * 
    * @return Weak associations for the table
    */
   ColumnMap[] getWeakAssociations();
-
-  /**
-   * Weak column associations that are derived by SchemaCrawler from the
-   * column names.
-   * 
-   * @param tableAssociationType
-   *        Specifies what kind of weak associations are to be returned,
-   *        one of
-   *        <ul>
-   *        <li>all</li>
-   *        <li>exported, that is, only those whose primary key is
-   *        referenced in another table</li>
-   *        <li>imported, that is, only those that reference a primary
-   *        key another table</li>
-   *        </ul>
-   * @return Weak associations for the table
-   */
-  ColumnMap[] getWeakAssociations(TableAssociationType tableAssociationType);
 
 }

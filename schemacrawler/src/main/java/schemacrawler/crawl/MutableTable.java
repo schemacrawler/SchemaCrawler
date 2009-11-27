@@ -39,7 +39,6 @@ import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.TableAssociationType;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.TableType;
 import schemacrawler.schema.Trigger;
@@ -53,6 +52,13 @@ class MutableTable
   extends AbstractDatabaseObject
   implements Table
 {
+
+  private enum TableAssociationType
+  {
+    all,
+    exported,
+    imported;
+  }
 
   private enum TableCategory
   {
@@ -161,6 +167,26 @@ class MutableTable
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schema.Table#getExportedForeignKeys()
+   */
+  public ForeignKey[] getExportedForeignKeys()
+  {
+    return getForeignKeys(TableAssociationType.exported);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Table#getExportedWeakAssociations()
+   */
+  public ColumnMap[] getExportedWeakAssociations()
+  {
+    return getWeakAssociations(TableAssociationType.exported);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see schemacrawler.schema.Table#getForeignKey(java.lang.String)
    */
   public MutableForeignKey getForeignKey(final String name)
@@ -178,57 +204,19 @@ class MutableTable
     return getForeignKeys(TableAssociationType.all);
   }
 
+  public ForeignKey[] getImportedForeignKeys()
+  {
+    return getForeignKeys(TableAssociationType.imported);
+  }
+
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.Table#getForeignKeys(schemacrawler.schema.TableAssociationType)
+   * @see schemacrawler.schema.Table#getImportedWeakAssociations()
    */
-  public ForeignKey[] getForeignKeys(final TableAssociationType tableAssociationType)
+  public ColumnMap[] getImportedWeakAssociations()
   {
-    final List<MutableForeignKey> foreignKeysList = new ArrayList<MutableForeignKey>(foreignKeys
-      .values());
-    if (tableAssociationType != null
-        && tableAssociationType != TableAssociationType.all)
-    {
-      for (final Iterator<MutableForeignKey> iterator = foreignKeysList
-        .iterator(); iterator.hasNext();)
-      {
-        final MutableForeignKey mutableForeignKey = iterator.next();
-        final ForeignKeyColumnMap[] columnPairs = mutableForeignKey
-          .getColumnPairs();
-        boolean isExportedKey = false;
-        boolean isImportedKey = false;
-        for (final ForeignKeyColumnMap columnPair: columnPairs)
-        {
-          if (columnPair.getPrimaryKeyColumn().getParent().equals(this))
-          {
-            isExportedKey = true;
-          }
-          if (columnPair.getForeignKeyColumn().getParent().equals(this))
-          {
-            isImportedKey = true;
-          }
-        }
-        switch (tableAssociationType)
-        {
-          case exported:
-            if (!isExportedKey)
-            {
-              iterator.remove();
-            }
-            break;
-          case imported:
-            if (!isImportedKey)
-            {
-              iterator.remove();
-            }
-            break;
-          default:
-            break;
-        }
-      }
-    }
-    return foreignKeysList.toArray(new ForeignKey[foreignKeysList.size()]);
+    return getWeakAssociations(TableAssociationType.imported);
   }
 
   /**
@@ -356,17 +344,65 @@ class MutableTable
     return type;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Table#getWeakAssociations()
+   */
   public ColumnMap[] getWeakAssociations()
   {
     return getWeakAssociations(TableAssociationType.all);
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.Table#getWeakAssociations(schemacrawler.schema.TableAssociationType)
-   */
-  public ColumnMap[] getWeakAssociations(final TableAssociationType tableAssociationType)
+  private ForeignKey[] getForeignKeys(final TableAssociationType tableAssociationType)
+  {
+    final List<MutableForeignKey> foreignKeysList = new ArrayList<MutableForeignKey>(foreignKeys
+      .values());
+    if (tableAssociationType != null
+        && tableAssociationType != TableAssociationType.all)
+    {
+      for (final Iterator<MutableForeignKey> iterator = foreignKeysList
+        .iterator(); iterator.hasNext();)
+      {
+        final MutableForeignKey mutableForeignKey = iterator.next();
+        final ForeignKeyColumnMap[] columnPairs = mutableForeignKey
+          .getColumnPairs();
+        boolean isExportedKey = false;
+        boolean isImportedKey = false;
+        for (final ForeignKeyColumnMap columnPair: columnPairs)
+        {
+          if (columnPair.getPrimaryKeyColumn().getParent().equals(this))
+          {
+            isExportedKey = true;
+          }
+          if (columnPair.getForeignKeyColumn().getParent().equals(this))
+          {
+            isImportedKey = true;
+          }
+        }
+        switch (tableAssociationType)
+        {
+          case exported:
+            if (!isExportedKey)
+            {
+              iterator.remove();
+            }
+            break;
+          case imported:
+            if (!isImportedKey)
+            {
+              iterator.remove();
+            }
+            break;
+          default:
+            break;
+        }
+      }
+    }
+    return foreignKeysList.toArray(new ForeignKey[foreignKeysList.size()]);
+  }
+
+  private ColumnMap[] getWeakAssociations(final TableAssociationType tableAssociationType)
   {
     final List<MutableColumnMap> weakAssociationsList = new ArrayList<MutableColumnMap>(weakAssociations);
     if (tableAssociationType != null)
