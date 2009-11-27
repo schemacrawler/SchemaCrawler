@@ -40,7 +40,6 @@ import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.TableAssociationType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -302,17 +301,13 @@ public class SchemaCrawlerTest
       {
         final Table table = tables[tableIdx];
         assertEquals(String
-                       .format("Table %s %s foreign key count does not match",
-                               table.getFullName(),
-                               TableAssociationType.exported),
-                     exportedFkCounts[schemaIdx][tableIdx],
-                     table.getForeignKeys(TableAssociationType.exported).length);
+          .format("Table %s exported foreign key count does not match", table
+            .getFullName()), exportedFkCounts[schemaIdx][tableIdx], table
+          .getExportedForeignKeys().length);
         assertEquals(String
-                       .format("Table %s %s foreign key count does not match",
-                               table.getFullName(),
-                               TableAssociationType.imported),
-                     importedFkCounts[schemaIdx][tableIdx],
-                     table.getForeignKeys(TableAssociationType.imported).length);
+          .format("Table %s imported foreign key count does not match", table
+            .getFullName()), importedFkCounts[schemaIdx][tableIdx], table
+          .getImportedForeignKeys().length);
       }
     }
   }
