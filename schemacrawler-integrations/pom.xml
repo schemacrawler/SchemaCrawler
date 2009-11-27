@@ -3,7 +3,7 @@
   <parent>
     <artifactId>schemacrawler-all</artifactId>
     <groupId>schemacrawler</groupId>
-    <version>7.5</version>
+    <version>7.5.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>schemacrawler</groupId>
