@@ -41,9 +41,9 @@ public final class BundledDriverConnectionOptionsParser
   private final StringOption optionHost = new StringOption(Option.NO_SHORT_FORM,
                                                            "host",
                                                            null);
-  private final NumberOption<Integer> optionPort = new NumberOption<Integer>(Option.NO_SHORT_FORM,
-                                                                             "port",
-                                                                             0);
+  private final NumberOption optionPort = new NumberOption(Option.NO_SHORT_FORM,
+                                                           "port",
+                                                           0);
   private final StringOption optionDatabase = new StringOption(Option.NO_SHORT_FORM,
                                                                "database",
                                                                "");

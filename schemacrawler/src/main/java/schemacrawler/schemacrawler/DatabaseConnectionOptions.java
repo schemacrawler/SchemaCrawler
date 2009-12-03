@@ -99,7 +99,7 @@ public class DatabaseConnectionOptions
   }
 
   public Connection createConnection()
-    throws SQLException
+    throws SchemaCrawlerException
   {
     if (user == null)
     {
@@ -109,7 +109,15 @@ public class DatabaseConnectionOptions
     {
       LOGGER.log(Level.WARNING, "Database password is not provided");
     }
-    return DriverManager.getConnection(connectionUrl, user, password);
+    try
+    {
+      return DriverManager.getConnection(connectionUrl, user, password);
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerException(String
+        .format("Could not connect to %s, for user %s", connectionUrl, user), e);
+    }
   }
 
   public String getConnectionUrl()

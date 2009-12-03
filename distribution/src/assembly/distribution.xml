@@ -5,15 +5,54 @@
   <property name="distribution.target" location="${SchemaCrawler.home}/distribution/target" />
   <property name="schemacrawler.distibution.jar" value="${distribution.target}/schemacrawler-${SchemaCrawler.version}.jar" />
 
+  <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
 
   <target name="make-distribution" depends="
+      do-downloads,
 	    make-super-jar,
 	    make-binary-distribution,
 	    make-source-distribution,
 	    make-database-distributions,
 	    make-website-distribution,
 	    cleanup-distribution
-	  " description="Package all sub-project jars into the distributable jar" />
+	    "
+	  description="Package all sub-project jars into the distributable jar" />
+
+  <target name="do-downloads">
+
+    <!-- Download licenses -->
+    <available file="gpl-3.0.txt" property="available.gpl-3.0.txt"/>
+    <if>
+      <equals arg1="${available.gpl-3.0.txt}" arg2="true" />
+      <else>
+        <get src="http://www.gnu.org/licenses/gpl-3.0.txt" dest="gpl-3.0.txt" usetimestamp="true" />
+      </else>
+    </if>
+    <available file="lgpl-3.0.txt" property="available.lgpl-3.0.txt"/>
+    <if>
+      <equals arg1="${available.lgpl-3.0.txt}" arg2="true" />
+      <else>
+        <get src="http://www.gnu.org/licenses/lgpl-3.0.txt" dest="lgpl-3.0.txt" usetimestamp="true" />
+      </else>
+    </if>
+    <available file="hsqlLicense.html" property="available.hsqlLicense.html"/>
+    <if>
+      <equals arg1="${available.hsqlLicense.html}" arg2="true" />
+      <else>
+        <get src="http://hsqldb.org/web/hsqlLicense.html" dest="hsqlLicense.html" usetimestamp="false" />
+      </else>
+    </if>
+
+    <!-- Download HSQLDB -->
+    <available file="hsqldb_1_8_0_10.zip" property="available.hsqldb_1_8_0_10.zip"/>
+    <if>
+      <equals arg1="${available.hsqldb_1_8_0_10.zip}" arg2="true" />
+      <else>
+        <get src="http://downloads.sourceforge.net/project/hsqldb/hsqldb/hsqldb_1_8_0/hsqldb_1_8_0_10.zip" dest="hsqldb_1_8_0_10.zip" verbose="true" usetimestamp="true" />
+      </else>
+    </if>
+
+  </target>
 
 
   <target name="make-super-jar">
@@ -32,10 +71,6 @@
       <zipfileset dir="${SchemaCrawler.home}/schemacrawler-maven-plugin/target/classes" />
     </jar>
 
-    <!-- Download licenses -->
-    <get src="http://www.gnu.org/licenses/gpl-3.0.txt" dest="gpl-3.0.txt" usetimestamp="true" />
-    <get src="http://www.gnu.org/licenses/lgpl-3.0.txt" dest="lgpl-3.0.txt" usetimestamp="true" />
-
   </target>
 
 
@@ -48,9 +83,9 @@
     <!-- Copy super-jar -->
     <copy file="${schemacrawler.distibution.jar}" todir="${distribution.staging.dir}/examples" />
 
-    <!-- Get licenses -->
+    <!-- Copy licenses -->
     <copy file="lgpl-3.0.txt" tofile="${distribution.staging.dir}/examples/LICENSE.txt" />
-    <get src="http://hsqldb.org/web/hsqlLicense.html" dest="${distribution.staging.dir}/examples/hsqlLicense.html" verbose="true" usetimestamp="false" />
+    <copy file="hsqlLicense.html" tofile="${distribution.staging.dir}/examples/hsqlLicense.html"/>
 
     <!-- Copy config files -->
     <copy todir="${distribution.staging.dir}/examples">
@@ -70,7 +105,6 @@
     <copy file="${SchemaCrawler.home}/schemacrawler-test/src/main/java/ApiExample.java" todir="${distribution.staging.dir}/examples/api" />
 
     <!-- Copy database server -->
-    <get src="http://downloads.sourceforge.net/project/hsqldb/hsqldb/hsqldb_1_8_0/hsqldb_1_8_0_10.zip" dest="hsqldb_1_8_0_10.zip" verbose="true" usetimestamp="true" />
     <unzip src="hsqldb_1_8_0_10.zip" dest="${distribution.staging.dir}/examples">
       <patternset>
         <include name="**/hsqldb.jar" />

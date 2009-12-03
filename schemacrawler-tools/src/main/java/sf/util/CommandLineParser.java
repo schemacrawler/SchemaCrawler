@@ -236,8 +236,8 @@ public final class CommandLineParser
    * @param <N>
    *        Option type
    */
-  public static final class NumberOption<N extends Number>
-    extends BaseOption<N>
+  public static final class NumberOption
+    extends BaseOption<Number>
   {
 
     /**
@@ -253,18 +253,17 @@ public final class CommandLineParser
      */
     public NumberOption(final char shortForm,
                         final String longForm,
-                        final N defaultValue)
+                        final Number defaultValue)
     {
       super(shortForm, longForm, defaultValue);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    protected N parseValue(final String arg)
+    protected Number parseValue(final String arg)
     {
       try
       {
-        return (N) NumberFormat.getNumberInstance().parse(arg);
+        return NumberFormat.getNumberInstance().parse(arg);
       }
       catch (final ParseException e)
       {
