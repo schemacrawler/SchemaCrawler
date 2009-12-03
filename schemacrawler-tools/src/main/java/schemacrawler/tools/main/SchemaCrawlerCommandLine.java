@@ -21,7 +21,6 @@ package schemacrawler.tools.main;
 
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -164,7 +163,7 @@ public class SchemaCrawlerCommandLine
    *         On an exception
    */
   public Connection createConnection()
-    throws SQLException
+    throws SchemaCrawlerException
   {
     return connectionOptions.createConnection();
   }

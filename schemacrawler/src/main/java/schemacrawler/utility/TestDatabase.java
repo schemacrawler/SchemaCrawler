@@ -117,7 +117,7 @@ public class TestDatabase
    * @throws SQLException
    */
   public Connection getConnection()
-    throws SQLException
+    throws SchemaCrawlerException
   {
     return connectionOptions.createConnection();
   }
@@ -165,6 +165,10 @@ public class TestDatabase
         }
         connectionOptions = null;
       }
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      LOGGER.log(Level.WARNING, "", e);
     }
     catch (final SQLException e)
     {
@@ -298,6 +302,10 @@ public class TestDatabase
         }
         connection.close();
       }
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      LOGGER.log(Level.WARNING, "", e);
     }
     catch (final SQLException e)
     {

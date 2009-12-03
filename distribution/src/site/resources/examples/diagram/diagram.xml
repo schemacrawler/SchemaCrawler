@@ -12,7 +12,7 @@
   -->
   <typedef
     resource="schemacrawler-integrations-antlib.xml"
-    classpath="../schemacrawler-7.5.1.jar" />
+    classpath="../schemacrawler-7.6.jar" />
 
   <!-- Step 2.
     Define the classpath to the database driver

@@ -23,7 +23,6 @@ import static org.junit.Assert.assertNotNull;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -62,7 +61,7 @@ public class ResultColumnsTest
 
   @Test
   public void columns()
-    throws SQLException
+    throws Exception
   {
 
     final String[] columnNames = {
