@@ -45,7 +45,7 @@ public class ExecutionException
    */
   public ExecutionException(final String message, final Throwable cause)
   {
-    super(message + ": " + cause.getMessage(), cause);
+    super(message, cause);
   }
 
 }

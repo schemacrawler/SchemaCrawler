@@ -68,4 +68,9 @@ class MutableCatalog
     schemas.add(schema);
   }
 
+  boolean hasSchemas()
+  {
+    return !schemas.isEmpty();
+  }
+
 }
