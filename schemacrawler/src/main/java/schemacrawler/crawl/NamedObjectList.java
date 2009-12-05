@@ -84,6 +84,11 @@ class NamedObjectList<N extends NamedObject>
     objects.put(key, namedObject);
   }
 
+  boolean isEmpty()
+  {
+    return objects.isEmpty();
+  }
+
   N lookup(final NamedObject namedObject, final String name)
   {
     final String key = makeLookupKey(namedObject, name);

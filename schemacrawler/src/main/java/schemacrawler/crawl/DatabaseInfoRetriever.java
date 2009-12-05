@@ -265,8 +265,8 @@ final class DatabaseInfoRetriever
   void retrieveSystemColumnDataTypes()
     throws SQLException
   {
-    final Schema schema = new MutableSchema(new MutableCatalog(database, ""),
-                                            "");
+    final Schema SYSTEM_SCHEMA = createSystemSchema();
+
     final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getTypeInfo());
     try
@@ -296,7 +296,7 @@ final class DatabaseInfoRetriever
         final int maximumScale = results.getInt("MAXIMUM_SCALE", 0);
         final int numPrecisionRadix = results.getInt("NUM_PREC_RADIX", 0);
 
-        final MutableColumnDataType columnDataType = new MutableColumnDataType(schema,
+        final MutableColumnDataType columnDataType = new MutableColumnDataType(SYSTEM_SCHEMA,
                                                                                typeName);
         // Set the Java SQL type code, but no mapped Java class is
         // available, so use the defaults
@@ -382,6 +382,20 @@ final class DatabaseInfoRetriever
       results.close();
     }
 
+  }
+
+  /**
+   * Create a system schema to hold the system column data-types, but do
+   * not add this to the set of database catalogs.
+   */
+  private Schema createSystemSchema()
+  {
+    final MutableCatalog systemCatalog = new MutableCatalog(database,
+                                                            "<system>");
+    final MutableSchema systemSchema = new MutableSchema(systemCatalog,
+                                                         "<system>");
+    systemCatalog.addSchema(systemSchema);
+    return systemSchema;
   }
 
   /**

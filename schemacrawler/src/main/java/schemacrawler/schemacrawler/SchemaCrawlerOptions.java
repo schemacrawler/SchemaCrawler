@@ -137,10 +137,10 @@ public final class SchemaCrawlerOptions
 
     catalogInclusionRule = new InclusionRule(configProperties
                                                .getStringValue(SC_CATALOG_PATTERN_INCLUDE,
-                                                               InclusionRule.NONE),
+                                                               InclusionRule.ALL),
                                              configProperties
                                                .getStringValue(SC_CATALOG_PATTERN_EXCLUDE,
-                                                               InclusionRule.ALL));
+                                                               InclusionRule.NONE));
     schemaInclusionRule = new InclusionRule(configProperties
                                               .getStringValue(SC_SCHEMA_PATTERN_INCLUDE,
                                                               InclusionRule.ALL),
