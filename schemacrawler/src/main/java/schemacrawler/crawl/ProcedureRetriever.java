@@ -116,9 +116,12 @@ final class ProcedureRetriever
     }
     catch (final SQLException e)
     {
-      LOGGER.log(Level.WARNING, "Could not retrieve columns for procedure "
-                                + procedure + ": " + e.getMessage());
-      throw e;
+      final SQLException sqlEx = new SQLException("Could not retrieve columns for procedure "
+                                                  + procedure
+                                                  + ": "
+                                                  + e.getMessage());
+      sqlEx.setNextException(e);
+      throw sqlEx;
     }
     finally
     {

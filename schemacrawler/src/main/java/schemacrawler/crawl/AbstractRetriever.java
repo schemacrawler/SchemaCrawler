@@ -179,9 +179,9 @@ abstract class AbstractRetriever
   protected MutableSchema lookupSchema(final String catalogName,
                                        final String schemaName)
   {
-    final MutableSchema schema = retrieverConnection.getSchemaNamesMap()
-      .get(new SchemaReference(catalogName, schemaName));
-    return schema;
+    final SchemaReference schemaRef = new SchemaReference(catalogName,
+                                                          schemaName);
+    return retrieverConnection.getSchemaNamesMap().get(schemaRef);
   }
 
   protected MutableTable lookupTable(final String catalogName,

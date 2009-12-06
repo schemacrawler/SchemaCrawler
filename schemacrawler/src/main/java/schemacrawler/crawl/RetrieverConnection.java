@@ -28,7 +28,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import schemacrawler.schemacrawler.InformationSchemaViews;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 /**
@@ -47,7 +46,7 @@ final class RetrieverConnection
 
   RetrieverConnection(final Connection connection,
                       final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException, SQLException
+    throws SQLException
   {
     SchemaCrawlerOptions schemaCrawlerOptions = options;
     if (schemaCrawlerOptions == null)
@@ -56,11 +55,11 @@ final class RetrieverConnection
     }
     if (connection == null)
     {
-      throw new SchemaCrawlerException("No connection provided");
+      throw new SQLException("No connection provided");
     }
     if (connection.isClosed())
     {
-      throw new SchemaCrawlerException("Connection is closed");
+      throw new SQLException("Connection is closed");
     }
     this.connection = connection;
     metaData = connection.getMetaData();

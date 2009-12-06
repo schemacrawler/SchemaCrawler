@@ -144,9 +144,12 @@ final class TableRetriever
     }
     catch (final SQLException e)
     {
-      LOGGER.log(Level.WARNING, "Could not retrieve columns for table " + table
-                                + ":" + e.getMessage());
-      throw e;
+      final SQLException sqlEx = new SQLException("Could not retrieve columns for table "
+                                                  + table
+                                                  + ":"
+                                                  + e.getMessage());
+      sqlEx.setNextException(e);
+      throw sqlEx;
     }
     finally
     {
@@ -212,9 +215,12 @@ final class TableRetriever
     }
     catch (final SQLException e)
     {
-      LOGGER.log(Level.WARNING, "Could not retrieve indices for table " + table
-                                + ": " + e.getMessage());
-      throw e;
+      final SQLException sqlEx = new SQLException("Could not retrieve indices for table "
+                                                  + table
+                                                  + ": "
+                                                  + e.getMessage());
+      sqlEx.setNextException(e);
+      throw sqlEx;
     }
     finally
     {
@@ -276,9 +282,12 @@ final class TableRetriever
     }
     catch (final SQLException e)
     {
-      LOGGER.log(Level.WARNING, "Could not retrieve primary keys for table "
-                                + table + ": " + e.getMessage());
-      throw e;
+      final SQLException sqlEx = new SQLException("Could not retrieve primary keys for table "
+                                                  + table
+                                                  + ": "
+                                                  + e.getMessage());
+      sqlEx.setNextException(e);
+      throw sqlEx;
     }
     finally
     {

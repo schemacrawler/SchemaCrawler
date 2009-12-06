@@ -186,6 +186,23 @@ final class SchemaRetriever
                                              schema);
       }
     }
+
+    // Add an empty schema reference for databases that do not support
+    // neither catalogs nor schemas, as well as for the system
+    // data-types
+    final SchemaReference systemSchemaRef = new SchemaReference(null, null);
+    if (!schemaRefs.contains(systemSchemaRef))
+    {
+      final MutableCatalog systemCatalog = new MutableCatalog(database, null);
+      final MutableSchema systemSchema = new MutableSchema(systemCatalog, null);
+      systemCatalog.addSchema(systemSchema);
+      getRetrieverConnection().cacheSchema(systemSchemaRef, systemSchema);
+      if (!supportsCatalogs && !supportsSchemas)
+      {
+        database.addCatalog(systemCatalog);
+      }
+    }
+
   }
 
   /**
