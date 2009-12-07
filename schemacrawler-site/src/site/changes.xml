@@ -5,6 +5,12 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+    <release version="7.7" date="2009-12-03">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed -schemas and -catalogs command-line switch filtering of schemas 
+        and catalogs. 
+      ]]></action> 
+    </release>    
     <release version="7.6" date="2009-12-03">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed specification of Oracle SID using the -database command line switch, as well as
