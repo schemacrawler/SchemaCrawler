@@ -1,1 +1,1 @@
-@java -classpath ../schemacrawler-7.6.jar;../hsqldb.jar schemacrawler.Main -c hsqldb -command=hsqldb.tables
+@java -classpath ../schemacrawler-7.7.jar;../hsqldb.jar schemacrawler.Main -c hsqldb -command=hsqldb.tables
