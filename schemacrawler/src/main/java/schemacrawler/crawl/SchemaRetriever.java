@@ -149,18 +149,6 @@ final class SchemaRetriever
   {
     final Set<String> catalogNames = new HashSet<String>();
 
-    String connectionCatalog;
-    try
-    {
-      connectionCatalog = getDatabaseConnection().getCatalog();
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, e.getMessage(), e);
-      connectionCatalog = null;
-    }
-    catalogNames.add(connectionCatalog);
-
     if (supportsCatalogs)
     {
       try
@@ -171,7 +159,7 @@ final class SchemaRetriever
       {
         LOGGER.log(Level.WARNING, e.getMessage(), e);
       }
-      LOGGER.log(Level.FINER, "Retrieeved catalogs: " + catalogNames);
+      LOGGER.log(Level.FINER, "Retrieved catalogs: " + catalogNames);
     }
 
     return catalogNames;

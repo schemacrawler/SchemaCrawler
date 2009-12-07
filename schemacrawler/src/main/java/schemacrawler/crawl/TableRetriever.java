@@ -427,17 +427,19 @@ final class TableRetriever
                                                             fkTableName,
                                                             fkColumnName);
         // Make a direct connection between the two columns
-        fkColumn.setReferencedColumn(pkColumn);
-        foreignKey.addColumnPair(keySequence, pkColumn, fkColumn);
-        foreignKey.setUpdateRule(ForeignKeyUpdateRule.valueOf(updateRule));
-        foreignKey.setDeleteRule(ForeignKeyUpdateRule.valueOf(deleteRule));
-        foreignKey.setDeferrability(ForeignKeyDeferrability
-          .valueOf(deferrability));
+        if (pkColumn != null && fkColumn != null)
+        {
+          foreignKey.addColumnPair(keySequence, pkColumn, fkColumn);
+          foreignKey.setUpdateRule(ForeignKeyUpdateRule.valueOf(updateRule));
+          foreignKey.setDeleteRule(ForeignKeyUpdateRule.valueOf(deleteRule));
+          foreignKey.setDeferrability(ForeignKeyDeferrability
+            .valueOf(deferrability));
+          foreignKey.addAttributes(results.getAttributes());
 
-        foreignKey.addAttributes(results.getAttributes());
-
-        ((MutableTable) pkColumn.getParent()).addForeignKey(foreignKey);
-        ((MutableTable) fkColumn.getParent()).addForeignKey(foreignKey);
+          fkColumn.setReferencedColumn(pkColumn);
+          ((MutableTable) pkColumn.getParent()).addForeignKey(foreignKey);
+          ((MutableTable) fkColumn.getParent()).addForeignKey(foreignKey);
+        }
       }
     }
     finally
