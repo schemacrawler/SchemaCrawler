@@ -71,6 +71,21 @@ final class SchemaRetriever
     throws SQLException
   {
 
+    final InclusionRule includeAllRUle = new InclusionRule(InclusionRule.ALL,
+                                                           InclusionRule.NONE);
+    if (!supportsCatalogs && !catalogInclusionRule.equals(includeAllRUle))
+    {
+      LOGGER
+        .log(Level.INFO,
+             "Ignoring catalog inclusion rule, since the database does not support catalogs");
+    }
+    if (!supportsSchemas && !schemaInclusionRule.equals(includeAllRUle))
+    {
+      LOGGER
+        .log(Level.INFO,
+             "Ignoring schema inclusion rule, since the database does not support schemas");
+    }
+
     final Set<SchemaReference> schemaRefs = new HashSet<SchemaReference>();
 
     final Set<String> allCatalogNames = retrieveAllCatalogNames();
