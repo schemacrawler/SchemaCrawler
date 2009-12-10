@@ -1,6 +1,3 @@
-package schemacrawler.test;
-
-
 /*
  * SchemaCrawler
  * Copyright (c) 2000-2009, Sualeh Fatehi.
@@ -17,16 +14,15 @@ package schemacrawler.test;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package schemacrawler.test;
+
 
 import static org.junit.Assert.assertEquals;
 
 import java.sql.Connection;
-import java.util.Collection;
-import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -35,6 +31,8 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.utility.SchemaCrawlerUtility;
@@ -42,38 +40,23 @@ import schemacrawler.utility.SchemaCrawlerUtility;
 public class SchemaCrawlerSystemTest
 {
 
-  private static final Logger LOGGER = Logger
-    .getLogger(SchemaCrawlerSystemTest.class.getName());
-
-  private Collection<DataSource> dataSources;
-
-  @Before
-  public void beforeTest()
-    throws Exception
-  {
-    final ApplicationContext appContext = new ClassPathXmlApplicationContext("context.xml");
-    dataSources = (Collection<DataSource>) appContext.getBean("dataSources");
-  }
+  final ApplicationContext appContext = new ClassPathXmlApplicationContext("context.xml");
 
   @Test
-  public void tables()
+  public void tablesAndCounts()
     throws Exception
   {
-    for (final DataSource dataSource: dataSources)
-    {
-      final Schema schema = retrieveSchema(dataSource.getConnection());
-      tables(schema);
-    }
-  }
+    Schema schema;
 
-  public void counts()
-    throws Exception
-  {
-    for (final DataSource dataSource: dataSources)
-    {
-      final Schema schema = retrieveSchema(dataSource.getConnection());
-      counts(schema);
-    }
+    schema = retrieveSchema("oracle", "", "SCHEMACRAWLER");
+    tables(schema);
+    // counts(schema);
+
+    schema = retrieveSchema("sql-server",
+                            "schemacrawler",
+                            "schemacrawler.schemacrawler");
+    tables(schema);
+    // counts(schema);
   }
 
   private void counts(final Schema schema)
@@ -135,16 +118,47 @@ public class SchemaCrawlerSystemTest
     }
   }
 
-  private Schema retrieveSchema(final Connection connection)
+  private Schema retrieveSchema(final String dataSourceName,
+                                final String catalogInclusion,
+                                final String schemaInclusion)
     throws Exception
   {
+    final DataSource dataSource = (DataSource) appContext
+      .getBean(dataSourceName);
+    final Connection connection = dataSource.getConnection();
+
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    final Database database = SchemaCrawlerUtility
-      .getDatabase(connection, schemaCrawlerOptions);
-    final Catalog catalog = database.getCatalogs()[0];
-    final Schema schema = catalog.getSchema("SCHEMACRAWLER");
-    return schema;
-  }
+    schemaCrawlerOptions
+      .setCatalogInclusionRule(new InclusionRule(catalogInclusion,
+                                                 InclusionRule.NONE));
+    schemaCrawlerOptions
+      .setSchemaInclusionRule(new InclusionRule(schemaInclusion,
+                                                InclusionRule.NONE));
 
+    try
+    {
+      final Database database = SchemaCrawlerUtility
+        .getDatabase(connection, schemaCrawlerOptions);
+
+      final Catalog catalog = database.getCatalogs()[0];
+      if (catalog == null)
+      {
+        throw new NullPointerException("No catalog found for " + dataSourceName);
+      }
+
+      final Schema schema = catalog.getSchemas()[0];
+      if (schema == null)
+      {
+        throw new NullPointerException("No schema found for " + dataSourceName);
+      }
+
+      return schema;
+    }
+    catch (Exception e)
+    {
+      throw new SchemaCrawlerException(dataSourceName, e);
+    }
+
+  }
 }
