@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>SchemaCrawler - System Test</name>
+	<comment></comment>
+	<projects>
+		<project>SchemaCrawler - Integrations</project>
+		<project>SchemaCrawler - Main</project>
+		<project>SchemaCrawler - Tools</project>
+		<project>SchemaCrawler for Apache Derby</project>
+		<project>SchemaCrawler for Microsoft SQL Server</project>
+		<project>SchemaCrawler for MySQL</project>
+		<project>SchemaCrawler for Oracle</project>
+		<project>SchemaCrawler for PostgreSQL</project>
+		<project>SchemaCrawler for SQLite</project>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.maven.ide.eclipse.maven2Builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.springframework.ide.eclipse.core.springbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.springframework.ide.eclipse.core.springnature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.maven.ide.eclipse.maven2Nature</nature>
+	</natures>
+</projectDescription>
