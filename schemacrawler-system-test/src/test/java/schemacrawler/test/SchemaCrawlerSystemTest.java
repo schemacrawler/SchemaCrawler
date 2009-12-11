@@ -18,6 +18,8 @@ package schemacrawler.test;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.sql.Connection;
 
@@ -46,84 +48,131 @@ public class SchemaCrawlerSystemTest
   public void tablesAndCounts()
     throws Exception
   {
+    String dataSourceName;
     Schema schema;
 
-    schema = retrieveSchema("MicrosoftSQLServer",
+    dataSourceName = "MicrosoftSQLServer";
+    schema = retrieveSchema(dataSourceName,
                             "schemacrawler",
                             "schemacrawler.schemacrawler");
-    tables(schema);
-    // counts(schema);
+    tables(dataSourceName, schema);
+    counts(dataSourceName, schema);
 
-    schema = retrieveSchema("MySQL", "schemacrawler", null);
-    tables(schema);
-    // counts(schema);
+    dataSourceName = "MySQL";
+    schema = retrieveSchema(dataSourceName, "schemacrawler", null);
+    tables(dataSourceName, schema);
+    counts(dataSourceName, schema);
 
-    schema = retrieveSchema("Oracle", null, "SCHEMACRAWLER");
-    tables(schema);
-    // counts(schema);
+    dataSourceName = "Oracle";
+    schema = retrieveSchema(dataSourceName, null, "SCHEMACRAWLER");
+    tables(dataSourceName, schema);
+    counts(dataSourceName, schema);
 
-    schema = retrieveSchema("PostgreSQL", null, null);
-    tables(schema);
-    // counts(schema);
+    dataSourceName = "PostgreSQL";
+    schema = retrieveSchema(dataSourceName, null, null);
+    tables(dataSourceName, schema);
+    counts(dataSourceName, schema);
 
   }
 
-  private void counts(final Schema schema)
+  @Test
+  public void unknownCatalog()
+    throws Exception
+  {
+    String dataSourceName;
+    Schema schema;
+
+    dataSourceName = "MicrosoftSQLServer";
+    schema = retrieveSchema(dataSourceName,
+                            "unknown",
+                            "schemacrawler.schemacrawler");
+    assertNull(dataSourceName, schema);
+
+    dataSourceName = "MySQL";
+    schema = retrieveSchema(dataSourceName, "unknown", null);
+    assertNull(schema);
+
+    // Oracle does not support catalogs, so the catalog rule is ignored
+    dataSourceName = "Oracle";
+    schema = retrieveSchema(dataSourceName, "unknown", "SCHEMACRAWLER");
+    assertNotNull(dataSourceName, schema);
+
+    // PostgreSQL does not support catalogs, so the catalog rule is
+    // ignored
+    dataSourceName = "PostgreSQL";
+    schema = retrieveSchema(dataSourceName, "unknown", null);
+    assertNotNull(dataSourceName, schema);
+
+  }
+
+  @Test
+  public void unknownSchema()
+    throws Exception
+  {
+    String dataSourceName;
+    Schema schema;
+
+    dataSourceName = "MicrosoftSQLServer";
+    schema = retrieveSchema(dataSourceName, "schemacrawler", "unknown");
+    assertNull(dataSourceName, schema);
+
+    dataSourceName = "MySQL";
+    schema = retrieveSchema(dataSourceName, "schemacrawler", "unknown");
+    assertNull(dataSourceName, schema);
+
+    dataSourceName = "Oracle";
+    schema = retrieveSchema(dataSourceName, null, "unknown");
+    assertNull(dataSourceName, schema);
+
+    dataSourceName = "PostgreSQL";
+    schema = retrieveSchema(dataSourceName, null, "unknown");
+    assertNull(dataSourceName, schema);
+
+  }
+
+  private void counts(String dataSourceName, final Schema schema)
     throws Exception
   {
 
-    final int tableCount = 6;
     final int[] tableColumnCounts = {
         5, 3, 3, 5, 3, 2
     };
     final int[] checkConstraints = {
         0, 0, 0, 0, 0, 0
     };
-    final int[] indexCounts = {
-        0, 0, 2, 4, 0, 2
-    };
+    // final int[] indexCounts = {
+    // 0, 0, 2, 4, 0, 2
+    // };
     final int[] fkCounts = {
         1, 0, 2, 2, 1, 0
     };
 
     final Table[] tables = schema.getTables();
-    assertEquals("Table count does not match", tableCount, tables.length);
+    assertEquals(dataSourceName + " table count does not match",
+                 tableColumnCounts.length,
+                 tables.length);
     for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
     {
       final Table table = tables[tableIdx];
-      assertEquals(String.format("Table %s columns count does not match", table
-        .getFullName()), tableColumnCounts[tableIdx], table.getColumns().length);
-      assertEquals(String
-        .format("Table %s check constraints count does not match", table
-          .getFullName()), checkConstraints[tableIdx], table
-        .getCheckConstraints().length);
-      assertEquals(String.format("Table %s index count does not match", table
-        .getFullName()), indexCounts[tableIdx], table.getIndices().length);
-      assertEquals(String.format("Table %s foreign key count does not match",
+      assertEquals(String.format("%s table %s columns count does not match",
+                                 dataSourceName,
                                  table.getFullName()),
-                   fkCounts[tableIdx],
-                   table.getForeignKeys().length);
-    }
-  }
-
-  private void tables(final Schema schema)
-    throws Exception
-  {
-    final String[] tableNames = {
-        "CUSTOMER", "CUSTOMERLIST", "INVOICE", "ITEM", "PRODUCT", "SUPPLIER"
-    };
-    final String[] tableTypes = {
-        "TABLE", "VIEW", "TABLE", "TABLE", "TABLE", "TABLE"
-    };
-
-    final Table[] tables = schema.getTables();
-    for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
-    {
-      final Table table = tables[tableIdx];
-      assertEquals("Table name does not match", tableNames[tableIdx], table
-        .getName().toUpperCase());
-      assertEquals("Table type does not match", tableTypes[tableIdx], table
-        .getType().toString().toUpperCase());
+                   tableColumnCounts[tableIdx],
+                   table.getColumns().length);
+      assertEquals(String
+        .format("%s table %s check constraints count does not match",
+                dataSourceName,
+                table.getFullName()), checkConstraints[tableIdx], table
+        .getCheckConstraints().length);
+      // assertEquals(String.format("%s table %s index count does not match",dataSourceName,
+      // table
+      // .getFullName()), indexCounts[tableIdx],
+      // table.getIndices().length);
+      assertEquals(String
+        .format("%s table %s foreign key count does not match",
+                dataSourceName,
+                table.getFullName()), fkCounts[tableIdx], table
+        .getForeignKeys().length);
     }
   }
 
@@ -156,32 +205,57 @@ public class SchemaCrawlerSystemTest
       final Database database = SchemaCrawlerUtility
         .getDatabase(connection, schemaCrawlerOptions);
 
+      final Schema schema;
       final Catalog[] catalogs = database.getCatalogs();
-      if (catalogs == null || catalogs.length == 0)
+      if (catalogs != null && catalogs.length > 0)
       {
-        throw new NullPointerException("No catalogs found for "
-                                       + dataSourceName);
-      }
-      final Catalog catalog = catalogs[0];
-      if (catalog == null)
-      {
-        throw new NullPointerException("No catalog found for " + dataSourceName);
-      }
+        final Catalog catalog = catalogs[0];
+        if (catalog == null)
+        {
+          throw new NullPointerException("No catalog found for "
+                                         + dataSourceName);
+        }
 
-      final Schema[] schemas = catalog.getSchemas();
-      final Schema schema = schemas[0];
-      if (schema == null)
-      {
-        throw new NullPointerException("No schema found for " + dataSourceName);
+        final Schema[] schemas = catalog.getSchemas();
+        schema = schemas[0];
       }
-
+      else
+      {
+        schema = null;
+      }
       return schema;
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       throw new SchemaCrawlerException(dataSourceName, e);
     }
 
+  }
+
+  private void tables(final String dataSourceName, final Schema schema)
+    throws Exception
+  {
+    final String[] tableNames = {
+        "CUSTOMER", "CUSTOMERLIST", "INVOICE", "ITEM", "PRODUCT", "SUPPLIER"
+    };
+    final String[] tableTypes = {
+        "TABLE", "VIEW", "TABLE", "TABLE", "TABLE", "TABLE"
+    };
+
+    final Table[] tables = schema.getTables();
+    assertEquals(dataSourceName + " table count does not match",
+                 tableNames.length,
+                 tables.length);
+    for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
+    {
+      final Table table = tables[tableIdx];
+      assertEquals(dataSourceName + " table name does not match",
+                   tableNames[tableIdx],
+                   table.getName().toUpperCase());
+      assertEquals(dataSourceName + " table type does not match",
+                   tableTypes[tableIdx],
+                   table.getType().toString().toUpperCase());
+    }
   }
 
 }
