@@ -123,19 +123,17 @@ final class SchemaRetriever
     }
 
     // Add an empty schema reference for databases that do not support
-    // neither catalogs nor schemas, as well as for the system
-    // data-types
-    final SchemaReference systemSchemaRef = new SchemaReference(null, null);
-    if (!schemaRefs.contains(systemSchemaRef))
+    // neither catalogs nor schemas
+    if (!supportsCatalogs && !supportsSchemas)
     {
-      final MutableCatalog systemCatalog = new MutableCatalog(database, null);
-      final MutableSchema systemSchema = new MutableSchema(systemCatalog, null);
-      systemCatalog.addSchema(systemSchema);
-      getRetrieverConnection().cacheSchema(systemSchemaRef, systemSchema);
-      if (!supportsCatalogs && !supportsSchemas)
-      {
-        database.addCatalog(systemCatalog);
-      }
+      final SchemaReference schemaRef = new SchemaReference(null, null);
+
+      final MutableCatalog catalog = new MutableCatalog(database, null);
+      final MutableSchema schema = new MutableSchema(catalog, null);
+      catalog.addSchema(schema);
+
+      getRetrieverConnection().cacheSchema(schemaRef, schema);
+      database.addCatalog(catalog);
     }
 
   }

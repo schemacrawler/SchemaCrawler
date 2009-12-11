@@ -265,7 +265,8 @@ final class DatabaseInfoRetriever
   void retrieveSystemColumnDataTypes()
     throws SQLException
   {
-    final Schema systemSchema = lookupSchema(null, null);
+    final Schema systemSchema = new MutableSchema(new MutableCatalog(database,
+                                                                     ""), "");
 
     final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getTypeInfo());
