@@ -54,7 +54,7 @@ public class SchemaCrawlerSystemTest
     dataSourceName = "MicrosoftSQLServer";
     schema = retrieveSchema(dataSourceName,
                             "schemacrawler",
-                            "schemacrawler.schemacrawler");
+                            "schemacrawler.dbo");
     tables(dataSourceName, schema);
     counts(dataSourceName, schema);
 
@@ -83,9 +83,7 @@ public class SchemaCrawlerSystemTest
     Schema schema;
 
     dataSourceName = "MicrosoftSQLServer";
-    schema = retrieveSchema(dataSourceName,
-                            "unknown",
-                            "schemacrawler.schemacrawler");
+    schema = retrieveSchema(dataSourceName, "unknown", "schemacrawler.dbo");
     assertNull(dataSourceName, schema);
 
     dataSourceName = "MySQL";
