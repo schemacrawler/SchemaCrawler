@@ -73,6 +73,10 @@ public class SchemaCrawlerSystemTest
     tables(dataSourceName, schema);
     counts(dataSourceName, schema);
 
+    dataSourceName = "SQLite";
+    schema = retrieveSchema(dataSourceName, null, null);
+    tables(dataSourceName, schema);
+    // counts(dataSourceName, schema);
   }
 
   @Test
@@ -101,6 +105,10 @@ public class SchemaCrawlerSystemTest
     schema = retrieveSchema(dataSourceName, "unknown", "schemacrawler");
     assertNotNull(dataSourceName, schema);
 
+    // SQLite does not support catalogs or schemas, so rules are ignored
+    dataSourceName = "SQLite";
+    schema = retrieveSchema(dataSourceName, "unknown", null);
+    assertNotNull(dataSourceName, schema);
   }
 
   @Test
@@ -126,6 +134,10 @@ public class SchemaCrawlerSystemTest
     schema = retrieveSchema(dataSourceName, null, "unknown");
     assertNull(dataSourceName, schema);
 
+    // SQLite does not support catalogs or schemas, so rules are ignored
+    dataSourceName = "SQLite";
+    schema = retrieveSchema(dataSourceName, null, "unknown");
+    assertNotNull(dataSourceName, schema);
   }
 
   private void counts(String dataSourceName, final Schema schema)
