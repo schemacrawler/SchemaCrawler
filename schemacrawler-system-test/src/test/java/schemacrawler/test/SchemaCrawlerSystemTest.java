@@ -69,7 +69,7 @@ public class SchemaCrawlerSystemTest
     counts(dataSourceName, schema);
 
     dataSourceName = "PostgreSQL";
-    schema = retrieveSchema(dataSourceName, null, null);
+    schema = retrieveSchema(dataSourceName, null, "schemacrawler");
     tables(dataSourceName, schema);
     counts(dataSourceName, schema);
 
@@ -98,7 +98,7 @@ public class SchemaCrawlerSystemTest
     // PostgreSQL does not support catalogs, so the catalog rule is
     // ignored
     dataSourceName = "PostgreSQL";
-    schema = retrieveSchema(dataSourceName, "unknown", null);
+    schema = retrieveSchema(dataSourceName, "unknown", "schemacrawler");
     assertNotNull(dataSourceName, schema);
 
   }
