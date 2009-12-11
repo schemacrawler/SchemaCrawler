@@ -5,6 +5,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
+import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.utility.SchemaCrawlerUtility;
@@ -27,6 +28,8 @@ public final class ApiExample
     // time taken to crawl the schema
     options.setSchemaInfoLevel(SchemaInfoLevel.standard());
     options.setShowStoredProcedures(false);
+    options.setSchemaInclusionRule(new InclusionRule("public",
+                                                     InclusionRule.NONE));
     // Sorting options
     options.setAlphabeticalSortForTableColumns(true);
 
