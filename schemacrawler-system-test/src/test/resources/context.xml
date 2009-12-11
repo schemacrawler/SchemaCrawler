@@ -11,8 +11,37 @@
   xsi:schemaLocation="
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
+  <bean id="MicrosoftSQLServer" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <property name="driverClassName">
+      <value>net.sourceforge.jtds.jdbc.Driver</value>
+    </property>
+    <property name="url">
+      <value>jdbc:jtds:sqlserver://localhost:1433/schemacrawler;appName=SchemaCrawler;useCursors=true</value>
+    </property>
+    <property name="username">
+      <value>schemacrawler</value>
+    </property>
+    <property name="password">
+      <value>schemacrawler</value>
+    </property>
+  </bean>
 
-  <bean id="oracle" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+  <bean id="MySQL" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <property name="driverClassName">
+      <value>org.postgresql.Driver</value>
+    </property>
+    <property name="url">
+      <value>jdbc:mysql://192.168.0.101:3306</value>
+    </property>
+    <property name="username">
+      <value>root</value>
+    </property>
+    <property name="password">
+      <value>sualeh</value>
+    </property>
+  </bean>
+  
+  <bean id="Oracle" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
     <property name="driverClassName">
       <value>oracle.jdbc.driver.OracleDriver</value>
     </property>
@@ -27,12 +56,12 @@
     </property>
   </bean>
 
-  <bean id="sql-server" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+  <bean id="PostgreSQL" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
     <property name="driverClassName">
-      <value>net.sourceforge.jtds.jdbc.Driver</value>
+      <value>org.postgresql.Driver</value>
     </property>
     <property name="url">
-      <value>jdbc:jtds:sqlserver://localhost:1433/schemacrawler;appName=SchemaCrawler;useCursors=true</value>
+      <value>jdbc:postgresql://192.168.0.101:5432</value>
     </property>
     <property name="username">
       <value>schemacrawler</value>

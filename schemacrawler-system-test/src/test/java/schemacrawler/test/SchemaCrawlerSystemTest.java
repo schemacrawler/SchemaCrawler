@@ -48,15 +48,24 @@ public class SchemaCrawlerSystemTest
   {
     Schema schema;
 
-    schema = retrieveSchema("oracle", "", "SCHEMACRAWLER");
-    tables(schema);
-    // counts(schema);
-
-    schema = retrieveSchema("sql-server",
+    schema = retrieveSchema("MicrosoftSQLServer",
                             "schemacrawler",
                             "schemacrawler.schemacrawler");
     tables(schema);
     // counts(schema);
+
+    schema = retrieveSchema("MySQL", "schemacrawler", null);
+    tables(schema);
+    // counts(schema);
+
+    schema = retrieveSchema("Oracle", null, "SCHEMACRAWLER");
+    tables(schema);
+    // counts(schema);
+
+    schema = retrieveSchema("PostgreSQL", null, null);
+    tables(schema);
+    // counts(schema);
+
   }
 
   private void counts(final Schema schema)
@@ -129,25 +138,38 @@ public class SchemaCrawlerSystemTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    schemaCrawlerOptions
-      .setCatalogInclusionRule(new InclusionRule(catalogInclusion,
-                                                 InclusionRule.NONE));
-    schemaCrawlerOptions
-      .setSchemaInclusionRule(new InclusionRule(schemaInclusion,
-                                                InclusionRule.NONE));
+    if (catalogInclusion != null)
+    {
+      schemaCrawlerOptions
+        .setCatalogInclusionRule(new InclusionRule(catalogInclusion,
+                                                   InclusionRule.NONE));
+    }
+    if (schemaInclusion != null)
+    {
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new InclusionRule(schemaInclusion,
+                                                  InclusionRule.NONE));
+    }
 
     try
     {
       final Database database = SchemaCrawlerUtility
         .getDatabase(connection, schemaCrawlerOptions);
 
-      final Catalog catalog = database.getCatalogs()[0];
+      final Catalog[] catalogs = database.getCatalogs();
+      if (catalogs == null || catalogs.length == 0)
+      {
+        throw new NullPointerException("No catalogs found for "
+                                       + dataSourceName);
+      }
+      final Catalog catalog = catalogs[0];
       if (catalog == null)
       {
         throw new NullPointerException("No catalog found for " + dataSourceName);
       }
 
-      final Schema schema = catalog.getSchemas()[0];
+      final Schema[] schemas = catalog.getSchemas();
+      final Schema schema = schemas[0];
       if (schema == null)
       {
         throw new NullPointerException("No schema found for " + dataSourceName);
@@ -161,4 +183,5 @@ public class SchemaCrawlerSystemTest
     }
 
   }
+
 }
