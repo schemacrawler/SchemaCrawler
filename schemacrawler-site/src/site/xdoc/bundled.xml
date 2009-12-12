@@ -7,7 +7,7 @@
   </properties>
   <body>
     <section name="Bundled Distributions">
-      <subsection name="bundled">
+      <subsection name="Bundled Distributions">
         <p>The bundled distributions of SchemaCrawler are ready to use for a given RDBMS system. Most come with
           open-source JDBC drivers bundled in, so not further downloads are required. The bundled distributions of
           SchemaCrawler
@@ -51,13 +51,14 @@
           </li>
         </ul>
       </subsection>
-      <subsection name="how-to">
+      <subsection name="How To">
         <p>
           If you download a bundled distribution of SchemaCrawler, you do not need to
           download the main distribution.
           Simply ensure that you have Java installed, and unzip the distribution, and you
           are ready to use SchemaCrawler.
           A typical command line for SchemaCrawler for Microsoft SQL Server looks like:
+          <br />
           <code>-host=localhost -port=1433 -database=schemacrawler -schemas=schemacrawler.dbo -user=schemacrawler
             -password=schemacrawler</code>
         </p>
@@ -68,14 +69,14 @@
           on Microsoft SQL Server, typically schemas look like "database_name.user", but for Oracle, typically, schemas
           look like "USER".</p>
       </subsection>
-      <subsection name="license">
+      <subsection name="License">
         <p>
-          The bundled distributions are distributed under the
+          <img src="http://www.gnu.org/graphics/gplv3-88x31.png" alt="GPL" />
+          Unlike the SchemaCrawler main distribution, the bundled distributions are distributed under the
           <a href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License (GPL) license.</a>
           The JDBC drivers that are packaged with these SchemaCrawler distributions are in their binary form, and retain
           their original license.
         </p>
-        s
       </subsection>
     </section>
   </body>
