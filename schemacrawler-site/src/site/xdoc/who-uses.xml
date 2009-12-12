@@ -1,0 +1,62 @@
+<!DOCTYPE document PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+  "http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+  <properties>
+    <title>SchemaCrawler - Who Uses</title>
+    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
+  </properties>
+  <body>
+    <section name="Who Uses SchemaCrawler">
+      <subsection name="Academia">
+        <p>Uses of SchemaCrawler in universities around the world.</p>
+        <ul>
+          <li>
+            Prof. Zachary Ives, in his
+            <a href="http://www.seas.upenn.edu/~zives/cis550/">CIS 550 Database and Information Systems</a>
+            course at the University of Pennsylvania.
+          </li>
+        </ul>
+      </subsection>
+      <subsection name="Press">
+        <p>SchemaCrawler in the press, and in online articles.</p>
+        <ul>
+          <li>
+            Baseline Database Magazine, in an article on
+            <a href="http://www.baselinemag.com/c/a/Database/7-Free-Database-Tools/6/">Free Database Tools.</a>
+          </li>
+          <li>
+            Luxembourg Java Users Group presentation on
+            <a href="www.yajug.org/confluence/download/attachments/917512/20081016_Eclipse_SDK.pdf?version=1">Make daily development easier and smarter</a>
+          </li>
+        </ul>
+      </subsection>
+      <subsection name="Open Source Projects">
+        <p>SchemaCrawler in the open source projects.</p>
+        <ul>
+          <li>
+            <a href="http://code.google.com/p/jule/">Jule, </a>
+            a code generator in Java.
+          </li>
+          <li>
+            <a href="http://www.jequel.de/">JEQUEL, </a>
+            Java Embedded QUEry Language.
+          </li>
+        </ul>
+      </subsection>
+      <subsection name="Consutants and Professionals">
+        <p>SchemaCrawler used by consultants and professionals.</p>
+        <ul>
+          <li>
+            <a href="http://www.netfocusconsulting.com/netfocus/TechnologyLinks2.jsp/">Netfocus Consulting Inc.</a>
+            has built expertise in SchemaCrawler.
+          </li>
+          <li>
+            <a href="http://www.softweave.com/html/resume.html/">Jane Eisenstein</a>
+            used SchemaCrawler in her migration project.
+          </li>
+        </ul>
+      </subsection>
+
+    </section>
+  </body>
+</document>
