@@ -39,8 +39,11 @@
         name="How-tos"
         href="how-to.html" />
       <item
+        name="Bundled Distributions"
+        href="bundled.html" />           
+      <item
         name="Who Uses"
-        href="who-uses.html" />        
+        href="who-uses.html" />                    
       <item
         name="Donations"
         href="http://sourceforge.net/donate/index.php?group_id=148383" />
