@@ -1,0 +1,82 @@
+<!DOCTYPE document PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+  "http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+  <properties>
+    <title>SchemaCrawler - Bundled Distributions</title>
+    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
+  </properties>
+  <body>
+    <section name="Bundled Distributions">
+      <subsection name="bundled">
+        <p>The bundled distributions of SchemaCrawler are ready to use for a given RDBMS system. Most come with
+          open-source JDBC drivers bundled in, so not further downloads are required. The bundled distributions of
+          SchemaCrawler
+          are:</p>
+        <ul>
+          <li>
+            SchemaCrawler for
+            <a href="http://db.apache.org/derby/">Apache Derby</a>
+            (which can also be used with JavaDB)
+          </li>
+          <li>
+            SchemaCrawler for
+            <a href="http://www.microsoft.com/sqlserver/">Microsoft SQL Server,</a>
+            with the
+            <a href="http://jtds.sourceforge.net/">jTDS JDBC driver</a>
+          </li>
+          <li>
+            SchemaCrawler for
+            <a href="http://www.mysql.com/">MySQL,</a>
+            with the
+            <a href="http://dev.mysql.com/downloads/connector/j/">MySQL Connector/J JDBC driver</a>
+          </li>
+          <li>
+            SchemaCrawler for
+            <a href="http://www.oracle.com/">Oracle</a>
+            (but the
+            <a href="http://www.oracle.com/technology/software/tech/java/sqlj_jdbc/index.html">Oracle JDBC driver</a>
+            needs to be downloaded separately)
+          </li>
+          <li>
+            SchemaCrawler for
+            <a href="http://www.postgresql.org/">PostgreSQL,</a>
+            with the
+            <a href="http://jdbc.postgresql.org/">PostgreSQL JDBC driver</a>
+          </li>
+          <li>
+            SchemaCrawler for
+            <a href="http://www.sqlite.org/">SQLite,</a>
+            with the
+            <a href="http://www.xerial.org/trac/Xerial/wiki/SQLiteJDBC">Xerial SQLite JDBC driver</a>
+          </li>
+        </ul>
+      </subsection>
+      <subsection name="how-to">
+        <p>
+          If you download a bundled distribution of SchemaCrawler, you do not need to
+          download the main distribution.
+          Simply ensure that you have Java installed, and unzip the distribution, and you
+          are ready to use SchemaCrawler.
+          A typical command line for SchemaCrawler for Microsoft SQL Server looks like:
+          <code>-host=localhost -port=1433 -database=schemacrawler -schemas=schemacrawler.dbo -user=schemacrawler
+            -password=schemacrawler</code>
+        </p>
+        <p>The host defaults to localhost, and port defaults to the standard port for the database system that you are
+          using, so the -host and -port command-line switches are optional. You should always use the -schemas
+          command-line switch for databases that support it. The value for the -schemas switch is a regular expression
+          that determines which schemas SchemaCrawler will work with. The "schema" is database-dependent - for example,
+          on Microsoft SQL Server, typically schemas look like "database_name.user", but for Oracle, typically, schemas
+          look like "USER".</p>
+      </subsection>
+      <subsection name="license">
+        <p>
+          The bundled distributions are distributed under the
+          <a href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License (GPL) license.</a>
+          The JDBC drivers that are packaged with these SchemaCrawler distributions are in their binary form, and retain
+          their original license.
+        </p>
+        s
+      </subsection>
+    </section>
+  </body>
+</document>

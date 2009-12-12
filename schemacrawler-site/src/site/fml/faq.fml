@@ -483,13 +483,14 @@ Or, the following:
         </p>
         <p>
           <img src="http://www.gnu.org/graphics/gplv3-88x31.png" alt="GPL" />
-          SchemaCrawler is also distributed packaged for different database systems such as
+          SchemaCrawler is also distributed pre-packaged for different database systems such as 
+          <a href="http://www.oracle.com/">Oracle</a>,
           <a href="http://www.microsoft.com/sqlserver">Microsoft SQL Server</a>
           ,
           <a href="http://www.mysql.com/">MySQL</a>
           and
           <a href="http://www.postgresql.org/">PostgreSQL</a>
-          . These pre-packaged distributions are distributed under the
+          . These <a href="bundled.html">bundled distributions</a> are distributed under the
           <a href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License (GPL) license.</a>
           The JDBC drivers that are packaged with these SchemaCrawler distributions are in their binary form, and retain
           their original license.
