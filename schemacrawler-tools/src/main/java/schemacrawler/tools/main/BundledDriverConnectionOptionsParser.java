@@ -22,9 +22,9 @@ package schemacrawler.tools.main;
 
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.DatabaseConnectionOptions;
+import schemacrawler.schemacrawler.ConnectionOptions;
+import schemacrawler.schemacrawler.DatabaseConfigConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.TemplatingUtility;
 import sf.util.CommandLineParser.NumberOption;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
@@ -60,7 +60,7 @@ public final class BundledDriverConnectionOptionsParser
   }
 
   @Override
-  public DatabaseConnectionOptions getOptions()
+  public ConnectionOptions getOptions()
     throws SchemaCrawlerException
   {
     parse(new Option[] {
@@ -83,9 +83,7 @@ public final class BundledDriverConnectionOptionsParser
     config.put("user", optionUser.getValue());
     config.put("password", optionPassword.getValue());
 
-    TemplatingUtility.substituteVariables(config);
-
-    return new DatabaseConnectionOptions(config);
+    return new DatabaseConfigConnectionOptions(config);
   }
 
   @Override

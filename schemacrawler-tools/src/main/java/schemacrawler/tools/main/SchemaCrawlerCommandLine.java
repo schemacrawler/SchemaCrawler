@@ -26,6 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -47,7 +48,7 @@ public class SchemaCrawlerCommandLine
   private final Config config;
   private final SchemaCrawlerOptions schemaCrawlerOptions;
   private final OutputOptions outputOptions;
-  private final DatabaseConnectionOptions connectionOptions;
+  private final ConnectionOptions connectionOptions;
 
   public SchemaCrawlerCommandLine(final Commands commands,
                                   final Config config,
@@ -140,8 +141,8 @@ public class SchemaCrawlerCommandLine
         config = new Config();
       }
 
-      DatabaseConnectionOptions connectionOptions = new CommandLineConnectionOptionsParser(args,
-                                                                                           config)
+      ConnectionOptions connectionOptions = new CommandLineConnectionOptionsParser(args,
+                                                                                   config)
         .getOptions();
       if (connectionOptions == null)
       {

@@ -22,7 +22,7 @@ package schemacrawler.tools.main;
 
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.DatabaseConnectionOptions;
+import schemacrawler.schemacrawler.ConnectionOptions;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
 
@@ -32,7 +32,7 @@ import sf.util.CommandLineParser.StringOption;
  * @author sfatehi
  */
 abstract class BaseDatabaseConnectionOptionsParser
-  extends BaseOptionsParser<DatabaseConnectionOptions>
+  extends BaseOptionsParser<ConnectionOptions>
 {
 
   protected final StringOption optionUser = new StringOption(Option.NO_SHORT_FORM,
