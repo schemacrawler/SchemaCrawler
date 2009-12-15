@@ -25,7 +25,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.DatabaseConnectionOptions;
+import schemacrawler.schemacrawler.ConnectionOptions;
+import schemacrawler.schemacrawler.DatabaseConfigConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.TemplatingUtility;
 import sf.util.Utility;
@@ -91,7 +92,7 @@ public final class ConfigConnectionOptionsParser
   }
 
   @Override
-  public DatabaseConnectionOptions getOptions()
+  public ConnectionOptions getOptions()
     throws SchemaCrawlerException
   {
     parse(new Option[] {
@@ -127,7 +128,7 @@ public final class ConfigConnectionOptionsParser
 
     TemplatingUtility.substituteVariables(databaseConnectionConfig);
 
-    return new DatabaseConnectionOptions(databaseConnectionConfig);
+    return new DatabaseConfigConnectionOptions(databaseConnectionConfig);
   }
 
   @Override
