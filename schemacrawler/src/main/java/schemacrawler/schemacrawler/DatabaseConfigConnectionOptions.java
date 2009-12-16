@@ -37,6 +37,7 @@ public final class DatabaseConfigConnectionOptions
   private static final String URL = "url";
   private static final String HOST = "host";
   private static final String PORT = "port";
+  private static final String DATABASE = "database";
   private static final String USER = "user";
   private static final String PASSWORD = "password";
 
@@ -56,12 +57,24 @@ public final class DatabaseConfigConnectionOptions
     setPassword(properties.get(PASSWORD));
   }
 
+  public DatabaseConfigConnectionOptions(final String configResource)
+    throws SchemaCrawlerException
+  {
+    this(Config.load(DatabaseConfigConnectionOptions.class
+      .getResourceAsStream(configResource)));
+  }
+
   @Override
   public String getConnectionUrl()
   {
     final Map<String, String> properties = new HashMap<String, String>(this.properties);
     TemplatingUtility.substituteVariables(properties);
     return properties.get(URL);
+  }
+
+  public String getDatabase()
+  {
+    return properties.get(DATABASE);
   }
 
   public String getHost()
@@ -78,6 +91,14 @@ public final class DatabaseConfigConnectionOptions
     catch (final NumberFormatException e)
     {
       return 0;
+    }
+  }
+
+  public void setDatabase(final String database)
+  {
+    if (!Utility.isBlank(database))
+    {
+      properties.put(DATABASE, database);
     }
   }
 

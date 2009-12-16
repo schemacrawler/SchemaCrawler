@@ -43,6 +43,7 @@ public final class DatabaseConnectionOptions
     loadJdbcDriver(jdbcDriverClassName);
   }
 
+  @Override
   public String getConnectionUrl()
   {
     return connectionUrl;
