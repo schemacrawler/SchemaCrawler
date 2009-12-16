@@ -28,7 +28,6 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConfigConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.TemplatingUtility;
 import sf.util.Utility;
 import sf.util.CommandLineParser.BooleanOption;
 import sf.util.CommandLineParser.Option;
@@ -114,21 +113,22 @@ public final class ConfigConnectionOptionsParser
 
     final Map<String, String> databaseConnectionConfig = partition(config,
                                                                    connectionName);
+
+    final ConnectionOptions connectionOptions = new DatabaseConfigConnectionOptions(databaseConnectionConfig);
+
     final String user = optionUser.getValue();
     if (user != null && !databaseConnectionConfig.containsKey("user"))
     {
-      databaseConnectionConfig.put("user", user);
+      connectionOptions.setUser(user);
     }
 
     final String password = optionPassword.getValue();
     if (password != null && !databaseConnectionConfig.containsKey("password"))
     {
-      databaseConnectionConfig.put("password", password);
+      connectionOptions.setPassword(password);
     }
 
-    TemplatingUtility.substituteVariables(databaseConnectionConfig);
-
-    return new DatabaseConfigConnectionOptions(databaseConnectionConfig);
+    return connectionOptions;
   }
 
   @Override

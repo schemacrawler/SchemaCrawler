@@ -67,23 +67,25 @@ public final class BundledDriverConnectionOptionsParser
         optionHost, optionPort, optionDatabase, optionUser, optionPassword,
     });
 
+    final DatabaseConfigConnectionOptions connectionOptions = new DatabaseConfigConnectionOptions(config);
+
     if (optionHost.isFound())
     {
-      config.put("host", optionHost.getValue());
+      connectionOptions.setHost(optionHost.getValue());
     }
     if (optionPort.isFound())
     {
-      config.put("port", String.valueOf(optionPort.getValue().intValue()));
+      connectionOptions.setPort(optionPort.getValue().intValue());
     }
     if (optionDatabase.isFound())
     {
-      config.put("database", optionDatabase.getValue());
+      connectionOptions.setDatabase(optionDatabase.getValue());
     }
 
-    config.put("user", optionUser.getValue());
-    config.put("password", optionPassword.getValue());
+    connectionOptions.setUser(optionUser.getValue());
+    connectionOptions.setPassword(optionPassword.getValue());
 
-    return new DatabaseConfigConnectionOptions(config);
+    return connectionOptions;
   }
 
   @Override
