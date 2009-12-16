@@ -11,14 +11,17 @@
   xsi:schemaLocation="
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
-  <bean id="MicrosoftSQLServer" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-    <property name="driverClassName">
-      <value>net.sourceforge.jtds.jdbc.Driver</value>
+  <bean id="MicrosoftSQLServer" class="schemacrawler.schemacrawler.DatabaseConfigConnectionOptions">
+    <constructor-arg type="java.lang.String">
+      <value>/schemacrawler-sqlserver.config.properties</value>
+    </constructor-arg>
+    <property name="host">
+      <value>localhost</value>
     </property>
-    <property name="url">
-      <value>jdbc:jtds:sqlserver://localhost:1433/schemacrawler;appName=SchemaCrawler;useCursors=true</value>
+    <property name="database">
+      <value>schemacrawler</value>
     </property>
-    <property name="username">
+    <property name="user">
       <value>schemacrawler</value>
     </property>
     <property name="password">
@@ -26,29 +29,35 @@
     </property>
   </bean>
 
-  <bean id="MySQL" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-    <property name="driverClassName">
-      <value>org.postgresql.Driver</value>
+  <bean id="MySQL" class="schemacrawler.schemacrawler.DatabaseConfigConnectionOptions">
+    <constructor-arg type="java.lang.String">
+      <value>/schemacrawler-mysql.config.properties</value>
+    </constructor-arg>
+    <property name="host">
+      <value>192.168.0.101</value>
     </property>
-    <property name="url">
-      <value>jdbc:mysql://192.168.0.101:3306</value>
+    <property name="database">
+      <value>schemacrawler</value>
     </property>
-    <property name="username">
+    <property name="user">
       <value>root</value>
     </property>
     <property name="password">
       <value>sualeh</value>
     </property>
   </bean>
-  
-  <bean id="Oracle" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-    <property name="driverClassName">
-      <value>oracle.jdbc.driver.OracleDriver</value>
+
+  <bean id="Oracle" class="schemacrawler.schemacrawler.DatabaseConfigConnectionOptions">
+    <constructor-arg type="java.lang.String">
+      <value>/schemacrawler-oracle.config.properties</value>
+    </constructor-arg>
+    <property name="host">
+      <value>192.168.0.101</value>
     </property>
-    <property name="url">
-      <value>jdbc:oracle:thin:@192.168.0.101:1521:XE</value>
+    <property name="database">
+      <value>XE</value>
     </property>
-    <property name="username">
+    <property name="user">
       <value>schemacrawler</value>
     </property>
     <property name="password">
@@ -56,14 +65,17 @@
     </property>
   </bean>
 
-  <bean id="PostgreSQL" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-    <property name="driverClassName">
-      <value>org.postgresql.Driver</value>
+  <bean id="PostgreSQL" class="schemacrawler.schemacrawler.DatabaseConfigConnectionOptions">
+    <constructor-arg type="java.lang.String">
+      <value>/schemacrawler-postgresql.config.properties</value>
+    </constructor-arg>
+    <property name="host">
+      <value>192.168.0.101</value>
     </property>
-    <property name="url">
-      <value>jdbc:postgresql://192.168.0.101:5432</value>
+    <property name="database">
+      <value>schemacrawler</value>
     </property>
-    <property name="username">
+    <property name="user">
       <value>schemacrawler</value>
     </property>
     <property name="password">
@@ -71,19 +83,19 @@
     </property>
   </bean>
 
-  <bean id="SQLite" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-    <property name="driverClassName">
-      <value>org.sqlite.JDBC</value>
+  <bean id="SQLite" class="schemacrawler.schemacrawler.DatabaseConfigConnectionOptions">
+    <constructor-arg type="java.lang.String">
+      <value>/schemacrawler-sqlite.config.properties</value>
+    </constructor-arg>
+    <property name="database">
+      <value>schemacrawler</value>
     </property>
-    <property name="url">
-      <value>jdbc:sqlite:..\schemacrawler-sqlite\src\test\resources\sc.db</value>
-    </property>
-    <property name="username">
+    <property name="user">
       <value>schemacrawler</value>
     </property>
     <property name="password">
       <value>schemacrawler</value>
     </property>
   </bean>
-  
+
 </beans>

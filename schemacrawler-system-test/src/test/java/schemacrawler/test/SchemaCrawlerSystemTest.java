@@ -23,8 +23,6 @@ import static org.junit.Assert.assertNull;
 
 import java.sql.Connection;
 
-import javax.sql.DataSource;
-
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -33,6 +31,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -191,9 +190,9 @@ public class SchemaCrawlerSystemTest
                                 final String schemaInclusion)
     throws Exception
   {
-    final DataSource dataSource = (DataSource) appContext
+    final ConnectionOptions connectionOptions = (ConnectionOptions) appContext
       .getBean(dataSourceName);
-    final Connection connection = dataSource.getConnection();
+    final Connection connection = connectionOptions.createConnection();
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
