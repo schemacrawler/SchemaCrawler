@@ -63,7 +63,7 @@ public class SchemaCrawlerSystemTest
         }, {
           5,
         }, {
-          1
+          1,
         },
     };
 
