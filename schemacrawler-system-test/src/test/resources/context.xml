@@ -11,13 +11,17 @@
   xsi:schemaLocation="
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
+  <bean id="host" class="java.lang.String">
+    <constructor-arg type="java.lang.String">
+      <value>192.168.0.101</value>
+    </constructor-arg>
+  </bean>
+
   <bean id="MicrosoftSQLServer" class="schemacrawler.schemacrawler.DatabaseConfigConnectionOptions">
     <constructor-arg type="java.lang.String">
       <value>/schemacrawler-sqlserver.config.properties</value>
     </constructor-arg>
-    <property name="host">
-      <value>localhost</value>
-    </property>
+    <property name="host" ref="host" />
     <property name="database">
       <value>schemacrawler</value>
     </property>
@@ -33,9 +37,7 @@
     <constructor-arg type="java.lang.String">
       <value>/schemacrawler-mysql.config.properties</value>
     </constructor-arg>
-    <property name="host">
-      <value>192.168.0.101</value>
-    </property>
+    <property name="host" ref="host" />
     <property name="database">
       <value>schemacrawler</value>
     </property>
@@ -51,9 +53,7 @@
     <constructor-arg type="java.lang.String">
       <value>/schemacrawler-oracle.config.properties</value>
     </constructor-arg>
-    <property name="host">
-      <value>192.168.0.101</value>
-    </property>
+    <property name="host" ref="host" />
     <property name="database">
       <value>XE</value>
     </property>
@@ -69,9 +69,7 @@
     <constructor-arg type="java.lang.String">
       <value>/schemacrawler-postgresql.config.properties</value>
     </constructor-arg>
-    <property name="host">
-      <value>192.168.0.101</value>
-    </property>
+    <property name="host" ref="host" />
     <property name="database">
       <value>schemacrawler</value>
     </property>
@@ -88,7 +86,8 @@
       <value>/schemacrawler-sqlite.config.properties</value>
     </constructor-arg>
     <property name="database">
-      <value>schemacrawler</value>
+      <value>C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-sqlite\src\test\resources\sc.db
+      </value>
     </property>
     <property name="user">
       <value>schemacrawler</value>

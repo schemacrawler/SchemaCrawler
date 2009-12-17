@@ -44,6 +44,55 @@ public class SchemaCrawlerSystemTest
   final ApplicationContext appContext = new ClassPathXmlApplicationContext("context.xml");
 
   @Test
+  public void schemaCounts()
+    throws Exception
+  {
+    final String[] dataSources = {
+        "MicrosoftSQLServer", "MySQL", "Oracle", "PostgreSQL", "SQLite",
+    };
+    final int[] catalogCounts = {
+        4, 4, 1, 1, 1,
+    };
+    final int[][] schemaCounts = {
+        {
+            5, 5, 5, 5,
+        }, {
+            1, 1, 1, 1,
+        }, {
+          14,
+        }, {
+          5,
+        }, {
+          1
+        },
+    };
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(".*", ".*");
+    final SchemaInfoLevel infoLevel = SchemaInfoLevel.minimum();
+    infoLevel.setRetrieveTables(false);
+    infoLevel.setRetrieveProcedures(false);
+    schemaCrawlerOptions.setSchemaInfoLevel(infoLevel);
+
+    for (int i = 0; i < dataSources.length; i++)
+    {
+      final String dataSource = dataSources[i];
+      final Database database = retrieveDatabase(dataSource,
+                                                 schemaCrawlerOptions);
+      final Catalog[] catalogs = database.getCatalogs();
+      assertEquals("Incorrect number of catalogs for " + dataSource,
+                   catalogCounts[i],
+                   catalogs.length);
+      for (int j = 0; j < catalogs.length; j++)
+      {
+        final Catalog catalog = catalogs[j];
+        final Schema[] schemas = catalog.getSchemas();
+        assertEquals("Incorrect number of schemas for " + dataSource
+                     + " catalog #" + j, schemaCounts[i][j], schemas.length);
+      }
+    }
+  }
+
+  @Test
   public void tablesAndCounts()
     throws Exception
   {
@@ -139,7 +188,7 @@ public class SchemaCrawlerSystemTest
     assertNotNull(dataSourceName, schema);
   }
 
-  private void counts(String dataSourceName, final Schema schema)
+  private void counts(final String dataSourceName, final Schema schema)
     throws Exception
   {
 
@@ -185,15 +234,30 @@ public class SchemaCrawlerSystemTest
     }
   }
 
-  private Schema retrieveSchema(final String dataSourceName,
-                                final String catalogInclusion,
-                                final String schemaInclusion)
+  private Database retrieveDatabase(final String dataSourceName,
+                                    final SchemaCrawlerOptions schemaCrawlerOptions)
     throws Exception
   {
     final ConnectionOptions connectionOptions = (ConnectionOptions) appContext
       .getBean(dataSourceName);
     final Connection connection = connectionOptions.createConnection();
 
+    try
+    {
+      final Database database = SchemaCrawlerUtility
+        .getDatabase(connection, schemaCrawlerOptions);
+      return database;
+    }
+    catch (final Exception e)
+    {
+      throw new SchemaCrawlerException(dataSourceName, e);
+    }
+
+  }
+
+  private SchemaCrawlerOptions createOptions(final String catalogInclusion,
+                                             final String schemaInclusion)
+  {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
     if (catalogInclusion != null)
@@ -208,37 +272,37 @@ public class SchemaCrawlerSystemTest
         .setSchemaInclusionRule(new InclusionRule(schemaInclusion,
                                                   InclusionRule.NONE));
     }
+    return schemaCrawlerOptions;
+  }
 
-    try
+  private Schema retrieveSchema(final String dataSourceName,
+                                final String catalogInclusion,
+                                final String schemaInclusion)
+    throws Exception
+  {
+    final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(catalogInclusion,
+                                                                    schemaInclusion);
+    final Database database = retrieveDatabase(dataSourceName,
+                                               schemaCrawlerOptions);
+
+    final Schema schema;
+    final Catalog[] catalogs = database.getCatalogs();
+    if (catalogs != null && catalogs.length > 0)
     {
-      final Database database = SchemaCrawlerUtility
-        .getDatabase(connection, schemaCrawlerOptions);
-
-      final Schema schema;
-      final Catalog[] catalogs = database.getCatalogs();
-      if (catalogs != null && catalogs.length > 0)
+      final Catalog catalog = catalogs[0];
+      if (catalog == null)
       {
-        final Catalog catalog = catalogs[0];
-        if (catalog == null)
-        {
-          throw new NullPointerException("No catalog found for "
-                                         + dataSourceName);
-        }
+        throw new NullPointerException("No catalog found for " + dataSourceName);
+      }
 
-        final Schema[] schemas = catalog.getSchemas();
-        schema = schemas[0];
-      }
-      else
-      {
-        schema = null;
-      }
-      return schema;
+      final Schema[] schemas = catalog.getSchemas();
+      schema = schemas[0];
     }
-    catch (final Exception e)
+    else
     {
-      throw new SchemaCrawlerException(dataSourceName, e);
+      schema = null;
     }
-
+    return schema;
   }
 
   private void tables(final String dataSourceName, final Schema schema)
