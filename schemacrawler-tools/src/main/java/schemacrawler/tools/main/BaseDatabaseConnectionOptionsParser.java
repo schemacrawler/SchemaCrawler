@@ -40,7 +40,7 @@ abstract class BaseDatabaseConnectionOptionsParser
                                                              null);
   protected final StringOption optionPassword = new StringOption(Option.NO_SHORT_FORM,
                                                                  "password",
-                                                                 "");
+                                                                 null);
 
   protected final Config config;
 
