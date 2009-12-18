@@ -22,12 +22,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import java.sql.Connection;
+import java.util.regex.Pattern;
 
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -50,24 +50,11 @@ public class SchemaCrawlerSystemTest
     final String[] dataSources = {
         "MicrosoftSQLServer", "MySQL", "Oracle", "PostgreSQL", "SQLite",
     };
-    final int[] catalogCounts = {
-        4, 4, 1, 1, 1,
-    };
-    final int[][] schemaCounts = {
-        {
-            5, 5, 5, 5,
-        }, {
-            1, 1, 1, 1,
-        }, {
-          14,
-        }, {
-          5,
-        }, {
-          1,
-        },
+    final int[] schemaCounts = {
+        20, 4, 14, 5, 1,
     };
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(".*", ".*");
+    final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(".*");
     final SchemaInfoLevel infoLevel = SchemaInfoLevel.minimum();
     infoLevel.setRetrieveTables(false);
     infoLevel.setRetrieveProcedures(false);
@@ -78,17 +65,10 @@ public class SchemaCrawlerSystemTest
       final String dataSource = dataSources[i];
       final Database database = retrieveDatabase(dataSource,
                                                  schemaCrawlerOptions);
-      final Catalog[] catalogs = database.getCatalogs();
-      assertEquals("Incorrect number of catalogs for " + dataSource,
-                   catalogCounts[i],
-                   catalogs.length);
-      for (int j = 0; j < catalogs.length; j++)
-      {
-        final Catalog catalog = catalogs[j];
-        final Schema[] schemas = catalog.getSchemas();
-        assertEquals("Incorrect number of schemas for " + dataSource
-                     + " catalog #" + j, schemaCounts[i][j], schemas.length);
-      }
+      final Schema[] schemas = database.getSchemas();
+      assertEquals("Incorrect number of schemas for " + dataSource,
+                   schemaCounts[i],
+                   schemas.length);
     }
   }
 
@@ -101,62 +81,29 @@ public class SchemaCrawlerSystemTest
 
     dataSourceName = "MicrosoftSQLServer";
     schema = retrieveSchema(dataSourceName,
-                            "schemacrawler",
                             "schemacrawler.dbo");
     tables(dataSourceName, schema);
     counts(dataSourceName, schema);
 
     dataSourceName = "MySQL";
-    schema = retrieveSchema(dataSourceName, "schemacrawler", null);
+    schema = retrieveSchema(dataSourceName, null);
     tables(dataSourceName, schema);
     counts(dataSourceName, schema);
 
     dataSourceName = "Oracle";
-    schema = retrieveSchema(dataSourceName, null, "SCHEMACRAWLER");
+    schema = retrieveSchema(dataSourceName, "SCHEMACRAWLER");
     tables(dataSourceName, schema);
     counts(dataSourceName, schema);
 
     dataSourceName = "PostgreSQL";
-    schema = retrieveSchema(dataSourceName, null, "schemacrawler");
+    schema = retrieveSchema(dataSourceName, "schemacrawler");
     tables(dataSourceName, schema);
     counts(dataSourceName, schema);
 
     dataSourceName = "SQLite";
-    schema = retrieveSchema(dataSourceName, null, null);
+    schema = retrieveSchema(dataSourceName, null);
     tables(dataSourceName, schema);
     // counts(dataSourceName, schema);
-  }
-
-  @Test
-  public void unknownCatalog()
-    throws Exception
-  {
-    String dataSourceName;
-    Schema schema;
-
-    dataSourceName = "MicrosoftSQLServer";
-    schema = retrieveSchema(dataSourceName, "unknown", "schemacrawler.dbo");
-    assertNull(dataSourceName, schema);
-
-    dataSourceName = "MySQL";
-    schema = retrieveSchema(dataSourceName, "unknown", null);
-    assertNull(schema);
-
-    // Oracle does not support catalogs, so the catalog rule is ignored
-    dataSourceName = "Oracle";
-    schema = retrieveSchema(dataSourceName, "unknown", "SCHEMACRAWLER");
-    assertNotNull(dataSourceName, schema);
-
-    // PostgreSQL does not support catalogs, so the catalog rule is
-    // ignored
-    dataSourceName = "PostgreSQL";
-    schema = retrieveSchema(dataSourceName, "unknown", "schemacrawler");
-    assertNotNull(dataSourceName, schema);
-
-    // SQLite does not support catalogs or schemas, so rules are ignored
-    dataSourceName = "SQLite";
-    schema = retrieveSchema(dataSourceName, "unknown", null);
-    assertNotNull(dataSourceName, schema);
   }
 
   @Test
@@ -167,24 +114,24 @@ public class SchemaCrawlerSystemTest
     Schema schema;
 
     dataSourceName = "MicrosoftSQLServer";
-    schema = retrieveSchema(dataSourceName, "schemacrawler", "unknown");
+    schema = retrieveSchema(dataSourceName, "unknown");
     assertNull(dataSourceName, schema);
 
     dataSourceName = "MySQL";
-    schema = retrieveSchema(dataSourceName, "schemacrawler", "unknown");
+    schema = retrieveSchema(dataSourceName, "unknown");
     assertNull(dataSourceName, schema);
 
     dataSourceName = "Oracle";
-    schema = retrieveSchema(dataSourceName, null, "unknown");
+    schema = retrieveSchema(dataSourceName, "unknown");
     assertNull(dataSourceName, schema);
 
     dataSourceName = "PostgreSQL";
-    schema = retrieveSchema(dataSourceName, null, "unknown");
+    schema = retrieveSchema(dataSourceName, "unknown");
     assertNull(dataSourceName, schema);
 
     // SQLite does not support catalogs or schemas, so rules are ignored
     dataSourceName = "SQLite";
-    schema = retrieveSchema(dataSourceName, null, "unknown");
+    schema = retrieveSchema(dataSourceName, "unknown");
     assertNotNull(dataSourceName, schema);
   }
 
@@ -234,6 +181,19 @@ public class SchemaCrawlerSystemTest
     }
   }
 
+  private SchemaCrawlerOptions createOptions(final String schemaInclusion)
+  {
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+    if (schemaInclusion != null)
+    {
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new InclusionRule(schemaInclusion,
+                                                  InclusionRule.NONE));
+    }
+    return schemaCrawlerOptions;
+  }
+
   private Database retrieveDatabase(final String dataSourceName,
                                     final SchemaCrawlerOptions schemaCrawlerOptions)
     throws Exception
@@ -255,52 +215,38 @@ public class SchemaCrawlerSystemTest
 
   }
 
-  private SchemaCrawlerOptions createOptions(final String catalogInclusion,
-                                             final String schemaInclusion)
-  {
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-    if (catalogInclusion != null)
-    {
-      schemaCrawlerOptions
-        .setCatalogInclusionRule(new InclusionRule(catalogInclusion,
-                                                   InclusionRule.NONE));
-    }
-    if (schemaInclusion != null)
-    {
-      schemaCrawlerOptions
-        .setSchemaInclusionRule(new InclusionRule(schemaInclusion,
-                                                  InclusionRule.NONE));
-    }
-    return schemaCrawlerOptions;
-  }
-
   private Schema retrieveSchema(final String dataSourceName,
-                                final String catalogInclusion,
                                 final String schemaInclusion)
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(catalogInclusion,
-                                                                    schemaInclusion);
+    final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(schemaInclusion);
     final Database database = retrieveDatabase(dataSourceName,
                                                schemaCrawlerOptions);
 
+    final Schema[] schemas = database.getSchemas();
     final Schema schema;
-    final Catalog[] catalogs = database.getCatalogs();
-    if (catalogs != null && catalogs.length > 0)
+    if (schemas == null || schemas.length == 0)
     {
-      final Catalog catalog = catalogs[0];
-      if (catalog == null)
-      {
-        throw new NullPointerException("No catalog found for " + dataSourceName);
-      }
-
-      final Schema[] schemas = catalog.getSchemas();
+      schema = null;
+    }
+    else if (schemas.length == 1)
+    {
       schema = schemas[0];
     }
     else
     {
-      schema = null;
+      final Pattern schemaPattern = Pattern.compile(".*schemacrawler");
+      Schema scSchema = null;
+      for (final Schema currSchema: schemas)
+      {
+        if (schemaPattern.matcher(currSchema.getFullName().toLowerCase())
+          .matches())
+        {
+          scSchema = currSchema;
+          break;
+        }
+      }
+      schema = scSchema;
     }
     return schema;
   }

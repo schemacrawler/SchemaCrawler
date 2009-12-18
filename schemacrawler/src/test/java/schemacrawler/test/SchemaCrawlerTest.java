@@ -34,8 +34,8 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.Database;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
@@ -152,8 +152,8 @@ public class SchemaCrawlerTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
 
-    final Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
-    final Schema[] schemas = catalog.getSchemas();
+    final Database database = testUtility.getDatabase(schemaCrawlerOptions);
+    final Schema[] schemas = database.getSchemas();
     assertEquals("Schema count does not match", 3, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
@@ -228,8 +228,8 @@ public class SchemaCrawlerTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-    final Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
-    final Schema[] schemas = catalog.getSchemas();
+    final Database database = testUtility.getDatabase(schemaCrawlerOptions);
+    final Schema[] schemas = database.getSchemas();
     assertEquals("Schema count does not match", 3, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
@@ -287,8 +287,8 @@ public class SchemaCrawlerTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-    final Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
-    final Schema[] schemas = catalog.getSchemas();
+    final Database database = testUtility.getDatabase(schemaCrawlerOptions);
+    final Schema[] schemas = database.getSchemas();
     assertEquals("Schema count does not match", 3, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
@@ -402,8 +402,8 @@ public class SchemaCrawlerTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.basic());
 
-    final Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
-    final Schema[] schemas = catalog.getSchemas();
+    final Database database = testUtility.getDatabase(schemaCrawlerOptions);
+    final Schema[] schemas = database.getSchemas();
     assertEquals("Schema count does not match", 3, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {
@@ -440,8 +440,8 @@ public class SchemaCrawlerTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setAlphabeticalSortForTables(false);
 
-    final Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
-    final Schema[] schemas = catalog.getSchemas();
+    final Database database = testUtility.getDatabase(schemaCrawlerOptions);
+    final Schema[] schemas = database.getSchemas();
     assertEquals("Schema count does not match", 3, schemas.length);
     final Schema schema = schemas[1];
 

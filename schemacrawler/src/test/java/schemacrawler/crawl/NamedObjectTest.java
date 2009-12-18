@@ -38,15 +38,13 @@ public class NamedObjectTest
         "CUSTOMER", "CUSTOMERLIST", "INVOICE", "ITEM", "PRODUCT", "SUPPLIER"
     };
 
-    final MutableCatalog catalog = new MutableCatalog(new MutableDatabase("database"),
-                                                      "catalog");
-
     MutableTable table;
     final NamedObjectList<Table> tables = new NamedObjectList<Table>();
 
+    MutableDatabase database = new MutableDatabase("DATABASE");
     for (final String schemaName: schemaNames)
     {
-      final MutableSchema schema = new MutableSchema(catalog, schemaName);
+      final MutableSchema schema = database.addSchema("CATALOG", schemaName);
       for (final String tableName: tableNames)
       {
         table = new MutableTable(schema, tableName);

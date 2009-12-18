@@ -36,8 +36,6 @@ public final class SchemaCrawlerOptions
 
   private static final long serialVersionUID = -3557794862382066029L;
 
-  private static final String SC_CATALOG_PATTERN_EXCLUDE = "schemacrawler.catalog.pattern.exclude";
-  private static final String SC_CATALOG_PATTERN_INCLUDE = "schemacrawler.catalog.pattern.include";
   private static final String SC_SCHEMA_PATTERN_EXCLUDE = "schemacrawler.schema.pattern.exclude";
   private static final String SC_SCHEMA_PATTERN_INCLUDE = "schemacrawler.schema.pattern.include";
 
@@ -74,7 +72,6 @@ public final class SchemaCrawlerOptions
     return tableTypesCopy;
   }
 
-  private InclusionRule catalogInclusionRule;
   private InclusionRule schemaInclusionRule;
   private TableType[] tableTypes;
   private boolean showStoredProcedures;
@@ -135,12 +132,6 @@ public final class SchemaCrawlerOptions
 
     informationSchemaViews = new InformationSchemaViews(config);
 
-    catalogInclusionRule = new InclusionRule(configProperties
-                                               .getStringValue(SC_CATALOG_PATTERN_INCLUDE,
-                                                               InclusionRule.ALL),
-                                             configProperties
-                                               .getStringValue(SC_CATALOG_PATTERN_EXCLUDE,
-                                                               InclusionRule.NONE));
     schemaInclusionRule = new InclusionRule(configProperties
                                               .getStringValue(SC_SCHEMA_PATTERN_INCLUDE,
                                                               InclusionRule.ALL),
@@ -198,16 +189,6 @@ public final class SchemaCrawlerOptions
     isAlphabeticalSortForProcedureColumns = configProperties
       .getBooleanValue(SC_SORT_ALPHABETICALLY_PROCEDURE_COLUMNS);
 
-  }
-
-  /**
-   * Gets the catalog inclusion rule.
-   * 
-   * @return Catalog inclusion rule.
-   */
-  public InclusionRule getCatalogInclusionRule()
-  {
-    return catalogInclusionRule;
   }
 
   /**
@@ -442,21 +423,6 @@ public final class SchemaCrawlerOptions
   public void setAlphabeticalSortForTables(final boolean alphabeticalSort)
   {
     isAlphabeticalSortForTables = alphabeticalSort;
-  }
-
-  /**
-   * Sets the catalog inclusion rule.
-   * 
-   * @param catalogInclusionRule
-   *        Catalog inclusion rule
-   */
-  public void setCatalogInclusionRule(final InclusionRule catalogInclusionRule)
-  {
-    if (catalogInclusionRule == null)
-    {
-      throw new IllegalArgumentException("Cannot use null value in a setter");
-    }
-    this.catalogInclusionRule = catalogInclusionRule;
   }
 
   /**

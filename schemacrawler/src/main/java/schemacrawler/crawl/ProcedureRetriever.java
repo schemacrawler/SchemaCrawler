@@ -69,8 +69,8 @@ final class ProcedureRetriever
     try
     {
       results = new MetadataResultSet(getMetaData()
-        .getProcedureColumns(procedure.getSchema().getParent().getName(),
-                             procedure.getSchema().getName(),
+        .getProcedureColumns(procedure.getSchema().getCatalogName(),
+                             procedure.getSchema().getSchemaName(),
                              procedure.getName(),
                              null));
 

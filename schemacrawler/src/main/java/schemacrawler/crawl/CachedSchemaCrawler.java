@@ -20,7 +20,6 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
@@ -58,20 +57,17 @@ public class CachedSchemaCrawler
     handler.handle(database.getSchemaCrawlerInfo());
     handler.handle(database.getDatabaseInfo());
     handler.handle(database.getJdbcDriverInfo());
-    for (final Catalog catalog: database.getCatalogs())
+    for (final Schema schema: database.getSchemas())
     {
-      for (final Schema schema: catalog.getSchemas())
+      for (final Table table: schema.getTables())
       {
-        for (final Table table: schema.getTables())
+        handler.handle(table);
+      }
+      if (options == null || options.isShowStoredProcedures())
+      {
+        for (final Procedure procedure: schema.getProcedures())
         {
-          handler.handle(table);
-        }
-        if (options == null || options.isShowStoredProcedures())
-        {
-          for (final Procedure procedure: schema.getProcedures())
-          {
-            handler.handle(procedure);
-          }
+          handler.handle(procedure);
         }
       }
     }

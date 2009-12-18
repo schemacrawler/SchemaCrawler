@@ -23,10 +23,8 @@ package schemacrawler.crawl;
 
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -65,8 +63,7 @@ final class SchemaRetriever
   /**
    * Retrieves a list of schemas from the database.
    */
-  void retrieveSchemas(final InclusionRule catalogInclusionRule,
-                       final InclusionRule schemaInclusionRule)
+  void retrieveSchemas(final InclusionRule schemaInclusionRule)
     throws SQLException
   {
     final Set<SchemaReference> schemaRefs = retrieveAllSchemas();
@@ -76,17 +73,6 @@ final class SchemaRetriever
       .hasNext();)
     {
       final SchemaReference schemaRef = iterator.next();
-
-      final String catalogName = schemaRef.getCatalogName();
-      if (catalogInclusionRule != null && catalogName != null
-          && !catalogInclusionRule.include(catalogName))
-      {
-        LOGGER.log(Level.FINER, "Dropping schema, since catalog is excluded: "
-                                + schemaRef.getFullName());
-        iterator.remove();
-        continue;
-      }
-
       final String schemaFullName = schemaRef.getFullName();
       if (schemaInclusionRule != null && schemaFullName != null
           && !schemaInclusionRule.include(schemaFullName))
@@ -98,42 +84,18 @@ final class SchemaRetriever
       }
     }
 
-    // Create catalogs in the database, along with a lookup map
-    final Map<String, MutableCatalog> catalogNamesMap = new HashMap<String, MutableCatalog>();
-    for (final SchemaReference schemaRef: schemaRefs)
-    {
-      final String catalogName = schemaRef.getCatalogName();
-      if (!catalogNamesMap.containsKey(catalogName))
-      {
-        final MutableCatalog catalog = new MutableCatalog(database, catalogName);
-        database.addCatalog(catalog);
-        catalogNamesMap.put(catalogName, catalog);
-      }
-    }
     // Create schemas for the catalogs, as well as create the schema
     // reference cache
     for (final SchemaReference schemaRef: schemaRefs)
     {
-      final MutableCatalog catalog = catalogNamesMap.get(schemaRef
-        .getCatalogName());
-      final MutableSchema schema = new MutableSchema(catalog, schemaRef
-        .getSchemaName());
-      catalog.addSchema(schema);
-      getRetrieverConnection().cacheSchema(schemaRef, schema);
+      database.addSchema(schemaRef);
     }
 
     // Add an empty schema reference for databases that do not support
     // neither catalogs nor schemas
     if (!supportsCatalogs && !supportsSchemas)
     {
-      final SchemaReference schemaRef = new SchemaReference(null, null);
-
-      final MutableCatalog catalog = new MutableCatalog(database, null);
-      final MutableSchema schema = new MutableSchema(catalog, null);
-      catalog.addSchema(schema);
-
-      getRetrieverConnection().cacheSchema(schemaRef, schema);
-      database.addCatalog(catalog);
+      database.addSchema(new SchemaReference(null, null));
     }
 
   }

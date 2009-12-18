@@ -5,12 +5,18 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+    <release version="8.0" date="2009-12-03">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Dropped the -catalogs command-line switch filtering catalogs. Dropped the concept
+        of a catalog from the API. Databases now directly contain schemas. 
+      ]]></action>
+    </release>
     <release version="7.7" date="2009-12-03">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed -schemas and -catalogs command-line switch filtering of schemas 
         and catalogs. 
-      ]]></action> 
-    </release>    
+      ]]></action>
+    </release>
     <release version="7.6" date="2009-12-03">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed specification of Oracle SID using the -database command line switch, as well as
@@ -18,8 +24,8 @@
       ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed shell script classpath. 
-      ]]></action>      
-    </release>  
+      ]]></action>
+    </release>
     <release version="7.5.1" date="2009-11-28">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Added methods to get imported and exported foreign keys and weak associations. 

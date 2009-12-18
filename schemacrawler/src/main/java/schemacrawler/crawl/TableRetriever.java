@@ -77,15 +77,11 @@ final class TableRetriever
     MetadataResultSet results = null;
     try
     {
-      results = new MetadataResultSet(getMetaData().getColumns(table
-                                                                 .getSchema()
-                                                                 .getParent()
-                                                                 .getName(),
-                                                               table
-                                                                 .getSchema()
-                                                                 .getName(),
-                                                               table.getName(),
-                                                               null));
+      results = new MetadataResultSet(getMetaData()
+        .getColumns(table.getSchema().getCatalogName(),
+                    table.getSchema().getSchemaName(),
+                    table.getName(),
+                    null));
 
       while (results.next())
       {
@@ -171,11 +167,11 @@ final class TableRetriever
     final DatabaseMetaData metaData = getMetaData();
 
     results = new MetadataResultSet(metaData.getImportedKeys(table.getSchema()
-      .getParent().getName(), table.getSchema().getName(), table.getName()));
+      .getCatalogName(), table.getSchema().getSchemaName(), table.getName()));
     createForeignKeys(results, foreignKeys);
 
     results = new MetadataResultSet(metaData.getExportedKeys(table.getSchema()
-      .getParent().getName(), table.getSchema().getName(), table.getName()));
+      .getCatalogName(), table.getSchema().getSchemaName(), table.getName()));
     createForeignKeys(results, foreignKeys);
   }
 
@@ -205,8 +201,8 @@ final class TableRetriever
       else
       {
         results = new MetadataResultSet(getMetaData()
-          .getIndexInfo(table.getSchema().getParent().getName(),
-                        table.getSchema().getName(),
+          .getIndexInfo(table.getSchema().getCatalogName(),
+                        table.getSchema().getSchemaName(),
                         table.getName(),
                         unique,
                         true/* approximate */));
@@ -244,8 +240,8 @@ final class TableRetriever
     try
     {
       results = new MetadataResultSet(getMetaData()
-        .getPrimaryKeys(table.getSchema().getParent().getName(),
-                        table.getSchema().getName(),
+        .getPrimaryKeys(table.getSchema().getCatalogName(),
+                        table.getSchema().getSchemaName(),
                         table.getName()));
 
       MutablePrimaryKey primaryKey;

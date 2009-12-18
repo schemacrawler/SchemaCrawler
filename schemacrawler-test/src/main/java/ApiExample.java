@@ -1,4 +1,3 @@
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
@@ -37,28 +36,25 @@ public final class ApiExample
     final Database database = SchemaCrawlerUtility
       .getDatabase(connectionOptions.createConnection(), options);
 
-    for (final Catalog catalog: database.getCatalogs())
+    for (final Schema schema: database.getSchemas())
     {
-      for (final Schema schema: catalog.getSchemas())
+      System.out.println(schema);
+      for (final Table table: schema.getTables())
       {
-        System.out.println(schema);
-        for (final Table table: schema.getTables())
+        System.out.print("o--> " + table);
+        if (table instanceof View)
         {
-          System.out.print("o--> " + table);
-          if (table instanceof View)
-          {
-            System.out.println(" (VIEW)");
-          }
-          else
-          {
-            System.out.println();
-          }
+          System.out.println(" (VIEW)");
+        }
+        else
+        {
+          System.out.println();
+        }
 
-          for (final Column column: table.getColumns())
-          {
-            System.out.println("     o--> " + column + " (" + column.getType()
-                               + ")");
-          }
+        for (final Column column: table.getColumns())
+        {
+          System.out.println("     o--> " + column + " (" + column.getType()
+                             + ")");
         }
       }
     }

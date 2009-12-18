@@ -27,8 +27,8 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InclusionRule;
@@ -119,8 +119,8 @@ public class SchemaCrawlerGrepTest
     schemaCrawlerOptions
       .setGrepColumnInclusionRule(new InclusionRule(".*\\..*\\.ID", ""));
 
-    final Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
-    final Schema[] schemas = catalog.getSchemas();
+    final Database database = testUtility.getDatabase(schemaCrawlerOptions);
+    final Schema[] schemas = database.getSchemas();
     assertEquals("Schema count does not match", 3, schemas.length);
     for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
     {

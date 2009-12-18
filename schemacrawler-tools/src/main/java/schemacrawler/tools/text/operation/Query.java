@@ -128,8 +128,7 @@ public final class Query
     {
       if (table.getSchema() != null)
       {
-        tableProperties.put("catalog", table.getSchema().getParent().getName());
-        tableProperties.put("schema", table.getSchema().getName());
+        tableProperties.put("schema", table.getSchema().getFullName());
       }
       tableProperties.put("table", table.getFullName());
       tableProperties.put("columns", table.getColumnsListAsString());

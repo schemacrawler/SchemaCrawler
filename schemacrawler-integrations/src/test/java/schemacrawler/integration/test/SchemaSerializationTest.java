@@ -38,7 +38,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -76,12 +75,9 @@ public class SchemaSerializationTest
 
     final Database database = testUtility.getDatabase(schemaCrawlerOptions);
     assertNotNull("Could not obtain database", database);
-    assertTrue("Could not find any catalogs", database.getCatalogs().length > 0);
+    assertTrue("Could not find any schemas", database.getSchemas().length > 0);
 
-    final Catalog catalog = database.getCatalogs()[0];
-    assertTrue("Could not find any schemas", catalog.getSchemas().length > 0);
-
-    final Schema schema = catalog.getSchema("PUBLIC");
+    final Schema schema = database.getSchema("PUBLIC");
     assertNotNull("Could not obtain schema", schema);
     assertEquals("Unexpected number of tables in the schema", 6, schema
       .getTables().length);
@@ -101,9 +97,7 @@ public class SchemaSerializationTest
     xmlSchemaCrawler = new XmlSchemaCrawler(new StringReader(xmlSerializedCatalog1));
     final Database deserializedDatabase = xmlSchemaCrawler.getDatabase();
     assertNotNull("No database deserialized", deserializedDatabase);
-    final Catalog deserializedCatalog = deserializedDatabase.getCatalogs()[0];
-    assertNotNull("No catalog deserialized", deserializedCatalog);
-    final Schema deserializedSchema = deserializedCatalog.getSchema("PUBLIC");
+    final Schema deserializedSchema = deserializedDatabase.getSchema("PUBLIC");
     assertNotNull("Could not obtain deserialized schema", deserializedSchema);
     assertEquals("Unexpected number of tables in the deserialized schema",
                  6,
@@ -138,43 +132,36 @@ public class SchemaSerializationTest
     schemaCrawlerOptions.setShowStoredProcedures(true);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-    final Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
-    assertNotNull("Could not obtain catalog", catalog);
-    assertTrue("Could not find any schemas", catalog.getSchemas().length > 0);
-
-    final Schema schema = catalog.getSchema("PUBLIC");
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
     assertNotNull("Could not obtain schema", schema);
     assertEquals("Unexpected number of tables in the schema", 6, schema
       .getTables().length);
 
     final XStream xStream = new XStream();
 
-    final String xmlSerializedCatalog1 = xStream.toXML(catalog);
-    assertNotNull("Catalog was not serialized to XML", xmlSerializedCatalog1);
-    assertNotSame("Catalog was not serialized to XML", 0, xmlSerializedCatalog1
+    final String xmlSerializedSchema1 = xStream.toXML(schema);
+    assertNotNull("Catalog was not serialized to XML", xmlSerializedSchema1);
+    assertNotSame("Catalog was not serialized to XML", 0, xmlSerializedSchema1
       .trim().length());
 
-    final Catalog deserializedCatalog = (Catalog) xStream
-      .fromXML(xmlSerializedCatalog1);
-    assertNotNull("No catalog deserialized", deserializedCatalog);
-
-    final Schema deserializedSchema = deserializedCatalog.getSchema("PUBLIC");
-    assertNotNull("Could not obtain deserialized schema", deserializedSchema);
+    final Schema deserializedSchema = (Schema) xStream
+      .fromXML(xmlSerializedSchema1);
+    assertNotNull("Could not deserialize schema", deserializedSchema);
     assertEquals("Unexpected number of tables in the deserialized schema",
                  6,
                  deserializedSchema.getTables().length);
 
-    final String xmlSerializedCatalog2 = xStream.toXML(deserializedCatalog);
+    final String xmlSerializedCatalog2 = xStream.toXML(deserializedSchema);
     assertNotNull("Catalog was not serialized to XML", xmlSerializedCatalog2);
     assertNotSame("Catalog was not serialized to XML", 0, xmlSerializedCatalog2
       .trim().length());
 
-    final DetailedDiff myDiff = new DetailedDiff(new Diff(xmlSerializedCatalog1,
+    final DetailedDiff myDiff = new DetailedDiff(new Diff(xmlSerializedSchema1,
                                                           xmlSerializedCatalog2));
     final List<?> allDifferences = myDiff.getAllDifferences();
     if (!myDiff.similar())
     {
-      IOUtils.write(xmlSerializedCatalog1,
+      IOUtils.write(xmlSerializedSchema1,
                     new FileWriter("serialized-catalog-1.xml"));
       IOUtils.write(xmlSerializedCatalog2,
                     new FileWriter("serialized-catalog-2.xml"));

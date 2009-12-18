@@ -24,8 +24,6 @@ package schemacrawler.crawl;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -42,7 +40,6 @@ final class RetrieverConnection
   private final DatabaseMetaData metaData;
   private final InformationSchemaViews informationSchemaViews;
   private final boolean supportsCatalogs;
-  private final Map<SchemaReference, MutableSchema> schemaRefsCache;
 
   RetrieverConnection(final Connection connection,
                       final SchemaCrawlerOptions options)
@@ -64,13 +61,7 @@ final class RetrieverConnection
     this.connection = connection;
     metaData = connection.getMetaData();
     supportsCatalogs = metaData.supportsCatalogsInTableDefinitions();
-    schemaRefsCache = new HashMap<SchemaReference, MutableSchema>();
     informationSchemaViews = schemaCrawlerOptions.getInformationSchemaViews();
-  }
-
-  void cacheSchema(final SchemaReference schemaName, final MutableSchema schema)
-  {
-    schemaRefsCache.put(schemaName, schema);
   }
 
   Connection getConnection()
@@ -91,11 +82,6 @@ final class RetrieverConnection
   DatabaseMetaData getMetaData()
   {
     return metaData;
-  }
-
-  Map<SchemaReference, MutableSchema> getSchemaNamesMap()
-  {
-    return schemaRefsCache;
   }
 
   boolean isSupportsCatalogs()

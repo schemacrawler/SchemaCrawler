@@ -103,6 +103,13 @@ public final class GraphExecutable
     }
   }
 
+  @Override
+  protected HelpOptions getHelpOptions()
+  {
+    return new IntegrationHelpOptions("SchemaCrawler - Graphing",
+                                      "/help/OutputOptions.dot.txt");
+  }
+
   private void writeDotFile(final Connection connection, final File dotFile)
   {
     try
@@ -121,13 +128,6 @@ public final class GraphExecutable
     {
       LOGGER.log(Level.SEVERE, "Could not write diagram, " + dotFile, e);
     }
-  }
-
-  @Override
-  protected HelpOptions getHelpOptions()
-  {
-    return new IntegrationHelpOptions("SchemaCrawler - Graphing",
-                                      "/help/OutputOptions.dot.txt");
   }
 
 }

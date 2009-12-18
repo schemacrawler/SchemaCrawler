@@ -16,14 +16,6 @@
   Optional, defaults to false
   
 --- Filtering Options ---
-    
--catalogs=<regular-expression>
-  <regular-expression> is a regular expression to match catalog names 
-  for example, 
-  -catalogs=.*\.C.*|.*\.P.*
-  matches any catalogs whose names start with C or P
-  Catalogs that do not match the pattern are not displayed
-  Optional, defaults to showing all catalogs
      
 -schemas=<regular-expression>
   <regular-expression> is a regular expression to match fully qualified schema 
