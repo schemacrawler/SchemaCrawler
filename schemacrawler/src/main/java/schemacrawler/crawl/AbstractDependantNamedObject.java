@@ -25,8 +25,7 @@ import schemacrawler.schema.DependantNamedObject;
 import schemacrawler.schema.NamedObject;
 
 /**
- * Represents the dependent of a named object, such as a catalog or a
- * schema.
+ * Represents the dependent of a named object.
  * 
  * @author Sualeh Fatehi
  */

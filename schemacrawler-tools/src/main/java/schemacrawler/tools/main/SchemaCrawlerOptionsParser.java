@@ -37,9 +37,6 @@ final class SchemaCrawlerOptionsParser
   extends BaseOptionsParser<SchemaCrawlerOptions>
 {
 
-  private final StringOption optionCatalogs = new StringOption(Option.NO_SHORT_FORM,
-                                                               "catalogs",
-                                                               InclusionRule.NONE);
   private final StringOption optionSchemas = new StringOption(Option.NO_SHORT_FORM,
                                                               "schemas",
                                                               InclusionRule.NONE);
@@ -98,7 +95,6 @@ final class SchemaCrawlerOptionsParser
   protected SchemaCrawlerOptions getOptions()
   {
     parse(new Option[] {
-        optionCatalogs,
         optionSchemas,
         optionTableTypes,
         optionShowStoredProcedures,
@@ -114,13 +110,6 @@ final class SchemaCrawlerOptionsParser
         optionSortInout,
     });
 
-    if (optionCatalogs.isFound())
-    {
-      final InclusionRule catalogInclusionRule = new InclusionRule(optionCatalogs
-                                                                     .getValue(),
-                                                                   InclusionRule.NONE);
-      options.setCatalogInclusionRule(catalogInclusionRule);
-    }
     if (optionSchemas.isFound())
     {
       final InclusionRule schemaInclusionRule = new InclusionRule(optionSchemas

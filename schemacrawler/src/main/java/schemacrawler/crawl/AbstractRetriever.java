@@ -26,8 +26,8 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import schemacrawler.schema.DatabaseObject;
 import sf.util.Utility;
@@ -81,14 +81,13 @@ abstract class AbstractRetriever
 
     boolean belongsToCatalog = true;
     boolean belongsToSchema = true;
-    final String dbObjectCatalogName = dbObject.getSchema().getParent()
-      .getName();
+    final String dbObjectCatalogName = dbObject.getSchema().getCatalogName();
     if (!Utility.isBlank(catalogName) && !Utility.isBlank(dbObjectCatalogName)
         && !catalogName.equals(dbObjectCatalogName))
     {
       belongsToCatalog = false;
     }
-    final String dbObjectSchemaName = dbObject.getSchema().getName();
+    final String dbObjectSchemaName = dbObject.getSchema().getSchemaName();
     if (!Utility.isBlank(schemaName) && !Utility.isBlank(dbObjectSchemaName)
         && !schemaName.equals(dbObjectSchemaName))
     {
@@ -110,11 +109,6 @@ abstract class AbstractRetriever
   protected RetrieverConnection getRetrieverConnection()
   {
     return retrieverConnection;
-  }
-
-  protected Set<SchemaReference> getSchemaNames()
-  {
-    return retrieverConnection.getSchemaNamesMap().keySet();
   }
 
   protected MutableColumnDataType lookupColumnDataTypeByType(final MutableSchema schema,
@@ -181,7 +175,7 @@ abstract class AbstractRetriever
   {
     final SchemaReference schemaRef = new SchemaReference(catalogName,
                                                           schemaName);
-    return retrieverConnection.getSchemaNamesMap().get(schemaRef);
+    return database.getSchema(schemaRef);
   }
 
   protected MutableTable lookupTable(final String catalogName,
@@ -195,6 +189,11 @@ abstract class AbstractRetriever
       table = schema.getTable(tableName);
     }
     return table;
+  }
+
+  Collection<SchemaReference> getSchemaNames()
+  {
+    return database.getSchemaNames();
   }
 
   /**

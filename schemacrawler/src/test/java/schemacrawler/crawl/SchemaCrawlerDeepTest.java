@@ -26,7 +26,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
@@ -66,11 +65,7 @@ public class SchemaCrawlerDeepTest
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setShowStoredProcedures(true);
 
-    final Catalog catalog = testUtility.getCatalog(schemaCrawlerOptions);
-    assertNotNull("Could not obtain catalog", catalog);
-    assertTrue("Could not find any schemas", catalog.getSchemas().length > 0);
-
-    final Schema schema = catalog.getSchema("PUBLIC");
+    final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
     assertNotNull("Could not obtain schema", schema);
     assertTrue("Could not find any tables", schema.getTables().length > 0);
     assertTrue("Could not find any procedures",

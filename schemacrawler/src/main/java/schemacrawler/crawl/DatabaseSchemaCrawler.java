@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnMap;
@@ -149,14 +148,11 @@ public final class DatabaseSchemaCrawler
       {
         handler.handle(columnDataType);
       }
-      for (final Catalog catalog: database.getCatalogs())
+      for (final Schema schema: database.getSchemas())
       {
-        for (final Schema schema: catalog.getSchemas())
+        for (final ColumnDataType columnDataType: schema.getColumnDataTypes())
         {
-          for (final ColumnDataType columnDataType: schema.getColumnDataTypes())
-          {
-            handler.handle(columnDataType);
-          }
+          handler.handle(columnDataType);
         }
       }
 
@@ -318,8 +314,7 @@ public final class DatabaseSchemaCrawler
       final SchemaRetriever retriever = new SchemaRetriever(retrieverConnection,
                                                             database);
 
-      retriever.retrieveSchemas(options.getCatalogInclusionRule(), options
-        .getSchemaInclusionRule());
+      retriever.retrieveSchemas(options.getSchemaInclusionRule());
     }
     catch (final SQLException e)
     {

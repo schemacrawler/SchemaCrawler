@@ -21,7 +21,13 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.Catalog;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Procedure;
@@ -45,7 +51,7 @@ final class MutableDatabase
   private final MutableJdbcDriverInfo jdbcDriverInfo;
   private final MutableSchemaCrawlerInfo schemaCrawlerInfo;
   private final ColumnDataTypes systemColumnDataTypes = new ColumnDataTypes();
-  private final NamedObjectList<MutableCatalog> catalogs = new NamedObjectList<MutableCatalog>();
+  private final Map<SchemaReference, MutableSchema> schemaRefsCache;
 
   MutableDatabase(final String name)
   {
@@ -53,26 +59,7 @@ final class MutableDatabase
     databaseInfo = new MutableDatabaseInfo();
     jdbcDriverInfo = new MutableJdbcDriverInfo();
     schemaCrawlerInfo = new MutableSchemaCrawlerInfo();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.Catalog#getCatalog(java.lang.String)
-   */
-  public MutableCatalog getCatalog(final String name)
-  {
-    return catalogs.lookup(name);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.Catalog#getCatalogs()
-   */
-  public Catalog[] getCatalogs()
-  {
-    return catalogs.values().toArray(new Catalog[catalogs.size()]);
+    schemaRefsCache = new HashMap<SchemaReference, MutableSchema>();
   }
 
   public MutableDatabaseInfo getDatabaseInfo()
@@ -93,11 +80,42 @@ final class MutableDatabase
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schema.Database#getSchema(java.lang.String)
+   */
+  public MutableSchema getSchema(final String name)
+  {
+    final Collection<SchemaReference> schemaRefs = getSchemaNames();
+    for (final SchemaReference schemaRef: schemaRefs)
+    {
+      if (schemaRef.getFullName().equals(name))
+      {
+        return schemaRefsCache.get(schemaRef);
+      }
+    }
+    return null;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see schemacrawler.schema.Database#getSchemaCrawlerInfo()
    */
   public MutableSchemaCrawlerInfo getSchemaCrawlerInfo()
   {
     return schemaCrawlerInfo;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Database#getSchemas()
+   */
+  public Schema[] getSchemas()
+  {
+    final List<MutableSchema> schemas = new ArrayList<MutableSchema>(schemaRefsCache
+      .values());
+    Collections.sort(schemas);
+    return schemas.toArray(new Schema[schemas.size()]);
   }
 
   /**
@@ -121,9 +139,16 @@ final class MutableDatabase
       .toArray(new ColumnDataType[systemColumnDataTypes.size()]);
   }
 
-  void addCatalog(final MutableCatalog catalog)
+  MutableSchema addSchema(final SchemaReference schemaRef)
   {
-    catalogs.add(catalog);
+    final MutableSchema schema = new MutableSchema(schemaRef);
+    schemaRefsCache.put(schemaRef, schema);
+    return schema;
+  }
+
+  MutableSchema addSchema(final String catalogName, final String schemaName)
+  {
+    return addSchema(new SchemaReference(catalogName, schemaName));
   }
 
   void addSystemColumnDataType(final MutableColumnDataType columnDataType)
@@ -137,35 +162,37 @@ final class MutableDatabase
   NamedObjectList<MutableProcedure> getAllProcedures()
   {
     final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>();
-    for (final Catalog catalog: getCatalogs())
+    for (final Schema schema: getSchemas())
     {
-      for (final Schema schema: catalog.getSchemas())
+      for (final Procedure procedure: schema.getProcedures())
       {
-        for (final Procedure procedure: schema.getProcedures())
-        {
-          procedures.add((MutableProcedure) procedure);
-        }
+        procedures.add((MutableProcedure) procedure);
       }
     }
-
     return procedures;
   }
 
   NamedObjectList<MutableTable> getAllTables()
   {
     final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>();
-    for (final Catalog catalog: getCatalogs())
+    for (final Schema schema: getSchemas())
     {
-      for (final Schema schema: catalog.getSchemas())
+      for (final Table table: schema.getTables())
       {
-        for (final Table table: schema.getTables())
-        {
-          tables.add((MutableTable) table);
-        }
+        tables.add((MutableTable) table);
       }
     }
-
     return tables;
+  }
+
+  MutableSchema getSchema(final SchemaReference schemaRef)
+  {
+    return schemaRefsCache.get(schemaRef);
+  }
+
+  Collection<SchemaReference> getSchemaNames()
+  {
+    return schemaRefsCache.keySet();
   }
 
   ColumnDataTypes getSystemColumnDataTypesList()

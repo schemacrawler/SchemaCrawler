@@ -22,11 +22,9 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import sf.util.Utility;
 
 /**
  * Represents the database schema.
@@ -34,21 +32,36 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 class MutableSchema
-  extends AbstractDependantNamedObject
+  extends AbstractNamedObject
   implements Schema
 {
 
   private static final long serialVersionUID = 3258128063743931187L;
 
-  private transient String fullName;
-
+  private final SchemaReference schemaRef;
   private final ColumnDataTypes columnDataTypes = new ColumnDataTypes();
   private final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>();
   private final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>();
 
-  MutableSchema(final AbstractNamedObject parent, final String name)
+  MutableSchema()
   {
-    super(parent, name);
+    this(new SchemaReference(null, null));
+  }
+
+  MutableSchema(final SchemaReference schemaRef)
+  {
+    super(schemaRef.getFullName());
+    this.schemaRef = schemaRef;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Schema#getCatalogName()
+   */
+  public String getCatalogName()
+  {
+    return schemaRef.getCatalogName();
   }
 
   /**
@@ -80,8 +93,7 @@ class MutableSchema
   @Override
   public String getFullName()
   {
-    buildFullName();
-    return fullName;
+    return schemaRef.getFullName();
   }
 
   /**
@@ -102,6 +114,16 @@ class MutableSchema
   public Procedure[] getProcedures()
   {
     return procedures.values().toArray(new Procedure[procedures.size()]);
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Schema#getSchemaName()
+   */
+  public String getSchemaName()
+  {
+    return schemaRef.getSchemaName();
   }
 
   /**
@@ -160,30 +182,6 @@ class MutableSchema
   void setTablesSortOrder(final NamedObjectSort sort)
   {
     tables.setSortOrder(sort);
-  }
-
-  private final void buildFullName()
-  {
-    if (fullName == null)
-    {
-      final StringBuilder buffer = new StringBuilder();
-      final NamedObject catalog = getParent();
-      final boolean hasCatalogName = catalog != null
-                                     && !Utility.isBlank(catalog.getName());
-      if (hasCatalogName)
-      {
-        buffer.append(catalog.getName());
-      }
-      if (getName() != null)
-      {
-        if (hasCatalogName)
-        {
-          buffer.append(".");
-        }
-        buffer.append(getName());
-      }
-      fullName = buffer.toString();
-    }
   }
 
 }

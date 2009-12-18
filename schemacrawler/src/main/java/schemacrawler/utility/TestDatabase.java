@@ -24,7 +24,6 @@ package schemacrawler.utility;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
@@ -33,7 +32,6 @@ import java.util.logging.Logger;
 
 import org.hsqldb.Server;
 
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
@@ -53,20 +51,6 @@ public class TestDatabase
 
   private static final Logger LOGGER = Logger.getLogger(TestDatabase.class
     .getName());
-
-  private static final Class<Driver> JDBC_DRIVER_CLASS;
-  static
-  {
-    try
-    {
-      JDBC_DRIVER_CLASS = (Class<Driver>) Class
-        .forName("org.hsqldb.jdbcDriver");
-    }
-    catch (final ClassNotFoundException e)
-    {
-      throw new RuntimeException(e);
-    }
-  }
 
   public static void initializeApplicationLogging()
   {
@@ -102,14 +86,6 @@ public class TestDatabase
     createDatabase("jdbc:hsqldb:mem:schemacrawler");
   }
 
-  public Catalog getCatalog(final SchemaCrawlerOptions schemaCrawlerOptions)
-    throws SchemaCrawlerException, SQLException
-  {
-    final Database database = getDatabase(schemaCrawlerOptions);
-    final Catalog catalog = database.getCatalogs()[0];
-    return catalog;
-  }
-
   /**
    * Gets the connection.
    * 
@@ -139,9 +115,8 @@ public class TestDatabase
                           final String schemaName)
     throws SchemaCrawlerException, SQLException
   {
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
-
-    final Schema schema = catalog.getSchema(schemaName);
+    final Database database = getDatabase(schemaCrawlerOptions);
+    final Schema schema = database.getSchema(schemaName);
     return schema;
   }
 
@@ -266,8 +241,8 @@ public class TestDatabase
   private void makeDataSource(final String url)
     throws SchemaCrawlerException
   {
-    connectionOptions = new DatabaseConnectionOptions(JDBC_DRIVER_CLASS
-      .getName(), url);
+    connectionOptions = new DatabaseConnectionOptions("org.hsqldb.jdbcDriver",
+                                                      url);
     connectionOptions.setUser("sa");
     connectionOptions.setPassword("");
   }

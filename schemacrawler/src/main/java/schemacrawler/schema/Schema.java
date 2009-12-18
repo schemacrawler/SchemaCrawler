@@ -27,8 +27,15 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface Schema
-  extends DependantNamedObject
+  extends NamedObject
 {
+
+  /**
+   * Gets the name of the catalog.
+   * 
+   * @return Name of the catalog.
+   */
+  String getCatalogName();
 
   /**
    * Gets the column data types defined in the schema, by name.
@@ -59,6 +66,13 @@ public interface Schema
    * @return Procedures
    */
   Procedure[] getProcedures();
+
+  /**
+   * Gets the name of the schema.
+   * 
+   * @return Name of the schema.
+   */
+  String getSchemaName();
 
   /**
    * Gets a table by name.

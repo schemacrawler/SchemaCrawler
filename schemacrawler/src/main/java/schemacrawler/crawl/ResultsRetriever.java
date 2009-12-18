@@ -87,10 +87,8 @@ final class ResultsRetriever
           tableName = "";
         }
 
-        final MutableCatalog catalog = new MutableCatalog(database, catalogName);
-        database.addCatalog(catalog);
-        final MutableSchema schema = new MutableSchema(catalog, schemaName);
-        catalog.addSchema(schema);
+        final MutableSchema schema = database
+          .addSchema(catalogName, schemaName);
         final MutableTable table = new MutableTable(schema, tableName);
         schema.addTable(table);
 

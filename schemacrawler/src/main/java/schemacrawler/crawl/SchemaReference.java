@@ -22,6 +22,8 @@ package schemacrawler.crawl;
 
 import java.io.Serializable;
 
+import sf.util.Utility;
+
 final class SchemaReference
   implements Serializable
 {
@@ -30,8 +32,9 @@ final class SchemaReference
 
   private final String catalogName;
   private final String schemaName;
+  private transient String fullName;
 
-  public SchemaReference(final String catalogName, final String schemaName)
+  SchemaReference(final String catalogName, final String schemaName)
   {
     this.catalogName = catalogName;
     this.schemaName = schemaName;
@@ -109,15 +112,27 @@ final class SchemaReference
     return catalogName;
   }
 
-  final String getFullName()
+  String getFullName()
   {
-    return (catalogName != null? catalogName + ".": "")
-           + (schemaName != null? schemaName: "");
+    buildFullName();
+    return fullName;
   }
 
   String getSchemaName()
   {
     return schemaName;
+  }
+
+  private final void buildFullName()
+  {
+    if (fullName == null)
+    {
+      final boolean hasCatalogName = !Utility.isBlank(catalogName);
+      final boolean hasSchemaName = !Utility.isBlank(schemaName);
+      fullName = (hasCatalogName? catalogName: "")
+                 + (hasCatalogName && hasSchemaName? ".": "")
+                 + (hasSchemaName? schemaName: "");
+    }
   }
 
 }

@@ -30,27 +30,27 @@ public interface Database
   extends NamedObject
 {
 
-  /**
-   * Gets a catalog by name.
-   * 
-   * @param name
-   *        Name
-   * @return Catalog.
-   */
-  Catalog getCatalog(String catalogName);
-
-  /**
-   * Gets the schemas.
-   * 
-   * @return Catalogs
-   */
-  Catalog[] getCatalogs();
-
   DatabaseInfo getDatabaseInfo();
 
   JdbcDriverInfo getJdbcDriverInfo();
 
+  /**
+   * Gets a schema by name.
+   * 
+   * @param name
+   *        Name
+   * @return Schema.
+   */
+  Schema getSchema(String schemaName);
+
   SchemaCrawlerInfo getSchemaCrawlerInfo();
+
+  /**
+   * Gets the schemas.
+   * 
+   * @return Schemas
+   */
+  Schema[] getSchemas();
 
   /**
    * Gets the column data types defined by the RDBMS system, by name.
