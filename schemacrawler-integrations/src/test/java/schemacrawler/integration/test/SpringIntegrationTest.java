@@ -105,8 +105,7 @@ public class SpringIntegrationTest
     final String outputFilename = File.createTempFile("schemacrawler", "test")
       .getAbsolutePath();
 
-    executable.getToolOptions().getOutputOptions()
-      .setOutputFileName(outputFilename);
+    executable.getOutputOptions().setOutputFileName(outputFilename);
     executable.execute(testUtility.getConnection());
 
     final File testOutputFile = new File(outputFilename);

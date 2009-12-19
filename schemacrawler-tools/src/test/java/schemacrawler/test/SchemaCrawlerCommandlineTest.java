@@ -40,16 +40,11 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.main.Commands;
 import schemacrawler.tools.main.SchemaCrawlerCommandLine;
 import schemacrawler.tools.main.SchemaCrawlerMain;
-import schemacrawler.tools.text.operation.Operation;
-import schemacrawler.tools.text.operation.OperationExecutable;
-import schemacrawler.tools.text.schema.SchemaCrawlerExecutable;
-import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.utility.TestDatabase;
 import sf.util.TestUtility;
 

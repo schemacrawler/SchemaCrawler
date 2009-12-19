@@ -54,11 +54,6 @@ public final class FreeMarkerRenderer
   private static final Logger LOGGER = Logger
     .getLogger(FreeMarkerRenderer.class.getName());
 
-  public FreeMarkerRenderer()
-  {
-    super(FreeMarkerRenderer.class.getSimpleName());
-  }
-
   /**
    * {@inheritDoc}
    * 

@@ -21,19 +21,10 @@
 package schemacrawler.tools.integration;
 
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.Executable;
+import schemacrawler.tools.ExecutionException;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.main.Command;
-import schemacrawler.tools.main.Commands;
-import schemacrawler.tools.main.HelpOptions;
-import schemacrawler.tools.main.SchemaCrawlerCommandLine;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 
@@ -46,72 +37,18 @@ public abstract class IntegrationsExecutable
   extends Executable<SchemaTextOptions>
 {
 
-  private static final Logger LOGGER = Logger
-    .getLogger(IntegrationsExecutable.class.getName());
-
-  protected IntegrationsExecutable(final String name)
+  @Override
+  public void initialize(final String command,
+                         final Config config,
+                         final OutputOptions outputOptions)
+    throws ExecutionException
   {
-    super(name);
-  }
-
-  /**
-   * Get connection parameters, and creates a connection, and crawls the
-   * schema.
-   * 
-   * @param args
-   *        Arguments passed into the program from the command line.
-   * @throws Exception
-   *         On an exception
-   */
-  public final void main(final String[] args)
-    throws Exception
-  {
-    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
-                                                                              getHelpOptions());
-
-    schemaCrawlerOptions = commandLine.getSchemaCrawlerOptions();
-
-    final OutputOptions outputOptions = commandLine.getOutputOptions();
-    final Commands commands = commandLine.getCommands();
     final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType
-      .valueOf(getCommand(commands));
-    final Config config = commandLine.getConfig();
+      .valueOf(command);
     toolOptions = new SchemaTextOptions(config,
                                         outputOptions,
                                         schemaTextDetailType);
-
-    final Connection connection = commandLine.createConnection();
-    execute(connection);
-
-    try
-    {
-      if (connection != null)
-      {
-        connection.close();
-        LOGGER.log(Level.INFO, "Closed database connection, " + connection);
-      }
-    }
-    catch (final SQLException e)
-    {
-      final String errorMessage = e.getMessage();
-      LOGGER.log(Level.WARNING, "Could not close the connection: "
-                                + errorMessage);
-    }
-  }
-
-  protected abstract HelpOptions getHelpOptions();
-
-  /**
-   * Expect one command (further, of type schema text.
-   */
-  private String getCommand(final Commands commands)
-  {
-    final Iterator<Command> iterator = commands.iterator();
-    if (!iterator.hasNext())
-    {
-      throw new IllegalArgumentException("No commands specified");
-    }
-    return iterator.next().getName();
+    schemaCrawlerOptions = schemaCrawlerOptions;
   }
 
 }

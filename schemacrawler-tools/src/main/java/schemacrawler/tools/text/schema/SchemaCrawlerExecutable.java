@@ -28,7 +28,6 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.ExecutionException;
 import schemacrawler.tools.OutputOptions;
@@ -79,7 +78,6 @@ public class SchemaCrawlerExecutable
   @Override
   public void initialize(final String command,
                          final Config config,
-                         final SchemaCrawlerOptions schemaCrawlerOptions,
                          final OutputOptions outputOptions)
     throws ExecutionException
   {
@@ -88,7 +86,7 @@ public class SchemaCrawlerExecutable
     toolOptions = new SchemaTextOptions(config,
                                         outputOptions,
                                         schemaTextDetailType);
-    this.schemaCrawlerOptions = schemaCrawlerOptions;
+    schemaCrawlerOptions = schemaCrawlerOptions;
   }
 
 }

@@ -61,11 +61,6 @@ public final class VelocityRenderer
                   resourceLoaderPropertyValue);
   }
 
-  public VelocityRenderer()
-  {
-    super(VelocityRenderer.class.getSimpleName());
-  }
-
   /**
    * {@inheritDoc}
    * 
