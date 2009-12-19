@@ -24,10 +24,13 @@ package schemacrawler.tools.text.operation;
 import java.sql.Connection;
 
 import schemacrawler.crawl.DatabaseSchemaCrawler;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.ExecutionException;
+import schemacrawler.tools.OutputOptions;
 
 /**
  * Basic SchemaCrawler executor.
@@ -37,16 +40,6 @@ import schemacrawler.tools.ExecutionException;
 public class OperationExecutable
   extends Executable<OperationOptions>
 {
-
-  public OperationExecutable()
-  {
-    this(OperationExecutable.class.getSimpleName());
-  }
-
-  public OperationExecutable(final String name)
-  {
-    super(name);
-  }
 
   /**
    * {@inheritDoc}
@@ -79,6 +72,30 @@ public class OperationExecutable
     {
       throw new ExecutionException("Could not execute operation", e);
     }
+  }
+
+  @Override
+  public void initialize(final String command,
+                         final Config config,
+                         final SchemaCrawlerOptions schemaCrawlerOptions,
+                         final OutputOptions outputOptions)
+    throws ExecutionException
+  {
+
+    Operation operation;
+    OperationOptions operationOptions;
+    try
+    {
+      operation = Operation.valueOf(command);
+      operationOptions = new OperationOptions(config, outputOptions, operation);
+    }
+    catch (final IllegalArgumentException e)
+    {
+      final String queryName = command;
+      operationOptions = new OperationOptions(config, outputOptions, queryName);
+    }
+    toolOptions = operationOptions;
+    this.schemaCrawlerOptions = schemaCrawlerOptions;
   }
 
 }

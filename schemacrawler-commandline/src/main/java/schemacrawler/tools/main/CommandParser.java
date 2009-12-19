@@ -21,7 +21,6 @@
 package schemacrawler.tools.main;
 
 
-import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
 
@@ -36,8 +35,7 @@ final class CommandParser
 
   private final StringOption optionCommand = new StringOption(Option.NO_SHORT_FORM,
                                                               "command",
-                                                              SchemaTextDetailType.standard_schema
-                                                                .name());
+                                                              "standard_schema");
 
   CommandParser(final String[] args)
   {
@@ -58,24 +56,7 @@ final class CommandParser
     });
 
     final String commandOptionValue = optionCommand.getValue();
-    final String[] commandStrings = commandOptionValue.split(",");
-
-    final Commands commands = new Commands();
-    for (final String commandString: commandStrings)
-    {
-      SchemaTextDetailType schemaTextDetailType;
-      try
-      {
-        schemaTextDetailType = SchemaTextDetailType.valueOf(commandString);
-      }
-      catch (final IllegalArgumentException e)
-      {
-        schemaTextDetailType = null;
-      }
-      final boolean isOperation = schemaTextDetailType == null;
-      commands.add(new Command(commandString, isOperation));
-    }
-
+    final Commands commands = new Commands(commandOptionValue);
     return commands;
   }
 
