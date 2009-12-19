@@ -35,6 +35,7 @@
   </scm>
   <modules>
     <module>schemacrawler</module>
+    <module>schemacrawler-commandline</module>
     <module>schemacrawler-tools</module>
     <module>schemacrawler-integrations</module>
     <module>schemacrawler-maven-plugin</module>
