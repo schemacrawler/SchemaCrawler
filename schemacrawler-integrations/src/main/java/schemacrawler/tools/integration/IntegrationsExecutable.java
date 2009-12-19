@@ -38,17 +38,14 @@ public abstract class IntegrationsExecutable
 {
 
   @Override
-  public void initialize(final String command,
-                         final Config config,
-                         final OutputOptions outputOptions)
+  public void initializeToolOptions(final String command,
+                                    final Config config,
+                                    final OutputOptions outputOptions)
     throws ExecutionException
   {
-    final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType
-      .valueOf(command);
     toolOptions = new SchemaTextOptions(config,
                                         outputOptions,
-                                        schemaTextDetailType);
-    schemaCrawlerOptions = schemaCrawlerOptions;
+                                        SchemaTextDetailType.standard_schema);
   }
 
 }

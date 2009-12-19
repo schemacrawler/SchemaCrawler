@@ -114,7 +114,7 @@ final class ExecutableFactory
       {
         executable = executableClass.newInstance();
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-        executable.initialize(command, config, outputOptions);
+        executable.initializeToolOptions(command, config, outputOptions);
       }
       catch (final InstantiationException e)
       {

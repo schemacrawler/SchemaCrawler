@@ -76,9 +76,9 @@ public class SchemaCrawlerExecutable
   }
 
   @Override
-  public void initialize(final String command,
-                         final Config config,
-                         final OutputOptions outputOptions)
+  public void initializeToolOptions(final String command,
+                                    final Config config,
+                                    final OutputOptions outputOptions)
     throws ExecutionException
   {
     final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType
@@ -86,7 +86,6 @@ public class SchemaCrawlerExecutable
     toolOptions = new SchemaTextOptions(config,
                                         outputOptions,
                                         schemaTextDetailType);
-    schemaCrawlerOptions = schemaCrawlerOptions;
   }
 
 }

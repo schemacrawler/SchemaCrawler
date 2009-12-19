@@ -74,9 +74,9 @@ public class OperationExecutable
   }
 
   @Override
-  public void initialize(final String command,
-                         final Config config,
-                         final OutputOptions outputOptions)
+  public void initializeToolOptions(final String command,
+                                    final Config config,
+                                    final OutputOptions outputOptions)
     throws ExecutionException
   {
 
