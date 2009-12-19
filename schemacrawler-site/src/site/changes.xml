@@ -7,6 +7,10 @@
   <body>
     <release version="8.0" date="2009-12-03">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Create a command registry, which allows pluggable commands. Any command can be run from the
+        main class.
+      ]]></action>    
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Dropped the -catalogs command-line switch filtering catalogs. Dropped the concept
         of a catalog from the API. Databases now directly contain schemas. 
       ]]></action>
