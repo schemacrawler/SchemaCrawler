@@ -93,7 +93,6 @@ public class OperationExecutable
       operationOptions = new OperationOptions(config, outputOptions, queryName);
     }
     toolOptions = operationOptions;
-    schemaCrawlerOptions = schemaCrawlerOptions;
   }
 
 }
