@@ -2,37 +2,49 @@ package schemacrawler.tools.main;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
 import schemacrawler.schemacrawler.Options;
+import sf.util.Utility;
 
 public final class Commands
-  implements Options, Iterable<Command>
+  implements Options, Iterable<String>
 {
 
   private static final long serialVersionUID = -3450943894546747834L;
 
-  private final List<Command> commands;
+  private final List<String> commands;
 
   public Commands()
   {
-    commands = new ArrayList<Command>();
+    commands = new ArrayList<String>();
   }
 
-  public void add(final Command command)
+  public Commands(final String commandsList)
   {
-    if (command != null)
+    this();
+    if (!Utility.isBlank(commandsList))
+    {
+      final String[] commandStrings = commandsList.split(",");
+      commands.addAll(Arrays.asList(commandStrings));
+    }
+  }
+
+  public void add(final String command)
+  {
+    if (!Utility.isBlank(command))
     {
       commands.add(command);
     }
   }
 
-  public boolean isFirstCommand(final Command command)
+  public boolean isFirstCommand(final String command)
   {
     if (command != null)
     {
-      final Command firstCommand = commands.get(0);
+      final String firstCommand = commands.get(0);
       return firstCommand.equals(command);
     }
     else
@@ -41,11 +53,11 @@ public final class Commands
     }
   }
 
-  public boolean isLastCommand(final Command command)
+  public boolean isLastCommand(final String command)
   {
     if (command != null)
     {
-      final Command lastCommand = commands.get(commands.size() - 1);
+      final String lastCommand = commands.get(commands.size() - 1);
       return lastCommand.equals(command);
     }
     else
@@ -54,7 +66,7 @@ public final class Commands
     }
   }
 
-  public Iterator<Command> iterator()
+  public Iterator<String> iterator()
   {
     return commands.iterator();
   }

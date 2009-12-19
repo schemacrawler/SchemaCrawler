@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import sf.util.ObjectToString;
@@ -45,18 +46,8 @@ public abstract class Executable<O extends ToolOptions>
   private static final Logger LOGGER = Logger.getLogger(Executable.class
     .getName());
 
-  private final String name;
   protected SchemaCrawlerOptions schemaCrawlerOptions;
   protected O toolOptions;
-
-  /**
-   * Creates an executable with some default options.
-   */
-  protected Executable(final String name)
-  {
-    this.name = name;
-    schemaCrawlerOptions = new SchemaCrawlerOptions();
-  }
 
   /**
    * Executes main functionality for SchemaCrawler.
@@ -116,55 +107,11 @@ public abstract class Executable<O extends ToolOptions>
     }
   }
 
-  /**
-   * @return the name
-   */
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * Gets the schema crawler options.
-   * 
-   * @return SchemaCrawlerOptions
-   */
-  public final SchemaCrawlerOptions getSchemaCrawlerOptions()
-  {
-    return schemaCrawlerOptions;
-  }
-
-  /**
-   * Gets the tool options.
-   * 
-   * @return Tool options
-   */
-  public final O getToolOptions()
-  {
-    return toolOptions;
-  }
-
-  /**
-   * Sets the schema crawler options.
-   * 
-   * @param schemaCrawlerOptions
-   *        SchemaCrawlerOptions
-   */
-  public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
-  {
-    this.schemaCrawlerOptions = schemaCrawlerOptions;
-  }
-
-  /**
-   * Gets the tool options.
-   * 
-   * @param toolOptions
-   *        Tool options
-   */
-  public final void setToolOptions(final O toolOptions)
-  {
-    this.toolOptions = toolOptions;
-  }
+  public abstract void initialize(final String command,
+                                  final Config config,
+                                  final SchemaCrawlerOptions schemaCrawlerOptions,
+                                  final OutputOptions outputOptions)
+    throws ExecutionException;
 
   /**
    * {@inheritDoc}

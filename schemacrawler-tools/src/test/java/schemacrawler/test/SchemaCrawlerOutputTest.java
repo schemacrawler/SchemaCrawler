@@ -40,19 +40,16 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.main.Command;
 import schemacrawler.tools.main.Commands;
 import schemacrawler.tools.main.SchemaCrawlerCommandLine;
 import schemacrawler.tools.main.SchemaCrawlerMain;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.operation.OperationExecutable;
-import schemacrawler.tools.text.operation.OperationOptions;
-import schemacrawler.tools.text.operation.Query;
 import schemacrawler.tools.text.schema.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
-import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.utility.TestDatabase;
 import sf.util.TestUtility;
 
@@ -102,14 +99,11 @@ public class SchemaCrawlerOutputTest
   public void compareCompositeOutput()
     throws Exception
   {
-    final Command[][] commandSets = new Command[][] {
+    final String[][] commandSets = new String[][] {
         {
-            new Command("maximum_schema", false),
-            new Command("count", true),
-            new Command("dump", true),
-        },
-        {
-            new Command("brief_schema", false), new Command("count", true),
+            "maximum_schema", "count", "dump",
+        }, {
+            "brief_schema", "count",
         }
     };
 
@@ -120,7 +114,7 @@ public class SchemaCrawlerOutputTest
       {
         continue;
       }
-      for (final Command[] commandSet: commandSets)
+      for (final String[] commandSet: commandSets)
       {
         final String referenceFile = commandSet[0].toString() + "."
                                      + outputFormat.name();
@@ -136,9 +130,9 @@ public class SchemaCrawlerOutputTest
         outputOptions.setNoFooter(false);
 
         final Commands commands = new Commands();
-        for (final Command element: commandSet)
+        for (final String command: commandSet)
         {
-          commands.add(element);
+          commands.add(command);
         }
 
         final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(commands,
@@ -177,12 +171,12 @@ public class SchemaCrawlerOutputTest
 
     final OutputOptions outputOptions = new OutputOptions(OutputFormat.text,
                                                           outputFilename);
-    final OperationOptions operatorOptions = new OperationOptions(new Config(),
-                                                                  outputOptions,
-                                                                  Operation.count);
 
     final OperationExecutable executable = new OperationExecutable();
-    executable.setToolOptions(operatorOptions);
+    executable.initialize(Operation.count.name(),
+                          new Config(),
+                          new SchemaCrawlerOptions(),
+                          outputOptions);
     executable.execute(testUtility.getConnection());
 
     final File outputFile = new File(outputFilename);
@@ -205,12 +199,12 @@ public class SchemaCrawlerOutputTest
     outputOptions.setNoHeader(false);
     outputOptions.setNoFooter(false);
     outputOptions.setNoInfo(false);
-    final OperationOptions operatorOptions = new OperationOptions(new Config(),
-                                                                  outputOptions,
-                                                                  Operation.count);
 
     final OperationExecutable executable = new OperationExecutable();
-    executable.setToolOptions(operatorOptions);
+    executable.initialize(Operation.count.name(),
+                          new Config(),
+                          new SchemaCrawlerOptions(),
+                          outputOptions);
     executable.execute(testUtility.getConnection());
 
     final Validator validator = new Validator(new FileReader(outputFilename));
@@ -224,15 +218,16 @@ public class SchemaCrawlerOutputTest
     final String outputFilename = File.createTempFile("schemacrawler", "test")
       .getAbsolutePath();
 
-    final OperationOptions textFormatOptions = new OperationOptions(new Config(),
-                                                                    new OutputOptions(OutputFormat.text,
-                                                                                      outputFilename),
-                                                                    (String) null);
-    textFormatOptions.setQuery(new Query("Customer Count",
-                                         "SELECT COUNT(*) FROM CUSTOMER"));
+    final OutputOptions outputOptions = new OutputOptions(OutputFormat.text,
+                                                          outputFilename);
+    final Config config = new Config();
+    config.put("CustomerCount", "SELECT COUNT(*) FROM CUSTOMER");
 
     final OperationExecutable executable = new OperationExecutable();
-    executable.setToolOptions(textFormatOptions);
+    executable.initialize("CustomerCount",
+                          config,
+                          new SchemaCrawlerOptions(),
+                          outputOptions);
     executable.execute(testUtility.getConnection());
 
     final File outputFile = new File(outputFilename);
@@ -255,12 +250,12 @@ public class SchemaCrawlerOutputTest
     outputOptions.setNoHeader(false);
     outputOptions.setNoFooter(false);
     outputOptions.setNoInfo(false);
-    final OperationOptions operatorOptions = new OperationOptions(new Config(),
-                                                                  outputOptions,
-                                                                  Operation.dump);
 
     final OperationExecutable executable = new OperationExecutable();
-    executable.setToolOptions(operatorOptions);
+    executable.initialize(Operation.dump.name(),
+                          new Config(),
+                          new SchemaCrawlerOptions(),
+                          outputOptions);
     executable.execute(testUtility.getConnection());
 
     final Validator validator = new Validator(new FileReader(outputFilename));
@@ -274,13 +269,14 @@ public class SchemaCrawlerOutputTest
     final String outputFilename = File.createTempFile("schemacrawler", "test")
       .getAbsolutePath();
 
-    final SchemaTextOptions textFormatOptions = new SchemaTextOptions(new Config(),
-                                                                      new OutputOptions(OutputFormat.text,
-                                                                                        outputFilename),
-                                                                      SchemaTextDetailType.brief_schema);
+    final OutputOptions outputOptions = new OutputOptions(OutputFormat.text,
+                                                          outputFilename);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable();
-    executable.setToolOptions(textFormatOptions);
+    executable.initialize(SchemaTextDetailType.brief_schema.name(),
+                          new Config(),
+                          new SchemaCrawlerOptions(),
+                          outputOptions);
     executable.execute(testUtility.getConnection());
 
     final File outputFile = new File(outputFilename);
@@ -303,12 +299,12 @@ public class SchemaCrawlerOutputTest
     outputOptions.setNoHeader(false);
     outputOptions.setNoFooter(false);
     outputOptions.setNoInfo(false);
-    final SchemaTextOptions textFormatOptions = new SchemaTextOptions(new Config(),
-                                                                      outputOptions,
-                                                                      SchemaTextDetailType.maximum_schema);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable();
-    executable.setToolOptions(textFormatOptions);
+    executable.initialize(SchemaTextDetailType.maximum_schema.name(),
+                          new Config(),
+                          new SchemaCrawlerOptions(),
+                          outputOptions);
     executable.execute(testUtility.getConnection());
 
     final Validator validator = new Validator(new FileReader(outputFilename));

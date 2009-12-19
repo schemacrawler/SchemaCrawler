@@ -24,11 +24,14 @@ package schemacrawler.tools.text.schema;
 import java.sql.Connection;
 
 import schemacrawler.crawl.DatabaseSchemaCrawler;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.ExecutionException;
+import schemacrawler.tools.OutputOptions;
 
 /**
  * Basic SchemaCrawler executor.
@@ -40,20 +43,6 @@ public class SchemaCrawlerExecutable
 {
 
   protected CrawlHandler crawlHandler;
-
-  public SchemaCrawlerExecutable()
-  {
-    this(SchemaCrawlerExecutable.class.getSimpleName());
-  }
-
-  /**
-   * Sets up default options.
-   */
-  public SchemaCrawlerExecutable(final String name)
-  {
-    super(name);
-    toolOptions = new SchemaTextOptions();
-  }
 
   @Override
   public final void execute(final Connection connection)
@@ -85,6 +74,21 @@ public class SchemaCrawlerExecutable
     {
       throw new ExecutionException("Could not execute SchemaCrawler", e);
     }
+  }
+
+  @Override
+  public void initialize(final String command,
+                         final Config config,
+                         final SchemaCrawlerOptions schemaCrawlerOptions,
+                         final OutputOptions outputOptions)
+    throws ExecutionException
+  {
+    final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType
+      .valueOf(command);
+    toolOptions = new SchemaTextOptions(config,
+                                        outputOptions,
+                                        schemaTextDetailType);
+    this.schemaCrawlerOptions = schemaCrawlerOptions;
   }
 
 }
