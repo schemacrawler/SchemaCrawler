@@ -99,7 +99,9 @@ public class SchemaCrawlerOutputTest
                                                           outputFilename);
 
     final OperationExecutable executable = new OperationExecutable();
-    executable.initialize(Operation.count.name(), new Config(), outputOptions);
+    executable.initializeToolOptions(Operation.count.name(),
+                                     new Config(),
+                                     outputOptions);
     executable.execute(testUtility.getConnection());
 
     final File outputFile = new File(outputFilename);
@@ -124,7 +126,9 @@ public class SchemaCrawlerOutputTest
     outputOptions.setNoInfo(false);
 
     final OperationExecutable executable = new OperationExecutable();
-    executable.initialize(Operation.count.name(), new Config(), outputOptions);
+    executable.initializeToolOptions(Operation.count.name(),
+                                     new Config(),
+                                     outputOptions);
     executable.execute(testUtility.getConnection());
 
     final Validator validator = new Validator(new FileReader(outputFilename));
@@ -144,7 +148,7 @@ public class SchemaCrawlerOutputTest
     config.put("CustomerCount", "SELECT COUNT(*) FROM CUSTOMER");
 
     final OperationExecutable executable = new OperationExecutable();
-    executable.initialize("CustomerCount", config, outputOptions);
+    executable.initializeToolOptions("CustomerCount", config, outputOptions);
     executable.execute(testUtility.getConnection());
 
     final File outputFile = new File(outputFilename);
@@ -169,7 +173,9 @@ public class SchemaCrawlerOutputTest
     outputOptions.setNoInfo(false);
 
     final OperationExecutable executable = new OperationExecutable();
-    executable.initialize(Operation.dump.name(), new Config(), outputOptions);
+    executable.initializeToolOptions(Operation.dump.name(),
+                                     new Config(),
+                                     outputOptions);
     executable.execute(testUtility.getConnection());
 
     final Validator validator = new Validator(new FileReader(outputFilename));
@@ -187,9 +193,9 @@ public class SchemaCrawlerOutputTest
                                                           outputFilename);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable();
-    executable.initialize(SchemaTextDetailType.brief_schema.name(),
-                          new Config(),
-                          outputOptions);
+    executable.initializeToolOptions(SchemaTextDetailType.brief_schema.name(),
+                                     new Config(),
+                                     outputOptions);
     executable.execute(testUtility.getConnection());
 
     final File outputFile = new File(outputFilename);
@@ -214,9 +220,10 @@ public class SchemaCrawlerOutputTest
     outputOptions.setNoInfo(false);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable();
-    executable.initialize(SchemaTextDetailType.maximum_schema.name(),
-                          new Config(),
-                          outputOptions);
+    executable
+      .initializeToolOptions(SchemaTextDetailType.maximum_schema.name(),
+                             new Config(),
+                             outputOptions);
     executable.execute(testUtility.getConnection());
 
     final Validator validator = new Validator(new FileReader(outputFilename));

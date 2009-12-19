@@ -31,15 +31,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.integration.freemarker.FreeMarkerRenderer;
-import schemacrawler.tools.integration.velocity.VelocityRenderer;
-import schemacrawler.tools.text.schema.SchemaTextDetailType;
-import schemacrawler.tools.text.schema.SchemaTextOptions;
+import schemacrawler.tools.main.Commands;
+import schemacrawler.tools.main.SchemaCrawlerCommandLine;
+import schemacrawler.tools.main.SchemaCrawlerMain;
 import schemacrawler.utility.TestDatabase;
 
-public class ExecutorIntegrationTest
+public class IntegrationCommandlineTest
 {
 
   private static TestDatabase testUtility = new TestDatabase();
@@ -66,7 +64,14 @@ public class ExecutorIntegrationTest
       .getAbsolutePath();
     final OutputOptions outputOptions = new OutputOptions("plaintextschema.ftl",
                                                           outputFilename);
-    executeAndCheckForOutputFile(new FreeMarkerRenderer(), outputOptions);
+
+    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(new Commands("freemarker"),
+                                                                              new Config(),
+                                                                              testUtility
+                                                                                .getDatabaseConnectionOptions(),
+                                                                              outputOptions);
+
+    executeAndCheckForOutputFile(commandLine, outputOptions);
   }
 
   @Test
@@ -77,18 +82,20 @@ public class ExecutorIntegrationTest
       .getAbsolutePath();
     final OutputOptions outputOptions = new OutputOptions("plaintextschema.vm",
                                                           outputFilename);
-    executeAndCheckForOutputFile(new VelocityRenderer(), outputOptions);
+    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(new Commands("velocity"),
+                                                                              new Config(),
+                                                                              testUtility
+                                                                                .getDatabaseConnectionOptions(),
+                                                                              outputOptions);
+
+    executeAndCheckForOutputFile(commandLine, outputOptions);
   }
 
-  private void executeAndCheckForOutputFile(final Executable<SchemaTextOptions> executable,
+  private void executeAndCheckForOutputFile(final SchemaCrawlerCommandLine commandLine,
                                             final OutputOptions outputOptions)
     throws Exception
   {
-    executable.initializeToolOptions(SchemaTextDetailType.basic_schema.name(),
-                                     new Config(),
-                                     outputOptions);
-    executable.execute(testUtility.getConnection());
-
+    SchemaCrawlerMain.schemacrawler(commandLine);
     // Check post-conditions
     final File outputFile = outputOptions.getOutputFile();
     Assert.assertTrue(outputFile.exists());

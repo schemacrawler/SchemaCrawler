@@ -122,9 +122,9 @@ public abstract class Executable<O extends ToolOptions>
     return schemaCrawlerOptions;
   }
 
-  public abstract void initialize(final String command,
-                                  final Config config,
-                                  final OutputOptions outputOptions)
+  public abstract void initializeToolOptions(final String command,
+                                             final Config config,
+                                             final OutputOptions outputOptions)
     throws ExecutionException;
 
   public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
