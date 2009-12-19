@@ -143,7 +143,7 @@ final class ExecutableFactory
     try
     {
       resources = Thread.currentThread().getContextClassLoader()
-        .getResources("/command.properties");
+        .getResources("command.properties");
     }
     catch (final IOException e)
     {
