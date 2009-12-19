@@ -30,6 +30,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.integration.freemarker.FreeMarkerRenderer;
@@ -83,11 +84,9 @@ public class ExecutorIntegrationTest
                                             final OutputOptions outputOptions)
     throws Exception
   {
-    final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(null,
-                                                                      outputOptions,
-                                                                      SchemaTextDetailType.basic_schema);
-    executable.setToolOptions(schemaTextOptions);
-
+    executable.initialize(SchemaTextDetailType.basic_schema.name(),
+                          new Config(),
+                          outputOptions);
     executable.execute(testUtility.getConnection());
 
     // Check post-conditions

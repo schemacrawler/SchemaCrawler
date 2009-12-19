@@ -29,7 +29,6 @@ import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.ExecutionException;
-import schemacrawler.tools.main.HelpOptions;
 
 /**
  * An executor that uses a template renderer to render a schema.
@@ -39,11 +38,6 @@ import schemacrawler.tools.main.HelpOptions;
 public abstract class SchemaRenderer
   extends IntegrationsExecutable
 {
-
-  protected SchemaRenderer(final String name)
-  {
-    super(name);
-  }
 
   @Override
   public final void execute(final Connection connection)
@@ -74,13 +68,6 @@ public abstract class SchemaRenderer
     {
       throw new ExecutionException("Could not execute renderer", e);
     }
-  }
-
-  @Override
-  protected HelpOptions getHelpOptions()
-  {
-    return new IntegrationHelpOptions("SchemaCrawler - Templating",
-                                      "/help/OutputOptions.templating.txt");
   }
 
   /**

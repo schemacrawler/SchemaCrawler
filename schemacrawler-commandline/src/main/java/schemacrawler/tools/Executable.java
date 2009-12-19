@@ -49,6 +49,11 @@ public abstract class Executable<O extends ToolOptions>
   protected SchemaCrawlerOptions schemaCrawlerOptions;
   protected O toolOptions;
 
+  public Executable()
+  {
+    schemaCrawlerOptions = new SchemaCrawlerOptions();
+  }
+
   /**
    * Executes main functionality for SchemaCrawler.
    * 
@@ -107,11 +112,41 @@ public abstract class Executable<O extends ToolOptions>
     }
   }
 
+  public OutputOptions getOutputOptions()
+  {
+    return toolOptions.getOutputOptions();
+  }
+
+  public final SchemaCrawlerOptions getSchemaCrawlerOptions()
+  {
+    return schemaCrawlerOptions;
+  }
+
   public abstract void initialize(final String command,
                                   final Config config,
-                                  final SchemaCrawlerOptions schemaCrawlerOptions,
                                   final OutputOptions outputOptions)
     throws ExecutionException;
+
+  public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
+  {
+    if (schemaCrawlerOptions != null)
+    {
+      this.schemaCrawlerOptions = schemaCrawlerOptions;
+    }
+  }
+
+  public final O setToolOptions()
+  {
+    return toolOptions;
+  }
+
+  public final void setToolOptions(final O schemaTextOptions)
+  {
+    if (schemaTextOptions != null)
+    {
+      this.toolOptions = schemaTextOptions;
+    }
+  }
 
   /**
    * {@inheritDoc}

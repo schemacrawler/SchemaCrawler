@@ -27,7 +27,6 @@ import schemacrawler.crawl.DatabaseSchemaCrawler;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.ExecutionException;
 import schemacrawler.tools.OutputOptions;
@@ -77,7 +76,6 @@ public class OperationExecutable
   @Override
   public void initialize(final String command,
                          final Config config,
-                         final SchemaCrawlerOptions schemaCrawlerOptions,
                          final OutputOptions outputOptions)
     throws ExecutionException
   {
@@ -95,7 +93,7 @@ public class OperationExecutable
       operationOptions = new OperationOptions(config, outputOptions, queryName);
     }
     toolOptions = operationOptions;
-    this.schemaCrawlerOptions = schemaCrawlerOptions;
+    schemaCrawlerOptions = schemaCrawlerOptions;
   }
 
 }

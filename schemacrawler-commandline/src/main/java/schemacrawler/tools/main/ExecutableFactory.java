@@ -113,10 +113,8 @@ final class ExecutableFactory
       try
       {
         executable = executableClass.newInstance();
-        executable.initialize(command,
-                              config,
-                              schemaCrawlerOptions,
-                              outputOptions);
+        executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+        executable.initialize(command, config, outputOptions);
       }
       catch (final InstantiationException e)
       {

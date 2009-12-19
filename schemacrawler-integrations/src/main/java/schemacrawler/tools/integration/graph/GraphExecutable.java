@@ -32,9 +32,7 @@ import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.tools.ExecutionException;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.integration.IntegrationHelpOptions;
 import schemacrawler.tools.integration.IntegrationsExecutable;
-import schemacrawler.tools.main.HelpOptions;
 import schemacrawler.tools.text.schema.SchemaTextFactory;
 import schemacrawler.tools.text.util.HtmlFormattingHelper;
 import sf.util.FileUtility;
@@ -55,11 +53,6 @@ public final class GraphExecutable
   {
     return sf.util.Utility.readFully(HtmlFormattingHelper.class
       .getResourceAsStream("/dot.error.txt"));
-  }
-
-  public GraphExecutable()
-  {
-    super(GraphExecutable.class.getSimpleName());
   }
 
   @Override
@@ -101,13 +94,6 @@ public final class GraphExecutable
                                                                ".dot"));
       System.out.println(dotError());
     }
-  }
-
-  @Override
-  protected HelpOptions getHelpOptions()
-  {
-    return new IntegrationHelpOptions("SchemaCrawler - Graphing",
-                                      "/help/OutputOptions.dot.txt");
   }
 
   private void writeDotFile(final Connection connection, final File dotFile)
