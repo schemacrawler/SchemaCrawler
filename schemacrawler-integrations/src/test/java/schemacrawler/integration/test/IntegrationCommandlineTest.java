@@ -34,7 +34,6 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.main.Commands;
 import schemacrawler.tools.main.SchemaCrawlerCommandLine;
-import schemacrawler.tools.main.SchemaCrawlerMain;
 import schemacrawler.utility.TestDatabase;
 
 public class IntegrationCommandlineTest
@@ -95,7 +94,7 @@ public class IntegrationCommandlineTest
                                             final OutputOptions outputOptions)
     throws Exception
   {
-    SchemaCrawlerMain.schemacrawler(commandLine);
+    commandLine.execute();
     // Check post-conditions
     final File outputFile = outputOptions.getOutputFile();
     Assert.assertTrue(outputFile.exists());

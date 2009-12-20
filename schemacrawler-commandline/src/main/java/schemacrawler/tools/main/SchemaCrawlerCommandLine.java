@@ -22,6 +22,7 @@ package schemacrawler.tools.main;
 
 import java.sql.Connection;
 import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,6 +31,7 @@ import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputOptions;
 import sf.util.Utility;
 
@@ -157,16 +159,37 @@ public class SchemaCrawlerCommandLine
   }
 
   /**
-   * Creates the connection.
+   * Executes with the command line, and a given executor. The executor
+   * allows for the command line to be parsed independently of the
+   * execution. The execution can integrate with other software, such as
+   * Velocity.
    * 
-   * @return Database connection
-   * @throws DatabaseConnectorException
+   * @throws Exception
    *         On an exception
    */
-  public Connection createConnection()
-    throws SchemaCrawlerException
+  public void execute()
+    throws Exception
   {
-    return connectionOptions.createConnection();
+    final List<Executable<?>> executables = ExecutableFactory
+      .createExecutables(this);
+
+    Connection connection = null;
+    try
+    {
+      connection = connectionOptions.createConnection();
+      for (final Executable<?> executable: executables)
+      {
+        executable.execute(connection);
+      }
+    }
+    finally
+    {
+      if (connection != null)
+      {
+        connection.close();
+        LOGGER.log(Level.INFO, "Closed database connection, " + connection);
+      }
+    }
   }
 
   /**
@@ -174,7 +197,7 @@ public class SchemaCrawlerCommandLine
    * 
    * @return Commands.
    */
-  public Commands getCommands()
+  Commands getCommands()
   {
     return commands;
   }
@@ -184,7 +207,7 @@ public class SchemaCrawlerCommandLine
    * 
    * @return Config.
    */
-  public Config getConfig()
+  Config getConfig()
   {
     return new Config(config);
   }
@@ -194,12 +217,12 @@ public class SchemaCrawlerCommandLine
    * 
    * @return Output options.
    */
-  public OutputOptions getOutputOptions()
+  OutputOptions getOutputOptions()
   {
     return outputOptions.duplicate();
   }
 
-  public SchemaCrawlerOptions getSchemaCrawlerOptions()
+  SchemaCrawlerOptions getSchemaCrawlerOptions()
   {
     return schemaCrawlerOptions;
   }

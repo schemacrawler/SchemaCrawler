@@ -44,7 +44,6 @@ import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.main.Commands;
 import schemacrawler.tools.main.SchemaCrawlerCommandLine;
-import schemacrawler.tools.main.SchemaCrawlerMain;
 import schemacrawler.utility.TestDatabase;
 import sf.util.TestUtility;
 
@@ -135,7 +134,7 @@ public class SchemaCrawlerCommandlineTest
                                                                                   testUtility
                                                                                     .getDatabaseConnectionOptions(),
                                                                                   outputOptions);
-        SchemaCrawlerMain.schemacrawler(commandLine);
+        commandLine.execute();
 
         if (outputFormat == OutputFormat.html)
         {
