@@ -23,7 +23,6 @@ package schemacrawler.tools.mysql;
 
 import schemacrawler.tools.main.BundledDriverHelpOptions;
 import schemacrawler.tools.main.SchemaCrawlerCommandLine;
-import schemacrawler.tools.main.SchemaCrawlerMain;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -46,7 +45,7 @@ public final class Main
                                                                                 new BundledDriverHelpOptions("SchemaCrawler for MySQL",
                                                                                                              "/help/Connections.mysql.txt"),
                                                                                 "/schemacrawler-mysql.config.properties");
-      SchemaCrawlerMain.schemacrawler(commandLine);
+      commandLine.execute();
     }
     catch (final Exception e)
     {
