@@ -29,7 +29,7 @@ import sf.util.CommandLineParser.StringOption;
  * 
  * @author Sualeh Fatehi
  */
-final class CommandParser
+final class CommandsParser
   extends BaseOptionsParser<Commands>
 {
 
@@ -37,7 +37,7 @@ final class CommandParser
                                                               "command",
                                                               "standard_schema");
 
-  CommandParser(final String[] args)
+  CommandsParser(final String[] args)
   {
     super(args);
   }

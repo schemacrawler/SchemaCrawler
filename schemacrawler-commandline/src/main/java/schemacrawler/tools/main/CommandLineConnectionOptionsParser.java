@@ -33,7 +33,7 @@ import sf.util.CommandLineParser.StringOption;
  * 
  * @author sfatehi
  */
-public final class CommandLineConnectionOptionsParser
+final class CommandLineConnectionOptionsParser
   extends BaseDatabaseConnectionOptionsParser
 {
 

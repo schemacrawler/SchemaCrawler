@@ -64,10 +64,10 @@ public class IntegrationCommandlineTest
     final OutputOptions outputOptions = new OutputOptions("plaintextschema.ftl",
                                                           outputFilename);
 
-    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(new Commands("freemarker"),
+    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(testUtility
+      .getDatabaseConnectionOptions(),
+                                                                              new Commands("freemarker"),
                                                                               new Config(),
-                                                                              testUtility
-                                                                                .getDatabaseConnectionOptions(),
                                                                               outputOptions);
 
     executeAndCheckForOutputFile(commandLine, outputOptions);
@@ -81,10 +81,10 @@ public class IntegrationCommandlineTest
       .getAbsolutePath();
     final OutputOptions outputOptions = new OutputOptions("plaintextschema.vm",
                                                           outputFilename);
-    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(new Commands("velocity"),
+    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(testUtility
+      .getDatabaseConnectionOptions(),
+                                                                              new Commands("velocity"),
                                                                               new Config(),
-                                                                              testUtility
-                                                                                .getDatabaseConnectionOptions(),
                                                                               outputOptions);
 
     executeAndCheckForOutputFile(commandLine, outputOptions);

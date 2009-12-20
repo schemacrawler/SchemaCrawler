@@ -30,7 +30,7 @@ import sf.util.CommandLineParser.StringOption;
  * 
  * @author Sualeh Fatehi
  */
-final class ConfigParser
+class ConfigParser
   extends BaseOptionsParser<Config>
 {
 
