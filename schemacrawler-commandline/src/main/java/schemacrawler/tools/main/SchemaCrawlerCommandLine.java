@@ -28,7 +28,6 @@ import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
-import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.Executable;
@@ -52,9 +51,9 @@ public class SchemaCrawlerCommandLine
   private final OutputOptions outputOptions;
   private final ConnectionOptions connectionOptions;
 
-  public SchemaCrawlerCommandLine(final Commands commands,
+  public SchemaCrawlerCommandLine(final ConnectionOptions connectionOptions,
+                                  final Commands commands,
                                   final Config config,
-                                  final DatabaseConnectionOptions connectionOptions,
                                   final OutputOptions outputOptions)
   {
     this.commands = commands;
@@ -111,7 +110,7 @@ public class SchemaCrawlerCommandLine
         System.exit(0);
       }
 
-      commands = new CommandParser(args).getOptions();
+      commands = new CommandsParser(args).getOptions();
       outputOptions = new OutputOptionsParser(args).getOptions();
     }
     else

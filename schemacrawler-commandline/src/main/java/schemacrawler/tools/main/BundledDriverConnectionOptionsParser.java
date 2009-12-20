@@ -34,7 +34,7 @@ import sf.util.CommandLineParser.StringOption;
  * 
  * @author sfatehi
  */
-public final class BundledDriverConnectionOptionsParser
+final class BundledDriverConnectionOptionsParser
   extends BaseDatabaseConnectionOptionsParser
 {
 

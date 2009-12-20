@@ -129,10 +129,10 @@ public class SchemaCrawlerCommandlineTest
           commands.add(command);
         }
 
-        final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(commands,
+        final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(testUtility
+          .getDatabaseConnectionOptions(),
+                                                                                  commands,
                                                                                   new Config(),
-                                                                                  testUtility
-                                                                                    .getDatabaseConnectionOptions(),
                                                                                   outputOptions);
         commandLine.execute();
 
