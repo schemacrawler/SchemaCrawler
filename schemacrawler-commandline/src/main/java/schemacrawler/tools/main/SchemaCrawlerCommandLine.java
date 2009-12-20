@@ -56,9 +56,9 @@ public class SchemaCrawlerCommandLine
                                   final Config config,
                                   final OutputOptions outputOptions)
   {
+    this.connectionOptions = connectionOptions;
     this.commands = commands;
     this.config = config;
-    this.connectionOptions = connectionOptions;
     this.outputOptions = outputOptions;
     schemaCrawlerOptions = new SchemaCrawlerOptions();
   }
