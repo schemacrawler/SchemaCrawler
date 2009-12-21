@@ -30,6 +30,7 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputOptions;
 import sf.util.Utility;
@@ -52,6 +53,7 @@ public class SchemaCrawlerCommandLine
   private final ConnectionOptions connectionOptions;
 
   public SchemaCrawlerCommandLine(final ConnectionOptions connectionOptions,
+                                  final SchemaInfoLevel infoLevel,
                                   final Commands commands,
                                   final Config config,
                                   final OutputOptions outputOptions)
@@ -60,7 +62,12 @@ public class SchemaCrawlerCommandLine
     this.commands = commands;
     this.config = config;
     this.outputOptions = outputOptions;
+
     schemaCrawlerOptions = new SchemaCrawlerOptions();
+    if (infoLevel != null)
+    {
+      schemaCrawlerOptions.setSchemaInfoLevel(infoLevel);
+    }
   }
 
   /**

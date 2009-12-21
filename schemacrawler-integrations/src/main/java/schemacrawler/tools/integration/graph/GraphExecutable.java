@@ -64,7 +64,7 @@ public final class GraphExecutable
       throw new IllegalArgumentException("No connection provided");
     }
 
-    initialize();
+    adjustSchemaInfoLevel();
 
     final OutputOptions outputOptions = toolOptions.getOutputOptions();
     final File outputFile = outputOptions.getOutputFile();

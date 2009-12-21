@@ -24,6 +24,7 @@ package schemacrawler.tools.main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaInfoLevel;
 import sf.util.CommandLineParser.BooleanOption;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
@@ -36,6 +37,10 @@ import sf.util.CommandLineParser.StringOption;
 final class SchemaCrawlerOptionsParser
   extends BaseOptionsParser<SchemaCrawlerOptions>
 {
+
+  private final StringOption optionInfoLevel = new StringOption(Option.NO_SHORT_FORM,
+                                                                "infolevel",
+                                                                "standard");
 
   private final StringOption optionSchemas = new StringOption(Option.NO_SHORT_FORM,
                                                               "schemas",
@@ -95,6 +100,7 @@ final class SchemaCrawlerOptionsParser
   protected SchemaCrawlerOptions getOptions()
   {
     parse(new Option[] {
+        optionInfoLevel,
         optionSchemas,
         optionTableTypes,
         optionShowStoredProcedures,
@@ -109,6 +115,31 @@ final class SchemaCrawlerOptionsParser
         optionSortColumns,
         optionSortInout,
     });
+
+    if (optionInfoLevel.isFound())
+    {
+      final String infoLevel = optionInfoLevel.getValue();
+      if ("minimum".equals(infoLevel))
+      {
+        options.setSchemaInfoLevel(SchemaInfoLevel.minimum());
+      }
+      else if ("basic".equals(infoLevel))
+      {
+        options.setSchemaInfoLevel(SchemaInfoLevel.basic());
+      }
+      else if ("verbose".equals(infoLevel))
+      {
+        options.setSchemaInfoLevel(SchemaInfoLevel.verbose());
+      }
+      else if ("standard".equals(infoLevel))
+      {
+        options.setSchemaInfoLevel(SchemaInfoLevel.standard());
+      }
+      else if ("maximum".equals(infoLevel))
+      {
+        options.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+      }
+    }
 
     if (optionSchemas.isFound())
     {
@@ -193,5 +224,4 @@ final class SchemaCrawlerOptionsParser
 
     return options;
   }
-
 }

@@ -17,6 +17,12 @@
   
 --- Filtering Options ---
      
+-infolevel=<infolevel>
+  <infolevel> is one of basic, maximum, minimum, standard or verbose
+  The info level determines the amount of database metadata retrieved,
+  and also determines the time taken to crawl the schema
+  Optional, defaults to standard
+       
 -schemas=<regular-expression>
   <regular-expression> is a regular expression to match fully qualified schema 
   namess, in the form "CATALOGNAME.SCHEMANAME" - for example,
@@ -26,7 +32,7 @@
   Optional, defaults to showing all schemas
   
 -table_types=<table_types>
-  <table_types> is a command separated list of table types of 
+  <table_types> is a comma-separated list of table types of 
   TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS
   Optional, defaults to TABLE,VIEW
   

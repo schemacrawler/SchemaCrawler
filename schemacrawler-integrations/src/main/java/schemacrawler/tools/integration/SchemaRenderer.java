@@ -48,7 +48,7 @@ public abstract class SchemaRenderer
       throw new IllegalArgumentException("No connection provided");
     }
 
-    initialize();
+    adjustSchemaInfoLevel();
 
     try
     {

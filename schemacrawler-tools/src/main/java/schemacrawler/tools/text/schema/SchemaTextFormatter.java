@@ -121,6 +121,12 @@ final class SchemaTextFormatter
   public void handle(final ColumnDataType columnDataType)
     throws SchemaCrawlerException
   {
+    final SchemaTextDetailType schemaTextDetailType = options
+      .getSchemaTextDetailType();
+    if (schemaTextDetailType == SchemaTextDetailType.brief_schema)
+    {
+      return;
+    }
 
     if (columnDataTypeCount == 0)
     {
@@ -133,7 +139,6 @@ final class SchemaTextFormatter
     out.print(formattingHelper.createObjectEnd());
 
     columnDataTypeCount++;
-
   }
 
   /**
@@ -145,6 +150,12 @@ final class SchemaTextFormatter
     throws SchemaCrawlerException
   {
     if (weakAssociations == null || weakAssociations.length == 0)
+    {
+      return;
+    }
+    final SchemaTextDetailType schemaTextDetailType = options
+      .getSchemaTextDetailType();
+    if (schemaTextDetailType == SchemaTextDetailType.brief_schema)
     {
       return;
     }

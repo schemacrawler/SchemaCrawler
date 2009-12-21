@@ -59,7 +59,7 @@ public class OperationExecutable
     {
       throw new IllegalArgumentException("No connection provided");
     }
-    initialize();
+    adjustSchemaInfoLevel();
 
     try
     {
