@@ -162,9 +162,9 @@ public abstract class Executable<O extends ToolOptions>
   /**
    * Initializes the executable before execution.
    */
-  protected final void initialize()
+  protected final void adjustSchemaInfoLevel()
   {
-    final SchemaInfoLevel infoLevel = toolOptions.getSchemaInfoLevel();
+    final SchemaInfoLevel infoLevel = schemaCrawlerOptions.getSchemaInfoLevel();
     if (!schemaCrawlerOptions.isAlphabeticalSortForTables()
         && !infoLevel.isRetrieveForeignKeys())
     {
@@ -174,7 +174,6 @@ public abstract class Executable<O extends ToolOptions>
         .log(Level.WARNING,
              "Adjusted schema info level to retrieve foreign-keys, so tables can be sorted using the natural sort order");
     }
-    schemaCrawlerOptions.setSchemaInfoLevel(infoLevel);
 
     if (LOGGER.isLoggable(Level.CONFIG))
     {

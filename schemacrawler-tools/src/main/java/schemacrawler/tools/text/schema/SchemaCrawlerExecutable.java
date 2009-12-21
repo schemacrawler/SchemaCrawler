@@ -52,7 +52,7 @@ public class SchemaCrawlerExecutable
       throw new IllegalArgumentException("No connection provided");
     }
 
-    initialize();
+    adjustSchemaInfoLevel();
 
     try
     {

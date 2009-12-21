@@ -1,5 +1,179 @@
 
 
+Data Types
+========================================================================
+
+
+BIGINT                                                       [data type]
+  based on                          BIGINT                      
+  not user defined
+  defined with no parameters
+  nullable
+  auto-incrementable
+  searchable
+
+BINARY                                                       [data type]
+  based on                          BINARY                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+BOOLEAN                                                      [data type]
+  based on                          BOOLEAN                     
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+CHAR                                                         [data type]
+  based on                          CHAR                        
+  not user defined
+  defined with LENGTH
+  nullable
+  not auto-incrementable
+  searchable
+
+DATE                                                         [data type]
+  based on                          DATE                        
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+DECIMAL                                                      [data type]
+  based on                          DECIMAL                     
+  not user defined
+  defined with PRECISION,SCALE
+  nullable
+  not auto-incrementable
+  searchable
+
+DOUBLE                                                       [data type]
+  based on                          DOUBLE                      
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+FLOAT                                                        [data type]
+  based on                          FLOAT                       
+  not user defined
+  defined with PRECISION
+  nullable
+  not auto-incrementable
+  searchable
+
+INTEGER                                                      [data type]
+  based on                          INTEGER                     
+  not user defined
+  defined with no parameters
+  nullable
+  auto-incrementable
+  searchable
+
+LONGVARBINARY                                                [data type]
+  based on                          LONGVARBINARY               
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+LONGVARCHAR                                                  [data type]
+  based on                          LONGVARCHAR                 
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+NUMERIC                                                      [data type]
+  based on                          NUMERIC                     
+  not user defined
+  defined with PRECISION,SCALE
+  nullable
+  not auto-incrementable
+  searchable
+
+OTHER                                                        [data type]
+  based on                          OTHER                       
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  not searchable
+
+REAL                                                         [data type]
+  based on                          REAL                        
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+SMALLINT                                                     [data type]
+  based on                          SMALLINT                    
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+TIME                                                         [data type]
+  based on                          TIME                        
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+TIMESTAMP                                                    [data type]
+  based on                          TIMESTAMP                   
+  not user defined
+  defined with PRECISION
+  nullable
+  not auto-incrementable
+  searchable
+
+TINYINT                                                      [data type]
+  based on                          TINYINT                     
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+VARBINARY                                                    [data type]
+  based on                          VARBINARY                   
+  not user defined
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  searchable
+
+VARCHAR                                                      [data type]
+  based on                          VARCHAR                     
+  not user defined
+  defined with LENGTH
+  nullable
+  not auto-incrementable
+  searchable
+
+VARCHAR_IGNORECASE                                           [data type]
+  based on                          VARCHAR                     
+  not user defined
+  defined with LENGTH
+  nullable
+  not auto-incrementable
+  searchable
+
+
+
 Tables
 ========================================================================
 
@@ -18,6 +192,18 @@ SYS_IDX_46                                                 [primary key]
 FK_INVOICE_CUSTOMER                        [foreign key, with no action]
  1  ID --> PUBLIC.INVOICE.CUSTOMERID                              
 
+DELETE                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+INSERT                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+SELECT                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+UPDATE                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
 
 PUBLIC.CUSTOMERLIST                                               [view]
 ------------------------------------------------------------------------
@@ -25,6 +211,20 @@ PUBLIC.CUSTOMERLIST                                               [view]
 1   ID                                INTEGER                     
 3   LASTNAME                          VARCHAR(255)                
 
+DELETE                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+INSERT                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+SELECT                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+UPDATE                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+                                                            [definition]
+  SELECT ID, FIRSTNAME, LASTNAME FROM CUSTOMER
 
 
 PUBLIC.INVOICE                                                   [table]
@@ -47,6 +247,18 @@ INDEX_INVOICE_CUSTOMER                                [non-unique index]
 
 SYS_IDX_50                                            [non-unique index]
 2   CUSTOMERID                        ascending                   
+
+DELETE                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+INSERT                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+SELECT                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+UPDATE                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
 
 PUBLIC.ITEM                                                      [table]
@@ -79,6 +291,18 @@ SYS_IDX_53                                            [non-unique index]
 SYS_IDX_55                                            [non-unique index]
 3   PRODUCTID                         ascending                   
 
+DELETE                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+INSERT                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+SELECT                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+UPDATE                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
 
 PUBLIC.PRODUCT                                                   [table]
 ------------------------------------------------------------------------
@@ -91,6 +315,18 @@ SYS_IDX_47                                                 [primary key]
 
 FK_A_ITEM_PRODUCT                          [foreign key, with no action]
  1  ID --> PUBLIC.ITEM.PRODUCTID                                  
+
+DELETE                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+INSERT                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+SELECT                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+UPDATE                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
 
 PUBLIC.SUPPLIER                                                  [table]
@@ -106,6 +342,18 @@ INDEX_B_SUPPLIER                                      [non-unique index]
 1   SUPPLIER_ID                       ascending                   
 2   SUPPLIER_NAME                     ascending                   
 
+DELETE                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+INSERT                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+SELECT                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+UPDATE                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
 
 SCHEMACRAWLER.ITEM                                               [table]
 ------------------------------------------------------------------------
@@ -119,6 +367,18 @@ SYS_IDX_59                                                 [primary key]
 1   INVOICEID                         ascending                   
 2   ITEM                              ascending                   
 
+DELETE                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+INSERT                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+SELECT                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+UPDATE                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
 
 SCHEMACRAWLER.PRODUCT2                                           [table]
 ------------------------------------------------------------------------
@@ -128,6 +388,18 @@ SCHEMACRAWLER.PRODUCT2                                           [table]
 
 SYS_IDX_61                                                 [primary key]
 1   ID                                ascending                   
+
+DELETE                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+INSERT                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+SELECT                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+UPDATE                                                       [privilege]
+  DBA --> SA (grantable)                                        
 
 
 

@@ -31,6 +31,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.main.Commands;
 import schemacrawler.tools.main.SchemaCrawlerCommandLine;
@@ -65,7 +66,9 @@ public class IntegrationCommandlineTest
                                                           outputFilename);
 
     final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(testUtility
-      .getDatabaseConnectionOptions(),
+                                                                                .getDatabaseConnectionOptions(),
+                                                                              SchemaInfoLevel
+                                                                                .standard(),
                                                                               new Commands("freemarker"),
                                                                               new Config(),
                                                                               outputOptions);
@@ -82,7 +85,9 @@ public class IntegrationCommandlineTest
     final OutputOptions outputOptions = new OutputOptions("plaintextschema.vm",
                                                           outputFilename);
     final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(testUtility
-      .getDatabaseConnectionOptions(),
+                                                                                .getDatabaseConnectionOptions(),
+                                                                              SchemaInfoLevel
+                                                                                .standard(),
                                                                               new Commands("velocity"),
                                                                               new Config(),
                                                                               outputOptions);

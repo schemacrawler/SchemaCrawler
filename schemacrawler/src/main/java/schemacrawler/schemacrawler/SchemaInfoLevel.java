@@ -95,7 +95,6 @@ public final class SchemaInfoLevel
     standard.setRetrieveTableColumns(true);
     standard.setRetrieveForeignKeys(true);
     standard.setRetrieveIndices(true);
-    standard.setRetrieveWeakAssociations(true);
     return standard;
   }
 

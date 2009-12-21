@@ -40,6 +40,8 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.DatabaseConnectionOptions;
+import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.main.Commands;
@@ -129,8 +131,11 @@ public class SchemaCrawlerCommandlineTest
           commands.add(command);
         }
 
-        final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(testUtility
-          .getDatabaseConnectionOptions(),
+        final DatabaseConnectionOptions connectionOptions = testUtility
+          .getDatabaseConnectionOptions();
+        final SchemaInfoLevel infoLevel = SchemaInfoLevel.maximum();
+        final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(connectionOptions,
+                                                                                  infoLevel,
                                                                                   commands,
                                                                                   new Config(),
                                                                                   outputOptions);
