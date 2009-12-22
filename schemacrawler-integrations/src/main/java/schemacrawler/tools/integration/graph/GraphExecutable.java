@@ -28,13 +28,13 @@ import java.util.logging.Logger;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Database;
-import schemacrawler.tools.CrawlHandler;
-import schemacrawler.tools.Crawler;
 import schemacrawler.tools.ExecutionException;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.integration.IntegrationsExecutable;
-import schemacrawler.tools.text.schema.SchemaTextFactory;
+import schemacrawler.tools.text.SchemaTextFactory;
+import schemacrawler.tools.text.base.CrawlHandler;
+import schemacrawler.tools.text.base.Crawler;
 import schemacrawler.tools.text.util.HtmlFormattingHelper;
 import sf.util.FileUtility;
 

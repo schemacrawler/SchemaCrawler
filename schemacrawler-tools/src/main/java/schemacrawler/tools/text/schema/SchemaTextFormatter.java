@@ -46,8 +46,8 @@ import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schema.Privilege.Grant;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.CrawlHandler;
-import schemacrawler.tools.text.BaseFormatter;
+import schemacrawler.tools.text.base.BaseFormatter;
+import schemacrawler.tools.text.base.CrawlHandler;
 import schemacrawler.tools.text.util.TextFormattingHelper.DocumentHeaderType;
 import sf.util.Utility;
 
@@ -56,7 +56,7 @@ import sf.util.Utility;
  * 
  * @author Sualeh Fatehi
  */
-final class SchemaTextFormatter
+public final class SchemaTextFormatter
   extends BaseFormatter<SchemaTextOptions>
   implements CrawlHandler
 {
@@ -74,7 +74,7 @@ final class SchemaTextFormatter
    * @param options
    *        Options for text formatting of schema
    */
-  SchemaTextFormatter(final SchemaTextOptions options)
+  public SchemaTextFormatter(final SchemaTextOptions options)
     throws SchemaCrawlerException
   {
     super(options);

@@ -34,7 +34,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.text.BaseFormatter;
+import schemacrawler.tools.text.base.BaseFormatter;
 import schemacrawler.tools.text.util.TextFormattingHelper.DocumentHeaderType;
 
 /**

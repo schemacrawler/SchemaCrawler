@@ -1,9 +1,12 @@
-package schemacrawler.tools.text.schema;
+package schemacrawler.tools.text;
 
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.CrawlHandler;
 import schemacrawler.tools.OutputFormat;
+import schemacrawler.tools.text.base.CrawlHandler;
+import schemacrawler.tools.text.schema.SchemaDotFormatter;
+import schemacrawler.tools.text.schema.SchemaTextFormatter;
+import schemacrawler.tools.text.schema.SchemaTextOptions;
 
 public final class SchemaTextFactory
 {
