@@ -408,8 +408,8 @@ Weak Associations
 ========================================================================
 
 
-  PUBLIC.PRODUCT.ID --> SCHEMACRAWLER.ITEM.PRODUCTID                              
   PUBLIC.INVOICE.ID --> SCHEMACRAWLER.ITEM.INVOICEID                              
+  PUBLIC.PRODUCT.ID --> SCHEMACRAWLER.ITEM.PRODUCTID                              
 
 
 
