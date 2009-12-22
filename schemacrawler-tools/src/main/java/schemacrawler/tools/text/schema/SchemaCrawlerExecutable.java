@@ -23,10 +23,9 @@ package schemacrawler.tools.text.schema;
 
 import java.sql.Connection;
 
-import schemacrawler.crawl.DatabaseSchemaCrawler;
+import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.CrawlHandler;
 import schemacrawler.tools.Crawler;
@@ -68,7 +67,7 @@ public class SchemaCrawlerExecutable
         handler = crawlHandler;
       }
 
-      final SchemaCrawler schemaCrawler = new DatabaseSchemaCrawler(connection);
+      final SchemaCrawler schemaCrawler = new SchemaCrawler(connection);
       final Database database = schemaCrawler.crawl(schemaCrawlerOptions);
       final Crawler crawler = new Crawler(database);
       crawler.crawl(handler);

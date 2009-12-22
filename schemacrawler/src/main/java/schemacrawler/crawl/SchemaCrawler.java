@@ -37,7 +37,6 @@ import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InclusionRule;
-import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
@@ -48,12 +47,11 @@ import schemacrawler.schemacrawler.SchemaInfoLevel;
  * 
  * @author Sualeh Fatehi
  */
-public final class DatabaseSchemaCrawler
-  implements SchemaCrawler
+public final class SchemaCrawler
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(DatabaseSchemaCrawler.class.getName());
+    .getLogger(SchemaCrawler.class.getName());
 
   /**
    * Gets the result set columns metadata.
@@ -93,7 +91,7 @@ public final class DatabaseSchemaCrawler
    * @throws SchemaCrawlerException
    *         On a crawler exception
    */
-  public DatabaseSchemaCrawler(final Connection connection)
+  public SchemaCrawler(final Connection connection)
     throws SchemaCrawlerException
   {
     if (connection == null)
