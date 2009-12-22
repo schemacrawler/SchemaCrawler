@@ -51,13 +51,21 @@ public class Crawler
       }
     }
 
+    final Set<ColumnMap> weakAssociations = new HashSet<ColumnMap>();
     for (final Schema schema: schemas)
     {
       for (final Table table: schema.getTables())
       {
         handler.handle(table);
+        weakAssociations.addAll(Arrays.asList(table.getWeakAssociations()));
       }
     }
+
+    final ColumnMap[] weakAssociationsArray = weakAssociations
+      .toArray(new ColumnMap[weakAssociations.size()]);
+    Arrays.sort(weakAssociationsArray);
+    handler.handle(weakAssociationsArray);
+
     for (final Schema schema: schemas)
     {
       for (final Procedure procedure: schema.getProcedures())
@@ -65,19 +73,6 @@ public class Crawler
         handler.handle(procedure);
       }
     }
-
-    final Set<ColumnMap> weakAssociations = new HashSet<ColumnMap>();
-    for (final Schema schema: schemas)
-    {
-      for (final Table table: schema.getTables())
-      {
-        weakAssociations.addAll(Arrays.asList(table.getWeakAssociations()));
-      }
-    }
-    final ColumnMap[] weakAssociationsArray = weakAssociations
-      .toArray(new ColumnMap[weakAssociations.size()]);
-    Arrays.sort(weakAssociationsArray);
-    handler.handle(weakAssociationsArray);
 
     handler.end();
   }
