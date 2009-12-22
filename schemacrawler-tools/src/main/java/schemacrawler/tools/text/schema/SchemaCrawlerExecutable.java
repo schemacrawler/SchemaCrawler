@@ -38,7 +38,7 @@ import schemacrawler.tools.OutputOptions;
  * 
  * @author Sualeh Fatehi
  */
-public class SchemaCrawlerExecutable
+public final class SchemaCrawlerExecutable
   extends Executable<SchemaTextOptions>
 {
 
