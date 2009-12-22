@@ -1,7 +1,12 @@
 package schemacrawler.tools;
 
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
@@ -31,14 +36,21 @@ public class Crawler
     handler.handle(database.getDatabaseInfo());
     handler.handle(database.getJdbcDriverInfo());
 
+    final Schema[] schemas = database.getSchemas();
     for (final ColumnDataType columnDataType: database
       .getSystemColumnDataTypes())
     {
       handler.handle(columnDataType);
 
     }
+    for (final Schema schema: schemas)
+    {
+      for (final ColumnDataType columnDataType: schema.getColumnDataTypes())
+      {
+        handler.handle(columnDataType);
+      }
+    }
 
-    final Schema[] schemas = database.getSchemas();
     for (final Schema schema: schemas)
     {
       for (final Table table: schema.getTables())
@@ -53,6 +65,19 @@ public class Crawler
         handler.handle(procedure);
       }
     }
+
+    final Set<ColumnMap> weakAssociations = new HashSet<ColumnMap>();
+    for (final Schema schema: schemas)
+    {
+      for (final Table table: schema.getTables())
+      {
+        weakAssociations.addAll(Arrays.asList(table.getWeakAssociations()));
+      }
+    }
+    final ColumnMap[] weakAssociationsArray = weakAssociations
+      .toArray(new ColumnMap[weakAssociations.size()]);
+    Arrays.sort(weakAssociationsArray);
+    handler.handle(weakAssociationsArray);
 
     handler.end();
   }
