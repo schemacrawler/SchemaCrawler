@@ -23,7 +23,6 @@ package schemacrawler.utility;
 
 import java.sql.Connection;
 
-import schemacrawler.crawl.CachingCrawlHandler;
 import schemacrawler.crawl.DatabaseSchemaCrawler;
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawler;
@@ -42,10 +41,8 @@ public final class SchemaCrawlerUtility
                                      final SchemaCrawlerOptions schemaCrawlerOptions)
     throws SchemaCrawlerException
   {
-    final CachingCrawlHandler crawlHandler = new CachingCrawlHandler();
     final SchemaCrawler schemaCrawler = new DatabaseSchemaCrawler(connection);
-    schemaCrawler.crawl(schemaCrawlerOptions, crawlHandler);
-    final Database database = crawlHandler.getDatabase();
+    final Database database = schemaCrawler.crawl(schemaCrawlerOptions);
     return database;
   }
 

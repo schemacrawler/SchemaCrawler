@@ -1,8 +1,8 @@
 package schemacrawler.tools.text.schema;
 
 
-import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.CrawlHandler;
 import schemacrawler.tools.OutputFormat;
 
 public final class SchemaTextFactory

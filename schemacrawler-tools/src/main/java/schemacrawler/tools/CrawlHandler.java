@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.schemacrawler;
+package schemacrawler.tools;
 
 
 import schemacrawler.schema.ColumnDataType;
@@ -28,6 +28,7 @@ import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
  * Handler for SchemaCrawler.

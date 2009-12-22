@@ -23,7 +23,6 @@ package schemacrawler.tools.integration;
 import java.io.Writer;
 import java.sql.Connection;
 
-import schemacrawler.crawl.CachingCrawlHandler;
 import schemacrawler.crawl.DatabaseSchemaCrawler;
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawler;
@@ -52,10 +51,8 @@ public abstract class SchemaRenderer
 
     try
     {
-      final CachingCrawlHandler handler = new CachingCrawlHandler();
       final SchemaCrawler crawler = new DatabaseSchemaCrawler(connection);
-      crawler.crawl(schemaCrawlerOptions, handler);
-      final Database database = handler.getDatabase();
+      final Database database = crawler.crawl(schemaCrawlerOptions);
 
       // Executable-specific work
       final Writer writer = toolOptions.getOutputOptions().openOutputWriter();

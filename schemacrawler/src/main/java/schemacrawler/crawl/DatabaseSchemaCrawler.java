@@ -30,14 +30,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Column;
-import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnMap;
+import schemacrawler.schema.Database;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.ResultsColumns;
-import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -85,7 +83,6 @@ public final class DatabaseSchemaCrawler
     return resultColumns;
   }
 
-  private final MutableDatabase database;
   private final Connection connection;
 
   /**
@@ -104,8 +101,6 @@ public final class DatabaseSchemaCrawler
       throw new SchemaCrawlerException("No connection specified");
     }
     this.connection = connection;
-
-    database = new MutableDatabase("database");
   }
 
   /**
@@ -114,14 +109,10 @@ public final class DatabaseSchemaCrawler
    * @see schemacrawler.schemacrawler.SchemaCrawler#crawl(schemacrawler.schemacrawler.SchemaCrawlerOptions,
    *      schemacrawler.schemacrawler.CrawlHandler)
    */
-  public void crawl(final SchemaCrawlerOptions options,
-                    final CrawlHandler handler)
+  public Database crawl(final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
   {
-    if (handler == null)
-    {
-      throw new SchemaCrawlerException("No crawl handler specified");
-    }
+    final MutableDatabase database = new MutableDatabase("database");
 
     RetrieverConnection retrieverConnection = null;
     try
@@ -134,37 +125,13 @@ public final class DatabaseSchemaCrawler
       retrieverConnection = new RetrieverConnection(connection,
                                                     schemaCrawlerOptions);
 
-      handler.begin();
+      crawlSchemas(database, retrieverConnection, schemaCrawlerOptions);
+      crawlDatabaseInfo(database, retrieverConnection, schemaCrawlerOptions);
+      crawlColumnDataTypes(database, retrieverConnection, schemaCrawlerOptions);
+      crawlTables(database, retrieverConnection, schemaCrawlerOptions);
+      crawlProcedures(database, retrieverConnection, schemaCrawlerOptions);
 
-      crawlSchemas(retrieverConnection, schemaCrawlerOptions);
-      crawlDatabaseInfo(retrieverConnection, schemaCrawlerOptions);
-      handler.handle(database.getSchemaCrawlerInfo());
-      handler.handle(database.getDatabaseInfo());
-      handler.handle(database.getJdbcDriverInfo());
-
-      crawlColumnDataTypes(retrieverConnection, schemaCrawlerOptions);
-      for (final ColumnDataType columnDataType: database
-        .getSystemColumnDataTypes())
-      {
-        handler.handle(columnDataType);
-      }
-      for (final Schema schema: database.getSchemas())
-      {
-        for (final ColumnDataType columnDataType: schema.getColumnDataTypes())
-        {
-          handler.handle(columnDataType);
-        }
-      }
-
-      crawlTables(retrieverConnection, schemaCrawlerOptions, handler);
-      crawlProcedures(retrieverConnection, schemaCrawlerOptions, handler);
-
-      handler.end();
-
-      if (handler instanceof CachingCrawlHandler)
-      {
-        ((CachingCrawlHandler) handler).setDatabase(database);
-      }
+      return database;
     }
     catch (final SQLException e)
     {
@@ -172,7 +139,8 @@ public final class DatabaseSchemaCrawler
     }
   }
 
-  private void crawlColumnDataTypes(final RetrieverConnection retrieverConnection,
+  private void crawlColumnDataTypes(final MutableDatabase database,
+                                    final RetrieverConnection retrieverConnection,
                                     final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
   {
@@ -201,7 +169,8 @@ public final class DatabaseSchemaCrawler
     }
   }
 
-  private void crawlDatabaseInfo(final RetrieverConnection retrieverConnection,
+  private void crawlDatabaseInfo(final MutableDatabase database,
+                                 final RetrieverConnection retrieverConnection,
                                  final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
   {
@@ -244,9 +213,9 @@ public final class DatabaseSchemaCrawler
     }
   }
 
-  private void crawlProcedures(final RetrieverConnection retrieverConnection,
-                               final SchemaCrawlerOptions options,
-                               final CrawlHandler handler)
+  private void crawlProcedures(final MutableDatabase database,
+                               final RetrieverConnection retrieverConnection,
+                               final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
   {
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
@@ -295,8 +264,6 @@ public final class DatabaseSchemaCrawler
         // Set comparators
         procedure.setColumnComparator(NamedObjectSort
           .getNamedObjectSort(options.isAlphabeticalSortForProcedureColumns()));
-        // Handle procedure
-        handler.handle(procedure);
       }
     }
     catch (final SQLException e)
@@ -305,7 +272,8 @@ public final class DatabaseSchemaCrawler
     }
   }
 
-  private void crawlSchemas(final RetrieverConnection retrieverConnection,
+  private void crawlSchemas(final MutableDatabase database,
+                            final RetrieverConnection retrieverConnection,
                             final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
   {
@@ -323,9 +291,9 @@ public final class DatabaseSchemaCrawler
     }
   }
 
-  private void crawlTables(final RetrieverConnection retrieverConnection,
-                           final SchemaCrawlerOptions options,
-                           final CrawlHandler handler)
+  private void crawlTables(final MutableDatabase database,
+                           final RetrieverConnection retrieverConnection,
+                           final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
   {
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
@@ -429,20 +397,12 @@ public final class DatabaseSchemaCrawler
       final TablesGraph tablesGraph = new TablesGraph(allTables);
       tablesGraph.setTablesSortIndices();
 
-      for (final MutableTable table: allTables)
-      {
-        // Handle table
-        handler.handle(table);
-      }
-
       if (infoLevel.isRetrieveWeakAssociations())
       {
         final List<ColumnMap> weakAssociations = new ArrayList<ColumnMap>();
         final WeakAssociationsAnalyzer tableAnalyzer = new WeakAssociationsAnalyzer(allTables,
                                                                                     weakAssociations);
         tableAnalyzer.analyzeTables();
-        handler.handle(weakAssociations.toArray(new ColumnMap[weakAssociations
-          .size()]));
       }
     }
     catch (final SQLException e)
