@@ -37,7 +37,7 @@ import schemacrawler.tools.OutputOptions;
  * 
  * @author Sualeh Fatehi
  */
-public class OperationExecutable
+public final class OperationExecutable
   extends Executable<OperationOptions>
 {
 
