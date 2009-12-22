@@ -35,8 +35,8 @@ import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.CrawlHandler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.CrawlHandler;
 
 /**
  * Text formatting of operations output.

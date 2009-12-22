@@ -27,8 +27,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.crawl.DatabaseSchemaCrawler;
-import schemacrawler.schemacrawler.CrawlHandler;
+import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawler;
+import schemacrawler.tools.CrawlHandler;
+import schemacrawler.tools.Crawler;
 import schemacrawler.tools.ExecutionException;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
@@ -107,8 +109,10 @@ public final class GraphExecutable
 
       final CrawlHandler handler = SchemaTextFactory
         .createSchemaTextCrawlHandler(toolOptions);
-      final SchemaCrawler crawler = new DatabaseSchemaCrawler(connection);
-      crawler.crawl(schemaCrawlerOptions, handler);
+      final SchemaCrawler schemaCrawler = new DatabaseSchemaCrawler(connection);
+      final Database database = schemaCrawler.crawl(schemaCrawlerOptions);
+      final Crawler crawler = new Crawler(database);
+      crawler.crawl(handler);
     }
     catch (final Exception e)
     {

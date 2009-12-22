@@ -24,9 +24,11 @@ package schemacrawler.tools.text.operation;
 import java.sql.Connection;
 
 import schemacrawler.crawl.DatabaseSchemaCrawler;
+import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.Crawler;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.ExecutionException;
 import schemacrawler.tools.OutputOptions;
@@ -63,9 +65,10 @@ public class OperationExecutable
 
     try
     {
-      final SchemaCrawler crawler = new DatabaseSchemaCrawler(connection);
-      crawler.crawl(schemaCrawlerOptions, new OperationHandler(toolOptions,
-                                                               connection));
+      final SchemaCrawler schemaCrawler = new DatabaseSchemaCrawler(connection);
+      final Database database = schemaCrawler.crawl(schemaCrawlerOptions);
+      final Crawler crawler = new Crawler(database);
+      crawler.crawl(new OperationHandler(toolOptions, connection));
     }
     catch (final SchemaCrawlerException e)
     {
