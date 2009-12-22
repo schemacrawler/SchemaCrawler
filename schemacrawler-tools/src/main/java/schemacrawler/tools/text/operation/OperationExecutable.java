@@ -64,10 +64,13 @@ public class OperationExecutable
 
     try
     {
+      final OperationHandler handler = new OperationHandler(toolOptions,
+                                                            connection);
+
       final SchemaCrawler schemaCrawler = new SchemaCrawler(connection);
       final Database database = schemaCrawler.crawl(schemaCrawlerOptions);
       final Crawler crawler = new Crawler(database);
-      crawler.crawl(new OperationHandler(toolOptions, connection));
+      crawler.crawl(handler);
     }
     catch (final SchemaCrawlerException e)
     {
