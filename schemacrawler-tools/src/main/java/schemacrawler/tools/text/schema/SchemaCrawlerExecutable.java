@@ -42,8 +42,6 @@ public class SchemaCrawlerExecutable
   extends Executable<SchemaTextOptions>
 {
 
-  protected CrawlHandler crawlHandler;
-
   @Override
   public final void execute(final Connection connection)
     throws ExecutionException
@@ -57,15 +55,8 @@ public class SchemaCrawlerExecutable
 
     try
     {
-      final CrawlHandler handler;
-      if (crawlHandler == null)
-      {
-        handler = SchemaTextFactory.createSchemaTextCrawlHandler(toolOptions);
-      }
-      else
-      {
-        handler = crawlHandler;
-      }
+      final CrawlHandler handler = SchemaTextFactory
+        .createSchemaTextCrawlHandler(toolOptions);
 
       final SchemaCrawler schemaCrawler = new SchemaCrawler(connection);
       final Database database = schemaCrawler.crawl(schemaCrawlerOptions);
