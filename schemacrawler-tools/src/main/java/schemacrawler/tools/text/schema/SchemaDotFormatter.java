@@ -40,14 +40,14 @@ import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.CrawlHandler;
+import schemacrawler.tools.text.base.CrawlHandler;
 import schemacrawler.tools.text.util.HtmlFormattingHelper;
 import schemacrawler.tools.text.util.PastelColor;
 import schemacrawler.utility.MetaDataUtility;
 import schemacrawler.utility.MetaDataUtility.Connectivity;
 import sf.util.Utility;
 
-final class SchemaDotFormatter
+public final class SchemaDotFormatter
   implements CrawlHandler
 {
   private static final Logger LOGGER = Logger
@@ -66,7 +66,7 @@ final class SchemaDotFormatter
    * @param options
    *        Options for text formatting of schema
    */
-  SchemaDotFormatter(final SchemaTextOptions options)
+  public SchemaDotFormatter(final SchemaTextOptions options)
     throws SchemaCrawlerException
   {
     if (options == null)

@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.tools;
+package schemacrawler.tools.text.base;
 
 
 import schemacrawler.schema.ColumnDataType;

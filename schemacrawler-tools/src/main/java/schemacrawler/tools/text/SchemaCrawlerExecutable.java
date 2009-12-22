@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.tools.text.schema;
+package schemacrawler.tools.text;
 
 
 import java.sql.Connection;
@@ -27,11 +27,13 @@ import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.CrawlHandler;
-import schemacrawler.tools.Crawler;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.ExecutionException;
 import schemacrawler.tools.OutputOptions;
+import schemacrawler.tools.text.base.CrawlHandler;
+import schemacrawler.tools.text.base.Crawler;
+import schemacrawler.tools.text.schema.SchemaTextDetailType;
+import schemacrawler.tools.text.schema.SchemaTextOptions;
 
 /**
  * Basic SchemaCrawler executor.

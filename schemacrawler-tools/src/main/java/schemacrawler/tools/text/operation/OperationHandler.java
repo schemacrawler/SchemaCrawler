@@ -36,7 +36,7 @@ import schemacrawler.schema.Procedure;
 import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.CrawlHandler;
+import schemacrawler.tools.text.base.CrawlHandler;
 
 /**
  * Text formatting of operations output.

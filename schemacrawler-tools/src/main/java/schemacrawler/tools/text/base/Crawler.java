@@ -1,4 +1,4 @@
-package schemacrawler.tools;
+package schemacrawler.tools.text.base;
 
 
 import java.util.Arrays;

@@ -40,9 +40,9 @@ import org.xml.sax.SAXException;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
+import schemacrawler.tools.text.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.operation.OperationExecutable;
-import schemacrawler.tools.text.schema.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.utility.TestDatabase;
 

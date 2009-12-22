@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.tools.text;
+package schemacrawler.tools.text.base;
 
 
 import java.io.PrintWriter;
@@ -33,7 +33,6 @@ import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.CrawlHandler;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.text.util.HtmlFormattingHelper;

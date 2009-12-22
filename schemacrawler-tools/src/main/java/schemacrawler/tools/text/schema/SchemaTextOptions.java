@@ -24,7 +24,7 @@ package schemacrawler.tools.text.schema;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.text.BaseToolOptions;
+import schemacrawler.tools.text.base.BaseToolOptions;
 
 /**
  * Options.
