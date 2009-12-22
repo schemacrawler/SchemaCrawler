@@ -23,9 +23,8 @@ package schemacrawler.tools.integration;
 import java.io.Writer;
 import java.sql.Connection;
 
-import schemacrawler.crawl.DatabaseSchemaCrawler;
+import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Database;
-import schemacrawler.schemacrawler.SchemaCrawler;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.ExecutionException;
 
@@ -51,7 +50,7 @@ public abstract class SchemaRenderer
 
     try
     {
-      final SchemaCrawler crawler = new DatabaseSchemaCrawler(connection);
+      final SchemaCrawler crawler = new SchemaCrawler(connection);
       final Database database = crawler.crawl(schemaCrawlerOptions);
 
       // Executable-specific work
