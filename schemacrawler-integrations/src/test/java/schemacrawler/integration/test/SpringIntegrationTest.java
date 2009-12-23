@@ -71,10 +71,10 @@ public class SpringIntegrationTest
     for (final String beanDefinitionName: appContext.getBeanDefinitionNames())
     {
       final Object bean = appContext.getBean(beanDefinitionName);
-      if (bean instanceof Executable<?> && !(bean instanceof GraphExecutable))
+      if (bean instanceof Executable && !(bean instanceof GraphExecutable))
       {
         executeAndCheckForOutputFile(beanDefinitionName,
-                                     (Executable<?>) bean,
+                                     (Executable) bean,
                                      failures);
       }
     }
@@ -98,7 +98,7 @@ public class SpringIntegrationTest
   }
 
   private void executeAndCheckForOutputFile(final String executableName,
-                                            final Executable<?> executable,
+                                            final Executable executable,
                                             final List<String> failures)
     throws Exception
   {

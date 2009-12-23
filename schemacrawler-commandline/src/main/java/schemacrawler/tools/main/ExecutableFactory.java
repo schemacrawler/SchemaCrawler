@@ -23,10 +23,8 @@ package schemacrawler.tools.main;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -37,7 +35,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.ToolOptions;
 
 /**
  * Parses the command line.
@@ -58,7 +55,7 @@ final class ExecutableFactory
    * @return Command line options
    * @throws SchemaCrawlerException
    */
-  static List<Executable<?>> createExecutables(final SchemaCrawlerCommandLine commandLine)
+  static Executable createExecutable(final SchemaCrawlerCommandLine commandLine)
     throws SchemaCrawlerException
   {
     if (commandLine == null)
@@ -71,74 +68,46 @@ final class ExecutableFactory
     final Config config = commandLine.getConfig();
     final SchemaCrawlerOptions schemaCrawlerOptions = commandLine
       .getSchemaCrawlerOptions();
-    final OutputOptions masterOutputOptions = commandLine.getOutputOptions();
-    final Commands commands = commandLine.getCommands();
-    final List<Executable<?>> executables = new ArrayList<Executable<?>>();
-    for (final String command: commands)
+    final OutputOptions outputOptions = commandLine.getOutputOptions();
+    final String command = commandLine.getCommand();
+
+    final String executableClassName;
+    if (commandRegistry.containsKey(command))
     {
-      final OutputOptions outputOptions = masterOutputOptions.duplicate();
-      if (commands.isFirstCommand(command))
-      {
-        // First command - no footer
-        outputOptions.setNoFooter(true);
-      }
-      else if (commands.isLastCommand(command))
-      {
-        // Last command - no header, or info
-        outputOptions.setNoHeader(true);
-        outputOptions.setNoInfo(true);
-
-        outputOptions.setAppendOutput(true);
-      }
-      else
-      {
-        // Middle command - no header, footer, or info
-        outputOptions.setNoHeader(true);
-        outputOptions.setNoInfo(true);
-        outputOptions.setNoFooter(true);
-
-        outputOptions.setAppendOutput(true);
-      }
-
-      final String executableClassName;
-      if (commandRegistry.containsKey(command))
-      {
-        executableClassName = commandRegistry.get(command);
-      }
-      else
-      {
-        executableClassName = commandRegistry.get("default");
-      }
-
-      try
-      {
-        final Class<? extends Executable<? extends ToolOptions>> executableClass = (Class<? extends Executable<? extends ToolOptions>>) Class
-          .forName(executableClassName);
-        final Executable<? extends ToolOptions> executable = executableClass
-          .newInstance();
-        executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-        executable.initializeToolOptions(command, config, outputOptions);
-        //
-        executables.add(executable);
-      }
-      catch (final InstantiationException e)
-      {
-        throw new SchemaCrawlerException("Could not initialize executable for "
-                                         + command, e);
-      }
-      catch (final IllegalAccessException e)
-      {
-        throw new SchemaCrawlerException("Could not initialize executable for "
-                                         + command, e);
-      }
-      catch (ClassNotFoundException e)
-      {
-        throw new SchemaCrawlerException("Could not initialize executable for "
-                                         + command, e);
-      }
+      executableClassName = commandRegistry.get(command);
+    }
+    else
+    {
+      executableClassName = commandRegistry.get("default");
     }
 
-    return executables;
+    try
+    {
+      final Class<? extends Executable> executableClass = (Class<? extends Executable>) Class
+        .forName(executableClassName);
+      final Executable executable = executableClass.newInstance();
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+      executable.setCommand(command);
+      executable.setConfig(config);
+      executable.setOutputOptions(outputOptions);
+      //
+      return executable;
+    }
+    catch (final InstantiationException e)
+    {
+      throw new SchemaCrawlerException("Could not initialize executable for "
+                                       + command, e);
+    }
+    catch (final IllegalAccessException e)
+    {
+      throw new SchemaCrawlerException("Could not initialize executable for "
+                                       + command, e);
+    }
+    catch (final ClassNotFoundException e)
+    {
+      throw new SchemaCrawlerException("Could not initialize executable for "
+                                       + command, e);
+    }
   }
 
   private static Map<String, String> loadCommandRegistry()

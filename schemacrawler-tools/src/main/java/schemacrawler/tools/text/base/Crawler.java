@@ -18,7 +18,7 @@ public class Crawler
 
   private final Database database;
 
-  public Crawler(Database database)
+  public Crawler(final Database database)
   {
     this.database = database;
   }

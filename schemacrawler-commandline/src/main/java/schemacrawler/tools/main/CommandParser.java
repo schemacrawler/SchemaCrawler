@@ -29,15 +29,15 @@ import sf.util.CommandLineParser.StringOption;
  * 
  * @author Sualeh Fatehi
  */
-final class CommandsParser
-  extends BaseOptionsParser<Commands>
+final class CommandParser
+  extends BaseOptionsParser<Command>
 {
 
   private final StringOption optionCommand = new StringOption(Option.NO_SHORT_FORM,
                                                               "command",
                                                               "standard_schema");
 
-  CommandsParser(final String[] args)
+  CommandParser(final String[] args)
   {
     super(args);
   }
@@ -49,15 +49,15 @@ final class CommandsParser
   }
 
   @Override
-  protected Commands getOptions()
+  protected Command getOptions()
   {
     parse(new Option[] {
       optionCommand
     });
 
     final String commandOptionValue = optionCommand.getValue();
-    final Commands commands = new Commands(commandOptionValue);
-    return commands;
+    final Command command = new Command(commandOptionValue);
+    return command;
   }
 
 }

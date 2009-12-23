@@ -44,7 +44,6 @@ import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.main.Commands;
 import schemacrawler.tools.main.SchemaCrawlerCommandLine;
 import schemacrawler.utility.TestDatabase;
 import sf.util.TestUtility;
@@ -95,12 +94,8 @@ public class SchemaCrawlerCommandlineTest
   public void compareCompositeOutput()
     throws Exception
   {
-    final String[][] commandSets = new String[][] {
-        {
-            "maximum_schema", "count", "dump",
-        }, {
-            "brief_schema", "count",
-        }
+    final String[] commands = new String[] {
+        "maximum_schema,count,dump", "brief_schema,count",
     };
 
     final List<String> failures = new ArrayList<String>();
@@ -110,10 +105,9 @@ public class SchemaCrawlerCommandlineTest
       {
         continue;
       }
-      for (final String[] commandSet: commandSets)
+      for (final String command: commands)
       {
-        final String referenceFile = commandSet[0].toString() + "."
-                                     + outputFormat.name();
+        final String referenceFile = command + "." + outputFormat.name();
 
         final File testOutputFile = File.createTempFile("schemacrawler.test.",
                                                         referenceFile);
@@ -125,18 +119,12 @@ public class SchemaCrawlerCommandlineTest
         outputOptions.setNoHeader(false);
         outputOptions.setNoFooter(false);
 
-        final Commands commands = new Commands();
-        for (final String command: commandSet)
-        {
-          commands.add(command);
-        }
-
         final DatabaseConnectionOptions connectionOptions = testUtility
           .getDatabaseConnectionOptions();
         final SchemaInfoLevel infoLevel = SchemaInfoLevel.maximum();
         final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(connectionOptions,
                                                                                   infoLevel,
-                                                                                  commands,
+                                                                                  command,
                                                                                   new Config(),
                                                                                   outputOptions);
         commandLine.execute();

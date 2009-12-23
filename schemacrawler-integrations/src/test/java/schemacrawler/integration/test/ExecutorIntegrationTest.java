@@ -30,13 +30,11 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.integration.freemarker.FreeMarkerRenderer;
 import schemacrawler.tools.integration.velocity.VelocityRenderer;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
-import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.utility.TestDatabase;
 
 public class ExecutorIntegrationTest
@@ -80,13 +78,12 @@ public class ExecutorIntegrationTest
     executeAndCheckForOutputFile(new VelocityRenderer(), outputOptions);
   }
 
-  private void executeAndCheckForOutputFile(final Executable<SchemaTextOptions> executable,
+  private void executeAndCheckForOutputFile(final Executable executable,
                                             final OutputOptions outputOptions)
     throws Exception
   {
-    executable.initializeToolOptions(SchemaTextDetailType.basic_schema.name(),
-                                     new Config(),
-                                     outputOptions);
+    executable.setCommand(SchemaTextDetailType.basic_schema.name());
+    executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());
 
     // Check post-conditions

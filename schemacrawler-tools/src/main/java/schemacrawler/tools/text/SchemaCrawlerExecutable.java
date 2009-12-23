@@ -22,18 +22,23 @@ package schemacrawler.tools.text;
 
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Database;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.ExecutionException;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.text.base.CrawlHandler;
 import schemacrawler.tools.text.base.Crawler;
+import schemacrawler.tools.text.operation.Operation;
+import schemacrawler.tools.text.operation.OperationHandler;
+import schemacrawler.tools.text.operation.OperationOptions;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
+import sf.util.Utility;
 
 /**
  * Basic SchemaCrawler executor.
@@ -41,7 +46,7 @@ import schemacrawler.tools.text.schema.SchemaTextOptions;
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawlerExecutable
-  extends Executable<SchemaTextOptions>
+  extends Executable
 {
 
   @Override
@@ -57,13 +62,15 @@ public final class SchemaCrawlerExecutable
 
     try
     {
-      final CrawlHandler handler = SchemaTextFactory
-        .createSchemaTextCrawlHandler(toolOptions);
-
       final SchemaCrawler schemaCrawler = new SchemaCrawler(connection);
       final Database database = schemaCrawler.crawl(schemaCrawlerOptions);
+      final List<CrawlHandler> crawlHandlers = createCrawlHandlers(database,
+                                                                   connection);
       final Crawler crawler = new Crawler(database);
-      crawler.crawl(handler);
+      for (final CrawlHandler crawlHandler: crawlHandlers)
+      {
+        crawler.crawl(crawlHandler);
+      }
     }
     catch (final SchemaCrawlerException e)
     {
@@ -71,17 +78,93 @@ public final class SchemaCrawlerExecutable
     }
   }
 
-  @Override
-  public void initializeToolOptions(final String command,
-                                    final Config config,
-                                    final OutputOptions outputOptions)
-    throws ExecutionException
+  private List<CrawlHandler> createCrawlHandlers(final Database database,
+                                                 final Connection connection)
+    throws SchemaCrawlerException
   {
-    final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType
-      .valueOf(command);
-    toolOptions = new SchemaTextOptions(config,
-                                        outputOptions,
-                                        schemaTextDetailType);
+    final Commands commands;
+    if (Utility.isBlank(command))
+    {
+      commands = new Commands(SchemaTextDetailType.standard_schema.name());
+    }
+    else
+    {
+      commands = new Commands(command);
+    }
+
+    final OutputOptions masterOutputOptions = outputOptions;
+    final List<CrawlHandler> crawlHandlers = new ArrayList<CrawlHandler>();
+    for (final String command: commands)
+    {
+      final OutputOptions outputOptions = masterOutputOptions.duplicate();
+      if (commands.size() > 1)
+      {
+        if (commands.isFirstCommand(command))
+        {
+          // First command - no footer
+          outputOptions.setNoFooter(true);
+        }
+        else if (commands.isLastCommand(command))
+        {
+          // Last command - no header, or info
+          outputOptions.setNoHeader(true);
+          outputOptions.setNoInfo(true);
+
+          outputOptions.setAppendOutput(true);
+        }
+        else
+        {
+          // Middle command - no header, footer, or info
+          outputOptions.setNoHeader(true);
+          outputOptions.setNoInfo(true);
+          outputOptions.setNoFooter(true);
+
+          outputOptions.setAppendOutput(true);
+        }
+      }
+
+      final CrawlHandler crawlHandler;
+      SchemaTextDetailType schemaTextDetailType;
+      try
+      {
+        schemaTextDetailType = SchemaTextDetailType.valueOf(command);
+      }
+      catch (final Exception e)
+      {
+        schemaTextDetailType = null;
+      }
+      if (schemaTextDetailType != null)
+      {
+        final SchemaTextOptions toolOptions = new SchemaTextOptions(config,
+                                                                    outputOptions,
+                                                                    schemaTextDetailType);
+        crawlHandler = SchemaTextFactory
+          .createSchemaTextCrawlHandler(toolOptions);
+      }
+      else
+      {
+        Operation operation;
+        OperationOptions operationOptions;
+        try
+        {
+          operation = Operation.valueOf(command);
+          operationOptions = new OperationOptions(config,
+                                                  outputOptions,
+                                                  operation);
+        }
+        catch (final IllegalArgumentException e)
+        {
+          final String queryName = command;
+          operationOptions = new OperationOptions(config,
+                                                  outputOptions,
+                                                  queryName);
+        }
+        crawlHandler = new OperationHandler(operationOptions, connection);
+      }
+      crawlHandlers.add(crawlHandler);
+    }
+
+    return crawlHandlers;
   }
 
 }

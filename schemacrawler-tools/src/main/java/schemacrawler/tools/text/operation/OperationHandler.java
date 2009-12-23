@@ -43,7 +43,7 @@ import schemacrawler.tools.text.base.CrawlHandler;
  * 
  * @author Sualeh Fatehi
  */
-final class OperationHandler
+public final class OperationHandler
   implements CrawlHandler
 {
 
@@ -60,7 +60,8 @@ final class OperationHandler
    * @param options
    *        Options for text formatting of operations output
    */
-  OperationHandler(final OperationOptions options, final Connection connection)
+  public OperationHandler(final OperationOptions options,
+                          final Connection connection)
     throws SchemaCrawlerException
   {
     if (connection == null)
