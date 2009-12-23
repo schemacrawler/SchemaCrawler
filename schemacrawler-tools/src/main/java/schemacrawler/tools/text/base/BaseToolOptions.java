@@ -55,6 +55,10 @@ public abstract class BaseToolOptions
     }
   }
 
+  protected BaseToolOptions()
+  {
+  }
+
   /**
    * Get output options.
    * 

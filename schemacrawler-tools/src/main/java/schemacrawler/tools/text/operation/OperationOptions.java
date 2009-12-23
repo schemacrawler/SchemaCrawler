@@ -110,6 +110,22 @@ public final class OperationOptions
   }
 
   /**
+   * Operator options.
+   * 
+   * @return A duplicate of this object
+   */
+  public OperationOptions duplicate()
+  {
+    final OperationOptions operationOptions = new OperationOptions();
+    operationOptions.setOutputOptions(getOutputOptions());
+    operationOptions.setMergeRows(mergeRows);
+    operationOptions.setShowLobs(showLobs);
+    operationOptions.setOperation(operation);
+    operationOptions.setQuery(query);
+    return operationOptions;
+  }
+
+  /**
    * Gets the operation.
    * 
    * @return Operation.

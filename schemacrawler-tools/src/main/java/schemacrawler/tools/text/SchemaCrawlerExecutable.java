@@ -36,6 +36,7 @@ import schemacrawler.tools.text.base.Crawler;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.operation.OperationHandler;
 import schemacrawler.tools.text.operation.OperationOptions;
+import schemacrawler.tools.text.operation.Query;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import sf.util.Utility;
@@ -48,6 +49,9 @@ import sf.util.Utility;
 public final class SchemaCrawlerExecutable
   extends Executable
 {
+
+  private OperationOptions operationOptions;
+  private SchemaTextOptions schemaTextOptions;
 
   @Override
   public final void execute(final Connection connection)
@@ -64,8 +68,7 @@ public final class SchemaCrawlerExecutable
     {
       final SchemaCrawler schemaCrawler = new SchemaCrawler(connection);
       final Database database = schemaCrawler.crawl(schemaCrawlerOptions);
-      final List<CrawlHandler> crawlHandlers = createCrawlHandlers(database,
-                                                                   connection);
+      final List<CrawlHandler> crawlHandlers = createCrawlHandlers(connection);
       final Crawler crawler = new Crawler(database);
       for (final CrawlHandler crawlHandler: crawlHandlers)
       {
@@ -78,8 +81,27 @@ public final class SchemaCrawlerExecutable
     }
   }
 
-  private List<CrawlHandler> createCrawlHandlers(final Database database,
-                                                 final Connection connection)
+  public final OperationOptions getOperationOptions()
+  {
+    return operationOptions;
+  }
+
+  public final SchemaTextOptions getSchemaTextOptions()
+  {
+    return schemaTextOptions;
+  }
+
+  public final void setOperationOptions(final OperationOptions operationOptions)
+  {
+    this.operationOptions = operationOptions;
+  }
+
+  public final void setSchemaTextOptions(final SchemaTextOptions schemaTextOptions)
+  {
+    this.schemaTextOptions = schemaTextOptions;
+  }
+
+  private List<CrawlHandler> createCrawlHandlers(final Connection connection)
     throws SchemaCrawlerException
   {
     final Commands commands;
@@ -135,30 +157,60 @@ public final class SchemaCrawlerExecutable
       }
       if (schemaTextDetailType != null)
       {
-        final SchemaTextOptions toolOptions = new SchemaTextOptions(config,
-                                                                    outputOptions,
-                                                                    schemaTextDetailType);
+        final SchemaTextOptions schemaTextOptions;
+        if (this.schemaTextOptions == null)
+        {
+          schemaTextOptions = new SchemaTextOptions(config,
+                                                    outputOptions,
+                                                    schemaTextDetailType);
+        }
+        else
+        {
+          schemaTextOptions = this.schemaTextOptions.duplicate();
+          schemaTextOptions.setOutputOptions(outputOptions);
+          schemaTextOptions.setSchemaTextDetailType(schemaTextDetailType);
+        }
+
         crawlHandler = SchemaTextFactory
-          .createSchemaTextCrawlHandler(toolOptions);
+          .createSchemaTextCrawlHandler(schemaTextOptions);
       }
       else
       {
+        String queryName = null;
         Operation operation;
         OperationOptions operationOptions;
         try
         {
           operation = Operation.valueOf(command);
-          operationOptions = new OperationOptions(config,
-                                                  outputOptions,
-                                                  operation);
         }
         catch (final IllegalArgumentException e)
         {
-          final String queryName = command;
-          operationOptions = new OperationOptions(config,
-                                                  outputOptions,
-                                                  queryName);
+          operation = null;
+          queryName = command;
         }
+        if (this.operationOptions == null)
+        {
+          operationOptions = new OperationOptions();
+        }
+        else
+        {
+          operationOptions = this.operationOptions.duplicate();
+        }
+        if (operation == null)
+        {
+          final Query query = operationOptions.getQuery();
+          if (query == null || !query.getName().equals(queryName))
+          {
+            operationOptions.setQuery(new Query(queryName, config
+              .get(queryName)));
+          }
+        }
+        else
+        {
+          operationOptions.setOperation(operation);
+        }
+        operationOptions.setOutputOptions(outputOptions);
+
         crawlHandler = new OperationHandler(operationOptions, connection);
       }
       crawlHandlers.add(crawlHandler);

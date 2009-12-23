@@ -61,7 +61,7 @@ public class SchemaTextOptions
    */
   public SchemaTextOptions()
   {
-    this(null, null, null);
+    setDefaultValues();
   }
 
   /**
@@ -80,26 +80,13 @@ public class SchemaTextOptions
   {
     super(outputOptions);
 
-    if (schemaTextDetailType == null)
-    {
-      this.schemaTextDetailType = SchemaTextDetailType.basic_schema;
-    }
-    else
+    setDefaultValues();
+    if (schemaTextDetailType != null)
     {
       this.schemaTextDetailType = schemaTextDetailType;
     }
 
-    if (config == null)
-    {
-      showStandardColumnTypeNames = false;
-      showOrdinalNumbers = false;
-
-      hideForeignKeyNames = false;
-      hidePrimaryKeyNames = false;
-      hideIndexNames = false;
-      hideConstraintNames = false;
-    }
-    else
+    if (config != null)
     {
       showStandardColumnTypeNames = config
         .getBooleanValue(SHOW_JDBC_COLUMN_TYPE_NAMES)
@@ -112,6 +99,29 @@ public class SchemaTextOptions
       hideIndexNames = config.getBooleanValue(HIDE_INDEX_NAMES);
       hideConstraintNames = config.getBooleanValue(HIDE_CONSTRAINT_NAMES);
     }
+  }
+
+  /**
+   * Creates the default SchemaTextOptions.
+   */
+  public SchemaTextOptions duplicate()
+  {
+    final SchemaTextOptions schemaTextOptions = new SchemaTextOptions();
+
+    schemaTextOptions.setOutputOptions(getOutputOptions());
+
+    schemaTextOptions
+      .setShowStandardColumnTypeNames(showStandardColumnTypeNames);
+    schemaTextOptions.setShowOrdinalNumbers(showOrdinalNumbers);
+
+    schemaTextOptions.setHidePrimaryKeyNames(hidePrimaryKeyNames);
+    schemaTextOptions.setHideForeignKeyNames(hideForeignKeyNames);
+    schemaTextOptions.setHideIndexNames(hideIndexNames);
+    schemaTextOptions.setHideConstraintNames(hideConstraintNames);
+
+    schemaTextOptions.setSchemaTextDetailType(schemaTextDetailType);
+
+    return schemaTextOptions;
   }
 
   /**
@@ -280,6 +290,19 @@ public class SchemaTextOptions
   public void setShowStandardColumnTypeNames(final boolean showStandardColumnTypeNames)
   {
     this.showStandardColumnTypeNames = showStandardColumnTypeNames;
+  }
+
+  private void setDefaultValues()
+  {
+    schemaTextDetailType = SchemaTextDetailType.basic_schema;
+
+    showStandardColumnTypeNames = false;
+    showOrdinalNumbers = false;
+
+    hideForeignKeyNames = false;
+    hidePrimaryKeyNames = false;
+    hideIndexNames = false;
+    hideConstraintNames = false;
   }
 
 }
