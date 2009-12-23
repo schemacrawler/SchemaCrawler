@@ -219,29 +219,4 @@ public class SchemaCrawlerCommandLine
     }
   }
 
-  /**
-   * Gets the config.
-   * 
-   * @return Config.
-   */
-  Config getConfig()
-  {
-    return new Config(config);
-  }
-
-  /**
-   * Gets the output options.
-   * 
-   * @return Output options.
-   */
-  OutputOptions getOutputOptions()
-  {
-    return outputOptions.duplicate();
-  }
-
-  SchemaCrawlerOptions getSchemaCrawlerOptions()
-  {
-    return schemaCrawlerOptions;
-  }
-
 }
