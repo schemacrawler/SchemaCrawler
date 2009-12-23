@@ -202,7 +202,6 @@ public class SchemaCrawlerCommandLine
   public void execute()
     throws Exception
   {
-
     Connection connection = null;
     try
     {
