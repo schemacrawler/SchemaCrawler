@@ -72,7 +72,7 @@ public final class Main
         .getOptions();
       final ApplicationContext appContext = new FileSystemXmlApplicationContext(springOptions
         .getContextFileName());
-      final Executable<?> executable = (Executable<?>) appContext
+      final Executable executable = (Executable) appContext
         .getBean(springOptions.getExecutableName());
       final DataSource dataSource = (DataSource) appContext
         .getBean(springOptions.getDataSourceName());

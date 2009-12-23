@@ -26,6 +26,7 @@ import java.sql.Connection;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.Executable;
 import schemacrawler.tools.ExecutionException;
 
 /**
@@ -34,7 +35,7 @@ import schemacrawler.tools.ExecutionException;
  * @author sfatehi
  */
 public abstract class SchemaRenderer
-  extends IntegrationsExecutable
+  extends Executable
 {
 
   @Override
@@ -54,11 +55,10 @@ public abstract class SchemaRenderer
       final Database database = crawler.crawl(schemaCrawlerOptions);
 
       // Executable-specific work
-      final Writer writer = toolOptions.getOutputOptions().openOutputWriter();
-      final String templateName = toolOptions.getOutputOptions()
-        .getOutputFormatValue();
+      final Writer writer = outputOptions.openOutputWriter();
+      final String templateName = outputOptions.getOutputFormatValue();
       render(connection, templateName, database, writer);
-      toolOptions.getOutputOptions().closeOutputWriter(writer);
+      outputOptions.closeOutputWriter(writer);
     }
     catch (final SchemaCrawlerException e)
     {

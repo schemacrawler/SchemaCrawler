@@ -108,8 +108,7 @@
     </property>
   </bean>
 
-
-
+<!-- 
   <bean id="executableForSchema" class="schemacrawler.tools.text.SchemaCrawlerExecutable">
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
     <property name="toolOptions">
@@ -125,18 +124,16 @@
       </bean>
     </property>
   </bean>
-
-  <bean id="executableForCount" class="schemacrawler.tools.text.operation.OperationExecutable">
+ -->
+ 
+  <bean id="executableForCount" class="schemacrawler.tools.text.SchemaCrawlerExecutable">
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
-    <property name="toolOptions">
-      <bean id="operationOptions" class="schemacrawler.tools.text.operation.OperationOptions">
-        <property name="operation" value="count" />
-        <property name="outputOptions" ref="outputOptions" />
-      </bean>
-    </property>
+    <property name="command" value="count" />
+    <property name="outputOptions" ref="outputOptions" />
   </bean>
 
-  <bean id="executableForQuery" class="schemacrawler.tools.text.operation.OperationExecutable">
+<!-- 
+  <bean id="executableForQuery" class="schemacrawler.tools.text.SchemaCrawlerExecutable">
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
     <property name="toolOptions">
       <bean id="queryTextFormatOptions" class="schemacrawler.tools.text.operation.OperationOptions">
@@ -156,8 +153,8 @@
       </bean>
     </property>
   </bean>
-
-  <bean id="executableForQueryOver" class="schemacrawler.tools.text.operation.OperationExecutable">
+ 
+  <bean id="executableForQueryOver" class="schemacrawler.tools.text.SchemaCrawlerExecutable">
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
     <property name="toolOptions">
       <bean id="queryOverTextFormatOptions" class="schemacrawler.tools.text.operation.OperationOptions">
@@ -177,55 +174,37 @@
       </bean>
     </property>
   </bean>
-
+ -->
+ 
   <bean id="executableForGraph" class="schemacrawler.tools.integration.graph.GraphExecutable">
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
-    <property name="toolOptions">
-      <bean id="schemaTextOptionsForGraph" class="schemacrawler.tools.text.schema.SchemaTextOptions">
-        <property name="schemaTextDetailType" value="basic_schema" />
-        <property name="outputOptions" ref="outputOptions" />
-      </bean>
-    </property>
+    <property name="command" value="basic_schema" />
+    <property name="outputOptions" ref="outputOptions" />
   </bean>
 
   <bean id="executableForVelocity" class="schemacrawler.tools.integration.velocity.VelocityRenderer">
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
-    <property name="toolOptions">
-      <bean id="schemaTextOptionsForVelocity" class="schemacrawler.tools.text.schema.SchemaTextOptions">
-        <property name="schemaTextDetailType" value="basic_schema" />
-        <property name="outputOptions">
-          <bean class="schemacrawler.tools.OutputOptions">
-            <property name="outputFormatValue" value="plaintextschema.vm" />
-          </bean>
-        </property>
+    <property name="outputOptions">
+      <bean class="schemacrawler.tools.OutputOptions">
+        <property name="outputFormatValue" value="plaintextschema.vm" />
       </bean>
     </property>
   </bean>
 
   <bean id="executableForFreeMarker" class="schemacrawler.tools.integration.freemarker.FreeMarkerRenderer">
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
-    <property name="toolOptions">
-      <bean id="schemaTextOptionsForFreeMarker" class="schemacrawler.tools.text.schema.SchemaTextOptions">
-        <property name="schemaTextDetailType" value="basic_schema" />
-        <property name="outputOptions">
-          <bean id="outputOptionsForFreeMarker" class="schemacrawler.tools.OutputOptions">
-            <property name="outputFormatValue" value="plaintextschema.ftl" />
-          </bean>
-        </property>
+    <property name="outputOptions">
+      <bean id="outputOptionsForFreeMarker" class="schemacrawler.tools.OutputOptions">
+        <property name="outputFormatValue" value="plaintextschema.ftl" />
       </bean>
     </property>
   </bean>
 
   <bean id="executableForJavaScript" class="schemacrawler.tools.integration.scripting.ScriptRenderer">
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
-    <property name="toolOptions">
-      <bean id="schemaTextOptionsForJavaScript" class="schemacrawler.tools.text.schema.SchemaTextOptions">
-        <property name="schemaTextDetailType" value="basic_schema" />
-        <property name="outputOptions">
-          <bean id="outputOptionsForJavaScript" class="schemacrawler.tools.OutputOptions">
-            <property name="outputFormatValue" value="plaintextschema.js" />
-          </bean>
-        </property>
+    <property name="outputOptions">
+      <bean id="outputOptionsForJavaScript" class="schemacrawler.tools.OutputOptions">
+        <property name="outputFormatValue" value="plaintextschema.js" />
       </bean>
     </property>
   </bean>

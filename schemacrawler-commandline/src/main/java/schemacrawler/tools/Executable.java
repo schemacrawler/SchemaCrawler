@@ -40,18 +40,22 @@ import sf.util.ObjectToString;
  * @param <O>
  *        Tool-specific options for execution.
  */
-public abstract class Executable<O extends ToolOptions>
+public abstract class Executable
 {
 
   private static final Logger LOGGER = Logger.getLogger(Executable.class
     .getName());
 
   protected SchemaCrawlerOptions schemaCrawlerOptions;
-  protected O toolOptions;
+  protected String command;
+  protected Config config;
+  protected OutputOptions outputOptions;
 
   public Executable()
   {
     schemaCrawlerOptions = new SchemaCrawlerOptions();
+    outputOptions = new OutputOptions();
+    config = new Config();
   }
 
   /**
@@ -112,9 +116,19 @@ public abstract class Executable<O extends ToolOptions>
     }
   }
 
-  public OutputOptions getOutputOptions()
+  public final String getCommand()
   {
-    return toolOptions.getOutputOptions();
+    return command;
+  }
+
+  public final Config getConfig()
+  {
+    return config;
+  }
+
+  public final OutputOptions getOutputOptions()
+  {
+    return outputOptions;
   }
 
   public final SchemaCrawlerOptions getSchemaCrawlerOptions()
@@ -122,29 +136,32 @@ public abstract class Executable<O extends ToolOptions>
     return schemaCrawlerOptions;
   }
 
-  public abstract void initializeToolOptions(final String command,
-                                             final Config config,
-                                             final OutputOptions outputOptions)
-    throws ExecutionException;
+  public final void setCommand(final String command)
+  {
+    this.command = command;
+  }
+
+  public final void setConfig(final Config config)
+  {
+    if (config != null)
+    {
+      this.config = config;
+    }
+  }
+
+  public final void setOutputOptions(final OutputOptions outputOptions)
+  {
+    if (outputOptions != null)
+    {
+      this.outputOptions = outputOptions;
+    }
+  }
 
   public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
   {
     if (schemaCrawlerOptions != null)
     {
       this.schemaCrawlerOptions = schemaCrawlerOptions;
-    }
-  }
-
-  public final O setToolOptions()
-  {
-    return toolOptions;
-  }
-
-  public final void setToolOptions(final O schemaTextOptions)
-  {
-    if (schemaTextOptions != null)
-    {
-      this.toolOptions = schemaTextOptions;
     }
   }
 
@@ -177,7 +194,7 @@ public abstract class Executable<O extends ToolOptions>
 
     if (LOGGER.isLoggable(Level.CONFIG))
     {
-      LOGGER.log(Level.CONFIG, this.toString());
+      LOGGER.log(Level.CONFIG, toString());
     }
   }
 

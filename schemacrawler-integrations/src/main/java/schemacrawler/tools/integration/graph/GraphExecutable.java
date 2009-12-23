@@ -28,13 +28,15 @@ import java.util.logging.Logger;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Database;
+import schemacrawler.tools.Executable;
 import schemacrawler.tools.ExecutionException;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.integration.IntegrationsExecutable;
 import schemacrawler.tools.text.SchemaTextFactory;
 import schemacrawler.tools.text.base.CrawlHandler;
 import schemacrawler.tools.text.base.Crawler;
+import schemacrawler.tools.text.schema.SchemaTextDetailType;
+import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.util.HtmlFormattingHelper;
 import sf.util.FileUtility;
 
@@ -44,7 +46,7 @@ import sf.util.FileUtility;
  * @author Sualeh Fatehi
  */
 public final class GraphExecutable
-  extends IntegrationsExecutable
+  extends Executable
 {
 
   private static final Logger LOGGER = Logger.getLogger(GraphExecutable.class
@@ -67,9 +69,7 @@ public final class GraphExecutable
 
     adjustSchemaInfoLevel();
 
-    final OutputOptions outputOptions = toolOptions.getOutputOptions();
     final File outputFile = outputOptions.getOutputFile();
-
     try
     {
       final String outputFormat = outputOptions.getOutputFormatValue();
@@ -104,10 +104,14 @@ public final class GraphExecutable
       final OutputOptions outputOptions = new OutputOptions();
       outputOptions.setOutputFormatValue(OutputFormat.dot.name());
       outputOptions.setOutputFileName(dotFile.getAbsolutePath());
-      toolOptions.setOutputOptions(outputOptions);
+
+      final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(config,
+                                                                        outputOptions,
+                                                                        SchemaTextDetailType.standard_schema);
+      schemaTextOptions.setOutputOptions(outputOptions);
 
       final CrawlHandler handler = SchemaTextFactory
-        .createSchemaTextCrawlHandler(toolOptions);
+        .createSchemaTextCrawlHandler(schemaTextOptions);
       final SchemaCrawler schemaCrawler = new SchemaCrawler(connection);
       final Database database = schemaCrawler.crawl(schemaCrawlerOptions);
       final Crawler crawler = new Crawler(database);

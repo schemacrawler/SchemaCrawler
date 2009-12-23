@@ -1,4 +1,4 @@
-package schemacrawler.tools.main;
+package schemacrawler.tools.text;
 
 
 import java.util.ArrayList;
@@ -40,6 +40,11 @@ public final class Commands
     }
   }
 
+  public boolean isEmpty()
+  {
+    return commands.isEmpty();
+  }
+
   public boolean isFirstCommand(final String command)
   {
     if (command != null)
@@ -69,6 +74,11 @@ public final class Commands
   public Iterator<String> iterator()
   {
     return commands.iterator();
+  }
+
+  public int size()
+  {
+    return commands.size();
   }
 
   @Override

@@ -22,7 +22,6 @@ package schemacrawler.tools.main;
 
 import java.sql.Connection;
 import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -46,7 +45,7 @@ public class SchemaCrawlerCommandLine
   private static final Logger LOGGER = Logger
     .getLogger(SchemaCrawlerCommandLine.class.getName());
 
-  private final Commands commands;
+  private final String command;
   private final Config config;
   private final SchemaCrawlerOptions schemaCrawlerOptions;
   private final OutputOptions outputOptions;
@@ -54,12 +53,12 @@ public class SchemaCrawlerCommandLine
 
   public SchemaCrawlerCommandLine(final ConnectionOptions connectionOptions,
                                   final SchemaInfoLevel infoLevel,
-                                  final Commands commands,
+                                  final String command,
                                   final Config config,
                                   final OutputOptions outputOptions)
   {
     this.connectionOptions = connectionOptions;
-    this.commands = commands;
+    this.command = command;
     this.config = config;
     this.outputOptions = outputOptions;
 
@@ -117,13 +116,13 @@ public class SchemaCrawlerCommandLine
         System.exit(0);
       }
 
-      commands = new CommandsParser(args).getOptions();
+      command = new CommandParser(args).getOptions().toString();
       outputOptions = new OutputOptionsParser(args).getOptions();
     }
     else
     {
       applicationOptions = new ApplicationOptions();
-      commands = new Commands();
+      command = null;
       outputOptions = new OutputOptions();
     }
 
@@ -176,17 +175,12 @@ public class SchemaCrawlerCommandLine
   public void execute()
     throws Exception
   {
-    final List<Executable<?>> executables = ExecutableFactory
-      .createExecutables(this);
-
+    final Executable executable = ExecutableFactory.createExecutable(this);
     Connection connection = null;
     try
     {
       connection = connectionOptions.createConnection();
-      for (final Executable<?> executable: executables)
-      {
-        executable.execute(connection);
-      }
+      executable.execute(connection);
     }
     finally
     {
@@ -203,9 +197,9 @@ public class SchemaCrawlerCommandLine
    * 
    * @return Commands.
    */
-  Commands getCommands()
+  String getCommand()
   {
-    return commands;
+    return command;
   }
 
   /**
