@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.tools.main;
+package schemacrawler.tools;
 
 
 import java.util.HashMap;

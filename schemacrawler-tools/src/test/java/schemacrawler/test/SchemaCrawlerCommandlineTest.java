@@ -42,9 +42,10 @@ import org.xml.sax.SAXException;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.tools.Command;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.main.SchemaCrawlerCommandLine;
+import schemacrawler.tools.SchemaCrawlerCommandLine;
 import schemacrawler.utility.TestDatabase;
 import sf.util.TestUtility;
 
@@ -124,7 +125,7 @@ public class SchemaCrawlerCommandlineTest
         final SchemaInfoLevel infoLevel = SchemaInfoLevel.maximum();
         final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(connectionOptions,
                                                                                   infoLevel,
-                                                                                  command,
+                                                                                  new Command(command),
                                                                                   new Config(),
                                                                                   outputOptions);
         commandLine.execute();

@@ -21,8 +21,8 @@
 package schemacrawler.tools.postgresql;
 
 
-import schemacrawler.tools.main.BundledDriverHelpOptions;
-import schemacrawler.tools.main.SchemaCrawlerCommandLine;
+import schemacrawler.tools.BundledDriverHelpOptions;
+import schemacrawler.tools.SchemaCrawlerCommandLine;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
