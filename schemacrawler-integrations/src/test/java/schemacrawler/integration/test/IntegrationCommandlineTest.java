@@ -32,8 +32,9 @@ import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.tools.Command;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.main.SchemaCrawlerCommandLine;
+import schemacrawler.tools.SchemaCrawlerCommandLine;
 import schemacrawler.utility.TestDatabase;
 
 public class IntegrationCommandlineTest
@@ -68,7 +69,7 @@ public class IntegrationCommandlineTest
                                                                                 .getDatabaseConnectionOptions(),
                                                                               SchemaInfoLevel
                                                                                 .standard(),
-                                                                              "freemarker",
+                                                                              new Command("freemarker"),
                                                                               new Config(),
                                                                               outputOptions);
 
@@ -87,7 +88,7 @@ public class IntegrationCommandlineTest
                                                                                 .getDatabaseConnectionOptions(),
                                                                               SchemaInfoLevel
                                                                                 .standard(),
-                                                                              "velocity",
+                                                                              new Command("velocity"),
                                                                               new Config(),
                                                                               outputOptions);
 

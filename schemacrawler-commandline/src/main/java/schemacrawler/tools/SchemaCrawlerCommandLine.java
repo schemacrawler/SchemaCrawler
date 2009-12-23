@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.main;
+package schemacrawler.tools;
 
 
 import java.sql.Connection;
@@ -30,8 +30,6 @@ import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
-import schemacrawler.tools.Executable;
-import schemacrawler.tools.OutputOptions;
 import sf.util.Utility;
 
 /**
@@ -45,7 +43,7 @@ public class SchemaCrawlerCommandLine
   private static final Logger LOGGER = Logger
     .getLogger(SchemaCrawlerCommandLine.class.getName());
 
-  private final String command;
+  private final Command command;
   private final Config config;
   private final SchemaCrawlerOptions schemaCrawlerOptions;
   private final OutputOptions outputOptions;
@@ -53,7 +51,7 @@ public class SchemaCrawlerCommandLine
 
   public SchemaCrawlerCommandLine(final ConnectionOptions connectionOptions,
                                   final SchemaInfoLevel infoLevel,
-                                  final String command,
+                                  final Command command,
                                   final Config config,
                                   final OutputOptions outputOptions)
   {
@@ -116,7 +114,7 @@ public class SchemaCrawlerCommandLine
         System.exit(0);
       }
 
-      command = new CommandParser(args).getOptions().toString();
+      command = new CommandParser(args).getOptions();
       outputOptions = new OutputOptionsParser(args).getOptions();
     }
     else
@@ -172,13 +170,43 @@ public class SchemaCrawlerCommandLine
    * @throws Exception
    *         On an exception
    */
+  public Executable createExecutable()
+    throws Exception
+  {
+    if (command == null)
+    {
+      throw new SchemaCrawlerException("No command specified");
+    }
+
+    final Class<? extends Executable> executableClass = (Class<? extends Executable>) Class
+      .forName(command.getCommandExecutableClassName());
+    final Executable executable = executableClass.newInstance();
+    executable.setCommand(command.toString());
+    executable.setConfig(config);
+    executable.setOutputOptions(outputOptions);
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    return executable;
+  }
+
+  /**
+   * Executes with the command line, and a given executor. The executor
+   * allows for the command line to be parsed independently of the
+   * execution. The execution can integrate with other software, such as
+   * Velocity.
+   * 
+   * @param commandLine
+   *        Command line arguments
+   * @throws Exception
+   *         On an exception
+   */
   public void execute()
     throws Exception
   {
-    final Executable executable = ExecutableFactory.createExecutable(this);
+
     Connection connection = null;
     try
     {
+      final Executable executable = createExecutable();
       connection = connectionOptions.createConnection();
       executable.execute(connection);
     }
@@ -192,14 +220,9 @@ public class SchemaCrawlerCommandLine
     }
   }
 
-  /**
-   * Gets the commands.
-   * 
-   * @return Commands.
-   */
-  String getCommand()
+  public final ConnectionOptions getConnectionOptions()
   {
-    return command;
+    return connectionOptions;
   }
 
   /**

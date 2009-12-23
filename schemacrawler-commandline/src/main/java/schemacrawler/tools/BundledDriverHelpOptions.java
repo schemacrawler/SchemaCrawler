@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.tools.main;
+package schemacrawler.tools;
 
 
 public final class BundledDriverHelpOptions

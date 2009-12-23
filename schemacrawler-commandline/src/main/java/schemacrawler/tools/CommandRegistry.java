@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.tools.main;
+package schemacrawler.tools;
 
 
 import java.io.IOException;
@@ -30,84 +30,33 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.Executable;
-import schemacrawler.tools.OutputOptions;
 
 /**
  * Parses the command line.
  * 
  * @author Sualeh Fatehi
  */
-final class ExecutableFactory
+final class CommandRegistry
 {
 
-  private static final Logger LOGGER = Logger.getLogger(ExecutableFactory.class
+  private static final Logger LOGGER = Logger.getLogger(CommandRegistry.class
     .getName());
 
-  /**
-   * Parses the command line.
-   * 
-   * @param args
-   *        Command line arguments
-   * @return Command line options
-   * @throws SchemaCrawlerException
-   */
-  static Executable createExecutable(final SchemaCrawlerCommandLine commandLine)
+  static String lookupCommandExecutableClassName(final String command)
     throws SchemaCrawlerException
   {
-    if (commandLine == null)
-    {
-      throw new SchemaCrawlerException("No command line provided");
-    }
-
+    final String commandExecutableClassName;
     final Map<String, String> commandRegistry = loadCommandRegistry();
-
-    final Config config = commandLine.getConfig();
-    final SchemaCrawlerOptions schemaCrawlerOptions = commandLine
-      .getSchemaCrawlerOptions();
-    final OutputOptions outputOptions = commandLine.getOutputOptions();
-    final String command = commandLine.getCommand();
-
-    final String executableClassName;
     if (commandRegistry.containsKey(command))
     {
-      executableClassName = commandRegistry.get(command);
+      commandExecutableClassName = commandRegistry.get(command);
     }
     else
     {
-      executableClassName = commandRegistry.get("default");
+      commandExecutableClassName = commandRegistry.get("default");
     }
-
-    try
-    {
-      final Class<? extends Executable> executableClass = (Class<? extends Executable>) Class
-        .forName(executableClassName);
-      final Executable executable = executableClass.newInstance();
-      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-      executable.setCommand(command);
-      executable.setConfig(config);
-      executable.setOutputOptions(outputOptions);
-      //
-      return executable;
-    }
-    catch (final InstantiationException e)
-    {
-      throw new SchemaCrawlerException("Could not initialize executable for "
-                                       + command, e);
-    }
-    catch (final IllegalAccessException e)
-    {
-      throw new SchemaCrawlerException("Could not initialize executable for "
-                                       + command, e);
-    }
-    catch (final ClassNotFoundException e)
-    {
-      throw new SchemaCrawlerException("Could not initialize executable for "
-                                       + command, e);
-    }
+    return commandExecutableClassName;
   }
 
   private static Map<String, String> loadCommandRegistry()
@@ -154,7 +103,7 @@ final class ExecutableFactory
     return commandRegistry;
   }
 
-  private ExecutableFactory()
+  private CommandRegistry()
   {
 
   }

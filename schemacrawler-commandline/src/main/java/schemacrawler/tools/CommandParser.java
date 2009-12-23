@@ -18,10 +18,9 @@
  *
  */
 
-package schemacrawler.tools.main;
+package schemacrawler.tools;
 
 
-import schemacrawler.schemacrawler.Config;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
 
@@ -30,18 +29,15 @@ import sf.util.CommandLineParser.StringOption;
  * 
  * @author Sualeh Fatehi
  */
-class ConfigParser
-  extends BaseOptionsParser<Config>
+final class CommandParser
+  extends BaseOptionsParser<Command>
 {
 
-  private final StringOption optionConfigFile = new StringOption('g',
-                                                                 "configfile",
-                                                                 "schemacrawler.config.properties");
-  private final StringOption optionConfigOverrideFile = new StringOption('p',
-                                                                         "configoverridefile",
-                                                                         "schemacrawler.config.override.properties");
+  private final StringOption optionCommand = new StringOption(Option.NO_SHORT_FORM,
+                                                              "command",
+                                                              "standard_schema");
 
-  ConfigParser(final String[] args)
+  CommandParser(final String[] args)
   {
     super(args);
   }
@@ -49,19 +45,19 @@ class ConfigParser
   @Override
   protected String getHelpResource()
   {
-    return "/help/ConfigurationOptions.readme.txt";
+    return "/help/Commands.readme.txt";
   }
 
   @Override
-  protected Config getOptions()
+  protected Command getOptions()
   {
     parse(new Option[] {
-        optionConfigFile, optionConfigOverrideFile
+      optionCommand
     });
 
-    final String cfgFile = optionConfigFile.getValue();
-    final String cfgOverrideFile = optionConfigOverrideFile.getValue();
-    return Config.load(cfgFile, cfgOverrideFile);
+    final String commandOptionValue = optionCommand.getValue();
+    final Command command = new Command(commandOptionValue);
+    return command;
   }
 
 }

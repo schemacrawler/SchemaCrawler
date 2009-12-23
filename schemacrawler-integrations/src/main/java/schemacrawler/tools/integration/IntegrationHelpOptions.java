@@ -21,7 +21,7 @@
 package schemacrawler.tools.integration;
 
 
-import schemacrawler.tools.main.HelpOptions;
+import schemacrawler.tools.HelpOptions;
 
 public final class IntegrationHelpOptions
   extends HelpOptions

@@ -18,9 +18,10 @@
  *
  */
 
-package schemacrawler.tools.main;
+package schemacrawler.tools;
 
 
+import schemacrawler.schemacrawler.Config;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
 
@@ -29,15 +30,18 @@ import sf.util.CommandLineParser.StringOption;
  * 
  * @author Sualeh Fatehi
  */
-final class CommandParser
-  extends BaseOptionsParser<Command>
+class ConfigParser
+  extends BaseOptionsParser<Config>
 {
 
-  private final StringOption optionCommand = new StringOption(Option.NO_SHORT_FORM,
-                                                              "command",
-                                                              "standard_schema");
+  private final StringOption optionConfigFile = new StringOption('g',
+                                                                 "configfile",
+                                                                 "schemacrawler.config.properties");
+  private final StringOption optionConfigOverrideFile = new StringOption('p',
+                                                                         "configoverridefile",
+                                                                         "schemacrawler.config.override.properties");
 
-  CommandParser(final String[] args)
+  ConfigParser(final String[] args)
   {
     super(args);
   }
@@ -45,19 +49,19 @@ final class CommandParser
   @Override
   protected String getHelpResource()
   {
-    return "/help/Commands.readme.txt";
+    return "/help/ConfigurationOptions.readme.txt";
   }
 
   @Override
-  protected Command getOptions()
+  protected Config getOptions()
   {
     parse(new Option[] {
-      optionCommand
+        optionConfigFile, optionConfigOverrideFile
     });
 
-    final String commandOptionValue = optionCommand.getValue();
-    final Command command = new Command(commandOptionValue);
-    return command;
+    final String cfgFile = optionConfigFile.getValue();
+    final String cfgOverrideFile = optionConfigOverrideFile.getValue();
+    return Config.load(cfgFile, cfgOverrideFile);
   }
 
 }
