@@ -110,7 +110,7 @@
 
 
 
-  <bean id="executableForSchema" class="schemacrawler.tools.text.schema.SchemaCrawlerExecutable">
+  <bean id="executableForSchema" class="schemacrawler.tools.text.SchemaCrawlerExecutable">
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
     <property name="toolOptions">
       <bean id="schemaTextOptions" class="schemacrawler.tools.text.schema.SchemaTextOptions">
