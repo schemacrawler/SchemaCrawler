@@ -220,11 +220,6 @@ public class SchemaCrawlerCommandLine
     }
   }
 
-  public final ConnectionOptions getConnectionOptions()
-  {
-    return connectionOptions;
-  }
-
   /**
    * Gets the config.
    * 
