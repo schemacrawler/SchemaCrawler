@@ -20,7 +20,6 @@
 package schemacrawler.tools;
 
 
-import java.sql.Connection;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -162,61 +161,6 @@ public class SchemaCrawlerCommandLine
 
     schemaCrawlerOptions = new SchemaCrawlerOptionsParser(args, config)
       .getOptions();
-  }
-
-  /**
-   * Executes with the command line, and a given executor. The executor
-   * allows for the command line to be parsed independently of the
-   * execution. The execution can integrate with other software, such as
-   * Velocity.
-   * 
-   * @throws Exception
-   *         On an exception
-   */
-  public Executable createExecutable()
-    throws Exception
-  {
-    if (command == null)
-    {
-      throw new SchemaCrawlerException("No command specified");
-    }
-
-    final Class<? extends BaseExecutable> executableClass = (Class<? extends BaseExecutable>) Class
-      .forName(command.getCommandExecutableClassName());
-    final Executable executable = executableClass.newInstance();
-    executable.setExecutableOptions(this);
-    return executable;
-  }
-
-  /**
-   * Executes with the command line, and a given executor. The executor
-   * allows for the command line to be parsed independently of the
-   * execution. The execution can integrate with other software, such as
-   * Velocity.
-   * 
-   * @param commandLine
-   *        Command line arguments
-   * @throws Exception
-   *         On an exception
-   */
-  public void execute()
-    throws Exception
-  {
-    Connection connection = null;
-    try
-    {
-      final Executable executable = createExecutable();
-      connection = connectionOptions.createConnection();
-      executable.execute(connection);
-    }
-    finally
-    {
-      if (connection != null)
-      {
-        connection.close();
-        LOGGER.log(Level.INFO, "Closed database connection, " + connection);
-      }
-    }
   }
 
   public final String getCommand()

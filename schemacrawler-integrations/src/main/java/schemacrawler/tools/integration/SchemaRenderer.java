@@ -38,6 +38,8 @@ public abstract class SchemaRenderer
   extends BaseExecutable
 {
 
+  private static final long serialVersionUID = 7441125886947849708L;
+
   @Override
   public final void execute(final Connection connection)
     throws ExecutionException

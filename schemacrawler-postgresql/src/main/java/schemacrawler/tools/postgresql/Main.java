@@ -23,6 +23,7 @@ package schemacrawler.tools.postgresql;
 
 import schemacrawler.tools.BundledDriverHelpOptions;
 import schemacrawler.tools.SchemaCrawlerCommandLine;
+import schemacrawler.tools.SchemaCrawlerExecutable;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -45,7 +46,8 @@ public final class Main
                                                                                 new BundledDriverHelpOptions("SchemaCrawler for PostgreSQL",
                                                                                                              "/help/Connections.postgresql.txt"),
                                                                                 "/schemacrawler-postgresql.config.properties");
-      commandLine.execute();
+      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(commandLine);
+      executable.execute();
     }
     catch (final Exception e)
     {

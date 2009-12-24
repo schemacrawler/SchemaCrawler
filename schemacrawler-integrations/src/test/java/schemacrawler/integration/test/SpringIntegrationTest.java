@@ -37,7 +37,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.BaseExecutable;
 import schemacrawler.tools.Executable;
 import schemacrawler.tools.integration.graph.GraphExecutable;
 import schemacrawler.utility.TestDatabase;
@@ -72,11 +71,14 @@ public class SpringIntegrationTest
     for (final String beanDefinitionName: appContext.getBeanDefinitionNames())
     {
       final Object bean = appContext.getBean(beanDefinitionName);
-      if (bean instanceof Executable && !(bean instanceof GraphExecutable))
+      if (bean instanceof Executable)
       {
-        executeAndCheckForOutputFile(beanDefinitionName,
-                                     (BaseExecutable) bean,
-                                     failures);
+        final Executable executable = (Executable) bean;
+        if (!"graph".equals(executable.getCommand())
+            && !(executable instanceof GraphExecutable))
+        {
+          executeAndCheckForOutputFile(beanDefinitionName, executable, failures);
+        }
       }
     }
     if (failures.size() > 0)
@@ -99,7 +101,7 @@ public class SpringIntegrationTest
   }
 
   private void executeAndCheckForOutputFile(final String executableName,
-                                            final BaseExecutable executable,
+                                            final Executable executable,
                                             final List<String> failures)
     throws Exception
   {
@@ -111,7 +113,9 @@ public class SpringIntegrationTest
 
     final File testOutputFile = new File(outputFilename);
     assertTrue(testOutputFile.exists());
-    assertTrue(testOutputFile.length() > 0);
+    assertTrue(String.format("Executable %s output file has zero length - %s",
+                             executableName,
+                             testOutputFile), testOutputFile.length() > 0);
     TestUtility
       .compareOutput(executableName + ".txt", testOutputFile, failures);
   }

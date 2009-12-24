@@ -46,6 +46,7 @@ import schemacrawler.tools.Command;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.SchemaCrawlerCommandLine;
+import schemacrawler.tools.SchemaCrawlerExecutable;
 import schemacrawler.utility.TestDatabase;
 import sf.util.TestUtility;
 
@@ -128,7 +129,8 @@ public class SchemaCrawlerCommandlineTest
                                                                                   new Command(command),
                                                                                   new Config(),
                                                                                   outputOptions);
-        commandLine.execute();
+        final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(commandLine);
+        executable.execute();
 
         if (outputFormat == OutputFormat.html)
         {

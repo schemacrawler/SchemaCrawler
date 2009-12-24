@@ -14,10 +14,10 @@ public interface ExecutableOptions
 
   Config getConfig();
 
-  SchemaCrawlerOptions getSchemaCrawlerOptions();
+  ConnectionOptions getConnectionOptions();
 
   OutputOptions getOutputOptions();
 
-  ConnectionOptions getConnectionOptions();
+  SchemaCrawlerOptions getSchemaCrawlerOptions();
 
 }
