@@ -18,11 +18,12 @@
  *
  */
 
-package schemacrawler.tools;
+package schemacrawler.tools.commandline;
 
 
 import java.util.logging.Level;
 
+import schemacrawler.tools.options.ApplicationOptions;
 import sf.util.CommandLineParser;
 import sf.util.CommandLineParser.BooleanOption;
 import sf.util.CommandLineParser.Option;

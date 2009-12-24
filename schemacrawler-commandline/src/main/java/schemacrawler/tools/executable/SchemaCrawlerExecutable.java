@@ -1,4 +1,4 @@
-package schemacrawler.tools;
+package schemacrawler.tools.executable;
 
 
 import java.sql.Connection;
@@ -9,6 +9,8 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
+import schemacrawler.tools.options.OutputOptions;
 
 public class SchemaCrawlerExecutable
   implements Executable
@@ -16,29 +18,29 @@ public class SchemaCrawlerExecutable
 
   private final Executable executable;
 
-  public SchemaCrawlerExecutable(final ExecutableOptions executableOptions)
+  public SchemaCrawlerExecutable(final SchemaCrawlerCommandLine commandLine)
     throws SchemaCrawlerException
   {
-    this(executableOptions.getCommand());
-    if (executableOptions != null)
+    this(commandLine.getCommand());
+    if (commandLine != null)
     {
-      final Config config = executableOptions.getConfig();
+      final Config config = commandLine.getConfig();
       if (config != null)
       {
         setConfig(config);
       }
-      final ConnectionOptions connectionOptions = executableOptions
+      final ConnectionOptions connectionOptions = commandLine
         .getConnectionOptions();
       if (connectionOptions != null)
       {
         setConnectionOptions(connectionOptions);
       }
-      final OutputOptions outputOptions = executableOptions.getOutputOptions();
+      final OutputOptions outputOptions = commandLine.getOutputOptions();
       if (outputOptions != null)
       {
         setOutputOptions(outputOptions);
       }
-      final SchemaCrawlerOptions schemaCrawlerOptions = executableOptions
+      final SchemaCrawlerOptions schemaCrawlerOptions = commandLine
         .getSchemaCrawlerOptions();
       if (schemaCrawlerOptions != null)
       {
@@ -129,11 +131,6 @@ public class SchemaCrawlerExecutable
   public void setConnectionOptions(final ConnectionOptions connectionOptions)
   {
     executable.setConnectionOptions(connectionOptions);
-  }
-
-  public void setExecutableOptions(final ExecutableOptions executableOptions)
-  {
-    executable.setExecutableOptions(executableOptions);
   }
 
   public void setOutputOptions(final OutputOptions outputOptions)

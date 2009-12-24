@@ -17,28 +17,53 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools;
+
+package schemacrawler.tools.commandline;
 
 
 import schemacrawler.schemacrawler.Options;
-import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.CommandLineParser;
+import sf.util.CommandLineParser.Option;
 
 /**
- * Tag interface for all tool-specific options.
+ * Parses the command line.
  * 
+ * @param <O>
+ *        Options to be parsed from the command line.
  * @author Sualeh Fatehi
  */
-public interface ToolOptions
-  extends Options
+public abstract class BaseOptionsParser<O extends Options>
 {
 
-  OutputOptions getOutputOptions();
+  private final String[] args;
+
+  protected BaseOptionsParser(final String[] args)
+  {
+    this.args = args;
+  }
 
   /**
-   * Gets the SchemaInfoLevel for the tool.
+   * Gets the help text.
    */
-  SchemaInfoLevel getSchemaInfoLevel();
+  protected abstract String getHelpResource();
 
-  void setOutputOptions(OutputOptions outputOptions);
+  /**
+   * Parses the command line.
+   * 
+   * @return Command line options
+   */
+  protected abstract O getOptions()
+    throws SchemaCrawlerException;
+
+  protected void parse(final CommandLineParser.Option<?>[] options)
+  {
+    final CommandLineParser parser = new CommandLineParser();
+    for (final Option<?> option: options)
+    {
+      parser.addOption(option);
+    }
+    parser.parse(args);
+  }
 
 }
