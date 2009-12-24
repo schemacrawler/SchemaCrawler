@@ -36,7 +36,7 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
 
 import schemacrawler.schema.Database;
-import schemacrawler.tools.ExecutionException;
+import schemacrawler.tools.executable.ExecutionException;
 import schemacrawler.tools.integration.SchemaRenderer;
 
 /**

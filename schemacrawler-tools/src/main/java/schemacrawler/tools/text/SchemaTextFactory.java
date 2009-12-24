@@ -2,7 +2,7 @@ package schemacrawler.tools.text;
 
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.OutputFormat;
+import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.text.base.CrawlHandler;
 import schemacrawler.tools.text.schema.SchemaDotFormatter;
 import schemacrawler.tools.text.schema.SchemaTextFormatter;

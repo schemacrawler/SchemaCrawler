@@ -21,7 +21,7 @@
 package schemacrawler.tools.text.util;
 
 
-import schemacrawler.tools.OutputFormat;
+import schemacrawler.tools.options.OutputFormat;
 
 /**
  * Methods to format entire rows of output as text.

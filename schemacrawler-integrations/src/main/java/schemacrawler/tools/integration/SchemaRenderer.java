@@ -26,8 +26,8 @@ import java.sql.Connection;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.BaseExecutable;
-import schemacrawler.tools.ExecutionException;
+import schemacrawler.tools.executable.BaseExecutable;
+import schemacrawler.tools.executable.ExecutionException;
 
 /**
  * An executor that uses a template renderer to render a schema.

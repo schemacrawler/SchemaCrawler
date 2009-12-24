@@ -21,7 +21,7 @@
 package schemacrawler.tools.integration.spring;
 
 
-import schemacrawler.tools.BaseOptionsParser;
+import schemacrawler.tools.commandline.BaseOptionsParser;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
 

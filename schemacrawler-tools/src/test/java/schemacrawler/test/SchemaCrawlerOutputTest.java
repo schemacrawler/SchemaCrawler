@@ -38,8 +38,8 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.OutputFormat;
-import schemacrawler.tools.OutputOptions;
+import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.SchemaCrawlerTextExecutable;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
