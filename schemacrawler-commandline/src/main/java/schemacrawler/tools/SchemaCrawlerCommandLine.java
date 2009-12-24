@@ -173,7 +173,7 @@ public class SchemaCrawlerCommandLine
    * @throws Exception
    *         On an exception
    */
-  public BaseExecutable createExecutable()
+  public Executable createExecutable()
     throws Exception
   {
     if (command == null)
@@ -183,7 +183,7 @@ public class SchemaCrawlerCommandLine
 
     final Class<? extends BaseExecutable> executableClass = (Class<? extends BaseExecutable>) Class
       .forName(command.getCommandExecutableClassName());
-    final BaseExecutable executable = executableClass.newInstance();
+    final Executable executable = executableClass.newInstance();
     executable.setExecutableOptions(this);
     return executable;
   }
@@ -205,7 +205,7 @@ public class SchemaCrawlerCommandLine
     Connection connection = null;
     try
     {
-      final BaseExecutable executable = createExecutable();
+      final Executable executable = createExecutable();
       connection = connectionOptions.createConnection();
       executable.execute(connection);
     }

@@ -33,7 +33,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import schemacrawler.tools.ApplicationOptions;
 import schemacrawler.tools.ApplicationOptionsParser;
-import schemacrawler.tools.BaseExecutable;
+import schemacrawler.tools.Executable;
 import sf.util.Utility;
 
 /**
@@ -72,7 +72,7 @@ public final class Main
         .getOptions();
       final ApplicationContext appContext = new FileSystemXmlApplicationContext(springOptions
         .getContextFileName());
-      final BaseExecutable executable = (BaseExecutable) appContext
+      final Executable executable = (Executable) appContext
         .getBean(springOptions.getExecutableName());
       final DataSource dataSource = (DataSource) appContext
         .getBean(springOptions.getDataSourceName());
