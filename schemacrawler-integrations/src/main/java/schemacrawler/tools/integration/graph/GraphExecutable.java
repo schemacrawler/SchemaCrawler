@@ -28,7 +28,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Database;
-import schemacrawler.tools.Executable;
+import schemacrawler.tools.BaseExecutable;
 import schemacrawler.tools.ExecutionException;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
@@ -46,7 +46,7 @@ import sf.util.FileUtility;
  * @author Sualeh Fatehi
  */
 public final class GraphExecutable
-  extends Executable
+  extends BaseExecutable
 {
 
   private static final Logger LOGGER = Logger.getLogger(GraphExecutable.class

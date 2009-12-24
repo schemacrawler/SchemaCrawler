@@ -42,13 +42,13 @@ import sf.util.ObjectToString;
  * @param <O>
  *        Tool-specific options for execution.
  */
-public abstract class Executable
+public abstract class BaseExecutable
   implements ExecutableOptions
 {
 
   private static final long serialVersionUID = -7346631903113057945L;
 
-  private static final Logger LOGGER = Logger.getLogger(Executable.class
+  private static final Logger LOGGER = Logger.getLogger(BaseExecutable.class
     .getName());
 
   protected SchemaCrawlerOptions schemaCrawlerOptions;
@@ -57,7 +57,7 @@ public abstract class Executable
   protected OutputOptions outputOptions;
   protected ConnectionOptions connectionOptions;
 
-  public Executable()
+  public BaseExecutable()
   {
     schemaCrawlerOptions = new SchemaCrawlerOptions();
     outputOptions = new OutputOptions();

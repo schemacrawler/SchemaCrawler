@@ -30,7 +30,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.tools.Executable;
+import schemacrawler.tools.BaseExecutable;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.integration.freemarker.FreeMarkerRenderer;
 import schemacrawler.tools.integration.velocity.VelocityRenderer;
@@ -78,7 +78,7 @@ public class ExecutorIntegrationTest
     executeAndCheckForOutputFile(new VelocityRenderer(), outputOptions);
   }
 
-  private void executeAndCheckForOutputFile(final Executable executable,
+  private void executeAndCheckForOutputFile(final BaseExecutable executable,
                                             final OutputOptions outputOptions)
     throws Exception
   {

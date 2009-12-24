@@ -28,7 +28,7 @@ import java.util.List;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.Executable;
+import schemacrawler.tools.BaseExecutable;
 import schemacrawler.tools.ExecutionException;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.text.base.CrawlHandler;
@@ -46,8 +46,8 @@ import sf.util.Utility;
  * 
  * @author Sualeh Fatehi
  */
-public final class SchemaCrawlerExecutable
-  extends Executable
+public final class SchemaCrawlerTextExecutable
+  extends BaseExecutable
 {
 
   private OperationOptions operationOptions;
