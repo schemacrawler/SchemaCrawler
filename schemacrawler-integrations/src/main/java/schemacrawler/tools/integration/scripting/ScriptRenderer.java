@@ -48,6 +48,8 @@ public final class ScriptRenderer
   extends SchemaRenderer
 {
 
+  private static final long serialVersionUID = -2232328675306451328L;
+
   /**
    * {@inheritDoc}
    * 

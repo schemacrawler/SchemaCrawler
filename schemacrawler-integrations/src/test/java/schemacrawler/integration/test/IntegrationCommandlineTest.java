@@ -35,6 +35,7 @@ import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.Command;
 import schemacrawler.tools.OutputOptions;
 import schemacrawler.tools.SchemaCrawlerCommandLine;
+import schemacrawler.tools.SchemaCrawlerExecutable;
 import schemacrawler.utility.TestDatabase;
 
 public class IntegrationCommandlineTest
@@ -99,7 +100,8 @@ public class IntegrationCommandlineTest
                                             final OutputOptions outputOptions)
     throws Exception
   {
-    commandLine.execute();
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(commandLine);
+    executable.execute();
     // Check post-conditions
     final File outputFile = outputOptions.getOutputFile();
     Assert.assertTrue(outputFile.exists());

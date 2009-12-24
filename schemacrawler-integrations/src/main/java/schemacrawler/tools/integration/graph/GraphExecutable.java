@@ -49,6 +49,7 @@ public final class GraphExecutable
   extends BaseExecutable
 {
 
+  private static final long serialVersionUID = 8731005865929616064L;
   private static final Logger LOGGER = Logger.getLogger(GraphExecutable.class
     .getName());
 
