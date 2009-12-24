@@ -28,10 +28,10 @@ import java.util.logging.Logger;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Database;
-import schemacrawler.tools.BaseExecutable;
-import schemacrawler.tools.ExecutionException;
-import schemacrawler.tools.OutputFormat;
-import schemacrawler.tools.OutputOptions;
+import schemacrawler.tools.executable.BaseExecutable;
+import schemacrawler.tools.executable.ExecutionException;
+import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.SchemaTextFactory;
 import schemacrawler.tools.text.base.CrawlHandler;
 import schemacrawler.tools.text.base.Crawler;

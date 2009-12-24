@@ -21,8 +21,8 @@
 package schemacrawler.tools.text.base;
 
 
-import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.ToolOptions;
+import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.ToolOptions;
 
 /**
  * Tool options.

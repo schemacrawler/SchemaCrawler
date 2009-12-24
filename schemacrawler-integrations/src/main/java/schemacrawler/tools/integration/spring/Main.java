@@ -31,9 +31,9 @@ import javax.sql.DataSource;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-import schemacrawler.tools.ApplicationOptions;
-import schemacrawler.tools.ApplicationOptionsParser;
-import schemacrawler.tools.Executable;
+import schemacrawler.tools.commandline.ApplicationOptionsParser;
+import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.options.ApplicationOptions;
 import sf.util.Utility;
 
 /**

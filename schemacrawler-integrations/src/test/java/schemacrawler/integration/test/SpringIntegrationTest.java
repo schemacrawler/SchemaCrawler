@@ -37,7 +37,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.Executable;
+import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.integration.graph.GraphExecutable;
 import schemacrawler.utility.TestDatabase;
 import sf.util.TestUtility;

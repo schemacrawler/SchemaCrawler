@@ -35,7 +35,7 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import schemacrawler.schema.Database;
-import schemacrawler.tools.ExecutionException;
+import schemacrawler.tools.executable.ExecutionException;
 import schemacrawler.tools.integration.SchemaRenderer;
 import sf.util.FileUtility;
 

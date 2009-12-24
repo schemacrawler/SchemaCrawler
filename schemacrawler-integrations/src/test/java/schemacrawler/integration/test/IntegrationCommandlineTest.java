@@ -32,10 +32,10 @@ import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
-import schemacrawler.tools.Command;
-import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.SchemaCrawlerCommandLine;
-import schemacrawler.tools.SchemaCrawlerExecutable;
+import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.Command;
+import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.utility.TestDatabase;
 
 public class IntegrationCommandlineTest

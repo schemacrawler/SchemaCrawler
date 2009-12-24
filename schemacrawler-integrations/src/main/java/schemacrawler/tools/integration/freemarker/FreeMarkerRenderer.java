@@ -31,7 +31,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Database;
-import schemacrawler.tools.ExecutionException;
+import schemacrawler.tools.executable.ExecutionException;
 import schemacrawler.tools.integration.SchemaRenderer;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.FileTemplateLoader;

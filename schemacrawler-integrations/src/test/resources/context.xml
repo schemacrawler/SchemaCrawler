@@ -55,7 +55,7 @@
     </property>
   </bean>
 
-  <bean id="outputOptions" class="schemacrawler.tools.OutputOptions">
+  <bean id="outputOptions" class="schemacrawler.tools.options.OutputOptions">
     <property name="appendOutput" value="false" />
     <property name="noFooter" value="true" />
     <property name="noHeader" value="true" />
@@ -168,43 +168,43 @@
     </property>
   </bean>
 
-  <bean id="executableForCount" class="schemacrawler.tools.SchemaCrawlerExecutable">
+  <bean id="executableForCount" class="schemacrawler.tools.executable.SchemaCrawlerExecutable">
     <constructor-arg value="count" />
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
     <property name="outputOptions" ref="outputOptions" />
   </bean>
 
-  <bean id="executableForGraph" class="schemacrawler.tools.SchemaCrawlerExecutable">
+  <bean id="executableForGraph" class="schemacrawler.tools.executable.SchemaCrawlerExecutable">
     <constructor-arg value="graph" />
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
     <property name="outputOptions" ref="outputOptions" />
   </bean>
 
-  <bean id="executableForVelocity" class="schemacrawler.tools.SchemaCrawlerExecutable">
+  <bean id="executableForVelocity" class="schemacrawler.tools.executable.SchemaCrawlerExecutable">
     <constructor-arg value="velocity" />
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
     <property name="outputOptions">
-      <bean class="schemacrawler.tools.OutputOptions">
+      <bean class="schemacrawler.tools.options.OutputOptions">
         <property name="outputFormatValue" value="plaintextschema.vm" />
       </bean>
     </property>
   </bean>
 
-  <bean id="executableForFreeMarker" class="schemacrawler.tools.SchemaCrawlerExecutable">
+  <bean id="executableForFreeMarker" class="schemacrawler.tools.executable.SchemaCrawlerExecutable">
     <constructor-arg value="freemarker" />
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
     <property name="outputOptions">
-      <bean id="outputOptionsForFreeMarker" class="schemacrawler.tools.OutputOptions">
+      <bean id="outputOptionsForFreeMarker" class="schemacrawler.tools.options.OutputOptions">
         <property name="outputFormatValue" value="plaintextschema.ftl" />
       </bean>
     </property>
   </bean>
 
-  <bean id="executableForJavaScript" class="schemacrawler.tools.SchemaCrawlerExecutable">
+  <bean id="executableForJavaScript" class="schemacrawler.tools.executable.SchemaCrawlerExecutable">
     <constructor-arg value="javascript" />
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
     <property name="outputOptions">
-      <bean id="outputOptionsForJavaScript" class="schemacrawler.tools.OutputOptions">
+      <bean id="outputOptionsForJavaScript" class="schemacrawler.tools.options.OutputOptions">
         <property name="outputFormatValue" value="plaintextschema.js" />
       </bean>
     </property>
