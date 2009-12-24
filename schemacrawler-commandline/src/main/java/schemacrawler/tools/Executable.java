@@ -29,6 +29,8 @@ import java.util.logging.Logger;
 import javax.sql.DataSource;
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.ConnectionOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import sf.util.ObjectToString;
@@ -41,7 +43,10 @@ import sf.util.ObjectToString;
  *        Tool-specific options for execution.
  */
 public abstract class Executable
+  implements ExecutableOptions
 {
+
+  private static final long serialVersionUID = -7346631903113057945L;
 
   private static final Logger LOGGER = Logger.getLogger(Executable.class
     .getName());
@@ -50,12 +55,47 @@ public abstract class Executable
   protected String command;
   protected Config config;
   protected OutputOptions outputOptions;
+  protected ConnectionOptions connectionOptions;
 
   public Executable()
   {
     schemaCrawlerOptions = new SchemaCrawlerOptions();
     outputOptions = new OutputOptions();
     config = new Config();
+  }
+
+  /**
+   * Executes with the command line, and a given executor. The executor
+   * allows for the command line to be parsed independently of the
+   * execution. The execution can integrate with other software, such as
+   * Velocity.
+   * 
+   * @param commandLine
+   *        Command line arguments
+   * @throws Exception
+   *         On an exception
+   */
+  public final void execute()
+    throws Exception
+  {
+    if (connectionOptions == null)
+    {
+      throw new SchemaCrawlerException("No connection options provided");
+    }
+    Connection connection = null;
+    try
+    {
+      connection = connectionOptions.createConnection();
+      execute(connection);
+    }
+    finally
+    {
+      if (connection != null)
+      {
+        connection.close();
+        LOGGER.log(Level.INFO, "Closed database connection, " + connection);
+      }
+    }
   }
 
   /**
@@ -126,6 +166,11 @@ public abstract class Executable
     return config;
   }
 
+  public final ConnectionOptions getConnectionOptions()
+  {
+    return connectionOptions;
+  }
+
   public final OutputOptions getOutputOptions()
   {
     return outputOptions;
@@ -143,26 +188,57 @@ public abstract class Executable
 
   public final void setConfig(final Config config)
   {
-    if (config != null)
+    this.config = config;
+  }
+
+  public final void setConnectionOptions(final ConnectionOptions connectionOptions)
+  {
+    this.connectionOptions = connectionOptions;
+  }
+
+  public final void setExecutableOptions(final ExecutableOptions executableOptions)
+  {
+    if (executableOptions != null)
     {
-      this.config = config;
+      final String command = executableOptions.getCommand();
+      if (command != null)
+      {
+        this.command = command;
+      }
+      final Config config = executableOptions.getConfig();
+      if (config != null)
+      {
+        this.config = config;
+      }
+
+      final ConnectionOptions connectionOptions = executableOptions
+        .getConnectionOptions();
+      if (connectionOptions != null)
+      {
+        this.connectionOptions = connectionOptions;
+      }
+      final OutputOptions outputOptions = executableOptions.getOutputOptions();
+      if (outputOptions != null)
+      {
+        this.outputOptions = outputOptions;
+      }
+      final SchemaCrawlerOptions schemaCrawlerOptions = executableOptions
+        .getSchemaCrawlerOptions();
+      if (schemaCrawlerOptions != null)
+      {
+        this.schemaCrawlerOptions = schemaCrawlerOptions;
+      }
     }
   }
 
   public final void setOutputOptions(final OutputOptions outputOptions)
   {
-    if (outputOptions != null)
-    {
-      this.outputOptions = outputOptions;
-    }
+    this.outputOptions = outputOptions;
   }
 
   public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
   {
-    if (schemaCrawlerOptions != null)
-    {
-      this.schemaCrawlerOptions = schemaCrawlerOptions;
-    }
+    this.schemaCrawlerOptions = schemaCrawlerOptions;
   }
 
   /**
