@@ -18,7 +18,7 @@
  *
  */
 
-package schemacrawler.tools;
+package schemacrawler.tools.executable;
 
 
 import java.sql.Connection;
@@ -33,6 +33,7 @@ import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.tools.options.OutputOptions;
 import sf.util.ObjectToString;
 
 /**
@@ -43,7 +44,7 @@ import sf.util.ObjectToString;
  *        Tool-specific options for execution.
  */
 public abstract class BaseExecutable
-  implements ExecutableOptions, Executable
+  implements Executable
 {
 
   private static final long serialVersionUID = -7346631903113057945L;
@@ -67,7 +68,7 @@ public abstract class BaseExecutable
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.Executable#execute()
+   * @see schemacrawler.tools.executable.Executable#execute()
    */
   public final void execute()
     throws Exception
@@ -95,7 +96,7 @@ public abstract class BaseExecutable
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.Executable#execute(java.sql.Connection)
+   * @see schemacrawler.tools.executable.Executable#execute(java.sql.Connection)
    */
   public abstract void execute(Connection connection)
     throws ExecutionException;
@@ -103,7 +104,7 @@ public abstract class BaseExecutable
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.Executable#execute(javax.sql.DataSource)
+   * @see schemacrawler.tools.executable.Executable#execute(javax.sql.DataSource)
    */
   public final void execute(final DataSource dataSource)
     throws ExecutionException
@@ -147,7 +148,7 @@ public abstract class BaseExecutable
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.Executable#getCommand()
+   * @see schemacrawler.tools.executable.Executable#getCommand()
    */
   public final String getCommand()
   {
@@ -157,7 +158,7 @@ public abstract class BaseExecutable
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.Executable#getConfig()
+   * @see schemacrawler.tools.executable.Executable#getConfig()
    */
   public final Config getConfig()
   {
@@ -167,7 +168,7 @@ public abstract class BaseExecutable
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.Executable#getConnectionOptions()
+   * @see schemacrawler.tools.executable.Executable#getConnectionOptions()
    */
   public final ConnectionOptions getConnectionOptions()
   {
@@ -177,7 +178,7 @@ public abstract class BaseExecutable
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.Executable#getOutputOptions()
+   * @see schemacrawler.tools.executable.Executable#getOutputOptions()
    */
   public final OutputOptions getOutputOptions()
   {
@@ -187,7 +188,7 @@ public abstract class BaseExecutable
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.Executable#getSchemaCrawlerOptions()
+   * @see schemacrawler.tools.executable.Executable#getSchemaCrawlerOptions()
    */
   public final SchemaCrawlerOptions getSchemaCrawlerOptions()
   {
@@ -197,7 +198,7 @@ public abstract class BaseExecutable
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.Executable#setCommand(java.lang.String)
+   * @see schemacrawler.tools.executable.Executable#setCommand(java.lang.String)
    */
   public final void setCommand(final String command)
   {
@@ -207,7 +208,7 @@ public abstract class BaseExecutable
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.Executable#setConfig(schemacrawler.schemacrawler.Config)
+   * @see schemacrawler.tools.executable.Executable#setConfig(schemacrawler.schemacrawler.Config)
    */
   public final void setConfig(final Config config)
   {
@@ -217,7 +218,7 @@ public abstract class BaseExecutable
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.Executable#setConnectionOptions(schemacrawler.schemacrawler.ConnectionOptions)
+   * @see schemacrawler.tools.executable.Executable#setConnectionOptions(schemacrawler.schemacrawler.ConnectionOptions)
    */
   public final void setConnectionOptions(final ConnectionOptions connectionOptions)
   {
@@ -227,47 +228,7 @@ public abstract class BaseExecutable
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.Executable#setExecutableOptions(schemacrawler.tools.ExecutableOptions)
-   */
-  public final void setExecutableOptions(final ExecutableOptions executableOptions)
-  {
-    if (executableOptions != null)
-    {
-      final String command = executableOptions.getCommand();
-      if (command != null)
-      {
-        this.command = command;
-      }
-      final Config config = executableOptions.getConfig();
-      if (config != null)
-      {
-        this.config = config;
-      }
-
-      final ConnectionOptions connectionOptions = executableOptions
-        .getConnectionOptions();
-      if (connectionOptions != null)
-      {
-        this.connectionOptions = connectionOptions;
-      }
-      final OutputOptions outputOptions = executableOptions.getOutputOptions();
-      if (outputOptions != null)
-      {
-        this.outputOptions = outputOptions;
-      }
-      final SchemaCrawlerOptions schemaCrawlerOptions = executableOptions
-        .getSchemaCrawlerOptions();
-      if (schemaCrawlerOptions != null)
-      {
-        this.schemaCrawlerOptions = schemaCrawlerOptions;
-      }
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.Executable#setOutputOptions(schemacrawler.tools.OutputOptions)
+   * @see schemacrawler.tools.executable.Executable#setOutputOptions(schemacrawler.tools.options.OutputOptions)
    */
   public final void setOutputOptions(final OutputOptions outputOptions)
   {
@@ -277,7 +238,7 @@ public abstract class BaseExecutable
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.Executable#setSchemaCrawlerOptions(schemacrawler.schemacrawler.SchemaCrawlerOptions)
+   * @see schemacrawler.tools.executable.Executable#setSchemaCrawlerOptions(schemacrawler.schemacrawler.SchemaCrawlerOptions)
    */
   public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
   {

@@ -18,52 +18,34 @@
  *
  */
 
-package schemacrawler.tools;
+package schemacrawler.tools.executable;
 
 
-import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.CommandLineParser;
-import sf.util.CommandLineParser.Option;
 
 /**
- * Parses the command line.
- * 
- * @param <O>
- *        Options to be parsed from the command line.
- * @author Sualeh Fatehi
+ * Exception for the SchemaCrawler.
  */
-public abstract class BaseOptionsParser<O extends Options>
+public class ExecutionException
+  extends SchemaCrawlerException
 {
 
-  private final String[] args;
+  private static final long serialVersionUID = 3257848770627713076L;
 
-  protected BaseOptionsParser(final String[] args)
+  /**
+   * {@inheritDoc}
+   */
+  public ExecutionException(final String message)
   {
-    this.args = args;
+    super(message);
   }
 
   /**
-   * Gets the help text.
+   * {@inheritDoc}
    */
-  protected abstract String getHelpResource();
-
-  /**
-   * Parses the command line.
-   * 
-   * @return Command line options
-   */
-  protected abstract O getOptions()
-    throws SchemaCrawlerException;
-
-  protected void parse(final CommandLineParser.Option<?>[] options)
+  public ExecutionException(final String message, final Throwable cause)
   {
-    final CommandLineParser parser = new CommandLineParser();
-    for (final Option<?> option: options)
-    {
-      parser.addOption(option);
-    }
-    parser.parse(args);
+    super(message, cause);
   }
 
 }

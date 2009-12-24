@@ -17,25 +17,28 @@
  * Boston, MA 02111-1307, USA.
  *
  */
+package schemacrawler.tools.options;
 
-package schemacrawler.tools;
 
+import schemacrawler.schemacrawler.Options;
+import schemacrawler.schemacrawler.SchemaInfoLevel;
 
 /**
- * Enumeration for text format type.
+ * Tag interface for all tool-specific options.
+ * 
+ * @author Sualeh Fatehi
  */
-public enum OutputFormat
+public interface ToolOptions
+  extends Options
 {
 
-  /** Text formatting. */
-  text,
-  /** HTML formatting. */
-  html,
-  /** CSV formatting. */
-  csv,
-  /** DOT formatting. */
-  dot,
-  /** Other - tool defined. */
-  other;
+  OutputOptions getOutputOptions();
+
+  /**
+   * Gets the SchemaInfoLevel for the tool.
+   */
+  SchemaInfoLevel getSchemaInfoLevel();
+
+  void setOutputOptions(OutputOptions outputOptions);
 
 }

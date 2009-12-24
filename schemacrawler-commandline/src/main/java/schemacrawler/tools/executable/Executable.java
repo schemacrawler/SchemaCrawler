@@ -1,4 +1,4 @@
-package schemacrawler.tools;
+package schemacrawler.tools.executable;
 
 
 import java.sql.Connection;
@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.options.OutputOptions;
 
 public interface Executable
 {
@@ -63,8 +64,6 @@ public interface Executable
   void setConfig(final Config config);
 
   void setConnectionOptions(final ConnectionOptions connectionOptions);
-
-  void setExecutableOptions(final ExecutableOptions executableOptions);
 
   void setOutputOptions(final OutputOptions outputOptions);
 

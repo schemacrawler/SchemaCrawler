@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools;
+package schemacrawler.tools.commandline;
 
 
 import java.util.Arrays;
@@ -29,6 +29,10 @@ import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.tools.options.ApplicationOptions;
+import schemacrawler.tools.options.Command;
+import schemacrawler.tools.options.HelpOptions;
+import schemacrawler.tools.options.OutputOptions;
 import sf.util.Utility;
 
 /**
@@ -37,7 +41,6 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 public class SchemaCrawlerCommandLine
-  implements ExecutableOptions
 {
 
   private static final long serialVersionUID = -3748989545708155963L;

@@ -18,34 +18,24 @@
  *
  */
 
-package schemacrawler.tools;
+package schemacrawler.tools.options;
 
-
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
- * Exception for the SchemaCrawler.
+ * Enumeration for text format type.
  */
-public class ExecutionException
-  extends SchemaCrawlerException
+public enum OutputFormat
 {
 
-  private static final long serialVersionUID = 3257848770627713076L;
-
-  /**
-   * {@inheritDoc}
-   */
-  public ExecutionException(final String message)
-  {
-    super(message);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public ExecutionException(final String message, final Throwable cause)
-  {
-    super(message, cause);
-  }
+  /** Text formatting. */
+  text,
+  /** HTML formatting. */
+  html,
+  /** CSV formatting. */
+  csv,
+  /** DOT formatting. */
+  dot,
+  /** Other - tool defined. */
+  other;
 
 }
