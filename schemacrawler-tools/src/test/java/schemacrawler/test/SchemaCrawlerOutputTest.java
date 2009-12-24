@@ -40,7 +40,7 @@ import org.xml.sax.SAXException;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.OutputFormat;
 import schemacrawler.tools.OutputOptions;
-import schemacrawler.tools.text.SchemaCrawlerExecutable;
+import schemacrawler.tools.text.SchemaCrawlerTextExecutable;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.utility.TestDatabase;
@@ -97,7 +97,7 @@ public class SchemaCrawlerOutputTest
     final OutputOptions outputOptions = new OutputOptions(OutputFormat.text,
                                                           outputFilename);
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable();
+    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable();
     executable.setCommand(Operation.count.name());
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());
@@ -123,7 +123,7 @@ public class SchemaCrawlerOutputTest
     outputOptions.setNoFooter(false);
     outputOptions.setNoInfo(false);
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable();
+    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable();
     executable.setCommand(Operation.count.name());
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());
@@ -144,7 +144,7 @@ public class SchemaCrawlerOutputTest
     final Config config = new Config();
     config.put("CustomerCount", "SELECT COUNT(*) FROM CUSTOMER");
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable();
+    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable();
     executable.setCommand("CustomerCount");
     executable.setConfig(config);
     executable.setOutputOptions(outputOptions);
@@ -171,7 +171,7 @@ public class SchemaCrawlerOutputTest
     outputOptions.setNoFooter(false);
     outputOptions.setNoInfo(false);
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable();
+    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable();
     executable.setCommand(Operation.dump.name());
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());
@@ -190,7 +190,7 @@ public class SchemaCrawlerOutputTest
     final OutputOptions outputOptions = new OutputOptions(OutputFormat.text,
                                                           outputFilename);
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable();
+    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable();
     executable.setCommand(SchemaTextDetailType.brief_schema.name());
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());
@@ -216,7 +216,7 @@ public class SchemaCrawlerOutputTest
     outputOptions.setNoFooter(false);
     outputOptions.setNoInfo(false);
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable();
+    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable();
     executable.setCommand(SchemaTextDetailType.maximum_schema.name());
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());

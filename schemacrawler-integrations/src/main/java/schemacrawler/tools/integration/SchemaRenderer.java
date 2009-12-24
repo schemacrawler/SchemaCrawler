@@ -26,7 +26,7 @@ import java.sql.Connection;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.Executable;
+import schemacrawler.tools.BaseExecutable;
 import schemacrawler.tools.ExecutionException;
 
 /**
@@ -35,7 +35,7 @@ import schemacrawler.tools.ExecutionException;
  * @author sfatehi
  */
 public abstract class SchemaRenderer
-  extends Executable
+  extends BaseExecutable
 {
 
   @Override
