@@ -38,7 +38,10 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 public class SchemaCrawlerCommandLine
+  implements ExecutableOptions
 {
+
+  private static final long serialVersionUID = -3748989545708155963L;
 
   private static final Logger LOGGER = Logger
     .getLogger(SchemaCrawlerCommandLine.class.getName());
@@ -181,10 +184,7 @@ public class SchemaCrawlerCommandLine
     final Class<? extends Executable> executableClass = (Class<? extends Executable>) Class
       .forName(command.getCommandExecutableClassName());
     final Executable executable = executableClass.newInstance();
-    executable.setCommand(command.toString());
-    executable.setConfig(config);
-    executable.setOutputOptions(outputOptions);
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setExecutableOptions(this);
     return executable;
   }
 
@@ -217,6 +217,38 @@ public class SchemaCrawlerCommandLine
         LOGGER.log(Level.INFO, "Closed database connection, " + connection);
       }
     }
+  }
+
+  public final String getCommand()
+  {
+    if (command != null)
+    {
+      return command.toString();
+    }
+    else
+    {
+      return null;
+    }
+  }
+
+  public final Config getConfig()
+  {
+    return config;
+  }
+
+  public final ConnectionOptions getConnectionOptions()
+  {
+    return connectionOptions;
+  }
+
+  public final OutputOptions getOutputOptions()
+  {
+    return outputOptions;
+  }
+
+  public final SchemaCrawlerOptions getSchemaCrawlerOptions()
+  {
+    return schemaCrawlerOptions;
   }
 
 }
