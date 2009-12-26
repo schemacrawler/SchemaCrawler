@@ -47,6 +47,14 @@ public abstract class BaseExecutable
   implements Executable
 {
 
+  public void setSchemaInfoLevel(final SchemaInfoLevel infoLevel)
+  {
+    if (infoLevel != null && schemaCrawlerOptions != null)
+    {
+      schemaCrawlerOptions.setSchemaInfoLevel(infoLevel);
+    }
+  }
+
   private static final long serialVersionUID = -7346631903113057945L;
 
   private static final Logger LOGGER = Logger.getLogger(BaseExecutable.class

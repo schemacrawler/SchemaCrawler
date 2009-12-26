@@ -39,12 +39,10 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
-import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
+import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.Command;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.utility.TestDatabase;
@@ -124,12 +122,11 @@ public class SchemaCrawlerCommandlineTest
         final DatabaseConnectionOptions connectionOptions = testUtility
           .getDatabaseConnectionOptions();
         final SchemaInfoLevel infoLevel = SchemaInfoLevel.maximum();
-        final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(connectionOptions,
-                                                                                  infoLevel,
-                                                                                  new Command(command),
-                                                                                  new Config(),
-                                                                                  outputOptions);
-        final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(commandLine);
+
+        final Executable executable = new SchemaCrawlerExecutable(command);
+        executable.setConnectionOptions(connectionOptions);
+        executable.setSchemaInfoLevel(infoLevel);
+        executable.setOutputOptions(outputOptions);
         executable.execute();
 
         if (outputFormat == OutputFormat.html)

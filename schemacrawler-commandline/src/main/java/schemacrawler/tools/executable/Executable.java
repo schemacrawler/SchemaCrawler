@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.options.OutputOptions;
 
 public interface Executable
@@ -46,7 +47,7 @@ public interface Executable
    * @throws Exception
    *         On an exception
    */
-  void execute(final DataSource dataSource)
+  void execute(DataSource dataSource)
     throws ExecutionException;
 
   String getCommand();
@@ -59,14 +60,16 @@ public interface Executable
 
   SchemaCrawlerOptions getSchemaCrawlerOptions();
 
-  void setCommand(final String command);
+  void setCommand(String command);
 
-  void setConfig(final Config config);
+  void setConfig(Config config);
 
-  void setConnectionOptions(final ConnectionOptions connectionOptions);
+  void setConnectionOptions(ConnectionOptions connectionOptions);
 
-  void setOutputOptions(final OutputOptions outputOptions);
+  void setOutputOptions(OutputOptions outputOptions);
 
-  void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions);
+  void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
+
+  void setSchemaInfoLevel(SchemaInfoLevel infoLevel);
 
 }
