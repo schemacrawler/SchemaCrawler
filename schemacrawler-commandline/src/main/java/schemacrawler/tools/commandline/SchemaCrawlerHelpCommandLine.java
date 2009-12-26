@@ -28,6 +28,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.ApplicationOptions;
 import schemacrawler.tools.options.Command;
 import schemacrawler.tools.options.HelpOptions;
+import sf.util.Utility;
 
 /**
  * Utility for parsing the SchemaCrawler command line.
@@ -43,6 +44,7 @@ public final class SchemaCrawlerHelpCommandLine
     .getLogger(SchemaCrawlerHelpCommandLine.class.getName());
 
   private final boolean isShowHelp;
+  private final boolean hideConfig;
   private final Command command;
   private final HelpOptions helpOptions;
 
@@ -57,7 +59,7 @@ public final class SchemaCrawlerHelpCommandLine
   public SchemaCrawlerHelpCommandLine(final String[] args)
     throws SchemaCrawlerException
   {
-    this(args, new HelpOptions(""));
+    this(args, new HelpOptions(""), null);
   }
 
   /**
@@ -72,7 +74,8 @@ public final class SchemaCrawlerHelpCommandLine
    *         On an exception
    */
   public SchemaCrawlerHelpCommandLine(final String[] args,
-                                      final HelpOptions helpOptions)
+                                      final HelpOptions helpOptions,
+                                      final String configResource)
     throws SchemaCrawlerException
   {
     if (args == null)
@@ -85,6 +88,8 @@ public final class SchemaCrawlerHelpCommandLine
       throw new SchemaCrawlerException("No help options provided");
     }
     this.helpOptions = helpOptions;
+
+    hideConfig = !Utility.isBlank(configResource);
 
     if (args.length == 0)
     {
@@ -109,7 +114,7 @@ public final class SchemaCrawlerHelpCommandLine
   {
     if (isShowHelp)
     {
-      helpOptions.showHelp();
+      showHelp();
       System.exit(0);
     }
   }
@@ -129,6 +134,33 @@ public final class SchemaCrawlerHelpCommandLine
     {
       return null;
     }
+  }
+
+  private void showHelp()
+  {
+    System.out.println(helpOptions.getTitle());
+    showHelp("/help/SchemaCrawler.txt");
+    System.out.println();
+
+    showHelp(helpOptions.getResourceConnections());
+    showHelp("/help/SchemaCrawlerOptions.txt");
+    if (!hideConfig)
+    {
+      showHelp("/help/Config.txt");
+    }
+    showHelp("/help/ApplicationOptions.txt");
+  }
+
+  private void showHelp(final String helpResource)
+  {
+    if (sf.util.Utility.isBlank(helpResource))
+    {
+      return;
+    }
+    final String helpText = Utility
+      .readFully(SchemaCrawlerHelpCommandLine.class
+        .getResourceAsStream(helpResource));
+    System.out.println(helpText);
   }
 
 }

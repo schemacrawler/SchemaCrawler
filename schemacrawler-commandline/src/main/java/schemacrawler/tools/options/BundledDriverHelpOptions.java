@@ -32,7 +32,6 @@ public final class BundledDriverHelpOptions
   {
     super(title);
     setResourceConnections(resourceConnections);
-    setCommandHelpType(CommandHelpType.without_query);
     setHideConfig(true);
   }
 

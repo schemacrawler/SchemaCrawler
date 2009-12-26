@@ -28,11 +28,6 @@ public class HelpOptions
   implements Options
 {
 
-  public enum CommandHelpType
-  {
-    complete, without_query, without_operations;
-  }
-
   private static final long serialVersionUID = -2497570007150087268L;
 
   public static String about()
@@ -44,11 +39,8 @@ public class HelpOptions
   private final String title;
   private final String resourceApplicationOptions = "/help/ApplicationOptions.txt";
   private String resourceConnections = "/help/Connections.txt";
-  private final String resourceCommands = "/help/Commands.%s.txt";
   private final String resourceConfig = "/help/Config.txt";
   private final String resourceSchemaCrawlerOptions = "/help/SchemaCrawlerOptions.txt";
-  private CommandHelpType commandHelpType = CommandHelpType.complete;
-  private String resourceOutputOptions = "/help/OutputOptions.txt";
 
   private boolean hideConfig;
 
@@ -57,19 +49,9 @@ public class HelpOptions
     this.title = title;
   }
 
-  public CommandHelpType getCommandHelpType()
-  {
-    return commandHelpType;
-  }
-
   public String getResourceConnections()
   {
     return resourceConnections;
-  }
-
-  public String getResourceOutputOptions()
-  {
-    return resourceOutputOptions;
   }
 
   public String getTitle()
@@ -82,11 +64,6 @@ public class HelpOptions
     return hideConfig;
   }
 
-  public void setCommandHelpType(final CommandHelpType commandHelpType)
-  {
-    this.commandHelpType = commandHelpType;
-  }
-
   public void setHideConfig(final boolean hideConfig)
   {
     this.hideConfig = hideConfig;
@@ -95,39 +72,6 @@ public class HelpOptions
   public void setResourceConnections(final String resourceConnections)
   {
     this.resourceConnections = resourceConnections;
-  }
-
-  public void setResourceOutputOptions(final String resourceOutputOptions)
-  {
-    this.resourceOutputOptions = resourceOutputOptions;
-  }
-
-  public void showHelp()
-  {
-    System.out.println(title);
-    System.out.println(about());
-    System.out.println();
-
-    showHelp(resourceConnections);
-    showHelp(String.format(resourceCommands, commandHelpType));
-    showHelp(resourceSchemaCrawlerOptions);
-    if (!hideConfig)
-    {
-      showHelp(resourceConfig);
-    }
-    showHelp(resourceOutputOptions);
-    showHelp(resourceApplicationOptions);
-  }
-
-  private void showHelp(final String helpResource)
-  {
-    if (sf.util.Utility.isBlank(helpResource))
-    {
-      return;
-    }
-    final String helpText = Utility.readFully(HelpOptions.class
-      .getResourceAsStream(helpResource));
-    System.out.println(helpText);
   }
 
 }
