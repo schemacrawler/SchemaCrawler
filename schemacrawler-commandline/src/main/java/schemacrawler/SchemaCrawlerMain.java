@@ -17,36 +17,23 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-
 package schemacrawler;
 
 
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.options.HelpOptions;
 
-/**
- * Main class that takes arguments for a database for crawling a schema.
- */
-public final class Main
+public class SchemaCrawlerMain
 {
 
-  /**
-   * Get connection parameters, and creates a connection, and crawls the
-   * schema.
-   * 
-   * @param args
-   *        Arguments passed into the program from the command line.
-   * @throws Exception
-   *         On an exception
-   */
-  public static void main(final String[] args)
-    throws Exception
+  public static void main(final String[] args,
+                          final HelpOptions helpOptions,
+                          final String configResource)
+    throws SchemaCrawlerException, Exception
   {
-    SchemaCrawlerMain.main(args, new HelpOptions(""), null);
-  }
-
-  private Main()
-  {
-    // Prevent instantiation
+    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args);
+    commandLine.execute();
   }
 
 }

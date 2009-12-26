@@ -21,8 +21,7 @@
 package schemacrawler.tools.postgresql;
 
 
-import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
-import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.SchemaCrawlerMain;
 import schemacrawler.tools.options.BundledDriverHelpOptions;
 
 /**
@@ -42,12 +41,11 @@ public final class Main
   {
     try
     {
-      final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
-                                                                                new BundledDriverHelpOptions("SchemaCrawler for PostgreSQL",
-                                                                                                             "/help/Connections.postgresql.txt"),
-                                                                                "/schemacrawler-postgresql.config.properties");
-      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(commandLine);
-      executable.execute();
+      SchemaCrawlerMain
+        .main(args,
+              new BundledDriverHelpOptions("SchemaCrawler for PostgreSQL",
+                                           "/help/Connections.postgresql.txt"),
+              "/schemacrawler-postgresql.config.properties");
     }
     catch (final Exception e)
     {

@@ -10,7 +10,6 @@ import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
-import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.options.OutputOptions;
 
 public class SchemaCrawlerExecutable
@@ -18,37 +17,6 @@ public class SchemaCrawlerExecutable
 {
 
   private final Executable executable;
-
-  public SchemaCrawlerExecutable(final SchemaCrawlerCommandLine commandLine)
-    throws SchemaCrawlerException
-  {
-    this(commandLine.getCommand());
-    if (commandLine != null)
-    {
-      final Config config = commandLine.getConfig();
-      if (config != null)
-      {
-        setConfig(config);
-      }
-      final ConnectionOptions connectionOptions = commandLine
-        .getConnectionOptions();
-      if (connectionOptions != null)
-      {
-        setConnectionOptions(connectionOptions);
-      }
-      final OutputOptions outputOptions = commandLine.getOutputOptions();
-      if (outputOptions != null)
-      {
-        setOutputOptions(outputOptions);
-      }
-      final SchemaCrawlerOptions schemaCrawlerOptions = commandLine
-        .getSchemaCrawlerOptions();
-      if (schemaCrawlerOptions != null)
-      {
-        setSchemaCrawlerOptions(schemaCrawlerOptions);
-      }
-    }
-  }
 
   public SchemaCrawlerExecutable(final String command)
     throws SchemaCrawlerException
