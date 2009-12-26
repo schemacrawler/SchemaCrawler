@@ -47,20 +47,13 @@ public abstract class BaseExecutable
   implements Executable
 {
 
-  public void setSchemaInfoLevel(final SchemaInfoLevel infoLevel)
-  {
-    if (infoLevel != null && schemaCrawlerOptions != null)
-    {
-      schemaCrawlerOptions.setSchemaInfoLevel(infoLevel);
-    }
-  }
-
   private static final long serialVersionUID = -7346631903113057945L;
 
   private static final Logger LOGGER = Logger.getLogger(BaseExecutable.class
     .getName());
 
   protected SchemaCrawlerOptions schemaCrawlerOptions;
+
   protected String command;
   protected Config config;
   protected OutputOptions outputOptions;
@@ -251,6 +244,14 @@ public abstract class BaseExecutable
   public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
   {
     this.schemaCrawlerOptions = schemaCrawlerOptions;
+  }
+
+  public void setSchemaInfoLevel(final SchemaInfoLevel infoLevel)
+  {
+    if (infoLevel != null && schemaCrawlerOptions != null)
+    {
+      schemaCrawlerOptions.setSchemaInfoLevel(infoLevel);
+    }
   }
 
   /**
