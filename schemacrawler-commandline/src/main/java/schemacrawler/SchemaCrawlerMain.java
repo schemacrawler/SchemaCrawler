@@ -22,6 +22,7 @@ package schemacrawler;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
+import schemacrawler.tools.commandline.SchemaCrawlerHelpCommandLine;
 import schemacrawler.tools.options.HelpOptions;
 
 public class SchemaCrawlerMain
@@ -32,6 +33,9 @@ public class SchemaCrawlerMain
                           final String configResource)
     throws SchemaCrawlerException, Exception
   {
+    final SchemaCrawlerHelpCommandLine helpCommandLine = new SchemaCrawlerHelpCommandLine(args);
+    helpCommandLine.execute();
+
     final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args);
     commandLine.execute();
   }
