@@ -9,6 +9,7 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.options.OutputOptions;
 
@@ -141,6 +142,11 @@ public class SchemaCrawlerExecutable
   public void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
   {
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+  }
+
+  public void setSchemaInfoLevel(final SchemaInfoLevel infoLevel)
+  {
+    executable.setSchemaInfoLevel(infoLevel);
   }
 
 }
