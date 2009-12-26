@@ -29,6 +29,8 @@ import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.ApplicationOptions;
 import schemacrawler.tools.options.Command;
 import schemacrawler.tools.options.HelpOptions;
@@ -40,7 +42,7 @@ import sf.util.Utility;
  * 
  * @author Sualeh Fatehi
  */
-public class SchemaCrawlerCommandLine
+public final class SchemaCrawlerCommandLine
 {
 
   private static final long serialVersionUID = -3748989545708155963L;
@@ -83,7 +85,7 @@ public class SchemaCrawlerCommandLine
   public SchemaCrawlerCommandLine(final String[] args)
     throws SchemaCrawlerException
   {
-    this(args, new HelpOptions(""), null);
+    this(args, null);
   }
 
   /**
@@ -98,26 +100,18 @@ public class SchemaCrawlerCommandLine
    *         On an exception
    */
   public SchemaCrawlerCommandLine(final String[] args,
-                                  final HelpOptions helpOptions,
                                   final String configResource)
     throws SchemaCrawlerException
   {
-    if (args == null || args.length == 0)
+    if (args == null)
     {
-      helpOptions.showHelp();
-      System.exit(0);
+      throw new IllegalArgumentException("No command line arguments provided");
     }
 
     final ApplicationOptions applicationOptions;
     if (args.length > 0)
     {
       applicationOptions = new ApplicationOptionsParser(args).getOptions();
-      if (applicationOptions.isShowHelp())
-      {
-        helpOptions.showHelp();
-        System.exit(0);
-      }
-
       command = new CommandParser(args).getOptions();
       outputOptions = new OutputOptionsParser(args).getOptions();
     }
@@ -163,6 +157,29 @@ public class SchemaCrawlerCommandLine
 
     schemaCrawlerOptions = new SchemaCrawlerOptionsParser(args, config)
       .getOptions();
+  }
+
+  public void execute()
+    throws Exception
+  {
+    final Executable executable = new SchemaCrawlerExecutable(getCommand());
+    if (config != null)
+    {
+      executable.setConfig(config);
+    }
+    if (connectionOptions != null)
+    {
+      executable.setConnectionOptions(connectionOptions);
+    }
+    if (outputOptions != null)
+    {
+      executable.setOutputOptions(outputOptions);
+    }
+    if (schemaCrawlerOptions != null)
+    {
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    }
+    executable.execute();
   }
 
   public final String getCommand()

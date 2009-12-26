@@ -21,8 +21,7 @@
 package schemacrawler.tools.sqlserver;
 
 
-import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
-import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.SchemaCrawlerMain;
 import schemacrawler.tools.options.BundledDriverHelpOptions;
 
 /**
@@ -42,12 +41,11 @@ public final class Main
   {
     try
     {
-      final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
-                                                                                new BundledDriverHelpOptions("SchemaCrawler for Microsoft SQL Server",
-                                                                                                             "/help/Connections.sqlserver.txt"),
-                                                                                "/schemacrawler-sqlserver.config.properties");
-      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(commandLine);
-      executable.execute();
+      SchemaCrawlerMain
+        .main(args,
+              new BundledDriverHelpOptions("SchemaCrawler for Microsoft SQL Server",
+                                           "/help/Connections.sqlserver.txt"),
+              "/schemacrawler-sqlserver.config.properties");
     }
     catch (final Exception e)
     {
