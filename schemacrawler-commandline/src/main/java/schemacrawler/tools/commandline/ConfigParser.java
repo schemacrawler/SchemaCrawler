@@ -47,12 +47,6 @@ class ConfigParser
   }
 
   @Override
-  protected String getHelpResource()
-  {
-    return "/help/ConfigurationOptions.readme.txt";
-  }
-
-  @Override
   protected Config getOptions()
   {
     parse(new Option[] {

@@ -1,0 +1,7 @@
+--- Command ---
+
+-command=<command>
+  Where <command> is a SchemaCrawler command. For a list of available commands,
+  re-run SchemaCrawler with:
+  -help -command=<command>
+  

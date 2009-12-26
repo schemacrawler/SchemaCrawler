@@ -20,14 +20,13 @@
 package schemacrawler.tools.commandline;
 
 
-import java.util.Arrays;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.Version;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.options.ApplicationOptions;
-import schemacrawler.tools.options.Command;
+import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.options.HelpOptions;
+import sf.util.ObjectToString;
 import sf.util.Utility;
 
 /**
@@ -36,6 +35,7 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawlerHelpCommandLine
+  implements CommandLine
 {
 
   private static final long serialVersionUID = -3748989545708155963L;
@@ -43,9 +43,8 @@ public final class SchemaCrawlerHelpCommandLine
   private static final Logger LOGGER = Logger
     .getLogger(SchemaCrawlerHelpCommandLine.class.getName());
 
-  private final boolean isShowHelp;
   private final boolean hideConfig;
-  private final Command command;
+  private final String command;
   private final HelpOptions helpOptions;
 
   /**
@@ -94,52 +93,23 @@ public final class SchemaCrawlerHelpCommandLine
     if (args.length == 0)
     {
       command = null;
-      isShowHelp = true;
     }
     else
     {
-      final ApplicationOptions applicationOptions = new ApplicationOptionsParser(args)
-        .getOptions();
-      isShowHelp = applicationOptions.isShowHelp();
-      command = new CommandParser(args).getOptions();
-
-      applicationOptions.applyApplicationLogLevel();
-      LOGGER.log(Level.INFO, HelpOptions.about());
-      LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
+      command = new CommandParser(args).getOptions().toString();
     }
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.tools.commandline.CommandLine#execute()
+   */
   public void execute()
     throws SchemaCrawlerException
   {
-    if (isShowHelp)
-    {
-      showHelp();
-      System.exit(0);
-    }
-  }
-
-  public final String getCommand()
-  {
-    if (command != null)
-    {
-      return command.toString();
-    }
-    else
-    {
-      return null;
-    }
-  }
-
-  public final boolean isShowHelp()
-  {
-    return isShowHelp;
-  }
-
-  private void showHelp()
-  {
     System.out.println(helpOptions.getTitle());
-    showHelp("/help/SchemaCrawler.txt");
+    System.out.println(Version.about());
     System.out.println();
 
     showHelp(helpOptions.getResourceConnections());
@@ -149,6 +119,24 @@ public final class SchemaCrawlerHelpCommandLine
       showHelp("/help/Config.txt");
     }
     showHelp("/help/ApplicationOptions.txt");
+    if (command == null)
+    {
+      showHelp("/help/Command.txt");
+      System.out.print("  Available commands are: ");
+      System.out.println(ObjectToString.toString(CommandRegistry
+        .lookupAvailableCommands()));
+    }
+    else
+    {
+      // TODO: Get the command details from the executable
+    }
+
+    System.exit(0);
+  }
+
+  public final String getCommand()
+  {
+    return command;
   }
 
   private void showHelp(final String helpResource)

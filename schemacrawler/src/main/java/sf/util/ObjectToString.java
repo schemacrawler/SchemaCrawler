@@ -141,8 +141,21 @@ public final class ObjectToString
     }
     else if (Collection.class.isAssignableFrom(object.getClass()))
     {
-      for (final Iterator<?> iterator = ((Collection<?>) (Collection<?>) object)
-        .iterator(); iterator.hasNext();)
+      for (final Iterator<?> iterator = ((Collection<?>) object).iterator(); iterator
+        .hasNext();)
+      {
+        final Object item = iterator.next();
+        buffer.append(item);
+        if (iterator.hasNext())
+        {
+          buffer.append(", ");
+        }
+      }
+    }
+    else if (object.getClass().isArray())
+    {
+      for (final Iterator<?> iterator =Arrays.asList((Object[]) object).iterator(); iterator
+        .hasNext();)
       {
         final Object item = iterator.next();
         buffer.append(item);

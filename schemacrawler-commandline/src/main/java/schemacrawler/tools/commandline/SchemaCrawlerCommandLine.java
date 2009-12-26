@@ -20,8 +20,6 @@
 package schemacrawler.tools.commandline;
 
 
-import java.util.Arrays;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Config;
@@ -31,9 +29,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.ApplicationOptions;
-import schemacrawler.tools.options.Command;
-import schemacrawler.tools.options.HelpOptions;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.Utility;
 
@@ -43,6 +38,7 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawlerCommandLine
+  implements CommandLine
 {
 
   private static final long serialVersionUID = -3748989545708155963L;
@@ -50,7 +46,7 @@ public final class SchemaCrawlerCommandLine
   private static final Logger LOGGER = Logger
     .getLogger(SchemaCrawlerCommandLine.class.getName());
 
-  private final Command command;
+  private final String command;
   private final Config config;
   private final SchemaCrawlerOptions schemaCrawlerOptions;
   private final OutputOptions outputOptions;
@@ -58,7 +54,7 @@ public final class SchemaCrawlerCommandLine
 
   public SchemaCrawlerCommandLine(final ConnectionOptions connectionOptions,
                                   final SchemaInfoLevel infoLevel,
-                                  final Command command,
+                                  final String command,
                                   final Config config,
                                   final OutputOptions outputOptions)
   {
@@ -108,23 +104,16 @@ public final class SchemaCrawlerCommandLine
       throw new IllegalArgumentException("No command line arguments provided");
     }
 
-    final ApplicationOptions applicationOptions;
     if (args.length > 0)
     {
-      applicationOptions = new ApplicationOptionsParser(args).getOptions();
-      command = new CommandParser(args).getOptions();
+      command = new CommandParser(args).getOptions().toString();
       outputOptions = new OutputOptionsParser(args).getOptions();
     }
     else
     {
-      applicationOptions = new ApplicationOptions();
       command = null;
       outputOptions = new OutputOptions();
     }
-
-    applicationOptions.applyApplicationLogLevel();
-    LOGGER.log(Level.INFO, HelpOptions.about());
-    LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
 
     if (!Utility.isBlank(configResource))
     {
@@ -184,14 +173,7 @@ public final class SchemaCrawlerCommandLine
 
   public final String getCommand()
   {
-    if (command != null)
-    {
-      return command.toString();
-    }
-    else
-    {
-      return null;
-    }
+    return command;
   }
 
   public final Config getConfig()

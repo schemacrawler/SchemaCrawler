@@ -74,10 +74,4 @@ public final class ApplicationOptionsParser
     return options;
   }
 
-  @Override
-  protected String getHelpResource()
-  {
-    return "/help/ApplicationOptions.readme.txt";
-  }
-
 }

@@ -20,23 +20,54 @@
 package schemacrawler;
 
 
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.commandline.ApplicationOptionsParser;
+import schemacrawler.tools.commandline.CommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerHelpCommandLine;
+import schemacrawler.tools.options.ApplicationOptions;
 import schemacrawler.tools.options.HelpOptions;
 
 public class SchemaCrawlerMain
 {
+
+  private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerMain.class
+    .getName());
 
   public static void main(final String[] args,
                           final HelpOptions helpOptions,
                           final String configResource)
     throws SchemaCrawlerException, Exception
   {
-    final SchemaCrawlerHelpCommandLine helpCommandLine = new SchemaCrawlerHelpCommandLine(args);
-    helpCommandLine.execute();
+    final CommandLine commandLine;
+    final boolean showHelp;
+    final ApplicationOptions applicationOptions;
+    if (args.length == 0)
+    {
+      applicationOptions = new ApplicationOptions();
+      showHelp = true;
+    }
+    else
+    {
+      applicationOptions = new ApplicationOptionsParser(args).getOptions();
+      showHelp = applicationOptions.isShowHelp();
+    }
+    applicationOptions.applyApplicationLogLevel();
+    LOGGER.log(Level.INFO, Version.about());
+    LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
 
-    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args);
+    if (showHelp)
+    {
+      commandLine = new SchemaCrawlerHelpCommandLine(args);
+    }
+    else
+    {
+      commandLine = new SchemaCrawlerCommandLine(args);
+    }
     commandLine.execute();
   }
 

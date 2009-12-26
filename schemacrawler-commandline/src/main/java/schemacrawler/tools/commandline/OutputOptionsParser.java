@@ -58,12 +58,6 @@ final class OutputOptionsParser
   }
 
   @Override
-  protected String getHelpResource()
-  {
-    return "/help/OutputOptions.readme.txt";
-  }
-
-  @Override
   protected OutputOptions getOptions()
   {
     parse(new Option[] {

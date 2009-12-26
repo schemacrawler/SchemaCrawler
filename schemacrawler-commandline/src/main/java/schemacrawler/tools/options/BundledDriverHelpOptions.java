@@ -32,7 +32,6 @@ public final class BundledDriverHelpOptions
   {
     super(title);
     setResourceConnections(resourceConnections);
-    setHideConfig(true);
   }
 
 }

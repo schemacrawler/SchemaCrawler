@@ -44,11 +44,6 @@ public abstract class BaseOptionsParser<O extends Options>
   }
 
   /**
-   * Gets the help text.
-   */
-  protected abstract String getHelpResource();
-
-  /**
    * Parses the command line.
    * 
    * @return Command line options
