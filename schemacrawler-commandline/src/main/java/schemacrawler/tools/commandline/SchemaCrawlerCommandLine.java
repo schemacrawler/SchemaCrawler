@@ -80,11 +80,10 @@ public class SchemaCrawlerCommandLine
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  public SchemaCrawlerCommandLine(final String[] args,
-                                  final HelpOptions helpOptions)
+  public SchemaCrawlerCommandLine(final String[] args)
     throws SchemaCrawlerException
   {
-    this(args, helpOptions, null);
+    this(args, new HelpOptions(""), null);
   }
 
   /**

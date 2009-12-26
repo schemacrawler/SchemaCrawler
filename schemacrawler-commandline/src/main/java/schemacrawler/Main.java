@@ -23,7 +23,6 @@ package schemacrawler;
 
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.HelpOptions;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -43,8 +42,7 @@ public final class Main
   public static void main(final String[] args)
     throws Exception
   {
-    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args,
-                                                                              new HelpOptions(""));
+    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(args);
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(commandLine);
     executable.execute();
   }
