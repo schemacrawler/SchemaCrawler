@@ -37,11 +37,7 @@ public class HelpOptions
   }
 
   private final String title;
-  private final String resourceApplicationOptions = "/help/ApplicationOptions.txt";
   private String resourceConnections = "/help/Connections.txt";
-  private final String resourceConfig = "/help/Config.txt";
-  private final String resourceSchemaCrawlerOptions = "/help/SchemaCrawlerOptions.txt";
-
   private boolean hideConfig;
 
   public HelpOptions(final String title)

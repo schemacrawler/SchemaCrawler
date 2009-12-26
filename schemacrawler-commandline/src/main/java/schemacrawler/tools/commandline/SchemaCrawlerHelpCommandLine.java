@@ -119,11 +119,6 @@ public final class SchemaCrawlerHelpCommandLine
     }
   }
 
-  public final boolean isShowHelp()
-  {
-    return isShowHelp;
-  }
-
   public final String getCommand()
   {
     if (command != null)
@@ -134,6 +129,11 @@ public final class SchemaCrawlerHelpCommandLine
     {
       return null;
     }
+  }
+
+  public final boolean isShowHelp()
+  {
+    return isShowHelp;
   }
 
   private void showHelp()
