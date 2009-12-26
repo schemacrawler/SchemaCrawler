@@ -88,10 +88,4 @@ final class CommandLineConnectionOptionsParser
     return conenctionOptions;
   }
 
-  @Override
-  protected String getHelpResource()
-  {
-    return "/help/Commands.readme.txt";
-  }
-
 }

@@ -91,12 +91,6 @@ final class SchemaCrawlerOptionsParser
   }
 
   @Override
-  protected String getHelpResource()
-  {
-    return "/help/SchemaCrawlerOptions.readme.txt";
-  }
-
-  @Override
   protected SchemaCrawlerOptions getOptions()
   {
     parse(new Option[] {

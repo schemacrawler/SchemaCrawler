@@ -23,10 +23,12 @@ package schemacrawler.tools.executable;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,13 +39,25 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
  * 
  * @author Sualeh Fatehi
  */
-final class CommandRegistry
+public final class CommandRegistry
 {
 
   private static final Logger LOGGER = Logger.getLogger(CommandRegistry.class
     .getName());
 
-  static String lookupCommandExecutableClassName(final String command)
+  public static String[] lookupAvailableCommands()
+    throws SchemaCrawlerException
+  {
+    final Map<String, String> commandRegistry = loadCommandRegistry();
+    final Set<String> availableCommandsList = commandRegistry.keySet();
+    availableCommandsList.remove("default");
+    final String[] availableCommands = availableCommandsList
+      .toArray(new String[0]);
+    Arrays.sort(availableCommands);
+    return availableCommands;
+  }
+
+  public static String lookupCommandExecutableClassName(final String command)
     throws SchemaCrawlerException
   {
     final String commandExecutableClassName;
@@ -105,7 +119,7 @@ final class CommandRegistry
 
   private CommandRegistry()
   {
-
+    // Prevent instantiation
   }
 
 }

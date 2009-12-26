@@ -55,12 +55,6 @@ final class SpringOptionsParser
   }
 
   @Override
-  protected String getHelpResource()
-  {
-    return "/help/Commands.readme.txt";
-  }
-
-  @Override
   protected SpringOptions getOptions()
   {
     parse(new Option[] {

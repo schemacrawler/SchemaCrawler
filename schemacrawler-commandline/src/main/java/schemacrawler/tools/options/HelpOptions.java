@@ -22,7 +22,6 @@ package schemacrawler.tools.options;
 
 
 import schemacrawler.schemacrawler.Options;
-import sf.util.Utility;
 
 public class HelpOptions
   implements Options
@@ -30,15 +29,8 @@ public class HelpOptions
 
   private static final long serialVersionUID = -2497570007150087268L;
 
-  public static String about()
-  {
-    return Utility.readFully(HelpOptions.class
-      .getResourceAsStream("/help/SchemaCrawler.txt"));
-  }
-
   private final String title;
   private String resourceConnections = "/help/Connections.txt";
-  private boolean hideConfig;
 
   public HelpOptions(final String title)
   {
@@ -53,16 +45,6 @@ public class HelpOptions
   public String getTitle()
   {
     return title;
-  }
-
-  public boolean isHideConfig()
-  {
-    return hideConfig;
-  }
-
-  public void setHideConfig(final boolean hideConfig)
-  {
-    this.hideConfig = hideConfig;
   }
 
   public void setResourceConnections(final String resourceConnections)

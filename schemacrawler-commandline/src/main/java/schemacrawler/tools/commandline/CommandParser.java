@@ -36,17 +36,11 @@ final class CommandParser
 
   private final StringOption optionCommand = new StringOption(Option.NO_SHORT_FORM,
                                                               "command",
-                                                              "standard_schema");
+                                                              null);
 
   CommandParser(final String[] args)
   {
     super(args);
-  }
-
-  @Override
-  protected String getHelpResource()
-  {
-    return "/help/Commands.readme.txt";
   }
 
   @Override

@@ -131,9 +131,4 @@ final class ConfigConnectionOptionsParser
     return connectionOptions;
   }
 
-  @Override
-  protected String getHelpResource()
-  {
-    return "/help/Commands.readme.txt";
-  }
 }
