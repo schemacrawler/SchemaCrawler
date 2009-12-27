@@ -1,0 +1,14 @@
+--- Command ---
+
+-command=freemarker
+  Processes a FreeMarker template
+  
+--- Output Options ---
+
+-outputformat=<outputformat>
+	Where <outputformat> is the file path or class path to the FreeMarker 
+	template
+
+-outputfile=<outputfile>
+	Optional 
+	<outputfile> is the path to the output file

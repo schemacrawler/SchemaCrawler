@@ -1,3 +1,8 @@
+--- Command ---
+
+-command=velocity
+  Processes a Velocity template
+  
 --- Output Options ---
 
 -outputformat=<outputformat>
@@ -5,4 +10,5 @@
 	template
 
 -outputfile=<outputfile>
-	Optional - <outputfile> is the path to the output file
+	Optional 
+	<outputfile> is the path to the output file

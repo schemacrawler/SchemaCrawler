@@ -26,7 +26,6 @@ import schemacrawler.Version;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.options.HelpOptions;
-import sf.util.ObjectToString;
 import sf.util.Utility;
 
 /**
@@ -46,20 +45,6 @@ public final class SchemaCrawlerHelpCommandLine
   private final boolean hideConfig;
   private final String command;
   private final HelpOptions helpOptions;
-
-  /**
-   * Loads objects from command line options.
-   * 
-   * @param args
-   *        Command line arguments.
-   * @throws SchemaCrawlerException
-   *         On an exception
-   */
-  public SchemaCrawlerHelpCommandLine(final String[] args)
-    throws SchemaCrawlerException
-  {
-    this(args, new HelpOptions(""), null);
-  }
 
   /**
    * Loads objects from command line options. Optionally loads the
@@ -122,13 +107,23 @@ public final class SchemaCrawlerHelpCommandLine
     if (command == null)
     {
       showHelp("/help/Command.txt");
-      System.out.print("  Available commands are: ");
-      System.out.println(ObjectToString.toString(CommandRegistry
-        .lookupAvailableCommands()));
+      System.out.println("  Available commands are: ");
+      final String[] availableCommands = CommandRegistry
+        .lookupAvailableCommands();
+      for (final String availableCommand: availableCommands)
+      {
+        System.out.println("  " + availableCommand);
+      }
     }
     else
     {
-      // TODO: Get the command details from the executable
+      final String commandExecutableClassName = CommandRegistry
+        .lookupCommandExecutableClassName(command);
+      final String helpResource = "/help/"
+                                  + commandExecutableClassName
+                                    .substring(commandExecutableClassName
+                                      .lastIndexOf('.') + 1) + ".txt";
+      showHelp(helpResource);
     }
 
     System.exit(0);

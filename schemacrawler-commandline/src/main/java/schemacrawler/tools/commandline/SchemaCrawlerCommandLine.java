@@ -71,20 +71,6 @@ public final class SchemaCrawlerCommandLine
   }
 
   /**
-   * Loads objects from command line options.
-   * 
-   * @param args
-   *        Command line arguments.
-   * @throws SchemaCrawlerException
-   *         On an exception
-   */
-  public SchemaCrawlerCommandLine(final String[] args)
-    throws SchemaCrawlerException
-  {
-    this(args, null);
-  }
-
-  /**
    * Loads objects from command line options. Optionally loads the
    * config from the classpath.
    * 
@@ -151,7 +137,7 @@ public final class SchemaCrawlerCommandLine
   public void execute()
     throws Exception
   {
-    final Executable executable = new SchemaCrawlerExecutable(getCommand());
+    final Executable executable = new SchemaCrawlerExecutable(command);
     if (config != null)
     {
       executable.setConfig(config);

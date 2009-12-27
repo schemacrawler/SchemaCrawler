@@ -21,7 +21,7 @@
 package schemacrawler.tools.oracle;
 
 
-import schemacrawler.SchemaCrawlerMain;
+import schemacrawler.tools.commandline.SchemaCrawlerMain;
 import schemacrawler.tools.options.BundledDriverHelpOptions;
 
 /**
