@@ -21,7 +21,7 @@
 package schemacrawler;
 
 
-import schemacrawler.tools.options.HelpOptions;
+import schemacrawler.tools.commandline.SchemaCrawlerMain;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -41,7 +41,7 @@ public final class Main
   public static void main(final String[] args)
     throws Exception
   {
-    SchemaCrawlerMain.main(args, new HelpOptions(""), null);
+    SchemaCrawlerMain.main(args);
   }
 
   private Main()

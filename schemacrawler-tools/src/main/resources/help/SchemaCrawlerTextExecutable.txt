@@ -1,4 +1,4 @@
---- Commands ---
+--- Command ---
 
 -command=<command>
   Where <command> is a comma-separated list of:
@@ -31,3 +31,22 @@
       with variables are executed once for each table, with the variables
       substituted
   Optional, default is standard_schema
+
+--- Output Options ---
+
+-outputformat=<outputformat>
+  Format of the SchemaCrawler output, where <outputformat> is one of:
+    text
+      For text output (default)
+    html
+      For XHTML output
+    csv
+      For CSV output
+    dot
+      For DOT chart format output
+  Optional, defaults to text    
+      
+-outputfile=<outputfile>
+  <outputfile> is the path to the output file
+  Optional, defaults to the console (stdout)
+  

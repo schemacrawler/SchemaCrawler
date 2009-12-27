@@ -21,7 +21,7 @@
 package schemacrawler.tools.sqlite;
 
 
-import schemacrawler.SchemaCrawlerMain;
+import schemacrawler.tools.commandline.SchemaCrawlerMain;
 import schemacrawler.tools.options.BundledDriverHelpOptions;
 
 /**

@@ -21,7 +21,7 @@
 package schemacrawler.tools.mysql;
 
 
-import schemacrawler.SchemaCrawlerMain;
+import schemacrawler.tools.commandline.SchemaCrawlerMain;
 import schemacrawler.tools.options.BundledDriverHelpOptions;
 
 /**

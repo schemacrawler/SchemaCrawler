@@ -17,18 +17,14 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler;
+package schemacrawler.tools.commandline;
 
 
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.commandline.ApplicationOptionsParser;
-import schemacrawler.tools.commandline.CommandLine;
-import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
-import schemacrawler.tools.commandline.SchemaCrawlerHelpCommandLine;
+import schemacrawler.Version;
 import schemacrawler.tools.options.ApplicationOptions;
 import schemacrawler.tools.options.HelpOptions;
 
@@ -38,10 +34,16 @@ public class SchemaCrawlerMain
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerMain.class
     .getName());
 
+  public static void main(final String[] args)
+    throws Exception
+  {
+    main(args, new HelpOptions(""), null);
+  }
+
   public static void main(final String[] args,
                           final HelpOptions helpOptions,
                           final String configResource)
-    throws SchemaCrawlerException, Exception
+    throws Exception
   {
     final CommandLine commandLine;
     final boolean showHelp;
@@ -62,11 +64,13 @@ public class SchemaCrawlerMain
 
     if (showHelp)
     {
-      commandLine = new SchemaCrawlerHelpCommandLine(args);
+      commandLine = new SchemaCrawlerHelpCommandLine(args,
+                                                     helpOptions,
+                                                     configResource);
     }
     else
     {
-      commandLine = new SchemaCrawlerCommandLine(args);
+      commandLine = new SchemaCrawlerCommandLine(args, configResource);
     }
     commandLine.execute();
   }

@@ -1,0 +1,14 @@
+--- Command ---
+
+-command=javascript
+  Processes JavaScript against the database
+  
+--- Output Options ---
+
+-outputformat=<outputformat>
+  Where <outputformat> is the file path to the JavaScript
+  file
+
+-outputfile=<outputfile>
+	Optional 
+	<outputfile> is the path to the output file
