@@ -23,6 +23,9 @@ package schemacrawler.tools.integration.graph;
 
 import java.io.File;
 import java.sql.Connection;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,6 +42,7 @@ import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.util.HtmlFormattingHelper;
 import sf.util.FileUtility;
+import sf.util.Utility;
 
 /**
  * Main executor for the graphing integration.
@@ -69,6 +73,7 @@ public final class GraphExecutable
     }
 
     adjustSchemaInfoLevel();
+    setOutputOptionsDefaults();
 
     final File outputFile = outputOptions.getOutputFile();
     try
@@ -95,6 +100,59 @@ public final class GraphExecutable
       writeDotFile(connection, FileUtility.changeFileExtension(outputFile,
                                                                ".dot"));
       System.out.println(dotError());
+    }
+  }
+
+  private void setOutputOptionsDefaults()
+  {
+    outputOptions = outputOptions.duplicate();
+
+    if (outputOptions.getOutputFile() == null)
+    {
+      final String outputFormat = outputOptions.getOutputFormatValue();
+      final String filename = "schemacrawler." + UUID.randomUUID() + "."
+                              + outputFormat;
+      final File outputFile = new File(new File("."), filename);
+      outputOptions.setOutputFileName(outputFile.getAbsolutePath());
+    }
+
+    final List<String> outputFormats = Arrays.asList(new String[] {
+        "canon",
+        "cmap",
+        "cmapx",
+        "cmapx_np",
+        "dot",
+        "eps",
+        "fig",
+        "gd",
+        "gd2",
+        "gif",
+        "gv",
+        "imap",
+        "imap_np",
+        "ismap",
+        "jpe",
+        "jpeg",
+        "jpg",
+        "pdf",
+        "plain",
+        "plain-ext",
+        "png",
+        "ps",
+        "ps2",
+        "svg",
+        "svgz",
+        "tk",
+        "vml",
+        "vmlz",
+        "vrml",
+        "wbmp",
+        "xdot"
+    });
+    if (Utility.isBlank(outputOptions.getOutputFormatValue())
+        || !outputFormats.contains(outputOptions.getOutputFormatValue()))
+    {
+      outputOptions.setOutputFormatValue("png");
     }
   }
 
