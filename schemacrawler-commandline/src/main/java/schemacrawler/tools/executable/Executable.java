@@ -8,7 +8,6 @@ import javax.sql.DataSource;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.options.OutputOptions;
 
 public interface Executable
@@ -60,8 +59,6 @@ public interface Executable
 
   SchemaCrawlerOptions getSchemaCrawlerOptions();
 
-  void setCommand(String command);
-
   void setConfig(Config config);
 
   void setConnectionOptions(ConnectionOptions connectionOptions);
@@ -69,7 +66,5 @@ public interface Executable
   void setOutputOptions(OutputOptions outputOptions);
 
   void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
-
-  void setSchemaInfoLevel(SchemaInfoLevel infoLevel);
 
 }

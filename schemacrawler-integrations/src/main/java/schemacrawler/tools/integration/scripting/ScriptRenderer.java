@@ -50,6 +50,11 @@ public final class ScriptRenderer
 
   private static final long serialVersionUID = -2232328675306451328L;
 
+  public ScriptRenderer()
+  {
+    super("javascript");
+  }
+
   /**
    * {@inheritDoc}
    * 

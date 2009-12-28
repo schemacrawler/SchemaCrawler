@@ -34,7 +34,6 @@ import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.integration.freemarker.FreeMarkerRenderer;
 import schemacrawler.tools.integration.velocity.VelocityRenderer;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.utility.TestDatabase;
 
 public class ExecutorIntegrationTest
@@ -82,7 +81,6 @@ public class ExecutorIntegrationTest
                                             final OutputOptions outputOptions)
     throws Exception
   {
-    executable.setCommand(SchemaTextDetailType.basic_schema.name());
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());
 

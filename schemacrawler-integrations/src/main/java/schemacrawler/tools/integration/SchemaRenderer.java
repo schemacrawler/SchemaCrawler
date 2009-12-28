@@ -40,6 +40,11 @@ public abstract class SchemaRenderer
 
   private static final long serialVersionUID = 7441125886947849708L;
 
+  protected SchemaRenderer(final String command)
+  {
+    super(command);
+  }
+
   @Override
   public final void execute(final Connection connection)
     throws ExecutionException

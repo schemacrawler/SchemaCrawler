@@ -52,8 +52,14 @@ public final class FreeMarkerRenderer
 {
 
   private static final long serialVersionUID = 4029489563062547982L;
+
   private static final Logger LOGGER = Logger
     .getLogger(FreeMarkerRenderer.class.getName());
+
+  public FreeMarkerRenderer()
+  {
+    super("freemarker");
+  }
 
   /**
    * {@inheritDoc}
