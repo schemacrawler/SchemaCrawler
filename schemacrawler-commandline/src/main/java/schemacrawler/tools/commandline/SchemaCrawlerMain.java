@@ -24,9 +24,9 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.Version;
 import schemacrawler.tools.options.ApplicationOptions;
 import schemacrawler.tools.options.HelpOptions;
+import sf.util.Utility;
 
 public class SchemaCrawlerMain
 {
@@ -59,7 +59,8 @@ public class SchemaCrawlerMain
       showHelp = applicationOptions.isShowHelp();
     }
     applicationOptions.applyApplicationLogLevel();
-    LOGGER.log(Level.INFO, Version.about());
+    LOGGER.log(Level.INFO, Utility.readFully(SchemaCrawlerMain.class
+      .getResourceAsStream("/help/SchemaCrawlerOptions.txt")));
     LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
 
     if (showHelp)

@@ -20,7 +20,6 @@
 package schemacrawler.tools.commandline;
 
 
-import schemacrawler.Version;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.options.HelpOptions;
@@ -89,7 +88,7 @@ public final class SchemaCrawlerHelpCommandLine
     throws SchemaCrawlerException
   {
     System.out.println(helpOptions.getTitle());
-    System.out.println(Version.about());
+    showHelp("/help/SchemaCrawler.txt");
     System.out.println();
 
     showHelp(helpOptions.getResourceConnections());
