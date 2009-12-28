@@ -47,6 +47,9 @@ import schemacrawler.utility.TestDatabase;
 
 public class SchemaSerializationTest
 {
+
+  private static final boolean DEBUG = false;
+
   private static TestDatabase testUtility = new TestDatabase();
 
   @AfterClass
@@ -112,7 +115,7 @@ public class SchemaSerializationTest
     final DetailedDiff myDiff = new DetailedDiff(new Diff(xmlSerializedCatalog1,
                                                           xmlSerializedCatalog2));
     final List<?> allDifferences = myDiff.getAllDifferences();
-    if (!myDiff.similar())
+    if (DEBUG || !myDiff.similar())
     {
       IOUtils.write(xmlSerializedCatalog1,
                     new FileWriter("/temp/serialized-schema-1.xml"));
