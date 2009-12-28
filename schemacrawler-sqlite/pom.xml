@@ -18,7 +18,7 @@
   <dependencies>
     <dependency>
       <groupId>schemacrawler</groupId>
-      <artifactId>schemacrawler-tools</artifactId>
+      <artifactId>schemacrawler-integrations</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>

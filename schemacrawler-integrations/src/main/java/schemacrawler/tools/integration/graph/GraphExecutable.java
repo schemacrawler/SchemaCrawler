@@ -107,15 +107,6 @@ public final class GraphExecutable
   {
     outputOptions = outputOptions.duplicate();
 
-    if (outputOptions.getOutputFile() == null)
-    {
-      final String outputFormat = outputOptions.getOutputFormatValue();
-      final String filename = "schemacrawler." + UUID.randomUUID() + "."
-                              + outputFormat;
-      final File outputFile = new File(new File("."), filename);
-      outputOptions.setOutputFileName(outputFile.getAbsolutePath());
-    }
-
     final List<String> outputFormats = Arrays.asList(new String[] {
         "canon",
         "cmap",
@@ -153,6 +144,15 @@ public final class GraphExecutable
         || !outputFormats.contains(outputOptions.getOutputFormatValue()))
     {
       outputOptions.setOutputFormatValue("png");
+    }
+
+    if (outputOptions.getOutputFile() == null)
+    {
+      final String outputFormat = outputOptions.getOutputFormatValue();
+      final String filename = "schemacrawler." + UUID.randomUUID() + "."
+                              + outputFormat;
+      final File outputFile = new File(new File("."), filename);
+      outputOptions.setOutputFileName(outputFile.getAbsolutePath());
     }
   }
 
