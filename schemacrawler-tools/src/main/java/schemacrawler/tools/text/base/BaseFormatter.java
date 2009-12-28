@@ -107,26 +107,24 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
                                                     dbInfo.getUserName()));
     out.print(formattingHelper.createObjectEnd());
 
-    if (options.isPrintVerboseDatabaseInfo())
+    if (options.isPrintVerboseDatabaseInfo()
+        && dbInfo.getProperties().length > 0)
     {
       out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                                 "Database Characteristics"));
-      if (dbInfo.getProperties().length > 0)
+      out.print(formattingHelper.createObjectStart(""));
+      for (final DatabaseProperty property: dbInfo.getProperties())
       {
-        out.print(formattingHelper.createObjectStart(""));
-        for (final DatabaseProperty property: dbInfo.getProperties())
+        final String name = property.getDescription();
+        Object value = property.getValue();
+        if (value == null)
         {
-          final String name = property.getDescription();
-          Object value = property.getValue();
-          if (value == null)
-          {
-            value = "";
-          }
-          out.println(formattingHelper.createNameValueRow(name, ObjectToString
-            .toString(value)));
+          value = "";
         }
-        out.print(formattingHelper.createObjectEnd());
+        out.println(formattingHelper.createNameValueRow(name, ObjectToString
+          .toString(value)));
       }
+      out.print(formattingHelper.createObjectEnd());
     }
 
     out.flush();
@@ -163,21 +161,17 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
                                                       .isJdbcCompliant())));
     out.print(formattingHelper.createObjectEnd());
 
-    if (options.isPrintVerboseDatabaseInfo())
+    final JdbcDriverProperty[] jdbcDriverProperties = driverInfo
+      .getDriverProperties();
+    if (options.isPrintVerboseDatabaseInfo() && jdbcDriverProperties.length > 0)
     {
       out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                                 "JDBC Driver Properties"));
-
-      final JdbcDriverProperty[] jdbcDriverProperties = driverInfo
-        .getDriverProperties();
-      if (jdbcDriverProperties.length > 0)
+      for (final JdbcDriverProperty driverProperty: jdbcDriverProperties)
       {
-        for (final JdbcDriverProperty driverProperty: jdbcDriverProperties)
-        {
-          out.print(formattingHelper.createObjectStart(""));
-          printJdbcDriverProperty(driverProperty);
-          out.print(formattingHelper.createObjectEnd());
-        }
+        out.print(formattingHelper.createObjectStart(""));
+        printJdbcDriverProperty(driverProperty);
+        out.print(formattingHelper.createObjectEnd());
       }
     }
 
