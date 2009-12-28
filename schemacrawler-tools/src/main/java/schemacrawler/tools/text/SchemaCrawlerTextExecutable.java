@@ -51,8 +51,14 @@ public final class SchemaCrawlerTextExecutable
 {
 
   private static final long serialVersionUID = -6824567755397315920L;
+
   private OperationOptions operationOptions;
   private SchemaTextOptions schemaTextOptions;
+
+  public SchemaCrawlerTextExecutable(final String command)
+  {
+    super(command);
+  }
 
   @Override
   public final void execute(final Connection connection)

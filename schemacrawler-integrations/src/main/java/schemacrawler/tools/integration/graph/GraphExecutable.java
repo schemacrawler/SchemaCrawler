@@ -54,6 +54,7 @@ public final class GraphExecutable
 {
 
   private static final long serialVersionUID = 8731005865929616064L;
+
   private static final Logger LOGGER = Logger.getLogger(GraphExecutable.class
     .getName());
 
@@ -61,6 +62,11 @@ public final class GraphExecutable
   {
     return sf.util.Utility.readFully(HtmlFormattingHelper.class
       .getResourceAsStream("/dot.error.txt"));
+  }
+
+  public GraphExecutable()
+  {
+    super("graph");
   }
 
   @Override

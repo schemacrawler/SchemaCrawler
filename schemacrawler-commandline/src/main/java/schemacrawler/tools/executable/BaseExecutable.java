@@ -54,13 +54,14 @@ public abstract class BaseExecutable
 
   protected SchemaCrawlerOptions schemaCrawlerOptions;
 
-  protected String command;
+  protected final String command;
   protected Config config;
   protected OutputOptions outputOptions;
   protected ConnectionOptions connectionOptions;
 
-  public BaseExecutable()
+  public BaseExecutable(final String command)
   {
+    this.command = command;
     schemaCrawlerOptions = new SchemaCrawlerOptions();
     outputOptions = new OutputOptions();
     config = new Config();
@@ -199,16 +200,6 @@ public abstract class BaseExecutable
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.executable.Executable#setCommand(java.lang.String)
-   */
-  public final void setCommand(final String command)
-  {
-    this.command = command;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see schemacrawler.tools.executable.Executable#setConfig(schemacrawler.schemacrawler.Config)
    */
   public final void setConfig(final Config config)
@@ -244,14 +235,6 @@ public abstract class BaseExecutable
   public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
   {
     this.schemaCrawlerOptions = schemaCrawlerOptions;
-  }
-
-  public void setSchemaInfoLevel(final SchemaInfoLevel infoLevel)
-  {
-    if (infoLevel != null && schemaCrawlerOptions != null)
-    {
-      schemaCrawlerOptions.setSchemaInfoLevel(infoLevel);
-    }
   }
 
   /**

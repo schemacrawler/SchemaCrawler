@@ -125,7 +125,7 @@ public class SchemaCrawlerCommandlineTest
 
         final Executable executable = new SchemaCrawlerExecutable(command);
         executable.setConnectionOptions(connectionOptions);
-        executable.setSchemaInfoLevel(infoLevel);
+        executable.getSchemaCrawlerOptions().setSchemaInfoLevel(infoLevel);
         executable.setOutputOptions(outputOptions);
         executable.execute();
 

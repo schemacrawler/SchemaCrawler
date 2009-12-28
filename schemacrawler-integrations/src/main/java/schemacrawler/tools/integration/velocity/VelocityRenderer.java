@@ -49,6 +49,7 @@ public final class VelocityRenderer
 {
 
   private static final long serialVersionUID = -3346519953252968289L;
+
   private static final Logger LOGGER = Logger.getLogger(VelocityRenderer.class
     .getName());
 
@@ -60,6 +61,11 @@ public final class VelocityRenderer
     p.setProperty(resourceLoaderName + "." + RuntimeConstants.RESOURCE_LOADER
                       + "." + resourceLoaderPropertyName,
                   resourceLoaderPropertyValue);
+  }
+
+  public VelocityRenderer()
+  {
+    super("velocity");
   }
 
   /**

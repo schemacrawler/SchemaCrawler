@@ -1,47 +1,55 @@
 package schemacrawler.tools.executable;
 
 
+import java.lang.reflect.Constructor;
 import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.options.OutputOptions;
 
 public class SchemaCrawlerExecutable
   implements Executable
 {
 
+  private static final Logger LOGGER = Logger
+    .getLogger(SchemaCrawlerExecutable.class.getName());
+
   private final Executable executable;
 
   public SchemaCrawlerExecutable(final String command)
-    throws SchemaCrawlerException
+    throws Exception
   {
     final String commandExecutableClassName = CommandRegistry
       .lookupCommandExecutableClassName(command);
+    final Class<? extends Executable> commandExecutableClass = (Class<? extends Executable>) Class
+      .forName(commandExecutableClassName);
+
+    Executable executable;
     try
     {
-      final Class<? extends Executable> commandExecutableClass = (Class<? extends Executable>) Class
-        .forName(commandExecutableClassName);
-      executable = commandExecutableClass.newInstance();
-      executable.setCommand(command);
+      executable = (Executable) commandExecutableClass.newInstance();
     }
-    catch (final ClassNotFoundException e)
+    catch (final Exception e)
     {
-      throw new SchemaCrawlerException("Could not instantiate executable", e);
+      LOGGER.log(Level.FINE, "Could not instantiate "
+                             + commandExecutableClassName
+                             + " using the default constructor", e);
+      final Constructor constructor = commandExecutableClass
+        .getConstructor(new Class[] {
+          String.class
+        });
+      executable = (Executable) constructor.newInstance(new Object[] {
+        command
+      });
     }
-    catch (final InstantiationException e)
-    {
-      throw new SchemaCrawlerException("Could not instantiate executable", e);
-    }
-    catch (final IllegalAccessException e)
-    {
-      throw new SchemaCrawlerException("Could not instantiate executable", e);
-    }
+
+    this.executable = executable;
   }
 
   public void execute()
@@ -87,11 +95,6 @@ public class SchemaCrawlerExecutable
     return executable.getSchemaCrawlerOptions();
   }
 
-  public void setCommand(final String command)
-  {
-    throw new UnsupportedOperationException("Cannot set the command");
-  }
-
   public void setConfig(final Config config)
   {
     executable.setConfig(config);
@@ -110,11 +113,6 @@ public class SchemaCrawlerExecutable
   public void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
   {
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-  }
-
-  public void setSchemaInfoLevel(final SchemaInfoLevel infoLevel)
-  {
-    executable.setSchemaInfoLevel(infoLevel);
   }
 
 }
