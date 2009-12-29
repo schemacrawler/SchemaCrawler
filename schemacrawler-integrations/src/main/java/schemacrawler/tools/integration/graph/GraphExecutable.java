@@ -171,12 +171,10 @@ public final class GraphExecutable
       outputOptions.setOutputFileName(dotFile.getAbsolutePath());
 
       final SchemaTextOptions schemaTextOptions = new SchemaTextOptions(config,
-                                                                        outputOptions,
                                                                         SchemaTextDetailType.standard_schema);
-      schemaTextOptions.setOutputOptions(outputOptions);
 
       final CrawlHandler handler = SchemaTextFactory
-        .createSchemaTextCrawlHandler(schemaTextOptions);
+        .createSchemaTextCrawlHandler(schemaTextOptions, outputOptions);
       final SchemaCrawler schemaCrawler = new SchemaCrawler(connection);
       final Database database = schemaCrawler.crawl(schemaCrawlerOptions);
       final Crawler crawler = new Crawler(database);

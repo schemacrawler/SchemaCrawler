@@ -34,6 +34,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseFormatter;
 import schemacrawler.tools.text.util.TextFormattingHelper.DocumentHeaderType;
 
@@ -60,10 +61,11 @@ public final class DataTextFormatter
    * @param options
    *        Options for text formatting of data
    */
-  public DataTextFormatter(final OperationOptions options)
+  public DataTextFormatter(final OperationOptions options,
+                           final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
-    super(options);
+    super(options, outputOptions);
     operation = options.getOperation();
   }
 
@@ -74,7 +76,7 @@ public final class DataTextFormatter
    */
   public void begin()
   {
-    if (!options.getOutputOptions().isNoHeader())
+    if (!outputOptions.isNoHeader())
     {
       out.println(formattingHelper.createDocumentStart());
     }
@@ -92,13 +94,13 @@ public final class DataTextFormatter
       out.println(formattingHelper.createObjectEnd());
     }
 
-    if (!options.getOutputOptions().isNoFooter())
+    if (!outputOptions.isNoFooter())
     {
       out.println(formattingHelper.createDocumentEnd());
     }
     out.flush();
     //
-    options.getOutputOptions().closeOutputWriter(out);
+    outputOptions.closeOutputWriter(out);
   }
 
   @Override

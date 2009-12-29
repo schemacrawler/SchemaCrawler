@@ -36,6 +36,7 @@ import schemacrawler.schema.Procedure;
 import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.CrawlHandler;
 
 /**
@@ -61,6 +62,7 @@ public final class OperationHandler
    *        Options for text formatting of operations output
    */
   public OperationHandler(final OperationOptions options,
+                          final OutputOptions outputOptions,
                           final Connection connection)
     throws SchemaCrawlerException
   {
@@ -74,7 +76,7 @@ public final class OperationHandler
     {
       throw new SchemaCrawlerException("No operation options provided");
     }
-    dataFormatter = new DataTextFormatter(options);
+    dataFormatter = new DataTextFormatter(options, outputOptions);
 
     if (options.getQuery() == null)
     {

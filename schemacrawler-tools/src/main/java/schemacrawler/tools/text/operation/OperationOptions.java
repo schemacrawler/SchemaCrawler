@@ -22,8 +22,7 @@ package schemacrawler.tools.text.operation;
 
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.text.base.BaseToolOptions;
+import schemacrawler.tools.options.ToolOptions;
 import sf.util.Utility;
 
 /**
@@ -32,7 +31,7 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 public final class OperationOptions
-  extends BaseToolOptions
+  implements ToolOptions
 {
 
   private static final long serialVersionUID = -7977434852526746391L;
@@ -50,7 +49,7 @@ public final class OperationOptions
    */
   public OperationOptions()
   {
-    this(null, null, (Operation) null);
+    this(null, (Operation) null);
   }
 
   /**
@@ -63,11 +62,8 @@ public final class OperationOptions
    * @param config
    *        Config
    */
-  public OperationOptions(final Config config,
-                          final OutputOptions outputOptions,
-                          final Operation operation)
+  public OperationOptions(final Config config, final Operation operation)
   {
-    super(outputOptions);
     setFromConfig(config);
 
     if (operation == null)
@@ -90,11 +86,8 @@ public final class OperationOptions
    * @param config
    *        Config
    */
-  public OperationOptions(final Config config,
-                          final OutputOptions outputOptions,
-                          final String queryName)
+  public OperationOptions(final Config config, final String queryName)
   {
-    super(outputOptions);
     setFromConfig(config);
 
     if (config != null && !Utility.isBlank(queryName))
@@ -116,7 +109,6 @@ public final class OperationOptions
   public OperationOptions duplicate()
   {
     final OperationOptions operationOptions = new OperationOptions();
-    operationOptions.setOutputOptions(getOutputOptions());
     operationOptions.setMergeRows(mergeRows);
     operationOptions.setShowLobs(showLobs);
     operationOptions.setOperation(operation);
@@ -161,7 +153,6 @@ public final class OperationOptions
     return mergeRows;
   }
 
-  @Override
   public boolean isPrintVerboseDatabaseInfo()
   {
     return false;

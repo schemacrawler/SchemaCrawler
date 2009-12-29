@@ -22,8 +22,7 @@ package schemacrawler.tools.text.schema;
 
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.text.base.BaseToolOptions;
+import schemacrawler.tools.options.ToolOptions;
 
 /**
  * Options.
@@ -31,7 +30,7 @@ import schemacrawler.tools.text.base.BaseToolOptions;
  * @author Sualeh Fatehi
  */
 public class SchemaTextOptions
-  extends BaseToolOptions
+  implements ToolOptions
 {
 
   private static final long serialVersionUID = -8133661515343358712L;
@@ -74,11 +73,8 @@ public class SchemaTextOptions
    *        Output options
    */
   public SchemaTextOptions(final Config config,
-                           final OutputOptions outputOptions,
                            final SchemaTextDetailType schemaTextDetailType)
   {
-    super(outputOptions);
-
     setDefaultValues();
     if (schemaTextDetailType != null)
     {
@@ -106,8 +102,6 @@ public class SchemaTextOptions
   public SchemaTextOptions duplicate()
   {
     final SchemaTextOptions schemaTextOptions = new SchemaTextOptions();
-
-    schemaTextOptions.setOutputOptions(getOutputOptions());
 
     schemaTextOptions
       .setShowStandardColumnTypeNames(showStandardColumnTypeNames);
@@ -173,7 +167,6 @@ public class SchemaTextOptions
     return hidePrimaryKeyNames;
   }
 
-  @Override
   public boolean isPrintVerboseDatabaseInfo()
   {
     return schemaTextDetailType == SchemaTextDetailType.maximum_schema;

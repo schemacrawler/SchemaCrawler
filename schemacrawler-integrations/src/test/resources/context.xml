@@ -128,9 +128,9 @@
 				<property name="hideForeignKeyNames" value="false" />
 				<property name="hideConstraintNames" value="false" />
 				<property name="schemaTextDetailType" value="standard_schema" />
-				<property name="outputOptions" ref="outputOptions" />
 			</bean>
 		</property>
+		<property name="outputOptions" ref="outputOptions" />
 	</bean>
 
 	<bean id="executableForQuery" class="schemacrawler.tools.text.SchemaCrawlerTextExecutable">
@@ -150,9 +150,9 @@
 						</constructor-arg>
 					</bean>
 				</property>
-				<property name="outputOptions" ref="outputOptions" />
 			</bean>
 		</property>
+		<property name="outputOptions" ref="outputOptions" />
 	</bean>
 
 	<bean id="executableForQueryOver" class="schemacrawler.tools.text.SchemaCrawlerTextExecutable">
@@ -172,9 +172,9 @@
 						</constructor-arg>
 					</bean>
 				</property>
-				<property name="outputOptions" ref="outputOptions" />
 			</bean>
 		</property>
+		<property name="outputOptions" ref="outputOptions" />
 	</bean>
 
 	<bean id="executableForCount" class="schemacrawler.tools.executable.SchemaCrawlerExecutable">
