@@ -24,9 +24,13 @@ package schemacrawler.test;
 import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.custommonkey.xmlunit.Validator;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -36,15 +40,40 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.DatabaseConnectionOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.text.SchemaCrawlerTextExecutable;
-import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.utility.TestDatabase;
+import sf.util.TestUtility;
 
 public class SchemaCrawlerOutputTest
 {
+
+  enum InfoLevel
+  {
+    minimum(SchemaInfoLevel.minimum()),
+    standard(SchemaInfoLevel.standard()),
+    verbose(SchemaInfoLevel.verbose()),
+    maximum(SchemaInfoLevel.maximum());
+
+    private final SchemaInfoLevel infoLevel;
+
+    private InfoLevel(final SchemaInfoLevel infoLevel)
+    {
+      this.infoLevel = infoLevel;
+    }
+
+    public final SchemaInfoLevel getSchemaInfoLevel()
+    {
+      return infoLevel;
+    }
+
+  }
 
   private static class LocalEntityResolver
     implements EntityResolver
@@ -86,71 +115,120 @@ public class SchemaCrawlerOutputTest
   }
 
   @Test
-  public void countOperatorOutput()
+  public void compareCompositeOutput()
     throws Exception
   {
-    final String outputFilename = File.createTempFile("schemacrawler", "test")
-      .getAbsolutePath();
+    final String[] commands = new String[] {
+        "maximum_schema,count,dump", "brief_schema,count",
+    };
 
-    final OutputOptions outputOptions = new OutputOptions(OutputFormat.text,
-                                                          outputFilename);
-
-    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(Operation.count
-      .name());
-    executable.setOutputOptions(outputOptions);
-    executable.execute(testUtility.getConnection());
-
-    final File outputFile = new File(outputFilename);
-    if (!outputFile.delete())
+    final List<String> failures = new ArrayList<String>();
+    for (final OutputFormat outputFormat: OutputFormat.values())
     {
-      fail("Cannot delete output file");
+      if (outputFormat == OutputFormat.dot)
+      {
+        continue;
+      }
+      for (final String command: commands)
+      {
+        final String referenceFile = command + "." + outputFormat.name();
+
+        final File testOutputFile = File.createTempFile("schemacrawler.test.",
+                                                        referenceFile);
+
+        final OutputOptions outputOptions = new OutputOptions(outputFormat,
+                                                              testOutputFile
+                                                                .getAbsolutePath());
+        outputOptions.setNoInfo(false);
+        outputOptions.setNoHeader(false);
+        outputOptions.setNoFooter(false);
+
+        final Config config = Config.load(SchemaCrawlerOutputTest.class
+          .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
+        final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
+        schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+
+        final DatabaseConnectionOptions connectionOptions = testUtility
+          .getDatabaseConnectionOptions();
+
+        final Executable executable = new SchemaCrawlerExecutable(command);
+        executable.setConnectionOptions(connectionOptions);
+        executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+        executable.setOutputOptions(outputOptions);
+        executable.execute();
+
+        if (outputFormat == OutputFormat.html)
+        {
+          final Validator validator = new Validator(new FileReader(testOutputFile));
+          if (!validator.isValid())
+          {
+            failures.add(validator.toString());
+          }
+        }
+
+        TestUtility.compareOutput("composite_output/" + referenceFile,
+                                  testOutputFile,
+                                  failures);
+      }
     }
+
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
+    }
+
   }
 
   @Test
-  public void dataOutput()
+  public void compareInfoLevelOutput()
     throws Exception
   {
-    final String outputFilename = File.createTempFile("schemacrawler", "test")
-      .getAbsolutePath();
 
-    final OutputOptions outputOptions = new OutputOptions(OutputFormat.text,
-                                                          outputFilename);
-    final Config config = new Config();
-    config.put("CustomerCount", "SELECT COUNT(*) FROM CUSTOMER");
-
-    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable("CustomerCount");
-    executable.setConfig(config);
-    executable.setOutputOptions(outputOptions);
-    executable.execute(testUtility.getConnection());
-
-    final File outputFile = new File(outputFilename);
-    if (!outputFile.delete())
+    final List<String> failures = new ArrayList<String>();
+    for (final InfoLevel infoLevel: InfoLevel.values())
     {
-      fail("Cannot delete output file");
+      for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
+        .values())
+      {
+        final String referenceFile = schemaTextDetailType + "_" + infoLevel
+                                     + ".txt";
+
+        final File testOutputFile = File.createTempFile("schemacrawler.test.",
+                                                        referenceFile);
+
+        final OutputOptions outputOptions = new OutputOptions(OutputFormat.text,
+                                                              testOutputFile
+                                                                .getAbsolutePath());
+        outputOptions.setNoInfo(false);
+        outputOptions.setNoHeader(false);
+        outputOptions.setNoFooter(false);
+
+        final Config config = Config.load(SchemaCrawlerOutputTest.class
+          .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
+        final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
+        schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
+
+        final DatabaseConnectionOptions connectionOptions = testUtility
+          .getDatabaseConnectionOptions();
+
+        final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
+          .name());
+        executable.setConnectionOptions(connectionOptions);
+        executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+        executable.setOutputOptions(outputOptions);
+        executable.execute();
+
+        TestUtility.compareOutput("info_level_output/" + referenceFile,
+                                  testOutputFile,
+                                  failures);
+      }
     }
-  }
 
-  @Test
-  public void schemaOutput()
-    throws Exception
-  {
-    final String outputFilename = File.createTempFile("schemacrawler", "test")
-      .getAbsolutePath();
-
-    final OutputOptions outputOptions = new OutputOptions(OutputFormat.text,
-                                                          outputFilename);
-
-    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(SchemaTextDetailType.brief_schema
-      .name());
-    executable.setOutputOptions(outputOptions);
-    executable.execute(testUtility.getConnection());
-
-    final File outputFile = new File(outputFilename);
-    if (!outputFile.delete())
+    if (failures.size() > 0)
     {
-      fail("Cannot delete output file");
+      fail(failures.toString());
     }
+
   }
 
 }
