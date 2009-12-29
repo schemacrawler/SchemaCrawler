@@ -39,7 +39,9 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -197,14 +199,18 @@ public class SchemaCrawlerCommandlineTest
         outputOptions.setNoHeader(false);
         outputOptions.setNoFooter(false);
 
+        final Config config = Config.load(SchemaCrawlerCommandlineTest.class
+          .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
+        final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
+        schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
+
         final DatabaseConnectionOptions connectionOptions = testUtility
           .getDatabaseConnectionOptions();
 
         final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
           .name());
         executable.setConnectionOptions(connectionOptions);
-        executable.getSchemaCrawlerOptions().setSchemaInfoLevel(infoLevel
-          .getSchemaInfoLevel());
+        executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);
         executable.execute();
 

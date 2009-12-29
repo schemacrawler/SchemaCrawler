@@ -57,6 +57,8 @@ PUBLIC.CUSTOMERLIST                                               [view]
   FIRSTNAME                         VARCHAR(255)                
   LASTNAME                          VARCHAR(255)                
 
+                                                            [definition]
+  SELECT ID, FIRSTNAME, LASTNAME FROM CUSTOMER
 
 
 PUBLIC.INVOICE                                                   [table]

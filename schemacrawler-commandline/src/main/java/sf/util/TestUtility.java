@@ -52,6 +52,7 @@ public final class TestUtility
     if (!contentEquals)
     {
       final File testOutputLocalFile = new File("./", referenceFile);
+      testOutputLocalFile.getParentFile().mkdirs();
       final boolean renamed = testOutputFile.renameTo(testOutputLocalFile);
       final String message;
       if (renamed)

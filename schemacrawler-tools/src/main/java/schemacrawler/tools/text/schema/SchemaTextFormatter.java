@@ -280,10 +280,10 @@ public final class SchemaTextFormatter
       printPrimaryKey(table.getPrimaryKey());
       printForeignKeys(table.getName(), table.getForeignKeys());
       printIndices(table.getIndices());
-      printCheckConstraints(table.getCheckConstraints());
       if (schemaTextDetailType
         .isGreaterThanOrEqualTo(SchemaTextDetailType.maximum_schema))
       {
+        printCheckConstraints(table.getCheckConstraints());
         printPrivileges(table.getPrivileges());
         printTriggers(table.getTriggers());
       }
@@ -313,7 +313,6 @@ public final class SchemaTextFormatter
 
   private void printCheckConstraints(final CheckConstraint[] constraints)
   {
-
     for (final CheckConstraint constraint: constraints)
     {
       if (constraint != null)
