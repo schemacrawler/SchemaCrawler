@@ -21,8 +21,6 @@
 package schemacrawler.tools.text.schema;
 
 
-import schemacrawler.schemacrawler.SchemaInfoLevel;
-
 /**
  * Enumeration for level of schema text output detail.
  */
@@ -30,18 +28,11 @@ public enum SchemaTextDetailType
 {
 
   /** No column detail. */
-  brief_schema(SchemaInfoLevel.minimum()),
+  brief_schema,
   /** Standard column detail. */
-  standard_schema(SchemaInfoLevel.standard()),
+  standard_schema,
   /** Maximum column detail, everything supported by SchemaCrawler. */
-  maximum_schema(SchemaInfoLevel.maximum()), ;
-
-  private final SchemaInfoLevel mappedToInfoLevel;
-
-  private SchemaTextDetailType(final SchemaInfoLevel mappedToInfoLevel)
-  {
-    this.mappedToInfoLevel = mappedToInfoLevel;
-  }
+  maximum_schema, ;
 
   /**
    * Checks if this is greater than or equal to the provided info level.
