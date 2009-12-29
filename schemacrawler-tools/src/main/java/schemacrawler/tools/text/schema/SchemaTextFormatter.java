@@ -227,11 +227,7 @@ public final class SchemaTextFormatter
                                                      columnType.toString()));
       }
     }
-    if (schemaTextDetailType
-      .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
-    {
-      printDefinition(procedure.getDefinition());
-    }
+    printDefinition(procedure.getDefinition());
 
     if (schemaTextDetailType != SchemaTextDetailType.brief_schema)
     {
@@ -281,19 +277,10 @@ public final class SchemaTextFormatter
     if (schemaTextDetailType != SchemaTextDetailType.brief_schema)
     {
       printTableColumns(table.getColumns());
-    }
 
-    if (schemaTextDetailType
-      .isGreaterThanOrEqualTo(SchemaTextDetailType.standard_schema))
-    {
       printPrimaryKey(table.getPrimaryKey());
       printForeignKeys(table.getName(), table.getForeignKeys());
       printIndices(table.getIndices());
-    }
-
-    if (schemaTextDetailType
-      .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
-    {
       printCheckConstraints(table.getCheckConstraints());
       if (schemaTextDetailType
         .isGreaterThanOrEqualTo(SchemaTextDetailType.maximum_schema))
@@ -306,10 +293,7 @@ public final class SchemaTextFormatter
         final View view = (View) table;
         printDefinition(view.getDefinition());
       }
-    }
 
-    if (schemaTextDetailType != SchemaTextDetailType.brief_schema)
-    {
       out.println(formattingHelper.createObjectEnd());
     }
     out.flush();
