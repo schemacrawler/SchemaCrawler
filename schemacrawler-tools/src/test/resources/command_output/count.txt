@@ -1,0 +1,19 @@
+
+
+Row Count
+========================================================================
+
+
+
+Row Count
+------------------------------------------------------------------------
+PUBLIC.CUSTOMER                                                  50 rows
+PUBLIC.CUSTOMERLIST                                              50 rows
+PUBLIC.INVOICE                                                   50 rows
+PUBLIC.ITEM                                                     650 rows
+PUBLIC.PRODUCT                                                   50 rows
+PUBLIC.SUPPLIER                                                   1 rows
+SCHEMACRAWLER.ITEM                                               20 rows
+SCHEMACRAWLER.PRODUCT2                                           11 rows
+
+

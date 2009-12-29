@@ -134,7 +134,7 @@ public class SchemaCrawlerOutputTest
         final String referenceFile = command + "." + outputFormat.name();
 
         final File testOutputFile = File.createTempFile("schemacrawler.test.",
-                                                        referenceFile);
+                                                        "." + referenceFile);
 
         final OutputOptions outputOptions = new OutputOptions(outputFormat,
                                                               testOutputFile
@@ -194,7 +194,7 @@ public class SchemaCrawlerOutputTest
                                      + ".txt";
 
         final File testOutputFile = File.createTempFile("schemacrawler.test.",
-                                                        referenceFile);
+                                                        "." + referenceFile);
 
         final OutputOptions outputOptions = new OutputOptions(OutputFormat.text,
                                                               testOutputFile

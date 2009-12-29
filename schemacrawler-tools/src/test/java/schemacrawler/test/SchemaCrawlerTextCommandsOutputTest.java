@@ -26,6 +26,8 @@ import static org.junit.Assert.fail;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.AfterClass;
@@ -42,6 +44,7 @@ import schemacrawler.tools.text.SchemaCrawlerTextExecutable;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.utility.TestDatabase;
+import sf.util.TestUtility;
 
 public class SchemaCrawlerTextCommandsOutputTest
 {
@@ -86,48 +89,90 @@ public class SchemaCrawlerTextCommandsOutputTest
   }
 
   @Test
-  public void countOperatorOutput()
+  public void countOutput()
     throws Exception
   {
-    final String outputFilename = File.createTempFile("schemacrawler", "test")
-      .getAbsolutePath();
+    final String referenceFile = "count.txt";
+
+    final File testOutputFile = File.createTempFile("schemacrawler.test.",
+                                                    "." + referenceFile);
 
     final OutputOptions outputOptions = new OutputOptions(OutputFormat.text,
-                                                          outputFilename);
+                                                          testOutputFile
+                                                            .getAbsolutePath());
 
     final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(Operation.count
       .name());
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());
 
-    final File outputFile = new File(outputFilename);
-    if (!outputFile.delete())
+    final List<String> failures = new ArrayList<String>();
+    TestUtility.compareOutput("command_output/" + referenceFile,
+                              testOutputFile,
+                              failures);
+    if (failures.size() > 0)
     {
-      fail("Cannot delete output file");
+      fail(failures.toString());
     }
   }
 
   @Test
-  public void dataOutput()
+  public void dumpOutput()
     throws Exception
   {
-    final String outputFilename = File.createTempFile("schemacrawler", "test")
-      .getAbsolutePath();
+    final String referenceFile = "dump.txt";
+
+    final File testOutputFile = File.createTempFile("schemacrawler.test.",
+                                                    "." + referenceFile);
 
     final OutputOptions outputOptions = new OutputOptions(OutputFormat.text,
-                                                          outputFilename);
-    final Config config = new Config();
-    config.put("CustomerCount", "SELECT COUNT(*) FROM CUSTOMER");
+                                                          testOutputFile
+                                                            .getAbsolutePath());
 
-    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable("CustomerCount");
+    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(Operation.dump
+      .name());
+    executable.setOutputOptions(outputOptions);
+    executable.execute(testUtility.getConnection());
+
+    final List<String> failures = new ArrayList<String>();
+    TestUtility.compareOutput("command_output/" + referenceFile,
+                              testOutputFile,
+                              failures);
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
+    }
+  }
+
+  @Test
+  public void queryOutput()
+    throws Exception
+  {
+    final String referenceFile = "query.txt";
+
+    final File testOutputFile = File.createTempFile("schemacrawler.test.",
+                                                    "." + referenceFile);
+
+    final OutputOptions outputOptions = new OutputOptions(OutputFormat.text,
+                                                          testOutputFile
+                                                            .getAbsolutePath());
+
+    final String queryCommand = "CustomerCount";
+    final Config config = new Config();
+    config.put(queryCommand, "SELECT COUNT(*) FROM CUSTOMER");
+
+    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(queryCommand);
     executable.setConfig(config);
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());
 
-    final File outputFile = new File(outputFilename);
-    if (!outputFile.delete())
+    final List<String> failures = new ArrayList<String>();
+    TestUtility.compareOutput("command_output/" + referenceFile,
+                              testOutputFile,
+                              failures);
+    if (failures.size() > 0)
     {
-      fail("Cannot delete output file");
+      fail(failures.toString());
     }
   }
 
@@ -135,21 +180,27 @@ public class SchemaCrawlerTextCommandsOutputTest
   public void schemaOutput()
     throws Exception
   {
-    final String outputFilename = File.createTempFile("schemacrawler", "test")
-      .getAbsolutePath();
+    final String referenceFile = "brief_schema.txt";
+
+    final File testOutputFile = File.createTempFile("schemacrawler.test.",
+                                                    "." + referenceFile);
 
     final OutputOptions outputOptions = new OutputOptions(OutputFormat.text,
-                                                          outputFilename);
+                                                          testOutputFile
+                                                            .getAbsolutePath());
 
     final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(SchemaTextDetailType.brief_schema
       .name());
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());
 
-    final File outputFile = new File(outputFilename);
-    if (!outputFile.delete())
+    final List<String> failures = new ArrayList<String>();
+    TestUtility.compareOutput("command_output/" + referenceFile,
+                              testOutputFile,
+                              failures);
+    if (failures.size() > 0)
     {
-      fail("Cannot delete output file");
+      fail(failures.toString());
     }
   }
 
