@@ -231,6 +231,8 @@ PUBLIC.CUSTOMERLIST                                               [view]
   FIRSTNAME                         VARCHAR(255)                
   LASTNAME                          VARCHAR(255)                
 
+                                                            [definition]
+  SELECT ID, FIRSTNAME, LASTNAME FROM CUSTOMER
 
 
 PUBLIC.INVOICE                                                   [table]
@@ -311,6 +313,9 @@ INDEX_B_SUPPLIER                                      [non-unique index]
 INDEX_A_SUPPLIER                                      [non-unique index]
   SUPPLIER_NAME                     ascending                   
   SUPPLIER_ID                       ascending                   
+
+CHECK_UPPERCASE_SUPPLIER_NAME                         [check constraint]
+  SUPPLIER.SUPPLIER_NAME=UPPER(SUPPLIER.SUPPLIER_NAME)
 
 
 SCHEMACRAWLER.ITEM                                               [table]
