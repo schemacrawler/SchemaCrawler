@@ -192,39 +192,12 @@ SYS_IDX_46                                                 [primary key]
 FK_INVOICE_CUSTOMER                        [foreign key, with no action]
  1  ID --> PUBLIC.INVOICE.CUSTOMERID                              
 
-DELETE                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-INSERT                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-SELECT                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-UPDATE                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
 
 PUBLIC.CUSTOMERLIST                                               [view]
 ------------------------------------------------------------------------
 2   FIRSTNAME                         VARCHAR(255)                
 1   ID                                INTEGER                     
 3   LASTNAME                          VARCHAR(255)                
-
-DELETE                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-INSERT                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-SELECT                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-UPDATE                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-                                                            [definition]
-  SELECT ID, FIRSTNAME, LASTNAME FROM CUSTOMER
 
 
 PUBLIC.INVOICE                                                   [table]
@@ -247,18 +220,6 @@ INDEX_INVOICE_CUSTOMER                                [non-unique index]
 
 SYS_IDX_50                                            [non-unique index]
 2   CUSTOMERID                        ascending                   
-
-DELETE                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-INSERT                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-SELECT                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-UPDATE                                                       [privilege]
-  DBA --> SA (grantable)                                        
 
 
 PUBLIC.ITEM                                                      [table]
@@ -291,18 +252,6 @@ SYS_IDX_53                                            [non-unique index]
 SYS_IDX_55                                            [non-unique index]
 3   PRODUCTID                         ascending                   
 
-DELETE                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-INSERT                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-SELECT                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-UPDATE                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
 
 PUBLIC.PRODUCT                                                   [table]
 ------------------------------------------------------------------------
@@ -315,18 +264,6 @@ SYS_IDX_47                                                 [primary key]
 
 FK_A_ITEM_PRODUCT                          [foreign key, with no action]
  1  ID --> PUBLIC.ITEM.PRODUCTID                                  
-
-DELETE                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-INSERT                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-SELECT                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-UPDATE                                                       [privilege]
-  DBA --> SA (grantable)                                        
 
 
 PUBLIC.SUPPLIER                                                  [table]
@@ -342,18 +279,6 @@ INDEX_B_SUPPLIER                                      [non-unique index]
 1   SUPPLIER_ID                       ascending                   
 2   SUPPLIER_NAME                     ascending                   
 
-DELETE                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-INSERT                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-SELECT                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-UPDATE                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
 
 SCHEMACRAWLER.ITEM                                               [table]
 ------------------------------------------------------------------------
@@ -367,18 +292,6 @@ SYS_IDX_59                                                 [primary key]
 1   INVOICEID                         ascending                   
 2   ITEM                              ascending                   
 
-DELETE                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-INSERT                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-SELECT                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-UPDATE                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
 
 SCHEMACRAWLER.PRODUCT2                                           [table]
 ------------------------------------------------------------------------
@@ -388,18 +301,6 @@ SCHEMACRAWLER.PRODUCT2                                           [table]
 
 SYS_IDX_61                                                 [primary key]
 1   ID                                ascending                   
-
-DELETE                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-INSERT                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-SELECT                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-UPDATE                                                       [privilege]
-  DBA --> SA (grantable)                                        
 
 
 
@@ -423,12 +324,10 @@ PUBLIC.ABS                                   [procedure, returns result]
 1   @p1                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.ACOS                                  [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
-
 
 
 PUBLIC.ASCII                                 [procedure, returns result]
@@ -437,19 +336,16 @@ PUBLIC.ASCII                                 [procedure, returns result]
 1   @p1                               LONGVARCHAR, in             
 
 
-
 PUBLIC.ASIN                                  [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.ATAN                                  [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
-
 
 
 PUBLIC.ATAN2                                 [procedure, returns result]
@@ -459,12 +355,10 @@ PUBLIC.ATAN2                                 [procedure, returns result]
 2   @p2                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.BIT_LENGTH                            [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               INTEGER, result             
 1   @p1                               LONGVARCHAR, in             
-
 
 
 PUBLIC.BITAND                                [procedure, returns result]
@@ -474,13 +368,11 @@ PUBLIC.BITAND                                [procedure, returns result]
 2   @p2                               INTEGER, in                 
 
 
-
 PUBLIC.BITOR                                 [procedure, returns result]
 ------------------------------------------------------------------------
 3   @p0                               INTEGER, result             
 1   @p1                               INTEGER, in                 
 2   @p2                               INTEGER, in                 
-
 
 
 PUBLIC.BITXOR                                [procedure, returns result]
@@ -490,12 +382,10 @@ PUBLIC.BITXOR                                [procedure, returns result]
 2   @p2                               INTEGER, in                 
 
 
-
 PUBLIC.CEILING                               [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
-
 
 
 PUBLIC.CHAR                                  [procedure, returns result]
@@ -504,19 +394,16 @@ PUBLIC.CHAR                                  [procedure, returns result]
 1   @p1                               INTEGER, in                 
 
 
-
 PUBLIC.CHAR_LENGTH                           [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               INTEGER, result             
 1   @p1                               LONGVARCHAR, in             
 
 
-
 PUBLIC.CHARACTER_LENGTH                      [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               INTEGER, result             
 1   @p1                               LONGVARCHAR, in             
-
 
 
 PUBLIC.CONCAT                                [procedure, returns result]
@@ -526,12 +413,10 @@ PUBLIC.CONCAT                                [procedure, returns result]
 2   @p2                               LONGVARCHAR, in             
 
 
-
 PUBLIC.COS                                   [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
-
 
 
 PUBLIC.COT                                   [procedure, returns result]
@@ -540,11 +425,9 @@ PUBLIC.COT                                   [procedure, returns result]
 1   @p1                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.CURDATE                               [procedure, returns result]
 ------------------------------------------------------------------------
 1   @p0                               DATE, result                
-
 
 
 PUBLIC.CURTIME                               [procedure, returns result]
@@ -552,11 +435,9 @@ PUBLIC.CURTIME                               [procedure, returns result]
 1   @p0                               TIME, result                
 
 
-
 PUBLIC.DATABASE                              [procedure, returns result]
 ------------------------------------------------------------------------
 1   @p0                               LONGVARCHAR, result         
-
 
 
 PUBLIC.DATEDIFF                              [procedure, returns result]
@@ -567,12 +448,10 @@ PUBLIC.DATEDIFF                              [procedure, returns result]
 3   @p3                               TIMESTAMP, in               
 
 
-
 PUBLIC.DAY                                   [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               INTEGER, result             
 1   @p1                               DATE, in                    
-
 
 
 PUBLIC.DAYNAME                               [procedure, returns result]
@@ -581,12 +460,10 @@ PUBLIC.DAYNAME                               [procedure, returns result]
 1   @p1                               DATE, in                    
 
 
-
 PUBLIC.DAYOFMONTH                            [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               INTEGER, result             
 1   @p1                               DATE, in                    
-
 
 
 PUBLIC.DAYOFWEEK                             [procedure, returns result]
@@ -595,19 +472,16 @@ PUBLIC.DAYOFWEEK                             [procedure, returns result]
 1   @p1                               DATE, in                    
 
 
-
 PUBLIC.DAYOFYEAR                             [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               INTEGER, result             
 1   @p1                               DATE, in                    
 
 
-
 PUBLIC.DEGREES                               [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
-
 
 
 PUBLIC.DIFFERENCE                            [procedure, returns result]
@@ -617,12 +491,10 @@ PUBLIC.DIFFERENCE                            [procedure, returns result]
 2   @p2                               LONGVARCHAR, in             
 
 
-
 PUBLIC.EXP                                   [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
-
 
 
 PUBLIC.FLOOR                                 [procedure, returns result]
@@ -631,12 +503,10 @@ PUBLIC.FLOOR                                 [procedure, returns result]
 1   @p1                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.HEXTORAW                              [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               LONGVARCHAR, result         
 1   @p1                               LONGVARCHAR, in             
-
 
 
 PUBLIC.HOUR                                  [procedure, returns result]
@@ -645,11 +515,9 @@ PUBLIC.HOUR                                  [procedure, returns result]
 1   @p1                               TIME, in                    
 
 
-
 PUBLIC.IDENTITY                              [procedure, returns result]
 ------------------------------------------------------------------------
 1   @p0                               INTEGER, result             
-
 
 
 PUBLIC.INSERT                                [procedure, returns result]
@@ -661,12 +529,10 @@ PUBLIC.INSERT                                [procedure, returns result]
 4   @p4                               LONGVARCHAR, in             
 
 
-
 PUBLIC.java.lang.Math.abs                    [procedure, returns result]
 ------------------------------------------------------------------------
 8   @p0                               BIGINT, result              
 7   @p1                               BIGINT, in                  
-
 
 
 PUBLIC.java.lang.Math.acos                   [procedure, returns result]
@@ -675,19 +541,16 @@ PUBLIC.java.lang.Math.acos                   [procedure, returns result]
 1   @p1                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.java.lang.Math.asin                   [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.java.lang.Math.atan                   [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
-
 
 
 PUBLIC.java.lang.Math.atan2                  [procedure, returns result]
@@ -697,19 +560,16 @@ PUBLIC.java.lang.Math.atan2                  [procedure, returns result]
 2   @p2                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.java.lang.Math.cbrt                   [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.java.lang.Math.ceil                   [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
-
 
 
 PUBLIC.java.lang.Math.copySign               [procedure, returns result]
@@ -719,12 +579,10 @@ PUBLIC.java.lang.Math.copySign               [procedure, returns result]
 5   @p2                               FLOAT(8, 17), in            
 
 
-
 PUBLIC.java.lang.Math.cos                    [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
-
 
 
 PUBLIC.java.lang.Math.cosh                   [procedure, returns result]
@@ -733,12 +591,10 @@ PUBLIC.java.lang.Math.cosh                   [procedure, returns result]
 1   @p1                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.java.lang.Math.exp                    [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
-
 
 
 PUBLIC.java.lang.Math.expm1                  [procedure, returns result]
@@ -747,19 +603,16 @@ PUBLIC.java.lang.Math.expm1                  [procedure, returns result]
 1   @p1                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.java.lang.Math.floor                  [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.java.lang.Math.getExponent            [procedure, returns result]
 ------------------------------------------------------------------------
 4   @p0                               INTEGER, result             
 3   @p1                               FLOAT(8, 17), in            
-
 
 
 PUBLIC.java.lang.Math.hypot                  [procedure, returns result]
@@ -769,13 +622,11 @@ PUBLIC.java.lang.Math.hypot                  [procedure, returns result]
 2   @p2                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.java.lang.Math.IEEEremainder          [procedure, returns result]
 ------------------------------------------------------------------------
 3   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
 2   @p2                               DOUBLE(8, 17), in           
-
 
 
 PUBLIC.java.lang.Math.log                    [procedure, returns result]
@@ -784,19 +635,16 @@ PUBLIC.java.lang.Math.log                    [procedure, returns result]
 1   @p1                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.java.lang.Math.log10                  [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.java.lang.Math.log1p                  [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
-
 
 
 PUBLIC.java.lang.Math.max                    [procedure, returns result]
@@ -806,13 +654,11 @@ PUBLIC.java.lang.Math.max                    [procedure, returns result]
 11  @p2                               BIGINT, in                  
 
 
-
 PUBLIC.java.lang.Math.min                    [procedure, returns result]
 ------------------------------------------------------------------------
 12  @p0                               BIGINT, result              
 10  @p1                               BIGINT, in                  
 11  @p2                               BIGINT, in                  
-
 
 
 PUBLIC.java.lang.Math.nextAfter              [procedure, returns result]
@@ -822,12 +668,10 @@ PUBLIC.java.lang.Math.nextAfter              [procedure, returns result]
 5   @p2                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.java.lang.Math.nextUp                 [procedure, returns result]
 ------------------------------------------------------------------------
 4   @p0                               FLOAT(8, 17), result        
 3   @p1                               FLOAT(8, 17), in            
-
 
 
 PUBLIC.java.lang.Math.pow                    [procedure, returns result]
@@ -837,11 +681,9 @@ PUBLIC.java.lang.Math.pow                    [procedure, returns result]
 2   @p2                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.java.lang.Math.random                 [procedure, returns result]
 ------------------------------------------------------------------------
 1   @p0                               DOUBLE(8, 17), result       
-
 
 
 PUBLIC.java.lang.Math.rint                   [procedure, returns result]
@@ -850,12 +692,10 @@ PUBLIC.java.lang.Math.rint                   [procedure, returns result]
 1   @p1                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.java.lang.Math.round                  [procedure, returns result]
 ------------------------------------------------------------------------
 4   @p0                               INTEGER, result             
 3   @p1                               FLOAT(8, 17), in            
-
 
 
 PUBLIC.java.lang.Math.scalb                  [procedure, returns result]
@@ -865,12 +705,10 @@ PUBLIC.java.lang.Math.scalb                  [procedure, returns result]
 5   @p2                               INTEGER, in                 
 
 
-
 PUBLIC.java.lang.Math.signum                 [procedure, returns result]
 ------------------------------------------------------------------------
 4   @p0                               FLOAT(8, 17), result        
 3   @p1                               FLOAT(8, 17), in            
-
 
 
 PUBLIC.java.lang.Math.sin                    [procedure, returns result]
@@ -879,12 +717,10 @@ PUBLIC.java.lang.Math.sin                    [procedure, returns result]
 1   @p1                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.java.lang.Math.sinh                   [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
-
 
 
 PUBLIC.java.lang.Math.sqrt                   [procedure, returns result]
@@ -893,12 +729,10 @@ PUBLIC.java.lang.Math.sqrt                   [procedure, returns result]
 1   @p1                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.java.lang.Math.tan                    [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
-
 
 
 PUBLIC.java.lang.Math.tanh                   [procedure, returns result]
@@ -907,12 +741,10 @@ PUBLIC.java.lang.Math.tanh                   [procedure, returns result]
 1   @p1                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.java.lang.Math.toDegrees              [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
-
 
 
 PUBLIC.java.lang.Math.toRadians              [procedure, returns result]
@@ -921,19 +753,16 @@ PUBLIC.java.lang.Math.toRadians              [procedure, returns result]
 1   @p1                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.java.lang.Math.ulp                    [procedure, returns result]
 ------------------------------------------------------------------------
 4   @p0                               FLOAT(8, 17), result        
 3   @p1                               FLOAT(8, 17), in            
 
 
-
 PUBLIC.LCASE                                 [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               LONGVARCHAR, result         
 1   @p1                               LONGVARCHAR, in             
-
 
 
 PUBLIC.LEFT                                  [procedure, returns result]
@@ -943,12 +772,10 @@ PUBLIC.LEFT                                  [procedure, returns result]
 2   @p2                               INTEGER, in                 
 
 
-
 PUBLIC.LENGTH                                [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               INTEGER, result             
 1   @p1                               LONGVARCHAR, in             
-
 
 
 PUBLIC.LOCATE                                [procedure, returns result]
@@ -959,12 +786,10 @@ PUBLIC.LOCATE                                [procedure, returns result]
 3   @p3                               INTEGER, in                 
 
 
-
 PUBLIC.LOG                                   [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
-
 
 
 PUBLIC.LOG10                                 [procedure, returns result]
@@ -973,12 +798,10 @@ PUBLIC.LOG10                                 [procedure, returns result]
 1   @p1                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.LOWER                                 [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               LONGVARCHAR, result         
 1   @p1                               LONGVARCHAR, in             
-
 
 
 PUBLIC.LTRIM                                 [procedure, returns result]
@@ -987,12 +810,10 @@ PUBLIC.LTRIM                                 [procedure, returns result]
 1   @p1                               LONGVARCHAR, in             
 
 
-
 PUBLIC.MINUTE                                [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               INTEGER, result             
 1   @p1                               TIME, in                    
-
 
 
 PUBLIC.MOD                                   [procedure, returns result]
@@ -1002,12 +823,10 @@ PUBLIC.MOD                                   [procedure, returns result]
 2   @p2                               INTEGER, in                 
 
 
-
 PUBLIC.MONTH                                 [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               INTEGER, result             
 1   @p1                               DATE, in                    
-
 
 
 PUBLIC.MONTHNAME                             [procedure, returns result]
@@ -1016,11 +835,9 @@ PUBLIC.MONTHNAME                             [procedure, returns result]
 1   @p1                               DATE, in                    
 
 
-
 PUBLIC.NOW                                   [procedure, returns result]
 ------------------------------------------------------------------------
 1   @p0                               TIMESTAMP, result           
-
 
 
 PUBLIC.OCTET_LENGTH                          [procedure, returns result]
@@ -1029,19 +846,16 @@ PUBLIC.OCTET_LENGTH                          [procedure, returns result]
 1   @p1                               LONGVARCHAR, in             
 
 
-
 PUBLIC.org.hsqldb.Library.abs                [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.org.hsqldb.Library.ascii              [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               INTEGER, result             
 1   @p1                               LONGVARCHAR, in             
-
 
 
 PUBLIC.org.hsqldb.Library.bitand             [procedure, returns result]
@@ -1051,12 +865,10 @@ PUBLIC.org.hsqldb.Library.bitand             [procedure, returns result]
 2   @p2                               INTEGER, in                 
 
 
-
 PUBLIC.org.hsqldb.Library.bitLength          [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               INTEGER, result             
 1   @p1                               LONGVARCHAR, in             
-
 
 
 PUBLIC.org.hsqldb.Library.bitor              [procedure, returns result]
@@ -1066,7 +878,6 @@ PUBLIC.org.hsqldb.Library.bitor              [procedure, returns result]
 2   @p2                               INTEGER, in                 
 
 
-
 PUBLIC.org.hsqldb.Library.bitxor             [procedure, returns result]
 ------------------------------------------------------------------------
 3   @p0                               INTEGER, result             
@@ -1074,12 +885,10 @@ PUBLIC.org.hsqldb.Library.bitxor             [procedure, returns result]
 2   @p2                               INTEGER, in                 
 
 
-
 PUBLIC.org.hsqldb.Library.character          [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               LONGVARCHAR, result         
 1   @p1                               INTEGER, in                 
-
 
 
 PUBLIC.org.hsqldb.Library.concat             [procedure, returns result]
@@ -1089,12 +898,10 @@ PUBLIC.org.hsqldb.Library.concat             [procedure, returns result]
 2   @p2                               LONGVARCHAR, in             
 
 
-
 PUBLIC.org.hsqldb.Library.cot                [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
-
 
 
 PUBLIC.org.hsqldb.Library.curdate            [procedure, returns result]
@@ -1102,17 +909,14 @@ PUBLIC.org.hsqldb.Library.curdate            [procedure, returns result]
 1   @p0                               DATE, result                
 
 
-
 PUBLIC.org.hsqldb.Library.curtime            [procedure, returns result]
 ------------------------------------------------------------------------
 1   @p0                               TIME, result                
 
 
-
 PUBLIC.org.hsqldb.Library.database           [procedure, returns result]
 ------------------------------------------------------------------------
 1   @p0                               LONGVARCHAR, result         
-
 
 
 PUBLIC.org.hsqldb.Library.datediff           [procedure, returns result]
@@ -1123,12 +927,10 @@ PUBLIC.org.hsqldb.Library.datediff           [procedure, returns result]
 3   @p3                               TIMESTAMP, in               
 
 
-
 PUBLIC.org.hsqldb.Library.dayname            [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               LONGVARCHAR, result         
 1   @p1                               DATE, in                    
-
 
 
 PUBLIC.org.hsqldb.Library.dayofmonth         [procedure, returns result]
@@ -1137,19 +939,16 @@ PUBLIC.org.hsqldb.Library.dayofmonth         [procedure, returns result]
 1   @p1                               DATE, in                    
 
 
-
 PUBLIC.org.hsqldb.Library.dayofweek          [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               INTEGER, result             
 1   @p1                               DATE, in                    
 
 
-
 PUBLIC.org.hsqldb.Library.dayofyear          [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               INTEGER, result             
 1   @p1                               DATE, in                    
-
 
 
 PUBLIC.org.hsqldb.Library.difference         [procedure, returns result]
@@ -1159,11 +958,9 @@ PUBLIC.org.hsqldb.Library.difference         [procedure, returns result]
 2   @p2                               LONGVARCHAR, in             
 
 
-
 PUBLIC.org.hsqldb.Library.getAutoCommit      [procedure, returns result]
 ------------------------------------------------------------------------
 1   @p0                               BOOLEAN, result             
-
 
 
 PUBLIC.org.hsqldb.Library.getDatabaseFullProductVersion  [procedure, returns result]
@@ -1171,11 +968,9 @@ PUBLIC.org.hsqldb.Library.getDatabaseFullProductVersion  [procedure, returns res
 1   @p0                               LONGVARCHAR, result         
 
 
-
 PUBLIC.org.hsqldb.Library.getDatabaseMajorVersion  [procedure, returns result]
 ------------------------------------------------------------------------
 1   @p0                               INTEGER, result             
-
 
 
 PUBLIC.org.hsqldb.Library.getDatabaseMinorVersion  [procedure, returns result]
@@ -1183,17 +978,14 @@ PUBLIC.org.hsqldb.Library.getDatabaseMinorVersion  [procedure, returns result]
 1   @p0                               INTEGER, result             
 
 
-
 PUBLIC.org.hsqldb.Library.getDatabaseProductName  [procedure, returns result]
 ------------------------------------------------------------------------
 1   @p0                               LONGVARCHAR, result         
 
 
-
 PUBLIC.org.hsqldb.Library.getDatabaseProductVersion  [procedure, returns result]
 ------------------------------------------------------------------------
 1   @p0                               LONGVARCHAR, result         
-
 
 
 PUBLIC.org.hsqldb.Library.hexToRaw           [procedure, returns result]
@@ -1202,18 +994,15 @@ PUBLIC.org.hsqldb.Library.hexToRaw           [procedure, returns result]
 1   @p1                               LONGVARCHAR, in             
 
 
-
 PUBLIC.org.hsqldb.Library.hour               [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               INTEGER, result             
 1   @p1                               TIME, in                    
 
 
-
 PUBLIC.org.hsqldb.Library.identity           [procedure, returns result]
 ------------------------------------------------------------------------
 1   @p0                               INTEGER, result             
-
 
 
 PUBLIC.org.hsqldb.Library.insert             [procedure, returns result]
@@ -1225,11 +1014,9 @@ PUBLIC.org.hsqldb.Library.insert             [procedure, returns result]
 4   @p4                               LONGVARCHAR, in             
 
 
-
 PUBLIC.org.hsqldb.Library.isReadOnlyConnection  [procedure, returns result]
 ------------------------------------------------------------------------
 1   @p0                               BOOLEAN, result             
-
 
 
 PUBLIC.org.hsqldb.Library.isReadOnlyDatabase  [procedure, returns result]
@@ -1237,18 +1024,15 @@ PUBLIC.org.hsqldb.Library.isReadOnlyDatabase  [procedure, returns result]
 1   @p0                               BOOLEAN, result             
 
 
-
 PUBLIC.org.hsqldb.Library.isReadOnlyDatabaseFiles  [procedure, returns result]
 ------------------------------------------------------------------------
 1   @p0                               BOOLEAN, result             
-
 
 
 PUBLIC.org.hsqldb.Library.lcase              [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               LONGVARCHAR, result         
 1   @p1                               LONGVARCHAR, in             
-
 
 
 PUBLIC.org.hsqldb.Library.left               [procedure, returns result]
@@ -1258,12 +1042,10 @@ PUBLIC.org.hsqldb.Library.left               [procedure, returns result]
 2   @p2                               INTEGER, in                 
 
 
-
 PUBLIC.org.hsqldb.Library.length             [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               INTEGER, result             
 1   @p1                               LONGVARCHAR, in             
-
 
 
 PUBLIC.org.hsqldb.Library.locate             [procedure, returns result]
@@ -1274,12 +1056,10 @@ PUBLIC.org.hsqldb.Library.locate             [procedure, returns result]
 3   @p3                               INTEGER, in                 
 
 
-
 PUBLIC.org.hsqldb.Library.log10              [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
-
 
 
 PUBLIC.org.hsqldb.Library.ltrim              [procedure, returns result]
@@ -1288,12 +1068,10 @@ PUBLIC.org.hsqldb.Library.ltrim              [procedure, returns result]
 1   @p1                               LONGVARCHAR, in             
 
 
-
 PUBLIC.org.hsqldb.Library.minute             [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               INTEGER, result             
 1   @p1                               TIME, in                    
-
 
 
 PUBLIC.org.hsqldb.Library.mod                [procedure, returns result]
@@ -1303,12 +1081,10 @@ PUBLIC.org.hsqldb.Library.mod                [procedure, returns result]
 2   @p2                               INTEGER, in                 
 
 
-
 PUBLIC.org.hsqldb.Library.month              [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               INTEGER, result             
 1   @p1                               DATE, in                    
-
 
 
 PUBLIC.org.hsqldb.Library.monthname          [procedure, returns result]
@@ -1317,11 +1093,9 @@ PUBLIC.org.hsqldb.Library.monthname          [procedure, returns result]
 1   @p1                               DATE, in                    
 
 
-
 PUBLIC.org.hsqldb.Library.now                [procedure, returns result]
 ------------------------------------------------------------------------
 1   @p0                               TIMESTAMP, result           
-
 
 
 PUBLIC.org.hsqldb.Library.octetLength        [procedure, returns result]
@@ -1330,11 +1104,9 @@ PUBLIC.org.hsqldb.Library.octetLength        [procedure, returns result]
 1   @p1                               LONGVARCHAR, in             
 
 
-
 PUBLIC.org.hsqldb.Library.pi                 [procedure, returns result]
 ------------------------------------------------------------------------
 1   @p0                               DOUBLE(8, 17), result       
-
 
 
 PUBLIC.org.hsqldb.Library.position           [procedure, returns result]
@@ -1344,12 +1116,10 @@ PUBLIC.org.hsqldb.Library.position           [procedure, returns result]
 2   @p2                               LONGVARCHAR, in             
 
 
-
 PUBLIC.org.hsqldb.Library.quarter            [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               INTEGER, result             
 1   @p1                               DATE, in                    
-
 
 
 PUBLIC.org.hsqldb.Library.rand               [procedure, returns result]
@@ -1358,12 +1128,10 @@ PUBLIC.org.hsqldb.Library.rand               [procedure, returns result]
 1   @p1                               INTEGER, in                 
 
 
-
 PUBLIC.org.hsqldb.Library.rawToHex           [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               LONGVARCHAR, result         
 1   @p1                               LONGVARCHAR, in             
-
 
 
 PUBLIC.org.hsqldb.Library.repeat             [procedure, returns result]
@@ -1371,7 +1139,6 @@ PUBLIC.org.hsqldb.Library.repeat             [procedure, returns result]
 3   @p0                               LONGVARCHAR, result         
 1   @p1                               LONGVARCHAR, in             
 2   @p2                               INTEGER, in                 
-
 
 
 PUBLIC.org.hsqldb.Library.replace            [procedure, returns result]
@@ -1382,13 +1149,11 @@ PUBLIC.org.hsqldb.Library.replace            [procedure, returns result]
 3   @p3                               LONGVARCHAR, in             
 
 
-
 PUBLIC.org.hsqldb.Library.right              [procedure, returns result]
 ------------------------------------------------------------------------
 3   @p0                               LONGVARCHAR, result         
 1   @p1                               LONGVARCHAR, in             
 2   @p2                               INTEGER, in                 
-
 
 
 PUBLIC.org.hsqldb.Library.round              [procedure, returns result]
@@ -1398,12 +1163,10 @@ PUBLIC.org.hsqldb.Library.round              [procedure, returns result]
 2   @p2                               INTEGER, in                 
 
 
-
 PUBLIC.org.hsqldb.Library.roundMagic         [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
-
 
 
 PUBLIC.org.hsqldb.Library.rtrim              [procedure, returns result]
@@ -1412,12 +1175,10 @@ PUBLIC.org.hsqldb.Library.rtrim              [procedure, returns result]
 1   @p1                               LONGVARCHAR, in             
 
 
-
 PUBLIC.org.hsqldb.Library.second             [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               INTEGER, result             
 1   @p1                               TIME, in                    
-
 
 
 PUBLIC.org.hsqldb.Library.sign               [procedure, returns result]
@@ -1426,19 +1187,16 @@ PUBLIC.org.hsqldb.Library.sign               [procedure, returns result]
 1   @p1                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.org.hsqldb.Library.soundex            [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               LONGVARCHAR, result         
 1   @p1                               LONGVARCHAR, in             
 
 
-
 PUBLIC.org.hsqldb.Library.space              [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               LONGVARCHAR, result         
 1   @p1                               INTEGER, in                 
-
 
 
 PUBLIC.org.hsqldb.Library.substring          [procedure, returns result]
@@ -1449,13 +1207,11 @@ PUBLIC.org.hsqldb.Library.substring          [procedure, returns result]
 3   @p3                               INTEGER, in                 
 
 
-
 PUBLIC.org.hsqldb.Library.to_char            [procedure, returns result]
 ------------------------------------------------------------------------
 3   @p0                               LONGVARCHAR, result         
 1   @p1                               DATE, in                    
 2   @p2                               LONGVARCHAR, in             
-
 
 
 PUBLIC.org.hsqldb.Library.trim               [procedure, returns result]
@@ -1467,13 +1223,11 @@ PUBLIC.org.hsqldb.Library.trim               [procedure, returns result]
 4   @p4                               BOOLEAN, in                 
 
 
-
 PUBLIC.org.hsqldb.Library.truncate           [procedure, returns result]
 ------------------------------------------------------------------------
 3   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
 2   @p2                               INTEGER, in                 
-
 
 
 PUBLIC.org.hsqldb.Library.ucase              [procedure, returns result]
@@ -1482,11 +1236,9 @@ PUBLIC.org.hsqldb.Library.ucase              [procedure, returns result]
 1   @p1                               LONGVARCHAR, in             
 
 
-
 PUBLIC.org.hsqldb.Library.user               [procedure, returns result]
 ------------------------------------------------------------------------
 1   @p0                               LONGVARCHAR, result         
-
 
 
 PUBLIC.org.hsqldb.Library.week               [procedure, returns result]
@@ -1495,18 +1247,15 @@ PUBLIC.org.hsqldb.Library.week               [procedure, returns result]
 1   @p1                               DATE, in                    
 
 
-
 PUBLIC.org.hsqldb.Library.year               [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               INTEGER, result             
 1   @p1                               DATE, in                    
 
 
-
 PUBLIC.PI                                    [procedure, returns result]
 ------------------------------------------------------------------------
 1   @p0                               DOUBLE(8, 17), result       
-
 
 
 PUBLIC.POWER                                 [procedure, returns result]
@@ -1516,12 +1265,10 @@ PUBLIC.POWER                                 [procedure, returns result]
 2   @p2                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.QUARTER                               [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               INTEGER, result             
 1   @p1                               DATE, in                    
-
 
 
 PUBLIC.RADIANS                               [procedure, returns result]
@@ -1530,11 +1277,9 @@ PUBLIC.RADIANS                               [procedure, returns result]
 1   @p1                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.RAND                                  [procedure, returns result]
 ------------------------------------------------------------------------
 1   @p0                               DOUBLE(8, 17), result       
-
 
 
 PUBLIC.RAWTOHEX                              [procedure, returns result]
@@ -1543,13 +1288,11 @@ PUBLIC.RAWTOHEX                              [procedure, returns result]
 1   @p1                               LONGVARCHAR, in             
 
 
-
 PUBLIC.REPEAT                                [procedure, returns result]
 ------------------------------------------------------------------------
 3   @p0                               LONGVARCHAR, result         
 1   @p1                               LONGVARCHAR, in             
 2   @p2                               INTEGER, in                 
-
 
 
 PUBLIC.REPLACE                               [procedure, returns result]
@@ -1560,13 +1303,11 @@ PUBLIC.REPLACE                               [procedure, returns result]
 3   @p3                               LONGVARCHAR, in             
 
 
-
 PUBLIC.RIGHT                                 [procedure, returns result]
 ------------------------------------------------------------------------
 3   @p0                               LONGVARCHAR, result         
 1   @p1                               LONGVARCHAR, in             
 2   @p2                               INTEGER, in                 
-
 
 
 PUBLIC.ROUND                                 [procedure, returns result]
@@ -1576,12 +1317,10 @@ PUBLIC.ROUND                                 [procedure, returns result]
 2   @p2                               INTEGER, in                 
 
 
-
 PUBLIC.ROUNDMAGIC                            [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
-
 
 
 PUBLIC.RTRIM                                 [procedure, returns result]
@@ -1590,12 +1329,10 @@ PUBLIC.RTRIM                                 [procedure, returns result]
 1   @p1                               LONGVARCHAR, in             
 
 
-
 PUBLIC.SECOND                                [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               INTEGER, result             
 1   @p1                               TIME, in                    
-
 
 
 PUBLIC.SIGN                                  [procedure, returns result]
@@ -1604,12 +1341,10 @@ PUBLIC.SIGN                                  [procedure, returns result]
 1   @p1                               DOUBLE(8, 17), in           
 
 
-
 PUBLIC.SIN                                   [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
-
 
 
 PUBLIC.SOUNDEX                               [procedure, returns result]
@@ -1618,19 +1353,16 @@ PUBLIC.SOUNDEX                               [procedure, returns result]
 1   @p1                               LONGVARCHAR, in             
 
 
-
 PUBLIC.SPACE                                 [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               LONGVARCHAR, result         
 1   @p1                               INTEGER, in                 
 
 
-
 PUBLIC.SQRT                                  [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
-
 
 
 PUBLIC.SUBSTR                                [procedure, returns result]
@@ -1641,7 +1373,6 @@ PUBLIC.SUBSTR                                [procedure, returns result]
 3   @p3                               INTEGER, in                 
 
 
-
 PUBLIC.SUBSTRING                             [procedure, returns result]
 ------------------------------------------------------------------------
 4   @p0                               LONGVARCHAR, result         
@@ -1650,12 +1381,10 @@ PUBLIC.SUBSTRING                             [procedure, returns result]
 3   @p3                               INTEGER, in                 
 
 
-
 PUBLIC.TAN                                   [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
-
 
 
 PUBLIC.TO_CHAR                               [procedure, returns result]
@@ -1665,13 +1394,11 @@ PUBLIC.TO_CHAR                               [procedure, returns result]
 2   @p2                               LONGVARCHAR, in             
 
 
-
 PUBLIC.TRUNCATE                              [procedure, returns result]
 ------------------------------------------------------------------------
 3   @p0                               DOUBLE(8, 17), result       
 1   @p1                               DOUBLE(8, 17), in           
 2   @p2                               INTEGER, in                 
-
 
 
 PUBLIC.UCASE                                 [procedure, returns result]
@@ -1680,18 +1407,15 @@ PUBLIC.UCASE                                 [procedure, returns result]
 1   @p1                               LONGVARCHAR, in             
 
 
-
 PUBLIC.UPPER                                 [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               LONGVARCHAR, result         
 1   @p1                               LONGVARCHAR, in             
 
 
-
 PUBLIC.USER                                  [procedure, returns result]
 ------------------------------------------------------------------------
 1   @p0                               LONGVARCHAR, result         
-
 
 
 PUBLIC.WEEK                                  [procedure, returns result]
@@ -1700,11 +1424,9 @@ PUBLIC.WEEK                                  [procedure, returns result]
 1   @p1                               DATE, in                    
 
 
-
 PUBLIC.YEAR                                  [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               INTEGER, result             
 1   @p1                               DATE, in                    
-
 
 

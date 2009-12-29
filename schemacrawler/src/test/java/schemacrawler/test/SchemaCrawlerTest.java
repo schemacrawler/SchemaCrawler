@@ -400,7 +400,7 @@ public class SchemaCrawlerTest
         }
     };
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.basic());
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
 
     final Database database = testUtility.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();

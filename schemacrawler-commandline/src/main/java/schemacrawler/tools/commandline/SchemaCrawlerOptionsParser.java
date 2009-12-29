@@ -117,17 +117,13 @@ final class SchemaCrawlerOptionsParser
       {
         options.setSchemaInfoLevel(SchemaInfoLevel.minimum());
       }
-      else if ("basic".equals(infoLevel))
+      else if ("standard".equals(infoLevel))
       {
-        options.setSchemaInfoLevel(SchemaInfoLevel.basic());
+        options.setSchemaInfoLevel(SchemaInfoLevel.standard());
       }
       else if ("verbose".equals(infoLevel))
       {
         options.setSchemaInfoLevel(SchemaInfoLevel.verbose());
-      }
-      else if ("standard".equals(infoLevel))
-      {
-        options.setSchemaInfoLevel(SchemaInfoLevel.standard());
       }
       else if ("maximum".equals(infoLevel))
       {

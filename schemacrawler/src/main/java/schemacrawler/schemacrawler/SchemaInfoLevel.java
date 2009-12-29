@@ -33,20 +33,6 @@ public final class SchemaInfoLevel
   private static final long serialVersionUID = -6721986729175552425L;
 
   /**
-   * Creates a new SchemaInfoLevel for basic schema information.
-   * 
-   * @return New SchemaInfoLevel
-   */
-  public static SchemaInfoLevel basic()
-  {
-    final SchemaInfoLevel basic = minimum();
-    basic.setRetrieveColumnDataTypes(true);
-    basic.setRetrieveProcedureColumns(true);
-    basic.setRetrieveTableColumns(true);
-    return basic;
-  }
-
-  /**
    * Creates a new SchemaInfoLevel for maximum schema information.
    * 
    * @return New SchemaInfoLevel
@@ -54,6 +40,7 @@ public final class SchemaInfoLevel
   public static SchemaInfoLevel maximum()
   {
     final SchemaInfoLevel maximum = verbose();
+    maximum.setRetrieveAdditionalDatabaseInfo(true);
     maximum.setRetrieveAdditionalJdbcDriverInfo(true);
     maximum.setRetrieveTablePrivileges(true);
     maximum.setRetrieveTableColumnPrivileges(true);
@@ -85,12 +72,8 @@ public final class SchemaInfoLevel
    */
   public static SchemaInfoLevel standard()
   {
-    final SchemaInfoLevel standard = new SchemaInfoLevel();
-    standard.setRetrieveSchemaCrawlerInfo(true);
-    standard.setRetrieveDatabaseInfo(true);
-    standard.setRetrieveJdbcDriverInfo(true);
-    standard.setRetrieveTables(true);
-    standard.setRetrieveProcedures(true);
+    final SchemaInfoLevel standard = minimum();
+    standard.setRetrieveColumnDataTypes(true);
     standard.setRetrieveProcedureColumns(true);
     standard.setRetrieveTableColumns(true);
     standard.setRetrieveForeignKeys(true);
@@ -105,14 +88,11 @@ public final class SchemaInfoLevel
    */
   public static SchemaInfoLevel verbose()
   {
-    final SchemaInfoLevel verbose = basic();
-    verbose.setRetrieveAdditionalDatabaseInfo(true);
+    final SchemaInfoLevel verbose = standard();
     verbose.setRetrieveUserDefinedColumnDataTypes(true);
     verbose.setRetrieveProcedureInformation(true);
     verbose.setRetrieveCheckConstraintInformation(true);
     verbose.setRetrieveViewInformation(true);
-    verbose.setRetrieveForeignKeys(true);
-    verbose.setRetrieveIndices(true);
     return verbose;
   }
 

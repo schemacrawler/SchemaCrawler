@@ -31,14 +31,12 @@ public enum SchemaTextDetailType
 
   /** No column detail. */
   brief_schema(SchemaInfoLevel.minimum()),
-  /** Basic column detail. */
-  basic_schema(SchemaInfoLevel.basic()),
+  /** Standard column detail. */
+  standard_schema(SchemaInfoLevel.standard()),
   /** Verbose column detail. */
   verbose_schema(SchemaInfoLevel.verbose()),
   /** Maximum column detail, everything supported by SchemaCrawler. */
-  maximum_schema(SchemaInfoLevel.maximum()),
-  /** Standard column detail. */
-  standard_schema(SchemaInfoLevel.standard()), ;
+  maximum_schema(SchemaInfoLevel.maximum()), ;
 
   private final SchemaInfoLevel mappedToInfoLevel;
 
