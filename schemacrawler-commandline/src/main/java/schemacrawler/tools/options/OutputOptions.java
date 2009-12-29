@@ -191,7 +191,7 @@ public final class OutputOptions
     }
     catch (final IllegalArgumentException e)
     {
-      outputFormat = OutputFormat.other;
+      outputFormat = OutputFormat.text;
     }
     return outputFormat;
   }
