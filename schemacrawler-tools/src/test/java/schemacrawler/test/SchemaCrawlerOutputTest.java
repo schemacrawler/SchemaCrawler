@@ -110,29 +110,6 @@ public class SchemaCrawlerOutputTest
   }
 
   @Test
-  public void countOperatorValidXMLOutput()
-    throws Exception
-  {
-    final String outputFilename = File.createTempFile("schemacrawler",
-                                                      ".test.html")
-      .getAbsolutePath();
-
-    final OutputOptions outputOptions = new OutputOptions(OutputFormat.html,
-                                                          outputFilename);
-    outputOptions.setNoHeader(false);
-    outputOptions.setNoFooter(false);
-    outputOptions.setNoInfo(false);
-
-    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(Operation.count
-      .name());
-    executable.setOutputOptions(outputOptions);
-    executable.execute(testUtility.getConnection());
-
-    final Validator validator = new Validator(new FileReader(outputFilename));
-    validator.assertIsValid();
-  }
-
-  @Test
   public void dataOutput()
     throws Exception
   {
@@ -157,29 +134,6 @@ public class SchemaCrawlerOutputTest
   }
 
   @Test
-  public void dumpOperatorValidXMLOutput()
-    throws Exception
-  {
-    final String outputFilename = File.createTempFile("schemacrawler",
-                                                      ".test.html")
-      .getAbsolutePath();
-
-    final OutputOptions outputOptions = new OutputOptions(OutputFormat.html,
-                                                          outputFilename);
-    outputOptions.setNoHeader(false);
-    outputOptions.setNoFooter(false);
-    outputOptions.setNoInfo(false);
-
-    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(Operation.dump
-      .name());
-    executable.setOutputOptions(outputOptions);
-    executable.execute(testUtility.getConnection());
-
-    final Validator validator = new Validator(new FileReader(outputFilename));
-    validator.assertIsValid();
-  }
-
-  @Test
   public void schemaOutput()
     throws Exception
   {
@@ -199,28 +153,5 @@ public class SchemaCrawlerOutputTest
     {
       fail("Cannot delete output file");
     }
-  }
-
-  @Test
-  public void schemaValidXMLOutput()
-    throws Exception
-  {
-    final String outputFilename = File.createTempFile("schemacrawler",
-                                                      ".test.html")
-      .getAbsolutePath();
-
-    final OutputOptions outputOptions = new OutputOptions(OutputFormat.html,
-                                                          outputFilename);
-    outputOptions.setNoHeader(false);
-    outputOptions.setNoFooter(false);
-    outputOptions.setNoInfo(false);
-
-    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(SchemaTextDetailType.maximum_schema
-      .name());
-    executable.setOutputOptions(outputOptions);
-    executable.execute(testUtility.getConnection());
-
-    final Validator validator = new Validator(new FileReader(outputFilename));
-    validator.assertIsValid();
   }
 }
