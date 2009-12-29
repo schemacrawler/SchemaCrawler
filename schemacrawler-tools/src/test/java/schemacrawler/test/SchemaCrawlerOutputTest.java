@@ -24,11 +24,9 @@ package schemacrawler.test;
 import static org.junit.Assert.fail;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.custommonkey.xmlunit.Validator;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -154,4 +152,5 @@ public class SchemaCrawlerOutputTest
       fail("Cannot delete output file");
     }
   }
+
 }
