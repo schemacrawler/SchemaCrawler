@@ -38,6 +38,7 @@ import schemacrawler.tools.text.operation.OperationHandler;
 import schemacrawler.tools.text.operation.OperationOptions;
 import schemacrawler.tools.text.operation.Query;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
+import schemacrawler.tools.text.schema.SchemaTextFormatter;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import sf.util.Utility;
 
@@ -176,8 +177,7 @@ public final class SchemaCrawlerTextExecutable
           schemaTextOptions.setSchemaTextDetailType(schemaTextDetailType);
         }
 
-        crawlHandler = SchemaTextFactory
-          .createSchemaTextCrawlHandler(schemaTextOptions, outputOptions);
+        crawlHandler = new SchemaTextFormatter(schemaTextOptions, outputOptions);
       }
       else
       {
