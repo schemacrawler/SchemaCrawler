@@ -143,13 +143,17 @@ public class SchemaCrawlerCommandlineTest
         outputOptions.setNoHeader(false);
         outputOptions.setNoFooter(false);
 
+        final Config config = Config.load(SchemaCrawlerCommandlineTest.class
+          .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
+        final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
+        schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+
         final DatabaseConnectionOptions connectionOptions = testUtility
           .getDatabaseConnectionOptions();
-        final SchemaInfoLevel infoLevel = SchemaInfoLevel.maximum();
 
         final Executable executable = new SchemaCrawlerExecutable(command);
         executable.setConnectionOptions(connectionOptions);
-        executable.getSchemaCrawlerOptions().setSchemaInfoLevel(infoLevel);
+        executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);
         executable.execute();
 

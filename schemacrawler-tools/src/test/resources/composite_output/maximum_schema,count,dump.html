@@ -1637,6 +1637,17 @@ hr {
 		<td class='subname'>DBA &#8594; SA (grantable)</td>
 		<td class='type'></td>
 	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SCTRIGGER</td>
+		<td class='description'>[trigger, before delete, per row]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>CREATE TRIGGER SCTRIGGER BEFORE DELETE ON CUSTOMER FOR EACH ROW CALL &quot;org.hsqldb.sample.TriggerSample&quot;</td>
+	</tr>
 </table>
 <p></p>
 
@@ -1710,6 +1721,14 @@ hr {
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[definition]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>SELECT ID, FIRSTNAME, LASTNAME FROM CUSTOMER</td>
 	</tr>
 </table>
 <p></p>
@@ -2158,6 +2177,17 @@ hr {
 		<td class='ordinal'></td>
 		<td class='subname'>SUPPLIER_ID</td>
 		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>CHECK_UPPERCASE_SUPPLIER_NAME</td>
+		<td class='description'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>SUPPLIER.SUPPLIER_NAME=UPPER(SUPPLIER.SUPPLIER_NAME)</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
