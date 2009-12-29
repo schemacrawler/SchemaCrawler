@@ -1,0 +1,15 @@
+
+
+Tables
+========================================================================
+
+
+PUBLIC.CUSTOMER                                                  [table]
+PUBLIC.CUSTOMERLIST                                               [view]
+PUBLIC.INVOICE                                                   [table]
+PUBLIC.ITEM                                                      [table]
+PUBLIC.PRODUCT                                                   [table]
+PUBLIC.SUPPLIER                                                  [table]
+SCHEMACRAWLER.ITEM                                               [table]
+SCHEMACRAWLER.PRODUCT2                                           [table]
+
