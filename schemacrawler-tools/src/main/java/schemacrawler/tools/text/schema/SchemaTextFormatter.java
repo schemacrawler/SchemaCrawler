@@ -123,20 +123,19 @@ public final class SchemaTextFormatter
   {
     final SchemaTextDetailType schemaTextDetailType = options
       .getSchemaTextDetailType();
-    if (schemaTextDetailType == SchemaTextDetailType.brief_schema)
+    if (schemaTextDetailType
+      .isGreaterThanOrEqualTo(SchemaTextDetailType.maximum_schema))
     {
-      return;
-    }
+      if (columnDataTypeCount == 0)
+      {
+        out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
+                                                  "Data Types"));
+      }
 
-    if (columnDataTypeCount == 0)
-    {
-      out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                                "Data Types"));
+      out.print(formattingHelper.createObjectStart(""));
+      printColumnDataType(columnDataType);
+      out.print(formattingHelper.createObjectEnd());
     }
-
-    out.print(formattingHelper.createObjectStart(""));
-    printColumnDataType(columnDataType);
-    out.print(formattingHelper.createObjectEnd());
 
     columnDataTypeCount++;
   }
