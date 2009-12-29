@@ -284,16 +284,16 @@ public final class SchemaTextFormatter
     }
 
     if (schemaTextDetailType
-      .isGreaterThanOrEqualTo(SchemaTextDetailType.basic_schema))
+      .isGreaterThanOrEqualTo(SchemaTextDetailType.standard_schema))
     {
       printPrimaryKey(table.getPrimaryKey());
+      printForeignKeys(table.getName(), table.getForeignKeys());
+      printIndices(table.getIndices());
     }
 
     if (schemaTextDetailType
       .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
     {
-      printForeignKeys(table.getName(), table.getForeignKeys());
-      printIndices(table.getIndices());
       printCheckConstraints(table.getCheckConstraints());
       if (schemaTextDetailType
         .isGreaterThanOrEqualTo(SchemaTextDetailType.maximum_schema))

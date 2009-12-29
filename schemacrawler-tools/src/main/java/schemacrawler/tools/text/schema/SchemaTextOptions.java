@@ -262,7 +262,7 @@ public class SchemaTextOptions
   {
     if (schemaTextDetailType == null)
     {
-      this.schemaTextDetailType = SchemaTextDetailType.basic_schema;
+      this.schemaTextDetailType = SchemaTextDetailType.standard_schema;
     }
     else
     {
@@ -294,7 +294,7 @@ public class SchemaTextOptions
 
   private void setDefaultValues()
   {
-    schemaTextDetailType = SchemaTextDetailType.basic_schema;
+    schemaTextDetailType = SchemaTextDetailType.standard_schema;
 
     showStandardColumnTypeNames = false;
     showOrdinalNumbers = false;
