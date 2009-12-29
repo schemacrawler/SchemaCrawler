@@ -425,6 +425,9 @@ SELECT,[privilege]
 ""
 UPDATE,[privilege]
 "",DBA --> SA (grantable),""
+""
+SCTRIGGER,"[trigger, before delete, per row]"
+"","CREATE TRIGGER SCTRIGGER BEFORE DELETE ON CUSTOMER FOR EACH ROW CALL 68org.hsqldb.sample.TriggerSample68"
 
 
 PUBLIC.CUSTOMERLIST,[view]
@@ -445,6 +448,8 @@ SELECT,[privilege]
 UPDATE,[privilege]
 "",DBA --> SA (grantable),""
 ""
+"",[definition]
+"","SELECT ID, FIRSTNAME, LASTNAME FROM CUSTOMER"
 
 
 PUBLIC.INVOICE,[table]
@@ -561,6 +566,9 @@ INDEX_B_SUPPLIER,[non-unique index]
 INDEX_A_SUPPLIER,[non-unique index]
 "",SUPPLIER_NAME,ascending
 "",SUPPLIER_ID,ascending
+""
+CHECK_UPPERCASE_SUPPLIER_NAME,[check constraint]
+"",SUPPLIER.SUPPLIER_NAME=UPPER(SUPPLIER.SUPPLIER_NAME)
 ""
 DELETE,[privilege]
 "",DBA --> SA (grantable),""
