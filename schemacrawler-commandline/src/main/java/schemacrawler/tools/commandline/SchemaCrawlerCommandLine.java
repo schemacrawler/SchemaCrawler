@@ -63,7 +63,7 @@ public final class SchemaCrawlerCommandLine
     this.config = config;
     this.outputOptions = outputOptions;
 
-    schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions = new SchemaCrawlerOptions(config);
     if (infoLevel != null)
     {
       schemaCrawlerOptions.setSchemaInfoLevel(infoLevel);
