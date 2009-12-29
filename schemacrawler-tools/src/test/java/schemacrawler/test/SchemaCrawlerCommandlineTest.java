@@ -160,7 +160,9 @@ public class SchemaCrawlerCommandlineTest
           }
         }
 
-        TestUtility.compareOutput(referenceFile, testOutputFile, failures);
+        TestUtility.compareOutput("composite_output/" + referenceFile,
+                                  testOutputFile,
+                                  failures);
       }
     }
 
@@ -206,7 +208,9 @@ public class SchemaCrawlerCommandlineTest
         executable.setOutputOptions(outputOptions);
         executable.execute();
 
-        TestUtility.compareOutput(referenceFile, testOutputFile, failures);
+        TestUtility.compareOutput("info_level_output/" + referenceFile,
+                                  testOutputFile,
+                                  failures);
       }
     }
 
