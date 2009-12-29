@@ -1,0 +1,174 @@
+
+
+
+System Information
+========================================================================
+
+
+
+SchemaCrawler Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+product name                          SchemaCrawler
+product version                       8.0
+
+
+Database Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+database product name                 HSQL Database Engine
+database product version              1.8.0
+database user name                    SA
+
+
+JDBC Driver Information
+-=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
+
+driver name                           HSQL Database Engine Driver
+driver version                        1.8.0
+driver class name                     org.hsqldb.jdbcDriver
+url                                   jdbc:hsqldb:mem:schemacrawler
+is JDBC compliant                     false
+
+
+
+Tables
+========================================================================
+
+
+PUBLIC.CUSTOMER                                                  [table]
+------------------------------------------------------------------------
+  ID                                INTEGER not null            
+  FIRSTNAME                         VARCHAR(255)                
+  LASTNAME                          VARCHAR(255)                
+  STREET                            VARCHAR(255)                
+  CITY                              VARCHAR(255)                
+
+SYS_IDX_46                                                 [primary key]
+  ID                                ascending                   
+
+FK_INVOICE_CUSTOMER                        [foreign key, with no action]
+  ID --> PUBLIC.INVOICE.CUSTOMERID                              
+
+
+PUBLIC.CUSTOMERLIST                                               [view]
+------------------------------------------------------------------------
+  ID                                INTEGER                     
+  FIRSTNAME                         VARCHAR(255)                
+  LASTNAME                          VARCHAR(255)                
+
+
+
+PUBLIC.INVOICE                                                   [table]
+------------------------------------------------------------------------
+  ID                                INTEGER not null            
+  CUSTOMERID                        INTEGER                     
+  TOTAL                             FLOAT(17, 0)                
+
+SYS_IDX_48                                                 [primary key]
+  ID                                ascending                   
+
+FK_INVOICE_CUSTOMER                        [foreign key, with no action]
+  PUBLIC.CUSTOMER.ID --> CUSTOMERID                              
+
+FK_B_ITEM_INVOICE                          [foreign key, with no action]
+  ID --> PUBLIC.ITEM.INVOICEID                                  
+
+INDEX_INVOICE_CUSTOMER                                [non-unique index]
+  CUSTOMERID                        ascending                   
+
+SYS_IDX_50                                            [non-unique index]
+  CUSTOMERID                        ascending                   
+
+
+PUBLIC.ITEM                                                      [table]
+------------------------------------------------------------------------
+  INVOICEID                         INTEGER not null            
+  ITEM                              INTEGER not null            
+  PRODUCTID                         INTEGER                     
+  QUANTITY                          INTEGER                     
+  COST                              FLOAT(17, 0)                
+
+SYS_IDX_52                                                 [primary key]
+  INVOICEID                         ascending                   
+  ITEM                              ascending                   
+
+FK_B_ITEM_INVOICE                          [foreign key, with no action]
+  PUBLIC.INVOICE.ID --> INVOICEID                               
+
+FK_A_ITEM_PRODUCT                          [foreign key, with no action]
+  PUBLIC.PRODUCT.ID --> PRODUCTID                               
+
+INDEX_ITEM_INVOICE                                    [non-unique index]
+  INVOICEID                         ascending                   
+
+SYS_IDX_53                                            [non-unique index]
+  INVOICEID                         ascending                   
+
+INDEX_ITEM_PRODUCT                                    [non-unique index]
+  PRODUCTID                         ascending                   
+
+SYS_IDX_55                                            [non-unique index]
+  PRODUCTID                         ascending                   
+
+
+PUBLIC.PRODUCT                                                   [table]
+------------------------------------------------------------------------
+  ID                                INTEGER not null            
+  NAME                              VARCHAR(255)                
+  PRICE                             FLOAT(17, 0)                
+
+SYS_IDX_47                                                 [primary key]
+  ID                                ascending                   
+
+FK_A_ITEM_PRODUCT                          [foreign key, with no action]
+  ID --> PUBLIC.ITEM.PRODUCTID                                  
+
+
+PUBLIC.SUPPLIER                                                  [table]
+------------------------------------------------------------------------
+  SUPPLIER_ID                       INTEGER                     
+  SUPPLIER_NAME                     VARCHAR(255)                
+
+INDEX_B_SUPPLIER                                      [non-unique index]
+  SUPPLIER_ID                       ascending                   
+  SUPPLIER_NAME                     ascending                   
+
+INDEX_A_SUPPLIER                                      [non-unique index]
+  SUPPLIER_NAME                     ascending                   
+  SUPPLIER_ID                       ascending                   
+
+
+SCHEMACRAWLER.ITEM                                               [table]
+------------------------------------------------------------------------
+  INVOICEID                         INTEGER not null            
+  ITEM                              INTEGER not null            
+  PRODUCTID                         INTEGER                     
+  QUANTITY                          INTEGER                     
+  COST                              FLOAT(17, 0)                
+
+SYS_IDX_59                                                 [primary key]
+  INVOICEID                         ascending                   
+  ITEM                              ascending                   
+
+
+SCHEMACRAWLER.PRODUCT2                                           [table]
+------------------------------------------------------------------------
+  ID                                INTEGER not null            
+  NAME                              VARCHAR(255)                
+  PRICE                             FLOAT(17, 0)                
+
+SYS_IDX_61                                                 [primary key]
+  ID                                ascending                   
+
+
+
+
+Weak Associations
+========================================================================
+
+
+  PUBLIC.INVOICE.ID --> SCHEMACRAWLER.ITEM.INVOICEID                              
+  PUBLIC.PRODUCT.ID --> SCHEMACRAWLER.ITEM.PRODUCTID                              
+
+

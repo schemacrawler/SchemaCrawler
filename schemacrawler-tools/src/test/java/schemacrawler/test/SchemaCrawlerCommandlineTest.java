@@ -45,11 +45,33 @@ import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.utility.TestDatabase;
 import sf.util.TestUtility;
 
 public class SchemaCrawlerCommandlineTest
 {
+
+  enum InfoLevel
+  {
+    minimum(SchemaInfoLevel.minimum()),
+    standard(SchemaInfoLevel.standard()),
+    verbose(SchemaInfoLevel.verbose()),
+    maximum(SchemaInfoLevel.maximum());
+
+    private final SchemaInfoLevel infoLevel;
+
+    private InfoLevel(final SchemaInfoLevel infoLevel)
+    {
+      this.infoLevel = infoLevel;
+    }
+
+    public final SchemaInfoLevel getSchemaInfoLevel()
+    {
+      return infoLevel;
+    }
+
+  }
 
   private static class LocalEntityResolver
     implements EntityResolver
@@ -137,6 +159,52 @@ public class SchemaCrawlerCommandlineTest
             failures.add(validator.toString());
           }
         }
+
+        TestUtility.compareOutput(referenceFile, testOutputFile, failures);
+      }
+    }
+
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
+    }
+
+  }
+
+  @Test
+  public void compareInfoLevelOutput()
+    throws Exception
+  {
+
+    final List<String> failures = new ArrayList<String>();
+    for (final InfoLevel infoLevel: InfoLevel.values())
+    {
+      for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
+        .values())
+      {
+        final String referenceFile = schemaTextDetailType + "_" + infoLevel
+                                     + ".txt";
+
+        final File testOutputFile = File.createTempFile("schemacrawler.test.",
+                                                        referenceFile);
+
+        final OutputOptions outputOptions = new OutputOptions(OutputFormat.text,
+                                                              testOutputFile
+                                                                .getAbsolutePath());
+        outputOptions.setNoInfo(false);
+        outputOptions.setNoHeader(false);
+        outputOptions.setNoFooter(false);
+
+        final DatabaseConnectionOptions connectionOptions = testUtility
+          .getDatabaseConnectionOptions();
+
+        final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
+          .name());
+        executable.setConnectionOptions(connectionOptions);
+        executable.getSchemaCrawlerOptions().setSchemaInfoLevel(infoLevel
+          .getSchemaInfoLevel());
+        executable.setOutputOptions(outputOptions);
+        executable.execute();
 
         TestUtility.compareOutput(referenceFile, testOutputFile, failures);
       }
