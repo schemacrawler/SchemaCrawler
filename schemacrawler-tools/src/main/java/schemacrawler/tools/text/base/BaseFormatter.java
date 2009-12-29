@@ -35,6 +35,7 @@ import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.ToolOptions;
 import schemacrawler.tools.text.util.HtmlFormattingHelper;
 import schemacrawler.tools.text.util.PlainTextFormattingHelper;
 import schemacrawler.tools.text.util.TextFormattingHelper;
@@ -46,10 +47,11 @@ import sf.util.ObjectToString;
  * 
  * @author Sualeh Fatehi
  */
-public abstract class BaseFormatter<O extends BaseToolOptions>
+public abstract class BaseFormatter<O extends ToolOptions>
 {
 
   protected final O options;
+  protected final OutputOptions outputOptions;
   protected final PrintWriter out;
   protected final TextFormattingHelper formattingHelper;
 
@@ -59,7 +61,7 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
    * @param options
    *        Options for text formatting of schema
    */
-  protected BaseFormatter(final O options)
+  protected BaseFormatter(final O options, final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
     if (options == null)
@@ -68,7 +70,11 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
     }
     this.options = options;
 
-    final OutputOptions outputOptions = options.getOutputOptions();
+    if (outputOptions == null)
+    {
+      throw new IllegalArgumentException("Output options not provided");
+    }
+    this.outputOptions = outputOptions;
     final OutputFormat outputFormat = outputOptions.getOutputFormat();
     if (outputFormat == OutputFormat.html)
     {
@@ -79,7 +85,7 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
       formattingHelper = new PlainTextFormattingHelper(outputFormat);
     }
 
-    this.out = options.getOutputOptions().openOutputWriter();
+    this.out = outputOptions.openOutputWriter();
   }
 
   /**
@@ -89,7 +95,7 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
    */
   public void handle(final DatabaseInfo dbInfo)
   {
-    if (dbInfo == null || options.getOutputOptions().isNoInfo())
+    if (dbInfo == null || outputOptions.isNoInfo())
     {
       return;
     }
@@ -137,7 +143,7 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
    */
   public void handle(final JdbcDriverInfo driverInfo)
   {
-    if (driverInfo == null || options.getOutputOptions().isNoInfo())
+    if (driverInfo == null || outputOptions.isNoInfo())
     {
       return;
     }
@@ -185,7 +191,7 @@ public abstract class BaseFormatter<O extends BaseToolOptions>
    */
   public void handle(final SchemaCrawlerInfo schemaCrawlerInfo)
   {
-    if (schemaCrawlerInfo == null || options.getOutputOptions().isNoInfo())
+    if (schemaCrawlerInfo == null || outputOptions.isNoInfo())
     {
       return;
     }

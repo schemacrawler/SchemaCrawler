@@ -3,6 +3,7 @@ package schemacrawler.tools.text;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.CrawlHandler;
 import schemacrawler.tools.text.schema.SchemaDotFormatter;
 import schemacrawler.tools.text.schema.SchemaTextFormatter;
@@ -16,7 +17,8 @@ public final class SchemaTextFactory
    * @param options
    *        Options for text formatting of schema
    */
-  public final static CrawlHandler createSchemaTextCrawlHandler(final SchemaTextOptions options)
+  public final static CrawlHandler createSchemaTextCrawlHandler(final SchemaTextOptions options,
+                                                                final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
     if (options == null)
@@ -24,16 +26,15 @@ public final class SchemaTextFactory
       throw new IllegalArgumentException("Options not provided");
     }
 
-    final OutputFormat outputFormat = options.getOutputOptions()
-      .getOutputFormat();
+    final OutputFormat outputFormat = outputOptions.getOutputFormat();
     final CrawlHandler schemaTextCrawlHandler;
     if (outputFormat == OutputFormat.dot)
     {
-      schemaTextCrawlHandler = new SchemaDotFormatter(options);
+      schemaTextCrawlHandler = new SchemaDotFormatter(options, outputOptions);
     }
     else
     {
-      schemaTextCrawlHandler = new SchemaTextFormatter(options);
+      schemaTextCrawlHandler = new SchemaTextFormatter(options, outputOptions);
     }
     return schemaTextCrawlHandler;
   }

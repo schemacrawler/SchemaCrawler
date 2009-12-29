@@ -168,18 +168,16 @@ public final class SchemaCrawlerTextExecutable
         if (this.schemaTextOptions == null)
         {
           schemaTextOptions = new SchemaTextOptions(config,
-                                                    outputOptions,
                                                     schemaTextDetailType);
         }
         else
         {
           schemaTextOptions = this.schemaTextOptions.duplicate();
-          schemaTextOptions.setOutputOptions(outputOptions);
           schemaTextOptions.setSchemaTextDetailType(schemaTextDetailType);
         }
 
         crawlHandler = SchemaTextFactory
-          .createSchemaTextCrawlHandler(schemaTextOptions);
+          .createSchemaTextCrawlHandler(schemaTextOptions, outputOptions);
       }
       else
       {
@@ -216,9 +214,10 @@ public final class SchemaCrawlerTextExecutable
         {
           operationOptions.setOperation(operation);
         }
-        operationOptions.setOutputOptions(outputOptions);
 
-        crawlHandler = new OperationHandler(operationOptions, connection);
+        crawlHandler = new OperationHandler(operationOptions,
+                                            outputOptions,
+                                            connection);
       }
       crawlHandlers.add(crawlHandler);
     }

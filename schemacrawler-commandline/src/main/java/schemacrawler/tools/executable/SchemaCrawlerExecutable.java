@@ -33,7 +33,7 @@ public class SchemaCrawlerExecutable
     Executable executable;
     try
     {
-      executable = (Executable) commandExecutableClass.newInstance();
+      executable = commandExecutableClass.newInstance();
     }
     catch (final Exception e)
     {

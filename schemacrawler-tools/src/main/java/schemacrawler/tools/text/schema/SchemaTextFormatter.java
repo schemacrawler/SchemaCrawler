@@ -46,6 +46,7 @@ import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schema.Privilege.Grant;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseFormatter;
 import schemacrawler.tools.text.base.CrawlHandler;
 import schemacrawler.tools.text.util.TextFormattingHelper.DocumentHeaderType;
@@ -74,10 +75,11 @@ public final class SchemaTextFormatter
    * @param options
    *        Options for text formatting of schema
    */
-  public SchemaTextFormatter(final SchemaTextOptions options)
+  public SchemaTextFormatter(final SchemaTextOptions options,
+                             final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
-    super(options);
+    super(options, outputOptions);
   }
 
   /**
@@ -88,7 +90,7 @@ public final class SchemaTextFormatter
   public void begin()
     throws SchemaCrawlerException
   {
-    if (!options.getOutputOptions().isNoHeader())
+    if (!outputOptions.isNoHeader())
     {
       out.println(formattingHelper.createDocumentStart());
     }
@@ -107,15 +109,14 @@ public final class SchemaTextFormatter
       out.print(formattingHelper.createObjectEnd());
     }
 
-    if (!options.getOutputOptions().isNoFooter())
+    if (!outputOptions.isNoFooter())
     {
       out.println(formattingHelper.createDocumentEnd());
     }
     out.flush();
     //
-    options.getOutputOptions().closeOutputWriter(out);
-    LOGGER.log(Level.FINE, "Wrote output, "
-                           + options.getOutputOptions().getOutputFile());
+    outputOptions.closeOutputWriter(out);
+    LOGGER.log(Level.FINE, "Wrote output, " + outputOptions.getOutputFile());
   }
 
   public void handle(final ColumnDataType columnDataType)

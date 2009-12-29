@@ -40,6 +40,7 @@ import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.CrawlHandler;
 import schemacrawler.tools.text.util.HtmlFormattingHelper;
 import schemacrawler.tools.text.util.PastelColor;
@@ -55,7 +56,7 @@ public final class SchemaDotFormatter
 
   private static final String NEWLINE = System.getProperty("line.separator");
 
-  private final SchemaTextOptions options;
+  private final OutputOptions outputOptions;
   private final PrintWriter out;
   private final Map<Schema, PastelColor> colorMap;
   private final StringBuilder graphInfo;
@@ -66,16 +67,20 @@ public final class SchemaDotFormatter
    * @param options
    *        Options for text formatting of schema
    */
-  public SchemaDotFormatter(final SchemaTextOptions options)
+  public SchemaDotFormatter(final SchemaTextOptions options,
+                            final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
     if (options == null)
     {
       throw new IllegalArgumentException("Options not provided");
     }
-    this.options = options;
-
-    out = options.getOutputOptions().openOutputWriter();
+    if (outputOptions == null)
+    {
+      throw new IllegalArgumentException("Output options not provided");
+    }
+    this.outputOptions = outputOptions;
+    out = outputOptions.openOutputWriter();
 
     colorMap = new HashMap<Schema, PastelColor>();
     graphInfo = new StringBuilder();
@@ -95,9 +100,8 @@ public final class SchemaDotFormatter
     out.println("}");
     out.flush();
     //
-    options.getOutputOptions().closeOutputWriter(out);
-    LOGGER.log(Level.FINE, "Wrote output, "
-                           + options.getOutputOptions().getOutputFile());
+    outputOptions.closeOutputWriter(out);
+    LOGGER.log(Level.FINE, "Wrote output, " + outputOptions.getOutputFile());
   }
 
   public void handle(final ColumnDataType dataType)
