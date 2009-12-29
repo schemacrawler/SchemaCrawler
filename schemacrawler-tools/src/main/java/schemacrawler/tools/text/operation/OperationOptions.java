@@ -22,7 +22,6 @@ package schemacrawler.tools.text.operation;
 
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseToolOptions;
 import sf.util.Utility;
@@ -150,25 +149,6 @@ public final class OperationOptions
     {
       return query;
     }
-  }
-
-  public final SchemaInfoLevel getSchemaInfoLevel()
-  {
-    final SchemaInfoLevel schemaInfoLevel = new SchemaInfoLevel();
-    schemaInfoLevel.setRetrieveDatabaseInfo(true);
-    schemaInfoLevel.setRetrieveJdbcDriverInfo(true);
-
-    // Retrieve tables only if the query requires it
-    final Query query = getQuery();
-    if (query == null || query.isQueryOver())
-    {
-      schemaInfoLevel.setRetrieveColumnDataTypes(true);
-      schemaInfoLevel.setRetrieveUserDefinedColumnDataTypes(true);
-      schemaInfoLevel.setRetrieveTableColumns(true);
-      schemaInfoLevel.setRetrieveTables(true);
-    }
-
-    return schemaInfoLevel;
   }
 
   /**

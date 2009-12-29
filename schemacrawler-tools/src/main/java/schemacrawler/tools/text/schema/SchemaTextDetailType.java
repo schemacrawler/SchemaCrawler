@@ -33,8 +33,6 @@ public enum SchemaTextDetailType
   brief_schema(SchemaInfoLevel.minimum()),
   /** Standard column detail. */
   standard_schema(SchemaInfoLevel.standard()),
-  /** Verbose column detail. */
-  verbose_schema(SchemaInfoLevel.verbose()),
   /** Maximum column detail, everything supported by SchemaCrawler. */
   maximum_schema(SchemaInfoLevel.maximum()), ;
 
@@ -62,16 +60,6 @@ public enum SchemaTextDetailType
     {
       return false;
     }
-  }
-
-  /**
-   * Find the enumeration value corresponding to the string.
-   * 
-   * @return Enumeration value
-   */
-  SchemaInfoLevel mapToInfoLevel()
-  {
-    return mappedToInfoLevel;
   }
 
 }
