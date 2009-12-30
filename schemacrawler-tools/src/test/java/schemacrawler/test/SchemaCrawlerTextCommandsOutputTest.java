@@ -106,9 +106,21 @@ public class SchemaCrawlerTextCommandsOutputTest
   public void queryOutput()
     throws Exception
   {
-    final String queryCommand = "customer_count";
+    final String queryCommand = "all_tables";
     final Config config = new Config();
-    config.put(queryCommand, "SELECT COUNT(*) FROM CUSTOMER");
+    config.put(queryCommand, "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES");
+
+    textOutputTest(queryCommand, config);
+  }
+
+  @Test
+  public void queryOverOutput()
+    throws Exception
+  {
+    final String queryCommand = "dump_tables";
+    final Config config = new Config();
+    config.put(queryCommand,
+               "SELECT ${columns} FROM ${table} ORDER BY ${columns}");
 
     textOutputTest(queryCommand, config);
   }
