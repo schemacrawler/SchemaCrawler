@@ -23,11 +23,8 @@ package schemacrawler.tools.integration;
 import java.io.Writer;
 import java.sql.Connection;
 
-import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Database;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
-import schemacrawler.tools.executable.ExecutionException;
 
 /**
  * An executor that uses a template renderer to render a schema.
@@ -46,48 +43,31 @@ public abstract class SchemaRenderer
   }
 
   @Override
-  public final void execute(final Connection connection)
-    throws ExecutionException
+  public final void executeOn(final Database database,
+                              final Connection connection)
+    throws Exception
   {
-    if (connection == null)
-    {
-      throw new IllegalArgumentException("No connection provided");
-    }
-
-    adjustSchemaInfoLevel();
-
-    try
-    {
-      final SchemaCrawler crawler = new SchemaCrawler(connection);
-      final Database database = crawler.crawl(schemaCrawlerOptions);
-
-      // Executable-specific work
-      final Writer writer = outputOptions.openOutputWriter();
-      final String resource = outputOptions.getOutputFormatValue();
-      render(connection, resource, database, writer);
-      outputOptions.closeOutputWriter(writer);
-    }
-    catch (final SchemaCrawlerException e)
-    {
-      throw new ExecutionException("Could not execute renderer", e);
-    }
+    final Writer writer = outputOptions.openOutputWriter();
+    final String resource = outputOptions.getOutputFormatValue();
+    render(database, connection, resource, writer);
+    outputOptions.closeOutputWriter(writer);
   }
 
   /**
    * Renders the schema with the given template.
    * 
-   * @param resource
-   *        Location of the resource
    * @param database
    *        Database
+   * @param resource
+   *        Location of the resource
    * @param writer
    *        Writer
    * @throws Exception
    */
-  protected abstract void render(Connection connection,
+  protected abstract void render(Database database,
+                                 Connection connection,
                                  String resource,
-                                 Database database,
                                  Writer writer)
-    throws ExecutionException;
+    throws Exception;
 
 }

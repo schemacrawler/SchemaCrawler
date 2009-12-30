@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.Writer;
 import java.sql.Connection;
 import java.util.Properties;
+import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,7 +37,6 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
 
 import schemacrawler.schema.Database;
-import schemacrawler.tools.executable.ExecutionException;
 import schemacrawler.tools.integration.SchemaRenderer;
 
 /**
@@ -71,16 +71,15 @@ public final class VelocityRenderer
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.integration.SchemaRenderer#render(java.sql.Connection,
-   *      java.lang.String, schemacrawler.schema.Database,
-   *      java.io.Writer)
+   * @see schemacrawler.tools.integration.SchemaRenderer#render(schemacrawler.schema.Database,
+   *      java.sql.Connection, java.lang.String, java.io.Writer)
    */
   @Override
-  protected void render(final Connection connection,
+  protected void render(final Database database,
+                        final Connection connection,
                         final String templateName,
-                        final Database database,
                         final Writer writer)
-    throws ExecutionException
+    throws Exception
   {
     // Set the file path, in case the template is a file template
     // This allows Velocity to load templates from any directory

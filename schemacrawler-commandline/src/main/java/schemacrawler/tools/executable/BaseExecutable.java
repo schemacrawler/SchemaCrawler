@@ -28,6 +28,8 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
+import schemacrawler.crawl.SchemaCrawler;
+import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -100,8 +102,19 @@ public abstract class BaseExecutable
    * 
    * @see schemacrawler.tools.executable.Executable#execute(java.sql.Connection)
    */
-  public abstract void execute(Connection connection)
-    throws ExecutionException;
+  public final void execute(final Connection connection)
+    throws Exception
+  {
+    if (connection == null)
+    {
+      throw new IllegalArgumentException("No connection provided");
+    }
+    adjustSchemaInfoLevel();
+
+    final SchemaCrawler crawler = new SchemaCrawler(connection);
+    final Database database = crawler.crawl(schemaCrawlerOptions);
+    executeOn(database, connection);
+  }
 
   /**
    * {@inheritDoc}
@@ -109,7 +122,7 @@ public abstract class BaseExecutable
    * @see schemacrawler.tools.executable.Executable#execute(javax.sql.DataSource)
    */
   public final void execute(final DataSource dataSource)
-    throws ExecutionException
+    throws Exception
   {
     if (dataSource == null)
     {
@@ -118,14 +131,7 @@ public abstract class BaseExecutable
     Connection connection = null;
     try
     {
-      try
-      {
-        connection = dataSource.getConnection();
-      }
-      catch (final SQLException e)
-      {
-        throw new ExecutionException("Could not create database connection", e);
-      }
+      connection = dataSource.getConnection();
       LOGGER.log(Level.INFO, "Obtained database connection, " + connection);
       execute(connection);
     }
@@ -248,10 +254,13 @@ public abstract class BaseExecutable
     return ObjectToString.toString(this);
   }
 
+  protected abstract void executeOn(Database database, Connection connection)
+    throws Exception;
+
   /**
    * Initializes the executable before execution.
    */
-  protected final void adjustSchemaInfoLevel()
+  private final void adjustSchemaInfoLevel()
   {
     final SchemaInfoLevel infoLevel = schemaCrawlerOptions.getSchemaInfoLevel();
     if (!schemaCrawlerOptions.isAlphabeticalSortForTables()

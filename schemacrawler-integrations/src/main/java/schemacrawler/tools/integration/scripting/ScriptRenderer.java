@@ -22,20 +22,20 @@ package schemacrawler.tools.integration.scripting;
 
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.Writer;
 import java.sql.Connection;
+import java.util.concurrent.ExecutionException;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import schemacrawler.schema.Database;
-import schemacrawler.tools.executable.ExecutionException;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.integration.SchemaRenderer;
 import sf.util.FileUtility;
 import sf.util.Utility;
@@ -53,40 +53,31 @@ public final class ScriptRenderer
 
   public ScriptRenderer()
   {
-    super("javascript");
+    super("script");
   }
 
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.integration.SchemaRenderer#render(java.sql.Connection,
-   *      java.lang.String, schemacrawler.schema.Database,
-   *      java.io.Writer)
+   * @see schemacrawler.tools.integration.SchemaRenderer#render(schemacrawler.schema.Database,
+   *      java.sql.Connection, java.lang.String, java.io.Writer)
    */
   @Override
-  protected void render(final Connection connection,
+  protected void render(final Database database,
+                        final Connection connection,
                         final String scriptFileName,
-                        final Database database,
                         final Writer writer)
-    throws ExecutionException
+    throws Exception
   {
     if (Utility.isBlank(scriptFileName))
     {
-      throw new ExecutionException("No script file provided");
+      throw new SchemaCrawlerException("No script file provided");
     }
     final Reader reader;
     final File scriptFile = new File(scriptFileName);
     if (scriptFile.exists() && scriptFile.canRead())
     {
-      try
-      {
-        reader = new FileReader(scriptFile);
-      }
-      catch (final FileNotFoundException e)
-      {
-        throw new ExecutionException("Cannot load script, "
-                                     + scriptFile.getAbsolutePath());
-      }
+      reader = new FileReader(scriptFile);
     }
     else
     {
@@ -98,7 +89,8 @@ public final class ScriptRenderer
       }
       else
       {
-        throw new ExecutionException("Cannot load script, " + scriptFileName);
+        throw new SchemaCrawlerException("Cannot load script, "
+                                         + scriptFileName);
       }
     }
 
@@ -114,7 +106,7 @@ public final class ScriptRenderer
       }
       if (scriptEngine == null)
       {
-        throw new ExecutionException("Script engine not found");
+        throw new SchemaCrawlerException("Script engine not found");
       }
 
       // Set up the context
