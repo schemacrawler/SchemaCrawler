@@ -38,6 +38,7 @@ import schemacrawler.schema.Database;
 import schemacrawler.tools.executable.ExecutionException;
 import schemacrawler.tools.integration.SchemaRenderer;
 import sf.util.FileUtility;
+import sf.util.Utility;
 
 /**
  * Main executor for the scripting engine integration.
@@ -58,8 +59,9 @@ public final class ScriptRenderer
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.integration.TemplatedSchemaRenderer#render(java.lang.String,
-   *      schemacrawler.schema.Schema, java.io.Writer)
+   * @see schemacrawler.tools.integration.SchemaRenderer#render(java.sql.Connection,
+   *      java.lang.String, schemacrawler.schema.Database,
+   *      java.io.Writer)
    */
   @Override
   protected void render(final Connection connection,
@@ -68,7 +70,7 @@ public final class ScriptRenderer
                         final Writer writer)
     throws ExecutionException
   {
-    if (sf.util.Utility.isBlank(scriptFileName))
+    if (Utility.isBlank(scriptFileName))
     {
       throw new ExecutionException("No script file provided");
     }
