@@ -28,7 +28,7 @@ public enum SchemaTextDetailType
 {
 
   /** No column detail. */
-  brief_schema,
+  list_objects,
   /** Standard column detail. */
   standard_schema,
   /** Maximum column detail, everything supported by SchemaCrawler. */

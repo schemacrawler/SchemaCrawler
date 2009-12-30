@@ -104,7 +104,7 @@ public final class SchemaTextFormatter
   public void end()
     throws SchemaCrawlerException
   {
-    if (options.getSchemaTextDetailType() == SchemaTextDetailType.brief_schema)
+    if (options.getSchemaTextDetailType() == SchemaTextDetailType.list_objects)
     {
       out.print(formattingHelper.createObjectEnd());
     }
@@ -155,7 +155,7 @@ public final class SchemaTextFormatter
     }
     final SchemaTextDetailType schemaTextDetailType = options
       .getSchemaTextDetailType();
-    if (schemaTextDetailType == SchemaTextDetailType.brief_schema)
+    if (schemaTextDetailType == SchemaTextDetailType.list_objects)
     {
       return;
     }
@@ -185,18 +185,18 @@ public final class SchemaTextFormatter
 
     final SchemaTextDetailType schemaTextDetailType = options
       .getSchemaTextDetailType();
-    if (schemaTextDetailType != SchemaTextDetailType.brief_schema)
+    if (schemaTextDetailType != SchemaTextDetailType.list_objects)
     {
       out.print(formattingHelper.createObjectStart(""));
     }
 
-    final boolean underscore = schemaTextDetailType != SchemaTextDetailType.brief_schema;
+    final boolean underscore = schemaTextDetailType != SchemaTextDetailType.list_objects;
     final String procedureTypeDetail = "procedure, " + procedure.getType();
     out.println(formattingHelper.createNameRow(procedure.getFullName(),
                                                "[" + procedureTypeDetail + "]",
                                                underscore));
 
-    if (schemaTextDetailType != SchemaTextDetailType.brief_schema)
+    if (schemaTextDetailType != SchemaTextDetailType.list_objects)
     {
       final ProcedureColumn[] columns = procedure.getColumns();
       for (final ProcedureColumn column: columns)
@@ -229,7 +229,7 @@ public final class SchemaTextFormatter
     }
     printDefinition(procedure.getDefinition());
 
-    if (schemaTextDetailType != SchemaTextDetailType.brief_schema)
+    if (schemaTextDetailType != SchemaTextDetailType.list_objects)
     {
       out.println(formattingHelper.createObjectEnd());
     }
@@ -258,15 +258,15 @@ public final class SchemaTextFormatter
     final SchemaTextDetailType schemaTextDetailType = options
       .getSchemaTextDetailType();
 
-    final boolean underscore = schemaTextDetailType != SchemaTextDetailType.brief_schema;
+    final boolean underscore = schemaTextDetailType != SchemaTextDetailType.list_objects;
     final String nameRow = formattingHelper.createNameRow(table.getFullName(),
                                                           "["
                                                               + table.getType()
                                                                 .name() + "]",
                                                           underscore);
 
-    if (schemaTextDetailType != SchemaTextDetailType.brief_schema
-        || schemaTextDetailType == SchemaTextDetailType.brief_schema
+    if (schemaTextDetailType != SchemaTextDetailType.list_objects
+        || schemaTextDetailType == SchemaTextDetailType.list_objects
         && tableCount == 0)
     {
       out.print(formattingHelper.createObjectStart(""));
@@ -274,7 +274,7 @@ public final class SchemaTextFormatter
 
     out.println(nameRow);
 
-    if (schemaTextDetailType != SchemaTextDetailType.brief_schema)
+    if (schemaTextDetailType != SchemaTextDetailType.list_objects)
     {
       printTableColumns(table.getColumns());
 

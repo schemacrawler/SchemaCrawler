@@ -189,7 +189,7 @@ public class SchemaCrawlerTextCommandsOutputTest
                                                           testOutputFile
                                                             .getAbsolutePath());
 
-    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(SchemaTextDetailType.brief_schema
+    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(SchemaTextDetailType.list_objects
       .name());
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());

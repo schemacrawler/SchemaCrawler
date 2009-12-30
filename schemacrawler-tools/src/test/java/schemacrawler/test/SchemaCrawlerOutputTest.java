@@ -48,6 +48,7 @@ import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.utility.TestDatabase;
 import sf.util.TestUtility;
@@ -99,7 +100,9 @@ public class SchemaCrawlerOutputTest
     throws Exception
   {
     final String[] commands = new String[] {
-        "maximum_schema,count,dump", "brief_schema,count",
+        SchemaTextDetailType.verbose_schema + "," + Operation.count + ","
+            + Operation.dump,
+        SchemaTextDetailType.list_objects + "," + Operation.count,
     };
 
     final List<String> failures = new ArrayList<String>();
