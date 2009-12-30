@@ -101,7 +101,7 @@ public class SchemaCrawlerXmlOutputTest
     outputOptions.setNoFooter(false);
     outputOptions.setNoInfo(false);
 
-    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(SchemaTextDetailType.brief_schema
+    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(SchemaTextDetailType.list_objects
       .name());
     executable.getSchemaCrawlerOptions().setSchemaInfoLevel(SchemaInfoLevel
       .minimum());
