@@ -346,7 +346,7 @@ public class SchemaCrawlerTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setShowStoredProcedures(true);
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.verbose());
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.detailed());
     final Schema schema1 = testUtility
       .getSchema(schemaCrawlerOptions, "PUBLIC");
     assertTrue("Could not find any tables", schema1.getTables().length > 0);

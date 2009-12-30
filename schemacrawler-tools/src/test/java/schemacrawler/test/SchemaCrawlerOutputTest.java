@@ -43,6 +43,7 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.tools.commandline.InfoLevel;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
@@ -53,27 +54,6 @@ import sf.util.TestUtility;
 
 public class SchemaCrawlerOutputTest
 {
-
-  enum InfoLevel
-  {
-    minimum(SchemaInfoLevel.minimum()),
-    standard(SchemaInfoLevel.standard()),
-    verbose(SchemaInfoLevel.verbose()),
-    maximum(SchemaInfoLevel.maximum());
-
-    private final SchemaInfoLevel infoLevel;
-
-    private InfoLevel(final SchemaInfoLevel infoLevel)
-    {
-      this.infoLevel = infoLevel;
-    }
-
-    public final SchemaInfoLevel getSchemaInfoLevel()
-    {
-      return infoLevel;
-    }
-
-  }
 
   private static class LocalEntityResolver
     implements EntityResolver

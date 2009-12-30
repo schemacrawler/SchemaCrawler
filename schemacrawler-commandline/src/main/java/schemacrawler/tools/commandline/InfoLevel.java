@@ -17,40 +17,37 @@
  * Boston, MA 02111-1307, USA.
  *
  */
+package schemacrawler.tools.commandline;
 
-package schemacrawler.tools.text.schema;
 
+import schemacrawler.schemacrawler.SchemaInfoLevel;
 
-/**
- * Enumeration for level of schema text output detail.
- */
-public enum SchemaTextDetailType
+public enum InfoLevel
 {
+  minimum, standard, detailed, maximum;
 
-  /** No column detail. */
-  brief_schema,
-  /** Standard column detail. */
-  standard_schema,
-  /** Maximum column detail, everything supported by SchemaCrawler. */
-  verbose_schema, ;
-
-  /**
-   * Checks if this is greater than or equal to the provided info level.
-   * 
-   * @param schemaTextDetailType
-   *        SchemaTextDetailType to check against
-   * @return Yes if this is greater or equal to
-   */
-  boolean isGreaterThanOrEqualTo(final SchemaTextDetailType schemaTextDetailType)
+  public final SchemaInfoLevel getSchemaInfoLevel()
   {
-    if (schemaTextDetailType != null)
+    final SchemaInfoLevel schemaInfoLevel;
+    switch (this)
     {
-      return ordinal() >= schemaTextDetailType.ordinal();
+      case minimum:
+        schemaInfoLevel = SchemaInfoLevel.minimum();
+        break;
+      case standard:
+        schemaInfoLevel = SchemaInfoLevel.standard();
+        break;
+      case detailed:
+        schemaInfoLevel = SchemaInfoLevel.detailed();
+        break;
+      case maximum:
+        schemaInfoLevel = SchemaInfoLevel.maximum();
+        break;
+      default:
+        schemaInfoLevel = SchemaInfoLevel.standard();
+        break;
     }
-    else
-    {
-      return false;
-    }
+    return schemaInfoLevel;
   }
 
 }

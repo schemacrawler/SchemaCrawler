@@ -169,7 +169,7 @@ public class SchemaCrawlerXmlOutputTest
     outputOptions.setNoFooter(false);
     outputOptions.setNoInfo(false);
 
-    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(SchemaTextDetailType.maximum_schema
+    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(SchemaTextDetailType.verbose_schema
       .name());
     executable.getSchemaCrawlerOptions().setSchemaInfoLevel(SchemaInfoLevel
       .maximum());
@@ -196,7 +196,7 @@ public class SchemaCrawlerXmlOutputTest
     final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(SchemaTextDetailType.standard_schema
       .name());
     executable.getSchemaCrawlerOptions().setSchemaInfoLevel(SchemaInfoLevel
-      .verbose());
+      .detailed());
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());
 

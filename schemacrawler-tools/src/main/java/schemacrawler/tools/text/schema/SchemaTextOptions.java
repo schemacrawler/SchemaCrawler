@@ -169,7 +169,7 @@ public class SchemaTextOptions
 
   public boolean isPrintVerboseDatabaseInfo()
   {
-    return schemaTextDetailType == SchemaTextDetailType.maximum_schema;
+    return schemaTextDetailType == SchemaTextDetailType.verbose_schema;
   }
 
   /**

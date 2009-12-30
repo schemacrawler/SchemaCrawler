@@ -125,7 +125,7 @@ public final class SchemaTextFormatter
     final SchemaTextDetailType schemaTextDetailType = options
       .getSchemaTextDetailType();
     if (schemaTextDetailType
-      .isGreaterThanOrEqualTo(SchemaTextDetailType.maximum_schema))
+      .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
     {
       if (columnDataTypeCount == 0)
       {
@@ -282,7 +282,7 @@ public final class SchemaTextFormatter
       printForeignKeys(table.getName(), table.getForeignKeys());
       printIndices(table.getIndices());
       if (schemaTextDetailType
-        .isGreaterThanOrEqualTo(SchemaTextDetailType.maximum_schema))
+        .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
       {
         printCheckConstraints(table.getCheckConstraints());
         printPrivileges(table.getPrivileges());
