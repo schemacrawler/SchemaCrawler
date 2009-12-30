@@ -66,6 +66,7 @@
         <attribute name="Main-Class" value="schemacrawler.Main" />
       </manifest>
       <zipfileset dir="${SchemaCrawler.home}/schemacrawler/target/classes" />
+    	<zipfileset dir="${SchemaCrawler.home}/schemacrawler-commandline/target/classes" />
       <zipfileset dir="${SchemaCrawler.home}/schemacrawler-tools/target/classes" />
       <zipfileset dir="${SchemaCrawler.home}/schemacrawler-integrations/target/classes" />
       <zipfileset dir="${SchemaCrawler.home}/schemacrawler-maven-plugin/target/classes" />
