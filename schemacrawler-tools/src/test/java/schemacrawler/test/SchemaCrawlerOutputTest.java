@@ -48,6 +48,7 @@ import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.text.SchemaCrawlerTextExecutable;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.utility.TestDatabase;
@@ -99,10 +100,20 @@ public class SchemaCrawlerOutputTest
   public void compareCompositeOutput()
     throws Exception
   {
+    final String queryCommand1 = "all_tables";
+    final Config queriesConfig = new Config();
+    queriesConfig.put(queryCommand1,
+                      "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES");
+    final String queryCommand2 = "dump_tables";
+    queriesConfig.put(queryCommand2,
+                      "SELECT ${columns} FROM ${table} ORDER BY ${columns}");
+
     final String[] commands = new String[] {
         SchemaTextDetailType.verbose_schema + "," + Operation.count + ","
             + Operation.dump,
         SchemaTextDetailType.list_objects + "," + Operation.count,
+        queryCommand1 + "," + queryCommand2 + "," + Operation.count + ","
+            + SchemaTextDetailType.list_objects,
     };
 
     final List<String> failures = new ArrayList<String>();
@@ -130,10 +141,11 @@ public class SchemaCrawlerOutputTest
         final DatabaseConnectionOptions connectionOptions = testUtility
           .getDatabaseConnectionOptions();
 
-        final Executable executable = new SchemaCrawlerExecutable(command);
+        final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(command);
         executable.setConnectionOptions(connectionOptions);
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);
+        executable.setConfig(queriesConfig); // For the queries
         executable.execute();
 
         if (outputFormat == OutputFormat.html)
