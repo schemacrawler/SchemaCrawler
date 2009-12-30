@@ -1,7 +1,7 @@
 --- Command ---
 
--command=javascript
-  Processes JavaScript against the database
+-command=script
+  Processes a script file, such as JavaScript against the database
   
 --- Output Options ---
 

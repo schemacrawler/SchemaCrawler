@@ -25,11 +25,9 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
-import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
-import schemacrawler.tools.executable.ExecutionException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.CrawlHandler;
 import schemacrawler.tools.text.base.Crawler;
@@ -61,34 +59,6 @@ public final class SchemaCrawlerTextExecutable
     super(command);
   }
 
-  @Override
-  public final void execute(final Connection connection)
-    throws ExecutionException
-  {
-    if (connection == null)
-    {
-      throw new IllegalArgumentException("No connection provided");
-    }
-
-    adjustSchemaInfoLevel();
-
-    try
-    {
-      final SchemaCrawler schemaCrawler = new SchemaCrawler(connection);
-      final Database database = schemaCrawler.crawl(schemaCrawlerOptions);
-      final List<CrawlHandler> crawlHandlers = createCrawlHandlers(connection);
-      final Crawler crawler = new Crawler(database);
-      for (final CrawlHandler crawlHandler: crawlHandlers)
-      {
-        crawler.crawl(crawlHandler);
-      }
-    }
-    catch (final SchemaCrawlerException e)
-    {
-      throw new ExecutionException("Could not execute SchemaCrawler", e);
-    }
-  }
-
   public final OperationOptions getOperationOptions()
   {
     return operationOptions;
@@ -107,6 +77,19 @@ public final class SchemaCrawlerTextExecutable
   public final void setSchemaTextOptions(final SchemaTextOptions schemaTextOptions)
   {
     this.schemaTextOptions = schemaTextOptions;
+  }
+
+  @Override
+  protected final void executeOn(final Database database,
+                                 final Connection connection)
+    throws Exception
+  {
+    final List<CrawlHandler> crawlHandlers = createCrawlHandlers(connection);
+    final Crawler crawler = new Crawler(database);
+    for (final CrawlHandler crawlHandler: crawlHandlers)
+    {
+      crawler.crawl(crawlHandler);
+    }
   }
 
   private List<CrawlHandler> createCrawlHandlers(final Connection connection)

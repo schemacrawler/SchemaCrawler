@@ -23,17 +23,17 @@ package schemacrawler.tools.integration.graph;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Writer;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.executable.ExecutionException;
-import schemacrawler.tools.integration.SchemaRenderer;
+import schemacrawler.tools.executable.BaseExecutable;
 import sf.util.Utility;
 
 /**
@@ -42,7 +42,7 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 public final class GraphExecutable
-  extends SchemaRenderer
+  extends BaseExecutable
 {
 
   public GraphExecutable()
@@ -53,16 +53,12 @@ public final class GraphExecutable
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.integration.SchemaRenderer#render(java.sql.Connection,
-   *      java.lang.String, schemacrawler.schema.Database,
-   *      java.io.Writer)
+   * @see schemacrawler.tools.integration.SchemaRenderer#render(schemacrawler.schema.Database,
+   *      java.sql.Connection, java.lang.String, java.io.Writer)
    */
   @Override
-  protected void render(final Connection connection,
-                        final String outputFormat,
-                        final Database database,
-                        final Writer writer)
-    throws ExecutionException
+  protected void executeOn(final Database database, final Connection connection)
+    throws Exception
   {
     try
     {
@@ -83,23 +79,24 @@ public final class GraphExecutable
         dotWriter.close();
       }
 
-      final String graphOutputFormat = getGraphOutputFormat(outputFormat);
+      final String graphOutputFormat = getGraphOutputFormat();
+      final File outputFile = getOutputFile(graphOutputFormat);
       final GraphGenerator dot = new GraphGenerator();
-      dot.generateDiagram(dotFile, outputFormat, outputOptions.getOutputFile());
+      dot.generateDiagram(dotFile, graphOutputFormat, outputFile);
     }
-    catch (IOException e)
+    catch (final IOException e)
     {
       throw new ExecutionException("Could not write dot file", e);
     }
-    catch (SchemaCrawlerException e)
+    catch (final SchemaCrawlerException e)
     {
       throw new ExecutionException("Could not write dot file", e);
     }
   }
 
-  private String getGraphOutputFormat(final String outputFormat)
+  private String getGraphOutputFormat()
   {
-    final String graphOutputFormat;
+    String graphOutputFormat = outputOptions.getOutputFormatValue();
     final List<String> outputFormats = Arrays.asList(new String[] {
         "canon",
         "cmap",
@@ -133,15 +130,23 @@ public final class GraphExecutable
         "wbmp",
         "xdot"
     });
-    if (Utility.isBlank(outputFormat) || !outputFormats.contains(outputFormat))
+    if (Utility.isBlank(graphOutputFormat)
+        || !outputFormats.contains(graphOutputFormat))
     {
       graphOutputFormat = "png";
     }
-    else
-    {
-      graphOutputFormat = outputFormat;
-    }
     return graphOutputFormat;
+  }
+
+  private File getOutputFile(final String graphOutputFormat)
+  {
+    File outputFile = outputOptions.getOutputFile();
+    if (outputFile == null)
+    {
+      outputFile = new File(".", "schemacrawler." + UUID.randomUUID() + "."
+                                 + graphOutputFormat);
+    }
+    return outputFile;
   }
 
 }

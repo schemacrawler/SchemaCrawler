@@ -59,13 +59,13 @@ public class SchemaCrawlerExecutable
   }
 
   public void execute(final Connection connection)
-    throws ExecutionException
+    throws Exception
   {
     executable.execute(connection);
   }
 
   public void execute(final DataSource dataSource)
-    throws ExecutionException
+    throws Exception
   {
     executable.execute(dataSource);
   }

@@ -36,7 +36,7 @@ public interface Executable
    *         On an exception
    */
   void execute(Connection connection)
-    throws ExecutionException;
+    throws Exception;
 
   /**
    * Executes main functionality for SchemaCrawler.
@@ -47,7 +47,7 @@ public interface Executable
    *         On an exception
    */
   void execute(DataSource dataSource)
-    throws ExecutionException;
+    throws Exception;
 
   String getCommand();
 

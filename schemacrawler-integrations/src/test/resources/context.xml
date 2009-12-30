@@ -210,7 +210,7 @@
 	</bean>
 
 	<bean id="executableForJavaScript" class="schemacrawler.tools.executable.SchemaCrawlerExecutable">
-		<constructor-arg value="javascript" />
+		<constructor-arg value="script" />
 		<property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
 		<property name="outputOptions">
 			<bean id="outputOptionsForJavaScript" class="schemacrawler.tools.options.OutputOptions">
