@@ -217,7 +217,7 @@ ID,FIRSTNAME,LASTNAME
 PUBLIC.INVOICE
 ------------------------------------------------------------------------
 ID,CUSTOMERID,TOTAL
-0,0,2607.7
+0,0,2608.0
 1,33,1610.7
 2,23,3789.0
 3,21,5974.5
@@ -260,7 +260,7 @@ ID,CUSTOMERID,TOTAL
 40,4,5288.4
 41,19,5475.6
 42,38,1436.4
-43,13,4827.7
+43,13,4828.0
 44,32,3388.2
 45,42,4731.0
 46,24,5827.2
@@ -952,7 +952,7 @@ ID,NAME,PRICE
 20,Ice Tea Telephone,20.0
 21,Chair Chair,11.4
 22,Iron Iron,6.6
-23,Shoe Chair,7.7
+23,Shoe Chair,8.0
 24,Chair Shoe,7.2
 25,Shoe Shoe,16.2
 26,Shoe Shoe,25.2
@@ -964,7 +964,7 @@ ID,NAME,PRICE
 32,Clock Iron,19.0
 33,Iron Chair,18.2
 34,Chair Iron,25.6
-35,Telephone Shoe,7.7
+35,Telephone Shoe,8.0
 36,Ice Tea Iron,3.2
 37,Clock Shoe,9.4
 38,Clock Ice Tea,21.6
