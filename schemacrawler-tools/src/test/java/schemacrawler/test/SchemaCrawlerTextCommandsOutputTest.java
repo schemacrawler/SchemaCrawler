@@ -92,96 +92,38 @@ public class SchemaCrawlerTextCommandsOutputTest
   public void countOutput()
     throws Exception
   {
-    final String referenceFile = "count.txt";
-
-    final File testOutputFile = File.createTempFile("schemacrawler.test.",
-                                                    "." + referenceFile);
-
-    final OutputOptions outputOptions = new OutputOptions(OutputFormat.text,
-                                                          testOutputFile
-                                                            .getAbsolutePath());
-
-    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(Operation.count
-      .name());
-    executable.setOutputOptions(outputOptions);
-    executable.execute(testUtility.getConnection());
-
-    final List<String> failures = new ArrayList<String>();
-    TestUtility.compareOutput("command_output/" + referenceFile,
-                              testOutputFile,
-                              failures);
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+    textOutputTest(Operation.count.name(), new Config());
   }
 
   @Test
   public void dumpOutput()
     throws Exception
   {
-    final String referenceFile = "dump.txt";
-
-    final File testOutputFile = File.createTempFile("schemacrawler.test.",
-                                                    "." + referenceFile);
-
-    final OutputOptions outputOptions = new OutputOptions(OutputFormat.text,
-                                                          testOutputFile
-                                                            .getAbsolutePath());
-
-    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(Operation.dump
-      .name());
-    executable.setOutputOptions(outputOptions);
-    executable.execute(testUtility.getConnection());
-
-    final List<String> failures = new ArrayList<String>();
-    TestUtility.compareOutput("command_output/" + referenceFile,
-                              testOutputFile,
-                              failures);
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+    textOutputTest(Operation.dump.name(), new Config());
   }
 
   @Test
   public void queryOutput()
     throws Exception
   {
-    final String referenceFile = "query.txt";
-
-    final File testOutputFile = File.createTempFile("schemacrawler.test.",
-                                                    "." + referenceFile);
-
-    final OutputOptions outputOptions = new OutputOptions(OutputFormat.text,
-                                                          testOutputFile
-                                                            .getAbsolutePath());
-
-    final String queryCommand = "CustomerCount";
+    final String queryCommand = "customer_count";
     final Config config = new Config();
     config.put(queryCommand, "SELECT COUNT(*) FROM CUSTOMER");
 
-    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(queryCommand);
-    executable.setConfig(config);
-    executable.setOutputOptions(outputOptions);
-    executable.execute(testUtility.getConnection());
-
-    final List<String> failures = new ArrayList<String>();
-    TestUtility.compareOutput("command_output/" + referenceFile,
-                              testOutputFile,
-                              failures);
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+    textOutputTest(queryCommand, config);
   }
 
   @Test
   public void schemaOutput()
     throws Exception
   {
-    final String referenceFile = "brief_schema.txt";
+    textOutputTest(SchemaTextDetailType.list_objects.name(), new Config());
+  }
 
+  private void textOutputTest(final String command, final Config config)
+    throws Exception
+  {
+    final String referenceFile = command + ".txt";
     final File testOutputFile = File.createTempFile("schemacrawler.test.",
                                                     "." + referenceFile);
 
@@ -189,8 +131,8 @@ public class SchemaCrawlerTextCommandsOutputTest
                                                           testOutputFile
                                                             .getAbsolutePath());
 
-    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(SchemaTextDetailType.list_objects
-      .name());
+    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(command);
+    executable.setConfig(config);
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());
 
