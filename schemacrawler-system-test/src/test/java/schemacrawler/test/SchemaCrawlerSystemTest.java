@@ -51,7 +51,7 @@ public class SchemaCrawlerSystemTest
         "MicrosoftSQLServer", "MySQL", "Oracle", "PostgreSQL", "SQLite",
     };
     final int[] schemaCounts = {
-        20, 4, 14, 5, 1,
+        52, 4, 14, 5, 1,
     };
 
     final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(".*");
@@ -80,8 +80,7 @@ public class SchemaCrawlerSystemTest
     Schema schema;
 
     dataSourceName = "MicrosoftSQLServer";
-    schema = retrieveSchema(dataSourceName,
-                            "schemacrawler.dbo");
+    schema = retrieveSchema(dataSourceName, "schemacrawler.dbo");
     tables(dataSourceName, schema);
     counts(dataSourceName, schema);
 
