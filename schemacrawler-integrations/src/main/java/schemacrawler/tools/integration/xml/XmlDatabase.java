@@ -54,6 +54,12 @@ public final class XmlDatabase
     return database.compareTo(o);
   }
 
+  @Override
+  public boolean equals(final Object obj)
+  {
+    return database.equals(obj);
+  }
+
   /**
    * {@inheritDoc}
    * 
@@ -172,6 +178,12 @@ public final class XmlDatabase
   public ColumnDataType[] getSystemColumnDataTypes()
   {
     return database.getSystemColumnDataTypes();
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return database.hashCode();
   }
 
   /**
