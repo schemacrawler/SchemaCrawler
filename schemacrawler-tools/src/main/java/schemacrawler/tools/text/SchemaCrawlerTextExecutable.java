@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import schemacrawler.schema.Database;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.options.OutputOptions;
@@ -51,12 +52,18 @@ public final class SchemaCrawlerTextExecutable
 
   private static final long serialVersionUID = -6824567755397315920L;
 
+  private Config config;
   private OperationOptions operationOptions;
   private SchemaTextOptions schemaTextOptions;
 
   public SchemaCrawlerTextExecutable(final String command)
   {
     super(command);
+  }
+
+  public final Config getConfig()
+  {
+    return config;
   }
 
   public final OperationOptions getOperationOptions()
@@ -67,6 +74,11 @@ public final class SchemaCrawlerTextExecutable
   public final SchemaTextOptions getSchemaTextOptions()
   {
     return schemaTextOptions;
+  }
+
+  public final void setConfig(final Config config)
+  {
+    this.config = config;
   }
 
   public final void setOperationOptions(final OperationOptions operationOptions)
@@ -189,8 +201,16 @@ public final class SchemaCrawlerTextExecutable
           final Query query = operationOptions.getQuery();
           if (query == null || !query.getName().equals(queryName))
           {
-            operationOptions.setQuery(new Query(queryName, config
-              .get(queryName)));
+            final String queryString;
+            if (config != null)
+            {
+              queryString = config.get(queryName);
+            }
+            else
+            {
+              queryString = null;
+            }
+            operationOptions.setQuery(new Query(queryName, queryString));
           }
         }
         else

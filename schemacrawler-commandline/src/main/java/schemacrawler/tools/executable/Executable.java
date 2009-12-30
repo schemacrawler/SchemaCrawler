@@ -5,7 +5,6 @@ import java.sql.Connection;
 
 import javax.sql.DataSource;
 
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
@@ -51,15 +50,11 @@ public interface Executable
 
   String getCommand();
 
-  Config getConfig();
-
   ConnectionOptions getConnectionOptions();
 
   OutputOptions getOutputOptions();
 
   SchemaCrawlerOptions getSchemaCrawlerOptions();
-
-  void setConfig(Config config);
 
   void setConnectionOptions(ConnectionOptions connectionOptions);
 
