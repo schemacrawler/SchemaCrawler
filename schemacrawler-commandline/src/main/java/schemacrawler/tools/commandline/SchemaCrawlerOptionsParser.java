@@ -112,22 +112,15 @@ final class SchemaCrawlerOptionsParser
 
     if (optionInfoLevel.isFound())
     {
-      final String infoLevel = optionInfoLevel.getValue();
-      if ("minimum".equals(infoLevel))
+      try
       {
-        options.setSchemaInfoLevel(SchemaInfoLevel.minimum());
+        final String infoLevel = optionInfoLevel.getValue();
+        options.setSchemaInfoLevel(InfoLevel.valueOf(infoLevel)
+          .getSchemaInfoLevel());
       }
-      else if ("standard".equals(infoLevel))
+      catch (final Exception e)
       {
         options.setSchemaInfoLevel(SchemaInfoLevel.standard());
-      }
-      else if ("verbose".equals(infoLevel))
-      {
-        options.setSchemaInfoLevel(SchemaInfoLevel.verbose());
-      }
-      else if ("maximum".equals(infoLevel))
-      {
-        options.setSchemaInfoLevel(SchemaInfoLevel.maximum());
       }
     }
 

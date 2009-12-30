@@ -39,7 +39,7 @@ public final class SchemaInfoLevel
    */
   public static SchemaInfoLevel maximum()
   {
-    final SchemaInfoLevel maximum = verbose();
+    final SchemaInfoLevel maximum = detailed();
     maximum.setRetrieveAdditionalDatabaseInfo(true);
     maximum.setRetrieveAdditionalJdbcDriverInfo(true);
     maximum.setRetrieveTablePrivileges(true);
@@ -86,7 +86,7 @@ public final class SchemaInfoLevel
    * 
    * @return New SchemaInfoLevel
    */
-  public static SchemaInfoLevel verbose()
+  public static SchemaInfoLevel detailed()
   {
     final SchemaInfoLevel verbose = standard();
     verbose.setRetrieveUserDefinedColumnDataTypes(true);
