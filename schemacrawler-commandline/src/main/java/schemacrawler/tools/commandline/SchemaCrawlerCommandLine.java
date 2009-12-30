@@ -47,7 +47,6 @@ public final class SchemaCrawlerCommandLine
     .getLogger(SchemaCrawlerCommandLine.class.getName());
 
   private final String command;
-  private final Config config;
   private final SchemaCrawlerOptions schemaCrawlerOptions;
   private final OutputOptions outputOptions;
   private final ConnectionOptions connectionOptions;
@@ -60,7 +59,6 @@ public final class SchemaCrawlerCommandLine
   {
     this.connectionOptions = connectionOptions;
     this.command = command;
-    this.config = config;
     this.outputOptions = outputOptions;
 
     schemaCrawlerOptions = new SchemaCrawlerOptions(config);
@@ -101,6 +99,7 @@ public final class SchemaCrawlerCommandLine
       outputOptions = new OutputOptions();
     }
 
+    final Config config;
     if (!Utility.isBlank(configResource))
     {
       config = Config.load(SchemaCrawlerCommandLine.class
@@ -138,10 +137,6 @@ public final class SchemaCrawlerCommandLine
     throws Exception
   {
     final Executable executable = new SchemaCrawlerExecutable(command);
-    if (config != null)
-    {
-      executable.setConfig(config);
-    }
     if (connectionOptions != null)
     {
       executable.setConnectionOptions(connectionOptions);
@@ -160,11 +155,6 @@ public final class SchemaCrawlerCommandLine
   public final String getCommand()
   {
     return command;
-  }
-
-  public final Config getConfig()
-  {
-    return config;
   }
 
   public final ConnectionOptions getConnectionOptions()

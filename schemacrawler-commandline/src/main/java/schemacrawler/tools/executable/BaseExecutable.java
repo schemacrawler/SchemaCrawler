@@ -30,7 +30,6 @@ import javax.sql.DataSource;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Database;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -57,7 +56,6 @@ public abstract class BaseExecutable
   protected SchemaCrawlerOptions schemaCrawlerOptions;
 
   protected final String command;
-  protected Config config;
   protected OutputOptions outputOptions;
   protected ConnectionOptions connectionOptions;
 
@@ -66,7 +64,6 @@ public abstract class BaseExecutable
     this.command = command;
     schemaCrawlerOptions = new SchemaCrawlerOptions();
     outputOptions = new OutputOptions();
-    config = new Config();
   }
 
   /**
@@ -166,16 +163,6 @@ public abstract class BaseExecutable
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.executable.Executable#getConfig()
-   */
-  public final Config getConfig()
-  {
-    return config;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see schemacrawler.tools.executable.Executable#getConnectionOptions()
    */
   public final ConnectionOptions getConnectionOptions()
@@ -201,16 +188,6 @@ public abstract class BaseExecutable
   public final SchemaCrawlerOptions getSchemaCrawlerOptions()
   {
     return schemaCrawlerOptions;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.executable.Executable#setConfig(schemacrawler.schemacrawler.Config)
-   */
-  public final void setConfig(final Config config)
-  {
-    this.config = config;
   }
 
   /**
