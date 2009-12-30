@@ -63,8 +63,8 @@ public abstract class SchemaRenderer
 
       // Executable-specific work
       final Writer writer = outputOptions.openOutputWriter();
-      final String templateName = outputOptions.getOutputFormatValue();
-      render(connection, templateName, database, writer);
+      final String resource = outputOptions.getOutputFormatValue();
+      render(connection, resource, database, writer);
       outputOptions.closeOutputWriter(writer);
     }
     catch (final SchemaCrawlerException e)
@@ -85,9 +85,9 @@ public abstract class SchemaRenderer
    * @throws Exception
    */
   protected abstract void render(Connection connection,
-                                 final String resource,
-                                 final Database database,
-                                 final Writer writer)
+                                 String resource,
+                                 Database database,
+                                 Writer writer)
     throws ExecutionException;
 
 }

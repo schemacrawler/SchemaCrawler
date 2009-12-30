@@ -71,8 +71,9 @@ public final class VelocityRenderer
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.integration.TemplatedSchemaRenderer#render(java.lang.String,
-   *      schemacrawler.schema.Schema, java.io.Writer)
+   * @see schemacrawler.tools.integration.SchemaRenderer#render(java.sql.Connection,
+   *      java.lang.String, schemacrawler.schema.Database,
+   *      java.io.Writer)
    */
   @Override
   protected void render(final Connection connection,
