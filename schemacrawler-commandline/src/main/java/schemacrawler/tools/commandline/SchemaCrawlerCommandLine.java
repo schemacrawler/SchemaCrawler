@@ -137,10 +137,6 @@ public final class SchemaCrawlerCommandLine
     throws Exception
   {
     final Executable executable = new SchemaCrawlerExecutable(command);
-    if (connectionOptions != null)
-    {
-      executable.setConnectionOptions(connectionOptions);
-    }
     if (outputOptions != null)
     {
       executable.setOutputOptions(outputOptions);
@@ -149,7 +145,14 @@ public final class SchemaCrawlerCommandLine
     {
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     }
-    executable.execute();
+    if (connectionOptions != null)
+    {
+      executable.execute(connectionOptions.createConnection());
+    }
+    else
+    {
+      throw new SchemaCrawlerException("No connection options provided");
+    }
   }
 
   public final String getCommand()

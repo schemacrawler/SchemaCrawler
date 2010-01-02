@@ -142,11 +142,10 @@ public class SchemaCrawlerOutputTest
           .getDatabaseConnectionOptions();
 
         final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(command);
-        executable.setConnectionOptions(connectionOptions);
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);
         executable.setConfig(queriesConfig); // For the queries
-        executable.execute();
+        executable.execute(connectionOptions.createConnection());
 
         if (outputFormat == OutputFormat.html)
         {
@@ -204,10 +203,9 @@ public class SchemaCrawlerOutputTest
 
         final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
           .name());
-        executable.setConnectionOptions(connectionOptions);
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);
-        executable.execute();
+        executable.execute(connectionOptions.createConnection());
 
         TestUtility.compareOutput("info_level_output/" + referenceFile,
                                   testOutputFile,
