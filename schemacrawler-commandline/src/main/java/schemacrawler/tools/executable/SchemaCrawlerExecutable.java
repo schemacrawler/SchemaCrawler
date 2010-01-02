@@ -51,32 +51,15 @@ public class SchemaCrawlerExecutable
     this.executable = executable;
   }
 
-  public void execute()
-    throws Exception
-  {
-    executable.execute();
-  }
-
   public void execute(final Connection connection)
     throws Exception
   {
     executable.execute(connection);
   }
 
-  public void execute(final DataSource dataSource)
-    throws Exception
-  {
-    executable.execute(dataSource);
-  }
-
   public String getCommand()
   {
     return executable.getCommand();
-  }
-
-  public ConnectionOptions getConnectionOptions()
-  {
-    return executable.getConnectionOptions();
   }
 
   public OutputOptions getOutputOptions()
@@ -87,11 +70,6 @@ public class SchemaCrawlerExecutable
   public SchemaCrawlerOptions getSchemaCrawlerOptions()
   {
     return executable.getSchemaCrawlerOptions();
-  }
-
-  public void setConnectionOptions(final ConnectionOptions connectionOptions)
-  {
-    executable.setConnectionOptions(connectionOptions);
   }
 
   public void setOutputOptions(final OutputOptions outputOptions)

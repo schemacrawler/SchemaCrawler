@@ -22,16 +22,11 @@ package schemacrawler.tools.executable;
 
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.sql.DataSource;
-
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Database;
-import schemacrawler.schemacrawler.ConnectionOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.options.OutputOptions;
@@ -57,41 +52,12 @@ public abstract class BaseExecutable
 
   protected final String command;
   protected OutputOptions outputOptions;
-  protected ConnectionOptions connectionOptions;
 
   public BaseExecutable(final String command)
   {
     this.command = command;
     schemaCrawlerOptions = new SchemaCrawlerOptions();
     outputOptions = new OutputOptions();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.executable.Executable#execute()
-   */
-  public final void execute()
-    throws Exception
-  {
-    if (connectionOptions == null)
-    {
-      throw new SchemaCrawlerException("No connection options provided");
-    }
-    Connection connection = null;
-    try
-    {
-      connection = connectionOptions.createConnection();
-      execute(connection);
-    }
-    finally
-    {
-      if (connection != null)
-      {
-        connection.close();
-        LOGGER.log(Level.INFO, "Closed database connection, " + connection);
-      }
-    }
   }
 
   /**
@@ -116,58 +82,11 @@ public abstract class BaseExecutable
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.tools.executable.Executable#execute(javax.sql.DataSource)
-   */
-  public final void execute(final DataSource dataSource)
-    throws Exception
-  {
-    if (dataSource == null)
-    {
-      throw new IllegalArgumentException("No data-source provided");
-    }
-    Connection connection = null;
-    try
-    {
-      connection = dataSource.getConnection();
-      LOGGER.log(Level.INFO, "Obtained database connection, " + connection);
-      execute(connection);
-    }
-    finally
-    {
-      if (connection != null)
-      {
-        try
-        {
-          connection.close();
-          LOGGER.log(Level.INFO, "Closed database connection, " + connection);
-        }
-        catch (final SQLException e)
-        {
-          LOGGER.log(Level.WARNING, "Could not close database connection, "
-                                    + connection, e);
-        }
-      }
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see schemacrawler.tools.executable.Executable#getCommand()
    */
   public final String getCommand()
   {
     return command;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.executable.Executable#getConnectionOptions()
-   */
-  public final ConnectionOptions getConnectionOptions()
-  {
-    return connectionOptions;
   }
 
   /**
@@ -188,16 +107,6 @@ public abstract class BaseExecutable
   public final SchemaCrawlerOptions getSchemaCrawlerOptions()
   {
     return schemaCrawlerOptions;
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.executable.Executable#setConnectionOptions(schemacrawler.schemacrawler.ConnectionOptions)
-   */
-  public final void setConnectionOptions(final ConnectionOptions connectionOptions)
-  {
-    this.connectionOptions = connectionOptions;
   }
 
   /**

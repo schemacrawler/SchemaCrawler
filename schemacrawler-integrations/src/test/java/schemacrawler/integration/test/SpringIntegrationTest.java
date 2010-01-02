@@ -119,4 +119,5 @@ public class SpringIntegrationTest
     TestUtility
       .compareOutput(executableName + ".txt", testOutputFile, failures);
   }
+
 }

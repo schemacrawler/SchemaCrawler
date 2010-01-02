@@ -36,7 +36,7 @@ import schemacrawler.tools.integration.velocity.VelocityRenderer;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.utility.TestDatabase;
 
-public class ExecutorIntegrationTest
+public class ExecutableIntegrationTest
 {
 
   private static TestDatabase testUtility = new TestDatabase();
