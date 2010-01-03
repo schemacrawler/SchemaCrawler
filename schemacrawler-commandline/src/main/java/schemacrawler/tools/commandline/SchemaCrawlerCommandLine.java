@@ -20,8 +20,6 @@
 package schemacrawler.tools.commandline;
 
 
-import java.util.logging.Logger;
-
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -42,9 +40,6 @@ public final class SchemaCrawlerCommandLine
 {
 
   private static final long serialVersionUID = -3748989545708155963L;
-
-  private static final Logger LOGGER = Logger
-    .getLogger(SchemaCrawlerCommandLine.class.getName());
 
   private final String command;
   private final SchemaCrawlerOptions schemaCrawlerOptions;
