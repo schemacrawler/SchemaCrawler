@@ -3,6 +3,7 @@ package schemacrawler.tools.executable;
 
 import java.sql.Connection;
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
 
@@ -20,11 +21,15 @@ public interface Executable
   void execute(Connection connection)
     throws Exception;
 
+  Config getAdditionalConfiguration();
+
   String getCommand();
 
   OutputOptions getOutputOptions();
 
   SchemaCrawlerOptions getSchemaCrawlerOptions();
+
+  void setAdditionalConfiguration(Config config);
 
   void setOutputOptions(OutputOptions outputOptions);
 

@@ -50,8 +50,8 @@ import schemacrawler.schemacrawler.SchemaInfoLevel;
 public final class SchemaCrawler
 {
 
-  private static final Logger LOGGER = Logger
-    .getLogger(SchemaCrawler.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(SchemaCrawler.class
+    .getName());
 
   /**
    * Gets the result set columns metadata.

@@ -144,7 +144,7 @@ public class SchemaCrawlerOutputTest
         final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(command);
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);
-        executable.setConfig(queriesConfig); // For the queries
+        executable.setAdditionalConfiguration(queriesConfig);
         executable.execute(connectionOptions.createConnection());
 
         if (outputFormat == OutputFormat.html)

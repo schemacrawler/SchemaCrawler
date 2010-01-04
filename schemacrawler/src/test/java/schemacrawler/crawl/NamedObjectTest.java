@@ -41,7 +41,7 @@ public class NamedObjectTest
     MutableTable table;
     final NamedObjectList<Table> tables = new NamedObjectList<Table>();
 
-    MutableDatabase database = new MutableDatabase("DATABASE");
+    final MutableDatabase database = new MutableDatabase("DATABASE");
     for (final String schemaName: schemaNames)
     {
       final MutableSchema schema = database.addSchema("CATALOG", schemaName);
