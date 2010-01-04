@@ -42,6 +42,7 @@ public final class SchemaCrawlerCommandLine
   private static final long serialVersionUID = -3748989545708155963L;
 
   private final String command;
+  private final Config config;
   private final SchemaCrawlerOptions schemaCrawlerOptions;
   private final OutputOptions outputOptions;
   private final ConnectionOptions connectionOptions;
@@ -55,7 +56,7 @@ public final class SchemaCrawlerCommandLine
     this.connectionOptions = connectionOptions;
     this.command = command;
     this.outputOptions = outputOptions;
-
+    this.config = new Config();
     schemaCrawlerOptions = new SchemaCrawlerOptions(config);
     if (infoLevel != null)
     {
@@ -94,7 +95,6 @@ public final class SchemaCrawlerCommandLine
       outputOptions = new OutputOptions();
     }
 
-    final Config config;
     if (!Utility.isBlank(configResource))
     {
       config = Config.load(SchemaCrawlerCommandLine.class
@@ -153,6 +153,11 @@ public final class SchemaCrawlerCommandLine
   public final String getCommand()
   {
     return command;
+  }
+
+  public final Config getConfig()
+  {
+    return config;
   }
 
   public final ConnectionOptions getConnectionOptions()
