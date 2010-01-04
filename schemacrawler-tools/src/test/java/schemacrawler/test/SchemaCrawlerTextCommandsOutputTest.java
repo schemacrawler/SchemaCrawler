@@ -144,7 +144,7 @@ public class SchemaCrawlerTextCommandsOutputTest
                                                             .getAbsolutePath());
 
     final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(command);
-    executable.setConfig(config);
+    executable.setAdditionalConfiguration(config);
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());
 

@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Database;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.options.OutputOptions;
@@ -48,10 +49,10 @@ public abstract class BaseExecutable
   private static final Logger LOGGER = Logger.getLogger(BaseExecutable.class
     .getName());
 
-  protected SchemaCrawlerOptions schemaCrawlerOptions;
-
   protected final String command;
+  protected SchemaCrawlerOptions schemaCrawlerOptions;
   protected OutputOptions outputOptions;
+  protected Config additionalConfiguration;
 
   public BaseExecutable(final String command)
   {
@@ -77,6 +78,11 @@ public abstract class BaseExecutable
     final SchemaCrawler crawler = new SchemaCrawler(connection);
     final Database database = crawler.crawl(schemaCrawlerOptions);
     executeOn(database, connection);
+  }
+
+  public final Config getAdditionalConfiguration()
+  {
+    return additionalConfiguration;
   }
 
   /**
@@ -107,6 +113,18 @@ public abstract class BaseExecutable
   public final SchemaCrawlerOptions getSchemaCrawlerOptions()
   {
     return schemaCrawlerOptions;
+  }
+
+  public final void setAdditionalConfiguration(final Config additionalConfiguration)
+  {
+    if (additionalConfiguration == null)
+    {
+      this.additionalConfiguration = new Config();
+    }
+    else
+    {
+      this.additionalConfiguration = additionalConfiguration;
+    }
   }
 
   /**

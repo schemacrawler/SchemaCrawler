@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
 
@@ -54,6 +55,11 @@ public class SchemaCrawlerExecutable
     executable.execute(connection);
   }
 
+  public Config getAdditionalConfiguration()
+  {
+    return executable.getAdditionalConfiguration();
+  }
+
   public String getCommand()
   {
     return executable.getCommand();
@@ -67,6 +73,11 @@ public class SchemaCrawlerExecutable
   public SchemaCrawlerOptions getSchemaCrawlerOptions()
   {
     return executable.getSchemaCrawlerOptions();
+  }
+
+  public void setAdditionalConfiguration(final Config config)
+  {
+    executable.setAdditionalConfiguration(config);
   }
 
   public void setOutputOptions(final OutputOptions outputOptions)

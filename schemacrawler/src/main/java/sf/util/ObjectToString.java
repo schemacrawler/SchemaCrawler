@@ -154,8 +154,8 @@ public final class ObjectToString
     }
     else if (object.getClass().isArray())
     {
-      for (final Iterator<?> iterator =Arrays.asList((Object[]) object).iterator(); iterator
-        .hasNext();)
+      for (final Iterator<?> iterator = Arrays.asList((Object[]) object)
+        .iterator(); iterator.hasNext();)
       {
         final Object item = iterator.next();
         buffer.append(item);

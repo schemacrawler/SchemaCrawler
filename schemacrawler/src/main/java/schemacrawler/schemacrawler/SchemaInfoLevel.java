@@ -33,6 +33,21 @@ public final class SchemaInfoLevel
   private static final long serialVersionUID = -6721986729175552425L;
 
   /**
+   * Creates a new SchemaInfoLevel for verbose schema information.
+   * 
+   * @return New SchemaInfoLevel
+   */
+  public static SchemaInfoLevel detailed()
+  {
+    final SchemaInfoLevel verbose = standard();
+    verbose.setRetrieveUserDefinedColumnDataTypes(true);
+    verbose.setRetrieveProcedureInformation(true);
+    verbose.setRetrieveCheckConstraintInformation(true);
+    verbose.setRetrieveViewInformation(true);
+    return verbose;
+  }
+
+  /**
    * Creates a new SchemaInfoLevel for maximum schema information.
    * 
    * @return New SchemaInfoLevel
@@ -79,21 +94,6 @@ public final class SchemaInfoLevel
     standard.setRetrieveForeignKeys(true);
     standard.setRetrieveIndices(true);
     return standard;
-  }
-
-  /**
-   * Creates a new SchemaInfoLevel for verbose schema information.
-   * 
-   * @return New SchemaInfoLevel
-   */
-  public static SchemaInfoLevel detailed()
-  {
-    final SchemaInfoLevel verbose = standard();
-    verbose.setRetrieveUserDefinedColumnDataTypes(true);
-    verbose.setRetrieveProcedureInformation(true);
-    verbose.setRetrieveCheckConstraintInformation(true);
-    verbose.setRetrieveViewInformation(true);
-    return verbose;
   }
 
   private boolean retrieveSchemaCrawlerInfo = true;
