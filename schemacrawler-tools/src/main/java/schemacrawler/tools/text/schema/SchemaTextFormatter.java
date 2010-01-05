@@ -82,7 +82,7 @@ public final class SchemaTextFormatter
     throws SchemaCrawlerException
   {
     super(options,
-          (schemaTextDetailType == SchemaTextDetailType.verbose_schema),
+          schemaTextDetailType == SchemaTextDetailType.verbose_schema,
           outputOptions);
     this.schemaTextDetailType = schemaTextDetailType;
   }
