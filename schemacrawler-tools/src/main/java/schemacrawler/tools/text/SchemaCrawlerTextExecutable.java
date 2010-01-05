@@ -151,21 +151,22 @@ public final class SchemaCrawlerTextExecutable
         final SchemaTextOptions schemaTextOptions;
         if (this.schemaTextOptions == null)
         {
-          schemaTextOptions = new SchemaTextOptions(additionalConfiguration,
-                                                    schemaTextDetailType);
+          schemaTextOptions = new SchemaTextOptions(additionalConfiguration);
         }
         else
         {
-          schemaTextOptions = this.schemaTextOptions.duplicate();
-          schemaTextOptions.setSchemaTextDetailType(schemaTextDetailType);
+          schemaTextOptions = this.schemaTextOptions;
         }
 
-        crawlHandler = new SchemaTextFormatter(schemaTextOptions, outputOptions);
+        crawlHandler = new SchemaTextFormatter(schemaTextDetailType,
+                                               schemaTextOptions,
+                                               outputOptions);
       }
       else
       {
         String queryName = null;
-        Operation operation;
+        Operation operation = null;
+        Query query = null;
         OperationOptions operationOptions;
         try
         {
@@ -182,31 +183,30 @@ public final class SchemaCrawlerTextExecutable
         }
         else
         {
-          operationOptions = this.operationOptions.duplicate();
+          operationOptions = this.operationOptions;
         }
         if (operation == null)
         {
-          final Query query = operationOptions.getQuery();
-          if (query == null || !query.getName().equals(queryName))
+
+          final String queryString;
+          if (additionalConfiguration != null)
           {
-            final String queryString;
-            if (additionalConfiguration != null)
-            {
-              queryString = additionalConfiguration.get(queryName);
-            }
-            else
-            {
-              queryString = null;
-            }
-            operationOptions.setQuery(new Query(queryName, queryString));
+            queryString = additionalConfiguration.get(queryName);
           }
+          else
+          {
+            queryString = null;
+          }
+          query = new Query(queryName, queryString);
         }
         else
         {
-          operationOptions.setOperation(operation);
+          query = operation.getQuery();
         }
 
-        crawlHandler = new OperationHandler(operationOptions,
+        crawlHandler = new OperationHandler(operation,
+                                            query,
+                                            operationOptions,
                                             outputOptions,
                                             connection);
       }

@@ -65,6 +65,7 @@ public final class SchemaTextFormatter
   private static final Logger LOGGER = Logger
     .getLogger(SchemaTextFormatter.class.getName());
 
+  private final SchemaTextDetailType schemaTextDetailType;
   private int tableCount;
   private int procedureCount;
   private int columnDataTypeCount;
@@ -75,11 +76,15 @@ public final class SchemaTextFormatter
    * @param options
    *        Options for text formatting of schema
    */
-  public SchemaTextFormatter(final SchemaTextOptions options,
+  public SchemaTextFormatter(final SchemaTextDetailType schemaTextDetailType,
+                             final SchemaTextOptions options,
                              final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
-    super(options, outputOptions);
+    super(options,
+          (schemaTextDetailType == SchemaTextDetailType.verbose_schema),
+          outputOptions);
+    this.schemaTextDetailType = schemaTextDetailType;
   }
 
   /**
@@ -104,7 +109,7 @@ public final class SchemaTextFormatter
   public void end()
     throws SchemaCrawlerException
   {
-    if (options.getSchemaTextDetailType() == SchemaTextDetailType.list_objects)
+    if (schemaTextDetailType == SchemaTextDetailType.list_objects)
     {
       out.print(formattingHelper.createObjectEnd());
     }
@@ -122,8 +127,6 @@ public final class SchemaTextFormatter
   public void handle(final ColumnDataType columnDataType)
     throws SchemaCrawlerException
   {
-    final SchemaTextDetailType schemaTextDetailType = options
-      .getSchemaTextDetailType();
     if (schemaTextDetailType
       .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
     {
@@ -153,8 +156,6 @@ public final class SchemaTextFormatter
     {
       return;
     }
-    final SchemaTextDetailType schemaTextDetailType = options
-      .getSchemaTextDetailType();
     if (schemaTextDetailType == SchemaTextDetailType.list_objects)
     {
       return;
@@ -183,8 +184,6 @@ public final class SchemaTextFormatter
                                                 "Procedures"));
     }
 
-    final SchemaTextDetailType schemaTextDetailType = options
-      .getSchemaTextDetailType();
     if (schemaTextDetailType != SchemaTextDetailType.list_objects)
     {
       out.print(formattingHelper.createObjectStart(""));
@@ -254,9 +253,6 @@ public final class SchemaTextFormatter
       out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                                 "Tables"));
     }
-
-    final SchemaTextDetailType schemaTextDetailType = options
-      .getSchemaTextDetailType();
 
     final boolean underscore = schemaTextDetailType != SchemaTextDetailType.list_objects;
     final String nameRow = formattingHelper.createNameRow(table.getFullName(),

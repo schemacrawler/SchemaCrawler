@@ -27,15 +27,16 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
+import schemacrawler.schema.Database;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schema.SchemaCrawlerInfo;
+import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.options.ToolOptions;
 import schemacrawler.tools.text.util.HtmlFormattingHelper;
 import schemacrawler.tools.text.util.PlainTextFormattingHelper;
 import schemacrawler.tools.text.util.TextFormattingHelper;
@@ -47,13 +48,14 @@ import sf.util.ObjectToString;
  * 
  * @author Sualeh Fatehi
  */
-public abstract class BaseFormatter<O extends ToolOptions>
+public abstract class BaseFormatter<O extends Options>
 {
 
   protected final O options;
   protected final OutputOptions outputOptions;
   protected final PrintWriter out;
   protected final TextFormattingHelper formattingHelper;
+  private final boolean printVerboseDatabaseInfo;
 
   /**
    * Text formatting of operations and schema.
@@ -61,7 +63,9 @@ public abstract class BaseFormatter<O extends ToolOptions>
    * @param options
    *        Options for text formatting of schema
    */
-  protected BaseFormatter(final O options, final OutputOptions outputOptions)
+  protected BaseFormatter(final O options,
+                          final boolean printVerboseDatabaseInfo,
+                          final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
     if (options == null)
@@ -69,6 +73,8 @@ public abstract class BaseFormatter<O extends ToolOptions>
       throw new IllegalArgumentException("Options not provided");
     }
     this.options = options;
+
+    this.printVerboseDatabaseInfo = printVerboseDatabaseInfo;
 
     if (outputOptions == null)
     {
@@ -113,8 +119,7 @@ public abstract class BaseFormatter<O extends ToolOptions>
                                                     dbInfo.getUserName()));
     out.print(formattingHelper.createObjectEnd());
 
-    if (options.isPrintVerboseDatabaseInfo()
-        && dbInfo.getProperties().length > 0)
+    if (printVerboseDatabaseInfo && dbInfo.getProperties().length > 0)
     {
       out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                                 "Database Characteristics"));
@@ -169,7 +174,7 @@ public abstract class BaseFormatter<O extends ToolOptions>
 
     final JdbcDriverProperty[] jdbcDriverProperties = driverInfo
       .getDriverProperties();
-    if (options.isPrintVerboseDatabaseInfo() && jdbcDriverProperties.length > 0)
+    if (printVerboseDatabaseInfo && jdbcDriverProperties.length > 0)
     {
       out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                                 "JDBC Driver Properties"));
@@ -211,7 +216,7 @@ public abstract class BaseFormatter<O extends ToolOptions>
         .getSchemaCrawlerVersion()));
     out.print(formattingHelper.createObjectEnd());
 
-    if (options.isPrintVerboseDatabaseInfo())
+    if (printVerboseDatabaseInfo)
     {
       final SortedMap<String, String> systemProperties = new TreeMap<String, String>(schemaCrawlerInfo
         .getSystemProperties());

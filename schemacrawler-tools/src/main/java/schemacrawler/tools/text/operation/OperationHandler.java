@@ -61,7 +61,9 @@ public final class OperationHandler
    * @param options
    *        Options for text formatting of operations output
    */
-  public OperationHandler(final OperationOptions options,
+  public OperationHandler(final Operation operation,
+                          final Query query,
+                          final OperationOptions options,
                           final OutputOptions outputOptions,
                           final Connection connection)
     throws SchemaCrawlerException
@@ -76,13 +78,13 @@ public final class OperationHandler
     {
       throw new SchemaCrawlerException("No operation options provided");
     }
-    dataFormatter = new DataTextFormatter(options, outputOptions);
+    dataFormatter = new DataTextFormatter(operation, options, outputOptions);
 
-    if (options.getQuery() == null)
+    if (query == null)
     {
       throw new SchemaCrawlerException("No query provided");
     }
-    query = options.getQuery();
+    this.query = query;
   }
 
   /**

@@ -22,7 +22,7 @@ package schemacrawler.tools.text.schema;
 
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.options.ToolOptions;
+import schemacrawler.schemacrawler.Options;
 
 /**
  * Options.
@@ -30,7 +30,7 @@ import schemacrawler.tools.options.ToolOptions;
  * @author Sualeh Fatehi
  */
 public class SchemaTextOptions
-  implements ToolOptions
+  implements Options
 {
 
   private static final long serialVersionUID = -8133661515343358712L;
@@ -52,8 +52,6 @@ public class SchemaTextOptions
   private boolean hideIndexNames;
   private boolean hideConstraintNames;
 
-  private SchemaTextDetailType schemaTextDetailType;
-
   /**
    * Creates the default SchemaTextOptions.
    */
@@ -72,15 +70,9 @@ public class SchemaTextOptions
    * @param outputOptions
    *        Output options
    */
-  public SchemaTextOptions(final Config config,
-                           final SchemaTextDetailType schemaTextDetailType)
+  public SchemaTextOptions(final Config config)
   {
     setDefaultValues();
-    if (schemaTextDetailType != null)
-    {
-      this.schemaTextDetailType = schemaTextDetailType;
-    }
-
     if (config != null)
     {
       showStandardColumnTypeNames = config
@@ -94,37 +86,6 @@ public class SchemaTextOptions
       hideIndexNames = config.getBooleanValue(HIDE_INDEX_NAMES);
       hideConstraintNames = config.getBooleanValue(HIDE_CONSTRAINT_NAMES);
     }
-  }
-
-  /**
-   * Creates the default SchemaTextOptions.
-   */
-  public SchemaTextOptions duplicate()
-  {
-    final SchemaTextOptions schemaTextOptions = new SchemaTextOptions();
-
-    schemaTextOptions
-      .setShowStandardColumnTypeNames(showStandardColumnTypeNames);
-    schemaTextOptions.setShowOrdinalNumbers(showOrdinalNumbers);
-
-    schemaTextOptions.setHidePrimaryKeyNames(hidePrimaryKeyNames);
-    schemaTextOptions.setHideForeignKeyNames(hideForeignKeyNames);
-    schemaTextOptions.setHideIndexNames(hideIndexNames);
-    schemaTextOptions.setHideConstraintNames(hideConstraintNames);
-
-    schemaTextOptions.setSchemaTextDetailType(schemaTextDetailType);
-
-    return schemaTextOptions;
-  }
-
-  /**
-   * Schema text detail type.
-   * 
-   * @return Schema text detail type
-   */
-  public SchemaTextDetailType getSchemaTextDetailType()
-  {
-    return schemaTextDetailType;
   }
 
   /**
@@ -165,11 +126,6 @@ public class SchemaTextOptions
   public boolean isHidePrimaryKeyNames()
   {
     return hidePrimaryKeyNames;
-  }
-
-  public boolean isPrintVerboseDatabaseInfo()
-  {
-    return schemaTextDetailType == SchemaTextDetailType.verbose_schema;
   }
 
   /**
@@ -237,24 +193,6 @@ public class SchemaTextOptions
   }
 
   /**
-   * Set the SchemaTextDetailType.
-   * 
-   * @param schemaTextDetailType
-   *        Set the SchemaTextDetailType.
-   */
-  public void setSchemaTextDetailType(final SchemaTextDetailType schemaTextDetailType)
-  {
-    if (schemaTextDetailType == null)
-    {
-      this.schemaTextDetailType = SchemaTextDetailType.standard_schema;
-    }
-    else
-    {
-      this.schemaTextDetailType = schemaTextDetailType;
-    }
-  }
-
-  /**
    * Sets whether to show ordinal numbers.
    * 
    * @param showOrdinalNumbers
@@ -278,8 +216,6 @@ public class SchemaTextOptions
 
   private void setDefaultValues()
   {
-    schemaTextDetailType = SchemaTextDetailType.standard_schema;
-
     showStandardColumnTypeNames = false;
     showOrdinalNumbers = false;
 

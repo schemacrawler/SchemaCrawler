@@ -61,12 +61,13 @@ public final class DataTextFormatter
    * @param options
    *        Options for text formatting of data
    */
-  public DataTextFormatter(final OperationOptions options,
+  public DataTextFormatter(final Operation operation,
+                           final OperationOptions options,
                            final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
-    super(options, outputOptions);
-    operation = options.getOperation();
+    super(options, /* printVerboseDatabaseInfo */false, outputOptions);
+    this.operation = operation;
   }
 
   /**
