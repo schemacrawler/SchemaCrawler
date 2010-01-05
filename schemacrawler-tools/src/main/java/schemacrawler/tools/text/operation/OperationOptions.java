@@ -22,8 +22,7 @@ package schemacrawler.tools.text.operation;
 
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.options.ToolOptions;
-import sf.util.Utility;
+import schemacrawler.schemacrawler.Options;
 
 /**
  * Operator options.
@@ -31,7 +30,7 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 public final class OperationOptions
-  implements ToolOptions
+  implements Options
 {
 
   private static final long serialVersionUID = -7977434852526746391L;
@@ -41,15 +40,13 @@ public final class OperationOptions
 
   private boolean mergeRows;
   private boolean showLobs;
-  private Operation operation;
-  private Query query;
 
   /**
    * Operator options, defaults.
    */
   public OperationOptions()
   {
-    this(null, (Operation) null);
+    this(null);
   }
 
   /**
@@ -62,84 +59,17 @@ public final class OperationOptions
    * @param config
    *        Config
    */
-  public OperationOptions(final Config config, final Operation operation)
+  public OperationOptions(final Config config)
   {
-    setFromConfig(config);
-
-    if (operation == null)
+    if (config == null)
     {
-      this.operation = Operation.count;
+      mergeRows = false;
+      showLobs = false;
     }
     else
     {
-      this.operation = operation;
-    }
-  }
-
-  /**
-   * Operator options from properties. Constructor.
-   * 
-   * @param outputOptions
-   *        Output options
-   * @param queryName
-   *        Query name
-   * @param config
-   *        Config
-   */
-  public OperationOptions(final Config config, final String queryName)
-  {
-    setFromConfig(config);
-
-    if (config != null && !Utility.isBlank(queryName))
-    {
-      query = new Query(queryName, config.get(queryName));
-    }
-    else
-    {
-      query = null;
-    }
-    operation = null;
-  }
-
-  /**
-   * Operator options.
-   * 
-   * @return A duplicate of this object
-   */
-  public OperationOptions duplicate()
-  {
-    final OperationOptions operationOptions = new OperationOptions();
-    operationOptions.setMergeRows(mergeRows);
-    operationOptions.setShowLobs(showLobs);
-    operationOptions.setOperation(operation);
-    operationOptions.setQuery(query);
-    return operationOptions;
-  }
-
-  /**
-   * Gets the operation.
-   * 
-   * @return Operation.
-   */
-  public Operation getOperation()
-  {
-    return operation;
-  }
-
-  /**
-   * Get the query.
-   * 
-   * @return The query
-   */
-  public Query getQuery()
-  {
-    if (operation != null)
-    {
-      return operation.getQuery();
-    }
-    else
-    {
-      return query;
+      mergeRows = config.getBooleanValue(MERGE_ROWS);
+      showLobs = config.getBooleanValue(SHOW_LOBS);
     }
   }
 
@@ -151,11 +81,6 @@ public final class OperationOptions
   public boolean isMergeRows()
   {
     return mergeRows;
-  }
-
-  public boolean isPrintVerboseDatabaseInfo()
-  {
-    return false;
   }
 
   /**
@@ -180,33 +105,6 @@ public final class OperationOptions
   }
 
   /**
-   * Sets the operation.
-   * 
-   * @param operation
-   *        Operation
-   */
-  public void setOperation(final Operation operation)
-  {
-    this.operation = operation;
-  }
-
-  /**
-   * Query.
-   * 
-   * @param query
-   *        Query
-   */
-  public void setQuery(final Query query)
-  {
-    if (query == null)
-    {
-      throw new IllegalArgumentException("Cannot set null query");
-    }
-    this.query = query;
-    operation = null;
-  }
-
-  /**
    * Whether to show LOBs.
    * 
    * @param showLobs
@@ -215,20 +113,6 @@ public final class OperationOptions
   public void setShowLobs(final boolean showLobs)
   {
     this.showLobs = showLobs;
-  }
-
-  private void setFromConfig(final Config config)
-  {
-    if (config == null)
-    {
-      mergeRows = false;
-      showLobs = false;
-    }
-    else
-    {
-      mergeRows = config.getBooleanValue(MERGE_ROWS);
-      showLobs = config.getBooleanValue(SHOW_LOBS);
-    }
   }
 
 }
