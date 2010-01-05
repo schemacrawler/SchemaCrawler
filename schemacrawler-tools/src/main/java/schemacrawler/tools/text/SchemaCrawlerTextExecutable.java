@@ -61,11 +61,29 @@ public final class SchemaCrawlerTextExecutable
 
   public final OperationOptions getOperationOptions()
   {
+    final OperationOptions operationOptions;
+    if (this.operationOptions == null)
+    {
+      operationOptions = new OperationOptions(additionalConfiguration);
+    }
+    else
+    {
+      operationOptions = this.operationOptions;
+    }
     return operationOptions;
   }
 
   public final SchemaTextOptions getSchemaTextOptions()
   {
+    final SchemaTextOptions schemaTextOptions;
+    if (this.schemaTextOptions == null)
+    {
+      schemaTextOptions = new SchemaTextOptions(additionalConfiguration);
+    }
+    else
+    {
+      schemaTextOptions = this.schemaTextOptions;
+    }
     return schemaTextOptions;
   }
 
@@ -105,11 +123,10 @@ public final class SchemaCrawlerTextExecutable
       commands = new Commands(command);
     }
 
-    final OutputOptions masterOutputOptions = outputOptions;
     final List<CrawlHandler> crawlHandlers = new ArrayList<CrawlHandler>();
     for (final String command: commands)
     {
-      final OutputOptions outputOptions = masterOutputOptions.duplicate();
+      final OutputOptions outputOptions = this.outputOptions.duplicate();
       if (commands.size() > 1)
       {
         if (commands.isFirstCommand(command))
@@ -148,26 +165,15 @@ public final class SchemaCrawlerTextExecutable
       }
       if (schemaTextDetailType != null)
       {
-        final SchemaTextOptions schemaTextOptions;
-        if (this.schemaTextOptions == null)
-        {
-          schemaTextOptions = new SchemaTextOptions(additionalConfiguration);
-        }
-        else
-        {
-          schemaTextOptions = this.schemaTextOptions;
-        }
-
+        final SchemaTextOptions schemaTextOptions = getSchemaTextOptions();
         crawlHandler = new SchemaTextFormatter(schemaTextDetailType,
                                                schemaTextOptions,
                                                outputOptions);
       }
       else
       {
-        String queryName = null;
+        // Determine the operation, or whether this command is a query
         Operation operation = null;
-        Query query = null;
-        OperationOptions operationOptions;
         try
         {
           operation = Operation.valueOf(command);
@@ -175,19 +181,13 @@ public final class SchemaCrawlerTextExecutable
         catch (final IllegalArgumentException e)
         {
           operation = null;
-          queryName = command;
         }
-        if (this.operationOptions == null)
-        {
-          operationOptions = new OperationOptions();
-        }
-        else
-        {
-          operationOptions = this.operationOptions;
-        }
+
+        // Get the query
+        final Query query;
         if (operation == null)
         {
-
+          final String queryName = command;
           final String queryString;
           if (additionalConfiguration != null)
           {
@@ -204,6 +204,7 @@ public final class SchemaCrawlerTextExecutable
           query = operation.getQuery();
         }
 
+        final OperationOptions operationOptions = getOperationOptions();
         crawlHandler = new OperationHandler(operation,
                                             query,
                                             operationOptions,

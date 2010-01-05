@@ -74,17 +74,17 @@ public final class OperationHandler
     }
     this.connection = connection;
 
-    if (options == null)
-    {
-      throw new SchemaCrawlerException("No operation options provided");
-    }
-    dataFormatter = new DataTextFormatter(operation, options, outputOptions);
-
     if (query == null)
     {
       throw new SchemaCrawlerException("No query provided");
     }
     this.query = query;
+
+    if (options == null)
+    {
+      throw new SchemaCrawlerException("No operation options provided");
+    }
+    dataFormatter = new DataTextFormatter(operation, options, outputOptions);
   }
 
   /**
