@@ -48,7 +48,7 @@ import schemacrawler.schema.Privilege.Grant;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseFormatter;
-import schemacrawler.tools.text.base.CrawlHandler;
+import schemacrawler.tools.text.base.DatabaseTraversalHandler;
 import schemacrawler.tools.text.util.TextFormattingHelper.DocumentHeaderType;
 import sf.util.Utility;
 
@@ -59,7 +59,7 @@ import sf.util.Utility;
  */
 public final class SchemaTextFormatter
   extends BaseFormatter<SchemaTextOptions>
-  implements CrawlHandler
+  implements DatabaseTraversalHandler
 {
 
   private static final Logger LOGGER = Logger
@@ -90,7 +90,7 @@ public final class SchemaTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see CrawlHandler#begin()
+   * @see DatabaseTraversalHandler#begin()
    */
   public void begin()
     throws SchemaCrawlerException
@@ -104,7 +104,7 @@ public final class SchemaTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see CrawlHandler#end()
+   * @see DatabaseTraversalHandler#end()
    */
   public void end()
     throws SchemaCrawlerException
@@ -147,7 +147,7 @@ public final class SchemaTextFormatter
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.WeakAssociations)
+   * @see schemacrawler.schemacrawler.DatabaseTraversalHandler#handle(schemacrawler.schema.WeakAssociations)
    */
   public void handle(final ColumnMap[] weakAssociations)
     throws SchemaCrawlerException

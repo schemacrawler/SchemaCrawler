@@ -13,17 +13,17 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
-public class Crawler
+public class DatabaseTraverser
 {
 
   private final Database database;
 
-  public Crawler(final Database database)
+  public DatabaseTraverser(final Database database)
   {
     this.database = database;
   }
 
-  public void crawl(final CrawlHandler handler)
+  public void crawl(final DatabaseTraversalHandler handler)
     throws SchemaCrawlerException
   {
     if (handler == null)
@@ -76,4 +76,5 @@ public class Crawler
 
     handler.end();
   }
+
 }

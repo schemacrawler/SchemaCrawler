@@ -29,8 +29,8 @@ import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.text.base.CrawlHandler;
-import schemacrawler.tools.text.base.Crawler;
+import schemacrawler.tools.text.base.DatabaseTraversalHandler;
+import schemacrawler.tools.text.base.DatabaseTraverser;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.operation.OperationHandler;
 import schemacrawler.tools.text.operation.OperationOptions;
@@ -102,15 +102,15 @@ public final class SchemaCrawlerTextExecutable
                                  final Connection connection)
     throws Exception
   {
-    final List<CrawlHandler> handlers = createHandlers(connection);
-    final Crawler crawler = new Crawler(database);
-    for (final CrawlHandler handler: handlers)
+    final List<DatabaseTraversalHandler> handlers = createHandlers(connection);
+    final DatabaseTraverser crawler = new DatabaseTraverser(database);
+    for (final DatabaseTraversalHandler handler: handlers)
     {
       crawler.crawl(handler);
     }
   }
 
-  private List<CrawlHandler> createHandlers(final Connection connection)
+  private List<DatabaseTraversalHandler> createHandlers(final Connection connection)
     throws SchemaCrawlerException
   {
     final Commands commands;
@@ -123,7 +123,7 @@ public final class SchemaCrawlerTextExecutable
       commands = new Commands(command);
     }
 
-    final List<CrawlHandler> handlers = new ArrayList<CrawlHandler>();
+    final List<DatabaseTraversalHandler> handlers = new ArrayList<DatabaseTraversalHandler>();
     for (final String command: commands)
     {
       final OutputOptions outputOptions = this.outputOptions.duplicate();
@@ -153,7 +153,7 @@ public final class SchemaCrawlerTextExecutable
         }
       }
 
-      final CrawlHandler handler;
+      final DatabaseTraversalHandler handler;
       SchemaTextDetailType schemaTextDetailType;
       try
       {

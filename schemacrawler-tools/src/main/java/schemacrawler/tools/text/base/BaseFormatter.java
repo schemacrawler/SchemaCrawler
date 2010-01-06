@@ -97,7 +97,7 @@ public abstract class BaseFormatter<O extends Options>
   /**
    * {@inheritDoc}
    * 
-   * @see CrawlHandler#handle(Database)
+   * @see DatabaseTraversalHandler#handle(Database)
    */
   public void handle(final DatabaseInfo dbInfo)
   {
@@ -144,7 +144,7 @@ public abstract class BaseFormatter<O extends Options>
   /**
    * {@inheritDoc}
    * 
-   * @see CrawlHandler#handle(Database)
+   * @see DatabaseTraversalHandler#handle(Database)
    */
   public void handle(final JdbcDriverInfo driverInfo)
   {
@@ -192,7 +192,7 @@ public abstract class BaseFormatter<O extends Options>
   /**
    * {@inheritDoc}
    * 
-   * @see CrawlHandler#handle(Database)
+   * @see DatabaseTraversalHandler#handle(Database)
    */
   public void handle(final SchemaCrawlerInfo schemaCrawlerInfo)
   {
