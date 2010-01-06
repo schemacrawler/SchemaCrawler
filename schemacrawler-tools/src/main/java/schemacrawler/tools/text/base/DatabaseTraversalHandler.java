@@ -33,7 +33,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 /**
  * Handler for SchemaCrawler.
  */
-public interface CrawlHandler
+public interface DatabaseTraversalHandler
 {
 
   /**

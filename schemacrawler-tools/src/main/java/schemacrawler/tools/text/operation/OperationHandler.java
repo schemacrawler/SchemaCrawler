@@ -37,7 +37,7 @@ import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.text.base.CrawlHandler;
+import schemacrawler.tools.text.base.DatabaseTraversalHandler;
 
 /**
  * Text formatting of operations output.
@@ -45,7 +45,7 @@ import schemacrawler.tools.text.base.CrawlHandler;
  * @author Sualeh Fatehi
  */
 public final class OperationHandler
-  implements CrawlHandler
+  implements DatabaseTraversalHandler
 {
 
   private static final Logger LOGGER = Logger.getLogger(OperationHandler.class
@@ -90,7 +90,7 @@ public final class OperationHandler
   /**
    * {@inheritDoc}
    * 
-   * @see CrawlHandler#begin()
+   * @see DatabaseTraversalHandler#begin()
    */
   public void begin()
     throws SchemaCrawlerException
@@ -113,7 +113,7 @@ public final class OperationHandler
   /**
    * {@inheritDoc}
    * 
-   * @see CrawlHandler#end()
+   * @see DatabaseTraversalHandler#end()
    */
   public void end()
     throws SchemaCrawlerException
@@ -131,7 +131,7 @@ public final class OperationHandler
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.ColumnDataType)
+   * @see schemacrawler.schemacrawler.DatabaseTraversalHandler#handle(schemacrawler.schema.ColumnDataType)
    */
   public void handle(final ColumnDataType dataType)
     throws SchemaCrawlerException
@@ -142,7 +142,7 @@ public final class OperationHandler
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.ColumnMap[])
+   * @see schemacrawler.schemacrawler.DatabaseTraversalHandler#handle(schemacrawler.schema.ColumnMap[])
    */
   public void handle(final ColumnMap[] weakAssociations)
     throws SchemaCrawlerException
@@ -153,7 +153,7 @@ public final class OperationHandler
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.DatabaseInfo)
+   * @see schemacrawler.schemacrawler.DatabaseTraversalHandler#handle(schemacrawler.schema.DatabaseInfo)
    */
   public void handle(final DatabaseInfo database)
     throws SchemaCrawlerException
@@ -164,7 +164,7 @@ public final class OperationHandler
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.JdbcDriverInfo)
+   * @see schemacrawler.schemacrawler.DatabaseTraversalHandler#handle(schemacrawler.schema.JdbcDriverInfo)
    */
   public void handle(final JdbcDriverInfo jdbcDriverInfo)
     throws SchemaCrawlerException
@@ -175,7 +175,7 @@ public final class OperationHandler
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.Procedure)
+   * @see schemacrawler.schemacrawler.DatabaseTraversalHandler#handle(schemacrawler.schema.Procedure)
    */
   public void handle(final Procedure procedure)
     throws SchemaCrawlerException
@@ -186,7 +186,7 @@ public final class OperationHandler
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schemacrawler.CrawlHandler#handle(schemacrawler.schema.SchemaCrawlerInfo)
+   * @see schemacrawler.schemacrawler.DatabaseTraversalHandler#handle(schemacrawler.schema.SchemaCrawlerInfo)
    */
   public void handle(final SchemaCrawlerInfo schemaCrawlerInfo)
     throws SchemaCrawlerException
@@ -197,7 +197,7 @@ public final class OperationHandler
   /**
    * {@inheritDoc}
    * 
-   * @see CrawlHandler#handle(Table)
+   * @see DatabaseTraversalHandler#handle(Table)
    */
   public void handle(final Table table)
     throws SchemaCrawlerException
