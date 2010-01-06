@@ -102,15 +102,15 @@ public final class SchemaCrawlerTextExecutable
                                  final Connection connection)
     throws Exception
   {
-    final List<CrawlHandler> crawlHandlers = createCrawlHandlers(connection);
+    final List<CrawlHandler> handlers = createHandlers(connection);
     final Crawler crawler = new Crawler(database);
-    for (final CrawlHandler crawlHandler: crawlHandlers)
+    for (final CrawlHandler handler: handlers)
     {
-      crawler.crawl(crawlHandler);
+      crawler.crawl(handler);
     }
   }
 
-  private List<CrawlHandler> createCrawlHandlers(final Connection connection)
+  private List<CrawlHandler> createHandlers(final Connection connection)
     throws SchemaCrawlerException
   {
     final Commands commands;
@@ -123,7 +123,7 @@ public final class SchemaCrawlerTextExecutable
       commands = new Commands(command);
     }
 
-    final List<CrawlHandler> crawlHandlers = new ArrayList<CrawlHandler>();
+    final List<CrawlHandler> handlers = new ArrayList<CrawlHandler>();
     for (final String command: commands)
     {
       final OutputOptions outputOptions = this.outputOptions.duplicate();
@@ -153,7 +153,7 @@ public final class SchemaCrawlerTextExecutable
         }
       }
 
-      final CrawlHandler crawlHandler;
+      final CrawlHandler handler;
       SchemaTextDetailType schemaTextDetailType;
       try
       {
@@ -166,7 +166,7 @@ public final class SchemaCrawlerTextExecutable
       if (schemaTextDetailType != null)
       {
         final SchemaTextOptions schemaTextOptions = getSchemaTextOptions();
-        crawlHandler = new SchemaTextFormatter(schemaTextDetailType,
+        handler = new SchemaTextFormatter(schemaTextDetailType,
                                                schemaTextOptions,
                                                outputOptions);
       }
@@ -205,16 +205,16 @@ public final class SchemaCrawlerTextExecutable
         }
 
         final OperationOptions operationOptions = getOperationOptions();
-        crawlHandler = new OperationHandler(operation,
+        handler = new OperationHandler(operation,
                                             query,
                                             operationOptions,
                                             outputOptions,
                                             connection);
       }
-      crawlHandlers.add(crawlHandler);
+      handlers.add(handler);
     }
 
-    return crawlHandlers;
+    return handlers;
   }
 
 }
