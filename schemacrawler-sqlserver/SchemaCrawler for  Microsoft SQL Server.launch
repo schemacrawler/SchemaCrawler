@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
 <listEntry value="/SchemaCrawler for Microsoft SQL Server/src/main/java/schemacrawler/tools/sqlserver/Main.java"/>
@@ -10,7 +10,7 @@
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.classpathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="schemacrawler.tools.sqlserver.Main"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-port=1433&#13;&#10;-database=schemacrawler &#13;&#10;-schemas=schemacrawler.dbo&#13;&#10;-user=schemacrawler &#13;&#10;-password=schemacrawler&#13;&#10;-command=maximum_schema&#13;&#10;--loglevel=FINER"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-port=1433&#13;&#10;-database=schemacrawler &#13;&#10;-schemas=schemacrawler.dbo&#13;&#10;-user=schemacrawler &#13;&#10;-password=schemacrawler&#13;&#10;-command=verbose_schema&#13;&#10;--loglevel=FINER"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SchemaCrawler for Microsoft SQL Server"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.sourcepathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:SchemaCrawler - Tools/target}"/>
