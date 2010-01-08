@@ -556,7 +556,7 @@
 			]]></action>
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added new command,
-        maximum_schema,
+        verbose_schema,
         that can give all possible details of
         the
         schema

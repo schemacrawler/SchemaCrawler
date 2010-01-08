@@ -64,12 +64,11 @@ final class CommandLineConnectionOptionsParser
     });
 
     final DatabaseConnectionOptions conenctionOptions;
-    if (optionDriver.isFound() && optionConnectionUrl.isFound())
+    if (optionConnectionUrl.isFound())
     {
       final String jdbcDriverClassName = optionDriver.getValue();
       final String connectionUrl = optionConnectionUrl.getValue();
-      if (Utility.isBlank(jdbcDriverClassName)
-          || Utility.isBlank(connectionUrl))
+      if (Utility.isBlank(connectionUrl))
       {
         conenctionOptions = null;
       }
