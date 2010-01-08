@@ -140,6 +140,10 @@ public final class SchemaCrawlerCommandLine
     {
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     }
+    if (config != null)
+    {
+      executable.setAdditionalConfiguration(config);
+    }
     if (connectionOptions != null)
     {
       executable.execute(connectionOptions.createConnection());
