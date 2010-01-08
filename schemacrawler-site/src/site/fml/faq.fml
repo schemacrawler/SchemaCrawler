@@ -91,7 +91,7 @@ Or, the following:
     verbose_schema
       Shows the most detail of the schema, including data types, indexes, 
       foreign keys, and view and procedure definitions
-    maximum_schema
+    verbose_schema
       Shows maximum possible detail of the schema, including privileges, and 
       details of privileges, triggers, and check constraints
     count

@@ -1,4 +1,4 @@
-package schemacrawler.test;
+package sf.util;
 
 
 import java.io.File;
@@ -6,7 +6,6 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.sql.Driver;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -23,7 +22,7 @@ import java.util.logging.Logger;
  *      href="http://stackoverflow.com/questions/1839671/finding-installed-jdbc-drivers"
  *      >Finding Installed JDBC Drivers</a>
  */
-public class ImplementationFinder
+public class ImplementationFinder<T>
 {
 
   private static final Logger LOGGER = Logger
@@ -31,20 +30,9 @@ public class ImplementationFinder
 
   private static final String JAR_FILE_PATTERN = ".+\\.jar$";
 
-  public static void main(final String[] args)
-    throws Exception
-  {
-    final List<Class<Driver>> drivers = new ImplementationFinder(Driver.class)
-      .findImplementations();
-    for (final Class<Driver> driver: drivers)
-    {
-      System.out.println(driver.getName());
-    }
-  }
-
   private final Class<?> baseClass;
 
-  public ImplementationFinder(final Class<?> baseClass)
+  public ImplementationFinder(final Class<T> baseClass)
   {
     if (baseClass == null)
     {
@@ -53,7 +41,7 @@ public class ImplementationFinder
     this.baseClass = baseClass;
   }
 
-  public <T extends Object> List<Class<T>> findImplementations()
+  public List<Class<T>> findImplementations()
     throws IOException
   {
     final List<Class<T>> classes = new ArrayList<Class<T>>();
@@ -141,8 +129,7 @@ public class ImplementationFinder
     return found;
   }
 
-  private <T extends Object> void searchInJar(final File file,
-                                              final List<Class<T>> classes)
+  private void searchInJar(final File file, final List<Class<T>> classes)
     throws IOException
   {
     final JarFile jarFile = new JarFile(file);

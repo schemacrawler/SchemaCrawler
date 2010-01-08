@@ -21,13 +21,16 @@
 package schemacrawler.schemacrawler;
 
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import sf.util.ImplementationFinder;
 import sf.util.Utility;
 
 abstract class BaseDatabaseConnectionOptions
@@ -108,16 +111,32 @@ abstract class BaseDatabaseConnectionOptions
   {
     if (Utility.isBlank(jdbcDriverClassName))
     {
-      throw new SchemaCrawlerException("No JDBC driver class provided");
+      // Load all JDBC drivers found on the classpath
+      try
+      {
+        final ImplementationFinder<Driver> finder = new ImplementationFinder<Driver>(Driver.class);
+        final List<Class<Driver>> driverClasses = finder.findImplementations();
+        if (driverClasses == null || driverClasses.isEmpty())
+        {
+          throw new SchemaCrawlerException("NO JDBC drivers found on the classpath");
+        }
+      }
+      catch (final IOException e)
+      {
+        throw new SchemaCrawlerException("Could not load JDBC drivers");
+      }
     }
-    try
+    else
     {
-      Class.forName(jdbcDriverClassName);
-    }
-    catch (final Exception e)
-    {
-      throw new SchemaCrawlerException("Could not load JDBC driver, "
-                                       + jdbcDriverClassName);
+      try
+      {
+        Class.forName(jdbcDriverClassName);
+      }
+      catch (final Exception e)
+      {
+        throw new SchemaCrawlerException("Could not load JDBC driver, "
+                                         + jdbcDriverClassName);
+      }
     }
   }
 

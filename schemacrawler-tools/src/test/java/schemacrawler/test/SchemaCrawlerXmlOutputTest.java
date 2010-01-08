@@ -156,7 +156,7 @@ public class SchemaCrawlerXmlOutputTest
   }
 
   @Test
-  public void maximum_schemaValidXMLOutput()
+  public void verbose_schemaValidXMLOutput()
     throws Exception
   {
     final String outputFilename = File.createTempFile("schemacrawler",
