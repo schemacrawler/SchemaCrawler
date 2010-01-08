@@ -106,6 +106,17 @@ abstract class BaseDatabaseConnectionOptions
     this.user = user;
   }
 
+  @Override
+  public final String toString()
+  {
+    final StringBuilder builder = new StringBuilder();
+    builder.append("driver=").append(getJdbcDriver().getClass().getName())
+      .append(Utility.NEWLINE);
+    builder.append("url=").append(getConnectionUrl()).append(Utility.NEWLINE);
+    builder.append("user=").append(getUser()).append(Utility.NEWLINE);
+    return builder.toString();
+  }
+
   protected final void loadJdbcDriver(final String jdbcDriverClassName)
     throws SchemaCrawlerException
   {
@@ -138,17 +149,6 @@ abstract class BaseDatabaseConnectionOptions
                                          + jdbcDriverClassName);
       }
     }
-  }
-
-  @Override
-  public final String toString()
-  {
-    StringBuilder builder = new StringBuilder();
-    builder.append("driver=").append(getJdbcDriver().getClass().getName())
-      .append(Utility.NEWLINE);
-    builder.append("url=").append(getConnectionUrl()).append(Utility.NEWLINE);
-    builder.append("user=").append(getUser()).append(Utility.NEWLINE);
-    return builder.toString();
   }
 
 }
