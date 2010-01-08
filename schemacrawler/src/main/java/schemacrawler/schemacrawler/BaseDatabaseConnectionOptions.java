@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 import sf.util.Utility;
 
 abstract class BaseDatabaseConnectionOptions
-  implements Options, ConnectionOptions
+  implements ConnectionOptions
 {
 
   private static final long serialVersionUID = -8141436553988174836L;
