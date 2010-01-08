@@ -140,4 +140,15 @@ abstract class BaseDatabaseConnectionOptions
     }
   }
 
+  @Override
+  public final String toString()
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append("driver=").append(getJdbcDriver().getClass().getName())
+      .append(Utility.NEWLINE);
+    builder.append("url=").append(getConnectionUrl()).append(Utility.NEWLINE);
+    builder.append("user=").append(getUser()).append(Utility.NEWLINE);
+    return builder.toString();
+  }
+
 }
