@@ -24,8 +24,10 @@ package schemacrawler.tools.executable;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -77,19 +79,19 @@ public final class CommandRegistry
     throws SchemaCrawlerException
   {
     final Map<String, String> commandRegistry = new HashMap<String, String>();
-    final Enumeration<URL> resources;
+    final List<URL> commandRegistryUrls;
     try
     {
-      resources = Thread.currentThread().getContextClassLoader()
-        .getResources("command.properties");
+      final Enumeration<URL> resources = Thread.currentThread()
+        .getContextClassLoader().getResources("command.properties");
+      commandRegistryUrls = Collections.list(resources);
     }
     catch (final IOException e)
     {
       throw new SchemaCrawlerException("Could not load command registry");
     }
-    while (resources.hasMoreElements())
+    for (final URL commandRegistryUrl: commandRegistryUrls)
     {
-      final URL commandRegistryUrl = resources.nextElement();
       try
       {
         final Properties commandRegistryProperties = new Properties();
