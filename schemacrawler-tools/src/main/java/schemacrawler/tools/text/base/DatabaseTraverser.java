@@ -23,7 +23,7 @@ public class DatabaseTraverser
     this.database = database;
   }
 
-  public void crawl(final DatabaseTraversalHandler handler)
+  public void traverse(final DatabaseTraversalHandler handler)
     throws SchemaCrawlerException
   {
     if (handler == null)
