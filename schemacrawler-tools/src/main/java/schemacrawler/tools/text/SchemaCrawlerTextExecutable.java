@@ -103,10 +103,10 @@ public final class SchemaCrawlerTextExecutable
     throws Exception
   {
     final List<DatabaseTraversalHandler> handlers = createHandlers(connection);
-    final DatabaseTraverser crawler = new DatabaseTraverser(database);
+    final DatabaseTraverser traverser = new DatabaseTraverser(database);
     for (final DatabaseTraversalHandler handler: handlers)
     {
-      crawler.crawl(handler);
+      traverser.traverse(handler);
     }
   }
 
@@ -167,8 +167,8 @@ public final class SchemaCrawlerTextExecutable
       {
         final SchemaTextOptions schemaTextOptions = getSchemaTextOptions();
         handler = new SchemaTextFormatter(schemaTextDetailType,
-                                               schemaTextOptions,
-                                               outputOptions);
+                                          schemaTextOptions,
+                                          outputOptions);
       }
       else
       {
@@ -206,10 +206,10 @@ public final class SchemaCrawlerTextExecutable
 
         final OperationOptions operationOptions = getOperationOptions();
         handler = new OperationHandler(operation,
-                                            query,
-                                            operationOptions,
-                                            outputOptions,
-                                            connection);
+                                       query,
+                                       operationOptions,
+                                       outputOptions,
+                                       connection);
       }
       handlers.add(handler);
     }
