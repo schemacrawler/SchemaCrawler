@@ -26,17 +26,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import schemacrawler.schema.Database;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
+import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.text.base.DatabaseTraversalHandler;
-import schemacrawler.tools.text.base.DatabaseTraverser;
-import schemacrawler.tools.text.operation.Operation;
-import schemacrawler.tools.text.operation.OperationHandler;
+import schemacrawler.tools.text.operation.OperationExecutable;
 import schemacrawler.tools.text.operation.OperationOptions;
-import schemacrawler.tools.text.operation.Query;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
-import schemacrawler.tools.text.schema.SchemaTextFormatter;
+import schemacrawler.tools.text.schema.SchemaTextExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import sf.util.Utility;
 
@@ -102,17 +98,6 @@ public final class SchemaCrawlerTextExecutable
                                  final Connection connection)
     throws Exception
   {
-    final List<DatabaseTraversalHandler> handlers = createHandlers(connection);
-    final DatabaseTraverser traverser = new DatabaseTraverser(database);
-    for (final DatabaseTraversalHandler handler: handlers)
-    {
-      traverser.traverse(handler);
-    }
-  }
-
-  private List<DatabaseTraversalHandler> createHandlers(final Connection connection)
-    throws SchemaCrawlerException
-  {
     final Commands commands;
     if (Utility.isBlank(command))
     {
@@ -123,7 +108,7 @@ public final class SchemaCrawlerTextExecutable
       commands = new Commands(command);
     }
 
-    final List<DatabaseTraversalHandler> handlers = new ArrayList<DatabaseTraversalHandler>();
+    final List<Executable> handlers = new ArrayList<Executable>();
     for (final String command: commands)
     {
       final OutputOptions outputOptions = this.outputOptions.duplicate();
@@ -153,7 +138,6 @@ public final class SchemaCrawlerTextExecutable
         }
       }
 
-      final DatabaseTraversalHandler handler;
       SchemaTextDetailType schemaTextDetailType;
       try
       {
@@ -165,56 +149,31 @@ public final class SchemaCrawlerTextExecutable
       }
       if (schemaTextDetailType != null)
       {
-        final SchemaTextOptions schemaTextOptions = getSchemaTextOptions();
-        handler = new SchemaTextFormatter(schemaTextDetailType,
-                                          schemaTextOptions,
-                                          outputOptions);
+        final SchemaTextExecutable executable = new SchemaTextExecutable(command);
+        executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+        executable.setAdditionalConfiguration(additionalConfiguration);
+        executable.setOutputOptions(outputOptions);
+        executable.setSchemaTextOptions(schemaTextOptions);
+        // 
+        handlers.add(executable);
       }
       else
       {
-        // Determine the operation, or whether this command is a query
-        Operation operation = null;
-        try
-        {
-          operation = Operation.valueOf(command);
-        }
-        catch (final IllegalArgumentException e)
-        {
-          operation = null;
-        }
-
-        // Get the query
-        final Query query;
-        if (operation == null)
-        {
-          final String queryName = command;
-          final String queryString;
-          if (additionalConfiguration != null)
-          {
-            queryString = additionalConfiguration.get(queryName);
-          }
-          else
-          {
-            queryString = null;
-          }
-          query = new Query(queryName, queryString);
-        }
-        else
-        {
-          query = operation.getQuery();
-        }
-
-        final OperationOptions operationOptions = getOperationOptions();
-        handler = new OperationHandler(operation,
-                                       query,
-                                       operationOptions,
-                                       outputOptions,
-                                       connection);
+        final OperationExecutable executable = new OperationExecutable(command);
+        executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+        executable.setAdditionalConfiguration(additionalConfiguration);
+        executable.setOutputOptions(outputOptions);
+        executable.setOperationOptions(operationOptions);
+        // 
+        handlers.add(executable);
       }
-      handlers.add(handler);
     }
 
-    return handlers;
+    for (final Executable executable: handlers)
+    {
+      executable.execute(connection);
+    }
+
   }
 
 }
