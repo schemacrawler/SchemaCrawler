@@ -47,10 +47,17 @@ public final class CommandRegistry
   private static final Logger LOGGER = Logger.getLogger(CommandRegistry.class
     .getName());
 
-  public static String[] lookupAvailableCommands()
+  final Map<String, String> commandRegistry;
+
+  public CommandRegistry()
     throws SchemaCrawlerException
   {
-    final Map<String, String> commandRegistry = loadCommandRegistry();
+    commandRegistry = loadCommandRegistry();
+  }
+
+  public String[] lookupAvailableCommands()
+    throws SchemaCrawlerException
+  {
     final Set<String> availableCommandsList = commandRegistry.keySet();
     availableCommandsList.remove("default");
     final String[] availableCommands = availableCommandsList
@@ -59,11 +66,10 @@ public final class CommandRegistry
     return availableCommands;
   }
 
-  public static String lookupCommandExecutableClassName(final String command)
+  public String lookupCommandExecutableClassName(final String command)
     throws SchemaCrawlerException
   {
     final String commandExecutableClassName;
-    final Map<String, String> commandRegistry = loadCommandRegistry();
     if (commandRegistry.containsKey(command))
     {
       commandExecutableClassName = commandRegistry.get(command);
@@ -75,7 +81,7 @@ public final class CommandRegistry
     return commandExecutableClassName;
   }
 
-  private static Map<String, String> loadCommandRegistry()
+  private Map<String, String> loadCommandRegistry()
     throws SchemaCrawlerException
   {
     final Map<String, String> commandRegistry = new HashMap<String, String>();
@@ -117,11 +123,6 @@ public final class CommandRegistry
       throw new SchemaCrawlerException("Could not load command registry");
     }
     return commandRegistry;
-  }
-
-  private CommandRegistry()
-  {
-    // Prevent instantiation
   }
 
 }

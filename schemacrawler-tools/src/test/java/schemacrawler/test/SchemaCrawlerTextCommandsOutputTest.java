@@ -38,9 +38,9 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.text.SchemaCrawlerTextExecutable;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.utility.TestDatabase;
@@ -143,7 +143,7 @@ public class SchemaCrawlerTextCommandsOutputTest
                                                           testOutputFile
                                                             .getAbsolutePath());
 
-    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(command);
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setAdditionalConfiguration(config);
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());

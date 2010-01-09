@@ -98,11 +98,12 @@ public final class SchemaCrawlerHelpCommandLine
       showHelp("/help/Config.txt");
     }
     showHelp("/help/ApplicationOptions.txt");
+    final CommandRegistry commandRegistry = new CommandRegistry();
     if (command == null)
     {
       showHelp("/help/Command.txt");
       System.out.println("  Available commands are: ");
-      final String[] availableCommands = CommandRegistry
+      final String[] availableCommands = commandRegistry
         .lookupAvailableCommands();
       for (final String availableCommand: availableCommands)
       {
@@ -111,7 +112,7 @@ public final class SchemaCrawlerHelpCommandLine
     }
     else
     {
-      final String commandExecutableClassName = CommandRegistry
+      final String commandExecutableClassName = commandRegistry
         .lookupCommandExecutableClassName(command);
       final String helpResource = "/help/"
                                   + commandExecutableClassName
