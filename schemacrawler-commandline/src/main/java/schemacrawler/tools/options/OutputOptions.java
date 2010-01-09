@@ -128,6 +128,7 @@ public final class OutputOptions
       {
         try
         {
+          writer.flush();
           writer.close();
           LOGGER.log(Level.INFO, "Closed output writer to file, "
                                  + outputFile.getAbsolutePath());
