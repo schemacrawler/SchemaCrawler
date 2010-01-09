@@ -32,7 +32,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Database;
-import schemacrawler.tools.integration.SchemaRenderer;
+import schemacrawler.tools.executable.BaseExecutable;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.MultiTemplateLoader;
@@ -48,7 +48,7 @@ import freemarker.template.TemplateException;
  * @author Sualeh Fatehi
  */
 public final class FreeMarkerRenderer
-  extends SchemaRenderer
+  extends BaseExecutable
 {
 
   private static final long serialVersionUID = 4029489563062547982L;
@@ -68,15 +68,13 @@ public final class FreeMarkerRenderer
    *      java.sql.Connection, java.lang.String, java.io.Writer)
    */
   @Override
-  protected void render(final Database database,
-                        final Connection connection,
-                        final String templateName,
-                        final Writer writer)
+  public final void executeOn(final Database database,
+                              final Connection connection)
     throws Exception
   {
     // Set the file path, in case the template is a file template
     // This allows Velocity to load templates from any directory
-    String templateLocation = templateName;
+    String templateLocation = outputOptions.getOutputFormatValue();
     String templatePath = ".";
     final File templateFilePath = new File(templateLocation);
     if (templateFilePath.exists())
@@ -111,12 +109,13 @@ public final class FreeMarkerRenderer
       final Map<String, Object> objectMap = new HashMap<String, Object>();
       objectMap.put("database", database);
 
+      final Writer writer = outputOptions.openOutputWriter();
+
       // Evaluate the template
       final Template template = cfg.getTemplate(templateLocation);
       template.process(objectMap, writer);
 
-      writer.flush();
-      writer.close();
+      outputOptions.closeOutputWriter(writer);
     }
     catch (final IOException e)
     {
