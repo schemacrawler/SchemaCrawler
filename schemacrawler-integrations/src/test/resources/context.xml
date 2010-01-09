@@ -108,7 +108,7 @@
     </property>
   </bean>
 
-  <bean id="executableForSchema" class="schemacrawler.tools.text.SchemaCrawlerTextExecutable">
+  <bean id="executableForSchema" class="schemacrawler.tools.text.schema.SchemaTextExecutable">
     <constructor-arg value="standard_schema" />
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
     <property name="schemaTextOptions">
@@ -124,7 +124,7 @@
     <property name="outputOptions" ref="outputOptions" />
   </bean>
 
-  <bean id="executableForQuery" class="schemacrawler.tools.text.SchemaCrawlerTextExecutable">
+  <bean id="executableForQuery" class="schemacrawler.tools.text.operation.OperationExecutable">
     <constructor-arg value="select.tables" />
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
     <property name="operationOptions">
@@ -145,7 +145,7 @@
     <property name="outputOptions" ref="outputOptions" />
   </bean>
 
-  <bean id="executableForQueryOver" class="schemacrawler.tools.text.SchemaCrawlerTextExecutable">
+  <bean id="executableForQueryOver" class="schemacrawler.tools.text.operation.OperationExecutable">
     <constructor-arg value="select" />
     <property name="schemaCrawlerOptions" ref="schemaCrawlerOptions" />
     <property name="operationOptions">

@@ -3,91 +3,98 @@ package schemacrawler.tools.executable;
 
 import java.lang.reflect.Constructor;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schema.Database;
 import schemacrawler.tools.options.OutputOptions;
 
 public class SchemaCrawlerExecutable
-  implements Executable
+  extends BaseExecutable
 {
 
   private static final Logger LOGGER = Logger
     .getLogger(SchemaCrawlerExecutable.class.getName());
 
-  private final Executable executable;
-
-  public SchemaCrawlerExecutable(final String command)
+  public SchemaCrawlerExecutable(final String commands)
     throws Exception
   {
-    final String commandExecutableClassName = CommandRegistry
-      .lookupCommandExecutableClassName(command);
-    final Class<? extends Executable> commandExecutableClass = (Class<? extends Executable>) Class
-      .forName(commandExecutableClassName);
+    super(commands);
+  }
 
-    Executable executable;
-    try
+  @Override
+  protected void executeOn(final Database database, final Connection connection)
+    throws Exception
+  {
+    final CommandRegistry commandRegistry = new CommandRegistry();
+    final Commands commands = new Commands(getCommand());
+    final List<Executable> executables = new ArrayList<Executable>();
+    for (final String command: commands)
     {
-      executable = commandExecutableClass.newInstance();
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.FINE, "Could not instantiate "
-                             + commandExecutableClassName
-                             + " using the default constructor", e);
-      final Constructor constructor = commandExecutableClass
-        .getConstructor(new Class[] {
-          String.class
+      final String commandExecutableClassName = commandRegistry
+        .lookupCommandExecutableClassName(command);
+      final Class<? extends Executable> commandExecutableClass = (Class<? extends Executable>) Class
+        .forName(commandExecutableClassName);
+
+      Executable executable;
+      try
+      {
+        executable = commandExecutableClass.newInstance();
+      }
+      catch (final Exception e)
+      {
+        LOGGER.log(Level.FINE, "Could not instantiate "
+                               + commandExecutableClassName
+                               + " using the default constructor", e);
+        final Constructor constructor = commandExecutableClass
+          .getConstructor(new Class[] {
+            String.class
+          });
+        executable = (Executable) constructor.newInstance(new Object[] {
+          command
         });
-      executable = (Executable) constructor.newInstance(new Object[] {
-        command
-      });
+      }
+
+      executables.add(executable);
     }
 
-    this.executable = executable;
-  }
+    for (final Executable executable: executables)
+    {
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+      executable.setAdditionalConfiguration(additionalConfiguration);
 
-  public void execute(final Connection connection)
-    throws Exception
-  {
-    executable.execute(connection);
-  }
+      final String command = executable.getCommand();
+      final OutputOptions executableOutputOptions = outputOptions.duplicate();
+      if (commands.size() > 1)
+      {
+        if (commands.isFirstCommand(command))
+        {
+          // First command - no footer
+          executableOutputOptions.setNoFooter(true);
+        }
+        else if (commands.isLastCommand(command))
+        {
+          // Last command - no header, or info
+          executableOutputOptions.setNoHeader(true);
+          executableOutputOptions.setNoInfo(true);
 
-  public Config getAdditionalConfiguration()
-  {
-    return executable.getAdditionalConfiguration();
-  }
+          executableOutputOptions.setAppendOutput(true);
+        }
+        else
+        {
+          // Middle command - no header, footer, or info
+          executableOutputOptions.setNoHeader(true);
+          executableOutputOptions.setNoInfo(true);
+          executableOutputOptions.setNoFooter(true);
 
-  public String getCommand()
-  {
-    return executable.getCommand();
-  }
+          executableOutputOptions.setAppendOutput(true);
+        }
+      }
+      executable.setOutputOptions(executableOutputOptions);
 
-  public OutputOptions getOutputOptions()
-  {
-    return executable.getOutputOptions();
+      ((BaseExecutable) executable).executeOn(database, connection);
+    }
   }
-
-  public SchemaCrawlerOptions getSchemaCrawlerOptions()
-  {
-    return executable.getSchemaCrawlerOptions();
-  }
-
-  public void setAdditionalConfiguration(final Config config)
-  {
-    executable.setAdditionalConfiguration(config);
-  }
-
-  public void setOutputOptions(final OutputOptions outputOptions)
-  {
-    executable.setOutputOptions(outputOptions);
-  }
-
-  public void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
-  {
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-  }
-
 }

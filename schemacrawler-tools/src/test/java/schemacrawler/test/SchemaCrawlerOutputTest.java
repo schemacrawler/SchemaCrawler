@@ -48,7 +48,6 @@ import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.text.SchemaCrawlerTextExecutable;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.utility.TestDatabase;
@@ -141,7 +140,7 @@ public class SchemaCrawlerOutputTest
         final DatabaseConnectionOptions connectionOptions = testUtility
           .getDatabaseConnectionOptions();
 
-        final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(command);
+        final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);
         executable.setAdditionalConfiguration(queriesConfig);

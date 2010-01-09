@@ -38,9 +38,9 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.text.SchemaCrawlerTextExecutable;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.utility.TestDatabase;
@@ -101,7 +101,7 @@ public class SchemaCrawlerXmlOutputTest
     outputOptions.setNoFooter(false);
     outputOptions.setNoInfo(false);
 
-    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(SchemaTextDetailType.list_objects
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.list_objects
       .name());
     executable.getSchemaCrawlerOptions().setSchemaInfoLevel(SchemaInfoLevel
       .minimum());
@@ -125,7 +125,7 @@ public class SchemaCrawlerXmlOutputTest
     outputOptions.setNoFooter(false);
     outputOptions.setNoInfo(false);
 
-    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(Operation.count
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(Operation.count
       .name());
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());
@@ -147,32 +147,8 @@ public class SchemaCrawlerXmlOutputTest
     outputOptions.setNoFooter(false);
     outputOptions.setNoInfo(false);
 
-    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(Operation.dump
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(Operation.dump
       .name());
-    executable.setOutputOptions(outputOptions);
-    executable.execute(testUtility.getConnection());
-
-    validateXml(outputFilename);
-  }
-
-  @Test
-  public void verbose_schemaValidXMLOutput()
-    throws Exception
-  {
-    final String outputFilename = File.createTempFile("schemacrawler",
-                                                      ".test.html")
-      .getAbsolutePath();
-
-    final OutputOptions outputOptions = new OutputOptions(OutputFormat.html,
-                                                          outputFilename);
-    outputOptions.setNoHeader(false);
-    outputOptions.setNoFooter(false);
-    outputOptions.setNoInfo(false);
-
-    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(SchemaTextDetailType.verbose_schema
-      .name());
-    executable.getSchemaCrawlerOptions().setSchemaInfoLevel(SchemaInfoLevel
-      .maximum());
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());
 
@@ -193,10 +169,34 @@ public class SchemaCrawlerXmlOutputTest
     outputOptions.setNoFooter(false);
     outputOptions.setNoInfo(false);
 
-    final SchemaCrawlerTextExecutable executable = new SchemaCrawlerTextExecutable(SchemaTextDetailType.standard_schema
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.standard_schema
       .name());
     executable.getSchemaCrawlerOptions().setSchemaInfoLevel(SchemaInfoLevel
       .detailed());
+    executable.setOutputOptions(outputOptions);
+    executable.execute(testUtility.getConnection());
+
+    validateXml(outputFilename);
+  }
+
+  @Test
+  public void verbose_schemaValidXMLOutput()
+    throws Exception
+  {
+    final String outputFilename = File.createTempFile("schemacrawler",
+                                                      ".test.html")
+      .getAbsolutePath();
+
+    final OutputOptions outputOptions = new OutputOptions(OutputFormat.html,
+                                                          outputFilename);
+    outputOptions.setNoHeader(false);
+    outputOptions.setNoFooter(false);
+    outputOptions.setNoInfo(false);
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.verbose_schema
+      .name());
+    executable.getSchemaCrawlerOptions().setSchemaInfoLevel(SchemaInfoLevel
+      .maximum());
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());
 

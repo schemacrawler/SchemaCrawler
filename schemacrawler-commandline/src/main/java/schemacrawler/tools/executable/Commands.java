@@ -1,4 +1,4 @@
-package schemacrawler.tools.text;
+package schemacrawler.tools.executable;
 
 
 import java.util.ArrayList;
