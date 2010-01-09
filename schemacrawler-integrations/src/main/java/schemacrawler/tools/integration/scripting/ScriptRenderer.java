@@ -36,7 +36,7 @@ import javax.script.ScriptException;
 
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.integration.SchemaRenderer;
+import schemacrawler.tools.executable.BaseExecutable;
 import sf.util.FileUtility;
 import sf.util.Utility;
 
@@ -46,7 +46,7 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 public final class ScriptRenderer
-  extends SchemaRenderer
+  extends BaseExecutable
 {
 
   private static final long serialVersionUID = -2232328675306451328L;
@@ -63,12 +63,11 @@ public final class ScriptRenderer
    *      java.sql.Connection, java.lang.String, java.io.Writer)
    */
   @Override
-  protected void render(final Database database,
-                        final Connection connection,
-                        final String scriptFileName,
-                        final Writer writer)
+  public final void executeOn(final Database database,
+                              final Connection connection)
     throws Exception
   {
+    final String scriptFileName = outputOptions.getOutputFormatValue();
     if (Utility.isBlank(scriptFileName))
     {
       throw new SchemaCrawlerException("No script file provided");
@@ -109,6 +108,8 @@ public final class ScriptRenderer
         throw new SchemaCrawlerException("Script engine not found");
       }
 
+      final Writer writer = outputOptions.openOutputWriter();
+
       // Set up the context
       scriptEngine.getContext().setWriter(writer);
       scriptEngine.put("database", database);
@@ -116,6 +117,8 @@ public final class ScriptRenderer
 
       // Evaluate the script
       scriptEngine.eval(reader);
+
+      outputOptions.closeOutputWriter(writer);
     }
     catch (final ScriptException e)
     {

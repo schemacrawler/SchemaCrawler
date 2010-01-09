@@ -37,7 +37,7 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
 
 import schemacrawler.schema.Database;
-import schemacrawler.tools.integration.SchemaRenderer;
+import schemacrawler.tools.executable.BaseExecutable;
 
 /**
  * Main executor for the Velocity integration.
@@ -45,7 +45,7 @@ import schemacrawler.tools.integration.SchemaRenderer;
  * @author Sualeh Fatehi
  */
 public final class VelocityRenderer
-  extends SchemaRenderer
+  extends BaseExecutable
 {
 
   private static final long serialVersionUID = -3346519953252968289L;
@@ -75,15 +75,13 @@ public final class VelocityRenderer
    *      java.sql.Connection, java.lang.String, java.io.Writer)
    */
   @Override
-  protected void render(final Database database,
-                        final Connection connection,
-                        final String templateName,
-                        final Writer writer)
+  public final void executeOn(final Database database,
+                              final Connection connection)
     throws Exception
   {
     // Set the file path, in case the template is a file template
     // This allows Velocity to load templates from any directory
-    String templateLocation = templateName;
+    String templateLocation = outputOptions.getOutputFormatValue();
     String templatePath = ".";
     final File templateFilePath = new File(templateLocation);
     if (templateFilePath.exists())
@@ -99,8 +97,7 @@ public final class VelocityRenderer
       final VelocityEngine ve = new VelocityEngine();
 
       // Set up Velocity resource loaders for loading from the
-      // classpath,
-      // as well as the file system
+      // classpath, as well as the file system
       // http://jakarta.apache.org/velocity/docs/developer-guide.html#
       // Configuring%20Resource%20Loaders
       final String fileResourceLoader = "file";
@@ -132,12 +129,13 @@ public final class VelocityRenderer
       final VelocityContext context = new VelocityContext();
       context.put("database", database);
 
+      final Writer writer = outputOptions.openOutputWriter();
+
       // Evaluate the template
       final Template template = ve.getTemplate(templateLocation);
       template.merge(context, writer);
 
-      writer.flush();
-      writer.close();
+      outputOptions.closeOutputWriter(writer);
     }
     catch (final Exception e)
     {
