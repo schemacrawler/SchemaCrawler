@@ -119,6 +119,7 @@
         logerror="true"
         failonerror="true">
         <classpath>
+          <pathelement path="${java.class.path}"/>
           <fileset dir="${schemacrawler.dir}">
             <include name="*.jar" />
           </fileset>
