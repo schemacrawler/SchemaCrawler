@@ -32,8 +32,7 @@
       datasource="hsqldb"
       db-driver-classpath="db-driver-classpath"
       command="verbose_schema,count"
-      outputfile="${outputfile}"
-      append="true"/>
+      outputfile="${outputfile}"/>
 
     <echo message="Snapshot in ${outputfile}"/>
 
