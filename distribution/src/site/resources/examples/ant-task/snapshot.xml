@@ -29,8 +29,10 @@
     <delete file="${outputfile}"/>
 
     <schemacrawler
-      datasource="hsqldb"
       db-driver-classpath="db-driver-classpath"
+      user="sa"
+      password=""
+      url="jdbc:hsqldb:hsql://localhost:9001/schemacrawler"
       command="verbose_schema,count"
       outputfile="${outputfile}"/>
 
