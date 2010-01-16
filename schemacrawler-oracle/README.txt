@@ -1,6 +1,6 @@
 SchemaCrawler
 http://sourceforge.net/projects/schemacrawler
-Copyright (c) 2000-2009, Sualeh Fatehi.
+Copyright (c) 2000-2010, Sualeh Fatehi.
 
 IMPORTANT: Please download a copy of the Oracle thin JDBC driver from:
 http://www.oracle.com/technology/software/tech/java/sqlj_jdbc/index.html
