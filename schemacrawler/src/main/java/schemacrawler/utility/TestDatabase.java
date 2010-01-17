@@ -21,6 +21,14 @@
 package schemacrawler.utility;
 
 
+import org.hsqldb.Server;
+import schemacrawler.schema.Database;
+import schemacrawler.schema.Schema;
+import schemacrawler.schemacrawler.DatabaseConnectionOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import sf.util.Utility;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.sql.Connection;
@@ -30,44 +38,31 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.hsqldb.Server;
-
-import schemacrawler.schema.Database;
-import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.DatabaseConnectionOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import sf.util.Utility;
-
 /**
  * Sets up a database schema for tests and examples.
- * 
+ *
  * @author sfatehi
  */
-public class TestDatabase
-{
+public class TestDatabase {
 
   private static final Level DEBUG_LOG_LEVEL = Level.OFF;
 
   private static final Logger LOGGER = Logger.getLogger(TestDatabase.class
     .getName());
 
-  public static void initializeApplicationLogging()
-  {
+  public static void initializeApplicationLogging() {
     Utility.setApplicationLogLevel(DEBUG_LOG_LEVEL);
   }
 
   /**
    * Starts up a test database in server mode.
-   * 
-   * @param args
-   *        Command line arguments
-   * @throws Exception
-   *         Exception
+   *
+   * @param args Command line arguments
+   *
+   * @throws Exception Exception
    */
   public static void main(final String[] args)
-    throws Exception
-  {
+    throws Exception {
     final TestDatabase testUtility = new TestDatabase();
     testUtility.createDatabase();
   }
@@ -76,45 +71,41 @@ public class TestDatabase
 
   /**
    * Create database in memory.
-   * 
+   *
    * @throws SchemaCrawlerException
    */
   public void createMemoryDatabase()
-    throws SchemaCrawlerException
-  {
+    throws SchemaCrawlerException {
     LOGGER.log(Level.FINE, toString() + " - Setting up in-memory database");
     createDatabase("jdbc:hsqldb:mem:schemacrawler");
   }
 
   /**
    * Gets the connection.
-   * 
+   *
    * @return Connection
+   *
    * @throws SQLException
    */
   public Connection getConnection()
-    throws SchemaCrawlerException
-  {
+    throws SchemaCrawlerException {
     return connectionOptions.createConnection();
   }
 
   public Database getDatabase(final SchemaCrawlerOptions schemaCrawlerOptions)
-    throws SchemaCrawlerException, SQLException
-  {
+    throws SchemaCrawlerException, SQLException {
     final Database database = SchemaCrawlerUtility
       .getDatabase(getConnection(), schemaCrawlerOptions);
     return database;
   }
 
-  public DatabaseConnectionOptions getDatabaseConnectionOptions()
-  {
+  public DatabaseConnectionOptions getDatabaseConnectionOptions() {
     return connectionOptions;
   }
 
   public Schema getSchema(final SchemaCrawlerOptions schemaCrawlerOptions,
                           final String schemaName)
-    throws SchemaCrawlerException, SQLException
-  {
+    throws SchemaCrawlerException, SQLException {
     final Database database = getDatabase(schemaCrawlerOptions);
     final Schema schema = database.getSchema(schemaName);
     return schema;
@@ -123,17 +114,13 @@ public class TestDatabase
   /**
    * Shuts down the database server.
    */
-  public void shutdownDatabase()
-  {
+  public void shutdownDatabase() {
     Connection connection = null;
     Statement statement = null;
-    try
-    {
-      if (connectionOptions != null)
-      {
+    try {
+      if (connectionOptions != null) {
         connection = connectionOptions.createConnection();
-        if (connection != null)
-        {
+        if (connection != null) {
           statement = connection.createStatement();
           statement.execute("SHUTDOWN");
           connection.close();
@@ -141,35 +128,26 @@ public class TestDatabase
         connectionOptions = null;
       }
     }
-    catch (final SchemaCrawlerException e)
-    {
+    catch (final SchemaCrawlerException e) {
       LOGGER.log(Level.WARNING, "", e);
     }
-    catch (final SQLException e)
-    {
+    catch (final SQLException e) {
       LOGGER.log(Level.WARNING, "", e);
     }
-    finally
-    {
-      if (statement != null)
-      {
-        try
-        {
+    finally {
+      if (statement != null) {
+        try {
           statement.close();
         }
-        catch (final SQLException e)
-        {
+        catch (final SQLException e) {
           LOGGER.log(Level.WARNING, "", e);
         }
       }
-      if (connection != null)
-      {
-        try
-        {
+      if (connection != null) {
+        try {
           connection.close();
         }
-        catch (final SQLException e)
-        {
+        catch (final SQLException e) {
           LOGGER.log(Level.WARNING, "", e);
         }
       }
@@ -178,33 +156,31 @@ public class TestDatabase
 
   /**
    * Load driver, and create database, schema and data.
-   * 
+   *
    * @throws SchemaCrawlerException
    */
   private void createDatabase()
-    throws SchemaCrawlerException
-  {
+    throws SchemaCrawlerException {
     LOGGER.log(Level.FINE, toString() + " - Setting up database");
     // Attempt to delete the database files
     final String serverFileStem = "hsqldb.schemacrawler";
     deleteServerFiles(serverFileStem);
     // Start the server
-    Server.main(new String[] {
-        "-database.0",
-        serverFileStem,
-        "-dbname.0",
-        "schemacrawler",
-        "-silent",
-        "false",
-        "-trace",
-        "true"
+    Server.main(new String[]{
+      "-database.0",
+      serverFileStem,
+      "-dbname.0",
+      "schemacrawler",
+      "-silent",
+      "false",
+      "-trace",
+      "true"
     });
     createDatabase("jdbc:hsqldb:hsql://localhost/schemacrawler");
   }
 
   private void createDatabase(final String url)
-    throws SchemaCrawlerException
-  {
+    throws SchemaCrawlerException {
     makeDataSource(url);
     setupSchema(connectionOptions);
   }
@@ -212,26 +188,19 @@ public class TestDatabase
   /**
    * Delete files from the previous run of the database server.
    */
-  private void deleteServerFiles(final String stem)
-  {
-    final FilenameFilter serverFilesFilter = new FilenameFilter()
-    {
-      public boolean accept(final File dir, final String name)
-      {
-        return Arrays.asList(new String[] {
-            stem + ".lck", stem + ".log", stem + ".properties",
-        }).contains(name);
+  private void deleteServerFiles(final String stem) {
+    final FilenameFilter serverFilesFilter = new FilenameFilter() {
+      public boolean accept(final File dir, final String name) {
+        return Arrays.asList(stem + ".lck", stem + ".log", stem + ".properties")
+          .contains(name);
       }
     };
 
     final File[] files = new File(".").listFiles(serverFilesFilter);
-    for (final File file: files)
-    {
-      if (!file.isDirectory() && !file.isHidden())
-      {
+    for (final File file : files) {
+      if (!file.isDirectory() && !file.isHidden()) {
         final boolean delete = file.delete();
-        if (!delete)
-        {
+        if (!delete) {
           LOGGER.log(Level.FINE, "Could not delete " + file.getAbsolutePath());
         }
       }
@@ -239,8 +208,7 @@ public class TestDatabase
   }
 
   private void makeDataSource(final String url)
-    throws SchemaCrawlerException
-  {
+    throws SchemaCrawlerException {
     connectionOptions = new DatabaseConnectionOptions("org.hsqldb.jdbcDriver",
                                                       url);
     connectionOptions.setUser("sa");
@@ -249,27 +217,22 @@ public class TestDatabase
 
   /**
    * Setup the schema.
-   * 
-   * @param dataSource
-   *        Datasource
+   *
+   * @param dataSource Datasource
    */
-  private void setupSchema(final DatabaseConnectionOptions dataSource)
-  {
+  private void setupSchema(final DatabaseConnectionOptions dataSource) {
     Connection connection = null;
     Statement statement = null;
-    try
-    {
-      final String[] scriptResources = new String[] {
-          "/schemacrawler.test.sql",
-          "/schemacrawler.test.extra.sql",
-          "/schemacrawler.test.other.sql"
+    try {
+      final String[] scriptResources = new String[]{
+        "/schemacrawler.test.sql",
+        "/schemacrawler.test.extra.sql",
+        "/schemacrawler.test.other.sql"
       };
-      if (dataSource != null)
-      {
+      if (dataSource != null) {
         connection = dataSource.createConnection();
         statement = connection.createStatement();
-        for (final String scriptResource: scriptResources)
-        {
+        for (final String scriptResource : scriptResources) {
           final String script = Utility.readFully(TestDatabase.class
             .getResourceAsStream(scriptResource));
           statement.execute(script);
@@ -278,35 +241,26 @@ public class TestDatabase
         connection.close();
       }
     }
-    catch (final SchemaCrawlerException e)
-    {
+    catch (final SchemaCrawlerException e) {
       LOGGER.log(Level.WARNING, "", e);
     }
-    catch (final SQLException e)
-    {
+    catch (final SQLException e) {
       LOGGER.log(Level.WARNING, "", e);
     }
-    finally
-    {
-      if (statement != null)
-      {
-        try
-        {
+    finally {
+      if (statement != null) {
+        try {
           statement.close();
         }
-        catch (final SQLException e)
-        {
+        catch (final SQLException e) {
           LOGGER.log(Level.WARNING, "", e);
         }
       }
-      if (connection != null)
-      {
-        try
-        {
+      if (connection != null) {
+        try {
           connection.close();
         }
-        catch (final SQLException e)
-        {
+        catch (final SQLException e) {
           LOGGER.log(Level.WARNING, "", e);
         }
       }

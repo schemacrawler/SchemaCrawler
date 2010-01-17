@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
  * 
  * @author Anthony Eden
  */
+@SuppressWarnings({"ALL"})
 public class Inflection
 {
   private static final List<Inflection> plural = new ArrayList<Inflection>();

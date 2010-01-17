@@ -42,12 +42,12 @@ public final class Main
   /**
    * Internal storage for information. Read from text file.
    */
-  private static String pluginPom = Utility.readFully(Main.class
+  private static final String pluginPom = Utility.readFully(Main.class
     .getResourceAsStream("/" + MAVEN_PLUGIN_POM_FILENAME));
   /**
    * Internal storage for information. Read from text file.
    */
-  private static String instructions = Utility.readFully(Main.class
+  private static final String instructions = Utility.readFully(Main.class
     .getResourceAsStream("/" + MAVEN_PLUGIN_INSTRUCTONS_FILENAME));
 
   /**

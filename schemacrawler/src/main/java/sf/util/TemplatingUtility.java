@@ -36,8 +36,8 @@ import java.util.Map.Entry;
 public final class TemplatingUtility
 {
 
-  private final static String DELIMITER_START = "${";
-  private final static String DELIMITER_END = "}";
+  private static final String DELIMITER_START = "${";
+  private static final String DELIMITER_END = "}";
 
   /**
    * Expands a template using system properties. Variables in the

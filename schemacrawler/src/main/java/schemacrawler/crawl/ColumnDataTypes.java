@@ -26,11 +26,6 @@ class ColumnDataTypes
 
   private static final long serialVersionUID = 6793135093651666453L;
 
-  ColumnDataTypes()
-  {
-    super();
-  }
-
   MutableColumnDataType lookupColumnDataTypeByType(final int type)
   {
     MutableColumnDataType columnDataType = null;

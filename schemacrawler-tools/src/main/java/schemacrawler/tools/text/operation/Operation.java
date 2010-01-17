@@ -26,14 +26,17 @@ import java.text.MessageFormat;
 /**
  * Database operations.
  */
-public enum Operation
-{
+public enum Operation {
 
-  /** Count operation */
+  /**
+   * Count operation
+   */
   count("Row Count", "SELECT COUNT(*) FROM ${table}",
-    "{0,choice,0#empty|0<{0,number,integer} rows}"),
-  /** Dump operation */
-  dump("Dump", "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}", ""), ;
+        "{0,choice,0#empty|0<{0,number,integer} rows}"),
+  /**
+   * Dump operation
+   */
+  dump("Dump", "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}", ""),;
 
   private final String description;
   private final String queryString;
@@ -41,8 +44,7 @@ public enum Operation
 
   private Operation(final String description,
                     final String queryString,
-                    final String countMessageFormat)
-  {
+                    final String countMessageFormat) {
     this.description = description;
     this.queryString = queryString;
     this.countMessageFormat = countMessageFormat;
@@ -50,33 +52,28 @@ public enum Operation
 
   /**
    * Message format for the counts.
-   * 
+   *
    * @return Message format for the counts
    */
-  public String getCountMessage(final Number number)
-  {
-    return MessageFormat.format(countMessageFormat, new Object[] {
-      number
-    });
+  public String getCountMessage(final Number number) {
+    return MessageFormat.format(countMessageFormat, number);
   }
 
   /**
    * Operation description.
-   * 
+   *
    * @return Operation description
    */
-  public String getDescription()
-  {
+  public String getDescription() {
     return description;
   }
 
   /**
    * Query.
-   * 
+   *
    * @return Query
    */
-  public Query getQuery()
-  {
+  public Query getQuery() {
     return new Query(name(), queryString);
   }
 

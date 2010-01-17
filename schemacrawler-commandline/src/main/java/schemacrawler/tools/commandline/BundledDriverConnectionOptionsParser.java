@@ -31,7 +31,7 @@ import sf.util.CommandLineParser.StringOption;
 
 /**
  * Options for the command line.
- * 
+ *
  * @author sfatehi
  */
 final class BundledDriverConnectionOptionsParser
@@ -50,10 +50,10 @@ final class BundledDriverConnectionOptionsParser
 
   /**
    * Parses the command line into options.
-   * 
+   *
    * @param args
    */
-  public BundledDriverConnectionOptionsParser(final String[] args,
+  BundledDriverConnectionOptionsParser(final String[] args,
                                               final Config config)
   {
     super(args, config);

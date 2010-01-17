@@ -123,7 +123,7 @@ final class SchemaReference
     return schemaName;
   }
 
-  private final void buildFullName()
+  private void buildFullName()
   {
     if (fullName == null)
     {
