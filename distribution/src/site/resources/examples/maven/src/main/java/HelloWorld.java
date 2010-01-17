@@ -1,4 +1,6 @@
+import java.lang.SuppressWarnings;
 
+@SuppressWarnings({"ALL"})
 public class HelloWorld
 {
   public static void main(String[] args)

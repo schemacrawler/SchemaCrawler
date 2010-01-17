@@ -9,6 +9,9 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
+import java.lang.SuppressWarnings;
+
+@SuppressWarnings({"ALL"})
 public final class ApiExample
 {
 

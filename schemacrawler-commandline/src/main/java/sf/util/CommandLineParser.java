@@ -120,7 +120,7 @@ public final class CommandLineParser
      */
     public T getValue()
     {
-      T returnValue;
+      final T returnValue;
       if (!isFound())
       {
         returnValue = defaultValue;

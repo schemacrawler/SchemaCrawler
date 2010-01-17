@@ -239,7 +239,6 @@ final class TableExRetriever
     {
       LOGGER.log(Level.WARNING, "Could not retrieve table column privileges:"
                                 + e.getMessage());
-      return;
     }
     finally
     {
@@ -264,7 +263,6 @@ final class TableExRetriever
     catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve table privileges", e);
-      return;
     }
     finally
     {
@@ -371,7 +369,6 @@ final class TableExRetriever
     catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve trigger information", e);
-      return;
     }
     finally
     {
@@ -445,7 +442,6 @@ final class TableExRetriever
     catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve view information", e);
-      return;
     }
     finally
     {

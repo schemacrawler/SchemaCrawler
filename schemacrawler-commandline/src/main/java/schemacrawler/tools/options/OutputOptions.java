@@ -257,7 +257,7 @@ public final class OutputOptions
   public PrintWriter openOutputWriter()
     throws SchemaCrawlerException
   {
-    PrintWriter writer;
+    final PrintWriter writer;
     try
     {
       if (outputFile == null)

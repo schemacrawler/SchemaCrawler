@@ -49,7 +49,7 @@ final class SpringOptionsParser
    * 
    * @param args
    */
-  public SpringOptionsParser(final String[] args)
+  SpringOptionsParser(final String[] args)
   {
     super(args);
   }

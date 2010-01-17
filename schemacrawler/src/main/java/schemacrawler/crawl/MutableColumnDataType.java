@@ -360,7 +360,7 @@ final class MutableColumnDataType
     this.userDefined = userDefined;
   }
 
-  private final void setTypeFromJavaSqlType(final JavaSqlType javaSqlType)
+  private void setTypeFromJavaSqlType(final JavaSqlType javaSqlType)
   {
     if (javaSqlType != null)
     {

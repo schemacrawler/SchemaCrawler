@@ -128,7 +128,7 @@ abstract class AbstractDatabaseObject
     return getFullName();
   }
 
-  private final void buildFullName()
+  private void buildFullName()
   {
     if (fullName == null)
     {

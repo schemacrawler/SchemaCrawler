@@ -49,7 +49,7 @@ final class CommandLineConnectionOptionsParser
    * 
    * @param args
    */
-  public CommandLineConnectionOptionsParser(final String[] args,
+  CommandLineConnectionOptionsParser(final String[] args,
                                             final Config config)
   {
     super(args, config);

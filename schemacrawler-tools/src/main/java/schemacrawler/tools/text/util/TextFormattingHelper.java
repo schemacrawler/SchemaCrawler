@@ -43,7 +43,7 @@ public interface TextFormattingHelper
    * @throws QueryExecutorException
    *         On an exception
    */
-  public String createRow(final String[] columnData);
+  String createRow(final String[] columnData);
 
   /**
    * Called to handle the header output. Handler to be implemented by
@@ -54,7 +54,7 @@ public interface TextFormattingHelper
    * @throws QueryExecutorException
    *         On an exception
    */
-  public String createRowHeader(final String[] columnNames);
+  String createRowHeader(final String[] columnNames);
 
   /**
    * Creates an arrow symbol.

@@ -169,7 +169,7 @@ public final class JavaSqlTypesGenerationUtility
   private static Writer startWriting(final File directory, final String fileName)
     throws IOException
   {
-    Writer writer;
+    final Writer writer;
     writer = new FileWriter(new File(directory, fileName));
     writer.write(String.format("# java.sql.Types from Java %s %s\n", System
       .getProperty("java.version"), System.getProperty("java.vendor")));
@@ -199,12 +199,12 @@ public final class JavaSqlTypesGenerationUtility
       catch (final SecurityException e)
       {
         LOGGER.log(Level.WARNING, "Could not access java.sql.Types", e);
-        continue;
+        // continue
       }
       catch (final IllegalAccessException e)
       {
         LOGGER.log(Level.WARNING, "Could not access java.sql.Types", e);
-        continue;
+        // continue
       }
     }
 

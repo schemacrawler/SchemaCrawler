@@ -172,7 +172,7 @@ public final class JavaSqlTypesUtility
       catch (final Exception e)
       {
         LOGGER.log(Level.WARNING, "Could not read java.sql.Types groups", e);
-        continue;
+       // continue
       }
     }
     return Collections.unmodifiableMap(javaSqlTypesGroupsMap);

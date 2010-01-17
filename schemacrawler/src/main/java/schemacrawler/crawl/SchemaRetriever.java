@@ -80,7 +80,7 @@ final class SchemaRetriever
         LOGGER.log(Level.FINER, "Dropping schema, since schema is excluded: "
                                 + schemaRef.getFullName());
         iterator.remove();
-        continue;
+        // continue
       }
     }
 

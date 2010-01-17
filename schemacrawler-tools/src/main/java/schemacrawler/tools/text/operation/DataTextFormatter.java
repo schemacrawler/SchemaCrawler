@@ -210,7 +210,7 @@ public final class DataTextFormatter
 
   private String getMessage(final double aggregate)
   {
-    Number number;
+    final Number number;
     if (Math.abs(aggregate - (int) aggregate) < 1E-10D)
     {
       number = Integer.valueOf((int) aggregate);

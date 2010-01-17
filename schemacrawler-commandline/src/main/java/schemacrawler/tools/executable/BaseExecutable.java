@@ -164,7 +164,7 @@ public abstract class BaseExecutable
   /**
    * Initializes the executable before execution.
    */
-  private final void adjustSchemaInfoLevel()
+  private void adjustSchemaInfoLevel()
   {
     final SchemaInfoLevel infoLevel = schemaCrawlerOptions.getSchemaInfoLevel();
     if (!schemaCrawlerOptions.isAlphabeticalSortForTables()

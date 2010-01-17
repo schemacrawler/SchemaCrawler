@@ -342,7 +342,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
 
     final Collection<Vertex<T>> vertices = new HashSet<Vertex<T>>(verticesMap
       .values());
-    final HashSet<DirectedEdge<T>> edges = new HashSet<DirectedEdge<T>>(this.edges);
+    final Set<DirectedEdge<T>> edges = new HashSet<DirectedEdge<T>>(this.edges);
     final List<T> sortedValues = new ArrayList<T>(collectionSize);
 
     while (!vertices.isEmpty())

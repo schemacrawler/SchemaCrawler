@@ -21,21 +21,17 @@
 package schemacrawler.schemacrawler;
 
 
-import java.io.IOException;
+import sf.util.Utility;
+
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import sf.util.ImplementationFinder;
-import sf.util.Utility;
-
 abstract class BaseDatabaseConnectionOptions
-  implements ConnectionOptions
-{
+  implements ConnectionOptions {
 
   private static final long serialVersionUID = -8141436553988174836L;
 
@@ -46,22 +42,17 @@ abstract class BaseDatabaseConnectionOptions
   private String password;
 
   public final Connection createConnection()
-    throws SchemaCrawlerException
-  {
-    if (user == null)
-    {
+    throws SchemaCrawlerException {
+    if (user == null) {
       LOGGER.log(Level.WARNING, "Database user is not provided");
     }
-    if (password == null)
-    {
+    if (password == null) {
       LOGGER.log(Level.WARNING, "Database password is not provided");
     }
-    try
-    {
+    try {
       return DriverManager.getConnection(getConnectionUrl(), user, password);
     }
-    catch (final SQLException e)
-    {
+    catch (final SQLException e) {
       throw new SchemaCrawlerException(String
         .format("Could not connect to %s, for user %s",
                 getConnectionUrl(),
@@ -71,83 +62,57 @@ abstract class BaseDatabaseConnectionOptions
 
   public abstract String getConnectionUrl();
 
-  public final Driver getJdbcDriver()
-  {
-    try
-    {
+  public final Driver getJdbcDriver() {
+    try {
       return DriverManager.getDriver(getConnectionUrl());
     }
-    catch (final SQLException e)
-    {
+    catch (final SQLException e) {
       LOGGER.log(Level.WARNING,
                  "Could not get a database driver for database connection URL "
-                     + getConnectionUrl());
+                   + getConnectionUrl());
       return null;
     }
   }
 
-  public final String getPassword()
-  {
+  public final String getPassword() {
     return password;
   }
 
-  public final String getUser()
-  {
+  public final String getUser() {
     return user;
   }
 
-  public final void setPassword(final String password)
-  {
+  public final void setPassword(final String password) {
     this.password = password;
   }
 
-  public final void setUser(final String user)
-  {
+  public final void setUser(final String user) {
     this.user = user;
   }
 
   @Override
-  public final String toString()
-  {
+  public final String toString() {
     final StringBuilder builder = new StringBuilder();
-    builder.append("driver=").append(getJdbcDriver().getClass().getName())
+    builder.append("driver=")
+      .append(getJdbcDriver().getClass().getName())
       .append(Utility.NEWLINE);
-    builder.append("url=").append(getConnectionUrl()).append(Utility.NEWLINE);
-    builder.append("user=").append(getUser()).append(Utility.NEWLINE);
+    builder.append("url=")
+      .append(getConnectionUrl())
+      .append(Utility.NEWLINE);
+    builder.append("user=")
+      .append(getUser())
+      .append(Utility.NEWLINE);
     return builder.toString();
   }
 
   protected final void loadJdbcDriver(final String jdbcDriverClassName)
-    throws SchemaCrawlerException
-  {
-    if (Utility.isBlank(jdbcDriverClassName))
-    {
-      // Load all JDBC drivers found on the classpath
-      try
-      {
-        final ImplementationFinder<Driver> finder = new ImplementationFinder<Driver>(Driver.class);
-        final List<Class<Driver>> driverClasses = finder.findImplementations();
-        if (driverClasses == null || driverClasses.isEmpty())
-        {
-          throw new SchemaCrawlerException("NO JDBC drivers found on the classpath");
-        }
-      }
-      catch (final IOException e)
-      {
-        throw new SchemaCrawlerException("Could not load JDBC drivers");
-      }
+    throws SchemaCrawlerException {
+    try {
+      Class.forName(jdbcDriverClassName);
     }
-    else
-    {
-      try
-      {
-        Class.forName(jdbcDriverClassName);
-      }
-      catch (final Exception e)
-      {
-        throw new SchemaCrawlerException("Could not load JDBC driver, "
-                                         + jdbcDriverClassName);
-      }
+    catch (final Exception e) {
+      throw new SchemaCrawlerException("Could not load JDBC driver, "
+        + jdbcDriverClassName);
     }
   }
 

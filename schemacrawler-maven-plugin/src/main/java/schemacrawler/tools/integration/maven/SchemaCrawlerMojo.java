@@ -20,14 +20,6 @@
 package schemacrawler.tools.integration.maven;
 
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.Arrays;
-import java.util.Locale;
-
 import org.apache.maven.doxia.siterenderer.Renderer;
 import org.apache.maven.doxia.siterenderer.RendererException;
 import org.apache.maven.doxia.siterenderer.sink.SiteRendererSink;
@@ -38,16 +30,23 @@ import org.apache.maven.reporting.MavenReport;
 import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.doxia.sink.Sink;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.Arrays;
+import java.util.Locale;
+
 /**
  * Generates a SchemaCrawler report of the database.
- * 
+ *
  * @goal schemacrawler
  * @execute phase="generate-sources"
  */
 public class SchemaCrawlerMojo
   extends AbstractMavenReport
-  implements MavenReport
-{
+  implements MavenReport {
 
   /**
    * @parameter expression="${project}"
@@ -63,107 +62,94 @@ public class SchemaCrawlerMojo
 
   /**
    * JDBC driver classpath.
-   * 
-   * @parameter expression="${schemacrawler.jdbc.driver.classpath}"
-   *            alias="schemacrawler.jdbc.driver.classpath"
+   *
+   * @parameter expression="${schemacrawler.jdbc.driver.classpath}" alias="schemacrawler.jdbc.driver.classpath"
    * @required
    */
   private String jdbcDriverClasspath;
 
   /**
    * Config file.
-   * 
-   * @parameter expression="${schemacrawler.config}"
-   *            alias="schemacrawler.config"
-   *            default-value="schemacrawler.config.properties"
+   *
+   * @parameter expression="${schemacrawler.config}" alias="schemacrawler.config" default-value="schemacrawler.config.properties"
    * @required
    */
   private String config;
 
   /**
    * Config override file.
-   * 
-   * @parameter expression="${schemacrawler.config-override}"
-   *            alias="schemacrawler.config-override"
-   *            default-value="schemacrawler.config.override.properties"
+   *
+   * @parameter expression="${schemacrawler.config-override}" alias="schemacrawler.config-override"
+   * default-value="schemacrawler.config.override.properties"
    */
   private String configOverride;
 
   /**
    * Datasource.
-   * 
-   * @parameter expression="${schemacrawler.datasource}"
-   *            alias="schemacrawler.datasource"
+   *
+   * @parameter expression="${schemacrawler.datasource}" alias="schemacrawler.datasource"
    * @required
    */
   private String datasource;
 
   /**
    * Command.
-   * 
-   * @parameter expression="${schemacrawler.command}"
-   *            alias="schemacrawler.command"
+   *
+   * @parameter expression="${schemacrawler.command}" alias="schemacrawler.command"
    * @required
    */
   private String command;
 
   /**
    * Whether the header should be suppressed.
-   * 
-   * @parameter expression="${schemacrawler.no-header}"
-   *            alias="schemacrawler.no-header" default-value="false"
+   *
+   * @parameter expression="${schemacrawler.no-header}" alias="schemacrawler.no-header" default-value="false"
    */
   private boolean noHeader;
 
   /**
    * Whether the footer should be suppressed.
-   * 
-   * @parameter expression="${schemacrawler.no-footer}"
-   *            alias="schemacrawler.no-footer" default-value="false"
+   *
+   * @parameter expression="${schemacrawler.no-footer}" alias="schemacrawler.no-footer" default-value="false"
    */
   private boolean noFooter;
 
   /**
    * Whether the info should be suppressed.
-   * 
-   * @parameter expression="${schemacrawler.no-info}"
-   *            alias="schemacrawler.no-footer" default-value="false"
+   *
+   * @parameter expression="${schemacrawler.no-info}" alias="schemacrawler.no-footer" default-value="false"
    */
   private boolean noInfo;
 
   /**
    * Output format.
-   * 
-   * @parameter expression="${schemacrawler.outputformat}"
-   *            alias="schemacrawler.outputformat" default-value="text"
+   *
+   * @parameter expression="${schemacrawler.outputformat}" alias="schemacrawler.outputformat" default-value="text"
    */
   private String outputFormat;
 
   /**
    * Output file.
-   * 
-   * @parameter expression="${schemacrawler.outputfile}"
-   *            alias="schemacrawler.outputfile"
-   *            default-value="schemacrawler.report.html"
+   *
+   * @parameter expression="${schemacrawler.outputfile}" alias="schemacrawler.outputfile"
+   * default-value="schemacrawler.report.html"
    */
   private String outputFile;
 
   /**
    * Whether to append to the output.
-   * 
-   * @parameter expression="${schemacrawler.append}"
-   *            alias="schemacrawler.append" default-value="false"
+   *
+   * @parameter expression="${schemacrawler.append}" alias="schemacrawler.append" default-value="false"
    */
   private boolean append;
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see org.apache.maven.reporting.MavenReport#canGenerateReport()
    */
   @Override
-  public boolean canGenerateReport()
-  {
+  public boolean canGenerateReport() {
     // TODO: Test database connection?
     return true;
   }
@@ -173,163 +159,146 @@ public class SchemaCrawlerMojo
    */
   @Override
   public void execute()
-    throws MojoExecutionException
-  {
+    throws MojoExecutionException {
     final String errorMessage = "An error has occurred in "
-                                + getName(Locale.ENGLISH)
-                                + " report generation.";
-    try
-    {
+      + getName(Locale.ENGLISH)
+      + " report generation.";
+    try {
       final String outputDirectory = getOutputDirectory();
       final SiteRendererSink sink = siteRenderer
         .createSink(new File(outputDirectory), getOutputName() + ".html");
       generate(sink, Locale.getDefault());
     }
-    catch (final RendererException e)
-    {
+    catch (final RendererException e) {
       throw new MojoExecutionException(errorMessage, e);
     }
-    catch (final IOException e)
-    {
+    catch (final IOException e) {
       throw new MojoExecutionException(errorMessage, e);
     }
-    catch (final MavenReportException e)
-    {
+    catch (final MavenReportException e) {
       throw new MojoExecutionException(errorMessage, e);
     }
   }
 
   /**
    * {@inheritDoc}
-   * 
-   * @see org.apache.maven.reporting.MavenReport#generate(org.codehaus.doxia.sink.Sink,
-   *      java.util.Locale)
+   *
+   * @see org.apache.maven.reporting.MavenReport#generate(org.codehaus.doxia.sink.Sink, java.util.Locale)
    */
   @Override
   public void generate(final Sink sink, final Locale locale)
-    throws MavenReportException
-  {
+    throws MavenReportException {
     executeReport(locale);
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see org.apache.maven.reporting.MavenReport#getCategoryName()
    */
   @Override
-  public String getCategoryName()
-  {
+  public String getCategoryName() {
     return CATEGORY_PROJECT_REPORTS;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see org.apache.maven.reporting.MavenReport#getDescription(java.util.Locale)
    */
-  public String getDescription(final Locale locale)
-  {
+  public String getDescription(final Locale locale) {
     return "SchemaCrawler Report";
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see org.apache.maven.reporting.MavenReport#getName(java.util.Locale)
    */
-  public String getName(final Locale locale)
-  {
+  public String getName(final Locale locale) {
     return "SchemaCrawler Report";
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see org.apache.maven.reporting.MavenReport#getOutputName()
    */
-  public String getOutputName()
-  {
+  public String getOutputName() {
     final String outputFilename = new File(outputFile).getName();
     return outputFilename.substring(0, outputFilename.lastIndexOf("."));
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see org.apache.maven.reporting.MavenReport#getReportOutputDirectory()
    */
   @Override
-  public File getReportOutputDirectory()
-  {
+  public File getReportOutputDirectory() {
     return new File(outputFile).getParentFile();
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see org.apache.maven.reporting.MavenReport#isExternalReport()
    */
   @Override
-  public boolean isExternalReport()
-  {
+  public boolean isExternalReport() {
     return true;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see org.apache.maven.reporting.MavenReport#setReportOutputDirectory(java.io.File)
    */
   @Override
-  public void setReportOutputDirectory(final File directory)
-  {
+  public void setReportOutputDirectory(final File directory) {
     // Get the output filename
     final String outputFilename = new File(outputFile).getName();
     // Set the new path
-    if (directory.exists() && directory.isDirectory())
-    {
+    if (directory.exists() && directory.isDirectory()) {
       outputFile = new File(directory, outputFilename).getAbsolutePath();
     }
   }
 
   @Override
   protected void executeReport(final Locale locale)
-    throws MavenReportException
-  {
+    throws MavenReportException {
 
     // Build command line
-    final String[] args = new String[] {
-        "-g",
-        config,
-        "-p",
-        configOverride,
-        "-c",
-        datasource,
-        "-command",
-        command,
-        "-noheader=" + noHeader,
-        "-nofooter=" + noFooter,
-        "-noinfo=" + noInfo,
-        "-outputformat",
-        outputFormat,
-        "-outputfile",
-        outputFile,
-        "-append",
-        String.valueOf(append),
+    final String[] args = new String[]{
+      "-g",
+      config,
+      "-p",
+      configOverride,
+      "-c",
+      datasource,
+      "-command",
+      command,
+      "-noheader=" + noHeader,
+      "-nofooter=" + noFooter,
+      "-noinfo=" + noInfo,
+      "-outputformat",
+      outputFormat,
+      "-outputfile",
+      outputFile,
+      "-append",
+      String.valueOf(append),
     };
 
     // Execute command
     final String commandLine = schemacrawler.Main.class.getName() + " ~"
-                               + Arrays.asList(args);
-    try
-    {
+      + Arrays.asList(args);
+    try {
       fixClassPath();
       getLog().info(commandLine);
-      schemacrawler.Main.main(args);
+      schemacrawler.Main
+        .main(args);
     }
-    catch (final Exception e)
-    {
+    catch (final Exception e) {
       throw new MavenReportException("Error executing: " + commandLine, e);
     }
   }
@@ -338,17 +307,16 @@ public class SchemaCrawlerMojo
    * @see org.apache.maven.reporting.AbstractMavenReport#getOutputDirectory()
    */
   @Override
-  protected String getOutputDirectory()
-  {
-    return new File(outputFile).getParentFile().getAbsolutePath();
+  protected String getOutputDirectory() {
+    return new File(outputFile).getParentFile()
+      .getAbsolutePath();
   }
 
   /**
    * @see org.apache.maven.reporting.AbstractMavenReport#getProject()
    */
   @Override
-  protected MavenProject getProject()
-  {
+  protected MavenProject getProject() {
     return project;
   }
 
@@ -356,37 +324,33 @@ public class SchemaCrawlerMojo
    * @see org.apache.maven.reporting.AbstractMavenReport#getSiteRenderer()
    */
   @Override
-  protected Renderer getSiteRenderer()
-  {
+  protected Renderer getSiteRenderer() {
     return siteRenderer;
   }
 
   /**
-   * The JDBC driver classpath comes from the configuration of the
-   * SchemaCrawler plugin. The current classloader needs to be "fixed"
-   * to include the JDBC driver in the classpath.
-   * 
+   * The JDBC driver classpath comes from the configuration of the SchemaCrawler plugin. The current classloader needs
+   * to be "fixed" to include the JDBC driver in the classpath.
+   *
    * @throws MavenReportException
    */
   private void fixClassPath()
-    throws MavenReportException
-  {
+    throws MavenReportException {
     URL[] jdbcJarUrls = new URL[0];
-    try
-    {
+    try {
 
       final String[] jdbcJarPaths = jdbcDriverClasspath.split(System
         .getProperty("path.separator"));
       jdbcJarUrls = new URL[jdbcJarPaths.length];
-      for (int i = 0; i < jdbcJarPaths.length; i++)
-      {
+      for (int i = 0; i < jdbcJarPaths.length; i++) {
         final String jdbcJarPath = jdbcJarPaths[i];
-        jdbcJarUrls[i] = new File(jdbcJarPath).getCanonicalFile().toURI()
+        jdbcJarUrls[i] = new File(jdbcJarPath).getCanonicalFile()
+          .toURI()
           .toURL();
       }
 
       final Method addUrlMethod = new URLClassLoader(new URL[0]).getClass()
-        .getDeclaredMethod("addURL", new Class[] {
+        .getDeclaredMethod("addURL", new Class[]{
           URL.class
         });
 
@@ -395,21 +359,17 @@ public class SchemaCrawlerMojo
 
       addUrlMethod.setAccessible(true);
 
-      for (final URL jdbcJarUrl: jdbcJarUrls)
-      {
-        addUrlMethod.invoke(classLoader, new Object[] {
-          jdbcJarUrl
-        });
+      for (final URL jdbcJarUrl : jdbcJarUrls) {
+        addUrlMethod.invoke(classLoader, jdbcJarUrl);
       }
 
       getLog().info("Fixed SchemaCrawler classpath: "
-                    + Arrays.asList(classLoader.getURLs()));
+        + Arrays.asList(classLoader.getURLs()));
 
     }
-    catch (final Exception e)
-    {
+    catch (final Exception e) {
       throw new MavenReportException("Error fixing classpath with "
-                                     + Arrays.asList(jdbcJarUrls), e);
+        + Arrays.asList(jdbcJarUrls), e);
     }
   }
 

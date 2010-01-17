@@ -85,7 +85,7 @@ final class ConfigConnectionOptionsParser
    * 
    * @param args
    */
-  public ConfigConnectionOptionsParser(final String[] args, final Config config)
+  ConfigConnectionOptionsParser(final String[] args, final Config config)
   {
     super(args, config);
   }

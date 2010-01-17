@@ -52,9 +52,7 @@ public class SchemaCrawlerExecutable
           .getConstructor(new Class[] {
             String.class
           });
-        executable = (Executable) constructor.newInstance(new Object[] {
-          command
-        });
+        executable = (Executable) constructor.newInstance(command);
       }
 
       executables.add(executable);
