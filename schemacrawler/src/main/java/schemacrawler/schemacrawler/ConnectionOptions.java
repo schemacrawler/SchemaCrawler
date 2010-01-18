@@ -5,7 +5,8 @@ import java.sql.Connection;
 import java.sql.Driver;
 
 public interface ConnectionOptions
-  extends Options {
+  extends Options
+{
 
   Connection createConnection()
     throws SchemaCrawlerException;

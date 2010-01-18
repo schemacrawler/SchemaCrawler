@@ -34,7 +34,8 @@ import schemacrawler.schema.NamedObject;
  */
 abstract class AbstractColumn
   extends AbstractDependantObject
-  implements BaseColumn {
+  implements BaseColumn
+{
 
   private static final long serialVersionUID = -8492662324895309485L;
 
@@ -44,7 +45,8 @@ abstract class AbstractColumn
   private int decimalDigits;
   private boolean nullable;
 
-  AbstractColumn(final DatabaseObject parent, final String name) {
+  AbstractColumn(final DatabaseObject parent, final String name)
+  {
     super(parent, name);
   }
 
@@ -52,18 +54,22 @@ abstract class AbstractColumn
    * {@inheritDoc}
    */
   @Override
-  public int compareTo(final NamedObject obj) {
-    if (obj == null) {
+  public int compareTo(final NamedObject obj)
+  {
+    if (obj == null)
+    {
       return -1;
     }
 
     final BaseColumn other = (BaseColumn) obj;
     int comparison = 0;
 
-    if (comparison == 0) {
+    if (comparison == 0)
+    {
       comparison = ordinalPosition - other.getOrdinalPosition();
     }
-    if (comparison == 0) {
+    if (comparison == 0)
+    {
       comparison = super.compareTo(other);
     }
 
@@ -75,7 +81,8 @@ abstract class AbstractColumn
    *
    * @see schemacrawler.schema.BaseColumn#getDecimalDigits()
    */
-  public final int getDecimalDigits() {
+  public final int getDecimalDigits()
+  {
     return decimalDigits;
   }
 
@@ -84,7 +91,8 @@ abstract class AbstractColumn
    *
    * @see schemacrawler.schema.BaseColumn#getOrdinalPosition()
    */
-  public final int getOrdinalPosition() {
+  public final int getOrdinalPosition()
+  {
     return ordinalPosition;
   }
 
@@ -93,7 +101,8 @@ abstract class AbstractColumn
    *
    * @see schemacrawler.schema.BaseColumn#getSize()
    */
-  public final int getSize() {
+  public final int getSize()
+  {
     return size;
   }
 
@@ -102,7 +111,8 @@ abstract class AbstractColumn
    *
    * @see schemacrawler.schema.BaseColumn#getType()
    */
-  public final ColumnDataType getType() {
+  public final ColumnDataType getType()
+  {
     return type;
   }
 
@@ -111,14 +121,17 @@ abstract class AbstractColumn
    *
    * @see schemacrawler.schema.BaseColumn#getWidth()
    */
-  public final String getWidth() {
+  public final String getWidth()
+  {
 
     final ColumnDataType columnDataType = getType();
-    if (columnDataType == null) {
+    if (columnDataType == null)
+    {
       return "";
     }
 
-    if (size == 0 || size == Integer.MIN_VALUE || size == Integer.MAX_VALUE) {
+    if (size == 0 || size == Integer.MIN_VALUE || size == Integer.MAX_VALUE)
+    {
       return "";
     }
 
@@ -129,10 +142,12 @@ abstract class AbstractColumn
       || sqlDataTypeGroup == JavaSqlTypeGroup.real;
 
     final StringBuilder columnWidthBuffer = new StringBuilder();
-    if (needWidth) {
+    if (needWidth)
+    {
       columnWidthBuffer.append("(");
       columnWidthBuffer.append(size);
-      if (sqlDataTypeGroup == JavaSqlTypeGroup.real) {
+      if (sqlDataTypeGroup == JavaSqlTypeGroup.real)
+      {
         columnWidthBuffer.append(", ")
           .append(getDecimalDigits());
       }
@@ -148,19 +163,23 @@ abstract class AbstractColumn
    *
    * @see schemacrawler.schema.BaseColumn#isNullable()
    */
-  public final boolean isNullable() {
+  public final boolean isNullable()
+  {
     return nullable;
   }
 
-  final void setDecimalDigits(final int decimalDigits) {
+  final void setDecimalDigits(final int decimalDigits)
+  {
     this.decimalDigits = decimalDigits;
   }
 
-  final void setNullable(final boolean nullable) {
+  final void setNullable(final boolean nullable)
+  {
     this.nullable = nullable;
   }
 
-  final void setOrdinalPosition(final int ordinalPosition) {
+  final void setOrdinalPosition(final int ordinalPosition)
+  {
     this.ordinalPosition = ordinalPosition;
   }
 
@@ -169,11 +188,13 @@ abstract class AbstractColumn
    *
    * @param size Size of the column
    */
-  final void setSize(final int size) {
+  final void setSize(final int size)
+  {
     this.size = size;
   }
 
-  void setType(final ColumnDataType type) {
+  void setType(final ColumnDataType type)
+  {
     this.type = type;
   }
 

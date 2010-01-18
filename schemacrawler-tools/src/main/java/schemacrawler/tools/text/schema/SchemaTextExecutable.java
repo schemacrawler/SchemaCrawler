@@ -21,11 +21,11 @@
 package schemacrawler.tools.text.schema;
 
 
+import java.sql.Connection;
+
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.text.base.BaseSchemaCrawlerTextExecutable;
 import schemacrawler.tools.text.base.DatabaseTraversalHandler;
-
-import java.sql.Connection;
 
 /**
  * Basic SchemaCrawler executor.
@@ -33,40 +33,49 @@ import java.sql.Connection;
  * @author Sualeh Fatehi
  */
 public final class SchemaTextExecutable
-  extends BaseSchemaCrawlerTextExecutable {
+  extends BaseSchemaCrawlerTextExecutable
+{
 
   private static final long serialVersionUID = -6824567755397315920L;
 
   private SchemaTextOptions schemaTextOptions;
 
-  public SchemaTextExecutable(final String command) {
+  public SchemaTextExecutable(final String command)
+  {
     super(command);
   }
 
-  public final SchemaTextOptions getSchemaTextOptions() {
+  public final SchemaTextOptions getSchemaTextOptions()
+  {
     final SchemaTextOptions schemaTextOptions;
-    if (this.schemaTextOptions == null) {
+    if (this.schemaTextOptions == null)
+    {
       schemaTextOptions = new SchemaTextOptions(additionalConfiguration);
     }
-    else {
+    else
+    {
       schemaTextOptions = this.schemaTextOptions;
     }
     return schemaTextOptions;
   }
 
-  public final void setSchemaTextOptions(final SchemaTextOptions schemaTextOptions) {
+  public final void setSchemaTextOptions(final SchemaTextOptions schemaTextOptions)
+  {
     this.schemaTextOptions = schemaTextOptions;
   }
 
   @Override
   protected DatabaseTraversalHandler getDatabaseTraversalHandler(final Connection connection)
-    throws SchemaCrawlerException {
+    throws SchemaCrawlerException
+  {
     final DatabaseTraversalHandler handler;
     SchemaTextDetailType schemaTextDetailType;
-    try {
+    try
+    {
       schemaTextDetailType = SchemaTextDetailType.valueOf(command);
     }
-    catch (final IllegalArgumentException e) {
+    catch (final IllegalArgumentException e)
+    {
       schemaTextDetailType = SchemaTextDetailType.standard_schema;
     }
     final SchemaTextOptions schemaTextOptions = getSchemaTextOptions();

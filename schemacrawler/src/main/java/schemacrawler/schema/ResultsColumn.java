@@ -27,7 +27,8 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface ResultsColumn
-  extends BaseColumn {
+  extends BaseColumn
+{
 
   /**
    * Gets the normal maximum number of characters allowed as the width of the designated column.

@@ -34,7 +34,8 @@ import sf.util.Utility;
  * @author sfatehi
  */
 final class CommandLineConnectionOptionsParser
-  extends BaseDatabaseConnectionOptionsParser {
+  extends BaseDatabaseConnectionOptionsParser
+{
 
   private final StringOption optionDriver = new StringOption(Option.NO_SHORT_FORM,
                                                              "driver",
@@ -43,38 +44,39 @@ final class CommandLineConnectionOptionsParser
                                                                     "url",
                                                                     null);
 
-  /**
-   * Parses the command line into options.
-   *
-   * @param args
-   */
   CommandLineConnectionOptionsParser(final String[] args,
-                                     final Config config) {
+                                     final Config config)
+  {
     super(args, config);
   }
 
   @Override
   public DatabaseConnectionOptions getOptions()
-    throws SchemaCrawlerException {
+    throws SchemaCrawlerException
+  {
     parse(new Option[]{
       optionDriver, optionConnectionUrl, optionUser, optionPassword,
     });
 
     final DatabaseConnectionOptions conenctionOptions;
-    if (optionConnectionUrl.isFound()) {
+    if (optionConnectionUrl.isFound())
+    {
       final String jdbcDriverClassName = optionDriver.getValue();
       final String connectionUrl = optionConnectionUrl.getValue();
-      if (Utility.isBlank(connectionUrl)) {
+      if (Utility.isBlank(connectionUrl))
+      {
         conenctionOptions = null;
       }
-      else {
+      else
+      {
         conenctionOptions = new DatabaseConnectionOptions(jdbcDriverClassName,
                                                           connectionUrl);
         conenctionOptions.setUser(optionUser.getValue());
         conenctionOptions.setPassword(optionPassword.getValue());
       }
     }
-    else {
+    else
+    {
       conenctionOptions = null;
     }
     return conenctionOptions;

@@ -35,7 +35,8 @@ import sf.util.CommandLineParser.StringOption;
  * @author sfatehi
  */
 final class BundledDriverConnectionOptionsParser
-  extends BaseDatabaseConnectionOptionsParser {
+  extends BaseDatabaseConnectionOptionsParser
+{
 
   private final StringOption optionHost = new StringOption(Option.NO_SHORT_FORM,
                                                            "host",
@@ -47,32 +48,32 @@ final class BundledDriverConnectionOptionsParser
                                                                "database",
                                                                "");
 
-  /**
-   * Parses the command line into options.
-   *
-   * @param args
-   */
   BundledDriverConnectionOptionsParser(final String[] args,
-                                       final Config config) {
+                                       final Config config)
+  {
     super(args, config);
   }
 
   @Override
   public ConnectionOptions getOptions()
-    throws SchemaCrawlerException {
+    throws SchemaCrawlerException
+  {
     parse(new Option[]{
       optionHost, optionPort, optionDatabase, optionUser, optionPassword,
     });
 
     final DatabaseConfigConnectionOptions connectionOptions = new DatabaseConfigConnectionOptions(config);
 
-    if (optionHost.isFound()) {
+    if (optionHost.isFound())
+    {
       connectionOptions.setHost(optionHost.getValue());
     }
-    if (optionPort.isFound()) {
+    if (optionPort.isFound())
+    {
       connectionOptions.setPort(optionPort.getValue().intValue());
     }
-    if (optionDatabase.isFound()) {
+    if (optionDatabase.isFound())
+    {
       connectionOptions.setDatabase(optionDatabase.getValue());
     }
 

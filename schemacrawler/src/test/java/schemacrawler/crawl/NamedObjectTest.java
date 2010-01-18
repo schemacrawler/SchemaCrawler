@@ -18,16 +18,18 @@
 package schemacrawler.crawl;
 
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
 
-import static org.junit.Assert.assertEquals;
-
-public class NamedObjectTest {
+public class NamedObjectTest
+{
 
   @Test
-  public void tableNames() {
+  public void tableNames()
+  {
     final String[] schemaNames = new String[]{
       "DBO", "PUBLIC"
     };
@@ -39,9 +41,11 @@ public class NamedObjectTest {
     final NamedObjectList<Table> tables = new NamedObjectList<Table>();
 
     final MutableDatabase database = new MutableDatabase("DATABASE");
-    for (final String schemaName : schemaNames) {
+    for (final String schemaName : schemaNames)
+    {
       final MutableSchema schema = database.addSchema("CATALOG", schemaName);
-      for (final String tableName : tableNames) {
+      for (final String tableName : tableNames)
+      {
         table = new MutableTable(schema, tableName);
         table.setType(TableType.table);
         tables.add(table);

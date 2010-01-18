@@ -24,7 +24,8 @@ package schemacrawler.schema;
 /**
  * View check options.
  */
-public enum CheckOptionType {
+public enum CheckOptionType
+{
 
   /**
    * Unknown.

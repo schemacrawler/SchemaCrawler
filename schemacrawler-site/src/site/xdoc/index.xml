@@ -174,9 +174,9 @@ for (final Catalog catalog: database.getCatalogs())
       <subsection name="SchemaCrawler Website Content License">
         <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">
           <img alt="Creative Commons License" style="border-width:0"
-               src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" />
+               src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png"/>
         </a>
-        <br />
+        <br/>
         <span xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://purl.org/dc/dcmitype/Text" property="dc:title"
               rel="dc:type">SchemaCrawler Website
         </span>
@@ -190,7 +190,7 @@ for (final Catalog catalog: database.getCatalogs())
           Unported License
         </a>
         .
-        <br />
+        <br/>
         Based on a work at
         <a xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://schemacrawler.sourceforge.net/" rel="dc:source">
           schemacrawler.sourceforge.net

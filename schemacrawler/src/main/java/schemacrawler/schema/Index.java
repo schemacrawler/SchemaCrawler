@@ -27,7 +27,8 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface Index
-  extends DependantObject {
+  extends DependantObject
+{
 
   /**
    * Gets the cardinality. When the index type is statistic, then this is the number of rows in the table; otherwise, it

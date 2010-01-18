@@ -23,7 +23,8 @@ package schemacrawler.schema;
 import java.io.Serializable;
 
 public interface DatabaseProperty
-  extends Serializable, Comparable<DatabaseProperty> {
+  extends Serializable, Comparable<DatabaseProperty>
+{
 
   /**
    * Gets the description of the property.

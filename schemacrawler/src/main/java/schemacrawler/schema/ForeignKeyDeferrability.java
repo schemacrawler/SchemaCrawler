@@ -28,7 +28,8 @@ import java.util.logging.Logger;
 /**
  * The deferrability value for foreign keys.
  */
-public enum ForeignKeyDeferrability {
+public enum ForeignKeyDeferrability
+{
 
   /**
    * Unknown
@@ -59,10 +60,13 @@ public enum ForeignKeyDeferrability {
    *
    * @return ForeignKeyDeferrability
    */
-  public static ForeignKeyDeferrability valueOf(final int id) {
+  public static ForeignKeyDeferrability valueOf(final int id)
+  {
     for (final ForeignKeyDeferrability fkDeferrability : ForeignKeyDeferrability
-      .values()) {
-      if (fkDeferrability.getId() == id) {
+      .values())
+    {
+      if (fkDeferrability.getId() == id)
+      {
         return fkDeferrability;
       }
     }
@@ -73,7 +77,8 @@ public enum ForeignKeyDeferrability {
   private final int id;
   private final String text;
 
-  private ForeignKeyDeferrability(final int id, final String text) {
+  private ForeignKeyDeferrability(final int id, final String text)
+  {
     this.id = id;
     this.text = text;
   }
@@ -83,7 +88,8 @@ public enum ForeignKeyDeferrability {
    *
    * @return id
    */
-  public int getId() {
+  public int getId()
+  {
     return id;
   }
 
@@ -93,7 +99,8 @@ public enum ForeignKeyDeferrability {
    * @see Object#toString()
    */
   @Override
-  public String toString() {
+  public String toString()
+  {
     return text;
   }
 

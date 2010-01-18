@@ -21,32 +21,35 @@
 package schemacrawler.tools.executable;
 
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+
 /**
  * Parses the command line.
  *
  * @author Sualeh Fatehi
  */
-public final class CommandRegistry {
+public final class CommandRegistry
+{
 
   private static final Logger LOGGER = Logger.getLogger(CommandRegistry.class
     .getName());
 
-  final Map<String, String> commandRegistry;
+  private final Map<String, String> commandRegistry;
 
   public CommandRegistry()
-    throws SchemaCrawlerException {
+    throws SchemaCrawlerException
+  {
     commandRegistry = loadCommandRegistry();
   }
 
-  public String[] lookupAvailableCommands() {
+  public String[] lookupAvailableCommands()
+  {
     final Set<String> availableCommandsList = commandRegistry.keySet();
     availableCommandsList.remove("default");
     final String[] availableCommands = availableCommandsList
@@ -55,48 +58,59 @@ public final class CommandRegistry {
     return availableCommands;
   }
 
-  public String lookupCommandExecutableClassName(final String command) {
+  public String lookupCommandExecutableClassName(final String command)
+  {
     final String commandExecutableClassName;
-    if (commandRegistry.containsKey(command)) {
+    if (commandRegistry.containsKey(command))
+    {
       commandExecutableClassName = commandRegistry.get(command);
     }
-    else {
+    else
+    {
       commandExecutableClassName = commandRegistry.get("default");
     }
     return commandExecutableClassName;
   }
 
   private static Map<String, String> loadCommandRegistry()
-    throws SchemaCrawlerException {
+    throws SchemaCrawlerException
+  {
     final Map<String, String> commandRegistry = new HashMap<String, String>();
     final List<URL> commandRegistryUrls;
-    try {
+    try
+    {
       final Enumeration<URL> resources = Thread.currentThread()
         .getContextClassLoader()
         .getResources("command.properties");
       commandRegistryUrls = Collections.list(resources);
     }
-    catch (final IOException e) {
+    catch (final IOException e)
+    {
       throw new SchemaCrawlerException("Could not load command registry");
     }
-    for (final URL commandRegistryUrl : commandRegistryUrls) {
-      try {
+    for (final URL commandRegistryUrl : commandRegistryUrls)
+    {
+      try
+      {
         final Properties commandRegistryProperties = new Properties();
         commandRegistryProperties.load(commandRegistryUrl.openStream());
         final List<String> propertyNames = (List<String>) Collections.list(commandRegistryProperties
           .propertyNames());
-        for (String commandName : propertyNames) {
+        for (String commandName : propertyNames)
+        {
           final String executableClassName = commandRegistryProperties
             .getProperty(commandName);
           commandRegistry.put(commandName, executableClassName);
         }
       }
-      catch (final IOException e) {
+      catch (final IOException e)
+      {
         LOGGER.log(Level.WARNING, "Could not load command registry, "
           + commandRegistryUrl, e);
       }
     }
-    if (commandRegistry.isEmpty()) {
+    if (commandRegistry.isEmpty())
+    {
       throw new SchemaCrawlerException("Could not load command registry");
     }
     return commandRegistry;

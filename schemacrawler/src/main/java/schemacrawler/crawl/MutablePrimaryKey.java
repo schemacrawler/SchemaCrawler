@@ -33,7 +33,8 @@ import schemacrawler.schema.Table;
  */
 class MutablePrimaryKey
   extends MutableIndex
-  implements PrimaryKey {
+  implements PrimaryKey
+{
 
   private static final long serialVersionUID = -7169206178562782087L;
 
@@ -42,7 +43,8 @@ class MutablePrimaryKey
    *
    * @param index Index
    */
-  MutablePrimaryKey(final Index index) {
+  MutablePrimaryKey(final Index index)
+  {
     super((Table) index.getParent(), index.getName());
     setCardinality(index.getCardinality());
     setPages(index.getPages());
@@ -50,12 +52,14 @@ class MutablePrimaryKey
     setType(index.getType());
     setUnique(index.isUnique());
     // Copy columns
-    for (final IndexColumn column : index.getColumns()) {
+    for (final IndexColumn column : index.getColumns())
+    {
       addColumn((MutableIndexColumn) column);
     }
   }
 
-  MutablePrimaryKey(final Table parent, final String name) {
+  MutablePrimaryKey(final Table parent, final String name)
+  {
     super(parent, name);
   }
 
@@ -65,7 +69,8 @@ class MutablePrimaryKey
    * @see Index#isUnique()
    */
   @Override
-  public final boolean isUnique() {
+  public final boolean isUnique()
+  {
     return true;
   }
 

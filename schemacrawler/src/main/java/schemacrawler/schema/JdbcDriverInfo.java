@@ -29,7 +29,8 @@ import java.io.Serializable;
  * @author Sualeh Fatehi
  */
 public interface JdbcDriverInfo
-  extends Serializable {
+  extends Serializable
+{
 
   /**
    * Gets the database connection URL.

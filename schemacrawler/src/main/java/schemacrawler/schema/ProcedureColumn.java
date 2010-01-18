@@ -27,7 +27,8 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface ProcedureColumn
-  extends BaseColumn {
+  extends BaseColumn
+{
 
   /**
    * Gets the number of decimal digits precision for the column.

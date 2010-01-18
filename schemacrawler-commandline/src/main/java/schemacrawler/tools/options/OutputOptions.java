@@ -21,13 +21,13 @@
 package schemacrawler.tools.options;
 
 
-import schemacrawler.schemacrawler.Options;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.Utility;
-
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import schemacrawler.schemacrawler.Options;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.Utility;
 
 /**
  * Contains output options.
@@ -35,7 +35,8 @@ import java.util.logging.Logger;
  * @author Sualeh Fatehi
  */
 public final class OutputOptions
-  implements Options {
+  implements Options
+{
 
   private static final long serialVersionUID = 7018337388923813055L;
 
@@ -54,7 +55,8 @@ public final class OutputOptions
   /**
    * Creates default OutputOptions.
    */
-  public OutputOptions() {
+  public OutputOptions()
+  {
     this(OutputFormat.text.name(), null);
   }
 
@@ -65,15 +67,18 @@ public final class OutputOptions
    * @param outputFilename    Output filename
    */
   public OutputOptions(final OutputFormat outputFormat,
-                       final String outputFilename) {
-    if (outputFormat == null) {
+                       final String outputFilename)
+  {
+    if (outputFormat == null)
+    {
       throw new IllegalArgumentException("No output format provided");
     }
     outputFormatValue = outputFormat.name();
 
     if (!sf.util
       .Utility
-      .isBlank(outputFilename)) {
+      .isBlank(outputFilename))
+    {
       outputFile = new File(outputFilename);
     }
 
@@ -89,12 +94,14 @@ public final class OutputOptions
    * @param outputFilename    Output filename
    */
   public OutputOptions(final String outputFormatValue,
-                       final String outputFilename) {
+                       final String outputFilename)
+  {
     this.outputFormatValue = outputFormatValue;
 
     if (!sf.util
       .Utility
-      .isBlank(outputFilename)) {
+      .isBlank(outputFilename))
+    {
       outputFile = new File(outputFilename);
     }
 
@@ -108,21 +115,27 @@ public final class OutputOptions
    *
    * @param writer Output writer
    */
-  public void closeOutputWriter(final Writer writer) {
-    if (outputFile != null) {
-      if (writer != null) {
-        try {
+  public void closeOutputWriter(final Writer writer)
+  {
+    if (outputFile != null)
+    {
+      if (writer != null)
+      {
+        try
+        {
           writer.flush();
           writer.close();
           LOGGER.log(Level.INFO, "Closed output writer to file, "
             + outputFile.getAbsolutePath());
         }
-        catch (final IOException e) {
+        catch (final IOException e)
+        {
           LOGGER.log(Level.WARNING, "Exception closing output writer", e);
         }
       }
     }
-    else {
+    else
+    {
       LOGGER.log(Level.INFO,
                  "Not closing output writer, since output is to console");
     }
@@ -133,7 +146,8 @@ public final class OutputOptions
    *
    * @return Clone
    */
-  public OutputOptions duplicate() {
+  public OutputOptions duplicate()
+  {
     final OutputOptions outputOptions = new OutputOptions();
 
     outputOptions.outputFormatValue = outputFormatValue;
@@ -154,7 +168,8 @@ public final class OutputOptions
    *
    * @return Output file
    */
-  public File getOutputFile() {
+  public File getOutputFile()
+  {
     return outputFile;
   }
 
@@ -163,12 +178,15 @@ public final class OutputOptions
    *
    * @return Output format
    */
-  public OutputFormat getOutputFormat() {
+  public OutputFormat getOutputFormat()
+  {
     OutputFormat outputFormat;
-    try {
+    try
+    {
       outputFormat = OutputFormat.valueOf(outputFormatValue);
     }
-    catch (final IllegalArgumentException e) {
+    catch (final IllegalArgumentException e)
+    {
       outputFormat = OutputFormat.text;
     }
     return outputFormat;
@@ -179,7 +197,8 @@ public final class OutputOptions
    *
    * @return Output format value.s
    */
-  public String getOutputFormatValue() {
+  public String getOutputFormatValue()
+  {
     return outputFormatValue;
   }
 
@@ -188,7 +207,8 @@ public final class OutputOptions
    *
    * @return Whether the output gets appended
    */
-  public boolean isAppendOutput() {
+  public boolean isAppendOutput()
+  {
     return appendOutput;
   }
 
@@ -197,7 +217,8 @@ public final class OutputOptions
    *
    * @return Whether to print footers
    */
-  public boolean isNoFooter() {
+  public boolean isNoFooter()
+  {
     return noFooter;
   }
 
@@ -206,7 +227,8 @@ public final class OutputOptions
    *
    * @return Whether to print headers
    */
-  public boolean isNoHeader() {
+  public boolean isNoHeader()
+  {
     return noHeader;
   }
 
@@ -215,7 +237,8 @@ public final class OutputOptions
    *
    * @return Whether to print information
    */
-  public boolean isNoInfo() {
+  public boolean isNoInfo()
+  {
     return noInfo;
   }
 
@@ -227,21 +250,26 @@ public final class OutputOptions
    * @throws IOException On an exception
    */
   public PrintWriter openOutputWriter()
-    throws SchemaCrawlerException {
+    throws SchemaCrawlerException
+  {
     final PrintWriter writer;
-    try {
-      if (outputFile == null) {
+    try
+    {
+      if (outputFile == null)
+      {
         writer = new PrintWriter(System.out, /* autoFlush = */true);
         LOGGER.log(Level.INFO, "Opened output writer to console");
       }
-      else {
+      else
+      {
         final FileWriter fileWriter = new FileWriter(outputFile, appendOutput);
         writer = new PrintWriter(fileWriter, /* autoFlush = */true);
         LOGGER.log(Level.INFO, "Opened output writer to file, "
           + outputFile.getAbsolutePath());
       }
     }
-    catch (final Exception e) {
+    catch (final Exception e)
+    {
       throw new SchemaCrawlerException("Could not obtain output writer", e);
     }
     return writer;
@@ -252,7 +280,8 @@ public final class OutputOptions
    *
    * @param appendOutput Whether the output gets appended
    */
-  public void setAppendOutput(final boolean appendOutput) {
+  public void setAppendOutput(final boolean appendOutput)
+  {
     this.appendOutput = appendOutput;
   }
 
@@ -261,7 +290,8 @@ public final class OutputOptions
    *
    * @param noFooter Whether to print footers
    */
-  public void setNoFooter(final boolean noFooter) {
+  public void setNoFooter(final boolean noFooter)
+  {
     this.noFooter = noFooter;
   }
 
@@ -270,7 +300,8 @@ public final class OutputOptions
    *
    * @param noHeader Whether to print headers
    */
-  public void setNoHeader(final boolean noHeader) {
+  public void setNoHeader(final boolean noHeader)
+  {
     this.noHeader = noHeader;
   }
 
@@ -279,7 +310,8 @@ public final class OutputOptions
    *
    * @param noInfo Whether to print information
    */
-  public void setNoInfo(final boolean noInfo) {
+  public void setNoInfo(final boolean noInfo)
+  {
     this.noInfo = noInfo;
   }
 
@@ -288,8 +320,10 @@ public final class OutputOptions
    *
    * @param outputFileName Output file name.
    */
-  public void setOutputFileName(final String outputFileName) {
-    if (Utility.isBlank(outputFileName)) {
+  public void setOutputFileName(final String outputFileName)
+  {
+    if (Utility.isBlank(outputFileName))
+    {
       throw new IllegalArgumentException("Cannot set null output file name");
     }
     outputFile = new File(outputFileName);
@@ -300,8 +334,10 @@ public final class OutputOptions
    *
    * @param outputFormatValue Output format value
    */
-  public void setOutputFormatValue(final String outputFormatValue) {
-    if (outputFormatValue == null) {
+  public void setOutputFormatValue(final String outputFormatValue)
+  {
+    if (outputFormatValue == null)
+    {
       throw new IllegalArgumentException("Cannot use null value in a setter");
     }
     this.outputFormatValue = outputFormatValue;

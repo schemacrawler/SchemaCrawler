@@ -33,7 +33,8 @@ import sf.util.CommandLineParser.StringOption;
  * @author Sualeh Fatehi
  */
 final class OutputOptionsParser
-  extends BaseOptionsParser<OutputOptions> {
+  extends BaseOptionsParser<OutputOptions>
+{
 
   private final StringOption optionOutputFormat = new StringOption(Option.NO_SHORT_FORM,
                                                                    "outputformat",
@@ -51,12 +52,14 @@ final class OutputOptionsParser
   private final BooleanOption optionNoInfo = new BooleanOption(Option.NO_SHORT_FORM,
                                                                "noinfo");
 
-  OutputOptionsParser(final String[] args) {
+  OutputOptionsParser(final String[] args)
+  {
     super(args);
   }
 
   @Override
-  protected OutputOptions getOptions() {
+  protected OutputOptions getOptions()
+  {
     parse(new Option[]{
       optionOutputFormat,
       optionOutputFile,

@@ -1,13 +1,14 @@
 package schemacrawler.tools.executable;
 
 
+import java.sql.Connection;
+
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
 
-import java.sql.Connection;
-
-public interface Executable {
+public interface Executable
+{
 
   /**
    * Executes main functionality for SchemaCrawler.

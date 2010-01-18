@@ -21,6 +21,13 @@
 package schemacrawler.test;
 
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+
+import static org.junit.Assert.fail;
+
 import org.custommonkey.xmlunit.Validator;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.AfterClass;
@@ -37,27 +44,24 @@ import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.utility.TestDatabase;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-
-import static org.junit.Assert.fail;
-
-public class SchemaCrawlerXmlOutputTest {
+public class SchemaCrawlerXmlOutputTest
+{
 
   private static class LocalEntityResolver
-    implements EntityResolver {
+    implements EntityResolver
+  {
 
     public InputSource resolveEntity(final String publicId,
                                      final String systemId)
-      throws SAXException, IOException {
+      throws SAXException, IOException
+    {
       final String localResource = "/xhtml1"
         + systemId.substring(systemId
         .lastIndexOf('/'));
       final InputStream entityStream = LocalEntityResolver.class
         .getResourceAsStream(localResource);
-      if (entityStream == null) {
+      if (entityStream == null)
+      {
         throw new IOException("Could not load " + localResource);
       }
       return new InputSource(entityStream);
@@ -68,13 +72,15 @@ public class SchemaCrawlerXmlOutputTest {
   private static TestDatabase testUtility = new TestDatabase();
 
   @AfterClass
-  public static void afterAllTests() {
+  public static void afterAllTests()
+  {
     testUtility.shutdownDatabase();
   }
 
   @BeforeClass
   public static void beforeAllTests()
-    throws Exception {
+    throws Exception
+  {
     TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();
     XMLUnit.setControlEntityResolver(new LocalEntityResolver());
@@ -82,7 +88,8 @@ public class SchemaCrawlerXmlOutputTest {
 
   @Test
   public void brief_schemaValidXMLOutput()
-    throws Exception {
+    throws Exception
+  {
     final String outputFilename = File.createTempFile("schemacrawler",
                                                       ".test.html")
       .getAbsolutePath();
@@ -106,7 +113,8 @@ public class SchemaCrawlerXmlOutputTest {
 
   @Test
   public void countOperatorValidXMLOutput()
-    throws Exception {
+    throws Exception
+  {
     final String outputFilename = File.createTempFile("schemacrawler",
                                                       ".test.html")
       .getAbsolutePath();
@@ -127,7 +135,8 @@ public class SchemaCrawlerXmlOutputTest {
 
   @Test
   public void dumpOperatorValidXMLOutput()
-    throws Exception {
+    throws Exception
+  {
     final String outputFilename = File.createTempFile("schemacrawler",
                                                       ".test.html")
       .getAbsolutePath();
@@ -148,7 +157,8 @@ public class SchemaCrawlerXmlOutputTest {
 
   @Test
   public void standard_schemaValidXMLOutput()
-    throws Exception {
+    throws Exception
+  {
     final String outputFilename = File.createTempFile("schemacrawler",
                                                       ".test.html")
       .getAbsolutePath();
@@ -172,7 +182,8 @@ public class SchemaCrawlerXmlOutputTest {
 
   @Test
   public void verbose_schemaValidXMLOutput()
-    throws Exception {
+    throws Exception
+  {
     final String outputFilename = File.createTempFile("schemacrawler",
                                                       ".test.html")
       .getAbsolutePath();
@@ -195,14 +206,18 @@ public class SchemaCrawlerXmlOutputTest {
   }
 
   private void validateXml(final String outputFilename)
-    throws Exception {
+    throws Exception
+  {
     final File outputFile = new File(outputFilename);
-    try {
+    try
+    {
       final Validator validator = new Validator(new FileReader(outputFile));
       validator.assertIsValid();
     }
-    finally {
-      if (!outputFile.delete()) {
+    finally
+    {
+      if (!outputFile.delete())
+      {
         fail("Could not delete output file, " + outputFile.getAbsolutePath());
       }
     }

@@ -30,16 +30,19 @@ import schemacrawler.schema.*;
  */
 class MutableForeignKey
   extends AbstractNamedObject
-  implements ForeignKey {
+  implements ForeignKey
+{
 
   private static final long serialVersionUID = 4121411795974895671L;
 
-  private final NamedObjectList<MutableForeignKeyColumnMap> columnPairs = new NamedObjectList<MutableForeignKeyColumnMap>();
+  private final NamedObjectList<MutableForeignKeyColumnMap> columnPairs =
+    new NamedObjectList<MutableForeignKeyColumnMap>();
   private ForeignKeyUpdateRule updateRule;
   private ForeignKeyUpdateRule deleteRule;
   private ForeignKeyDeferrability deferrability;
 
-  MutableForeignKey(final String name) {
+  MutableForeignKey(final String name)
+  {
     super(name);
 
     // Default values
@@ -53,8 +56,10 @@ class MutableForeignKey
    * the foreign keys by the names of the columns in the foreign keys. </p>
    */
   @Override
-  public int compareTo(final NamedObject obj) {
-    if (obj == null) {
+  public int compareTo(final NamedObject obj)
+  {
+    if (obj == null)
+    {
       return -1;
     }
 
@@ -63,18 +68,23 @@ class MutableForeignKey
     final ForeignKeyColumnMap[] thisColumnPairs = getColumnPairs();
     final ForeignKeyColumnMap[] otherColumnPairs = other.getColumnPairs();
 
-    if (comparison == 0) {
+    if (comparison == 0)
+    {
       comparison = thisColumnPairs.length - otherColumnPairs.length;
     }
 
-    if (comparison == 0) {
-      for (int i = 0; i < thisColumnPairs.length; i++) {
+    if (comparison == 0)
+    {
+      for (int i = 0; i < thisColumnPairs.length; i++)
+      {
         final ForeignKeyColumnMap thisColumnPair = thisColumnPairs[i];
         final ForeignKeyColumnMap otherColumnPair = otherColumnPairs[i];
-        if (comparison == 0) {
+        if (comparison == 0)
+        {
           comparison = thisColumnPair.compareTo(otherColumnPair);
         }
-        else {
+        else
+        {
           break;
         }
       }
@@ -88,7 +98,8 @@ class MutableForeignKey
    *
    * @see ForeignKey#getColumnPairs()
    */
-  public ForeignKeyColumnMap[] getColumnPairs() {
+  public ForeignKeyColumnMap[] getColumnPairs()
+  {
     return columnPairs.values()
       .toArray(new ForeignKeyColumnMap[columnPairs
         .size()]);
@@ -99,7 +110,8 @@ class MutableForeignKey
    *
    * @see ForeignKey#getDeferrability()
    */
-  public final ForeignKeyDeferrability getDeferrability() {
+  public final ForeignKeyDeferrability getDeferrability()
+  {
     return deferrability;
   }
 
@@ -108,7 +120,8 @@ class MutableForeignKey
    *
    * @see ForeignKey#getDeleteRule()
    */
-  public final ForeignKeyUpdateRule getDeleteRule() {
+  public final ForeignKeyUpdateRule getDeleteRule()
+  {
     return deleteRule;
   }
 
@@ -117,13 +130,15 @@ class MutableForeignKey
    *
    * @see ForeignKey#getUpdateRule()
    */
-  public final ForeignKeyUpdateRule getUpdateRule() {
+  public final ForeignKeyUpdateRule getUpdateRule()
+  {
     return updateRule;
   }
 
   void addColumnPair(final int keySequence,
                      final Column pkColumn,
-                     final Column fkColumn) {
+                     final Column fkColumn)
+  {
     final String fkColumnMapName = getName() + "." + keySequence;
     final MutableForeignKeyColumnMap fkColumnPair = new MutableForeignKeyColumnMap(this,
                                                                                    fkColumnMapName);
@@ -133,15 +148,18 @@ class MutableForeignKey
     columnPairs.add(fkColumnPair);
   }
 
-  final void setDeferrability(final ForeignKeyDeferrability deferrability) {
+  final void setDeferrability(final ForeignKeyDeferrability deferrability)
+  {
     this.deferrability = deferrability;
   }
 
-  final void setDeleteRule(final ForeignKeyUpdateRule deleteRule) {
+  final void setDeleteRule(final ForeignKeyUpdateRule deleteRule)
+  {
     this.deleteRule = deleteRule;
   }
 
-  final void setUpdateRule(final ForeignKeyUpdateRule updateRule) {
+  final void setUpdateRule(final ForeignKeyUpdateRule updateRule)
+  {
     this.updateRule = updateRule;
   }
 

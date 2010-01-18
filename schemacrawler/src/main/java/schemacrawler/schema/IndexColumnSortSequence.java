@@ -27,7 +27,8 @@ import java.util.logging.Logger;
 /**
  * An enumeration wrapper around index sort sequences.
  */
-public enum IndexColumnSortSequence {
+public enum IndexColumnSortSequence
+{
 
   /**
    * Unknown
@@ -52,10 +53,13 @@ public enum IndexColumnSortSequence {
    *
    * @return Enumeration value
    */
-  public static IndexColumnSortSequence valueOfFromCode(final String code) {
-    for (final IndexColumnSortSequence type : IndexColumnSortSequence.values()) {
+  public static IndexColumnSortSequence valueOfFromCode(final String code)
+  {
+    for (final IndexColumnSortSequence type : IndexColumnSortSequence.values())
+    {
       if (type.getCode()
-        .equalsIgnoreCase(code)) {
+        .equalsIgnoreCase(code))
+      {
         return type;
       }
     }
@@ -65,7 +69,8 @@ public enum IndexColumnSortSequence {
 
   private final String code;
 
-  private IndexColumnSortSequence(final String code) {
+  private IndexColumnSortSequence(final String code)
+  {
     this.code = code;
   }
 
@@ -74,7 +79,8 @@ public enum IndexColumnSortSequence {
    *
    * @return Index sort sequence code
    */
-  public String getCode() {
+  String getCode()
+  {
     return code;
   }
 

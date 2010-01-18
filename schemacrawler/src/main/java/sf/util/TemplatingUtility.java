@@ -29,7 +29,8 @@ import java.util.Map.Entry;
  *
  * @author Sualeh Fatehi
  */
-public final class TemplatingUtility {
+public final class TemplatingUtility
+{
 
   private static final String DELIMITER_START = "${";
   private static final String DELIMITER_END = "}";
@@ -39,7 +40,8 @@ public final class TemplatingUtility {
    *
    * @param template Template to expand.
    */
-  public static String expandTemplate(final String template) {
+  public static String expandTemplate(final String template)
+  {
     return expandTemplate(template, propertiesMap(System.getProperties()));
   }
 
@@ -50,8 +52,10 @@ public final class TemplatingUtility {
    * @param template Template to expand.
    */
   public static String expandTemplate(final String template,
-                                      final Map<String, String> variablesMap) {
-    if (Utility.isBlank(template) || variablesMap == null) {
+                                      final Map<String, String> variablesMap)
+  {
+    if (Utility.isBlank(template) || variablesMap == null)
+    {
       return template;
     }
 
@@ -60,35 +64,43 @@ public final class TemplatingUtility {
     int delimiterStartPosition;
     int delimiterEndPosition;
 
-    while (true) {
+    while (true)
+    {
       delimiterStartPosition = template.indexOf(DELIMITER_START,
                                                 currentPosition);
-      if (delimiterStartPosition == -1) {
-        if (currentPosition == 0) {
+      if (delimiterStartPosition == -1)
+      {
+        if (currentPosition == 0)
+        {
           // No substitutions required at all
           return template;
         }
-        else {
+        else
+        {
           // No more substitutions
           buffer.append(template.substring(currentPosition, template.length()));
           return buffer.toString();
         }
       }
-      else {
+      else
+      {
         buffer.append(template.substring(currentPosition,
                                          delimiterStartPosition));
         delimiterEndPosition = template.indexOf(DELIMITER_END,
                                                 delimiterStartPosition);
-        if (delimiterEndPosition > -1) {
+        if (delimiterEndPosition > -1)
+        {
           delimiterStartPosition = delimiterStartPosition
             + DELIMITER_START.length();
           final String key = template.substring(delimiterStartPosition,
                                                 delimiterEndPosition);
           final String value = variablesMap.get(key);
-          if (value != null) {
+          if (value != null)
+          {
             buffer.append(value);
           }
-          else {
+          else
+          {
             // Do not substitute
             buffer.append(DELIMITER_START)
               .append(key)
@@ -97,7 +109,8 @@ public final class TemplatingUtility {
           // Advance current position
           currentPosition = delimiterEndPosition + DELIMITER_END.length();
         }
-        else {
+        else
+        {
           // End brace not found, so advance current position
           buffer.append(DELIMITER_START);
           currentPosition = delimiterStartPosition + DELIMITER_START.length();
@@ -111,23 +124,28 @@ public final class TemplatingUtility {
    *
    * @param template Template to extract variables from.
    */
-  public static Set<String> extractTemplateVariables(final String template) {
+  public static Set<String> extractTemplateVariables(final String template)
+  {
 
-    if (Utility.isBlank(template)) {
+    if (Utility.isBlank(template))
+    {
       return new HashSet<String>();
     }
 
     String shrunkTemplate = template;
     final Set<String> keys = new HashSet<String>();
-    for (int left; (left = shrunkTemplate.indexOf(DELIMITER_START)) >= 0;) {
+    for (int left; (left = shrunkTemplate.indexOf(DELIMITER_START)) >= 0;)
+    {
       final int right = shrunkTemplate.indexOf(DELIMITER_END, left + 2);
-      if (right >= 0) {
+      if (right >= 0)
+      {
         final String propertyKey = shrunkTemplate.substring(left + 2, right);
         keys.add(propertyKey);
         // Destroy key, so we can find the next one
         shrunkTemplate = shrunkTemplate.substring(0, left) + shrunkTemplate.substring(right + 1);
       }
-      else {
+      else
+      {
         // No ending baracket found
         break;
       }
@@ -142,9 +160,12 @@ public final class TemplatingUtility {
    *
    * @param map Map to expand.
    */
-  public static void substituteVariables(final Map<String, String> variablesMap) {
-    if (variablesMap != null && !variablesMap.isEmpty()) {
-      for (final Map.Entry<String, String> entry : variablesMap.entrySet()) {
+  public static void substituteVariables(final Map<String, String> variablesMap)
+  {
+    if (variablesMap != null && !variablesMap.isEmpty())
+    {
+      for (final Map.Entry<String, String> entry : variablesMap.entrySet())
+      {
         variablesMap.put(entry.getKey(), expandTemplate(entry.getValue(),
                                                         variablesMap));
       }
@@ -158,18 +179,22 @@ public final class TemplatingUtility {
    *
    * @return Map of properties and values
    */
-  private static Map<String, String> propertiesMap(final Properties properties) {
+  private static Map<String, String> propertiesMap(final Properties properties)
+  {
     final Map<String, String> propertiesMap = new HashMap<String, String>();
-    if (properties != null) {
+    if (properties != null)
+    {
       final Set<Entry<Object, Object>> entries = properties.entrySet();
-      for (final Entry<Object, Object> entry : entries) {
+      for (final Entry<Object, Object> entry : entries)
+      {
         propertiesMap.put((String) entry.getKey(), (String) entry.getValue());
       }
     }
     return propertiesMap;
   }
 
-  private TemplatingUtility() {
+  private TemplatingUtility()
+  {
   }
 
 }

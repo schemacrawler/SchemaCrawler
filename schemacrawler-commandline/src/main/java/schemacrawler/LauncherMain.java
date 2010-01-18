@@ -20,9 +20,6 @@
 package schemacrawler;
 
 
-import sf.util.CommandLineParser;
-import sf.util.Utility;
-
 import java.io.File;
 import java.io.FilenameFilter;
 import java.lang.reflect.Method;
@@ -36,11 +33,15 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import sf.util.CommandLineParser;
+import sf.util.Utility;
+
 /**
  * A wrapper used to assemble the classpath before launching the actual application. <p> See <a href="
  * http://tapestryjava.blogspot.com/2007/08/quick-and-dirty-java-application.html" >launcher discussion</a>.
  */
-public final class LauncherMain {
+public final class LauncherMain
+{
 
   private static final Logger LOGGER = Logger.getLogger(LauncherMain.class
     .getName());
@@ -53,11 +54,13 @@ public final class LauncherMain {
    *
    * @param args Command line arguments
    */
-  public static void main(final String[] args) {
+  public static void main(final String[] args)
+  {
 
     setLogLevel(args);
 
-    if (args.length == 0) {
+    if (args.length == 0)
+    {
       fail("No class to launch was specified.");
     }
     final String launchClass = args[0];
@@ -66,8 +69,10 @@ public final class LauncherMain {
     final List<URL> classpath = search(LIB_DIR);
 
     final List<String> launchOptions = new ArrayList<String>();
-    if (args.length > 1) {
-      for (int i = 1; i < args.length; i++) {
+    if (args.length > 1)
+    {
+      for (int i = 1; i < args.length; i++)
+      {
         launchOptions.add(args[i]);
       }
     }
@@ -79,24 +84,30 @@ public final class LauncherMain {
   }
 
   private static void addJarFileToClasspath(final File jarFile,
-                                            final List<URL> classpath) {
+                                            final List<URL> classpath)
+  {
     final URL url = toURL(jarFile);
 
-    if (url != null) {
+    if (url != null)
+    {
       LOGGER.log(Level.INFO, "Adding " + jarFile);
       classpath.add(url);
     }
   }
 
-  private static void fail(final String message) {
+  private static void fail(final String message)
+  {
     fail(message, null);
   }
 
-  private static void fail(final String message, final Exception e) {
-    if (e != null) {
+  private static void fail(final String message, final Exception e)
+  {
+    if (e != null)
+    {
       LOGGER.log(Level.SEVERE, message, e);
     }
-    else {
+    else
+    {
       LOGGER.log(Level.SEVERE, message);
     }
     System.exit(-1);
@@ -104,8 +115,10 @@ public final class LauncherMain {
 
   private static void launch(final List<URL> classpath,
                              final String launchClassName,
-                             final String[] args) {
-    try {
+                             final String[] args)
+  {
+    try
+    {
       final URL[] classpathURLs = classpath.toArray(new URL[classpath.size()]);
       final URLClassLoader newLoader = new URLClassLoader(classpathURLs, null);
 
@@ -123,30 +136,38 @@ public final class LauncherMain {
         args
       });
     }
-    catch (final ClassNotFoundException ex) {
+    catch (final ClassNotFoundException ex)
+    {
       fail(String.format("Class '%s' not found", launchClassName));
     }
-    catch (final NoSuchMethodException ex) {
+    catch (final NoSuchMethodException ex)
+    {
       fail(String.format("Class '%s' does not contain a main() method",
                          launchClassName));
     }
-    catch (final Exception e) {
+    catch (final Exception e)
+    {
       fail(String.format("Error invoking method main() of %s", launchClassName),
            e);
     }
   }
 
-  private static List<URL> search(final String directoryName) {
+  private static List<URL> search(final String directoryName)
+  {
     final List<URL> classpath = new ArrayList<URL>();
     final File dir = toDir(directoryName);
-    if (dir != null) {
-      final File[] jarFiles = dir.listFiles(new FilenameFilter() {
-        public boolean accept(final File dir, final String name) {
+    if (dir != null)
+    {
+      final File[] jarFiles = dir.listFiles(new FilenameFilter()
+      {
+        public boolean accept(final File dir, final String name)
+        {
           return name.endsWith(".jar");
         }
       });
 
-      for (final File jarFile : jarFiles) {
+      for (final File jarFile : jarFiles)
+      {
         addJarFileToClasspath(jarFile, classpath);
       }
     }
@@ -159,7 +180,8 @@ public final class LauncherMain {
    *
    * @param args Command line arguments
    */
-  private static void setLogLevel(final String[] args) {
+  private static void setLogLevel(final String[] args)
+  {
     final String OPTION_loglevel = "loglevel";
 
     final CommandLineParser parser = new CommandLineParser();
@@ -175,16 +197,19 @@ public final class LauncherMain {
     Utility.setApplicationLogLevel(logLevel);
   }
 
-  private static File toDir(final String directoryName) {
+  private static File toDir(final String directoryName)
+  {
     final File dir = new File(directoryName);
 
-    if (!dir.exists()) {
+    if (!dir.exists())
+    {
       LOGGER.log(Level.WARNING, String.format("Directory %s does not exist",
                                               directoryName));
       return null;
     }
 
-    if (!dir.isDirectory()) {
+    if (!dir.isDirectory())
+    {
       LOGGER.log(Level.WARNING, String.format("%s is not a directory",
                                               directoryName));
       return null;
@@ -193,19 +218,23 @@ public final class LauncherMain {
     return dir;
   }
 
-  private static URL toURL(final File file) {
-    try {
+  private static URL toURL(final File file)
+  {
+    try
+    {
       return file.toURI()
         .toURL();
     }
-    catch (final MalformedURLException ex) {
+    catch (final MalformedURLException ex)
+    {
       LOGGER.log(Level.WARNING, String.format("Cannot convert %s to a URL",
                                               file), ex);
       return null;
     }
   }
 
-  private LauncherMain() {
+  private LauncherMain()
+  {
     // Prevent instantiation
   }
 

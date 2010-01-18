@@ -26,7 +26,8 @@ import java.text.MessageFormat;
 /**
  * Database operations.
  */
-public enum Operation {
+public enum Operation
+{
 
   /**
    * Count operation
@@ -44,7 +45,8 @@ public enum Operation {
 
   private Operation(final String description,
                     final String queryString,
-                    final String countMessageFormat) {
+                    final String countMessageFormat)
+  {
     this.description = description;
     this.queryString = queryString;
     this.countMessageFormat = countMessageFormat;
@@ -55,7 +57,8 @@ public enum Operation {
    *
    * @return Message format for the counts
    */
-  public String getCountMessage(final Number number) {
+  public String getCountMessage(final Number number)
+  {
     return MessageFormat.format(countMessageFormat, number);
   }
 
@@ -64,7 +67,8 @@ public enum Operation {
    *
    * @return Operation description
    */
-  public String getDescription() {
+  public String getDescription()
+  {
     return description;
   }
 
@@ -73,7 +77,8 @@ public enum Operation {
    *
    * @return Query
    */
-  public Query getQuery() {
+  public Query getQuery()
+  {
     return new Query(name(), queryString);
   }
 

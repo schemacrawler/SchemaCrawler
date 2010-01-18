@@ -8,14 +8,14 @@
   -->
   <typedef
     resource="schemacrawler-antlib.xml"
-    classpath="../schemacrawler-8.0.jar" />
+    classpath="../schemacrawler-8.0.jar"/>
 
   <!-- Step 2.
        Define the classpath to the database driver
   -->
   <path id="db-driver-classpath">
     <fileset dir="..">
-      <include name="*.jar" />
+      <include name="*.jar"/>
     </fileset>
   </path>
 
@@ -24,9 +24,9 @@
   -->
   <target name="snapshot">
 
-    <property name="outputfile" location="./snapshot.txt" />
+    <property name="outputfile" location="./snapshot.txt"/>
 
-    <delete file="${outputfile}" />
+    <delete file="${outputfile}"/>
 
     <schemacrawler
       db-driver-classpath="db-driver-classpath"
@@ -34,9 +34,9 @@
       password=""
       url="jdbc:hsqldb:hsql://localhost:9001/schemacrawler"
       command="verbose_schema,count"
-      outputfile="${outputfile}" />
+      outputfile="${outputfile}"/>
 
-    <echo message="Snapshot in ${outputfile}" />
+    <echo message="Snapshot in ${outputfile}"/>
 
   </target>
 

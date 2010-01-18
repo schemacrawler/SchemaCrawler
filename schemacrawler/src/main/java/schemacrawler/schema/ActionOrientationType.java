@@ -24,7 +24,8 @@ package schemacrawler.schema;
 /**
  * Action orientation type.
  */
-public enum ActionOrientationType {
+public enum ActionOrientationType
+{
 
   /**
    * Unknown

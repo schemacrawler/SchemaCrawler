@@ -21,6 +21,10 @@
 package schemacrawler.tools.text.schema;
 
 
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import schemacrawler.schema.*;
 import schemacrawler.schema.Privilege.Grant;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -30,10 +34,6 @@ import schemacrawler.tools.text.base.DatabaseTraversalHandler;
 import schemacrawler.tools.text.util.TextFormattingHelper.DocumentHeaderType;
 import sf.util.Utility;
 
-import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  * Text formatting of schema.
  *
@@ -41,7 +41,8 @@ import java.util.logging.Logger;
  */
 public final class SchemaTextFormatter
   extends BaseFormatter<SchemaTextOptions>
-  implements DatabaseTraversalHandler {
+  implements DatabaseTraversalHandler
+{
 
   private static final Logger LOGGER = Logger
     .getLogger(SchemaTextFormatter.class.getName());
@@ -59,7 +60,8 @@ public final class SchemaTextFormatter
   public SchemaTextFormatter(final SchemaTextDetailType schemaTextDetailType,
                              final SchemaTextOptions options,
                              final OutputOptions outputOptions)
-    throws SchemaCrawlerException {
+    throws SchemaCrawlerException
+  {
     super(options,
           schemaTextDetailType == SchemaTextDetailType.verbose_schema,
           outputOptions);
@@ -72,8 +74,10 @@ public final class SchemaTextFormatter
    * @see DatabaseTraversalHandler#begin()
    */
   public void begin()
-    throws SchemaCrawlerException {
-    if (!outputOptions.isNoHeader()) {
+    throws SchemaCrawlerException
+  {
+    if (!outputOptions.isNoHeader())
+    {
       out.println(formattingHelper.createDocumentStart());
     }
   }
@@ -84,12 +88,15 @@ public final class SchemaTextFormatter
    * @see DatabaseTraversalHandler#end()
    */
   public void end()
-    throws SchemaCrawlerException {
-    if (schemaTextDetailType == SchemaTextDetailType.list_objects) {
+    throws SchemaCrawlerException
+  {
+    if (schemaTextDetailType == SchemaTextDetailType.list_objects)
+    {
       out.print(formattingHelper.createObjectEnd());
     }
 
-    if (!outputOptions.isNoFooter()) {
+    if (!outputOptions.isNoFooter())
+    {
       out.println(formattingHelper.createDocumentEnd());
     }
     out.flush();
@@ -99,10 +106,13 @@ public final class SchemaTextFormatter
   }
 
   public void handle(final ColumnDataType columnDataType)
-    throws SchemaCrawlerException {
+    throws SchemaCrawlerException
+  {
     if (schemaTextDetailType
-      .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema)) {
-      if (columnDataTypeCount == 0) {
+      .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
+    {
+      if (columnDataTypeCount == 0)
+      {
         out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                                   "Data Types"));
       }
@@ -121,11 +131,14 @@ public final class SchemaTextFormatter
    * @see schemacrawler.schemacrawler.DatabaseTraversalHandler#handle(schemacrawler.schema.WeakAssociations)
    */
   public void handle(final ColumnMap[] weakAssociations)
-    throws SchemaCrawlerException {
-    if (weakAssociations == null || weakAssociations.length == 0) {
+    throws SchemaCrawlerException
+  {
+    if (weakAssociations == null || weakAssociations.length == 0)
+    {
       return;
     }
-    if (schemaTextDetailType == SchemaTextDetailType.list_objects) {
+    if (schemaTextDetailType == SchemaTextDetailType.list_objects)
+    {
       return;
     }
 
@@ -142,14 +155,17 @@ public final class SchemaTextFormatter
    *
    * @param procedure Procedure metadata.
    */
-  public void handle(final Procedure procedure) {
+  public void handle(final Procedure procedure)
+  {
 
-    if (procedureCount == 0) {
+    if (procedureCount == 0)
+    {
       out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                                 "Procedures"));
     }
 
-    if (schemaTextDetailType != SchemaTextDetailType.list_objects) {
+    if (schemaTextDetailType != SchemaTextDetailType.list_objects)
+    {
       out.print(formattingHelper.createObjectStart(""));
     }
 
@@ -159,28 +175,35 @@ public final class SchemaTextFormatter
                                                "[" + procedureTypeDetail + "]",
                                                underscore));
 
-    if (schemaTextDetailType != SchemaTextDetailType.list_objects) {
+    if (schemaTextDetailType != SchemaTextDetailType.list_objects)
+    {
       final ProcedureColumn[] columns = procedure.getColumns();
-      for (final ProcedureColumn column : columns) {
+      for (final ProcedureColumn column : columns)
+      {
         final String columnTypeName;
-        if (options.isShowStandardColumnTypeNames()) {
+        if (options.isShowStandardColumnTypeNames())
+        {
           columnTypeName = column.getType()
             .getTypeName();
         }
-        else {
+        else
+        {
           columnTypeName = column.getType()
             .getDatabaseSpecificTypeName();
         }
         final StringBuilder columnType = new StringBuilder();
         columnType.append(columnTypeName)
           .append(column.getWidth());
-        if (column.getProcedureColumnType() != null) {
-          columnType.append(", " + column.getProcedureColumnType()
-            .toString());
+        if (column.getProcedureColumnType() != null)
+        {
+          columnType.append(", ")
+            .append(column.getProcedureColumnType()
+              .toString());
         }
 
         String ordinalNumberString = "";
-        if (options.isShowOrdinalNumbers()) {
+        if (options.isShowOrdinalNumbers())
+        {
           ordinalNumberString = String.valueOf(column.getOrdinalPosition() + 1);
         }
         out.println(formattingHelper.createDetailRow(ordinalNumberString,
@@ -190,7 +213,8 @@ public final class SchemaTextFormatter
     }
     printDefinition(procedure.getDefinition());
 
-    if (schemaTextDetailType != SchemaTextDetailType.list_objects) {
+    if (schemaTextDetailType != SchemaTextDetailType.list_objects)
+    {
       out.println(formattingHelper.createObjectEnd());
     }
 
@@ -205,9 +229,11 @@ public final class SchemaTextFormatter
    *
    * @param table Table metadata.
    */
-  public void handle(final Table table) {
+  public void handle(final Table table)
+  {
 
-    if (tableCount == 0) {
+    if (tableCount == 0)
+    {
       out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                                 "Tables"));
     }
@@ -221,25 +247,29 @@ public final class SchemaTextFormatter
 
     if (schemaTextDetailType != SchemaTextDetailType.list_objects
       || schemaTextDetailType == SchemaTextDetailType.list_objects
-      && tableCount == 0) {
+      && tableCount == 0)
+    {
       out.print(formattingHelper.createObjectStart(""));
     }
 
     out.println(nameRow);
 
-    if (schemaTextDetailType != SchemaTextDetailType.list_objects) {
+    if (schemaTextDetailType != SchemaTextDetailType.list_objects)
+    {
       printTableColumns(table.getColumns());
 
       printPrimaryKey(table.getPrimaryKey());
       printForeignKeys(table.getName(), table.getForeignKeys());
       printIndices(table.getIndices());
       if (schemaTextDetailType
-        .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema)) {
+        .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
+      {
         printCheckConstraints(table.getCheckConstraints());
         printPrivileges(table.getPrivileges());
         printTriggers(table.getTriggers());
       }
-      if (table instanceof View) {
+      if (table instanceof View)
+      {
         final View view = (View) table;
         printDefinition(view.getDefinition());
       }
@@ -252,19 +282,25 @@ public final class SchemaTextFormatter
 
   }
 
-  private static String negate(final boolean positive, final String text) {
+  private static String negate(final boolean positive, final String text)
+  {
     String textValue = text;
-    if (!positive) {
+    if (!positive)
+    {
       textValue = "not " + textValue;
     }
     return textValue;
   }
 
-  private void printCheckConstraints(final CheckConstraint[] constraints) {
-    for (final CheckConstraint constraint : constraints) {
-      if (constraint != null) {
+  private void printCheckConstraints(final CheckConstraint[] constraints)
+  {
+    for (final CheckConstraint constraint : constraints)
+    {
+      if (constraint != null)
+      {
         String constraintName = "";
-        if (!options.isHideConstraintNames()) {
+        if (!options.isHideConstraintNames())
+        {
           constraintName = constraint.getName();
         }
         out.println(formattingHelper.createEmptyRow());
@@ -277,7 +313,8 @@ public final class SchemaTextFormatter
     }
   }
 
-  private void printColumnDataType(final ColumnDataType columnDataType) {
+  private void printColumnDataType(final ColumnDataType columnDataType)
+  {
     final String databaseSpecificTypeName = columnDataType.getFullName();
     final String typeName = columnDataType.getTypeName();
     final String userDefined = negate(columnDataType.isUserDefined(),
@@ -286,10 +323,12 @@ public final class SchemaTextFormatter
     final String autoIncrementable = negate(columnDataType
       .isAutoIncrementable(), "auto-incrementable");
     String definedWith = "defined with ";
-    if (columnDataType.getCreateParameters() == null) {
+    if (columnDataType.getCreateParameters() == null)
+    {
       definedWith = definedWith + "no parameters";
     }
-    else {
+    else
+    {
       definedWith = definedWith + columnDataType.getCreateParameters();
     }
     out.println(formattingHelper.createNameRow(databaseSpecificTypeName,
@@ -309,8 +348,10 @@ public final class SchemaTextFormatter
    * @param columnPairs
    */
   private void printColumnPairs(final String tableName,
-                                final ColumnMap[] columnPairs) {
-    for (final ColumnMap columnPair : columnPairs) {
+                                final ColumnMap[] columnPairs)
+  {
+    for (final ColumnMap columnPair : columnPairs)
+    {
       final Column pkColumn;
       final Column fkColumn;
       final String pkColumnName;
@@ -319,23 +360,28 @@ public final class SchemaTextFormatter
       fkColumn = columnPair.getForeignKeyColumn();
       if (pkColumn.getParent()
         .getName()
-        .equals(tableName)) {
+        .equals(tableName))
+      {
         pkColumnName = pkColumn.getName();
       }
-      else {
+      else
+      {
         pkColumnName = pkColumn.getFullName();
       }
       if (fkColumn.getParent()
         .getName()
-        .equals(tableName)) {
+        .equals(tableName))
+      {
         fkColumnName = fkColumn.getName();
       }
-      else {
+      else
+      {
         fkColumnName = fkColumn.getFullName();
       }
       String keySequenceString = "";
       if (columnPair instanceof ForeignKeyColumnMap
-        && options.isShowOrdinalNumbers()) {
+        && options.isShowOrdinalNumbers())
+      {
         final int keySequence = ((ForeignKeyColumnMap) columnPair)
           .getKeySequence();
         keySequenceString = String.format("%2d", keySequence);
@@ -349,12 +395,14 @@ public final class SchemaTextFormatter
     }
   }
 
-  private void printDefinition(final String definition) {
+  private void printDefinition(final String definition)
+  {
     out.println(formattingHelper.createEmptyRow());
 
     if (sf.util
       .Utility
-      .isBlank(definition)) {
+      .isBlank(definition))
+    {
       return;
     }
     out.println(formattingHelper.createNameRow("", "[definition]", false));
@@ -362,35 +410,43 @@ public final class SchemaTextFormatter
   }
 
   private void printForeignKeys(final String tableName,
-                                final ForeignKey[] foreignKeys) {
-    for (final ForeignKey foreignKey : foreignKeys) {
-      if (foreignKey != null) {
+                                final ForeignKey[] foreignKeys)
+  {
+    for (final ForeignKey foreignKey : foreignKeys)
+    {
+      if (foreignKey != null)
+      {
         final String name = foreignKey.getName();
 
         String updateRuleString = "";
         final ForeignKeyUpdateRule updateRule = foreignKey.getUpdateRule();
-        if (updateRule != null && updateRule != ForeignKeyUpdateRule.unknown) {
+        if (updateRule != null && updateRule != ForeignKeyUpdateRule.unknown)
+        {
           updateRuleString = ", on update " + updateRule.toString();
         }
 
         String deleteRuleString = "";
         final ForeignKeyUpdateRule deleteRule = foreignKey.getDeleteRule();
-        if (deleteRule != null && deleteRule != ForeignKeyUpdateRule.unknown) {
+        if (deleteRule != null && deleteRule != ForeignKeyUpdateRule.unknown)
+        {
           deleteRuleString = ", on delete " + deleteRule.toString();
         }
 
         String ruleString = "";
-        if (updateRule == deleteRule) {
+        if (updateRule == deleteRule)
+        {
           ruleString = ", with " + deleteRule.toString();
         }
-        else {
+        else
+        {
           ruleString = updateRuleString + deleteRuleString;
         }
 
         out.println(formattingHelper.createEmptyRow());
 
         String fkName = "";
-        if (!options.isHideForeignKeyNames()) {
+        if (!options.isHideForeignKeyNames())
+        {
           fkName = name;
         }
         final String fkDetails = "[foreign key" + ruleString + "]";
@@ -401,18 +457,23 @@ public final class SchemaTextFormatter
     }
   }
 
-  private void printIndices(final Index[] indices) {
-    for (final Index index : indices) {
-      if (index != null) {
+  private void printIndices(final Index[] indices)
+  {
+    for (final Index index : indices)
+    {
+      if (index != null)
+      {
         out.println(formattingHelper.createEmptyRow());
 
         String indexName = "";
-        if (!options.isHideIndexNames()) {
+        if (!options.isHideIndexNames())
+        {
           indexName = index.getName();
         }
         final IndexType indexType = index.getType();
         String indexTypeString = "";
-        if (indexType != IndexType.unknown && indexType != IndexType.other) {
+        if (indexType != IndexType.unknown && indexType != IndexType.other)
+        {
           indexTypeString = indexType.toString() + " ";
         }
         final String indexDetails = "[" + (index.isUnique() ? "" : "non-")
@@ -425,16 +486,20 @@ public final class SchemaTextFormatter
     }
   }
 
-  private void printPrimaryKey(final Index primaryKey) {
-    if (primaryKey != null) {
+  private void printPrimaryKey(final Index primaryKey)
+  {
+    if (primaryKey != null)
+    {
       final String name = primaryKey.getName();
       out.println(formattingHelper.createEmptyRow());
 
       String pkName = "";
-      if (!options.isHidePrimaryKeyNames()) {
+      if (!options.isHidePrimaryKeyNames())
+      {
         pkName = name;
       }
-      if (Utility.isBlank(pkName)) {
+      if (Utility.isBlank(pkName))
+      {
         pkName = "";
       }
       out.println(formattingHelper
@@ -443,15 +508,19 @@ public final class SchemaTextFormatter
     }
   }
 
-  private void printPrivileges(final Privilege[] privileges) {
+  private void printPrivileges(final Privilege[] privileges)
+  {
 
-    for (final Privilege privilege : privileges) {
-      if (privilege != null) {
+    for (final Privilege privilege : privileges)
+    {
+      if (privilege != null)
+      {
         out.println(formattingHelper.createEmptyRow());
         out.println(formattingHelper.createNameRow(privilege.getName(),
                                                    "[privilege]",
                                                    false));
-        for (final Grant grant : privilege.getGrants()) {
+        for (final Grant grant : privilege.getGrants())
+        {
           final String grantedFrom = grant.getGrantor()
             + formattingHelper.createArrow()
             + grant.getGrantee()
@@ -462,19 +531,24 @@ public final class SchemaTextFormatter
     }
   }
 
-  private void printTableColumns(final Column[] columns) {
-    for (final Column column : columns) {
+  private void printTableColumns(final Column[] columns)
+  {
+    for (final Column column : columns)
+    {
       final String columnName = column.getName();
 
       final String columnDetails;
-      if (column instanceof IndexColumn) {
+      if (column instanceof IndexColumn)
+      {
         columnDetails = ((IndexColumn) column).getSortSequence()
           .name();
       }
-      else {
+      else
+      {
         String columnTypeName = column.getType()
           .getDatabaseSpecificTypeName();
-        if (options.isShowStandardColumnTypeNames()) {
+        if (options.isShowStandardColumnTypeNames())
+        {
           columnTypeName = column.getType()
             .getTypeName();
         }
@@ -484,7 +558,8 @@ public final class SchemaTextFormatter
       }
 
       String ordinalNumberString = "";
-      if (options.isShowOrdinalNumbers()) {
+      if (options.isShowOrdinalNumbers())
+      {
         ordinalNumberString = String.valueOf(column.getOrdinalPosition());
       }
       out.println(formattingHelper.createDetailRow(ordinalNumberString,
@@ -493,9 +568,12 @@ public final class SchemaTextFormatter
     }
   }
 
-  private void printTriggers(final Trigger[] triggers) {
-    for (final Trigger trigger : triggers) {
-      if (trigger != null) {
+  private void printTriggers(final Trigger[] triggers)
+  {
+    for (final Trigger trigger : triggers)
+    {
+      if (trigger != null)
+      {
         String timing = "";
         final ConditionTimingType conditionTiming = trigger
           .getConditionTiming();
@@ -504,12 +582,14 @@ public final class SchemaTextFormatter
         if (conditionTiming != null
           && conditionTiming != ConditionTimingType.unknown
           && eventManipulationType != null
-          && eventManipulationType != EventManipulationType.unknown) {
+          && eventManipulationType != EventManipulationType.unknown)
+        {
           timing = ", " + conditionTiming + " " + eventManipulationType;
         }
         String orientation = "";
         if (trigger.getActionOrientation() != null
-          && trigger.getActionOrientation() != ActionOrientationType.unknown) {
+          && trigger.getActionOrientation() != ActionOrientationType.unknown)
+        {
           orientation = ", per " + trigger.getActionOrientation();
         }
         String triggerType = "[trigger" + timing + orientation + "]";
@@ -525,12 +605,14 @@ public final class SchemaTextFormatter
 
         if (!sf.util
           .Utility
-          .isBlank(actionCondition)) {
+          .isBlank(actionCondition))
+        {
           out.println(formattingHelper.createDefinitionRow(actionCondition));
         }
         if (!sf.util
           .Utility
-          .isBlank(actionStatement)) {
+          .isBlank(actionStatement))
+        {
           out.println(formattingHelper.createDefinitionRow(actionStatement));
         }
       }

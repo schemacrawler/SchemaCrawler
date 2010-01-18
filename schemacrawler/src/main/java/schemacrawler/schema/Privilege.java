@@ -29,10 +29,12 @@ import java.io.Serializable;
  * @author Sualeh Fatehi
  */
 public interface Privilege
-  extends DependantObject {
+  extends DependantObject
+{
 
   public interface Grant
-    extends Serializable {
+    extends Serializable
+  {
 
     /**
      * Gets the grantee.

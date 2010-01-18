@@ -28,7 +28,8 @@ import java.util.logging.Logger;
 /**
  * An enumeration wrapper around procedure column types.
  */
-public enum ProcedureColumnType {
+public enum ProcedureColumnType
+{
 
   /**
    * Unknown.
@@ -65,9 +66,12 @@ public enum ProcedureColumnType {
    *
    * @return ForeignKeyDeferrability
    */
-  public static ProcedureColumnType valueOf(final int id) {
-    for (final ProcedureColumnType type : ProcedureColumnType.values()) {
-      if (type.getId() == id) {
+  public static ProcedureColumnType valueOf(final int id)
+  {
+    for (final ProcedureColumnType type : ProcedureColumnType.values())
+    {
+      if (type.getId() == id)
+      {
         return type;
       }
     }
@@ -78,7 +82,8 @@ public enum ProcedureColumnType {
   private final int id;
   private final String text;
 
-  private ProcedureColumnType(final int id, final String text) {
+  private ProcedureColumnType(final int id, final String text)
+  {
     this.id = id;
     this.text = text;
   }
@@ -88,7 +93,8 @@ public enum ProcedureColumnType {
    *
    * @return id
    */
-  public int getId() {
+  public int getId()
+  {
     return id;
   }
 
@@ -99,7 +105,8 @@ public enum ProcedureColumnType {
    */
   @SuppressWarnings({"RefusedBequest"})
   @Override
-  public String toString() {
+  public String toString()
+  {
     return text;
   }
 

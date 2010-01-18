@@ -32,25 +32,24 @@ import sf.util.CommandLineParser.Option;
  * @author Sualeh Fatehi
  * @param <O> Options to be parsed from the command line.
  */
-public abstract class BaseOptionsParser<O extends Options> {
+public abstract class BaseOptionsParser<O extends Options>
+{
 
   private final String[] args;
 
-  protected BaseOptionsParser(final String[] args) {
+  protected BaseOptionsParser(final String[] args)
+  {
     this.args = args;
   }
 
-  /**
-   * Parses the command line.
-   *
-   * @return Command line options
-   */
   protected abstract O getOptions()
     throws SchemaCrawlerException;
 
-  protected void parse(final CommandLineParser.Option<?>[] options) {
+  protected void parse(final CommandLineParser.Option<?>[] options)
+  {
     final CommandLineParser parser = new CommandLineParser();
-    for (final Option<?> option : options) {
+    for (final Option<?> option : options)
+    {
       parser.addOption(option);
     }
     parser.parse(args);

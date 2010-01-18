@@ -24,7 +24,8 @@ package schemacrawler.tools.options;
 /**
  * Enumeration for text format type.
  */
-public enum OutputFormat {
+public enum OutputFormat
+{
 
   /**
    * Text formatting.

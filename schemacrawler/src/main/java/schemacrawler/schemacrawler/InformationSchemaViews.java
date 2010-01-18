@@ -21,10 +21,10 @@
 package schemacrawler.schemacrawler;
 
 
-import sf.util.ObjectToString;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import sf.util.ObjectToString;
 
 /**
  * The database specific views to get additional database metadata in a standard format.
@@ -32,7 +32,8 @@ import java.util.Map;
  * @author Sualeh Fatehi
  */
 public final class InformationSchemaViews
-  implements Options {
+  implements Options
+{
 
   private static final long serialVersionUID = 3587581365346059044L;
 
@@ -48,7 +49,8 @@ public final class InformationSchemaViews
   /**
    * Creates empty information schema views.
    */
-  public InformationSchemaViews() {
+  public InformationSchemaViews()
+  {
     this(null);
   }
 
@@ -57,9 +59,11 @@ public final class InformationSchemaViews
    *
    * @param informationSchemaViewsSql Map of information schema view definitions.
    */
-  InformationSchemaViews(final Map<String, String> informationSchemaViewsSql) {
+  InformationSchemaViews(final Map<String, String> informationSchemaViewsSql)
+  {
     informationSchemaQueries = new HashMap<String, String>();
-    if (informationSchemaViewsSql != null) {
+    if (informationSchemaViewsSql != null)
+    {
       final String[] keys = new String[]{
         KEY_INFORMATION_SCHEMA_VIEWS,
         KEY_INFORMATION_SCHEMA_TRIGGERS,
@@ -68,13 +72,17 @@ public final class InformationSchemaViews
         KEY_INFORMATION_SCHEMA_ROUTINES,
         KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS,
       };
-      for (final String key : keys) {
-        if (informationSchemaViewsSql.containsKey(key)) {
-          try {
+      for (final String key : keys)
+      {
+        if (informationSchemaViewsSql.containsKey(key))
+        {
+          try
+          {
             informationSchemaQueries.put(key, informationSchemaViewsSql
               .get(key));
           }
-          catch (final IllegalArgumentException e) {
+          catch (final IllegalArgumentException e)
+          {
             // Ignore
           }
         }
@@ -87,7 +95,8 @@ public final class InformationSchemaViews
    *
    * @return Table check constraints SQL.
    */
-  public String getCheckConstraints() {
+  public String getCheckConstraints()
+  {
     return informationSchemaQueries
       .get(KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS);
   }
@@ -97,7 +106,8 @@ public final class InformationSchemaViews
    *
    * @return Index info constraints SQL.
    */
-  public String getIndexInfo() {
+  public String getIndexInfo()
+  {
     return informationSchemaQueries.get(KEY_GET_INDEX_INFO);
   }
 
@@ -106,7 +116,8 @@ public final class InformationSchemaViews
    *
    * @return Procedure defnitions SQL.
    */
-  public String getRoutines() {
+  public String getRoutines()
+  {
     return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_ROUTINES);
   }
 
@@ -115,7 +126,8 @@ public final class InformationSchemaViews
    *
    * @return Table constraints SQL.
    */
-  public String getTableConstraints() {
+  public String getTableConstraints()
+  {
     return informationSchemaQueries
       .get(KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS);
   }
@@ -125,7 +137,8 @@ public final class InformationSchemaViews
    *
    * @return Trigger defnitions SQL.
    */
-  public String getTriggers() {
+  public String getTriggers()
+  {
     return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_TRIGGERS);
   }
 
@@ -134,35 +147,42 @@ public final class InformationSchemaViews
    *
    * @return View defnitions SQL.
    */
-  public String getViews() {
+  public String getViews()
+  {
     return informationSchemaQueries.get(KEY_INFORMATION_SCHEMA_VIEWS);
   }
 
-  public boolean hasCheckConstraintsSql() {
+  public boolean hasCheckConstraintsSql()
+  {
     return informationSchemaQueries
       .containsKey(KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS);
   }
 
-  public boolean hasIndexInfoSql() {
+  public boolean hasIndexInfoSql()
+  {
     return informationSchemaQueries.containsKey(KEY_GET_INDEX_INFO);
   }
 
-  public boolean hasRoutinesSql() {
+  public boolean hasRoutinesSql()
+  {
     return informationSchemaQueries
       .containsKey(KEY_INFORMATION_SCHEMA_ROUTINES);
   }
 
-  public boolean hasTableConstraintsSql() {
+  public boolean hasTableConstraintsSql()
+  {
     return informationSchemaQueries
       .containsKey(KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS);
   }
 
-  public boolean hasTriggerSql() {
+  public boolean hasTriggerSql()
+  {
     return informationSchemaQueries
       .containsKey(KEY_INFORMATION_SCHEMA_TRIGGERS);
   }
 
-  public boolean hasViewsSql() {
+  public boolean hasViewsSql()
+  {
     return informationSchemaQueries.containsKey(KEY_INFORMATION_SCHEMA_VIEWS);
   }
 
@@ -171,7 +191,8 @@ public final class InformationSchemaViews
    *
    * @param sql Table check constraints SQL.
    */
-  public void setCheckConstraintsSql(final String sql) {
+  public void setCheckConstraintsSql(final String sql)
+  {
     informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS, sql);
   }
 
@@ -180,7 +201,8 @@ public final class InformationSchemaViews
    *
    * @param sql Index info constraints SQL.
    */
-  public void setIndexInfoSql(final String sql) {
+  public void setIndexInfoSql(final String sql)
+  {
     informationSchemaQueries.put(KEY_GET_INDEX_INFO, sql);
   }
 
@@ -189,7 +211,8 @@ public final class InformationSchemaViews
    *
    * @param sql Procedure defnitions SQL.
    */
-  public void setRoutinesSql(final String sql) {
+  public void setRoutinesSql(final String sql)
+  {
     informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_ROUTINES, sql);
   }
 
@@ -198,7 +221,8 @@ public final class InformationSchemaViews
    *
    * @param sql Table constraints SQL.
    */
-  public void setTableConstraintsSql(final String sql) {
+  public void setTableConstraintsSql(final String sql)
+  {
     informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS, sql);
   }
 
@@ -207,7 +231,8 @@ public final class InformationSchemaViews
    *
    * @param sql Trigger defnitions SQL.
    */
-  public void setTriggersSql(final String sql) {
+  public void setTriggersSql(final String sql)
+  {
     informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_TRIGGERS, sql);
   }
 
@@ -216,12 +241,14 @@ public final class InformationSchemaViews
    *
    * @param sql View defnitions SQL.
    */
-  public void setViewsSql(final String sql) {
+  public void setViewsSql(final String sql)
+  {
     informationSchemaQueries.put(KEY_INFORMATION_SCHEMA_VIEWS, sql);
   }
 
   @Override
-  public String toString() {
+  public String toString()
+  {
     return ObjectToString.toString(informationSchemaQueries);
   }
 

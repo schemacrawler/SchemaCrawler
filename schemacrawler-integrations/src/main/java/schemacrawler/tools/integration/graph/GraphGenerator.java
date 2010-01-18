@@ -8,17 +8,20 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-final class GraphGenerator {
+final class GraphGenerator
+{
 
   private static final Logger LOGGER = Logger.getLogger(GraphGenerator.class
     .getName());
 
-  private static String getGraphGenerator() {
+  private static String getGraphGenerator()
+  {
     return System.getProperty("schemacrawler.graph_generator", "dot");
   }
 
   private static void run(final String... args)
-    throws IOException {
+    throws IOException
+  {
     final List<String> command = new ArrayList<String>(Arrays.asList(args));
     command.add(0, getGraphGenerator());
     LOGGER.log(Level.INFO, "Executing: " + command);
@@ -30,16 +33,21 @@ final class GraphGenerator {
 
     final StringBuilder buffer = new StringBuilder();
     String line;
-    try {
-      while ((line = reader.readLine()) != null) {
+    try
+    {
+      while ((line = reader.readLine()) != null)
+      {
         buffer.append(line);
       }
     }
-    finally {
-      try {
+    finally
+    {
+      try
+      {
         reader.close();
       }
-      catch (final EOFException e) {
+      catch (final EOFException e)
+      {
         LOGGER.log(Level.WARNING, "Could not read diagram generator output"
           + e.getMessage());
       }
@@ -47,10 +55,12 @@ final class GraphGenerator {
 
 
     int exitCode = 0;
-    try {
+    try
+    {
       exitCode = process.waitFor();
     }
-    catch (final InterruptedException e) {
+    catch (final InterruptedException e)
+    {
       //
     }
 
@@ -61,27 +71,33 @@ final class GraphGenerator {
     process.getErrorStream()
       .close();
 
-    if (exitCode != 0) {
+    if (exitCode != 0)
+    {
       throw new IOException(buffer.toString());
     }
-    else if (buffer.length() > 0) {
+    else if (buffer.length() > 0)
+    {
       LOGGER.log(Level.INFO, buffer.toString());
     }
   }
 
   GraphGenerator()
-    throws IOException {
+    throws IOException
+  {
     run("-V");
   }
 
   static void generateDiagram(final File dotFile,
                               final String outputFormat,
                               final File diagramFile)
-    throws IOException {
-    if (dotFile == null || !dotFile.exists() || !dotFile.canRead()) {
+    throws IOException
+  {
+    if (dotFile == null || !dotFile.exists() || !dotFile.canRead())
+    {
       throw new IOException("Cannot read the input DOT file, " + dotFile);
     }
-    if (diagramFile == null) {
+    if (diagramFile == null)
+    {
       throw new IOException("Cannot write diagram file");
     }
 

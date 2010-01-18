@@ -32,7 +32,8 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawlerCommandLine
-  implements CommandLine {
+  implements CommandLine
+{
 
   private static final long serialVersionUID = -3748989545708155963L;
 
@@ -46,13 +47,15 @@ public final class SchemaCrawlerCommandLine
                                   final SchemaInfoLevel infoLevel,
                                   final String command,
                                   final Config config,
-                                  final OutputOptions outputOptions) {
+                                  final OutputOptions outputOptions)
+  {
     this.connectionOptions = connectionOptions;
     this.command = command;
     this.outputOptions = outputOptions;
     this.config = new Config();
     schemaCrawlerOptions = new SchemaCrawlerOptions(config);
-    if (infoLevel != null) {
+    if (infoLevel != null)
+    {
       schemaCrawlerOptions.setSchemaInfoLevel(infoLevel);
     }
   }
@@ -67,39 +70,48 @@ public final class SchemaCrawlerCommandLine
    */
   public SchemaCrawlerCommandLine(final String[] args,
                                   final String configResource)
-    throws SchemaCrawlerException {
-    if (args == null) {
+    throws SchemaCrawlerException
+  {
+    if (args == null)
+    {
       throw new IllegalArgumentException("No command line arguments provided");
     }
 
-    if (args.length > 0) {
+    if (args.length > 0)
+    {
       command = new CommandParser(args).getOptions()
         .toString();
       outputOptions = new OutputOptionsParser(args).getOptions();
     }
-    else {
+    else
+    {
       command = null;
       outputOptions = new OutputOptions();
     }
 
-    if (!Utility.isBlank(configResource)) {
+    if (!Utility.isBlank(configResource))
+    {
       config = Config.load(SchemaCrawlerCommandLine.class
         .getResourceAsStream(configResource));
       connectionOptions = new BundledDriverConnectionOptionsParser(args, config)
         .getOptions();
     }
-    else {
-      if (args != null && args.length > 0) {
+    else
+    {
+      if (args != null && args.length > 0)
+      {
         config = new ConfigParser(args).getOptions();
       }
-      else {
+      else
+      {
         config = new Config();
       }
 
       ConnectionOptions connectionOptions = new CommandLineConnectionOptionsParser(args,
                                                                                    config)
         .getOptions();
-      if (connectionOptions == null) {
+      if (connectionOptions == null)
+      {
         connectionOptions = new ConfigConnectionOptionsParser(args, config)
           .getOptions();
       }
@@ -111,42 +123,53 @@ public final class SchemaCrawlerCommandLine
   }
 
   public void execute()
-    throws Exception {
+    throws Exception
+  {
     final Executable executable = new SchemaCrawlerExecutable(command);
-    if (outputOptions != null) {
+    if (outputOptions != null)
+    {
       executable.setOutputOptions(outputOptions);
     }
-    if (schemaCrawlerOptions != null) {
+    if (schemaCrawlerOptions != null)
+    {
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     }
-    if (config != null) {
+    if (config != null)
+    {
       executable.setAdditionalConfiguration(config);
     }
-    if (connectionOptions != null) {
+    if (connectionOptions != null)
+    {
       executable.execute(connectionOptions.createConnection());
     }
-    else {
+    else
+    {
       throw new SchemaCrawlerException("No connection options provided");
     }
   }
 
-  public final String getCommand() {
+  public final String getCommand()
+  {
     return command;
   }
 
-  public final Config getConfig() {
+  public final Config getConfig()
+  {
     return config;
   }
 
-  public final ConnectionOptions getConnectionOptions() {
+  public final ConnectionOptions getConnectionOptions()
+  {
     return connectionOptions;
   }
 
-  public final OutputOptions getOutputOptions() {
+  public final OutputOptions getOutputOptions()
+  {
     return outputOptions;
   }
 
-  public final SchemaCrawlerOptions getSchemaCrawlerOptions() {
+  public final SchemaCrawlerOptions getSchemaCrawlerOptions()
+  {
     return schemaCrawlerOptions;
   }
 

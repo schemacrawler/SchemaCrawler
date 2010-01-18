@@ -21,9 +21,9 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.*;
-
 import java.util.*;
+
+import schemacrawler.schema.*;
 
 /**
  * Represents a table in the database.
@@ -32,9 +32,12 @@ import java.util.*;
  */
 class MutableTable
   extends AbstractDatabaseObject
-  implements Table {
+  implements Table
+{
 
-  private enum TableAssociationType {
+  private enum TableAssociationType
+  {
+
     all,
     exported,
     imported;
@@ -47,13 +50,15 @@ class MutableTable
   private final NamedObjectList<MutableColumn> columns = new NamedObjectList<MutableColumn>();
   private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<MutableForeignKey>();
   private final NamedObjectList<MutableIndex> indices = new NamedObjectList<MutableIndex>();
-  private final NamedObjectList<MutableCheckConstraint> checkConstraints = new NamedObjectList<MutableCheckConstraint>();
+  private final NamedObjectList<MutableCheckConstraint> checkConstraints =
+    new NamedObjectList<MutableCheckConstraint>();
   private final NamedObjectList<MutableTrigger> triggers = new NamedObjectList<MutableTrigger>();
   private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>();
   private final Set<MutableColumnMap> weakAssociations = new LinkedHashSet<MutableColumnMap>();
   private int sortIndex;
 
-  MutableTable(final Schema schema, final String name) {
+  MutableTable(final Schema schema, final String name)
+  {
     super(schema, name);
   }
 
@@ -61,18 +66,22 @@ class MutableTable
    * {@inheritDoc}
    */
   @Override
-  public int compareTo(final NamedObject obj) {
-    if (obj == null) {
+  public int compareTo(final NamedObject obj)
+  {
+    if (obj == null)
+    {
       return -1;
     }
 
     final MutableTable other = (MutableTable) obj;
     int comparison = 0;
 
-    if (comparison == 0) {
+    if (comparison == 0)
+    {
       comparison = sortIndex - other.sortIndex;
     }
-    if (comparison == 0) {
+    if (comparison == 0)
+    {
       comparison = super.compareTo(other);
     }
 
@@ -84,7 +93,8 @@ class MutableTable
    *
    * @see Table#getCheckConstraints()
    */
-  public CheckConstraint[] getCheckConstraints() {
+  public CheckConstraint[] getCheckConstraints()
+  {
     return checkConstraints.values()
       .toArray(new CheckConstraint[checkConstraints.size()]);
   }
@@ -94,7 +104,8 @@ class MutableTable
    *
    * @see schemacrawler.schema.Table#getColumn(java.lang.String)
    */
-  public MutableColumn getColumn(final String name) {
+  public MutableColumn getColumn(final String name)
+  {
     return columns.lookup(this, name);
   }
 
@@ -103,7 +114,8 @@ class MutableTable
    *
    * @see Table#getColumns()
    */
-  public Column[] getColumns() {
+  public Column[] getColumns()
+  {
     return columns.values()
       .toArray(new Column[columns.size()]);
   }
@@ -113,12 +125,15 @@ class MutableTable
    *
    * @see schemacrawler.schema.Table#getColumnsListAsString()
    */
-  public String getColumnsListAsString() {
+  public String getColumnsListAsString()
+  {
     final Column[] columnsArray = getColumns();
     final StringBuilder buffer = new StringBuilder();
-    for (int i = 0; i < columnsArray.length; i++) {
+    for (int i = 0; i < columnsArray.length; i++)
+    {
       final Column column = columnsArray[i];
-      if (i > 0) {
+      if (i > 0)
+      {
         buffer.append(", ");
       }
       buffer.append(column.getName());
@@ -131,7 +146,8 @@ class MutableTable
    *
    * @see schemacrawler.schema.Table#getExportedForeignKeys()
    */
-  public ForeignKey[] getExportedForeignKeys() {
+  public ForeignKey[] getExportedForeignKeys()
+  {
     return getForeignKeys(TableAssociationType.exported);
   }
 
@@ -140,7 +156,8 @@ class MutableTable
    *
    * @see schemacrawler.schema.Table#getExportedWeakAssociations()
    */
-  public ColumnMap[] getExportedWeakAssociations() {
+  public ColumnMap[] getExportedWeakAssociations()
+  {
     return getWeakAssociations(TableAssociationType.exported);
   }
 
@@ -149,7 +166,8 @@ class MutableTable
    *
    * @see schemacrawler.schema.Table#getForeignKey(java.lang.String)
    */
-  public MutableForeignKey getForeignKey(final String name) {
+  public MutableForeignKey getForeignKey(final String name)
+  {
     return foreignKeys.lookup(this, name);
   }
 
@@ -158,11 +176,13 @@ class MutableTable
    *
    * @see schemacrawler.schema.Table#getForeignKeys()
    */
-  public ForeignKey[] getForeignKeys() {
+  public ForeignKey[] getForeignKeys()
+  {
     return getForeignKeys(TableAssociationType.all);
   }
 
-  public ForeignKey[] getImportedForeignKeys() {
+  public ForeignKey[] getImportedForeignKeys()
+  {
     return getForeignKeys(TableAssociationType.imported);
   }
 
@@ -171,7 +191,8 @@ class MutableTable
    *
    * @see schemacrawler.schema.Table#getImportedWeakAssociations()
    */
-  public ColumnMap[] getImportedWeakAssociations() {
+  public ColumnMap[] getImportedWeakAssociations()
+  {
     return getWeakAssociations(TableAssociationType.imported);
   }
 
@@ -180,7 +201,8 @@ class MutableTable
    *
    * @see schemacrawler.schema.Table#getIndex(java.lang.String)
    */
-  public MutableIndex getIndex(final String name) {
+  public MutableIndex getIndex(final String name)
+  {
     return indices.lookup(this, name);
   }
 
@@ -189,7 +211,8 @@ class MutableTable
    *
    * @see Table#getIndices()
    */
-  public Index[] getIndices() {
+  public Index[] getIndices()
+  {
     return indices.values()
       .toArray(new Index[indices.size()]);
   }
@@ -199,7 +222,8 @@ class MutableTable
    *
    * @see Table#getPrimaryKey()
    */
-  public MutablePrimaryKey getPrimaryKey() {
+  public MutablePrimaryKey getPrimaryKey()
+  {
     return primaryKey;
   }
 
@@ -208,7 +232,8 @@ class MutableTable
    *
    * @see schemacrawler.schema.Table#getPrivilege(java.lang.String)
    */
-  public MutablePrivilege getPrivilege(final String name) {
+  public MutablePrivilege getPrivilege(final String name)
+  {
     return privileges.lookup(this, name);
   }
 
@@ -217,7 +242,8 @@ class MutableTable
    *
    * @see Table#getPrivileges()
    */
-  public Privilege[] getPrivileges() {
+  public Privilege[] getPrivileges()
+  {
     return privileges.values()
       .toArray(new Privilege[privileges.size()]);
   }
@@ -227,29 +253,36 @@ class MutableTable
    *
    * @see schemacrawler.schema.Table#getRelatedTables(schemacrawler.schema.TableRelationshipType)
    */
-  public Table[] getRelatedTables(final TableRelationshipType tableRelationshipType) {
+  public Table[] getRelatedTables(final TableRelationshipType tableRelationshipType)
+  {
     final Set<MutableTable> relatedTables = new HashSet<MutableTable>();
     if (tableRelationshipType != null
-      && tableRelationshipType != TableRelationshipType.none) {
+      && tableRelationshipType != TableRelationshipType.none)
+    {
       final List<MutableForeignKey> foreignKeysList = new ArrayList<MutableForeignKey>(foreignKeys
         .values());
-      for (final MutableForeignKey mutableForeignKey : foreignKeysList) {
+      for (final MutableForeignKey mutableForeignKey : foreignKeysList)
+      {
         for (final ForeignKeyColumnMap columnPair : mutableForeignKey
-          .getColumnPairs()) {
+          .getColumnPairs())
+        {
           final MutableTable parentTable = (MutableTable) columnPair
             .getPrimaryKeyColumn()
             .getParent();
           final MutableTable childTable = (MutableTable) columnPair
             .getForeignKeyColumn()
             .getParent();
-          switch (tableRelationshipType) {
+          switch (tableRelationshipType)
+          {
             case parent:
-              if (equals(childTable)) {
+              if (equals(childTable))
+              {
                 relatedTables.add(parentTable);
               }
               break;
             case child:
-              if (equals(parentTable)) {
+              if (equals(parentTable))
+              {
                 relatedTables.add(childTable);
               }
               break;
@@ -267,7 +300,8 @@ class MutableTable
    *
    * @see schemacrawler.schema.Table#getTrigger(java.lang.String)
    */
-  public MutableTrigger getTrigger(final String name) {
+  public MutableTrigger getTrigger(final String name)
+  {
     return lookupTrigger(name);
   }
 
@@ -276,7 +310,8 @@ class MutableTable
    *
    * @see Table#getTriggers()
    */
-  public Trigger[] getTriggers() {
+  public Trigger[] getTriggers()
+  {
     return triggers.values()
       .toArray(new Trigger[triggers.size()]);
   }
@@ -286,7 +321,8 @@ class MutableTable
    *
    * @see Table#getType()
    */
-  public TableType getType() {
+  public TableType getType()
+  {
     return type;
   }
 
@@ -295,41 +331,51 @@ class MutableTable
    *
    * @see schemacrawler.schema.Table#getWeakAssociations()
    */
-  public ColumnMap[] getWeakAssociations() {
+  public ColumnMap[] getWeakAssociations()
+  {
     return getWeakAssociations(TableAssociationType.all);
   }
 
-  void addCheckConstraint(final MutableCheckConstraint checkConstraint) {
+  void addCheckConstraint(final MutableCheckConstraint checkConstraint)
+  {
     checkConstraints.add(checkConstraint);
   }
 
-  void addColumn(final MutableColumn column) {
+  void addColumn(final MutableColumn column)
+  {
     columns.add(column);
   }
 
-  void addForeignKey(final MutableForeignKey foreignKey) {
+  void addForeignKey(final MutableForeignKey foreignKey)
+  {
     foreignKeys.add(foreignKey);
   }
 
-  void addIndex(final MutableIndex index) {
+  void addIndex(final MutableIndex index)
+  {
     indices.add(index);
   }
 
-  void addPrivilege(final MutablePrivilege privilege) {
+  void addPrivilege(final MutablePrivilege privilege)
+  {
     privileges.add(privilege);
   }
 
-  void addTrigger(final MutableTrigger trigger) {
+  void addTrigger(final MutableTrigger trigger)
+  {
     triggers.add(trigger);
   }
 
-  void addWeakAssociation(final MutableColumnMap columnMap) {
-    if (columnMap != null) {
+  void addWeakAssociation(final MutableColumnMap columnMap)
+  {
+    if (columnMap != null)
+    {
       weakAssociations.add(columnMap);
     }
   }
 
-  int getSortIndex() {
+  int getSortIndex()
+  {
     return sortIndex;
   }
 
@@ -340,95 +386,119 @@ class MutableTable
    *
    * @return Trigger, if found, or null
    */
-  MutableTrigger lookupTrigger(final String triggerName) {
+  MutableTrigger lookupTrigger(final String triggerName)
+  {
     return triggers.lookup(this, triggerName);
   }
 
-  void replacePrimaryKey() {
-    if (primaryKey == null) {
+  void replacePrimaryKey()
+  {
+    if (primaryKey == null)
+    {
       return;
     }
 
     final String primaryKeyName = primaryKey.getName();
     final MutableIndex index = indices.lookup(this, primaryKeyName);
-    if (index != null) {
+    if (index != null)
+    {
       boolean indexHasPkColumns = false;
       final IndexColumn[] pkColumns = primaryKey.getColumns();
       final IndexColumn[] indexColumns = index.getColumns();
-      if (pkColumns.length == indexColumns.length) {
-        for (int i = 0; i < indexColumns.length; i++) {
-          if (!pkColumns[i].equals(indexColumns[i])) {
+      if (pkColumns.length == indexColumns.length)
+      {
+        for (int i = 0; i < indexColumns.length; i++)
+        {
+          if (!pkColumns[i].equals(indexColumns[i]))
+          {
             break;
           }
         }
         indexHasPkColumns = true;
       }
-      if (indexHasPkColumns) {
+      if (indexHasPkColumns)
+      {
         indices.remove(index);
         setPrimaryKey(new MutablePrimaryKey(index));
       }
     }
   }
 
-  void setColumnsSortOrder(final NamedObjectSort sort) {
+  void setColumnsSortOrder(final NamedObjectSort sort)
+  {
     columns.setSortOrder(sort);
   }
 
-  void setForeignKeysSortOrder(final NamedObjectSort sort) {
+  void setForeignKeysSortOrder(final NamedObjectSort sort)
+  {
     foreignKeys.setSortOrder(sort);
   }
 
-  void setIndicesSortOrder(final NamedObjectSort sort) {
+  void setIndicesSortOrder(final NamedObjectSort sort)
+  {
     indices.setSortOrder(sort);
   }
 
-  void setPrimaryKey(final MutablePrimaryKey primaryKey) {
+  void setPrimaryKey(final MutablePrimaryKey primaryKey)
+  {
     this.primaryKey = primaryKey;
   }
 
-  void setSortIndex(final int sortIndex) {
+  void setSortIndex(final int sortIndex)
+  {
     this.sortIndex = sortIndex;
   }
 
-  void setType(final TableType type) {
-    if (type == null) {
+  void setType(final TableType type)
+  {
+    if (type == null)
+    {
       throw new IllegalArgumentException("Null table type");
     }
     this.type = type;
   }
 
-  private ForeignKey[] getForeignKeys(final TableAssociationType tableAssociationType) {
+  private ForeignKey[] getForeignKeys(final TableAssociationType tableAssociationType)
+  {
     final List<MutableForeignKey> foreignKeysList = new ArrayList<MutableForeignKey>(foreignKeys
       .values());
     if (tableAssociationType != null
-      && tableAssociationType != TableAssociationType.all) {
+      && tableAssociationType != TableAssociationType.all)
+    {
       for (final Iterator<MutableForeignKey> iterator = foreignKeysList
-        .iterator(); iterator.hasNext();) {
+        .iterator(); iterator.hasNext();)
+      {
         final MutableForeignKey mutableForeignKey = iterator.next();
         final ForeignKeyColumnMap[] columnPairs = mutableForeignKey
           .getColumnPairs();
         boolean isExportedKey = false;
         boolean isImportedKey = false;
-        for (final ForeignKeyColumnMap columnPair : columnPairs) {
+        for (final ForeignKeyColumnMap columnPair : columnPairs)
+        {
           if (columnPair.getPrimaryKeyColumn()
             .getParent()
-            .equals(this)) {
+            .equals(this))
+          {
             isExportedKey = true;
           }
           if (columnPair.getForeignKeyColumn()
             .getParent()
-            .equals(this)) {
+            .equals(this))
+          {
             isImportedKey = true;
           }
         }
-        switch (tableAssociationType) {
+        switch (tableAssociationType)
+        {
           case exported:
-            if (!isExportedKey) {
+            if (!isExportedKey)
+            {
               iterator.remove();
             }
             break;
           case imported:
-            if (!isImportedKey) {
+            if (!isImportedKey)
+            {
               iterator.remove();
             }
             break;
@@ -440,24 +510,30 @@ class MutableTable
     return foreignKeysList.toArray(new ForeignKey[foreignKeysList.size()]);
   }
 
-  private ColumnMap[] getWeakAssociations(final TableAssociationType tableAssociationType) {
+  private ColumnMap[] getWeakAssociations(final TableAssociationType tableAssociationType)
+  {
     final List<MutableColumnMap> weakAssociationsList = new ArrayList<MutableColumnMap>(weakAssociations);
-    if (tableAssociationType != null) {
+    if (tableAssociationType != null)
+    {
       for (final Iterator<MutableColumnMap> iterator = weakAssociationsList
-        .iterator(); iterator.hasNext();) {
+        .iterator(); iterator.hasNext();)
+      {
         final ColumnMap weakAssociation = iterator.next();
-        switch (tableAssociationType) {
+        switch (tableAssociationType)
+        {
           case exported:
             if (!weakAssociation.getPrimaryKeyColumn()
               .getParent()
-              .equals(this)) {
+              .equals(this))
+            {
               iterator.remove();
             }
             break;
           case imported:
             if (!weakAssociation.getForeignKeyColumn()
               .getParent()
-              .equals(this)) {
+              .equals(this))
+            {
               iterator.remove();
             }
             break;

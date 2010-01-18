@@ -21,13 +21,13 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.schema.DatabaseProperty;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
+
+import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.DatabaseProperty;
 
 /**
  * Database and connection information. Created from metadata returned by a JDBC call, and other sources of
@@ -36,7 +36,8 @@ import java.util.Set;
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
 final class MutableDatabaseInfo
-  implements DatabaseInfo {
+  implements DatabaseInfo
+{
 
   private static final long serialVersionUID = 4051323422934251828L;
 
@@ -52,7 +53,8 @@ final class MutableDatabaseInfo
    *
    * @see schemacrawler.schema.Database#getProductName()
    */
-  public String getProductName() {
+  public String getProductName()
+  {
     return productName;
   }
 
@@ -61,7 +63,8 @@ final class MutableDatabaseInfo
    *
    * @see schemacrawler.schema.Database#getProductVersion()
    */
-  public String getProductVersion() {
+  public String getProductVersion()
+  {
     return productVersion;
   }
 
@@ -70,7 +73,8 @@ final class MutableDatabaseInfo
    *
    * @see schemacrawler.schema.Database#getProperties()
    */
-  public DatabaseProperty[] getProperties() {
+  public DatabaseProperty[] getProperties()
+  {
     final DatabaseProperty[] properties = dbProperties
       .toArray(new DatabaseProperty[dbProperties.size()]);
     Arrays.sort(properties);
@@ -82,7 +86,8 @@ final class MutableDatabaseInfo
    *
    * @see schemacrawler.schema.DatabaseInfo#getUserName()
    */
-  public String getUserName() {
+  public String getUserName()
+  {
     return userName;
   }
 
@@ -92,7 +97,8 @@ final class MutableDatabaseInfo
    * @see Object#toString()
    */
   @Override
-  public String toString() {
+  public String toString()
+  {
     final StringBuilder info = new StringBuilder();
     info.append("-- database: ")
       .append(getProductName())
@@ -102,22 +108,27 @@ final class MutableDatabaseInfo
     return info.toString();
   }
 
-  void addAll(final Collection<MutableDatabaseProperty> dbProperties) {
-    if (dbProperties != null) {
+  void addAll(final Collection<MutableDatabaseProperty> dbProperties)
+  {
+    if (dbProperties != null)
+    {
       this.dbProperties
         .addAll(dbProperties);
     }
   }
 
-  void setProductName(final String productName) {
+  void setProductName(final String productName)
+  {
     this.productName = productName;
   }
 
-  void setProductVersion(final String productVersion) {
+  void setProductVersion(final String productVersion)
+  {
     this.productVersion = productVersion;
   }
 
-  void setUserName(final String userName) {
+  void setUserName(final String userName)
+  {
     this.userName = userName;
   }
 

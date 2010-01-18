@@ -23,6 +23,7 @@ package schemacrawler.tools.text.util;
 
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.text.util.TableCell.Align;
+import sf.util.Utility;
 
 /**
  * Methods to format entire rows of output as HTML.
@@ -30,17 +31,19 @@ import schemacrawler.tools.text.util.TableCell.Align;
  * @author Sualeh Fatehi
  */
 abstract class BaseTextFormattingHelper
-  implements TextFormattingHelper {
+  implements TextFormattingHelper
+{
 
   /**
    * System specific line separator character.
    */
-  protected static final String NEWLINE = System.getProperty("line.separator");
-  protected static final String DASHED_SEPARATOR = separator("-");
+  static final String DASHED_SEPARATOR = separator("-");
 
-  static String separator(final String pattern) {
+  static String separator(final String pattern)
+  {
     final StringBuilder dashedSeparator = new StringBuilder();
-    for (int i = 0; i < 72 / pattern.length(); i++) {
+    for (int i = 0; i < 72 / pattern.length(); i++)
+    {
       dashedSeparator.append(pattern);
     }
     return dashedSeparator.toString();
@@ -48,7 +51,8 @@ abstract class BaseTextFormattingHelper
 
   private final OutputFormat outputFormat;
 
-  BaseTextFormattingHelper(final OutputFormat outputFormat) {
+  BaseTextFormattingHelper(final OutputFormat outputFormat)
+  {
     this.outputFormat = outputFormat;
   }
 
@@ -57,7 +61,8 @@ abstract class BaseTextFormattingHelper
    *
    * @see schemacrawler.tools.util.TextFormattingHelper#createDefinitionRow(java.lang.String)
    */
-  public String createDefinitionRow(final String definition) {
+  public String createDefinitionRow(final String definition)
+  {
     final TableRow row = new TableRow(outputFormat);
     row.add(new TableCell("", "ordinal", outputFormat));
     row.add(new TableCell(definition,
@@ -77,17 +82,20 @@ abstract class BaseTextFormattingHelper
    */
   public String createDetailRow(final String ordinal,
                                 final String subName,
-                                final String type) {
+                                final String type)
+  {
     final int subNameWidth = 32;
     final int typeWidth = 28;
 
     final TableRow row = new TableRow(outputFormat);
     if (sf.util
       .Utility
-      .isBlank(ordinal)) {
+      .isBlank(ordinal))
+    {
       row.add(new TableCell("", "ordinal", outputFormat));
     }
-    else {
+    else
+    {
       row
         .add(new TableCell(ordinal, 2, Align.left, 1, "ordinal", outputFormat));
     }
@@ -107,7 +115,8 @@ abstract class BaseTextFormattingHelper
    *
    * @see schemacrawler.tools.util.TextFormattingHelper#createEmptyRow()
    */
-  public String createEmptyRow() {
+  public String createEmptyRow()
+  {
     return new TableRow(outputFormat, 4).toString();
   }
 
@@ -118,16 +127,19 @@ abstract class BaseTextFormattingHelper
    */
   public String createNameRow(final String name,
                               final String description,
-                              final boolean underscore) {
+                              final boolean underscore)
+  {
     int nameWidth = 34;
     int descriptionWidth = 36;
     // Adjust widths
-    if (name.length() > nameWidth && description.length() < descriptionWidth) {
+    if (name.length() > nameWidth && description.length() < descriptionWidth)
+    {
       descriptionWidth = Math.max(description.length(),
                                   descriptionWidth
                                     - (name.length() - nameWidth));
     }
-    if (description.length() > descriptionWidth && name.length() < nameWidth) {
+    if (description.length() > descriptionWidth && name.length() < nameWidth)
+    {
       nameWidth = Math.max(name.length(),
                            nameWidth
                              - (description.length() - descriptionWidth));
@@ -149,8 +161,9 @@ abstract class BaseTextFormattingHelper
                           outputFormat));
     nameRowString = row.toString();
 
-    if (underscore && outputFormat != OutputFormat.html) {
-      nameRowString = nameRowString + NEWLINE + DASHED_SEPARATOR;
+    if (underscore && outputFormat != OutputFormat.html)
+    {
+      nameRowString = nameRowString + Utility.NEWLINE + DASHED_SEPARATOR;
     }
 
     return nameRowString;
@@ -161,7 +174,8 @@ abstract class BaseTextFormattingHelper
    *
    * @see schemacrawler.tools.util.TextFormattingHelper#createNameValueRow(java.lang.String, java.lang.String)
    */
-  public String createNameValueRow(final String name, final String value) {
+  public String createNameValueRow(final String name, final String value)
+  {
     final int nameWidth = 36;
 
     final TableRow row = new TableRow(outputFormat);
@@ -177,13 +191,16 @@ abstract class BaseTextFormattingHelper
    *
    * @throws QueryExecutorException On an exception
    */
-  public String createRow(final String[] columnData) {
+  public String createRow(final String[] columnData)
+  {
     OutputFormat outputFormat = this.outputFormat;
-    if (outputFormat == OutputFormat.text) {
+    if (outputFormat == OutputFormat.text)
+    {
       outputFormat = OutputFormat.csv;
     }
     final TableRow row = new TableRow(outputFormat);
-    for (final String element : columnData) {
+    for (final String element : columnData)
+    {
       row.add(new TableCell(element, "", outputFormat));
     }
     return row.toString();
@@ -194,13 +211,16 @@ abstract class BaseTextFormattingHelper
    *
    * @param columnNames Column names
    */
-  public String createRowHeader(final String[] columnNames) {
+  public String createRowHeader(final String[] columnNames)
+  {
     OutputFormat outputFormat = this.outputFormat;
-    if (outputFormat == OutputFormat.text) {
+    if (outputFormat == OutputFormat.text)
+    {
       outputFormat = OutputFormat.csv;
     }
     final TableRow row = new TableRow(outputFormat);
-    for (final String columnName : columnNames) {
+    for (final String columnName : columnNames)
+    {
       row.add(new TableCell(columnName, "name", outputFormat));
     }
     return row.toString();

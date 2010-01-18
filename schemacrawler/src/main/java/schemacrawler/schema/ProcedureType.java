@@ -28,7 +28,8 @@ import java.util.logging.Logger;
 /**
  * An enumeration wrapper around JDBC procedure types.
  */
-public enum ProcedureType {
+public enum ProcedureType
+{
 
   /**
    * Result unknown.
@@ -53,9 +54,12 @@ public enum ProcedureType {
    *
    * @return ForeignKeyDeferrability
    */
-  public static ProcedureType valueOf(final int id) {
-    for (final ProcedureType type : ProcedureType.values()) {
-      if (type.getId() == id) {
+  public static ProcedureType valueOf(final int id)
+  {
+    for (final ProcedureType type : ProcedureType.values())
+    {
+      if (type.getId() == id)
+      {
         return type;
       }
     }
@@ -66,7 +70,8 @@ public enum ProcedureType {
   private final int id;
   private final String text;
 
-  private ProcedureType(final int id, final String text) {
+  private ProcedureType(final int id, final String text)
+  {
     this.id = id;
     this.text = text;
   }
@@ -76,7 +81,8 @@ public enum ProcedureType {
    *
    * @return id
    */
-  public int getId() {
+  public int getId()
+  {
     return id;
   }
 
@@ -86,7 +92,8 @@ public enum ProcedureType {
    * @see Object#toString()
    */
   @Override
-  public String toString() {
+  public String toString()
+  {
     return text;
   }
 

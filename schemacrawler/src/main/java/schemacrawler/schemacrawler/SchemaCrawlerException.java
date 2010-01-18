@@ -25,21 +25,24 @@ package schemacrawler.schemacrawler;
  * Exception for the SchemaCrawler.
  */
 public class SchemaCrawlerException
-  extends Exception {
+  extends Exception
+{
 
   private static final long serialVersionUID = 3257848770627713076L;
 
   /**
    * {@inheritDoc}
    */
-  public SchemaCrawlerException(final String message) {
+  public SchemaCrawlerException(final String message)
+  {
     super(message);
   }
 
   /**
    * {@inheritDoc}
    */
-  public SchemaCrawlerException(final String message, final Throwable cause) {
+  public SchemaCrawlerException(final String message, final Throwable cause)
+  {
     super(message + ": " + cause.getMessage(), cause);
   }
 

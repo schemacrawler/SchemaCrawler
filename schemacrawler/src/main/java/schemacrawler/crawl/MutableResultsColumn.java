@@ -31,7 +31,8 @@ import schemacrawler.schema.ResultsColumn;
  */
 final class MutableResultsColumn
   extends AbstractColumn
-  implements ResultsColumn {
+  implements ResultsColumn
+{
 
   private static final long serialVersionUID = -6983013302549352559L;
 
@@ -46,7 +47,8 @@ final class MutableResultsColumn
   private boolean signed;
   private boolean writable;
 
-  MutableResultsColumn(final DatabaseObject parent, final String name) {
+  MutableResultsColumn(final DatabaseObject parent, final String name)
+  {
     super(parent, name);
   }
 
@@ -55,7 +57,8 @@ final class MutableResultsColumn
    *
    * @see schemacrawler.schema.ResultsColumn#getDisplaySize()
    */
-  public int getDisplaySize() {
+  public int getDisplaySize()
+  {
     return displaySize;
   }
 
@@ -64,7 +67,8 @@ final class MutableResultsColumn
    *
    * @see schemacrawler.schema.ResultsColumn#getLabel()
    */
-  public String getLabel() {
+  public String getLabel()
+  {
     return label;
   }
 
@@ -73,7 +77,8 @@ final class MutableResultsColumn
    *
    * @see schemacrawler.schema.ResultsColumn#isAutoIncrement()
    */
-  public boolean isAutoIncrement() {
+  public boolean isAutoIncrement()
+  {
     return autoIncrement;
   }
 
@@ -82,7 +87,8 @@ final class MutableResultsColumn
    *
    * @see schemacrawler.schema.ResultsColumn#isCaseSensitive()
    */
-  public boolean isCaseSensitive() {
+  public boolean isCaseSensitive()
+  {
     return caseSensitive;
   }
 
@@ -91,7 +97,8 @@ final class MutableResultsColumn
    *
    * @see schemacrawler.schema.ResultsColumn#isCurrency()
    */
-  public boolean isCurrency() {
+  public boolean isCurrency()
+  {
     return currency;
   }
 
@@ -100,7 +107,8 @@ final class MutableResultsColumn
    *
    * @see schemacrawler.schema.ResultsColumn#isDefinitelyWritable()
    */
-  public boolean isDefinitelyWritable() {
+  public boolean isDefinitelyWritable()
+  {
     return definitelyWritable;
   }
 
@@ -109,7 +117,8 @@ final class MutableResultsColumn
    *
    * @see schemacrawler.schema.ResultsColumn#isReadOnly()
    */
-  public boolean isReadOnly() {
+  public boolean isReadOnly()
+  {
     return readOnly;
   }
 
@@ -118,7 +127,8 @@ final class MutableResultsColumn
    *
    * @see schemacrawler.schema.ResultsColumn#isSearchable()
    */
-  public boolean isSearchable() {
+  public boolean isSearchable()
+  {
     return searchable;
   }
 
@@ -127,7 +137,8 @@ final class MutableResultsColumn
    *
    * @see schemacrawler.schema.ResultsColumn#isSigned()
    */
-  public boolean isSigned() {
+  public boolean isSigned()
+  {
     return signed;
   }
 
@@ -136,47 +147,58 @@ final class MutableResultsColumn
    *
    * @see schemacrawler.schema.ResultsColumn#isWritable()
    */
-  public boolean isWritable() {
+  public boolean isWritable()
+  {
     return writable;
   }
 
-  void setAutoIncrement(final boolean isAutoIncrement) {
+  void setAutoIncrement(final boolean isAutoIncrement)
+  {
     autoIncrement = isAutoIncrement;
   }
 
-  void setCaseSensitive(final boolean isCaseSensitive) {
+  void setCaseSensitive(final boolean isCaseSensitive)
+  {
     caseSensitive = isCaseSensitive;
   }
 
-  void setCurrency(final boolean isCurrency) {
+  void setCurrency(final boolean isCurrency)
+  {
     currency = isCurrency;
   }
 
-  void setDefinitelyWritable(final boolean isDefinitelyWritable) {
+  void setDefinitelyWritable(final boolean isDefinitelyWritable)
+  {
     definitelyWritable = isDefinitelyWritable;
   }
 
-  void setDisplaySize(final int displaySize) {
+  void setDisplaySize(final int displaySize)
+  {
     this.displaySize = displaySize;
   }
 
-  void setLabel(final String label) {
+  void setLabel(final String label)
+  {
     this.label = label;
   }
 
-  void setReadOnly(final boolean isReadOnly) {
+  void setReadOnly(final boolean isReadOnly)
+  {
     readOnly = isReadOnly;
   }
 
-  void setSearchable(final boolean isSearchable) {
+  void setSearchable(final boolean isSearchable)
+  {
     searchable = isSearchable;
   }
 
-  void setSigned(final boolean isSigned) {
+  void setSigned(final boolean isSigned)
+  {
     signed = isSigned;
   }
 
-  void setWritable(final boolean isWritable) {
+  void setWritable(final boolean isWritable)
+  {
     writable = isWritable;
   }
 

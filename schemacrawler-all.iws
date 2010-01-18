@@ -3,39 +3,36 @@
   <component name="AnalysisUIOptions">
     <option name="ANALYZE_TEST_SOURCES" value="false" />
     <option name="CUSTOM_SCOPE_NAME" value="Project Files" />
+    <option name="ANALYSIS_IN_BACKGROUND" value="true" />
   </component>
   <component name="ChangeListManager" verified="true">
     <list default="true" readonly="true" id="2b93e222-a644-4a7e-b0a7-978a76041337" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableColumnMap.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableColumnMap.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/CommandLineConnectionOptionsParser.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/CommandLineConnectionOptionsParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/SchemaRetriever.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/SchemaRetriever.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableColumnMap.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableColumnMap.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schemacrawler/InformationSchemaViews.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schemacrawler/InformationSchemaViews.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-test/pom.xml" afterPath="$PROJECT_DIR$/schemacrawler-test/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/SchemaRetriever.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/SchemaRetriever.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/ApplicationOptionsParser.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/ApplicationOptionsParser.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-integrations/src/test/java/schemacrawler/integration/test/ExecutableIntegrationTest.java" afterPath="$PROJECT_DIR$/schemacrawler-integrations/src/test/java/schemacrawler/integration/test/ExecutableIntegrationTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/distribution/src/site/xdoc/examples/spring/spring-readme.xml" afterPath="$PROJECT_DIR$/distribution/src/site/xdoc/examples/spring/spring-readme.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-derby/src/main/java/schemacrawler/tools/derby/Main.java" afterPath="$PROJECT_DIR$/schemacrawler-derby/src/main/java/schemacrawler/tools/derby/Main.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/executable/SchemaCrawlerExecutable.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/executable/SchemaCrawlerExecutable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/test/java/schemacrawler/test/TemplatingTest.java" afterPath="$PROJECT_DIR$/schemacrawler/src/test/java/schemacrawler/test/TemplatingTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/CommandParser.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/CommandParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/test/java/schemacrawler/test/TemplatingTest.java" afterPath="$PROJECT_DIR$/schemacrawler/src/test/java/schemacrawler/test/TemplatingTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/base/DatabaseTraverser.java" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/base/DatabaseTraverser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/DatabaseObject.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/DatabaseObject.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-maven-plugin/src/main/java/schemacrawler/tools/integration/maven/SchemaCrawlerMojo.java" afterPath="$PROJECT_DIR$/schemacrawler-maven-plugin/src/main/java/schemacrawler/tools/integration/maven/SchemaCrawlerMojo.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/DatabaseObject.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/DatabaseObject.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-integrations/src/main/java/schemacrawler/tools/integration/spring/SpringOptionsParser.java" afterPath="$PROJECT_DIR$/schemacrawler-integrations/src/main/java/schemacrawler/tools/integration/spring/SpringOptionsParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-site/pom.xml" afterPath="$PROJECT_DIR$/schemacrawler-site/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/ConfigConnectionOptionsParser.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/ConfigConnectionOptionsParser.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/test/java/schemacrawler/test/SortingTest.java" afterPath="$PROJECT_DIR$/schemacrawler/src/test/java/schemacrawler/test/SortingTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/Schema.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/Schema.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/IndexColumn.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/IndexColumn.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/Schema.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/Schema.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutablePrivilege.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutablePrivilege.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/Privilege.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/Privilege.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/distribution/src/site/xdoc/examples/dump/dump-readme.xml" afterPath="$PROJECT_DIR$/distribution/src/site/xdoc/examples/dump/dump-readme.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/operation/Operation.java" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/operation/Operation.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ProcedureColumn.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ProcedureColumn.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-integrations/src/test/resources/context.xml" afterPath="$PROJECT_DIR$/schemacrawler-integrations/src/test/resources/context.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/test/resources/composite_output/all_tables,dump_tables,count,list_objects.html" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/test/resources/composite_output/all_tables,dump_tables,count,list_objects.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/operation/Query.java" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/operation/Query.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/test/java/schemacrawler/test/SchemaCrawlerTest.java" afterPath="$PROJECT_DIR$/schemacrawler/src/test/java/schemacrawler/test/SchemaCrawlerTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/distribution/src/site/xdoc/examples/maven/maven-readme.xml" afterPath="$PROJECT_DIR$/distribution/src/site/xdoc/examples/maven/maven-readme.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableForeignKey.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableForeignKey.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/Version.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/Version.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/IndexColumnSortSequence.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/IndexColumnSortSequence.java" />
@@ -54,62 +51,56 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-integrations/src/main/java/schemacrawler/tools/integration/graph/GraphGenerator.java" afterPath="$PROJECT_DIR$/schemacrawler-integrations/src/main/java/schemacrawler/tools/integration/graph/GraphGenerator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/executable/CommandRegistry.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/executable/CommandRegistry.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/EventManipulationType.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/EventManipulationType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/distribution/src/site/xdoc/examples/velocity/velocity-readme.xml" afterPath="$PROJECT_DIR$/distribution/src/site/xdoc/examples/velocity/velocity-readme.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ForeignKey.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ForeignKey.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/sf/util/DirectedGraph.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/sf/util/DirectedGraph.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/AbstractDependantNamedObject.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/AbstractDependantNamedObject.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/IndexType.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/IndexType.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/sf/util/TestUtility.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/sf/util/TestUtility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/AbstractDependantNamedObject.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/AbstractDependantNamedObject.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/SchemaCrawler.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/SchemaCrawler.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableForeignKeyColumnMap.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableForeignKeyColumnMap.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/BaseDatabaseConnectionOptionsParser.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/BaseDatabaseConnectionOptionsParser.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ResultsColumn.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ResultsColumn.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/executable/BaseExecutable.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/executable/BaseExecutable.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/distribution/src/site/xdoc/examples/javascript/javascript.xml" afterPath="$PROJECT_DIR$/distribution/src/site/xdoc/examples/javascript/javascript.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/options/OutputFormat.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/options/OutputFormat.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/schema/SchemaTextExecutable.java" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/schema/SchemaTextExecutable.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/options/OutputFormat.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/options/OutputFormat.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schemacrawler/DatabaseConfigConnectionOptions.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schemacrawler/DatabaseConfigConnectionOptions.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableDatabaseInfo.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableDatabaseInfo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-site/src/site/xdoc/who-uses.xml" afterPath="$PROJECT_DIR$/schemacrawler-site/src/site/xdoc/who-uses.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/OutputOptionsParser.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/OutputOptionsParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/distribution/src/site/resources/examples/spring/spring.xml" afterPath="$PROJECT_DIR$/distribution/src/site/resources/examples/spring/spring.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/test/java/schemacrawler/test/CommandLineParserTest.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/test/java/schemacrawler/test/CommandLineParserTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-sqlite/pom.xml" afterPath="$PROJECT_DIR$/schemacrawler-sqlite/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/options/OutputOptions.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/options/OutputOptions.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-postgresql/src/assembly/distrib-zip.xml" afterPath="$PROJECT_DIR$/schemacrawler-postgresql/src/assembly/distrib-zip.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/RoutineBodyType.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/RoutineBodyType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-mysql/pom.xml" afterPath="$PROJECT_DIR$/schemacrawler-mysql/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/util/HtmlFormattingHelper.java" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/util/HtmlFormattingHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/DependantObject.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/DependantObject.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/test/java/schemacrawler/test/SchemaCrawlerXmlOutputTest.java" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/test/java/schemacrawler/test/SchemaCrawlerXmlOutputTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/DependantObject.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/DependantObject.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/test/java/schemacrawler/crawl/NamedObjectTest.java" afterPath="$PROJECT_DIR$/schemacrawler/src/test/java/schemacrawler/crawl/NamedObjectTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/ConfigParser.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/ConfigParser.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/util/TableRow.java" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/util/TableRow.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-integrations/src/main/java/schemacrawler/tools/integration/velocity/VelocityRenderer.java" afterPath="$PROJECT_DIR$/schemacrawler-integrations/src/main/java/schemacrawler/tools/integration/velocity/VelocityRenderer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/NamedObjectList.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/NamedObjectList.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/ColumnDataTypes.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/ColumnDataTypes.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-integrations/src/main/java/schemacrawler/tools/integration/freemarker/FreeMarkerRenderer.java" afterPath="$PROJECT_DIR$/schemacrawler-integrations/src/main/java/schemacrawler/tools/integration/freemarker/FreeMarkerRenderer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/NamedObjectList.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/NamedObjectList.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-site/src/site/xdoc/index.xml" afterPath="$PROJECT_DIR$/schemacrawler-site/src/site/xdoc/index.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-integrations/src/main/java/schemacrawler/tools/integration/freemarker/FreeMarkerRenderer.java" afterPath="$PROJECT_DIR$/schemacrawler-integrations/src/main/java/schemacrawler/tools/integration/freemarker/FreeMarkerRenderer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schemacrawler/ConnectionOptions.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schemacrawler/ConnectionOptions.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/BundledDriverConnectionOptionsParser.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/BundledDriverConnectionOptionsParser.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/operation/OperationExecutable.java" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/operation/OperationExecutable.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableSchema.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableSchema.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-integrations/src/test/java/schemacrawler/integration/test/SchemaSerializationTest.java" afterPath="$PROJECT_DIR$/schemacrawler-integrations/src/test/java/schemacrawler/integration/test/SchemaSerializationTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/BaseOptionsParser.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/BaseOptionsParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/distribution/src/site/resources/examples/maven/pom.xml" afterPath="$PROJECT_DIR$/distribution/src/site/resources/examples/maven/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-site/src/site/xdoc/bundled.xml" afterPath="$PROJECT_DIR$/schemacrawler-site/src/site/xdoc/bundled.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableTable.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableTable.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableResultsColumn.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableResultsColumn.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/SchemaCrawlerCommandLine.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/SchemaCrawlerCommandLine.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schemacrawler/Options.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schemacrawler/Options.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/utility/TestDatabase.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/utility/TestDatabase.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableResultsColumns.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableResultsColumns.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schemacrawler/Options.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schemacrawler/Options.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-oracle/src/main/java/schemacrawler/tools/oracle/Main.java" afterPath="$PROJECT_DIR$/schemacrawler-oracle/src/main/java/schemacrawler/tools/oracle/Main.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/util/PlainTextFormattingHelper.java" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/util/PlainTextFormattingHelper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ColumnMap.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ColumnMap.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/View.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/View.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/sf/util/GraphException.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/sf/util/GraphException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/Procedure.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/Procedure.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/Main.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/Main.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/Procedure.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/Procedure.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-all.ipr" afterPath="$PROJECT_DIR$/schemacrawler-all.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutablePrimaryKey.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutablePrimaryKey.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/base/BaseSchemaCrawlerTextExecutable.java" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/base/BaseSchemaCrawlerTextExecutable.java" />
@@ -118,54 +109,48 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/sf/util/CommandLineParser.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/sf/util/CommandLineParser.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/options/Command.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/options/Command.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/test/java/schemacrawler/crawl/SchemaCrawlerDeepTest.java" afterPath="$PROJECT_DIR$/schemacrawler/src/test/java/schemacrawler/crawl/SchemaCrawlerDeepTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/AbstractNamedObject.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/AbstractNamedObject.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/TableRetriever.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/TableRetriever.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableIndex.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableIndex.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/base/BaseFormatter.java" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/base/BaseFormatter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ProcedureType.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ProcedureType.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/Column.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/Column.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/SchemaCrawlerHelpCommandLine.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/SchemaCrawlerHelpCommandLine.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/TableType.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/TableType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-derby/src/assembly/distrib-zip.xml" afterPath="$PROJECT_DIR$/schemacrawler-derby/src/assembly/distrib-zip.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/distribution/src/site/xdoc/examples/ant-task/snapshot-readme.xml" afterPath="$PROJECT_DIR$/distribution/src/site/xdoc/examples/ant-task/snapshot-readme.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/operation/OperationHandler.java" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/operation/OperationHandler.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/TableType.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/TableType.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableView.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/utility/MetaDataUtility.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/utility/MetaDataUtility.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableDatabase.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableDatabase.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/utility/MetaDataUtility.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/utility/MetaDataUtility.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/distribution/pom.xml" afterPath="$PROJECT_DIR$/distribution/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schemacrawler/Config.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schemacrawler/Config.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/SchemaCrawlerOptionsParser.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/SchemaCrawlerOptionsParser.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/util/TextFormattingHelper.java" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/util/TextFormattingHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-oracle/src/assembly/distrib-zip.xml" afterPath="$PROJECT_DIR$/schemacrawler-oracle/src/assembly/distrib-zip.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-integrations/src/main/java/schemacrawler/tools/integration/graph/GraphExecutable.java" afterPath="$PROJECT_DIR$/schemacrawler-integrations/src/main/java/schemacrawler/tools/integration/graph/GraphExecutable.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/CommandLine.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/CommandLine.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/JdbcDriverInfo.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/JdbcDriverInfo.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/Trigger.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/Trigger.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/SearchableType.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/SearchableType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/distribution/src/site/xdoc/examples/user-defined-query/user-defined-query.xml" afterPath="$PROJECT_DIR$/distribution/src/site/xdoc/examples/user-defined-query/user-defined-query.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/operation/DataTextFormatter.java" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/operation/DataTextFormatter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableDatabaseProperty.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableDatabaseProperty.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/test/java/schemacrawler/test/SchemaCrawlerOutputTest.java" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/test/java/schemacrawler/test/SchemaCrawlerOutputTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-site/src/site/xdoc/readme.xml" afterPath="$PROJECT_DIR$/schemacrawler-site/src/site/xdoc/readme.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-integrations/pom.xml" afterPath="$PROJECT_DIR$/schemacrawler-integrations/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schemacrawler/SchemaCrawlerException.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schemacrawler/SchemaCrawlerException.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ForeignKeyDeferrability.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ForeignKeyDeferrability.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schemacrawler/DatabaseConnectionOptions.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schemacrawler/DatabaseConnectionOptions.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/TableRelationshipType.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/TableRelationshipType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/ResultsRetriever.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/ResultsRetriever.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/NamedObject.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/NamedObject.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/ResultsRetriever.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/ResultsRetriever.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/JavaSqlType.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/JavaSqlType.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-integrations/src/test/java/schemacrawler/integration/test/SpringIntegrationTest.java" afterPath="$PROJECT_DIR$/schemacrawler-integrations/src/test/java/schemacrawler/integration/test/SpringIntegrationTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/base/DatabaseTraversalHandler.java" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/base/DatabaseTraversalHandler.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-system-test/src/test/java/schemacrawler/test/SchemaCrawlerSystemTest.java" afterPath="$PROJECT_DIR$/schemacrawler-system-test/src/test/java/schemacrawler/test/SchemaCrawlerSystemTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-maven-plugin/src/main/resources/schemacrawler-maven-plugin.pom" afterPath="$PROJECT_DIR$/schemacrawler-maven-plugin/src/main/resources/schemacrawler-maven-plugin.pom" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/PrimaryKey.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/PrimaryKey.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ForeignKeyUpdateRule.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ForeignKeyUpdateRule.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schemacrawler/InclusionRule.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schemacrawler/InclusionRule.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/distribution/src/site/xdoc/examples/db-specific-query/db-specific-query.xml" afterPath="$PROJECT_DIR$/distribution/src/site/xdoc/examples/db-specific-query/db-specific-query.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/AbstractDependantObject.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/AbstractDependantObject.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/sf/util/Inflection.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/sf/util/Inflection.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-site/src/site/changes.xml" afterPath="$PROJECT_DIR$/schemacrawler-site/src/site/changes.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/test/java/schemacrawler/test/SchemaCrawlerGrepTest.java" afterPath="$PROJECT_DIR$/schemacrawler/src/test/java/schemacrawler/test/SchemaCrawlerGrepTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/util/Entities.java" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/util/Entities.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/SchemaCrawlerMain.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/SchemaCrawlerMain.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/DependantNamedObject.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/DependantNamedObject.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-mysql/src/main/java/schemacrawler/tools/mysql/Main.java" afterPath="$PROJECT_DIR$/schemacrawler-mysql/src/main/java/schemacrawler/tools/mysql/Main.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-integrations/src/main/java/schemacrawler/tools/integration/spring/SpringOptions.java" afterPath="$PROJECT_DIR$/schemacrawler-integrations/src/main/java/schemacrawler/tools/integration/spring/SpringOptions.java" />
@@ -179,25 +164,22 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/CheckConstraint.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/CheckConstraint.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/options/ApplicationOptions.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/options/ApplicationOptions.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/JavaSqlTypesUtility.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/JavaSqlTypesUtility.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/test/resources/composite_output/verbose_schema,count,dump.csv" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/test/resources/composite_output/verbose_schema,count,dump.csv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-integrations/src/test/java/schemacrawler/integration/test/IntegrationCommandlineTest.java" afterPath="$PROJECT_DIR$/schemacrawler-integrations/src/test/java/schemacrawler/integration/test/IntegrationCommandlineTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/distribution/src/site/xdoc/examples/commandline/commandline-readme.xml" afterPath="$PROJECT_DIR$/distribution/src/site/xdoc/examples/commandline/commandline-readme.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ResultsColumns.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ResultsColumns.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/InfoLevel.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/InfoLevel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-site/src/site/xdoc/INFORMATION_SCHEMA.xml" afterPath="$PROJECT_DIR$/schemacrawler-site/src/site/xdoc/INFORMATION_SCHEMA.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/JdbcDriverProperty.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/JdbcDriverProperty.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableJdbcDriverProperty.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableJdbcDriverProperty.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/distribution/src/site/xdoc/examples/api/api-readme.xml" afterPath="$PROJECT_DIR$/distribution/src/site/xdoc/examples/api/api-readme.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-mysql/src/assembly/distrib-zip.xml" afterPath="$PROJECT_DIR$/schemacrawler-mysql/src/assembly/distrib-zip.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableSchemaCrawlerInfo.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableSchemaCrawlerInfo.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/options/BundledDriverHelpOptions.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/options/BundledDriverHelpOptions.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableSchemaCrawlerInfo.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableSchemaCrawlerInfo.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/utility/SchemaCrawlerUtility.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/utility/SchemaCrawlerUtility.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ConditionTimingType.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ConditionTimingType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/sf/util/Utility.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/sf/util/Utility.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ForeignKeyColumnMap.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ForeignKeyColumnMap.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/sf/util/Utility.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/sf/util/Utility.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/test/resources/composite_output/verbose_schema,count,dump.html" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/test/resources/composite_output/verbose_schema,count,dump.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ColumnDataType.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ColumnDataType.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ProcedureColumnType.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ProcedureColumnType.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/BaseColumn.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/BaseColumn.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/test/resources/composite_output/list_objects,count.html" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/test/resources/composite_output/list_objects,count.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/Database.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/Database.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/AbstractDatabaseObject.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/AbstractDatabaseObject.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/SchemaCrawlerInfo.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/SchemaCrawlerInfo.java" />
@@ -205,55 +187,50 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/distribution/src/site/resources/examples/maven/src/main/java/HelloWorld.java" afterPath="$PROJECT_DIR$/distribution/src/site/resources/examples/maven/src/main/java/HelloWorld.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-test/src/main/java/ApiExample.java" afterPath="$PROJECT_DIR$/schemacrawler-test/src/main/java/ApiExample.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableTrigger.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableTrigger.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-sqlserver/src/assembly/distrib-zip.xml" afterPath="$PROJECT_DIR$/schemacrawler-sqlserver/src/assembly/distrib-zip.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-system-test/pom.xml" afterPath="$PROJECT_DIR$/schemacrawler-system-test/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/AbstractRetriever.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/AbstractRetriever.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-all.iws" afterPath="$PROJECT_DIR$/schemacrawler-all.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/utility/JavaSqlTypesGenerationUtility.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/utility/JavaSqlTypesGenerationUtility.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableIndexColumn.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableIndexColumn.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-sqlserver/pom.xml" afterPath="$PROJECT_DIR$/schemacrawler-sqlserver/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/NamedObjectSort.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/NamedObjectSort.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/CheckOptionType.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/CheckOptionType.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/ProcedureRetriever.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/ProcedureRetriever.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableCheckConstraint.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableCheckConstraint.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/executable/Commands.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/executable/Commands.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-integrations/src/main/java/schemacrawler/tools/integration/graph/PastelColor.java" afterPath="$PROJECT_DIR$/schemacrawler-integrations/src/main/java/schemacrawler/tools/integration/graph/PastelColor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-derby/pom.xml" afterPath="$PROJECT_DIR$/schemacrawler-derby/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableJdbcDriverInfo.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableJdbcDriverInfo.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/TableExRetriever.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/TableExRetriever.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/resources/schemacrawler-antlib.xml" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/resources/schemacrawler-antlib.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/schema/SchemaTextFormatter.java" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/schema/SchemaTextFormatter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-site/src/site/resources/snapshot-examples/snapshot.html" afterPath="$PROJECT_DIR$/schemacrawler-site/src/site/resources/snapshot-examples/snapshot.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/distribution/src/site/resources/examples/velocity/velocity.xml" afterPath="$PROJECT_DIR$/distribution/src/site/resources/examples/velocity/velocity.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-site/src/site/site.xml" afterPath="$PROJECT_DIR$/schemacrawler-site/src/site/site.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-sqlite/src/assembly/distrib-zip.xml" afterPath="$PROJECT_DIR$/schemacrawler-sqlite/src/assembly/distrib-zip.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/sf/util/FileUtility.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/sf/util/FileUtility.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/distribution/src/site/xdoc/examples/diagram/diagram-readme.xml" afterPath="$PROJECT_DIR$/distribution/src/site/xdoc/examples/diagram/diagram-readme.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/distribution/src/site/resources/examples/ant-task/snapshot.xml" afterPath="$PROJECT_DIR$/distribution/src/site/resources/examples/ant-task/snapshot.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-system-test/src/test/resources/context.xml" afterPath="$PROJECT_DIR$/schemacrawler-system-test/src/test/resources/context.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/AbstractColumn.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/AbstractColumn.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/SchemaReference.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/SchemaReference.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/test/java/schemacrawler/test/DirectedGraphTest.java" afterPath="$PROJECT_DIR$/schemacrawler/src/test/java/schemacrawler/test/DirectedGraphTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/SchemaReference.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/SchemaReference.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/util/BaseTextFormattingHelper.java" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/util/BaseTextFormattingHelper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-sqlite/src/main/java/schemacrawler/tools/sqlite/Main.java" afterPath="$PROJECT_DIR$/schemacrawler-sqlite/src/main/java/schemacrawler/tools/sqlite/Main.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ActionOrientationType.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ActionOrientationType.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableProcedure.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableProcedure.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/LauncherMain.java" afterPath="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/LauncherMain.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/sf/util/ObjectToString.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/sf/util/ObjectToString.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/operation/OperationOptions.java" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/operation/OperationOptions.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/util/TableCell.java" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/util/TableCell.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/TablesGraph.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/TablesGraph.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/RetrieverConnection.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/RetrieverConnection.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schemacrawler/SchemaCrawlerOptions.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schemacrawler/SchemaCrawlerOptions.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/RetrieverConnection.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/RetrieverConnection.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/test/java/schemacrawler/test/ResultColumnsTest.java" afterPath="$PROJECT_DIR$/schemacrawler/src/test/java/schemacrawler/test/ResultColumnsTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-integrations/src/main/java/schemacrawler/tools/integration/scripting/ScriptRenderer.java" afterPath="$PROJECT_DIR$/schemacrawler-integrations/src/main/java/schemacrawler/tools/integration/scripting/ScriptRenderer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/sf/util/TemplatingUtility.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/sf/util/TemplatingUtility.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-postgresql/pom.xml" afterPath="$PROJECT_DIR$/schemacrawler-postgresql/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-integrations/src/main/java/schemacrawler/tools/integration/scripting/ScriptRenderer.java" afterPath="$PROJECT_DIR$/schemacrawler-integrations/src/main/java/schemacrawler/tools/integration/scripting/ScriptRenderer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-tools/src/test/java/schemacrawler/test/SchemaCrawlerTextCommandsOutputTest.java" afterPath="$PROJECT_DIR$/schemacrawler-tools/src/test/java/schemacrawler/test/SchemaCrawlerTextCommandsOutputTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/DatabaseProperty.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/DatabaseProperty.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/distribution/src/assembly/distribution.xml" afterPath="$PROJECT_DIR$/distribution/src/assembly/distribution.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler-integrations/src/main/java/schemacrawler/tools/integration/graph/DotWriter.java" afterPath="$PROJECT_DIR$/schemacrawler-integrations/src/main/java/schemacrawler/tools/integration/graph/DotWriter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/Index.java" afterPath="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/Index.java" />
     </list>
-    <ignored path=".idea/workspace.xml" />
     <ignored path="schemacrawler-all.iws" />
+    <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -375,44 +352,7 @@
   </component>
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="AbstractNamedObject.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/AbstractNamedObject.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="63" column="17" selection-start="1670" selection-end="1670" vertical-scroll-proportion="-11.56">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NamedObjectSort.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/NamedObjectSort.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="52" column="4" selection-start="1535" selection-end="1535" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SpringIntegrationTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/schemacrawler-integrations/src/test/java/schemacrawler/integration/test/SpringIntegrationTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="59" column="14" selection-start="1983" selection-end="1983" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AbstractDependantObject.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/AbstractDependantObject.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="131" column="15" selection-start="3200" selection-end="3200" vertical-scroll-proportion="0.33333334">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -422,22 +362,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/util/TableCell.java" />
-        <option value="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/TableRetriever.java" />
-        <option value="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/utility/TestDatabase.java" />
-        <option value="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/executable/CommandRegistry.java" />
         <option value="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/sf/util/CommandLineParser.java" />
-        <option value="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/sf/util/FileUtility.java" />
-        <option value="$PROJECT_DIR$/schemacrawler/src/main/java/sf/util/TemplatingUtility.java" />
-        <option value="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/WeakAssociationsAnalyzer.java" />
-        <option value="$PROJECT_DIR$/schemacrawler-maven-plugin/src/main/java/schemacrawler/tools/integration/maven/SchemaCrawlerMojo.java" />
+        <option value="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schemacrawler/Config.java" />
+        <option value="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/commandline/ConfigConnectionOptionsParser.java" />
+        <option value="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/Database.java" />
         <option value="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/DatabaseInfoRetriever.java" />
-        <option value="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/NamedObjectList.java" />
-        <option value="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/SchemaCrawler.java" />
-        <option value="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableTable.java" />
-        <option value="$PROJECT_DIR$/schemacrawler/src/test/java/schemacrawler/test/DirectedGraphTest.java" />
-        <option value="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/AbstractNamedObject.java" />
-        <option value="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/NamedObjectSort.java" />
+        <option value="$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/operation/DataTextFormatter.java" />
+        <option value="$PROJECT_DIR$/schemacrawler/src/main/java/sf/util/DirectedGraph.java" />
+        <option value="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/ProcedureRetriever.java" />
+        <option value="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/ResultsRetriever.java" />
+        <option value="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/Schema.java" />
+        <option value="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/TableRetriever.java" />
+        <option value="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ProcedureColumnType.java" />
+        <option value="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/IndexColumnSortSequence.java" />
+        <option value="$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ConditionTimingType.java" />
+        <option value="$PROJECT_DIR$/schemacrawler-integrations/src/main/java/schemacrawler/tools/integration/xml/XmlDatabase.java" />
+        <option value="$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/executable/BaseExecutable.java" />
       </list>
     </option>
   </component>
@@ -494,18 +434,6 @@
       <profile-state>
         <expanded-state>
           <State>
-            <id>Encapsulation issues</id>
-          </State>
-          <State>
-            <id>Error handling</id>
-          </State>
-          <State>
-            <id>Groovy</id>
-          </State>
-          <State>
-            <id>Initialization issues</id>
-          </State>
-          <State>
             <id>Inspections</id>
           </State>
           <State>
@@ -548,6 +476,27 @@
             <id>Performance issues</id>
           </State>
           <State>
+            <id>Portability issues</id>
+          </State>
+          <State>
+            <id>Probable bugs</id>
+          </State>
+          <State>
+            <id>Properties Files</id>
+          </State>
+          <State>
+            <id>Resource management issues</id>
+          </State>
+          <State>
+            <id>Security issues</id>
+          </State>
+          <State>
+            <id>Threading issues</id>
+          </State>
+          <State>
+            <id>UI Form Problems</id>
+          </State>
+          <State>
             <id>Verbose or redundant code constructs</id>
           </State>
           <State>
@@ -559,7 +508,7 @@
         </expanded-state>
         <selected-state>
           <State>
-            <id>Performance issues</id>
+            <id>Visibility issues</id>
           </State>
         </selected-state>
       </profile-state>
@@ -592,8 +541,6 @@
     </navigator>
     <panes>
       <pane id="Favorites" />
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -612,6 +559,100 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="oracle-jdbc-11.1.0.7.0.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="oracle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="oracle-jdbc-11.1.0.7.0.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="oracle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="oracle-jdbc-11.1.0.7.0.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="oracle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lmx" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="oracle-jdbc-11.1.0.7.0.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mysql-connector-java-5.1.10.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="SchemaCrawler" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -626,7 +667,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="schemacrawler-integrations" />
+              <option name="myItemId" value="schemacrawler-tools" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -640,7 +681,197 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="schemacrawler-integrations" />
+              <option name="myItemId" value="schemacrawler-tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="text" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="util" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="text" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schema" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="text" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="operation" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="text" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="base" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-system-test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-system-test" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -662,7 +893,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="schemacrawler-integrations" />
+              <option name="myItemId" value="schemacrawler-system-test" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -678,7 +909,109 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-system-test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-maven-plugin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-maven-plugin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-maven-plugin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="maven" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-integrations" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -697,6 +1030,354 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-integrations" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-integrations" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="integration" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="xml" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-integrations" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="integration" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-integrations" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="integration" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="graph" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-commandline" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-commandline" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-commandline" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-commandline" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="util" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-commandline" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-commandline" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="options" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-commandline" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="executable" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-commandline" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="commandline" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -779,6 +1460,10 @@
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="util" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -807,6 +1492,108 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="schemacrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="utility" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler-all" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SchemaCrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schemacrawler" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="schema" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -846,6 +1633,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="ProjectViewSettings">
@@ -858,383 +1647,20 @@
   </component>
   <component name="PropertiesComponent">
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="project.structure.last.edited" value="Global Libraries" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="com.intellij.openapi.vcs.configurable.VcsManagerConfigurable$4" />
+    <property name="options.lastSelected" value="preferences.sourceCode.HTML" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
-  </component>
-  <component name="RestoreUpdateTree">
-    <UpdateInfo date="1/17/10 9:22 PM" ActionInfo="_Update">
-      <UpdatedFiles>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Updated from server" />
-          <option name="myStatusName" value="Changed on server" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="CHANGED_ON_SERVER" />
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Updated" />
-            <option name="myStatusName" value="Changed" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="false" />
-            <option name="myId" value="UPDATED" />
-          </FILE-GROUP>
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Created" />
-            <option name="myStatusName" value="Created" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="false" />
-            <option name="myId" value="CREATED" />
-          </FILE-GROUP>
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Deleted" />
-            <option name="myStatusName" value="Deleted" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="true" />
-            <option name="myId" value="REMOVED_FROM_REPOSITORY" />
-          </FILE-GROUP>
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Restored" />
-            <option name="myStatusName" value="Will be restored" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="false" />
-            <option name="myId" value="RESTORED" />
-          </FILE-GROUP>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Modified" />
-          <option name="myStatusName" value="Modified" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MODIFIED" />
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-site\src\site\site.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-site\src\site\xdoc\who-uses.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-site\src\site\xdoc\readme.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-site\src\site\xdoc\bundled.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-site\src\site\xdoc\index.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-site\src\site\xdoc\INFORMATION_SCHEMA.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-site\src\site\resources\snapshot-examples\snapshot.html</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-site\src\site\changes.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-site\pom.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\test\java\schemacrawler\test\SchemaCrawlerTextCommandsOutputTest.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\test\java\schemacrawler\test\SchemaCrawlerXmlOutputTest.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\test\java\schemacrawler\test\SchemaCrawlerOutputTest.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\test\resources\composite_output\list_objects,count.html</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\test\resources\composite_output\all_tables,dump_tables,count,list_objects.html</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\test\resources\composite_output\verbose_schema,count,dump.csv</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\test\resources\composite_output\verbose_schema,count,dump.html</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\main\java\schemacrawler\tools\text\base\BaseFormatter.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\main\java\schemacrawler\tools\text\base\BaseSchemaCrawlerTextExecutable.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\main\java\schemacrawler\tools\text\base\DatabaseTraversalHandler.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\main\java\schemacrawler\tools\text\base\DatabaseTraverser.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\main\java\schemacrawler\tools\text\schema\SchemaTextOptions.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\main\java\schemacrawler\tools\text\schema\SchemaTextFormatter.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\main\java\schemacrawler\tools\text\schema\SchemaTextDetailType.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\main\java\schemacrawler\tools\text\schema\SchemaTextExecutable.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\main\java\schemacrawler\tools\text\util\TableCell.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\main\java\schemacrawler\tools\text\util\TextFormattingHelper.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\main\java\schemacrawler\tools\text\util\HtmlFormattingHelper.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\main\java\schemacrawler\tools\text\util\TableRow.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\main\java\schemacrawler\tools\text\util\PlainTextFormattingHelper.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\main\java\schemacrawler\tools\text\util\BaseTextFormattingHelper.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\main\java\schemacrawler\tools\text\util\Entities.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\main\java\schemacrawler\tools\text\operation\Query.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\main\java\schemacrawler\tools\text\operation\OperationOptions.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\main\java\schemacrawler\tools\text\operation\DataTextFormatter.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\main\java\schemacrawler\tools\text\operation\OperationHandler.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-tools\src\main\java\schemacrawler\tools\text\operation\OperationExecutable.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\distribution\src\assembly\distribution.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\distribution\src\site\xdoc\examples\user-defined-query\user-defined-query.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\distribution\src\site\xdoc\examples\diagram\diagram-readme.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\distribution\src\site\xdoc\examples\dump\dump-readme.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\distribution\src\site\xdoc\examples\api\api-readme.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\distribution\src\site\xdoc\examples\ant-task\snapshot-readme.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\distribution\src\site\xdoc\examples\maven\maven-readme.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\distribution\src\site\xdoc\examples\db-specific-query\db-specific-query.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\distribution\src\site\xdoc\examples\javascript\javascript.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\distribution\src\site\xdoc\examples\spring\spring-readme.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\distribution\src\site\xdoc\examples\velocity\velocity-readme.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\distribution\src\site\xdoc\examples\commandline\commandline-readme.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\distribution\src\site\resources\examples\diagram\diagram.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\distribution\src\site\resources\examples\ant-task\snapshot.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\distribution\src\site\resources\examples\maven\src\main\java\HelloWorld.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\distribution\src\site\resources\examples\maven\pom.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\distribution\pom.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\distribution\tools\umlgraph\UmlGraph.pom</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-all.ipr</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\test\java\schemacrawler\test\CommandLineParserTest.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\LauncherMain.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\Main.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\tools\executable\SchemaCrawlerExecutable.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\tools\executable\BaseExecutable.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\tools\executable\Executable.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\tools\executable\CommandRegistry.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\tools\executable\Commands.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\tools\options\ApplicationOptions.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\tools\options\HelpOptions.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\tools\options\OutputOptions.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\tools\options\Command.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\tools\options\OutputFormat.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\tools\options\BundledDriverHelpOptions.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\tools\commandline\ApplicationOptionsParser.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\tools\commandline\BaseOptionsParser.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\tools\commandline\SchemaCrawlerCommandLine.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\tools\commandline\SchemaCrawlerHelpCommandLine.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\tools\commandline\CommandParser.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\tools\commandline\SchemaCrawlerOptionsParser.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\tools\commandline\ConfigParser.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\tools\commandline\CommandLineConnectionOptionsParser.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\tools\commandline\CommandLine.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\tools\commandline\ConfigConnectionOptionsParser.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\tools\commandline\OutputOptionsParser.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\tools\commandline\InfoLevel.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\tools\commandline\BundledDriverConnectionOptionsParser.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\schemacrawler\tools\commandline\BaseDatabaseConnectionOptionsParser.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\sf\util\FileUtility.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\sf\util\CommandLineParser.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\java\sf\util\TestUtility.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-commandline\src\main\resources\schemacrawler-antlib.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-sqlite\src\assembly\distrib-zip.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-sqlite\src\main\java\schemacrawler\tools\sqlite\Main.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-sqlite\pom.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-mysql\src\assembly\distrib-zip.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-mysql\src\main\java\schemacrawler\tools\mysql\Main.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-mysql\pom.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-test\src\main\java\ApiExample.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-test\pom.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-derby\src\assembly\distrib-zip.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-derby\src\main\java\schemacrawler\tools\derby\Main.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-derby\pom.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-postgresql\src\assembly\distrib-zip.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-postgresql\src\main\java\schemacrawler\tools\postgresql\Main.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-postgresql\pom.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-maven-plugin\src\main\java\schemacrawler\tools\integration\maven\SchemaCrawlerMojo.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-maven-plugin\src\main\java\schemacrawler\tools\integration\maven\Main.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-maven-plugin\src\main\resources\schemacrawler-maven-plugin.pom</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\test\java\schemacrawler\test\SchemaCrawlerGrepTest.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\test\java\schemacrawler\test\TemplatingTest.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\test\java\schemacrawler\test\DirectedGraphTest.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\test\java\schemacrawler\test\SortingTest.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\test\java\schemacrawler\test\SchemaCrawlerTest.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\test\java\schemacrawler\test\ResultColumnsTest.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\test\java\schemacrawler\crawl\NamedObjectTest.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\test\java\schemacrawler\crawl\SchemaCrawlerDeepTest.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\DatabaseProperty.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\ForeignKeyUpdateRule.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\IndexType.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\ResultsColumn.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\DatabaseInfo.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\ProcedureColumn.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\TableType.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\BaseColumn.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\ResultsColumns.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\ColumnMap.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\CheckConstraint.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\SchemaCrawlerInfo.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\RoutineBodyType.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\ForeignKeyDeferrability.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\PrimaryKey.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\SearchableType.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\Database.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\ForeignKeyColumnMap.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\DatabaseObject.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\DependantObject.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\NamedObject.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\CheckOptionType.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\Column.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\ActionOrientationType.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\Index.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\EventManipulationType.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\Privilege.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\Table.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\ProcedureType.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\ForeignKey.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\IndexColumn.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\IndexColumnSortSequence.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\View.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\ProcedureColumnType.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\Schema.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\TableRelationshipType.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\ConditionTimingType.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\DependantNamedObject.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\ColumnDataType.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\JdbcDriverProperty.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\Trigger.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\Procedure.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schema\JdbcDriverInfo.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schemacrawler\ConnectionOptions.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schemacrawler\Options.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schemacrawler\SchemaCrawlerException.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schemacrawler\SchemaCrawlerOptions.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schemacrawler\InclusionRule.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schemacrawler\DatabaseConnectionOptions.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schemacrawler\SchemaInfoLevel.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schemacrawler\BaseDatabaseConnectionOptions.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schemacrawler\DatabaseConfigConnectionOptions.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schemacrawler\Config.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\schemacrawler\InformationSchemaViews.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\ProcedureExRetriever.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\WeakAssociationsAnalyzer.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\MutableDatabaseInfo.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\MutableProcedure.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\MutableResultsColumns.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\SchemaReference.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\JavaSqlType.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\MutableResultsColumn.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\MutablePrimaryKey.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\MutableProcedureColumn.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\MutableDatabase.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\MutableColumnMap.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\ResultsRetriever.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\MutableCheckConstraint.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\AbstractDatabaseObject.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\MutableColumn.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\MutableSchemaCrawlerInfo.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\ColumnDataTypes.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\AbstractColumn.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\AbstractDependantObject.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\AbstractNamedObject.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\MetadataResultSet.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\NamedObjectList.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\NamedObjectSort.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\MutableForeignKeyColumnMap.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\SchemaCrawler.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\MutableForeignKey.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\DatabaseInfoRetriever.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\MutableIndex.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\MutablePrivilege.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\MutableView.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\TablesGraph.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\MutableTable.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\TableRetriever.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\MutableSchema.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\ProcedureRetriever.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\MutableIndexColumn.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\MutableColumnDataType.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\AbstractDependantNamedObject.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\JavaSqlTypesUtility.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\MutableJdbcDriverProperty.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\MutableJdbcDriverInfo.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\MutableDatabaseProperty.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\SchemaRetriever.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\TableExRetriever.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\AbstractRetriever.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\RetrieverConnection.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\crawl\MutableTrigger.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\Version.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\utility\MetaDataUtility.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\utility\TestDatabase.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\utility\SchemaCrawlerUtility.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\schemacrawler\utility\JavaSqlTypesGenerationUtility.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\sf\util\Inflection.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\sf\util\Utility.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\sf\util\DirectedGraph.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\sf\util\TemplatingUtility.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler\src\main\java\sf\util\GraphException.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-system-test\src\test\java\schemacrawler\test\SchemaCrawlerSystemTest.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-system-test\src\test\resources\context.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-system-test\pom.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\pom.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-sqlserver\src\assembly\distrib-zip.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-sqlserver\src\main\java\schemacrawler\tools\sqlserver\Main.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-sqlserver\pom.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-oracle\src\assembly\distrib-zip.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-oracle\src\main\java\schemacrawler\tools\oracle\Main.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-integrations\src\test\java\schemacrawler\integration\test\IntegrationCommandlineTest.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-integrations\src\test\java\schemacrawler\integration\test\ExecutableIntegrationTest.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-integrations\src\test\java\schemacrawler\integration\test\SpringIntegrationTest.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-integrations\src\test\java\schemacrawler\integration\test\SchemaSerializationTest.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-integrations\src\test\resources\context.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-integrations\src\main\java\schemacrawler\tools\integration\freemarker\FreeMarkerRenderer.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-integrations\src\main\java\schemacrawler\tools\integration\scripting\ScriptRenderer.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-integrations\src\main\java\schemacrawler\tools\integration\xml\XmlDatabase.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-integrations\src\main\java\schemacrawler\tools\integration\spring\SpringOptionsParser.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-integrations\src\main\java\schemacrawler\tools\integration\spring\Main.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-integrations\src\main\java\schemacrawler\tools\integration\spring\SpringOptions.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-integrations\src\main\java\schemacrawler\tools\integration\velocity\VelocityRenderer.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-integrations\src\main\java\schemacrawler\tools\integration\graph\DotWriter.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-integrations\src\main\java\schemacrawler\tools\integration\graph\PastelColor.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-integrations\src\main\java\schemacrawler\tools\integration\graph\GraphGenerator.java</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-integrations\pom.xml</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\schemacrawler-all.iws</PATH>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Skipped" />
-          <option name="myStatusName" value="Skipped" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="SKIPPED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged with conflicts" />
-          <option name="myStatusName" value="Will be merged with conflicts" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED_WITH_CONFLICTS" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged" />
-          <option name="myStatusName" value="Will be merged" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Not in repository" />
-          <option name="myStatusName" value="Not in repository" />
-          <option name="mySupportsDeletion" value="true" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="UNKNOWN" />
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\Database Schemas.doc</PATH>
-          <PATH vcs="svn" revision="">C:\Users\Sualeh Fatehi\Documents\_Projects\SchemaCrawler\executableForVelocity.txt</PATH>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Locally added" />
-          <option name="myStatusName" value="Locally added" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="LOCALLY_ADDED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Locally removed" />
-          <option name="myStatusName" value="Locally removed" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="LOCALLY_REMOVED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Switched" />
-          <option name="myStatusName" value="Switched" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="SWITCHED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged with property conflicts" />
-          <option name="myStatusName" value="Will be merged with property conflicts" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged with tree conflicts" />
-          <option name="myStatusName" value="Will be merged with tree conflicts" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
-        </FILE-GROUP>
-      </UpdatedFiles>
-    </UpdateInfo>
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RunManager" selected="JUnit.SchemaCrawler - Test">
     <configuration default="true" type="Remote" factoryName="Remote">
@@ -1411,10 +1837,9 @@
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32992327" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="SVN Properties" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32992327" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32992327" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32992327" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32992327" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1424,16 +1849,17 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39984939" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5920716" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5920716" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39897698" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.43350384" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32992327" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="SVN Properties" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32992327" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Aspects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="EJB" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5920716" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32992327" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsManagerConfiguration">
@@ -1522,121 +1948,114 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/schemacrawler-maven-plugin/src/main/java/schemacrawler/tools/integration/maven/SchemaCrawlerMojo.java">
+    <entry file="file://$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/ProcedureRetriever.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="351" column="54" selection-start="9339" selection-end="9339" vertical-scroll-proportion="0.28177965">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/LauncherMain.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="77" column="6" selection-start="2291" selection-end="2291" vertical-scroll-proportion="0.2822086">
+        <state line="117" column="7" selection-start="4455" selection-end="4455" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/DatabaseInfoRetriever.java">
+    <entry file="file://$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/ResultsRetriever.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="355" column="10" selection-start="13252" selection-end="13259" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/NamedObjectList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="180" column="17" selection-start="4103" selection-end="4103" vertical-scroll-proportion="0.0">
+        <state line="59" column="41" selection-start="2040" selection-end="2040" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/SchemaCrawler.java">
+    <entry file="file://$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/Schema.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="286" column="17" selection-start="9569" selection-end="9569" vertical-scroll-proportion="0.0">
+        <state line="41" column="5" selection-start="1202" selection-end="1202" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/TableExRetriever.java">
+    <entry file="file://$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/TableRetriever.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="181" column="15" selection-start="6195" selection-end="6195" vertical-scroll-proportion="0.0">
+        <state line="453" column="24" selection-start="17562" selection-end="17562" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/AbstractColumn.java">
+    <entry file="file://$PROJECT_DIR$/schemacrawler/src/main/java/sf/util/TemplatingUtility.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="146" column="31" selection-start="3505" selection-end="3505" vertical-scroll-proportion="0.0">
+        <state line="31" column="19" selection-start="1008" selection-end="1008" vertical-scroll-proportion="0.31724137">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/MutableTable.java">
+    <entry file="file://$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ProcedureColumnType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="389" column="3" selection-start="9384" selection-end="9384" vertical-scroll-proportion="0.12269939">
+        <state line="96" column="18" selection-start="2342" selection-end="2357" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/schemacrawler/src/main/java/sf/util/DirectedGraph.java">
+    <entry file="file://$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/IndexColumnSortSequence.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="241" column="8" selection-start="5821" selection-end="5821" vertical-scroll-proportion="1.0695297">
+        <state line="81" column="2" selection-start="1999" selection-end="1999" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/schemacrawler/src/test/java/schemacrawler/test/DirectedGraphTest.java">
+    <entry file="file://$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ForeignKeyDeferrability.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="44" selection-start="1209" selection-end="1209" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="class#1715:1869" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/schemacrawler/src/test/java/schemacrawler/crawl/SchemaCrawlerDeepTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="34" selection-start="805" selection-end="805" vertical-scroll-proportion="0.2760736">
+        <state line="30" column="12" selection-start="1053" selection-end="1053" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.6.0_16/src.zip!/java/util/Comparator.java">
+    <entry file="file://$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/EventManipulationType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="119" column="8" selection-start="5790" selection-end="5790" vertical-scroll-proportion="0.33333334">
+        <state line="37" column="31" selection-start="1028" selection-end="1028" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/AbstractNamedObject.java">
+    <entry file="file://$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/ConditionTimingType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="63" column="17" selection-start="1670" selection-end="1670" vertical-scroll-proportion="-11.56">
+        <state line="85" column="9" selection-start="1976" selection-end="1976" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/NamedObjectSort.java">
+    <entry file="file://$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/schema/SearchableType.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="4" selection-start="1535" selection-end="1535" vertical-scroll-proportion="0.0">
+        <state line="92" column="13" selection-start="2320" selection-end="2320" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/schemacrawler-integrations/src/test/java/schemacrawler/integration/test/SpringIntegrationTest.java">
+    <entry file="file://$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/base/DatabaseTraversalHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="14" selection-start="1983" selection-end="1983" vertical-scroll-proportion="0.0">
+        <state line="56" column="11" selection-start="1666" selection-end="1666" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/AbstractDependantObject.java">
+    <entry file="file://$PROJECT_DIR$/schemacrawler-integrations/src/main/java/schemacrawler/tools/integration/xml/XmlDatabase.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="131" column="15" selection-start="3200" selection-end="3200" vertical-scroll-proportion="0.33333334">
+        <state line="186" column="51" selection-start="3620" selection-end="3620" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/schemacrawler/src/main/java/schemacrawler/crawl/WeakAssociationsAnalyzer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="36" selection-start="1458" selection-end="1458" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/schemacrawler-commandline/src/main/java/schemacrawler/tools/executable/BaseExecutable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="24" selection-start="1379" selection-end="1379" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/schemacrawler-tools/src/main/java/schemacrawler/tools/text/base/BaseFormatter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="88" column="38" selection-start="2865" selection-end="2865" vertical-scroll-proportion="0.28965518">
           <folding />
         </state>
       </provider>

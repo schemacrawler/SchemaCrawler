@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="schemacrawler" default="make-distribution" basedir=".">
 
-  <property name="distribution.assembly" location="${SchemaCrawler.home}/distribution/src/assembly" />
-  <property name="distribution.target" location="${SchemaCrawler.home}/distribution/target" />
+  <property name="distribution.assembly" location="${SchemaCrawler.home}/distribution/src/assembly"/>
+  <property name="distribution.target" location="${SchemaCrawler.home}/distribution/target"/>
   <property name="schemacrawler.distibution.jar"
-            value="${distribution.target}/schemacrawler-${SchemaCrawler.version}.jar" />
+            value="${distribution.target}/schemacrawler-${SchemaCrawler.version}.jar"/>
 
-  <taskdef resource="net/sf/antcontrib/antcontrib.properties" />
+  <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
 
   <target name="make-distribution" depends="
       do-downloads,
@@ -17,40 +17,40 @@
 	    make-website-distribution,
 	    cleanup-distribution
 	    "
-          description="Package all sub-project jars into the distributable jar" />
+          description="Package all sub-project jars into the distributable jar"/>
 
   <target name="do-downloads">
 
     <!-- Download licenses -->
-    <available file="gpl-3.0.txt" property="available.gpl-3.0.txt" />
+    <available file="gpl-3.0.txt" property="available.gpl-3.0.txt"/>
     <if>
-      <equals arg1="${available.gpl-3.0.txt}" arg2="true" />
+      <equals arg1="${available.gpl-3.0.txt}" arg2="true"/>
       <else>
-        <get src="http://www.gnu.org/licenses/gpl-3.0.txt" dest="gpl-3.0.txt" usetimestamp="true" />
+        <get src="http://www.gnu.org/licenses/gpl-3.0.txt" dest="gpl-3.0.txt" usetimestamp="true"/>
       </else>
     </if>
-    <available file="lgpl-3.0.txt" property="available.lgpl-3.0.txt" />
+    <available file="lgpl-3.0.txt" property="available.lgpl-3.0.txt"/>
     <if>
-      <equals arg1="${available.lgpl-3.0.txt}" arg2="true" />
+      <equals arg1="${available.lgpl-3.0.txt}" arg2="true"/>
       <else>
-        <get src="http://www.gnu.org/licenses/lgpl-3.0.txt" dest="lgpl-3.0.txt" usetimestamp="true" />
+        <get src="http://www.gnu.org/licenses/lgpl-3.0.txt" dest="lgpl-3.0.txt" usetimestamp="true"/>
       </else>
     </if>
-    <available file="hsqlLicense.html" property="available.hsqlLicense.html" />
+    <available file="hsqlLicense.html" property="available.hsqlLicense.html"/>
     <if>
-      <equals arg1="${available.hsqlLicense.html}" arg2="true" />
+      <equals arg1="${available.hsqlLicense.html}" arg2="true"/>
       <else>
-        <get src="http://hsqldb.org/web/hsqlLicense.html" dest="hsqlLicense.html" usetimestamp="false" />
+        <get src="http://hsqldb.org/web/hsqlLicense.html" dest="hsqlLicense.html" usetimestamp="false"/>
       </else>
     </if>
 
     <!-- Download HSQLDB -->
-    <available file="hsqldb_1_8_0_10.zip" property="available.hsqldb_1_8_0_10.zip" />
+    <available file="hsqldb_1_8_0_10.zip" property="available.hsqldb_1_8_0_10.zip"/>
     <if>
-      <equals arg1="${available.hsqldb_1_8_0_10.zip}" arg2="true" />
+      <equals arg1="${available.hsqldb_1_8_0_10.zip}" arg2="true"/>
       <else>
         <get src="http://downloads.sourceforge.net/project/hsqldb/hsqldb/hsqldb_1_8_0/hsqldb_1_8_0_10.zip"
-             dest="hsqldb_1_8_0_10.zip" verbose="true" usetimestamp="true" />
+             dest="hsqldb_1_8_0_10.zip" verbose="true" usetimestamp="true"/>
       </else>
     </if>
 
@@ -61,17 +61,17 @@
 
     <jar destfile="${schemacrawler.distibution.jar}" duplicate="preserve" index="true">
       <manifest>
-        <attribute name="Product" value="SchemaCrawler" />
-        <attribute name="Version" value="${SchemaCrawler.version}" />
-        <attribute name="Author" value="Sualeh Fatehi sualeh@hotmail.com" />
-        <attribute name="Copyright" value="(c) 2003-2009, Sualeh Fatehi" />
-        <attribute name="Main-Class" value="schemacrawler.Main" />
+        <attribute name="Product" value="SchemaCrawler"/>
+        <attribute name="Version" value="${SchemaCrawler.version}"/>
+        <attribute name="Author" value="Sualeh Fatehi sualeh@hotmail.com"/>
+        <attribute name="Copyright" value="(c) 2003-2009, Sualeh Fatehi"/>
+        <attribute name="Main-Class" value="schemacrawler.Main"/>
       </manifest>
-      <zipfileset dir="${SchemaCrawler.home}/schemacrawler/target/classes" />
-      <zipfileset dir="${SchemaCrawler.home}/schemacrawler-commandline/target/classes" />
-      <zipfileset dir="${SchemaCrawler.home}/schemacrawler-tools/target/classes" />
-      <zipfileset dir="${SchemaCrawler.home}/schemacrawler-integrations/target/classes" />
-      <zipfileset dir="${SchemaCrawler.home}/schemacrawler-maven-plugin/target/classes" />
+      <zipfileset dir="${SchemaCrawler.home}/schemacrawler/target/classes"/>
+      <zipfileset dir="${SchemaCrawler.home}/schemacrawler-commandline/target/classes"/>
+      <zipfileset dir="${SchemaCrawler.home}/schemacrawler-tools/target/classes"/>
+      <zipfileset dir="${SchemaCrawler.home}/schemacrawler-integrations/target/classes"/>
+      <zipfileset dir="${SchemaCrawler.home}/schemacrawler-maven-plugin/target/classes"/>
     </jar>
 
   </target>
@@ -79,101 +79,101 @@
 
   <target name="make-binary-distribution">
 
-    <property name="distribution.staging.dir" location="${distribution.target}/_distribution" />
-    <delete dir="${distribution.staging.dir}" />
-    <mkdir dir="${distribution.staging.dir}/examples" />
+    <property name="distribution.staging.dir" location="${distribution.target}/_distribution"/>
+    <delete dir="${distribution.staging.dir}"/>
+    <mkdir dir="${distribution.staging.dir}/examples"/>
 
     <!-- Copy super-jar -->
-    <copy file="${schemacrawler.distibution.jar}" todir="${distribution.staging.dir}/examples" />
+    <copy file="${schemacrawler.distibution.jar}" todir="${distribution.staging.dir}/examples"/>
 
     <!-- Copy licenses -->
-    <copy file="lgpl-3.0.txt" tofile="${distribution.staging.dir}/examples/LICENSE.txt" />
-    <copy file="hsqlLicense.html" tofile="${distribution.staging.dir}/examples/hsqlLicense.html" />
+    <copy file="lgpl-3.0.txt" tofile="${distribution.staging.dir}/examples/LICENSE.txt"/>
+    <copy file="hsqlLicense.html" tofile="${distribution.staging.dir}/examples/hsqlLicense.html"/>
 
     <!-- Copy config files -->
     <copy todir="${distribution.staging.dir}/examples">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
-        <include name="*config*.properties" />
+        <include name="*config*.properties"/>
       </fileset>
       <fileset dir="${SchemaCrawler.home}/schemacrawler-integrations/src/test/resources">
-        <include name="*.xml" />
+        <include name="*.xml"/>
       </fileset>
     </copy>
 
     <!-- Copy examples -->
-    <mkdir dir="${distribution.target}/site/examples" />
+    <mkdir dir="${distribution.target}/site/examples"/>
     <copy todir="${distribution.staging.dir}/examples">
-      <fileset dir="${distribution.target}/site/examples" />
+      <fileset dir="${distribution.target}/site/examples"/>
     </copy>
     <copy file="${SchemaCrawler.home}/schemacrawler-test/src/main/java/ApiExample.java"
-          todir="${distribution.staging.dir}/examples/api" />
+          todir="${distribution.staging.dir}/examples/api"/>
 
     <!-- Copy database server -->
     <unzip src="hsqldb_1_8_0_10.zip" dest="${distribution.staging.dir}/examples">
       <patternset>
-        <include name="**/hsqldb.jar" />
+        <include name="**/hsqldb.jar"/>
       </patternset>
-      <mapper type="flatten" />
+      <mapper type="flatten"/>
     </unzip>
     <copy todir="${distribution.staging.dir}/examples">
       <fileset dir="${distribution.assembly}">
-        <include name="StartDatabase*.*" />
+        <include name="StartDatabase*.*"/>
       </fileset>
     </copy>
 
     <!-- Create super jar -->
-    <copy file="${schemacrawler.distibution.jar}" todir="${distribution.staging.dir}/schemacrawler/lib" />
+    <copy file="${schemacrawler.distibution.jar}" todir="${distribution.staging.dir}/schemacrawler/lib"/>
 
     <!-- Get licenses -->
-    <copy file="lgpl-3.0.txt" tofile="${distribution.staging.dir}/schemacrawler/LICENSE.txt" />
+    <copy file="lgpl-3.0.txt" tofile="${distribution.staging.dir}/schemacrawler/LICENSE.txt"/>
 
     <!-- Create shortcuts -->
-    <filter token="version" value="${SchemaCrawler.version}" />
-    <filter token="package" value="schemacrawler" />
+    <filter token="version" value="${SchemaCrawler.version}"/>
+    <filter token="package" value="schemacrawler"/>
     <copy todir="${distribution.staging.dir}/schemacrawler" filtering="true">
       <fileset dir="${distribution.assembly}">
-        <include name="*.cmd" />
-        <include name="*.sh" />
-        <include name="*.wsf" />
-        <exclude name="StartDatabase*.*" />
+        <include name="*.cmd"/>
+        <include name="*.sh"/>
+        <include name="*.wsf"/>
+        <exclude name="StartDatabase*.*"/>
       </fileset>
       <fileset dir="${SchemaCrawler.home}/distribution">
-        <include name="README.txt" />
+        <include name="README.txt"/>
       </fileset>
     </copy>
 
     <!-- Create zip file for distribution -->
-    <property name="distribution.zip.prefix" value="schemacrawler-${SchemaCrawler.version}-distrib" />
-    <delete file="${distribution.target}/${distribution.zip.prefix}.zip" />
+    <property name="distribution.zip.prefix" value="schemacrawler-${SchemaCrawler.version}-distrib"/>
+    <delete file="${distribution.target}/${distribution.zip.prefix}.zip"/>
     <zip destfile="${distribution.target}/${distribution.zip.prefix}.zip">
-      <zipfileset dir="${distribution.staging.dir}" prefix="${distribution.zip.prefix}" defaultexcludes="yes" />
+      <zipfileset dir="${distribution.staging.dir}" prefix="${distribution.zip.prefix}" defaultexcludes="yes"/>
     </zip>
 
-    <delete dir="${distribution.staging.dir}" />
+    <delete dir="${distribution.staging.dir}"/>
 
   </target>
 
 
   <target name="make-source-distribution">
 
-    <property name="source.zip.prefix" value="schemacrawler-${SchemaCrawler.version}-src" />
-    <delete file="${distribution.target}/${source.zip.prefix}.zip" />
+    <property name="source.zip.prefix" value="schemacrawler-${SchemaCrawler.version}-src"/>
+    <delete file="${distribution.target}/${source.zip.prefix}.zip"/>
     <zip destfile="${distribution.target}/${source.zip.prefix}.zip">
       <zipfileset dir="${SchemaCrawler.home}" prefix="${source.zip.prefix}" defaultexcludes="yes">
-        <exclude name="${distribution.target}" />
-        <exclude name="${distribution.target}/*" />
-        <exclude name="**/target" />
-        <exclude name="**/target/**/*" />
-        <exclude name="differencer" />
-        <exclude name="differencer/**/*" />
-        <exclude name="**/*.launch" />
-        <exclude name="**/*.log" />
-        <exclude name="**/*.lck" />
-        <exclude name="**/*.ser" />
-        <exclude name="**/*.zip" />
-        <exclude name="*.html" />
-        <exclude name="workspace/**" />
-        <exclude name="*.epf" />
+        <exclude name="${distribution.target}"/>
+        <exclude name="${distribution.target}/*"/>
+        <exclude name="**/target"/>
+        <exclude name="**/target/**/*"/>
+        <exclude name="differencer"/>
+        <exclude name="differencer/**/*"/>
+        <exclude name="**/*.launch"/>
+        <exclude name="**/*.log"/>
+        <exclude name="**/*.lck"/>
+        <exclude name="**/*.ser"/>
+        <exclude name="**/*.zip"/>
+        <exclude name="*.html"/>
+        <exclude name="workspace/**"/>
+        <exclude name="*.epf"/>
       </zipfileset>
     </zip>
 
@@ -181,19 +181,19 @@
 
   <target name="make-website-distribution">
 
-    <property name="website.location" location="${SchemaCrawler.home}/schemacrawler-site/target/site" />
-    <property name="website.apidocs.location" location="${SchemaCrawler.home}/schemacrawler/target/site/apidocs" />
-    <mkdir dir="${website.location}" />
-    <mkdir dir="${website.apidocs.location}" />
-    <property name="website.zip.prefix" value="schemacrawler-${SchemaCrawler.version}-website" />
-    <delete file="${distribution.target}/${website.zip.prefix}.zip" />
+    <property name="website.location" location="${SchemaCrawler.home}/schemacrawler-site/target/site"/>
+    <property name="website.apidocs.location" location="${SchemaCrawler.home}/schemacrawler/target/site/apidocs"/>
+    <mkdir dir="${website.location}"/>
+    <mkdir dir="${website.apidocs.location}"/>
+    <property name="website.zip.prefix" value="schemacrawler-${SchemaCrawler.version}-website"/>
+    <delete file="${distribution.target}/${website.zip.prefix}.zip"/>
     <zip destfile="${distribution.target}/${website.zip.prefix}.zip">
       <zipfileset dir="${website.location}" prefix="${website.zip.prefix}" defaultexcludes="yes">
-        <include name="**/*.*" />
-        <exclude name="**/apidocs/*.*" />
+        <include name="**/*.*"/>
+        <exclude name="**/apidocs/*.*"/>
       </zipfileset>
       <zipfileset dir="${website.apidocs.location}" prefix="${website.zip.prefix}/apidocs" defaultexcludes="yes">
-        <include name="**/*.*" />
+        <include name="**/*.*"/>
       </zipfileset>
     </zip>
 
@@ -201,12 +201,12 @@
 
   <target name="make-database-distributions">
 
-    <create-database-distrib database="derby" />
-    <create-database-distrib database="mysql" />
-    <create-database-distrib database="oracle" />
-    <create-database-distrib database="postgresql" />
-    <create-database-distrib database="sqlserver" />
-    <create-database-distrib database="sqlite" />
+    <create-database-distrib database="derby"/>
+    <create-database-distrib database="mysql"/>
+    <create-database-distrib database="oracle"/>
+    <create-database-distrib database="postgresql"/>
+    <create-database-distrib database="sqlserver"/>
+    <create-database-distrib database="sqlite"/>
 
   </target>
 
@@ -215,8 +215,8 @@
 
     <delete>
       <fileset dir="${distribution.target}">
-        <include name="*.*" />
-        <exclude name="schemacrawler*.zip" />
+        <include name="*.*"/>
+        <exclude name="schemacrawler*.zip"/>
       </fileset>
     </delete>
 
@@ -224,39 +224,39 @@
 
 
   <macrodef name="create-database-distrib">
-    <attribute name="database" />
+    <attribute name="database"/>
 
     <sequential>
 
       <move todir="${distribution.target}">
         <fileset dir="${SchemaCrawler.home}/schemacrawler-@{database}/target">
-          <include name="schemacrawler-@{database}-${SchemaCrawler.version}-distrib.zip" />
+          <include name="schemacrawler-@{database}-${SchemaCrawler.version}-distrib.zip"/>
         </fileset>
       </move>
 
-      <mkdir dir="${distribution.target}/@{database}-launches" />
+      <mkdir dir="${distribution.target}/@{database}-launches"/>
 
-      <filter token="version" value="${SchemaCrawler.version}" />
-      <filter token="package" value="schemacrawler.tools.@{database}" />
+      <filter token="version" value="${SchemaCrawler.version}"/>
+      <filter token="package" value="schemacrawler.tools.@{database}"/>
       <copy todir="${distribution.target}/@{database}-launches" filtering="true">
         <fileset dir="${distribution.assembly}">
-          <include name="*.cmd" />
-          <include name="*.sh" />
-          <include name="*.wsf" />
-          <exclude name="StartDatabase*.*" />
+          <include name="*.cmd"/>
+          <include name="*.sh"/>
+          <include name="*.wsf"/>
+          <exclude name="StartDatabase*.*"/>
         </fileset>
       </copy>
 
       <zip destfile="${distribution.target}/schemacrawler-@{database}-${SchemaCrawler.version}-distrib.zip"
            update="true" whenempty="fail">
         <zipfileset dir="${distribution.target}/@{database}-launches"
-                    prefix="schemacrawler-@{database}-${SchemaCrawler.version}" />
+                    prefix="schemacrawler-@{database}-${SchemaCrawler.version}"/>
         <zipfileset dir="${distribution.target}" prefix="schemacrawler-@{database}-${SchemaCrawler.version}/lib">
-          <include name="schemacrawler*.jar" />
+          <include name="schemacrawler*.jar"/>
         </zipfileset>
       </zip>
 
-      <delete dir="${distribution.target}/@{database}-launches" />
+      <delete dir="${distribution.target}/@{database}-launches"/>
 
     </sequential>
 

@@ -27,7 +27,8 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface ForeignKey
-  extends NamedObject {
+  extends NamedObject
+{
 
   /**
    * Gets the list of column pairs.

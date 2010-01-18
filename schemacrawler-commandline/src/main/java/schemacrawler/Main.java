@@ -26,7 +26,8 @@ import schemacrawler.tools.commandline.SchemaCrawlerMain;
 /**
  * Main class that takes arguments for a database for crawling a schema.
  */
-public final class Main {
+public final class Main
+{
 
   /**
    * Get connection parameters, and creates a connection, and crawls the schema.
@@ -36,11 +37,13 @@ public final class Main {
    * @throws Exception On an exception
    */
   public static void main(final String[] args)
-    throws Exception {
+    throws Exception
+  {
     SchemaCrawlerMain.main(args);
   }
 
-  private Main() {
+  private Main()
+  {
     // Prevent instantiation
   }
 

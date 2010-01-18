@@ -18,6 +18,11 @@
 package schemacrawler.test;
 
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static org.junit.Assert.assertEquals;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -29,12 +34,8 @@ import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.TestDatabase;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import static org.junit.Assert.assertEquals;
-
-public class SchemaCrawlerGrepTest {
+public class SchemaCrawlerGrepTest
+{
 
   private static final Logger LOGGER = Logger
     .getLogger(SchemaCrawlerGrepTest.class.getName());
@@ -42,20 +43,23 @@ public class SchemaCrawlerGrepTest {
   private static TestDatabase testUtility = new TestDatabase();
 
   @AfterClass
-  public static void afterAllTests() {
+  public static void afterAllTests()
+  {
     testUtility.shutdownDatabase();
   }
 
   @BeforeClass
   public static void beforeAllTests()
-    throws Exception {
+    throws Exception
+  {
     TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();
   }
 
   @Test
   public void grep()
-    throws Exception {
+    throws Exception
+  {
     final String[] schemaNames = {
       "INFORMATION_SCHEMA", "PUBLIC", "SCHEMACRAWLER"
     };
@@ -116,7 +120,8 @@ public class SchemaCrawlerGrepTest {
     final Database database = testUtility.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
     assertEquals("Schema count does not match", 3, schemas.length);
-    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++) {
+    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
+    {
       final Schema schema = schemas[schemaIdx];
       assertEquals("Schema name does not match", schemaNames[schemaIdx], schema
         .getName());
@@ -124,11 +129,13 @@ public class SchemaCrawlerGrepTest {
       assertEquals("Table count does not match",
                    tableCounts[schemaIdx],
                    tables.length);
-      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++) {
+      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
+      {
         final Table table = tables[tableIdx];
         final Column[] columns = table.getColumns();
         final String[] columnsNamesForTable = columnNames[schemaIdx][tableIdx];
-        for (int columnIdx = 0; columnIdx < columns.length; columnIdx++) {
+        for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
+        {
           final Column column = columns[columnIdx];
           LOGGER.log(Level.FINE, column.toString());
           assertEquals("Column full name does not match",

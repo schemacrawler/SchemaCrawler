@@ -18,18 +18,20 @@
 package schemacrawler.test;
 
 
-import org.junit.Test;
-import sf.util.TemplatingUtility;
-
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
-public class TemplatingTest {
+import org.junit.Test;
+import sf.util.TemplatingUtility;
+
+public class TemplatingTest
+{
 
   @Test
   public void expandTemplate()
-    throws Exception {
+    throws Exception
+  {
     final Map<String, String> values = new HashMap<String, String>();
     values.put("one", "one.value");
     values.put("another", "two.value");
@@ -86,7 +88,8 @@ public class TemplatingTest {
 
   @Test
   public void extractTemplateVariables()
-    throws Exception {
+    throws Exception
+  {
     Set<String> variables;
     List<String> sortedVariables;
 
@@ -139,7 +142,8 @@ public class TemplatingTest {
     assertEquals("Incorrect number of variables found", 0, variables.size());
   }
 
-  private List<String> getSortedVariables(final Set<String> variables) {
+  private List<String> getSortedVariables(final Set<String> variables)
+  {
     final List<String> sortedVariables = new ArrayList<String>(variables);
     Collections.sort(sortedVariables);
     return sortedVariables;

@@ -21,9 +21,6 @@
 package schemacrawler.utility;
 
 
-import schemacrawler.crawl.JavaSqlType.JavaSqlTypeGroup;
-import sf.util.Utility;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -35,22 +32,29 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.crawl.JavaSqlType.JavaSqlTypeGroup;
+import sf.util.Utility;
+
 /**
  * Utility to work with java.sql.Types, and Java class name mappings.
  *
  * @author Sualeh Fatehi
  */
-public final class JavaSqlTypesGenerationUtility {
+public final class JavaSqlTypesGenerationUtility
+{
 
   private static final Logger LOGGER = Logger
     .getLogger(JavaSqlTypesGenerationUtility.class.getName());
 
   public static void main(final String[] args)
-    throws IOException {
-    if (args.length > 0) {
+    throws IOException
+  {
+    if (args.length > 0)
+    {
       writeJavaSqlTypes(new File(args[0]));
     }
-    else {
+    else
+    {
       writeJavaSqlTypes(new File("."));
     }
   }
@@ -61,7 +65,8 @@ public final class JavaSqlTypesGenerationUtility {
    * @see <a href="http://java.sun.com/j2se/1.4.2/docs/guide/jdbc/getstart/mapping.html#1004791">Mapping SQL and Java
    *      Types</a>
    */
-  private static Map<String, String> getJavaSqlTypesClassNameMap() {
+  private static Map<String, String> getJavaSqlTypesClassNameMap()
+  {
     final Map<String, Class<?>> javaSqlTypesPrimitivesClassMap = new TreeMap<String, Class<?>>();
     javaSqlTypesPrimitivesClassMap.put("BIGINT", Long.class);
     javaSqlTypesPrimitivesClassMap.put("BINARY", byte[].class);
@@ -91,7 +96,8 @@ public final class JavaSqlTypesGenerationUtility {
 
     final Map<String, String> javaSqlTypesClassNamesMap = new TreeMap<String, String>();
     for (final Entry<String, Class<?>> javaSqlTypesPrimitivesClassMapping : javaSqlTypesPrimitivesClassMap
-      .entrySet()) {
+      .entrySet())
+    {
       javaSqlTypesClassNamesMap
         .put(javaSqlTypesPrimitivesClassMapping.getKey(),
              javaSqlTypesPrimitivesClassMapping.getValue().getCanonicalName());
@@ -111,7 +117,8 @@ public final class JavaSqlTypesGenerationUtility {
     return Collections.unmodifiableMap(javaSqlTypesClassNamesMap);
   }
 
-  private static Map<String, JavaSqlTypeGroup> getJavaSqlTypesGroupsMap() {
+  private static Map<String, JavaSqlTypeGroup> getJavaSqlTypesGroupsMap()
+  {
     final Map<String, JavaSqlTypeGroup> javaSqlTypesGroupsMap = new HashMap<String, JavaSqlTypeGroup>();
     javaSqlTypesGroupsMap.put("ARRAY", JavaSqlTypeGroup.binary);
     javaSqlTypesGroupsMap.put("BIGINT", JavaSqlTypeGroup.integer);
@@ -153,17 +160,20 @@ public final class JavaSqlTypesGenerationUtility {
   }
 
   private static Writer startWriting(final File directory, final String fileName)
-    throws IOException {
+    throws IOException
+  {
     final Writer writer;
     writer = new FileWriter(new File(directory, fileName));
-    writer.write(String.format("# java.sql.Types from Java %s %s\n", System
+    writer.write(String.format("# java.sql.Types from Java %s %s%n", System
       .getProperty("java.version"), System.getProperty("java.vendor")));
     return writer;
   }
 
   private static void writeJavaSqlTypes(final File directory)
-    throws IOException {
-    if (directory == null || !directory.canWrite() || !directory.isDirectory()) {
+    throws IOException
+  {
+    if (directory == null || !directory.canWrite() || !directory.isDirectory())
+    {
       LOGGER.log(Level.WARNING, "Cannot write to directory, " + directory);
       return;
     }
@@ -171,17 +181,21 @@ public final class JavaSqlTypesGenerationUtility {
     final Map<String, Integer> javaSqlTypesMap = new HashMap<String, Integer>();
     final Map<String, JavaSqlTypeGroup> javaSqlTypeGroupsMap = getJavaSqlTypesGroupsMap();
     final Map<String, String> javaSqlTypesClassMap = getJavaSqlTypesClassNameMap();
-    for (final Field field : Types.class.getFields()) {
-      try {
+    for (final Field field : Types.class.getFields())
+    {
+      try
+      {
         final String javaSqlTypeName = field.getName();
         final Integer javaSqlType = (Integer) field.get(null);
         javaSqlTypesMap.put(javaSqlTypeName, javaSqlType);
       }
-      catch (final SecurityException e) {
+      catch (final SecurityException e)
+      {
         LOGGER.log(Level.WARNING, "Could not access java.sql.Types", e);
         // continue
       }
-      catch (final IllegalAccessException e) {
+      catch (final IllegalAccessException e)
+      {
         LOGGER.log(Level.WARNING, "Could not access java.sql.Types", e);
         // continue
       }
@@ -195,14 +209,16 @@ public final class JavaSqlTypesGenerationUtility {
     final List<String> javaSqlTypeNames = new ArrayList<String>(javaSqlTypesMap
       .keySet());
     Collections.sort(javaSqlTypeNames);
-    for (final String javaSqlTypeName : javaSqlTypeNames) {
+    for (final String javaSqlTypeName : javaSqlTypeNames)
+    {
       writers[0].write(String.format("%s=%d\n",
                                      javaSqlTypeName,
                                      javaSqlTypesMap.get(javaSqlTypeName)));
       //
       final String javaSqlTypeMappedClassName = javaSqlTypesClassMap
         .get(javaSqlTypeName);
-      if (!Utility.isBlank(javaSqlTypeMappedClassName)) {
+      if (!Utility.isBlank(javaSqlTypeMappedClassName))
+      {
         writers[1].write(String.format("%s=%s\n",
                                        javaSqlTypeName,
                                        javaSqlTypeMappedClassName));
@@ -210,19 +226,22 @@ public final class JavaSqlTypesGenerationUtility {
       //
       final JavaSqlTypeGroup javaSqlTypeGroup = javaSqlTypeGroupsMap
         .get(javaSqlTypeName);
-      if (javaSqlTypeGroup != null) {
+      if (javaSqlTypeGroup != null)
+      {
         writers[2].write(String.format("%s=%s\n",
                                        javaSqlTypeName,
                                        javaSqlTypeGroup.name()));
       }
     }
-    for (final Writer writer : writers) {
+    for (final Writer writer : writers)
+    {
       writer.flush();
       writer.close();
     }
   }
 
-  private JavaSqlTypesGenerationUtility() {
+  private JavaSqlTypesGenerationUtility()
+  {
   }
 
 }

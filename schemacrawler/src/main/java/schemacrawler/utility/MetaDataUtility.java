@@ -30,21 +30,28 @@ import schemacrawler.schema.Column;
  *
  * @author sfatehi
  */
-public final class MetaDataUtility {
+public final class MetaDataUtility
+{
 
-  public enum Connectivity {
+  public enum Connectivity
+  {
+
     OneToOne,
     OneToMany;
   }
 
-  public static Connectivity getConnectivity(final Column fkColumn) {
-    if (fkColumn == null) {
+  public static Connectivity getConnectivity(final Column fkColumn)
+  {
+    if (fkColumn == null)
+    {
       return null;
     }
-    if (fkColumn.isPartOfPrimaryKey() || fkColumn.isPartOfUniqueIndex()) {
+    if (fkColumn.isPartOfPrimaryKey() || fkColumn.isPartOfUniqueIndex())
+    {
       return Connectivity.OneToOne;
     }
-    else {
+    else
+    {
       return Connectivity.OneToMany;
     }
   }
@@ -56,7 +63,8 @@ public final class MetaDataUtility {
    *
    * @return JavaSqlType type
    */
-  public static JavaSqlType lookupSqlDataType(final int type) {
+  public static JavaSqlType lookupSqlDataType(final int type)
+  {
     return JavaSqlTypesUtility.lookupSqlDataType(type);
   }
 
@@ -67,11 +75,13 @@ public final class MetaDataUtility {
    *
    * @return JavaSqlType type
    */
-  public static JavaSqlType lookupSqlDataType(final String typeName) {
+  public static JavaSqlType lookupSqlDataType(final String typeName)
+  {
     return JavaSqlTypesUtility.lookupSqlDataType(typeName);
   }
 
-  private MetaDataUtility() {
+  private MetaDataUtility()
+  {
     // Prevent instantiation
   }
 

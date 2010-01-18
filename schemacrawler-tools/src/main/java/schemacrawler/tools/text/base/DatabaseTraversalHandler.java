@@ -27,7 +27,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 /**
  * Handler for SchemaCrawler.
  */
-public interface DatabaseTraversalHandler {
+public interface DatabaseTraversalHandler
+{
 
   /**
    * Handles the begin of the crawl.

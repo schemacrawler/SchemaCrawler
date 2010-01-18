@@ -30,7 +30,8 @@ import java.util.Map;
  * @author Sualeh Fatehi
  */
 public interface SchemaCrawlerInfo
-  extends Serializable {
+  extends Serializable
+{
 
   /**
    * Gets the SchemaCrawler about text.

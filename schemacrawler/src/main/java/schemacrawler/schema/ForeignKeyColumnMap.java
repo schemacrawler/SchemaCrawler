@@ -27,7 +27,8 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface ForeignKeyColumnMap
-  extends DependantNamedObject, ColumnMap {
+  extends DependantNamedObject, ColumnMap
+{
 
   /**
    * Gets the sequence in the foreign key.

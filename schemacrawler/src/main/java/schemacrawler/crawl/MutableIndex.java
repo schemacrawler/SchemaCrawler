@@ -30,7 +30,8 @@ import schemacrawler.schema.*;
  */
 class MutableIndex
   extends AbstractDependantObject
-  implements Index {
+  implements Index
+{
 
   private static final long serialVersionUID = 4051326747138079028L;
 
@@ -40,7 +41,8 @@ class MutableIndex
   private int cardinality;
   private int pages;
 
-  MutableIndex(final Table parent, final String name) {
+  MutableIndex(final Table parent, final String name)
+  {
     super(parent, name);
     // Default values
     type = IndexType.unknown;
@@ -51,8 +53,10 @@ class MutableIndex
    * indexes by the names of the columns in the index. </p>
    */
   @Override
-  public int compareTo(final NamedObject obj) {
-    if (obj == null) {
+  public int compareTo(final NamedObject obj)
+  {
+    if (obj == null)
+    {
       return -1;
     }
 
@@ -61,22 +65,28 @@ class MutableIndex
     final Column[] thisColumns = getColumns();
     final Column[] otherColumns = other.getColumns();
 
-    if (comparison == 0) {
+    if (comparison == 0)
+    {
       comparison = thisColumns.length - otherColumns.length;
     }
-    if (comparison == 0) {
-      for (int i = 0; i < thisColumns.length; i++) {
+    if (comparison == 0)
+    {
+      for (int i = 0; i < thisColumns.length; i++)
+      {
         final Column thisColumn = thisColumns[i];
         final Column otherColumn = otherColumns[i];
-        if (comparison == 0) {
+        if (comparison == 0)
+        {
           comparison = thisColumn.compareTo(otherColumn);
         }
-        else {
+        else
+        {
           break;
         }
       }
     }
-    if (comparison == 0) {
+    if (comparison == 0)
+    {
       comparison = super.compareTo(other);
     }
 
@@ -88,7 +98,8 @@ class MutableIndex
    *
    * @see Index#getCardinality()
    */
-  public final int getCardinality() {
+  public final int getCardinality()
+  {
     return cardinality;
   }
 
@@ -97,7 +108,8 @@ class MutableIndex
    *
    * @see Index#getColumns()
    */
-  public IndexColumn[] getColumns() {
+  public IndexColumn[] getColumns()
+  {
     return columns.values()
       .toArray(new IndexColumn[columns.size()]);
   }
@@ -107,7 +119,8 @@ class MutableIndex
    *
    * @see Index#getPages()
    */
-  public final int getPages() {
+  public final int getPages()
+  {
     return pages;
   }
 
@@ -116,7 +129,8 @@ class MutableIndex
    *
    * @see Index#getType()
    */
-  public final IndexType getType() {
+  public final IndexType getType()
+  {
     return type;
   }
 
@@ -125,27 +139,33 @@ class MutableIndex
    *
    * @see Index#isUnique()
    */
-  public boolean isUnique() {
+  public boolean isUnique()
+  {
     return isUnique;
   }
 
-  void addColumn(final MutableIndexColumn column) {
+  void addColumn(final MutableIndexColumn column)
+  {
     columns.add(column);
   }
 
-  final void setCardinality(final int cardinality) {
+  final void setCardinality(final int cardinality)
+  {
     this.cardinality = cardinality;
   }
 
-  final void setPages(final int pages) {
+  final void setPages(final int pages)
+  {
     this.pages = pages;
   }
 
-  final void setType(final IndexType type) {
+  final void setType(final IndexType type)
+  {
     this.type = type;
   }
 
-  final void setUnique(final boolean unique) {
+  final void setUnique(final boolean unique)
+  {
     isUnique = unique;
   }
 

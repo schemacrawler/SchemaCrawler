@@ -24,7 +24,8 @@ package schemacrawler.schema;
 /**
  * Routine body.
  */
-public enum RoutineBodyType {
+public enum RoutineBodyType
+{
 
   /**
    * Unknown

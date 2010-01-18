@@ -29,7 +29,8 @@ import java.io.Serializable;
  * @author Sualeh Fatehi
  */
 public interface DatabaseInfo
-  extends Serializable {
+  extends Serializable
+{
 
   /**
    * Gets the name of the RDBMS vendor and product.

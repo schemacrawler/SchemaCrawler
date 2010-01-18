@@ -21,6 +21,9 @@
 package schemacrawler.tools.commandline;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConfigConnectionOptions;
@@ -30,35 +33,38 @@ import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
 import sf.util.Utility;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Options for the command line.
  *
  * @author sfatehi
  */
 final class ConfigConnectionOptionsParser
-  extends BaseDatabaseConnectionOptionsParser {
+  extends BaseDatabaseConnectionOptionsParser
+{
 
   /**
    * Gets a sub-group of properties - those that start with a given prefix. The prefix is removed in the result.
    *
+   * @param Config to partition
    * @param prefix Prefix to group by.
    *
    * @return Partitioned properties.
    */
   private static Map<String, String> partition(final Map<String, String> config,
-                                               final String prefix) {
-    if (Utility.isBlank(prefix)) {
+                                               final String prefix)
+  {
+    if (Utility.isBlank(prefix))
+    {
       return config;
     }
 
     final String dottedPrefix = prefix + ".";
     final Map<String, String> partition = new HashMap<String, String>();
-    for (final Map.Entry<String, String> entry : config.entrySet()) {
+    for (final Map.Entry<String, String> entry : config.entrySet())
+    {
       final String key = entry.getKey();
-      if (key.startsWith(dottedPrefix)) {
+      if (key.startsWith(dottedPrefix))
+      {
         final String unprefixed = key.substring(dottedPrefix.length());
         partition.put(unprefixed, entry.getValue());
       }
@@ -79,13 +85,15 @@ final class ConfigConnectionOptionsParser
    *
    * @param args
    */
-  ConfigConnectionOptionsParser(final String[] args, final Config config) {
+  ConfigConnectionOptionsParser(final String[] args, final Config config)
+  {
     super(args, config);
   }
 
   @Override
   public ConnectionOptions getOptions()
-    throws SchemaCrawlerException {
+    throws SchemaCrawlerException
+  {
     parse(new Option[]{
       optionUseDefaultConnection,
       optionConnection,
@@ -94,10 +102,12 @@ final class ConfigConnectionOptionsParser
     });
 
     final String connectionName;
-    if (optionUseDefaultConnection.getValue()) {
+    if (optionUseDefaultConnection.getValue())
+    {
       connectionName = config.get("defaultconnection");
     }
-    else {
+    else
+    {
       connectionName = optionConnection.getValue();
     }
 
@@ -107,12 +117,14 @@ final class ConfigConnectionOptionsParser
     final ConnectionOptions connectionOptions = new DatabaseConfigConnectionOptions(databaseConnectionConfig);
 
     final String user = optionUser.getValue();
-    if (user != null && !databaseConnectionConfig.containsKey("user")) {
+    if (user != null && !databaseConnectionConfig.containsKey("user"))
+    {
       connectionOptions.setUser(user);
     }
 
     final String password = optionPassword.getValue();
-    if (password != null && !databaseConnectionConfig.containsKey("password")) {
+    if (password != null && !databaseConnectionConfig.containsKey("password"))
+    {
       connectionOptions.setPassword(password);
     }
 

@@ -21,9 +21,6 @@
 package schemacrawler.test;
 
 
-import org.junit.Test;
-import sf.util.CommandLineParser;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
@@ -31,32 +28,42 @@ import java.util.Date;
 
 import static org.junit.Assert.*;
 
-public class CommandLineParserTest {
+import org.junit.Test;
+import sf.util.CommandLineParser;
+
+public class CommandLineParserTest
+{
 
   private static class ShortDateOption
-    extends CommandLineParser.BaseOption<Calendar> {
+    extends CommandLineParser.BaseOption<Calendar>
+  {
 
-    ShortDateOption(final char shortForm, final String longForm) {
+    ShortDateOption(final char shortForm, final String longForm)
+    {
       super(shortForm, longForm, null);
     }
 
     @Override
-    protected Calendar parseValue(final String arg) {
-      try {
+    protected Calendar parseValue(final String arg)
+    {
+      try
+      {
         final Date date = DateFormat.getDateInstance(DateFormat.SHORT)
           .parse(arg);
         final Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         return calendar;
       }
-      catch (final ParseException e) {
+      catch (final ParseException e)
+      {
         return null;
       }
     }
   }
 
   @Test
-  public void badFormat() {
+  public void badFormat()
+  {
     final CommandLineParser parser = new CommandLineParser();
     parser.addOption(new CommandLineParser.NumberOption('s', "size", null));
     parser.parse(new String[]{
@@ -67,7 +74,8 @@ public class CommandLineParserTest {
   }
 
   @Test
-  public void booleanOptions() {
+  public void booleanOptions()
+  {
     final String verbose = "verbose";
 
     final CommandLineParser parser = new CommandLineParser();
@@ -112,7 +120,8 @@ public class CommandLineParserTest {
   }
 
   @Test
-  public void illegalCustomOption() {
+  public void illegalCustomOption()
+  {
 
     final CommandLineParser parser = new CommandLineParser();
     parser.addOption(new CommandLineParserTest.ShortDateOption('d', "date"));
@@ -124,7 +133,8 @@ public class CommandLineParserTest {
   }
 
   @Test
-  public void resetBetweenParse() {
+  public void resetBetweenParse()
+  {
     final CommandLineParser parser = new CommandLineParser();
     parser.addOption(new CommandLineParser.BooleanOption('v', "verbose"));
     parser.parse(new String[]{
@@ -139,7 +149,8 @@ public class CommandLineParserTest {
   }
 
   @Test
-  public void standardOptions() {
+  public void standardOptions()
+  {
     final CommandLineParser parser = new CommandLineParser();
     parser.addOption(new CommandLineParser.BooleanOption('v', "verbose"));
     parser.addOption(new CommandLineParser.NumberOption('s', "size", null));
@@ -165,7 +176,8 @@ public class CommandLineParserTest {
   }
 
   @Test
-  public void stringOptions() {
+  public void stringOptions()
+  {
     final String string = "string";
 
     final CommandLineParser parser = new CommandLineParser();
@@ -220,7 +232,8 @@ public class CommandLineParserTest {
   }
 
   @Test
-  public void testCustomOption() {
+  public void testCustomOption()
+  {
     final CommandLineParser parser = new CommandLineParser();
     parser.addOption(new CommandLineParserTest.ShortDateOption('d', "date"));
     parser.parse(new String[]{

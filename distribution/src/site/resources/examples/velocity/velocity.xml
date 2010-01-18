@@ -6,21 +6,21 @@
   <description>
     Velocity - Integration of SchemaCrawler with Apache Jakarta Velocity.
   </description>
-  <property environment="env" />
+  <property environment="env"/>
 
   <!-- Step 1.
     Define the ant tasks (macros) that come with SchemaCrawler
   -->
   <typedef
     resource="schemacrawler-integrations-antlib.xml"
-    classpath="../schemacrawler-8.0.jar" />
+    classpath="../schemacrawler-8.0.jar"/>
 
   <!-- Step 2.
     Define the classpath to the database driver
   -->
   <path id="db-driver-classpath">
     <fileset dir="..">
-      <include name="*.jar" />
+      <include name="*.jar"/>
     </fileset>
   </path>
 
@@ -29,7 +29,7 @@
   -->
   <path id="velocity-classpath">
     <fileset dir=".">
-      <include name="*.jar" />
+      <include name="*.jar"/>
     </fileset>
   </path>
 
@@ -40,22 +40,22 @@
     src="http://www.ibiblio.org/maven/velocity/jars/velocity-1.5.jar"
     dest="velocity-1.5.jar"
     verbose="true"
-    usetimestamp="true" />
+    usetimestamp="true"/>
   <get
     src="http://www.ibiblio.org/maven/log4j/jars/log4j-1.2.9.jar"
     dest="log4j-1.2.9.jar"
     verbose="true"
-    usetimestamp="true" />
+    usetimestamp="true"/>
   <get
     src="http://www.ibiblio.org/maven/commons-collections/jars/commons-collections-3.2.jar"
     dest="commons-collections-3.2.jar"
     verbose="true"
-    usetimestamp="true" />
+    usetimestamp="true"/>
   <get
     src="http://www.ibiblio.org/maven/commons-lang/jars/commons-lang-2.3.jar"
     dest="commons-lang-2.3.jar"
     verbose="true"
-    usetimestamp="true" />
+    usetimestamp="true"/>
 
   <!-- Step 5.
     Define an ant task that uses the <schemacrawler-velocity> macro
@@ -64,12 +64,12 @@
 
     <property
       name="velocity-template"
-      value="tables.vm" />
+      value="tables.vm"/>
     <property
       name="outputfile"
-      location="table-script-by-velocity.sql" />
+      location="table-script-by-velocity.sql"/>
 
-    <delete file="${outputfile}" />
+    <delete file="${outputfile}"/>
 
     <schemacrawler-velocity
       datasource="hsqldb"
@@ -77,9 +77,9 @@
       velocity-classpath="velocity-classpath"
       command="verbose_schema"
       template="${velocity-template}"
-      outputfile="${outputfile}" />
+      outputfile="${outputfile}"/>
 
-    <echo message="Output is in ${outputfile}" />
+    <echo message="Output is in ${outputfile}"/>
 
   </target>
 

@@ -27,7 +27,8 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface Procedure
-  extends DatabaseObject {
+  extends DatabaseObject
+{
 
   /**
    * Gets a column by name.

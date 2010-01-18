@@ -21,14 +21,18 @@ package schemacrawler.crawl;
 
 
 class ColumnDataTypes
-  extends NamedObjectList<MutableColumnDataType> {
+  extends NamedObjectList<MutableColumnDataType>
+{
 
   private static final long serialVersionUID = 6793135093651666453L;
 
-  MutableColumnDataType lookupColumnDataTypeByType(final int type) {
+  MutableColumnDataType lookupColumnDataTypeByType(final int type)
+  {
     MutableColumnDataType columnDataType = null;
-    for (final MutableColumnDataType currentColumnDataType : this) {
-      if (type == currentColumnDataType.getType()) {
+    for (final MutableColumnDataType currentColumnDataType : this)
+    {
+      if (type == currentColumnDataType.getType())
+      {
         columnDataType = currentColumnDataType;
         break;
       }

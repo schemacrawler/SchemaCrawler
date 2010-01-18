@@ -13,12 +13,15 @@ import java.util.regex.Pattern;
  * @author Anthony Eden
  */
 @SuppressWarnings({"ALL"})
-public class Inflection {
+public class Inflection
+{
+
   private static final List<Inflection> plural = new ArrayList<Inflection>();
   private static final List<Inflection> singular = new ArrayList<Inflection>();
   private static final List<String> uncountable = new ArrayList<String>();
 
-  static {
+  static
+  {
     // plural is "singular to plural form"
     // singular is "plural to singular form"
     plural("$", "s");
@@ -94,9 +97,12 @@ public class Inflection {
    *
    * @return True if it is uncountable
    */
-  public static boolean isUncountable(final String word) {
-    for (final String w : uncountable) {
-      if (w.equalsIgnoreCase(word)) {
+  public static boolean isUncountable(final String word)
+  {
+    for (final String w : uncountable)
+    {
+      if (w.equalsIgnoreCase(word))
+      {
         return true;
       }
     }
@@ -110,13 +116,17 @@ public class Inflection {
    *
    * @return The pluralized word
    */
-  public static String pluralize(final String word) {
-    if (Inflection.isUncountable(word)) {
+  public static String pluralize(final String word)
+  {
+    if (Inflection.isUncountable(word))
+    {
       return word;
     }
 
-    for (final Inflection inflection : plural) {
-      if (inflection.match(word)) {
+    for (final Inflection inflection : plural)
+    {
+      if (inflection.match(word))
+      {
         return inflection.replace(word);
       }
     }
@@ -130,15 +140,19 @@ public class Inflection {
    *
    * @return The singularized word
    */
-  public static String singularize(final String word) {
-    if (Inflection.isUncountable(word)) {
+  public static String singularize(final String word)
+  {
+    if (Inflection.isUncountable(word))
+    {
       return word;
     }
 
-    for (final Inflection inflection : singular) {
+    for (final Inflection inflection : singular)
+    {
       // System.out.println(word + " matches " + inflection.pattern +
       // "? (ignore case: " + inflection.ignoreCase + ")");
-      if (inflection.match(word)) {
+      if (inflection.match(word))
+      {
         // System.out.println("match!");
         return inflection.replace(word);
       }
@@ -146,22 +160,26 @@ public class Inflection {
     return word;
   }
 
-  private static void irregular(final String s, final String p) {
+  private static void irregular(final String s, final String p)
+  {
     plural("(" + s.substring(0, 1) + ")" + s.substring(1) + "$",
            "$1" + p.substring(1));
     singular("(" + p.substring(0, 1) + ")" + p.substring(1) + "$",
              "$1" + s.substring(1));
   }
 
-  private static void plural(final String pattern, final String replacement) {
+  private static void plural(final String pattern, final String replacement)
+  {
     plural.add(0, new Inflection(pattern, replacement));
   }
 
-  private static void singular(final String pattern, final String replacement) {
+  private static void singular(final String pattern, final String replacement)
+  {
     singular.add(0, new Inflection(pattern, replacement));
   }
 
-  private static void uncountable(final String word) {
+  private static void uncountable(final String word)
+  {
     uncountable.add(word);
   }
 
@@ -171,17 +189,20 @@ public class Inflection {
 
   private final boolean ignoreCase;
 
-  public Inflection(final String pattern) {
+  public Inflection(final String pattern)
+  {
     this(pattern, null, true);
   }
 
-  public Inflection(final String pattern, final String replacement) {
+  public Inflection(final String pattern, final String replacement)
+  {
     this(pattern, replacement, true);
   }
 
   public Inflection(final String pattern,
                     final String replacement,
-                    final boolean ignoreCase) {
+                    final boolean ignoreCase)
+  {
     this.pattern = pattern;
     this.replacement = replacement;
     this.ignoreCase = ignoreCase;
@@ -194,9 +215,11 @@ public class Inflection {
    *
    * @return True if it matches the inflection pattern
    */
-  public boolean match(final String word) {
+  public boolean match(final String word)
+  {
     int flags = 0;
-    if (ignoreCase) {
+    if (ignoreCase)
+    {
       flags = flags | Pattern.CASE_INSENSITIVE;
     }
     return Pattern.compile(pattern, flags)
@@ -211,9 +234,11 @@ public class Inflection {
    *
    * @return The result
    */
-  public String replace(final String word) {
+  public String replace(final String word)
+  {
     int flags = 0;
-    if (ignoreCase) {
+    if (ignoreCase)
+    {
       flags = flags | Pattern.CASE_INSENSITIVE;
     }
     return Pattern.compile(pattern, flags)

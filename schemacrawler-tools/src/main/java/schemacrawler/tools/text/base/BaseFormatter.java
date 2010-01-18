@@ -21,6 +21,12 @@
 package schemacrawler.tools.text.base;
 
 
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Map.Entry;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
 import schemacrawler.schema.*;
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -32,18 +38,13 @@ import schemacrawler.tools.text.util.TextFormattingHelper;
 import schemacrawler.tools.text.util.TextFormattingHelper.DocumentHeaderType;
 import sf.util.ObjectToString;
 
-import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.Map.Entry;
-import java.util.SortedMap;
-import java.util.TreeMap;
-
 /**
  * Text formatting of schema.
  *
  * @author Sualeh Fatehi
  */
-public abstract class BaseFormatter<O extends Options> {
+public abstract class BaseFormatter<O extends Options>
+{
 
   protected final O options;
   protected final OutputOptions outputOptions;
@@ -51,31 +52,31 @@ public abstract class BaseFormatter<O extends Options> {
   protected final TextFormattingHelper formattingHelper;
   private final boolean printVerboseDatabaseInfo;
 
-  /**
-   * Text formatting of operations and schema.
-   *
-   * @param options Options for text formatting of schema
-   */
   protected BaseFormatter(final O options,
                           final boolean printVerboseDatabaseInfo,
                           final OutputOptions outputOptions)
-    throws SchemaCrawlerException {
-    if (options == null) {
+    throws SchemaCrawlerException
+  {
+    if (options == null)
+    {
       throw new IllegalArgumentException("Options not provided");
     }
     this.options = options;
 
     this.printVerboseDatabaseInfo = printVerboseDatabaseInfo;
 
-    if (outputOptions == null) {
+    if (outputOptions == null)
+    {
       throw new IllegalArgumentException("Output options not provided");
     }
     this.outputOptions = outputOptions;
     final OutputFormat outputFormat = outputOptions.getOutputFormat();
-    if (outputFormat == OutputFormat.html) {
+    if (outputFormat == OutputFormat.html)
+    {
       formattingHelper = new HtmlFormattingHelper(outputFormat);
     }
-    else {
+    else
+    {
       formattingHelper = new PlainTextFormattingHelper(outputFormat);
     }
 
@@ -87,8 +88,10 @@ public abstract class BaseFormatter<O extends Options> {
    *
    * @see DatabaseTraversalHandler#handle(Database)
    */
-  public void handle(final DatabaseInfo dbInfo) {
-    if (dbInfo == null || outputOptions.isNoInfo()) {
+  public void handle(final DatabaseInfo dbInfo)
+  {
+    if (dbInfo == null || outputOptions.isNoInfo())
+    {
       return;
     }
 
@@ -105,14 +108,17 @@ public abstract class BaseFormatter<O extends Options> {
                                                     dbInfo.getUserName()));
     out.print(formattingHelper.createObjectEnd());
 
-    if (printVerboseDatabaseInfo && dbInfo.getProperties().length > 0) {
+    if (printVerboseDatabaseInfo && dbInfo.getProperties().length > 0)
+    {
       out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                                 "Database Characteristics"));
       out.print(formattingHelper.createObjectStart(""));
-      for (final DatabaseProperty property : dbInfo.getProperties()) {
+      for (final DatabaseProperty property : dbInfo.getProperties())
+      {
         final String name = property.getDescription();
         Object value = property.getValue();
-        if (value == null) {
+        if (value == null)
+        {
           value = "";
         }
         out.println(formattingHelper.createNameValueRow(name, ObjectToString
@@ -129,8 +135,10 @@ public abstract class BaseFormatter<O extends Options> {
    *
    * @see DatabaseTraversalHandler#handle(Database)
    */
-  public void handle(final JdbcDriverInfo driverInfo) {
-    if (driverInfo == null || outputOptions.isNoInfo()) {
+  public void handle(final JdbcDriverInfo driverInfo)
+  {
+    if (driverInfo == null || outputOptions.isNoInfo())
+    {
       return;
     }
 
@@ -155,10 +163,12 @@ public abstract class BaseFormatter<O extends Options> {
 
     final JdbcDriverProperty[] jdbcDriverProperties = driverInfo
       .getDriverProperties();
-    if (printVerboseDatabaseInfo && jdbcDriverProperties.length > 0) {
+    if (printVerboseDatabaseInfo && jdbcDriverProperties.length > 0)
+    {
       out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                                 "JDBC Driver Properties"));
-      for (final JdbcDriverProperty driverProperty : jdbcDriverProperties) {
+      for (final JdbcDriverProperty driverProperty : jdbcDriverProperties)
+      {
         out.print(formattingHelper.createObjectStart(""));
         printJdbcDriverProperty(driverProperty);
         out.print(formattingHelper.createObjectEnd());
@@ -173,8 +183,10 @@ public abstract class BaseFormatter<O extends Options> {
    *
    * @see DatabaseTraversalHandler#handle(Database)
    */
-  public void handle(final SchemaCrawlerInfo schemaCrawlerInfo) {
-    if (schemaCrawlerInfo == null || outputOptions.isNoInfo()) {
+  public void handle(final SchemaCrawlerInfo schemaCrawlerInfo)
+  {
+    if (schemaCrawlerInfo == null || outputOptions.isNoInfo())
+    {
       return;
     }
 
@@ -193,15 +205,18 @@ public abstract class BaseFormatter<O extends Options> {
       .getSchemaCrawlerVersion()));
     out.print(formattingHelper.createObjectEnd());
 
-    if (printVerboseDatabaseInfo) {
+    if (printVerboseDatabaseInfo)
+    {
       final SortedMap<String, String> systemProperties = new TreeMap<String, String>(schemaCrawlerInfo
         .getSystemProperties());
-      if (!systemProperties.isEmpty()) {
+      if (!systemProperties.isEmpty())
+      {
         out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                                   "System Properties"));
         out.print(formattingHelper.createObjectStart(""));
         for (final Entry<String, String> systemProperty : systemProperties
-          .entrySet()) {
+          .entrySet())
+        {
           out.println(formattingHelper.createNameValueRow(systemProperty
             .getKey(), systemProperty.getValue()));
         }
@@ -212,14 +227,16 @@ public abstract class BaseFormatter<O extends Options> {
     out.flush();
   }
 
-  private void printJdbcDriverProperty(final JdbcDriverProperty driverProperty) {
+  private void printJdbcDriverProperty(final JdbcDriverProperty driverProperty)
+  {
     final String choices = Arrays.asList(driverProperty.getChoices())
       .toString();
     final String required = (driverProperty.isRequired() ? "" : "not ")
       + "required";
     String details = required;
     if (driverProperty.getChoices() != null
-      && driverProperty.getChoices().length > 0) {
+      && driverProperty.getChoices().length > 0)
+    {
       details = details + "; choices " + choices;
     }
     final String value = driverProperty.getValue();
