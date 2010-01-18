@@ -23,12 +23,11 @@ package schemacrawler.schema;
 
 /**
  * Database and connection information.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface Database
-  extends NamedObject
-{
+  extends NamedObject {
 
   DatabaseInfo getDatabaseInfo();
 
@@ -36,9 +35,9 @@ public interface Database
 
   /**
    * Gets a schema by name.
-   * 
-   * @param name
-   *        Name
+   *
+   * @param name Name
+   *
    * @return Schema.
    */
   Schema getSchema(String schemaName);
@@ -47,21 +46,21 @@ public interface Database
 
   /**
    * Gets the schemas.
-   * 
+   *
    * @return Schemas
    */
   Schema[] getSchemas();
 
   /**
    * Gets the column data types defined by the RDBMS system, by name.
-   * 
+   *
    * @return Column data type
    */
   ColumnDataType getSystemColumnDataType(String name);
 
   /**
    * Gets the column data types defined by the RDBMS system.
-   * 
+   *
    * @return Column data types
    */
   ColumnDataType[] getSystemColumnDataTypes();

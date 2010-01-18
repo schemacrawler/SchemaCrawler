@@ -21,26 +21,28 @@
 package schemacrawler.schemacrawler;
 
 
+import sf.util.Utility;
+
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
-import sf.util.Utility;
-
 /**
- * Specifies inclusion and exclusion patterns that can be applied to the
- * names of database objects.
- * 
+ * Specifies inclusion and exclusion patterns that can be applied to the names of database objects.
+ *
  * @author Sualeh Fatehi
  */
 public final class InclusionRule
-  implements Serializable
-{
+  implements Serializable {
 
-  /** Exclude nothing */
+  /**
+   * Exclude nothing
+   */
   public static final String NONE = "";
-  /** Include everything. */
+  /**
+   * Include everything.
+   */
   public static final String ALL = ".*";
 
   private static final Logger LOGGER = Logger.getLogger(InclusionRule.class
@@ -53,123 +55,100 @@ public final class InclusionRule
 
   /**
    * Set include and exclude patterns.
-   * 
-   * @param patternInclude
-   *        Inclusion pattern
-   * @param patternExclude
-   *        Exclusion pattern
+   *
+   * @param patternInclude Inclusion pattern
+   * @param patternExclude Exclusion pattern
    */
   public InclusionRule(final Pattern patternInclude,
-                       final Pattern patternExclude)
-  {
+                       final Pattern patternExclude) {
     this.patternInclude = patternInclude;
     this.patternExclude = patternExclude;
   }
 
   /**
    * Set include and exclude patterns.
-   * 
-   * @param patternInclude
-   *        Inclusion pattern
-   * @param patternExclude
-   *        Exclusion pattern
+   *
+   * @param patternInclude Inclusion pattern
+   * @param patternExclude Exclusion pattern
    */
-  public InclusionRule(final String patternInclude, final String patternExclude)
-  {
+  public InclusionRule(final String patternInclude, final String patternExclude) {
     this(Pattern.compile(patternInclude), Pattern.compile(patternExclude));
   }
 
   @Override
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
+  public boolean equals(final Object obj) {
+    if (this == obj) {
       return true;
     }
-    if (obj == null)
-    {
+    if (obj == null) {
       return false;
     }
-    if (getClass() != obj.getClass())
-    {
+    if (getClass() != obj.getClass()) {
       return false;
     }
     final InclusionRule other = (InclusionRule) obj;
-    if (patternExclude == null)
-    {
-      if (other.patternExclude != null)
-      {
+    if (patternExclude == null) {
+      if (other.patternExclude != null) {
         return false;
       }
     }
-    else if (!patternExclude.equals(other.patternExclude))
-    {
+    else if (!patternExclude.equals(other.patternExclude)) {
       return false;
     }
-    if (patternInclude == null)
-    {
-      if (other.patternInclude != null)
-      {
+    if (patternInclude == null) {
+      if (other.patternInclude != null) {
         return false;
       }
     }
-    else if (!patternInclude.equals(other.patternInclude))
-    {
+    else if (!patternInclude.equals(other.patternInclude)) {
       return false;
     }
     return true;
   }
 
   @Override
-  public int hashCode()
-  {
+  public int hashCode() {
     final int prime = 31;
     int result = 1;
     result = prime * result
-             + (patternExclude == null? 0: patternExclude.hashCode());
+      + (patternExclude == null ? 0 : patternExclude.hashCode());
     result = prime * result
-             + (patternInclude == null? 0: patternInclude.hashCode());
+      + (patternInclude == null ? 0 : patternInclude.hashCode());
     return result;
   }
 
   /**
-   * Checks whether to add a named object after considering the include
-   * and exclude patterns.
-   * 
-   * @param name
-   *        Name to check
+   * Checks whether to add a named object after considering the include and exclude patterns.
+   *
+   * @param name Name to check
+   *
    * @return Whether the name should be included or not
    */
-  public boolean include(final String name)
-  {
+  public boolean include(final String name) {
 
     final String actionMessage;
     boolean include = false;
-    if (!Utility.isBlank(name))
-    {
-      if (!patternInclude.matcher(name).matches())
-      {
+    if (!Utility.isBlank(name)) {
+      if (!patternInclude.matcher(name)
+        .matches()) {
         actionMessage = "Excluding " + name
-                        + " since it does not match the include pattern";
+          + " since it does not match the include pattern";
       }
-      else if (patternExclude.matcher(name).matches())
-      {
+      else if (patternExclude.matcher(name)
+        .matches()) {
         actionMessage = "Excluding " + name
-                        + " since it matches the exclude pattern";
+          + " since it matches the exclude pattern";
       }
-      else
-      {
+      else {
         actionMessage = "Including " + name;
         include = true;
       }
     }
-    else
-    {
+    else {
       actionMessage = "Excluding, since name is bank";
     }
 
-    if (LOGGER.isLoggable(Level.FINE))
-    {
+    if (LOGGER.isLoggable(Level.FINE)) {
       final StackTraceElement caller = new Exception().getStackTrace()[1];
       LOGGER.logp(Level.FINE,
                   caller.getClassName(),
@@ -182,12 +161,11 @@ public final class InclusionRule
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#toString()
    */
   @Override
-  public String toString()
-  {
+  public String toString() {
     return String.format("%s@%h-[:include:%s:exclude:%s:]",
                          this.getClass().getSimpleName(),
                          System.identityHashCode(this),

@@ -21,42 +21,38 @@
 package schemacrawler.tools.text.operation;
 
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
-import schemacrawler.crawl.JavaSqlTypesUtility;
 import schemacrawler.crawl.JavaSqlType.JavaSqlTypeGroup;
+import schemacrawler.crawl.JavaSqlTypesUtility;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import sf.util.TemplatingUtility;
 import sf.util.Utility;
 
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * A SQL query. May be parameterized with ant-like variable references.
- * 
+ *
  * @author sfatehi
  */
 public final class Query
-  implements Serializable
-{
+  implements Serializable {
 
   private static final long serialVersionUID = 2820769346069413473L;
 
-  private static String getOrderByColumnsListAsString(final Table table)
-  {
+  private static String getOrderByColumnsListAsString(final Table table) {
     final Column[] columnsArray = table.getColumns();
     final StringBuilder buffer = new StringBuilder();
-    for (int i = 0; i < columnsArray.length; i++)
-    {
+    for (int i = 0; i < columnsArray.length; i++) {
       final Column column = columnsArray[i];
       final JavaSqlTypeGroup javaSqlTypeGroup = JavaSqlTypesUtility
-        .lookupSqlDataType(column.getType().getType()).getJavaSqlTypeGroup();
-      if (javaSqlTypeGroup != JavaSqlTypeGroup.binary)
-      {
-        if (i > 0)
-        {
+        .lookupSqlDataType(column.getType().getType())
+        .getJavaSqlTypeGroup();
+      if (javaSqlTypeGroup != JavaSqlTypeGroup.binary) {
+        if (i > 0) {
           buffer.append(", ");
         }
         buffer.append(column.getName());
@@ -70,64 +66,53 @@ public final class Query
   private final String query;
 
   /**
-   * Definition of a query, including a name, and parameterized or
-   * regular SQL.
-   * 
-   * @param name
-   *        Query name.
-   * @param query
-   *        Query SQL.
+   * Definition of a query, including a name, and parameterized or regular SQL.
+   *
+   * @param name  Query name.
+   * @param query Query SQL.
    */
-  public Query(final String name, final String query)
-  {
-    if (Utility.isBlank(name))
-    {
+  public Query(final String name, final String query) {
+    if (Utility.isBlank(name)) {
       throw new IllegalArgumentException("No name provided for the query");
     }
     this.name = name;
 
-    if (Utility.isBlank(query))
-    {
+    if (Utility.isBlank(query)) {
       throw new IllegalArgumentException("No SQL provided for query '" + name
-                                         + "'");
+        + "'");
     }
     this.query = query;
   }
 
   /**
    * Gets the query name.
-   * 
+   *
    * @return Query name
    */
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
   /**
    * Gets the query SQL.
-   * 
+   *
    * @return Query SQL
    */
-  public String getQuery()
-  {
+  public String getQuery() {
     return TemplatingUtility.expandTemplate(query);
   }
 
   /**
    * Gets the query with parameters substituted.
-   * 
-   * @param table
-   *        Table information
+   *
+   * @param table Table information
+   *
    * @return Ready-to-execute quer
    */
-  public String getQueryForTable(final Table table)
-  {
+  public String getQueryForTable(final Table table) {
     final Map<String, String> tableProperties = new HashMap<String, String>();
-    if (table != null)
-    {
-      if (table.getSchema() != null)
-      {
+    if (table != null) {
+      if (table.getSchema() != null) {
         tableProperties.put("schema", table.getSchema().getFullName());
       }
       tableProperties.put("table", table.getFullName());
@@ -145,25 +130,22 @@ public final class Query
   }
 
   /**
-   * Determines if this query has substitutable parameters, and whether
-   * it should be run once for each table.
-   * 
+   * Determines if this query has substitutable parameters, and whether it should be run once for each table.
+   *
    * @return If the query is to be run over each table
    */
-  public boolean isQueryOver()
-  {
+  public boolean isQueryOver() {
     final Set<String> keys = TemplatingUtility.extractTemplateVariables(query);
     return keys.contains("table");
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#toString()
    */
   @Override
-  public String toString()
-  {
+  public String toString() {
     return name + ":" + query;
   }
 

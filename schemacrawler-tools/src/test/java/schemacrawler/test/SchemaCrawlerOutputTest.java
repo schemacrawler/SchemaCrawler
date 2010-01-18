@@ -21,15 +21,6 @@
 package schemacrawler.test;
 
 
-import static org.junit.Assert.fail;
-
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.custommonkey.xmlunit.Validator;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.AfterClass;
@@ -38,7 +29,6 @@ import org.junit.Test;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -53,24 +43,29 @@ import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.utility.TestDatabase;
 import sf.util.TestUtility;
 
-public class SchemaCrawlerOutputTest
-{
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.fail;
+
+public class SchemaCrawlerOutputTest {
 
   private static class LocalEntityResolver
-    implements EntityResolver
-  {
+    implements EntityResolver {
 
     public InputSource resolveEntity(final String publicId,
                                      final String systemId)
-      throws SAXException, IOException
-    {
+      throws SAXException, IOException {
       final String localResource = "/xhtml1"
-                                   + systemId.substring(systemId
-                                     .lastIndexOf('/'));
+        + systemId.substring(systemId
+        .lastIndexOf('/'));
       final InputStream entityStream = LocalEntityResolver.class
         .getResourceAsStream(localResource);
-      if (entityStream == null)
-      {
+      if (entityStream == null) {
         throw new IOException("Could not load " + localResource);
       }
       return new InputSource(entityStream);
@@ -81,15 +76,13 @@ public class SchemaCrawlerOutputTest
   private static TestDatabase testUtility = new TestDatabase();
 
   @AfterClass
-  public static void afterAllTests()
-  {
+  public static void afterAllTests() {
     testUtility.shutdownDatabase();
   }
 
   @BeforeClass
   public static void beforeAllTests()
-    throws Exception
-  {
+    throws Exception {
     TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();
     XMLUnit.setControlEntityResolver(new LocalEntityResolver());
@@ -97,8 +90,7 @@ public class SchemaCrawlerOutputTest
 
   @Test
   public void compareCompositeOutput()
-    throws Exception
-  {
+    throws Exception {
     final String queryCommand1 = "all_tables";
     final Config queriesConfig = new Config();
     queriesConfig.put(queryCommand1,
@@ -107,19 +99,17 @@ public class SchemaCrawlerOutputTest
     queriesConfig.put(queryCommand2,
                       "SELECT ${columns} FROM ${table} ORDER BY ${columns}");
 
-    final String[] commands = new String[] {
-        SchemaTextDetailType.verbose_schema + "," + Operation.count + ","
-            + Operation.dump,
-        SchemaTextDetailType.list_objects + "," + Operation.count,
-        queryCommand1 + "," + queryCommand2 + "," + Operation.count + ","
-            + SchemaTextDetailType.list_objects,
+    final String[] commands = new String[]{
+      SchemaTextDetailType.verbose_schema + "," + Operation.count + ","
+        + Operation.dump,
+      SchemaTextDetailType.list_objects + "," + Operation.count,
+      queryCommand1 + "," + queryCommand2 + "," + Operation.count + ","
+        + SchemaTextDetailType.list_objects,
     };
 
     final List<String> failures = new ArrayList<String>();
-    for (final OutputFormat outputFormat: OutputFormat.values())
-    {
-      for (final String command: commands)
-      {
+    for (final OutputFormat outputFormat : OutputFormat.values()) {
+      for (final String command : commands) {
         final String referenceFile = command + "." + outputFormat.name();
 
         final File testOutputFile = File.createTempFile("schemacrawler.test.",
@@ -146,11 +136,9 @@ public class SchemaCrawlerOutputTest
         executable.setAdditionalConfiguration(queriesConfig);
         executable.execute(connectionOptions.createConnection());
 
-        if (outputFormat == OutputFormat.html)
-        {
+        if (outputFormat == OutputFormat.html) {
           final Validator validator = new Validator(new FileReader(testOutputFile));
-          if (!validator.isValid())
-          {
+          if (!validator.isValid()) {
             failures.add(validator.toString());
           }
         }
@@ -161,8 +149,7 @@ public class SchemaCrawlerOutputTest
       }
     }
 
-    if (failures.size() > 0)
-    {
+    if (failures.size() > 0) {
       fail(failures.toString());
     }
 
@@ -170,17 +157,14 @@ public class SchemaCrawlerOutputTest
 
   @Test
   public void compareInfoLevelOutput()
-    throws Exception
-  {
+    throws Exception {
 
     final List<String> failures = new ArrayList<String>();
-    for (final InfoLevel infoLevel: InfoLevel.values())
-    {
-      for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
-        .values())
-      {
+    for (final InfoLevel infoLevel : InfoLevel.values()) {
+      for (final SchemaTextDetailType schemaTextDetailType : SchemaTextDetailType
+        .values()) {
         final String referenceFile = schemaTextDetailType + "_" + infoLevel
-                                     + ".txt";
+          + ".txt";
 
         final File testOutputFile = File.createTempFile("schemacrawler.test.",
                                                         "." + referenceFile);
@@ -212,8 +196,7 @@ public class SchemaCrawlerOutputTest
       }
     }
 
-    if (failures.size() > 0)
-    {
+    if (failures.size() > 0) {
       fail(failures.toString());
     }
 

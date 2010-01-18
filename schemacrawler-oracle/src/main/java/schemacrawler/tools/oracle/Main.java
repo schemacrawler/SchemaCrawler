@@ -27,34 +27,27 @@ import schemacrawler.tools.options.BundledDriverHelpOptions;
 /**
  * Main class that takes arguments for a database for crawling a schema.
  */
-public final class Main
-{
+public final class Main {
 
   /**
-   * Get connection parameters, and creates a connection, and crawls the
-   * schema.
-   * 
-   * @param args
-   *        Arguments passed into the program from the command line.
+   * Get connection parameters, and creates a connection, and crawls the schema.
+   *
+   * @param args Arguments passed into the program from the command line.
    */
-  public static void main(final String[] args)
-  {
-    try
-    {
+  public static void main(final String[] args) {
+    try {
       SchemaCrawlerMain
         .main(args,
               new BundledDriverHelpOptions("SchemaCrawler for Oracle",
                                            "/help/Connections.oracle.txt"),
               "/schemacrawler-oracle.config.properties");
     }
-    catch (final Exception e)
-    {
+    catch (final Exception e) {
       e.printStackTrace();
     }
   }
 
-  private Main()
-  {
+  private Main() {
     // Prevent instantiation
   }
 

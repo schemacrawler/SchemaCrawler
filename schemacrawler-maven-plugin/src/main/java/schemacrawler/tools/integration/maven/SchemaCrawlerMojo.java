@@ -226,7 +226,7 @@ public class SchemaCrawlerMojo
    */
   public String getOutputName() {
     final String outputFilename = new File(outputFile).getName();
-    return outputFilename.substring(0, outputFilename.lastIndexOf("."));
+    return outputFilename.substring(0, outputFilename.lastIndexOf('.'));
   }
 
   /**
@@ -349,7 +349,7 @@ public class SchemaCrawlerMojo
           .toURL();
       }
 
-      final Method addUrlMethod = new URLClassLoader(new URL[0]).getClass()
+      final Method addUrlMethod = URLClassLoader.class
         .getDeclaredMethod("addURL", new Class[]{
           URL.class
         });

@@ -28,19 +28,28 @@ import java.util.logging.Logger;
 /**
  * An enumeration wrapper around JDBC procedure types.
  */
-public enum SearchableType
-{
+public enum SearchableType {
 
-  /** Unknown */
+  /**
+   * Unknown
+   */
   unknown(-1, "unknown"),
-  /** Not searchable. */
+  /**
+   * Not searchable.
+   */
   predNone(DatabaseMetaData.typePredNone, "not searchable"),
-  /** Only searchable with where .. like. */
+  /**
+   * Only searchable with where .. like.
+   */
   predChar(DatabaseMetaData.typePredChar, "only searchable with where .. like"),
-  /** Searchable except with where .. like. */
+  /**
+   * Searchable except with where .. like.
+   */
   predBasic(DatabaseMetaData.typePredBasic,
-    "searchable except with where .. like"),
-  /** Searchable. */
+            "searchable except with where .. like"),
+  /**
+   * Searchable.
+   */
   searchable(DatabaseMetaData.typeSearchable, "searchable");
 
   private static final Logger LOGGER = Logger.getLogger(SearchableType.class
@@ -48,17 +57,14 @@ public enum SearchableType
 
   /**
    * Gets the enum value from the integer.
-   * 
-   * @param id
-   *        Id of the integer
+   *
+   * @param id Id of the integer
+   *
    * @return SearchableType
    */
-  public static SearchableType valueOf(final int id)
-  {
-    for (final SearchableType type: SearchableType.values())
-    {
-      if (type.getId() == id)
-      {
+  public static SearchableType valueOf(final int id) {
+    for (final SearchableType type : SearchableType.values()) {
+      if (type.getId() == id) {
         return type;
       }
     }
@@ -69,30 +75,27 @@ public enum SearchableType
   private final int id;
   private final String text;
 
-  private SearchableType(final int id, final String text)
-  {
+  private SearchableType(final int id, final String text) {
     this.id = id;
     this.text = text;
   }
 
   /**
    * Gets the id.
-   * 
+   *
    * @return id
    */
-  public int getId()
-  {
+  public int getId() {
     return id;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Object#toString()
    */
   @Override
-  public String toString()
-  {
+  public String toString() {
     return text;
   }
 

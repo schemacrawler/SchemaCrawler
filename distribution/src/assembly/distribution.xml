@@ -3,9 +3,10 @@
 
   <property name="distribution.assembly" location="${SchemaCrawler.home}/distribution/src/assembly" />
   <property name="distribution.target" location="${SchemaCrawler.home}/distribution/target" />
-  <property name="schemacrawler.distibution.jar" value="${distribution.target}/schemacrawler-${SchemaCrawler.version}.jar" />
+  <property name="schemacrawler.distibution.jar"
+            value="${distribution.target}/schemacrawler-${SchemaCrawler.version}.jar" />
 
-  <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+  <taskdef resource="net/sf/antcontrib/antcontrib.properties" />
 
   <target name="make-distribution" depends="
       do-downloads,
@@ -16,26 +17,26 @@
 	    make-website-distribution,
 	    cleanup-distribution
 	    "
-	  description="Package all sub-project jars into the distributable jar" />
+          description="Package all sub-project jars into the distributable jar" />
 
   <target name="do-downloads">
 
     <!-- Download licenses -->
-    <available file="gpl-3.0.txt" property="available.gpl-3.0.txt"/>
+    <available file="gpl-3.0.txt" property="available.gpl-3.0.txt" />
     <if>
       <equals arg1="${available.gpl-3.0.txt}" arg2="true" />
       <else>
         <get src="http://www.gnu.org/licenses/gpl-3.0.txt" dest="gpl-3.0.txt" usetimestamp="true" />
       </else>
     </if>
-    <available file="lgpl-3.0.txt" property="available.lgpl-3.0.txt"/>
+    <available file="lgpl-3.0.txt" property="available.lgpl-3.0.txt" />
     <if>
       <equals arg1="${available.lgpl-3.0.txt}" arg2="true" />
       <else>
         <get src="http://www.gnu.org/licenses/lgpl-3.0.txt" dest="lgpl-3.0.txt" usetimestamp="true" />
       </else>
     </if>
-    <available file="hsqlLicense.html" property="available.hsqlLicense.html"/>
+    <available file="hsqlLicense.html" property="available.hsqlLicense.html" />
     <if>
       <equals arg1="${available.hsqlLicense.html}" arg2="true" />
       <else>
@@ -44,11 +45,12 @@
     </if>
 
     <!-- Download HSQLDB -->
-    <available file="hsqldb_1_8_0_10.zip" property="available.hsqldb_1_8_0_10.zip"/>
+    <available file="hsqldb_1_8_0_10.zip" property="available.hsqldb_1_8_0_10.zip" />
     <if>
       <equals arg1="${available.hsqldb_1_8_0_10.zip}" arg2="true" />
       <else>
-        <get src="http://downloads.sourceforge.net/project/hsqldb/hsqldb/hsqldb_1_8_0/hsqldb_1_8_0_10.zip" dest="hsqldb_1_8_0_10.zip" verbose="true" usetimestamp="true" />
+        <get src="http://downloads.sourceforge.net/project/hsqldb/hsqldb/hsqldb_1_8_0/hsqldb_1_8_0_10.zip"
+             dest="hsqldb_1_8_0_10.zip" verbose="true" usetimestamp="true" />
       </else>
     </if>
 
@@ -66,7 +68,7 @@
         <attribute name="Main-Class" value="schemacrawler.Main" />
       </manifest>
       <zipfileset dir="${SchemaCrawler.home}/schemacrawler/target/classes" />
-    	<zipfileset dir="${SchemaCrawler.home}/schemacrawler-commandline/target/classes" />
+      <zipfileset dir="${SchemaCrawler.home}/schemacrawler-commandline/target/classes" />
       <zipfileset dir="${SchemaCrawler.home}/schemacrawler-tools/target/classes" />
       <zipfileset dir="${SchemaCrawler.home}/schemacrawler-integrations/target/classes" />
       <zipfileset dir="${SchemaCrawler.home}/schemacrawler-maven-plugin/target/classes" />
@@ -86,7 +88,7 @@
 
     <!-- Copy licenses -->
     <copy file="lgpl-3.0.txt" tofile="${distribution.staging.dir}/examples/LICENSE.txt" />
-    <copy file="hsqlLicense.html" tofile="${distribution.staging.dir}/examples/hsqlLicense.html"/>
+    <copy file="hsqlLicense.html" tofile="${distribution.staging.dir}/examples/hsqlLicense.html" />
 
     <!-- Copy config files -->
     <copy todir="${distribution.staging.dir}/examples">
@@ -103,7 +105,8 @@
     <copy todir="${distribution.staging.dir}/examples">
       <fileset dir="${distribution.target}/site/examples" />
     </copy>
-    <copy file="${SchemaCrawler.home}/schemacrawler-test/src/main/java/ApiExample.java" todir="${distribution.staging.dir}/examples/api" />
+    <copy file="${SchemaCrawler.home}/schemacrawler-test/src/main/java/ApiExample.java"
+          todir="${distribution.staging.dir}/examples/api" />
 
     <!-- Copy database server -->
     <unzip src="hsqldb_1_8_0_10.zip" dest="${distribution.staging.dir}/examples">
@@ -244,8 +247,10 @@
         </fileset>
       </copy>
 
-      <zip destfile="${distribution.target}/schemacrawler-@{database}-${SchemaCrawler.version}-distrib.zip" update="true" whenempty="fail">
-        <zipfileset dir="${distribution.target}/@{database}-launches" prefix="schemacrawler-@{database}-${SchemaCrawler.version}" />
+      <zip destfile="${distribution.target}/schemacrawler-@{database}-${SchemaCrawler.version}-distrib.zip"
+           update="true" whenempty="fail">
+        <zipfileset dir="${distribution.target}/@{database}-launches"
+                    prefix="schemacrawler-@{database}-${SchemaCrawler.version}" />
         <zipfileset dir="${distribution.target}" prefix="schemacrawler-@{database}-${SchemaCrawler.version}/lib">
           <include name="schemacrawler*.jar" />
         </zipfileset>

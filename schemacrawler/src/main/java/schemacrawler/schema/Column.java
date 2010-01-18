@@ -23,61 +23,59 @@ package schemacrawler.schema;
 
 /**
  * Represents a column in a database table or procedure.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface Column
-  extends BaseColumn
-{
+  extends BaseColumn {
 
   /**
    * Gets the default data value for the column.
-   * 
+   *
    * @return Default data value for the column
    */
   String getDefaultValue();
 
   /**
    * Gets a privilege by name.
-   * 
-   * @param name
-   *        Name
+   *
+   * @param name Name
+   *
    * @return Privilege.
    */
   Privilege getPrivilege(String name);
 
   /**
    * Gets the list of privileges for the table.
-   * 
+   *
    * @return Privileges for the table
    */
   Privilege[] getPrivileges();
 
   /**
-   * Referenced column if this column is part of a foreign key, null
-   * otherwise.
-   * 
+   * Referenced column if this column is part of a foreign key, null otherwise.
+   *
    * @return Referenced column
    */
   Column getReferencedColumn();
 
   /**
    * True if this column is part of a foreign key.
-   * 
+   *
    * @return If the column is part of a foreign key
    */
   boolean isPartOfForeignKey();
 
   /**
    * True if this column is a part of primary key.
-   * 
+   *
    * @return If the column is a part of primary key
    */
   boolean isPartOfPrimaryKey();
 
   /**
    * True if this column is a unique index.
-   * 
+   *
    * @return If the column is a unique index
    */
   boolean isPartOfUniqueIndex();

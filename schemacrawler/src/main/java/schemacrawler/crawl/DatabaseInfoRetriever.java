@@ -338,7 +338,7 @@ final class DatabaseInfoRetriever
    *
    * @return Whether a method is a result set method
    */
-  private boolean isDatabasePropertiesResultSetMethod(final Method method) {
+  private static boolean isDatabasePropertiesResultSetMethod(final Method method) {
     final Class<?> returnType = method.getReturnType();
     final boolean isPropertiesResultSetMethod = returnType
       .equals(ResultSet.class)
@@ -353,7 +353,7 @@ final class DatabaseInfoRetriever
    *
    * @return Whether method is a database property
    */
-  private boolean isDatabasePropertyMethod(final Method method) {
+  private static boolean isDatabasePropertyMethod(final Method method) {
     final Class<?> returnType = method.getReturnType();
     final boolean notPropertyMethod = returnType.equals(ResultSet.class)
       || returnType.equals(Connection.class)
@@ -368,7 +368,7 @@ final class DatabaseInfoRetriever
    *
    * @return Whether a method is a database property result set type
    */
-  private boolean isDatabasePropertyResultSetType(final Method method) {
+  private static boolean isDatabasePropertyResultSetType(final Method method) {
     final String[] databasePropertyResultSetTypes = new String[]{
       "deletesAreDetected",
       "insertsAreDetected",
@@ -386,10 +386,10 @@ final class DatabaseInfoRetriever
     return isDatabasePropertyResultSetType;
   }
 
-  private MutableDatabaseProperty retrieveResultSetTypeProperty(final DatabaseMetaData dbMetaData,
-                                                                final Method method,
-                                                                final int resultSetType,
-                                                                final String resultSetTypeName)
+  private static MutableDatabaseProperty retrieveResultSetTypeProperty(final DatabaseMetaData dbMetaData,
+                                                                       final Method method,
+                                                                       final int resultSetType,
+                                                                       final String resultSetTypeName)
     throws IllegalAccessException, InvocationTargetException {
     final String name = method.getName() + "For" + resultSetTypeName
       + "ResultSets";

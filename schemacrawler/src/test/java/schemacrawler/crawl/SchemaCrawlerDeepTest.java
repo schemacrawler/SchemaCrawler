@@ -18,49 +18,34 @@
 package schemacrawler.crawl;
 
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import schemacrawler.schema.CheckConstraint;
-import schemacrawler.schema.Column;
-import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.Index;
-import schemacrawler.schema.Privilege;
-import schemacrawler.schema.Schema;
-import schemacrawler.schema.Table;
-import schemacrawler.schema.Trigger;
+import schemacrawler.schema.*;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.TestDatabase;
 
-public class SchemaCrawlerDeepTest
-{
+import static org.junit.Assert.*;
+
+public class SchemaCrawlerDeepTest {
 
   private static TestDatabase testUtility = new TestDatabase();
 
   @AfterClass
-  public static void afterAllTests()
-    throws ClassNotFoundException
-  {
+  public static void afterAllTests() {
     testUtility.shutdownDatabase();
   }
 
   @BeforeClass
   public static void beforeAllTests()
-    throws Exception
-  {
+    throws Exception {
     TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();
   }
 
   @Test
   public void tableEquals()
-    throws Exception
-  {
+    throws Exception {
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setShowStoredProcedures(true);
@@ -83,33 +68,27 @@ public class SchemaCrawlerDeepTest
       .getPrimaryKey();
     table1.setPrimaryKey(primaryKey);
     table2.setPrimaryKey(primaryKey);
-    for (final Column column: table0.getColumns())
-    {
+    for (final Column column : table0.getColumns()) {
       table1.addColumn((MutableColumn) column);
       table2.addColumn((MutableColumn) column);
     }
-    for (final Index index: table0.getIndices())
-    {
+    for (final Index index : table0.getIndices()) {
       table1.addIndex((MutableIndex) index);
       table2.addIndex((MutableIndex) index);
     }
-    for (final ForeignKey fk: table0.getForeignKeys())
-    {
+    for (final ForeignKey fk : table0.getForeignKeys()) {
       table1.addForeignKey((MutableForeignKey) fk);
       table2.addForeignKey((MutableForeignKey) fk);
     }
-    for (final Trigger trigger: table0.getTriggers())
-    {
+    for (final Trigger trigger : table0.getTriggers()) {
       table1.addTrigger((MutableTrigger) trigger);
       table2.addTrigger((MutableTrigger) trigger);
     }
-    for (final Privilege privilege: table0.getPrivileges())
-    {
+    for (final Privilege privilege : table0.getPrivileges()) {
       table1.addPrivilege((MutablePrivilege) privilege);
       table2.addPrivilege((MutablePrivilege) privilege);
     }
-    for (final CheckConstraint checkConstraint: table0.getCheckConstraints())
-    {
+    for (final CheckConstraint checkConstraint : table0.getCheckConstraints()) {
       table1.addCheckConstraint((MutableCheckConstraint) checkConstraint);
       table2.addCheckConstraint((MutableCheckConstraint) checkConstraint);
     }

@@ -21,22 +21,16 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.Procedure;
-import schemacrawler.schema.ProcedureColumn;
-import schemacrawler.schema.ProcedureType;
-import schemacrawler.schema.RoutineBodyType;
-import schemacrawler.schema.Schema;
+import schemacrawler.schema.*;
 
 /**
- * Represents a database procedure. Created from metadata returned by a
- * JDBC call.
- * 
+ * Represents a database procedure. Created from metadata returned by a JDBC call.
+ *
  * @author Sualeh Fatehi
  */
 final class MutableProcedure
   extends AbstractDatabaseObject
-  implements Procedure
-{
+  implements Procedure {
 
   private static final long serialVersionUID = 3906925686089134130L;
 
@@ -45,8 +39,7 @@ final class MutableProcedure
   private RoutineBodyType routineBodyType;
   private final StringBuilder definition;
 
-  MutableProcedure(final Schema schema, final String name)
-  {
+  MutableProcedure(final Schema schema, final String name) {
     super(schema, name);
     // Default values
     procedureType = ProcedureType.unknown;
@@ -56,81 +49,71 @@ final class MutableProcedure
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Procedure#getColumn(java.lang.String)
    */
-  public MutableProcedureColumn getColumn(final String name)
-  {
+  public MutableProcedureColumn getColumn(final String name) {
     return columns.lookup(this, name);
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Procedure#getColumns()
    */
-  public ProcedureColumn[] getColumns()
-  {
-    return columns.values().toArray(new ProcedureColumn[columns.size()]);
+  public ProcedureColumn[] getColumns() {
+    return columns.values()
+      .toArray(new ProcedureColumn[columns.size()]);
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Procedure#getDefinition()
    */
-  public String getDefinition()
-  {
+  public String getDefinition() {
     return definition.toString();
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Procedure#getRoutineBodyType()
    */
-  public RoutineBodyType getRoutineBodyType()
-  {
+  public RoutineBodyType getRoutineBodyType() {
     return routineBodyType;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Procedure#getType()
    */
-  public ProcedureType getType()
-  {
+  public ProcedureType getType() {
     return procedureType;
   }
 
-  void addColumn(final MutableProcedureColumn column)
-  {
+  void addColumn(final MutableProcedureColumn column) {
     columns.add(column);
   }
 
-  void appendDefinition(final String definition)
-  {
-    if (definition != null)
-    {
-      this.definition.append(definition);
+  void appendDefinition(final String definition) {
+    if (definition != null) {
+      this.definition
+        .append(definition);
     }
   }
 
-  void setColumnComparator(final NamedObjectSort comparator)
-  {
+  void setColumnComparator(final NamedObjectSort comparator) {
     columns.setSortOrder(comparator);
   }
 
-  void setRoutineBodyType(final RoutineBodyType routineBodyType)
-  {
+  void setRoutineBodyType(final RoutineBodyType routineBodyType) {
     this.routineBodyType = routineBodyType;
   }
 
-  void setType(final ProcedureType type)
-  {
-    if (type == null)
-    {
+  void setType(final ProcedureType type) {
+    if (type == null) {
       throw new IllegalArgumentException("Null procedure type");
     }
     procedureType = type;

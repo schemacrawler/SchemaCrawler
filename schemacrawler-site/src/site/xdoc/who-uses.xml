@@ -26,7 +26,9 @@
           </li>
           <li>
             Luxembourg Java Users Group presentation on
-            <a href="http://www.yajug.org/confluence/download/attachments/917512/20081016_Eclipse_SDK.pdf?version=1">Make daily development easier and smarter</a>
+            <a href="http://www.yajug.org/confluence/download/attachments/917512/20081016_Eclipse_SDK.pdf?version=1">
+              Make daily development easier and smarter
+            </a>
           </li>
         </ul>
       </subsection>
@@ -34,11 +36,11 @@
         <p>SchemaCrawler in the open source projects.</p>
         <ul>
           <li>
-            <a href="http://code.google.com/p/jule/">Jule, </a>
+            <a href="http://code.google.com/p/jule/">Jule,</a>
             a code generator in Java.
           </li>
           <li>
-            <a href="http://www.jequel.de/">JEQUEL, </a>
+            <a href="http://www.jequel.de/">JEQUEL,</a>
             Java Embedded QUEry Language.
           </li>
         </ul>

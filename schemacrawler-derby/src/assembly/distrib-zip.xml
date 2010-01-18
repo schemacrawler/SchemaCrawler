@@ -26,6 +26,6 @@
       <includes>
         <include>derby.*</include>
       </includes>
-     </fileSet>
+    </fileSet>
   </fileSets>
 </assembly>

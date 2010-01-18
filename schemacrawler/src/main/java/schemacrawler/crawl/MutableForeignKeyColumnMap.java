@@ -26,15 +26,13 @@ import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.NamedObject;
 
 /**
- * Represents a single column mapping from a primary key column to a
- * foreign key column.
- * 
+ * Represents a single column mapping from a primary key column to a foreign key column.
+ *
  * @author Sualeh Fatehi
  */
 final class MutableForeignKeyColumnMap
   extends AbstractDependantNamedObject
-  implements ForeignKeyColumnMap
-{
+  implements ForeignKeyColumnMap {
 
   private static final long serialVersionUID = 3689073962672273464L;
 
@@ -42,8 +40,7 @@ final class MutableForeignKeyColumnMap
   private Column primaryKeyColumn;
   private int keySequence;
 
-  MutableForeignKeyColumnMap(final NamedObject parent, final String name)
-  {
+  MutableForeignKeyColumnMap(final NamedObject parent, final String name) {
     super(parent, name);
   }
 
@@ -51,31 +48,28 @@ final class MutableForeignKeyColumnMap
    * {@inheritDoc}
    */
   @Override
-  public int compareTo(final NamedObject obj)
-  {
-    if (obj == null)
-    {
+  public int compareTo(final NamedObject obj) {
+    if (obj == null) {
       return -1;
     }
 
     final ForeignKeyColumnMap other = (ForeignKeyColumnMap) obj;
     int comparison = 0;
 
-    if (comparison == 0)
-    {
+    if (comparison == 0) {
       comparison = getKeySequence() - other.getKeySequence();
     }
     // Note: For the primary key and foreign key columns, compare by
     // name.
-    if (comparison == 0)
-    {
-      comparison = getPrimaryKeyColumn().getFullName().compareTo(other
-        .getPrimaryKeyColumn().getFullName());
+    if (comparison == 0) {
+      comparison = getPrimaryKeyColumn().getFullName()
+        .compareTo(other
+          .getPrimaryKeyColumn().getFullName());
     }
-    if (comparison == 0)
-    {
-      comparison = getForeignKeyColumn().getFullName().compareTo(other
-        .getForeignKeyColumn().getFullName());
+    if (comparison == 0) {
+      comparison = getForeignKeyColumn().getFullName()
+        .compareTo(other
+          .getForeignKeyColumn().getFullName());
     }
 
     return comparison;
@@ -83,46 +77,40 @@ final class MutableForeignKeyColumnMap
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.ForeignKeyColumnMap#getForeignKeyColumn()
    */
-  public Column getForeignKeyColumn()
-  {
+  public Column getForeignKeyColumn() {
     return foreignKeyColumn;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.ForeignKeyColumnMap#getKeySequence()
    */
-  public int getKeySequence()
-  {
+  public int getKeySequence() {
     return keySequence;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.ForeignKeyColumnMap#getPrimaryKeyColumn()
    */
-  public Column getPrimaryKeyColumn()
-  {
+  public Column getPrimaryKeyColumn() {
     return primaryKeyColumn;
   }
 
-  void setForeignKeyColumn(final Column foreignKeyColumn)
-  {
+  void setForeignKeyColumn(final Column foreignKeyColumn) {
     this.foreignKeyColumn = foreignKeyColumn;
   }
 
-  void setKeySequence(final int keySequence)
-  {
+  void setKeySequence(final int keySequence) {
     this.keySequence = keySequence;
   }
 
-  void setPrimaryKeyColumn(final Column primaryKeyColumn)
-  {
+  void setPrimaryKeyColumn(final Column primaryKeyColumn) {
     this.primaryKeyColumn = primaryKeyColumn;
   }
 

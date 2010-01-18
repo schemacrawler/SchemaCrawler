@@ -27,13 +27,12 @@ import sf.util.Utility;
 
 /**
  * Represents a database object.
- * 
+ *
  * @author Sualeh Fatehi
  */
 abstract class AbstractDatabaseObject
   extends AbstractNamedObject
-  implements DatabaseObject
-{
+  implements DatabaseObject {
 
   private static final long serialVersionUID = 3099561832386790624L;
 
@@ -42,42 +41,34 @@ abstract class AbstractDatabaseObject
   private transient String fullName;
   private transient int hashCode;
 
-  AbstractDatabaseObject(final Schema schema, final String name)
-  {
+  AbstractDatabaseObject(final Schema schema, final String name) {
     super(name);
     this.schema = schema;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
-  public boolean equals(final Object obj)
-  {
-    if (!super.equals(obj))
-    {
+  public boolean equals(final Object obj) {
+    if (!super.equals(obj)) {
       return false;
     }
-    if (this == obj)
-    {
+    if (this == obj) {
       return true;
     }
-    if (obj == null)
-    {
+    if (obj == null) {
       return false;
     }
     final AbstractDatabaseObject other = (AbstractDatabaseObject) obj;
-    if (schema == null)
-    {
-      if (other.schema != null)
-      {
+    if (schema == null) {
+      if (other.schema != null) {
         return false;
       }
     }
-    else if (!schema.equals(other.schema))
-    {
+    else if (!schema.equals(other.schema)) {
       return false;
     }
     return true;
@@ -85,73 +76,64 @@ abstract class AbstractDatabaseObject
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Object#toString()
    */
   @Override
-  public String getFullName()
-  {
+  public String getFullName() {
     buildFullName();
     return fullName;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.DatabaseObject#getSchema()
    */
-  public final Schema getSchema()
-  {
+  public final Schema getSchema() {
     return schema;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#hashCode()
    */
   @Override
-  public int hashCode()
-  {
+  public int hashCode() {
     buildHashCode();
     return hashCode;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Object#toString()
    */
   @Override
-  public String toString()
-  {
+  public String toString() {
     return getFullName();
   }
 
-  private void buildFullName()
-  {
-    if (fullName == null)
-    {
+  private void buildFullName() {
+    if (fullName == null) {
       final StringBuilder buffer = new StringBuilder();
-      if (schema != null && !Utility.isBlank(schema.getFullName()))
-      {
-        buffer.append(schema.getFullName()).append(".");
+      if (schema != null && !Utility.isBlank(schema.getFullName())) {
+        buffer.append(schema.getFullName())
+          .append(".");
       }
-      if (!Utility.isBlank(getName()))
-      {
+      if (!Utility.isBlank(getName())) {
         buffer.append(getName());
       }
       fullName = buffer.toString();
     }
   }
 
-  private void buildHashCode()
-  {
-    if (hashCode == 0)
-    {
+  private void buildHashCode() {
+    if (hashCode == 0) {
       final int prime = 31;
       int result = super.hashCode();
-      result = prime * result + (schema == null? 0: schema.hashCode());
+      result = prime * result + (schema == null ? 0 : schema.hashCode());
       result = prime * result + super.hashCode();
       hashCode = result;
     }

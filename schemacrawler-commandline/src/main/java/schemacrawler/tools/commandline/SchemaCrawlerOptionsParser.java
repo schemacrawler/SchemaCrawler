@@ -31,12 +31,11 @@ import sf.util.CommandLineParser.StringOption;
 
 /**
  * Parses the command line.
- * 
+ *
  * @author Sualeh Fatehi
  */
 final class SchemaCrawlerOptionsParser
-  extends BaseOptionsParser<SchemaCrawlerOptions>
-{
+  extends BaseOptionsParser<SchemaCrawlerOptions> {
 
   private final StringOption optionInfoLevel = new StringOption(Option.NO_SHORT_FORM,
                                                                 "infolevel",
@@ -84,123 +83,105 @@ final class SchemaCrawlerOptionsParser
 
   private final SchemaCrawlerOptions options;
 
-  SchemaCrawlerOptionsParser(final String[] args, final Config config)
-  {
+  SchemaCrawlerOptionsParser(final String[] args, final Config config) {
     super(args);
     options = new SchemaCrawlerOptions(config);
   }
 
   @Override
-  protected SchemaCrawlerOptions getOptions()
-  {
-    parse(new Option[] {
-        optionInfoLevel,
-        optionSchemas,
-        optionTableTypes,
-        optionShowStoredProcedures,
-        optionTables,
-        optionExcludeColumns,
-        optionProcedures,
-        optionExcludeProcedureColumns,
-        optionGrepColumns,
-        optionGrepProcedureColumns,
-        optionGrepInvertMatch,
-        optionSortTables,
-        optionSortColumns,
-        optionSortInout,
+  protected SchemaCrawlerOptions getOptions() {
+    parse(new Option[]{
+      optionInfoLevel,
+      optionSchemas,
+      optionTableTypes,
+      optionShowStoredProcedures,
+      optionTables,
+      optionExcludeColumns,
+      optionProcedures,
+      optionExcludeProcedureColumns,
+      optionGrepColumns,
+      optionGrepProcedureColumns,
+      optionGrepInvertMatch,
+      optionSortTables,
+      optionSortColumns,
+      optionSortInout,
     });
 
-    if (optionInfoLevel.isFound())
-    {
-      try
-      {
+    if (optionInfoLevel.isFound()) {
+      try {
         final String infoLevel = optionInfoLevel.getValue();
         options.setSchemaInfoLevel(InfoLevel.valueOf(infoLevel)
           .getSchemaInfoLevel());
       }
-      catch (final Exception e)
-      {
+      catch (final IllegalArgumentException e) {
         options.setSchemaInfoLevel(SchemaInfoLevel.standard());
       }
     }
 
-    if (optionSchemas.isFound())
-    {
+    if (optionSchemas.isFound()) {
       final InclusionRule schemaInclusionRule = new InclusionRule(optionSchemas
         .getValue(), InclusionRule.NONE);
       options.setSchemaInclusionRule(schemaInclusionRule);
     }
 
-    if (optionTableTypes.isFound())
-    {
+    if (optionTableTypes.isFound()) {
       options.setTableTypes(optionTableTypes.getValue());
     }
-    if (optionShowStoredProcedures.isFound())
-    {
+    if (optionShowStoredProcedures.isFound()) {
       options.setShowStoredProcedures(optionShowStoredProcedures.getValue());
     }
 
-    if (optionTables.isFound())
-    {
+    if (optionTables.isFound()) {
       final InclusionRule tableInclusionRule = new InclusionRule(optionTables
         .getValue(), InclusionRule.NONE);
       options.setTableInclusionRule(tableInclusionRule);
     }
-    if (optionExcludeColumns.isFound())
-    {
+    if (optionExcludeColumns.isFound()) {
       final InclusionRule columnInclusionRule = new InclusionRule(InclusionRule.ALL,
                                                                   optionExcludeColumns
                                                                     .getValue());
       options.setColumnInclusionRule(columnInclusionRule);
     }
 
-    if (optionProcedures.isFound())
-    {
+    if (optionProcedures.isFound()) {
       final InclusionRule procedureInclusionRule = new InclusionRule(optionProcedures
-                                                                       .getValue(),
+        .getValue(),
                                                                      InclusionRule.NONE);
       options.setProcedureInclusionRule(procedureInclusionRule);
     }
-    if (optionExcludeProcedureColumns.isFound())
-    {
+    if (optionExcludeProcedureColumns.isFound()) {
       final InclusionRule procedureColumnInclusionRule = new InclusionRule(InclusionRule.ALL,
                                                                            optionExcludeProcedureColumns
                                                                              .getValue());
       options.setProcedureColumnInclusionRule(procedureColumnInclusionRule);
     }
 
-    if (optionGrepInvertMatch.isFound())
-    {
+    if (optionGrepInvertMatch.isFound()) {
       options.setGrepInvertMatch(optionGrepInvertMatch.getValue());
     }
 
-    if (optionGrepColumns.isFound())
-    {
+    if (optionGrepColumns.isFound()) {
       final InclusionRule grepColumnInclusionRule = new InclusionRule(optionGrepColumns
-                                                                        .getValue(),
+        .getValue(),
                                                                       InclusionRule.NONE);
       options.setGrepColumnInclusionRule(grepColumnInclusionRule);
     }
 
-    if (optionGrepProcedureColumns.isFound())
-    {
+    if (optionGrepProcedureColumns.isFound()) {
       final InclusionRule grepProcedureColumnInclusionRule = new InclusionRule(optionGrepProcedureColumns
-                                                                                 .getValue(),
+        .getValue(),
                                                                                InclusionRule.NONE);
       options
         .setGrepProcedureColumnInclusionRule(grepProcedureColumnInclusionRule);
     }
 
-    if (optionSortColumns.isFound())
-    {
+    if (optionSortColumns.isFound()) {
       options.setAlphabeticalSortForTableColumns(optionSortColumns.getValue());
     }
-    if (optionSortTables.isFound())
-    {
+    if (optionSortTables.isFound()) {
       options.setAlphabeticalSortForTables(optionSortTables.getValue());
     }
-    if (optionSortInout.isFound())
-    {
+    if (optionSortInout.isFound()) {
       options
         .setAlphabeticalSortForProcedureColumns(optionSortInout.getValue());
     }

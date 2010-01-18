@@ -21,6 +21,12 @@
 package schemacrawler.crawl;
 
 
+import schemacrawler.schema.*;
+import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaInfoLevel;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,52 +35,30 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.Column;
-import schemacrawler.schema.ColumnMap;
-import schemacrawler.schema.Database;
-import schemacrawler.schema.Procedure;
-import schemacrawler.schema.ProcedureColumn;
-import schemacrawler.schema.ResultsColumns;
-import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.InclusionRule;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaInfoLevel;
-
 /**
- * SchemaCrawler uses database meta-data to get the details about the
- * schema.
- * 
+ * SchemaCrawler uses database meta-data to get the details about the schema.
+ *
  * @author Sualeh Fatehi
  */
-public final class SchemaCrawler
-{
+public final class SchemaCrawler {
 
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawler.class
     .getName());
 
   /**
    * Gets the result set columns metadata.
-   * 
-   * @param resultSet
-   *        Result set
+   *
+   * @param resultSet Result set
+   *
    * @return Schema
    */
-  public static ResultsColumns getResultColumns(final ResultSet resultSet)
-  {
+  public static ResultsColumns getResultColumns(final ResultSet resultSet) {
     ResultsColumns resultColumns = null;
-    try
-    {
+    try {
       final ResultsRetriever resultsRetriever = new ResultsRetriever(resultSet);
       resultColumns = resultsRetriever.retrieveResults();
     }
-    catch (final SchemaCrawlerException e)
-    {
-      LOGGER.log(Level.WARNING, e.getMessage(), e);
-      resultColumns = null;
-    }
-    catch (final SQLException e)
-    {
+    catch (final SchemaCrawlerException e) {
       LOGGER.log(Level.WARNING, e.getMessage(), e);
       resultColumns = null;
     }
@@ -85,17 +69,14 @@ public final class SchemaCrawler
 
   /**
    * Constructs a SchemaCrawler object, from a connection.
-   * 
-   * @param connection
-   *        An database connection.
-   * @throws SchemaCrawlerException
-   *         On a crawler exception
+   *
+   * @param connection An database connection.
+   *
+   * @throws SchemaCrawlerException On a crawler exception
    */
   public SchemaCrawler(final Connection connection)
-    throws SchemaCrawlerException
-  {
-    if (connection == null)
-    {
+    throws SchemaCrawlerException {
+    if (connection == null) {
       throw new SchemaCrawlerException("No connection specified");
     }
     this.connection = connection;
@@ -103,21 +84,18 @@ public final class SchemaCrawler
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schemacrawler.SchemaCrawler#crawl(schemacrawler.schemacrawler.SchemaCrawlerOptions,
    *      schemacrawler.schemacrawler.CrawlHandler)
    */
   public Database crawl(final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
-  {
+    throws SchemaCrawlerException {
     final MutableDatabase database = new MutableDatabase("database");
 
     RetrieverConnection retrieverConnection = null;
-    try
-    {
+    try {
       SchemaCrawlerOptions schemaCrawlerOptions = options;
-      if (schemaCrawlerOptions == null)
-      {
+      if (schemaCrawlerOptions == null) {
         schemaCrawlerOptions = new SchemaCrawlerOptions();
       }
       retrieverConnection = new RetrieverConnection(connection,
@@ -131,185 +109,152 @@ public final class SchemaCrawler
 
       return database;
     }
-    catch (final SQLException e)
-    {
+    catch (final SQLException e) {
       throw new SchemaCrawlerException("Database access exception", e);
     }
   }
 
-  private void crawlColumnDataTypes(final MutableDatabase database,
-                                    final RetrieverConnection retrieverConnection,
-                                    final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
-  {
-    try
-    {
+  private static void crawlColumnDataTypes(final MutableDatabase database,
+                                           final RetrieverConnection retrieverConnection,
+                                           final SchemaCrawlerOptions options)
+    throws SchemaCrawlerException {
+    try {
       final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
       final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection,
                                                                         database);
-      if (infoLevel.isRetrieveColumnDataTypes())
-      {
+      if (infoLevel.isRetrieveColumnDataTypes()) {
         retriever.retrieveSystemColumnDataTypes();
       }
-      if (infoLevel.isRetrieveUserDefinedColumnDataTypes())
-      {
-        for (final SchemaReference schemaNameObject: retriever.getSchemaNames())
-        {
+      if (infoLevel.isRetrieveUserDefinedColumnDataTypes()) {
+        for (final SchemaReference schemaNameObject : retriever.getSchemaNames()) {
           retriever.retrieveUserDefinedColumnDataTypes(schemaNameObject
             .getSchemaName(), schemaNameObject.getSchemaName());
         }
       }
     }
-    catch (final SQLException e)
-    {
+    catch (final SQLException e) {
       throw new SchemaCrawlerException("Exception retrieving column data type information",
                                        e);
     }
   }
 
-  private void crawlDatabaseInfo(final MutableDatabase database,
-                                 final RetrieverConnection retrieverConnection,
-                                 final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
-  {
-    try
-    {
+  private static void crawlDatabaseInfo(final MutableDatabase database,
+                                        final RetrieverConnection retrieverConnection,
+                                        final SchemaCrawlerOptions options)
+    throws SchemaCrawlerException {
+    try {
 
       final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
       final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection,
                                                                         database);
 
-      if (infoLevel.isRetrieveSchemaCrawlerInfo())
-      {
+      if (infoLevel.isRetrieveSchemaCrawlerInfo()) {
         retriever.retrieveSchemaCrawlerInfo();
-        if (infoLevel.isRetrieveAdditionalSchemaCrawlerInfo())
-        {
+        if (infoLevel.isRetrieveAdditionalSchemaCrawlerInfo()) {
           retriever.retrieveAdditionalSchemaCrawlerInfo();
         }
       }
-      if (infoLevel.isRetrieveDatabaseInfo())
-      {
+      if (infoLevel.isRetrieveDatabaseInfo()) {
         retriever.retrieveDatabaseInfo();
-        if (infoLevel.isRetrieveAdditionalDatabaseInfo())
-        {
+        if (infoLevel.isRetrieveAdditionalDatabaseInfo()) {
           retriever.retrieveAdditionalDatabaseInfo();
         }
       }
-      if (infoLevel.isRetrieveJdbcDriverInfo())
-      {
+      if (infoLevel.isRetrieveJdbcDriverInfo()) {
         retriever.retrieveJdbcDriverInfo();
-        if (infoLevel.isRetrieveAdditionalJdbcDriverInfo())
-        {
+        if (infoLevel.isRetrieveAdditionalJdbcDriverInfo()) {
           retriever.retrieveAdditionalJdbcDriverInfo();
         }
       }
     }
-    catch (final SQLException e)
-    {
+    catch (final SQLException e) {
       throw new SchemaCrawlerException("Exception retrieving database information",
                                        e);
     }
   }
 
-  private void crawlProcedures(final MutableDatabase database,
-                               final RetrieverConnection retrieverConnection,
-                               final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
-  {
+  private static void crawlProcedures(final MutableDatabase database,
+                                      final RetrieverConnection retrieverConnection,
+                                      final SchemaCrawlerOptions options)
+    throws SchemaCrawlerException {
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
     final boolean retrieveProcedures = options.isShowStoredProcedures()
-                                       && infoLevel.isRetrieveProcedures();
-    if (!retrieveProcedures)
-    {
+      && infoLevel.isRetrieveProcedures();
+    if (!retrieveProcedures) {
       return;
     }
 
     final ProcedureRetriever retriever;
     final ProcedureExRetriever retrieverExtra;
-    try
-    {
+    try {
       retriever = new ProcedureRetriever(retrieverConnection, database);
       retrieverExtra = new ProcedureExRetriever(retrieverConnection, database);
-      for (final SchemaReference schemaNameObject: retriever.getSchemaNames())
-      {
+      for (final SchemaReference schemaNameObject : retriever.getSchemaNames()) {
         retriever.retrieveProcedures(schemaNameObject.getCatalogName(),
                                      schemaNameObject.getSchemaName(),
                                      options.getProcedureInclusionRule());
       }
       final NamedObjectList<MutableProcedure> allProcedures = database
         .getAllProcedures();
-      for (final MutableProcedure procedure: allProcedures)
-      {
-        if (infoLevel.isRetrieveProcedureColumns())
-        {
+      for (final MutableProcedure procedure : allProcedures) {
+        if (infoLevel.isRetrieveProcedureColumns()) {
           retriever.retrieveProcedureColumns(procedure, options
             .getProcedureColumnInclusionRule());
         }
-        if (!grepMatch(options, procedure))
-        {
+        if (!grepMatch(options, procedure)) {
           ((MutableSchema) procedure.getSchema()).removeProcedure(procedure);
           allProcedures.remove(procedure);
         }
       }
 
-      if (infoLevel.isRetrieveProcedureInformation())
-      {
+      if (infoLevel.isRetrieveProcedureInformation()) {
         retrieverExtra.retrieveProcedureInformation();
       }
 
-      for (final MutableProcedure procedure: allProcedures)
-      {
+      for (final MutableProcedure procedure : allProcedures) {
         // Set comparators
         procedure.setColumnComparator(NamedObjectSort
           .getNamedObjectSort(options.isAlphabeticalSortForProcedureColumns()));
       }
     }
-    catch (final SQLException e)
-    {
+    catch (final SQLException e) {
       throw new SchemaCrawlerException("Exception retrieving procedures", e);
     }
   }
 
-  private void crawlSchemas(final MutableDatabase database,
-                            final RetrieverConnection retrieverConnection,
-                            final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
-  {
-    try
-    {
+  private static void crawlSchemas(final MutableDatabase database,
+                                   final RetrieverConnection retrieverConnection,
+                                   final SchemaCrawlerOptions options)
+    throws SchemaCrawlerException {
+    try {
       final SchemaRetriever retriever = new SchemaRetriever(retrieverConnection,
                                                             database);
 
       retriever.retrieveSchemas(options.getSchemaInclusionRule());
     }
-    catch (final SQLException e)
-    {
+    catch (final SQLException e) {
       throw new SchemaCrawlerException("Exception retrieving database information",
                                        e);
     }
   }
 
-  private void crawlTables(final MutableDatabase database,
-                           final RetrieverConnection retrieverConnection,
-                           final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
-  {
+  private static void crawlTables(final MutableDatabase database,
+                                  final RetrieverConnection retrieverConnection,
+                                  final SchemaCrawlerOptions options)
+    throws SchemaCrawlerException {
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
     final boolean retrieveTables = infoLevel.isRetrieveTables();
-    if (!retrieveTables)
-    {
+    if (!retrieveTables) {
       return;
     }
 
     final TableRetriever retriever;
     final TableExRetriever retrieverExtra;
-    try
-    {
+    try {
       retriever = new TableRetriever(retrieverConnection, database);
       retrieverExtra = new TableExRetriever(retrieverConnection, database);
 
-      for (final SchemaReference schemaNameObject: retriever.getSchemaNames())
-      {
+      for (final SchemaReference schemaNameObject : retriever.getSchemaNames()) {
         retriever.retrieveTables(schemaNameObject.getCatalogName(),
                                  schemaNameObject.getSchemaName(),
                                  options.getTableTypes(),
@@ -317,64 +262,51 @@ public final class SchemaCrawler
       }
 
       final NamedObjectList<MutableTable> allTables = database.getAllTables();
-      for (final MutableTable table: allTables)
-      {
-        if (infoLevel.isRetrieveTableColumns())
-        {
+      for (final MutableTable table : allTables) {
+        if (infoLevel.isRetrieveTableColumns()) {
           retriever.retrieveColumns(table, options.getColumnInclusionRule());
         }
-        if (!grepMatch(options, table))
-        {
+        if (!grepMatch(options, table)) {
           ((MutableSchema) table.getSchema()).removeTable(table);
           allTables.remove(table);
         }
       }
 
-      if (infoLevel.isRetrieveCheckConstraintInformation())
-      {
+      if (infoLevel.isRetrieveCheckConstraintInformation()) {
         retrieverExtra.retrieveCheckConstraintInformation();
       }
-      if (infoLevel.isRetrieveTriggerInformation())
-      {
+      if (infoLevel.isRetrieveTriggerInformation()) {
         retrieverExtra.retrieveTriggerInformation();
       }
-      if (infoLevel.isRetrieveViewInformation())
-      {
+      if (infoLevel.isRetrieveViewInformation()) {
         retrieverExtra.retrieveViewInformation();
       }
-      if (infoLevel.isRetrieveTablePrivileges())
-      {
+      if (infoLevel.isRetrieveTablePrivileges()) {
         retrieverExtra.retrieveTablePrivileges();
       }
-      if (infoLevel.isRetrieveTableColumnPrivileges())
-      {
+      if (infoLevel.isRetrieveTableColumnPrivileges()) {
         retrieverExtra.retrieveTableColumnPrivileges();
       }
 
       final NamedObjectSort tablesSort = NamedObjectSort
         .getNamedObjectSort(options.isAlphabeticalSortForTables());
       if (tablesSort == NamedObjectSort.natural
-          && !infoLevel.isRetrieveForeignKeys())
-      {
+        && !infoLevel.isRetrieveForeignKeys()) {
         LOGGER
           .log(Level.WARNING,
                "Foreign-keys are not being retrieved, so tables cannot be sorted using the natural sort order");
       }
-      for (final MutableTable table: allTables)
-      {
+      for (final MutableTable table : allTables) {
         final boolean isView = table instanceof MutableView;
-        if (!isView && infoLevel.isRetrieveTableColumns())
-        {
+        if (!isView && infoLevel.isRetrieveTableColumns()) {
           retriever.retrievePrimaryKey(table);
-          if (infoLevel.isRetrieveIndices())
-          {
+          if (infoLevel.isRetrieveIndices()) {
             retriever.retrieveIndices(table, true);
             retriever.retrieveIndices(table, false);
             //
             table.replacePrimaryKey();
           }
-          if (infoLevel.isRetrieveForeignKeys())
-          {
+          if (infoLevel.isRetrieveForeignKeys()) {
             retriever.retrieveForeignKeys(table);
           }
         }
@@ -395,51 +327,42 @@ public final class SchemaCrawler
       final TablesGraph tablesGraph = new TablesGraph(allTables);
       tablesGraph.setTablesSortIndices();
 
-      if (infoLevel.isRetrieveWeakAssociations())
-      {
+      if (infoLevel.isRetrieveWeakAssociations()) {
         final List<ColumnMap> weakAssociations = new ArrayList<ColumnMap>();
         final WeakAssociationsAnalyzer tableAnalyzer = new WeakAssociationsAnalyzer(allTables,
                                                                                     weakAssociations);
         tableAnalyzer.analyzeTables();
       }
     }
-    catch (final SQLException e)
-    {
+    catch (final SQLException e) {
       throw new SchemaCrawlerException("Exception retrieving tables", e);
     }
 
   }
 
   /**
-   * Special case for "grep" like functionality. Handle procedure if a
-   * procedure column inclusion rule is found, and at least one column
-   * matches the rule.
-   * 
-   * @param options
-   *        Options
-   * @param procedure
-   *        Procedure to check
+   * Special case for "grep" like functionality. Handle procedure if a procedure column inclusion rule is found, and at
+   * least one column matches the rule.
+   *
+   * @param options   Options
+   * @param procedure Procedure to check
+   *
    * @return Whether the column should be included
    */
-  private boolean grepMatch(final SchemaCrawlerOptions options,
-                            final Procedure procedure)
-  {
+  private static boolean grepMatch(final SchemaCrawlerOptions options,
+                                   final Procedure procedure) {
     final InclusionRule grepProcedureColumnInclusionRule = options
       .getGrepProcedureColumnInclusionRule();
     final boolean invertMatch = options.isGrepInvertMatch();
 
     boolean include = false;
     final ProcedureColumn[] columns = procedure.getColumns();
-    if (columns.length == 0)
-    {
+    if (columns.length == 0) {
       include = true;
     }
-    else
-    {
-      for (final ProcedureColumn column: columns)
-      {
-        if (grepProcedureColumnInclusionRule.include(column.getFullName()))
-        {
+    else {
+      for (final ProcedureColumn column : columns) {
+        if (grepProcedureColumnInclusionRule.include(column.getFullName())) {
           // We found a column that should be included,
           // so handle the procedure
           include = true;
@@ -447,50 +370,41 @@ public final class SchemaCrawler
         }
       }
     }
-    if (invertMatch)
-    {
+    if (invertMatch) {
       include = !include;
     }
 
-    if (!include)
-    {
+    if (!include) {
       LOGGER.log(Level.FINE, "Removing procedure " + procedure
-                             + " since it does not match the grep pattern");
+        + " since it does not match the grep pattern");
     }
 
     return include;
   }
 
   /**
-   * Special case for "grep" like functionality. Handle table if a table
-   * column inclusion rule is found, and at least one column matches the
-   * rule.
-   * 
-   * @param options
-   *        Options
-   * @param table
-   *        Table to check
+   * Special case for "grep" like functionality. Handle table if a table column inclusion rule is found, and at least
+   * one column matches the rule.
+   *
+   * @param options Options
+   * @param table   Table to check
+   *
    * @return Whether the column should be included
    */
-  private boolean grepMatch(final SchemaCrawlerOptions options,
-                            final Table table)
-  {
+  private static boolean grepMatch(final SchemaCrawlerOptions options,
+                                   final Table table) {
     final InclusionRule grepColumnInclusionRule = options
       .getGrepColumnInclusionRule();
     final boolean invertMatch = options.isGrepInvertMatch();
 
     boolean include = false;
     final Column[] columns = table.getColumns();
-    if (columns.length == 0)
-    {
+    if (columns.length == 0) {
       include = true;
     }
-    else
-    {
-      for (final Column column: columns)
-      {
-        if (grepColumnInclusionRule.include(column.getFullName()))
-        {
+    else {
+      for (final Column column : columns) {
+        if (grepColumnInclusionRule.include(column.getFullName())) {
           // We found a column that should be included, so handle the
           // table
           include = true;
@@ -498,15 +412,13 @@ public final class SchemaCrawler
         }
       }
     }
-    if (invertMatch)
-    {
+    if (invertMatch) {
       include = !include;
     }
 
-    if (!include)
-    {
+    if (!include) {
       LOGGER.log(Level.FINE, "Removing table " + table
-                             + " since it does not match the grep pattern");
+        + " since it does not match the grep pattern");
     }
 
     return include;

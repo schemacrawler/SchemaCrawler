@@ -45,8 +45,8 @@ hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
     * \
   FROM \
     INFORMATION_SCHEMA.SYSTEM_VIEWS
-]]>    
-    </source>
+]]>
+        </source>
       </subsection>
       <subsection name="INFORMATION_SCHEMA.VIEWS">
         <table>

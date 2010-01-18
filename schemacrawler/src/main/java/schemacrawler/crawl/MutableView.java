@@ -28,13 +28,12 @@ import schemacrawler.schema.View;
 
 /**
  * Represents a view in the database.
- * 
+ *
  * @author Sualeh Fatehi
  */
 class MutableView
   extends MutableTable
-  implements View
-{
+  implements View {
 
   private static final long serialVersionUID = 3257290248802284852L;
 
@@ -42,8 +41,7 @@ class MutableView
   private CheckOptionType checkOption;
   private boolean updatable;
 
-  MutableView(final Schema schema, final String name)
-  {
+  MutableView(final Schema schema, final String name) {
     super(schema, name);
     definition = new StringBuilder();
   }
@@ -51,64 +49,55 @@ class MutableView
   /**
    * {@inheritDoc}
    */
-  public CheckOptionType getCheckOption()
-  {
+  public CheckOptionType getCheckOption() {
     return checkOption;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.View#getDefinition()
    */
-  public String getDefinition()
-  {
+  public String getDefinition() {
     return definition.toString();
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see View#getType()
    */
   @Override
-  public TableType getType()
-  {
+  public TableType getType() {
     return TableType.view;
   }
 
   /**
    * {@inheritDoc}
    */
-  public boolean isUpdatable()
-  {
+  public boolean isUpdatable() {
     return updatable;
   }
 
-  void appendDefinition(final String definition)
-  {
-    if (definition != null)
-    {
-      this.definition.append(definition);
+  void appendDefinition(final String definition) {
+    if (definition != null) {
+      this.definition
+        .append(definition);
     }
   }
 
-  void setCheckOption(final CheckOptionType checkOption)
-  {
+  void setCheckOption(final CheckOptionType checkOption) {
     this.checkOption = checkOption;
   }
 
   @Override
-  void setType(final TableType type)
-  {
-    if (type != TableType.view)
-    {
+  void setType(final TableType type) {
+    if (type != TableType.view) {
       throw new UnsupportedOperationException("Cannot reset view type");
     }
   }
 
-  void setUpdatable(final boolean updatable)
-  {
+  void setUpdatable(final boolean updatable) {
     this.updatable = updatable;
   }
 

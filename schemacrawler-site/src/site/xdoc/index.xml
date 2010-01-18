@@ -12,7 +12,8 @@
           SchemaCrawler is an open-source Java API that makes working with database
           metadata as easy as working with
           plain old Java
-          objects.</p>
+          objects.
+        </p>
         <p>
           SchemaCrawler is also a command-line tool to output your database
           schema and data in a
@@ -25,13 +26,16 @@
       </subsection>
       <subsection name="SchemaCrawler API">
         <p>
-          Java programmers need to access database metadata</p>
+          Java programmers need to access database metadata
+        </p>
         <ul>
           <li>in order to dynamically generate SQL statements</li>
           <li>when programmatically determining the capabilities of a given
-            RDBMS</li>
+            RDBMS
+          </li>
           <li>when finding the names and types of tables and columns in the
-            database</li>
+            database
+          </li>
         </ul>
         <p>
           Programmers can obtain database metadata using JDBC, but with the
@@ -62,7 +66,8 @@
           is consistent and usable.
           Database metadata is provided in the form of plain old Java objects
           (POJOs). Some examples of the consistency
-          and usability of the SchemaCrawler API are that:</p>
+          and usability of the SchemaCrawler API are that:
+        </p>
         <ul>
           <li>
             <code>Table</code>
@@ -86,7 +91,7 @@
             <code>java.util.List</code>
           </li>
           <li>You don't worry about database resources or exception handling
-					</li>
+          </li>
           <li>
             You can use standard Java programming idioms - for example, you
             can access the
@@ -109,7 +114,8 @@
         </p>
 
         <p>The sample code below demonstrates just how easy it is to use
-          SchemaCrawler:</p>
+          SchemaCrawler:
+        </p>
         <source><![CDATA[
 final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
 final Database database = SchemaCrawlerUtility.getDatabase(connection, options);
@@ -138,7 +144,7 @@ for (final Catalog catalog: database.getCatalogs())
           ,
           <a href="snapshot-examples/snapshot.html">XHTML,</a>
           or
-          <a href="snapshot-examples/snapshot.csv"> comma-separated text (CSV).</a>
+          <a href="snapshot-examples/snapshot.csv">comma-separated text (CSV).</a>
           The XHTML output is a combination of valid XML (that can be
           manipulated by XML tools or XSLT), and HTML that
           can be viewed in a browser.
@@ -167,21 +173,27 @@ for (final Catalog catalog: database.getCatalogs())
       </subsection>
       <subsection name="SchemaCrawler Website Content License">
         <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">
-          <img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" />
+          <img alt="Creative Commons License" style="border-width:0"
+               src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" />
         </a>
         <br />
         <span xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://purl.org/dc/dcmitype/Text" property="dc:title"
-          rel="dc:type">SchemaCrawler Website</span>
+              rel="dc:type">SchemaCrawler Website
+        </span>
         by
         <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Sualeh
-          Fatehi</span>
+          Fatehi
+        </span>
         is licensed under a
-        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike 3.0
-          Unported License</a>
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share Alike
+          3.0
+          Unported License
+        </a>
         .
         <br />
         Based on a work at
-        <a xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://schemacrawler.sourceforge.net/" rel="dc:source">schemacrawler.sourceforge.net
+        <a xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://schemacrawler.sourceforge.net/" rel="dc:source">
+          schemacrawler.sourceforge.net
         </a>
         .
       </subsection>

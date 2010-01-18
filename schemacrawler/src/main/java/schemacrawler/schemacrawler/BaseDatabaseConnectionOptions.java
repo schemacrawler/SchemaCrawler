@@ -60,8 +60,6 @@ abstract class BaseDatabaseConnectionOptions
     }
   }
 
-  public abstract String getConnectionUrl();
-
   public final Driver getJdbcDriver() {
     try {
       return DriverManager.getDriver(getConnectionUrl());
@@ -105,7 +103,7 @@ abstract class BaseDatabaseConnectionOptions
     return builder.toString();
   }
 
-  protected final void loadJdbcDriver(final String jdbcDriverClassName)
+  protected static final void loadJdbcDriver(final String jdbcDriverClassName)
     throws SchemaCrawlerException {
     try {
       Class.forName(jdbcDriverClassName);

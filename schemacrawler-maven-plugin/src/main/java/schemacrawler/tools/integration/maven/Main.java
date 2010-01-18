@@ -21,18 +21,17 @@
 package schemacrawler.tools.integration.maven;
 
 
+import schemacrawler.Version;
+import sf.util.Utility;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import schemacrawler.Version;
-import sf.util.Utility;
-
 /**
  * Main class that takes arguments for a database for crawling a schema.
  */
-public final class Main
-{
+public final class Main {
 
   private static final String VERIFY_MAVEN_PLUGIN_SCRIPT_FILESTEM = "verify-schemacrawler-maven-plugin";
   private static final String INSTALL_MAVEN_PLUGIN_SCRIPT_FILESTEM = "install-schemacrawler-maven-plugin";
@@ -52,105 +51,101 @@ public final class Main
 
   /**
    * Returns true if the current operating system is Windows.
-   * 
+   *
    * @return True is the current operating system is Windows.
    */
-  public static boolean isWindowsOS()
-  {
+  public static boolean isWindowsOS() {
     final String osName = System.getProperty("os.name");
     final boolean isWindowsOS = osName == null
-                                || osName.toLowerCase().indexOf("windows") != -1;
+      || osName.toLowerCase()
+      .indexOf("windows") != -1;
     return isWindowsOS;
   }
 
   /**
-   * Get connection parameters, and creates a connection, and crawls the
-   * schema.
-   * 
-   * @param args
-   *        Arguments passed into the program from the command line.
-   * @throws Exception
-   *         On an exception
+   * Get connection parameters, and creates a connection, and crawls the schema.
+   *
+   * @param args Arguments passed into the program from the command line.
+   *
+   * @throws Exception On an exception
    */
   public static void main(final String[] args)
-    throws Exception
-  {
+    throws Exception {
 
-    final String shellExt = isWindowsOS()? ".cmd": ".sh";
+    final String shellExt = isWindowsOS() ? ".cmd" : ".sh";
 
-    System.out.println(Version.about());
+    System.out
+      .println(Version.about());
 
     // Create POM file
     final File pomFile = writeStringToFile(MAVEN_PLUGIN_POM_FILENAME, pluginPom);
-    System.out.println("Created Maven POM file: " + pomFile.getAbsolutePath());
+    System.out
+      .println("Created Maven POM file: " + pomFile.getAbsolutePath());
 
     // Create install script
     final String installScript = "mvn install:install-file "
-                                 + "-DgroupId=schemacrawler "
-                                 + "-DartifactId=schemacrawler-maven-plugin "
-                                 + "-Dversion=" + Version.getVersion() + " "
-                                 + "-Dpackaging=maven-plugin "
-                                 + "-Dfile=schemacrawler-"
-                                 + Version.getVersion() + ".jar "
-                                 + "-DpomFile=schemacrawler-maven-plugin.pom "
-                                 + "-DcreateChecksum=true";
+      + "-DgroupId=schemacrawler "
+      + "-DartifactId=schemacrawler-maven-plugin "
+      + "-Dversion=" + Version.getVersion() + " "
+      + "-Dpackaging=maven-plugin "
+      + "-Dfile=schemacrawler-"
+      + Version.getVersion() + ".jar "
+      + "-DpomFile=schemacrawler-maven-plugin.pom "
+      + "-DcreateChecksum=true";
     final File installScriptFile = writeStringToFile(INSTALL_MAVEN_PLUGIN_SCRIPT_FILESTEM
-                                                         + shellExt,
+      + shellExt,
                                                      installScript);
-    System.out.println("Created installation script: "
-                       + installScriptFile.getAbsolutePath());
+    System.out
+      .println("Created installation script: "
+        + installScriptFile.getAbsolutePath());
 
     // Create verify script
     final String verifyScript = "mvn help:describe "
-                                + "-DgroupId=schemacrawler "
-                                + "-DartifactId=schemacrawler-maven-plugin "
-                                + "-Dversion=" + Version.getVersion() + " ";
+      + "-DgroupId=schemacrawler "
+      + "-DartifactId=schemacrawler-maven-plugin "
+      + "-Dversion=" + Version.getVersion() + " ";
     final File verifyScriptFile = writeStringToFile(VERIFY_MAVEN_PLUGIN_SCRIPT_FILESTEM
-                                                        + shellExt,
+      + shellExt,
                                                     verifyScript);
-    System.out.println("Created verification script: "
-                       + verifyScriptFile.getAbsolutePath());
+    System.out
+      .println("Created verification script: "
+        + verifyScriptFile.getAbsolutePath());
 
     // Instructions
-    System.out.println(instructions);
+    System.out
+      .println(instructions);
 
   }
 
   /**
    * Writes a string to a file.
-   * 
-   * @param fileName
-   *        Name of the file to write.
-   * @param fileContents
-   *        Contents of the file.
+   *
+   * @param fileName     Name of the file to write.
+   * @param fileContents Contents of the file.
+   *
    * @return The file.
-   * @throws IOException
-   *         On an exception.
+   *
+   * @throws IOException On an exception.
    */
   public static File writeStringToFile(final String fileName,
                                        final String fileContents)
-    throws IOException
-  {
+    throws IOException {
     FileWriter writer = null;
-    try
-    {
+    try {
       final File file = new File(fileName);
       writer = new FileWriter(file);
       writer.write(fileContents);
       writer.flush();
       return file;
     }
-    finally
-    {
-      if (writer != null)
-      {
+    finally {
+      if (writer != null) {
         writer.close();
       }
     }
   }
 
-  private Main()
-  {
+  private Main() {
   }
 
 }

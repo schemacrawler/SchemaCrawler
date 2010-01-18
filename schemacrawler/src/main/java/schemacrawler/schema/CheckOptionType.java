@@ -24,14 +24,19 @@ package schemacrawler.schema;
 /**
  * View check options.
  */
-public enum CheckOptionType
-{
+public enum CheckOptionType {
 
-  /** Unknown. */
+  /**
+   * Unknown.
+   */
   unknown,
-  /** Check option none. */
+  /**
+   * Check option none.
+   */
   none,
-  /** Check option cascade. */
+  /**
+   * Check option cascade.
+   */
   cascade;
 
 }

@@ -21,67 +21,60 @@
 package schemacrawler.crawl;
 
 
-import java.util.Arrays;
-import java.util.Iterator;
-
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
 
+import java.util.Arrays;
+import java.util.Iterator;
+
 /**
  * Represents a result set, a result of a query.
- * 
+ *
  * @author Sualeh Fatehi
  */
 class MutableResultsColumns
   extends AbstractNamedObject
-  implements ResultsColumns
-{
+  implements ResultsColumns {
 
   private static final long serialVersionUID = 5204766782914559188L;
 
   private final NamedObjectList<MutableResultsColumn> columns = new NamedObjectList<MutableResultsColumn>();
 
-  MutableResultsColumns(final String name)
-  {
+  MutableResultsColumns(final String name) {
     super(name);
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.ResultsColumns#getColumn(java.lang.String)
    */
-  public ResultsColumn getColumn(final String name)
-  {
+  public ResultsColumn getColumn(final String name) {
     return columns.lookup(name);
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.ResultsColumns#getColumns()
    */
-  public ResultsColumn[] getColumns()
-  {
-    return columns.values().toArray(new ResultsColumn[columns.size()]);
+  public ResultsColumn[] getColumns() {
+    return columns.values()
+      .toArray(new ResultsColumn[columns.size()]);
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.ResultsColumns#getColumnsListAsString()
    */
-  public String getColumnsListAsString()
-  {
+  public String getColumnsListAsString() {
     String columnsList = "";
     final ResultsColumn[] columnsArray = getColumns();
-    if (columnsArray != null && columnsArray.length > 0)
-    {
+    if (columnsArray != null && columnsArray.length > 0) {
       final StringBuilder buffer = new StringBuilder();
-      for (int i = 0; i < columnsArray.length; i++)
-      {
-        if (i > 0)
-        {
+      for (int i = 0; i < columnsArray.length; i++) {
+        if (i > 0) {
           buffer.append(", ");
         }
         final ResultsColumn column = columnsArray[i];
@@ -92,13 +85,12 @@ class MutableResultsColumns
     return columnsList;
   }
 
-  public Iterator<ResultsColumn> iterator()
-  {
-    return Arrays.asList(getColumns()).iterator();
+  public Iterator<ResultsColumn> iterator() {
+    return Arrays.asList(getColumns())
+      .iterator();
   }
 
-  void addColumn(final MutableResultsColumn column)
-  {
+  void addColumn(final MutableResultsColumn column) {
     columns.add(column);
   }
 

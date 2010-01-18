@@ -21,23 +21,12 @@
 package schemacrawler.integration.test;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertTrue;
-
-import java.io.FileWriter;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.util.List;
-
 import org.apache.commons.io.IOUtils;
 import org.custommonkey.xmlunit.DetailedDiff;
 import org.custommonkey.xmlunit.Diff;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -45,31 +34,34 @@ import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.integration.xml.XmlDatabase;
 import schemacrawler.utility.TestDatabase;
 
-public class SchemaSerializationTest
-{
+import java.io.FileWriter;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.List;
+
+import static org.junit.Assert.*;
+
+public class SchemaSerializationTest {
 
   private static final boolean DEBUG = false;
 
   private static TestDatabase testUtility = new TestDatabase();
 
   @AfterClass
-  public static void afterAllTests()
-  {
+  public static void afterAllTests() {
     testUtility.shutdownDatabase();
   }
 
   @BeforeClass
   public static void beforeAllTests()
-    throws Exception
-  {
+    throws Exception {
     TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();
   }
 
   @Test
   public void schemaSerializationWithXStream()
-    throws Exception
-  {
+    throws Exception {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setShowStoredProcedures(true);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
@@ -115,8 +107,7 @@ public class SchemaSerializationTest
     final DetailedDiff myDiff = new DetailedDiff(new Diff(xmlSerializedCatalog1,
                                                           xmlSerializedCatalog2));
     final List<?> allDifferences = myDiff.getAllDifferences();
-    if (DEBUG || !myDiff.similar())
-    {
+    if (DEBUG || !myDiff.similar()) {
       IOUtils.write(xmlSerializedCatalog1,
                     new FileWriter("/temp/serialized-schema-1.xml"));
       IOUtils.write(xmlSerializedCatalog2,

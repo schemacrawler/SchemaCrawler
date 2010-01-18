@@ -26,6 +26,6 @@
       <includes>
         <include>sqlite.*</include>
       </includes>
-     </fileSet>
+    </fileSet>
   </fileSets>
 </assembly>

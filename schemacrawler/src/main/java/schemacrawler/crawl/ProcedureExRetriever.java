@@ -21,6 +21,9 @@
 package schemacrawler.crawl;
 
 
+import schemacrawler.schema.RoutineBodyType;
+import schemacrawler.schemacrawler.InformationSchemaViews;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -28,44 +31,34 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.RoutineBodyType;
-import schemacrawler.schemacrawler.InformationSchemaViews;
-
 /**
- * A retriever that uses database metadata to get the extended details
- * about the database procedures.
- * 
+ * A retriever that uses database metadata to get the extended details about the database procedures.
+ *
  * @author Sualeh Fatehi
  */
 final class ProcedureExRetriever
-  extends AbstractRetriever
-{
+  extends AbstractRetriever {
 
   private static final Logger LOGGER = Logger
     .getLogger(ProcedureExRetriever.class.getName());
 
   ProcedureExRetriever(final RetrieverConnection retrieverConnection,
-                       final MutableDatabase database)
-    throws SQLException
-  {
+                       final MutableDatabase database) {
     super(retrieverConnection, database);
   }
 
   /**
    * Retrieves a procedure definitions from the database.
-   * 
-   * @param procedures
-   *        List of procedures.
-   * @throws SQLException
-   *         On a SQL exception
+   *
+   * @param procedures List of procedures.
+   *
+   * @throws SQLException On a SQL exception
    */
   void retrieveProcedureInformation()
-    throws SQLException
-  {
+    throws SQLException {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
-    if (!informationSchemaViews.hasRoutinesSql())
-    {
+    if (!informationSchemaViews.hasRoutinesSql()) {
       LOGGER.log(Level.FINE,
                  "Procedure definition SQL statement was not provided");
       return;
@@ -75,21 +68,17 @@ final class ProcedureExRetriever
     final Connection connection = getDatabaseConnection();
     final Statement statement = connection.createStatement();
     MetadataResultSet results = null;
-    try
-    {
+    try {
       results = new MetadataResultSet(statement
         .executeQuery(procedureDefinitionsSql));
     }
-    catch (final SQLException e)
-    {
+    catch (final SQLException e) {
       LOGGER.log(Level.WARNING, "Could not retrieve procedure information", e);
       return;
     }
 
-    try
-    {
-      while (results.next())
-      {
+    try {
+      while (results.next()) {
         final String catalogName = results.getString("ROUTINE_CATALOG");
         final String schemaName = results.getString("ROUTINE_SCHEMA");
         final String procedureName = results.getString("ROUTINE_NAME");
@@ -97,10 +86,9 @@ final class ProcedureExRetriever
         final MutableProcedure procedure = lookupProcedure(catalogName,
                                                            schemaName,
                                                            procedureName);
-        if (procedure != null)
-        {
+        if (procedure != null) {
           LOGGER.log(Level.FINER, "Retrieving procedure information: "
-                                  + procedureName);
+            + procedureName);
           final RoutineBodyType routineBodyType = RoutineBodyType
             .valueOf(results.getString("ROUTINE_BODY")
               .toLowerCase(Locale.ENGLISH));
@@ -113,8 +101,7 @@ final class ProcedureExRetriever
         }
       }
     }
-    finally
-    {
+    finally {
       statement.close();
       results.close();
     }

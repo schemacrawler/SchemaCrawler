@@ -23,69 +23,68 @@ package schemacrawler.schema;
 
 /**
  * Represents the database schema.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface Schema
-  extends NamedObject
-{
+  extends NamedObject {
 
   /**
    * Gets the name of the catalog.
-   * 
+   *
    * @return Name of the catalog.
    */
   String getCatalogName();
 
   /**
    * Gets the column data types defined in the schema, by name.
-   * 
+   *
    * @return Column data types
    */
   ColumnDataType getColumnDataType(String name);
 
   /**
    * Gets the column data types defined in the schema, by name.
-   * 
+   *
    * @return Column data types
    */
   ColumnDataType[] getColumnDataTypes();
 
   /**
    * Gets a procedure by name.
-   * 
-   * @param name
-   *        Name
+   *
+   * @param name Name
+   *
    * @return Procedure.
    */
   Procedure getProcedure(String name);
 
   /**
    * Gets the procedures.
-   * 
+   *
    * @return Procedures
    */
   Procedure[] getProcedures();
 
   /**
    * Gets the name of the schema.
-   * 
+   *
    * @return Name of the schema.
    */
   String getSchemaName();
 
   /**
    * Gets a table by name.
-   * 
-   * @param name
-   *        Name
+   *
+   * @param name Name
+   *
    * @return Table.
    */
   Table getTable(String name);
 
   /**
    * Gets the tables.
-   * 
+   *
    * @return Tables
    */
   Table[] getTables();

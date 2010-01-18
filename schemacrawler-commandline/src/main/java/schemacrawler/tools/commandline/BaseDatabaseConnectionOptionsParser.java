@@ -28,12 +28,11 @@ import sf.util.CommandLineParser.StringOption;
 
 /**
  * Options for the command line.
- * 
+ *
  * @author sfatehi
  */
 abstract class BaseDatabaseConnectionOptionsParser
-  extends BaseOptionsParser<ConnectionOptions>
-{
+  extends BaseOptionsParser<ConnectionOptions> {
 
   protected final StringOption optionUser = new StringOption(Option.NO_SHORT_FORM,
                                                              "user",
@@ -46,12 +45,11 @@ abstract class BaseDatabaseConnectionOptionsParser
 
   /**
    * Parses the command line into options.
-   * 
+   *
    * @param args
    */
   protected BaseDatabaseConnectionOptionsParser(final String[] args,
-                                                final Config config)
-  {
+                                                final Config config) {
     super(args);
     this.config = config;
   }

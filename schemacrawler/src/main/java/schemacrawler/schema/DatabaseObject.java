@@ -23,16 +23,15 @@ package schemacrawler.schema;
 
 /**
  * Represents a database object.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface DatabaseObject
-  extends NamedObject
-{
+  extends NamedObject {
 
   /**
    * Gets the database schema.
-   * 
+   *
    * @return Database schema
    */
   Schema getSchema();

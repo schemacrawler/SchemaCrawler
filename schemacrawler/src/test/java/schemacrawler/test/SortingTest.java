@@ -18,52 +18,43 @@
 package schemacrawler.test;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import schemacrawler.schema.Column;
-import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.Index;
-import schemacrawler.schema.Schema;
-import schemacrawler.schema.Table;
+import schemacrawler.schema.*;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.utility.TestDatabase;
 
-public class SortingTest
-{
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+public class SortingTest {
 
   private static TestDatabase testUtility = new TestDatabase();
 
   @AfterClass
   public static void afterAllTests()
-    throws Exception
-  {
+    throws Exception {
     testUtility.shutdownDatabase();
   }
 
   @BeforeClass
   public static void beforeAllTests()
-    throws Exception
-  {
+    throws Exception {
     TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();
   }
 
   @Test
   public void columnSort()
-    throws Exception
-  {
+    throws Exception {
 
-    final String[] sortedAlpha = new String[] {
-        "CUSTOMERID", "ID", "TOTAL"
+    final String[] sortedAlpha = new String[]{
+      "CUSTOMERID", "ID", "TOTAL"
     };
-    final String[] sortedNatural = new String[] {
-        "ID", "CUSTOMERID", "TOTAL"
+    final String[] sortedNatural = new String[]{
+      "ID", "CUSTOMERID", "TOTAL"
     };
     checkColumnSort(sortedAlpha, true);
     checkColumnSort(sortedNatural, false);
@@ -72,14 +63,13 @@ public class SortingTest
 
   @Test
   public void fkSort()
-    throws Exception
-  {
+    throws Exception {
 
-    final String[] sortedAlpha = new String[] {
-        "FK_A_ITEM_PRODUCT", "FK_B_ITEM_INVOICE"
+    final String[] sortedAlpha = new String[]{
+      "FK_A_ITEM_PRODUCT", "FK_B_ITEM_INVOICE"
     };
-    final String[] sortedNatural = new String[] {
-        "FK_B_ITEM_INVOICE", "FK_A_ITEM_PRODUCT"
+    final String[] sortedNatural = new String[]{
+      "FK_B_ITEM_INVOICE", "FK_A_ITEM_PRODUCT"
     };
     checkFkSort(sortedAlpha, true);
     checkFkSort(sortedNatural, false);
@@ -88,14 +78,13 @@ public class SortingTest
 
   @Test
   public void indexSort()
-    throws Exception
-  {
+    throws Exception {
 
-    final String[] sortedAlpha = new String[] {
-        "INDEX_A_SUPPLIER", "INDEX_B_SUPPLIER"
+    final String[] sortedAlpha = new String[]{
+      "INDEX_A_SUPPLIER", "INDEX_B_SUPPLIER"
     };
-    final String[] sortedNatural = new String[] {
-        "INDEX_B_SUPPLIER", "INDEX_A_SUPPLIER"
+    final String[] sortedNatural = new String[]{
+      "INDEX_B_SUPPLIER", "INDEX_A_SUPPLIER"
     };
     checkIndexSort(sortedAlpha, true);
     checkIndexSort(sortedNatural, false);
@@ -105,8 +94,7 @@ public class SortingTest
   @SuppressWarnings("boxing")
   private void checkColumnSort(final String[] expectedValues,
                                final boolean sortAlphabetically)
-    throws Exception
-  {
+    throws Exception {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setAlphabeticalSortForTableColumns(sortAlphabetically);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
@@ -115,16 +103,15 @@ public class SortingTest
 
     final Table table = schema.getTable("INVOICE");
     assertNotNull("Table INVOICE not found", table);
-    if (table.getName().equals("INVOICE"))
-    {
+    if (table.getName()
+      .equals("INVOICE")) {
       final Column[] columns = table.getColumns();
       assertEquals("Column count does not match", 3, columns.length);
-      for (int i = 0; i < columns.length; i++)
-      {
+      for (int i = 0; i < columns.length; i++) {
         final Column column = columns[i];
         assertEquals("Columns not "
-                     + (sortAlphabetically? "alphabetically": "naturally")
-                     + " sorted", expectedValues[i], column.getName());
+          + (sortAlphabetically ? "alphabetically" : "naturally")
+          + " sorted", expectedValues[i], column.getName());
       }
     }
   }
@@ -132,8 +119,7 @@ public class SortingTest
   @SuppressWarnings("boxing")
   private void checkFkSort(final String[] expectedValues,
                            final boolean sortAlphabetically)
-    throws Exception
-  {
+    throws Exception {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setAlphabeticalSortForForeignKeys(sortAlphabetically);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
@@ -142,18 +128,16 @@ public class SortingTest
 
     final Table[] tables = schema.getTables();
     assertEquals("Table count does not match", 6, tables.length);
-    for (final Table table: tables)
-    {
-      if (table.getName().equals("ITEM"))
-      {
+    for (final Table table : tables) {
+      if (table.getName()
+        .equals("ITEM")) {
         final ForeignKey[] foreignKeys = table.getForeignKeys();
         assertEquals("Foreign key count does not match", 2, foreignKeys.length);
-        for (int i = 0; i < foreignKeys.length; i++)
-        {
+        for (int i = 0; i < foreignKeys.length; i++) {
           final ForeignKey foreignKey = foreignKeys[i];
           assertEquals("Foreign keys not "
-                       + (sortAlphabetically? "alphabetically": "naturally")
-                       + " sorted", expectedValues[i], foreignKey.getName());
+            + (sortAlphabetically ? "alphabetically" : "naturally")
+            + " sorted", expectedValues[i], foreignKey.getName());
         }
       }
     }
@@ -161,8 +145,7 @@ public class SortingTest
 
   private void checkIndexSort(final String[] expectedValues,
                               final boolean sortAlphabetically)
-    throws Exception
-  {
+    throws Exception {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setAlphabeticalSortForIndexes(sortAlphabetically);
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
@@ -171,18 +154,16 @@ public class SortingTest
 
     final Table[] tables = schema.getTables();
     assertEquals("Table count does not match", 6, tables.length);
-    for (final Table table: tables)
-    {
-      if (table.getName().equals("SUPPLIER"))
-      {
+    for (final Table table : tables) {
+      if (table.getName()
+        .equals("SUPPLIER")) {
         final Index[] indices = table.getIndices();
         assertEquals("Index count does not match", 2, indices.length);
-        for (int i = 0; i < indices.length; i++)
-        {
+        for (int i = 0; i < indices.length; i++) {
           final Index index = indices[i];
           assertEquals("Indexes not "
-                       + (sortAlphabetically? "alphabetically": "naturally")
-                       + " sorted", expectedValues[i], index.getName());
+            + (sortAlphabetically ? "alphabetically" : "naturally")
+            + " sorted", expectedValues[i], index.getName());
         }
       }
     }

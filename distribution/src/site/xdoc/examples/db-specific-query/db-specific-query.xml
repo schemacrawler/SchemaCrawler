@@ -5,11 +5,12 @@
     <title>SchemaCrawler - Database-Specific Queries Example</title>
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
-	<body>
+  <body>
     <section name="SchemaCrawler - Database-Specific Queries Example">
       <subsection name="Description">
         <p>SchemaCrawler has the capability to execute any arbitrary SQL, even if the SQL is
-          database-specific. This example demonstrates how to execute arbitrary SQL.</p>
+          database-specific. This example demonstrates how to execute arbitrary SQL.
+        </p>
       </subsection>
       <subsection name="How to Run">
         <ol type="1">
@@ -17,32 +18,42 @@
             Make sure that the Java executable is on your path.
           </li>
           <li>
-            Copy the <span class="code">schemacrawler.config.properties</span> file into the
-              <span class="code">db-specific-query</span> example directory.
+            Copy the
+            <span class="code">schemacrawler.config.properties</span>
+            file into the
+            <span class="code">db-specific-query</span>
+            example directory.
           </li>
           <li>Start the database server by running StartDatabaseServer script from the
-            distribution directory.</li>
+            distribution directory.
+          </li>
           <li>
             Start a command shell in the
-              <span class="code">db-specific-query</span> example directory.
+            <span class="code">db-specific-query</span>
+            example directory.
           </li>
-          <li> Run
-            <span class="code">db-specific-query.cmd</span> (or
-            <span class="code">db-specific-query.sh</span> on
-              Unix). </li>
+          <li>Run
+            <span class="code">db-specific-query.cmd</span>
+            (or
+            <span class="code">db-specific-query.sh</span>
+            on
+            Unix).
+          </li>
         </ol>
       </subsection>
       <subsection name="How to Experiment">
         <ol>
-          <li> Try modifying the
-            <span class="code">schemacrawler.config.properties</span> with
-            different queries. </li>
+          <li>Try modifying the
+            <span class="code">schemacrawler.config.properties</span>
+            with
+            different queries.
+          </li>
           <li>
             Redirect the output of SchemaCrawler into a file, by running
-              <span class="code">db-specific-query.cmd &gt; file.txt</span>.
+            <span class="code">db-specific-query.cmd &gt; file.txt</span>.
           </li>
         </ol>
       </subsection>
     </section>
-	</body>
+  </body>
 </document>

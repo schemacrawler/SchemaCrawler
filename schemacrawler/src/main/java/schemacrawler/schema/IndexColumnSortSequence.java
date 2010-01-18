@@ -27,14 +27,19 @@ import java.util.logging.Logger;
 /**
  * An enumeration wrapper around index sort sequences.
  */
-public enum IndexColumnSortSequence
-{
+public enum IndexColumnSortSequence {
 
-  /** Unknown */
+  /**
+   * Unknown
+   */
   unknown("unknown"),
-  /** Ascending. */
+  /**
+   * Ascending.
+   */
   ascending("A"),
-  /** Descending. */
+  /**
+   * Descending.
+   */
   descending("D");
 
   private static final Logger LOGGER = Logger
@@ -42,17 +47,15 @@ public enum IndexColumnSortSequence
 
   /**
    * Find the enumeration value corresponding to the string.
-   * 
-   * @param code
-   *        Sort sequence code.
+   *
+   * @param code Sort sequence code.
+   *
    * @return Enumeration value
    */
-  public static IndexColumnSortSequence valueOfFromCode(final String code)
-  {
-    for (final IndexColumnSortSequence type: IndexColumnSortSequence.values())
-    {
-      if (type.getCode().equalsIgnoreCase(code))
-      {
+  public static IndexColumnSortSequence valueOfFromCode(final String code) {
+    for (final IndexColumnSortSequence type : IndexColumnSortSequence.values()) {
+      if (type.getCode()
+        .equalsIgnoreCase(code)) {
         return type;
       }
     }
@@ -62,18 +65,16 @@ public enum IndexColumnSortSequence
 
   private final String code;
 
-  private IndexColumnSortSequence(final String code)
-  {
+  private IndexColumnSortSequence(final String code) {
     this.code = code;
   }
 
   /**
    * Index sort sequence code.
-   * 
+   *
    * @return Index sort sequence code
    */
-  public String getCode()
-  {
+  public String getCode() {
     return code;
   }
 

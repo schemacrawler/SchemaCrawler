@@ -21,32 +21,29 @@
 package schemacrawler.utility;
 
 
-import java.sql.Connection;
-
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
+import java.sql.Connection;
+
 /**
  * SchemaCrawler utility methods.
- * 
+ *
  * @author sfatehi
  */
-public final class SchemaCrawlerUtility
-{
+public final class SchemaCrawlerUtility {
 
   public static Database getDatabase(final Connection connection,
                                      final SchemaCrawlerOptions schemaCrawlerOptions)
-    throws SchemaCrawlerException
-  {
+    throws SchemaCrawlerException {
     final SchemaCrawler schemaCrawler = new SchemaCrawler(connection);
     final Database database = schemaCrawler.crawl(schemaCrawlerOptions);
     return database;
   }
 
-  private SchemaCrawlerUtility()
-  {
+  private SchemaCrawlerUtility() {
     // Prevent instantiation
   }
 

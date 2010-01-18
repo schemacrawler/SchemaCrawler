@@ -23,48 +23,45 @@ package schemacrawler.schema;
 
 /**
  * Represents an index on a database table.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface Index
-  extends DependantObject
-{
+  extends DependantObject {
 
   /**
-   * Gets the cardinality. When the index type is statistic, then this
-   * is the number of rows in the table; otherwise, it is the number of
-   * unique values in the index.
-   * 
+   * Gets the cardinality. When the index type is statistic, then this is the number of rows in the table; otherwise, it
+   * is the number of unique values in the index.
+   *
    * @return Cardinality
    */
   int getCardinality();
 
   /**
    * Gets the list of columns in ordinal order.
-   * 
+   *
    * @return Columns of the table.
    */
   IndexColumn[] getColumns();
 
   /**
-   * Gets the pages. When the index type is statistic, then this is the
-   * number of pages used for the table, otherwise it is the number of
-   * pages used for the current index.
-   * 
+   * Gets the pages. When the index type is statistic, then this is the number of pages used for the table, otherwise it
+   * is the number of pages used for the current index.
+   *
    * @return Pages
    */
   int getPages();
 
   /**
    * Gets the index type.
-   * 
+   *
    * @return Index type
    */
   IndexType getType();
 
   /**
    * If the index is unique.
-   * 
+   *
    * @return If the index is unique
    */
   boolean isUnique();

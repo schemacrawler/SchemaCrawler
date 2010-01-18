@@ -1,4 +1,5 @@
-<?xml version="1.0"?><project>
+<?xml version="1.0"?>
+<project>
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>schemacrawler</groupId>
@@ -7,49 +8,49 @@
   </parent>
   <groupId>schemacrawler</groupId>
   <artifactId>schemacrawler-test</artifactId>
-	<packaging>pom</packaging>
+  <packaging>pom</packaging>
   <name>SchemaCrawler Test</name>
-	<dependencies>
-		<dependency>
-			<groupId>schemacrawler</groupId>
-			<artifactId>schemacrawler-integrations</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>schemacrawler</groupId>
-			<artifactId>schemacrawler-sqlserver</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>schemacrawler</groupId>
-			<artifactId>schemacrawler-oracle</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>schemacrawler</groupId>
-			<artifactId>schemacrawler-mysql</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>schemacrawler</groupId>
-			<artifactId>schemacrawler-postgresql</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>schemacrawler</groupId>
-			<artifactId>schemacrawler-sqlite</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>schemacrawler</groupId>
-			<artifactId>schemacrawler-derby</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>oracle</groupId>
-			<artifactId>oracle-jdbc</artifactId>
-			<version>11.1.0.7.0</version>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
+  <dependencies>
+    <dependency>
+      <groupId>schemacrawler</groupId>
+      <artifactId>schemacrawler-integrations</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>schemacrawler</groupId>
+      <artifactId>schemacrawler-sqlserver</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>schemacrawler</groupId>
+      <artifactId>schemacrawler-oracle</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>schemacrawler</groupId>
+      <artifactId>schemacrawler-mysql</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>schemacrawler</groupId>
+      <artifactId>schemacrawler-postgresql</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>schemacrawler</groupId>
+      <artifactId>schemacrawler-sqlite</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>schemacrawler</groupId>
+      <artifactId>schemacrawler-derby</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>oracle</groupId>
+      <artifactId>oracle-jdbc</artifactId>
+      <version>11.1.0.7.0</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
 </project>

@@ -23,9 +23,9 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>5.1.10</version>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.10</version>
     </dependency>
   </dependencies>
   <build>
@@ -45,7 +45,7 @@
             </manifestEntries>
           </archive>
         </configuration>
-      </plugin>      
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>

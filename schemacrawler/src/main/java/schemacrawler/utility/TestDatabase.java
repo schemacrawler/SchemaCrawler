@@ -188,7 +188,7 @@ public class TestDatabase {
   /**
    * Delete files from the previous run of the database server.
    */
-  private void deleteServerFiles(final String stem) {
+  private static void deleteServerFiles(final String stem) {
     final FilenameFilter serverFilesFilter = new FilenameFilter() {
       public boolean accept(final File dir, final String name) {
         return Arrays.asList(stem + ".lck", stem + ".log", stem + ".properties")
@@ -220,7 +220,7 @@ public class TestDatabase {
    *
    * @param dataSource Datasource
    */
-  private void setupSchema(final DatabaseConnectionOptions dataSource) {
+  private static void setupSchema(final DatabaseConnectionOptions dataSource) {
     Connection connection = null;
     Statement statement = null;
     try {

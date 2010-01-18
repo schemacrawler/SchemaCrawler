@@ -23,9 +23,9 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
-        <groupId>postgresql</groupId>
-        <artifactId>postgresql</artifactId>
-        <version>8.4-701.jdbc4</version>
+      <groupId>postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>8.4-701.jdbc4</version>
     </dependency>
   </dependencies>
   <build>
@@ -45,7 +45,7 @@
             </manifestEntries>
           </archive>
         </configuration>
-      </plugin>        
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>

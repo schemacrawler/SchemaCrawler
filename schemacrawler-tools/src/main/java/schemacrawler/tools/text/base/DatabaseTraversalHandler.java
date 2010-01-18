@@ -21,113 +21,96 @@
 package schemacrawler.tools.text.base;
 
 
-import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.ColumnMap;
-import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.schema.JdbcDriverInfo;
-import schemacrawler.schema.Procedure;
-import schemacrawler.schema.SchemaCrawlerInfo;
-import schemacrawler.schema.Table;
+import schemacrawler.schema.*;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
  * Handler for SchemaCrawler.
  */
-public interface DatabaseTraversalHandler
-{
+public interface DatabaseTraversalHandler {
 
   /**
    * Handles the begin of the crawl.
-   * 
-   * @throws SchemaCrawlerException
-   *         On an exception
+   *
+   * @throws SchemaCrawlerException On an exception
    */
   void begin()
     throws SchemaCrawlerException;
 
   /**
    * Handles the end of the crawl.
-   * 
-   * @throws SchemaCrawlerException
-   *         On an exception
+   *
+   * @throws SchemaCrawlerException On an exception
    */
   void end()
     throws SchemaCrawlerException;
 
   /**
-   * Handles information on column data types. This method may be called
-   * more than once, once for each schema.
-   * 
-   * @param dataType
-   *        Column data type information
-   * @throws SchemaCrawlerException
-   *         On an exception
+   * Handles information on column data types. This method may be called more than once, once for each schema.
+   *
+   * @param dataType Column data type information
+   *
+   * @throws SchemaCrawlerException On an exception
    */
   void handle(ColumnDataType dataType)
     throws SchemaCrawlerException;
 
   /**
    * Provides information on the database schema.
-   * 
-   * @param weakAssociations
-   *        Table associations information
-   * @throws SchemaCrawlerException
-   *         On an exception
+   *
+   * @param weakAssociations Table associations information
+   *
+   * @throws SchemaCrawlerException On an exception
    */
   void handle(ColumnMap[] weakAssociations)
     throws SchemaCrawlerException;
 
   /**
    * Handles information on the database.
-   * 
-   * @param database
-   *        Database information
-   * @throws SchemaCrawlerException
-   *         On an exception
+   *
+   * @param database Database information
+   *
+   * @throws SchemaCrawlerException On an exception
    */
   void handle(DatabaseInfo databaseInfo)
     throws SchemaCrawlerException;
 
   /**
    * Handles information on the JDBC driver.
-   * 
-   * @param jdbcDriverInfo
-   *        JDBC driver information
-   * @throws SchemaCrawlerException
-   *         On an exception
+   *
+   * @param jdbcDriverInfo JDBC driver information
+   *
+   * @throws SchemaCrawlerException On an exception
    */
   void handle(JdbcDriverInfo jdbcDriverInfo)
     throws SchemaCrawlerException;
 
   /**
    * Provides information on the database schema.
-   * 
-   * @param procedure
-   *        Procedure information
-   * @throws SchemaCrawlerException
-   *         On an exception
+   *
+   * @param procedure Procedure information
+   *
+   * @throws SchemaCrawlerException On an exception
    */
   void handle(Procedure procedure)
     throws SchemaCrawlerException;
 
   /**
    * Handles information on SchemaCrawler.
-   * 
-   * @param schemaCrawlerInfo
-   *        SchemaCrawler information
-   * @throws SchemaCrawlerException
-   *         On an exception
+   *
+   * @param schemaCrawlerInfo SchemaCrawler information
+   *
+   * @throws SchemaCrawlerException On an exception
    */
   void handle(SchemaCrawlerInfo schemaCrawlerInfo)
     throws SchemaCrawlerException;
 
   /**
    * Provides information on the database schema.
-   * 
-   * @param table
-   *        Table information
-   * @throws SchemaCrawlerException
-   *         On an exception
+   *
+   * @param table Table information
+   *
+   * @throws SchemaCrawlerException On an exception
    */
   void handle(Table table)
     throws SchemaCrawlerException;

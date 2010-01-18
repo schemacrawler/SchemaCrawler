@@ -24,14 +24,19 @@ package schemacrawler.tools.options;
 /**
  * Enumeration for text format type.
  */
-public enum OutputFormat
-{
+public enum OutputFormat {
 
-  /** Text formatting. */
+  /**
+   * Text formatting.
+   */
   text,
-  /** HTML formatting. */
+  /**
+   * HTML formatting.
+   */
   html,
-  /** CSV formatting. */
-  csv, ;
+  /**
+   * CSV formatting.
+   */
+  csv,;
 
 }

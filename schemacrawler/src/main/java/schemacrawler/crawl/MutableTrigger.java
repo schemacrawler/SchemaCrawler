@@ -21,21 +21,16 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.ActionOrientationType;
-import schemacrawler.schema.ConditionTimingType;
-import schemacrawler.schema.EventManipulationType;
-import schemacrawler.schema.Table;
-import schemacrawler.schema.Trigger;
+import schemacrawler.schema.*;
 
 /**
  * Represents a trigger.
- * 
+ *
  * @author Sualeh Fatehi
  */
 class MutableTrigger
   extends AbstractDependantObject
-  implements Trigger
-{
+  implements Trigger {
 
   private static final long serialVersionUID = -1619291073229701764L;
 
@@ -46,8 +41,7 @@ class MutableTrigger
   private ActionOrientationType actionOrientation;
   private ConditionTimingType conditionTiming;
 
-  MutableTrigger(final Table parent, final String name)
-  {
+  MutableTrigger(final Table parent, final String name) {
     super(parent, name);
     // Default values
     eventManipulationType = EventManipulationType.unknown;
@@ -60,84 +54,72 @@ class MutableTrigger
   /**
    * {@inheritDoc}
    */
-  public String getActionCondition()
-  {
+  public String getActionCondition() {
     return actionCondition.toString();
   }
 
   /**
    * {@inheritDoc}
    */
-  public int getActionOrder()
-  {
+  public int getActionOrder() {
     return actionOrder;
   }
 
   /**
    * {@inheritDoc}
    */
-  public ActionOrientationType getActionOrientation()
-  {
+  public ActionOrientationType getActionOrientation() {
     return actionOrientation;
   }
 
   /**
    * {@inheritDoc}
    */
-  public String getActionStatement()
-  {
+  public String getActionStatement() {
     return actionStatement.toString();
   }
 
   /**
    * {@inheritDoc}
    */
-  public ConditionTimingType getConditionTiming()
-  {
+  public ConditionTimingType getConditionTiming() {
     return conditionTiming;
   }
 
   /**
    * {@inheritDoc}
    */
-  public EventManipulationType getEventManipulationType()
-  {
+  public EventManipulationType getEventManipulationType() {
     return eventManipulationType;
   }
 
-  void appendActionCondition(final String actionCondition)
-  {
-    if (actionCondition != null)
-    {
-      this.actionCondition.append(actionCondition);
+  void appendActionCondition(final String actionCondition) {
+    if (actionCondition != null) {
+      this.actionCondition
+        .append(actionCondition);
     }
   }
 
-  void appendActionStatement(final String actionStatement)
-  {
-    if (actionStatement != null)
-    {
-      this.actionStatement.append(actionStatement);
+  void appendActionStatement(final String actionStatement) {
+    if (actionStatement != null) {
+      this.actionStatement
+        .append(actionStatement);
     }
   }
 
-  void setActionOrder(final int actionOrder)
-  {
+  void setActionOrder(final int actionOrder) {
     this.actionOrder = actionOrder;
   }
 
-  void setActionOrientation(final ActionOrientationType actionOrientation)
-  {
+  void setActionOrientation(final ActionOrientationType actionOrientation) {
     this.actionOrientation = actionOrientation;
   }
 
-  void setConditionTiming(final ConditionTimingType conditionTiming)
-  {
+  void setConditionTiming(final ConditionTimingType conditionTiming) {
     this.conditionTiming = conditionTiming;
   }
 
-  void setEventManipulationType(final EventManipulationType eventManipulationType)
-  {
+  void setEventManipulationType(final EventManipulationType eventManipulationType) {
     this.eventManipulationType = eventManipulationType;
   }
 

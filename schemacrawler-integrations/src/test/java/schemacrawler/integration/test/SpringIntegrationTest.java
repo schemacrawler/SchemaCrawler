@@ -20,21 +20,11 @@
 package schemacrawler.integration.test;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.Executable;
@@ -42,21 +32,24 @@ import schemacrawler.tools.integration.graph.GraphExecutable;
 import schemacrawler.utility.TestDatabase;
 import sf.util.TestUtility;
 
-public class SpringIntegrationTest
-{
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.*;
+
+public class SpringIntegrationTest {
 
   private static TestDatabase testUtility = new TestDatabase();
 
   @AfterClass
-  public static void afterAllTests()
-  {
+  public static void afterAllTests() {
     testUtility.shutdownDatabase();
   }
 
   @BeforeClass
   public static void beforeAllTests()
-    throws Exception
-  {
+    throws Exception {
     TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();
   }
@@ -65,32 +58,26 @@ public class SpringIntegrationTest
 
   @Test
   public void testExecutables()
-    throws Exception
-  {
+    throws Exception {
     final List<String> failures = new ArrayList<String>();
-    for (final String beanDefinitionName: appContext.getBeanDefinitionNames())
-    {
+    for (final String beanDefinitionName : appContext.getBeanDefinitionNames()) {
       final Object bean = appContext.getBean(beanDefinitionName);
-      if (bean instanceof Executable)
-      {
+      if (bean instanceof Executable) {
         final Executable executable = (Executable) bean;
         if (!"graph".equals(executable.getCommand())
-            && !(executable instanceof GraphExecutable))
-        {
+          && !(executable instanceof GraphExecutable)) {
           executeAndCheckForOutputFile(beanDefinitionName, executable, failures);
         }
       }
     }
-    if (failures.size() > 0)
-    {
+    if (failures.size() > 0) {
       fail(failures.toString());
     }
   }
 
   @Test
   public void testSchema()
-    throws Exception
-  {
+    throws Exception {
     final SchemaCrawlerOptions schemaCrawlerOptions = (SchemaCrawlerOptions) appContext
       .getBean("schemaCrawlerOptions");
 
@@ -103,12 +90,12 @@ public class SpringIntegrationTest
   private void executeAndCheckForOutputFile(final String executableName,
                                             final Executable executable,
                                             final List<String> failures)
-    throws Exception
-  {
+    throws Exception {
     final String outputFilename = File.createTempFile("schemacrawler", "test")
       .getAbsolutePath();
 
-    executable.getOutputOptions().setOutputFileName(outputFilename);
+    executable.getOutputOptions()
+      .setOutputFileName(outputFilename);
     executable.execute(testUtility.getConnection());
 
     final File testOutputFile = new File(outputFilename);

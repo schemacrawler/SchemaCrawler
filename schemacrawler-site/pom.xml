@@ -4,22 +4,22 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>schemacrawler</groupId>
-		<artifactId>schemacrawler-all</artifactId>
-		<version>8.0</version>
-	</parent>
-	<groupId>schemacrawler</groupId>
-	<artifactId>schemacrawler-site</artifactId>
-	<packaging>pom</packaging>
-	<name>SchemaCrawler Website</name>
-	<dependencies>
-		<dependency>
-			<groupId>schemacrawler</groupId>
-			<artifactId>schemacrawler-integrations</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-	</dependencies>
+  <parent>
+    <groupId>schemacrawler</groupId>
+    <artifactId>schemacrawler-all</artifactId>
+    <version>8.0</version>
+  </parent>
+  <groupId>schemacrawler</groupId>
+  <artifactId>schemacrawler-site</artifactId>
+  <packaging>pom</packaging>
+  <name>SchemaCrawler Website</name>
+  <dependencies>
+    <dependency>
+      <groupId>schemacrawler</groupId>
+      <artifactId>schemacrawler-integrations</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
   <reporting>
     <plugins>
       <plugin>

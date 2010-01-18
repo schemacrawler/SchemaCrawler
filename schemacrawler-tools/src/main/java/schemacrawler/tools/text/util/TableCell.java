@@ -24,15 +24,14 @@ import schemacrawler.tools.options.OutputFormat;
 
 /**
  * Represents an HTML table row.
- * 
+ *
  * @author Sualeh Fatehi
  */
-final class TableCell
-{
+final class TableCell {
 
-  enum Align
-  {
-    left, right;
+  enum Align {
+    left,
+    right;
   }
 
   private final OutputFormat outputFormat;
@@ -47,8 +46,7 @@ final class TableCell
             final Align align,
             final int colSpan,
             final String styleClass,
-            final OutputFormat outputFormat)
-  {
+            final OutputFormat outputFormat) {
     this.outputFormat = outputFormat;
     this.colSpan = colSpan;
     this.styleClass = styleClass;
@@ -59,65 +57,55 @@ final class TableCell
 
   TableCell(final String text,
             final String styleClass,
-            final OutputFormat outputFormat)
-  {
+            final OutputFormat outputFormat) {
     this(text, 0, Align.left, 1, styleClass, outputFormat);
   }
 
   /**
    * Converts the table cell to HTML.
-   * 
+   *
    * @return HTML
    */
   @Override
-  public String toString()
-  {
-    if (outputFormat == OutputFormat.html)
-    {
+  public String toString() {
+    if (outputFormat == OutputFormat.html) {
       return toHtmlString();
     }
-    else
-    {
+    else {
       return toPlainTextString();
     }
   }
 
   /**
-   * Enclose the value in quotes and escape the quote and comma
-   * characters that are inside.
-   * 
-   * @param text
-   *        Text that needs to be escaped and quoted
+   * Enclose the value in quotes and escape the quote and comma characters that are inside.
+   *
+   * @param text Text that needs to be escaped and quoted
+   *
    * @return Text, escaped and quoted.
    */
-  private String escapeAndQuoteCsv(final String text)
-  {
+  private static String escapeAndQuoteCsv(final String text) {
     final char QUOTE = '\"';
     final char SEPARATOR = ',';
 
     final String value = String.valueOf(text);
     final int length = value.length();
-    if (length == 0)
-    {
+    if (length == 0) {
       return "\"\"";
     }
 
-    if (value.indexOf(SEPARATOR) < 0 && value.indexOf(QUOTE) < 0)
-    {
+    if (value.indexOf(SEPARATOR) < 0 && value.indexOf(QUOTE) < 0) {
       return value;
     }
 
     final StringBuilder sb = new StringBuilder(length);
     sb.append(QUOTE);
-    for (int i = 0; i < length; i++)
-    {
+    for (int i = 0; i < length; i++) {
       final char c = value.charAt(i);
-      if (c == QUOTE)
-      {
-        sb.append(QUOTE + QUOTE);
+      if (c == QUOTE) {
+        sb.append(QUOTE)
+          .append(c);
       }
-      else
-      {
+      else {
         sb.append(c);
       }
     }
@@ -128,20 +116,23 @@ final class TableCell
 
   /**
    * Converts the table cell to HTML.
-   * 
+   *
    * @return HTML
    */
-  private String toHtmlString()
-  {
+  private String toHtmlString() {
     final StringBuilder buffer = new StringBuilder();
     buffer.append("<td");
-    if (colSpan > 1)
-    {
-      buffer.append(" colspan='").append(colSpan).append("'");
+    if (colSpan > 1) {
+      buffer.append(" colspan='")
+        .append(colSpan)
+        .append("'");
     }
-    if (!sf.util.Utility.isBlank(styleClass))
-    {
-      buffer.append(" class='").append(styleClass).append("'");
+    if (!sf.util
+      .Utility
+      .isBlank(styleClass)) {
+      buffer.append(" class='")
+        .append(styleClass)
+        .append("'");
     }
     buffer.append(">");
     buffer.append(Entities.XML.escape(String.valueOf(text)));
@@ -152,30 +143,23 @@ final class TableCell
 
   /**
    * Converts the table cell to CSV.
-   * 
+   *
    * @return CSV
    */
-  private String toPlainTextString()
-  {
-    if (outputFormat == OutputFormat.csv)
-    {
+  private String toPlainTextString() {
+    if (outputFormat == OutputFormat.csv) {
       return escapeAndQuoteCsv(text);
     }
-    else
-    {
-      if (characterWidth > 0)
-      {
-        if (align == Align.right)
-        {
+    else {
+      if (characterWidth > 0) {
+        if (align == Align.right) {
           return String.format("%" + characterWidth + "s", text);
         }
-        else
-        {
+        else {
           return String.format("%-" + characterWidth + "s", text);
         }
       }
-      else
-      {
+      else {
         return text;
       }
     }

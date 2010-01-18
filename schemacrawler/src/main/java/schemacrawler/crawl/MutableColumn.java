@@ -26,15 +26,13 @@ import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Privilege;
 
 /**
- * Represents a column in a database table or procedure. Created from
- * metadata returned by a JDBC call.
- * 
+ * Represents a column in a database table or procedure. Created from metadata returned by a JDBC call.
+ *
  * @author Sualeh Fatehi
  */
 class MutableColumn
   extends AbstractColumn
-  implements Column
-{
+  implements Column {
 
   private static final long serialVersionUID = 3834591019449528633L;
 
@@ -44,103 +42,91 @@ class MutableColumn
   private MutableColumn referencedColumn;
   private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>();
 
-  MutableColumn(final DatabaseObject parent, final String name)
-  {
+  MutableColumn(final DatabaseObject parent, final String name) {
     super(parent, name);
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#getDefaultValue()
    */
-  public String getDefaultValue()
-  {
+  public String getDefaultValue() {
     return defaultValue;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#getPrivilege(java.lang.String)
    */
-  public MutablePrivilege getPrivilege(final String name)
-  {
+  public MutablePrivilege getPrivilege(final String name) {
     return privileges.lookup(this, name);
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Column#getPrivileges()
    */
-  public Privilege[] getPrivileges()
-  {
-    return privileges.values().toArray(new Privilege[privileges.size()]);
+  public Privilege[] getPrivileges() {
+    return privileges.values()
+      .toArray(new Privilege[privileges.size()]);
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#getReferencedColumn()
    */
-  public Column getReferencedColumn()
-  {
+  public Column getReferencedColumn() {
     return referencedColumn;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#isPartOfForeignKey()
    */
-  public boolean isPartOfForeignKey()
-  {
+  public boolean isPartOfForeignKey() {
     return referencedColumn != null;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#isPartOfPrimaryKey()
    */
-  public boolean isPartOfPrimaryKey()
-  {
+  public boolean isPartOfPrimaryKey() {
     return isPartOfPrimaryKey;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#isPartOfUniqueIndex()
    */
-  public boolean isPartOfUniqueIndex()
-  {
+  public boolean isPartOfUniqueIndex() {
     return isPartOfUniqueIndex;
   }
 
-  void addPrivilege(final MutablePrivilege privilege)
-  {
+  void addPrivilege(final MutablePrivilege privilege) {
     privileges.add(privilege);
   }
 
-  void setDefaultValue(final String defaultValue)
-  {
+  void setDefaultValue(final String defaultValue) {
     this.defaultValue = defaultValue;
   }
 
-  void setPartOfPrimaryKey(final boolean partOfPrimaryKey)
-  {
+  void setPartOfPrimaryKey(final boolean partOfPrimaryKey) {
     isPartOfPrimaryKey = partOfPrimaryKey;
   }
 
-  void setPartOfUniqueIndex(final boolean partOfUniqueIndex)
-  {
+  void setPartOfUniqueIndex(final boolean partOfUniqueIndex) {
     isPartOfUniqueIndex = partOfUniqueIndex;
   }
 
-  void setReferencedColumn(final MutableColumn referencedColumn)
-  {
+  void setReferencedColumn(final MutableColumn referencedColumn) {
     this.referencedColumn = referencedColumn;
   }
 

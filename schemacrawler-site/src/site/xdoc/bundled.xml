@@ -11,7 +11,8 @@
         <p>The bundled distributions of SchemaCrawler are ready to use for a given RDBMS system. Most come with
           open-source JDBC drivers bundled in, so not further downloads are required. The bundled distributions of
           SchemaCrawler
-          are:</p>
+          are:
+        </p>
         <ul>
           <li>
             SchemaCrawler for
@@ -60,14 +61,16 @@
           A typical command line for SchemaCrawler for Microsoft SQL Server looks like:
           <br />
           <code>-host=localhost -port=1433 -database=schemacrawler -schemas=schemacrawler.dbo -user=schemacrawler
-            -password=schemacrawler</code>
+            -password=schemacrawler
+          </code>
         </p>
         <p>The host defaults to localhost, and port defaults to the standard port for the database system that you are
           using, so the -host and -port command-line switches are optional. You should always use the -schemas
           command-line switch for databases that support it. The value for the -schemas switch is a regular expression
           that determines which schemas SchemaCrawler will work with. The "schema" is database-dependent - for example,
           on Microsoft SQL Server, typically schemas look like "database_name.user", but for Oracle, typically, schemas
-          look like "USER".</p>
+          look like "USER".
+        </p>
       </subsection>
       <subsection name="License">
         <p>

@@ -18,15 +18,9 @@
 package schemacrawler.test;
 
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
@@ -35,8 +29,12 @@ import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.TestDatabase;
 
-public class SchemaCrawlerGrepTest
-{
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static org.junit.Assert.assertEquals;
+
+public class SchemaCrawlerGrepTest {
 
   private static final Logger LOGGER = Logger
     .getLogger(SchemaCrawlerGrepTest.class.getName());
@@ -44,74 +42,70 @@ public class SchemaCrawlerGrepTest
   private static TestDatabase testUtility = new TestDatabase();
 
   @AfterClass
-  public static void afterAllTests()
-    throws ClassNotFoundException
-  {
+  public static void afterAllTests() {
     testUtility.shutdownDatabase();
   }
 
   @BeforeClass
   public static void beforeAllTests()
-    throws Exception
-  {
+    throws Exception {
     TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();
   }
 
   @Test
   public void grep()
-    throws Exception
-  {
+    throws Exception {
     final String[] schemaNames = {
-        "INFORMATION_SCHEMA", "PUBLIC", "SCHEMACRAWLER"
+      "INFORMATION_SCHEMA", "PUBLIC", "SCHEMACRAWLER"
     };
     final int[] tableCounts = {
-        0, 4, 1
+      0, 4, 1
     };
     final String[][][] columnNames = {
-        {},
+      {},
+      {
         {
-            {
-                "CUSTOMER.ID",
-                "CUSTOMER.FIRSTNAME",
-                "CUSTOMER.LASTNAME",
-                "CUSTOMER.STREET",
-                "CUSTOMER.CITY"
-            },
-            {
-                "CUSTOMERLIST.ID",
-                "CUSTOMERLIST.FIRSTNAME",
-                "CUSTOMERLIST.LASTNAME"
-            },
-            {
-                "INVOICE.ID", "INVOICE.CUSTOMERID", "INVOICE.TOTAL"
-            },
-            {
-                "PRODUCT.ID", "PRODUCT.NAME", "PRODUCT.PRICE"
-            },
+          "CUSTOMER.ID",
+          "CUSTOMER.FIRSTNAME",
+          "CUSTOMER.LASTNAME",
+          "CUSTOMER.STREET",
+          "CUSTOMER.CITY"
         },
         {
-          {
-              "PRODUCT2.ID", "PRODUCT2.NAME", "PRODUCT2.PRICE"
-          },
-        }
+          "CUSTOMERLIST.ID",
+          "CUSTOMERLIST.FIRSTNAME",
+          "CUSTOMERLIST.LASTNAME"
+        },
+        {
+          "INVOICE.ID", "INVOICE.CUSTOMERID", "INVOICE.TOTAL"
+        },
+        {
+          "PRODUCT.ID", "PRODUCT.NAME", "PRODUCT.PRICE"
+        },
+      },
+      {
+        {
+          "PRODUCT2.ID", "PRODUCT2.NAME", "PRODUCT2.PRICE"
+        },
+      }
     };
     final String[][][] columnDataTypes = {
-        {}, {
-            {
-                "INTEGER", "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR"
-            }, {
-                "INTEGER", "VARCHAR", "VARCHAR"
-            }, {
-                "INTEGER", "INTEGER", "FLOAT"
-            }, {
-                "INTEGER", "VARCHAR", "FLOAT"
-            },
+      {}, {
+        {
+          "INTEGER", "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR"
         }, {
-          {
-              "INTEGER", "VARCHAR", "FLOAT"
-          },
-        }
+          "INTEGER", "VARCHAR", "VARCHAR"
+        }, {
+          "INTEGER", "INTEGER", "FLOAT"
+        }, {
+          "INTEGER", "VARCHAR", "FLOAT"
+        },
+      }, {
+        {
+          "INTEGER", "VARCHAR", "FLOAT"
+        },
+      }
     };
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -122,8 +116,7 @@ public class SchemaCrawlerGrepTest
     final Database database = testUtility.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
     assertEquals("Schema count does not match", 3, schemas.length);
-    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
-    {
+    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++) {
       final Schema schema = schemas[schemaIdx];
       assertEquals("Schema name does not match", schemaNames[schemaIdx], schema
         .getName());
@@ -131,18 +124,16 @@ public class SchemaCrawlerGrepTest
       assertEquals("Table count does not match",
                    tableCounts[schemaIdx],
                    tables.length);
-      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
-      {
+      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++) {
         final Table table = tables[tableIdx];
         final Column[] columns = table.getColumns();
         final String[] columnsNamesForTable = columnNames[schemaIdx][tableIdx];
-        for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
-        {
+        for (int columnIdx = 0; columnIdx < columns.length; columnIdx++) {
           final Column column = columns[columnIdx];
           LOGGER.log(Level.FINE, column.toString());
           assertEquals("Column full name does not match",
                        schemaNames[schemaIdx] + "."
-                           + columnsNamesForTable[columnIdx],
+                         + columnsNamesForTable[columnIdx],
                        column.getFullName());
           assertEquals("Column type does not match",
                        columnDataTypes[schemaIdx][tableIdx][columnIdx],

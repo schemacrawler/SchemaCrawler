@@ -5,12 +5,13 @@
     <title>SchemaCrawler - Velocity Example</title>
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
-	<body>
-		<section name="SchemaCrawler - Velocity Example">
-			<subsection name="Description">
+  <body>
+    <section name="SchemaCrawler - Velocity Example">
+      <subsection name="Description">
         <p>The command example demonstrates the integration of SchemaCrawler with Apache
-          Jakarta Velocity.</p>
-			</subsection>
+          Jakarta Velocity.
+        </p>
+      </subsection>
       <subsection name="How to Run">
         <ol>
           <li>
@@ -22,26 +23,35 @@
           </li>
           <li>
             Copy the
-              <span class="code">schemacrawler.config.properties</span> file into the
-              <span class="code">velocity</span> example directory.
+            <span class="code">schemacrawler.config.properties</span>
+            file into the
+            <span class="code">velocity</span>
+            example directory.
           </li>
           <li>Start the database server by running StartDatabaseServer script from the
-            distribution directory.</li>
+            distribution directory.
+          </li>
           <li>
             Start a command shell in the
-              <span class="code">velocity</span> example directory.
+            <span class="code">velocity</span>
+            example directory.
           </li>
-          <li> Run
-            <span class="code">velocity.cmd</span> (or
-            <span class="code">velocity.sh</span> on Unix). </li>
+          <li>Run
+            <span class="code">velocity.cmd</span>
+            (or
+            <span class="code">velocity.sh</span>
+            on Unix).
+          </li>
         </ol>
       </subsection>
-			<subsection name="How to Experiment">
-				<ol>
+      <subsection name="How to Experiment">
+        <ol>
           <li>Try modifying the Velocity template,
-            <span class="code">tables.vm</span> to modify the output produced.</li>
-				</ol>
-			</subsection>
-		</section>
-	</body>
+            <span class="code">tables.vm</span>
+            to modify the output produced.
+          </li>
+        </ol>
+      </subsection>
+    </section>
+  </body>
 </document>

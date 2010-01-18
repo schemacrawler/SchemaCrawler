@@ -21,31 +21,26 @@
 package schemacrawler.tools.text.operation;
 
 
-import java.io.BufferedInputStream;
-import java.sql.Blob;
-import java.sql.Clob;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseFormatter;
 import schemacrawler.tools.text.util.TextFormattingHelper.DocumentHeaderType;
 
+import java.io.BufferedInputStream;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Text formatting of data.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class DataTextFormatter
-  extends BaseFormatter<OperationOptions>
-{
+  extends BaseFormatter<OperationOptions> {
 
   private static final Logger LOGGER = Logger.getLogger(DataTextFormatter.class
     .getName());
@@ -57,46 +52,39 @@ public final class DataTextFormatter
 
   /**
    * Text formatting of data.
-   * 
-   * @param options
-   *        Options for text formatting of data
+   *
+   * @param options Options for text formatting of data
    */
   public DataTextFormatter(final Operation operation,
                            final OperationOptions options,
                            final OutputOptions outputOptions)
-    throws SchemaCrawlerException
-  {
+    throws SchemaCrawlerException {
     super(options, /* printVerboseDatabaseInfo */false, outputOptions);
     this.operation = operation;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.execute.DataHandler#begin()
    */
-  public void begin()
-  {
-    if (!outputOptions.isNoHeader())
-    {
+  public void begin() {
+    if (!outputOptions.isNoHeader()) {
       out.println(formattingHelper.createDocumentStart());
     }
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.execute.DataHandler#end()
    */
-  public void end()
-  {
-    if (operation == Operation.count)
-    {
+  public void end() {
+    if (operation == Operation.count) {
       out.println(formattingHelper.createObjectEnd());
     }
 
-    if (!outputOptions.isNoFooter())
-    {
+    if (!outputOptions.isNoFooter()) {
       out.println(formattingHelper.createDocumentEnd());
     }
     out.flush();
@@ -105,23 +93,19 @@ public final class DataTextFormatter
   }
 
   @Override
-  public void handle(final JdbcDriverInfo driverInfo)
-  {
+  public void handle(final JdbcDriverInfo driverInfo) {
     super.handle(driverInfo);
 
-    if (operation != null)
-    {
+    if (operation != null) {
       out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                                 operation.getDescription()));
     }
-    else
-    {
+    else {
       out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
                                                 "Query"));
     }
 
-    if (operation == Operation.count)
-    {
+    if (operation == Operation.count) {
       out.println(formattingHelper
         .createObjectStart(operation.getDescription()));
     }
@@ -129,75 +113,59 @@ public final class DataTextFormatter
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.execute.DataHandler#handleData(java.sql.ResultSet)
    */
   public void handleData(final String title, final ResultSet rows)
-    throws SchemaCrawlerException
-  {
-    if (operation == Operation.count)
-    {
+    throws SchemaCrawlerException {
+    if (operation == Operation.count) {
       handleAggregateOperationForTable(title, rows);
     }
-    else
-    {
+    else {
       out.println(formattingHelper.createObjectStart(title));
-      try
-      {
+      try {
         final ResultSetMetaData rsm = rows.getMetaData();
         final int columnCount = rsm.getColumnCount();
         final String[] columnNames = new String[columnCount];
-        for (int i = 0; i < columnCount; i++)
-        {
+        for (int i = 0; i < columnCount; i++) {
           columnNames[i] = rsm.getColumnName(i + 1);
         }
         out.println(formattingHelper.createRowHeader(columnNames));
 
-        if (options.isMergeRows() && columnCount > 1)
-        {
+        if (options.isMergeRows() && columnCount > 1) {
           iterateRowsAndMerge(rows, columnNames);
         }
-        else
-        {
+        else {
           iterateRows(rows, columnNames.length);
         }
       }
-      catch (final SQLException e)
-      {
+      catch (final SQLException e) {
         throw new SchemaCrawlerException(e.getMessage(), e);
       }
       out.println(formattingHelper.createObjectEnd());
     }
   }
 
-  private String convertColumnDataToString(final Object columnData)
-  {
+  private String convertColumnDataToString(final Object columnData) {
     String columnDataString;
-    if (columnData == null)
-    {
+    if (columnData == null) {
       columnDataString = NULL;
     }
-    else if (columnData instanceof Clob || columnData instanceof Blob)
-    {
+    else if (columnData instanceof Clob || columnData instanceof Blob) {
       columnDataString = BINARY;
-      if (options.isShowLobs())
-      {
+      if (options.isShowLobs()) {
         columnDataString = readLob(columnData);
       }
     }
-    else
-    {
+    else {
       columnDataString = columnData.toString();
     }
     return columnDataString;
   }
 
   private void doHandleOneRow(final List<String> row,
-                              final String lastColumnData)
-    throws SchemaCrawlerException
-  {
-    if (row.isEmpty())
-    {
+                              final String lastColumnData) {
+    if (row.isEmpty()) {
       return;
     }
     final List<String> outputRow = new ArrayList<String>();
@@ -208,15 +176,12 @@ public final class DataTextFormatter
     out.println(formattingHelper.createRow(columnData));
   }
 
-  private String getMessage(final double aggregate)
-  {
+  private String getMessage(final double aggregate) {
     final Number number;
-    if (Math.abs(aggregate - (int) aggregate) < 1E-10D)
-    {
+    if (Math.abs(aggregate - (int) aggregate) < 1E-10D) {
       number = Integer.valueOf((int) aggregate);
     }
-    else
-    {
+    else {
       number = Double.valueOf(aggregate);
     }
     final String message = operation.getCountMessage(number);
@@ -225,28 +190,22 @@ public final class DataTextFormatter
 
   /**
    * Handles an aggregate operation, such as a count, for a given table.
-   * 
-   * @param table
-   *        Table
-   * @param results
-   *        Results
-   * @throws SQLException
-   *         On an exception
+   *
+   * @param table   Table
+   * @param results Results
+   *
+   * @throws SQLException On an exception
    */
   private void handleAggregateOperationForTable(final String title,
                                                 final ResultSet results)
-    throws SchemaCrawlerException
-  {
+    throws SchemaCrawlerException {
     long aggregate = 0;
-    try
-    {
-      if (results.next())
-      {
+    try {
+      if (results.next()) {
         aggregate = results.getLong(1);
       }
     }
-    catch (final SQLException e)
-    {
+    catch (final SQLException e) {
       throw new SchemaCrawlerException("Could not obtain aggregate data", e);
     }
     final String message = getMessage(aggregate);
@@ -255,14 +214,11 @@ public final class DataTextFormatter
   }
 
   private void iterateRows(final ResultSet rows, final int columnCount)
-    throws SQLException, SchemaCrawlerException
-  {
+    throws SQLException {
     List<String> currentRow;
-    while (rows.next())
-    {
+    while (rows.next()) {
       currentRow = new ArrayList<String>(columnCount);
-      for (int i = 0; i < columnCount; i++)
-      {
+      for (int i = 0; i < columnCount; i++) {
         final int columnIndex = i + 1;
         final Object columnData = rows.getObject(columnIndex);
         final String columnDataString = convertColumnDataToString(columnData);
@@ -276,30 +232,25 @@ public final class DataTextFormatter
 
   private void iterateRowsAndMerge(final ResultSet resultSet,
                                    final String[] columnNames)
-    throws SQLException, SchemaCrawlerException
-  {
+    throws SQLException, SchemaCrawlerException {
     final int columnCount = columnNames.length;
     List<String> previousRow = new ArrayList<String>();
     List<String> currentRow;
     StringBuilder currentRowLastColumn = new StringBuilder();
     // write out the data
-    while (resultSet.next())
-    {
+    while (resultSet.next()) {
       currentRow = new ArrayList<String>(columnCount - 1);
-      for (int i = 0; i < columnCount - 1; i++)
-      {
+      for (int i = 0; i < columnCount - 1; i++) {
         final Object columnData = resultSet.getObject(i + 1);
         final String columnDataString = convertColumnDataToString(columnData);
         currentRow.add(columnDataString);
       }
       final Object lastColumnData = resultSet.getObject(columnCount);
       final String lastColumnDataString = convertColumnDataToString(lastColumnData);
-      if (currentRow.equals(previousRow))
-      {
+      if (currentRow.equals(previousRow)) {
         currentRowLastColumn.append(lastColumnDataString);
       }
-      else
-      {
+      else {
         // At this point, we have a new row coming in, so dump the
         // previous merged row out
         doHandleOneRow(previousRow, currentRowLastColumn.toString());
@@ -316,34 +267,30 @@ public final class DataTextFormatter
   }
 
   /**
-   * Reads data from a LOB into a string. Default system encoding is
-   * assumed.
-   * 
-   * @param columnData
-   *        Column data object returned by JDBC
+   * Reads data from a LOB into a string. Default system encoding is assumed.
+   *
+   * @param columnData Column data object returned by JDBC
+   *
    * @return A string with the contents of the LOB
    */
-  private String readLob(final Object columnData)
-  {
+  private static String readLob(final Object columnData) {
     BufferedInputStream in = null;
     final String lobData;
-    try
-    {
-      if (columnData instanceof Blob)
-      {
+    try {
+      if (columnData instanceof Blob) {
         final Blob blob = (Blob) columnData;
         in = new BufferedInputStream(blob.getBinaryStream());
       }
-      else if (columnData instanceof Clob)
-      {
+      else if (columnData instanceof Clob) {
         final Clob clob = (Clob) columnData;
         in = new BufferedInputStream(clob.getAsciiStream());
       }
-      lobData = sf.util.Utility.readFully(in);
+      lobData = sf.util
+        .Utility
+        .readFully(in);
       return lobData;
     }
-    catch (final SQLException e)
-    {
+    catch (final SQLException e) {
       LOGGER.log(Level.FINE, "Could not read binary data", e);
       return BINARY;
     }

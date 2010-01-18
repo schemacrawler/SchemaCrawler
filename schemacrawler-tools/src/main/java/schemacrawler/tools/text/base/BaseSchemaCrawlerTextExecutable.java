@@ -21,33 +21,30 @@
 package schemacrawler.tools.text.base;
 
 
-import java.sql.Connection;
-
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
 
+import java.sql.Connection;
+
 /**
  * Basic SchemaCrawler executor.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public abstract class BaseSchemaCrawlerTextExecutable
-  extends BaseExecutable
-{
+  extends BaseExecutable {
 
   private static final long serialVersionUID = -6824567755397315920L;
 
-  public BaseSchemaCrawlerTextExecutable(final String command)
-  {
+  protected BaseSchemaCrawlerTextExecutable(final String command) {
     super(command);
   }
 
   @Override
   protected final void executeOn(final Database database,
                                  final Connection connection)
-    throws Exception
-  {
+    throws Exception {
     final DatabaseTraversalHandler handler = getDatabaseTraversalHandler(connection);
     final DatabaseTraverser traverser = new DatabaseTraverser(database);
     traverser.traverse(handler);

@@ -21,44 +21,39 @@
 package schemacrawler.integration.test;
 
 
-import static org.junit.Assert.fail;
-
-import java.io.File;
-
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.integration.freemarker.FreeMarkerRenderer;
 import schemacrawler.tools.integration.velocity.VelocityRenderer;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.utility.TestDatabase;
 
-public class ExecutableIntegrationTest
-{
+import java.io.File;
+
+import static org.junit.Assert.fail;
+
+public class ExecutableIntegrationTest {
 
   private static TestDatabase testUtility = new TestDatabase();
 
   @AfterClass
-  public static void afterAllTests()
-  {
+  public static void afterAllTests() {
     testUtility.shutdownDatabase();
   }
 
   @BeforeClass
   public static void beforeAllTests()
-    throws Exception
-  {
+    throws Exception {
     TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();
   }
 
   @Test
   public void templatingWithFreeMarker()
-    throws Exception
-  {
+    throws Exception {
     final String outputFilename = File.createTempFile("schemacrawler", ".txt")
       .getAbsolutePath();
     final OutputOptions outputOptions = new OutputOptions("plaintextschema.ftl",
@@ -68,8 +63,7 @@ public class ExecutableIntegrationTest
 
   @Test
   public void templatingWithVelocity()
-    throws Exception
-  {
+    throws Exception {
     final String outputFilename = File.createTempFile("schemacrawler", ".txt")
       .getAbsolutePath();
     final OutputOptions outputOptions = new OutputOptions("plaintextschema.vm",
@@ -79,8 +73,7 @@ public class ExecutableIntegrationTest
 
   private void executeAndCheckForOutputFile(final Executable executable,
                                             final OutputOptions outputOptions)
-    throws Exception
-  {
+    throws Exception {
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());
 
@@ -88,8 +81,7 @@ public class ExecutableIntegrationTest
     final File outputFile = outputOptions.getOutputFile();
     Assert.assertTrue(outputFile.exists());
     Assert.assertTrue(outputFile.length() > 0);
-    if (!outputFile.delete())
-    {
+    if (!outputFile.delete()) {
       fail("Cannot delete output file");
     }
   }

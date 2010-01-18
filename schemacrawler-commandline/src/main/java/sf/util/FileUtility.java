@@ -24,45 +24,39 @@ import java.io.File;
 
 /**
  * Utility methods.
- * 
+ *
  * @author Sualeh Fatehi
  */
-public final class FileUtility
-{
+public final class FileUtility {
 
-  public static File changeFileExtension(final File file, final String ext)
-  {
+  public static File changeFileExtension(final File file, final String ext) {
     final String oldExt = getFileExtension(file);
     final String oldFileName = file.getName();
     final String newFileName = oldFileName.substring(0, (oldFileName
       .lastIndexOf(oldExt) - 1))
-                               + ext;
+      + ext;
     return new File(file.getParentFile(), newFileName);
   }
 
-  public static String getFileExtension(final File file)
-  {
+  public static String getFileExtension(final File file) {
     final String ext;
-    if (file != null)
-    {
+    if (file != null) {
       final String scriptFileName = file.getName();
-      ext = scriptFileName.lastIndexOf(".") == -1
-                                                 ? ""
-                                                 : scriptFileName
-                                                   .substring(scriptFileName
-                                                                .lastIndexOf(".") + 1,
-                                                              scriptFileName
-                                                                .length());
+      ext = scriptFileName.lastIndexOf('.') == -1
+        ? ""
+        : scriptFileName
+        .substring(scriptFileName
+          .lastIndexOf('.') + 1,
+                   scriptFileName
+                     .length());
     }
-    else
-    {
+    else {
       ext = "";
     }
     return ext;
   }
 
-  private FileUtility()
-  { // Prevent instantiation
+  private FileUtility() { // Prevent instantiation
   }
 
 }

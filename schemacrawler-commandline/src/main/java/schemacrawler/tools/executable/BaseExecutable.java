@@ -21,10 +21,6 @@
 package schemacrawler.tools.executable;
 
 
-import java.sql.Connection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.Config;
@@ -33,16 +29,18 @@ import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.ObjectToString;
 
+import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * A SchemaCrawler tools executable unit.
- * 
+ *
  * @author Sualeh Fatehi
- * @param <O>
- *        Tool-specific options for execution.
+ * @param <O> Tool-specific options for execution.
  */
 public abstract class BaseExecutable
-  implements Executable
-{
+  implements Executable {
 
   private static final long serialVersionUID = -7346631903113057945L;
 
@@ -54,8 +52,7 @@ public abstract class BaseExecutable
   protected OutputOptions outputOptions;
   protected Config additionalConfiguration;
 
-  public BaseExecutable(final String command)
-  {
+  protected BaseExecutable(final String command) {
     this.command = command;
     schemaCrawlerOptions = new SchemaCrawlerOptions();
     outputOptions = new OutputOptions();
@@ -63,14 +60,12 @@ public abstract class BaseExecutable
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.executable.Executable#execute(java.sql.Connection)
    */
   public final void execute(final Connection connection)
-    throws Exception
-  {
-    if (connection == null)
-    {
+    throws Exception {
+    if (connection == null) {
       throw new IllegalArgumentException("No connection provided");
     }
     adjustSchemaInfoLevel();
@@ -80,81 +75,71 @@ public abstract class BaseExecutable
     executeOn(database, connection);
   }
 
-  public final Config getAdditionalConfiguration()
-  {
+  public final Config getAdditionalConfiguration() {
     return additionalConfiguration;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.executable.Executable#getCommand()
    */
-  public final String getCommand()
-  {
+  public final String getCommand() {
     return command;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.executable.Executable#getOutputOptions()
    */
-  public final OutputOptions getOutputOptions()
-  {
+  public final OutputOptions getOutputOptions() {
     return outputOptions;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.executable.Executable#getSchemaCrawlerOptions()
    */
-  public final SchemaCrawlerOptions getSchemaCrawlerOptions()
-  {
+  public final SchemaCrawlerOptions getSchemaCrawlerOptions() {
     return schemaCrawlerOptions;
   }
 
-  public final void setAdditionalConfiguration(final Config additionalConfiguration)
-  {
-    if (additionalConfiguration == null)
-    {
+  public final void setAdditionalConfiguration(final Config additionalConfiguration) {
+    if (additionalConfiguration == null) {
       this.additionalConfiguration = new Config();
     }
-    else
-    {
+    else {
       this.additionalConfiguration = additionalConfiguration;
     }
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.executable.Executable#setOutputOptions(schemacrawler.tools.options.OutputOptions)
    */
-  public final void setOutputOptions(final OutputOptions outputOptions)
-  {
+  public final void setOutputOptions(final OutputOptions outputOptions) {
     this.outputOptions = outputOptions;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.executable.Executable#setSchemaCrawlerOptions(schemacrawler.schemacrawler.SchemaCrawlerOptions)
    */
-  public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
-  {
+  public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions) {
     this.schemaCrawlerOptions = schemaCrawlerOptions;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Object#toString()
    */
   @Override
-  public final String toString()
-  {
+  public final String toString() {
     return ObjectToString.toString(this);
   }
 
@@ -164,12 +149,10 @@ public abstract class BaseExecutable
   /**
    * Initializes the executable before execution.
    */
-  private void adjustSchemaInfoLevel()
-  {
+  private void adjustSchemaInfoLevel() {
     final SchemaInfoLevel infoLevel = schemaCrawlerOptions.getSchemaInfoLevel();
     if (!schemaCrawlerOptions.isAlphabeticalSortForTables()
-        && !infoLevel.isRetrieveForeignKeys())
-    {
+      && !infoLevel.isRetrieveForeignKeys()) {
       infoLevel.setRetrieveTableColumns(true);
       infoLevel.setRetrieveForeignKeys(true);
       LOGGER
@@ -177,8 +160,7 @@ public abstract class BaseExecutable
              "Adjusted schema info level to retrieve foreign-keys, so tables can be sorted using the natural sort order");
     }
 
-    if (LOGGER.isLoggable(Level.CONFIG))
-    {
+    if (LOGGER.isLoggable(Level.CONFIG)) {
       LOGGER.log(Level.CONFIG, toString());
     }
   }

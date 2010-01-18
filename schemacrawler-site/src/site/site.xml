@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="SchemaCrawler">
-  <version/>
+  <version />
   <bannerLeft>
     <name>SchemaCrawler</name>
     <src>images/schemacrawler.png</src>
@@ -14,7 +14,7 @@
   </bannerRight>
   <poweredBy>
     <logo name="Maven" href="http://maven.apache.org/"
-          img="http://maven.apache.org/images/logos/maven-button-1.png"/>
+          img="http://maven.apache.org/images/logos/maven-button-1.png" />
   </poweredBy>
   <body>
     <links>
@@ -40,10 +40,10 @@
         href="how-to.html" />
       <item
         name="Bundled Distributions"
-        href="bundled.html" />           
+        href="bundled.html" />
       <item
         name="Who Uses"
-        href="who-uses.html" />                    
+        href="who-uses.html" />
       <item
         name="Donations"
         href="http://sourceforge.net/donate/index.php?group_id=148383" />

@@ -21,20 +21,19 @@
 package schemacrawler.crawl;
 
 
+import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
-import schemacrawler.schemacrawler.InformationSchemaViews;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-
 /**
  * A connection for the retriever. Wraps a live database connection.
- * 
+ *
  * @author Sualeh Fatehi
  */
-final class RetrieverConnection
-{
+final class RetrieverConnection {
 
   private final Connection connection;
   private final DatabaseMetaData metaData;
@@ -43,19 +42,15 @@ final class RetrieverConnection
 
   RetrieverConnection(final Connection connection,
                       final SchemaCrawlerOptions options)
-    throws SQLException
-  {
+    throws SQLException {
     SchemaCrawlerOptions schemaCrawlerOptions = options;
-    if (schemaCrawlerOptions == null)
-    {
+    if (schemaCrawlerOptions == null) {
       schemaCrawlerOptions = new SchemaCrawlerOptions();
     }
-    if (connection == null)
-    {
+    if (connection == null) {
       throw new SQLException("No connection provided");
     }
-    if (connection.isClosed())
-    {
+    if (connection.isClosed()) {
       throw new SQLException("Connection is closed");
     }
     this.connection = connection;
@@ -64,28 +59,24 @@ final class RetrieverConnection
     informationSchemaViews = schemaCrawlerOptions.getInformationSchemaViews();
   }
 
-  Connection getConnection()
-  {
+  Connection getConnection() {
     return connection;
   }
 
   /**
    * Gets the INFORMATION_SCHEMA views select SQL statements.
-   * 
+   *
    * @return INFORMATION_SCHEMA views selects
    */
-  InformationSchemaViews getInformationSchemaViews()
-  {
+  InformationSchemaViews getInformationSchemaViews() {
     return informationSchemaViews;
   }
 
-  DatabaseMetaData getMetaData()
-  {
+  DatabaseMetaData getMetaData() {
     return metaData;
   }
 
-  boolean isSupportsCatalogs()
-  {
+  boolean isSupportsCatalogs() {
     return supportsCatalogs;
   }
 

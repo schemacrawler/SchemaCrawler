@@ -20,11 +20,7 @@
 package sf.util;
 
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.Enumeration;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -33,11 +29,10 @@ import java.util.logging.Logger;
 
 /**
  * Utility methods.
- * 
+ *
  * @author Sualeh Fatehi
  */
-public final class Utility
-{
+public final class Utility {
 
   private static final Logger LOGGER = Logger
     .getLogger(Utility.class.getName());
@@ -47,37 +42,31 @@ public final class Utility
    */
   public static final String NEWLINE = System.getProperty("line.separator");
 
-  public static String commonPrefix(final String string1, final String string2)
-  {
+  public static String commonPrefix(final String string1, final String string2) {
     final int index = indexOfDifference(string1, string2);
-    if (index == -1)
-    {
+    if (index == -1) {
       return null;
     }
-    else
-    {
-      return string1.substring(0, index).toLowerCase();
+    else {
+      return string1.substring(0, index)
+        .toLowerCase();
     }
   }
 
   /**
    * Checks if the text is null or empty.
-   * 
-   * @param text
-   *        Text to check.
+   *
+   * @param text Text to check.
+   *
    * @return Whether the string is blank.
    */
-  public static boolean isBlank(final String text)
-  {
+  public static boolean isBlank(final String text) {
     final int textLength;
-    if (text == null || (textLength = text.length()) == 0)
-    {
+    if (text == null || (textLength = text.length()) == 0) {
       return true;
     }
-    for (int i = 0; i < textLength; i++)
-    {
-      if (!Character.isWhitespace(text.charAt(i)))
-      {
+    for (int i = 0; i < textLength; i++) {
+      if (!Character.isWhitespace(text.charAt(i))) {
         return false;
       }
     }
@@ -86,15 +75,13 @@ public final class Utility
 
   /**
    * Reads the stream fully, and returns a byte array of data.
-   * 
-   * @param stream
-   *        Stream to read.
+   *
+   * @param stream Stream to read.
+   *
    * @return Byte array
    */
-  public static String readFully(final InputStream stream)
-  {
-    if (stream == null)
-    {
+  public static String readFully(final InputStream stream) {
+    if (stream == null) {
       LOGGER.log(Level.WARNING,
                  "Cannot read null input stream",
                  new IOException("Cannot read null input stream"));
@@ -103,26 +90,22 @@ public final class Utility
 
     final StringBuilder out = new StringBuilder();
 
-    try
-    {
+    try {
       final char[] buffer = new char[0x10000];
       final Reader reader = new InputStreamReader(stream, "UTF-8");
       int read;
-      do
-      {
+      do {
         read = reader.read(buffer, 0, buffer.length);
-        if (read > 0)
-        {
+        if (read > 0) {
           out.append(buffer, 0, read);
         }
-      } while (read >= 0);
+      }
+      while (read >= 0);
     }
-    catch (final UnsupportedEncodingException e)
-    {
+    catch (final UnsupportedEncodingException e) {
       LOGGER.log(Level.WARNING, e.getMessage(), e);
     }
-    catch (final IOException e)
-    {
+    catch (final IOException e) {
       LOGGER.log(Level.WARNING, "Could not read stream", e);
     }
 
@@ -131,22 +114,18 @@ public final class Utility
 
   /**
    * Sets the application-wide log level.
-   * 
-   * @param logLevel
-   *        Log level to set
+   *
+   * @param logLevel Log level to set
    */
-  public static void setApplicationLogLevel(final Level logLevel)
-  {
+  public static void setApplicationLogLevel(final Level logLevel) {
     final LogManager logManager = LogManager.getLogManager();
     for (final Enumeration<String> loggerNames = logManager.getLoggerNames(); loggerNames
-      .hasMoreElements();)
-    {
+      .hasMoreElements();) {
       final String loggerName = loggerNames.nextElement();
       final Logger logger = logManager.getLogger(loggerName);
       logger.setLevel(null);
       final Handler[] handlers = logger.getHandlers();
-      for (final Handler handler: handlers)
-      {
+      for (final Handler handler : handlers) {
         handler.setLevel(logLevel);
       }
     }
@@ -156,29 +135,23 @@ public final class Utility
   }
 
   private static int indexOfDifference(final String string1,
-                                       final String string2)
-  {
-    if (string1 == null || string2 == null)
-    {
+                                       final String string2) {
+    if (string1 == null || string2 == null) {
       return 0;
     }
     int i;
-    for (i = 0; i < string1.length() && i < string2.length(); ++i)
-    {
-      if (string1.charAt(i) != string2.charAt(i))
-      {
+    for (i = 0; i < string1.length() && i < string2.length(); ++i) {
+      if (string1.charAt(i) != string2.charAt(i)) {
         break;
       }
     }
-    if (i < string2.length() || i < string1.length())
-    {
+    if (i < string2.length() || i < string1.length()) {
       return i;
     }
     return -1;
   }
 
-  private Utility()
-  { // Prevent instantiation
+  private Utility() { // Prevent instantiation
   }
 
 }

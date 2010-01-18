@@ -26,6 +26,6 @@
       <includes>
         <include>postgresql.*</include>
       </includes>
-     </fileSet>
+    </fileSet>
   </fileSets>
 </assembly>
