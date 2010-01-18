@@ -18,6 +18,14 @@
 package schemacrawler.test;
 
 
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static org.junit.Assert.*;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -28,15 +36,8 @@ import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.utility.TestDatabase;
 import sf.util.Utility;
 
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import static org.junit.Assert.*;
-
-public class SchemaCrawlerTest {
+public class SchemaCrawlerTest
+{
 
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerTest.class
     .getName());
@@ -44,20 +45,23 @@ public class SchemaCrawlerTest {
   private static TestDatabase testUtility = new TestDatabase();
 
   @AfterClass
-  public static void afterAllTests() {
+  public static void afterAllTests()
+  {
     testUtility.shutdownDatabase();
   }
 
   @BeforeClass
   public static void beforeAllTests()
-    throws Exception {
+    throws Exception
+  {
     TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();
   }
 
   @Test
   public void columns()
-    throws Exception {
+    throws Exception
+  {
     final String[] schemaNames = {
       "INFORMATION_SCHEMA", "PUBLIC", "SCHEMACRAWLER"
     };
@@ -138,7 +142,8 @@ public class SchemaCrawlerTest {
     final Database database = testUtility.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
     assertEquals("Schema count does not match", 3, schemas.length);
-    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++) {
+    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
+    {
       final Schema schema = schemas[schemaIdx];
       assertEquals("Schema name does not match", schemaNames[schemaIdx], schema
         .getName());
@@ -146,11 +151,13 @@ public class SchemaCrawlerTest {
       assertEquals("Table count does not match",
                    tableCounts[schemaIdx],
                    tables.length);
-      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++) {
+      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
+      {
         final Table table = tables[tableIdx];
         final Column[] columns = table.getColumns();
         final String[] columnsNamesForTable = columnNames[schemaIdx][tableIdx];
-        for (int columnIdx = 0; columnIdx < columns.length; columnIdx++) {
+        for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
+        {
           final Column column = columns[columnIdx];
           LOGGER.log(Level.FINE, column.toString());
           assertEquals("Column full name does not match",
@@ -170,7 +177,8 @@ public class SchemaCrawlerTest {
 
   @Test
   public void counts()
-    throws Exception {
+    throws Exception
+  {
 
     final int[] tableCounts = {
       0, 6, 2
@@ -210,13 +218,15 @@ public class SchemaCrawlerTest {
     final Database database = testUtility.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
     assertEquals("Schema count does not match", 3, schemas.length);
-    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++) {
+    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
+    {
       final Schema schema = schemas[schemaIdx];
       final Table[] tables = schema.getTables();
       assertEquals("Table count does not match",
                    tableCounts[schemaIdx],
                    tables.length);
-      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++) {
+      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
+      {
         final Table table = tables[tableIdx];
         assertEquals(String.format("Table %s columns count does not match",
                                    table.getFullName()),
@@ -240,7 +250,8 @@ public class SchemaCrawlerTest {
 
   @Test
   public void fkCounts()
-    throws Exception {
+    throws Exception
+  {
 
     final int[] tableCounts = {
       0, 6, 2
@@ -266,13 +277,15 @@ public class SchemaCrawlerTest {
     final Database database = testUtility.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
     assertEquals("Schema count does not match", 3, schemas.length);
-    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++) {
+    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
+    {
       final Schema schema = schemas[schemaIdx];
       final Table[] tables = schema.getTables();
       assertEquals("Table count does not match",
                    tableCounts[schemaIdx],
                    tables.length);
-      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++) {
+      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
+      {
         final Table table = tables[tableIdx];
         assertEquals(String
           .format("Table %s exported foreign key count does not match", table
@@ -288,7 +301,8 @@ public class SchemaCrawlerTest {
 
   @Test
   public void procedureDefinitions()
-    throws Exception {
+    throws Exception
+  {
 
     final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
     informationSchemaViews.setRoutinesSql(Utility.readFully(this.getClass()
@@ -302,7 +316,8 @@ public class SchemaCrawlerTest {
     final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
     final Procedure[] procedures = schema.getProcedures();
     assertTrue("No procedures found", procedures.length > 0);
-    for (final Procedure procedure : procedures) {
+    for (final Procedure procedure : procedures)
+    {
       assertNotNull("Procedure definition is null, for "
         + procedure.getFullName(), procedure.getDefinition());
       assertFalse("Procedure definition not found", procedure.getDefinition()
@@ -313,7 +328,8 @@ public class SchemaCrawlerTest {
 
   @Test
   public void schemaEquals()
-    throws Exception {
+    throws Exception
+  {
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setShowStoredProcedures(true);
@@ -343,7 +359,8 @@ public class SchemaCrawlerTest {
 
   @Test
   public void tables()
-    throws Exception {
+    throws Exception
+  {
 
     final String[] schemaNames = {
       "INFORMATION_SCHEMA", "PUBLIC", "SCHEMACRAWLER"
@@ -375,12 +392,14 @@ public class SchemaCrawlerTest {
     final Database database = testUtility.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
     assertEquals("Schema count does not match", 3, schemas.length);
-    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++) {
+    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
+    {
       final Schema schema = schemas[schemaIdx];
       assertEquals("Schema name does not match", schemaNames[schemaIdx], schema
         .getName());
       final Table[] tables = schema.getTables();
-      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++) {
+      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
+      {
         final Table table = tables[tableIdx];
         assertEquals("Table name does not match",
                      tableNames[schemaIdx][tableIdx],
@@ -398,7 +417,8 @@ public class SchemaCrawlerTest {
 
   @Test
   public void tablesSort()
-    throws Exception {
+    throws Exception
+  {
 
     final String[] tableNames = {
       "SUPPLIER", "CUSTOMER", "PRODUCT", "INVOICE", "ITEM", "CUSTOMERLIST",
@@ -489,8 +509,10 @@ public class SchemaCrawlerTest {
         .getTable("INVOICE")) > 0);
 
     final Table[] tables = schema.getTables();
-    for (int i = 0; i < 10; i++) {
-      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++) {
+    for (int i = 0; i < 10; i++)
+    {
+      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
+      {
         final Table table = tables[tableIdx];
         assertEquals("Table name does not match in iteration " + i,
                      tableNames[tableIdx],
@@ -498,7 +520,8 @@ public class SchemaCrawlerTest {
       }
 
       // Shuffle array, and sort it again
-      for (int k = tables.length; k > 1; k--) {
+      for (int k = tables.length; k > 1; k--)
+      {
         final int i1 = k - 1;
         final int i2 = rnd.nextInt(k);
         final Table tmp = tables[i1];
@@ -511,7 +534,8 @@ public class SchemaCrawlerTest {
 
   @Test
   public void triggers()
-    throws Exception {
+    throws Exception
+  {
 
     // Set up information schema properties
     final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
@@ -539,9 +563,11 @@ public class SchemaCrawlerTest {
     final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
     final Table[] tables = schema.getTables();
     boolean foundTrigger = false;
-    for (final Table table : tables) {
+    for (final Table table : tables)
+    {
       final Trigger[] triggers = table.getTriggers();
-      for (final Trigger trigger : triggers) {
+      for (final Trigger trigger : triggers)
+      {
         foundTrigger = true;
         assertEquals("Triggers full name does not match",
                      "PUBLIC.CUSTOMER.SCTRIGGER",
@@ -556,7 +582,8 @@ public class SchemaCrawlerTest {
 
   @Test
   public void viewDefinitions()
-    throws Exception {
+    throws Exception
+  {
     final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
     informationSchemaViews
       .setViewsSql("SELECT * FROM INFORMATION_SCHEMA.SYSTEM_VIEWS");

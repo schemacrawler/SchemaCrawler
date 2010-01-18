@@ -28,7 +28,8 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface ColumnDataType
-  extends DatabaseObject {
+  extends DatabaseObject
+{
 
   /**
    * Gets the base type of the data type.

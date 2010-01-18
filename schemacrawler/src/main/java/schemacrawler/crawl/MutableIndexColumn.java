@@ -5,7 +5,8 @@ import schemacrawler.schema.*;
 
 final class MutableIndexColumn
   extends AbstractDependantObject
-  implements IndexColumn {
+  implements IndexColumn
+{
 
   private static final long serialVersionUID = -6923211341742623556L;
 
@@ -14,7 +15,8 @@ final class MutableIndexColumn
   private int indexOrdinalPosition;
   private IndexColumnSortSequence sortSequence;
 
-  MutableIndexColumn(final Index index, final Column column) {
+  MutableIndexColumn(final Index index, final Column column)
+  {
     super(column.getParent(), column.getName());
     this.index = index;
     this.column = column;
@@ -24,18 +26,22 @@ final class MutableIndexColumn
    * {@inheritDoc}
    */
   @Override
-  public int compareTo(final NamedObject obj) {
-    if (obj == null) {
+  public int compareTo(final NamedObject obj)
+  {
+    if (obj == null)
+    {
       return -1;
     }
 
     final MutableIndexColumn other = (MutableIndexColumn) obj;
     int comparison = 0;
 
-    if (comparison == 0) {
+    if (comparison == 0)
+    {
       comparison = indexOrdinalPosition - other.indexOrdinalPosition;
     }
-    if (comparison == 0) {
+    if (comparison == 0)
+    {
       comparison = super.compareTo(other);
     }
 
@@ -47,7 +53,8 @@ final class MutableIndexColumn
    *
    * @see schemacrawler.schema.BaseColumn#getDecimalDigits()
    */
-  public int getDecimalDigits() {
+  public int getDecimalDigits()
+  {
     return column.getDecimalDigits();
   }
 
@@ -56,7 +63,8 @@ final class MutableIndexColumn
    *
    * @see schemacrawler.schema.Column#getDefaultValue()
    */
-  public String getDefaultValue() {
+  public String getDefaultValue()
+  {
     return column.getDefaultValue();
   }
 
@@ -65,7 +73,8 @@ final class MutableIndexColumn
    *
    * @see schemacrawler.schema.IndexColumn#getIndex()
    */
-  public Index getIndex() {
+  public Index getIndex()
+  {
     return index;
   }
 
@@ -74,7 +83,8 @@ final class MutableIndexColumn
    *
    * @see schemacrawler.schema.IndexColumn#getIndexOrdinalPosition()
    */
-  public int getIndexOrdinalPosition() {
+  public int getIndexOrdinalPosition()
+  {
     return indexOrdinalPosition;
   }
 
@@ -83,7 +93,8 @@ final class MutableIndexColumn
    *
    * @see schemacrawler.schema.BaseColumn#getOrdinalPosition()
    */
-  public int getOrdinalPosition() {
+  public int getOrdinalPosition()
+  {
     return column.getOrdinalPosition();
   }
 
@@ -92,7 +103,8 @@ final class MutableIndexColumn
    *
    * @see schemacrawler.schema.Column#getPrivilege(java.lang.String)
    */
-  public Privilege getPrivilege(final String name) {
+  public Privilege getPrivilege(final String name)
+  {
     return column.getPrivilege(name);
   }
 
@@ -101,7 +113,8 @@ final class MutableIndexColumn
    *
    * @see schemacrawler.schema.Column#getPrivileges()
    */
-  public Privilege[] getPrivileges() {
+  public Privilege[] getPrivileges()
+  {
     return column.getPrivileges();
   }
 
@@ -110,7 +123,8 @@ final class MutableIndexColumn
    *
    * @see schemacrawler.schema.Column#getReferencedColumn()
    */
-  public Column getReferencedColumn() {
+  public Column getReferencedColumn()
+  {
     return column.getReferencedColumn();
   }
 
@@ -119,7 +133,8 @@ final class MutableIndexColumn
    *
    * @see schemacrawler.schema.BaseColumn#getSize()
    */
-  public int getSize() {
+  public int getSize()
+  {
     return column.getSize();
   }
 
@@ -128,11 +143,13 @@ final class MutableIndexColumn
    *
    * @see schemacrawler.schema.IndexColumn#getSortSequence()
    */
-  public IndexColumnSortSequence getSortSequence() {
+  public IndexColumnSortSequence getSortSequence()
+  {
     return sortSequence;
   }
 
-  public ColumnDataType getType() {
+  public ColumnDataType getType()
+  {
     return column.getType();
   }
 
@@ -141,7 +158,8 @@ final class MutableIndexColumn
    *
    * @see schemacrawler.schema.BaseColumn#getWidth()
    */
-  public String getWidth() {
+  public String getWidth()
+  {
     return column.getWidth();
   }
 
@@ -150,7 +168,8 @@ final class MutableIndexColumn
    *
    * @see schemacrawler.schema.BaseColumn#isNullable()
    */
-  public boolean isNullable() {
+  public boolean isNullable()
+  {
     return column.isNullable();
   }
 
@@ -159,7 +178,8 @@ final class MutableIndexColumn
    *
    * @see schemacrawler.schema.Column#isPartOfForeignKey()
    */
-  public boolean isPartOfForeignKey() {
+  public boolean isPartOfForeignKey()
+  {
     return column.isPartOfForeignKey();
   }
 
@@ -168,7 +188,8 @@ final class MutableIndexColumn
    *
    * @see schemacrawler.schema.Column#isPartOfPrimaryKey()
    */
-  public boolean isPartOfPrimaryKey() {
+  public boolean isPartOfPrimaryKey()
+  {
     return column.isPartOfPrimaryKey();
   }
 
@@ -177,15 +198,18 @@ final class MutableIndexColumn
    *
    * @see schemacrawler.schema.Column#isPartOfUniqueIndex()
    */
-  public boolean isPartOfUniqueIndex() {
+  public boolean isPartOfUniqueIndex()
+  {
     return column.isPartOfUniqueIndex();
   }
 
-  void setIndexOrdinalPosition(final int indexOrdinalPosition) {
+  void setIndexOrdinalPosition(final int indexOrdinalPosition)
+  {
     this.indexOrdinalPosition = indexOrdinalPosition;
   }
 
-  void setSortSequence(final IndexColumnSortSequence sortSequence) {
+  void setSortSequence(final IndexColumnSortSequence sortSequence)
+  {
     this.sortSequence = sortSequence;
   }
 

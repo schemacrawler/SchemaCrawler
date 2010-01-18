@@ -21,17 +21,18 @@
 package schemacrawler.tools.integration.maven;
 
 
-import schemacrawler.Version;
-import sf.util.Utility;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import schemacrawler.Version;
+import sf.util.Utility;
+
 /**
  * Main class that takes arguments for a database for crawling a schema.
  */
-public final class Main {
+public final class Main
+{
 
   private static final String VERIFY_MAVEN_PLUGIN_SCRIPT_FILESTEM = "verify-schemacrawler-maven-plugin";
   private static final String INSTALL_MAVEN_PLUGIN_SCRIPT_FILESTEM = "install-schemacrawler-maven-plugin";
@@ -54,7 +55,8 @@ public final class Main {
    *
    * @return True is the current operating system is Windows.
    */
-  public static boolean isWindowsOS() {
+  public static boolean isWindowsOS()
+  {
     final String osName = System.getProperty("os.name");
     final boolean isWindowsOS = osName == null
       || osName.toLowerCase()
@@ -70,7 +72,8 @@ public final class Main {
    * @throws Exception On an exception
    */
   public static void main(final String[] args)
-    throws Exception {
+    throws Exception
+  {
 
     final String shellExt = isWindowsOS() ? ".cmd" : ".sh";
 
@@ -129,23 +132,28 @@ public final class Main {
    */
   public static File writeStringToFile(final String fileName,
                                        final String fileContents)
-    throws IOException {
+    throws IOException
+  {
     FileWriter writer = null;
-    try {
+    try
+    {
       final File file = new File(fileName);
       writer = new FileWriter(file);
       writer.write(fileContents);
       writer.flush();
       return file;
     }
-    finally {
-      if (writer != null) {
+    finally
+    {
+      if (writer != null)
+      {
         writer.close();
       }
     }
   }
 
-  private Main() {
+  private Main()
+  {
   }
 
 }

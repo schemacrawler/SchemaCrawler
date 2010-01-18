@@ -32,13 +32,15 @@ import schemacrawler.schema.ProcedureColumnType;
  */
 final class MutableProcedureColumn
   extends AbstractColumn
-  implements ProcedureColumn {
+  implements ProcedureColumn
+{
 
   private static final long serialVersionUID = 3546361725629772857L;
 
   private ProcedureColumnType procedureColumnType;
 
-  MutableProcedureColumn(final DatabaseObject parent, final String name) {
+  MutableProcedureColumn(final DatabaseObject parent, final String name)
+  {
     super(parent, name);
   }
 
@@ -47,7 +49,8 @@ final class MutableProcedureColumn
    *
    * @see ProcedureColumn#getPrecision()
    */
-  public int getPrecision() {
+  public int getPrecision()
+  {
     return getDecimalDigits();
   }
 
@@ -56,15 +59,18 @@ final class MutableProcedureColumn
    *
    * @see ProcedureColumn#getProcedureColumnType()
    */
-  public ProcedureColumnType getProcedureColumnType() {
+  public ProcedureColumnType getProcedureColumnType()
+  {
     return procedureColumnType;
   }
 
-  void setPrecision(final int precision) {
+  void setPrecision(final int precision)
+  {
     setDecimalDigits(precision);
   }
 
-  void setProcedureColumnType(final ProcedureColumnType procedureColumnType) {
+  void setProcedureColumnType(final ProcedureColumnType procedureColumnType)
+  {
     this.procedureColumnType = procedureColumnType;
   }
 

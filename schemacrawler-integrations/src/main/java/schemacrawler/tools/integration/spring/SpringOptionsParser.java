@@ -31,7 +31,8 @@ import sf.util.CommandLineParser.StringOption;
  * @author sfatehi
  */
 final class SpringOptionsParser
-  extends BaseOptionsParser<SpringOptions> {
+  extends BaseOptionsParser<SpringOptions>
+{
 
   private final StringOption optionContextFile = new StringOption('c',
                                                                   "context-file",
@@ -48,12 +49,14 @@ final class SpringOptionsParser
    *
    * @param args
    */
-  SpringOptionsParser(final String[] args) {
+  SpringOptionsParser(final String[] args)
+  {
     super(args);
   }
 
   @Override
-  protected SpringOptions getOptions() {
+  protected SpringOptions getOptions()
+  {
     parse(new Option[]{
       optionContextFile, optionExecutable, optionDataSourceName,
     });

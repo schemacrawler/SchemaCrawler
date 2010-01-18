@@ -5,21 +5,21 @@
   xmlns:ivy="antlib:fr.jayasoft.ivy.ant">
 
   <description>diagram - Integration of SchemaCrawler with GraphViz.</description>
-  <property environment="env" />
+  <property environment="env"/>
 
   <!-- Step 1.
     Define the ant tasks (macros) that come with SchemaCrawler
   -->
   <typedef
     resource="schemacrawler-integrations-antlib.xml"
-    classpath="../schemacrawler-8.0.jar" />
+    classpath="../schemacrawler-8.0.jar"/>
 
   <!-- Step 2.
     Define the classpath to the database driver
   -->
   <path id="db-driver-classpath">
     <fileset dir="..">
-      <include name="*.jar" />
+      <include name="*.jar"/>
     </fileset>
   </path>
 
@@ -30,21 +30,21 @@
 
     <property
       name="graph-type"
-      value="png" />
+      value="png"/>
     <property
       name="outputfile"
-      location="schema-diagram.png" />
+      location="schema-diagram.png"/>
 
-    <delete file="${outputfile}" />
+    <delete file="${outputfile}"/>
 
     <schemacrawler-diagram
       datasource="hsqldb"
       db-driver-classpath="db-driver-classpath"
       command="standard_schema"
       graph-type="${graph-type}"
-      outputfile="${outputfile}" />
+      outputfile="${outputfile}"/>
 
-    <echo message="Schema diagram is in ${outputfile}" />
+    <echo message="Schema diagram is in ${outputfile}"/>
 
   </target>
 

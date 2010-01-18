@@ -21,11 +21,11 @@
 package schemacrawler.tools.text.operation;
 
 
+import java.sql.Connection;
+
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.text.base.BaseSchemaCrawlerTextExecutable;
 import schemacrawler.tools.text.base.DatabaseTraversalHandler;
-
-import java.sql.Connection;
 
 /**
  * Basic SchemaCrawler executor.
@@ -33,59 +33,72 @@ import java.sql.Connection;
  * @author Sualeh Fatehi
  */
 public final class OperationExecutable
-  extends BaseSchemaCrawlerTextExecutable {
+  extends BaseSchemaCrawlerTextExecutable
+{
 
   private static final long serialVersionUID = -6824567755397315920L;
 
   private OperationOptions operationOptions;
 
-  public OperationExecutable(final String command) {
+  public OperationExecutable(final String command)
+  {
     super(command);
   }
 
-  public final OperationOptions getOperationOptions() {
+  public final OperationOptions getOperationOptions()
+  {
     final OperationOptions operationOptions;
-    if (this.operationOptions == null) {
+    if (this.operationOptions == null)
+    {
       operationOptions = new OperationOptions(additionalConfiguration);
     }
-    else {
+    else
+    {
       operationOptions = this.operationOptions;
     }
     return operationOptions;
   }
 
-  public final void setOperationOptions(final OperationOptions operationOptions) {
+  public final void setOperationOptions(final OperationOptions operationOptions)
+  {
     this.operationOptions = operationOptions;
   }
 
   @Override
   protected DatabaseTraversalHandler getDatabaseTraversalHandler(final Connection connection)
-    throws SchemaCrawlerException {
+    throws SchemaCrawlerException
+  {
     final DatabaseTraversalHandler handler;
 
     // Determine the operation, or whether this command is a query
     Operation operation = null;
-    try {
+    try
+    {
       operation = Operation.valueOf(command);
     }
-    catch (final IllegalArgumentException e) {
+    catch (final IllegalArgumentException e)
+    {
       operation = null;
     }
 
     // Get the query
     final Query query;
-    if (operation == null) {
+    if (operation == null)
+    {
       final String queryName = command;
       final String queryString;
-      if (additionalConfiguration != null) {
+      if (additionalConfiguration != null)
+      {
         queryString = additionalConfiguration.get(queryName);
       }
-      else {
+      else
+      {
         queryString = null;
       }
       query = new Query(queryName, queryString);
     }
-    else {
+    else
+    {
       query = operation.getQuery();
     }
 

@@ -28,7 +28,8 @@ import java.util.logging.Logger;
 /**
  * An enumeration wrapper around index types.
  */
-public enum IndexType {
+public enum IndexType
+{
 
   /**
    * Unknown
@@ -61,9 +62,12 @@ public enum IndexType {
    *
    * @return IndexType
    */
-  public static IndexType valueOf(final int id) {
-    for (final IndexType type : IndexType.values()) {
-      if (type.getId() == id) {
+  public static IndexType valueOf(final int id)
+  {
+    for (final IndexType type : IndexType.values())
+    {
+      if (type.getId() == id)
+      {
         return type;
       }
     }
@@ -73,7 +77,8 @@ public enum IndexType {
 
   private final int id;
 
-  private IndexType(final int id) {
+  private IndexType(final int id)
+  {
     this.id = id;
   }
 
@@ -82,7 +87,8 @@ public enum IndexType {
    *
    * @return id
    */
-  public int getId() {
+  public int getId()
+  {
     return id;
   }
 

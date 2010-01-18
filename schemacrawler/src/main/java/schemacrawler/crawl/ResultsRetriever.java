@@ -21,13 +21,13 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.ResultsColumns;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.Utility;
-
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+
+import schemacrawler.schema.ResultsColumns;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.Utility;
 
 /**
  * A retriever uses database metadata to get the details about a result set.
@@ -35,19 +35,24 @@ import java.sql.SQLException;
  * @author Sualeh Fatehi
  */
 final class ResultsRetriever
-  extends AbstractRetriever {
+  extends AbstractRetriever
+{
 
   private final ResultSetMetaData resultsMetaData;
 
   ResultsRetriever(final ResultSet resultSet)
-    throws SchemaCrawlerException {
-    if (resultSet == null) {
+    throws SchemaCrawlerException
+  {
+    if (resultSet == null)
+    {
       throw new SchemaCrawlerException("Cannot retrieve metadata for null results");
     }
-    try {
+    try
+    {
       resultsMetaData = resultSet.getMetaData();
     }
-    catch (final SQLException e) {
+    catch (final SQLException e)
+    {
       throw new SchemaCrawlerException("Cannot retrieve metadata for results",
                                        e);
     }
@@ -57,20 +62,24 @@ final class ResultsRetriever
    * Retrieves a list of columns from the results. There is no attempt to share table objects, since the tables cannot
    * have children that are ResultColumns. Likewise, there is no attempt to share column data types.
    *
-   * @throws SQLException On a SQL exception
+   * @throws SchemaCrawlerException On an exception
    */
   ResultsColumns retrieveResults()
-    throws SchemaCrawlerException {
+    throws SchemaCrawlerException
+  {
     final MutableResultsColumns resultColumns = new MutableResultsColumns("");
 
-    try {
+    try
+    {
       final MutableDatabase database = new MutableDatabase("results");
       final int columnCount = resultsMetaData.getColumnCount();
-      for (int i = 1; i <= columnCount; i++) {
+      for (int i = 1; i <= columnCount; i++)
+      {
         final String catalogName = resultsMetaData.getCatalogName(i);
         final String schemaName = resultsMetaData.getSchemaName(i);
         String tableName = resultsMetaData.getTableName(i);
-        if (Utility.isBlank(tableName)) {
+        if (Utility.isBlank(tableName))
+        {
           tableName = "";
         }
 
@@ -113,7 +122,8 @@ final class ResultsRetriever
         resultColumns.addColumn(column);
       }
     }
-    catch (final SQLException e) {
+    catch (final SQLException e)
+    {
       throw new SchemaCrawlerException("Cannot retrieve metadata for results",
                                        e);
     }

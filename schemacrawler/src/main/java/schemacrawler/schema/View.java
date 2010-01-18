@@ -27,7 +27,8 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface View
-  extends Table {
+  extends Table
+{
 
   /**
    * Type of WITH CHECK OPTION. Is CASCADE if the original view was created by using the WITH CHECK OPTION. Otherwise,

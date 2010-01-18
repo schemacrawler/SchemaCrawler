@@ -21,14 +21,14 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.ProcedureColumnType;
-import schemacrawler.schema.ProcedureType;
-import schemacrawler.schemacrawler.InclusionRule;
-
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import schemacrawler.schema.ProcedureColumnType;
+import schemacrawler.schema.ProcedureType;
+import schemacrawler.schemacrawler.InclusionRule;
 
 /**
  * A retriever uses database metadata to get the details about the database procedures.
@@ -36,37 +36,35 @@ import java.util.logging.Logger;
  * @author Sualeh Fatehi
  */
 final class ProcedureRetriever
-  extends AbstractRetriever {
+  extends AbstractRetriever
+{
 
   private static final Logger LOGGER = Logger
     .getLogger(ProcedureRetriever.class.getName());
 
   ProcedureRetriever(final RetrieverConnection retrieverConnection,
-                     final MutableDatabase database) {
+                     final MutableDatabase database)
+  {
     super(retrieverConnection, database);
   }
 
-  /**
-   * Retrieves a list of columns from the database, for the table specified.
-   *
-   * @param procedure Procedure for which data is required.
-   *
-   * @throws SQLException On a SQL exception
-   */
   void retrieveProcedureColumns(final MutableProcedure procedure,
                                 final InclusionRule columnInclusionRule)
-    throws SQLException {
+    throws SQLException
+  {
 
     MetadataResultSet results = null;
     int ordinalNumber = 0;
-    try {
+    try
+    {
       results = new MetadataResultSet(getMetaData()
         .getProcedureColumns(procedure.getSchema().getCatalogName(),
                              procedure.getSchema().getSchemaName(),
                              procedure.getName(),
                              null));
 
-      while (results.next()) {
+      while (results.next())
+      {
         final String columnCatalogName = results.getString("PROCEDURE_CAT");
         final String schemaName = results.getString("PROCEDURE_SCHEM");
         final String procedureName = results.getString("PROCEDURE_NAME");
@@ -78,7 +76,8 @@ final class ProcedureRetriever
         if (columnInclusionRule.include(columnFullName)
           && procedure.getName()
           .equals(procedureName)
-          && belongsToSchema(procedure, columnCatalogName, schemaName)) {
+          && belongsToSchema(procedure, columnCatalogName, schemaName))
+        {
           LOGGER.log(Level.FINER, "Retrieving procedure column: " + columnName);
           final short columnType = results.getShort("COLUMN_TYPE", (short) 0);
           final int dataType = results.getInt("DATA_TYPE", 0);
@@ -105,7 +104,8 @@ final class ProcedureRetriever
         }
       }
     }
-    catch (final SQLException e) {
+    catch (final SQLException e)
+    {
       final SQLException sqlEx = new SQLException("Could not retrieve columns for procedure "
         + procedure
         + ": "
@@ -113,37 +113,31 @@ final class ProcedureRetriever
       sqlEx.setNextException(e);
       throw sqlEx;
     }
-    finally {
-      if (results != null) {
+    finally
+    {
+      if (results != null)
+      {
         results.close();
       }
     }
 
   }
 
-  /**
-   * Retrieves procedure metadata according to the parameters specified. No column metadata is retrieved, for reasons of
-   * efficiency.
-   *
-   * @param pattern          Procedure name pattern for table
-   * @param useRegExpPattern True is the procedure name pattern is a regular expression; false if the procedure name
-   *                         pattern is the JDBC pattern
-   *
-   * @return A list of tables in the database that match the pattern
-   *
-   * @throws SQLException On a SQL exception
-   */
+
   void retrieveProcedures(final String catalogName,
                           final String schemaName,
                           final InclusionRule procedureInclusionRule)
-    throws SQLException {
+    throws SQLException
+  {
     MetadataResultSet results = null;
-    try {
+    try
+    {
       results = new MetadataResultSet(getMetaData().getProcedures(catalogName,
                                                                   schemaName,
                                                                   "%"));
 
-      while (results.next()) {
+      while (results.next())
+      {
         // final String catalogName =
         // results.getString("PROCEDURE_CAT");
         // final String schemaName =
@@ -156,7 +150,8 @@ final class ProcedureRetriever
         final String remarks = results.getString("REMARKS");
 
         final MutableSchema schema = lookupSchema(catalogName, schemaName);
-        if (schema == null) {
+        if (schema == null)
+        {
           LOGGER.log(Level.FINE, String.format("Cannot find schema, %s.%s",
                                                catalogName,
                                                schemaName));
@@ -165,7 +160,8 @@ final class ProcedureRetriever
 
         final MutableProcedure procedure = new MutableProcedure(schema,
                                                                 procedureName);
-        if (procedureInclusionRule.include(procedure.getFullName())) {
+        if (procedureInclusionRule.include(procedure.getFullName()))
+        {
           procedure.setType(ProcedureType.valueOf(procedureType));
           procedure.setRemarks(remarks);
           procedure.addAttributes(results.getAttributes());
@@ -174,8 +170,10 @@ final class ProcedureRetriever
         }
       }
     }
-    finally {
-      if (results != null) {
+    finally
+    {
+      if (results != null)
+      {
         results.close();
       }
     }

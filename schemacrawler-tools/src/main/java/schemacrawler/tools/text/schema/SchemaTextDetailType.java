@@ -24,7 +24,8 @@ package schemacrawler.tools.text.schema;
 /**
  * Enumeration for level of schema text output detail.
  */
-public enum SchemaTextDetailType {
+public enum SchemaTextDetailType
+{
 
   /**
    * No column detail.
@@ -46,11 +47,14 @@ public enum SchemaTextDetailType {
    *
    * @return Yes if this is greater or equal to
    */
-  boolean isGreaterThanOrEqualTo(final SchemaTextDetailType schemaTextDetailType) {
-    if (schemaTextDetailType != null) {
+  boolean isGreaterThanOrEqualTo(final SchemaTextDetailType schemaTextDetailType)
+  {
+    if (schemaTextDetailType != null)
+    {
       return ordinal() >= schemaTextDetailType.ordinal();
     }
-    else {
+    else
+    {
       return false;
     }
   }

@@ -28,7 +28,8 @@ import schemacrawler.schemacrawler.Options;
  * @author Sualeh Fatehi
  */
 public class SpringOptions
-  implements Options {
+  implements Options
+{
 
   private static final long serialVersionUID = 5125868244511892692L;
 
@@ -41,7 +42,8 @@ public class SpringOptions
    *
    * @return Spring context file name.
    */
-  public String getContextFileName() {
+  public String getContextFileName()
+  {
     return contextFileName;
   }
 
@@ -50,7 +52,8 @@ public class SpringOptions
    *
    * @return Bean name for the datasource.
    */
-  public String getDataSourceName() {
+  public String getDataSourceName()
+  {
     return dataSourceName;
   }
 
@@ -59,7 +62,8 @@ public class SpringOptions
    *
    * @return Bean name of the SchemaCrawler executable.
    */
-  public String getExecutableName() {
+  public String getExecutableName()
+  {
     return executableName;
   }
 
@@ -68,7 +72,8 @@ public class SpringOptions
    *
    * @param contextFileName Spring context file name.
    */
-  public void setContextFileName(final String contextFileName) {
+  public void setContextFileName(final String contextFileName)
+  {
     this.contextFileName = contextFileName;
   }
 
@@ -77,7 +82,8 @@ public class SpringOptions
    *
    * @param dataSourceName Bean name for the datasource.
    */
-  public void setDataSourceName(final String dataSourceName) {
+  public void setDataSourceName(final String dataSourceName)
+  {
     this.dataSourceName = dataSourceName;
   }
 
@@ -86,7 +92,8 @@ public class SpringOptions
    *
    * @param executableName Bean name of the SchemaCrawler executable.
    */
-  public void setExecutableName(final String executableName) {
+  public void setExecutableName(final String executableName)
+  {
     this.executableName = executableName;
   }
 

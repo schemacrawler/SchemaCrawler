@@ -24,7 +24,8 @@ package schemacrawler.schema;
 /**
  * Constraint type.
  */
-public enum EventManipulationType {
+public enum EventManipulationType
+{
 
   /**
    * Unknown

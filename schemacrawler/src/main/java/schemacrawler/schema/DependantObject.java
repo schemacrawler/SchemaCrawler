@@ -27,7 +27,8 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface DependantObject
-  extends DatabaseObject {
+  extends DatabaseObject
+{
 
   /**
    * Gets the parent database object.

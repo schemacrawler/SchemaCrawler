@@ -20,6 +20,14 @@
 package schemacrawler.tools.integration.maven;
 
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.Arrays;
+import java.util.Locale;
+
 import org.apache.maven.doxia.siterenderer.Renderer;
 import org.apache.maven.doxia.siterenderer.RendererException;
 import org.apache.maven.doxia.siterenderer.sink.SiteRendererSink;
@@ -30,14 +38,6 @@ import org.apache.maven.reporting.MavenReport;
 import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.doxia.sink.Sink;
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.Arrays;
-import java.util.Locale;
-
 /**
  * Generates a SchemaCrawler report of the database.
  *
@@ -46,7 +46,8 @@ import java.util.Locale;
  */
 public class SchemaCrawlerMojo
   extends AbstractMavenReport
-  implements MavenReport {
+  implements MavenReport
+{
 
   /**
    * @parameter expression="${project}"
@@ -149,7 +150,8 @@ public class SchemaCrawlerMojo
    * @see org.apache.maven.reporting.MavenReport#canGenerateReport()
    */
   @Override
-  public boolean canGenerateReport() {
+  public boolean canGenerateReport()
+  {
     // TODO: Test database connection?
     return true;
   }
@@ -159,23 +161,28 @@ public class SchemaCrawlerMojo
    */
   @Override
   public void execute()
-    throws MojoExecutionException {
+    throws MojoExecutionException
+  {
     final String errorMessage = "An error has occurred in "
       + getName(Locale.ENGLISH)
       + " report generation.";
-    try {
+    try
+    {
       final String outputDirectory = getOutputDirectory();
       final SiteRendererSink sink = siteRenderer
         .createSink(new File(outputDirectory), getOutputName() + ".html");
       generate(sink, Locale.getDefault());
     }
-    catch (final RendererException e) {
+    catch (final RendererException e)
+    {
       throw new MojoExecutionException(errorMessage, e);
     }
-    catch (final IOException e) {
+    catch (final IOException e)
+    {
       throw new MojoExecutionException(errorMessage, e);
     }
-    catch (final MavenReportException e) {
+    catch (final MavenReportException e)
+    {
       throw new MojoExecutionException(errorMessage, e);
     }
   }
@@ -187,7 +194,8 @@ public class SchemaCrawlerMojo
    */
   @Override
   public void generate(final Sink sink, final Locale locale)
-    throws MavenReportException {
+    throws MavenReportException
+  {
     executeReport(locale);
   }
 
@@ -197,7 +205,8 @@ public class SchemaCrawlerMojo
    * @see org.apache.maven.reporting.MavenReport#getCategoryName()
    */
   @Override
-  public String getCategoryName() {
+  public String getCategoryName()
+  {
     return CATEGORY_PROJECT_REPORTS;
   }
 
@@ -206,7 +215,8 @@ public class SchemaCrawlerMojo
    *
    * @see org.apache.maven.reporting.MavenReport#getDescription(java.util.Locale)
    */
-  public String getDescription(final Locale locale) {
+  public String getDescription(final Locale locale)
+  {
     return "SchemaCrawler Report";
   }
 
@@ -215,7 +225,8 @@ public class SchemaCrawlerMojo
    *
    * @see org.apache.maven.reporting.MavenReport#getName(java.util.Locale)
    */
-  public String getName(final Locale locale) {
+  public String getName(final Locale locale)
+  {
     return "SchemaCrawler Report";
   }
 
@@ -224,7 +235,8 @@ public class SchemaCrawlerMojo
    *
    * @see org.apache.maven.reporting.MavenReport#getOutputName()
    */
-  public String getOutputName() {
+  public String getOutputName()
+  {
     final String outputFilename = new File(outputFile).getName();
     return outputFilename.substring(0, outputFilename.lastIndexOf('.'));
   }
@@ -235,7 +247,8 @@ public class SchemaCrawlerMojo
    * @see org.apache.maven.reporting.MavenReport#getReportOutputDirectory()
    */
   @Override
-  public File getReportOutputDirectory() {
+  public File getReportOutputDirectory()
+  {
     return new File(outputFile).getParentFile();
   }
 
@@ -245,7 +258,8 @@ public class SchemaCrawlerMojo
    * @see org.apache.maven.reporting.MavenReport#isExternalReport()
    */
   @Override
-  public boolean isExternalReport() {
+  public boolean isExternalReport()
+  {
     return true;
   }
 
@@ -255,18 +269,21 @@ public class SchemaCrawlerMojo
    * @see org.apache.maven.reporting.MavenReport#setReportOutputDirectory(java.io.File)
    */
   @Override
-  public void setReportOutputDirectory(final File directory) {
+  public void setReportOutputDirectory(final File directory)
+  {
     // Get the output filename
     final String outputFilename = new File(outputFile).getName();
     // Set the new path
-    if (directory.exists() && directory.isDirectory()) {
+    if (directory.exists() && directory.isDirectory())
+    {
       outputFile = new File(directory, outputFilename).getAbsolutePath();
     }
   }
 
   @Override
   protected void executeReport(final Locale locale)
-    throws MavenReportException {
+    throws MavenReportException
+  {
 
     // Build command line
     final String[] args = new String[]{
@@ -292,13 +309,15 @@ public class SchemaCrawlerMojo
     // Execute command
     final String commandLine = schemacrawler.Main.class.getName() + " ~"
       + Arrays.asList(args);
-    try {
+    try
+    {
       fixClassPath();
       getLog().info(commandLine);
       schemacrawler.Main
         .main(args);
     }
-    catch (final Exception e) {
+    catch (final Exception e)
+    {
       throw new MavenReportException("Error executing: " + commandLine, e);
     }
   }
@@ -307,7 +326,8 @@ public class SchemaCrawlerMojo
    * @see org.apache.maven.reporting.AbstractMavenReport#getOutputDirectory()
    */
   @Override
-  protected String getOutputDirectory() {
+  protected String getOutputDirectory()
+  {
     return new File(outputFile).getParentFile()
       .getAbsolutePath();
   }
@@ -316,7 +336,8 @@ public class SchemaCrawlerMojo
    * @see org.apache.maven.reporting.AbstractMavenReport#getProject()
    */
   @Override
-  protected MavenProject getProject() {
+  protected MavenProject getProject()
+  {
     return project;
   }
 
@@ -324,7 +345,8 @@ public class SchemaCrawlerMojo
    * @see org.apache.maven.reporting.AbstractMavenReport#getSiteRenderer()
    */
   @Override
-  protected Renderer getSiteRenderer() {
+  protected Renderer getSiteRenderer()
+  {
     return siteRenderer;
   }
 
@@ -335,14 +357,17 @@ public class SchemaCrawlerMojo
    * @throws MavenReportException
    */
   private void fixClassPath()
-    throws MavenReportException {
+    throws MavenReportException
+  {
     URL[] jdbcJarUrls = new URL[0];
-    try {
+    try
+    {
 
       final String[] jdbcJarPaths = jdbcDriverClasspath.split(System
         .getProperty("path.separator"));
       jdbcJarUrls = new URL[jdbcJarPaths.length];
-      for (int i = 0; i < jdbcJarPaths.length; i++) {
+      for (int i = 0; i < jdbcJarPaths.length; i++)
+      {
         final String jdbcJarPath = jdbcJarPaths[i];
         jdbcJarUrls[i] = new File(jdbcJarPath).getCanonicalFile()
           .toURI()
@@ -359,7 +384,8 @@ public class SchemaCrawlerMojo
 
       addUrlMethod.setAccessible(true);
 
-      for (final URL jdbcJarUrl : jdbcJarUrls) {
+      for (final URL jdbcJarUrl : jdbcJarUrls)
+      {
         addUrlMethod.invoke(classLoader, jdbcJarUrl);
       }
 
@@ -367,7 +393,8 @@ public class SchemaCrawlerMojo
         + Arrays.asList(classLoader.getURLs()));
 
     }
-    catch (final Exception e) {
+    catch (final Exception e)
+    {
       throw new MavenReportException("Error fixing classpath with "
         + Arrays.asList(jdbcJarUrls), e);
     }

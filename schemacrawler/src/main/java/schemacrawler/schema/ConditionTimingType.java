@@ -27,7 +27,8 @@ import java.util.logging.Logger;
 /**
  * Constraint type.
  */
-public enum ConditionTimingType {
+public enum ConditionTimingType
+{
 
   /**
    * Unknown
@@ -56,10 +57,13 @@ public enum ConditionTimingType {
    *
    * @return Enumeration value
    */
-  public static ConditionTimingType valueOfFromValue(final String value) {
-    for (final ConditionTimingType type : ConditionTimingType.values()) {
+  public static ConditionTimingType valueOfFromValue(final String value)
+  {
+    for (final ConditionTimingType type : ConditionTimingType.values())
+    {
       if (type.getValue()
-        .equalsIgnoreCase(value)) {
+        .equalsIgnoreCase(value))
+      {
         return type;
       }
     }
@@ -69,7 +73,8 @@ public enum ConditionTimingType {
 
   private final String value;
 
-  private ConditionTimingType(final String value) {
+  private ConditionTimingType(final String value)
+  {
     this.value = value;
   }
 
@@ -78,7 +83,8 @@ public enum ConditionTimingType {
    *
    * @return Value
    */
-  public final String getValue() {
+  public final String getValue()
+  {
     return value;
   }
 

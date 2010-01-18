@@ -24,26 +24,31 @@ package schemacrawler.tools.options;
 import schemacrawler.schemacrawler.Options;
 
 public class HelpOptions
-  implements Options {
+  implements Options
+{
 
   private static final long serialVersionUID = -2497570007150087268L;
 
   private final String title;
   private String resourceConnections = "/help/Connections.txt";
 
-  public HelpOptions(final String title) {
+  public HelpOptions(final String title)
+  {
     this.title = title;
   }
 
-  public String getResourceConnections() {
+  public String getResourceConnections()
+  {
     return resourceConnections;
   }
 
-  public String getTitle() {
+  public String getTitle()
+  {
     return title;
   }
 
-  public void setResourceConnections(final String resourceConnections) {
+  void setResourceConnections(final String resourceConnections)
+  {
     this.resourceConnections = resourceConnections;
   }
 

@@ -26,9 +26,12 @@ package schemacrawler.tools.text.util;
  *
  * @author Sualeh Fatehi
  */
-public interface TextFormattingHelper {
+public interface TextFormattingHelper
+{
 
-  enum DocumentHeaderType {
+  enum DocumentHeaderType
+  {
+
     title,
     subTitle,
     section;

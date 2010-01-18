@@ -31,7 +31,8 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawlerHelpCommandLine
-  implements CommandLine {
+  implements CommandLine
+{
 
   private static final long serialVersionUID = -3748989545708155963L;
 
@@ -50,22 +51,27 @@ public final class SchemaCrawlerHelpCommandLine
   public SchemaCrawlerHelpCommandLine(final String[] args,
                                       final HelpOptions helpOptions,
                                       final String configResource)
-    throws SchemaCrawlerException {
-    if (args == null) {
+    throws SchemaCrawlerException
+  {
+    if (args == null)
+    {
       throw new IllegalArgumentException("No command line arguments provided");
     }
 
-    if (helpOptions == null) {
+    if (helpOptions == null)
+    {
       throw new SchemaCrawlerException("No help options provided");
     }
     this.helpOptions = helpOptions;
 
     hideConfig = !Utility.isBlank(configResource);
 
-    if (args.length == 0) {
+    if (args.length == 0)
+    {
       command = null;
     }
-    else {
+    else
+    {
       command = new CommandParser(args).getOptions()
         .toString();
     }
@@ -77,7 +83,8 @@ public final class SchemaCrawlerHelpCommandLine
    * @see schemacrawler.tools.commandline.CommandLine#execute()
    */
   public void execute()
-    throws SchemaCrawlerException {
+    throws SchemaCrawlerException
+  {
     System.out
       .println(helpOptions.getTitle());
     showHelp("/help/SchemaCrawler.txt");
@@ -86,23 +93,27 @@ public final class SchemaCrawlerHelpCommandLine
 
     showHelp(helpOptions.getResourceConnections());
     showHelp("/help/SchemaCrawlerOptions.txt");
-    if (!hideConfig) {
+    if (!hideConfig)
+    {
       showHelp("/help/Config.txt");
     }
     showHelp("/help/ApplicationOptions.txt");
     final CommandRegistry commandRegistry = new CommandRegistry();
-    if (command == null) {
+    if (command == null)
+    {
       showHelp("/help/Command.txt");
       System.out
         .println("  Available commands are: ");
       final String[] availableCommands = commandRegistry
         .lookupAvailableCommands();
-      for (final String availableCommand : availableCommands) {
+      for (final String availableCommand : availableCommands)
+      {
         System.out
           .println("  " + availableCommand);
       }
     }
-    else {
+    else
+    {
       final String commandExecutableClassName = commandRegistry
         .lookupCommandExecutableClassName(command);
       final String helpResource = "/help/"
@@ -115,14 +126,17 @@ public final class SchemaCrawlerHelpCommandLine
     System.exit(0);
   }
 
-  public final String getCommand() {
+  public final String getCommand()
+  {
     return command;
   }
 
-  private static void showHelp(final String helpResource) {
+  private static void showHelp(final String helpResource)
+  {
     if (sf.util
       .Utility
-      .isBlank(helpResource)) {
+      .isBlank(helpResource))
+    {
       return;
     }
     final String helpText = Utility

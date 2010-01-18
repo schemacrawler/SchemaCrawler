@@ -29,7 +29,8 @@ import java.io.Serializable;
  * @author Sualeh Fatehi
  */
 public interface ColumnMap
-  extends Serializable {
+  extends Serializable
+{
 
   /**
    * Gets the foreign key column.

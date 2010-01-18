@@ -27,7 +27,8 @@ package schemacrawler.schema;
  * @author sfatehi
  */
 public interface JdbcDriverProperty
-  extends DatabaseProperty {
+  extends DatabaseProperty
+{
 
   /**
    * Gets the array of possible values if the value for the field <code>DriverPropertyInfo.value</code> may be selected

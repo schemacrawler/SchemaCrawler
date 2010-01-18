@@ -29,7 +29,8 @@ import schemacrawler.schema.DatabaseObject;
  */
 class MutableCheckConstraint
   extends AbstractDependantObject
-  implements CheckConstraint {
+  implements CheckConstraint
+{
 
   private static final long serialVersionUID = 1155277343302693656L;
 
@@ -37,7 +38,8 @@ class MutableCheckConstraint
   private boolean initiallyDeferred;
   private String definition;
 
-  MutableCheckConstraint(final DatabaseObject parent, final String name) {
+  MutableCheckConstraint(final DatabaseObject parent, final String name)
+  {
     super(parent, name);
   }
 
@@ -46,7 +48,8 @@ class MutableCheckConstraint
    *
    * @see schemacrawler.schema.CheckConstraint#getDefinition()
    */
-  public String getDefinition() {
+  public String getDefinition()
+  {
     return definition;
   }
 
@@ -55,7 +58,8 @@ class MutableCheckConstraint
    *
    * @see schemacrawler.schema.CheckConstraint#isDeferrable()
    */
-  public boolean isDeferrable() {
+  public boolean isDeferrable()
+  {
     return deferrable;
   }
 
@@ -64,19 +68,23 @@ class MutableCheckConstraint
    *
    * @see schemacrawler.schema.CheckConstraint#isInitiallyDeferred()
    */
-  public boolean isInitiallyDeferred() {
+  public boolean isInitiallyDeferred()
+  {
     return initiallyDeferred;
   }
 
-  void setDeferrable(final boolean deferrable) {
+  void setDeferrable(final boolean deferrable)
+  {
     this.deferrable = deferrable;
   }
 
-  void setDefinition(final String definition) {
+  void setDefinition(final String definition)
+  {
     this.definition = definition;
   }
 
-  void setInitiallyDeferred(final boolean initiallyDeferred) {
+  void setInitiallyDeferred(final boolean initiallyDeferred)
+  {
     this.initiallyDeferred = initiallyDeferred;
   }
 

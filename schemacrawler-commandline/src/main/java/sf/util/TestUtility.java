@@ -23,64 +23,78 @@ package sf.util;
 import java.io.*;
 import java.util.List;
 
-public final class TestUtility {
+public final class TestUtility
+{
 
   public static void compareOutput(final String referenceFile,
                                    final File testOutputFile,
                                    final List<String> failures)
-    throws Exception {
+    throws Exception
+  {
 
     final boolean contentEquals;
     final InputStream referenceStream = TestUtility.class
       .getResourceAsStream("/" + referenceFile);
-    if (referenceStream == null) {
+    if (referenceStream == null)
+    {
       contentEquals = false;
     }
-    else {
+    else
+    {
       contentEquals = contentEquals(new FileReader(testOutputFile),
                                     new InputStreamReader(referenceStream));
     }
-    if (!contentEquals) {
+    if (!contentEquals)
+    {
       final File testOutputLocalFile = new File("./", referenceFile);
       testOutputLocalFile.getParentFile()
         .mkdirs();
       final boolean renamed = testOutputFile.renameTo(testOutputLocalFile);
       final String message;
-      if (renamed) {
+      if (renamed)
+      {
         message = "Expected file contents in "
           + testOutputLocalFile.getAbsolutePath();
       }
-      else {
+      else
+      {
         message = "Expected file contents in "
           + testOutputFile.getAbsolutePath();
       }
       failures.add(message);
     }
-    if (!testOutputFile.delete()) {
+    if (!testOutputFile.delete())
+    {
       failures.add("Cannot delete output file, "
         + testOutputFile.getAbsolutePath());
     }
   }
 
   private static boolean contentEquals(final Reader input1, final Reader input2)
-    throws Exception {
-    if (input1 == null || input2 == null) {
+    throws Exception
+  {
+    if (input1 == null || input2 == null)
+    {
       return false;
     }
 
     boolean contentEquals = true;
     final BufferedReader reader1 = new BufferedReader(input1);
     final BufferedReader reader2 = new BufferedReader(input2);
-    try {
+    try
+    {
       String line1 = reader1.readLine();
-      while (null != line1) {
+      while (null != line1)
+      {
         final String line2 = reader2.readLine();
-        if (line2 == null) {
+        if (line2 == null)
+        {
           contentEquals = false;
           break;
         }
         if (!line1.trim()
-          .equals(line2.trim())) {
+          .equals(line2.trim()))
+        {
           contentEquals = false;
           break;
         }
@@ -90,14 +104,16 @@ public final class TestUtility {
       final String line2 = reader2.readLine();
       contentEquals = line2 == null;
     }
-    finally {
+    finally
+    {
       reader1.close();
       reader2.close();
     }
     return contentEquals;
   }
 
-  private TestUtility() {
+  private TestUtility()
+  {
     // Prevent instantiation
   }
 

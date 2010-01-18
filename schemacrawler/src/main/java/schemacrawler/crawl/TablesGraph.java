@@ -1,33 +1,39 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnMap;
-import sf.util.DirectedGraph;
-import sf.util.GraphException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schema.ForeignKey;
+import schemacrawler.schema.ForeignKeyColumnMap;
+import sf.util.DirectedGraph;
+import sf.util.GraphException;
+
 final class TablesGraph
-  extends DirectedGraph<MutableTable> {
+  extends DirectedGraph<MutableTable>
+{
 
   private static final Logger LOGGER = Logger.getLogger(TablesGraph.class
     .getName());
 
-  TablesGraph(final NamedObjectList<MutableTable> tables) {
-    if (tables == null) {
+  TablesGraph(final NamedObjectList<MutableTable> tables)
+  {
+    if (tables == null)
+    {
       return;
     }
 
-    for (final MutableTable table : tables) {
+    for (final MutableTable table : tables)
+    {
       addVertex(table);
       final ForeignKey[] foreignKeys = table.getForeignKeys();
-      for (final ForeignKey foreignKey : foreignKeys) {
+      for (final ForeignKey foreignKey : foreignKeys)
+      {
         final ForeignKeyColumnMap[] columnPairs = foreignKey.getColumnPairs();
-        for (final ForeignKeyColumnMap columnPair : columnPairs) {
+        for (final ForeignKeyColumnMap columnPair : columnPairs)
+        {
           addDirectedEdge((MutableTable) columnPair.getPrimaryKeyColumn()
             .getParent(), (MutableTable) columnPair.getForeignKeyColumn()
             .getParent());
@@ -40,26 +46,33 @@ final class TablesGraph
   /**
    * Set the sort order for tables and views.
    */
-  void setTablesSortIndices() {
-    try {
+  void setTablesSortIndices()
+  {
+    try
+    {
       final List<MutableTable> sortedTables = topologicalSort();
       final List<MutableView> sortedViews = new ArrayList<MutableView>();
       int sortIndex = 0;
-      for (final MutableTable table : sortedTables) {
-        if (table instanceof MutableView) {
+      for (final MutableTable table : sortedTables)
+      {
+        if (table instanceof MutableView)
+        {
           sortedViews.add((MutableView) table);
         }
-        else {
+        else
+        {
           table.setSortIndex(sortIndex);
           sortIndex++;
         }
       }
-      for (final MutableView view : sortedViews) {
+      for (final MutableView view : sortedViews)
+      {
         view.setSortIndex(sortIndex);
         sortIndex++;
       }
     }
-    catch (final GraphException e) {
+    catch (final GraphException e)
+    {
       LOGGER.log(Level.CONFIG, e.getMessage());
     }
   }

@@ -30,55 +30,70 @@ import schemacrawler.schema.ColumnMap;
  * @author Sualeh Fatehi
  */
 final class MutableColumnMap
-  implements ColumnMap, Comparable<ColumnMap> {
+  implements ColumnMap, Comparable<ColumnMap>
+{
 
   private static final long serialVersionUID = -4411771492159843382L;
 
   private final Column foreignKeyColumn;
   private final Column primaryKeyColumn;
 
-  MutableColumnMap(final Column primaryKeyColumn, final Column foreignKeyColumn) {
+  MutableColumnMap(final Column primaryKeyColumn, final Column foreignKeyColumn)
+  {
     this.primaryKeyColumn = primaryKeyColumn;
     this.foreignKeyColumn = foreignKeyColumn;
   }
 
-  public int compareTo(final ColumnMap o) {
+  public int compareTo(final ColumnMap o)
+  {
     int compare = 0;
-    if (compare == 0) {
+    if (compare == 0)
+    {
       compare = primaryKeyColumn.compareTo(o.getPrimaryKeyColumn());
     }
-    if (compare == 0) {
+    if (compare == 0)
+    {
       compare = foreignKeyColumn.compareTo(o.getForeignKeyColumn());
     }
     return compare;
   }
 
   @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
+  public boolean equals(final Object obj)
+  {
+    if (this == obj)
+    {
       return true;
     }
-    if (obj == null) {
+    if (obj == null)
+    {
       return false;
     }
-    if (getClass() != obj.getClass()) {
+    if (getClass() != obj.getClass())
+    {
       return false;
     }
     final MutableColumnMap other = (MutableColumnMap) obj;
-    if (foreignKeyColumn == null) {
-      if (other.foreignKeyColumn != null) {
+    if (foreignKeyColumn == null)
+    {
+      if (other.foreignKeyColumn != null)
+      {
         return false;
       }
     }
-    else if (!foreignKeyColumn.equals(other.foreignKeyColumn)) {
+    else if (!foreignKeyColumn.equals(other.foreignKeyColumn))
+    {
       return false;
     }
-    if (primaryKeyColumn == null) {
-      if (other.primaryKeyColumn != null) {
+    if (primaryKeyColumn == null)
+    {
+      if (other.primaryKeyColumn != null)
+      {
         return false;
       }
     }
-    else if (!primaryKeyColumn.equals(other.primaryKeyColumn)) {
+    else if (!primaryKeyColumn.equals(other.primaryKeyColumn))
+    {
       return false;
     }
     return true;
@@ -89,7 +104,8 @@ final class MutableColumnMap
    *
    * @see schemacrawler.schema.ForeignKeyColumnMap#getForeignKeyColumn()
    */
-  public Column getForeignKeyColumn() {
+  public Column getForeignKeyColumn()
+  {
     return foreignKeyColumn;
   }
 
@@ -98,12 +114,14 @@ final class MutableColumnMap
    *
    * @see schemacrawler.schema.ForeignKeyColumnMap#getPrimaryKeyColumn()
    */
-  public Column getPrimaryKeyColumn() {
+  public Column getPrimaryKeyColumn()
+  {
     return primaryKeyColumn;
   }
 
   @Override
-  public int hashCode() {
+  public int hashCode()
+  {
     final int prime = 31;
     int result = 1;
     result = prime * result
@@ -114,7 +132,8 @@ final class MutableColumnMap
   }
 
   @Override
-  public String toString() {
+  public String toString()
+  {
     return primaryKeyColumn + " --> " + foreignKeyColumn;
   }
 

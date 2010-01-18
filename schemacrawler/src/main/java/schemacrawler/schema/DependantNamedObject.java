@@ -27,7 +27,8 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface DependantNamedObject
-  extends NamedObject {
+  extends NamedObject
+{
 
   /**
    * Gets the parent named object.

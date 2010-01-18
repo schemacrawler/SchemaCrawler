@@ -21,9 +21,6 @@
 package schemacrawler.schemacrawler;
 
 
-import sf.util.ObjectToString;
-import sf.util.Utility;
-
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +29,9 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import sf.util.ObjectToString;
+import sf.util.Utility;
+
 /**
  * Configuration properties.
  *
@@ -39,7 +39,8 @@ import java.util.logging.Logger;
  */
 public final class Config
   extends HashMap<String, String>
-  implements Options {
+  implements Options
+{
 
   private static final long serialVersionUID = 8720699738076915453L;
 
@@ -52,9 +53,11 @@ public final class Config
    *
    * @return Configuration properties.
    */
-  public static Config load(final InputStream configStream) {
+  public static Config load(final InputStream configStream)
+  {
     Properties configProperties = new Properties();
-    if (configStream != null) {
+    if (configStream != null)
+    {
       configProperties = loadProperties(configProperties, configStream);
     }
     return new Config(configProperties);
@@ -67,11 +70,15 @@ public final class Config
    *
    * @return Configuration properties.
    */
-  public static Config load(final String... configFilenames) {
+  public static Config load(final String... configFilenames)
+  {
     Properties configProperties = new Properties();
-    if (configFilenames != null) {
-      for (final String configFilename : configFilenames) {
-        if (!Utility.isBlank(configFilename)) {
+    if (configFilenames != null)
+    {
+      for (final String configFilename : configFilenames)
+      {
+        if (!Utility.isBlank(configFilename))
+        {
           configProperties = loadProperties(configProperties,
                                             new File(configFilename));
         }
@@ -83,18 +90,21 @@ public final class Config
   /**
    * Loads a properties file.
    *
-   * @param properties         Properties object.
-   * @param propertiesFileName Properties file name.
+   * @param properties     Properties object.
+   * @param propertiesFile Properties file.
    *
    * @return Properties
    */
   private static Properties loadProperties(final Properties properties,
-                                           final File propertiesFile) {
-    try {
+                                           final File propertiesFile)
+  {
+    try
+    {
       final InputStream propertiesStream = new BufferedInputStream(new FileInputStream(propertiesFile));
       loadProperties(properties, propertiesStream);
     }
-    catch (final FileNotFoundException e) {
+    catch (final FileNotFoundException e)
+    {
       LOGGER.log(Level.WARNING, "Cannot load properties from file, "
         + propertiesFile.getAbsolutePath());
       LOGGER.log(Level.FINEST, e.getMessage(), e);
@@ -105,27 +115,34 @@ public final class Config
   /**
    * Loads a properties file.
    *
-   * @param properties         Properties object.
-   * @param propertiesFileName Properties file name.
+   * @param properties       Properties object.
+   * @param propertiesStream Properties data stream.
    *
    * @return Properties
    */
   private static Properties loadProperties(final Properties properties,
-                                           final InputStream propertiesStream) {
-    try {
+                                           final InputStream propertiesStream)
+  {
+    try
+    {
       properties.load(propertiesStream);
       propertiesStream.close();
     }
-    catch (final IOException e) {
+    catch (final IOException e)
+    {
       LOGGER.log(Level.WARNING, "Error loading properties", e);
     }
-    finally {
-      try {
-        if (propertiesStream != null) {
+    finally
+    {
+      try
+      {
+        if (propertiesStream != null)
+        {
           propertiesStream.close();
         }
       }
-      catch (final IOException e) {
+      catch (final IOException e)
+      {
         LOGGER.log(Level.WARNING, "Error closing stream", e);
       }
     }
@@ -139,11 +156,14 @@ public final class Config
    *
    * @return Map of properties and values
    */
-  private static Map<String, String> propertiesMap(final Properties properties) {
+  private static Map<String, String> propertiesMap(final Properties properties)
+  {
     final Map<String, String> propertiesMap = new HashMap<String, String>();
-    if (properties != null) {
+    if (properties != null)
+    {
       final Set<Map.Entry<Object, Object>> entries = properties.entrySet();
-      for (final Map.Entry<Object, Object> entry : entries) {
+      for (final Map.Entry<Object, Object> entry : entries)
+      {
         propertiesMap.put((String) entry.getKey(), (String) entry.getValue());
       }
     }
@@ -153,7 +173,8 @@ public final class Config
   /**
    * Creates an empty config.
    */
-  public Config() {
+  public Config()
+  {
   }
 
   /**
@@ -161,8 +182,10 @@ public final class Config
    *
    * @param config Config to clone
    */
-  public Config(final Map<String, String> config) {
-    if (config != null) {
+  public Config(final Map<String, String> config)
+  {
+    if (config != null)
+    {
       putAll(config);
     }
   }
@@ -172,7 +195,8 @@ public final class Config
    *
    * @param properties Properties to copy
    */
-  public Config(final Properties properties) {
+  public Config(final Properties properties)
+  {
     super(propertiesMap(properties));
   }
 
@@ -183,7 +207,8 @@ public final class Config
    *
    * @return Boolean value
    */
-  public boolean getBooleanValue(final String propertyName) {
+  public boolean getBooleanValue(final String propertyName)
+  {
     return Boolean.parseBoolean(getStringValue(propertyName, "false"));
   }
 
@@ -194,7 +219,8 @@ public final class Config
    *
    * @return Integer value
    */
-  public int getIntegerValue(final String propertyName) {
+  public int getIntegerValue(final String propertyName)
+  {
     return Integer.parseInt(getStringValue(propertyName, null));
   }
 
@@ -207,16 +233,19 @@ public final class Config
    * @return String value
    */
   public String getStringValue(final String propertyName,
-                               final String defaultValue) {
+                               final String defaultValue)
+  {
     String value = get(propertyName);
-    if (value == null) {
+    if (value == null)
+    {
       value = defaultValue;
     }
     return value;
   }
 
   @Override
-  public String toString() {
+  public String toString()
+  {
     return ObjectToString.toString(this);
   }
 

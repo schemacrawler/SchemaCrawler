@@ -21,6 +21,12 @@
 package schemacrawler.tools.integration.spring;
 
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sql.DataSource;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 import schemacrawler.tools.commandline.ApplicationOptionsParser;
@@ -28,16 +34,11 @@ import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.options.ApplicationOptions;
 import sf.util.Utility;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.sql.DataSource;
-
 /**
  * Main class that takes arguments for a database for crawling a schema.
  */
-public final class Main {
+public final class Main
+{
 
   private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
@@ -46,12 +47,15 @@ public final class Main {
    *
    * @param args Arguments passed into the program from the command line.
    */
-  public static void main(final String[] args) {
+  public static void main(final String[] args)
+  {
     Connection connection = null;
-    try {
+    try
+    {
       final ApplicationOptions applicationOptions = new ApplicationOptionsParser(args)
         .getOptions();
-      if (applicationOptions.isShowHelp()) {
+      if (applicationOptions.isShowHelp())
+      {
         final String text = Utility.readFully(Main.class
           .getResourceAsStream("/help/SchemaCrawler.spring.txt"));
         System.out
@@ -72,17 +76,22 @@ public final class Main {
       connection = dataSource.getConnection();
       executable.execute(connection);
     }
-    catch (final Exception e) {
+    catch (final Exception e)
+    {
       e.printStackTrace();
     }
-    finally {
-      try {
-        if (connection != null) {
+    finally
+    {
+      try
+      {
+        if (connection != null)
+        {
           connection.close();
           LOGGER.log(Level.INFO, "Closed database connection, " + connection);
         }
       }
-      catch (final SQLException e) {
+      catch (final SQLException e)
+      {
         final String errorMessage = e.getMessage();
         LOGGER.log(Level.WARNING, "Could not close the connection: "
           + errorMessage);
@@ -90,7 +99,8 @@ public final class Main {
     }
   }
 
-  private Main() {
+  private Main()
+  {
     // Prevent instantiation
   }
 

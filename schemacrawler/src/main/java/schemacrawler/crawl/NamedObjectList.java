@@ -21,11 +21,11 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.NamedObject;
-import sf.util.Utility;
-
 import java.io.Serializable;
 import java.util.*;
+
+import schemacrawler.schema.NamedObject;
+import sf.util.Utility;
 
 /**
  * Ordered list of named objects, that can be searched associatively.
@@ -33,7 +33,8 @@ import java.util.*;
  * @author Sualeh Fatehi
  */
 class NamedObjectList<N extends NamedObject>
-  implements Serializable, Iterable<N> {
+  implements Serializable, Iterable<N>
+{
 
   private static final long serialVersionUID = 3257847666804142128L;
 
@@ -48,7 +49,8 @@ class NamedObjectList<N extends NamedObject>
    *
    * @see java.lang.Iterable#iterator()
    */
-  public Iterator<N> iterator() {
+  public Iterator<N> iterator()
+  {
     return values().iterator();
   }
 
@@ -58,7 +60,8 @@ class NamedObjectList<N extends NamedObject>
    * @see java.lang.Object#toString()
    */
   @Override
-  public String toString() {
+  public String toString()
+  {
     return values().toString();
   }
 
@@ -67,19 +70,23 @@ class NamedObjectList<N extends NamedObject>
    *
    * @param namedObject Named object
    */
-  void add(final N namedObject) {
-    if (namedObject == null) {
+  void add(final N namedObject)
+  {
+    if (namedObject == null)
+    {
       throw new IllegalArgumentException("Cannot add a null object to the list");
     }
     final String key = makeLookupKey(namedObject);
     objects.put(key, namedObject);
   }
 
-  boolean isEmpty() {
+  boolean isEmpty()
+  {
     return objects.isEmpty();
   }
 
-  N lookup(final NamedObject namedObject, final String name) {
+  N lookup(final NamedObject namedObject, final String name)
+  {
     final String key = makeLookupKey(namedObject, name);
     return objects.get(key);
   }
@@ -91,18 +98,22 @@ class NamedObjectList<N extends NamedObject>
    *
    * @return Named object
    */
-  N lookup(final String fullName) {
+  N lookup(final String fullName)
+  {
     final String key = makeLookupKey(fullName);
     return objects.get(key);
   }
 
-  void remove(final NamedObject namedObject) {
-    if (namedObject != null) {
+  void remove(final NamedObject namedObject)
+  {
+    if (namedObject != null)
+    {
       objects.remove(makeLookupKey(namedObject));
     }
   }
 
-  void setSortOrder(final NamedObjectSort sort) {
+  void setSortOrder(final NamedObjectSort sort)
+  {
     this.sort = sort;
   }
 
@@ -111,7 +122,8 @@ class NamedObjectList<N extends NamedObject>
    *
    * @return Number of elements in this list.
    */
-  int size() {
+  int size()
+  {
     return objects.size();
   }
 
@@ -120,33 +132,40 @@ class NamedObjectList<N extends NamedObject>
    *
    * @return All named objects
    */
-  List<N> values() {
+  List<N> values()
+  {
     final List<N> all = new ArrayList<N>(objects.values());
     Collections.sort(all, sort);
     return Collections.unmodifiableList(all);
   }
 
-  private static String makeLookupKey(final NamedObject namedObject) {
+  private static String makeLookupKey(final NamedObject namedObject)
+  {
     final String key;
-    if (namedObject == null) {
+    if (namedObject == null)
+    {
       key = null;
     }
-    else {
+    else
+    {
       key = namedObject.getFullName();
     }
     return key;
   }
 
-  private static String makeLookupKey(final NamedObject namedObject, final String name) {
+  private static String makeLookupKey(final NamedObject namedObject, final String name)
+  {
     final StringBuilder buffer = new StringBuilder(256);
 
     final String key;
     final String namedObjectLookupKey = makeLookupKey(namedObject);
 
-    if (namedObjectLookupKey != null) {
+    if (namedObjectLookupKey != null)
+    {
       buffer.append(namedObjectLookupKey);
     }
-    if (buffer.length() > 0) {
+    if (buffer.length() > 0)
+    {
       buffer.append(".");
     }
     buffer.append(name);
@@ -155,12 +174,15 @@ class NamedObjectList<N extends NamedObject>
     return key;
   }
 
-  private static String makeLookupKey(final String fullName) {
+  private static String makeLookupKey(final String fullName)
+  {
     final String key;
-    if (Utility.isBlank(fullName)) {
+    if (Utility.isBlank(fullName))
+    {
       key = null;
     }
-    else {
+    else
+    {
       key = fullName;
     }
     return key;

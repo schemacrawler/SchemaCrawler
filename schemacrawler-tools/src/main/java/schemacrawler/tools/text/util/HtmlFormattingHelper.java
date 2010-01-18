@@ -30,7 +30,9 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 public final class HtmlFormattingHelper
-  extends BaseTextFormattingHelper {
+  extends BaseTextFormattingHelper
+{
+
   /**
    * HTML footer.
    */
@@ -40,7 +42,8 @@ public final class HtmlFormattingHelper
    */
   private static final String HTML_HEADER = htmlHeader();
 
-  private static String htmlHeader() {
+  private static String htmlHeader()
+  {
     final String styleSheet = Utility.readFully(HtmlFormattingHelper.class
       .getResourceAsStream("/schemacrawler-output.css"));
 
@@ -58,11 +61,13 @@ public final class HtmlFormattingHelper
     return header;
   }
 
-  public HtmlFormattingHelper(final OutputFormat outputFormat) {
+  public HtmlFormattingHelper(final OutputFormat outputFormat)
+  {
     super(outputFormat);
   }
 
-  public String createArrow() {
+  public String createArrow()
+  {
     return " \u2192 ";
   }
 
@@ -71,7 +76,8 @@ public final class HtmlFormattingHelper
    *
    * @see schemacrawler.tools.util.TextFormattingHelper#createDocumentEnd()
    */
-  public String createDocumentEnd() {
+  public String createDocumentEnd()
+  {
     return HTML_FOOTER;
   }
 
@@ -80,22 +86,28 @@ public final class HtmlFormattingHelper
    *
    * @see schemacrawler.tools.util.TextFormattingHelper#createDocumentStart()
    */
-  public String createDocumentStart() {
+  public String createDocumentStart()
+  {
     return HTML_HEADER;
   }
 
-  public String createHeader(final DocumentHeaderType type, final String header) {
+  public String createHeader(final DocumentHeaderType type, final String header)
+  {
     if (!sf.util
       .Utility
-      .isBlank(header)) {
+      .isBlank(header))
+    {
       final String prefix;
       final String headerTag;
-      if (type == null) {
+      if (type == null)
+      {
         prefix = "<p>&nbsp;</p>";
         headerTag = "h2";
       }
-      else {
-        switch (type) {
+      else
+      {
+        switch (type)
+        {
           case title:
             prefix = "<p>&nbsp;</p>";
             headerTag = "h1";
@@ -114,13 +126,14 @@ public final class HtmlFormattingHelper
             break;
         }
       }
-      return String.format("%s\n<%s>%s</%s>\n",
+      return String.format("%s%n<%s>%s</%s>%n",
                            prefix,
                            headerTag,
                            header,
                            headerTag);
     }
-    else {
+    else
+    {
       return "";
     }
   }
@@ -130,7 +143,8 @@ public final class HtmlFormattingHelper
    *
    * @see schemacrawler.tools.util.TextFormattingHelper#createObjectEnd()
    */
-  public String createObjectEnd() {
+  public String createObjectEnd()
+  {
     return "</table>" + NEWLINE + "<p></p>" + NEWLINE;
   }
 
@@ -139,11 +153,13 @@ public final class HtmlFormattingHelper
    *
    * @see schemacrawler.tools.util.TextFormattingHelper#createObjectStart(java.lang.String)
    */
-  public String createObjectStart(final String name) {
+  public String createObjectStart(final String name)
+  {
     String objectStart = "<table>" + NEWLINE;
     if (!sf.util
       .Utility
-      .isBlank(name)) {
+      .isBlank(name))
+    {
       objectStart = objectStart + "  <caption>" + name + "</caption>" + NEWLINE;
     }
     return objectStart;
@@ -154,7 +170,8 @@ public final class HtmlFormattingHelper
    *
    * @see schemacrawler.tools.util.TextFormattingHelper#createPreformattedText(java.lang.String, java.lang.String)
    */
-  public String createPreformattedText(final String id, final String text) {
+  public String createPreformattedText(final String id, final String text)
+  {
     return String.format("<pre id=\'%s\'>%n%s</pre>", id, text);
   }
 }

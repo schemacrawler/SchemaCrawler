@@ -27,6 +27,7 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface PrimaryKey
-  extends Index {
+  extends Index
+{
 
 }

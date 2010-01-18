@@ -20,36 +20,41 @@
 package schemacrawler.tools.commandline;
 
 
-import schemacrawler.tools.options.ApplicationOptions;
-import schemacrawler.tools.options.HelpOptions;
-import sf.util.Utility;
-
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SchemaCrawlerMain {
+import schemacrawler.tools.options.ApplicationOptions;
+import schemacrawler.tools.options.HelpOptions;
+import sf.util.Utility;
+
+public class SchemaCrawlerMain
+{
 
   private static final Logger LOGGER = Logger.getLogger(SchemaCrawlerMain.class
     .getName());
 
   public static void main(final String[] args)
-    throws Exception {
+    throws Exception
+  {
     main(args, new HelpOptions(""), null);
   }
 
   public static void main(final String[] args,
                           final HelpOptions helpOptions,
                           final String configResource)
-    throws Exception {
+    throws Exception
+  {
     final CommandLine commandLine;
     final boolean showHelp;
     final ApplicationOptions applicationOptions;
-    if (args.length == 0) {
+    if (args.length == 0)
+    {
       applicationOptions = new ApplicationOptions();
       showHelp = true;
     }
-    else {
+    else
+    {
       applicationOptions = new ApplicationOptionsParser(args).getOptions();
       showHelp = applicationOptions.isShowHelp();
     }
@@ -58,18 +63,21 @@ public class SchemaCrawlerMain {
       .getResourceAsStream("/help/SchemaCrawlerOptions.txt")));
     LOGGER.log(Level.CONFIG, "Command line: " + Arrays.toString(args));
 
-    if (showHelp) {
+    if (showHelp)
+    {
       commandLine = new SchemaCrawlerHelpCommandLine(args,
                                                      helpOptions,
                                                      configResource);
     }
-    else {
+    else
+    {
       commandLine = new SchemaCrawlerCommandLine(args, configResource);
     }
     commandLine.execute();
   }
 
-  private SchemaCrawlerMain() {
+  private SchemaCrawlerMain()
+  {
 
   }
 

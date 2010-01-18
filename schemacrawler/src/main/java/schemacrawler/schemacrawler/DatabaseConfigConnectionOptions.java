@@ -21,14 +21,15 @@
 package schemacrawler.schemacrawler;
 
 
-import sf.util.TemplatingUtility;
-import sf.util.Utility;
-
 import java.util.HashMap;
 import java.util.Map;
 
+import sf.util.TemplatingUtility;
+import sf.util.Utility;
+
 public final class DatabaseConfigConnectionOptions
-  extends BaseDatabaseConnectionOptions {
+  extends BaseDatabaseConnectionOptions
+{
 
   private static final long serialVersionUID = -8141436553988174836L;
 
@@ -43,8 +44,10 @@ public final class DatabaseConfigConnectionOptions
   private final Map<String, String> properties;
 
   public DatabaseConfigConnectionOptions(final Map<String, String> properties)
-    throws SchemaCrawlerException {
-    if (properties == null) {
+    throws SchemaCrawlerException
+  {
+    if (properties == null)
+    {
       throw new SchemaCrawlerException("No connection properties provided");
     }
     this.properties = new HashMap<String, String>(properties);
@@ -55,49 +58,62 @@ public final class DatabaseConfigConnectionOptions
   }
 
   public DatabaseConfigConnectionOptions(final String configResource)
-    throws SchemaCrawlerException {
+    throws SchemaCrawlerException
+  {
     this(Config.load(DatabaseConfigConnectionOptions.class
       .getResourceAsStream(configResource)));
   }
 
   @Override
-  public String getConnectionUrl() {
+  public String getConnectionUrl()
+  {
     final Map<String, String> properties = new HashMap<String, String>(this.properties);
     TemplatingUtility.substituteVariables(properties);
     return properties.get(URL);
   }
 
-  public String getDatabase() {
+  public String getDatabase()
+  {
     return properties.get(DATABASE);
   }
 
-  public String getHost() {
+  public String getHost()
+  {
     return properties.get(HOST);
   }
 
-  public int getPort() {
-    try {
+  public int getPort()
+  {
+    try
+    {
       return Integer.parseInt(properties.get(PORT));
     }
-    catch (final NumberFormatException e) {
+    catch (final NumberFormatException e)
+    {
       return 0;
     }
   }
 
-  public void setDatabase(final String database) {
-    if (!Utility.isBlank(database)) {
+  public void setDatabase(final String database)
+  {
+    if (!Utility.isBlank(database))
+    {
       properties.put(DATABASE, database);
     }
   }
 
-  public void setHost(final String host) {
-    if (!Utility.isBlank(host)) {
+  public void setHost(final String host)
+  {
+    if (!Utility.isBlank(host))
+    {
       properties.put(HOST, host);
     }
   }
 
-  public void setPort(final int port) {
-    if (port > 0) {
+  public void setPort(final int port)
+  {
+    if (port > 0)
+    {
       properties.put(PORT, String.valueOf(port));
     }
   }

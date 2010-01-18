@@ -33,7 +33,9 @@ import java.util.Map;
  *
  * @author Steve Purcell, Sualeh Fatehi
  */
-public final class CommandLineParser {
+public final class CommandLineParser
+{
+
   /**
    * Representation of a command-line option.
    *
@@ -41,34 +43,40 @@ public final class CommandLineParser {
    * @param <T> Option type
    */
   public abstract static class BaseOption<T>
-    implements Option<T> {
+    implements Option<T>
+  {
 
     private String shortForm;
     private String longForm;
     private boolean hasShortForm;
     private boolean hasLongForm;
-    protected T value;
+    T value;
     private final T defaultValue;
 
     protected BaseOption(final char shortForm,
                          final String longForm,
-                         final T defaultValue) {
-      if (shortForm != NO_SHORT_FORM) {
+                         final T defaultValue)
+    {
+      if (shortForm != NO_SHORT_FORM)
+      {
         this.shortForm = new String(new char[]{
           shortForm
         });
         hasShortForm = true;
       }
 
-      if (!longForm.equals(NO_LONG_FORM)) {
-        if (longForm.length() == 0) {
+      if (!longForm.equals(NO_LONG_FORM))
+      {
+        if (longForm.length() == 0)
+        {
           throw new IllegalArgumentException("Long form for option not specified");
         }
         this.longForm = longForm;
         hasLongForm = true;
       }
 
-      if (!hasLongForm && !hasShortForm) {
+      if (!hasLongForm && !hasShortForm)
+      {
         throw new IllegalArgumentException("Option cannot be defined");
       }
 
@@ -80,7 +88,8 @@ public final class CommandLineParser {
      *
      * @see Option#getDefaultValue()
      */
-    public T getDefaultValue() {
+    public T getDefaultValue()
+    {
       return defaultValue;
     }
 
@@ -89,7 +98,8 @@ public final class CommandLineParser {
      *
      * @see Option#getLongForm()
      */
-    public String getLongForm() {
+    public String getLongForm()
+    {
       return longForm;
     }
 
@@ -98,7 +108,8 @@ public final class CommandLineParser {
      *
      * @see Option#getShortForm()
      */
-    public String getShortForm() {
+    public String getShortForm()
+    {
       return shortForm;
     }
 
@@ -107,12 +118,15 @@ public final class CommandLineParser {
      *
      * @see Option#getValue()
      */
-    public T getValue() {
+    public T getValue()
+    {
       final T returnValue;
-      if (!isFound()) {
+      if (!isFound())
+      {
         returnValue = defaultValue;
       }
-      else {
+      else
+      {
         returnValue = value;
       }
       return returnValue;
@@ -123,7 +137,8 @@ public final class CommandLineParser {
      *
      * @see Option#hasLongForm()
      */
-    public boolean hasLongForm() {
+    public boolean hasLongForm()
+    {
       return hasLongForm;
     }
 
@@ -132,7 +147,8 @@ public final class CommandLineParser {
      *
      * @see Option#hasShortForm()
      */
-    public boolean hasShortForm() {
+    public boolean hasShortForm()
+    {
       return hasShortForm;
     }
 
@@ -141,7 +157,8 @@ public final class CommandLineParser {
      *
      * @see Option#isFound()
      */
-    public boolean isFound() {
+    public boolean isFound()
+    {
       return value != null;
     }
 
@@ -151,27 +168,23 @@ public final class CommandLineParser {
      * @see java.lang.Object#toString()
      */
     @Override
-    public String toString() {
+    public String toString()
+    {
       final String optionString = (hasLongForm ? longForm : "")
         + (hasShortForm ? " (" + shortForm + ")" : "")
         + "=" + value + " (" + defaultValue + ")";
       return optionString;
     }
 
-    /**
-     * Override to extract and convert an option value passed on the command-line.
-     *
-     * @param valueString
-     *
-     * @return Parsed value
-     */
     protected abstract T parseValue(final String valueString);
 
-    void reset() {
+    void reset()
+    {
       value = null;
     }
 
-    void setValue(final String valueString) {
+    void setValue(final String valueString)
+    {
       value = parseValue(valueString);
     }
   }
@@ -180,7 +193,8 @@ public final class CommandLineParser {
    * An option that expects a boolean value.
    */
   public static final class BooleanOption
-    extends BaseOption<Boolean> {
+    extends BaseOption<Boolean>
+  {
 
     /**
      * Constructor that takes the short form and long form of the switch.
@@ -188,14 +202,17 @@ public final class CommandLineParser {
      * @param shortForm Short form of the switch
      * @param longForm  Long form of the switch
      */
-    public BooleanOption(final char shortForm, final String longForm) {
+    public BooleanOption(final char shortForm, final String longForm)
+    {
       super(shortForm, longForm, Boolean.FALSE);
       value = Boolean.FALSE;
     }
 
     @Override
-    protected Boolean parseValue(final String valueString) {
-      if (valueString == null || valueString.length() == 0) {
+    protected Boolean parseValue(final String valueString)
+    {
+      if (valueString == null || valueString.length() == 0)
+      {
         return Boolean.FALSE;
       }
       return Boolean.valueOf(valueString);
@@ -209,7 +226,8 @@ public final class CommandLineParser {
    * @param <N> Option type
    */
   public static final class NumberOption
-    extends BaseOption<Number> {
+    extends BaseOption<Number>
+  {
 
     /**
      * Constructor that takes the short form and long form of the switch.
@@ -220,17 +238,21 @@ public final class CommandLineParser {
      */
     public NumberOption(final char shortForm,
                         final String longForm,
-                        final Number defaultValue) {
+                        final Number defaultValue)
+    {
       super(shortForm, longForm, defaultValue);
     }
 
     @Override
-    protected Number parseValue(final String arg) {
-      try {
+    protected Number parseValue(final String arg)
+    {
+      try
+      {
         return NumberFormat.getNumberInstance()
           .parse(arg);
       }
-      catch (final ParseException e) {
+      catch (final ParseException e)
+      {
         return null;
       }
     }
@@ -242,7 +264,9 @@ public final class CommandLineParser {
    * @author Sualeh Fatehi
    * @param <T> Option type
    */
-  public static interface Option<T> {
+  public static interface Option<T>
+  {
+
     /**
      * Special value when no short form is defined
      */
@@ -307,7 +331,8 @@ public final class CommandLineParser {
    * An option that expects a string value.
    */
   public static final class StringOption
-    extends BaseOption<String> {
+    extends BaseOption<String>
+  {
 
     /**
      * Constructor that takes the short form and long form of the switch.
@@ -318,12 +343,14 @@ public final class CommandLineParser {
      */
     public StringOption(final char shortForm,
                         final String longForm,
-                        final String defaultValue) {
+                        final String defaultValue)
+    {
       super(shortForm, longForm, defaultValue);
     }
 
     @Override
-    protected String parseValue(final String arg) {
+    protected String parseValue(final String arg)
+    {
       return arg;
     }
   }
@@ -339,11 +366,14 @@ public final class CommandLineParser {
    *
    * @param option Option to add
    */
-  public void addOption(final Option<?> option) {
-    if (option.hasShortForm()) {
+  public void addOption(final Option<?> option)
+  {
+    if (option.hasShortForm())
+    {
       optionsMap.put(DASH + option.getShortForm(), option);
     }
-    if (option.hasLongForm()) {
+    if (option.hasLongForm())
+    {
       optionsMap.put(DASH + option.getLongForm(), option);
     }
   }
@@ -355,14 +385,18 @@ public final class CommandLineParser {
    *
    * @return Option
    */
-  public boolean getBooleanOptionValue(final String optionName) {
+  public boolean getBooleanOptionValue(final String optionName)
+  {
     boolean optionValue = false;
     final Option<?> option = getOption(optionName);
-    if (option == null) {
+    if (option == null)
+    {
       optionValue = false;
     }
-    else {
-      if (option instanceof BooleanOption) {
+    else
+    {
+      if (option instanceof BooleanOption)
+      {
         optionValue = ((BooleanOption) option).getValue();
       }
     }
@@ -376,7 +410,8 @@ public final class CommandLineParser {
    *
    * @return Option
    */
-  public Option<?> getOption(final String optionName) {
+  public Option<?> getOption(final String optionName)
+  {
     return optionsMap.get(DASH + optionName);
   }
 
@@ -385,7 +420,8 @@ public final class CommandLineParser {
    *
    * @return The non-option arguments
    */
-  public String[] getRemainingArgs() {
+  public String[] getRemainingArgs()
+  {
     final String[] remainingArgsCopy = new String[remainingArgs.length];
     System.arraycopy(remainingArgs,
                      0,
@@ -402,9 +438,11 @@ public final class CommandLineParser {
    *
    * @return Option
    */
-  public String getStringOptionValue(final String optionName) {
+  public String getStringOptionValue(final String optionName)
+  {
     final Option<?> option = getOption(optionName);
-    if (option == null || option.getValue() == null) {
+    if (option == null || option.getValue() == null)
+    {
       return null;
     }
     return option.getValue()
@@ -417,28 +455,33 @@ public final class CommandLineParser {
    *
    * @param args Command line arguments
    */
-  public void parse(final String[] args) {
+  public void parse(final String[] args)
+  {
     // Reset all options
-    for (final Option<?> element : optionsMap.values()) {
+    for (final Option<?> element : optionsMap.values())
+    {
       ((BaseOption<?>) element).reset();
     }
 
     final List<String> otherArgs = new ArrayList<String>();
     int position = 0;
-    while (position < args.length) {
+    while (position < args.length)
+    {
       String currentArg = args[position];
       String valueArg = null;
 
       // handle -arg=value
       final int equalsPos = currentArg.indexOf('=');
 
-      if (equalsPos != -1) {
+      if (equalsPos != -1)
+      {
         valueArg = currentArg.substring(equalsPos + 1);
         currentArg = currentArg.substring(0, equalsPos);
       }
 
       final BaseOption<?> option = (BaseOption<?>) optionsMap.get(currentArg);
-      if (option == null) {
+      if (option == null)
+      {
         otherArgs.add(currentArg);
         position++;
         continue;
@@ -464,20 +507,24 @@ public final class CommandLineParser {
       // }
       // Check if a value is needed
 
-      if (valueArg == null) {
+      if (valueArg == null)
+      {
         // The next argument is the value argument
         position++;
-        if (position < args.length) {
+        if (position < args.length)
+        {
           valueArg = args[position];
           // If this is not an argument, backtrack
-          if (valueArg.startsWith(DASH)) {
+          if (valueArg.startsWith(DASH))
+          {
             position--;
             valueArg = null;
           }
         }
       }
       // Booleans are true, even if they have no value
-      if (valueArg == null && option instanceof BooleanOption) {
+      if (valueArg == null && option instanceof BooleanOption)
+      {
         valueArg = Boolean.TRUE
           .toString();
       }

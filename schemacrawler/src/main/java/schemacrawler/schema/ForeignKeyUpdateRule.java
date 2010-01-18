@@ -28,7 +28,8 @@ import java.util.logging.Logger;
 /**
  * Foreign key update and delete rules.
  */
-public enum ForeignKeyUpdateRule {
+public enum ForeignKeyUpdateRule
+{
 
   /**
    * Unknown
@@ -65,9 +66,12 @@ public enum ForeignKeyUpdateRule {
    *
    * @return ForeignKeyUpdateRule
    */
-  public static ForeignKeyUpdateRule valueOf(final int id) {
-    for (final ForeignKeyUpdateRule type : ForeignKeyUpdateRule.values()) {
-      if (type.getId() == id) {
+  public static ForeignKeyUpdateRule valueOf(final int id)
+  {
+    for (final ForeignKeyUpdateRule type : ForeignKeyUpdateRule.values())
+    {
+      if (type.getId() == id)
+      {
         return type;
       }
     }
@@ -78,7 +82,8 @@ public enum ForeignKeyUpdateRule {
   private final String text;
   private final int id;
 
-  private ForeignKeyUpdateRule(final int id, final String text) {
+  private ForeignKeyUpdateRule(final int id, final String text)
+  {
     this.id = id;
     this.text = text;
   }
@@ -88,7 +93,8 @@ public enum ForeignKeyUpdateRule {
    *
    * @return id
    */
-  public int getId() {
+  public int getId()
+  {
     return id;
   }
 
@@ -98,7 +104,8 @@ public enum ForeignKeyUpdateRule {
    * @see Object#toString()
    */
   @Override
-  public String toString() {
+  public String toString()
+  {
     return text;
   }
 

@@ -1,14 +1,14 @@
 package schemacrawler.tools.integration.xml;
 
 
-import com.thoughtworks.xstream.XStream;
-import schemacrawler.schema.*;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.Map;
+
+import com.thoughtworks.xstream.XStream;
+import schemacrawler.schema.*;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
  * Decorates a database to allow for serialization to and from XML.
@@ -16,20 +16,24 @@ import java.util.Map;
  * @author sfatehi
  */
 public final class XmlDatabase
-  implements Database {
+  implements Database
+{
 
   private static final long serialVersionUID = 5314326260124511414L;
 
   private final Database database;
 
-  public XmlDatabase(final Database database) {
-    if (database == null) {
+  public XmlDatabase(final Database database)
+  {
+    if (database == null)
+    {
       throw new IllegalArgumentException("No database provided");
     }
     this.database = database;
   }
 
-  public XmlDatabase(final Reader reader) {
+  public XmlDatabase(final Reader reader)
+  {
     this((Database) new XStream().fromXML(reader));
   }
 
@@ -38,12 +42,14 @@ public final class XmlDatabase
    *
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
-  public int compareTo(final NamedObject o) {
+  public int compareTo(final NamedObject o)
+  {
     return database.compareTo(o);
   }
 
   @Override
-  public boolean equals(final Object obj) {
+  public boolean equals(final Object obj)
+  {
     return database.equals(obj);
   }
 
@@ -52,7 +58,8 @@ public final class XmlDatabase
    *
    * @see schemacrawler.schema.NamedObject#getAttribute(java.lang.String)
    */
-  public Object getAttribute(final String name) {
+  public Object getAttribute(final String name)
+  {
     return database.getAttribute(name);
   }
 
@@ -61,7 +68,8 @@ public final class XmlDatabase
    *
    * @see schemacrawler.schema.NamedObject#getAttributes()
    */
-  public Map<String, Object> getAttributes() {
+  public Map<String, Object> getAttributes()
+  {
     return database.getAttributes();
   }
 
@@ -70,7 +78,8 @@ public final class XmlDatabase
    *
    * @see schemacrawler.schema.Database#getDatabaseInfo()
    */
-  public DatabaseInfo getDatabaseInfo() {
+  public DatabaseInfo getDatabaseInfo()
+  {
     return database.getDatabaseInfo();
   }
 
@@ -79,7 +88,8 @@ public final class XmlDatabase
    *
    * @see schemacrawler.schema.NamedObject#getFullName()
    */
-  public String getFullName() {
+  public String getFullName()
+  {
     return database.getFullName();
   }
 
@@ -88,7 +98,8 @@ public final class XmlDatabase
    *
    * @see schemacrawler.schema.Database#getJdbcDriverInfo()
    */
-  public JdbcDriverInfo getJdbcDriverInfo() {
+  public JdbcDriverInfo getJdbcDriverInfo()
+  {
     return database.getJdbcDriverInfo();
   }
 
@@ -97,7 +108,8 @@ public final class XmlDatabase
    *
    * @see schemacrawler.schema.NamedObject#getName()
    */
-  public String getName() {
+  public String getName()
+  {
     return database.getName();
   }
 
@@ -106,7 +118,8 @@ public final class XmlDatabase
    *
    * @see schemacrawler.schema.NamedObject#getRemarks()
    */
-  public String getRemarks() {
+  public String getRemarks()
+  {
     return database.getRemarks();
   }
 
@@ -115,7 +128,8 @@ public final class XmlDatabase
    *
    * @see schemacrawler.schema.Database#getSchema(java.lang.String)
    */
-  public Schema getSchema(final String schemaName) {
+  public Schema getSchema(final String schemaName)
+  {
     return database.getSchema(schemaName);
   }
 
@@ -124,7 +138,8 @@ public final class XmlDatabase
    *
    * @see schemacrawler.schema.Database#getSchemaCrawlerInfo()
    */
-  public SchemaCrawlerInfo getSchemaCrawlerInfo() {
+  public SchemaCrawlerInfo getSchemaCrawlerInfo()
+  {
     return database.getSchemaCrawlerInfo();
   }
 
@@ -133,7 +148,8 @@ public final class XmlDatabase
    *
    * @see schemacrawler.schema.Database#getSchemas()
    */
-  public Schema[] getSchemas() {
+  public Schema[] getSchemas()
+  {
     return database.getSchemas();
   }
 
@@ -142,7 +158,8 @@ public final class XmlDatabase
    *
    * @see schemacrawler.schema.Database#getSystemColumnDataType(java.lang.String)
    */
-  public ColumnDataType getSystemColumnDataType(final String name) {
+  public ColumnDataType getSystemColumnDataType(final String name)
+  {
     return database.getSystemColumnDataType(name);
   }
 
@@ -151,29 +168,39 @@ public final class XmlDatabase
    *
    * @see schemacrawler.schema.Database#getSystemColumnDataTypes()
    */
-  public ColumnDataType[] getSystemColumnDataTypes() {
+  public ColumnDataType[] getSystemColumnDataTypes()
+  {
     return database.getSystemColumnDataTypes();
   }
 
   @Override
-  public int hashCode() {
+  public int hashCode()
+  {
     return database.hashCode();
   }
 
   /**
    * Serializes the database to the writer, as XML.
+   *
+   * @param writer Writer to save to
+   *
+   * @throws SchemaCrawlerException On an exception
    */
   public void save(final Writer writer)
-    throws SchemaCrawlerException {
-    if (writer == null) {
+    throws SchemaCrawlerException
+  {
+    if (writer == null)
+    {
       throw new SchemaCrawlerException("Writer not provided");
     }
     final XStream xStream = new XStream();
     xStream.toXML(database, writer);
-    try {
+    try
+    {
       writer.flush();
     }
-    catch (final IOException e) {
+    catch (final IOException e)
+    {
       throw new SchemaCrawlerException("Could not flush writer", e);
     }
   }
@@ -183,7 +210,8 @@ public final class XmlDatabase
    *
    * @see schemacrawler.schema.NamedObject#setAttribute(java.lang.String, java.lang.Object)
    */
-  public void setAttribute(final String name, final Object value) {
+  public void setAttribute(final String name, final Object value)
+  {
     database.setAttribute(name, value);
   }
 

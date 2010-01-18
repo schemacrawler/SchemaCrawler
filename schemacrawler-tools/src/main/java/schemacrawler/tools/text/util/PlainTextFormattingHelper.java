@@ -29,18 +29,21 @@ import schemacrawler.tools.options.OutputFormat;
  * @author Sualeh Fatehi
  */
 public class PlainTextFormattingHelper
-  extends BaseTextFormattingHelper {
+  extends BaseTextFormattingHelper
+{
 
   /**
    * Constructor.
    *
    * @param outputFormat Output format - text or CSV.
    */
-  public PlainTextFormattingHelper(final OutputFormat outputFormat) {
+  public PlainTextFormattingHelper(final OutputFormat outputFormat)
+  {
     super(outputFormat);
   }
 
-  public String createArrow() {
+  public String createArrow()
+  {
     return " --> ";
   }
 
@@ -49,7 +52,8 @@ public class PlainTextFormattingHelper
    *
    * @see schemacrawler.tools.util.TextFormattingHelper#createDocumentEnd()
    */
-  public String createDocumentEnd() {
+  public String createDocumentEnd()
+  {
     return "";
   }
 
@@ -58,24 +62,30 @@ public class PlainTextFormattingHelper
    *
    * @see schemacrawler.tools.util.TextFormattingHelper#createDocumentStart()
    */
-  public String createDocumentStart() {
+  public String createDocumentStart()
+  {
     return "";
   }
 
-  public String createHeader(final DocumentHeaderType type, final String header) {
+  public String createHeader(final DocumentHeaderType type, final String header)
+  {
     if (!sf.util
       .Utility
-      .isBlank(header)) {
+      .isBlank(header))
+    {
       final String defaultSeparator = separator("=");
 
       final String prefix;
       final String separator;
-      if (type == null) {
+      if (type == null)
+      {
         prefix = NEWLINE;
         separator = defaultSeparator;
       }
-      else {
-        switch (type) {
+      else
+      {
+        switch (type)
+        {
           case title:
             prefix = NEWLINE;
             separator = separator("_");
@@ -96,7 +106,8 @@ public class PlainTextFormattingHelper
       }
       return NEWLINE + prefix + header + NEWLINE + separator + NEWLINE + prefix;
     }
-    else {
+    else
+    {
       return "";
     }
   }
@@ -106,7 +117,8 @@ public class PlainTextFormattingHelper
    *
    * @see schemacrawler.tools.util.TextFormattingHelper#createObjectEnd()
    */
-  public String createObjectEnd() {
+  public String createObjectEnd()
+  {
     return NEWLINE;
   }
 
@@ -115,11 +127,13 @@ public class PlainTextFormattingHelper
    *
    * @see schemacrawler.tools.util.TextFormattingHelper#createObjectStart(java.lang.String)
    */
-  public String createObjectStart(final String name) {
+  public String createObjectStart(final String name)
+  {
     String objectStart = "";
     if (!sf.util
       .Utility
-      .isBlank(name)) {
+      .isBlank(name))
+    {
       objectStart = objectStart + NEWLINE + name + NEWLINE + DASHED_SEPARATOR;
     }
     return objectStart;
@@ -130,7 +144,8 @@ public class PlainTextFormattingHelper
    *
    * @see schemacrawler.tools.util.TextFormattingHelper#createPreformattedText(java.lang.String, java.lang.String)
    */
-  public String createPreformattedText(final String id, final String text) {
+  public String createPreformattedText(final String id, final String text)
+  {
     return NEWLINE + text;
   }
 

@@ -21,10 +21,10 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.JdbcDriverProperty;
-
 import java.sql.DriverPropertyInfo;
 import java.util.Arrays;
+
+import schemacrawler.schema.JdbcDriverProperty;
 
 /**
  * Represents a JDBC driver property, and it's value. Created from metadata returned by a JDBC call, and other sources
@@ -34,7 +34,8 @@ import java.util.Arrays;
  */
 final class MutableJdbcDriverProperty
   extends MutableDatabaseProperty
-  implements JdbcDriverProperty {
+  implements JdbcDriverProperty
+{
 
   private static final long serialVersionUID = 8030156654422512161L;
 
@@ -42,7 +43,8 @@ final class MutableJdbcDriverProperty
   private final boolean required;
   private final String[] choices;
 
-  MutableJdbcDriverProperty(final DriverPropertyInfo driverPropertyInfo) {
+  MutableJdbcDriverProperty(final DriverPropertyInfo driverPropertyInfo)
+  {
     super(driverPropertyInfo.name, driverPropertyInfo.value);
     description = driverPropertyInfo.description;
     required = driverPropertyInfo.required;
@@ -50,29 +52,38 @@ final class MutableJdbcDriverProperty
   }
 
   @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
+  public boolean equals(final Object obj)
+  {
+    if (this == obj)
+    {
       return true;
     }
-    if (!super.equals(obj)) {
+    if (!super.equals(obj))
+    {
       return false;
     }
-    if (getClass() != obj.getClass()) {
+    if (getClass() != obj.getClass())
+    {
       return false;
     }
     final MutableJdbcDriverProperty other = (MutableJdbcDriverProperty) obj;
-    if (!Arrays.equals(choices, other.choices)) {
+    if (!Arrays.equals(choices, other.choices))
+    {
       return false;
     }
-    if (description == null) {
-      if (other.description != null) {
+    if (description == null)
+    {
+      if (other.description != null)
+      {
         return false;
       }
     }
-    else if (!description.equals(other.description)) {
+    else if (!description.equals(other.description))
+    {
       return false;
     }
-    if (required != other.required) {
+    if (required != other.required)
+    {
       return false;
     }
     return true;
@@ -83,11 +94,14 @@ final class MutableJdbcDriverProperty
    *
    * @see schemacrawler.schema.JdbcDriverProperty#getChoices()
    */
-  public String[] getChoices() {
-    if (choices != null) {
+  public String[] getChoices()
+  {
+    if (choices != null)
+    {
       return choices;
     }
-    else {
+    else
+    {
       return new String[0];
     }
   }
@@ -98,11 +112,14 @@ final class MutableJdbcDriverProperty
    * @see schemacrawler.schema.JdbcDriverProperty#getDescription()
    */
   @Override
-  public String getDescription() {
-    if (description != null) {
+  public String getDescription()
+  {
+    if (description != null)
+    {
       return description;
     }
-    else {
+    else
+    {
       return "";
     }
   }
@@ -113,23 +130,28 @@ final class MutableJdbcDriverProperty
    * @see schemacrawler.schema.JdbcDriverProperty#getValue()
    */
   @Override
-  public String getValue() {
+  public String getValue()
+  {
     final Object valueObject = super.getValue();
     final String value;
-    if (valueObject == null) {
+    if (valueObject == null)
+    {
       value = null;
     }
-    else if (getName().equalsIgnoreCase("password")) {
+    else if (getName().equalsIgnoreCase("password"))
+    {
       value = "*****";
     }
-    else {
+    else
+    {
       value = String.valueOf(valueObject);
     }
     return value;
   }
 
   @Override
-  public int hashCode() {
+  public int hashCode()
+  {
     final int prime = 31;
     int result = super.hashCode();
     result = prime * result + Arrays.hashCode(choices);
@@ -143,7 +165,8 @@ final class MutableJdbcDriverProperty
    *
    * @see schemacrawler.schema.JdbcDriverProperty#isRequired()
    */
-  public boolean isRequired() {
+  public boolean isRequired()
+  {
     return required;
   }
 

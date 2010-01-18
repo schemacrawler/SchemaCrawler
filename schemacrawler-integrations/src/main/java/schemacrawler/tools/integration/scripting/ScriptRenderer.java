@@ -21,12 +21,6 @@
 package schemacrawler.tools.integration.scripting;
 
 
-import schemacrawler.schema.Database;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.executable.BaseExecutable;
-import sf.util.FileUtility;
-import sf.util.Utility;
-
 import java.io.*;
 import java.sql.Connection;
 import java.util.concurrent.ExecutionException;
@@ -34,17 +28,25 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import schemacrawler.schema.Database;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.executable.BaseExecutable;
+import sf.util.FileUtility;
+import sf.util.Utility;
+
 /**
  * Main executor for the scripting engine integration.
  *
  * @author Sualeh Fatehi
  */
 public final class ScriptRenderer
-  extends BaseExecutable {
+  extends BaseExecutable
+{
 
   private static final long serialVersionUID = -2232328675306451328L;
 
-  public ScriptRenderer() {
+  public ScriptRenderer()
+  {
     super("script");
   }
 
@@ -57,37 +59,46 @@ public final class ScriptRenderer
   @Override
   public final void executeOn(final Database database,
                               final Connection connection)
-    throws Exception {
+    throws Exception
+  {
     final String scriptFileName = outputOptions.getOutputFormatValue();
-    if (Utility.isBlank(scriptFileName)) {
+    if (Utility.isBlank(scriptFileName))
+    {
       throw new SchemaCrawlerException("No script file provided");
     }
     final Reader reader;
     final File scriptFile = new File(scriptFileName);
-    if (scriptFile.exists() && scriptFile.canRead()) {
+    if (scriptFile.exists() && scriptFile.canRead())
+    {
       reader = new FileReader(scriptFile);
     }
-    else {
+    else
+    {
       final InputStream inputStream = ScriptRenderer.class
         .getResourceAsStream("/" + scriptFileName);
-      if (inputStream != null) {
+      if (inputStream != null)
+      {
         reader = new InputStreamReader(inputStream);
       }
-      else {
+      else
+      {
         throw new SchemaCrawlerException("Cannot load script, "
           + scriptFileName);
       }
     }
 
-    try {
+    try
+    {
       // Create a new instance of the engine
       final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
       ScriptEngine scriptEngine = scriptEngineManager
         .getEngineByExtension(FileUtility.getFileExtension(scriptFile));
-      if (scriptEngine == null) {
+      if (scriptEngine == null)
+      {
         scriptEngine = scriptEngineManager.getEngineByName("JavaScript");
       }
-      if (scriptEngine == null) {
+      if (scriptEngine == null)
+      {
         throw new SchemaCrawlerException("Script engine not found");
       }
 
@@ -104,7 +115,8 @@ public final class ScriptRenderer
 
       outputOptions.closeOutputWriter(writer);
     }
-    catch (final ScriptException e) {
+    catch (final ScriptException e)
+    {
       throw new ExecutionException("Could not evaluate script", e);
     }
   }

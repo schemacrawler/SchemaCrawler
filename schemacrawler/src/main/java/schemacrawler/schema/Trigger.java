@@ -27,7 +27,8 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface Trigger
-  extends DependantObject {
+  extends DependantObject
+{
 
   /**
    * Gets the WHEN clause of the trigger.

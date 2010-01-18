@@ -21,11 +21,11 @@
 package schemacrawler;
 
 
-import sf.util.Utility;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
+
+import sf.util.Utility;
 
 /**
  * Version information for this product. Has methods to obtain information about the product, as well as a main method,
@@ -33,22 +33,26 @@ import java.io.StringReader;
  *
  * @author Sualeh Fatehi
  */
-public final class Version {
+public final class Version
+{
 
   private static final String PRODUCTNAME = "SchemaCrawler";
   private static final String VERSION;
   private static final String ABOUT;
 
-  static {
+  static
+  {
     ABOUT = Utility.readFully(Version.class
       .getResourceAsStream("/help/SchemaCrawler.txt"));
 
     String[] productLine;
-    try {
+    try
+    {
       productLine = new BufferedReader(new StringReader(ABOUT)).readLine()
         .split(" ");
     }
-    catch (final IOException e) {
+    catch (final IOException e)
+    {
       productLine = new String[]{
         PRODUCTNAME, ""
       };
@@ -61,7 +65,8 @@ public final class Version {
    *
    * @return Information about this product.
    */
-  public static String about() {
+  public static String about()
+  {
     return ABOUT;
   }
 
@@ -70,7 +75,8 @@ public final class Version {
    *
    * @return Product name.
    */
-  public static String getProductName() {
+  public static String getProductName()
+  {
     return PRODUCTNAME;
   }
 
@@ -79,7 +85,8 @@ public final class Version {
    *
    * @return Product version number.
    */
-  public static String getVersion() {
+  public static String getVersion()
+  {
     return VERSION;
   }
 
@@ -88,12 +95,14 @@ public final class Version {
    *
    * @param args Arguments to the main routine - they are ignored.
    */
-  public static void main(final String[] args) {
+  public static void main(final String[] args)
+  {
     System.out
       .println(about());
   }
 
-  private Version() {
+  private Version()
+  {
     // Prevent external instantiation
   }
 
@@ -103,7 +112,8 @@ public final class Version {
    * @see Object#toString()
    */
   @Override
-  public String toString() {
+  public String toString()
+  {
     return about();
   }
 

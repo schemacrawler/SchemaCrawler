@@ -27,7 +27,8 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface BaseColumn
-  extends DependantObject {
+  extends DependantObject
+{
 
   /**
    * Get the number of fractional digits.

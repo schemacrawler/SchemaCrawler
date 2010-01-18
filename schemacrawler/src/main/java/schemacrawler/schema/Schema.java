@@ -27,7 +27,8 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface Schema
-  extends NamedObject {
+  extends NamedObject
+{
 
   /**
    * Gets the name of the catalog.
@@ -38,6 +39,8 @@ public interface Schema
 
   /**
    * Gets the column data types defined in the schema, by name.
+   *
+   * @param name Name
    *
    * @return Column data types
    */

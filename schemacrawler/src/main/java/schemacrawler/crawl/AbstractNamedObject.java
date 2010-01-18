@@ -30,7 +30,7 @@ import sf.util.Utility;
 
 /**
  * Represents a named object.
- * 
+ *
  * @author Sualeh Fatehi
  */
 abstract class AbstractNamedObject
@@ -51,7 +51,7 @@ abstract class AbstractNamedObject
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
   public int compareTo(final NamedObject obj)
@@ -61,7 +61,8 @@ abstract class AbstractNamedObject
       return -1;
     }
 
-    return NamedObjectSort.alphabetical.compare(this, obj);
+    return NamedObjectSort.alphabetical
+      .compare(this, obj);
   }
 
   @Override
@@ -96,7 +97,7 @@ abstract class AbstractNamedObject
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.NamedObject#getAttribute(java.lang.String)
    */
   public final Object getAttribute(final String name)
@@ -106,7 +107,7 @@ abstract class AbstractNamedObject
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.NamedObject#getAttributes()
    */
   public Map<String, Object> getAttributes()
@@ -116,7 +117,7 @@ abstract class AbstractNamedObject
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.NamedObject#getFullName()
    */
   public String getFullName()
@@ -126,7 +127,7 @@ abstract class AbstractNamedObject
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.NamedObject#getName()
    */
   public final String getName()
@@ -136,7 +137,7 @@ abstract class AbstractNamedObject
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.DatabaseObject#getRemarks()
    */
   public final String getRemarks()
@@ -149,13 +150,13 @@ abstract class AbstractNamedObject
   {
     final int prime = 31;
     int result = 1;
-    result = prime * result + (name == null? 0: name.hashCode());
+    result = prime * result + (name == null ? 0 : name.hashCode());
     return result;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see NamedObject#setAttribute(String, Object)
    */
   public final void setAttribute(final String name, final Object value)
@@ -175,7 +176,7 @@ abstract class AbstractNamedObject
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Object#toString()
    */
   @Override

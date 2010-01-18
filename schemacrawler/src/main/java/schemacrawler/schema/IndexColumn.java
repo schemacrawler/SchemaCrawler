@@ -2,7 +2,8 @@ package schemacrawler.schema;
 
 
 public interface IndexColumn
-  extends Column {
+  extends Column
+{
 
   /**
    * Gets the index this column belongs to.

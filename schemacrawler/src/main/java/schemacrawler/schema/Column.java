@@ -27,7 +27,8 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface Column
-  extends BaseColumn {
+  extends BaseColumn
+{
 
   /**
    * Gets the default data value for the column.

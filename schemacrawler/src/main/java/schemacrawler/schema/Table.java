@@ -27,7 +27,8 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface Table
-  extends DatabaseObject {
+  extends DatabaseObject
+{
 
   /**
    * Gets the list of check constraints.

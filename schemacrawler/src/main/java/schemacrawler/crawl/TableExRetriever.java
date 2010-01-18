@@ -21,12 +21,6 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.ActionOrientationType;
-import schemacrawler.schema.CheckOptionType;
-import schemacrawler.schema.ConditionTimingType;
-import schemacrawler.schema.EventManipulationType;
-import schemacrawler.schemacrawler.InformationSchemaViews;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -37,19 +31,27 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schema.ActionOrientationType;
+import schemacrawler.schema.CheckOptionType;
+import schemacrawler.schema.ConditionTimingType;
+import schemacrawler.schema.EventManipulationType;
+import schemacrawler.schemacrawler.InformationSchemaViews;
+
 /**
  * A retriever uses database metadata to get the extended details about the database tables.
  *
  * @author Sualeh Fatehi
  */
 final class TableExRetriever
-  extends AbstractRetriever {
+  extends AbstractRetriever
+{
 
   private static final Logger LOGGER = Logger.getLogger(TableExRetriever.class
     .getName());
 
   TableExRetriever(final RetrieverConnection retrieverConnection,
-                   final MutableDatabase database) {
+                   final MutableDatabase database)
+  {
     super(retrieverConnection, database);
   }
 
@@ -61,13 +63,15 @@ final class TableExRetriever
    * @throws SQLException On a SQL exception
    */
   void retrieveCheckConstraintInformation()
-    throws SQLException {
+    throws SQLException
+  {
     final Map<String, MutableCheckConstraint> checkConstraintsMap = new HashMap<String, MutableCheckConstraint>();
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
 
-    if (!informationSchemaViews.hasTableConstraintsSql()) {
+    if (!informationSchemaViews.hasTableConstraintsSql())
+    {
       LOGGER
         .log(Level.FINE, "Table constraints SQL statement was not provided");
       return;
@@ -78,12 +82,14 @@ final class TableExRetriever
     final Connection connection = getDatabaseConnection();
     Statement statement = null;
     MetadataResultSet results = null;
-    try {
+    try
+    {
       statement = connection.createStatement();
       results = new MetadataResultSet(statement
         .executeQuery(tableConstraintsInformationSql));
 
-      while (results.next()) {
+      while (results.next())
+      {
         final String catalogName = results.getString("CONSTRAINT_CATALOG");
         final String schemaName = results.getString("CONSTRAINT_SCHEMA");
         final String constraintName = results.getString("CONSTRAINT_NAME");
@@ -97,7 +103,8 @@ final class TableExRetriever
         final MutableTable table = lookupTable(catalogName,
                                                schemaName,
                                                tableName);
-        if (table == null) {
+        if (table == null)
+        {
           LOGGER.log(Level.FINE, String.format("Cannot find table, %s.%s.%s",
                                                catalogName,
                                                schemaName,
@@ -110,7 +117,8 @@ final class TableExRetriever
         final boolean initiallyDeferred = results
           .getBoolean("INITIALLY_DEFERRED");
 
-        if (constraintType.equalsIgnoreCase("check")) {
+        if (constraintType.equalsIgnoreCase("check"))
+        {
           final MutableCheckConstraint checkConstraint = new MutableCheckConstraint(table,
                                                                                     constraintName);
           checkConstraint.setDeferrable(deferrable);
@@ -123,22 +131,27 @@ final class TableExRetriever
         }
       }
     }
-    catch (final SQLException e) {
+    catch (final SQLException e)
+    {
       LOGGER.log(Level.WARNING,
                  "Could not retrieve check constraint information",
                  e);
       return;
     }
-    finally {
-      if (statement != null) {
+    finally
+    {
+      if (statement != null)
+      {
         statement.close();
       }
-      if (results != null) {
+      if (results != null)
+      {
         results.close();
       }
     }
 
-    if (!informationSchemaViews.hasCheckConstraintsSql()) {
+    if (!informationSchemaViews.hasCheckConstraintsSql())
+    {
       LOGGER
         .log(Level.FINE, "Check constraints SQL statement was not provided");
       return;
@@ -149,11 +162,13 @@ final class TableExRetriever
     // Get check constraint definitions
     statement = null;
     results = null;
-    try {
+    try
+    {
       statement = connection.createStatement();
       results = new MetadataResultSet(statement
         .executeQuery(checkConstraintInformationSql));
-      while (results.next()) {
+      while (results.next())
+      {
         // final String catalogName =
         // results.getString("CONSTRAINT_CATALOG");
         // final String schemaName =
@@ -165,7 +180,8 @@ final class TableExRetriever
 
         final MutableCheckConstraint checkConstraint = checkConstraintsMap
           .get(constraintName);
-        if (checkConstraint == null) {
+        if (checkConstraint == null)
+        {
           LOGGER.log(Level.FINEST, "Could not add check constraint to table: "
             + constraintName);
           continue;
@@ -173,18 +189,22 @@ final class TableExRetriever
         final String text = checkConstraint.getDefinition();
 
         if (!(text == null || text.trim()
-          .length() == 0)) {
+          .length() == 0))
+        {
           definition = checkConstraint.getDefinition() + definition;
         }
 
         checkConstraint.setDefinition(definition);
       }
     }
-    finally {
-      if (statement != null) {
+    finally
+    {
+      if (statement != null)
+      {
         statement.close();
       }
-      if (results != null) {
+      if (results != null)
+      {
         results.close();
       }
     }
@@ -192,7 +212,8 @@ final class TableExRetriever
     // Add check constraints to tables
     final Collection<MutableCheckConstraint> checkConstraintsCollection = checkConstraintsMap
       .values();
-    for (final MutableCheckConstraint checkConstraint : checkConstraintsCollection) {
+    for (final MutableCheckConstraint checkConstraint : checkConstraintsCollection)
+    {
       final MutableTable table = (MutableTable) checkConstraint.getParent();
       table.addCheckConstraint(checkConstraint);
     }
@@ -200,40 +221,50 @@ final class TableExRetriever
   }
 
   void retrieveTableColumnPrivileges()
-    throws SQLException {
+    throws SQLException
+  {
     MetadataResultSet results = null;
-    try {
+    try
+    {
       results = new MetadataResultSet(getMetaData().getColumnPrivileges(null,
                                                                         null,
                                                                         "%",
                                                                         "%"));
       createPrivileges(results, true);
     }
-    catch (final SQLException e) {
+    catch (final SQLException e)
+    {
       LOGGER.log(Level.WARNING, "Could not retrieve table column privileges:"
         + e.getMessage());
     }
-    finally {
-      if (results != null) {
+    finally
+    {
+      if (results != null)
+      {
         results.close();
       }
     }
   }
 
   void retrieveTablePrivileges()
-    throws SQLException {
+    throws SQLException
+  {
     MetadataResultSet results = null;
-    try {
+    try
+    {
       results = new MetadataResultSet(getMetaData().getTablePrivileges(null,
                                                                        null,
                                                                        "%"));
       createPrivileges(results, false);
     }
-    catch (final SQLException e) {
+    catch (final SQLException e)
+    {
       LOGGER.log(Level.WARNING, "Could not retrieve table privileges", e);
     }
-    finally {
-      if (results != null) {
+    finally
+    {
+      if (results != null)
+      {
         results.close();
       }
     }
@@ -247,10 +278,12 @@ final class TableExRetriever
    * @throws SQLException On a SQL exception
    */
   void retrieveTriggerInformation()
-    throws SQLException {
+    throws SQLException
+  {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
-    if (!informationSchemaViews.hasTriggerSql()) {
+    if (!informationSchemaViews.hasTriggerSql())
+    {
       LOGGER.log(Level.FINE,
                  "Trigger definition SQL statement was not provided");
       return;
@@ -260,11 +293,13 @@ final class TableExRetriever
     final Connection connection = getDatabaseConnection();
     final Statement statement = connection.createStatement();
     MetadataResultSet results = null;
-    try {
+    try
+    {
       results = new MetadataResultSet(statement
         .executeQuery(triggerInformationSql));
 
-      while (results.next()) {
+      while (results.next())
+      {
         final String catalogName = results.getString("TRIGGER_CATALOG");
         final String schemaName = results.getString("TRIGGER_SCHEMA");
         final String triggerName = results.getString("TRIGGER_NAME");
@@ -279,7 +314,8 @@ final class TableExRetriever
         final MutableTable table = lookupTable(catalogName,
                                                schemaName,
                                                tableName);
-        if (table == null) {
+        if (table == null)
+        {
           LOGGER.log(Level.FINE, String.format("Cannot find table, %s.%s.%s",
                                                catalogName,
                                                schemaName,
@@ -288,11 +324,13 @@ final class TableExRetriever
         }
 
         EventManipulationType eventManipulationType;
-        try {
+        try
+        {
           eventManipulationType = EventManipulationType.valueOf(results
             .getString("EVENT_MANIPULATION").toLowerCase(Locale.ENGLISH));
         }
-        catch (final IllegalArgumentException e) {
+        catch (final IllegalArgumentException e)
+        {
           eventManipulationType = EventManipulationType.unknown;
         }
         final int actionOrder = results.getInt("ACTION_ORDER", 0);
@@ -306,7 +344,8 @@ final class TableExRetriever
             .toLowerCase(Locale.ENGLISH));
 
         MutableTrigger trigger = table.lookupTrigger(triggerName);
-        if (trigger == null) {
+        if (trigger == null)
+        {
           trigger = new MutableTrigger(table, triggerName);
         }
         trigger.setEventManipulationType(eventManipulationType);
@@ -322,10 +361,12 @@ final class TableExRetriever
 
       }
     }
-    catch (final SQLException e) {
+    catch (final SQLException e)
+    {
       LOGGER.log(Level.WARNING, "Could not retrieve trigger information", e);
     }
-    finally {
+    finally
+    {
       results.close();
       statement.close();
     }
@@ -340,11 +381,13 @@ final class TableExRetriever
    * @throws SQLException On a SQL exception
    */
   void retrieveViewInformation()
-    throws SQLException {
+    throws SQLException
+  {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
 
-    if (!informationSchemaViews.hasViewsSql()) {
+    if (!informationSchemaViews.hasViewsSql())
+    {
       LOGGER.log(Level.FINE, "Views SQL statement was not provided");
       return;
     }
@@ -353,11 +396,13 @@ final class TableExRetriever
     final Connection connection = getDatabaseConnection();
     final Statement statement = connection.createStatement();
     MetadataResultSet results = null;
-    try {
+    try
+    {
       results = new MetadataResultSet(statement
         .executeQuery(viewInformationSql));
 
-      while (results.next()) {
+      while (results.next())
+      {
         final String catalogName = results.getString("TABLE_CATALOG");
         final String schemaName = results.getString("TABLE_SCHEMA");
         final String viewName = results.getString("TABLE_NAME");
@@ -365,7 +410,8 @@ final class TableExRetriever
         final MutableView view = (MutableView) lookupTable(catalogName,
                                                            schemaName,
                                                            viewName);
-        if (view == null) {
+        if (view == null)
+        {
           LOGGER.log(Level.FINE, String.format("Cannot find table, %s.%s.%s",
                                                catalogName,
                                                schemaName,
@@ -386,12 +432,15 @@ final class TableExRetriever
         view.addAttributes(results.getAttributes());
       }
     }
-    catch (final SQLException e) {
+    catch (final SQLException e)
+    {
       LOGGER.log(Level.WARNING, "Could not retrieve view information", e);
     }
-    finally {
+    finally
+    {
       statement.close();
-      if (results != null) {
+      if (results != null)
+      {
         results.close();
       }
     }
@@ -400,26 +449,32 @@ final class TableExRetriever
 
   private void createPrivileges(final MetadataResultSet results,
                                 final boolean privilegesForColumn)
-    throws SQLException {
-    while (results.next()) {
+    throws SQLException
+  {
+    while (results.next())
+    {
       final String catalogName = results.getString("TABLE_CAT");
       final String schemaName = results.getString("TABLE_SCHEM");
       final String tableName = results.getString("TABLE_NAME");
       final String columnName;
-      if (privilegesForColumn) {
+      if (privilegesForColumn)
+      {
         columnName = results.getString("COLUMN_NAME");
       }
-      else {
+      else
+      {
         columnName = null;
       }
 
       final MutableTable table = lookupTable(catalogName, schemaName, tableName);
-      if (table == null) {
+      if (table == null)
+      {
         continue;
       }
 
       final MutableColumn column = table.getColumn(columnName);
-      if (privilegesForColumn && column == null) {
+      if (privilegesForColumn && column == null)
+      {
         continue;
       }
 
@@ -429,35 +484,43 @@ final class TableExRetriever
       final boolean isGrantable = results.getBoolean("IS_GRANTABLE");
 
       final MutablePrivilege privilege;
-      if (privilegesForColumn) {
+      if (privilegesForColumn)
+      {
         final MutablePrivilege columnPrivilege = column
           .getPrivilege(privilegeName);
-        if (columnPrivilege == null) {
+        if (columnPrivilege == null)
+        {
           privilege = new MutablePrivilege(column, privilegeName);
           column.addPrivilege(privilege);
         }
-        else {
+        else
+        {
           privilege = columnPrivilege;
         }
       }
-      else {
+      else
+      {
         final MutablePrivilege tablePrivilege = table
           .getPrivilege(privilegeName);
-        if (tablePrivilege == null) {
+        if (tablePrivilege == null)
+        {
           privilege = new MutablePrivilege(table, privilegeName);
           table.addPrivilege(privilege);
         }
-        else {
+        else
+        {
           privilege = tablePrivilege;
         }
       }
       privilege.addGrant(grantor, grantee, isGrantable);
       privilege.addAttributes(results.getAttributes());
 
-      if (privilegesForColumn) {
+      if (privilegesForColumn)
+      {
         column.addPrivilege(privilege);
       }
-      else {
+      else
+      {
         table.addPrivilege(privilege);
       }
     }

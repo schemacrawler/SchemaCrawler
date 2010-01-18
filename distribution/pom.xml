@@ -95,9 +95,9 @@
             <phase>package</phase>
             <configuration>
               <tasks>
-                <property name="SchemaCrawler.home" location=".." />
-                <property name="SchemaCrawler.version" value="${project.version}" />
-                <ant antfile="src\assembly\distribution.xml" target="make-distribution" />
+                <property name="SchemaCrawler.home" location=".."/>
+                <property name="SchemaCrawler.version" value="${project.version}"/>
+                <ant antfile="src\assembly\distribution.xml" target="make-distribution"/>
               </tasks>
             </configuration>
             <goals>

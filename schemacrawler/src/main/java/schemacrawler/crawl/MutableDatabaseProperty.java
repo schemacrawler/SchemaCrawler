@@ -20,23 +20,25 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.DatabaseProperty;
-import sf.util.Utility;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import schemacrawler.schema.DatabaseProperty;
+import sf.util.Utility;
+
 class MutableDatabaseProperty
-  implements DatabaseProperty {
+  implements DatabaseProperty
+{
 
   private static final long serialVersionUID = -7150431683440256142L;
 
   private static final Set<Entry<String, String>> acronyms;
 
-  static {
+  static
+  {
     final Map<String, String> acronymsMap = new HashMap<String, String>();
     acronymsMap.put("JDBC", "Jdbc");
     acronymsMap.put("ANSI", "Ansi");
@@ -55,34 +57,41 @@ class MutableDatabaseProperty
    *
    * @return Method name
    */
-  private static String createDescription(final String name) {
+  private static String createDescription(final String name)
+  {
 
     final String get = "get";
     String description = name;
-    if (description.startsWith(get)) {
+    if (description.startsWith(get))
+    {
       description = description.substring(get.length());
     }
 
-    for (final Entry<String, String> acronym : acronyms) {
+    for (final Entry<String, String> acronym : acronyms)
+    {
       description = description
         .replaceAll(acronym.getKey(), acronym.getValue());
     }
 
     final int strLen = description.length();
     final StringBuilder buffer = new StringBuilder(strLen);
-    for (int i = 0; i < strLen; i++) {
+    for (int i = 0; i < strLen; i++)
+    {
       final char ch = description.charAt(i);
-      if (Character.isUpperCase(ch) || Character.isTitleCase(ch)) {
+      if (Character.isUpperCase(ch) || Character.isTitleCase(ch))
+      {
         buffer.append(' ')
           .append(Character.toLowerCase(ch));
       }
-      else {
+      else
+      {
         buffer.append(ch);
       }
     }
     description = buffer.toString();
 
-    for (final Entry<String, String> acronym : acronyms) {
+    for (final Entry<String, String> acronym : acronyms)
+    {
       description = description.replaceAll(acronym.getValue().toLowerCase(),
                                            acronym.getKey());
       description = description
@@ -96,8 +105,10 @@ class MutableDatabaseProperty
   private final String description;
   private final Object value;
 
-  MutableDatabaseProperty(final String name, final Object value) {
-    if (Utility.isBlank(name)) {
+  MutableDatabaseProperty(final String name, final Object value)
+  {
+    if (Utility.isBlank(name))
+    {
       throw new IllegalArgumentException("No description provided");
     }
     this.name = name.trim();
@@ -105,11 +116,14 @@ class MutableDatabaseProperty
     this.value = value;
   }
 
-  public int compareTo(final DatabaseProperty otherDbProperty) {
-    if (otherDbProperty == null) {
+  public int compareTo(final DatabaseProperty otherDbProperty)
+  {
+    if (otherDbProperty == null)
+    {
       return -1;
     }
-    else {
+    else
+    {
       return getDescription().toLowerCase()
         .compareTo(otherDbProperty
           .getDescription().toLowerCase());
@@ -117,31 +131,41 @@ class MutableDatabaseProperty
   }
 
   @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
+  public boolean equals(final Object obj)
+  {
+    if (this == obj)
+    {
       return true;
     }
-    if (obj == null) {
+    if (obj == null)
+    {
       return false;
     }
-    if (!(obj instanceof MutableDatabaseProperty)) {
+    if (!(obj instanceof MutableDatabaseProperty))
+    {
       return false;
     }
     final MutableDatabaseProperty other = (MutableDatabaseProperty) obj;
-    if (name == null) {
-      if (other.name != null) {
+    if (name == null)
+    {
+      if (other.name != null)
+      {
         return false;
       }
     }
-    else if (!name.equals(other.name)) {
+    else if (!name.equals(other.name))
+    {
       return false;
     }
-    if (value == null) {
-      if (other.value != null) {
+    if (value == null)
+    {
+      if (other.value != null)
+      {
         return false;
       }
     }
-    else if (!value.equals(other.value)) {
+    else if (!value.equals(other.value))
+    {
       return false;
     }
     return true;
@@ -152,7 +176,8 @@ class MutableDatabaseProperty
    *
    * @see schemacrawler.crawl.DatabaseProperty#getDescription()
    */
-  public String getDescription() {
+  public String getDescription()
+  {
     return description;
   }
 
@@ -161,7 +186,8 @@ class MutableDatabaseProperty
    *
    * @see schemacrawler.crawl.DatabaseProperty#getName()
    */
-  public String getName() {
+  public String getName()
+  {
     return name;
   }
 
@@ -170,12 +196,14 @@ class MutableDatabaseProperty
    *
    * @see schemacrawler.crawl.DatabaseProperty#getValue()
    */
-  public Object getValue() {
+  public Object getValue()
+  {
     return value;
   }
 
   @Override
-  public int hashCode() {
+  public int hashCode()
+  {
     final int prime = 31;
     int result = 1;
     result = prime * result + (name == null ? 0 : name.hashCode());
@@ -184,7 +212,8 @@ class MutableDatabaseProperty
   }
 
   @Override
-  public String toString() {
+  public String toString()
+  {
     return name + "=" + value;
   }
 

@@ -29,7 +29,8 @@ import schemacrawler.schema.TableType;
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawlerOptions
-  implements Options {
+  implements Options
+{
 
   public static final String DEFAULT_TABLE_TYPES = "TABLE,VIEW";
 
@@ -53,18 +54,23 @@ public final class SchemaCrawlerOptions
 
   private static final String SC_GREP_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.column.pattern.exclude";
   private static final String SC_GREP_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.column.pattern.include";
-  private static final String SC_GREP_PROCEDURE_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.procedure.inout.pattern.exclude";
-  private static final String SC_GREP_PROCEDURE_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.procedure.inout.pattern.include";
+  private static final String SC_GREP_PROCEDURE_COLUMN_PATTERN_EXCLUDE =
+    "schemacrawler.grep.procedure.inout.pattern.exclude";
+  private static final String SC_GREP_PROCEDURE_COLUMN_PATTERN_INCLUDE =
+    "schemacrawler.grep.procedure.inout.pattern.include";
 
   private static final String SC_GREP_INVERT_MATCH = "schemacrawler.grep.invert-match";
 
   private static final String SC_SORT_ALPHABETICALLY_TABLES = "schemacrawler.sort_alphabetically.tables";
-  private static final String SC_SORT_ALPHABETICALLY_PROCEDURE_COLUMNS = "schemacrawler.sort_alphabetically.procedure_columns";
+  private static final String SC_SORT_ALPHABETICALLY_PROCEDURE_COLUMNS =
+    "schemacrawler.sort_alphabetically.procedure_columns";
   private static final String SC_SORT_ALPHABETICALLY_TABLE_INDEXES = "schemacrawler.sort_alphabetically.table_indices";
-  private static final String SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS = "schemacrawler.sort_alphabetically.table_foreignkeys";
+  private static final String SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS =
+    "schemacrawler.sort_alphabetically.table_foreignkeys";
   private static final String SC_SORT_ALPHABETICALLY_TABLE_COLUMNS = "schemacrawler.sort_alphabetically.table_columns";
 
-  private static TableType[] copyTableTypes(final TableType[] tableTypes) {
+  private static TableType[] copyTableTypes(final TableType[] tableTypes)
+  {
     final TableType[] tableTypesCopy = new TableType[tableTypes.length];
     System.arraycopy(tableTypes, 0, tableTypesCopy, 0, tableTypes.length);
     return tableTypesCopy;
@@ -96,7 +102,8 @@ public final class SchemaCrawlerOptions
   /**
    * Default options.
    */
-  public SchemaCrawlerOptions() {
+  public SchemaCrawlerOptions()
+  {
     this(new Config());
   }
 
@@ -106,12 +113,15 @@ public final class SchemaCrawlerOptions
    * @param config    Configuration properties
    * @param partition Partition for information schema
    */
-  public SchemaCrawlerOptions(final Config config) {
+  public SchemaCrawlerOptions(final Config config)
+  {
     final Config configProperties;
-    if (config == null) {
+    if (config == null)
+    {
       configProperties = new Config();
     }
-    else {
+    else
+    {
       configProperties = config;
     }
 
@@ -188,7 +198,8 @@ public final class SchemaCrawlerOptions
    *
    * @return Column inclusion rule.
    */
-  public InclusionRule getColumnInclusionRule() {
+  public InclusionRule getColumnInclusionRule()
+  {
     return columnInclusionRule;
   }
 
@@ -197,7 +208,8 @@ public final class SchemaCrawlerOptions
    *
    * @return Column inclusion rule for grep.
    */
-  public InclusionRule getGrepColumnInclusionRule() {
+  public InclusionRule getGrepColumnInclusionRule()
+  {
     return grepColumnInclusionRule;
   }
 
@@ -206,7 +218,8 @@ public final class SchemaCrawlerOptions
    *
    * @return Procedure column rule for grep.
    */
-  public InclusionRule getGrepProcedureColumnInclusionRule() {
+  public InclusionRule getGrepProcedureColumnInclusionRule()
+  {
     return grepProcedureColumnInclusionRule;
   }
 
@@ -215,7 +228,8 @@ public final class SchemaCrawlerOptions
    *
    * @return Information schema views.
    */
-  public InformationSchemaViews getInformationSchemaViews() {
+  public InformationSchemaViews getInformationSchemaViews()
+  {
     return informationSchemaViews;
   }
 
@@ -224,7 +238,8 @@ public final class SchemaCrawlerOptions
    *
    * @return Procedure column rule.
    */
-  public InclusionRule getProcedureColumnInclusionRule() {
+  public InclusionRule getProcedureColumnInclusionRule()
+  {
     return procedureColumnInclusionRule;
   }
 
@@ -233,7 +248,8 @@ public final class SchemaCrawlerOptions
    *
    * @return Procedure inclusion rule.
    */
-  public InclusionRule getProcedureInclusionRule() {
+  public InclusionRule getProcedureInclusionRule()
+  {
     return procedureInclusionRule;
   }
 
@@ -242,7 +258,8 @@ public final class SchemaCrawlerOptions
    *
    * @return Schema inclusion rule.
    */
-  public InclusionRule getSchemaInclusionRule() {
+  public InclusionRule getSchemaInclusionRule()
+  {
     return schemaInclusionRule;
   }
 
@@ -251,11 +268,14 @@ public final class SchemaCrawlerOptions
    *
    * @return Schema information level.
    */
-  public SchemaInfoLevel getSchemaInfoLevel() {
-    if (schemaInfoLevel == null) {
+  public SchemaInfoLevel getSchemaInfoLevel()
+  {
+    if (schemaInfoLevel == null)
+    {
       return SchemaInfoLevel.standard();
     }
-    else {
+    else
+    {
       return schemaInfoLevel;
     }
   }
@@ -265,7 +285,8 @@ public final class SchemaCrawlerOptions
    *
    * @return Table inclusion rule.
    */
-  public InclusionRule getTableInclusionRule() {
+  public InclusionRule getTableInclusionRule()
+  {
     return tableInclusionRule;
   }
 
@@ -274,7 +295,8 @@ public final class SchemaCrawlerOptions
    *
    * @return Table types
    */
-  public TableType[] getTableTypes() {
+  public TableType[] getTableTypes()
+  {
     final TableType[] tableTypesCopy = copyTableTypes(tableTypes);
     return tableTypesCopy;
   }
@@ -284,7 +306,8 @@ public final class SchemaCrawlerOptions
    *
    * @return Whether foreign keys are alphabetically sorted
    */
-  public boolean isAlphabeticalSortForForeignKeys() {
+  public boolean isAlphabeticalSortForForeignKeys()
+  {
     return isAlphabeticalSortForForeignKeys;
   }
 
@@ -293,7 +316,8 @@ public final class SchemaCrawlerOptions
    *
    * @return Whether indexes are alphabetically sorted
    */
-  public boolean isAlphabeticalSortForIndexes() {
+  public boolean isAlphabeticalSortForIndexes()
+  {
     return isAlphabeticalSortForIndexes;
   }
 
@@ -302,7 +326,8 @@ public final class SchemaCrawlerOptions
    *
    * @return Whether procedure columns are alphabetically sorted
    */
-  public boolean isAlphabeticalSortForProcedureColumns() {
+  public boolean isAlphabeticalSortForProcedureColumns()
+  {
     return isAlphabeticalSortForProcedureColumns;
   }
 
@@ -311,7 +336,8 @@ public final class SchemaCrawlerOptions
    *
    * @return Whether table columns are alphabetically sorted
    */
-  public boolean isAlphabeticalSortForTableColumns() {
+  public boolean isAlphabeticalSortForTableColumns()
+  {
     return isAlphabeticalSortForTableColumns;
   }
 
@@ -320,7 +346,8 @@ public final class SchemaCrawlerOptions
    *
    * @return Whether tables are alphabetically sorted
    */
-  public boolean isAlphabeticalSortForTables() {
+  public boolean isAlphabeticalSortForTables()
+  {
     return isAlphabeticalSortForTables;
   }
 
@@ -329,7 +356,8 @@ public final class SchemaCrawlerOptions
    *
    * @return Whether to invert matches.
    */
-  public boolean isGrepInvertMatch() {
+  public boolean isGrepInvertMatch()
+  {
     return grepInvertMatch;
   }
 
@@ -338,7 +366,8 @@ public final class SchemaCrawlerOptions
    *
    * @return Whether stored procedures are output
    */
-  public boolean isShowStoredProcedures() {
+  public boolean isShowStoredProcedures()
+  {
     return showStoredProcedures;
   }
 
@@ -347,7 +376,8 @@ public final class SchemaCrawlerOptions
    *
    * @param alphabeticalSort Alphabetical sort
    */
-  public void setAlphabeticalSortForForeignKeys(final boolean alphabeticalSort) {
+  public void setAlphabeticalSortForForeignKeys(final boolean alphabeticalSort)
+  {
     isAlphabeticalSortForForeignKeys = alphabeticalSort;
   }
 
@@ -356,7 +386,8 @@ public final class SchemaCrawlerOptions
    *
    * @param alphabeticalSort Alphabetical sort
    */
-  public void setAlphabeticalSortForIndexes(final boolean alphabeticalSort) {
+  public void setAlphabeticalSortForIndexes(final boolean alphabeticalSort)
+  {
     isAlphabeticalSortForIndexes = alphabeticalSort;
   }
 
@@ -365,7 +396,8 @@ public final class SchemaCrawlerOptions
    *
    * @param alphabeticalSort Alphabetical sort
    */
-  public void setAlphabeticalSortForProcedureColumns(final boolean alphabeticalSort) {
+  public void setAlphabeticalSortForProcedureColumns(final boolean alphabeticalSort)
+  {
     isAlphabeticalSortForProcedureColumns = alphabeticalSort;
   }
 
@@ -374,7 +406,8 @@ public final class SchemaCrawlerOptions
    *
    * @param alphabeticalSort Alphabetical sort
    */
-  public void setAlphabeticalSortForTableColumns(final boolean alphabeticalSort) {
+  public void setAlphabeticalSortForTableColumns(final boolean alphabeticalSort)
+  {
     isAlphabeticalSortForTableColumns = alphabeticalSort;
   }
 
@@ -383,7 +416,8 @@ public final class SchemaCrawlerOptions
    *
    * @param alphabeticalSort Alphabetical sort
    */
-  public void setAlphabeticalSortForTables(final boolean alphabeticalSort) {
+  public void setAlphabeticalSortForTables(final boolean alphabeticalSort)
+  {
     isAlphabeticalSortForTables = alphabeticalSort;
   }
 
@@ -392,8 +426,10 @@ public final class SchemaCrawlerOptions
    *
    * @param columnInclusionRule Column inclusion rule
    */
-  public void setColumnInclusionRule(final InclusionRule columnInclusionRule) {
-    if (columnInclusionRule == null) {
+  public void setColumnInclusionRule(final InclusionRule columnInclusionRule)
+  {
+    if (columnInclusionRule == null)
+    {
       throw new IllegalArgumentException("Cannot use null value in a setter");
     }
     this.columnInclusionRule = columnInclusionRule;
@@ -404,8 +440,10 @@ public final class SchemaCrawlerOptions
    *
    * @param columnInclusionRule Column inclusion rule for grep
    */
-  public void setGrepColumnInclusionRule(final InclusionRule grepColumnInclusionRule) {
-    if (grepColumnInclusionRule == null) {
+  public void setGrepColumnInclusionRule(final InclusionRule grepColumnInclusionRule)
+  {
+    if (grepColumnInclusionRule == null)
+    {
       throw new IllegalArgumentException("Cannot use null value in a setter");
     }
     this.grepColumnInclusionRule = grepColumnInclusionRule;
@@ -416,7 +454,8 @@ public final class SchemaCrawlerOptions
    *
    * @param invertMatch Whether to invert matches.
    */
-  public void setGrepInvertMatch(final boolean grepInvertMatch) {
+  public void setGrepInvertMatch(final boolean grepInvertMatch)
+  {
     this.grepInvertMatch = grepInvertMatch;
   }
 
@@ -425,8 +464,10 @@ public final class SchemaCrawlerOptions
    *
    * @param procedureColumnInclusionRule Procedure column inclusion rule for grep
    */
-  public void setGrepProcedureColumnInclusionRule(final InclusionRule grepProcedureColumnInclusionRule) {
-    if (grepProcedureColumnInclusionRule == null) {
+  public void setGrepProcedureColumnInclusionRule(final InclusionRule grepProcedureColumnInclusionRule)
+  {
+    if (grepProcedureColumnInclusionRule == null)
+    {
       throw new IllegalArgumentException("Cannot use null value in a setter");
     }
     this.grepProcedureColumnInclusionRule = grepProcedureColumnInclusionRule;
@@ -437,11 +478,14 @@ public final class SchemaCrawlerOptions
    *
    * @param informationSchemaViews Information schema views.
    */
-  public void setInformationSchemaViews(final InformationSchemaViews informationSchemaViews) {
-    if (informationSchemaViews == null) {
+  public void setInformationSchemaViews(final InformationSchemaViews informationSchemaViews)
+  {
+    if (informationSchemaViews == null)
+    {
       this.informationSchemaViews = new InformationSchemaViews();
     }
-    else {
+    else
+    {
       this.informationSchemaViews = informationSchemaViews;
     }
   }
@@ -451,8 +495,10 @@ public final class SchemaCrawlerOptions
    *
    * @param procedureColumnInclusionRule Procedure column inclusion rule
    */
-  public void setProcedureColumnInclusionRule(final InclusionRule procedureColumnInclusionRule) {
-    if (procedureColumnInclusionRule == null) {
+  public void setProcedureColumnInclusionRule(final InclusionRule procedureColumnInclusionRule)
+  {
+    if (procedureColumnInclusionRule == null)
+    {
       throw new IllegalArgumentException("Cannot use null value in a setter");
     }
     this.procedureColumnInclusionRule = procedureColumnInclusionRule;
@@ -463,8 +509,10 @@ public final class SchemaCrawlerOptions
    *
    * @param procedureInclusionRule Procedure inclusion rule
    */
-  public void setProcedureInclusionRule(final InclusionRule procedureInclusionRule) {
-    if (procedureInclusionRule == null) {
+  public void setProcedureInclusionRule(final InclusionRule procedureInclusionRule)
+  {
+    if (procedureInclusionRule == null)
+    {
       throw new IllegalArgumentException("Cannot use null value in a setter");
     }
     this.procedureInclusionRule = procedureInclusionRule;
@@ -475,8 +523,10 @@ public final class SchemaCrawlerOptions
    *
    * @param schemaInclusionRule Schema inclusion rule
    */
-  public void setSchemaInclusionRule(final InclusionRule schemaInclusionRule) {
-    if (schemaInclusionRule == null) {
+  public void setSchemaInclusionRule(final InclusionRule schemaInclusionRule)
+  {
+    if (schemaInclusionRule == null)
+    {
       throw new IllegalArgumentException("Cannot use null value in a setter");
     }
     this.schemaInclusionRule = schemaInclusionRule;
@@ -487,7 +537,8 @@ public final class SchemaCrawlerOptions
    *
    * @param schemaInfoLevel Schema information level.
    */
-  public void setSchemaInfoLevel(final SchemaInfoLevel schemaInfoLevel) {
+  public void setSchemaInfoLevel(final SchemaInfoLevel schemaInfoLevel)
+  {
     this.schemaInfoLevel = schemaInfoLevel;
   }
 
@@ -496,7 +547,8 @@ public final class SchemaCrawlerOptions
    *
    * @param showStoredProcedures Show stored procedures
    */
-  public void setShowStoredProcedures(final boolean showStoredProcedures) {
+  public void setShowStoredProcedures(final boolean showStoredProcedures)
+  {
     this.showStoredProcedures = showStoredProcedures;
   }
 
@@ -505,8 +557,10 @@ public final class SchemaCrawlerOptions
    *
    * @param tableInclusionRule Table inclusion rule
    */
-  public void setTableInclusionRule(final InclusionRule tableInclusionRule) {
-    if (tableInclusionRule == null) {
+  public void setTableInclusionRule(final InclusionRule tableInclusionRule)
+  {
+    if (tableInclusionRule == null)
+    {
       throw new IllegalArgumentException("Cannot use null value in a setter");
     }
     this.tableInclusionRule = tableInclusionRule;
@@ -518,8 +572,10 @@ public final class SchemaCrawlerOptions
    *
    * @param tableTypesString Comma-separated list of table types.
    */
-  public void setTableTypes(final String tableTypesString) {
-    if (tableTypesString == null) {
+  public void setTableTypes(final String tableTypesString)
+  {
+    if (tableTypesString == null)
+    {
       throw new IllegalArgumentException("Cannot use null value in a setter");
     }
     tableTypes = TableType.valueOf(tableTypesString.split(","));
@@ -530,8 +586,10 @@ public final class SchemaCrawlerOptions
    *
    * @param tableTypesArray Array of table types.
    */
-  public void setTableTypes(final TableType[] tableTypesArray) {
-    if (tableTypesArray == null) {
+  public void setTableTypes(final TableType[] tableTypesArray)
+  {
+    if (tableTypesArray == null)
+    {
       throw new IllegalArgumentException("Cannot use null value in a setter");
     }
     tableTypes = copyTableTypes(tableTypesArray);
@@ -543,7 +601,8 @@ public final class SchemaCrawlerOptions
    *
    * @param tableTypesString Comma-separated list of table types.
    */
-  public void setTableTypesString(final String tableTypesString) {
+  public void setTableTypesString(final String tableTypesString)
+  {
     setTableTypes(tableTypesString);
   }
 

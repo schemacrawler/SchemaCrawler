@@ -30,7 +30,8 @@ import schemacrawler.schemacrawler.Options;
  * @author Sualeh Fatehi
  */
 public final class OperationOptions
-  implements Options {
+  implements Options
+{
 
   private static final long serialVersionUID = -7977434852526746391L;
 
@@ -43,7 +44,8 @@ public final class OperationOptions
   /**
    * Operator options, defaults.
    */
-  public OperationOptions() {
+  public OperationOptions()
+  {
     this(null);
   }
 
@@ -54,12 +56,15 @@ public final class OperationOptions
    * @param operation     Operation
    * @param config        Config
    */
-  public OperationOptions(final Config config) {
-    if (config == null) {
+  public OperationOptions(final Config config)
+  {
+    if (config == null)
+    {
       mergeRows = false;
       showLobs = false;
     }
-    else {
+    else
+    {
       mergeRows = config.getBooleanValue(MERGE_ROWS);
       showLobs = config.getBooleanValue(SHOW_LOBS);
     }
@@ -70,7 +75,8 @@ public final class OperationOptions
    *
    * @return Whether to merge similar rows.
    */
-  public boolean isMergeRows() {
+  public boolean isMergeRows()
+  {
     return mergeRows;
   }
 
@@ -79,7 +85,8 @@ public final class OperationOptions
    *
    * @return Whether to show LOBs.
    */
-  public boolean isShowLobs() {
+  public boolean isShowLobs()
+  {
     return showLobs;
   }
 
@@ -88,7 +95,8 @@ public final class OperationOptions
    *
    * @param mergeRows Whether to merge similar rows
    */
-  public void setMergeRows(final boolean mergeRows) {
+  public void setMergeRows(final boolean mergeRows)
+  {
     this.mergeRows = mergeRows;
   }
 
@@ -97,7 +105,8 @@ public final class OperationOptions
    *
    * @param showLobs Whether to show LOBs
    */
-  public void setShowLobs(final boolean showLobs) {
+  public void setShowLobs(final boolean showLobs)
+  {
     this.showLobs = showLobs;
   }
 
