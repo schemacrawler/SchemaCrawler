@@ -21,19 +21,18 @@
 package schemacrawler.tools.text.util;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.text.util.TableCell.Align;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Represents an HTML table row.
- * 
+ *
  * @author Sualeh Fatehi
  */
-final class TableRow
-{
+final class TableRow {
 
   /**
    * System specific line separator character.
@@ -43,65 +42,56 @@ final class TableRow
   private final OutputFormat outputFormat;
   private final List<TableCell> cells;
 
-  TableRow(final OutputFormat outputFormat)
-  {
+  TableRow(final OutputFormat outputFormat) {
     this.outputFormat = outputFormat;
     cells = new ArrayList<TableCell>();
   }
 
-  TableRow(final OutputFormat outputFormat, final int colSpan)
-  {
+  TableRow(final OutputFormat outputFormat, final int colSpan) {
     this(outputFormat);
     cells.add(new TableCell("", 0, Align.left, colSpan, "", outputFormat));
   }
 
   /**
    * Converts the table row to HTML.
-   * 
+   *
    * @return HTML
    */
   @Override
-  public String toString()
-  {
-    if (outputFormat == OutputFormat.html)
-    {
+  public String toString() {
+    if (outputFormat == OutputFormat.html) {
       return toHtmlString();
     }
-    else
-    {
+    else {
       return toPlainTextString();
     }
   }
 
-  void add(final TableCell cell)
-  {
+  void add(final TableCell cell) {
     cells.add(cell);
   }
 
-  private String getFieldSeparator()
-  {
-    if (outputFormat == OutputFormat.csv)
-    {
+  private String getFieldSeparator() {
+    if (outputFormat == OutputFormat.csv) {
       return ",";
     }
-    else
-    {
+    else {
       return "  ";
     }
   }
 
   /**
    * Converts the table row to HTML.
-   * 
+   *
    * @return HTML
    */
-  private String toHtmlString()
-  {
+  private String toHtmlString() {
     final StringBuilder buffer = new StringBuilder();
     buffer.append("\t<tr>" + NEWLINE);
-    for (final TableCell cell: cells)
-    {
-      buffer.append("\t\t").append(cell).append(NEWLINE);
+    for (final TableCell cell : cells) {
+      buffer.append("\t\t")
+        .append(cell)
+        .append(NEWLINE);
     }
     buffer.append("\t</tr>");
 
@@ -110,18 +100,15 @@ final class TableRow
 
   /**
    * Converts the table row to CSV.
-   * 
+   *
    * @return CSV
    */
-  private String toPlainTextString()
-  {
+  private String toPlainTextString() {
     final StringBuilder buffer = new StringBuilder();
 
-    for (int i = 0; i < cells.size(); i++)
-    {
+    for (int i = 0; i < cells.size(); i++) {
       final TableCell cell = cells.get(i);
-      if (i > 0)
-      {
+      if (i > 0) {
         buffer.append(getFieldSeparator());
       }
       buffer.append(cell.toString());

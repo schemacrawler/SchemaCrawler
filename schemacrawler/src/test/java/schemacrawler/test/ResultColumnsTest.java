@@ -18,8 +18,13 @@
 package schemacrawler.test;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import schemacrawler.crawl.SchemaCrawler;
+import schemacrawler.schema.ResultsColumn;
+import schemacrawler.schema.ResultsColumns;
+import schemacrawler.utility.TestDatabase;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -27,17 +32,10 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
-import schemacrawler.crawl.SchemaCrawler;
-import schemacrawler.schema.ResultsColumn;
-import schemacrawler.schema.ResultsColumns;
-import schemacrawler.utility.TestDatabase;
-
-public class ResultColumnsTest
-{
+public class ResultColumnsTest {
 
   private static final Logger LOGGER = Logger.getLogger(ResultColumnsTest.class
     .getName());
@@ -45,42 +43,38 @@ public class ResultColumnsTest
   private static TestDatabase testUtility = new TestDatabase();
 
   @AfterClass
-  public static void afterAllTests()
-    throws ClassNotFoundException
-  {
+  public static void afterAllTests() {
     testUtility.shutdownDatabase();
   }
 
   @BeforeClass
   public static void beforeAllTests()
-    throws Exception
-  {
+    throws Exception {
     TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();
   }
 
   @Test
   public void columns()
-    throws Exception
-  {
+    throws Exception {
 
     final String[] columnNames = {
-        "PUBLIC.CUSTOMER.FIRSTNAME", "PUBLIC.CUSTOMER.LASTNAME", "ADDRESS", "",
+      "PUBLIC.CUSTOMER.FIRSTNAME", "PUBLIC.CUSTOMER.LASTNAME", "ADDRESS", "",
     };
     final String[] columnDataTypes = {
-        "VARCHAR", "VARCHAR", "VARCHAR", "DOUBLE",
+      "VARCHAR", "VARCHAR", "VARCHAR", "DOUBLE",
     };
 
     final String sql = "SELECT "
-                       + "  CUSTOMER.FIRSTNAME, "
-                       + "  CUSTOMER.LASTNAME, "
-                       + "  CUSTOMER.STREET + ', ' + CUSTOMER.CITY AS ADDRESS, "
-                       + "  SUM(INVOICE.TOTAL) " + "FROM " + "  CUSTOMER "
-                       + "  INNER JOIN INVOICE "
-                       + "  ON INVOICE.CUSTOMERID = CUSTOMER.ID " + "GROUP BY "
-                       + "  CUSTOMER.FIRSTNAME, " + "  CUSTOMER.LASTNAME, "
-                       + "  CUSTOMER.STREET, " + "  CUSTOMER.CITY "
-                       + "ORDER BY " + "  SUM(INVOICE.TOTAL) DESC";
+      + "  CUSTOMER.FIRSTNAME, "
+      + "  CUSTOMER.LASTNAME, "
+      + "  CUSTOMER.STREET + ', ' + CUSTOMER.CITY AS ADDRESS, "
+      + "  SUM(INVOICE.TOTAL) " + "FROM " + "  CUSTOMER "
+      + "  INNER JOIN INVOICE "
+      + "  ON INVOICE.CUSTOMERID = CUSTOMER.ID " + "GROUP BY "
+      + "  CUSTOMER.FIRSTNAME, " + "  CUSTOMER.LASTNAME, "
+      + "  CUSTOMER.STREET, " + "  CUSTOMER.CITY "
+      + "ORDER BY " + "  SUM(INVOICE.TOTAL) DESC";
     final Connection connection = testUtility.getConnection();
     final Statement statement = connection.createStatement();
     final ResultSet resultSet = statement.executeQuery(sql);
@@ -92,8 +86,7 @@ public class ResultColumnsTest
     assertNotNull("Could not obtain result columns", resultColumns);
     final ResultsColumn[] columns = resultColumns.getColumns();
     assertEquals("Column count does not match", 4, columns.length);
-    for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
-    {
+    for (int columnIdx = 0; columnIdx < columns.length; columnIdx++) {
       final ResultsColumn column = columns[columnIdx];
       LOGGER.log(Level.FINE, column.toString());
       assertEquals("Column full name does not match",

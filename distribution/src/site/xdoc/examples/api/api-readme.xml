@@ -10,26 +10,36 @@
       <subsection name="Description">
         <p>The API example demonstrates the use of the SchemaCrawler API to create a data
           source, and obtain database metadata. The SchemaCrawler API is a much simpler
-          alternative to using JDBC metadata.</p>
+          alternative to using JDBC metadata.
+        </p>
       </subsection>
       <subsection name="How to Run">
         <ol>
           <li>Start the database server by running StartDatabaseServer script from the
-            distribution directory.</li>
+            distribution directory.
+          </li>
           <li>Make sure that java and javac are on your PATH.</li>
           <li>Run
-            <span class="code">api.cmd</span> (or
-            <span class="code">api.sh</span> on Unix) to compile and run the
-            program.</li>
+            <span class="code">api.cmd</span>
+            (or
+            <span class="code">api.sh</span>
+            on Unix) to compile and run the
+            program.
+          </li>
         </ol>
       </subsection>
       <subsection name="How to Experiment">
         <ol>
           <li>Try modifying the
-            <span class="code">schemacrawler.config.properties</span> with regular
-            expressions, logging, and so on.</li>
-          <li>Try uncommenting the code block in <span class="code">ApiExample.java</span> that
-            modifies the default options .</li>
+            <span class="code">schemacrawler.config.properties</span>
+            with regular
+            expressions, logging, and so on.
+          </li>
+          <li>Try uncommenting the code block in
+            <span class="code">ApiExample.java</span>
+            that
+            modifies the default options .
+          </li>
         </ol>
       </subsection>
     </section>

@@ -27,12 +27,11 @@ import sf.util.CommandLineParser.StringOption;
 
 /**
  * Parses the command line.
- * 
+ *
  * @author Sualeh Fatehi
  */
 class ConfigParser
-  extends BaseOptionsParser<Config>
-{
+  extends BaseOptionsParser<Config> {
 
   private final StringOption optionConfigFile = new StringOption('g',
                                                                  "configfile",
@@ -41,16 +40,14 @@ class ConfigParser
                                                                          "configoverridefile",
                                                                          "schemacrawler.config.override.properties");
 
-  ConfigParser(final String[] args)
-  {
+  ConfigParser(final String[] args) {
     super(args);
   }
 
   @Override
-  protected Config getOptions()
-  {
-    parse(new Option[] {
-        optionConfigFile, optionConfigOverrideFile
+  protected Config getOptions() {
+    parse(new Option[]{
+      optionConfigFile, optionConfigOverrideFile
     });
 
     final String cfgFile = optionConfigFile.getValue();

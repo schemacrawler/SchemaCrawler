@@ -26,6 +26,6 @@
       <includes>
         <include>mysql.*</include>
       </includes>
-     </fileSet>
+    </fileSet>
   </fileSets>
 </assembly>

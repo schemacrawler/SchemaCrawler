@@ -28,13 +28,12 @@ import schemacrawler.schema.Table;
 
 /**
  * Represents the database schema.
- * 
+ *
  * @author Sualeh Fatehi
  */
 class MutableSchema
   extends AbstractNamedObject
-  implements Schema
-{
+  implements Schema {
 
   private static final long serialVersionUID = 3258128063743931187L;
 
@@ -43,144 +42,128 @@ class MutableSchema
   private final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>();
   private final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>();
 
-  MutableSchema()
-  {
+  MutableSchema() {
     this(new SchemaReference(null, null));
   }
 
-  MutableSchema(final SchemaReference schemaRef)
-  {
+  MutableSchema(final SchemaReference schemaRef) {
     super(schemaRef.getFullName());
     this.schemaRef = schemaRef;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Schema#getCatalogName()
    */
-  public String getCatalogName()
-  {
+  public String getCatalogName() {
     return schemaRef.getCatalogName();
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Schema#getColumnDataType(java.lang.String)
    */
-  public MutableColumnDataType getColumnDataType(final String name)
-  {
+  public MutableColumnDataType getColumnDataType(final String name) {
     return columnDataTypes.lookup(name);
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Database#getSystemColumnDataTypes()
    */
-  public ColumnDataType[] getColumnDataTypes()
-  {
-    return columnDataTypes.values().toArray(new ColumnDataType[columnDataTypes
-      .size()]);
+  public ColumnDataType[] getColumnDataTypes() {
+    return columnDataTypes.values()
+      .toArray(new ColumnDataType[columnDataTypes
+        .size()]);
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Schema#getFullName()
    */
   @Override
-  public String getFullName()
-  {
+  public String getFullName() {
     return schemaRef.getFullName();
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Schema#getProcedure(java.lang.String)
    */
-  public MutableProcedure getProcedure(final String name)
-  {
+  public MutableProcedure getProcedure(final String name) {
     return procedures.lookup(this, name);
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Schema#getProcedures()
    */
-  public Procedure[] getProcedures()
-  {
-    return procedures.values().toArray(new Procedure[procedures.size()]);
+  public Procedure[] getProcedures() {
+    return procedures.values()
+      .toArray(new Procedure[procedures.size()]);
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Schema#getSchemaName()
    */
-  public String getSchemaName()
-  {
+  public String getSchemaName() {
     return schemaRef.getSchemaName();
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Schema#getTable(java.lang.String)
    */
-  public MutableTable getTable(final String name)
-  {
+  public MutableTable getTable(final String name) {
     return tables.lookup(this, name);
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Schema#getTables()
    */
-  public Table[] getTables()
-  {
-    return tables.values().toArray(new Table[tables.size()]);
+  public Table[] getTables() {
+    return tables.values()
+      .toArray(new Table[tables.size()]);
   }
 
-  void addColumnDataType(final MutableColumnDataType columnDataType)
-  {
-    if (columnDataType != null)
-    {
+  void addColumnDataType(final MutableColumnDataType columnDataType) {
+    if (columnDataType != null) {
       columnDataTypes.add(columnDataType);
     }
   }
 
-  void addProcedure(final MutableProcedure procedure)
-  {
+  void addProcedure(final MutableProcedure procedure) {
     procedures.add(procedure);
   }
 
-  void addTable(final MutableTable table)
-  {
+  void addTable(final MutableTable table) {
     tables.add(table);
   }
 
-  MutableColumnDataType lookupColumnDataTypeByType(final int type)
-  {
+  MutableColumnDataType lookupColumnDataTypeByType(final int type) {
     return columnDataTypes.lookupColumnDataTypeByType(type);
   }
 
-  void removeProcedure(final Procedure procedure)
-  {
+  void removeProcedure(final Procedure procedure) {
     procedures.remove(procedure);
   }
 
-  void removeTable(final Table table)
-  {
+  void removeTable(final Table table) {
     tables.remove(table);
   }
 
-  void setTablesSortOrder(final NamedObjectSort sort)
-  {
+  void setTablesSortOrder(final NamedObjectSort sort) {
     tables.setSortOrder(sort);
   }
 

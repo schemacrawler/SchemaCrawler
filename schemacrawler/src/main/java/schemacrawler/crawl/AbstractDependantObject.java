@@ -26,15 +26,13 @@ import schemacrawler.schema.DependantObject;
 import sf.util.Utility;
 
 /**
- * Represents the dependent of a database object, such as a column or an
- * index, which are dependents of a table.
- * 
+ * Represents the dependent of a database object, such as a column or an index, which are dependents of a table.
+ *
  * @author Sualeh Fatehi
  */
 abstract class AbstractDependantObject
   extends AbstractDatabaseObject
-  implements DependantObject
-{
+  implements DependantObject {
 
   private static final long serialVersionUID = -4327208866052082457L;
 
@@ -43,42 +41,34 @@ abstract class AbstractDependantObject
 
   private transient int hashCode;
 
-  AbstractDependantObject(final DatabaseObject parent, final String name)
-  {
+  AbstractDependantObject(final DatabaseObject parent, final String name) {
     super(parent.getSchema(), name);
     this.parent = parent;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
-  public boolean equals(final Object obj)
-  {
-    if (!super.equals(obj))
-    {
+  public boolean equals(final Object obj) {
+    if (!super.equals(obj)) {
       return false;
     }
-    if (this == obj)
-    {
+    if (this == obj) {
       return true;
     }
-    if (obj == null)
-    {
+    if (obj == null) {
       return false;
     }
     final AbstractDependantObject other = (AbstractDependantObject) obj;
-    if (parent == null)
-    {
-      if (other.parent != null)
-      {
+    if (parent == null) {
+      if (other.parent != null) {
         return false;
       }
     }
-    else if (!parent.equals(other.parent))
-    {
+    else if (!parent.equals(other.parent)) {
       return false;
     }
     return true;
@@ -86,73 +76,64 @@ abstract class AbstractDependantObject
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.crawl.AbstractDatabaseObject#getFullName()
    */
   @Override
-  public String getFullName()
-  {
+  public String getFullName() {
     buildFullName();
     return fullName;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.DependantObject#getParent()
    */
-  public final DatabaseObject getParent()
-  {
+  public final DatabaseObject getParent() {
     return parent;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#hashCode()
    */
   @Override
-  public int hashCode()
-  {
+  public int hashCode() {
     buildHashCode();
     return hashCode;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Object#toString()
    */
   @Override
-  public String toString()
-  {
+  public String toString() {
     return getFullName();
   }
 
-  private void buildFullName()
-  {
-    if (fullName == null)
-    {
+  private void buildFullName() {
+    if (fullName == null) {
       final StringBuilder buffer = new StringBuilder();
-      if (parent != null && !Utility.isBlank(parent.getFullName()))
-      {
-        buffer.append(parent.getFullName()).append(".");
+      if (parent != null && !Utility.isBlank(parent.getFullName())) {
+        buffer.append(parent.getFullName())
+          .append(".");
       }
-      if (!Utility.isBlank(getName()))
-      {
+      if (!Utility.isBlank(getName())) {
         buffer.append(getName());
       }
       fullName = buffer.toString();
     }
   }
 
-  private void buildHashCode()
-  {
-    if (hashCode == 0)
-    {
+  private void buildHashCode() {
+    if (hashCode == 0) {
       final int prime = 31;
       int result = super.hashCode();
-      result = prime * result + (parent == null? 0: parent.hashCode());
+      result = prime * result + (parent == null ? 0 : parent.hashCode());
       result = prime * result + super.hashCode();
       hashCode = result;
     }

@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>schemacrawler</groupId>
   <artifactId>schemacrawler-all</artifactId>
   <packaging>pom</packaging>
   <version>8.0</version>
   <name>SchemaCrawler [All]</name>
-  <description>SchemaCrawler is an API that improves on the standard JDBC metadata. SchemaCrawler is also a command-line tool to output your database schema and data in a readable form. The output is designed to be diff-ed with previous versions of your database schema.</description>
+  <description>SchemaCrawler is an API that improves on the standard JDBC metadata. SchemaCrawler is also a command-line
+    tool to output your database schema and data in a readable form. The output is designed to be diff-ed with previous
+    versions of your database schema.
+  </description>
   <inceptionYear>2003</inceptionYear>
   <licenses>
     <license>
@@ -68,9 +72,9 @@
       <scope>provided</scope>
     </dependency>
   </dependencies>
-	<properties>
-		<schemacrawler.version>8.0</schemacrawler.version>
-	</properties>
+  <properties>
+    <schemacrawler.version>8.0</schemacrawler.version>
+  </properties>
   <build>
     <plugins>
       <plugin>
@@ -81,18 +85,18 @@
           <target>5</target>
         </configuration>
       </plugin>
-  		<plugin>
-  		  <groupId>org.apache.maven.plugins</groupId>
-  		  <artifactId>maven-source-plugin</artifactId>
-  		  <executions>
-    			<execution>
-    			  <goals>
-      				<goal>jar</goal>
-      				<goal>test-jar</goal>
-    			  </goals>
-    			</execution>
-  		  </executions>
-  		</plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>jar</goal>
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>cobertura-maven-plugin</artifactId>

@@ -23,30 +23,29 @@ package schemacrawler.schema;
 
 /**
  * Represents a table constraint.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface CheckConstraint
-  extends DependantObject
-{
+  extends DependantObject {
 
   /**
    * Gets the definition.
-   * 
+   *
    * @return Definition
    */
   String getDefinition();
 
   /**
    * Whether the constraint is deferrable.
-   * 
+   *
    * @return Whether the constraint is deferrable
    */
   boolean isDeferrable();
 
   /**
    * Whether the constraint is initially deferred.
-   * 
+   *
    * @return Whether the constraint is initially deferred
    */
   boolean isInitiallyDeferred();

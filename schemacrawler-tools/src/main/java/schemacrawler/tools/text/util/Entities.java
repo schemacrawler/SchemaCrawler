@@ -26,24 +26,28 @@ import java.util.Map;
 
 /**
  * HTML escapes entities.
- * 
+ *
  * @author Sualeh Fatehi
  */
-@SuppressWarnings("unchecked")
-public final class Entities
-{
+@SuppressWarnings({"unchecked", "ImplicitNumericConversion", "ImplicitNumericConversion"})
+public final class Entities {
 
-  /** XML character entities. */
+  /**
+   * XML character entities.
+   */
   public static final Entities XML;
 
-  /** HTML 3.2 character entities. */
+  /**
+   * HTML 3.2 character entities.
+   */
   public static final Entities HTML32;
 
-  /** HTML 4.0 character entities. */
+  /**
+   * HTML 4.0 character entities.
+   */
   public static final Entities HTML40;
 
-  static
-  {
+  static {
     final Map<Integer, String> BASIC_ENTITIES_MAP;
     final Map<Integer, String> APOS_ENTITIES_MAP;
     final Map<Integer, String> ISO8859_1_ENTITIES_MAP;
@@ -425,11 +429,9 @@ public final class Entities
 
   private final Map<Integer, String> charEntityMap;
 
-  private Entities(final Map<Integer, String>... maps)
-  {
+  private Entities(final Map<Integer, String>... maps) {
     final Map<Integer, String> workingCharEntityMap = new HashMap<Integer, String>();
-    for (final Map<Integer, String> map: maps)
-    {
+    for (final Map<Integer, String> map : maps) {
       workingCharEntityMap.putAll(map);
     }
     charEntityMap = Collections.unmodifiableMap(workingCharEntityMap);
@@ -437,34 +439,28 @@ public final class Entities
 
   /**
    * HTML escapes the characters in some text.
-   * 
-   * @param text
-   *        Text to escape.
+   *
+   * @param text Text to escape.
+   *
    * @return HTML-escaped text
    */
-  public String escape(final String text)
-  {
+  public String escape(final String text) {
     final StringBuilder buffer = new StringBuilder(text.length() * 2);
-    for (int i = 0; i < text.length(); ++i)
-    {
+    for (int i = 0; i < text.length(); ++i) {
       final char ch = text.charAt(i);
       final String entityName = charEntityMap.get((int) ch);
-      if (entityName == null)
-      {
-        if (ch > 0x7F)
-        {
+      if (entityName == null) {
+        if (ch > 0x7F) {
           final int intValue = ch;
           buffer.append("&#");
           buffer.append(intValue);
           buffer.append(';');
         }
-        else
-        {
+        else {
           buffer.append(ch);
         }
       }
-      else
-      {
+      else {
         buffer.append('&');
         buffer.append(entityName);
         buffer.append(';');

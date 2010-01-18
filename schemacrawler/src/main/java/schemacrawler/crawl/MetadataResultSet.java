@@ -21,29 +21,22 @@
 package schemacrawler.crawl;
 
 
+import sf.util.Utility;
+
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import sf.util.Utility;
-
 /**
- * A wrapper around a JDBC resultset obtained from a database metadata
- * call. This allows type-safe methods to obtain boolean, integer and
- * string data, while abstracting away the quirks of the JDBC metadata
- * API.
- * 
+ * A wrapper around a JDBC resultset obtained from a database metadata call. This allows type-safe methods to obtain
+ * boolean, integer and string data, while abstracting away the quirks of the JDBC metadata API.
+ *
  * @author Sualeh Fatehi
  */
-final class MetadataResultSet
-{
+final class MetadataResultSet {
 
   private static final Logger LOGGER = Logger.getLogger(MetadataResultSet.class
     .getName());
@@ -54,38 +47,30 @@ final class MetadataResultSet
   private final Set<String> resultSetColumns;
   private Set<String> readColumns;
 
-  MetadataResultSet(final ResultSet resultSet)
-  {
-    if (resultSet == null)
-    {
+  MetadataResultSet(final ResultSet resultSet) {
+    if (resultSet == null) {
       throw new IllegalArgumentException("Cannot use null results");
     }
     results = resultSet;
-    try
-    {
+    try {
       results.setFetchSize(FETCHSIZE);
     }
-    catch (final NullPointerException e)
-    {
+    catch (final NullPointerException e) {
       // Need this catch for the JDBC/ ODBC driver
       LOGGER.log(Level.WARNING, "", e);
     }
-    catch (final SQLException e)
-    {
+    catch (final SQLException e) {
       LOGGER.log(Level.WARNING, "Could not set fetch size", e);
     }
 
     final Set<String> resultSetColumns = new HashSet<String>();
-    try
-    {
+    try {
       final ResultSetMetaData rsMetaData = resultSet.getMetaData();
-      for (int i = 0; i < rsMetaData.getColumnCount(); i++)
-      {
+      for (int i = 0; i < rsMetaData.getColumnCount(); i++) {
         resultSetColumns.add(rsMetaData.getColumnName(i + 1));
       }
     }
-    catch (final SQLException e)
-    {
+    catch (final SQLException e) {
       LOGGER.log(Level.WARNING, "Could not get columns list");
     }
     this.resultSetColumns = Collections.unmodifiableSet(resultSetColumns);
@@ -94,31 +79,24 @@ final class MetadataResultSet
   }
 
   /**
-   * Releases this <code>ResultSet</code> object's database and JDBC
-   * resources immediately instead of waiting for this to happen when it
-   * is automatically closed.
-   * 
-   * @throws SQLException
-   *         On an exception
+   * Releases this <code>ResultSet</code> object's database and JDBC resources immediately instead of waiting for this
+   * to happen when it is automatically closed.
+   *
+   * @throws SQLException On an exception
    */
   void close()
-    throws SQLException
-  {
+    throws SQLException {
     results.close();
   }
 
-  String currentRowToString()
-  {
+  String currentRowToString() {
     final Map<String, String> currentRow = new HashMap<String, String>();
-    for (final String columnName: resultSetColumns)
-    {
+    for (final String columnName : resultSetColumns) {
       Object columnData;
-      try
-      {
+      try {
         columnData = results.getObject(columnName);
       }
-      catch (final SQLException e)
-      {
+      catch (final SQLException e) {
         columnData = null;
       }
       currentRow.put(columnName, String.valueOf(columnData));
@@ -127,167 +105,135 @@ final class MetadataResultSet
   }
 
   /**
-   * Gets unread (and therefore unmapped) columns from the database
-   * metadata resultset, and makes them available as addiiotnal
-   * attributes.
-   * 
+   * Gets unread (and therefore unmapped) columns from the database metadata resultset, and makes them available as
+   * addiiotnal attributes.
+   *
    * @return Map of additional attributes to the database object
    */
-  Map<String, Object> getAttributes()
-  {
+  Map<String, Object> getAttributes() {
     final Set<String> unusedResultSetColumns = new HashSet<String>(resultSetColumns);
     // Retain unused columns
-    for (final String readColumn: readColumns)
-    {
+    for (final String readColumn : readColumns) {
       unusedResultSetColumns.remove(readColumn);
     }
     // Set attributes
     final Map<String, Object> attributes = new HashMap<String, Object>();
-    for (final String unusedColumnName: unusedResultSetColumns)
-    {
-      try
-      {
+    for (final String unusedColumnName : unusedResultSetColumns) {
+      try {
         final Object value = results.getObject(unusedColumnName);
         attributes.put(unusedColumnName, value);
       }
-      catch (final SQLException e)
-      {
+      catch (final SQLException e) {
         LOGGER.log(Level.WARNING, "Could not read value for column "
-                                  + unusedColumnName, e);
+          + unusedColumnName, e);
       }
     }
     return attributes;
   }
 
   /**
-   * Checks if the value of a column from the result set evaluates to
-   * true.
-   * 
-   * @param columnName
-   *        Column name to check
+   * Checks if the value of a column from the result set evaluates to true.
+   *
+   * @param columnName Column name to check
+   *
    * @return Whether the string evaluates to true
    */
-  boolean getBoolean(final String columnName)
-  {
+  boolean getBoolean(final String columnName) {
     boolean value = false;
     String stringValue = null;
-    if (useColumn(columnName))
-    {
-      try
-      {
+    if (useColumn(columnName)) {
+      try {
         stringValue = results.getString(columnName);
-        if (!Utility.isBlank(stringValue))
-        {
-          try
-          {
+        if (!Utility.isBlank(stringValue)) {
+          try {
             final int booleanInt = Integer.parseInt(stringValue);
             value = booleanInt != 0;
           }
-          catch (final NumberFormatException e)
-          {
+          catch (final NumberFormatException e) {
             value = stringValue.equalsIgnoreCase("YES")
-                    || Boolean.valueOf(stringValue).booleanValue();
+              || Boolean.valueOf(stringValue)
+              .booleanValue();
           }
         }
       }
-      catch (final SQLException e)
-      {
+      catch (final SQLException e) {
         LOGGER.log(Level.WARNING, "Could not read boolean value for column "
-                                  + columnName, e);
+          + columnName, e);
       }
     }
     return value;
   }
 
   /**
-   * Reads the value of a column from the result set as an integer. If
-   * the value was null, returns the default.
-   * 
-   * @param columnName
-   *        Column name
-   * @return Integer value of the column, or the default if not
-   *         available
+   * Reads the value of a column from the result set as an integer. If the value was null, returns the default.
+   *
+   * @param columnName Column name
+   *
+   * @return Integer value of the column, or the default if not available
    */
-  int getInt(final String columnName, final int defaultValue)
-  {
+  int getInt(final String columnName, final int defaultValue) {
     int value = defaultValue;
-    if (useColumn(columnName))
-    {
-      try
-      {
+    if (useColumn(columnName)) {
+      try {
         value = results.getInt(columnName);
-        if (results.wasNull())
-        {
+        if (results.wasNull()) {
           value = defaultValue;
         }
         return value;
       }
-      catch (final SQLException e)
-      {
+      catch (final SQLException e) {
         LOGGER.log(Level.WARNING, "Could not read integer value for column "
-                                  + columnName, e);
+          + columnName, e);
       }
     }
     return value;
   }
 
   /**
-   * Reads the value of a column from the result set as a long. If the
-   * value was null, returns the default.
-   * 
-   * @param columnName
-   *        Column name
+   * Reads the value of a column from the result set as a long. If the value was null, returns the default.
+   *
+   * @param columnName Column name
+   *
    * @return Long value of the column, or the default if not available
    */
-  long getLong(final String columnName, final long defaultValue)
-  {
+  long getLong(final String columnName, final long defaultValue) {
     long value = defaultValue;
-    if (useColumn(columnName))
-    {
-      try
-      {
+    if (useColumn(columnName)) {
+      try {
         value = results.getLong(columnName);
-        if (results.wasNull())
-        {
+        if (results.wasNull()) {
           value = defaultValue;
         }
         return value;
       }
-      catch (final SQLException e)
-      {
+      catch (final SQLException e) {
         LOGGER.log(Level.WARNING, "Could not read long value for column "
-                                  + columnName, e);
+          + columnName, e);
       }
     }
     return value;
   }
 
   /**
-   * Reads the value of a column from the result set as a short. If the
-   * value was null, returns the default.
-   * 
-   * @param columnName
-   *        Column name
+   * Reads the value of a column from the result set as a short. If the value was null, returns the default.
+   *
+   * @param columnName Column name
+   *
    * @return Short value of the column, or the default if not available
    */
-  short getShort(final String columnName, final short defaultValue)
-  {
+  short getShort(final String columnName, final short defaultValue) {
     short value = defaultValue;
-    if (useColumn(columnName))
-    {
-      try
-      {
+    if (useColumn(columnName)) {
+      try {
         value = results.getShort(columnName);
-        if (results.wasNull())
-        {
+        if (results.wasNull()) {
           value = defaultValue;
         }
         return value;
       }
-      catch (final SQLException e)
-      {
+      catch (final SQLException e) {
         LOGGER.log(Level.WARNING, "Could not read short value for column "
-                                  + columnName, e);
+          + columnName, e);
       }
     }
     return value;
@@ -295,57 +241,46 @@ final class MetadataResultSet
 
   /**
    * Reads the value of a column from the result set as a string.
-   * 
-   * @param columnName
-   *        Column name
+   *
+   * @param columnName Column name
+   *
    * @return Short value of the column, or the default if not available
    */
-  String getString(final String columnName)
-  {
+  String getString(final String columnName) {
     String value = null;
-    if (useColumn(columnName))
-    {
-      try
-      {
+    if (useColumn(columnName)) {
+      try {
         value = results.getString(columnName);
-        if (results.wasNull())
-        {
+        if (results.wasNull()) {
           value = null;
         }
       }
-      catch (final SQLException e)
-      {
+      catch (final SQLException e) {
         LOGGER.log(Level.WARNING, "Could not read string value for column "
-                                  + columnName, e);
+          + columnName, e);
       }
     }
     return value;
   }
 
   /**
-   * Moves the cursor down one row from its current position. A
-   * <code>ResultSet</code> cursor is initially positioned before the
-   * first row; the first call to the method <code>next</code> makes the
-   * first row the current row; the second call makes the second row the
-   * current row, and so on.
-   * 
-   * @return <code>true</code> if the new current row is valid;
-   *         <code>false</code> if there are no more rows
-   * @throws SQLException
-   *         On a database access error
+   * Moves the cursor down one row from its current position. A <code>ResultSet</code> cursor is initially positioned
+   * before the first row; the first call to the method <code>next</code> makes the first row the current row; the
+   * second call makes the second row the current row, and so on.
+   *
+   * @return <code>true</code> if the new current row is valid; <code>false</code> if there are no more rows
+   *
+   * @throws SQLException On a database access error
    */
   boolean next()
-    throws SQLException
-  {
+    throws SQLException {
     readColumns = new HashSet<String>();
     return results.next();
   }
 
-  private boolean useColumn(final String columnName)
-  {
+  private boolean useColumn(final String columnName) {
     final boolean useColumn = columnName != null;
-    if (useColumn)
-    {
+    if (useColumn) {
       readColumns.add(columnName);
     }
     return useColumn;

@@ -24,15 +24,13 @@ import java.io.Serializable;
 
 /**
  * A wrapper around java.sql.Types.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class JavaSqlType
-  implements Serializable, Comparable<JavaSqlType>
-{
+  implements Serializable, Comparable<JavaSqlType> {
 
-  public enum JavaSqlTypeGroup
-  {
+  public enum JavaSqlTypeGroup {
 
     unknown,
     binary,
@@ -55,7 +53,9 @@ public final class JavaSqlType
   private final String javaSqlTypeMappedClassName;
   private final JavaSqlTypeGroup javaSqlTypeGroup;
 
-  /** Unknown SQL data type. */
+  /**
+   * Unknown SQL data type.
+   */
   public static final JavaSqlType UNKNOWN = new JavaSqlType(Integer.MAX_VALUE,
                                                             "<UNKNOWN>",
                                                             null,
@@ -64,71 +64,55 @@ public final class JavaSqlType
   JavaSqlType(final int javaSqlType,
               final String javaSqlTypeName,
               final String javaSqlTypeMappedClassName,
-              final JavaSqlTypeGroup javaSqlTypeGroup)
-  {
+              final JavaSqlTypeGroup javaSqlTypeGroup) {
     this.javaSqlType = javaSqlType;
     this.javaSqlTypeName = javaSqlTypeName;
     this.javaSqlTypeGroup = javaSqlTypeGroup;
     this.javaSqlTypeMappedClassName = javaSqlTypeMappedClassName;
   }
 
-  public int compareTo(final JavaSqlType otherSqlDataType)
-  {
+  public int compareTo(final JavaSqlType otherSqlDataType) {
     return javaSqlTypeName.compareTo(otherSqlDataType.javaSqlTypeName);
   }
 
   @Override
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
+  public boolean equals(final Object obj) {
+    if (this == obj) {
       return true;
     }
-    if (obj == null)
-    {
+    if (obj == null) {
       return false;
     }
-    if (getClass() != obj.getClass())
-    {
+    if (getClass() != obj.getClass()) {
       return false;
     }
     final JavaSqlType other = (JavaSqlType) obj;
-    if (javaSqlType != other.javaSqlType)
-    {
+    if (javaSqlType != other.javaSqlType) {
       return false;
     }
-    if (javaSqlTypeGroup == null)
-    {
-      if (other.javaSqlTypeGroup != null)
-      {
+    if (javaSqlTypeGroup == null) {
+      if (other.javaSqlTypeGroup != null) {
         return false;
       }
     }
-    else if (!javaSqlTypeGroup.equals(other.javaSqlTypeGroup))
-    {
+    else if (!javaSqlTypeGroup.equals(other.javaSqlTypeGroup)) {
       return false;
     }
-    if (javaSqlTypeMappedClassName == null)
-    {
-      if (other.javaSqlTypeMappedClassName != null)
-      {
+    if (javaSqlTypeMappedClassName == null) {
+      if (other.javaSqlTypeMappedClassName != null) {
         return false;
       }
     }
     else if (!javaSqlTypeMappedClassName
-      .equals(other.javaSqlTypeMappedClassName))
-    {
+      .equals(other.javaSqlTypeMappedClassName)) {
       return false;
     }
-    if (javaSqlTypeName == null)
-    {
-      if (other.javaSqlTypeName != null)
-      {
+    if (javaSqlTypeName == null) {
+      if (other.javaSqlTypeName != null) {
         return false;
       }
     }
-    else if (!javaSqlTypeName.equals(other.javaSqlTypeName))
-    {
+    else if (!javaSqlTypeName.equals(other.javaSqlTypeName)) {
       return false;
     }
     return true;
@@ -136,55 +120,49 @@ public final class JavaSqlType
 
   /**
    * The java.sql.Types type.
-   * 
+   *
    * @return java.sql.Types type
    */
-  public int getJavaSqlType()
-  {
+  public int getJavaSqlType() {
     return javaSqlType;
   }
 
-  public JavaSqlTypeGroup getJavaSqlTypeGroup()
-  {
+  public JavaSqlTypeGroup getJavaSqlTypeGroup() {
     return javaSqlTypeGroup;
   }
 
-  public String getJavaSqlTypeMappedClassName()
-  {
+  public String getJavaSqlTypeMappedClassName() {
     return javaSqlTypeMappedClassName;
   }
 
   /**
    * The java.sql.Types type name.
-   * 
+   *
    * @return java.sql.Types type names
    */
-  public String getJavaSqlTypeName()
-  {
+  public String getJavaSqlTypeName() {
     return javaSqlTypeName;
   }
 
   @Override
-  public int hashCode()
-  {
+  public int hashCode() {
     final int prime = 31;
     int result = 1;
     result = prime * result + javaSqlType;
     result = prime * result
-             + (javaSqlTypeGroup == null? 0: javaSqlTypeGroup.hashCode());
+      + (javaSqlTypeGroup == null ? 0 : javaSqlTypeGroup.hashCode());
     result = prime
-             * result
-             + (javaSqlTypeMappedClassName == null? 0
-                                                  : javaSqlTypeMappedClassName
-                                                    .hashCode());
+      * result
+      + (javaSqlTypeMappedClassName == null ? 0
+      : javaSqlTypeMappedClassName
+      .hashCode());
     result = prime * result
-             + (javaSqlTypeName == null? 0: javaSqlTypeName.hashCode());
+      + (javaSqlTypeName == null ? 0 : javaSqlTypeName.hashCode());
     return result;
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return String.format("%s\t%d\t%s\t%s",
                          javaSqlTypeName,
                          javaSqlType,

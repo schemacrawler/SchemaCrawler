@@ -24,31 +24,33 @@ package schemacrawler.tools.text.schema;
 /**
  * Enumeration for level of schema text output detail.
  */
-public enum SchemaTextDetailType
-{
+public enum SchemaTextDetailType {
 
-  /** No column detail. */
+  /**
+   * No column detail.
+   */
   list_objects,
-  /** Standard column detail. */
+  /**
+   * Standard column detail.
+   */
   standard_schema,
-  /** Maximum column detail, everything supported by SchemaCrawler. */
-  verbose_schema, ;
+  /**
+   * Maximum column detail, everything supported by SchemaCrawler.
+   */
+  verbose_schema,;
 
   /**
    * Checks if this is greater than or equal to the provided info level.
-   * 
-   * @param schemaTextDetailType
-   *        SchemaTextDetailType to check against
+   *
+   * @param schemaTextDetailType SchemaTextDetailType to check against
+   *
    * @return Yes if this is greater or equal to
    */
-  boolean isGreaterThanOrEqualTo(final SchemaTextDetailType schemaTextDetailType)
-  {
-    if (schemaTextDetailType != null)
-    {
+  boolean isGreaterThanOrEqualTo(final SchemaTextDetailType schemaTextDetailType) {
+    if (schemaTextDetailType != null) {
       return ordinal() >= schemaTextDetailType.ordinal();
     }
-    else
-    {
+    else {
       return false;
     }
   }

@@ -27,26 +27,23 @@ import sf.util.CommandLineParser.StringOption;
 
 /**
  * Parses the command line.
- * 
+ *
  * @author Sualeh Fatehi
  */
 final class CommandParser
-  extends BaseOptionsParser<Command>
-{
+  extends BaseOptionsParser<Command> {
 
   private final StringOption optionCommand = new StringOption(Option.NO_SHORT_FORM,
                                                               "command",
                                                               null);
 
-  CommandParser(final String[] args)
-  {
+  CommandParser(final String[] args) {
     super(args);
   }
 
   @Override
-  protected Command getOptions()
-  {
-    parse(new Option[] {
+  protected Command getOptions() {
+    parse(new Option[]{
       optionCommand
     });
 

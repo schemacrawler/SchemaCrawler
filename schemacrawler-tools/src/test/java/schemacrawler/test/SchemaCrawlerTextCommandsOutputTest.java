@@ -21,14 +21,6 @@
 package schemacrawler.test;
 
 
-import static org.junit.Assert.fail;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -36,7 +28,6 @@ import org.junit.Test;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
@@ -46,24 +37,28 @@ import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.utility.TestDatabase;
 import sf.util.TestUtility;
 
-public class SchemaCrawlerTextCommandsOutputTest
-{
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.fail;
+
+public class SchemaCrawlerTextCommandsOutputTest {
 
   private static class LocalEntityResolver
-    implements EntityResolver
-  {
+    implements EntityResolver {
 
     public InputSource resolveEntity(final String publicId,
                                      final String systemId)
-      throws SAXException, IOException
-    {
+      throws SAXException, IOException {
       final String localResource = "/xhtml1"
-                                   + systemId.substring(systemId
-                                     .lastIndexOf('/'));
+        + systemId.substring(systemId
+        .lastIndexOf('/'));
       final InputStream entityStream = LocalEntityResolver.class
         .getResourceAsStream(localResource);
-      if (entityStream == null)
-      {
+      if (entityStream == null) {
         throw new IOException("Could not load " + localResource);
       }
       return new InputSource(entityStream);
@@ -74,15 +69,13 @@ public class SchemaCrawlerTextCommandsOutputTest
   private static TestDatabase testUtility = new TestDatabase();
 
   @AfterClass
-  public static void afterAllTests()
-  {
+  public static void afterAllTests() {
     testUtility.shutdownDatabase();
   }
 
   @BeforeClass
   public static void beforeAllTests()
-    throws Exception
-  {
+    throws Exception {
     TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();
     XMLUnit.setControlEntityResolver(new LocalEntityResolver());
@@ -90,22 +83,19 @@ public class SchemaCrawlerTextCommandsOutputTest
 
   @Test
   public void countOutput()
-    throws Exception
-  {
+    throws Exception {
     textOutputTest(Operation.count.name(), new Config());
   }
 
   @Test
   public void dumpOutput()
-    throws Exception
-  {
+    throws Exception {
     textOutputTest(Operation.dump.name(), new Config());
   }
 
   @Test
   public void queryOutput()
-    throws Exception
-  {
+    throws Exception {
     final String queryCommand = "all_tables";
     final Config config = new Config();
     config.put(queryCommand, "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES");
@@ -115,8 +105,7 @@ public class SchemaCrawlerTextCommandsOutputTest
 
   @Test
   public void queryOverOutput()
-    throws Exception
-  {
+    throws Exception {
     final String queryCommand = "dump_tables";
     final Config config = new Config();
     config.put(queryCommand,
@@ -127,14 +116,12 @@ public class SchemaCrawlerTextCommandsOutputTest
 
   @Test
   public void schemaOutput()
-    throws Exception
-  {
+    throws Exception {
     textOutputTest(SchemaTextDetailType.list_objects.name(), new Config());
   }
 
   private void textOutputTest(final String command, final Config config)
-    throws Exception
-  {
+    throws Exception {
     final String referenceFile = command + ".txt";
     final File testOutputFile = File.createTempFile("schemacrawler.test.",
                                                     "." + referenceFile);
@@ -152,8 +139,7 @@ public class SchemaCrawlerTextCommandsOutputTest
     TestUtility.compareOutput("command_output/" + referenceFile,
                               testOutputFile,
                               failures);
-    if (failures.size() > 0)
-    {
+    if (failures.size() > 0) {
       fail(failures.toString());
     }
   }

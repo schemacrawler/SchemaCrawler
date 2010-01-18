@@ -24,14 +24,19 @@ package schemacrawler.schema;
 /**
  * Routine body.
  */
-public enum RoutineBodyType
-{
+public enum RoutineBodyType {
 
-  /** Unknown */
+  /**
+   * Unknown
+   */
   unknown,
-  /** SQL. */
+  /**
+   * SQL.
+   */
   sql,
-  /** External. */
+  /**
+   * External.
+   */
   external;
 
 }

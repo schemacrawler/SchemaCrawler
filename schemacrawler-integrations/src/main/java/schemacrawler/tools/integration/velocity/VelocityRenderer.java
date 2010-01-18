@@ -21,6 +21,15 @@
 package schemacrawler.tools.integration.velocity;
 
 
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
+import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
+import schemacrawler.schema.Database;
+import schemacrawler.tools.executable.BaseExecutable;
+
 import java.io.File;
 import java.io.Writer;
 import java.sql.Connection;
@@ -29,24 +38,13 @@ import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.runtime.RuntimeConstants;
-import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
-import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
-
-import schemacrawler.schema.Database;
-import schemacrawler.tools.executable.BaseExecutable;
-
 /**
  * Main executor for the Velocity integration.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class VelocityRenderer
-  extends BaseExecutable
-{
+  extends BaseExecutable {
 
   private static final long serialVersionUID = -3346519953252968289L;
 
@@ -56,43 +54,39 @@ public final class VelocityRenderer
   private static void setVelocityResourceLoaderProperty(final Properties p,
                                                         final String resourceLoaderName,
                                                         final String resourceLoaderPropertyName,
-                                                        final String resourceLoaderPropertyValue)
-  {
+                                                        final String resourceLoaderPropertyValue) {
     p.setProperty(resourceLoaderName + "." + RuntimeConstants.RESOURCE_LOADER
-                      + "." + resourceLoaderPropertyName,
+      + "." + resourceLoaderPropertyName,
                   resourceLoaderPropertyValue);
   }
 
-  public VelocityRenderer()
-  {
+  public VelocityRenderer() {
     super("velocity");
   }
 
   /**
    * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.integration.SchemaRenderer#render(schemacrawler.schema.Database,
-   *      java.sql.Connection, java.lang.String, java.io.Writer)
+   *
+   * @see schemacrawler.tools.integration.SchemaRenderer#render(schemacrawler.schema.Database, java.sql.Connection,
+   *      java.lang.String, java.io.Writer)
    */
   @Override
   public final void executeOn(final Database database,
                               final Connection connection)
-    throws Exception
-  {
+    throws Exception {
     // Set the file path, in case the template is a file template
     // This allows Velocity to load templates from any directory
     String templateLocation = outputOptions.getOutputFormatValue();
     String templatePath = ".";
     final File templateFilePath = new File(templateLocation);
-    if (templateFilePath.exists())
-    {
+    if (templateFilePath.exists()) {
       templatePath = templatePath + ","
-                     + templateFilePath.getAbsoluteFile().getParent();
+        + templateFilePath.getAbsoluteFile()
+        .getParent();
       templateLocation = templateFilePath.getName();
     }
 
-    try
-    {
+    try {
       // Create a new instance of the engine
       final VelocityEngine ve = new VelocityEngine();
 
@@ -120,7 +114,7 @@ public final class VelocityRenderer
                                         templatePath);
 
       LOGGER.log(Level.INFO, "Velocity configuration properties - "
-                             + p.toString());
+        + p.toString());
 
       // Initialize the engine
       ve.init(p);
@@ -137,8 +131,7 @@ public final class VelocityRenderer
 
       outputOptions.closeOutputWriter(writer);
     }
-    catch (final Exception e)
-    {
+    catch (final Exception e) {
       throw new ExecutionException("Could not expand template", e);
     }
   }

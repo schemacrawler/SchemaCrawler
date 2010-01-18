@@ -9,33 +9,52 @@
     <section name="SchemaCrawler - snapshot Example">
       <subsection name="Description">
         <p>The snapshot example demonstrates the use of the
-          &lt;schemacrawler&gt; macro that comes bundled with SchemaCrawler.</p>
+          &lt;schemacrawler&gt; macro that comes bundled with SchemaCrawler.
+        </p>
       </subsection>
       <subsection name="How to Run">
         <ol>
           <li>Install
             <a href="http://ant.apache.org/">ant</a>, and make sure that ant is on your
-            path.</li>
-          <li>Copy the <span class="code">schemacrawler.config.properties</span> into
-            the <span class="code">ant-task</span> example directory.</li>
-          <li>Start the database server by running the <span class="code">StartDatabaseServer</span> script from the
-            distribution directory.</li>
+            path.
+          </li>
+          <li>Copy the
+            <span class="code">schemacrawler.config.properties</span>
+            into
+            the
+            <span class="code">ant-task</span>
+            example directory.
+          </li>
+          <li>Start the database server by running the
+            <span class="code">StartDatabaseServer</span>
+            script from the
+            distribution directory.
+          </li>
           <li>Run
-            <span class="code">snapshot.cmd</span> (or
-            <span class="code">snapshot.sh</span> on Unix).</li>
-          <li>See the output produced in the <span class="code">snapshot.txt</span> file.</li>
+            <span class="code">snapshot.cmd</span>
+            (or
+            <span class="code">snapshot.sh</span>
+            on Unix).
+          </li>
+          <li>See the output produced in the
+            <span class="code">snapshot.txt</span>
+            file.
+          </li>
         </ol>
       </subsection>
       <subsection name="How to Experiment">
         <ol>
           <li>Try modifying the schemacrawler.config.properties with regular
-            expressions, logging, and so on.</li>
+            expressions, logging, and so on.
+          </li>
           <li>Try using different SchemaCrawler commands. (For a complete list of
             SchemaCrawler commands, run
             <span class="code">java -jar
-              &lt;schemacrawler-jar&gt;</span>.)</li>
+              &lt;schemacrawler-jar&gt;</span>.)
+          </li>
           <li>Try defining a new database connection, using your favorite database and
-            driver.</li>
+            driver.
+          </li>
         </ol>
       </subsection>
     </section>

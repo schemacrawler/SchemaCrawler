@@ -26,12 +26,11 @@ import sf.util.Utility;
 
 /**
  * Methods to format entire rows of output as HTML.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class HtmlFormattingHelper
-  extends BaseTextFormattingHelper
-{
+  extends BaseTextFormattingHelper {
   /**
    * HTML footer.
    */
@@ -41,70 +40,62 @@ public final class HtmlFormattingHelper
    */
   private static final String HTML_HEADER = htmlHeader();
 
-  private static String htmlHeader()
-  {
+  private static String htmlHeader() {
     final String styleSheet = Utility.readFully(HtmlFormattingHelper.class
       .getResourceAsStream("/schemacrawler-output.css"));
 
     final String header = ""
-                          + "<?xml version='1.0' encoding='UTF-8'?>"
-                          + NEWLINE
-                          + "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"
-                          + NEWLINE
-                          + "<html xmlns='http://www.w3.org/1999/xhtml'>"
-                          + NEWLINE + "<head>" + NEWLINE
-                          + "  <title>SchemaCrawler Output</title>" + NEWLINE
-                          + "  <style type='text/css'>" + NEWLINE + styleSheet
-                          + NEWLINE + "  </style>" + NEWLINE + "</head>"
-                          + NEWLINE + "<body>" + NEWLINE;
+      + "<?xml version='1.0' encoding='UTF-8'?>"
+      + NEWLINE
+      + "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"
+      + NEWLINE
+      + "<html xmlns='http://www.w3.org/1999/xhtml'>"
+      + NEWLINE + "<head>" + NEWLINE
+      + "  <title>SchemaCrawler Output</title>" + NEWLINE
+      + "  <style type='text/css'>" + NEWLINE + styleSheet
+      + NEWLINE + "  </style>" + NEWLINE + "</head>"
+      + NEWLINE + "<body>" + NEWLINE;
     return header;
   }
 
-  public HtmlFormattingHelper(final OutputFormat outputFormat)
-  {
+  public HtmlFormattingHelper(final OutputFormat outputFormat) {
     super(outputFormat);
   }
 
-  public String createArrow()
-  {
+  public String createArrow() {
     return " \u2192 ";
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.util.TextFormattingHelper#createDocumentEnd()
    */
-  public String createDocumentEnd()
-  {
+  public String createDocumentEnd() {
     return HTML_FOOTER;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.util.TextFormattingHelper#createDocumentStart()
    */
-  public String createDocumentStart()
-  {
+  public String createDocumentStart() {
     return HTML_HEADER;
   }
 
-  public String createHeader(final DocumentHeaderType type, final String header)
-  {
-    if (!sf.util.Utility.isBlank(header))
-    {
+  public String createHeader(final DocumentHeaderType type, final String header) {
+    if (!sf.util
+      .Utility
+      .isBlank(header)) {
       final String prefix;
       final String headerTag;
-      if (type == null)
-      {
+      if (type == null) {
         prefix = "<p>&nbsp;</p>";
         headerTag = "h2";
       }
-      else
-      {
-        switch (type)
-        {
+      else {
+        switch (type) {
           case title:
             prefix = "<p>&nbsp;</p>";
             headerTag = "h1";
@@ -129,32 +120,30 @@ public final class HtmlFormattingHelper
                            header,
                            headerTag);
     }
-    else
-    {
+    else {
       return "";
     }
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.util.TextFormattingHelper#createObjectEnd()
    */
-  public String createObjectEnd()
-  {
+  public String createObjectEnd() {
     return "</table>" + NEWLINE + "<p></p>" + NEWLINE;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.tools.util.TextFormattingHelper#createObjectStart(java.lang.String)
    */
-  public String createObjectStart(final String name)
-  {
+  public String createObjectStart(final String name) {
     String objectStart = "<table>" + NEWLINE;
-    if (!sf.util.Utility.isBlank(name))
-    {
+    if (!sf.util
+      .Utility
+      .isBlank(name)) {
       objectStart = objectStart + "  <caption>" + name + "</caption>" + NEWLINE;
     }
     return objectStart;
@@ -162,12 +151,10 @@ public final class HtmlFormattingHelper
 
   /**
    * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.util.TextFormattingHelper#createPreformattedText(java.lang.String,
-   *      java.lang.String)
+   *
+   * @see schemacrawler.tools.util.TextFormattingHelper#createPreformattedText(java.lang.String, java.lang.String)
    */
-  public String createPreformattedText(final String id, final String text)
-  {
+  public String createPreformattedText(final String id, final String text) {
     return String.format("<pre id=\'%s\'>%n%s</pre>", id, text);
   }
 }

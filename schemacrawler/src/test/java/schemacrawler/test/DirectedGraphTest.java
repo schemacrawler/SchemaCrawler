@@ -18,24 +18,19 @@
 package schemacrawler.test;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Arrays;
-
 import org.junit.Test;
-
 import sf.util.DirectedGraph;
 import sf.util.GraphException;
 
-public class DirectedGraphTest
-{
+import java.util.Arrays;
+
+import static org.junit.Assert.*;
+
+public class DirectedGraphTest {
 
   @Test
   public void cycles()
-    throws Exception
-  {
+    throws Exception {
     final DirectedGraph<String> graph = makeGraph();
 
     assertFalse(graph.containsCycle());
@@ -47,38 +42,31 @@ public class DirectedGraphTest
 
   @Test
   public void topologicalSort()
-    throws Exception
-  {
-    for (int i = 0; i < 8; i++)
-    {
+    throws Exception {
+    for (int i = 0; i < 8; i++) {
       final DirectedGraph<String> graph = makeGraph();
 
-      assertEquals("Test run #" + (i + 1), Arrays.asList(new String[] {
-          "E", "A", "D", "B", "C"
-      }), graph.topologicalSort());
+      assertEquals("Test run #" + (i + 1), Arrays.asList("E", "A", "D", "B", "C"), graph.topologicalSort());
     }
   }
 
   @Test(expected = GraphException.class)
   public void topologicalSortCyclical()
-    throws Exception
-  {
+    throws Exception {
     final DirectedGraph<String> graph = makeGraph();
     graph.addDirectedEdge("C", "A");
 
-    assertEquals(Arrays.asList(new String[] {
-        "E", "A", "D", "B", "C"
-    }), graph.topologicalSort());
+    assertEquals(Arrays.asList("E", "A", "D", "B", "C"), graph.topologicalSort());
   }
 
-  private DirectedGraph<String> makeGraph()
-  {
-    final DirectedGraph<String> graph = new DirectedGraph<String>();
+  private DirectedGraph<String> makeGraph() {
 
-    graph.addDirectedEdge("A", "B");
-    graph.addDirectedEdge("B", "C");
-    graph.addDirectedEdge("A", "D");
-    graph.addVertex("E");
+    final DirectedGraph<String> graph = new DirectedGraph<String>() {{
+      addDirectedEdge("A", "B");
+      addDirectedEdge("B", "C");
+      addDirectedEdge("A", "D");
+      addVertex("E");
+    }};
 
     return graph;
   }

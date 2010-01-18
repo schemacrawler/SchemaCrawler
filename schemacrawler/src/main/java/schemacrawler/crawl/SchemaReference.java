@@ -20,13 +20,12 @@
 package schemacrawler.crawl;
 
 
-import java.io.Serializable;
-
 import sf.util.Utility;
 
+import java.io.Serializable;
+
 final class SchemaReference
-  implements Serializable
-{
+  implements Serializable {
 
   private static final long serialVersionUID = -5309848447599233878L;
 
@@ -34,53 +33,42 @@ final class SchemaReference
   private final String schemaName;
   private transient String fullName;
 
-  SchemaReference(final String catalogName, final String schemaName)
-  {
+  SchemaReference(final String catalogName, final String schemaName) {
     this.catalogName = catalogName;
     this.schemaName = schemaName;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
+  public boolean equals(final Object obj) {
+    if (this == obj) {
       return true;
     }
-    if (obj == null)
-    {
+    if (obj == null) {
       return false;
     }
-    if (!(obj instanceof SchemaReference))
-    {
+    if (!(obj instanceof SchemaReference)) {
       return false;
     }
     final SchemaReference other = (SchemaReference) obj;
-    if (catalogName == null)
-    {
-      if (other.catalogName != null)
-      {
+    if (catalogName == null) {
+      if (other.catalogName != null) {
         return false;
       }
     }
-    else if (!catalogName.equals(other.catalogName))
-    {
+    else if (!catalogName.equals(other.catalogName)) {
       return false;
     }
-    if (schemaName == null)
-    {
-      if (other.schemaName != null)
-      {
+    if (schemaName == null) {
+      if (other.schemaName != null) {
         return false;
       }
     }
-    else if (!schemaName.equals(other.schemaName))
-    {
+    else if (!schemaName.equals(other.schemaName)) {
       return false;
     }
     return true;
@@ -88,50 +76,43 @@ final class SchemaReference
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#hashCode()
    */
   @Override
-  public int hashCode()
-  {
+  public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result + (catalogName == null? 0: catalogName.hashCode());
-    result = prime * result + (schemaName == null? 0: schemaName.hashCode());
+    result = prime * result + (catalogName == null ? 0 : catalogName.hashCode());
+    result = prime * result + (schemaName == null ? 0 : schemaName.hashCode());
     return result;
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return getFullName();
   }
 
-  String getCatalogName()
-  {
+  String getCatalogName() {
     return catalogName;
   }
 
-  String getFullName()
-  {
+  String getFullName() {
     buildFullName();
     return fullName;
   }
 
-  String getSchemaName()
-  {
+  String getSchemaName() {
     return schemaName;
   }
 
-  private void buildFullName()
-  {
-    if (fullName == null)
-    {
+  private void buildFullName() {
+    if (fullName == null) {
       final boolean hasCatalogName = !Utility.isBlank(catalogName);
       final boolean hasSchemaName = !Utility.isBlank(schemaName);
-      fullName = (hasCatalogName? catalogName: "")
-                 + (hasCatalogName && hasSchemaName? ".": "")
-                 + (hasSchemaName? schemaName: "");
+      fullName = (hasCatalogName ? catalogName : "")
+        + (hasCatalogName && hasSchemaName ? "." : "")
+        + (hasSchemaName ? schemaName : "");
     }
   }
 

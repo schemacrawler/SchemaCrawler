@@ -25,34 +25,32 @@ import java.io.Serializable;
 
 /**
  * Represents a privilege of a table or column.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface Privilege
-  extends DependantObject
-{
+  extends DependantObject {
 
   public interface Grant
-    extends Serializable
-  {
+    extends Serializable {
 
     /**
      * Gets the grantee.
-     * 
+     *
      * @return Grantee
      */
     String getGrantee();
 
     /**
      * Gets the grantor.
-     * 
+     *
      * @return Grantor
      */
     String getGrantor();
 
     /**
      * If the privilege is grantable.
-     * 
+     *
      * @return Is grantable
      */
     boolean isGrantable();

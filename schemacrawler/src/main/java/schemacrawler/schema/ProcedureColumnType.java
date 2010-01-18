@@ -28,20 +28,31 @@ import java.util.logging.Logger;
 /**
  * An enumeration wrapper around procedure column types.
  */
-public enum ProcedureColumnType
-{
+public enum ProcedureColumnType {
 
-  /** Unknown. */
+  /**
+   * Unknown.
+   */
   unknown(DatabaseMetaData.procedureColumnUnknown, "unknown"),
-  /** In. */
+  /**
+   * In.
+   */
   in(DatabaseMetaData.procedureColumnIn, "in"),
-  /** In/ out. */
+  /**
+   * In/ out.
+   */
   inOut(DatabaseMetaData.procedureColumnInOut, "in/ out"),
-  /** Out. */
+  /**
+   * Out.
+   */
   out(DatabaseMetaData.procedureColumnOut, "out"),
-  /** Return. */
+  /**
+   * Return.
+   */
   returnValue(DatabaseMetaData.procedureColumnReturn, "return"),
-  /** Return. */
+  /**
+   * Return.
+   */
   result(DatabaseMetaData.procedureColumnResult, "result");
 
   private static final Logger LOGGER = Logger
@@ -49,17 +60,14 @@ public enum ProcedureColumnType
 
   /**
    * Gets the enum value from the integer.
-   * 
-   * @param id
-   *        Id of the integer
+   *
+   * @param id Id of the integer
+   *
    * @return ForeignKeyDeferrability
    */
-  public static ProcedureColumnType valueOf(final int id)
-  {
-    for (final ProcedureColumnType type: ProcedureColumnType.values())
-    {
-      if (type.getId() == id)
-      {
+  public static ProcedureColumnType valueOf(final int id) {
+    for (final ProcedureColumnType type : ProcedureColumnType.values()) {
+      if (type.getId() == id) {
         return type;
       }
     }
@@ -70,30 +78,29 @@ public enum ProcedureColumnType
   private final int id;
   private final String text;
 
-  private ProcedureColumnType(final int id, final String text)
-  {
+  private ProcedureColumnType(final int id, final String text) {
     this.id = id;
     this.text = text;
   }
 
   /**
    * Gets the id.
-   * 
+   *
    * @return id
    */
-  public int getId()
-  {
+  public int getId() {
     return id;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Object#toString()
    */
+  @SuppressWarnings({"RefusedBequest"})
   @Override
-  public String toString()
-  {
+  public String toString() {
     return text;
   }
+
 }

@@ -1,22 +1,20 @@
 package schemacrawler.tools.executable;
 
 
-import java.sql.Connection;
-
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
 
-public interface Executable
-{
+import java.sql.Connection;
+
+public interface Executable {
 
   /**
    * Executes main functionality for SchemaCrawler.
-   * 
-   * @param connection
-   *        Database connection
-   * @throws Exception
-   *         On an exception
+   *
+   * @param connection Database connection
+   *
+   * @throws Exception On an exception
    */
   void execute(Connection connection)
     throws Exception;

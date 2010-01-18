@@ -27,16 +27,23 @@ import java.util.logging.Logger;
 /**
  * Constraint type.
  */
-public enum ConditionTimingType
-{
+public enum ConditionTimingType {
 
-  /** Unknown */
+  /**
+   * Unknown
+   */
   unknown("unknown"),
-  /** Before */
+  /**
+   * Before
+   */
   before("BEFORE"),
-  /** Instead of */
+  /**
+   * Instead of
+   */
   instead_of("INSTEAD OF"),
-  /** After */
+  /**
+   * After
+   */
   after("AFTER");
 
   private static final Logger LOGGER = Logger
@@ -44,17 +51,15 @@ public enum ConditionTimingType
 
   /**
    * Find the enumeration value corresponding to the string.
-   * 
-   * @param value
-   *        Sort sequence code.
+   *
+   * @param value Sort sequence code.
+   *
    * @return Enumeration value
    */
-  public static ConditionTimingType valueOfFromValue(final String value)
-  {
-    for (final ConditionTimingType type: ConditionTimingType.values())
-    {
-      if (type.getValue().equalsIgnoreCase(value))
-      {
+  public static ConditionTimingType valueOfFromValue(final String value) {
+    for (final ConditionTimingType type : ConditionTimingType.values()) {
+      if (type.getValue()
+        .equalsIgnoreCase(value)) {
         return type;
       }
     }
@@ -64,18 +69,16 @@ public enum ConditionTimingType
 
   private final String value;
 
-  private ConditionTimingType(final String value)
-  {
+  private ConditionTimingType(final String value) {
     this.value = value;
   }
 
   /**
    * Gets the value.
-   * 
+   *
    * @return Value
    */
-  public final String getValue()
-  {
+  public final String getValue() {
     return value;
   }
 

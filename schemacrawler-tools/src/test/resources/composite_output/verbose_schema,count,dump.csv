@@ -41,7 +41,7 @@ does max row size include blobs,true
 driver major version,1
 driver minor version,8
 extra name characters,""
-identifier quote string,"68"
+identifier quote string,""""
 inserts are detected for TYPE_FORWARD_ONLY result sets,false
 inserts are detected for TYPE_SCROLL_INSENSITIVE result sets,false
 inserts are detected for TYPE_SCROLL_SENSITIVE result sets,false
@@ -427,7 +427,7 @@ UPDATE,[privilege]
 "",DBA --> SA (grantable),""
 ""
 SCTRIGGER,"[trigger, before delete, per row]"
-"","CREATE TRIGGER SCTRIGGER BEFORE DELETE ON CUSTOMER FOR EACH ROW CALL 68org.hsqldb.sample.TriggerSample68"
+"","CREATE TRIGGER SCTRIGGER BEFORE DELETE ON CUSTOMER FOR EACH ROW CALL ""org.hsqldb.sample.TriggerSample"""
 
 
 PUBLIC.CUSTOMERLIST,[view]

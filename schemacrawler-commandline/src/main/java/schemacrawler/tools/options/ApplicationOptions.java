@@ -21,6 +21,8 @@
 package schemacrawler.tools.options;
 
 
+import schemacrawler.schemacrawler.Options;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Handler;
@@ -28,11 +30,8 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
-import schemacrawler.schemacrawler.Options;
-
 public class ApplicationOptions
-  implements Options
-{
+  implements Options {
 
   private static final long serialVersionUID = -2497570007150087268L;
 
@@ -42,23 +41,19 @@ public class ApplicationOptions
   /**
    * Sets the application-wide log level.
    */
-  public void applyApplicationLogLevel()
-  {
-    if (applicationLogLevel == null)
-    {
+  public void applyApplicationLogLevel() {
+    if (applicationLogLevel == null) {
       return;
     }
 
     final LogManager logManager = LogManager.getLogManager();
     final List<String> loggerNames = Collections.list(logManager
       .getLoggerNames());
-    for (final String loggerName: loggerNames)
-    {
+    for (final String loggerName : loggerNames) {
       final Logger logger = logManager.getLogger(loggerName);
       logger.setLevel(null);
       final Handler[] handlers = logger.getHandlers();
-      for (final Handler handler: handlers)
-      {
+      for (final Handler handler : handlers) {
         handler.setLevel(applicationLogLevel);
       }
     }
@@ -67,23 +62,19 @@ public class ApplicationOptions
     rootLogger.setLevel(applicationLogLevel);
   }
 
-  public Level getApplicationLogLevel()
-  {
+  public Level getApplicationLogLevel() {
     return applicationLogLevel;
   }
 
-  public boolean isShowHelp()
-  {
+  public boolean isShowHelp() {
     return showHelp;
   }
 
-  public void setApplicationLogLevel(final Level applicationLogLevel)
-  {
+  public void setApplicationLogLevel(final Level applicationLogLevel) {
     this.applicationLogLevel = applicationLogLevel;
   }
 
-  public void setShowHelp(final boolean showHelp)
-  {
+  public void setShowHelp(final boolean showHelp) {
     this.showHelp = showHelp;
   }
 

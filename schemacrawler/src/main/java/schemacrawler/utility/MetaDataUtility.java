@@ -27,62 +27,51 @@ import schemacrawler.schema.Column;
 
 /**
  * SchemaCrawler utility methods.
- * 
+ *
  * @author sfatehi
  */
-public final class MetaDataUtility
-{
+public final class MetaDataUtility {
 
-  public enum Connectivity
-  {
+  public enum Connectivity {
     OneToOne,
     OneToMany;
   }
 
-  public static Connectivity getConnectivity(final Column fkColumn)
-  {
-    if (fkColumn == null)
-    {
+  public static Connectivity getConnectivity(final Column fkColumn) {
+    if (fkColumn == null) {
       return null;
     }
-    if (fkColumn.isPartOfPrimaryKey() || fkColumn.isPartOfUniqueIndex())
-    {
+    if (fkColumn.isPartOfPrimaryKey() || fkColumn.isPartOfUniqueIndex()) {
       return Connectivity.OneToOne;
     }
-    else
-    {
+    else {
       return Connectivity.OneToMany;
     }
   }
 
   /**
-   * Lookup java.sql.Types type, and return more detailed information,
-   * including the mapped Java class.
-   * 
-   * @param type
-   *        java.sql.Types type
+   * Lookup java.sql.Types type, and return more detailed information, including the mapped Java class.
+   *
+   * @param type java.sql.Types type
+   *
    * @return JavaSqlType type
    */
-  public static JavaSqlType lookupSqlDataType(final int type)
-  {
+  public static JavaSqlType lookupSqlDataType(final int type) {
     return JavaSqlTypesUtility.lookupSqlDataType(type);
   }
 
   /**
-   * Lookup java.sql.Types type, and return more detailed information,
-   * including the mapped Java class.
-   * 
-   * @param typeName
-   *        java.sql.Types type name
+   * Lookup java.sql.Types type, and return more detailed information, including the mapped Java class.
+   *
+   * @param typeName java.sql.Types type name
+   *
    * @return JavaSqlType type
    */
-  public static JavaSqlType lookupSqlDataType(final String typeName)
-  {
+  public static JavaSqlType lookupSqlDataType(final String typeName) {
     return JavaSqlTypesUtility.lookupSqlDataType(typeName);
   }
 
-  private MetaDataUtility()
-  {
+  private MetaDataUtility() {
     // Prevent instantiation
   }
 

@@ -21,22 +21,16 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.Column;
-import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnMap;
-import schemacrawler.schema.ForeignKeyDeferrability;
-import schemacrawler.schema.ForeignKeyUpdateRule;
-import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.*;
 
 /**
  * Represents a foreign-key mapping to a primary key in another table.
- * 
+ *
  * @author Sualeh Fatehi
  */
 class MutableForeignKey
   extends AbstractNamedObject
-  implements ForeignKey
-{
+  implements ForeignKey {
 
   private static final long serialVersionUID = 4121411795974895671L;
 
@@ -45,8 +39,7 @@ class MutableForeignKey
   private ForeignKeyUpdateRule deleteRule;
   private ForeignKeyDeferrability deferrability;
 
-  MutableForeignKey(final String name)
-  {
+  MutableForeignKey(final String name) {
     super(name);
 
     // Default values
@@ -56,18 +49,12 @@ class MutableForeignKey
   }
 
   /**
-   * {@inheritDoc}
-   * <p>
-   * Note: Since foreign keys are not always explicitly named in
-   * databases, the sorting routine orders the foreign keys by the names
-   * of the columns in the foreign keys.
-   * </p>
+   * {@inheritDoc} <p> Note: Since foreign keys are not always explicitly named in databases, the sorting routine orders
+   * the foreign keys by the names of the columns in the foreign keys. </p>
    */
   @Override
-  public int compareTo(final NamedObject obj)
-  {
-    if (obj == null)
-    {
+  public int compareTo(final NamedObject obj) {
+    if (obj == null) {
       return -1;
     }
 
@@ -76,23 +63,18 @@ class MutableForeignKey
     final ForeignKeyColumnMap[] thisColumnPairs = getColumnPairs();
     final ForeignKeyColumnMap[] otherColumnPairs = other.getColumnPairs();
 
-    if (comparison == 0)
-    {
+    if (comparison == 0) {
       comparison = thisColumnPairs.length - otherColumnPairs.length;
     }
 
-    if (comparison == 0)
-    {
-      for (int i = 0; i < thisColumnPairs.length; i++)
-      {
+    if (comparison == 0) {
+      for (int i = 0; i < thisColumnPairs.length; i++) {
         final ForeignKeyColumnMap thisColumnPair = thisColumnPairs[i];
         final ForeignKeyColumnMap otherColumnPair = otherColumnPairs[i];
-        if (comparison == 0)
-        {
+        if (comparison == 0) {
           comparison = thisColumnPair.compareTo(otherColumnPair);
         }
-        else
-        {
+        else {
           break;
         }
       }
@@ -103,49 +85,45 @@ class MutableForeignKey
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see ForeignKey#getColumnPairs()
    */
-  public ForeignKeyColumnMap[] getColumnPairs()
-  {
-    return columnPairs.values().toArray(new ForeignKeyColumnMap[columnPairs
-      .size()]);
+  public ForeignKeyColumnMap[] getColumnPairs() {
+    return columnPairs.values()
+      .toArray(new ForeignKeyColumnMap[columnPairs
+        .size()]);
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see ForeignKey#getDeferrability()
    */
-  public final ForeignKeyDeferrability getDeferrability()
-  {
+  public final ForeignKeyDeferrability getDeferrability() {
     return deferrability;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see ForeignKey#getDeleteRule()
    */
-  public final ForeignKeyUpdateRule getDeleteRule()
-  {
+  public final ForeignKeyUpdateRule getDeleteRule() {
     return deleteRule;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see ForeignKey#getUpdateRule()
    */
-  public final ForeignKeyUpdateRule getUpdateRule()
-  {
+  public final ForeignKeyUpdateRule getUpdateRule() {
     return updateRule;
   }
 
   void addColumnPair(final int keySequence,
                      final Column pkColumn,
-                     final Column fkColumn)
-  {
+                     final Column fkColumn) {
     final String fkColumnMapName = getName() + "." + keySequence;
     final MutableForeignKeyColumnMap fkColumnPair = new MutableForeignKeyColumnMap(this,
                                                                                    fkColumnMapName);
@@ -155,18 +133,15 @@ class MutableForeignKey
     columnPairs.add(fkColumnPair);
   }
 
-  final void setDeferrability(final ForeignKeyDeferrability deferrability)
-  {
+  final void setDeferrability(final ForeignKeyDeferrability deferrability) {
     this.deferrability = deferrability;
   }
 
-  final void setDeleteRule(final ForeignKeyUpdateRule deleteRule)
-  {
+  final void setDeleteRule(final ForeignKeyUpdateRule deleteRule) {
     this.deleteRule = deleteRule;
   }
 
-  final void setUpdateRule(final ForeignKeyUpdateRule updateRule)
-  {
+  final void setUpdateRule(final ForeignKeyUpdateRule updateRule) {
     this.updateRule = updateRule;
   }
 

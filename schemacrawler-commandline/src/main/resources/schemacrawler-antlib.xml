@@ -32,7 +32,7 @@
     <attribute
       name="url"
       description="Database connection string"
-      default="" />     
+      default="" />
     <attribute
       name="user"
       description="Database connection user name"
@@ -87,20 +87,20 @@
     <attribute
       name="excludeinout"
       description="Regular expression to exclude procedure parameters"
-      default="" />    
+      default="" />
     <attribute
       name="grepcolumns"
       description="Regular expression to grep columns"
-      default=".*" />  
+      default=".*" />
     <attribute
       name="grepinout"
       description="Regular expression to grep procedure parameters"
-      default=".*" />              
+      default=".*" />
     <attribute
       name="invert-match"
       description="Whether to invert the matching tables"
       default="false" />
-      
+
     <attribute
       name="loglevel"
       description="Log level - may be one of: OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL"
@@ -119,7 +119,7 @@
         logerror="true"
         failonerror="true">
         <classpath>
-          <pathelement path="${java.class.path}"/>
+          <pathelement path="${java.class.path}" />
           <fileset dir="${schemacrawler.dir}">
             <include name="*.jar" />
           </fileset>
@@ -136,10 +136,10 @@
         <arg value="-tables=@{tables}" />
         <arg value="-excludecolumns=@{excludecolumns}" />
         <arg value="-procedures=@{procedures}" />
-        <arg value="-excludeinout=@{excludeinout}" />  
-        <arg value="-grepcolumns=@{grepcolumns}" />              
+        <arg value="-excludeinout=@{excludeinout}" />
+        <arg value="-grepcolumns=@{grepcolumns}" />
         <arg value="-grepinout=@{grepinout}" />
-        <arg value="-v=@{invert-match}" />        
+        <arg value="-v=@{invert-match}" />
         <arg value="-noheader=@{no-header}" />
         <arg value="-nofooter=@{no-footer}" />
         <arg value="-noinfo=@{no-info}" />

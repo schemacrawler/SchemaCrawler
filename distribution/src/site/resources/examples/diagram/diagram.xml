@@ -41,7 +41,7 @@
       datasource="hsqldb"
       db-driver-classpath="db-driver-classpath"
       command="standard_schema"
-    	graph-type="${graph-type}"
+      graph-type="${graph-type}"
       outputfile="${outputfile}" />
 
     <echo message="Schema diagram is in ${outputfile}" />

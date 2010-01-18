@@ -23,22 +23,20 @@ package schemacrawler.schemacrawler;
 
 /**
  * Descriptor for level of schema detail.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class SchemaInfoLevel
-  implements Options
-{
+  implements Options {
 
   private static final long serialVersionUID = -6721986729175552425L;
 
   /**
    * Creates a new SchemaInfoLevel for verbose schema information.
-   * 
+   *
    * @return New SchemaInfoLevel
    */
-  public static SchemaInfoLevel detailed()
-  {
+  public static SchemaInfoLevel detailed() {
     final SchemaInfoLevel verbose = standard();
     verbose.setRetrieveUserDefinedColumnDataTypes(true);
     verbose.setRetrieveProcedureInformation(true);
@@ -49,11 +47,10 @@ public final class SchemaInfoLevel
 
   /**
    * Creates a new SchemaInfoLevel for maximum schema information.
-   * 
+   *
    * @return New SchemaInfoLevel
    */
-  public static SchemaInfoLevel maximum()
-  {
+  public static SchemaInfoLevel maximum() {
     final SchemaInfoLevel maximum = detailed();
     maximum.setRetrieveAdditionalDatabaseInfo(true);
     maximum.setRetrieveAdditionalJdbcDriverInfo(true);
@@ -66,11 +63,10 @@ public final class SchemaInfoLevel
 
   /**
    * Creates a new SchemaInfoLevel for minimum schema information.
-   * 
+   *
    * @return New SchemaInfoLevel
    */
-  public static SchemaInfoLevel minimum()
-  {
+  public static SchemaInfoLevel minimum() {
     final SchemaInfoLevel minimum = new SchemaInfoLevel();
     minimum.setRetrieveSchemaCrawlerInfo(true);
     minimum.setRetrieveDatabaseInfo(true);
@@ -82,11 +78,10 @@ public final class SchemaInfoLevel
 
   /**
    * Creates a new SchemaInfoLevel for standard schema information.
-   * 
+   *
    * @return New SchemaInfoLevel
    */
-  public static SchemaInfoLevel standard()
-  {
+  public static SchemaInfoLevel standard() {
     final SchemaInfoLevel standard = minimum();
     standard.setRetrieveColumnDataTypes(true);
     standard.setRetrieveProcedureColumns(true);
@@ -118,213 +113,171 @@ public final class SchemaInfoLevel
   private boolean retrieveTableColumns;
   private boolean retrieveWeakAssociations;
 
-  public boolean isRetrieveAdditionalDatabaseInfo()
-  {
+  public boolean isRetrieveAdditionalDatabaseInfo() {
     return retrieveAdditionalDatabaseInfo;
   }
 
-  public boolean isRetrieveAdditionalJdbcDriverInfo()
-  {
+  public boolean isRetrieveAdditionalJdbcDriverInfo() {
     return retrieveAdditionalJdbcDriverInfo;
   }
 
-  public boolean isRetrieveAdditionalSchemaCrawlerInfo()
-  {
+  public boolean isRetrieveAdditionalSchemaCrawlerInfo() {
     return retrieveAdditionalSchemaCrawlerInfo;
   }
 
-  public boolean isRetrieveCheckConstraintInformation()
-  {
+  public boolean isRetrieveCheckConstraintInformation() {
     return retrieveCheckConstraintInformation;
   }
 
-  public boolean isRetrieveColumnDataTypes()
-  {
+  public boolean isRetrieveColumnDataTypes() {
     return retrieveColumnDataTypes;
   }
 
-  public boolean isRetrieveDatabaseInfo()
-  {
+  public boolean isRetrieveDatabaseInfo() {
     return retrieveDatabaseInfo;
   }
 
-  public boolean isRetrieveForeignKeys()
-  {
+  public boolean isRetrieveForeignKeys() {
     return retrieveForeignKeys;
   }
 
-  public boolean isRetrieveIndices()
-  {
+  public boolean isRetrieveIndices() {
     return retrieveIndices;
   }
 
-  public boolean isRetrieveJdbcDriverInfo()
-  {
+  public boolean isRetrieveJdbcDriverInfo() {
     return retrieveJdbcDriverInfo;
   }
 
-  public boolean isRetrieveProcedureColumns()
-  {
+  public boolean isRetrieveProcedureColumns() {
     return retrieveProcedureColumns;
   }
 
-  public boolean isRetrieveProcedureInformation()
-  {
+  public boolean isRetrieveProcedureInformation() {
     return retrieveProcedureInformation;
   }
 
-  public boolean isRetrieveProcedures()
-  {
+  public boolean isRetrieveProcedures() {
     return retrieveProcedures;
   }
 
-  public boolean isRetrieveSchemaCrawlerInfo()
-  {
+  public boolean isRetrieveSchemaCrawlerInfo() {
     return retrieveSchemaCrawlerInfo;
   }
 
-  public boolean isRetrieveTableColumnPrivileges()
-  {
+  public boolean isRetrieveTableColumnPrivileges() {
     return retrieveTableColumnPrivileges;
   }
 
-  public boolean isRetrieveTableColumns()
-  {
+  public boolean isRetrieveTableColumns() {
     return retrieveTableColumns;
   }
 
-  public boolean isRetrieveTablePrivileges()
-  {
+  public boolean isRetrieveTablePrivileges() {
     return retrieveTablePrivileges;
   }
 
-  public boolean isRetrieveTables()
-  {
+  public boolean isRetrieveTables() {
     return retrieveTables;
   }
 
-  public boolean isRetrieveTriggerInformation()
-  {
+  public boolean isRetrieveTriggerInformation() {
     return retrieveTriggerInformation;
   }
 
-  public boolean isRetrieveUserDefinedColumnDataTypes()
-  {
+  public boolean isRetrieveUserDefinedColumnDataTypes() {
     return retrieveUserDefinedColumnDataTypes;
   }
 
-  public boolean isRetrieveViewInformation()
-  {
+  public boolean isRetrieveViewInformation() {
     return retrieveViewInformation;
   }
 
-  public boolean isRetrieveWeakAssociations()
-  {
+  public boolean isRetrieveWeakAssociations() {
     return retrieveWeakAssociations;
   }
 
-  public void setRetrieveAdditionalDatabaseInfo(final boolean retrieveAdditionalDatabaseInfo)
-  {
+  public void setRetrieveAdditionalDatabaseInfo(final boolean retrieveAdditionalDatabaseInfo) {
     this.retrieveAdditionalDatabaseInfo = retrieveAdditionalDatabaseInfo;
   }
 
-  public void setRetrieveAdditionalJdbcDriverInfo(final boolean retrieveAdditionalJdbcDriverInfo)
-  {
+  public void setRetrieveAdditionalJdbcDriverInfo(final boolean retrieveAdditionalJdbcDriverInfo) {
     this.retrieveAdditionalJdbcDriverInfo = retrieveAdditionalJdbcDriverInfo;
   }
 
-  public void setRetrieveAdditionalSchemaCrawlerInfo(final boolean retrieveAdditionalSchemaCrawlerInfo)
-  {
+  public void setRetrieveAdditionalSchemaCrawlerInfo(final boolean retrieveAdditionalSchemaCrawlerInfo) {
     this.retrieveAdditionalSchemaCrawlerInfo = retrieveAdditionalSchemaCrawlerInfo;
   }
 
-  public void setRetrieveCheckConstraintInformation(final boolean retrieveCheckConstraintInformation)
-  {
+  public void setRetrieveCheckConstraintInformation(final boolean retrieveCheckConstraintInformation) {
     this.retrieveCheckConstraintInformation = retrieveCheckConstraintInformation;
   }
 
-  public void setRetrieveColumnDataTypes(final boolean retrieveColumnDataTypes)
-  {
+  public void setRetrieveColumnDataTypes(final boolean retrieveColumnDataTypes) {
     this.retrieveColumnDataTypes = retrieveColumnDataTypes;
   }
 
-  public void setRetrieveDatabaseInfo(final boolean retrieveDatabaseInfo)
-  {
+  public void setRetrieveDatabaseInfo(final boolean retrieveDatabaseInfo) {
     this.retrieveDatabaseInfo = retrieveDatabaseInfo;
   }
 
-  public void setRetrieveForeignKeys(final boolean retrieveForeignKeys)
-  {
+  public void setRetrieveForeignKeys(final boolean retrieveForeignKeys) {
     this.retrieveForeignKeys = retrieveForeignKeys;
   }
 
-  public void setRetrieveIndices(final boolean retrieveIndices)
-  {
+  public void setRetrieveIndices(final boolean retrieveIndices) {
     this.retrieveIndices = retrieveIndices;
   }
 
-  public void setRetrieveJdbcDriverInfo(final boolean retrieveJdbcDriverInfo)
-  {
+  public void setRetrieveJdbcDriverInfo(final boolean retrieveJdbcDriverInfo) {
     this.retrieveJdbcDriverInfo = retrieveJdbcDriverInfo;
   }
 
-  public void setRetrieveProcedureColumns(final boolean retrieveProcedureColumns)
-  {
+  public void setRetrieveProcedureColumns(final boolean retrieveProcedureColumns) {
     this.retrieveProcedureColumns = retrieveProcedureColumns;
   }
 
-  public void setRetrieveProcedureInformation(final boolean retrieveProcedureInformation)
-  {
+  public void setRetrieveProcedureInformation(final boolean retrieveProcedureInformation) {
     this.retrieveProcedureInformation = retrieveProcedureInformation;
   }
 
-  public void setRetrieveProcedures(final boolean retrieveProcedures)
-  {
+  public void setRetrieveProcedures(final boolean retrieveProcedures) {
     this.retrieveProcedures = retrieveProcedures;
   }
 
-  public void setRetrieveSchemaCrawlerInfo(final boolean retrieveSchemaCrawlerInfo)
-  {
+  public void setRetrieveSchemaCrawlerInfo(final boolean retrieveSchemaCrawlerInfo) {
     this.retrieveSchemaCrawlerInfo = retrieveSchemaCrawlerInfo;
   }
 
-  public void setRetrieveTableColumnPrivileges(final boolean retrieveTableColumnPrivileges)
-  {
+  public void setRetrieveTableColumnPrivileges(final boolean retrieveTableColumnPrivileges) {
     this.retrieveTableColumnPrivileges = retrieveTableColumnPrivileges;
   }
 
-  public void setRetrieveTableColumns(final boolean retrieveTableColumns)
-  {
+  public void setRetrieveTableColumns(final boolean retrieveTableColumns) {
     this.retrieveTableColumns = retrieveTableColumns;
   }
 
-  public void setRetrieveTablePrivileges(final boolean retrieveTablePrivileges)
-  {
+  public void setRetrieveTablePrivileges(final boolean retrieveTablePrivileges) {
     this.retrieveTablePrivileges = retrieveTablePrivileges;
   }
 
-  public void setRetrieveTables(final boolean retrieveTables)
-  {
+  public void setRetrieveTables(final boolean retrieveTables) {
     this.retrieveTables = retrieveTables;
   }
 
-  public void setRetrieveTriggerInformation(final boolean retrieveTriggerInformation)
-  {
+  public void setRetrieveTriggerInformation(final boolean retrieveTriggerInformation) {
     this.retrieveTriggerInformation = retrieveTriggerInformation;
   }
 
-  public void setRetrieveUserDefinedColumnDataTypes(final boolean retrieveUserDefinedColumnDataTypes)
-  {
+  public void setRetrieveUserDefinedColumnDataTypes(final boolean retrieveUserDefinedColumnDataTypes) {
     this.retrieveUserDefinedColumnDataTypes = retrieveUserDefinedColumnDataTypes;
   }
 
-  public void setRetrieveViewInformation(final boolean retrieveViewInformation)
-  {
+  public void setRetrieveViewInformation(final boolean retrieveViewInformation) {
     this.retrieveViewInformation = retrieveViewInformation;
   }
 
-  public void setRetrieveWeakAssociations(final boolean retrieveWeakAssociations)
-  {
+  public void setRetrieveWeakAssociations(final boolean retrieveWeakAssociations) {
     this.retrieveWeakAssociations = retrieveWeakAssociations;
   }
 

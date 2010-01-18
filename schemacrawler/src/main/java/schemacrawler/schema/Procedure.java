@@ -23,46 +23,45 @@ package schemacrawler.schema;
 
 /**
  * Represents a database procedure.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface Procedure
-  extends DatabaseObject
-{
+  extends DatabaseObject {
 
   /**
    * Gets a column by name.
-   * 
-   * @param name
-   *        Name
+   *
+   * @param name Name
+   *
    * @return Column of the procedure
    */
   ProcedureColumn getColumn(String name);
 
   /**
    * Gets the list of columns in ordinal order.
-   * 
+   *
    * @return Columns of the procedure
    */
   ProcedureColumn[] getColumns();
 
   /**
    * Gets the definition.
-   * 
+   *
    * @return Definition
    */
   String getDefinition();
 
   /**
    * Gets the type of the routine body.
-   * 
+   *
    * @return Routine body type
    */
   RoutineBodyType getRoutineBodyType();
 
   /**
    * Gets the procedure type.
-   * 
+   *
    * @return Procedure type
    */
   ProcedureType getType();

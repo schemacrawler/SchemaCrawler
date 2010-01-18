@@ -9,7 +9,8 @@
     <section name="SchemaCrawler - Commandline Example">
       <subsection name="Description">
         <p>The command example demonstrates the use of SchemaCrawler from the
-          shell command line.</p>
+          shell command line.
+        </p>
       </subsection>
       <subsection name="How to Run">
         <ol>
@@ -23,7 +24,8 @@
             directory.
           </li>
           <li>Start the database server by running StartDatabaseServer script from the
-            distribution directory.</li>
+            distribution directory.
+          </li>
           <li>
             Start a command shell in the
             <em>commandline</em>
@@ -53,15 +55,17 @@
             <span class="code">schemacrawler.config.properties</span>
             file with regular expressions, logging, and so on.
           </li>
-          <li>Try using different SchemaCrawler command line options. </li>
+          <li>Try using different SchemaCrawler command line options.</li>
           <li>
             Redirect the output of SchemaCrawler into a file, by running
             <span class="code">sc.cmd &gt; file.txt</span>
-						.</li>
-					<li>Try defining a new database connection, using your favorite
-						database and driver.</li>
-				</ol>
-			</subsection>
-		</section>
-	</body>
+            .
+          </li>
+          <li>Try defining a new database connection, using your favorite
+            database and driver.
+          </li>
+        </ol>
+      </subsection>
+    </section>
+  </body>
 </document>

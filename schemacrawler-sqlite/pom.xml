@@ -1,4 +1,5 @@
-<?xml version="1.0"?><project>
+<?xml version="1.0"?>
+<project>
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>schemacrawler</groupId>
@@ -44,7 +45,7 @@
             </manifestEntries>
           </archive>
         </configuration>
-      </plugin>      
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>

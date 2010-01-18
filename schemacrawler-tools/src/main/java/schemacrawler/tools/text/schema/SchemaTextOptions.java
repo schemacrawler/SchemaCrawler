@@ -26,12 +26,11 @@ import schemacrawler.schemacrawler.Options;
 
 /**
  * Options.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public class SchemaTextOptions
-  implements Options
-{
+  implements Options {
 
   private static final long serialVersionUID = -8133661515343358712L;
 
@@ -41,7 +40,9 @@ public class SchemaTextOptions
   private static final String HIDE_CONSTRAINT_NAMES = "schemacrawler.format.hide_constraint_names";
   private static final String SHOW_ORDINAL_NUMBERS = "schemacrawler.format.show_ordinal_numbers";
   private static final String SHOW_STANDARD_COLUMN_TYPE_NAMES = "schemacrawler.format.show_standard_column_type_names";
-  /** Deprecated */
+  /**
+   * Deprecated
+   */
   private static final String SHOW_JDBC_COLUMN_TYPE_NAMES = "schemacrawler.format.show_jdbc_column_type_names";
 
   private boolean showStandardColumnTypeNames;
@@ -55,30 +56,24 @@ public class SchemaTextOptions
   /**
    * Creates the default SchemaTextOptions.
    */
-  public SchemaTextOptions()
-  {
+  public SchemaTextOptions() {
     setDefaultValues();
   }
 
   /**
    * Options from properties. Constructor.
-   * 
-   * @param config
-   *        Properties
-   * @param schemaTextDetailType
-   *        Schema detail
-   * @param outputOptions
-   *        Output options
+   *
+   * @param config               Properties
+   * @param schemaTextDetailType Schema detail
+   * @param outputOptions        Output options
    */
-  public SchemaTextOptions(final Config config)
-  {
+  public SchemaTextOptions(final Config config) {
     setDefaultValues();
-    if (config != null)
-    {
+    if (config != null) {
       showStandardColumnTypeNames = config
         .getBooleanValue(SHOW_JDBC_COLUMN_TYPE_NAMES)
-                                    || config
-                                      .getBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES);
+        || config
+        .getBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES);
       showOrdinalNumbers = config.getBooleanValue(SHOW_ORDINAL_NUMBERS);
 
       hideForeignKeyNames = config.getBooleanValue(HIDE_FOREIGN_KEY_NAMES);
@@ -90,132 +85,113 @@ public class SchemaTextOptions
 
   /**
    * Whether to hide constraint names.
-   * 
+   *
    * @return Hide constraint names.
    */
-  public boolean isHideConstraintNames()
-  {
+  public boolean isHideConstraintNames() {
     return hideConstraintNames;
   }
 
   /**
    * Whether to hide foreign key names.
-   * 
+   *
    * @return Hide foreign key names.
    */
-  public boolean isHideForeignKeyNames()
-  {
+  public boolean isHideForeignKeyNames() {
     return hideForeignKeyNames;
   }
 
   /**
    * Whether to hide index names.
-   * 
+   *
    * @return Hide index names.
    */
-  public boolean isHideIndexNames()
-  {
+  public boolean isHideIndexNames() {
     return hideIndexNames;
   }
 
   /**
    * Whether to hide primary key names.
-   * 
+   *
    * @return Hide primary key names.
    */
-  public boolean isHidePrimaryKeyNames()
-  {
+  public boolean isHidePrimaryKeyNames() {
     return hidePrimaryKeyNames;
   }
 
   /**
    * Whether to show ordinal numbers.
-   * 
+   *
    * @return Whether to show ordinal numbers.
    */
-  public boolean isShowOrdinalNumbers()
-  {
+  public boolean isShowOrdinalNumbers() {
     return showOrdinalNumbers;
   }
 
   /**
    * Whether to show standard column types.
-   * 
+   *
    * @return Whether to show standard column types.
    */
-  public boolean isShowStandardColumnTypeNames()
-  {
+  public boolean isShowStandardColumnTypeNames() {
     return showStandardColumnTypeNames;
   }
 
   /**
    * Sets whether to hide constraint names.
-   * 
-   * @param hideConstraintNames
-   *        Whether to hide constraint names.
+   *
+   * @param hideConstraintNames Whether to hide constraint names.
    */
-  public void setHideConstraintNames(final boolean hideConstraintNames)
-  {
+  public void setHideConstraintNames(final boolean hideConstraintNames) {
     this.hideConstraintNames = hideConstraintNames;
   }
 
   /**
    * Sets whether to hide foreign key names.
-   * 
-   * @param hideForeignKeyNames
-   *        Whether to hide foreign key names.
+   *
+   * @param hideForeignKeyNames Whether to hide foreign key names.
    */
-  public void setHideForeignKeyNames(final boolean hideForeignKeyNames)
-  {
+  public void setHideForeignKeyNames(final boolean hideForeignKeyNames) {
     this.hideForeignKeyNames = hideForeignKeyNames;
   }
 
   /**
    * Sets whether to hide index names.
-   * 
-   * @param hideIndexNames
-   *        Whether to hide index names.
+   *
+   * @param hideIndexNames Whether to hide index names.
    */
-  public void setHideIndexNames(final boolean hideIndexNames)
-  {
+  public void setHideIndexNames(final boolean hideIndexNames) {
     this.hideIndexNames = hideIndexNames;
   }
 
   /**
    * Sets whether to hide primary key names.
-   * 
-   * @param hidePrimaryKeyNames
-   *        Whether to hide primary key names.
+   *
+   * @param hidePrimaryKeyNames Whether to hide primary key names.
    */
-  public void setHidePrimaryKeyNames(final boolean hidePrimaryKeyNames)
-  {
+  public void setHidePrimaryKeyNames(final boolean hidePrimaryKeyNames) {
     this.hidePrimaryKeyNames = hidePrimaryKeyNames;
   }
 
   /**
    * Sets whether to show ordinal numbers.
-   * 
-   * @param showOrdinalNumbers
-   *        Whether to show ordinal numbers.
+   *
+   * @param showOrdinalNumbers Whether to show ordinal numbers.
    */
-  public void setShowOrdinalNumbers(final boolean showOrdinalNumbers)
-  {
+  public void setShowOrdinalNumbers(final boolean showOrdinalNumbers) {
     this.showOrdinalNumbers = showOrdinalNumbers;
   }
 
   /**
    * Sets whether to show standard column type names.
-   * 
-   * @param showStandardColumnTypeNames
-   *        Whether to show standard column type names.
+   *
+   * @param showStandardColumnTypeNames Whether to show standard column type names.
    */
-  public void setShowStandardColumnTypeNames(final boolean showStandardColumnTypeNames)
-  {
+  public void setShowStandardColumnTypeNames(final boolean showStandardColumnTypeNames) {
     this.showStandardColumnTypeNames = showStandardColumnTypeNames;
   }
 
-  private void setDefaultValues()
-  {
+  private void setDefaultValues() {
     showStandardColumnTypeNames = false;
     showOrdinalNumbers = false;
 

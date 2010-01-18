@@ -26,6 +26,6 @@
       <includes>
         <include>sqlserver.*</include>
       </includes>
-     </fileSet>
+    </fileSet>
   </fileSets>
 </assembly>

@@ -22,18 +22,16 @@ package schemacrawler.schema;
 
 
 /**
- * Represents a single column mapping from a primary key column to a
- * foreign key column.
- * 
+ * Represents a single column mapping from a primary key column to a foreign key column.
+ *
  * @author Sualeh Fatehi
  */
 public interface ForeignKeyColumnMap
-  extends DependantNamedObject, ColumnMap
-{
+  extends DependantNamedObject, ColumnMap {
 
   /**
    * Gets the sequence in the foreign key.
-   * 
+   *
    * @return Foreign key sequence
    */
   int getKeySequence();

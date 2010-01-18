@@ -11,7 +11,8 @@
         <p>SchemaCrawler allows scripting with database
           metadata, using JavaScript. This example shows how to script
           with
-          JavaScript.</p>
+          JavaScript.
+        </p>
       </subsection>
       <subsection name="How to Run">
         <ol type="1">

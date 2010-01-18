@@ -26,13 +26,12 @@ import schemacrawler.schema.NamedObject;
 
 /**
  * Represents the dependent of a named object.
- * 
+ *
  * @author Sualeh Fatehi
  */
 abstract class AbstractDependantNamedObject
   extends AbstractNamedObject
-  implements DependantNamedObject
-{
+  implements DependantNamedObject {
 
   private static final long serialVersionUID = -4327208866052082457L;
 
@@ -40,42 +39,34 @@ abstract class AbstractDependantNamedObject
 
   private transient int hashCode;
 
-  AbstractDependantNamedObject(final NamedObject parent, final String name)
-  {
+  AbstractDependantNamedObject(final NamedObject parent, final String name) {
     super(name);
     this.parent = parent;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
-  public boolean equals(final Object obj)
-  {
-    if (!super.equals(obj))
-    {
+  public boolean equals(final Object obj) {
+    if (!super.equals(obj)) {
       return false;
     }
-    if (this == obj)
-    {
+    if (this == obj) {
       return true;
     }
-    if (obj == null)
-    {
+    if (obj == null) {
       return false;
     }
     final AbstractDependantNamedObject other = (AbstractDependantNamedObject) obj;
-    if (parent == null)
-    {
-      if (other.parent != null)
-      {
+    if (parent == null) {
+      if (other.parent != null) {
         return false;
       }
     }
-    else if (!parent.equals(other.parent))
-    {
+    else if (!parent.equals(other.parent)) {
       return false;
     }
     return true;
@@ -83,33 +74,29 @@ abstract class AbstractDependantNamedObject
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.DependantNamedObject#getParent()
    */
-  public final NamedObject getParent()
-  {
+  public final NamedObject getParent() {
     return parent;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#hashCode()
    */
   @Override
-  public int hashCode()
-  {
+  public int hashCode() {
     buildHashCode();
     return hashCode;
   }
 
-  private void buildHashCode()
-  {
-    if (hashCode == 0)
-    {
+  private void buildHashCode() {
+    if (hashCode == 0) {
       final int prime = 31;
       int result = super.hashCode();
-      result = prime * result + (parent == null? 0: parent.hashCode());
+      result = prime * result + (parent == null ? 0 : parent.hashCode());
       result = prime * result + super.hashCode();
       hashCode = result;
     }

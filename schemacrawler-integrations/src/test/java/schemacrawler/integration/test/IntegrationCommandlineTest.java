@@ -21,51 +21,46 @@
 package schemacrawler.integration.test;
 
 
-import static org.junit.Assert.fail;
-
-import java.io.File;
-
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.utility.TestDatabase;
 
-public class IntegrationCommandlineTest
-{
+import java.io.File;
+
+import static org.junit.Assert.fail;
+
+public class IntegrationCommandlineTest {
 
   private static TestDatabase testUtility = new TestDatabase();
 
   @AfterClass
-  public static void afterAllTests()
-  {
+  public static void afterAllTests() {
     testUtility.shutdownDatabase();
   }
 
   @BeforeClass
   public static void beforeAllTests()
-    throws Exception
-  {
+    throws Exception {
     TestDatabase.initializeApplicationLogging();
     testUtility.createMemoryDatabase();
   }
 
   @Test
   public void templatingWithFreeMarker()
-    throws Exception
-  {
+    throws Exception {
     final String outputFilename = File.createTempFile("schemacrawler", ".txt")
       .getAbsolutePath();
     final OutputOptions outputOptions = new OutputOptions("plaintextschema.ftl",
                                                           outputFilename);
 
     final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(testUtility
-                                                                                .getDatabaseConnectionOptions(),
+      .getDatabaseConnectionOptions(),
                                                                               SchemaInfoLevel
                                                                                 .standard(),
                                                                               "freemarker",
@@ -77,14 +72,13 @@ public class IntegrationCommandlineTest
 
   @Test
   public void templatingWithVelocity()
-    throws Exception
-  {
+    throws Exception {
     final String outputFilename = File.createTempFile("schemacrawler", ".txt")
       .getAbsolutePath();
     final OutputOptions outputOptions = new OutputOptions("plaintextschema.vm",
                                                           outputFilename);
     final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(testUtility
-                                                                                .getDatabaseConnectionOptions(),
+      .getDatabaseConnectionOptions(),
                                                                               SchemaInfoLevel
                                                                                 .standard(),
                                                                               "velocity",
@@ -96,15 +90,13 @@ public class IntegrationCommandlineTest
 
   private void executeAndCheckForOutputFile(final SchemaCrawlerCommandLine commandLine,
                                             final OutputOptions outputOptions)
-    throws Exception
-  {
+    throws Exception {
     commandLine.execute();
     // Check post-conditions
     final File outputFile = outputOptions.getOutputFile();
     Assert.assertTrue(outputFile.exists());
     Assert.assertTrue(outputFile.length() > 0);
-    if (!outputFile.delete())
-    {
+    if (!outputFile.delete()) {
       fail("Cannot delete output file");
     }
   }

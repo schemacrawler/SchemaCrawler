@@ -27,12 +27,11 @@ import sf.util.CommandLineParser.StringOption;
 
 /**
  * Options for the command line.
- * 
+ *
  * @author sfatehi
  */
 final class SpringOptionsParser
-  extends BaseOptionsParser<SpringOptions>
-{
+  extends BaseOptionsParser<SpringOptions> {
 
   private final StringOption optionContextFile = new StringOption('c',
                                                                   "context-file",
@@ -46,19 +45,17 @@ final class SpringOptionsParser
 
   /**
    * Parses the command line into options.
-   * 
+   *
    * @param args
    */
-  SpringOptionsParser(final String[] args)
-  {
+  SpringOptionsParser(final String[] args) {
     super(args);
   }
 
   @Override
-  protected SpringOptions getOptions()
-  {
-    parse(new Option[] {
-        optionContextFile, optionExecutable, optionDataSourceName,
+  protected SpringOptions getOptions() {
+    parse(new Option[]{
+      optionContextFile, optionExecutable, optionDataSourceName,
     });
 
     final SpringOptions options = new SpringOptions();

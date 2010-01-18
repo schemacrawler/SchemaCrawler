@@ -21,6 +21,17 @@
 package schemacrawler.tools.integration.freemarker;
 
 
+import freemarker.cache.ClassTemplateLoader;
+import freemarker.cache.FileTemplateLoader;
+import freemarker.cache.MultiTemplateLoader;
+import freemarker.cache.TemplateLoader;
+import freemarker.template.Configuration;
+import freemarker.template.DefaultObjectWrapper;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import schemacrawler.schema.Database;
+import schemacrawler.tools.executable.BaseExecutable;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
@@ -31,68 +42,53 @@ import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.Database;
-import schemacrawler.tools.executable.BaseExecutable;
-import freemarker.cache.ClassTemplateLoader;
-import freemarker.cache.FileTemplateLoader;
-import freemarker.cache.MultiTemplateLoader;
-import freemarker.cache.TemplateLoader;
-import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
-
 /**
  * Main executor for the FreeMarker integration.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class FreeMarkerRenderer
-  extends BaseExecutable
-{
+  extends BaseExecutable {
 
   private static final long serialVersionUID = 4029489563062547982L;
 
   private static final Logger LOGGER = Logger
     .getLogger(FreeMarkerRenderer.class.getName());
 
-  public FreeMarkerRenderer()
-  {
+  public FreeMarkerRenderer() {
     super("freemarker");
   }
 
   /**
    * {@inheritDoc}
-   * 
-   * @see schemacrawler.tools.integration.SchemaRenderer#render(schemacrawler.schema.Database,
-   *      java.sql.Connection, java.lang.String, java.io.Writer)
+   *
+   * @see schemacrawler.tools.integration.SchemaRenderer#render(schemacrawler.schema.Database, java.sql.Connection,
+   *      java.lang.String, java.io.Writer)
    */
   @Override
   public final void executeOn(final Database database,
                               final Connection connection)
-    throws Exception
-  {
+    throws Exception {
     // Set the file path, in case the template is a file template
     // This allows Velocity to load templates from any directory
     String templateLocation = outputOptions.getOutputFormatValue();
     String templatePath = ".";
     final File templateFilePath = new File(templateLocation);
-    if (templateFilePath.exists())
-    {
-      templatePath = templateFilePath.getAbsoluteFile().getParent();
+    if (templateFilePath.exists()) {
+      templatePath = templateFilePath.getAbsoluteFile()
+        .getParent();
       templateLocation = templateFilePath.getName();
     }
 
-    try
-    {
+    try {
       // Create a new instance of the configuration
       final Configuration cfg = new Configuration();
 
       final ClassTemplateLoader ctl = new ClassTemplateLoader(FreeMarkerRenderer.class,
                                                               "/");
       final FileTemplateLoader ftl = new FileTemplateLoader(new File(templatePath));
-      final TemplateLoader[] loaders = new TemplateLoader[] {
-          ctl, ftl
+      final TemplateLoader[] loaders = new TemplateLoader[]{
+        ctl, ftl
       };
       final MultiTemplateLoader mtl = new MultiTemplateLoader(loaders);
       cfg.setTemplateLoader(mtl);
@@ -117,12 +113,10 @@ public final class FreeMarkerRenderer
 
       outputOptions.closeOutputWriter(writer);
     }
-    catch (final IOException e)
-    {
+    catch (final IOException e) {
       throw new ExecutionException("Could not expand template", e);
     }
-    catch (final TemplateException e)
-    {
+    catch (final TemplateException e) {
       throw new ExecutionException("Could not expand template", e);
     }
   }

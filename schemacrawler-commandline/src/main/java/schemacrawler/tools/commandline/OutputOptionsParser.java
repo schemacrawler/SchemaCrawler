@@ -29,12 +29,11 @@ import sf.util.CommandLineParser.StringOption;
 
 /**
  * Parses the command line.
- * 
+ *
  * @author Sualeh Fatehi
  */
 final class OutputOptionsParser
-  extends BaseOptionsParser<OutputOptions>
-{
+  extends BaseOptionsParser<OutputOptions> {
 
   private final StringOption optionOutputFormat = new StringOption(Option.NO_SHORT_FORM,
                                                                    "outputformat",
@@ -52,22 +51,20 @@ final class OutputOptionsParser
   private final BooleanOption optionNoInfo = new BooleanOption(Option.NO_SHORT_FORM,
                                                                "noinfo");
 
-  OutputOptionsParser(final String[] args)
-  {
+  OutputOptionsParser(final String[] args) {
     super(args);
   }
 
   @Override
-  protected OutputOptions getOptions()
-  {
-    parse(new Option[] {
-        optionOutputFormat,
-        optionOutputFile,
-        optionAppend,
-        optionNoHeader,
-        optionNoFooter,
-        optionNoInfo,
-        optionNoInfo
+  protected OutputOptions getOptions() {
+    parse(new Option[]{
+      optionOutputFormat,
+      optionOutputFile,
+      optionAppend,
+      optionNoHeader,
+      optionNoFooter,
+      optionNoInfo,
+      optionNoInfo
     });
 
     final String outputFormatValue = optionOutputFormat.getValue();

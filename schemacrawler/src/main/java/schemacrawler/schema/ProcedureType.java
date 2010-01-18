@@ -28,14 +28,19 @@ import java.util.logging.Logger;
 /**
  * An enumeration wrapper around JDBC procedure types.
  */
-public enum ProcedureType
-{
+public enum ProcedureType {
 
-  /** Result unknown. */
+  /**
+   * Result unknown.
+   */
   unknown(DatabaseMetaData.procedureResultUnknown, "result unknown"),
-  /** No result. */
+  /**
+   * No result.
+   */
   noResult(DatabaseMetaData.procedureNoResult, "no result"),
-  /** Returns result. */
+  /**
+   * Returns result.
+   */
   returnsResult(DatabaseMetaData.procedureReturnsResult, "returns result");
 
   private static final Logger LOGGER = Logger.getLogger(ProcedureType.class
@@ -43,17 +48,14 @@ public enum ProcedureType
 
   /**
    * Gets the enum value from the integer.
-   * 
-   * @param id
-   *        Id of the integer
+   *
+   * @param id Id of the integer
+   *
    * @return ForeignKeyDeferrability
    */
-  public static ProcedureType valueOf(final int id)
-  {
-    for (final ProcedureType type: ProcedureType.values())
-    {
-      if (type.getId() == id)
-      {
+  public static ProcedureType valueOf(final int id) {
+    for (final ProcedureType type : ProcedureType.values()) {
+      if (type.getId() == id) {
         return type;
       }
     }
@@ -64,30 +66,27 @@ public enum ProcedureType
   private final int id;
   private final String text;
 
-  private ProcedureType(final int id, final String text)
-  {
+  private ProcedureType(final int id, final String text) {
     this.id = id;
     this.text = text;
   }
 
   /**
    * Gets the id.
-   * 
+   *
    * @return id
    */
-  public int getId()
-  {
+  public int getId() {
     return id;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see Object#toString()
    */
   @Override
-  public String toString()
-  {
+  public String toString() {
     return text;
   }
 
