@@ -263,7 +263,7 @@ public final class OutputOptions
       else
       {
         final FileWriter fileWriter = new FileWriter(outputFile, appendOutput);
-        writer = new PrintWriter(fileWriter, /* autoFlush = */true);
+        writer = new PrintWriter(new BufferedWriter(fileWriter), /* autoFlush = */true);
         LOGGER.log(Level.INFO, "Opened output writer to file, "
           + outputFile.getAbsolutePath());
       }

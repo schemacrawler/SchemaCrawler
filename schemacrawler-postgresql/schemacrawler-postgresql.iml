@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module relativePaths="false" type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="false">
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
-    <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
@@ -11,82 +10,18 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="schemacrawler-integrations" />
-    <orderEntry type="module" module-name="schemacrawler-tools" />
-    <orderEntry type="module" module-name="schemacrawler-commandline" />
-    <orderEntry type="module" module-name="schemacrawler" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/apache/velocity/velocity/1.6.2/velocity-1.6.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/commons-lang/commons-lang/2.4/commons-lang-2.4.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/oro/oro/2.0.8/oro-2.0.8.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/xmlunit/xmlunit/1.2/xmlunit-1.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/hsqldb/hsqldb/1.8.0.7/hsqldb-1.8.0.7.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/junit/junit/4.5/junit-4.5.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/postgresql/postgresql/8.4-701.jdbc4/postgresql-8.4-701.jdbc4.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="module" module-name="schemacrawler-integrations" exported="" />
+    <orderEntry type="module" module-name="schemacrawler-tools" exported="" />
+    <orderEntry type="module" module-name="schemacrawler-commandline" exported="" />
+    <orderEntry type="module" module-name="schemacrawler" exported="" />
+    <orderEntry type="library" exported="" name="Maven: org.apache.velocity:velocity:1.5" level="project" />
+    <orderEntry type="library" exported="" name="Maven: commons-collections:commons-collections:3.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: commons-lang:commons-lang:2.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: oro:oro:2.0.8" level="project" />
+    <orderEntry type="library" exported="" name="Maven: postgresql:postgresql:8.4-701.jdbc4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: xmlunit:xmlunit:1.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: hsqldb:hsqldb:1.8.0.7" level="project" />
   </component>
 </module>
 
