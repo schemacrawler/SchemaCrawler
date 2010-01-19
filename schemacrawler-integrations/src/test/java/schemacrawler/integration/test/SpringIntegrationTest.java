@@ -24,8 +24,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -37,6 +35,10 @@ import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.integration.graph.GraphExecutable;
 import schemacrawler.utility.TestDatabase;
 import sf.util.TestUtility;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 public class SpringIntegrationTest
 {
@@ -101,18 +103,13 @@ public class SpringIntegrationTest
                                             final List<String> failures)
     throws Exception
   {
-    final String outputFilename = File.createTempFile("schemacrawler", "test")
-      .getAbsolutePath();
+    final File testOutputFile = File.createTempFile("schemacrawler." + executableName + ".", ".test");
+    testOutputFile.delete();
 
     executable.getOutputOptions()
-      .setOutputFileName(outputFilename);
+      .setOutputFileName(testOutputFile.getAbsolutePath());
     executable.execute(testUtility.getConnection());
 
-    final File testOutputFile = new File(outputFilename);
-    assertTrue(testOutputFile.exists());
-    assertTrue(String.format("Executable %s output file has zero length - %s",
-                             executableName,
-                             testOutputFile), testOutputFile.length() > 0);
     TestUtility
       .compareOutput(executableName + ".txt", testOutputFile, failures);
   }

@@ -20,7 +20,12 @@
 package sf.util;
 
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.List;
 
 public final class TestUtility
@@ -32,10 +37,18 @@ public final class TestUtility
     throws Exception
   {
 
+    if (testOutputFile == null || !testOutputFile.exists() || !testOutputFile.isFile() || !testOutputFile
+      .canRead() || testOutputFile.length() == 0)
+    {
+      failures.add("Output file not created - " + testOutputFile.getAbsolutePath());
+      return;
+    }
+
     final boolean contentEquals;
     final InputStream referenceStream = TestUtility.class
       .getResourceAsStream("/" + referenceFile);
     if (referenceStream == null)
+
     {
       contentEquals = false;
     }
@@ -44,30 +57,32 @@ public final class TestUtility
       contentEquals = contentEquals(new FileReader(testOutputFile),
                                     new InputStreamReader(referenceStream));
     }
+
     if (!contentEquals)
+
     {
       final File testOutputLocalFile = new File("./", referenceFile);
       testOutputLocalFile.getParentFile()
         .mkdirs();
       final boolean renamed = testOutputFile.renameTo(testOutputLocalFile);
-      final String message;
       if (renamed)
       {
-        message = "Expected file contents in "
-          + testOutputLocalFile.getAbsolutePath();
+        failures.add("Output does not match: see actual output in "
+          + testOutputLocalFile.getAbsolutePath());
+        if (!testOutputFile.delete())
+
+        {
+          failures.add("Cannot delete output file, "
+            + testOutputFile.getAbsolutePath());
+        }
       }
       else
       {
-        message = "Expected file contents in "
-          + testOutputFile.getAbsolutePath();
+        failures.add("Output does not match; could not rename file; see actual output in "
+          + testOutputFile.getAbsolutePath());
       }
-      failures.add(message);
     }
-    if (!testOutputFile.delete())
-    {
-      failures.add("Cannot delete output file, "
-        + testOutputFile.getAbsolutePath());
-    }
+
   }
 
   private static boolean contentEquals(final Reader input1, final Reader input2)
