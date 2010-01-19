@@ -28,8 +28,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.fail;
-
 import org.custommonkey.xmlunit.Validator;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.AfterClass;
@@ -51,6 +49,8 @@ import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.utility.TestDatabase;
 import sf.util.TestUtility;
+
+import static org.junit.Assert.fail;
 
 public class SchemaCrawlerOutputTest
 {
@@ -121,8 +121,9 @@ public class SchemaCrawlerOutputTest
       {
         final String referenceFile = command + "." + outputFormat.name();
 
-        final File testOutputFile = File.createTempFile("schemacrawler.test.",
-                                                        "." + referenceFile);
+        final File testOutputFile = File.createTempFile("schemacrawler." + referenceFile + ".",
+                                                        ".test");
+        testOutputFile.delete();
 
         final OutputOptions outputOptions = new OutputOptions(outputFormat,
                                                               testOutputFile
@@ -181,8 +182,9 @@ public class SchemaCrawlerOutputTest
         final String referenceFile = schemaTextDetailType + "_" + infoLevel
           + ".txt";
 
-        final File testOutputFile = File.createTempFile("schemacrawler.test.",
-                                                        "." + referenceFile);
+        final File testOutputFile = File.createTempFile("schemacrawler." + referenceFile + ".",
+                                                        ".test");
+        testOutputFile.delete();
 
         final OutputOptions outputOptions = new OutputOptions(OutputFormat.text,
                                                               testOutputFile
