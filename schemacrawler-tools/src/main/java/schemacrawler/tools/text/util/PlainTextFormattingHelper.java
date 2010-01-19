@@ -22,6 +22,7 @@ package schemacrawler.tools.text.util;
 
 
 import schemacrawler.tools.options.OutputFormat;
+import sf.util.Utility;
 
 /**
  * Methods to format entire rows of output as text.
@@ -49,8 +50,6 @@ public class PlainTextFormattingHelper
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.util.TextFormattingHelper#createDocumentEnd()
    */
   public String createDocumentEnd()
   {
@@ -59,8 +58,6 @@ public class PlainTextFormattingHelper
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.util.TextFormattingHelper#createDocumentStart()
    */
   public String createDocumentStart()
   {
@@ -79,7 +76,7 @@ public class PlainTextFormattingHelper
       final String separator;
       if (type == null)
       {
-        prefix = NEWLINE;
+        prefix = Utility.NEWLINE;
         separator = defaultSeparator;
       }
       else
@@ -87,11 +84,11 @@ public class PlainTextFormattingHelper
         switch (type)
         {
           case title:
-            prefix = NEWLINE;
+            prefix = Utility.NEWLINE;
             separator = separator("_");
             break;
           case subTitle:
-            prefix = NEWLINE;
+            prefix = Utility.NEWLINE;
             separator = defaultSeparator;
             break;
           case section:
@@ -99,12 +96,12 @@ public class PlainTextFormattingHelper
             separator = separator("-=-");
             break;
           default:
-            prefix = NEWLINE;
+            prefix = Utility.NEWLINE;
             separator = defaultSeparator;
             break;
         }
       }
-      return NEWLINE + prefix + header + NEWLINE + separator + NEWLINE + prefix;
+      return Utility.NEWLINE + prefix + header + Utility.NEWLINE + separator + Utility.NEWLINE + prefix;
     }
     else
     {
@@ -114,18 +111,14 @@ public class PlainTextFormattingHelper
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.util.TextFormattingHelper#createObjectEnd()
    */
   public String createObjectEnd()
   {
-    return NEWLINE;
+    return Utility.NEWLINE;
   }
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.util.TextFormattingHelper#createObjectStart(java.lang.String)
    */
   public String createObjectStart(final String name)
   {
@@ -134,19 +127,17 @@ public class PlainTextFormattingHelper
       .Utility
       .isBlank(name))
     {
-      objectStart = objectStart + NEWLINE + name + NEWLINE + DASHED_SEPARATOR;
+      objectStart = objectStart + Utility.NEWLINE + name + Utility.NEWLINE + DASHED_SEPARATOR;
     }
     return objectStart;
   }
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.util.TextFormattingHelper#createPreformattedText(java.lang.String, java.lang.String)
    */
   public String createPreformattedText(final String id, final String text)
   {
-    return NEWLINE + text;
+    return Utility.NEWLINE + text;
   }
 
 }
