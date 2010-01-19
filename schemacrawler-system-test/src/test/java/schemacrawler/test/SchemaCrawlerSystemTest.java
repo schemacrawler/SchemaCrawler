@@ -17,17 +17,25 @@
 package schemacrawler.test;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import java.sql.Connection;
 import java.util.regex.Pattern;
-
-import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.ConnectionOptions;
+import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
 public class SchemaCrawlerSystemTest
@@ -40,10 +48,10 @@ public class SchemaCrawlerSystemTest
     throws Exception
   {
     final String[] dataSources = {
-      "MicrosoftSQLServer", "MySQL", "Oracle", "PostgreSQL", "SQLite",
+        "MicrosoftSQLServer", "MySQL", "Oracle", "PostgreSQL", "SQLite",
     };
     final int[] schemaCounts = {
-      52, 4, 14, 5, 1,
+        52, 4, 14, 5, 1,
     };
 
     final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(".*");
@@ -131,16 +139,16 @@ public class SchemaCrawlerSystemTest
   {
 
     final int[] tableColumnCounts = {
-      5, 3, 3, 5, 3, 2
+        5, 3, 3, 5, 3, 2
     };
     final int[] checkConstraints = {
-      0, 0, 0, 0, 0, 0
+        0, 0, 0, 0, 0, 0
     };
     // final int[] indexCounts = {
     // 0, 0, 2, 4, 0, 2
     // };
     final int[] fkCounts = {
-      1, 0, 2, 2, 1, 0
+        1, 0, 2, 2, 1, 0
     };
 
     final Table[] tables = schema.getTables();
@@ -228,7 +236,7 @@ public class SchemaCrawlerSystemTest
     {
       final Pattern schemaPattern = Pattern.compile(".*schemacrawler");
       Schema scSchema = null;
-      for (final Schema currSchema : schemas)
+      for (final Schema currSchema: schemas)
       {
         if (schemaPattern.matcher(currSchema.getFullName().toLowerCase())
           .matches())
@@ -246,10 +254,10 @@ public class SchemaCrawlerSystemTest
     throws Exception
   {
     final String[] tableNames = {
-      "CUSTOMER", "CUSTOMERLIST", "INVOICE", "ITEM", "PRODUCT", "SUPPLIER"
+        "CUSTOMER", "CUSTOMERLIST", "INVOICE", "ITEM", "PRODUCT", "SUPPLIER"
     };
     final String[] tableTypes = {
-      "TABLE", "VIEW", "TABLE", "TABLE", "TABLE", "TABLE"
+        "TABLE", "VIEW", "TABLE", "TABLE", "TABLE", "TABLE"
     };
 
     final Table[] tables = schema.getTables();
@@ -264,8 +272,7 @@ public class SchemaCrawlerSystemTest
                    table.getName().toUpperCase());
       assertEquals(dataSourceName + " table type does not match",
                    tableTypes[tableIdx],
-                   table.getType()
-                     .toString().toUpperCase());
+                   table.getType().toString().toUpperCase());
     }
   }
 
