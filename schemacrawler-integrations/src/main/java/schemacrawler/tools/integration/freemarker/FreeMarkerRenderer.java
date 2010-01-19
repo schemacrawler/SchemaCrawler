@@ -22,12 +22,10 @@ package schemacrawler.tools.integration.freemarker;
 
 
 import java.io.File;
-import java.io.IOException;
 import java.io.Writer;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,7 +36,6 @@ import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
-import freemarker.template.TemplateException;
 import schemacrawler.schema.Database;
 import schemacrawler.tools.executable.BaseExecutable;
 
@@ -63,9 +60,6 @@ public final class FreeMarkerRenderer
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.integration.SchemaRenderer#render(schemacrawler.schema.Database, java.sql.Connection,
-   *      java.lang.String, java.io.Writer)
    */
   @Override
   public final void executeOn(final Database database,
@@ -84,48 +78,37 @@ public final class FreeMarkerRenderer
       templateLocation = templateFilePath.getName();
     }
 
-    try
-    {
-      // Create a new instance of the configuration
-      final Configuration cfg = new Configuration();
+    // Create a new instance of the configuration
+    final Configuration cfg = new Configuration();
 
-      final ClassTemplateLoader ctl = new ClassTemplateLoader(FreeMarkerRenderer.class,
-                                                              "/");
-      final FileTemplateLoader ftl = new FileTemplateLoader(new File(templatePath));
-      final TemplateLoader[] loaders = new TemplateLoader[]{
-        ctl, ftl
-      };
-      final MultiTemplateLoader mtl = new MultiTemplateLoader(loaders);
-      cfg.setTemplateLoader(mtl);
+    final ClassTemplateLoader ctl = new ClassTemplateLoader(FreeMarkerRenderer.class,
+                                                            "/");
+    final FileTemplateLoader ftl = new FileTemplateLoader(new File(templatePath));
+    final TemplateLoader[] loaders = new TemplateLoader[]{
+      ctl, ftl
+    };
+    final MultiTemplateLoader mtl = new MultiTemplateLoader(loaders);
+    cfg.setTemplateLoader(mtl);
 
-      cfg.setStrictSyntaxMode(true);
-      cfg.setWhitespaceStripping(true);
+    cfg.setStrictSyntaxMode(true);
+    cfg.setWhitespaceStripping(true);
 
-      cfg.setObjectWrapper(new DefaultObjectWrapper());
+    cfg.setObjectWrapper(new DefaultObjectWrapper());
 
-      LOGGER.log(Level.INFO, Configuration.getVersionNumber());
-      LOGGER.log(Level.INFO, "FreeMarker configuration properties - " + cfg);
+    LOGGER.log(Level.INFO, Configuration.getVersionNumber());
+    LOGGER.log(Level.INFO, "FreeMarker configuration properties - " + cfg);
 
-      // Create the root hash
-      final Map<String, Object> objectMap = new HashMap<String, Object>();
-      objectMap.put("database", database);
+    // Create the root hash
+    final Map<String, Object> objectMap = new HashMap<String, Object>();
+    objectMap.put("database", database);
 
-      final Writer writer = outputOptions.openOutputWriter();
+    final Writer writer = outputOptions.openOutputWriter();
 
-      // Evaluate the template
-      final Template template = cfg.getTemplate(templateLocation);
-      template.process(objectMap, writer);
+    // Evaluate the template
+    final Template template = cfg.getTemplate(templateLocation);
+    template.process(objectMap, writer);
 
-      outputOptions.closeOutputWriter(writer);
-    }
-    catch (final IOException e)
-    {
-      throw new ExecutionException("Could not expand template", e);
-    }
-    catch (final TemplateException e)
-    {
-      throw new ExecutionException("Could not expand template", e);
-    }
+    outputOptions.closeOutputWriter(writer);
   }
 
 }

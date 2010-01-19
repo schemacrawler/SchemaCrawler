@@ -22,17 +22,14 @@ package schemacrawler.tools.integration.graph;
 
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.ExecutionException;
 
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
 import sf.util.Utility;
 
@@ -52,46 +49,32 @@ public final class GraphExecutable
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.integration.SchemaRenderer#render(schemacrawler.schema.Database, java.sql.Connection,
-   *      java.lang.String, java.io.Writer)
    */
   @Override
   protected void executeOn(final Database database, final Connection connection)
     throws Exception
   {
-    try
+    final File dotFile = File.createTempFile("schemacrawler.", ".dot");
+    final DotWriter dotWriter = new DotWriter(dotFile);
+    if (database != null)
     {
-      final File dotFile = File.createTempFile("schemacrawler.", ".dot");
-      final DotWriter dotWriter = new DotWriter(dotFile);
-      if (database != null)
+      dotWriter.open();
+      dotWriter.print(database.getSchemaCrawlerInfo(), database
+        .getDatabaseInfo(), database.getJdbcDriverInfo());
+      for (final Schema schema : database.getSchemas())
       {
-        dotWriter.open();
-        dotWriter.print(database.getSchemaCrawlerInfo(), database
-          .getDatabaseInfo(), database.getJdbcDriverInfo());
-        for (final Schema schema : database.getSchemas())
+        for (final Table table : schema.getTables())
         {
-          for (final Table table : schema.getTables())
-          {
-            dotWriter.print(table);
-          }
+          dotWriter.print(table);
         }
-        dotWriter.close();
       }
+      dotWriter.close();
+    }
 
-      final String graphOutputFormat = getGraphOutputFormat();
-      final File outputFile = getOutputFile(graphOutputFormat);
-      final GraphGenerator dot = new GraphGenerator();
-      dot.generateDiagram(dotFile, graphOutputFormat, outputFile);
-    }
-    catch (final IOException e)
-    {
-      throw new ExecutionException("Could not write dot file", e);
-    }
-    catch (final SchemaCrawlerException e)
-    {
-      throw new ExecutionException("Could not write dot file", e);
-    }
+    final String graphOutputFormat = getGraphOutputFormat();
+    final File outputFile = getOutputFile(graphOutputFormat);
+    final GraphGenerator dot = new GraphGenerator();
+    dot.generateDiagram(dotFile, graphOutputFormat, outputFile);
   }
 
   private String getGraphOutputFormat()
