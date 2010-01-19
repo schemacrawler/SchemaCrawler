@@ -64,7 +64,6 @@ public final class DatabaseConfigConnectionOptions
       .getResourceAsStream(configResource)));
   }
 
-  @Override
   public String getConnectionUrl()
   {
     final Map<String, String> properties = new HashMap<String, String>(this.properties);

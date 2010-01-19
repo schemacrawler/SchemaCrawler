@@ -21,12 +21,15 @@
 package schemacrawler.tools.integration.scripting;
 
 
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.Writer;
 import java.sql.Connection;
-import java.util.concurrent.ExecutionException;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 
 import schemacrawler.schema.Database;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -52,9 +55,6 @@ public final class ScriptRenderer
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.integration.SchemaRenderer#render(schemacrawler.schema.Database, java.sql.Connection,
-   *      java.lang.String, java.io.Writer)
    */
   @Override
   public final void executeOn(final Database database,
@@ -87,38 +87,31 @@ public final class ScriptRenderer
       }
     }
 
-    try
+    // Create a new instance of the engine
+    final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
+    ScriptEngine scriptEngine = scriptEngineManager
+      .getEngineByExtension(FileUtility.getFileExtension(scriptFile));
+    if (scriptEngine == null)
     {
-      // Create a new instance of the engine
-      final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
-      ScriptEngine scriptEngine = scriptEngineManager
-        .getEngineByExtension(FileUtility.getFileExtension(scriptFile));
-      if (scriptEngine == null)
-      {
-        scriptEngine = scriptEngineManager.getEngineByName("JavaScript");
-      }
-      if (scriptEngine == null)
-      {
-        throw new SchemaCrawlerException("Script engine not found");
-      }
-
-      final Writer writer = outputOptions.openOutputWriter();
-
-      // Set up the context
-      scriptEngine.getContext()
-        .setWriter(writer);
-      scriptEngine.put("database", database);
-      scriptEngine.put("connection", connection);
-
-      // Evaluate the script
-      scriptEngine.eval(reader);
-
-      outputOptions.closeOutputWriter(writer);
+      scriptEngine = scriptEngineManager.getEngineByName("JavaScript");
     }
-    catch (final ScriptException e)
+    if (scriptEngine == null)
     {
-      throw new ExecutionException("Could not evaluate script", e);
+      throw new SchemaCrawlerException("Script engine not found");
     }
+
+    final Writer writer = outputOptions.openOutputWriter();
+
+    // Set up the context
+    scriptEngine.getContext()
+      .setWriter(writer);
+    scriptEngine.put("database", database);
+    scriptEngine.put("connection", connection);
+
+    // Evaluate the script
+    scriptEngine.eval(reader);
+
+    outputOptions.closeOutputWriter(writer);
   }
 
 }
