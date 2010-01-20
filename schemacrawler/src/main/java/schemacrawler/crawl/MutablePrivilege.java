@@ -123,8 +123,6 @@ final class MutablePrivilege
 
     /**
      * {@inheritDoc}
-     *
-     * @see schemacrawler.schema.Privilege#getGrantee()
      */
     public String getGrantee()
     {
@@ -133,8 +131,6 @@ final class MutablePrivilege
 
     /**
      * {@inheritDoc}
-     *
-     * @see schemacrawler.schema.Privilege#getGrantor()
      */
     public String getGrantor()
     {
@@ -155,8 +151,6 @@ final class MutablePrivilege
 
     /**
      * {@inheritDoc}
-     *
-     * @see schemacrawler.schema.Privilege#isGrantable()
      */
     public boolean isGrantable()
     {

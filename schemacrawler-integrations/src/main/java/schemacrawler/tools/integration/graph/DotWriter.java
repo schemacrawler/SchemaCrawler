@@ -43,12 +43,7 @@ final class DotWriter
   private final PrintWriter out;
   private final Map<Schema, PastelColor> colorMap;
 
-  /**
-   * Text formatting of schema.
-   *
-   * @param options Options for text formatting of schema
-   */
-  public DotWriter(final File dotFile)
+  DotWriter(final File dotFile)
     throws SchemaCrawlerException
   {
     if (dotFile == null)
@@ -114,7 +109,8 @@ final class DotWriter
     graphInfo.append("          <td align=\"left\">")
       .append(databaseInfo.getProductName())
       .append("  ")
-      .append(databaseInfo.getProductVersion() + "</td>")
+      .append(databaseInfo.getProductVersion())
+      .append("</td>")
       .append(NEWLINE);
     graphInfo.append("        </tr>")
       .append(NEWLINE);
@@ -154,7 +150,6 @@ final class DotWriter
   }
 
   public void print(final Table table)
-    throws SchemaCrawlerException
   {
     final Schema schema = table.getSchema();
     if (!colorMap.containsKey(schema))

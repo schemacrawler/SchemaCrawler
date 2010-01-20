@@ -158,7 +158,7 @@ public final class TemplatingUtility
    * Does one pass over the values in the map, and expands each as a template, using the rest of the values in the same
    * map. Variables in the template are in the form of ${variable}.
    *
-   * @param map Map to expand.
+   * @param variablesMap Map to expand.
    */
   public static void substituteVariables(final Map<String, String> variablesMap)
   {

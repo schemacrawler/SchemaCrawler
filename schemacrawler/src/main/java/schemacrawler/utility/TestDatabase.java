@@ -98,7 +98,7 @@ public class TestDatabase
   }
 
   public Database getDatabase(final SchemaCrawlerOptions schemaCrawlerOptions)
-    throws SchemaCrawlerException, SQLException
+    throws SchemaCrawlerException
   {
     final Database database = SchemaCrawlerUtility
       .getDatabase(getConnection(), schemaCrawlerOptions);

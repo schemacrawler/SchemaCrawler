@@ -45,7 +45,7 @@ final class ConfigConnectionOptionsParser
   /**
    * Gets a sub-group of properties - those that start with a given prefix. The prefix is removed in the result.
    *
-   * @param Config to partition
+   * @param config Config to partition
    * @param prefix Prefix to group by.
    *
    * @return Partitioned properties.

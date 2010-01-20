@@ -89,10 +89,11 @@ public final class SchemaCrawler
   }
 
   /**
-   * {@inheritDoc}
+   * Crawls the database, to obtain database metadata.
    *
-   * @see schemacrawler.schemacrawler.SchemaCrawler#crawl(schemacrawler.schemacrawler.SchemaCrawlerOptions,
-   *      schemacrawler.schemacrawler.CrawlHandler)
+   * @param options SchemaCrawler options that control what metadata is returned
+   * @return Database metadata
+   * @throws SchemaCrawlerException On an exception
    */
   public Database crawl(final SchemaCrawlerOptions options)
     throws SchemaCrawlerException

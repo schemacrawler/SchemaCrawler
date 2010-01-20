@@ -52,8 +52,6 @@ final class ProcedureExRetriever
   /**
    * Retrieves a procedure definitions from the database.
    *
-   * @param procedures List of procedures.
-   *
    * @throws SQLException On a SQL exception
    */
   void retrieveProcedureInformation()

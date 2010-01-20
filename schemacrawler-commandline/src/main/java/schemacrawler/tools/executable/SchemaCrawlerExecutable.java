@@ -19,7 +19,6 @@ public class SchemaCrawlerExecutable
     .getLogger(SchemaCrawlerExecutable.class.getName());
 
   public SchemaCrawlerExecutable(final String commands)
-    throws Exception
   {
     super(commands);
   }

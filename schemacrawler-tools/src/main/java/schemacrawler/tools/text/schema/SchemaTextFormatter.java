@@ -127,8 +127,6 @@ public final class SchemaTextFormatter
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schemacrawler.DatabaseTraversalHandler#handle(schemacrawler.schema.WeakAssociations)
    */
   public void handle(final ColumnMap[] weakAssociations)
     throws SchemaCrawlerException
@@ -343,10 +341,6 @@ public final class SchemaTextFormatter
       .getSearchable().toString()));
   }
 
-  /**
-   * @param table
-   * @param columnPairs
-   */
   private void printColumnPairs(final String tableName,
                                 final ColumnMap[] columnPairs)
   {

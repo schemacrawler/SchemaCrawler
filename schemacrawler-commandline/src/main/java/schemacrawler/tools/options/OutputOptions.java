@@ -63,7 +63,7 @@ public final class OutputOptions
   /**
    * Output options, given the type and the output filename.
    *
-   * @param outputFormatValue Type of output, which is dependent on the executor
+   * @param outputFormat Type of output, which is dependent on the executor
    * @param outputFilename    Output filename
    */
   public OutputOptions(final OutputFormat outputFormat,

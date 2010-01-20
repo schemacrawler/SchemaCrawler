@@ -94,7 +94,7 @@ class NamedObjectList<N extends NamedObject>
   /**
    * Looks up a named object by name.
    *
-   * @param name Name
+   * @param fullName Fully qualified name
    *
    * @return Named object
    */

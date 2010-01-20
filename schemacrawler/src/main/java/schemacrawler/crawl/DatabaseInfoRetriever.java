@@ -56,8 +56,6 @@ final class DatabaseInfoRetriever
   /**
    * Provides additional information on the database.
    *
-   * @param database Database information to add to
-   *
    * @throws SQLException On a SQL exception
    */
   void retrieveAdditionalDatabaseInfo()
@@ -191,8 +189,6 @@ final class DatabaseInfoRetriever
   /**
    * Provides information on the database.
    *
-   * @param database Database
-   *
    * @throws SQLException On a SQL exception
    */
   void retrieveDatabaseInfo()
@@ -239,8 +235,6 @@ final class DatabaseInfoRetriever
 
   /**
    * Retrieves column data type metadata.
-   *
-   * @param database Column data types
    *
    * @throws SQLException On a SQL exception
    */

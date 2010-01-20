@@ -65,11 +65,6 @@ public final class DataTextFormatter
     this.operation = operation;
   }
 
-  /**
-   * {@inheritDoc}
-   *
-   * @see schemacrawler.execute.DataHandler#begin()
-   */
   public void begin()
   {
     if (!outputOptions.isNoHeader())
@@ -78,11 +73,6 @@ public final class DataTextFormatter
     }
   }
 
-  /**
-   * {@inheritDoc}
-   *
-   * @see schemacrawler.execute.DataHandler#end()
-   */
   public void end()
   {
     if (operation == Operation.count)
