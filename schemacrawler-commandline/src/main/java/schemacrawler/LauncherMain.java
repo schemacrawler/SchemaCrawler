@@ -26,10 +26,7 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -83,7 +80,7 @@ public final class LauncherMain
   }
 
   private static void addJarFileToClasspath(final File jarFile,
-                                            final List<URL> classpath)
+                                            final Collection<URL> classpath)
   {
     final URL url = toURL(jarFile);
 
@@ -119,7 +116,7 @@ public final class LauncherMain
     try
     {
       final URL[] classpathURLs = classpath.toArray(new URL[classpath.size()]);
-      final URLClassLoader newLoader = new URLClassLoader(classpathURLs, null);
+      final ClassLoader newLoader = new URLClassLoader(classpathURLs, null);
 
       Thread.currentThread().setContextClassLoader(newLoader);
 

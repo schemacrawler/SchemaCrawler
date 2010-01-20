@@ -189,7 +189,7 @@ public final class InclusionRule
   public String toString()
   {
     return String.format("%s@%h-[:include:%s:exclude:%s:]",
-                         this.getClass().getSimpleName(),
+                         getClass().getSimpleName(),
                          System.identityHashCode(this),
                          patternInclude.pattern(),
                          patternExclude.pattern());

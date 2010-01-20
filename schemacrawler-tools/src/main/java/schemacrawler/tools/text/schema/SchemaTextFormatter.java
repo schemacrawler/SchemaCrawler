@@ -426,7 +426,7 @@ public final class SchemaTextFormatter
           deleteRuleString = ", on delete " + deleteRule.toString();
         }
 
-        String ruleString = "";
+        final String ruleString;
         if (updateRule == deleteRule)
         {
           ruleString = ", with " + deleteRule.toString();

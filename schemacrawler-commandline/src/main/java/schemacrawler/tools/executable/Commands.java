@@ -9,7 +9,7 @@ import java.util.List;
 import schemacrawler.schemacrawler.Options;
 import sf.util.Utility;
 
-public final class Commands
+final class Commands
   implements Options, Iterable<String>
 {
 
@@ -17,7 +17,7 @@ public final class Commands
 
   private final List<String> commands;
 
-  public Commands(final String commandsList)
+  Commands(final String commandsList)
   {
     commands = new ArrayList<String>();
     if (!Utility.isBlank(commandsList))
@@ -27,7 +27,7 @@ public final class Commands
     }
   }
 
-  public void add(final String command)
+  void add(final String command)
   {
     if (!Utility.isBlank(command))
     {
@@ -35,12 +35,12 @@ public final class Commands
     }
   }
 
-  public boolean isEmpty()
+  boolean isEmpty()
   {
     return commands.isEmpty();
   }
 
-  public boolean isFirstCommand(final String command)
+  boolean isFirstCommand(final String command)
   {
     if (command != null)
     {
@@ -53,7 +53,7 @@ public final class Commands
     }
   }
 
-  public boolean isLastCommand(final String command)
+  boolean isLastCommand(final String command)
   {
     if (command != null)
     {
@@ -71,7 +71,7 @@ public final class Commands
     return commands.iterator();
   }
 
-  public int size()
+  int size()
   {
     return commands.size();
   }

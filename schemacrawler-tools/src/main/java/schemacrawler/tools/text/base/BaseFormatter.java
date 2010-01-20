@@ -80,7 +80,7 @@ public abstract class BaseFormatter<O extends Options>
       formattingHelper = new PlainTextFormattingHelper(outputFormat);
     }
 
-    this.out = outputOptions.openOutputWriter();
+    out = outputOptions.openOutputWriter();
   }
 
   public void handle(final DatabaseInfo dbInfo)

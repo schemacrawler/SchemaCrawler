@@ -199,7 +199,7 @@ public final class ObjectToString
       {
         try
         {
-          definesToString = clazz.getDeclaredMethod("toString", new Class[0]) != null;
+          definesToString = clazz.getDeclaredMethod("toString") != null;
           if (definesToString)
           {
             break;

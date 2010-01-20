@@ -21,6 +21,16 @@
 package schemacrawler.tools.integration.freemarker;
 
 
+import freemarker.cache.ClassTemplateLoader;
+import freemarker.cache.FileTemplateLoader;
+import freemarker.cache.MultiTemplateLoader;
+import freemarker.cache.TemplateLoader;
+import freemarker.template.Configuration;
+import freemarker.template.DefaultObjectWrapper;
+import freemarker.template.Template;
+import schemacrawler.schema.Database;
+import schemacrawler.tools.executable.BaseExecutable;
+
 import java.io.File;
 import java.io.Writer;
 import java.sql.Connection;
@@ -29,19 +39,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.Database;
-import schemacrawler.tools.executable.BaseExecutable;
-import freemarker.cache.ClassTemplateLoader;
-import freemarker.cache.FileTemplateLoader;
-import freemarker.cache.MultiTemplateLoader;
-import freemarker.cache.TemplateLoader;
-import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
-import freemarker.template.Template;
-
 /**
  * Main executor for the FreeMarker integration.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class FreeMarkerRenderer
@@ -73,20 +73,20 @@ public final class FreeMarkerRenderer
     final File templateFilePath = new File(templateLocation);
     if (templateFilePath.exists())
     {
-      templatePath = templateFilePath.getAbsoluteFile().getParent();
+      templatePath = templateFilePath.getAbsoluteFile()
+        .getParent();
       templateLocation = templateFilePath.getName();
     }
 
     // Create a new instance of the configuration
     final Configuration cfg = new Configuration();
 
-    final ClassTemplateLoader ctl = new ClassTemplateLoader(FreeMarkerRenderer.class,
-                                                            "/");
-    final FileTemplateLoader ftl = new FileTemplateLoader(new File(templatePath));
-    final TemplateLoader[] loaders = new TemplateLoader[] {
-        ctl, ftl
-    };
-    final MultiTemplateLoader mtl = new MultiTemplateLoader(loaders);
+    final TemplateLoader ctl = new ClassTemplateLoader(FreeMarkerRenderer.class,
+                                                       "/");
+    final TemplateLoader ftl = new FileTemplateLoader(new File(templatePath));
+    final TemplateLoader mtl = new MultiTemplateLoader(new TemplateLoader[]{
+      ctl, ftl
+    });
     cfg.setTemplateLoader(mtl);
 
     cfg.setStrictSyntaxMode(true);
