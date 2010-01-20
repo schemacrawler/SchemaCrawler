@@ -379,7 +379,7 @@ public class SchemaCrawlerMojo
           URL.class
         });
 
-      final URLClassLoader classLoader = (URLClassLoader) this.getClass()
+      final URLClassLoader classLoader = (URLClassLoader) getClass()
         .getClassLoader();
 
       addUrlMethod.setAccessible(true);

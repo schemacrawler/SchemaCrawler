@@ -114,8 +114,6 @@ public final class DataTextFormatter
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.execute.DataHandler#handleData(java.sql.ResultSet)
    */
   public void handleData(final String title, final ResultSet rows)
     throws SchemaCrawlerException
@@ -210,7 +208,7 @@ public final class DataTextFormatter
   /**
    * Handles an aggregate operation, such as a count, for a given table.
    *
-   * @param table   Table
+   * @param title   Title
    * @param results Results
    */
   private void handleAggregateOperationForTable(final String title,
@@ -256,7 +254,7 @@ public final class DataTextFormatter
 
   private void iterateRowsAndMerge(final ResultSet resultSet,
                                    final String[] columnNames)
-    throws SQLException, SchemaCrawlerException
+    throws SQLException
   {
     final int columnCount = columnNames.length;
     List<String> previousRow = new ArrayList<String>();

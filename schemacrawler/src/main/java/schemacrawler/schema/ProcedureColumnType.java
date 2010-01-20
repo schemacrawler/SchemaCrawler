@@ -103,7 +103,6 @@ public enum ProcedureColumnType
    *
    * @see Object#toString()
    */
-  @SuppressWarnings({"RefusedBequest"})
   @Override
   public String toString()
   {
