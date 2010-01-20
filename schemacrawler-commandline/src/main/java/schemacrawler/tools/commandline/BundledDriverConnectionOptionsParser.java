@@ -31,7 +31,7 @@ import sf.util.CommandLineParser.StringOption;
 
 /**
  * Options for the command line.
- *
+ * 
  * @author sfatehi
  */
 final class BundledDriverConnectionOptionsParser
@@ -48,8 +48,7 @@ final class BundledDriverConnectionOptionsParser
                                                                "database",
                                                                "");
 
-  BundledDriverConnectionOptionsParser(final String[] args,
-                                       final Config config)
+  BundledDriverConnectionOptionsParser(final String[] args, final Config config)
   {
     super(args, config);
   }
@@ -58,8 +57,8 @@ final class BundledDriverConnectionOptionsParser
   public ConnectionOptions getOptions()
     throws SchemaCrawlerException
   {
-    parse(new Option[]{
-      optionHost, optionPort, optionDatabase, optionUser, optionPassword,
+    parse(new Option[] {
+        optionHost, optionPort, optionDatabase, optionUser, optionPassword,
     });
 
     final DatabaseConfigConnectionOptions connectionOptions = new DatabaseConfigConnectionOptions(config);

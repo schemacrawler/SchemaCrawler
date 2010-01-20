@@ -20,7 +20,7 @@
 package schemacrawler.tools.integration.graph;
 
 
-import java.awt.*;
+import java.awt.Color;
 import java.io.Serializable;
 
 public final class PastelColor
@@ -30,6 +30,11 @@ public final class PastelColor
   private static final long serialVersionUID = 7256039994498918504L;
 
   private static final double FACTOR = 0.87;
+
+  private static int colorValue()
+  {
+    return (int) (Math.random() * 60 + 190);
+  }
 
   private final Color color;
 
@@ -66,14 +71,7 @@ public final class PastelColor
   @Override
   public String toString()
   {
-    return "#" + Integer.toHexString(color.getRGB())
-      .substring(2)
-      .toUpperCase();
-  }
-
-  private static int colorValue()
-  {
-    return (int) (Math.random() * 60 + 190);
+    return "#" + Integer.toHexString(color.getRGB()).substring(2).toUpperCase();
   }
 
 }

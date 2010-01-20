@@ -52,12 +52,12 @@ public class ApplicationOptions
     final LogManager logManager = LogManager.getLogManager();
     final List<String> loggerNames = Collections.list(logManager
       .getLoggerNames());
-    for (final String loggerName : loggerNames)
+    for (final String loggerName: loggerNames)
     {
       final Logger logger = logManager.getLogger(loggerName);
       logger.setLevel(null);
       final Handler[] handlers = logger.getHandlers();
-      for (final Handler handler : handlers)
+      for (final Handler handler: handlers)
       {
         handler.setLevel(applicationLogLevel);
       }

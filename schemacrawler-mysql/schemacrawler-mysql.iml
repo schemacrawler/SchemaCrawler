@@ -14,10 +14,8 @@
     <orderEntry type="module" module-name="schemacrawler-tools" exported="" />
     <orderEntry type="module" module-name="schemacrawler-commandline" exported="" />
     <orderEntry type="module" module-name="schemacrawler" exported="" />
-    <orderEntry type="library" exported="" name="Maven: org.apache.velocity:velocity:1.5" level="project" />
-    <orderEntry type="library" exported="" name="Maven: commons-collections:commons-collections:3.1" level="project" />
-    <orderEntry type="library" exported="" name="Maven: commons-lang:commons-lang:2.1" level="project" />
-    <orderEntry type="library" exported="" name="Maven: oro:oro:2.0.8" level="project" />
+    <orderEntry type="library" exported="" name="Maven: velocity:velocity:1.4" level="project" />
+    <orderEntry type="library" exported="" scope="RUNTIME" name="Maven: velocity:velocity-dep:1.4" level="project" />
     <orderEntry type="library" exported="" name="Maven: mysql:mysql-connector-java:5.1.10" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: xmlunit:xmlunit:1.2" level="project" />

@@ -28,14 +28,14 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConfigConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.Utility;
 import sf.util.CommandLineParser.BooleanOption;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
-import sf.util.Utility;
 
 /**
  * Options for the command line.
- *
+ * 
  * @author sfatehi
  */
 final class ConfigConnectionOptionsParser
@@ -43,11 +43,13 @@ final class ConfigConnectionOptionsParser
 {
 
   /**
-   * Gets a sub-group of properties - those that start with a given prefix. The prefix is removed in the result.
-   *
-   * @param config Config to partition
-   * @param prefix Prefix to group by.
-   *
+   * Gets a sub-group of properties - those that start with a given
+   * prefix. The prefix is removed in the result.
+   * 
+   * @param config
+   *        Config to partition
+   * @param prefix
+   *        Prefix to group by.
    * @return Partitioned properties.
    */
   private static Map<String, String> partition(final Map<String, String> config,
@@ -60,7 +62,7 @@ final class ConfigConnectionOptionsParser
 
     final String dottedPrefix = prefix + ".";
     final Map<String, String> partition = new HashMap<String, String>();
-    for (final Map.Entry<String, String> entry : config.entrySet())
+    for (final Map.Entry<String, String> entry: config.entrySet())
     {
       final String key = entry.getKey();
       if (key.startsWith(dottedPrefix))
@@ -82,7 +84,7 @@ final class ConfigConnectionOptionsParser
 
   /**
    * Parses the command line into options.
-   *
+   * 
    * @param args
    */
   ConfigConnectionOptionsParser(final String[] args, final Config config)
@@ -94,11 +96,11 @@ final class ConfigConnectionOptionsParser
   public ConnectionOptions getOptions()
     throws SchemaCrawlerException
   {
-    parse(new Option[]{
-      optionUseDefaultConnection,
-      optionConnection,
-      optionUser,
-      optionPassword,
+    parse(new Option[] {
+        optionUseDefaultConnection,
+        optionConnection,
+        optionUser,
+        optionPassword,
     });
 
     final String connectionName;

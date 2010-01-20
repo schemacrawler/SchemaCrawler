@@ -25,10 +25,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.sql.DataSource;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
+
 import schemacrawler.tools.commandline.ApplicationOptionsParser;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.options.ApplicationOptions;
@@ -43,9 +45,11 @@ public final class Main
   private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
   /**
-   * Get connection parameters, and creates a connection, and crawls the schema.
-   *
-   * @param args Arguments passed into the program from the command line.
+   * Get connection parameters, and creates a connection, and crawls the
+   * schema.
+   * 
+   * @param args
+   *        Arguments passed into the program from the command line.
    */
   public static void main(final String[] args)
   {
@@ -58,8 +62,7 @@ public final class Main
       {
         final String text = Utility.readFully(Main.class
           .getResourceAsStream("/help/SchemaCrawler.spring.txt"));
-        System.out
-          .println(text);
+        System.out.println(text);
         System.exit(0);
       }
 
@@ -94,7 +97,7 @@ public final class Main
       {
         final String errorMessage = e.getMessage();
         LOGGER.log(Level.WARNING, "Could not close the connection: "
-          + errorMessage);
+                                  + errorMessage);
       }
     }
   }

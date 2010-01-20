@@ -27,7 +27,7 @@ import sf.util.CommandLineParser.StringOption;
 
 /**
  * Parses the command line.
- *
+ * 
  * @author Sualeh Fatehi
  */
 final class CommandParser
@@ -46,7 +46,7 @@ final class CommandParser
   @Override
   protected Command getOptions()
   {
-    parse(new Option[]{
+    parse(new Option[] {
       optionCommand
     });
 

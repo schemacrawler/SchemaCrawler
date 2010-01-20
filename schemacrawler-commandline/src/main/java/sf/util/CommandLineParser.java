@@ -30,7 +30,7 @@ import java.util.Map;
 
 /**
  * Command-line options parser.
- *
+ * 
  * @author Steve Purcell, Sualeh Fatehi
  */
 public final class CommandLineParser
@@ -38,9 +38,10 @@ public final class CommandLineParser
 
   /**
    * Representation of a command-line option.
-   *
+   * 
    * @author Sualeh Fatehi
-   * @param <T> Option type
+   * @param <T>
+   *        Option type
    */
   public abstract static class BaseOption<T>
     implements Option<T>
@@ -59,7 +60,7 @@ public final class CommandLineParser
     {
       if (shortForm != NO_SHORT_FORM)
       {
-        this.shortForm = new String(new char[]{
+        this.shortForm = new String(new char[] {
           shortForm
         });
         hasShortForm = true;
@@ -85,7 +86,7 @@ public final class CommandLineParser
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see Option#getDefaultValue()
      */
     public T getDefaultValue()
@@ -95,7 +96,7 @@ public final class CommandLineParser
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see Option#getLongForm()
      */
     public String getLongForm()
@@ -105,7 +106,7 @@ public final class CommandLineParser
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see Option#getShortForm()
      */
     public String getShortForm()
@@ -115,7 +116,7 @@ public final class CommandLineParser
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see Option#getValue()
      */
     public T getValue()
@@ -134,7 +135,7 @@ public final class CommandLineParser
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see Option#hasLongForm()
      */
     public boolean hasLongForm()
@@ -144,7 +145,7 @@ public final class CommandLineParser
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see Option#hasShortForm()
      */
     public boolean hasShortForm()
@@ -154,7 +155,7 @@ public final class CommandLineParser
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see Option#isFound()
      */
     public boolean isFound()
@@ -164,15 +165,15 @@ public final class CommandLineParser
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see java.lang.Object#toString()
      */
     @Override
     public String toString()
     {
-      final String optionString = (hasLongForm ? longForm : "")
-        + (hasShortForm ? " (" + shortForm + ")" : "")
-        + "=" + value + " (" + defaultValue + ")";
+      final String optionString = (hasLongForm? longForm: "")
+                                  + (hasShortForm? " (" + shortForm + ")": "")
+                                  + "=" + value + " (" + defaultValue + ")";
       return optionString;
     }
 
@@ -197,10 +198,13 @@ public final class CommandLineParser
   {
 
     /**
-     * Constructor that takes the short form and long form of the switch.
-     *
-     * @param shortForm Short form of the switch
-     * @param longForm  Long form of the switch
+     * Constructor that takes the short form and long form of the
+     * switch.
+     * 
+     * @param shortForm
+     *        Short form of the switch
+     * @param longForm
+     *        Long form of the switch
      */
     public BooleanOption(final char shortForm, final String longForm)
     {
@@ -228,11 +232,15 @@ public final class CommandLineParser
   {
 
     /**
-     * Constructor that takes the short form and long form of the switch.
-     *
-     * @param shortForm    Short form of the switch
-     * @param longForm     Long form of the switch
-     * @param defaultValue Default option value.
+     * Constructor that takes the short form and long form of the
+     * switch.
+     * 
+     * @param shortForm
+     *        Short form of the switch
+     * @param longForm
+     *        Long form of the switch
+     * @param defaultValue
+     *        Default option value.
      */
     public NumberOption(final char shortForm,
                         final String longForm,
@@ -246,8 +254,7 @@ public final class CommandLineParser
     {
       try
       {
-        return NumberFormat.getNumberInstance()
-          .parse(arg);
+        return NumberFormat.getNumberInstance().parse(arg);
       }
       catch (final ParseException e)
       {
@@ -258,9 +265,10 @@ public final class CommandLineParser
 
   /**
    * Representation of a command-line option.
-   *
+   * 
    * @author Sualeh Fatehi
-   * @param <T> Option type
+   * @param <T>
+   *        Option type
    */
   public static interface Option<T>
   {
@@ -276,49 +284,49 @@ public final class CommandLineParser
 
     /**
      * Gets the default value for the option.
-     *
+     * 
      * @return Default value.
      */
     T getDefaultValue();
 
     /**
      * Gets the long form of the switch for the option.
-     *
+     * 
      * @return Long form of the switch
      */
     String getLongForm();
 
     /**
      * Gets the short form of the switch for the option.
-     *
+     * 
      * @return Short form of the switch
      */
     String getShortForm();
 
     /**
      * Gets the value for the option.
-     *
+     * 
      * @return Option value
      */
     T getValue();
 
     /**
      * Whether the option has the long form of the switch.
-     *
+     * 
      * @return Whether the option has the long form of the switch
      */
     boolean hasLongForm();
 
     /**
      * Whether the option has the short form of the switch.
-     *
+     * 
      * @return Whether the option has the short form of the switch
      */
     boolean hasShortForm();
 
     /**
      * Whether the option was found.
-     *
+     * 
      * @return Whether the option was found
      */
     boolean isFound();
@@ -333,11 +341,15 @@ public final class CommandLineParser
   {
 
     /**
-     * Constructor that takes the short form and long form of the switch.
-     *
-     * @param shortForm    Short form of the switch
-     * @param longForm     Long form of the switch
-     * @param defaultValue Default option value.
+     * Constructor that takes the short form and long form of the
+     * switch.
+     * 
+     * @param shortForm
+     *        Short form of the switch
+     * @param longForm
+     *        Long form of the switch
+     * @param defaultValue
+     *        Default option value.
      */
     public StringOption(final char shortForm,
                         final String longForm,
@@ -361,8 +373,9 @@ public final class CommandLineParser
 
   /**
    * Add the specified Option to the list of accepted options.
-   *
-   * @param option Option to add
+   * 
+   * @param option
+   *        Option to add
    */
   public void addOption(final Option<?> option)
   {
@@ -378,9 +391,9 @@ public final class CommandLineParser
 
   /**
    * Get an option value by name.
-   *
-   * @param optionName Name of the option
-   *
+   * 
+   * @param optionName
+   *        Name of the option
    * @return Option
    */
   public boolean getBooleanOptionValue(final String optionName)
@@ -403,9 +416,9 @@ public final class CommandLineParser
 
   /**
    * Get an option by name.
-   *
-   * @param optionName Name of the option
-   *
+   * 
+   * @param optionName
+   *        Name of the option
    * @return Option
    */
   public Option<?> getOption(final String optionName)
@@ -415,7 +428,7 @@ public final class CommandLineParser
 
   /**
    * Remaining arguments, that are not parsed.
-   *
+   * 
    * @return The non-option arguments
    */
   public String[] getRemainingArgs()
@@ -431,9 +444,9 @@ public final class CommandLineParser
 
   /**
    * Get an option value by name.
-   *
-   * @param optionName Name of the option
-   *
+   * 
+   * @param optionName
+   *        Name of the option
    * @return Option
    */
   public String getStringOptionValue(final String optionName)
@@ -443,20 +456,21 @@ public final class CommandLineParser
     {
       return null;
     }
-    return option.getValue()
-      .toString();
+    return option.getValue().toString();
   }
 
   /**
-   * Extract the options and non-option arguments from the given list of command-line arguments. The default locale is
-   * used for parsing options whose values might be locale-specific.
-   *
-   * @param args Command line arguments
+   * Extract the options and non-option arguments from the given list of
+   * command-line arguments. The default locale is used for parsing
+   * options whose values might be locale-specific.
+   * 
+   * @param args
+   *        Command line arguments
    */
   public void parse(final String[] args)
   {
     // Reset all options
-    for (final Option<?> element : optionsMap.values())
+    for (final Option<?> element: optionsMap.values())
     {
       ((BaseOption<?>) element).reset();
     }
@@ -523,8 +537,7 @@ public final class CommandLineParser
       // Booleans are true, even if they have no value
       if (valueArg == null && option instanceof BooleanOption)
       {
-        valueArg = Boolean.TRUE
-          .toString();
+        valueArg = Boolean.TRUE.toString();
       }
 
       option.setValue(valueArg);

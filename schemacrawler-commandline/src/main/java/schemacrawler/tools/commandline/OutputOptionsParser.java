@@ -29,7 +29,7 @@ import sf.util.CommandLineParser.StringOption;
 
 /**
  * Parses the command line.
- *
+ * 
  * @author Sualeh Fatehi
  */
 final class OutputOptionsParser
@@ -60,14 +60,14 @@ final class OutputOptionsParser
   @Override
   protected OutputOptions getOptions()
   {
-    parse(new Option[]{
-      optionOutputFormat,
-      optionOutputFile,
-      optionAppend,
-      optionNoHeader,
-      optionNoFooter,
-      optionNoInfo,
-      optionNoInfo
+    parse(new Option[] {
+        optionOutputFormat,
+        optionOutputFile,
+        optionAppend,
+        optionNoHeader,
+        optionNoFooter,
+        optionNoInfo,
+        optionNoInfo
     });
 
     final String outputFormatValue = optionOutputFormat.getValue();

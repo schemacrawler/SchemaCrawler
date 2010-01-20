@@ -38,6 +38,6 @@ public enum OutputFormat
   /**
    * CSV formatting.
    */
-  csv,;
+  csv, ;
 
 }

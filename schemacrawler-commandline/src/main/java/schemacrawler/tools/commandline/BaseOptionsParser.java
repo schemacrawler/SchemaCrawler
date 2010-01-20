@@ -28,9 +28,10 @@ import sf.util.CommandLineParser.Option;
 
 /**
  * Parses the command line.
- *
+ * 
  * @author Sualeh Fatehi
- * @param <O> Options to be parsed from the command line.
+ * @param <O>
+ *        Options to be parsed from the command line.
  */
 public abstract class BaseOptionsParser<O extends Options>
 {
@@ -48,7 +49,7 @@ public abstract class BaseOptionsParser<O extends Options>
   protected void parse(final CommandLineParser.Option<?>[] options)
   {
     final CommandLineParser parser = new CommandLineParser();
-    for (final Option<?> option : options)
+    for (final Option<?> option: options)
     {
       parser.addOption(option);
     }

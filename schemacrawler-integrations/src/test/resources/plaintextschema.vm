@@ -4,7 +4,7 @@ $database.jdbcDriverInfo
 
 #foreach($schema in $database.schemas)
 #foreach($table in $schema.tables)
-#if ($table.type == "table")
+#if ($table.type.name() == "table")
 CREATE TABLE $table.name
 (
 #foreach($column in $table.columns)

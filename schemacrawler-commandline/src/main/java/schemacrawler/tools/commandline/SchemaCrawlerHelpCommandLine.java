@@ -27,7 +27,7 @@ import sf.util.Utility;
 
 /**
  * Utility for parsing the SchemaCrawler command line.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawlerHelpCommandLine
@@ -36,17 +36,33 @@ public final class SchemaCrawlerHelpCommandLine
 
   private static final long serialVersionUID = -3748989545708155963L;
 
+  private static void showHelp(final String helpResource)
+  {
+    if (sf.util.Utility.isBlank(helpResource))
+    {
+      return;
+    }
+    final String helpText = Utility
+      .readFully(SchemaCrawlerHelpCommandLine.class
+        .getResourceAsStream(helpResource));
+    System.out.println(helpText);
+  }
+
   private final boolean hideConfig;
   private final String command;
+
   private final HelpOptions helpOptions;
 
   /**
-   * Loads objects from command line options. Optionally loads the config from the classpath.
-   *
-   * @param args           Command line arguments.
-   * @param configResource Config resource.
-   *
-   * @throws SchemaCrawlerException On an exception
+   * Loads objects from command line options. Optionally loads the
+   * config from the classpath.
+   * 
+   * @param args
+   *        Command line arguments.
+   * @param configResource
+   *        Config resource.
+   * @throws SchemaCrawlerException
+   *         On an exception
    */
   public SchemaCrawlerHelpCommandLine(final String[] args,
                                       final HelpOptions helpOptions,
@@ -72,24 +88,21 @@ public final class SchemaCrawlerHelpCommandLine
     }
     else
     {
-      command = new CommandParser(args).getOptions()
-        .toString();
+      command = new CommandParser(args).getOptions().toString();
     }
   }
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.tools.commandline.CommandLine#execute()
    */
   public void execute()
     throws SchemaCrawlerException
   {
-    System.out
-      .println(helpOptions.getTitle());
+    System.out.println(helpOptions.getTitle());
     showHelp("/help/SchemaCrawler.txt");
-    System.out
-      .println();
+    System.out.println();
 
     showHelp(helpOptions.getResourceConnections());
     showHelp("/help/SchemaCrawlerOptions.txt");
@@ -102,14 +115,12 @@ public final class SchemaCrawlerHelpCommandLine
     if (command == null)
     {
       showHelp("/help/Command.txt");
-      System.out
-        .println("  Available commands are: ");
+      System.out.println("  Available commands are: ");
       final String[] availableCommands = commandRegistry
         .lookupAvailableCommands();
-      for (final String availableCommand : availableCommands)
+      for (final String availableCommand: availableCommands)
       {
-        System.out
-          .println("  " + availableCommand);
+        System.out.println("  " + availableCommand);
       }
     }
     else
@@ -117,9 +128,9 @@ public final class SchemaCrawlerHelpCommandLine
       final String commandExecutableClassName = commandRegistry
         .lookupCommandExecutableClassName(command);
       final String helpResource = "/help/"
-        + commandExecutableClassName
-        .substring(commandExecutableClassName
-          .lastIndexOf('.') + 1) + ".txt";
+                                  + commandExecutableClassName
+                                    .substring(commandExecutableClassName
+                                      .lastIndexOf('.') + 1) + ".txt";
       showHelp(helpResource);
     }
 
@@ -129,21 +140,6 @@ public final class SchemaCrawlerHelpCommandLine
   public final String getCommand()
   {
     return command;
-  }
-
-  private static void showHelp(final String helpResource)
-  {
-    if (sf.util
-      .Utility
-      .isBlank(helpResource))
-    {
-      return;
-    }
-    final String helpText = Utility
-      .readFully(SchemaCrawlerHelpCommandLine.class
-        .getResourceAsStream(helpResource));
-    System.out
-      .println(helpText);
   }
 
 }
