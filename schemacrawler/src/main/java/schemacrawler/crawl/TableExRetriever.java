@@ -58,8 +58,6 @@ final class TableExRetriever
   /**
    * Retrieves a check constraint information from the database, in the INFORMATION_SCHEMA format.
    *
-   * @param database List of tables and views.
-   *
    * @throws SQLException On a SQL exception
    */
   void retrieveCheckConstraintInformation()
@@ -273,8 +271,6 @@ final class TableExRetriever
   /**
    * Retrieves a trigger information from the database, in the INFORMATION_SCHEMA format.
    *
-   * @param database List of tables and views.
-   *
    * @throws SQLException On a SQL exception
    */
   void retrieveTriggerInformation()
@@ -375,8 +371,6 @@ final class TableExRetriever
 
   /**
    * Retrieves a view information from the database, in the INFORMATION_SCHEMA format.
-   *
-   * @param database List of tables and views.
    *
    * @throws SQLException On a SQL exception
    */

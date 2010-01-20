@@ -68,14 +68,7 @@ public final class LauncherMain
     // Load jars from the lib directory
     final List<URL> classpath = search(LIB_DIR);
 
-    final List<String> launchOptions = new ArrayList<String>();
-    if (args.length > 1)
-    {
-      for (int i = 1; i < args.length; i++)
-      {
-        launchOptions.add(args[i]);
-      }
-    }
+    final List<String> launchOptions = Arrays.asList(args).subList(1, args.length);
     final String[] launchArgs = launchOptions.toArray(new String[launchOptions
       .size()]);
 

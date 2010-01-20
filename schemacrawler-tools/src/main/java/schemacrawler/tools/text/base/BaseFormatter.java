@@ -83,11 +83,6 @@ public abstract class BaseFormatter<O extends Options>
     this.out = outputOptions.openOutputWriter();
   }
 
-  /**
-   * {@inheritDoc}
-   *
-   * @see DatabaseTraversalHandler#handle(Database)
-   */
   public void handle(final DatabaseInfo dbInfo)
   {
     if (dbInfo == null || outputOptions.isNoInfo())
@@ -130,11 +125,6 @@ public abstract class BaseFormatter<O extends Options>
     out.flush();
   }
 
-  /**
-   * {@inheritDoc}
-   *
-   * @see DatabaseTraversalHandler#handle(Database)
-   */
   public void handle(final JdbcDriverInfo driverInfo)
   {
     if (driverInfo == null || outputOptions.isNoInfo())
@@ -178,11 +168,6 @@ public abstract class BaseFormatter<O extends Options>
     out.flush();
   }
 
-  /**
-   * {@inheritDoc}
-   *
-   * @see DatabaseTraversalHandler#handle(Database)
-   */
   public void handle(final SchemaCrawlerInfo schemaCrawlerInfo)
   {
     if (schemaCrawlerInfo == null || outputOptions.isNoInfo())

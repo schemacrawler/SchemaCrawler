@@ -52,8 +52,6 @@ public final class OperationOptions
   /**
    * Operator options from properties. Constructor.
    *
-   * @param outputOptions Output options
-   * @param operation     Operation
    * @param config        Config
    */
   public OperationOptions(final Config config)

@@ -222,8 +222,6 @@ public final class CommandLineParser
 
   /**
    * An option that expects a floating-point value.
-   *
-   * @param <N> Option type
    */
   public static final class NumberOption
     extends BaseOption<Number>

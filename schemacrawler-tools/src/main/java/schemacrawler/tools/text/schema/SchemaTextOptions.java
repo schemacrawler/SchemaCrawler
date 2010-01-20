@@ -66,8 +66,6 @@ public class SchemaTextOptions
    * Options from properties. Constructor.
    *
    * @param config               Properties
-   * @param schemaTextDetailType Schema detail
-   * @param outputOptions        Output options
    */
   public SchemaTextOptions(final Config config)
   {

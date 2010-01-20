@@ -50,8 +50,6 @@ final class MutableDatabaseInfo
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Database#getProductName()
    */
   public String getProductName()
   {
@@ -60,8 +58,6 @@ final class MutableDatabaseInfo
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Database#getProductVersion()
    */
   public String getProductVersion()
   {
@@ -70,8 +66,6 @@ final class MutableDatabaseInfo
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Database#getProperties()
    */
   public DatabaseProperty[] getProperties()
   {
@@ -83,8 +77,6 @@ final class MutableDatabaseInfo
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.DatabaseInfo#getUserName()
    */
   public String getUserName()
   {

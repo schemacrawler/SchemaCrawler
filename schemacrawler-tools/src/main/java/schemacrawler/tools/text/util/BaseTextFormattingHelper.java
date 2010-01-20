@@ -59,7 +59,7 @@ abstract class BaseTextFormattingHelper
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.tools.util.TextFormattingHelper#createDefinitionRow(java.lang.String)
+   * @see TextFormattingHelper#createDefinitionRow(java.lang.String)
    */
   public String createDefinitionRow(final String definition)
   {
@@ -77,7 +77,7 @@ abstract class BaseTextFormattingHelper
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.tools.util.TextFormattingHelper#createDetailRow(java.lang.String, java.lang.String,
+   * @see TextFormattingHelper#createDetailRow(java.lang.String, java.lang.String,
    *      java.lang.String)
    */
   public String createDetailRow(final String ordinal,
@@ -113,7 +113,7 @@ abstract class BaseTextFormattingHelper
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.tools.util.TextFormattingHelper#createEmptyRow()
+   * @see TextFormattingHelper#createEmptyRow()
    */
   public String createEmptyRow()
   {
@@ -123,7 +123,7 @@ abstract class BaseTextFormattingHelper
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.tools.util.TextFormattingHelper#createNameRow(java.lang.String, java.lang.String)
+   * @see TextFormattingHelper#createNameRow(java.lang.String, java.lang.String)
    */
   public String createNameRow(final String name,
                               final String description,
@@ -172,7 +172,7 @@ abstract class BaseTextFormattingHelper
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.tools.util.TextFormattingHelper#createNameValueRow(java.lang.String, java.lang.String)
+   * @see TextFormattingHelper#createNameValueRow(java.lang.String, java.lang.String)
    */
   public String createNameValueRow(final String name, final String value)
   {
@@ -188,8 +188,6 @@ abstract class BaseTextFormattingHelper
    * Called to handle the row output.
    *
    * @param columnData Column data
-   *
-   * @throws QueryExecutorException On an exception
    */
   public String createRow(final String[] columnData)
   {

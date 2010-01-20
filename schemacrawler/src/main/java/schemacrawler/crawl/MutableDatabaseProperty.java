@@ -50,13 +50,6 @@ class MutableDatabaseProperty
     acronyms = Collections.unmodifiableSet(acronymsMap.entrySet());
   }
 
-  /**
-   * Derives the property name from the method name.
-   *
-   * @param method Method
-   *
-   * @return Method name
-   */
   private static String createDescription(final String name)
   {
 
@@ -173,8 +166,6 @@ class MutableDatabaseProperty
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.crawl.DatabaseProperty#getDescription()
    */
   public String getDescription()
   {
@@ -183,8 +174,6 @@ class MutableDatabaseProperty
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.crawl.DatabaseProperty#getName()
    */
   public String getName()
   {
@@ -193,8 +182,6 @@ class MutableDatabaseProperty
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.crawl.DatabaseProperty#getValue()
    */
   public Object getValue()
   {

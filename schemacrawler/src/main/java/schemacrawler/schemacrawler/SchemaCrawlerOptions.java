@@ -111,7 +111,6 @@ public final class SchemaCrawlerOptions
    * Options from properties.
    *
    * @param config    Configuration properties
-   * @param partition Partition for information schema
    */
   public SchemaCrawlerOptions(final Config config)
   {
@@ -438,7 +437,7 @@ public final class SchemaCrawlerOptions
   /**
    * Sets the column inclusion rule for grep.
    *
-   * @param columnInclusionRule Column inclusion rule for grep
+   * @param grepColumnInclusionRule Column inclusion rule for grep
    */
   public void setGrepColumnInclusionRule(final InclusionRule grepColumnInclusionRule)
   {
@@ -452,7 +451,7 @@ public final class SchemaCrawlerOptions
   /**
    * Set whether to invert matches.
    *
-   * @param invertMatch Whether to invert matches.
+   * @param grepInvertMatch Whether to invert matches.
    */
   public void setGrepInvertMatch(final boolean grepInvertMatch)
   {
@@ -462,7 +461,7 @@ public final class SchemaCrawlerOptions
   /**
    * Sets the procedure column inclusion rule for grep.
    *
-   * @param procedureColumnInclusionRule Procedure column inclusion rule for grep
+   * @param grepProcedureColumnInclusionRule Procedure column inclusion rule for grep
    */
   public void setGrepProcedureColumnInclusionRule(final InclusionRule grepProcedureColumnInclusionRule)
   {
