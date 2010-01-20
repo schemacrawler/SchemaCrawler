@@ -20,6 +20,10 @@
 package schemacrawler.integration.test;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,16 +33,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.integration.graph.GraphExecutable;
 import schemacrawler.utility.TestDatabase;
 import sf.util.TestUtility;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 
 public class SpringIntegrationTest
 {
@@ -66,14 +67,14 @@ public class SpringIntegrationTest
     throws Exception
   {
     final List<String> failures = new ArrayList<String>();
-    for (final String beanDefinitionName : appContext.getBeanDefinitionNames())
+    for (final String beanDefinitionName: appContext.getBeanDefinitionNames())
     {
       final Object bean = appContext.getBean(beanDefinitionName);
       if (bean instanceof Executable)
       {
         final Executable executable = (Executable) bean;
         if (!"graph".equals(executable.getCommand())
-          && !(executable instanceof GraphExecutable))
+            && !(executable instanceof GraphExecutable))
         {
           executeAndCheckForOutputFile(beanDefinitionName, executable, failures);
         }
@@ -103,11 +104,13 @@ public class SpringIntegrationTest
                                             final List<String> failures)
     throws Exception
   {
-    final File testOutputFile = File.createTempFile("schemacrawler." + executableName + ".", ".test");
+    final File testOutputFile = File.createTempFile("schemacrawler."
+                                                        + executableName + ".",
+                                                    ".test");
     testOutputFile.delete();
 
-    executable.getOutputOptions()
-      .setOutputFileName(testOutputFile.getAbsolutePath());
+    executable.getOutputOptions().setOutputFileName(testOutputFile
+      .getAbsolutePath());
     executable.execute(testUtility.getConnection());
 
     TestUtility

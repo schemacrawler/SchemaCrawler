@@ -35,7 +35,7 @@ import sf.util.ObjectToString;
 
 /**
  * A SchemaCrawler tools executable unit.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public abstract class BaseExecutable
@@ -61,7 +61,7 @@ public abstract class BaseExecutable
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.tools.executable.Executable#execute(java.sql.Connection)
    */
   public final void execute(final Connection connection)
@@ -85,7 +85,7 @@ public abstract class BaseExecutable
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.tools.executable.Executable#getCommand()
    */
   public final String getCommand()
@@ -95,7 +95,7 @@ public abstract class BaseExecutable
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.tools.executable.Executable#getOutputOptions()
    */
   public final OutputOptions getOutputOptions()
@@ -105,7 +105,7 @@ public abstract class BaseExecutable
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.tools.executable.Executable#getSchemaCrawlerOptions()
    */
   public final SchemaCrawlerOptions getSchemaCrawlerOptions()
@@ -127,7 +127,7 @@ public abstract class BaseExecutable
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.tools.executable.Executable#setOutputOptions(schemacrawler.tools.options.OutputOptions)
    */
   public final void setOutputOptions(final OutputOptions outputOptions)
@@ -137,7 +137,7 @@ public abstract class BaseExecutable
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.tools.executable.Executable#setSchemaCrawlerOptions(schemacrawler.schemacrawler.SchemaCrawlerOptions)
    */
   public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
@@ -147,7 +147,7 @@ public abstract class BaseExecutable
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see Object#toString()
    */
   @Override
@@ -166,7 +166,7 @@ public abstract class BaseExecutable
   {
     final SchemaInfoLevel infoLevel = schemaCrawlerOptions.getSchemaInfoLevel();
     if (!schemaCrawlerOptions.isAlphabeticalSortForTables()
-      && !infoLevel.isRetrieveForeignKeys())
+        && !infoLevel.isRetrieveForeignKeys())
     {
       infoLevel.setRetrieveTableColumns(true);
       infoLevel.setRetrieveForeignKeys(true);

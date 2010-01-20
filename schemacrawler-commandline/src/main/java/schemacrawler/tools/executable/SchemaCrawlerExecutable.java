@@ -30,7 +30,7 @@ public class SchemaCrawlerExecutable
     final CommandRegistry commandRegistry = new CommandRegistry();
     final Commands commands = new Commands(getCommand());
     final List<Executable> executables = new ArrayList<Executable>();
-    for (final String command : commands)
+    for (final String command: commands)
     {
       final String commandExecutableClassName = commandRegistry
         .lookupCommandExecutableClassName(command);
@@ -45,10 +45,10 @@ public class SchemaCrawlerExecutable
       catch (final Exception e)
       {
         LOGGER.log(Level.FINE, "Could not instantiate "
-          + commandExecutableClassName
-          + " using the default constructor", e);
+                               + commandExecutableClassName
+                               + " using the default constructor", e);
         final Constructor constructor = commandExecutableClass
-          .getConstructor(new Class[]{
+          .getConstructor(new Class[] {
             String.class
           });
         executable = (Executable) constructor.newInstance(command);
@@ -57,7 +57,7 @@ public class SchemaCrawlerExecutable
       executables.add(executable);
     }
 
-    for (final Executable executable : executables)
+    for (final Executable executable: executables)
     {
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setAdditionalConfiguration(additionalConfiguration);

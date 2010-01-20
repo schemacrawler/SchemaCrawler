@@ -15,10 +15,8 @@
     <orderEntry type="module" module-name="schemacrawler-tools" exported="" />
     <orderEntry type="module" module-name="schemacrawler-commandline" exported="" />
     <orderEntry type="module" module-name="schemacrawler" exported="" />
-    <orderEntry type="library" exported="" name="Maven: org.apache.velocity:velocity:1.5" level="project" />
-    <orderEntry type="library" exported="" name="Maven: commons-collections:commons-collections:3.1" level="project" />
-    <orderEntry type="library" exported="" name="Maven: commons-lang:commons-lang:2.1" level="project" />
-    <orderEntry type="library" exported="" name="Maven: oro:oro:2.0.8" level="project" />
+    <orderEntry type="library" exported="" name="Maven: velocity:velocity:1.4" level="project" />
+    <orderEntry type="library" exported="" scope="RUNTIME" name="Maven: velocity:velocity-dep:1.4" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.thoughtworks.xstream:xstream:1.3.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: xpp3:xpp3_min:1.1.4c" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.freemarker:freemarker:2.3.16" level="project" />

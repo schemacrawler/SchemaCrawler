@@ -6,13 +6,20 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.Map;
 
-import com.thoughtworks.xstream.XStream;
-import schemacrawler.schema.*;
+import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.Database;
+import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.JdbcDriverInfo;
+import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+
+import com.thoughtworks.xstream.XStream;
 
 /**
  * Decorates a database to allow for serialization to and from XML.
- *
+ * 
  * @author sfatehi
  */
 public final class XmlDatabase
@@ -39,7 +46,7 @@ public final class XmlDatabase
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
   public int compareTo(final NamedObject o)
@@ -55,7 +62,7 @@ public final class XmlDatabase
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.NamedObject#getAttribute(java.lang.String)
    */
   public Object getAttribute(final String name)
@@ -65,7 +72,7 @@ public final class XmlDatabase
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.NamedObject#getAttributes()
    */
   public Map<String, Object> getAttributes()
@@ -75,7 +82,7 @@ public final class XmlDatabase
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Database#getDatabaseInfo()
    */
   public DatabaseInfo getDatabaseInfo()
@@ -85,7 +92,7 @@ public final class XmlDatabase
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.NamedObject#getFullName()
    */
   public String getFullName()
@@ -95,7 +102,7 @@ public final class XmlDatabase
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Database#getJdbcDriverInfo()
    */
   public JdbcDriverInfo getJdbcDriverInfo()
@@ -105,7 +112,7 @@ public final class XmlDatabase
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.NamedObject#getName()
    */
   public String getName()
@@ -115,7 +122,7 @@ public final class XmlDatabase
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.NamedObject#getRemarks()
    */
   public String getRemarks()
@@ -125,7 +132,7 @@ public final class XmlDatabase
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Database#getSchema(java.lang.String)
    */
   public Schema getSchema(final String schemaName)
@@ -135,7 +142,7 @@ public final class XmlDatabase
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Database#getSchemaCrawlerInfo()
    */
   public SchemaCrawlerInfo getSchemaCrawlerInfo()
@@ -145,7 +152,7 @@ public final class XmlDatabase
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Database#getSchemas()
    */
   public Schema[] getSchemas()
@@ -155,7 +162,7 @@ public final class XmlDatabase
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Database#getSystemColumnDataType(java.lang.String)
    */
   public ColumnDataType getSystemColumnDataType(final String name)
@@ -165,7 +172,7 @@ public final class XmlDatabase
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Database#getSystemColumnDataTypes()
    */
   public ColumnDataType[] getSystemColumnDataTypes()
@@ -181,10 +188,11 @@ public final class XmlDatabase
 
   /**
    * Serializes the database to the writer, as XML.
-   *
-   * @param writer Writer to save to
-   *
-   * @throws SchemaCrawlerException On an exception
+   * 
+   * @param writer
+   *        Writer to save to
+   * @throws SchemaCrawlerException
+   *         On an exception
    */
   public void save(final Writer writer)
     throws SchemaCrawlerException
@@ -207,8 +215,9 @@ public final class XmlDatabase
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.NamedObject#setAttribute(java.lang.String, java.lang.Object)
+   * 
+   * @see schemacrawler.schema.NamedObject#setAttribute(java.lang.String,
+   *      java.lang.Object)
    */
   public void setAttribute(final String name, final Object value)
   {

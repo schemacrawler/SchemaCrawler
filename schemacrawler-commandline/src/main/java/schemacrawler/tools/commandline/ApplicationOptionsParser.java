@@ -31,7 +31,7 @@ import sf.util.CommandLineParser.StringOption;
 
 /**
  * Parses the command line.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public final class ApplicationOptionsParser
@@ -52,16 +52,14 @@ public final class ApplicationOptionsParser
   @Override
   public ApplicationOptions getOptions()
   {
-    parse(new Option[]{
-      optionLogLevel, optionHelp1, optionHelp2
+    parse(new Option[] {
+        optionLogLevel, optionHelp1, optionHelp2
     });
 
     final ApplicationOptions options = new ApplicationOptions();
 
     final String logLevelString = optionLogLevel.getValue();
-    if (!sf.util
-      .Utility
-      .isBlank(logLevelString))
+    if (!sf.util.Utility.isBlank(logLevelString))
     {
       final Level applicationLogLevel = Level.parse(logLevelString
         .toUpperCase());

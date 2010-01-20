@@ -20,7 +20,11 @@
 package schemacrawler.tools.commandline;
 
 
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.ConnectionOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
@@ -28,7 +32,7 @@ import sf.util.Utility;
 
 /**
  * Utility for parsing the SchemaCrawler command line.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawlerCommandLine
@@ -61,12 +65,15 @@ public final class SchemaCrawlerCommandLine
   }
 
   /**
-   * Loads objects from command line options. Optionally loads the config from the classpath.
-   *
-   * @param args           Command line arguments.
-   * @param configResource Config resource.
-   *
-   * @throws SchemaCrawlerException On an exception
+   * Loads objects from command line options. Optionally loads the
+   * config from the classpath.
+   * 
+   * @param args
+   *        Command line arguments.
+   * @param configResource
+   *        Config resource.
+   * @throws SchemaCrawlerException
+   *         On an exception
    */
   public SchemaCrawlerCommandLine(final String[] args,
                                   final String configResource)
@@ -79,8 +86,7 @@ public final class SchemaCrawlerCommandLine
 
     if (args.length > 0)
     {
-      command = new CommandParser(args).getOptions()
-        .toString();
+      command = new CommandParser(args).getOptions().toString();
       outputOptions = new OutputOptionsParser(args).getOptions();
     }
     else

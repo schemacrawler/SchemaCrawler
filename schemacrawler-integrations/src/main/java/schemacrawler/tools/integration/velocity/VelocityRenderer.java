@@ -34,12 +34,13 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
+
 import schemacrawler.schema.Database;
 import schemacrawler.tools.executable.BaseExecutable;
 
 /**
  * Main executor for the Velocity integration.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public final class VelocityRenderer
@@ -57,7 +58,7 @@ public final class VelocityRenderer
                                                         final String resourceLoaderPropertyValue)
   {
     p.setProperty(resourceLoaderName + "." + RuntimeConstants.RESOURCE_LOADER
-      + "." + resourceLoaderPropertyName,
+                      + "." + resourceLoaderPropertyName,
                   resourceLoaderPropertyValue);
   }
 
@@ -82,8 +83,7 @@ public final class VelocityRenderer
     if (templateFilePath.exists())
     {
       templatePath = templatePath + ","
-        + templateFilePath.getAbsoluteFile()
-        .getParent();
+                     + templateFilePath.getAbsoluteFile().getParent();
       templateLocation = templateFilePath.getName();
     }
 
@@ -97,9 +97,8 @@ public final class VelocityRenderer
     final String fileResourceLoader = "file";
     final String classpathResourceLoader = "classpath";
     final Properties p = new Properties();
-    p
-      .setProperty(RuntimeConstants.RESOURCE_LOADER,
-                   fileResourceLoader + "," + classpathResourceLoader);
+    p.setProperty(RuntimeConstants.RESOURCE_LOADER, fileResourceLoader + ","
+                                                    + classpathResourceLoader);
     setVelocityResourceLoaderProperty(p,
                                       classpathResourceLoader,
                                       "class",
@@ -114,7 +113,7 @@ public final class VelocityRenderer
                                       templatePath);
 
     LOGGER.log(Level.INFO, "Velocity configuration properties - "
-      + p.toString());
+                           + p.toString());
 
     // Initialize the engine
     ve.init(p);

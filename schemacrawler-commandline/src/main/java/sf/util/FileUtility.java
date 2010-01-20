@@ -24,7 +24,7 @@ import java.io.File;
 
 /**
  * Utility methods.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public final class FileUtility
@@ -36,7 +36,7 @@ public final class FileUtility
     final String oldFileName = file.getName();
     final String newFileName = oldFileName.substring(0, (oldFileName
       .lastIndexOf(oldExt) - 1))
-      + ext;
+                               + ext;
     return new File(file.getParentFile(), newFileName);
   }
 
@@ -47,12 +47,12 @@ public final class FileUtility
     {
       final String scriptFileName = file.getName();
       ext = scriptFileName.lastIndexOf('.') == -1
-        ? ""
-        : scriptFileName
-        .substring(scriptFileName
-          .lastIndexOf('.') + 1,
-                   scriptFileName
-                     .length());
+                                                 ? ""
+                                                 : scriptFileName
+                                                   .substring(scriptFileName
+                                                                .lastIndexOf('.') + 1,
+                                                              scriptFileName
+                                                                .length());
     }
     else
     {

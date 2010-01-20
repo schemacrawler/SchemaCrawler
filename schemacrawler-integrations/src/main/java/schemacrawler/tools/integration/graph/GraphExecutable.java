@@ -35,7 +35,7 @@ import sf.util.Utility;
 
 /**
  * Main executor for the graphing integration.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public final class GraphExecutable
@@ -61,9 +61,9 @@ public final class GraphExecutable
       dotWriter.open();
       dotWriter.print(database.getSchemaCrawlerInfo(), database
         .getDatabaseInfo(), database.getJdbcDriverInfo());
-      for (final Schema schema : database.getSchemas())
+      for (final Schema schema: database.getSchemas())
       {
-        for (final Table table : schema.getTables())
+        for (final Table table: schema.getTables())
         {
           dotWriter.print(table);
         }
@@ -74,47 +74,45 @@ public final class GraphExecutable
     final String graphOutputFormat = getGraphOutputFormat();
     final File outputFile = getOutputFile(graphOutputFormat);
     final GraphGenerator dot = new GraphGenerator();
-    dot.generateDiagram(dotFile, graphOutputFormat, outputFile);
+    GraphGenerator.generateDiagram(dotFile, graphOutputFormat, outputFile);
   }
 
   private String getGraphOutputFormat()
   {
     String graphOutputFormat = outputOptions.getOutputFormatValue();
-    final List<String> outputFormats = Arrays.asList(
-      "canon",
-      "cmap",
-      "cmapx",
-      "cmapx_np",
-      "dot",
-      "eps",
-      "fig",
-      "gd",
-      "gd2",
-      "gif",
-      "gv",
-      "imap",
-      "imap_np",
-      "ismap",
-      "jpe",
-      "jpeg",
-      "jpg",
-      "pdf",
-      "plain",
-      "plain-ext",
-      "png",
-      "ps",
-      "ps2",
-      "svg",
-      "svgz",
-      "tk",
-      "vml",
-      "vmlz",
-      "vrml",
-      "wbmp",
-      "xdot"
-    );
+    final List<String> outputFormats = Arrays.asList("canon",
+                                                     "cmap",
+                                                     "cmapx",
+                                                     "cmapx_np",
+                                                     "dot",
+                                                     "eps",
+                                                     "fig",
+                                                     "gd",
+                                                     "gd2",
+                                                     "gif",
+                                                     "gv",
+                                                     "imap",
+                                                     "imap_np",
+                                                     "ismap",
+                                                     "jpe",
+                                                     "jpeg",
+                                                     "jpg",
+                                                     "pdf",
+                                                     "plain",
+                                                     "plain-ext",
+                                                     "png",
+                                                     "ps",
+                                                     "ps2",
+                                                     "svg",
+                                                     "svgz",
+                                                     "tk",
+                                                     "vml",
+                                                     "vmlz",
+                                                     "vrml",
+                                                     "wbmp",
+                                                     "xdot");
     if (Utility.isBlank(graphOutputFormat)
-      || !outputFormats.contains(graphOutputFormat))
+        || !outputFormats.contains(graphOutputFormat))
     {
       graphOutputFormat = "png";
     }
@@ -127,7 +125,7 @@ public final class GraphExecutable
     if (outputFile == null)
     {
       outputFile = new File(".", "schemacrawler." + UUID.randomUUID() + "."
-        + graphOutputFormat);
+                                 + graphOutputFormat);
     }
     return outputFile;
   }

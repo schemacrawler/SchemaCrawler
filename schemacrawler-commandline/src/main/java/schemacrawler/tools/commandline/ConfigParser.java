@@ -27,7 +27,7 @@ import sf.util.CommandLineParser.StringOption;
 
 /**
  * Parses the command line.
- *
+ * 
  * @author Sualeh Fatehi
  */
 class ConfigParser
@@ -49,8 +49,8 @@ class ConfigParser
   @Override
   protected Config getOptions()
   {
-    parse(new Option[]{
-      optionConfigFile, optionConfigOverrideFile
+    parse(new Option[] {
+        optionConfigFile, optionConfigOverrideFile
     });
 
     final String cfgFile = optionConfigFile.getValue();

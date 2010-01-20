@@ -37,8 +37,12 @@ import sf.util.CommandLineParser;
 import sf.util.Utility;
 
 /**
- * A wrapper used to assemble the classpath before launching the actual application. <p> See <a href="
- * http://tapestryjava.blogspot.com/2007/08/quick-and-dirty-java-application.html" >launcher discussion</a>.
+ * A wrapper used to assemble the classpath before launching the actual
+ * application.
+ * <p>
+ * See <a href="
+ * http://tapestryjava.blogspot.com/2007/08/quick-and-dirty
+ * -java-application.html" >launcher discussion</a>.
  */
 public final class LauncherMain
 {
@@ -49,10 +53,11 @@ public final class LauncherMain
   private static final String LIB_DIR = "./lib";
 
   /**
-   * Loads all jars files in the ./lib directory, and then launches the specified class file with arguments, in a new
-   * classloader.
-   *
-   * @param args Command line arguments
+   * Loads all jars files in the ./lib directory, and then launches the
+   * specified class file with arguments, in a new classloader.
+   * 
+   * @param args
+   *        Command line arguments
    */
   public static void main(final String[] args)
   {
@@ -68,7 +73,8 @@ public final class LauncherMain
     // Load jars from the lib directory
     final List<URL> classpath = search(LIB_DIR);
 
-    final List<String> launchOptions = Arrays.asList(args).subList(1, args.length);
+    final List<String> launchOptions = Arrays.asList(args).subList(1,
+                                                                   args.length);
     final String[] launchArgs = launchOptions.toArray(new String[launchOptions
       .size()]);
 
@@ -115,17 +121,16 @@ public final class LauncherMain
       final URL[] classpathURLs = classpath.toArray(new URL[classpath.size()]);
       final URLClassLoader newLoader = new URLClassLoader(classpathURLs, null);
 
-      Thread.currentThread()
-        .setContextClassLoader(newLoader);
+      Thread.currentThread().setContextClassLoader(newLoader);
 
       LOGGER.log(Level.INFO, "Lauching " + launchClassName + " -"
-        + Arrays.toString(args));
+                             + Arrays.toString(args));
       final Class<?> launchClass = newLoader.loadClass(launchClassName);
-      final Method main = launchClass.getMethod("main", new Class[]{
+      final Method main = launchClass.getMethod("main", new Class[] {
         String[].class
       });
 
-      main.invoke(null, new Object[]{
+      main.invoke(null, new Object[] {
         args
       });
     }
@@ -159,7 +164,7 @@ public final class LauncherMain
         }
       });
 
-      for (final File jarFile : jarFiles)
+      for (final File jarFile: jarFiles)
       {
         addJarFileToClasspath(jarFile, classpath);
       }
@@ -170,8 +175,9 @@ public final class LauncherMain
 
   /**
    * Parses the command line, and sets the application log level.
-   *
-   * @param args Command line arguments
+   * 
+   * @param args
+   *        Command line arguments
    */
   private static void setLogLevel(final String[] args)
   {
@@ -215,8 +221,7 @@ public final class LauncherMain
   {
     try
     {
-      return file.toURI()
-        .toURL();
+      return file.toURI().toURL();
     }
     catch (final MalformedURLException ex)
     {

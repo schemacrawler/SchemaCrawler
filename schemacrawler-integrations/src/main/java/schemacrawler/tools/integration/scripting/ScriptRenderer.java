@@ -28,6 +28,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.Writer;
 import java.sql.Connection;
+
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
@@ -39,7 +40,7 @@ import sf.util.Utility;
 
 /**
  * Main executor for the scripting engine integration.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public final class ScriptRenderer
@@ -83,7 +84,7 @@ public final class ScriptRenderer
       else
       {
         throw new SchemaCrawlerException("Cannot load script, "
-          + scriptFileName);
+                                         + scriptFileName);
       }
     }
 
@@ -103,8 +104,7 @@ public final class ScriptRenderer
     final Writer writer = outputOptions.openOutputWriter();
 
     // Set up the context
-    scriptEngine.getContext()
-      .setWriter(writer);
+    scriptEngine.getContext().setWriter(writer);
     scriptEngine.put("database", database);
     scriptEngine.put("connection", connection);
 

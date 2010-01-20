@@ -21,12 +21,15 @@
 package schemacrawler.integration.test;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
+
 import java.io.FileWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 import org.apache.commons.io.IOUtils;
 import org.custommonkey.xmlunit.DetailedDiff;
@@ -34,6 +37,7 @@ import org.custommonkey.xmlunit.Diff;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;

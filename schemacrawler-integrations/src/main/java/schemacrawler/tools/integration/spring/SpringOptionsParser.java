@@ -27,7 +27,7 @@ import sf.util.CommandLineParser.StringOption;
 
 /**
  * Options for the command line.
- *
+ * 
  * @author sfatehi
  */
 final class SpringOptionsParser
@@ -46,7 +46,7 @@ final class SpringOptionsParser
 
   /**
    * Parses the command line into options.
-   *
+   * 
    * @param args
    */
   SpringOptionsParser(final String[] args)
@@ -57,8 +57,8 @@ final class SpringOptionsParser
   @Override
   protected SpringOptions getOptions()
   {
-    parse(new Option[]{
-      optionContextFile, optionExecutable, optionDataSourceName,
+    parse(new Option[] {
+        optionContextFile, optionExecutable, optionDataSourceName,
     });
 
     final SpringOptions options = new SpringOptions();

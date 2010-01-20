@@ -37,10 +37,12 @@ public final class TestUtility
     throws Exception
   {
 
-    if (testOutputFile == null || !testOutputFile.exists() || !testOutputFile.isFile() || !testOutputFile
-      .canRead() || testOutputFile.length() == 0)
+    if (testOutputFile == null || !testOutputFile.exists()
+        || !testOutputFile.isFile() || !testOutputFile.canRead()
+        || testOutputFile.length() == 0)
     {
-      failures.add("Output file not created - " + testOutputFile.getAbsolutePath());
+      failures.add("Output file not created - "
+                   + testOutputFile.getAbsolutePath());
       return;
     }
 
@@ -62,24 +64,25 @@ public final class TestUtility
 
     {
       final File testOutputLocalFile = new File("./", referenceFile);
-      testOutputLocalFile.getParentFile()
-        .mkdirs();
+      testOutputLocalFile.getParentFile().mkdirs();
+      testOutputLocalFile.delete();
       final boolean renamed = testOutputFile.renameTo(testOutputLocalFile);
       if (renamed)
       {
         failures.add("Output does not match: see actual output in "
-          + testOutputLocalFile.getAbsolutePath());
+                     + testOutputLocalFile.getAbsolutePath());
         if (!testOutputFile.delete())
 
         {
           failures.add("Cannot delete output file, "
-            + testOutputFile.getAbsolutePath());
+                       + testOutputFile.getAbsolutePath());
         }
       }
       else
       {
-        failures.add("Output does not match; could not rename file; see actual output in "
-          + testOutputFile.getAbsolutePath());
+        failures
+          .add("Output does not match; could not rename file; see actual output in "
+               + testOutputFile.getAbsolutePath());
       }
     }
 
@@ -107,8 +110,7 @@ public final class TestUtility
           contentEquals = false;
           break;
         }
-        if (!line1.trim()
-          .equals(line2.trim()))
+        if (!line1.trim().equals(line2.trim()))
         {
           contentEquals = false;
           break;

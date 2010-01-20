@@ -31,7 +31,7 @@ import sf.util.CommandLineParser.StringOption;
 
 /**
  * Parses the command line.
- *
+ * 
  * @author Sualeh Fatehi
  */
 final class SchemaCrawlerOptionsParser
@@ -93,21 +93,21 @@ final class SchemaCrawlerOptionsParser
   @Override
   protected SchemaCrawlerOptions getOptions()
   {
-    parse(new Option[]{
-      optionInfoLevel,
-      optionSchemas,
-      optionTableTypes,
-      optionShowStoredProcedures,
-      optionTables,
-      optionExcludeColumns,
-      optionProcedures,
-      optionExcludeProcedureColumns,
-      optionGrepColumns,
-      optionGrepProcedureColumns,
-      optionGrepInvertMatch,
-      optionSortTables,
-      optionSortColumns,
-      optionSortInout,
+    parse(new Option[] {
+        optionInfoLevel,
+        optionSchemas,
+        optionTableTypes,
+        optionShowStoredProcedures,
+        optionTables,
+        optionExcludeColumns,
+        optionProcedures,
+        optionExcludeProcedureColumns,
+        optionGrepColumns,
+        optionGrepProcedureColumns,
+        optionGrepInvertMatch,
+        optionSortTables,
+        optionSortColumns,
+        optionSortInout,
     });
 
     if (optionInfoLevel.isFound())
@@ -157,7 +157,7 @@ final class SchemaCrawlerOptionsParser
     if (optionProcedures.isFound())
     {
       final InclusionRule procedureInclusionRule = new InclusionRule(optionProcedures
-        .getValue(),
+                                                                       .getValue(),
                                                                      InclusionRule.NONE);
       options.setProcedureInclusionRule(procedureInclusionRule);
     }
@@ -177,7 +177,7 @@ final class SchemaCrawlerOptionsParser
     if (optionGrepColumns.isFound())
     {
       final InclusionRule grepColumnInclusionRule = new InclusionRule(optionGrepColumns
-        .getValue(),
+                                                                        .getValue(),
                                                                       InclusionRule.NONE);
       options.setGrepColumnInclusionRule(grepColumnInclusionRule);
     }
@@ -185,7 +185,7 @@ final class SchemaCrawlerOptionsParser
     if (optionGrepProcedureColumns.isFound())
     {
       final InclusionRule grepProcedureColumnInclusionRule = new InclusionRule(optionGrepProcedureColumns
-        .getValue(),
+                                                                                 .getValue(),
                                                                                InclusionRule.NONE);
       options
         .setGrepProcedureColumnInclusionRule(grepProcedureColumnInclusionRule);

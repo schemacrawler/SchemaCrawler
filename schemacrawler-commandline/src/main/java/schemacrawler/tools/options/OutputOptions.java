@@ -21,7 +21,12 @@
 package schemacrawler.tools.options;
 
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,7 +36,7 @@ import sf.util.Utility;
 
 /**
  * Contains output options.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public final class OutputOptions
@@ -62,9 +67,11 @@ public final class OutputOptions
 
   /**
    * Output options, given the type and the output filename.
-   *
-   * @param outputFormat Type of output, which is dependent on the executor
-   * @param outputFilename    Output filename
+   * 
+   * @param outputFormat
+   *        Type of output, which is dependent on the executor
+   * @param outputFilename
+   *        Output filename
    */
   public OutputOptions(final OutputFormat outputFormat,
                        final String outputFilename)
@@ -75,9 +82,7 @@ public final class OutputOptions
     }
     outputFormatValue = outputFormat.name();
 
-    if (!sf.util
-      .Utility
-      .isBlank(outputFilename))
+    if (!sf.util.Utility.isBlank(outputFilename))
     {
       outputFile = new File(outputFilename);
     }
@@ -89,18 +94,18 @@ public final class OutputOptions
 
   /**
    * Output options, given the type and the output filename.
-   *
-   * @param outputFormatValue Type of output, which is dependent on the executor
-   * @param outputFilename    Output filename
+   * 
+   * @param outputFormatValue
+   *        Type of output, which is dependent on the executor
+   * @param outputFilename
+   *        Output filename
    */
   public OutputOptions(final String outputFormatValue,
                        final String outputFilename)
   {
     this.outputFormatValue = outputFormatValue;
 
-    if (!sf.util
-      .Utility
-      .isBlank(outputFilename))
+    if (!sf.util.Utility.isBlank(outputFilename))
     {
       outputFile = new File(outputFilename);
     }
@@ -112,8 +117,9 @@ public final class OutputOptions
 
   /**
    * Close the output writer.
-   *
-   * @param writer Output writer
+   * 
+   * @param writer
+   *        Output writer
    */
   public void closeOutputWriter(final Writer writer)
   {
@@ -126,7 +132,7 @@ public final class OutputOptions
           writer.flush();
           writer.close();
           LOGGER.log(Level.INFO, "Closed output writer to file, "
-            + outputFile.getAbsolutePath());
+                                 + outputFile.getAbsolutePath());
         }
         catch (final IOException e)
         {
@@ -143,7 +149,7 @@ public final class OutputOptions
 
   /**
    * Clone this object.
-   *
+   * 
    * @return Clone
    */
   public OutputOptions duplicate()
@@ -165,7 +171,7 @@ public final class OutputOptions
 
   /**
    * Output file, which has previously been created.
-   *
+   * 
    * @return Output file
    */
   public File getOutputFile()
@@ -175,7 +181,7 @@ public final class OutputOptions
 
   /**
    * Output format.
-   *
+   * 
    * @return Output format
    */
   public OutputFormat getOutputFormat()
@@ -194,7 +200,7 @@ public final class OutputOptions
 
   /**
    * Gets the output format value.
-   *
+   * 
    * @return Output format value.s
    */
   public String getOutputFormatValue()
@@ -204,7 +210,7 @@ public final class OutputOptions
 
   /**
    * Whether the output gets appended.
-   *
+   * 
    * @return Whether the output gets appended
    */
   public boolean isAppendOutput()
@@ -214,7 +220,7 @@ public final class OutputOptions
 
   /**
    * Whether to print footers.
-   *
+   * 
    * @return Whether to print footers
    */
   public boolean isNoFooter()
@@ -224,7 +230,7 @@ public final class OutputOptions
 
   /**
    * Whether to print headers.
-   *
+   * 
    * @return Whether to print headers
    */
   public boolean isNoHeader()
@@ -234,7 +240,7 @@ public final class OutputOptions
 
   /**
    * Whether to print information.
-   *
+   * 
    * @return Whether to print information
    */
   public boolean isNoInfo()
@@ -244,10 +250,10 @@ public final class OutputOptions
 
   /**
    * Opens the output writer.
-   *
+   * 
    * @return Writer
-   *
-   * @throws IOException On an exception
+   * @throws IOException
+   *         On an exception
    */
   public PrintWriter openOutputWriter()
     throws SchemaCrawlerException
@@ -263,9 +269,12 @@ public final class OutputOptions
       else
       {
         final FileWriter fileWriter = new FileWriter(outputFile, appendOutput);
-        writer = new PrintWriter(new BufferedWriter(fileWriter), /* autoFlush = */true);
+        writer = new PrintWriter(new BufferedWriter(fileWriter), /*
+                                                                  * autoFlush
+                                                                  * =
+                                                                  */true);
         LOGGER.log(Level.INFO, "Opened output writer to file, "
-          + outputFile.getAbsolutePath());
+                               + outputFile.getAbsolutePath());
       }
     }
     catch (final Exception e)
@@ -277,8 +286,9 @@ public final class OutputOptions
 
   /**
    * Whether the output gets appended.
-   *
-   * @param appendOutput Whether the output gets appended
+   * 
+   * @param appendOutput
+   *        Whether the output gets appended
    */
   public void setAppendOutput(final boolean appendOutput)
   {
@@ -287,8 +297,9 @@ public final class OutputOptions
 
   /**
    * Whether to print footers.
-   *
-   * @param noFooter Whether to print footers
+   * 
+   * @param noFooter
+   *        Whether to print footers
    */
   public void setNoFooter(final boolean noFooter)
   {
@@ -297,8 +308,9 @@ public final class OutputOptions
 
   /**
    * Whether to print headers.
-   *
-   * @param noHeader Whether to print headers
+   * 
+   * @param noHeader
+   *        Whether to print headers
    */
   public void setNoHeader(final boolean noHeader)
   {
@@ -307,8 +319,9 @@ public final class OutputOptions
 
   /**
    * Whether to print information.
-   *
-   * @param noInfo Whether to print information
+   * 
+   * @param noInfo
+   *        Whether to print information
    */
   public void setNoInfo(final boolean noInfo)
   {
@@ -317,8 +330,9 @@ public final class OutputOptions
 
   /**
    * Sets the name of the output file.
-   *
-   * @param outputFileName Output file name.
+   * 
+   * @param outputFileName
+   *        Output file name.
    */
   public void setOutputFileName(final String outputFileName)
   {
@@ -331,8 +345,9 @@ public final class OutputOptions
 
   /**
    * Sets output format value.
-   *
-   * @param outputFormatValue Output format value
+   * 
+   * @param outputFormatValue
+   *        Output format value
    */
   public void setOutputFormatValue(final String outputFormatValue)
   {

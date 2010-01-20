@@ -1,7 +1,11 @@
 package schemacrawler.tools.integration.graph;
 
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.EOFException;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,6 +17,24 @@ final class GraphGenerator
 
   private static final Logger LOGGER = Logger.getLogger(GraphGenerator.class
     .getName());
+
+  static void generateDiagram(final File dotFile,
+                              final String outputFormat,
+                              final File diagramFile)
+    throws IOException
+  {
+    if (dotFile == null || !dotFile.exists() || !dotFile.canRead())
+    {
+      throw new IOException("Cannot read the input DOT file, " + dotFile);
+    }
+    if (diagramFile == null)
+    {
+      throw new IOException("Cannot write diagram file");
+    }
+
+    run("-q", "-T" + outputFormat, "-o", diagramFile.getAbsolutePath(), dotFile
+      .getAbsolutePath());
+  }
 
   private static String getGraphGenerator()
   {
@@ -49,10 +71,9 @@ final class GraphGenerator
       catch (final EOFException e)
       {
         LOGGER.log(Level.WARNING, "Could not read diagram generator output"
-          + e.getMessage());
+                                  + e.getMessage());
       }
     }
-
 
     int exitCode = 0;
     try
@@ -64,12 +85,9 @@ final class GraphGenerator
       //
     }
 
-    process.getInputStream()
-      .close();
-    process.getOutputStream()
-      .close();
-    process.getErrorStream()
-      .close();
+    process.getInputStream().close();
+    process.getOutputStream().close();
+    process.getErrorStream().close();
 
     if (exitCode != 0)
     {
@@ -85,24 +103,6 @@ final class GraphGenerator
     throws IOException
   {
     run("-V");
-  }
-
-  static void generateDiagram(final File dotFile,
-                              final String outputFormat,
-                              final File diagramFile)
-    throws IOException
-  {
-    if (dotFile == null || !dotFile.exists() || !dotFile.canRead())
-    {
-      throw new IOException("Cannot read the input DOT file, " + dotFile);
-    }
-    if (diagramFile == null)
-    {
-      throw new IOException("Cannot write diagram file");
-    }
-
-    run("-q", "-T" + outputFormat, "-o", diagramFile.getAbsolutePath(), dotFile
-      .getAbsolutePath());
   }
 
 }
