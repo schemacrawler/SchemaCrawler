@@ -23,15 +23,11 @@ package schemacrawler.tools.integration.graph;
 
 import java.io.File;
 import java.sql.Connection;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
 
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.executable.BaseExecutable;
-import sf.util.Utility;
 
 /**
  * Main executor for the graphing integration.
@@ -71,63 +67,10 @@ public final class GraphExecutable
       dotWriter.close();
     }
 
-    final String graphOutputFormat = getGraphOutputFormat();
-    final File outputFile = getOutputFile(graphOutputFormat);
-    final GraphGenerator dot = new GraphGenerator();
-    GraphGenerator.generateDiagram(dotFile, graphOutputFormat, outputFile);
-  }
-
-  private String getGraphOutputFormat()
-  {
-    String graphOutputFormat = outputOptions.getOutputFormatValue();
-    final List<String> outputFormats = Arrays.asList("canon",
-                                                     "cmap",
-                                                     "cmapx",
-                                                     "cmapx_np",
-                                                     "dot",
-                                                     "eps",
-                                                     "fig",
-                                                     "gd",
-                                                     "gd2",
-                                                     "gif",
-                                                     "gv",
-                                                     "imap",
-                                                     "imap_np",
-                                                     "ismap",
-                                                     "jpe",
-                                                     "jpeg",
-                                                     "jpg",
-                                                     "pdf",
-                                                     "plain",
-                                                     "plain-ext",
-                                                     "png",
-                                                     "ps",
-                                                     "ps2",
-                                                     "svg",
-                                                     "svgz",
-                                                     "tk",
-                                                     "vml",
-                                                     "vmlz",
-                                                     "vrml",
-                                                     "wbmp",
-                                                     "xdot");
-    if (Utility.isBlank(graphOutputFormat)
-        || !outputFormats.contains(graphOutputFormat))
-    {
-      graphOutputFormat = "png";
-    }
-    return graphOutputFormat;
-  }
-
-  private File getOutputFile(final String graphOutputFormat)
-  {
-    File outputFile = outputOptions.getOutputFile();
-    if (outputFile == null)
-    {
-      outputFile = new File(".", "schemacrawler." + UUID.randomUUID() + "."
-                                 + graphOutputFormat);
-    }
-    return outputFile;
+    final GraphGenerator dot = new GraphGenerator(dotFile);
+    dot.setGraphOutputFormat(outputOptions.getOutputFormatValue());
+    dot.setDiagramFile(outputOptions.getOutputFile());
+    dot.generateDiagram();
   }
 
 }
