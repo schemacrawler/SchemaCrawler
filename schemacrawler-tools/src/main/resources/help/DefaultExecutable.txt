@@ -2,18 +2,12 @@
 
 -command=<command>
   Where <command> is a comma-separated list of:
+    list_objects
+      Shows only table, view and procedure names  
     standard_schema
       Shows the commonly needed detail of the schema, including details of 
       tables, views and procedures, columns, primary keys, indexes, 
       and foreign keys
-    brief_schema
-      Shows only table, view and procedure names
-    basic_schema
-      Shows more details of tables, views and procedures, including columns 
-      and primary keys
-    verbose_schema
-      Shows the most detail of the schema, including data types, indexes, 
-      foreign keys, and view and procedure definitions
     verbose_schema
       Shows maximum possible detail of the schema, including privileges, and 
       details of privileges, triggers, and check constraints
