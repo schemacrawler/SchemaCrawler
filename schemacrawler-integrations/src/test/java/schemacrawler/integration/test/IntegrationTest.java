@@ -31,8 +31,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.integration.freemarker.FreeMarkerRenderer;
@@ -101,29 +99,20 @@ public class IntegrationTest
                                                        final String referenceFileName)
     throws Exception
   {
-    final File outputFile = File.createTempFile("schemacrawler." + command
-                                                + ".", ".test");
-    final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
-                                                          outputFile
-                                                            .getAbsolutePath());
-
-    final Config config = new Config();
-    config.put("schemacrawler.sort_alphabetically.table_columns", Boolean.TRUE
-      .toString());
-
-    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(testUtility
-                                                                                .getDatabaseConnectionOptions(),
-                                                                              SchemaInfoLevel
-                                                                                .standard(),
-                                                                              command,
-                                                                              config,
-                                                                              outputOptions);
-
     final File testOutputFile = File.createTempFile("schemacrawler." + command
                                                     + ".", ".test");
     testOutputFile.delete();
 
-    outputOptions.setOutputFileName(testOutputFile.getAbsolutePath());
+    final SchemaCrawlerCommandLine commandLine = new SchemaCrawlerCommandLine(testUtility
+                                                                                .getDatabaseConnectionOptions(),
+                                                                              "-command="
+                                                                                  + command,
+                                                                              "-sortcolumns=true",
+                                                                              "-outputformat="
+                                                                                  + outputFormatValue,
+                                                                              "-outputfile="
+                                                                                  + testOutputFile
+                                                                                    .getAbsolutePath());
     commandLine.execute();
 
     final List<String> failures = new ArrayList<String>();

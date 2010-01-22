@@ -38,13 +38,19 @@ public final class SchemaCrawlerHelpCommandLine
 
   private static void showHelp(final String helpResource)
   {
-    if (sf.util.Utility.isBlank(helpResource))
+    final String helpResourceName;
+    if (sf.util.Utility.isBlank(helpResource)
+        || SchemaCrawlerHelpCommandLine.class.getResource(helpResource) == null)
     {
-      return;
+      helpResourceName = "/help/DefaultExecutable.txt";
+    }
+    else
+    {
+      helpResourceName = helpResource;
     }
     final String helpText = Utility
       .readFully(SchemaCrawlerHelpCommandLine.class
-        .getResourceAsStream(helpResource));
+        .getResourceAsStream(helpResourceName));
     System.out.println(helpText);
   }
 

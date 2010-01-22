@@ -24,7 +24,6 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
@@ -48,20 +47,10 @@ public final class SchemaCrawlerCommandLine
   private final ConnectionOptions connectionOptions;
 
   public SchemaCrawlerCommandLine(final ConnectionOptions connectionOptions,
-                                  final SchemaInfoLevel infoLevel,
-                                  final String command,
-                                  final Config config,
-                                  final OutputOptions outputOptions)
+                                  final String... args)
+    throws SchemaCrawlerException
   {
-    this.connectionOptions = connectionOptions;
-    this.command = command;
-    this.outputOptions = outputOptions;
-    this.config = new Config();
-    schemaCrawlerOptions = new SchemaCrawlerOptions(config);
-    if (infoLevel != null)
-    {
-      schemaCrawlerOptions.setSchemaInfoLevel(infoLevel);
-    }
+    this((String) null, connectionOptions, args);
   }
 
   /**
@@ -75,8 +64,16 @@ public final class SchemaCrawlerCommandLine
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  public SchemaCrawlerCommandLine(final String[] args,
-                                  final String configResource)
+  public SchemaCrawlerCommandLine(final String configResource,
+                                  final String... args)
+    throws SchemaCrawlerException
+  {
+    this(configResource, (ConnectionOptions) null, args);
+  }
+
+  private SchemaCrawlerCommandLine(final String configResource,
+                                   final ConnectionOptions connectionOptions,
+                                   final String... args)
     throws SchemaCrawlerException
   {
     if (args == null)
@@ -99,7 +96,8 @@ public final class SchemaCrawlerCommandLine
     {
       config = Config.load(SchemaCrawlerCommandLine.class
         .getResourceAsStream(configResource));
-      connectionOptions = new BundledDriverConnectionOptionsParser(args, config)
+      this.connectionOptions = new BundledDriverConnectionOptionsParser(args,
+                                                                        config)
         .getOptions();
     }
     else
@@ -113,15 +111,23 @@ public final class SchemaCrawlerCommandLine
         config = new Config();
       }
 
-      ConnectionOptions connectionOptions = new CommandLineConnectionOptionsParser(args,
-                                                                                   config)
-        .getOptions();
-      if (connectionOptions == null)
+      if (connectionOptions != null)
       {
-        connectionOptions = new ConfigConnectionOptionsParser(args, config)
-          .getOptions();
+        this.connectionOptions = connectionOptions;
       }
-      this.connectionOptions = connectionOptions;
+      else
+      {
+        ConnectionOptions parsedConnectionOptions = new CommandLineConnectionOptionsParser(args,
+                                                                                           config)
+          .getOptions();
+        if (parsedConnectionOptions == null)
+        {
+          parsedConnectionOptions = new ConfigConnectionOptionsParser(args,
+                                                                      config)
+            .getOptions();
+        }
+        this.connectionOptions = parsedConnectionOptions;
+      }
     }
 
     schemaCrawlerOptions = new SchemaCrawlerOptionsParser(args, config)

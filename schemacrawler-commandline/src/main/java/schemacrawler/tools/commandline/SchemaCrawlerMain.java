@@ -71,7 +71,7 @@ public class SchemaCrawlerMain
     }
     else
     {
-      commandLine = new SchemaCrawlerCommandLine(args, configResource);
+      commandLine = new SchemaCrawlerCommandLine(configResource, args);
     }
     commandLine.execute();
   }
