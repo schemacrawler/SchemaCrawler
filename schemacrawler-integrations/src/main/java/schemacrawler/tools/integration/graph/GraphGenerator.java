@@ -9,8 +9,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import sf.util.Utility;
 
 final class GraphGenerator
 {
@@ -18,34 +21,13 @@ final class GraphGenerator
   private static final Logger LOGGER = Logger.getLogger(GraphGenerator.class
     .getName());
 
-  static void generateDiagram(final File dotFile,
-                              final String outputFormat,
-                              final File diagramFile)
-    throws IOException
-  {
-    if (dotFile == null || !dotFile.exists() || !dotFile.canRead())
-    {
-      throw new IOException("Cannot read the input DOT file, " + dotFile);
-    }
-    if (diagramFile == null)
-    {
-      throw new IOException("Cannot write diagram file");
-    }
-
-    run("-q", "-T" + outputFormat, "-o", diagramFile.getAbsolutePath(), dotFile
-      .getAbsolutePath());
-  }
-
-  private static String getGraphGenerator()
-  {
-    return System.getProperty("schemacrawler.graph_generator", "dot");
-  }
-
   private static void run(final String... args)
     throws IOException
   {
     final List<String> command = new ArrayList<String>(Arrays.asList(args));
-    command.add(0, getGraphGenerator());
+    final String graphGenerator = System
+      .getProperty("schemacrawler.graph_generator", "dot");
+    command.add(0, graphGenerator);
     LOGGER.log(Level.INFO, "Executing: " + command);
     final ProcessBuilder pb = new ProcessBuilder(command);
     pb.redirectErrorStream(true);
@@ -99,10 +81,101 @@ final class GraphGenerator
     }
   }
 
-  GraphGenerator()
+  private final File dotFile;
+  private String graphOutputFormat;
+  private File diagramFile;
+
+  GraphGenerator(final File dotFile)
     throws IOException
   {
+    if (dotFile == null || !dotFile.exists() || !dotFile.canRead())
+    {
+      throw new IOException("Cannot read the input DOT file, " + dotFile);
+    }
+    this.dotFile = dotFile;
+    graphOutputFormat = "png";
+
     run("-V");
+  }
+
+  void generateDiagram()
+    throws IOException
+  {
+    final File diagramFile = getDiagramFile();
+    run("-q",
+        "-T" + graphOutputFormat,
+        "-o",
+        diagramFile.getAbsolutePath(),
+        dotFile.getAbsolutePath());
+  }
+
+  File getDiagramFile()
+  {
+    return diagramFile;
+  }
+
+  final File getDotFile()
+  {
+    return dotFile;
+  }
+
+  final String getGraphOutputFormat()
+  {
+    return graphOutputFormat;
+  }
+
+  final void setDiagramFile(final File diagramFile)
+  {
+    if (diagramFile == null)
+    {
+      this.diagramFile = new File(".", "schemacrawler." + UUID.randomUUID()
+                                       + "." + graphOutputFormat);
+    }
+    else
+    {
+      this.diagramFile = diagramFile;
+    }
+  }
+
+  void setGraphOutputFormat(final String outputFormat)
+  {
+    graphOutputFormat = outputFormat;
+    final List<String> outputFormats = Arrays.asList("canon",
+                                                     "cmap",
+                                                     "cmapx",
+                                                     "cmapx_np",
+                                                     "dot",
+                                                     "eps",
+                                                     "fig",
+                                                     "gd",
+                                                     "gd2",
+                                                     "gif",
+                                                     "gv",
+                                                     "imap",
+                                                     "imap_np",
+                                                     "ismap",
+                                                     "jpe",
+                                                     "jpeg",
+                                                     "jpg",
+                                                     "pdf",
+                                                     "plain",
+                                                     "plain-ext",
+                                                     "png",
+                                                     "ps",
+                                                     "ps2",
+                                                     "svg",
+                                                     "svgz",
+                                                     "tk",
+                                                     "vml",
+                                                     "vmlz",
+                                                     "vrml",
+                                                     "wbmp",
+                                                     "xdot");
+    if (Utility.isBlank(graphOutputFormat)
+        || !outputFormats.contains(graphOutputFormat))
+    {
+      graphOutputFormat = "png";
+    }
   }
 
 }

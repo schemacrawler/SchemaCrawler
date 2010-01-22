@@ -22,7 +22,6 @@ package schemacrawler.tools.integration.graph;
 
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -111,7 +110,7 @@ final class DotWriter
     }
     try
     {
-      out = new PrintWriter(new FileWriter(dotFile));
+      out = new PrintWriter(dotFile);
     }
     catch (final IOException e)
     {
