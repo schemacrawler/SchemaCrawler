@@ -34,6 +34,7 @@ import org.junit.Test;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.integration.freemarker.FreeMarkerRenderer;
+import schemacrawler.tools.integration.scripting.ScriptRenderer;
 import schemacrawler.tools.integration.velocity.VelocityRenderer;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.utility.TestDatabase;
@@ -68,6 +69,15 @@ public class IntegrationTest
   }
 
   @Test
+  public void commandlineJavaScript()
+    throws Exception
+  {
+    executeCommandlineAndCheckForOutputFile("script",
+                                            "plaintextschema.js",
+                                            "executableForJavaScript");
+  }
+
+  @Test
   public void commandlineVelocity()
     throws Exception
   {
@@ -83,6 +93,15 @@ public class IntegrationTest
     executeExecutableAndCheckForOutputFile(new FreeMarkerRenderer(),
                                            "plaintextschema.ftl",
                                            "executableForFreeMarker");
+  }
+
+  @Test
+  public void executableJavaScript()
+    throws Exception
+  {
+    executeExecutableAndCheckForOutputFile(new ScriptRenderer(),
+                                           "plaintextschema.js",
+                                           "executableForJavaScript");
   }
 
   @Test
