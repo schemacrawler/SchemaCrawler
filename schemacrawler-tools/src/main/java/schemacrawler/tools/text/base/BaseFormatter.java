@@ -23,11 +23,15 @@ package schemacrawler.tools.text.base;
 
 import java.io.PrintWriter;
 import java.util.Arrays;
-import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.Map.Entry;
 
-import schemacrawler.schema.*;
+import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.DatabaseProperty;
+import schemacrawler.schema.JdbcDriverInfo;
+import schemacrawler.schema.JdbcDriverProperty;
+import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputFormat;
@@ -40,7 +44,7 @@ import sf.util.ObjectToString;
 
 /**
  * Text formatting of schema.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public abstract class BaseFormatter<O extends Options>
@@ -83,7 +87,7 @@ public abstract class BaseFormatter<O extends Options>
     out = outputOptions.openOutputWriter();
   }
 
-  public void handle(final DatabaseInfo dbInfo)
+  public final void handle(final DatabaseInfo dbInfo)
   {
     if (dbInfo == null || outputOptions.isNoInfo())
     {
@@ -108,7 +112,7 @@ public abstract class BaseFormatter<O extends Options>
       out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                                 "Database Characteristics"));
       out.print(formattingHelper.createObjectStart(""));
-      for (final DatabaseProperty property : dbInfo.getProperties())
+      for (final DatabaseProperty property: dbInfo.getProperties())
       {
         final String name = property.getDescription();
         Object value = property.getValue();
@@ -157,7 +161,7 @@ public abstract class BaseFormatter<O extends Options>
     {
       out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                                 "JDBC Driver Properties"));
-      for (final JdbcDriverProperty driverProperty : jdbcDriverProperties)
+      for (final JdbcDriverProperty driverProperty: jdbcDriverProperties)
       {
         out.print(formattingHelper.createObjectStart(""));
         printJdbcDriverProperty(driverProperty);
@@ -168,7 +172,7 @@ public abstract class BaseFormatter<O extends Options>
     out.flush();
   }
 
-  public void handle(final SchemaCrawlerInfo schemaCrawlerInfo)
+  public final void handle(final SchemaCrawlerInfo schemaCrawlerInfo)
   {
     if (schemaCrawlerInfo == null || outputOptions.isNoInfo())
     {
@@ -184,10 +188,10 @@ public abstract class BaseFormatter<O extends Options>
     out.print(formattingHelper.createObjectStart(""));
     out.println(formattingHelper
       .createNameValueRow("product name", schemaCrawlerInfo
-      .getSchemaCrawlerProductName()));
+        .getSchemaCrawlerProductName()));
     out.println(formattingHelper
       .createNameValueRow("product version", schemaCrawlerInfo
-      .getSchemaCrawlerVersion()));
+        .getSchemaCrawlerVersion()));
     out.print(formattingHelper.createObjectEnd());
 
     if (printVerboseDatabaseInfo)
@@ -199,7 +203,7 @@ public abstract class BaseFormatter<O extends Options>
         out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                                   "System Properties"));
         out.print(formattingHelper.createObjectStart(""));
-        for (final Entry<String, String> systemProperty : systemProperties
+        for (final Entry<String, String> systemProperty: systemProperties
           .entrySet())
         {
           out.println(formattingHelper.createNameValueRow(systemProperty
@@ -216,11 +220,11 @@ public abstract class BaseFormatter<O extends Options>
   {
     final String choices = Arrays.asList(driverProperty.getChoices())
       .toString();
-    final String required = (driverProperty.isRequired() ? "" : "not ")
-      + "required";
+    final String required = (driverProperty.isRequired()? "": "not ")
+                            + "required";
     String details = required;
     if (driverProperty.getChoices() != null
-      && driverProperty.getChoices().length > 0)
+        && driverProperty.getChoices().length > 0)
     {
       details = details + "; choices " + choices;
     }
