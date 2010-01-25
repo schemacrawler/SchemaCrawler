@@ -22,13 +22,19 @@ package schemacrawler.tools.text.operation;
 
 
 import java.io.BufferedInputStream;
-import java.sql.*;
+import java.sql.Blob;
+import java.sql.Clob;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
+import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseFormatter;
@@ -36,7 +42,7 @@ import schemacrawler.tools.text.util.TextFormattingHelper.DocumentHeaderType;
 
 /**
  * Text formatting of data.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public final class DataTextFormatter
@@ -53,8 +59,9 @@ public final class DataTextFormatter
 
   /**
    * Text formatting of data.
-   *
-   * @param options Options for text formatting of data
+   * 
+   * @param options
+   *        Options for text formatting of data
    */
   public DataTextFormatter(final Operation operation,
                            final OperationOptions options,
@@ -90,9 +97,12 @@ public final class DataTextFormatter
   }
 
   @Override
-  public void handle(final JdbcDriverInfo driverInfo)
+  public void handle(final SchemaCrawlerInfo schemaCrawlerInfo,
+                     final DatabaseInfo databaseInfo,
+                     final JdbcDriverInfo jdbcDriverInfo)
+    throws SchemaCrawlerException
   {
-    super.handle(driverInfo);
+    super.handle(schemaCrawlerInfo, databaseInfo, jdbcDriverInfo);
 
     if (operation != null)
     {
@@ -207,9 +217,11 @@ public final class DataTextFormatter
 
   /**
    * Handles an aggregate operation, such as a count, for a given table.
-   *
-   * @param title   Title
-   * @param results Results
+   * 
+   * @param title
+   *        Title
+   * @param results
+   *        Results
    */
   private void handleAggregateOperationForTable(final String title,
                                                 final ResultSet results)
@@ -294,10 +306,11 @@ public final class DataTextFormatter
   }
 
   /**
-   * Reads data from a LOB into a string. Default system encoding is assumed.
-   *
-   * @param columnData Column data object returned by JDBC
-   *
+   * Reads data from a LOB into a string. Default system encoding is
+   * assumed.
+   * 
+   * @param columnData
+   *        Column data object returned by JDBC
    * @return A string with the contents of the LOB
    */
   private static String readLob(final Object columnData)
@@ -316,9 +329,7 @@ public final class DataTextFormatter
         final Clob clob = (Clob) columnData;
         in = new BufferedInputStream(clob.getAsciiStream());
       }
-      lobData = sf.util
-        .Utility
-        .readFully(in);
+      lobData = sf.util.Utility.readFully(in);
       return lobData;
     }
     catch (final SQLException e)

@@ -87,9 +87,23 @@ public abstract class BaseFormatter<O extends Options>
     out = outputOptions.openOutputWriter();
   }
 
-  public final void handle(final DatabaseInfo dbInfo)
+  public void handle(final SchemaCrawlerInfo schemaCrawlerInfo,
+                     final DatabaseInfo databaseInfo,
+                     final JdbcDriverInfo jdbcDriverInfo)
+    throws SchemaCrawlerException
   {
-    if (dbInfo == null || outputOptions.isNoInfo())
+    if (outputOptions.isNoInfo())
+    {
+      return;
+    }
+    handle(schemaCrawlerInfo);
+    handle(databaseInfo);
+    handle(jdbcDriverInfo);
+  }
+
+  private void handle(final DatabaseInfo dbInfo)
+  {
+    if (dbInfo == null)
     {
       return;
     }
@@ -129,9 +143,9 @@ public abstract class BaseFormatter<O extends Options>
     out.flush();
   }
 
-  public void handle(final JdbcDriverInfo driverInfo)
+  private void handle(final JdbcDriverInfo driverInfo)
   {
-    if (driverInfo == null || outputOptions.isNoInfo())
+    if (driverInfo == null)
     {
       return;
     }
@@ -172,9 +186,9 @@ public abstract class BaseFormatter<O extends Options>
     out.flush();
   }
 
-  public final void handle(final SchemaCrawlerInfo schemaCrawlerInfo)
+  private final void handle(final SchemaCrawlerInfo schemaCrawlerInfo)
   {
-    if (schemaCrawlerInfo == null || outputOptions.isNoInfo())
+    if (schemaCrawlerInfo == null)
     {
       return;
     }
