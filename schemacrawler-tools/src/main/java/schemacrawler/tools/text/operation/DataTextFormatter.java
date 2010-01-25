@@ -32,9 +32,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.schema.JdbcDriverInfo;
-import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseFormatter;
@@ -54,6 +51,43 @@ public final class DataTextFormatter
 
   private static final String NULL = "<null>";
   private static final String BINARY = "<binary>";
+
+  /**
+   * Reads data from a LOB into a string. Default system encoding is
+   * assumed.
+   * 
+   * @param columnData
+   *        Column data object returned by JDBC
+   * @return A string with the contents of the LOB
+   */
+  private static String readLob(final Object columnData)
+  {
+    BufferedInputStream in = null;
+    final String lobData;
+    try
+    {
+      if (columnData instanceof Blob)
+      {
+        final Blob blob = (Blob) columnData;
+        in = new BufferedInputStream(blob.getBinaryStream());
+      }
+      else if (columnData instanceof Clob)
+      {
+        final Clob clob = (Clob) columnData;
+        in = new BufferedInputStream(clob.getAsciiStream());
+      }
+      lobData = sf.util.Utility.readFully(in);
+      return lobData;
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.FINE, "Could not read binary data", e);
+      return BINARY;
+    }
+
+  }
+
+  private int dataBlockCount;
 
   private final Operation operation;
 
@@ -96,38 +130,17 @@ public final class DataTextFormatter
     outputOptions.closeOutputWriter(out);
   }
 
-  @Override
-  public void handle(final SchemaCrawlerInfo schemaCrawlerInfo,
-                     final DatabaseInfo databaseInfo,
-                     final JdbcDriverInfo jdbcDriverInfo)
-    throws SchemaCrawlerException
-  {
-    super.handle(schemaCrawlerInfo, databaseInfo, jdbcDriverInfo);
-
-    if (operation != null)
-    {
-      out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                                operation.getDescription()));
-    }
-    else
-    {
-      out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                                "Query"));
-    }
-
-    if (operation == Operation.count)
-    {
-      out.println(formattingHelper
-        .createObjectStart(operation.getDescription()));
-    }
-  }
-
   /**
    * {@inheritDoc}
    */
   public void handleData(final String title, final ResultSet rows)
     throws SchemaCrawlerException
   {
+    if (dataBlockCount == 0)
+    {
+      printHeader();
+    }
+
     if (operation == Operation.count)
     {
       handleAggregateOperationForTable(title, rows);
@@ -161,6 +174,8 @@ public final class DataTextFormatter
       }
       out.println(formattingHelper.createObjectEnd());
     }
+
+    dataBlockCount++;
   }
 
   private String convertColumnDataToString(final Object columnData)
@@ -305,39 +320,24 @@ public final class DataTextFormatter
     doHandleOneRow(previousRow, currentRowLastColumn.toString());
   }
 
-  /**
-   * Reads data from a LOB into a string. Default system encoding is
-   * assumed.
-   * 
-   * @param columnData
-   *        Column data object returned by JDBC
-   * @return A string with the contents of the LOB
-   */
-  private static String readLob(final Object columnData)
+  private void printHeader()
   {
-    BufferedInputStream in = null;
-    final String lobData;
-    try
+    if (operation != null)
     {
-      if (columnData instanceof Blob)
-      {
-        final Blob blob = (Blob) columnData;
-        in = new BufferedInputStream(blob.getBinaryStream());
-      }
-      else if (columnData instanceof Clob)
-      {
-        final Clob clob = (Clob) columnData;
-        in = new BufferedInputStream(clob.getAsciiStream());
-      }
-      lobData = sf.util.Utility.readFully(in);
-      return lobData;
+      out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
+                                                operation.getDescription()));
     }
-    catch (final SQLException e)
+    else
     {
-      LOGGER.log(Level.FINE, "Could not read binary data", e);
-      return BINARY;
+      out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
+                                                "Query"));
     }
 
+    if (operation == Operation.count)
+    {
+      out.println(formattingHelper
+        .createObjectStart(operation.getDescription()));
+    }
   }
 
 }

@@ -87,9 +87,9 @@ public abstract class BaseFormatter<O extends Options>
     out = outputOptions.openOutputWriter();
   }
 
-  public void handle(final SchemaCrawlerInfo schemaCrawlerInfo,
-                     final DatabaseInfo databaseInfo,
-                     final JdbcDriverInfo jdbcDriverInfo)
+  public final void handle(final SchemaCrawlerInfo schemaCrawlerInfo,
+                           final DatabaseInfo databaseInfo,
+                           final JdbcDriverInfo jdbcDriverInfo)
     throws SchemaCrawlerException
   {
     if (outputOptions.isNoInfo())
