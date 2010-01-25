@@ -27,9 +27,9 @@ public class DatabaseTraverser
     }
 
     handler.begin();
-    handler.handle(database.getSchemaCrawlerInfo());
-    handler.handle(database.getDatabaseInfo());
-    handler.handle(database.getJdbcDriverInfo());
+    handler.handle(database.getSchemaCrawlerInfo(),
+                   database.getDatabaseInfo(),
+                   database.getJdbcDriverInfo());
 
     for (final ColumnDataType columnDataType: database
       .getSystemColumnDataTypes())

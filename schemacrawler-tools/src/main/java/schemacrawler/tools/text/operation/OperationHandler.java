@@ -139,24 +139,6 @@ public final class OperationHandler
   /**
    * {@inheritDoc}
    */
-  public void handle(final DatabaseInfo database)
-    throws SchemaCrawlerException
-  {
-    dataFormatter.handle(database);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public void handle(final JdbcDriverInfo jdbcDriverInfo)
-    throws SchemaCrawlerException
-  {
-    dataFormatter.handle(jdbcDriverInfo);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
   public void handle(final Procedure procedure)
     throws SchemaCrawlerException
   {
@@ -166,10 +148,12 @@ public final class OperationHandler
   /**
    * {@inheritDoc}
    */
-  public void handle(final SchemaCrawlerInfo schemaCrawlerInfo)
+  public void handle(final SchemaCrawlerInfo schemaCrawlerInfo,
+                     final DatabaseInfo databaseInfo,
+                     final JdbcDriverInfo jdbcDriverInfo)
     throws SchemaCrawlerException
   {
-    dataFormatter.handle(schemaCrawlerInfo);
+    dataFormatter.handle(schemaCrawlerInfo, databaseInfo, jdbcDriverInfo);
   }
 
   /**

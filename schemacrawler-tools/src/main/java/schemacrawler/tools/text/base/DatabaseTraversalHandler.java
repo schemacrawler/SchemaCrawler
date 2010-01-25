@@ -66,28 +66,6 @@ public interface DatabaseTraversalHandler
     throws SchemaCrawlerException;
 
   /**
-   * Handles information on the database.
-   * 
-   * @param database
-   *        Database information
-   * @throws SchemaCrawlerException
-   *         On an exception
-   */
-  void handle(DatabaseInfo databaseInfo)
-    throws SchemaCrawlerException;
-
-  /**
-   * Handles information on the JDBC driver.
-   * 
-   * @param jdbcDriverInfo
-   *        JDBC driver information
-   * @throws SchemaCrawlerException
-   *         On an exception
-   */
-  void handle(JdbcDriverInfo jdbcDriverInfo)
-    throws SchemaCrawlerException;
-
-  /**
    * Provides information on the database schema.
    * 
    * @param procedure
@@ -99,14 +77,20 @@ public interface DatabaseTraversalHandler
     throws SchemaCrawlerException;
 
   /**
-   * Handles information on SchemaCrawler.
+   * Handles information on the database.
    * 
    * @param schemaCrawlerInfo
    *        SchemaCrawler information
+   * @param databaseInfo
+   *        Database information
+   * @param jdbcDriverInfo
+   *        JDBC driver information
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  void handle(SchemaCrawlerInfo schemaCrawlerInfo)
+  void handle(SchemaCrawlerInfo schemaCrawlerInfo,
+              DatabaseInfo databaseInfo,
+              JdbcDriverInfo jdbcDriverInfo)
     throws SchemaCrawlerException;
 
   /**
