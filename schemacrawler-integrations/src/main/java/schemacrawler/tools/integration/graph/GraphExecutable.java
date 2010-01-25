@@ -25,9 +25,8 @@ import java.io.File;
 import java.sql.Connection;
 
 import schemacrawler.schema.Database;
-import schemacrawler.schema.Schema;
-import schemacrawler.schema.Table;
 import schemacrawler.tools.executable.BaseExecutable;
+import schemacrawler.tools.text.base.DatabaseTraverser;
 
 /**
  * Main executor for the graphing integration.
@@ -50,23 +49,13 @@ public final class GraphExecutable
   protected void executeOn(final Database database, final Connection connection)
     throws Exception
   {
+    // Create dot file
     final File dotFile = File.createTempFile("schemacrawler.", ".dot");
+    final DatabaseTraverser traverser = new DatabaseTraverser(database);
     final DotWriter dotWriter = new DotWriter(dotFile);
-    if (database != null)
-    {
-      dotWriter.open();
-      dotWriter.print(database.getSchemaCrawlerInfo(), database
-        .getDatabaseInfo(), database.getJdbcDriverInfo());
-      for (final Schema schema: database.getSchemas())
-      {
-        for (final Table table: schema.getTables())
-        {
-          dotWriter.print(table);
-        }
-      }
-      dotWriter.close();
-    }
+    traverser.traverse(dotWriter);
 
+    // Create graph image
     final GraphGenerator dot = new GraphGenerator(dotFile);
     dot.setGraphOutputFormat(outputOptions.getOutputFormatValue());
     dot.setDiagramFile(outputOptions.getOutputFile());

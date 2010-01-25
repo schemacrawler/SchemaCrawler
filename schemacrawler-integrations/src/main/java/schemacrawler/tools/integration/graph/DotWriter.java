@@ -28,22 +28,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.JdbcDriverInfo;
+import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.text.base.DatabaseTraversalHandler;
 import schemacrawler.tools.text.util.HtmlFormattingHelper;
 import schemacrawler.utility.MetaDataUtility;
 import schemacrawler.utility.MetaDataUtility.Connectivity;
 import sf.util.Utility;
 
 final class DotWriter
+  implements DatabaseTraversalHandler
 {
 
   private static String printColumnAssociation(final String associationName,
@@ -96,7 +100,6 @@ final class DotWriter
   }
 
   private final PrintWriter out;
-
   private final Map<Schema, PastelColor> colorMap;
 
   DotWriter(final File dotFile)
@@ -118,7 +121,14 @@ final class DotWriter
     colorMap = new HashMap<Schema, PastelColor>();
   }
 
-  public void close()
+  public void begin()
+  {
+    final String text = Utility.readFully(HtmlFormattingHelper.class
+      .getResourceAsStream("/dot.header.txt"));
+    out.println(text);
+  }
+
+  public void end()
   {
     out.println("}");
     out.flush();
@@ -126,16 +136,21 @@ final class DotWriter
     out.close();
   }
 
-  public void open()
+  public void handle(final ColumnDataType dataType)
+    throws SchemaCrawlerException
   {
-    final String text = Utility.readFully(HtmlFormattingHelper.class
-      .getResourceAsStream("/dot.header.txt"));
-    out.println(text);
+    // No-operation
   }
 
-  public void print(final SchemaCrawlerInfo schemaCrawlerInfo,
-                    final DatabaseInfo databaseInfo,
-                    final JdbcDriverInfo jdbcDriverInfo)
+  public void handle(final Procedure procedure)
+    throws SchemaCrawlerException
+  {
+    // No-operation
+  }
+
+  public void handle(final SchemaCrawlerInfo schemaCrawlerInfo,
+                     final DatabaseInfo databaseInfo,
+                     final JdbcDriverInfo jdbcDriverInfo)
   {
     final StringBuilder graphInfo = new StringBuilder();
 
@@ -186,7 +201,7 @@ final class DotWriter
     out.println(graphLabel);
   }
 
-  public void print(final Table table)
+  public void handle(final Table table)
   {
     final Schema schema = table.getSchema();
     if (!colorMap.containsKey(schema))
