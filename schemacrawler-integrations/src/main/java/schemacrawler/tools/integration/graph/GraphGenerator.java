@@ -21,7 +21,7 @@ final class GraphGenerator
   private static final Logger LOGGER = Logger.getLogger(GraphGenerator.class
     .getName());
 
-  private static void run(final String... args)
+  private static void executeGraphGeneratorProcess(final String... args)
     throws IOException
   {
     final List<String> command = new ArrayList<String>(Arrays.asList(args));
@@ -95,14 +95,14 @@ final class GraphGenerator
     this.dotFile = dotFile;
     graphOutputFormat = "png";
 
-    run("-V");
+    executeGraphGeneratorProcess("-V");
   }
 
   void generateDiagram()
     throws IOException
   {
     final File diagramFile = getDiagramFile();
-    run("-q",
+    executeGraphGeneratorProcess("-q",
         "-T" + graphOutputFormat,
         "-o",
         diagramFile.getAbsolutePath(),
