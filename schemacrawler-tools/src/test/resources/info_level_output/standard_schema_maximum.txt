@@ -76,6 +76,9 @@ FK_INVOICE_CUSTOMER                        [foreign key, with no action]
 FK_B_ITEM_INVOICE                          [foreign key, with no action]
   ID --> PUBLIC.ITEM.INVOICEID                                  
 
+                                                      [weak association]
+  ID --> SCHEMACRAWLER.ITEM.INVOICEID                              
+
 INDEX_INVOICE_CUSTOMER                                [non-unique index]
   CUSTOMERID                        ascending                   
 
@@ -126,6 +129,9 @@ SYS_IDX_47                                                 [primary key]
 FK_A_ITEM_PRODUCT                          [foreign key, with no action]
   ID --> PUBLIC.ITEM.PRODUCTID                                  
 
+                                                      [weak association]
+  ID --> SCHEMACRAWLER.ITEM.PRODUCTID                              
+
 
 PUBLIC.SUPPLIER                                                  [table]
 ------------------------------------------------------------------------
@@ -153,6 +159,12 @@ SYS_IDX_59                                                 [primary key]
   INVOICEID                         ascending                   
   ITEM                              ascending                   
 
+                                                      [weak association]
+  PUBLIC.PRODUCT.ID --> PRODUCTID                               
+
+                                                      [weak association]
+  PUBLIC.INVOICE.ID --> INVOICEID                               
+
 
 SCHEMACRAWLER.PRODUCT2                                           [table]
 ------------------------------------------------------------------------
@@ -163,14 +175,5 @@ SCHEMACRAWLER.PRODUCT2                                           [table]
 SYS_IDX_61                                                 [primary key]
   ID                                ascending                   
 
-
-
-
-Weak Associations
-========================================================================
-
-
-  PUBLIC.INVOICE.ID --> SCHEMACRAWLER.ITEM.INVOICEID                              
-  PUBLIC.PRODUCT.ID --> SCHEMACRAWLER.ITEM.PRODUCTID                              
 
 
