@@ -28,14 +28,19 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.*;
+import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.JdbcDriverInfo;
+import schemacrawler.schema.Procedure;
+import schemacrawler.schema.SchemaCrawlerInfo;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.DatabaseTraversalHandler;
 
 /**
  * Text formatting of operations output.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public final class OperationHandler
@@ -51,8 +56,9 @@ public final class OperationHandler
 
   /**
    * Text formatting of operations output.
-   *
-   * @param options Options for text formatting of operations output
+   * 
+   * @param options
+   *        Options for text formatting of operations output
    */
   public OperationHandler(final Operation operation,
                           final Query query,
@@ -82,7 +88,7 @@ public final class OperationHandler
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see DatabaseTraversalHandler#begin()
    */
   public void begin()
@@ -105,7 +111,7 @@ public final class OperationHandler
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see DatabaseTraversalHandler#end()
    */
   public void end()
@@ -125,15 +131,6 @@ public final class OperationHandler
    * {@inheritDoc}
    */
   public void handle(final ColumnDataType dataType)
-    throws SchemaCrawlerException
-  {
-    // No-op
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public void handle(final ColumnMap[] weakAssociations)
     throws SchemaCrawlerException
   {
     // No-op
@@ -192,7 +189,9 @@ public final class OperationHandler
   private void executeSqlAndHandleData(final String title, final String sql)
     throws SchemaCrawlerException
   {
-    LOGGER.log(Level.FINE, String.format("Executing query for %s: %s", title, sql));
+    LOGGER.log(Level.FINE, String.format("Executing query for %s: %s",
+                                         title,
+                                         sql));
     Statement statement = null;
     ResultSet results = null;
     try
