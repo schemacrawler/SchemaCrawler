@@ -28,9 +28,10 @@ import java.io.StringReader;
 import sf.util.Utility;
 
 /**
- * Version information for this product. Has methods to obtain information about the product, as well as a main method,
- * so it can be called from the command line.
- *
+ * Version information for this product. Has methods to obtain
+ * information about the product, as well as a main method, so it can be
+ * called from the command line.
+ * 
  * @author Sualeh Fatehi
  */
 public final class Version
@@ -48,13 +49,23 @@ public final class Version
     String[] productLine;
     try
     {
-      productLine = new BufferedReader(new StringReader(ABOUT)).readLine()
-        .split(" ");
+      final String readLine = new BufferedReader(new StringReader(ABOUT))
+        .readLine();
+      if (readLine != null)
+      {
+        productLine = readLine.split(" ");
+      }
+      else
+      {
+        productLine = new String[] {
+            PRODUCTNAME, ""
+        };
+      }
     }
     catch (final IOException e)
     {
-      productLine = new String[]{
-        PRODUCTNAME, ""
+      productLine = new String[] {
+          PRODUCTNAME, ""
       };
     }
     VERSION = productLine[1];
@@ -62,7 +73,7 @@ public final class Version
 
   /**
    * Information about this product.
-   *
+   * 
    * @return Information about this product.
    */
   public static String about()
@@ -72,7 +83,7 @@ public final class Version
 
   /**
    * Product name.
-   *
+   * 
    * @return Product name.
    */
   public static String getProductName()
@@ -82,7 +93,7 @@ public final class Version
 
   /**
    * Product version number.
-   *
+   * 
    * @return Product version number.
    */
   public static String getVersion()
@@ -92,13 +103,13 @@ public final class Version
 
   /**
    * Main routine. Prints information about this product.
-   *
-   * @param args Arguments to the main routine - they are ignored.
+   * 
+   * @param args
+   *        Arguments to the main routine - they are ignored.
    */
   public static void main(final String[] args)
   {
-    System.out
-      .println(about());
+    System.out.println(about());
   }
 
   private Version()
@@ -108,7 +119,7 @@ public final class Version
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see Object#toString()
    */
   @Override
