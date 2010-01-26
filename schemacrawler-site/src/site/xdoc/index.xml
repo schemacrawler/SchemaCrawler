@@ -119,18 +119,15 @@
         <source><![CDATA[
 final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
 final Database database = SchemaCrawlerUtility.getDatabase(connection, options);
-for (final Catalog catalog: database.getCatalogs())
+for (final Schema schema: database.getSchemas())
 {
-  for (final Schema schema: catalog.getSchemas())
+  System.out.println(schema);
+  for (final Table table: schema.getTables())
   {
-    System.out.println(schema);
-    for (final Table table: schema.getTables())
+    System.out.println("o--> " + table);
+    for (final Column column: table.getColumns())
     {
-      System.out.print("o--> " + table);
-      for (final Column column: table.getColumns())
-      {
-        System.out.println("     o--> " + column);
-      }
+      System.out.println("     o--> " + column);
     }
   }
 }
@@ -170,15 +167,25 @@ for (final Catalog catalog: database.getCatalogs())
           <a href="http://sourceforge.net/projects/schemacrawler/files/">download</a>
           .
         </p>
+        <p>
+          SchemaCrawler is integrated with, and allows you to write templates to generate SQL scripts or any other text
+          output, using templating engines, such as
+          <a href="http://velocity.apache.org/">Apache Velocity</a>
+          or
+          <a href="http://freemarker.org/">&lt;FreeMarker&gt;</a>
+          . However, you will need to download Apache Velocity or &lt;FreeMarker&gt;
+          separately, since these are not part
+          of the
+          SchemaCrawler download.
+        </p>
       </subsection>
       <subsection name="SchemaCrawler Website Content License">
         <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">
-          <img alt="Creative Commons License" style="border-width:0"
-               src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png"/>
+          <img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" />
         </a>
-        <br/>
+        <br />
         <span xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://purl.org/dc/dcmitype/Text" property="dc:title"
-              rel="dc:type">SchemaCrawler Website
+          rel="dc:type">SchemaCrawler Website
         </span>
         by
         <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Sualeh
@@ -190,7 +197,7 @@ for (final Catalog catalog: database.getCatalogs())
           Unported License
         </a>
         .
-        <br/>
+        <br />
         Based on a work at
         <a xmlns:dc="http://purl.org/dc/elements/1.1/" href="http://schemacrawler.sourceforge.net/" rel="dc:source">
           schemacrawler.sourceforge.net
