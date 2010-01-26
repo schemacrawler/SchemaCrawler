@@ -51,13 +51,13 @@ final class SchemaRetriever
 
     supportsCatalogs = dbMetaData.supportsCatalogsInTableDefinitions();
     LOGGER.log(Level.CONFIG, String
-      .format("Database %s catalogs", (supportsCatalogs ? "supports"
-      : "does not support")));
+      .format("Database %s catalogs", (supportsCatalogs? "supports"
+                                                       : "does not support")));
 
     supportsSchemas = dbMetaData.supportsSchemasInTableDefinitions();
     LOGGER.log(Level.CONFIG, String
-      .format("Database %s schemas", (supportsSchemas ? "supports"
-      : "does not support")));
+      .format("Database %s schemas", (supportsSchemas? "supports"
+                                                     : "does not support")));
   }
 
   /**
@@ -75,10 +75,10 @@ final class SchemaRetriever
       final SchemaReference schemaRef = iterator.next();
       final String schemaFullName = schemaRef.getFullName();
       if (schemaInclusionRule != null && schemaFullName != null
-        && !schemaInclusionRule.include(schemaFullName))
+          && !schemaInclusionRule.include(schemaFullName))
       {
         LOGGER.log(Level.FINER, "Dropping schema, since schema is excluded: "
-          + schemaRef.getFullName());
+                                + schemaRef.getFullName());
         iterator.remove();
         // continue
       }
@@ -86,7 +86,7 @@ final class SchemaRetriever
 
     // Create schemas for the catalogs, as well as create the schema
     // reference cache
-    for (final SchemaReference schemaRef : schemaRefs)
+    for (final SchemaReference schemaRef: schemaRefs)
     {
       database.addSchema(schemaRef);
     }
@@ -102,7 +102,7 @@ final class SchemaRetriever
 
   /**
    * Retrieves all catalog names.
-   *
+   * 
    * @return All catalog names in the database
    */
   private Set<String> retrieveAllCatalogs()
@@ -155,11 +155,11 @@ final class SchemaRetriever
           {
             if (allCatalogNames.isEmpty())
             {
-              schemaRefs.add(new SchemaReference(catalogName, schemaName));
+              schemaRefs.add(new SchemaReference(null, schemaName));
             }
             else
             {
-              for (final String expectedCatalogName : allCatalogNames)
+              for (final String expectedCatalogName: allCatalogNames)
               {
                 schemaRefs.add(new SchemaReference(expectedCatalogName,
                                                    schemaName));
@@ -179,7 +179,7 @@ final class SchemaRetriever
     }
     else
     {
-      for (final String catalogName : allCatalogNames)
+      for (final String catalogName: allCatalogNames)
       {
         LOGGER.log(Level.FINER, String.format("Retrieving schema: %s --> %s",
                                               catalogName,
