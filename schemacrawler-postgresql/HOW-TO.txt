@@ -1,0 +1,15 @@
+SchemaCrawler
+http://sourceforge.net/projects/schemacrawler
+Copyright (c) 2000-2010, Sualeh Fatehi.
+
+How-to Guide
+
+This distribution of SchemaCrawler is bundled with a free database driver, and 
+does not require you to download any other SchemaCrawler distributions. 
+
+All the SchemaCrawler integrations, that is, integrations for JavaScript, 
+Velocity, FreeMarker, and graphing are available. However, the jars files for 
+these third-party libraries are not provided. You can download the libraries 
+that you want to use from their respective websites, and place them in the lib 
+folder of the SchemaCrawler distribution. Any jar files in the SchemaCrawler lib 
+folder will be used automatically.
