@@ -96,6 +96,14 @@ public abstract class BaseFormatter<O extends Options>
     {
       return;
     }
+
+    if (schemaCrawlerInfo != null && databaseInfo != null
+        && jdbcDriverInfo != null)
+    {
+      out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
+                                                "System Information"));
+    }
+
     handle(schemaCrawlerInfo);
     handle(databaseInfo);
     handle(jdbcDriverInfo);
@@ -192,9 +200,6 @@ public abstract class BaseFormatter<O extends Options>
     {
       return;
     }
-
-    out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                              "System Information"));
 
     out.println(formattingHelper.createHeader(DocumentHeaderType.section,
                                               "SchemaCrawler Information"));
