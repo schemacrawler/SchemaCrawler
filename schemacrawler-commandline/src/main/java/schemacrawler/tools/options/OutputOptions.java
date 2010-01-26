@@ -123,13 +123,24 @@ public final class OutputOptions
    */
   public void closeOutputWriter(final Writer writer)
   {
+    if (writer != null)
+    {
+      try
+      {
+        writer.flush();
+      }
+      catch (final IOException e)
+      {
+        LOGGER.log(Level.WARNING, "Exception flushing output writer", e);
+      }
+    }
+
     if (outputFile != null)
     {
       if (writer != null)
       {
         try
         {
-          writer.flush();
           writer.close();
           LOGGER.log(Level.INFO, "Closed output writer to file, "
                                  + outputFile.getAbsolutePath());
