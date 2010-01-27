@@ -62,7 +62,8 @@ final class CommandLineConnectionOptionsParser
     {
       final String jdbcDriverClassName = optionDriver.getValue();
       final String connectionUrl = optionConnectionUrl.getValue();
-      if (Utility.isBlank(connectionUrl))
+      if (Utility.isBlank(jdbcDriverClassName)
+          || Utility.isBlank(connectionUrl))
       {
         conenctionOptions = null;
       }
