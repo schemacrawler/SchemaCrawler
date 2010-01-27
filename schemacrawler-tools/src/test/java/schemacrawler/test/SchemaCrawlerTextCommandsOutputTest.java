@@ -21,6 +21,8 @@
 package schemacrawler.test;
 
 
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,6 +36,7 @@ import org.junit.Test;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
@@ -42,8 +45,6 @@ import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.utility.TestDatabase;
 import sf.util.TestUtility;
-
-import static org.junit.Assert.fail;
 
 public class SchemaCrawlerTextCommandsOutputTest
 {
@@ -57,8 +58,8 @@ public class SchemaCrawlerTextCommandsOutputTest
       throws SAXException, IOException
     {
       final String localResource = "/xhtml1"
-        + systemId.substring(systemId
-        .lastIndexOf('/'));
+                                   + systemId.substring(systemId
+                                     .lastIndexOf('/'));
       final InputStream entityStream = LocalEntityResolver.class
         .getResourceAsStream(localResource);
       if (entityStream == null)
@@ -135,13 +136,17 @@ public class SchemaCrawlerTextCommandsOutputTest
     throws Exception
   {
     final String referenceFile = command + ".txt";
-    final File testOutputFile = File.createTempFile("schemacrawler." + referenceFile + ".",
+    final File testOutputFile = File.createTempFile("schemacrawler."
+                                                        + referenceFile + ".",
                                                     ".test");
     testOutputFile.delete();
 
     final OutputOptions outputOptions = new OutputOptions(OutputFormat.text,
                                                           testOutputFile
                                                             .getAbsolutePath());
+    outputOptions.setNoInfo(true);
+    outputOptions.setNoHeader(true);
+    outputOptions.setNoFooter(true);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setAdditionalConfiguration(config);
