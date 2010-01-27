@@ -1,1 +1,1 @@
-java -classpath ../schemacrawler-8.0.jar:../hsqldb.jar schemacrawler.tools.integration.scripting.Main -g schemacrawler.config.properties -c hsqldb -command verbose_schema -outputformat $1
+java -classpath ../schemacrawler-8.0.jar:../hsqldb.jar schemacrawler.Main -g schemacrawler.config.properties -c hsqldb -command script -infolevel=maximum -sorttables=false -outputformat $1
