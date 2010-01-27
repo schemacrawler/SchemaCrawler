@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -51,12 +52,18 @@ public final class CommandRegistry
     throws SchemaCrawlerException
   {
     final Map<String, String> commandRegistry = new HashMap<String, String>();
-    final List<URL> commandRegistryUrls;
+    final Set<URL> commandRegistryUrls = new HashSet<URL>();
     try
     {
-      final Enumeration<URL> resources = Thread.currentThread()
-        .getContextClassLoader().getResources("command.properties");
-      commandRegistryUrls = Collections.list(resources);
+      Enumeration<URL> resources;
+
+      resources = Thread.currentThread().getContextClassLoader()
+        .getResources("tools.command.properties");
+      commandRegistryUrls.addAll(Collections.list(resources));
+      //
+      resources = Thread.currentThread().getContextClassLoader()
+        .getResources("command.properties");
+      commandRegistryUrls.addAll(Collections.list(resources));
     }
     catch (final IOException e)
     {
