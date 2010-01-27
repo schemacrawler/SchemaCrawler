@@ -65,9 +65,20 @@ public final class SchemaTextFormatter
   private static final Logger LOGGER = Logger
     .getLogger(SchemaTextFormatter.class.getName());
 
+  private static String negate(final boolean positive, final String text)
+  {
+    String textValue = text;
+    if (!positive)
+    {
+      textValue = "not " + textValue;
+    }
+    return textValue;
+  }
+
   private final SchemaTextDetailType schemaTextDetailType;
   private int tableCount;
   private int procedureCount;
+
   private int columnDataTypeCount;
 
   /**
@@ -166,9 +177,9 @@ public final class SchemaTextFormatter
 
     final boolean underscore = schemaTextDetailType != SchemaTextDetailType.list_objects;
     final String procedureTypeDetail = "procedure, " + procedure.getType();
-    out.println(formattingHelper.createNameRow(procedure.getFullName(),
-                                               "[" + procedureTypeDetail + "]",
-                                               underscore));
+    final String nameRow = formattingHelper.createNameRow(procedure
+      .getFullName(), "[" + procedureTypeDetail + "]", underscore);
+    out.println(nameRow);
 
     if (schemaTextDetailType != SchemaTextDetailType.list_objects)
     {
@@ -201,18 +212,14 @@ public final class SchemaTextFormatter
                                                      column.getName(),
                                                      columnType.toString()));
       }
-    }
-    printDefinition(procedure.getDefinition());
+      printDefinition(procedure.getDefinition());
 
-    if (schemaTextDetailType != SchemaTextDetailType.list_objects)
-    {
       out.println(formattingHelper.createObjectEnd());
     }
 
     out.flush();
 
     procedureCount++;
-
   }
 
   /**
@@ -230,20 +237,17 @@ public final class SchemaTextFormatter
                                                 "Tables"));
     }
 
+    if (schemaTextDetailType != SchemaTextDetailType.list_objects)
+    {
+      out.print(formattingHelper.createObjectStart(""));
+    }
+
     final boolean underscore = schemaTextDetailType != SchemaTextDetailType.list_objects;
     final String nameRow = formattingHelper.createNameRow(table.getFullName(),
                                                           "["
                                                               + table.getType()
                                                                 .name() + "]",
                                                           underscore);
-
-    if (schemaTextDetailType != SchemaTextDetailType.list_objects
-        || schemaTextDetailType == SchemaTextDetailType.list_objects
-        && tableCount == 0)
-    {
-      out.print(formattingHelper.createObjectStart(""));
-    }
-
     out.println(nameRow);
 
     if (schemaTextDetailType != SchemaTextDetailType.list_objects)
@@ -272,17 +276,6 @@ public final class SchemaTextFormatter
     out.flush();
 
     tableCount++;
-
-  }
-
-  private static String negate(final boolean positive, final String text)
-  {
-    String textValue = text;
-    if (!positive)
-    {
-      textValue = "not " + textValue;
-    }
-    return textValue;
   }
 
   private void printCheckConstraints(final CheckConstraint[] constraints)
@@ -440,19 +433,6 @@ public final class SchemaTextFormatter
     }
   }
 
-  private void printWeakAssociations(final String tableName,
-                                     final ColumnMap[] weakAssociations)
-  {
-    for (final ColumnMap weakAssociation: weakAssociations)
-    {
-      out.println(formattingHelper.createEmptyRow());
-      out.println(formattingHelper.createNameRow("",
-                                                 "[weak association]",
-                                                 false));
-      printColumnPairs(tableName, weakAssociation);
-    }
-  }
-
   private void printIndices(final Index[] indices)
   {
     for (final Index index: indices)
@@ -605,6 +585,19 @@ public final class SchemaTextFormatter
           out.println(formattingHelper.createDefinitionRow(actionStatement));
         }
       }
+    }
+  }
+
+  private void printWeakAssociations(final String tableName,
+                                     final ColumnMap[] weakAssociations)
+  {
+    for (final ColumnMap weakAssociation: weakAssociations)
+    {
+      out.println(formattingHelper.createEmptyRow());
+      out.println(formattingHelper.createNameRow("",
+                                                 "[weak association]",
+                                                 false));
+      printColumnPairs(tableName, weakAssociation);
     }
   }
 
