@@ -6,7 +6,7 @@
   Optional, defaults to true
   
 -sortcolumns=<boolean>
-  Sort columns in a table alphabetically, defaults to false
+  Sort columns in a table alphabetically
   <boolean> can be true or false
   Optional, defaults to false
 

@@ -43,12 +43,6 @@ final class OutputOptionsParser
   private final StringOption optionOutputFile = new StringOption(Option.NO_SHORT_FORM,
                                                                  "outputfile",
                                                                  "");
-  private final BooleanOption optionAppend = new BooleanOption(Option.NO_SHORT_FORM,
-                                                               "append");
-  private final BooleanOption optionNoHeader = new BooleanOption(Option.NO_SHORT_FORM,
-                                                                 "noheader");
-  private final BooleanOption optionNoFooter = new BooleanOption(Option.NO_SHORT_FORM,
-                                                                 "nofooter");
   private final BooleanOption optionNoInfo = new BooleanOption(Option.NO_SHORT_FORM,
                                                                "noinfo");
 
@@ -61,13 +55,7 @@ final class OutputOptionsParser
   protected OutputOptions getOptions()
   {
     parse(new Option[] {
-        optionOutputFormat,
-        optionOutputFile,
-        optionAppend,
-        optionNoHeader,
-        optionNoFooter,
-        optionNoInfo,
-        optionNoInfo
+        optionOutputFormat, optionOutputFile, optionNoInfo, optionNoInfo
     });
 
     final String outputFormatValue = optionOutputFormat.getValue();
@@ -75,9 +63,6 @@ final class OutputOptionsParser
 
     final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
                                                           outputFile);
-    outputOptions.setAppendOutput(optionAppend.getValue());
-    outputOptions.setNoHeader(optionNoHeader.getValue());
-    outputOptions.setNoFooter(optionNoFooter.getValue());
     outputOptions.setNoInfo(optionNoInfo.getValue());
 
     return outputOptions;
