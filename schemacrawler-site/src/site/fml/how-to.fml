@@ -211,8 +211,7 @@ schemacrawler.format.hide_constraint_names=false
 					directory for more details.
 					An example of a SchemaCrawler database diagram:
 				</p>
-				<img src="images/graph.png" width="100%"
-					alt="SchemaCrawler database diagram" />
+				<img src="images/diagram.png" width="100%" alt="SchemaCrawler database diagram" />
 			</answer>
 		</faq>
 	</part>

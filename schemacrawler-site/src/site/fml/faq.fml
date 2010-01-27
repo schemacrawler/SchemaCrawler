@@ -51,6 +51,16 @@
           SchemaCrawler can output all the data in your tables and views, or run specific SQL statements against table
           and views. SchemaCrawler can be fine-tuned using configuration files. </p>
         <source><![CDATA[
+
+SchemaCrawler 8.0
+Copyright (c) 2000-2010, Sualeh Fatehi.
+SchemaCrawler is a platform (operating system and database) independent command-
+line tool to output your database schema and data in a readable form. The output 
+is designed to be diff-ed with previous versions of your database schema. 
+SchemaCrawler has powerful grep  functionality that allows you to search for 
+table and column names using regular expressions. SchemaCrawler can also 
+generate schema diagrams.
+
 --- Connection Options ---
 
 Required, one of:
@@ -75,40 +85,6 @@ Or, the following:
 -password=<password>
   Database password.
 
---- Commands ---
-
--command=<command>
-  Where <command> is a comma-separated list of:
-    standard_schema
-      Shows the commonly needed detail of the schema, including details of 
-      tables, views and procedures, columns, primary keys, indexes, 
-      and foreign keys
-    brief_schema
-      Shows only table, view and procedure names
-    basic_schema
-      Shows more details of tables, views and procedures, including columns 
-      and primary keys
-    verbose_schema
-      Shows the most detail of the schema, including data types, indexes, 
-      foreign keys, and view and procedure definitions
-    verbose_schema
-      Shows maximum possible detail of the schema, including privileges, and 
-      details of privileges, triggers, and check constraints
-    count
-      Shows counts of rows in the tables
-    dump
-      Shows data from all rows in the tables
-    <query_name>
-      Shows results of query <query_name>, as specified in the configuration 
-      properties file
-      The query itself can contain the variables ${table}, ${columns} 
-      and ${tabletype},  or system properties referenced as 
-      ${<system-property-name>}
-      Queries without any variables are executed exactly once; wueries
-      with variables are executed once for each table, with the variables
-      substituted
-  Optional, default is standard_schema
-  
 --- Sort Options ---
 
 -sorttables=<boolean>
@@ -127,60 +103,51 @@ Or, the following:
   Optional, defaults to false
   
 --- Filtering Options ---
-    
--catalogs=<regular-expression>
-  <regular-expression> is a regular expression to match catalog names 
-  for example, 
-  -catalogs=.*\.C.*|.*\.P.*
-  matches any catalogs whose names start with C or P
-  Catalogs that do not match the pattern are not displayed
-  Optional, defaults to showing all catalogs
      
+-infolevel=<infolevel>
+  <infolevel> is one of minimum, standard, detailed, or maximum
+  The info level determines the amount of database metadata retrieved,
+  and also determines the time taken to crawl the schema
+  Optional, defaults to standard
+       
 -schemas=<regular-expression>
-  <regular-expression> is a regular expression to match schema names 
-  for example, 
+  <regular-expression> is a regular expression to match fully qualified schema 
+  namess, in the form "CATALOGNAME.SCHEMANAME" - for example,
   -schemas=.*\.C.*|.*\.P.*
   matches any schemas whose names start with C or P
   Schemas that do not match the pattern are not displayed
   Optional, defaults to showing all schemas
-        
--schemapattern=<schemapattern>
-  <schemapattern> is a JDBC pattern (which can include _ or %)
-  for the schemas to crawl and optimizes the retrieval of
-  tables; if the -schemas option is used, then it is best
-  to specify this option in addition
-  Optional, defaults to all schemas in the catalog
   
 -table_types=<table_types>
-  <table_types> is a command separated list of table types of 
+  <table_types> is a comma-separated list of table types of 
   TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS
   Optional, defaults to TABLE,VIEW
   
--show_stored_procedures
+-show_stored_procedures=<boolean>
   Whether to show procedures, or not
   Optional, defaults to true
   
 -tables=<regular-expression>
-  <regular-expression> is a regular expression to match table 
-  names - for example, 
-  -tables=C.*|P.*
-  matches any table whose names start with C or P
+  <regular-expression> is a regular expression to match fully qualified table 
+  names, in the form "CATALOGNAME.SCHEMANAME.TABLENAME" - for example, 
+  -tables=.*\.C.*|.*\.P.*
+  matches any tables whose names start with C or P
   Tables that do not match the pattern are not displayed
   Optional, defaults to showing all tables
     
 -excludecolumns=<regular-expression>
-  <regular-expression> is a regular expression to match fully qualified 
-  column names, in the form "SCHEMANAME.TABLENAME.COLUMNNAME" - for example, 
+  <regular-expression> is a regular expression to match fully qualified column 
+  names, in the form "CATALOGNAME.SCHEMANAME.TABLENAME.COLUMNNAME" - for example, 
   -excludecolumns=.*\.STREET|.*\.PRICE
   matches columns named STREET or PRICE in any table
   Columns that match the pattern are not displayed
   Optional, default is to show all columns
       
 -procedures=<regular-expression>
-  <regular-expression> is a regular expression to match procedure 
-  names - for example, 
-  -procedures=C.*|P.*
-  matches any procedure whose names start with C or P
+  <regular-expression> is a regular expression to match fully qualified procedure 
+  names, in the form "CATALOGNAME.SCHEMANAME.PROCEDURENAME" - for example, 
+  -procedures=.*\.C.*|.*\.P.*
+  matches any procedures whose names start with C or P
   Procedures that do not match the pattern are not displayed
   Optional, defaults to showing all procedures
     
@@ -224,6 +191,44 @@ Or, the following:
   configuration file
   Optional, defaults to no overrides
 
+--- Application Options ---
+
+-loglevel=<loglevel>
+  Sets the logging granularity, where <loglevel> is one of: 
+  OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL
+  Optional, default OFF
+
+-?, -h, -help, --help
+  Shows this help text
+
+--- Command ---
+
+-command=<command>
+  Where <command> is a comma-separated list of:
+    list_objects
+      Shows only table, view and procedure names  
+    standard_schema
+      Shows the commonly needed detail of the schema, including details of 
+      tables, views and procedures, columns, primary keys, indexes, 
+      and foreign keys
+    verbose_schema
+      Shows maximum possible detail of the schema, including privileges, and 
+      details of privileges, triggers, and check constraints
+    count
+      Shows counts of rows in the tables
+    dump
+      Shows data from all rows in the tables
+    <query_name>
+      Shows results of query <query_name>, as specified in the configuration 
+      properties file
+      The query itself can contain the variables ${table}, ${columns} 
+      and ${tabletype},  or system properties referenced as 
+      ${<system-property-name>}
+      Queries without any variables are executed exactly once; queries
+      with variables are executed once for each table, with the variables
+      substituted
+  Optional, default is standard_schema
+
 --- Output Options ---
 
 -outputformat=<outputformat>
@@ -234,23 +239,11 @@ Or, the following:
       For XHTML output
     csv
       For CSV output
-    dot
-      For DOT chart format output
   Optional, defaults to text    
       
 -outputfile=<outputfile>
   <outputfile> is the path to the output file
   Optional, defaults to the console (stdout)
-
---- Application Options ---
-
--loglevel=<loglevel>
-  Sets the logging granularity, where <loglevel> is one of: 
-  OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL
-  Optional, default OFF
-
--?, -h, -help, --help
-  Shows this help text
 ]]></source>
       </answer>
     </faq>
@@ -483,7 +476,7 @@ Or, the following:
         </p>
         <p>
           <img src="http://www.gnu.org/graphics/gplv3-88x31.png" alt="GPL" />
-          SchemaCrawler is also distributed pre-packaged for different database systems such as 
+          SchemaCrawler is also distributed bundled with a JDBC driver for different database systems such as 
           <a href="http://www.oracle.com/">Oracle</a>,
           <a href="http://www.microsoft.com/sqlserver">Microsoft SQL Server</a>
           ,
