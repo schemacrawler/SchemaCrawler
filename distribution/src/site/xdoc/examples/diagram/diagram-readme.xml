@@ -15,10 +15,6 @@
       <subsection name="How to Run">
         <ol type="1">
           <li>Install
-            <a href="http://ant.apache.org/">ant</a>, and make sure that ant is on your
-            path.
-          </li>
-          <li>Install
             <a href="http://www.graphviz.org/">Graphviz</a>, and make sure that Graphviz is on your
             path.
           </li>
