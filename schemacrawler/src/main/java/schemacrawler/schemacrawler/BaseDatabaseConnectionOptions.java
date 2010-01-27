@@ -76,7 +76,7 @@ abstract class BaseDatabaseConnectionOptions
     {
       LOGGER.log(Level.WARNING,
                  "Could not get a database driver for database connection URL "
-                   + getConnectionUrl());
+                     + getConnectionUrl());
       return null;
     }
   }
@@ -105,15 +105,10 @@ abstract class BaseDatabaseConnectionOptions
   public final String toString()
   {
     final StringBuilder builder = new StringBuilder();
-    builder.append("driver=")
-      .append(getJdbcDriver().getClass().getName())
+    builder.append("driver=").append(getJdbcDriver().getClass().getName())
       .append(Utility.NEWLINE);
-    builder.append("url=")
-      .append(getConnectionUrl())
-      .append(Utility.NEWLINE);
-    builder.append("user=")
-      .append(getUser())
-      .append(Utility.NEWLINE);
+    builder.append("url=").append(getConnectionUrl()).append(Utility.NEWLINE);
+    builder.append("user=").append(getUser()).append(Utility.NEWLINE);
     return builder.toString();
   }
 
@@ -127,7 +122,7 @@ abstract class BaseDatabaseConnectionOptions
     catch (final Exception e)
     {
       throw new SchemaCrawlerException("Could not load JDBC driver, "
-        + jdbcDriverClassName);
+                                       + jdbcDriverClassName, e);
     }
   }
 
