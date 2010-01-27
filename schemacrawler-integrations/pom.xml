@@ -20,6 +20,7 @@
 		    <groupId>org.apache.velocity</groupId>
 		    <artifactId>velocity</artifactId>
 		    <version>1.5</version>
+		    <scope>provided</scope>
 		</dependency>
     <dependency>
       <groupId>com.thoughtworks.xstream</groupId>
