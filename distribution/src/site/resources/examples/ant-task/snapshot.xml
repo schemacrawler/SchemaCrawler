@@ -32,6 +32,7 @@
       db-driver-classpath="db-driver-classpath"
       user="sa"
       password=""
+    	driver="org.hsqldb.jdbcDriver"
       url="jdbc:hsqldb:hsql://localhost:9001/schemacrawler"
       command="verbose_schema,count"
       outputfile="${outputfile}"/>
