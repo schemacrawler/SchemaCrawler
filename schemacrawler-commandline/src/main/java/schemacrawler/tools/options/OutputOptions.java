@@ -86,10 +86,6 @@ public final class OutputOptions
     {
       outputFile = new File(outputFilename);
     }
-
-    noHeader = true;
-    noFooter = true;
-    noInfo = true;
   }
 
   /**
@@ -109,10 +105,6 @@ public final class OutputOptions
     {
       outputFile = new File(outputFilename);
     }
-
-    noHeader = true;
-    noFooter = true;
-    noInfo = true;
   }
 
   /**

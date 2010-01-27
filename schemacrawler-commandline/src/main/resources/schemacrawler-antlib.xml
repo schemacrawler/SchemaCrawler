@@ -47,14 +47,6 @@
       description="Comma-separated list of commands"/>
 
     <attribute
-      name="no-header"
-      description="Whether to print the header - true or false"
-      default="false"/>
-    <attribute
-      name="no-footer"
-      description="Whether to print the footer - true or false"
-      default="false"/>
-    <attribute
       name="no-info"
       description="Whether to print information - true or false"
       default="false"/>
@@ -66,11 +58,6 @@
     <attribute
       name="outputfile"
       description="Path to output file"/>
-
-    <attribute
-      name="append"
-      description="Whether to append to the output - true or false"
-      default="false"/>
 
     <attribute
       name="tables"
@@ -140,12 +127,9 @@
         <arg value="-grepcolumns=@{grepcolumns}"/>
         <arg value="-grepinout=@{grepinout}"/>
         <arg value="-v=@{invert-match}"/>
-        <arg value="-noheader=@{no-header}"/>
-        <arg value="-nofooter=@{no-footer}"/>
         <arg value="-noinfo=@{no-info}"/>
         <arg value="-outputformat=@{outputformat}"/>
         <arg value="-outputfile=@{outputfile}"/>
-        <arg value="-append=@{append}"/>
         <arg value="-loglevel=@{loglevel}"/>
       </java>
 
