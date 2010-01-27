@@ -59,12 +59,12 @@
 
   <target name="make-super-jar">
 
-    <jar destfile="${schemacrawler.distibution.jar}" duplicate="preserve" index="true">
+    <jar destfile="${schemacrawler.distibution.jar}" index="true">
       <manifest>
         <attribute name="Product" value="SchemaCrawler"/>
         <attribute name="Version" value="${SchemaCrawler.version}"/>
         <attribute name="Author" value="Sualeh Fatehi sualeh@hotmail.com"/>
-        <attribute name="Copyright" value="(c) 2003-2009, Sualeh Fatehi"/>
+        <attribute name="Copyright" value="(c) 2003-2010, Sualeh Fatehi"/>
         <attribute name="Main-Class" value="schemacrawler.Main"/>
       </manifest>
       <zipfileset dir="${SchemaCrawler.home}/schemacrawler/target/classes"/>
@@ -252,8 +252,9 @@
         <zipfileset dir="${distribution.target}/@{database}-launches"
                     prefix="schemacrawler-@{database}-${SchemaCrawler.version}"/>
         <zipfileset dir="${distribution.target}" prefix="schemacrawler-@{database}-${SchemaCrawler.version}/lib">
-          <include name="schemacrawler*.jar"/>
+          <include name="schemacrawler-@{database}-${SchemaCrawler.version}.jar"/>
         </zipfileset>
+        <zipfileset file="${schemacrawler.distibution.jar}" prefix="schemacrawler-@{database}-${SchemaCrawler.version}/lib"/>
       </zip>
 
       <delete dir="${distribution.target}/@{database}-launches"/>
