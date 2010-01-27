@@ -36,8 +36,6 @@
       For XHTML output
     csv
       For CSV output
-    dot
-      For DOT chart format output
   Optional, defaults to text    
       
 -outputfile=<outputfile>
