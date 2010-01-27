@@ -28,6 +28,11 @@
 
 --- Output Options ---
 
+-noinfo=<boolean>
+  Hides database information
+  <boolean> can be true or false
+  Optional, defaults to false
+  
 -outputformat=<outputformat>
   Format of the SchemaCrawler output, where <outputformat> is one of:
     text
