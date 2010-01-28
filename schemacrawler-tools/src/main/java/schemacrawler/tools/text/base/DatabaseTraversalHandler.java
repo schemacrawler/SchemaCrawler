@@ -66,7 +66,7 @@ public interface DatabaseTraversalHandler
     throws SchemaCrawlerException;
 
   /**
-   * Provides information on the database schema.
+   * Provides information on the database procedure.
    * 
    * @param procedure
    *        Procedure information
@@ -94,7 +94,7 @@ public interface DatabaseTraversalHandler
     throws SchemaCrawlerException;
 
   /**
-   * Provides information on the database schema.
+   * Provides information on the database table.
    * 
    * @param table
    *        Table information
@@ -104,4 +104,55 @@ public interface DatabaseTraversalHandler
   void handle(Table table)
     throws SchemaCrawlerException;
 
+  /**
+   * Handles end of database column data types block.
+   * 
+   * @throws SchemaCrawlerException
+   *         On an exception
+   */
+  void handleColumnDataTypesEnd();
+
+  /**
+   * Handles start of database column data types block.
+   * 
+   * @throws SchemaCrawlerException
+   *         On an exception
+   */
+  void handleColumnDataTypesStart();
+
+  /**
+   * Handles end of database procedures block.
+   * 
+   * @throws SchemaCrawlerException
+   *         On an exception
+   */
+  void handleProceduresEnd()
+    throws SchemaCrawlerException;
+
+  /**
+   * Handles start of database procedures block.
+   * 
+   * @throws SchemaCrawlerException
+   *         On an exception
+   */
+  void handleProceduresStart()
+    throws SchemaCrawlerException;
+
+  /**
+   * Handles end of database tables block.
+   * 
+   * @throws SchemaCrawlerException
+   *         On an exception
+   */
+  void handleTablesEnd()
+    throws SchemaCrawlerException;
+
+  /**
+   * Handles start of database tables block.
+   * 
+   * @throws SchemaCrawlerException
+   *         On an exception
+   */
+  void handleTablesStart()
+    throws SchemaCrawlerException;
 }

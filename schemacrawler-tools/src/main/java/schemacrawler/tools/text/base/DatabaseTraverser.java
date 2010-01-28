@@ -1,6 +1,10 @@
 package schemacrawler.tools.text.base;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Procedure;
@@ -31,37 +35,46 @@ public class DatabaseTraverser
                    database.getDatabaseInfo(),
                    database.getJdbcDriverInfo());
 
-    for (final ColumnDataType columnDataType: database
-      .getSystemColumnDataTypes())
-    {
-      handler.handle(columnDataType);
+    final List<ColumnDataType> columnDataTypes = new ArrayList<ColumnDataType>();
+    final List<Table> tables = new ArrayList<Table>();
+    final List<Procedure> procedures = new ArrayList<Procedure>();
 
+    columnDataTypes.addAll(Arrays.asList(database.getSystemColumnDataTypes()));
+    for (final Schema schema: database.getSchemas())
+    {
+      columnDataTypes.addAll(Arrays.asList(schema.getColumnDataTypes()));
+      tables.addAll(Arrays.asList(schema.getTables()));
+      procedures.addAll(Arrays.asList(schema.getProcedures()));
     }
 
-    final Schema[] schemas = database.getSchemas();
-
-    for (final Schema schema: schemas)
+    if (!columnDataTypes.isEmpty())
     {
-      for (final ColumnDataType columnDataType: schema.getColumnDataTypes())
+      handler.handleColumnDataTypesStart();
+      for (final ColumnDataType columnDataType: columnDataTypes)
       {
         handler.handle(columnDataType);
       }
+      handler.handleColumnDataTypesEnd();
     }
 
-    for (final Schema schema: schemas)
+    if (!tables.isEmpty())
     {
-      for (final Table table: schema.getTables())
+      handler.handleTablesStart();
+      for (final Table table: tables)
       {
         handler.handle(table);
       }
+      handler.handleTablesEnd();
     }
 
-    for (final Schema schema: schemas)
+    if (!procedures.isEmpty())
     {
-      for (final Procedure procedure: schema.getProcedures())
+      handler.handleProceduresStart();
+      for (final Procedure procedure: procedures)
       {
         handler.handle(procedure);
       }
+      handler.handleProceduresEnd();
     }
 
     handler.end();

@@ -26,8 +26,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import schemacrawler.crawl.JavaSqlType.JavaSqlTypeGroup;
 import schemacrawler.crawl.JavaSqlTypesUtility;
+import schemacrawler.crawl.JavaSqlType.JavaSqlTypeGroup;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import sf.util.TemplatingUtility;
@@ -35,7 +35,7 @@ import sf.util.Utility;
 
 /**
  * A SQL query. May be parameterized with ant-like variable references.
- *
+ * 
  * @author sfatehi
  */
 public final class Query
@@ -52,8 +52,7 @@ public final class Query
     {
       final Column column = columnsArray[i];
       final JavaSqlTypeGroup javaSqlTypeGroup = JavaSqlTypesUtility
-        .lookupSqlDataType(column.getType().getType())
-        .getJavaSqlTypeGroup();
+        .lookupSqlDataType(column.getType().getType()).getJavaSqlTypeGroup();
       if (javaSqlTypeGroup != JavaSqlTypeGroup.binary)
       {
         if (i > 0)
@@ -71,10 +70,13 @@ public final class Query
   private final String query;
 
   /**
-   * Definition of a query, including a name, and parameterized or regular SQL.
-   *
-   * @param name  Query name.
-   * @param query Query SQL.
+   * Definition of a query, including a name, and parameterized or
+   * regular SQL.
+   * 
+   * @param name
+   *        Query name.
+   * @param query
+   *        Query SQL.
    */
   public Query(final String name, final String query)
   {
@@ -87,14 +89,14 @@ public final class Query
     if (Utility.isBlank(query))
     {
       throw new IllegalArgumentException("No SQL provided for query '" + name
-        + "'");
+                                         + "'");
     }
     this.query = query;
   }
 
   /**
    * Gets the query name.
-   *
+   * 
    * @return Query name
    */
   public String getName()
@@ -104,7 +106,7 @@ public final class Query
 
   /**
    * Gets the query SQL.
-   *
+   * 
    * @return Query SQL
    */
   public String getQuery()
@@ -114,9 +116,9 @@ public final class Query
 
   /**
    * Gets the query with parameters substituted.
-   *
-   * @param table Table information
-   *
+   * 
+   * @param table
+   *        Table information
    * @return Ready-to-execute quer
    */
   public String getQueryForTable(final Table table)
@@ -143,8 +145,9 @@ public final class Query
   }
 
   /**
-   * Determines if this query has substitutable parameters, and whether it should be run once for each table.
-   *
+   * Determines if this query has substitutable parameters, and whether
+   * it should be run once for each table.
+   * 
    * @return If the query is to be run over each table
    */
   public boolean isQueryOver()
@@ -155,7 +158,7 @@ public final class Query
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see java.lang.Object#toString()
    */
   @Override

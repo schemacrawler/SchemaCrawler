@@ -38,13 +38,13 @@ public enum SchemaTextDetailType
   /**
    * Maximum column detail, everything supported by SchemaCrawler.
    */
-  verbose_schema,;
+  verbose_schema, ;
 
   /**
    * Checks if this is greater than or equal to the provided info level.
-   *
-   * @param schemaTextDetailType SchemaTextDetailType to check against
-   *
+   * 
+   * @param schemaTextDetailType
+   *        SchemaTextDetailType to check against
    * @return Yes if this is greater or equal to
    */
   boolean isGreaterThanOrEqualTo(final SchemaTextDetailType schemaTextDetailType)

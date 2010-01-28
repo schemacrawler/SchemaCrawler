@@ -49,7 +49,6 @@ import sf.util.Utility;
 final class DotWriter
   implements DatabaseTraversalHandler
 {
-
   private static String printColumnAssociation(final String associationName,
                                                final Column primaryKeyColumn,
                                                final Column foreignKeyColumn)
@@ -278,6 +277,40 @@ final class DotWriter
     out.write(buffer.toString());
 
     printWeakAssociations(table.getWeakAssociations());
+  }
+
+  public void handleColumnDataTypesEnd()
+  {
+    // No-op
+  }
+
+  public void handleColumnDataTypesStart()
+  {
+    // No-op
+  }
+
+  public void handleProceduresEnd()
+    throws SchemaCrawlerException
+  {
+    // No-op
+  }
+
+  public void handleProceduresStart()
+    throws SchemaCrawlerException
+  {
+    // No-op
+  }
+
+  public void handleTablesEnd()
+    throws SchemaCrawlerException
+  {
+    // No-op
+  }
+
+  public void handleTablesStart()
+    throws SchemaCrawlerException
+  {
+    // No-op
   }
 
   private void printWeakAssociations(final ColumnMap[] weakAssociations)

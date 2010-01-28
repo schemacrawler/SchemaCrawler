@@ -128,7 +128,7 @@ public class SchemaCrawlerXmlOutputTest
   private void checkValidXmlOutput(final String command)
     throws IOException, Exception, SchemaCrawlerException
   {
-    final String referenceFile = command + ".xml";
+    final String referenceFile = command + ".html";
     final File testOutputFile = File.createTempFile("schemacrawler."
                                                         + referenceFile + ".",
                                                     ".test");
@@ -144,6 +144,7 @@ public class SchemaCrawlerXmlOutputTest
 
     final SchemaCrawlerOptions options = executable.getSchemaCrawlerOptions();
     options.setSchemaInfoLevel(SchemaInfoLevel.minimum());
+    options.setShowStoredProcedures(true);
 
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());

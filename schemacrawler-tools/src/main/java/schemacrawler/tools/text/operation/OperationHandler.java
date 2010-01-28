@@ -170,6 +170,40 @@ public final class OperationHandler
     }
   }
 
+  public void handleColumnDataTypesEnd()
+  {
+    // No-op
+  }
+
+  public void handleColumnDataTypesStart()
+  {
+    // No-op
+  }
+
+  public void handleProceduresEnd()
+    throws SchemaCrawlerException
+  {
+    // No-op
+  }
+
+  public void handleProceduresStart()
+    throws SchemaCrawlerException
+  {
+    // No-op
+  }
+
+  public void handleTablesEnd()
+    throws SchemaCrawlerException
+  {
+    // No-op
+  }
+
+  public void handleTablesStart()
+    throws SchemaCrawlerException
+  {
+    // No-op
+  }
+
   private void executeSqlAndHandleData(final String title, final String sql)
     throws SchemaCrawlerException
   {

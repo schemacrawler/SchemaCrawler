@@ -33,11 +33,11 @@ public enum Operation
    * Count operation
    */
   count("Row Count", "SELECT COUNT(*) FROM ${table}",
-        "{0,choice,0#empty|0<{0,number,integer} rows}"),
+    "{0,choice,0#empty|0<{0,number,integer} rows}"),
   /**
    * Dump operation
    */
-  dump("Dump", "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}", ""),;
+  dump("Dump", "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}", ""), ;
 
   private final String description;
   private final String queryString;
@@ -54,7 +54,7 @@ public enum Operation
 
   /**
    * Message format for the counts.
-   *
+   * 
    * @return Message format for the counts
    */
   public String getCountMessage(final Number number)
@@ -64,7 +64,7 @@ public enum Operation
 
   /**
    * Operation description.
-   *
+   * 
    * @return Operation description
    */
   public String getDescription()
@@ -74,7 +74,7 @@ public enum Operation
 
   /**
    * Query.
-   *
+   * 
    * @return Query
    */
   public Query getQuery()

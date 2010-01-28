@@ -30,7 +30,6 @@ import java.util.logging.Logger;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.context.Context;
 import org.apache.velocity.runtime.RuntimeConstants;
@@ -92,7 +91,7 @@ public final class VelocityRenderer
 
     // Create a new instance of the engine
     final VelocityEngine ve = new VelocityEngine();
-    ve.setProperty(Velocity.RUNTIME_LOG_LOGSYSTEM, new JdkLogChute());
+    ve.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM, new JdkLogChute());
 
     // Set up Velocity resource loaders for loading from the
     // classpath, as well as the file system

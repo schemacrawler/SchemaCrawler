@@ -26,10 +26,12 @@ import java.util.Map;
 
 /**
  * HTML escapes entities.
- *
+ * 
  * @author Sualeh Fatehi
  */
-@SuppressWarnings({"unchecked", "ImplicitNumericConversion", "ImplicitNumericConversion"})
+@SuppressWarnings( {
+    "unchecked", "ImplicitNumericConversion", "ImplicitNumericConversion"
+})
 public final class Entities
 {
 
@@ -434,7 +436,7 @@ public final class Entities
   private Entities(final Map<Integer, String>... maps)
   {
     final Map<Integer, String> workingCharEntityMap = new HashMap<Integer, String>();
-    for (final Map<Integer, String> map : maps)
+    for (final Map<Integer, String> map: maps)
     {
       workingCharEntityMap.putAll(map);
     }
@@ -443,9 +445,9 @@ public final class Entities
 
   /**
    * HTML escapes the characters in some text.
-   *
-   * @param text Text to escape.
-   *
+   * 
+   * @param text
+   *        Text to escape.
    * @return HTML-escaped text
    */
   public String escape(final String text)
