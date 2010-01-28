@@ -29,7 +29,7 @@ import schemacrawler.tools.executable.BaseExecutable;
 
 /**
  * Basic SchemaCrawler executor.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public abstract class BaseSchemaCrawlerTextExecutable

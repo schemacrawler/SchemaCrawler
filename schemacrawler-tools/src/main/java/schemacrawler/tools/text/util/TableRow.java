@@ -29,7 +29,7 @@ import schemacrawler.tools.text.util.TableCell.Align;
 
 /**
  * Represents an HTML table row.
- *
+ * 
  * @author Sualeh Fatehi
  */
 final class TableRow
@@ -57,7 +57,7 @@ final class TableRow
 
   /**
    * Converts the table row to HTML.
-   *
+   * 
    * @return HTML
    */
   @Override
@@ -71,11 +71,6 @@ final class TableRow
     {
       return toPlainTextString();
     }
-  }
-
-  void add(final TableCell cell)
-  {
-    cells.add(cell);
   }
 
   private String getFieldSeparator()
@@ -92,19 +87,16 @@ final class TableRow
 
   /**
    * Converts the table row to HTML.
-   *
+   * 
    * @return HTML
    */
   private String toHtmlString()
   {
     final StringBuilder buffer = new StringBuilder();
-    buffer.append("\t<tr>")
-      .append(NEWLINE);
-    for (final TableCell cell : cells)
+    buffer.append("\t<tr>").append(NEWLINE);
+    for (final TableCell cell: cells)
     {
-      buffer.append("\t\t")
-        .append(cell)
-        .append(NEWLINE);
+      buffer.append("\t\t").append(cell).append(NEWLINE);
     }
     buffer.append("\t</tr>");
 
@@ -113,7 +105,7 @@ final class TableRow
 
   /**
    * Converts the table row to CSV.
-   *
+   * 
    * @return CSV
    */
   private String toPlainTextString()
@@ -131,6 +123,11 @@ final class TableRow
     }
 
     return buffer.toString();
+  }
+
+  void add(final TableCell cell)
+  {
+    cells.add(cell);
   }
 
 }

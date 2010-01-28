@@ -27,7 +27,7 @@ import sf.util.Utility;
 
 /**
  * Methods to format entire rows of output as HTML.
- *
+ * 
  * @author Sualeh Fatehi
  */
 abstract class BaseTextFormattingHelper
@@ -58,7 +58,7 @@ abstract class BaseTextFormattingHelper
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see TextFormattingHelper#createDefinitionRow(java.lang.String)
    */
   public String createDefinitionRow(final String definition)
@@ -76,9 +76,9 @@ abstract class BaseTextFormattingHelper
 
   /**
    * {@inheritDoc}
-   *
-   * @see TextFormattingHelper#createDetailRow(java.lang.String, java.lang.String,
-   *      java.lang.String)
+   * 
+   * @see TextFormattingHelper#createDetailRow(java.lang.String,
+   *      java.lang.String, java.lang.String)
    */
   public String createDetailRow(final String ordinal,
                                 final String subName,
@@ -88,9 +88,7 @@ abstract class BaseTextFormattingHelper
     final int typeWidth = 28;
 
     final TableRow row = new TableRow(outputFormat);
-    if (sf.util
-      .Utility
-      .isBlank(ordinal))
+    if (sf.util.Utility.isBlank(ordinal))
     {
       row.add(new TableCell("", "ordinal", outputFormat));
     }
@@ -112,7 +110,7 @@ abstract class BaseTextFormattingHelper
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see TextFormattingHelper#createEmptyRow()
    */
   public String createEmptyRow()
@@ -122,8 +120,9 @@ abstract class BaseTextFormattingHelper
 
   /**
    * {@inheritDoc}
-   *
-   * @see TextFormattingHelper#createNameRow(java.lang.String, java.lang.String)
+   * 
+   * @see TextFormattingHelper#createNameRow(java.lang.String,
+   *      java.lang.String)
    */
   public String createNameRow(final String name,
                               final String description,
@@ -136,13 +135,13 @@ abstract class BaseTextFormattingHelper
     {
       descriptionWidth = Math.max(description.length(),
                                   descriptionWidth
-                                    - (name.length() - nameWidth));
+                                      - (name.length() - nameWidth));
     }
     if (description.length() > descriptionWidth && name.length() < nameWidth)
     {
       nameWidth = Math.max(name.length(),
                            nameWidth
-                             - (description.length() - descriptionWidth));
+                               - (description.length() - descriptionWidth));
     }
 
     String nameRowString;
@@ -151,13 +150,13 @@ abstract class BaseTextFormattingHelper
                           nameWidth,
                           Align.left,
                           2,
-                          "name" + (underscore ? " underscore" : ""),
+                          "name" + (underscore? " underscore": ""),
                           outputFormat));
     row.add(new TableCell(description,
                           descriptionWidth,
                           Align.right,
                           1,
-                          "description" + (underscore ? " underscore" : ""),
+                          "description" + (underscore? " underscore": ""),
                           outputFormat));
     nameRowString = row.toString();
 
@@ -171,8 +170,9 @@ abstract class BaseTextFormattingHelper
 
   /**
    * {@inheritDoc}
-   *
-   * @see TextFormattingHelper#createNameValueRow(java.lang.String, java.lang.String)
+   * 
+   * @see TextFormattingHelper#createNameValueRow(java.lang.String,
+   *      java.lang.String)
    */
   public String createNameValueRow(final String name, final String value)
   {
@@ -186,8 +186,9 @@ abstract class BaseTextFormattingHelper
 
   /**
    * Called to handle the row output.
-   *
-   * @param columnData Column data
+   * 
+   * @param columnData
+   *        Column data
    */
   public String createRow(final String[] columnData)
   {
@@ -197,7 +198,7 @@ abstract class BaseTextFormattingHelper
       outputFormat = OutputFormat.csv;
     }
     final TableRow row = new TableRow(outputFormat);
-    for (final String element : columnData)
+    for (final String element: columnData)
     {
       row.add(new TableCell(element, "", outputFormat));
     }
@@ -205,9 +206,11 @@ abstract class BaseTextFormattingHelper
   }
 
   /**
-   * Called to handle the header output. Handler to be implemented by subclass.
-   *
-   * @param columnNames Column names
+   * Called to handle the header output. Handler to be implemented by
+   * subclass.
+   * 
+   * @param columnNames
+   *        Column names
    */
   public String createRowHeader(final String[] columnNames)
   {
@@ -217,7 +220,7 @@ abstract class BaseTextFormattingHelper
       outputFormat = OutputFormat.csv;
     }
     final TableRow row = new TableRow(outputFormat);
-    for (final String columnName : columnNames)
+    for (final String columnName: columnNames)
     {
       row.add(new TableCell(columnName, "name", outputFormat));
     }

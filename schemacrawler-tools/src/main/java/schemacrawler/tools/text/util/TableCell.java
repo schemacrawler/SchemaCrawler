@@ -24,7 +24,7 @@ import schemacrawler.tools.options.OutputFormat;
 
 /**
  * Represents an HTML table row.
- *
+ * 
  * @author Sualeh Fatehi
  */
 final class TableCell
@@ -33,62 +33,15 @@ final class TableCell
   enum Align
   {
 
-    left,
-    right;
-  }
-
-  private final OutputFormat outputFormat;
-  private final String styleClass;
-  private final int colSpan;
-  private final int characterWidth;
-  private final Align align;
-  private final String text;
-
-  TableCell(final String text,
-            final int characterWidth,
-            final Align align,
-            final int colSpan,
-            final String styleClass,
-            final OutputFormat outputFormat)
-  {
-    this.outputFormat = outputFormat;
-    this.colSpan = colSpan;
-    this.styleClass = styleClass;
-    this.text = text;
-    this.characterWidth = characterWidth;
-    this.align = align;
-  }
-
-  TableCell(final String text,
-            final String styleClass,
-            final OutputFormat outputFormat)
-  {
-    this(text, 0, Align.left, 1, styleClass, outputFormat);
+    left, right;
   }
 
   /**
-   * Converts the table cell to HTML.
-   *
-   * @return HTML
-   */
-  @Override
-  public String toString()
-  {
-    if (outputFormat == OutputFormat.html)
-    {
-      return toHtmlString();
-    }
-    else
-    {
-      return toPlainTextString();
-    }
-  }
-
-  /**
-   * Enclose the value in quotes and escape the quote and comma characters that are inside.
-   *
-   * @param text Text that needs to be escaped and quoted
-   *
+   * Enclose the value in quotes and escape the quote and comma
+   * characters that are inside.
+   * 
+   * @param text
+   *        Text that needs to be escaped and quoted
    * @return Text, escaped and quoted.
    */
   private static String escapeAndQuoteCsv(final String text)
@@ -115,8 +68,7 @@ final class TableCell
       final char c = value.charAt(i);
       if (c == QUOTE)
       {
-        sb.append(QUOTE)
-          .append(c);
+        sb.append(QUOTE).append(c);
       }
       else
       {
@@ -128,9 +80,57 @@ final class TableCell
     return sb.toString();
   }
 
+  private final OutputFormat outputFormat;
+  private final String styleClass;
+  private final int colSpan;
+  private final int characterWidth;
+  private final Align align;
+
+  private final String text;
+
+  TableCell(final String text,
+            final int characterWidth,
+            final Align align,
+            final int colSpan,
+            final String styleClass,
+            final OutputFormat outputFormat)
+  {
+    this.outputFormat = outputFormat;
+    this.colSpan = colSpan;
+    this.styleClass = styleClass;
+    this.text = text;
+    this.characterWidth = characterWidth;
+    this.align = align;
+  }
+
+  TableCell(final String text,
+            final String styleClass,
+            final OutputFormat outputFormat)
+  {
+    this(text, 0, Align.left, 1, styleClass, outputFormat);
+  }
+
   /**
    * Converts the table cell to HTML.
-   *
+   * 
+   * @return HTML
+   */
+  @Override
+  public String toString()
+  {
+    if (outputFormat == OutputFormat.html)
+    {
+      return toHtmlString();
+    }
+    else
+    {
+      return toPlainTextString();
+    }
+  }
+
+  /**
+   * Converts the table cell to HTML.
+   * 
    * @return HTML
    */
   private String toHtmlString()
@@ -139,17 +139,11 @@ final class TableCell
     buffer.append("<td");
     if (colSpan > 1)
     {
-      buffer.append(" colspan='")
-        .append(colSpan)
-        .append("'");
+      buffer.append(" colspan='").append(colSpan).append("'");
     }
-    if (!sf.util
-      .Utility
-      .isBlank(styleClass))
+    if (!sf.util.Utility.isBlank(styleClass))
     {
-      buffer.append(" class='")
-        .append(styleClass)
-        .append("'");
+      buffer.append(" class='").append(styleClass).append("'");
     }
     buffer.append(">");
     buffer.append(Entities.XML.escape(String.valueOf(text)));
@@ -160,7 +154,7 @@ final class TableCell
 
   /**
    * Converts the table cell to CSV.
-   *
+   * 
    * @return CSV
    */
   private String toPlainTextString()

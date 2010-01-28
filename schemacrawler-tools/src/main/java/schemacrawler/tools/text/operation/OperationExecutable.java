@@ -29,7 +29,7 @@ import schemacrawler.tools.text.base.DatabaseTraversalHandler;
 
 /**
  * Basic SchemaCrawler executor.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public final class OperationExecutable

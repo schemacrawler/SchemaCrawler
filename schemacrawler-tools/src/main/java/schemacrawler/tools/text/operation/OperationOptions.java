@@ -26,7 +26,7 @@ import schemacrawler.schemacrawler.Options;
 
 /**
  * Operator options.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public final class OperationOptions
@@ -51,8 +51,9 @@ public final class OperationOptions
 
   /**
    * Operator options from properties. Constructor.
-   *
-   * @param config        Config
+   * 
+   * @param config
+   *        Config
    */
   public OperationOptions(final Config config)
   {
@@ -70,7 +71,7 @@ public final class OperationOptions
 
   /**
    * Whether to merge similar rows.
-   *
+   * 
    * @return Whether to merge similar rows.
    */
   public boolean isMergeRows()
@@ -80,7 +81,7 @@ public final class OperationOptions
 
   /**
    * Whether to show LOBs.
-   *
+   * 
    * @return Whether to show LOBs.
    */
   public boolean isShowLobs()
@@ -90,8 +91,9 @@ public final class OperationOptions
 
   /**
    * Whether to merge similar rows.
-   *
-   * @param mergeRows Whether to merge similar rows
+   * 
+   * @param mergeRows
+   *        Whether to merge similar rows
    */
   public void setMergeRows(final boolean mergeRows)
   {
@@ -100,8 +102,9 @@ public final class OperationOptions
 
   /**
    * Whether to show LOBs.
-   *
-   * @param showLobs Whether to show LOBs
+   * 
+   * @param showLobs
+   *        Whether to show LOBs
    */
   public void setShowLobs(final boolean showLobs)
   {

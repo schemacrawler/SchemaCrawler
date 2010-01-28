@@ -103,10 +103,10 @@ final class GraphGenerator
   {
     final File diagramFile = getDiagramFile();
     executeGraphGeneratorProcess("-q",
-        "-T" + graphOutputFormat,
-        "-o",
-        diagramFile.getAbsolutePath(),
-        dotFile.getAbsolutePath());
+                                 "-T" + graphOutputFormat,
+                                 "-o",
+                                 diagramFile.getAbsolutePath(),
+                                 dotFile.getAbsolutePath());
   }
 
   File getDiagramFile()

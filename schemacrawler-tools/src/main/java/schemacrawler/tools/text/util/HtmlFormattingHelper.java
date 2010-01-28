@@ -26,7 +26,7 @@ import sf.util.Utility;
 
 /**
  * Methods to format entire rows of output as HTML.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public final class HtmlFormattingHelper
@@ -36,7 +36,8 @@ public final class HtmlFormattingHelper
   /**
    * HTML footer.
    */
-  private static final String HTML_FOOTER = "</body>" + Utility.NEWLINE + "</html>";
+  private static final String HTML_FOOTER = "</body>" + Utility.NEWLINE
+                                            + "</html>";
   /**
    * HTML header.
    */
@@ -48,16 +49,15 @@ public final class HtmlFormattingHelper
       .getResourceAsStream("/schemacrawler-output.css"));
 
     return ""
-      + "<?xml version='1.0' encoding='UTF-8'?>"
-      + Utility.NEWLINE
-      + "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"
-      + Utility.NEWLINE
-      + "<html xmlns='http://www.w3.org/1999/xhtml'>"
-      + Utility.NEWLINE + "<head>" + Utility.NEWLINE
-      + "  <title>SchemaCrawler Output</title>" + Utility.NEWLINE
-      + "  <style type='text/css'>" + Utility.NEWLINE + styleSheet
-      + Utility.NEWLINE + "  </style>" + Utility.NEWLINE + "</head>"
-      + Utility.NEWLINE + "<body>" + Utility.NEWLINE;
+           + "<?xml version='1.0' encoding='UTF-8'?>"
+           + Utility.NEWLINE
+           + "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">"
+           + Utility.NEWLINE + "<html xmlns='http://www.w3.org/1999/xhtml'>"
+           + Utility.NEWLINE + "<head>" + Utility.NEWLINE
+           + "  <title>SchemaCrawler Output</title>" + Utility.NEWLINE
+           + "  <style type='text/css'>" + Utility.NEWLINE + styleSheet
+           + Utility.NEWLINE + "  </style>" + Utility.NEWLINE + "</head>"
+           + Utility.NEWLINE + "<body>" + Utility.NEWLINE;
   }
 
   public HtmlFormattingHelper(final OutputFormat outputFormat)
@@ -88,9 +88,7 @@ public final class HtmlFormattingHelper
 
   public String createHeader(final DocumentHeaderType type, final String header)
   {
-    if (!sf.util
-      .Utility
-      .isBlank(header))
+    if (!sf.util.Utility.isBlank(header))
     {
       final String prefix;
       final String headerTag;
@@ -147,11 +145,10 @@ public final class HtmlFormattingHelper
   public String createObjectStart(final String name)
   {
     String objectStart = "<table>" + Utility.NEWLINE;
-    if (!sf.util
-      .Utility
-      .isBlank(name))
+    if (!sf.util.Utility.isBlank(name))
     {
-      objectStart = objectStart + "  <caption>" + name + "</caption>" + Utility.NEWLINE;
+      objectStart = objectStart + "  <caption>" + name + "</caption>"
+                    + Utility.NEWLINE;
     }
     return objectStart;
   }

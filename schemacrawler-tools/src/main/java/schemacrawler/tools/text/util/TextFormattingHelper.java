@@ -23,7 +23,7 @@ package schemacrawler.tools.text.util;
 
 /**
  * Methods to format entire rows of output.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public interface TextFormattingHelper
@@ -32,24 +32,8 @@ public interface TextFormattingHelper
   enum DocumentHeaderType
   {
 
-    title,
-    subTitle,
-    section;
+    title, subTitle, section;
   }
-
-  /**
-   * Called to handle the row output. Handler to be implemented by subclass.
-   *
-   * @param columnData Column data
-   */
-  String createRow(final String[] columnData);
-
-  /**
-   * Called to handle the header output. Handler to be implemented by subclass.
-   *
-   * @param columnNames Column names
-   */
-  String createRowHeader(final String[] columnNames);
 
   /**
    * Creates an arrow symbol.
@@ -58,41 +42,43 @@ public interface TextFormattingHelper
 
   /**
    * Creates a definition row with a pre-formatted definition.
-   *
-   * @param definition Definition
-   *
+   * 
+   * @param definition
+   *        Definition
    * @return Row as a string
    */
   String createDefinitionRow(final String definition);
 
   /**
    * Creates a detail row, with four fields.
-   *
-   * @param ordinal Ordinal value
-   * @param subName Name
-   * @param type    Type
-   *
+   * 
+   * @param ordinal
+   *        Ordinal value
+   * @param subName
+   *        Name
+   * @param type
+   *        Type
    * @return Row as a string
    */
   String createDetailRow(String ordinal, final String subName, final String type);
 
   /**
    * Document end.
-   *
+   * 
    * @return Document end
    */
   String createDocumentEnd();
 
   /**
    * Document start.
-   *
+   * 
    * @return Document start
    */
   String createDocumentStart();
 
   /**
    * Create an empty row.
-   *
+   * 
    * @return Row as a string
    */
   String createEmptyRow();
@@ -104,10 +90,11 @@ public interface TextFormattingHelper
 
   /**
    * Create a name and description row.
-   *
-   * @param name        Name
-   * @param description Description
-   *
+   * 
+   * @param name
+   *        Name
+   * @param description
+   *        Description
    * @return Row as a string
    */
   String createNameRow(final String name,
@@ -116,26 +103,27 @@ public interface TextFormattingHelper
 
   /**
    * Create a name and value row.
-   *
-   * @param name  Name
-   * @param value Value
-   *
+   * 
+   * @param name
+   *        Name
+   * @param value
+   *        Value
    * @return Row as a string
    */
   String createNameValueRow(final String name, final String value);
 
   /**
    * Database object end.
-   *
+   * 
    * @return Database object end
    */
   String createObjectEnd();
 
   /**
    * Database object start.
-   *
-   * @param name Object name
-   *
+   * 
+   * @param name
+   *        Object name
    * @return Database object start
    */
   String createObjectStart(final String name);
@@ -144,5 +132,23 @@ public interface TextFormattingHelper
    * Creates a pre-formatted text section.
    */
   String createPreformattedText(String id, String text);
+
+  /**
+   * Called to handle the row output. Handler to be implemented by
+   * subclass.
+   * 
+   * @param columnData
+   *        Column data
+   */
+  String createRow(final String[] columnData);
+
+  /**
+   * Called to handle the header output. Handler to be implemented by
+   * subclass.
+   * 
+   * @param columnNames
+   *        Column names
+   */
+  String createRowHeader(final String[] columnNames);
 
 }

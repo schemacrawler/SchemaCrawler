@@ -26,7 +26,7 @@ import sf.util.Utility;
 
 /**
  * Methods to format entire rows of output as text.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public class PlainTextFormattingHelper
@@ -35,8 +35,9 @@ public class PlainTextFormattingHelper
 
   /**
    * Constructor.
-   *
-   * @param outputFormat Output format - text or CSV.
+   * 
+   * @param outputFormat
+   *        Output format - text or CSV.
    */
   public PlainTextFormattingHelper(final OutputFormat outputFormat)
   {
@@ -66,9 +67,7 @@ public class PlainTextFormattingHelper
 
   public String createHeader(final DocumentHeaderType type, final String header)
   {
-    if (!sf.util
-      .Utility
-      .isBlank(header))
+    if (!sf.util.Utility.isBlank(header))
     {
       final String defaultSeparator = separator("=");
 
@@ -101,7 +100,8 @@ public class PlainTextFormattingHelper
             break;
         }
       }
-      return Utility.NEWLINE + prefix + header + Utility.NEWLINE + separator + Utility.NEWLINE + prefix;
+      return Utility.NEWLINE + prefix + header + Utility.NEWLINE + separator
+             + Utility.NEWLINE + prefix;
     }
     else
     {
@@ -123,11 +123,10 @@ public class PlainTextFormattingHelper
   public String createObjectStart(final String name)
   {
     String objectStart = "";
-    if (!sf.util
-      .Utility
-      .isBlank(name))
+    if (!sf.util.Utility.isBlank(name))
     {
-      objectStart = objectStart + Utility.NEWLINE + name + Utility.NEWLINE + DASHED_SEPARATOR;
+      objectStart = objectStart + Utility.NEWLINE + name + Utility.NEWLINE
+                    + DASHED_SEPARATOR;
     }
     return objectStart;
   }
