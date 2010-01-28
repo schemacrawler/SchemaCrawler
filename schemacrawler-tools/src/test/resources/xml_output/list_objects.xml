@@ -127,6 +127,7 @@ hr {
 <p>&nbsp;</p>
 <h2>Tables</h2>
 
+<table>
 	<tr>
 		<td colspan='2' class='name'>PUBLIC.CUSTOMER</td>
 		<td class='description'>[table]</td>
