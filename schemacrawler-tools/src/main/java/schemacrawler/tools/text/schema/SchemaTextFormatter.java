@@ -209,7 +209,9 @@ public final class SchemaTextFormatter
                                                 "Tables"));
     }
 
-    if (schemaTextDetailType != SchemaTextDetailType.list_objects)
+    if (schemaTextDetailType != SchemaTextDetailType.list_objects
+        || schemaTextDetailType == SchemaTextDetailType.list_objects
+        && tableCount == 0)
     {
       out.print(formattingHelper.createObjectStart(""));
     }
