@@ -20,7 +20,12 @@
 package sf.util;
 
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -29,7 +34,7 @@ import java.util.logging.Logger;
 
 /**
  * Utility methods.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public final class Utility
@@ -52,16 +57,15 @@ public final class Utility
     }
     else
     {
-      return string1.substring(0, index)
-        .toLowerCase();
+      return string1.substring(0, index).toLowerCase();
     }
   }
 
   /**
    * Checks if the text is null or empty.
-   *
-   * @param text Text to check.
-   *
+   * 
+   * @param text
+   *        Text to check.
    * @return Whether the string is blank.
    */
   public static boolean isBlank(final String text)
@@ -81,18 +85,33 @@ public final class Utility
     return true;
   }
 
-  /**
-   * Reads the stream fully, and returns a byte array of data.
-   *
-   * @param stream Stream to read.
-   *
-   * @return Byte array
-   */
   public static String readFully(final InputStream stream)
   {
-    if (stream == null)
+    final Reader reader;
+    try
     {
-      LOGGER.log(Level.WARNING, "Cannot read null input stream");
+      reader = new InputStreamReader(stream, "UTF-8");
+    }
+    catch (final UnsupportedEncodingException e)
+    {
+      LOGGER.log(Level.WARNING, e.getMessage(), e);
+      return "";
+    }
+    return readFully(reader);
+  }
+
+  /**
+   * Reads the stream fully, and returns a byte array of data.
+   * 
+   * @param stream
+   *        Stream to read.
+   * @return Byte array
+   */
+  public static String readFully(final Reader reader)
+  {
+    if (reader == null)
+    {
+      LOGGER.log(Level.WARNING, "Cannot read null reader");
       return "";
     }
 
@@ -101,17 +120,16 @@ public final class Utility
     try
     {
       final char[] buffer = new char[0x10000];
-      final Reader reader = new InputStreamReader(stream, "UTF-8");
       int read;
       do
       {
-        read = reader.read(buffer, 0, buffer.length);
+        final Reader bufferedReader = new BufferedReader(reader, buffer.length);
+        read = bufferedReader.read(buffer, 0, buffer.length);
         if (read > 0)
         {
           out.append(buffer, 0, read);
         }
-      }
-      while (read >= 0);
+      } while (read >= 0);
     }
     catch (final UnsupportedEncodingException e)
     {
@@ -119,7 +137,18 @@ public final class Utility
     }
     catch (final IOException e)
     {
-      LOGGER.log(Level.WARNING, "Could not read stream", e);
+      LOGGER.log(Level.WARNING, "Could not read from reader", e);
+    }
+    finally
+    {
+      try
+      {
+        reader.close();
+      }
+      catch (final IOException e)
+      {
+        LOGGER.log(Level.WARNING, "Could not close reader", e);
+      }
     }
 
     return out.toString();
@@ -127,8 +156,9 @@ public final class Utility
 
   /**
    * Sets the application-wide log level.
-   *
-   * @param logLevel Log level to set
+   * 
+   * @param logLevel
+   *        Log level to set
    */
   public static void setApplicationLogLevel(final Level logLevel)
   {
@@ -140,7 +170,7 @@ public final class Utility
       final Logger logger = logManager.getLogger(loggerName);
       logger.setLevel(null);
       final Handler[] handlers = logger.getHandlers();
-      for (final Handler handler : handlers)
+      for (final Handler handler: handlers)
       {
         handler.setLevel(logLevel);
       }
