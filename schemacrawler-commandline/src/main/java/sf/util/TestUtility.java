@@ -28,11 +28,16 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
 
+import org.custommonkey.xmlunit.Validator;
+
+import schemacrawler.tools.options.OutputFormat;
+
 public final class TestUtility
 {
 
   public static void compareOutput(final String referenceFile,
                                    final File testOutputFile,
+                                   final OutputFormat outputFormat,
                                    final List<String> failures)
     throws Exception
   {
@@ -60,8 +65,24 @@ public final class TestUtility
                                     new InputStreamReader(referenceStream));
     }
 
-    if (!contentEquals)
+    final boolean isOutputValidXml;
+    if (outputFormat == OutputFormat.html)
+    {
+      final Reader reader = new BufferedReader(new FileReader(testOutputFile));
+      final Validator validator = new Validator(reader);
+      isOutputValidXml = validator.isValid();
+      if (!isOutputValidXml)
+      {
+        failures.add(validator.toString());
+      }
+      reader.close();
+    }
+    else
+    {
+      isOutputValidXml = true;
+    }
 
+    if (!contentEquals || !isOutputValidXml)
     {
       final File testOutputLocalFile = new File("./", referenceFile);
       testOutputLocalFile.getParentFile().mkdirs();
@@ -69,14 +90,18 @@ public final class TestUtility
       final boolean renamed = testOutputFile.renameTo(testOutputLocalFile);
       if (renamed)
       {
-        failures.add("Output does not match: see actual output in "
-                     + testOutputLocalFile.getAbsolutePath());
-        if (!testOutputFile.delete())
-
+        if (!contentEquals)
         {
-          failures.add("Cannot delete output file, "
-                       + testOutputFile.getAbsolutePath());
+          failures.add("Output does not match");
         }
+        if (!isOutputValidXml)
+        {
+          failures.add("Output is invalid XML");
+        }
+
+        failures.add("Actual output in "
+                     + testOutputLocalFile.getAbsolutePath());
+        System.err.println(testOutputLocalFile.getAbsolutePath());
       }
       else
       {

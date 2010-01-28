@@ -21,14 +21,14 @@
 package schemacrawler.test;
 
 
+import static org.junit.Assert.fail;
+
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.custommonkey.xmlunit.Validator;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -36,6 +36,7 @@ import org.junit.Test;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -50,8 +51,6 @@ import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.utility.TestDatabase;
 import sf.util.TestUtility;
 
-import static org.junit.Assert.fail;
-
 public class SchemaCrawlerOutputTest
 {
 
@@ -64,8 +63,8 @@ public class SchemaCrawlerOutputTest
       throws SAXException, IOException
     {
       final String localResource = "/xhtml1"
-        + systemId.substring(systemId
-        .lastIndexOf('/'));
+                                   + systemId.substring(systemId
+                                     .lastIndexOf('/'));
       final InputStream entityStream = LocalEntityResolver.class
         .getResourceAsStream(localResource);
       if (entityStream == null)
@@ -106,22 +105,24 @@ public class SchemaCrawlerOutputTest
     queriesConfig.put(queryCommand2,
                       "SELECT ${columns} FROM ${table} ORDER BY ${columns}");
 
-    final String[] commands = new String[]{
-      SchemaTextDetailType.verbose_schema + "," + Operation.count + ","
-        + Operation.dump,
-      SchemaTextDetailType.list_objects + "," + Operation.count,
-      queryCommand1 + "," + queryCommand2 + "," + Operation.count + ","
-        + SchemaTextDetailType.list_objects,
+    final String[] commands = new String[] {
+        SchemaTextDetailType.verbose_schema + "," + Operation.count + ","
+            + Operation.dump,
+        SchemaTextDetailType.list_objects + "," + Operation.count,
+        queryCommand1 + "," + queryCommand2 + "," + Operation.count + ","
+            + SchemaTextDetailType.list_objects,
     };
 
     final List<String> failures = new ArrayList<String>();
-    for (final OutputFormat outputFormat : OutputFormat.values())
+    for (final OutputFormat outputFormat: OutputFormat.values())
     {
-      for (final String command : commands)
+      for (final String command: commands)
       {
         final String referenceFile = command + "." + outputFormat.name();
 
-        final File testOutputFile = File.createTempFile("schemacrawler." + referenceFile + ".",
+        final File testOutputFile = File.createTempFile("schemacrawler."
+                                                            + referenceFile
+                                                            + ".",
                                                         ".test");
         testOutputFile.delete();
 
@@ -146,17 +147,9 @@ public class SchemaCrawlerOutputTest
         executable.setAdditionalConfiguration(queriesConfig);
         executable.execute(connectionOptions.createConnection());
 
-        if (outputFormat == OutputFormat.html)
-        {
-          final Validator validator = new Validator(new FileReader(testOutputFile));
-          if (!validator.isValid())
-          {
-            failures.add(validator.toString());
-          }
-        }
-
         TestUtility.compareOutput("composite_output/" + referenceFile,
                                   testOutputFile,
+                                  outputFormat,
                                   failures);
       }
     }
@@ -174,15 +167,17 @@ public class SchemaCrawlerOutputTest
   {
 
     final List<String> failures = new ArrayList<String>();
-    for (final InfoLevel infoLevel : InfoLevel.values())
+    for (final InfoLevel infoLevel: InfoLevel.values())
     {
-      for (final SchemaTextDetailType schemaTextDetailType : SchemaTextDetailType
+      for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
         .values())
       {
         final String referenceFile = schemaTextDetailType + "_" + infoLevel
-          + ".txt";
+                                     + ".txt";
 
-        final File testOutputFile = File.createTempFile("schemacrawler." + referenceFile + ".",
+        final File testOutputFile = File.createTempFile("schemacrawler."
+                                                            + referenceFile
+                                                            + ".",
                                                         ".test");
         testOutputFile.delete();
 
@@ -209,6 +204,7 @@ public class SchemaCrawlerOutputTest
 
         TestUtility.compareOutput("info_level_output/" + referenceFile,
                                   testOutputFile,
+                                  outputOptions.getOutputFormat(),
                                   failures);
       }
     }

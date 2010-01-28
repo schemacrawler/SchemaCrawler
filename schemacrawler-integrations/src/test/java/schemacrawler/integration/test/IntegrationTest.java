@@ -36,6 +36,7 @@ import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.integration.freemarker.FreeMarkerRenderer;
 import schemacrawler.tools.integration.scripting.ScriptRenderer;
 import schemacrawler.tools.integration.velocity.VelocityRenderer;
+import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.utility.TestDatabase;
 import sf.util.TestUtility;
@@ -137,6 +138,7 @@ public class IntegrationTest
     final List<String> failures = new ArrayList<String>();
     TestUtility.compareOutput(referenceFileName + ".txt",
                               testOutputFile,
+                              OutputFormat.text,
                               failures);
     if (failures.size() > 0)
     {
@@ -165,6 +167,7 @@ public class IntegrationTest
     final List<String> failures = new ArrayList<String>();
     TestUtility.compareOutput(referenceFileName + ".txt",
                               testOutputFile,
+                              OutputFormat.text,
                               failures);
     if (failures.size() > 0)
     {

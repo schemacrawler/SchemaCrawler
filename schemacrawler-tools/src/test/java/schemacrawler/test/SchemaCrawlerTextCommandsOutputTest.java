@@ -156,6 +156,7 @@ public class SchemaCrawlerTextCommandsOutputTest
     final List<String> failures = new ArrayList<String>();
     TestUtility.compareOutput("command_output/" + referenceFile,
                               testOutputFile,
+                              outputOptions.getOutputFormat(),
                               failures);
     if (failures.size() > 0)
     {

@@ -38,6 +38,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.integration.graph.GraphExecutable;
+import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.utility.TestDatabase;
 import sf.util.TestUtility;
 
@@ -113,8 +114,10 @@ public class SpringIntegrationTest
       .getAbsolutePath());
     executable.execute(testUtility.getConnection());
 
-    TestUtility
-      .compareOutput(executableName + ".txt", testOutputFile, failures);
+    TestUtility.compareOutput(executableName + ".txt",
+                              testOutputFile,
+                              (OutputFormat) null,
+                              failures);
   }
 
 }
