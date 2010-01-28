@@ -183,35 +183,7 @@ public final class SchemaTextFormatter
 
     if (schemaTextDetailType != SchemaTextDetailType.list_objects)
     {
-      final ProcedureColumn[] columns = procedure.getColumns();
-      for (final ProcedureColumn column: columns)
-      {
-        final String columnTypeName;
-        if (options.isShowStandardColumnTypeNames())
-        {
-          columnTypeName = column.getType().getTypeName();
-        }
-        else
-        {
-          columnTypeName = column.getType().getDatabaseSpecificTypeName();
-        }
-        final StringBuilder columnType = new StringBuilder();
-        columnType.append(columnTypeName).append(column.getWidth());
-        if (column.getProcedureColumnType() != null)
-        {
-          columnType.append(", ").append(column.getProcedureColumnType()
-            .toString());
-        }
-
-        String ordinalNumberString = "";
-        if (options.isShowOrdinalNumbers())
-        {
-          ordinalNumberString = String.valueOf(column.getOrdinalPosition() + 1);
-        }
-        out.println(formattingHelper.createDetailRow(ordinalNumberString,
-                                                     column.getName(),
-                                                     columnType.toString()));
-      }
+      printProcedureColumns(procedure.getColumns());
       printDefinition(procedure.getDefinition());
 
       out.println(formattingHelper.createObjectEnd());
@@ -244,9 +216,8 @@ public final class SchemaTextFormatter
 
     final boolean underscore = schemaTextDetailType != SchemaTextDetailType.list_objects;
     final String nameRow = formattingHelper.createNameRow(table.getFullName(),
-                                                          "["
-                                                              + table.getType()
-                                                                .name() + "]",
+                                                          "[" + table.getType()
+                                                              + "]",
                                                           underscore);
     out.println(nameRow);
 
@@ -504,6 +475,37 @@ public final class SchemaTextFormatter
           out.println(formattingHelper.createDetailRow("", grantedFrom, ""));
         }
       }
+    }
+  }
+
+  private void printProcedureColumns(final ProcedureColumn[] columns)
+  {
+    for (final ProcedureColumn column: columns)
+    {
+      final String columnTypeName;
+      if (options.isShowStandardColumnTypeNames())
+      {
+        columnTypeName = column.getType().getTypeName();
+      }
+      else
+      {
+        columnTypeName = column.getType().getDatabaseSpecificTypeName();
+      }
+      final StringBuilder columnType = new StringBuilder();
+      columnType.append(columnTypeName).append(column.getWidth());
+      if (column.getProcedureColumnType() != null)
+      {
+        columnType.append(", ").append(column.getProcedureColumnType()
+          .toString());
+      }
+
+      String ordinalNumberString = "";
+      if (options.isShowOrdinalNumbers())
+      {
+        ordinalNumberString = String.valueOf(column.getOrdinalPosition() + 1);
+      }
+      out.println(formattingHelper.createDetailRow(ordinalNumberString, column
+        .getName(), columnType.toString()));
     }
   }
 

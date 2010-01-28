@@ -21,12 +21,14 @@
 package schemacrawler.test;
 
 
+import static org.junit.Assert.fail;
+
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-
-import static org.junit.Assert.fail;
+import java.io.Reader;
 
 import org.custommonkey.xmlunit.Validator;
 import org.custommonkey.xmlunit.XMLUnit;
@@ -36,6 +38,8 @@ import org.junit.Test;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
@@ -56,8 +60,8 @@ public class SchemaCrawlerXmlOutputTest
       throws SAXException, IOException
     {
       final String localResource = "/xhtml1"
-        + systemId.substring(systemId
-        .lastIndexOf('/'));
+                                   + systemId.substring(systemId
+                                     .lastIndexOf('/'));
       final InputStream entityStream = LocalEntityResolver.class
         .getResourceAsStream(localResource);
       if (entityStream == null)
@@ -102,9 +106,10 @@ public class SchemaCrawlerXmlOutputTest
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.list_objects
       .name());
-    executable.getSchemaCrawlerOptions()
-      .setSchemaInfoLevel(SchemaInfoLevel
-        .minimum());
+
+    final SchemaCrawlerOptions options = executable.getSchemaCrawlerOptions();
+    options.setSchemaInfoLevel(SchemaInfoLevel.minimum());
+
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());
 
@@ -171,9 +176,8 @@ public class SchemaCrawlerXmlOutputTest
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.standard_schema
       .name());
-    executable.getSchemaCrawlerOptions()
-      .setSchemaInfoLevel(SchemaInfoLevel
-        .detailed());
+    executable.getSchemaCrawlerOptions().setSchemaInfoLevel(SchemaInfoLevel
+      .detailed());
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());
 
@@ -196,9 +200,8 @@ public class SchemaCrawlerXmlOutputTest
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.verbose_schema
       .name());
-    executable.getSchemaCrawlerOptions()
-      .setSchemaInfoLevel(SchemaInfoLevel
-        .maximum());
+    executable.getSchemaCrawlerOptions().setSchemaInfoLevel(SchemaInfoLevel
+      .maximum());
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());
 
@@ -209,13 +212,23 @@ public class SchemaCrawlerXmlOutputTest
     throws Exception
   {
     final File outputFile = new File(outputFilename);
+    Reader reader = null;
     try
     {
-      final Validator validator = new Validator(new FileReader(outputFile));
-      validator.assertIsValid();
+      reader = new BufferedReader(new FileReader(outputFile));
+      final Validator validator = new Validator(reader);
+      final boolean isValid = validator.isValid();
+      if (!isValid)
+      {
+
+      }
     }
     finally
     {
+      if (reader != null)
+      {
+        reader.close();
+      }
       if (!outputFile.delete())
       {
         fail("Could not delete output file, " + outputFile.getAbsolutePath());
