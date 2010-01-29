@@ -68,43 +68,15 @@ public final class OutputOptions
   /**
    * Output options, given the type and the output filename.
    * 
-   * @param outputFormat
-   *        Type of output, which is dependent on the executor
-   * @param outputFilename
-   *        Output filename
-   */
-  public OutputOptions(final OutputFormat outputFormat,
-                       final String outputFilename)
-  {
-    if (outputFormat == null)
-    {
-      throw new IllegalArgumentException("No output format provided");
-    }
-    outputFormatValue = outputFormat.name();
-
-    if (!sf.util.Utility.isBlank(outputFilename))
-    {
-      outputFile = new File(outputFilename);
-    }
-  }
-
-  /**
-   * Output options, given the type and the output filename.
-   * 
    * @param outputFormatValue
    *        Type of output, which is dependent on the executor
    * @param outputFilename
    *        Output filename
    */
-  public OutputOptions(final String outputFormatValue,
-                       final String outputFilename)
+  public OutputOptions(final String outputFormatValue, final File outputFile)
   {
     this.outputFormatValue = outputFormatValue;
-
-    if (!sf.util.Utility.isBlank(outputFilename))
-    {
-      outputFile = new File(outputFilename);
-    }
+    this.outputFile = outputFile;
   }
 
   /**

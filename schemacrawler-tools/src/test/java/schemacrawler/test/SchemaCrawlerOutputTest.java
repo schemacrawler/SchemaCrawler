@@ -126,9 +126,8 @@ public class SchemaCrawlerOutputTest
                                                         ".test");
         testOutputFile.delete();
 
-        final OutputOptions outputOptions = new OutputOptions(outputFormat,
-                                                              testOutputFile
-                                                                .getAbsolutePath());
+        final OutputOptions outputOptions = new OutputOptions(outputFormat
+          .name(), testOutputFile);
         outputOptions.setNoInfo(false);
         outputOptions.setNoHeader(false);
         outputOptions.setNoFooter(false);
@@ -181,9 +180,8 @@ public class SchemaCrawlerOutputTest
                                                         ".test");
         testOutputFile.delete();
 
-        final OutputOptions outputOptions = new OutputOptions(OutputFormat.text,
-                                                              testOutputFile
-                                                                .getAbsolutePath());
+        final OutputOptions outputOptions = new OutputOptions(OutputFormat.text
+          .name(), testOutputFile);
         outputOptions.setNoInfo(false);
         outputOptions.setNoHeader(false);
         outputOptions.setNoFooter(false);

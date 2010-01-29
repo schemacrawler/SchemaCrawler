@@ -156,8 +156,7 @@ public class IntegrationTest
                                                     + ".", ".test");
     testOutputFile.delete();
     final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
-                                                          testOutputFile
-                                                            .getAbsolutePath());
+                                                          testOutputFile);
 
     executable.getSchemaCrawlerOptions()
       .setAlphabeticalSortForTableColumns(true);

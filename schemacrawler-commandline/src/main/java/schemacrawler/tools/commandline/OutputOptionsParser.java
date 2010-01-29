@@ -21,8 +21,11 @@
 package schemacrawler.tools.commandline;
 
 
+import java.io.File;
+
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
+import sf.util.Utility;
 import sf.util.CommandLineParser.BooleanOption;
 import sf.util.CommandLineParser.Option;
 import sf.util.CommandLineParser.StringOption;
@@ -59,8 +62,17 @@ final class OutputOptionsParser
     });
 
     final String outputFormatValue = optionOutputFormat.getValue();
-    final String outputFile = optionOutputFile.getValue();
+    final String outputFileName = optionOutputFile.getValue();
 
+    final File outputFile;
+    if (Utility.isBlank(outputFileName))
+    {
+      outputFile = null;
+    }
+    else
+    {
+      outputFile = new File(outputFileName);
+    }
     final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
                                                           outputFile);
     outputOptions.setNoInfo(optionNoInfo.getValue());
