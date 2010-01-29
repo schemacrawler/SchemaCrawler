@@ -48,6 +48,7 @@ final class SpringOptionsParser
    * Parses the command line into options.
    * 
    * @param args
+   *        Command-line arguments
    */
   SpringOptionsParser(final String[] args)
   {
