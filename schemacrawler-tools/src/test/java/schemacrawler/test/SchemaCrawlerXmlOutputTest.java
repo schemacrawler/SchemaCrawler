@@ -133,9 +133,8 @@ public class SchemaCrawlerXmlOutputTest
                                                         + referenceFile + ".",
                                                     ".test");
 
-    final OutputOptions outputOptions = new OutputOptions(OutputFormat.html,
-                                                          testOutputFile
-                                                            .getAbsolutePath());
+    final OutputOptions outputOptions = new OutputOptions(OutputFormat.html
+      .name(), testOutputFile);
     outputOptions.setNoHeader(false);
     outputOptions.setNoFooter(false);
     outputOptions.setNoInfo(false);

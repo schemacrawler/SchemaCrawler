@@ -141,9 +141,8 @@ public class SchemaCrawlerTextCommandsOutputTest
                                                     ".test");
     testOutputFile.delete();
 
-    final OutputOptions outputOptions = new OutputOptions(OutputFormat.text,
-                                                          testOutputFile
-                                                            .getAbsolutePath());
+    final OutputOptions outputOptions = new OutputOptions(OutputFormat.text
+      .name(), testOutputFile);
     outputOptions.setNoInfo(true);
     outputOptions.setNoHeader(true);
     outputOptions.setNoFooter(true);
