@@ -255,7 +255,7 @@ public final class OutputOptions
    * Opens the output writer.
    * 
    * @return Writer
-   * @throws IOException
+   * @throws SchemaCrawlerException
    *         On an exception
    */
   public PrintWriter openOutputWriter()

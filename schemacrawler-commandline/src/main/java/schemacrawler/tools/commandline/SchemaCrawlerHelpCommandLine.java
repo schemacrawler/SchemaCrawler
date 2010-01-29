@@ -65,6 +65,8 @@ public final class SchemaCrawlerHelpCommandLine
    * 
    * @param args
    *        Command line arguments.
+   * @param helpOptions
+   *        Help options.
    * @param configResource
    *        Config resource.
    * @throws SchemaCrawlerException

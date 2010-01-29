@@ -86,6 +86,9 @@ final class ConfigConnectionOptionsParser
    * Parses the command line into options.
    * 
    * @param args
+   *        Command-line arguments
+   * @param config
+   *        Configuration
    */
   ConfigConnectionOptionsParser(final String[] args, final Config config)
   {

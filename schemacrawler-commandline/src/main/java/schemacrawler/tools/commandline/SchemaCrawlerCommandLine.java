@@ -50,7 +50,7 @@ public final class SchemaCrawlerCommandLine
                                   final String... args)
     throws SchemaCrawlerException
   {
-    this((String) null, connectionOptions, args);
+    this(null, connectionOptions, args);
   }
 
   /**
@@ -68,7 +68,7 @@ public final class SchemaCrawlerCommandLine
                                   final String... args)
     throws SchemaCrawlerException
   {
-    this(configResource, (ConnectionOptions) null, args);
+    this(configResource, null, args);
   }
 
   private SchemaCrawlerCommandLine(final String configResource,
