@@ -40,7 +40,7 @@ import org.codehaus.doxia.sink.Sink;
 
 /**
  * Generates a SchemaCrawler report of the database.
- *
+ * 
  * @goal schemacrawler
  * @execute phase="generate-sources"
  */
@@ -63,90 +63,102 @@ public class SchemaCrawlerMojo
 
   /**
    * JDBC driver classpath.
-   *
-   * @parameter expression="${schemacrawler.jdbc.driver.classpath}" alias="schemacrawler.jdbc.driver.classpath"
+   * 
+   * @parameter expression="${schemacrawler.jdbc.driver.classpath}"
+   *            alias="schemacrawler.jdbc.driver.classpath"
    * @required
    */
   private String jdbcDriverClasspath;
 
   /**
    * Config file.
-   *
-   * @parameter expression="${schemacrawler.config}" alias="schemacrawler.config" default-value="schemacrawler.config.properties"
+   * 
+   * @parameter expression="${schemacrawler.config}"
+   *            alias="schemacrawler.config"
+   *            default-value="schemacrawler.config.properties"
    * @required
    */
   private String config;
 
   /**
    * Config override file.
-   *
-   * @parameter expression="${schemacrawler.config-override}" alias="schemacrawler.config-override"
-   * default-value="schemacrawler.config.override.properties"
+   * 
+   * @parameter expression="${schemacrawler.config-override}"
+   *            alias="schemacrawler.config-override"
+   *            default-value="schemacrawler.config.override.properties"
    */
   private String configOverride;
 
   /**
    * Datasource.
-   *
-   * @parameter expression="${schemacrawler.datasource}" alias="schemacrawler.datasource"
+   * 
+   * @parameter expression="${schemacrawler.datasource}"
+   *            alias="schemacrawler.datasource"
    * @required
    */
   private String datasource;
 
   /**
    * Command.
-   *
-   * @parameter expression="${schemacrawler.command}" alias="schemacrawler.command"
+   * 
+   * @parameter expression="${schemacrawler.command}"
+   *            alias="schemacrawler.command"
    * @required
    */
   private String command;
 
   /**
    * Whether the header should be suppressed.
-   *
-   * @parameter expression="${schemacrawler.no-header}" alias="schemacrawler.no-header" default-value="false"
+   * 
+   * @parameter expression="${schemacrawler.no-header}"
+   *            alias="schemacrawler.no-header" default-value="false"
    */
   private boolean noHeader;
 
   /**
    * Whether the footer should be suppressed.
-   *
-   * @parameter expression="${schemacrawler.no-footer}" alias="schemacrawler.no-footer" default-value="false"
+   * 
+   * @parameter expression="${schemacrawler.no-footer}"
+   *            alias="schemacrawler.no-footer" default-value="false"
    */
   private boolean noFooter;
 
   /**
    * Whether the info should be suppressed.
-   *
-   * @parameter expression="${schemacrawler.no-info}" alias="schemacrawler.no-footer" default-value="false"
+   * 
+   * @parameter expression="${schemacrawler.no-info}"
+   *            alias="schemacrawler.no-footer" default-value="false"
    */
   private boolean noInfo;
 
   /**
    * Output format.
-   *
-   * @parameter expression="${schemacrawler.outputformat}" alias="schemacrawler.outputformat" default-value="text"
+   * 
+   * @parameter expression="${schemacrawler.outputformat}"
+   *            alias="schemacrawler.outputformat" default-value="text"
    */
   private String outputFormat;
 
   /**
    * Output file.
-   *
-   * @parameter expression="${schemacrawler.outputfile}" alias="schemacrawler.outputfile"
-   * default-value="schemacrawler.report.html"
+   * 
+   * @parameter expression="${schemacrawler.outputfile}"
+   *            alias="schemacrawler.outputfile"
+   *            default-value="schemacrawler.report.html"
    */
   private String outputFile;
 
   /**
    * Whether to append to the output.
-   *
-   * @parameter expression="${schemacrawler.append}" alias="schemacrawler.append" default-value="false"
+   * 
+   * @parameter expression="${schemacrawler.append}"
+   *            alias="schemacrawler.append" default-value="false"
    */
   private boolean append;
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see org.apache.maven.reporting.MavenReport#canGenerateReport()
    */
   @Override
@@ -164,8 +176,8 @@ public class SchemaCrawlerMojo
     throws MojoExecutionException
   {
     final String errorMessage = "An error has occurred in "
-      + getName(Locale.ENGLISH)
-      + " report generation.";
+                                + getName(Locale.ENGLISH)
+                                + " report generation.";
     try
     {
       final String outputDirectory = getOutputDirectory();
@@ -189,8 +201,9 @@ public class SchemaCrawlerMojo
 
   /**
    * {@inheritDoc}
-   *
-   * @see org.apache.maven.reporting.MavenReport#generate(org.codehaus.doxia.sink.Sink, java.util.Locale)
+   * 
+   * @see org.apache.maven.reporting.MavenReport#generate(org.codehaus.doxia.sink.Sink,
+   *      java.util.Locale)
    */
   @Override
   public void generate(final Sink sink, final Locale locale)
@@ -201,7 +214,7 @@ public class SchemaCrawlerMojo
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see org.apache.maven.reporting.MavenReport#getCategoryName()
    */
   @Override
@@ -212,7 +225,7 @@ public class SchemaCrawlerMojo
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see org.apache.maven.reporting.MavenReport#getDescription(java.util.Locale)
    */
   public String getDescription(final Locale locale)
@@ -222,7 +235,7 @@ public class SchemaCrawlerMojo
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see org.apache.maven.reporting.MavenReport#getName(java.util.Locale)
    */
   public String getName(final Locale locale)
@@ -232,7 +245,7 @@ public class SchemaCrawlerMojo
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see org.apache.maven.reporting.MavenReport#getOutputName()
    */
   public String getOutputName()
@@ -243,7 +256,7 @@ public class SchemaCrawlerMojo
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see org.apache.maven.reporting.MavenReport#getReportOutputDirectory()
    */
   @Override
@@ -254,7 +267,7 @@ public class SchemaCrawlerMojo
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see org.apache.maven.reporting.MavenReport#isExternalReport()
    */
   @Override
@@ -265,7 +278,7 @@ public class SchemaCrawlerMojo
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see org.apache.maven.reporting.MavenReport#setReportOutputDirectory(java.io.File)
    */
   @Override
@@ -286,35 +299,34 @@ public class SchemaCrawlerMojo
   {
 
     // Build command line
-    final String[] args = new String[]{
-      "-g",
-      config,
-      "-p",
-      configOverride,
-      "-c",
-      datasource,
-      "-command",
-      command,
-      "-noheader=" + noHeader,
-      "-nofooter=" + noFooter,
-      "-noinfo=" + noInfo,
-      "-outputformat",
-      outputFormat,
-      "-outputfile",
-      outputFile,
-      "-append",
-      String.valueOf(append),
+    final String[] args = new String[] {
+        "-g",
+        config,
+        "-p",
+        configOverride,
+        "-c",
+        datasource,
+        "-command",
+        command,
+        "-noheader=" + noHeader,
+        "-nofooter=" + noFooter,
+        "-noinfo=" + noInfo,
+        "-outputformat",
+        outputFormat,
+        "-outputfile",
+        outputFile,
+        "-append",
+        String.valueOf(append),
     };
 
     // Execute command
     final String commandLine = schemacrawler.Main.class.getName() + " ~"
-      + Arrays.asList(args);
+                               + Arrays.asList(args);
     try
     {
       fixClassPath();
       getLog().info(commandLine);
-      schemacrawler.Main
-        .main(args);
+      schemacrawler.Main.main(args);
     }
     catch (final Exception e)
     {
@@ -328,8 +340,7 @@ public class SchemaCrawlerMojo
   @Override
   protected String getOutputDirectory()
   {
-    return new File(outputFile).getParentFile()
-      .getAbsolutePath();
+    return new File(outputFile).getParentFile().getAbsolutePath();
   }
 
   /**
@@ -351,9 +362,10 @@ public class SchemaCrawlerMojo
   }
 
   /**
-   * The JDBC driver classpath comes from the configuration of the SchemaCrawler plugin. The current classloader needs
-   * to be "fixed" to include the JDBC driver in the classpath.
-   *
+   * The JDBC driver classpath comes from the configuration of the
+   * SchemaCrawler plugin. The current classloader needs to be "fixed"
+   * to include the JDBC driver in the classpath.
+   * 
    * @throws MavenReportException
    */
   private void fixClassPath()
@@ -369,13 +381,12 @@ public class SchemaCrawlerMojo
       for (int i = 0; i < jdbcJarPaths.length; i++)
       {
         final String jdbcJarPath = jdbcJarPaths[i];
-        jdbcJarUrls[i] = new File(jdbcJarPath).getCanonicalFile()
-          .toURI()
+        jdbcJarUrls[i] = new File(jdbcJarPath).getCanonicalFile().toURI()
           .toURL();
       }
 
       final Method addUrlMethod = URLClassLoader.class
-        .getDeclaredMethod("addURL", new Class[]{
+        .getDeclaredMethod("addURL", new Class[] {
           URL.class
         });
 
@@ -384,19 +395,19 @@ public class SchemaCrawlerMojo
 
       addUrlMethod.setAccessible(true);
 
-      for (final URL jdbcJarUrl : jdbcJarUrls)
+      for (final URL jdbcJarUrl: jdbcJarUrls)
       {
         addUrlMethod.invoke(classLoader, jdbcJarUrl);
       }
 
       getLog().info("Fixed SchemaCrawler classpath: "
-        + Arrays.asList(classLoader.getURLs()));
+                    + Arrays.asList(classLoader.getURLs()));
 
     }
     catch (final Exception e)
     {
       throw new MavenReportException("Error fixing classpath with "
-        + Arrays.asList(jdbcJarUrls), e);
+                                     + Arrays.asList(jdbcJarUrls), e);
     }
   }
 
