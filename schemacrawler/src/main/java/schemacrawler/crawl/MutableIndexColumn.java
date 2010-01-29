@@ -1,7 +1,13 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.*;
+import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.Index;
+import schemacrawler.schema.IndexColumn;
+import schemacrawler.schema.IndexColumnSortSequence;
+import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.Privilege;
 
 final class MutableIndexColumn
   extends AbstractDependantObject
@@ -50,7 +56,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.BaseColumn#getDecimalDigits()
    */
   public int getDecimalDigits()
@@ -60,7 +66,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Column#getDefaultValue()
    */
   public String getDefaultValue()
@@ -70,7 +76,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.IndexColumn#getIndex()
    */
   public Index getIndex()
@@ -80,7 +86,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.IndexColumn#getIndexOrdinalPosition()
    */
   public int getIndexOrdinalPosition()
@@ -90,7 +96,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.BaseColumn#getOrdinalPosition()
    */
   public int getOrdinalPosition()
@@ -100,7 +106,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Column#getPrivilege(java.lang.String)
    */
   public Privilege getPrivilege(final String name)
@@ -110,7 +116,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Column#getPrivileges()
    */
   public Privilege[] getPrivileges()
@@ -120,7 +126,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Column#getReferencedColumn()
    */
   public Column getReferencedColumn()
@@ -130,7 +136,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.BaseColumn#getSize()
    */
   public int getSize()
@@ -140,7 +146,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.IndexColumn#getSortSequence()
    */
   public IndexColumnSortSequence getSortSequence()
@@ -155,7 +161,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.BaseColumn#getWidth()
    */
   public String getWidth()
@@ -165,7 +171,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.BaseColumn#isNullable()
    */
   public boolean isNullable()
@@ -175,7 +181,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Column#isPartOfForeignKey()
    */
   public boolean isPartOfForeignKey()
@@ -185,7 +191,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Column#isPartOfPrimaryKey()
    */
   public boolean isPartOfPrimaryKey()
@@ -195,7 +201,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Column#isPartOfUniqueIndex()
    */
   public boolean isPartOfUniqueIndex()

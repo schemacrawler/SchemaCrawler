@@ -45,7 +45,7 @@ class MutableCheckConstraint
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.CheckConstraint#getDefinition()
    */
   public String getDefinition()
@@ -55,7 +55,7 @@ class MutableCheckConstraint
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.CheckConstraint#isDeferrable()
    */
   public boolean isDeferrable()
@@ -65,7 +65,7 @@ class MutableCheckConstraint
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.CheckConstraint#isInitiallyDeferred()
    */
   public boolean isInitiallyDeferred()

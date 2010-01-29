@@ -26,7 +26,7 @@ import java.util.Map;
 
 /**
  * Represents a named object.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public interface NamedObject
@@ -35,46 +35,48 @@ public interface NamedObject
 
   /**
    * Gets an attribute.
-   *
-   * @param name Attribute name.
-   *
+   * 
+   * @param name
+   *        Attribute name.
    * @return Attribute value.
    */
   Object getAttribute(String name);
 
   /**
    * Gets all attributes.
-   *
+   * 
    * @return Map of attributes
    */
   Map<String, Object> getAttributes();
 
   /**
    * Getter for fully qualified name of object.
-   *
+   * 
    * @return Fully qualified of the object
    */
   String getFullName();
 
   /**
    * Getter for name of object.
-   *
+   * 
    * @return Name of the object
    */
   String getName();
 
   /**
    * Getter for remarks.
-   *
+   * 
    * @return Remarks
    */
   String getRemarks();
 
   /**
    * Sets an attribute.
-   *
-   * @param name  Attribute name
-   * @param value Attribute value
+   * 
+   * @param name
+   *        Attribute name
+   * @param value
+   *        Attribute value
    */
   void setAttribute(String name, Object value);
 

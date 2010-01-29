@@ -21,7 +21,12 @@
 package schemacrawler.schemacrawler;
 
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -34,7 +39,7 @@ import sf.util.Utility;
 
 /**
  * Configuration properties.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public final class Config
@@ -47,10 +52,11 @@ public final class Config
   private static final Logger LOGGER = Logger.getLogger(Config.class.getName());
 
   /**
-   * Loads the SchemaCrawler configuration, from a properties file stream.
-   *
-   * @param configStream Configuration stream.
-   *
+   * Loads the SchemaCrawler configuration, from a properties file
+   * stream.
+   * 
+   * @param configStream
+   *        Configuration stream.
    * @return Configuration properties.
    */
   public static Config load(final InputStream configStream)
@@ -64,10 +70,11 @@ public final class Config
   }
 
   /**
-   * Loads the SchemaCrawler configuration, and override configuration, from properties files.
-   *
-   * @param configFilenames Configuration file name.
-   *
+   * Loads the SchemaCrawler configuration, and override configuration,
+   * from properties files.
+   * 
+   * @param configFilenames
+   *        Configuration file name.
    * @return Configuration properties.
    */
   public static Config load(final String... configFilenames)
@@ -75,7 +82,7 @@ public final class Config
     Properties configProperties = new Properties();
     if (configFilenames != null)
     {
-      for (final String configFilename : configFilenames)
+      for (final String configFilename: configFilenames)
       {
         if (!Utility.isBlank(configFilename))
         {
@@ -89,10 +96,11 @@ public final class Config
 
   /**
    * Loads a properties file.
-   *
-   * @param properties     Properties object.
-   * @param propertiesFile Properties file.
-   *
+   * 
+   * @param properties
+   *        Properties object.
+   * @param propertiesFile
+   *        Properties file.
    * @return Properties
    */
   private static Properties loadProperties(final Properties properties,
@@ -106,7 +114,7 @@ public final class Config
     catch (final FileNotFoundException e)
     {
       LOGGER.log(Level.WARNING, "Cannot load properties from file, "
-        + propertiesFile.getAbsolutePath());
+                                + propertiesFile.getAbsolutePath());
       LOGGER.log(Level.FINEST, e.getMessage(), e);
     }
     return properties;
@@ -114,10 +122,11 @@ public final class Config
 
   /**
    * Loads a properties file.
-   *
-   * @param properties       Properties object.
-   * @param propertiesStream Properties data stream.
-   *
+   * 
+   * @param properties
+   *        Properties object.
+   * @param propertiesStream
+   *        Properties data stream.
    * @return Properties
    */
   private static Properties loadProperties(final Properties properties,
@@ -151,9 +160,9 @@ public final class Config
 
   /**
    * Copies properties into a map.
-   *
-   * @param properties Properties to copy
-   *
+   * 
+   * @param properties
+   *        Properties to copy
    * @return Map of properties and values
    */
   private static Map<String, String> propertiesMap(final Properties properties)
@@ -162,7 +171,7 @@ public final class Config
     if (properties != null)
     {
       final Set<Map.Entry<Object, Object>> entries = properties.entrySet();
-      for (final Map.Entry<Object, Object> entry : entries)
+      for (final Map.Entry<Object, Object> entry: entries)
       {
         propertiesMap.put((String) entry.getKey(), (String) entry.getValue());
       }
@@ -179,8 +188,9 @@ public final class Config
 
   /**
    * Clones a config.
-   *
-   * @param config Config to clone
+   * 
+   * @param config
+   *        Config to clone
    */
   public Config(final Map<String, String> config)
   {
@@ -192,8 +202,9 @@ public final class Config
 
   /**
    * Copies properties into a map.
-   *
-   * @param properties Properties to copy
+   * 
+   * @param properties
+   *        Properties to copy
    */
   public Config(final Properties properties)
   {
@@ -202,9 +213,9 @@ public final class Config
 
   /**
    * Gets the value of a property as a boolean.
-   *
-   * @param propertyName Property name
-   *
+   * 
+   * @param propertyName
+   *        Property name
    * @return Boolean value
    */
   public boolean getBooleanValue(final String propertyName)
@@ -214,9 +225,9 @@ public final class Config
 
   /**
    * Gets the value of a property as an integer.
-   *
-   * @param propertyName Property name
-   *
+   * 
+   * @param propertyName
+   *        Property name
    * @return Integer value
    */
   public int getIntegerValue(final String propertyName)
@@ -226,10 +237,11 @@ public final class Config
 
   /**
    * Gets the value of a property as a string.
-   *
-   * @param propertyName Property name
-   * @param defaultValue Default value
-   *
+   * 
+   * @param propertyName
+   *        Property name
+   * @param defaultValue
+   *        Default value
    * @return String value
    */
   public String getStringValue(final String propertyName,

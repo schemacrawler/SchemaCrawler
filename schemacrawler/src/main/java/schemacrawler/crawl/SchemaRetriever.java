@@ -62,6 +62,11 @@ final class SchemaRetriever
 
   /**
    * Retrieves a list of schemas from the database.
+   * 
+   * @param schemaInclusionRule
+   *        Schema inclusion rule
+   * @throws SQLException
+   *         On an exception
    */
   void retrieveSchemas(final InclusionRule schemaInclusionRule)
     throws SQLException

@@ -61,14 +61,14 @@ public enum ForeignKeyUpdateRule
 
   /**
    * Gets the enum value from the integer.
-   *
-   * @param id Id of the integer
-   *
+   * 
+   * @param id
+   *        Id of the integer
    * @return ForeignKeyUpdateRule
    */
   public static ForeignKeyUpdateRule valueOf(final int id)
   {
-    for (final ForeignKeyUpdateRule type : ForeignKeyUpdateRule.values())
+    for (final ForeignKeyUpdateRule type: ForeignKeyUpdateRule.values())
     {
       if (type.getId() == id)
       {
@@ -90,7 +90,7 @@ public enum ForeignKeyUpdateRule
 
   /**
    * Gets the id.
-   *
+   * 
    * @return id
    */
   public int getId()
@@ -100,7 +100,7 @@ public enum ForeignKeyUpdateRule
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see Object#toString()
    */
   @Override

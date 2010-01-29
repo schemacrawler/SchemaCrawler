@@ -21,15 +21,24 @@
 package sf.util;
 
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class DirectedGraph<T extends Comparable<? super T>>
 {
 
   /**
    * Directed edge in a graph.
-   *
-   * @param <T> Type of node object
+   * 
+   * @param <T>
+   *        Type of node object
    */
   class DirectedEdge<T extends Comparable<? super T>>
   {
@@ -95,8 +104,8 @@ public class DirectedGraph<T extends Comparable<? super T>>
       final int prime = 31;
       int result = 1;
       result = prime * result + getOuterType().hashCode();
-      result = prime * result + (from == null ? 0 : from.hashCode());
-      result = prime * result + (to == null ? 0 : to.hashCode());
+      result = prime * result + (from == null? 0: from.hashCode());
+      result = prime * result + (to == null? 0: to.hashCode());
       return result;
     }
 
@@ -145,8 +154,9 @@ public class DirectedGraph<T extends Comparable<? super T>>
 
   /**
    * Vertex in a graph.
-   *
-   * @param <T> Type of node object
+   * 
+   * @param <T>
+   *        Type of node object
    */
   class Vertex<T extends Comparable<? super T>>
     implements Comparable<Vertex<T>>
@@ -209,7 +219,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
       final int prime = 31;
       int result = 1;
       result = prime * result + getOuterType().hashCode();
-      result = prime * result + (value == null ? 0 : value.hashCode());
+      result = prime * result + (value == null? 0: value.hashCode());
       return result;
     }
 
@@ -263,9 +273,11 @@ public class DirectedGraph<T extends Comparable<? super T>>
 
   /**
    * Adds vertices, and a directed edge between them.
-   *
-   * @param from Vertex value at the start of the edge
-   * @param to   Vertex value at the end of the edge
+   * 
+   * @param from
+   *        Vertex value at the start of the edge
+   * @param to
+   *        Vertex value at the end of the edge
    */
   public void addDirectedEdge(final T from, final T to)
   {
@@ -273,38 +285,20 @@ public class DirectedGraph<T extends Comparable<? super T>>
   }
 
   /**
-   * Adds a vertex.
-   *
-   * @param value Vertex value
-   */
-  protected Vertex<T> addVertex(final T value)
-  {
-    final Vertex<T> vertex;
-    if (verticesMap.containsKey(value))
-    {
-      vertex = verticesMap.get(value);
-    }
-    else
-    {
-      vertex = new Vertex<T>(value);
-      verticesMap.put(value, vertex);
-    }
-    return vertex;
-  }
-
-  /**
-   * Returns true if the graph contains a cycle, false otherwise.
+   * Checks if the graph contains a cycle.
+   * 
+   * @return true if the graph contains a cycle, false otherwise
    */
   public boolean containsCycle()
   {
     final Collection<Vertex<T>> vertices = verticesMap.values();
 
-    for (final Vertex<T> vertex : vertices)
+    for (final Vertex<T> vertex: vertices)
     {
       vertex.setTraversalState(TraversalState.notStarted);
     }
 
-    for (final Vertex<T> vertex : vertices)
+    for (final Vertex<T> vertex: vertices)
     {
       if (vertex.getTraversalState() == TraversalState.notStarted)
       {
@@ -351,7 +345,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
       Collections.sort(unattachedNodeValues);
       sortedValues.addAll(unattachedNodeValues);
 
-      for (final Vertex<T> vertex : vertices)
+      for (final Vertex<T> vertex: vertices)
       {
         if (isStartNode(vertex, edges))
         {
@@ -360,7 +354,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
       }
       Collections.sort(startNodes);
 
-      for (final Vertex<T> vertex : startNodes)
+      for (final Vertex<T> vertex: startNodes)
       {
         // Save the vertex value
         sortedValues.add(vertex.getValue());
@@ -372,6 +366,28 @@ public class DirectedGraph<T extends Comparable<? super T>>
     }
 
     return sortedValues;
+  }
+
+  /**
+   * Adds a vertex.
+   * 
+   * @param value
+   *        Vertex value
+   * @return The newly added vertex
+   */
+  protected Vertex<T> addVertex(final T value)
+  {
+    final Vertex<T> vertex;
+    if (verticesMap.containsKey(value))
+    {
+      vertex = verticesMap.get(value);
+    }
+    else
+    {
+      vertex = new Vertex<T>(value);
+      verticesMap.put(value, vertex);
+    }
+    return vertex;
   }
 
   private void dropOutEdges(final Vertex<T> vertex,
@@ -391,7 +407,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
   private boolean isStartNode(final Vertex<T> vertex,
                               final Set<DirectedEdge<T>> edges)
   {
-    for (final DirectedEdge<T> edge : edges)
+    for (final DirectedEdge<T> edge: edges)
     {
       if (edge.isTo(vertex))
       {
@@ -404,7 +420,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
   private boolean isUnattachedNode(final Vertex<T> vertex,
                                    final Set<DirectedEdge<T>> edges)
   {
-    for (final DirectedEdge<T> edge : edges)
+    for (final DirectedEdge<T> edge: edges)
     {
       if (edge.isTo(vertex) || edge.isFrom(vertex))
       {
@@ -418,7 +434,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
   {
     vertex.setTraversalState(TraversalState.inProgress);
 
-    for (final DirectedEdge<T> edge : edges)
+    for (final DirectedEdge<T> edge: edges)
     {
       final Vertex<T> to = edge.getTo();
       if (edge.isFrom(vertex))

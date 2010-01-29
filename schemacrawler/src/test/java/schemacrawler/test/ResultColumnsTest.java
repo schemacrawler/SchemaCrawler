@@ -18,18 +18,19 @@
 package schemacrawler.test;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
@@ -63,22 +64,22 @@ public class ResultColumnsTest
   {
 
     final String[] columnNames = {
-      "PUBLIC.CUSTOMER.FIRSTNAME", "PUBLIC.CUSTOMER.LASTNAME", "ADDRESS", "",
+        "PUBLIC.CUSTOMER.FIRSTNAME", "PUBLIC.CUSTOMER.LASTNAME", "ADDRESS", "",
     };
     final String[] columnDataTypes = {
-      "VARCHAR", "VARCHAR", "VARCHAR", "DOUBLE",
+        "VARCHAR", "VARCHAR", "VARCHAR", "DOUBLE",
     };
 
     final String sql = "SELECT "
-      + "  CUSTOMER.FIRSTNAME, "
-      + "  CUSTOMER.LASTNAME, "
-      + "  CUSTOMER.STREET + ', ' + CUSTOMER.CITY AS ADDRESS, "
-      + "  SUM(INVOICE.TOTAL) " + "FROM " + "  CUSTOMER "
-      + "  INNER JOIN INVOICE "
-      + "  ON INVOICE.CUSTOMERID = CUSTOMER.ID " + "GROUP BY "
-      + "  CUSTOMER.FIRSTNAME, " + "  CUSTOMER.LASTNAME, "
-      + "  CUSTOMER.STREET, " + "  CUSTOMER.CITY "
-      + "ORDER BY " + "  SUM(INVOICE.TOTAL) DESC";
+                       + "  CUSTOMER.FIRSTNAME, "
+                       + "  CUSTOMER.LASTNAME, "
+                       + "  CUSTOMER.STREET + ', ' + CUSTOMER.CITY AS ADDRESS, "
+                       + "  SUM(INVOICE.TOTAL) " + "FROM " + "  CUSTOMER "
+                       + "  INNER JOIN INVOICE "
+                       + "  ON INVOICE.CUSTOMERID = CUSTOMER.ID " + "GROUP BY "
+                       + "  CUSTOMER.FIRSTNAME, " + "  CUSTOMER.LASTNAME, "
+                       + "  CUSTOMER.STREET, " + "  CUSTOMER.CITY "
+                       + "ORDER BY " + "  SUM(INVOICE.TOTAL) DESC";
     final Connection connection = testUtility.getConnection();
     final Statement statement = connection.createStatement();
     final ResultSet resultSet = statement.executeQuery(sql);

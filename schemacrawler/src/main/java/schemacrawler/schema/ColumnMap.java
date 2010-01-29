@@ -24,8 +24,9 @@ package schemacrawler.schema;
 import java.io.Serializable;
 
 /**
- * Represents a single column mapping from a primary key column to a foreign key column.
- *
+ * Represents a single column mapping from a primary key column to a
+ * foreign key column.
+ * 
  * @author Sualeh Fatehi
  */
 public interface ColumnMap
@@ -34,14 +35,14 @@ public interface ColumnMap
 
   /**
    * Gets the foreign key column.
-   *
+   * 
    * @return Foreign key column
    */
   Column getForeignKeyColumn();
 
   /**
    * Gets the primary key column.
-   *
+   * 
    * @return Primary key column
    */
   Column getPrimaryKeyColumn();

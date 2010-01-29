@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 /**
  * Database and connection information.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public interface DatabaseInfo
@@ -34,28 +34,28 @@ public interface DatabaseInfo
 
   /**
    * Gets the name of the RDBMS vendor and product.
-   *
+   * 
    * @return Name of the RDBMS vendor and product
    */
   String getProductName();
 
   /**
    * Gets the RDBMS product version.
-   *
+   * 
    * @return RDBMS product version
    */
   String getProductVersion();
 
   /**
    * Gets all database properties.
-   *
+   * 
    * @return Database properties
    */
   DatabaseProperty[] getProperties();
 
   /**
    * Gets the user name as known to this database.
-   *
+   * 
    * @return Database user name
    */
   String getUserName();

@@ -25,8 +25,9 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnMap;
 
 /**
- * Represents a single column mapping from a primary key column to a foreign key column.
- *
+ * Represents a single column mapping from a primary key column to a
+ * foreign key column.
+ * 
  * @author Sualeh Fatehi
  */
 final class MutableColumnMap
@@ -101,7 +102,7 @@ final class MutableColumnMap
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ForeignKeyColumnMap#getForeignKeyColumn()
    */
   public Column getForeignKeyColumn()
@@ -111,7 +112,7 @@ final class MutableColumnMap
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ForeignKeyColumnMap#getPrimaryKeyColumn()
    */
   public Column getPrimaryKeyColumn()
@@ -125,9 +126,9 @@ final class MutableColumnMap
     final int prime = 31;
     int result = 1;
     result = prime * result
-      + (foreignKeyColumn == null ? 0 : foreignKeyColumn.hashCode());
+             + (foreignKeyColumn == null? 0: foreignKeyColumn.hashCode());
     result = prime * result
-      + (primaryKeyColumn == null ? 0 : primaryKeyColumn.hashCode());
+             + (primaryKeyColumn == null? 0: primaryKeyColumn.hashCode());
     return result;
   }
 

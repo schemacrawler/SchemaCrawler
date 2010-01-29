@@ -30,7 +30,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 /**
  * A connection for the retriever. Wraps a live database connection.
- *
+ * 
  * @author Sualeh Fatehi
  */
 final class RetrieverConnection
@@ -71,7 +71,7 @@ final class RetrieverConnection
 
   /**
    * Gets the INFORMATION_SCHEMA views select SQL statements.
-   *
+   * 
    * @return INFORMATION_SCHEMA views selects
    */
   InformationSchemaViews getInformationSchemaViews()

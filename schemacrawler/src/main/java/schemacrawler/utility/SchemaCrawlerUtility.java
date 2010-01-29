@@ -30,7 +30,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 /**
  * SchemaCrawler utility methods.
- *
+ * 
  * @author sfatehi
  */
 public final class SchemaCrawlerUtility

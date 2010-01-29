@@ -49,14 +49,14 @@ public enum ProcedureType
 
   /**
    * Gets the enum value from the integer.
-   *
-   * @param id Id of the integer
-   *
+   * 
+   * @param id
+   *        Id of the integer
    * @return ForeignKeyDeferrability
    */
   public static ProcedureType valueOf(final int id)
   {
-    for (final ProcedureType type : ProcedureType.values())
+    for (final ProcedureType type: ProcedureType.values())
     {
       if (type.getId() == id)
       {
@@ -78,7 +78,7 @@ public enum ProcedureType
 
   /**
    * Gets the id.
-   *
+   * 
    * @return id
    */
   public int getId()
@@ -88,7 +88,7 @@ public enum ProcedureType
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see Object#toString()
    */
   @Override

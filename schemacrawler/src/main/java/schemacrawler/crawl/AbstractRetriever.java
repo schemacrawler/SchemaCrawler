@@ -33,8 +33,9 @@ import schemacrawler.schema.DatabaseObject;
 import sf.util.Utility;
 
 /**
- * Base class for retriever that uses database metadata to get the details about the schema.
- *
+ * Base class for retriever that uses database metadata to get the
+ * details about the schema.
+ * 
  * @author Sualeh Fatehi
  */
 abstract class AbstractRetriever
@@ -42,28 +43,16 @@ abstract class AbstractRetriever
 
   static final String UNKNOWN = "<unknown>";
 
-  private final RetrieverConnection retrieverConnection;
-  final MutableDatabase database;
-
-  AbstractRetriever()
-  {
-    this(null, null);
-  }
-
-  AbstractRetriever(final RetrieverConnection retrieverConnection,
-                    final MutableDatabase database)
-  {
-    this.retrieverConnection = retrieverConnection;
-    this.database = database;
-  }
-
   /**
-   * Checks whether the provided database object belongs to the specified schema.
-   *
-   * @param dbObject    Database object to check
-   * @param catalogName Database catalog to check against
-   * @param schemaName  Database schema to check against
-   *
+   * Checks whether the provided database object belongs to the
+   * specified schema.
+   * 
+   * @param dbObject
+   *        Database object to check
+   * @param catalogName
+   *        Database catalog to check against
+   * @param schemaName
+   *        Database schema to check against
    * @return Whether the database object belongs to the specified schema
    */
   static boolean belongsToSchema(final DatabaseObject dbObject,
@@ -77,21 +66,63 @@ abstract class AbstractRetriever
 
     boolean belongsToCatalog = true;
     boolean belongsToSchema = true;
-    final String dbObjectCatalogName = dbObject.getSchema()
-      .getCatalogName();
+    final String dbObjectCatalogName = dbObject.getSchema().getCatalogName();
     if (!Utility.isBlank(catalogName) && !Utility.isBlank(dbObjectCatalogName)
-      && !catalogName.equals(dbObjectCatalogName))
+        && !catalogName.equals(dbObjectCatalogName))
     {
       belongsToCatalog = false;
     }
-    final String dbObjectSchemaName = dbObject.getSchema()
-      .getSchemaName();
+    final String dbObjectSchemaName = dbObject.getSchema().getSchemaName();
     if (!Utility.isBlank(schemaName) && !Utility.isBlank(dbObjectSchemaName)
-      && !schemaName.equals(dbObjectSchemaName))
+        && !schemaName.equals(dbObjectSchemaName))
     {
       belongsToSchema = false;
     }
     return belongsToCatalog && belongsToSchema;
+  }
+
+  /**
+   * Reads a single column result set as a list.
+   * 
+   * @param results
+   *        Result set
+   * @return List
+   * @throws SQLException
+   *         On an exception
+   */
+  static List<String> readResultsVector(final ResultSet results)
+    throws SQLException
+  {
+    final List<String> values = new ArrayList<String>();
+    try
+    {
+      while (results.next())
+      {
+        final String value = results.getString(1);
+        values.add(value);
+      }
+    }
+    finally
+    {
+      results.close();
+    }
+    return values;
+  }
+
+  private final RetrieverConnection retrieverConnection;
+
+  final MutableDatabase database;
+
+  AbstractRetriever()
+  {
+    this(null, null);
+  }
+
+  AbstractRetriever(final RetrieverConnection retrieverConnection,
+                    final MutableDatabase database)
+  {
+    this.retrieverConnection = retrieverConnection;
+    this.database = database;
   }
 
   Connection getDatabaseConnection()
@@ -109,6 +140,11 @@ abstract class AbstractRetriever
     return retrieverConnection;
   }
 
+  Collection<SchemaReference> getSchemaNames()
+  {
+    return database.getSchemaNames();
+  }
+
   MutableColumnDataType lookupColumnDataTypeByType(final MutableSchema schema,
                                                    final int type)
   {
@@ -123,12 +159,15 @@ abstract class AbstractRetriever
   }
 
   /**
-   * Creates a data type from the JDBC data type id, and the database specific type name, if it does not exist.
-   *
-   * @param schema                   Schema
-   * @param javaSqlType              JDBC data type
-   * @param databaseSpecificTypeName Database specific type name
-   *
+   * Creates a data type from the JDBC data type id, and the database
+   * specific type name, if it does not exist.
+   * 
+   * @param schema
+   *        Schema
+   * @param javaSqlType
+   *        JDBC data type
+   * @param databaseSpecificTypeName
+   *        Database specific type name
    * @return Column data type
    */
   MutableColumnDataType lookupOrCreateColumnDataType(final MutableSchema schema,
@@ -168,8 +207,7 @@ abstract class AbstractRetriever
     return procedure;
   }
 
-  MutableSchema lookupSchema(final String catalogName,
-                             final String schemaName)
+  MutableSchema lookupSchema(final String catalogName, final String schemaName)
   {
     final SchemaReference schemaRef = new SchemaReference(catalogName,
                                                           schemaName);
@@ -187,39 +225,6 @@ abstract class AbstractRetriever
       table = schema.getTable(tableName);
     }
     return table;
-  }
-
-  Collection<SchemaReference> getSchemaNames()
-  {
-    return database.getSchemaNames();
-  }
-
-  /**
-   * Reads a single column result set as a list.
-   *
-   * @param results Result set
-   *
-   * @return List
-   *
-   * @throws SQLException On an exception
-   */
-  static List<String> readResultsVector(final ResultSet results)
-    throws SQLException
-  {
-    final List<String> values = new ArrayList<String>();
-    try
-    {
-      while (results.next())
-      {
-        final String value = results.getString(1);
-        values.add(value);
-      }
-    }
-    finally
-    {
-      results.close();
-    }
-    return values;
   }
 
 }

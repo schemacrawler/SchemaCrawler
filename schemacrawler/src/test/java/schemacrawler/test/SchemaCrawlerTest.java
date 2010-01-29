@@ -18,18 +18,30 @@
 package schemacrawler.test;
 
 
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static org.junit.Assert.*;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import schemacrawler.schema.*;
+
+import schemacrawler.schema.Column;
+import schemacrawler.schema.Database;
+import schemacrawler.schema.EventManipulationType;
+import schemacrawler.schema.Procedure;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.Table;
+import schemacrawler.schema.Trigger;
+import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
@@ -63,78 +75,78 @@ public class SchemaCrawlerTest
     throws Exception
   {
     final String[] schemaNames = {
-      "INFORMATION_SCHEMA", "PUBLIC", "SCHEMACRAWLER"
+        "INFORMATION_SCHEMA", "PUBLIC", "SCHEMACRAWLER"
     };
     final int[] tableCounts = {
-      0, 6, 2
+        0, 6, 2
     };
     final String[][][] columnNames = {
-      {},
-      {
+        {},
         {
-          "CUSTOMER.ID",
-          "CUSTOMER.FIRSTNAME",
-          "CUSTOMER.LASTNAME",
-          "CUSTOMER.STREET",
-          "CUSTOMER.CITY"
+            {
+                "CUSTOMER.ID",
+                "CUSTOMER.FIRSTNAME",
+                "CUSTOMER.LASTNAME",
+                "CUSTOMER.STREET",
+                "CUSTOMER.CITY"
+            },
+            {
+                "CUSTOMERLIST.ID",
+                "CUSTOMERLIST.FIRSTNAME",
+                "CUSTOMERLIST.LASTNAME",
+            },
+            {
+                "INVOICE.ID", "INVOICE.CUSTOMERID", "INVOICE.TOTAL"
+            },
+            {
+                "ITEM.INVOICEID",
+                "ITEM.ITEM",
+                "ITEM.PRODUCTID",
+                "ITEM.QUANTITY",
+                "ITEM.COST"
+            },
+            {
+                "PRODUCT.ID", "PRODUCT.NAME", "PRODUCT.PRICE"
+            },
+            {
+                "SUPPLIER.SUPPLIER_ID", "SUPPLIER.SUPPLIER_NAME"
+            }
         },
         {
-          "CUSTOMERLIST.ID",
-          "CUSTOMERLIST.FIRSTNAME",
-          "CUSTOMERLIST.LASTNAME",
-        },
-        {
-          "INVOICE.ID", "INVOICE.CUSTOMERID", "INVOICE.TOTAL"
-        },
-        {
-          "ITEM.INVOICEID",
-          "ITEM.ITEM",
-          "ITEM.PRODUCTID",
-          "ITEM.QUANTITY",
-          "ITEM.COST"
-        },
-        {
-          "PRODUCT.ID", "PRODUCT.NAME", "PRODUCT.PRICE"
-        },
-        {
-          "SUPPLIER.SUPPLIER_ID", "SUPPLIER.SUPPLIER_NAME"
+            {
+                "ITEM.INVOICEID",
+                "ITEM.ITEM",
+                "ITEM.PRODUCTID",
+                "ITEM.QUANTITY",
+                "ITEM.COST"
+            },
+            {
+                "PRODUCT2.ID", "PRODUCT2.NAME", "PRODUCT2.PRICE"
+            },
         }
-      },
-      {
-        {
-          "ITEM.INVOICEID",
-          "ITEM.ITEM",
-          "ITEM.PRODUCTID",
-          "ITEM.QUANTITY",
-          "ITEM.COST"
-        },
-        {
-          "PRODUCT2.ID", "PRODUCT2.NAME", "PRODUCT2.PRICE"
-        },
-      }
     };
     final String[][][] columnDataTypes = {
-      {}, {
-        {
-          "INTEGER", "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR"
+        {}, {
+            {
+                "INTEGER", "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR"
+            }, {
+                "INTEGER", "VARCHAR", "VARCHAR"
+            }, {
+                "INTEGER", "INTEGER", "FLOAT"
+            }, {
+                "INTEGER", "INTEGER", "INTEGER", "INTEGER", "FLOAT"
+            }, {
+                "INTEGER", "VARCHAR", "FLOAT"
+            }, {
+                "INTEGER", "VARCHAR"
+            }
         }, {
-          "INTEGER", "VARCHAR", "VARCHAR"
-        }, {
-          "INTEGER", "INTEGER", "FLOAT"
-        }, {
-          "INTEGER", "INTEGER", "INTEGER", "INTEGER", "FLOAT"
-        }, {
-          "INTEGER", "VARCHAR", "FLOAT"
-        }, {
-          "INTEGER", "VARCHAR"
+            {
+                "INTEGER", "INTEGER", "INTEGER", "INTEGER", "FLOAT"
+            }, {
+                "INTEGER", "VARCHAR", "FLOAT"
+            },
         }
-      }, {
-        {
-          "INTEGER", "INTEGER", "INTEGER", "INTEGER", "FLOAT"
-        }, {
-          "INTEGER", "VARCHAR", "FLOAT"
-        },
-      }
     };
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -162,7 +174,7 @@ public class SchemaCrawlerTest
           LOGGER.log(Level.FINE, column.toString());
           assertEquals("Column full name does not match",
                        schemaNames[schemaIdx] + "."
-                         + columnsNamesForTable[columnIdx],
+                           + columnsNamesForTable[columnIdx],
                        column.getFullName());
           assertEquals("Column type does not match",
                        columnDataTypes[schemaIdx][tableIdx][columnIdx],
@@ -181,35 +193,35 @@ public class SchemaCrawlerTest
   {
 
     final int[] tableCounts = {
-      0, 6, 2
+        0, 6, 2
     };
     final int[][] tableColumnCounts = {
-      {}, {
-        5, 3, 3, 5, 3, 2
-      }, {
-        5, 3,
-      }
+        {}, {
+            5, 3, 3, 5, 3, 2
+        }, {
+            5, 3,
+        }
     };
     final int[][] checkConstraints = {
-      {}, {
-        0, 0, 0, 0, 0, 0
-      }, {
-        0, 0
-      }
+        {}, {
+            0, 0, 0, 0, 0, 0
+        }, {
+            0, 0
+        }
     };
     final int[][] indexCounts = {
-      {}, {
-        0, 0, 2, 4, 0, 2
-      }, {
-        0, 0
-      }
+        {}, {
+            0, 0, 2, 4, 0, 2
+        }, {
+            0, 0
+        }
     };
     final int[][] fkCounts = {
-      {}, {
-        1, 0, 2, 2, 1, 0
-      }, {
-        0, 0
-      }
+        {}, {
+            1, 0, 2, 2, 1, 0
+        }, {
+            0, 0
+        }
     };
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -234,10 +246,10 @@ public class SchemaCrawlerTest
                      table.getColumns().length);
         assertEquals(String
           .format("Table %s check constraints count does not match", table
-          .getFullName()), checkConstraints[schemaIdx][tableIdx], table
+            .getFullName()), checkConstraints[schemaIdx][tableIdx], table
           .getCheckConstraints().length);
         assertEquals(String.format("Table %s index count does not match", table
-          .getFullName()),
+                       .getFullName()),
                      indexCounts[schemaIdx][tableIdx],
                      table.getIndices().length);
         assertEquals(String.format("Table %s foreign key count does not match",
@@ -254,21 +266,21 @@ public class SchemaCrawlerTest
   {
 
     final int[] tableCounts = {
-      0, 6, 2
+        0, 6, 2
     };
     final int[][] exportedFkCounts = {
-      {}, {
-        1, 0, 1, 0, 1, 0
-      }, {
-        0, 0
-      }
+        {}, {
+            1, 0, 1, 0, 1, 0
+        }, {
+            0, 0
+        }
     };
     final int[][] importedFkCounts = {
-      {}, {
-        0, 0, 1, 2, 0, 0
-      }, {
-        0, 0
-      }
+        {}, {
+            0, 0, 1, 2, 0, 0
+        }, {
+            0, 0
+        }
     };
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -289,11 +301,11 @@ public class SchemaCrawlerTest
         final Table table = tables[tableIdx];
         assertEquals(String
           .format("Table %s exported foreign key count does not match", table
-          .getFullName()), exportedFkCounts[schemaIdx][tableIdx], table
+            .getFullName()), exportedFkCounts[schemaIdx][tableIdx], table
           .getExportedForeignKeys().length);
         assertEquals(String
           .format("Table %s imported foreign key count does not match", table
-          .getFullName()), importedFkCounts[schemaIdx][tableIdx], table
+            .getFullName()), importedFkCounts[schemaIdx][tableIdx], table
           .getImportedForeignKeys().length);
       }
     }
@@ -316,10 +328,10 @@ public class SchemaCrawlerTest
     final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
     final Procedure[] procedures = schema.getProcedures();
     assertTrue("No procedures found", procedures.length > 0);
-    for (final Procedure procedure : procedures)
+    for (final Procedure procedure: procedures)
     {
       assertNotNull("Procedure definition is null, for "
-        + procedure.getFullName(), procedure.getDefinition());
+                    + procedure.getFullName(), procedure.getDefinition());
       assertFalse("Procedure definition not found", procedure.getDefinition()
         .trim().equals(""));
     }
@@ -363,28 +375,28 @@ public class SchemaCrawlerTest
   {
 
     final String[] schemaNames = {
-      "INFORMATION_SCHEMA", "PUBLIC", "SCHEMACRAWLER"
+        "INFORMATION_SCHEMA", "PUBLIC", "SCHEMACRAWLER"
     };
     final String[][] tableNames = {
-      {},
-      {
-        "CUSTOMER",
-        "CUSTOMERLIST",
-        "INVOICE",
-        "ITEM",
-        "PRODUCT",
-        "SUPPLIER"
-      },
-      {
-        "ITEM", "PRODUCT2"
-      }
+        {},
+        {
+            "CUSTOMER",
+            "CUSTOMERLIST",
+            "INVOICE",
+            "ITEM",
+            "PRODUCT",
+            "SUPPLIER"
+        },
+        {
+            "ITEM", "PRODUCT2"
+        }
     };
     final String[][] tableTypes = {
-      {}, {
-        "TABLE", "VIEW", "TABLE", "TABLE", "TABLE", "TABLE"
-      }, {
-        "TABLE", "TABLE"
-      }
+        {}, {
+            "TABLE", "VIEW", "TABLE", "TABLE", "TABLE", "TABLE"
+        }, {
+            "TABLE", "TABLE"
+        }
     };
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
@@ -409,8 +421,7 @@ public class SchemaCrawlerTest
                      table.getFullName());
         assertEquals("Table type does not match",
                      tableTypes[schemaIdx][tableIdx],
-                     table.getType()
-                       .toString().toUpperCase(Locale.ENGLISH));
+                     table.getType().toString().toUpperCase(Locale.ENGLISH));
       }
     }
   }
@@ -421,7 +432,7 @@ public class SchemaCrawlerTest
   {
 
     final String[] tableNames = {
-      "SUPPLIER", "CUSTOMER", "PRODUCT", "INVOICE", "ITEM", "CUSTOMERLIST",
+        "SUPPLIER", "CUSTOMER", "PRODUCT", "INVOICE", "ITEM", "CUSTOMERLIST",
     };
     final Random rnd = new Random();
 
@@ -439,9 +450,8 @@ public class SchemaCrawlerTest
       .compareTo(schema.getTable("PRODUCT")) < 0);
     assertTrue("CUSTOMER -- INVOICE", schema.getTable("CUSTOMER")
       .compareTo(schema.getTable("INVOICE")) < 0);
-    assertTrue("CUSTOMER -- ITEM", schema.getTable("CUSTOMER")
-      .compareTo(schema
-        .getTable("ITEM")) < 0);
+    assertTrue("CUSTOMER -- ITEM", schema.getTable("CUSTOMER").compareTo(schema
+      .getTable("ITEM")) < 0);
     assertTrue("CUSTOMER -- CUSTOMERLIST", schema.getTable("CUSTOMER")
       .compareTo(schema.getTable("CUSTOMERLIST")) < 0);
     assertTrue("CUSTOMER -- SUPPLIER", schema.getTable("CUSTOMER")
@@ -451,9 +461,8 @@ public class SchemaCrawlerTest
       .compareTo(schema.getTable("PRODUCT")) == 0);
     assertTrue("PRODUCT -- INVOICE", schema.getTable("PRODUCT")
       .compareTo(schema.getTable("INVOICE")) < 0);
-    assertTrue("PRODUCT -- ITEM", schema.getTable("PRODUCT")
-      .compareTo(schema
-        .getTable("ITEM")) < 0);
+    assertTrue("PRODUCT -- ITEM", schema.getTable("PRODUCT").compareTo(schema
+      .getTable("ITEM")) < 0);
     assertTrue("PRODUCT -- CUSTOMERLIST", schema.getTable("PRODUCT")
       .compareTo(schema.getTable("CUSTOMERLIST")) < 0);
     assertTrue("PRODUCT -- SUPPLIER", schema.getTable("PRODUCT")
@@ -469,17 +478,15 @@ public class SchemaCrawlerTest
       .compareTo(schema.getTable("PRODUCT")) < 0);
     assertTrue("SUPPLIER -- INVOICE", schema.getTable("SUPPLIER")
       .compareTo(schema.getTable("INVOICE")) < 0);
-    assertTrue("SUPPLIER -- ITEM", schema.getTable("SUPPLIER")
-      .compareTo(schema
-        .getTable("ITEM")) < 0);
+    assertTrue("SUPPLIER -- ITEM", schema.getTable("SUPPLIER").compareTo(schema
+      .getTable("ITEM")) < 0);
     assertTrue("SUPPLIER -- CUSTOMERLIST", schema.getTable("SUPPLIER")
       .compareTo(schema.getTable("CUSTOMERLIST")) < 0);
 
     assertTrue("INVOICE -- INVOICE", schema.getTable("INVOICE")
       .compareTo(schema.getTable("INVOICE")) == 0);
-    assertTrue("INVOICE -- ITEM", schema.getTable("INVOICE")
-      .compareTo(schema
-        .getTable("ITEM")) < 0);
+    assertTrue("INVOICE -- ITEM", schema.getTable("INVOICE").compareTo(schema
+      .getTable("ITEM")) < 0);
     assertTrue("INVOICE -- CUSTOMERLIST", schema.getTable("INVOICE")
       .compareTo(schema.getTable("CUSTOMERLIST")) < 0);
     assertTrue("INVOICE -- SUPPLIER", schema.getTable("INVOICE")
@@ -489,24 +496,18 @@ public class SchemaCrawlerTest
     assertTrue("INVOICE -- PRODUCT", schema.getTable("INVOICE")
       .compareTo(schema.getTable("PRODUCT")) > 0);
 
-    assertTrue("ITEM -- ITEM", schema.getTable("ITEM")
-      .compareTo(schema
-        .getTable("ITEM")) == 0);
-    assertTrue("ITEM -- CUSTOMERLIST", schema.getTable("ITEM")
-      .compareTo(schema
-        .getTable("CUSTOMERLIST")) < 0);
-    assertTrue("ITEM -- SUPPLIER", schema.getTable("ITEM")
-      .compareTo(schema
-        .getTable("SUPPLIER")) > 0);
-    assertTrue("ITEM -- CUSTOMER", schema.getTable("ITEM")
-      .compareTo(schema
-        .getTable("CUSTOMER")) > 0);
-    assertTrue("ITEM -- PRODUCT", schema.getTable("ITEM")
-      .compareTo(schema
-        .getTable("PRODUCT")) > 0);
-    assertTrue("ITEM -- INVOICE", schema.getTable("ITEM")
-      .compareTo(schema
-        .getTable("INVOICE")) > 0);
+    assertTrue("ITEM -- ITEM", schema.getTable("ITEM").compareTo(schema
+      .getTable("ITEM")) == 0);
+    assertTrue("ITEM -- CUSTOMERLIST", schema.getTable("ITEM").compareTo(schema
+      .getTable("CUSTOMERLIST")) < 0);
+    assertTrue("ITEM -- SUPPLIER", schema.getTable("ITEM").compareTo(schema
+      .getTable("SUPPLIER")) > 0);
+    assertTrue("ITEM -- CUSTOMER", schema.getTable("ITEM").compareTo(schema
+      .getTable("CUSTOMER")) > 0);
+    assertTrue("ITEM -- PRODUCT", schema.getTable("ITEM").compareTo(schema
+      .getTable("PRODUCT")) > 0);
+    assertTrue("ITEM -- INVOICE", schema.getTable("ITEM").compareTo(schema
+      .getTable("INVOICE")) > 0);
 
     final Table[] tables = schema.getTables();
     for (int i = 0; i < 10; i++)
@@ -541,20 +542,20 @@ public class SchemaCrawlerTest
     final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
     informationSchemaViews
       .setTriggersSql("SELECT "
-        + "TRIGGER_CAT AS TRIGGER_CATALOG, "
-        + "TRIGGER_SCHEM AS TRIGGER_SCHEMA, "
-        + "TRIGGER_NAME, "
-        + "TRIGGERING_EVENT AS EVENT_MANIPULATION, "
-        + "TABLE_CAT AS EVENT_OBJECT_CATALOG, "
-        + "TABLE_SCHEM AS EVENT_OBJECT_SCHEMA, "
-        + "TABLE_NAME AS EVENT_OBJECT_TABLE, "
-        + "1 AS ACTION_ORDER, "
-        + "WHEN_CLAUSE AS ACTION_CONDITION, "
-        + "REFERENCING_NAMES AS ACTION_ORIENTATION, "
-        + "DESCRIPTION AS ACTION_STATEMENT, "
-        + "CASE WHEN TRIGGER_TYPE LIKE \'BEFORE%\' THEN \'BEFORE\' ELSE \'\' END AS CONDITION_TIMING, "
-        + "TRIGGER_BODY AS DEFINITION "
-        + "FROM INFORMATION_SCHEMA.SYSTEM_TRIGGERS");
+                      + "TRIGGER_CAT AS TRIGGER_CATALOG, "
+                      + "TRIGGER_SCHEM AS TRIGGER_SCHEMA, "
+                      + "TRIGGER_NAME, "
+                      + "TRIGGERING_EVENT AS EVENT_MANIPULATION, "
+                      + "TABLE_CAT AS EVENT_OBJECT_CATALOG, "
+                      + "TABLE_SCHEM AS EVENT_OBJECT_SCHEMA, "
+                      + "TABLE_NAME AS EVENT_OBJECT_TABLE, "
+                      + "1 AS ACTION_ORDER, "
+                      + "WHEN_CLAUSE AS ACTION_CONDITION, "
+                      + "REFERENCING_NAMES AS ACTION_ORIENTATION, "
+                      + "DESCRIPTION AS ACTION_STATEMENT, "
+                      + "CASE WHEN TRIGGER_TYPE LIKE \'BEFORE%\' THEN \'BEFORE\' ELSE \'\' END AS CONDITION_TIMING, "
+                      + "TRIGGER_BODY AS DEFINITION "
+                      + "FROM INFORMATION_SCHEMA.SYSTEM_TRIGGERS");
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setShowStoredProcedures(true);
@@ -563,10 +564,10 @@ public class SchemaCrawlerTest
     final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
     final Table[] tables = schema.getTables();
     boolean foundTrigger = false;
-    for (final Table table : tables)
+    for (final Table table: tables)
     {
       final Trigger[] triggers = table.getTriggers();
-      for (final Trigger trigger : triggers)
+      for (final Trigger trigger: triggers)
       {
         foundTrigger = true;
         assertEquals("Triggers full name does not match",
@@ -598,8 +599,7 @@ public class SchemaCrawlerTest
     final View view = (View) schema.getTable("CUSTOMERLIST");
     assertNotNull("View not found", view);
     assertNotNull("View definition not found", view.getDefinition());
-    assertFalse("View definition not found", view.getDefinition()
-      .trim()
+    assertFalse("View definition not found", view.getDefinition().trim()
       .equals(""));
   }
 

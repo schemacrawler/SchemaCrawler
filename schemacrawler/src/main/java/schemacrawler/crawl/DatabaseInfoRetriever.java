@@ -23,8 +23,19 @@ package schemacrawler.crawl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.DriverPropertyInfo;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,14 +49,85 @@ final class DatabaseInfoRetriever
   private static final Logger LOGGER = Logger
     .getLogger(DatabaseInfoRetriever.class.getName());
 
-  private static final List<String> ignoreMethods = Arrays.asList(
-    "getDatabaseProductName",
-    "getDatabaseProductVersion",
-    "getURL",
-    "getUserName",
-    "getDriverName",
-    "getDriverVersion"
-  );
+  private static final List<String> ignoreMethods = Arrays
+    .asList("getDatabaseProductName",
+            "getDatabaseProductVersion",
+            "getURL",
+            "getUserName",
+            "getDriverName",
+            "getDriverVersion");
+
+  /**
+   * Checks if a method is a result set method.
+   * 
+   * @param method
+   *        Method
+   * @return Whether a method is a result set method
+   */
+  private static boolean isDatabasePropertiesResultSetMethod(final Method method)
+  {
+    final Class<?> returnType = method.getReturnType();
+    final boolean isPropertiesResultSetMethod = returnType
+      .equals(ResultSet.class)
+                                                && method.getParameterTypes().length == 0;
+    return isPropertiesResultSetMethod;
+  }
+
+  /**
+   * Checks if a method is a database property.
+   * 
+   * @param method
+   *        Method
+   * @return Whether method is a database property
+   */
+  private static boolean isDatabasePropertyMethod(final Method method)
+  {
+    final Class<?> returnType = method.getReturnType();
+    final boolean notPropertyMethod = returnType.equals(ResultSet.class)
+                                      || returnType.equals(Connection.class)
+                                      || method.getParameterTypes().length > 0;
+    return !notPropertyMethod;
+  }
+
+  /**
+   * Checks if a method is a database property result set type.
+   * 
+   * @param method
+   *        Method
+   * @return Whether a method is a database property result set type
+   */
+  private static boolean isDatabasePropertyResultSetType(final Method method)
+  {
+    final String[] databasePropertyResultSetTypes = new String[] {
+        "deletesAreDetected",
+        "insertsAreDetected",
+        "updatesAreDetected",
+        "othersDeletesAreVisible",
+        "othersInsertsAreVisible",
+        "othersUpdatesAreVisible",
+        "ownDeletesAreVisible",
+        "ownInsertsAreVisible",
+        "ownUpdatesAreVisible",
+        "supportsResultSetType"
+    };
+    final boolean isDatabasePropertyResultSetType = Arrays
+      .binarySearch(databasePropertyResultSetTypes, method.getName()) >= 0;
+    return isDatabasePropertyResultSetType;
+  }
+
+  private static MutableDatabaseProperty retrieveResultSetTypeProperty(final DatabaseMetaData dbMetaData,
+                                                                       final Method method,
+                                                                       final int resultSetType,
+                                                                       final String resultSetTypeName)
+    throws IllegalAccessException, InvocationTargetException
+  {
+    final String name = method.getName() + "For" + resultSetTypeName
+                        + "ResultSets";
+    Boolean propertyValue = null;
+    propertyValue = (Boolean) method.invoke(dbMetaData, Integer
+      .valueOf(resultSetType));
+    return new MutableDatabaseProperty(name, propertyValue);
+  }
 
   DatabaseInfoRetriever(final RetrieverConnection retrieverConnection,
                         final MutableDatabase database)
@@ -55,8 +137,9 @@ final class DatabaseInfoRetriever
 
   /**
    * Provides additional information on the database.
-   *
-   * @throws SQLException On a SQL exception
+   * 
+   * @throws SQLException
+   *         On a SQL exception
    */
   void retrieveAdditionalDatabaseInfo()
     throws SQLException
@@ -67,7 +150,7 @@ final class DatabaseInfoRetriever
     final Collection<MutableDatabaseProperty> dbProperties = new ArrayList<MutableDatabaseProperty>();
 
     final Method[] methods = DatabaseMetaData.class.getMethods();
-    for (final Method method : methods)
+    for (final Method method: methods)
     {
       try
       {
@@ -83,9 +166,8 @@ final class DatabaseInfoRetriever
                        "Retrieving database property using method: " + method);
           }
           Object value = method.invoke(dbMetaData);
-          if (value != null && method.getName()
-            .endsWith("s")
-            && value instanceof String)
+          if (value != null && method.getName().endsWith("s")
+              && value instanceof String)
           {
             // Probably a comma-separated list
             value = Collections.unmodifiableList(Arrays.asList(((String) value)
@@ -148,8 +230,9 @@ final class DatabaseInfoRetriever
 
   /**
    * Provides information on the JDBC driver.
-   *
-   * @throws SQLException On a SQL exception
+   * 
+   * @throws SQLException
+   *         On a SQL exception
    */
   void retrieveAdditionalJdbcDriverInfo()
     throws SQLException
@@ -165,7 +248,7 @@ final class DatabaseInfoRetriever
         final Driver jdbcDriver = DriverManager.getDriver(url);
         final DriverPropertyInfo[] propertyInfo = jdbcDriver
           .getPropertyInfo(url, new Properties());
-        for (final DriverPropertyInfo driverPropertyInfo : propertyInfo)
+        for (final DriverPropertyInfo driverPropertyInfo: propertyInfo)
         {
           driverInfo
             .addJdbcDriverProperty(new MutableJdbcDriverProperty(driverPropertyInfo));
@@ -182,14 +265,14 @@ final class DatabaseInfoRetriever
 
   void retrieveAdditionalSchemaCrawlerInfo()
   {
-    database.getSchemaCrawlerInfo()
-      .setAdditionalSchemaCrawlerInfo();
+    database.getSchemaCrawlerInfo().setAdditionalSchemaCrawlerInfo();
   }
 
   /**
    * Provides information on the database.
-   *
-   * @throws SQLException On a SQL exception
+   * 
+   * @throws SQLException
+   *         On a SQL exception
    */
   void retrieveDatabaseInfo()
     throws SQLException
@@ -205,8 +288,9 @@ final class DatabaseInfoRetriever
 
   /**
    * Provides information on the JDBC driver.
-   *
-   * @throws SQLException On a SQL exception
+   * 
+   * @throws SQLException
+   *         On a SQL exception
    */
   void retrieveJdbcDriverInfo()
     throws SQLException
@@ -229,14 +313,14 @@ final class DatabaseInfoRetriever
 
   void retrieveSchemaCrawlerInfo()
   {
-    database.getSchemaCrawlerInfo()
-      .setSchemaCrawlerInfo();
+    database.getSchemaCrawlerInfo().setSchemaCrawlerInfo();
   }
 
   /**
    * Retrieves column data type metadata.
-   *
-   * @throws SQLException On a SQL exception
+   * 
+   * @throws SQLException
+   *         On a SQL exception
    */
   void retrieveSystemColumnDataTypes()
     throws SQLException
@@ -350,77 +434,6 @@ final class DatabaseInfoRetriever
       results.close();
     }
 
-  }
-
-  /**
-   * Checks if a method is a result set method.
-   *
-   * @param method Method
-   *
-   * @return Whether a method is a result set method
-   */
-  private static boolean isDatabasePropertiesResultSetMethod(final Method method)
-  {
-    final Class<?> returnType = method.getReturnType();
-    final boolean isPropertiesResultSetMethod = returnType
-      .equals(ResultSet.class)
-      && method.getParameterTypes().length == 0;
-    return isPropertiesResultSetMethod;
-  }
-
-  /**
-   * Checks if a method is a database property.
-   *
-   * @param method Method
-   *
-   * @return Whether method is a database property
-   */
-  private static boolean isDatabasePropertyMethod(final Method method)
-  {
-    final Class<?> returnType = method.getReturnType();
-    final boolean notPropertyMethod = returnType.equals(ResultSet.class)
-      || returnType.equals(Connection.class)
-      || method.getParameterTypes().length > 0;
-    return !notPropertyMethod;
-  }
-
-  /**
-   * Checks if a method is a database property result set type.
-   *
-   * @param method Method
-   *
-   * @return Whether a method is a database property result set type
-   */
-  private static boolean isDatabasePropertyResultSetType(final Method method)
-  {
-    final String[] databasePropertyResultSetTypes = new String[]{
-      "deletesAreDetected",
-      "insertsAreDetected",
-      "updatesAreDetected",
-      "othersDeletesAreVisible",
-      "othersInsertsAreVisible",
-      "othersUpdatesAreVisible",
-      "ownDeletesAreVisible",
-      "ownInsertsAreVisible",
-      "ownUpdatesAreVisible",
-      "supportsResultSetType"
-    };
-    final boolean isDatabasePropertyResultSetType = Arrays
-      .binarySearch(databasePropertyResultSetTypes, method.getName()) >= 0;
-    return isDatabasePropertyResultSetType;
-  }
-
-  private static MutableDatabaseProperty retrieveResultSetTypeProperty(final DatabaseMetaData dbMetaData,
-                                                                       final Method method,
-                                                                       final int resultSetType,
-                                                                       final String resultSetTypeName)
-    throws IllegalAccessException, InvocationTargetException
-  {
-    final String name = method.getName() + "For" + resultSetTypeName
-      + "ResultSets";
-    Boolean propertyValue = null;
-    propertyValue = (Boolean) method.invoke(dbMetaData, Integer.valueOf(resultSetType));
-    return new MutableDatabaseProperty(name, propertyValue);
   }
 
 }

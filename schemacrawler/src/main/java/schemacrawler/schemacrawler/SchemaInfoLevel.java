@@ -23,7 +23,7 @@ package schemacrawler.schemacrawler;
 
 /**
  * Descriptor for level of schema detail.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public final class SchemaInfoLevel
@@ -34,7 +34,7 @@ public final class SchemaInfoLevel
 
   /**
    * Creates a new SchemaInfoLevel for verbose schema information.
-   *
+   * 
    * @return New SchemaInfoLevel
    */
   public static SchemaInfoLevel detailed()
@@ -49,7 +49,7 @@ public final class SchemaInfoLevel
 
   /**
    * Creates a new SchemaInfoLevel for maximum schema information.
-   *
+   * 
    * @return New SchemaInfoLevel
    */
   public static SchemaInfoLevel maximum()
@@ -66,7 +66,7 @@ public final class SchemaInfoLevel
 
   /**
    * Creates a new SchemaInfoLevel for minimum schema information.
-   *
+   * 
    * @return New SchemaInfoLevel
    */
   public static SchemaInfoLevel minimum()
@@ -82,7 +82,7 @@ public final class SchemaInfoLevel
 
   /**
    * Creates a new SchemaInfoLevel for standard schema information.
-   *
+   * 
    * @return New SchemaInfoLevel
    */
   public static SchemaInfoLevel standard()

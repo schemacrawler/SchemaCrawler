@@ -28,8 +28,9 @@ import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
 
 /**
- * Represents a column in a database for tables and procedures. Created from metadata returned by a JDBC call.
- *
+ * Represents a column in a database for tables and procedures. Created
+ * from metadata returned by a JDBC call.
+ * 
  * @author Sualeh Fatehi
  */
 abstract class AbstractColumn
@@ -78,7 +79,7 @@ abstract class AbstractColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.BaseColumn#getDecimalDigits()
    */
   public final int getDecimalDigits()
@@ -88,7 +89,7 @@ abstract class AbstractColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.BaseColumn#getOrdinalPosition()
    */
   public final int getOrdinalPosition()
@@ -98,7 +99,7 @@ abstract class AbstractColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.BaseColumn#getSize()
    */
   public final int getSize()
@@ -108,7 +109,7 @@ abstract class AbstractColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.BaseColumn#getType()
    */
   public final ColumnDataType getType()
@@ -118,7 +119,7 @@ abstract class AbstractColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.BaseColumn#getWidth()
    */
   public final String getWidth()
@@ -136,10 +137,9 @@ abstract class AbstractColumn
     }
 
     final JavaSqlTypeGroup sqlDataTypeGroup = JavaSqlTypesUtility
-      .lookupSqlDataType(columnDataType.getType())
-      .getJavaSqlTypeGroup();
+      .lookupSqlDataType(columnDataType.getType()).getJavaSqlTypeGroup();
     final boolean needWidth = sqlDataTypeGroup == JavaSqlTypeGroup.character
-      || sqlDataTypeGroup == JavaSqlTypeGroup.real;
+                              || sqlDataTypeGroup == JavaSqlTypeGroup.real;
 
     final StringBuilder columnWidthBuffer = new StringBuilder();
     if (needWidth)
@@ -148,8 +148,7 @@ abstract class AbstractColumn
       columnWidthBuffer.append(size);
       if (sqlDataTypeGroup == JavaSqlTypeGroup.real)
       {
-        columnWidthBuffer.append(", ")
-          .append(getDecimalDigits());
+        columnWidthBuffer.append(", ").append(getDecimalDigits());
       }
       columnWidthBuffer.append(")");
     }
@@ -160,7 +159,7 @@ abstract class AbstractColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.BaseColumn#isNullable()
    */
   public final boolean isNullable()
@@ -185,8 +184,9 @@ abstract class AbstractColumn
 
   /**
    * Sets the column size.
-   *
-   * @param size Size of the column
+   * 
+   * @param size
+   *        Size of the column
    */
   final void setSize(final int size)
   {

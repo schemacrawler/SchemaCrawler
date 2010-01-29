@@ -52,17 +52,16 @@ public enum ConditionTimingType
 
   /**
    * Find the enumeration value corresponding to the string.
-   *
-   * @param value Sort sequence code.
-   *
+   * 
+   * @param value
+   *        Sort sequence code.
    * @return Enumeration value
    */
   public static ConditionTimingType valueOfFromValue(final String value)
   {
-    for (final ConditionTimingType type : ConditionTimingType.values())
+    for (final ConditionTimingType type: ConditionTimingType.values())
     {
-      if (type.getValue()
-        .equalsIgnoreCase(value))
+      if (type.getValue().equalsIgnoreCase(value))
       {
         return type;
       }
@@ -80,7 +79,7 @@ public enum ConditionTimingType
 
   /**
    * Gets the value.
-   *
+   * 
    * @return Value
    */
   public final String getValue()

@@ -21,11 +21,16 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.*;
+import schemacrawler.schema.Procedure;
+import schemacrawler.schema.ProcedureColumn;
+import schemacrawler.schema.ProcedureType;
+import schemacrawler.schema.RoutineBodyType;
+import schemacrawler.schema.Schema;
 
 /**
- * Represents a database procedure. Created from metadata returned by a JDBC call.
- *
+ * Represents a database procedure. Created from metadata returned by a
+ * JDBC call.
+ * 
  * @author Sualeh Fatehi
  */
 final class MutableProcedure
@@ -51,7 +56,7 @@ final class MutableProcedure
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Procedure#getColumn(java.lang.String)
    */
   public MutableProcedureColumn getColumn(final String name)
@@ -61,18 +66,17 @@ final class MutableProcedure
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see Procedure#getColumns()
    */
   public ProcedureColumn[] getColumns()
   {
-    return columns.values()
-      .toArray(new ProcedureColumn[columns.size()]);
+    return columns.values().toArray(new ProcedureColumn[columns.size()]);
   }
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see Procedure#getDefinition()
    */
   public String getDefinition()
@@ -82,7 +86,7 @@ final class MutableProcedure
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see Procedure#getRoutineBodyType()
    */
   public RoutineBodyType getRoutineBodyType()
@@ -92,7 +96,7 @@ final class MutableProcedure
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see Procedure#getType()
    */
   public ProcedureType getType()
@@ -109,8 +113,7 @@ final class MutableProcedure
   {
     if (definition != null)
     {
-      this.definition
-        .append(definition);
+      this.definition.append(definition);
     }
   }
 

@@ -21,14 +21,23 @@
 package schemacrawler.crawl;
 
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import schemacrawler.schema.*;
+import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.Database;
+import schemacrawler.schema.Procedure;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.Table;
 
 /**
- * Database and connection information. Created from metadata returned by a JDBC call, and other sources of
- * information.
- *
+ * Database and connection information. Created from metadata returned
+ * by a JDBC call, and other sources of information.
+ * 
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
 final class MutableDatabase
@@ -60,7 +69,7 @@ final class MutableDatabase
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Database#getJdbcDriverInfo()
    */
   public MutableJdbcDriverInfo getJdbcDriverInfo()
@@ -70,16 +79,15 @@ final class MutableDatabase
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Database#getSchema(java.lang.String)
    */
   public MutableSchema getSchema(final String name)
   {
     final Collection<SchemaReference> schemaRefs = getSchemaNames();
-    for (final SchemaReference schemaRef : schemaRefs)
+    for (final SchemaReference schemaRef: schemaRefs)
     {
-      if (schemaRef.getFullName()
-        .equals(name))
+      if (schemaRef.getFullName().equals(name))
       {
         return schemaRefsCache.get(schemaRef);
       }
@@ -89,7 +97,7 @@ final class MutableDatabase
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Database#getSchemaCrawlerInfo()
    */
   public MutableSchemaCrawlerInfo getSchemaCrawlerInfo()
@@ -99,7 +107,7 @@ final class MutableDatabase
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Database#getSchemas()
    */
   public Schema[] getSchemas()
@@ -112,7 +120,7 @@ final class MutableDatabase
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Database#getSystemColumnDataType(java.lang.String)
    */
   public MutableColumnDataType getSystemColumnDataType(final String name)
@@ -122,7 +130,7 @@ final class MutableDatabase
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Database#getSystemColumnDataTypes()
    */
   public ColumnDataType[] getSystemColumnDataTypes()
@@ -154,9 +162,9 @@ final class MutableDatabase
   NamedObjectList<MutableProcedure> getAllProcedures()
   {
     final NamedObjectList<MutableProcedure> procedures = new NamedObjectList<MutableProcedure>();
-    for (final Schema schema : getSchemas())
+    for (final Schema schema: getSchemas())
     {
-      for (final Procedure procedure : schema.getProcedures())
+      for (final Procedure procedure: schema.getProcedures())
       {
         procedures.add((MutableProcedure) procedure);
       }
@@ -167,9 +175,9 @@ final class MutableDatabase
   NamedObjectList<MutableTable> getAllTables()
   {
     final NamedObjectList<MutableTable> tables = new NamedObjectList<MutableTable>();
-    for (final Schema schema : getSchemas())
+    for (final Schema schema: getSchemas())
     {
-      for (final Table table : schema.getTables())
+      for (final Table table: schema.getTables())
       {
         tables.add((MutableTable) table);
       }

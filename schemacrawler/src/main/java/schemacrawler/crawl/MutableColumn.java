@@ -26,8 +26,9 @@ import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Privilege;
 
 /**
- * Represents a column in a database table or procedure. Created from metadata returned by a JDBC call.
- *
+ * Represents a column in a database table or procedure. Created from
+ * metadata returned by a JDBC call.
+ * 
  * @author Sualeh Fatehi
  */
 class MutableColumn
@@ -50,7 +51,7 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Column#getDefaultValue()
    */
   public String getDefaultValue()
@@ -60,7 +61,7 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Column#getPrivilege(java.lang.String)
    */
   public MutablePrivilege getPrivilege(final String name)
@@ -70,18 +71,17 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see Column#getPrivileges()
    */
   public Privilege[] getPrivileges()
   {
-    return privileges.values()
-      .toArray(new Privilege[privileges.size()]);
+    return privileges.values().toArray(new Privilege[privileges.size()]);
   }
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Column#getReferencedColumn()
    */
   public Column getReferencedColumn()
@@ -91,7 +91,7 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Column#isPartOfForeignKey()
    */
   public boolean isPartOfForeignKey()
@@ -101,7 +101,7 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Column#isPartOfPrimaryKey()
    */
   public boolean isPartOfPrimaryKey()
@@ -111,7 +111,7 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Column#isPartOfUniqueIndex()
    */
   public boolean isPartOfUniqueIndex()

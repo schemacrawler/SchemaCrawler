@@ -29,15 +29,22 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.*;
+import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnMap;
+import schemacrawler.schema.Database;
+import schemacrawler.schema.Procedure;
+import schemacrawler.schema.ProcedureColumn;
+import schemacrawler.schema.ResultsColumns;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 
 /**
- * SchemaCrawler uses database meta-data to get the details about the schema.
- *
+ * SchemaCrawler uses database meta-data to get the details about the
+ * schema.
+ * 
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawler
@@ -48,9 +55,9 @@ public final class SchemaCrawler
 
   /**
    * Gets the result set columns metadata.
-   *
-   * @param resultSet Result set
-   *
+   * 
+   * @param resultSet
+   *        Result set
    * @return Schema
    */
   public static ResultsColumns getResultColumns(final ResultSet resultSet)
@@ -69,62 +76,6 @@ public final class SchemaCrawler
     return resultColumns;
   }
 
-  private final Connection connection;
-
-  /**
-   * Constructs a SchemaCrawler object, from a connection.
-   *
-   * @param connection An database connection.
-   *
-   * @throws SchemaCrawlerException On a crawler exception
-   */
-  public SchemaCrawler(final Connection connection)
-    throws SchemaCrawlerException
-  {
-    if (connection == null)
-    {
-      throw new SchemaCrawlerException("No connection specified");
-    }
-    this.connection = connection;
-  }
-
-  /**
-   * Crawls the database, to obtain database metadata.
-   *
-   * @param options SchemaCrawler options that control what metadata is returned
-   * @return Database metadata
-   * @throws SchemaCrawlerException On an exception
-   */
-  public Database crawl(final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
-  {
-    final MutableDatabase database = new MutableDatabase("database");
-
-    RetrieverConnection retrieverConnection = null;
-    try
-    {
-      SchemaCrawlerOptions schemaCrawlerOptions = options;
-      if (schemaCrawlerOptions == null)
-      {
-        schemaCrawlerOptions = new SchemaCrawlerOptions();
-      }
-      retrieverConnection = new RetrieverConnection(connection,
-                                                    schemaCrawlerOptions);
-
-      crawlSchemas(database, retrieverConnection, schemaCrawlerOptions);
-      crawlDatabaseInfo(database, retrieverConnection, schemaCrawlerOptions);
-      crawlColumnDataTypes(database, retrieverConnection, schemaCrawlerOptions);
-      crawlTables(database, retrieverConnection, schemaCrawlerOptions);
-      crawlProcedures(database, retrieverConnection, schemaCrawlerOptions);
-
-      return database;
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerException("Database access exception", e);
-    }
-  }
-
   private static void crawlColumnDataTypes(final MutableDatabase database,
                                            final RetrieverConnection retrieverConnection,
                                            final SchemaCrawlerOptions options)
@@ -141,7 +92,7 @@ public final class SchemaCrawler
       }
       if (infoLevel.isRetrieveUserDefinedColumnDataTypes())
       {
-        for (final SchemaReference schemaNameObject : retriever.getSchemaNames())
+        for (final SchemaReference schemaNameObject: retriever.getSchemaNames())
         {
           retriever.retrieveUserDefinedColumnDataTypes(schemaNameObject
             .getSchemaName(), schemaNameObject.getSchemaName());
@@ -206,7 +157,7 @@ public final class SchemaCrawler
   {
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
     final boolean retrieveProcedures = options.isShowStoredProcedures()
-      && infoLevel.isRetrieveProcedures();
+                                       && infoLevel.isRetrieveProcedures();
     if (!retrieveProcedures)
     {
       return;
@@ -218,7 +169,7 @@ public final class SchemaCrawler
     {
       retriever = new ProcedureRetriever(retrieverConnection, database);
       retrieverExtra = new ProcedureExRetriever(retrieverConnection, database);
-      for (final SchemaReference schemaNameObject : retriever.getSchemaNames())
+      for (final SchemaReference schemaNameObject: retriever.getSchemaNames())
       {
         retriever.retrieveProcedures(schemaNameObject.getCatalogName(),
                                      schemaNameObject.getSchemaName(),
@@ -226,7 +177,7 @@ public final class SchemaCrawler
       }
       final NamedObjectList<MutableProcedure> allProcedures = database
         .getAllProcedures();
-      for (final MutableProcedure procedure : allProcedures)
+      for (final MutableProcedure procedure: allProcedures)
       {
         if (infoLevel.isRetrieveProcedureColumns())
         {
@@ -245,7 +196,7 @@ public final class SchemaCrawler
         retrieverExtra.retrieveProcedureInformation();
       }
 
-      for (final MutableProcedure procedure : allProcedures)
+      for (final MutableProcedure procedure: allProcedures)
       {
         // Set comparators
         procedure.setColumnComparator(NamedObjectSort
@@ -296,7 +247,7 @@ public final class SchemaCrawler
       retriever = new TableRetriever(retrieverConnection, database);
       retrieverExtra = new TableExRetriever(retrieverConnection, database);
 
-      for (final SchemaReference schemaNameObject : retriever.getSchemaNames())
+      for (final SchemaReference schemaNameObject: retriever.getSchemaNames())
       {
         retriever.retrieveTables(schemaNameObject.getCatalogName(),
                                  schemaNameObject.getSchemaName(),
@@ -305,7 +256,7 @@ public final class SchemaCrawler
       }
 
       final NamedObjectList<MutableTable> allTables = database.getAllTables();
-      for (final MutableTable table : allTables)
+      for (final MutableTable table: allTables)
       {
         if (infoLevel.isRetrieveTableColumns())
         {
@@ -342,13 +293,13 @@ public final class SchemaCrawler
       final NamedObjectSort tablesSort = NamedObjectSort
         .getNamedObjectSort(options.isAlphabeticalSortForTables());
       if (tablesSort == NamedObjectSort.natural
-        && !infoLevel.isRetrieveForeignKeys())
+          && !infoLevel.isRetrieveForeignKeys())
       {
         LOGGER
           .log(Level.WARNING,
                "Foreign-keys are not being retrieved, so tables cannot be sorted using the natural sort order");
       }
-      for (final MutableTable table : allTables)
+      for (final MutableTable table: allTables)
       {
         final boolean isView = table instanceof MutableView;
         if (!isView && infoLevel.isRetrieveTableColumns())
@@ -399,12 +350,14 @@ public final class SchemaCrawler
   }
 
   /**
-   * Special case for "grep" like functionality. Handle procedure if a procedure column inclusion rule is found, and at
-   * least one column matches the rule.
-   *
-   * @param options   Options
-   * @param procedure Procedure to check
-   *
+   * Special case for "grep" like functionality. Handle procedure if a
+   * procedure column inclusion rule is found, and at least one column
+   * matches the rule.
+   * 
+   * @param options
+   *        Options
+   * @param procedure
+   *        Procedure to check
    * @return Whether the column should be included
    */
   private static boolean grepMatch(final SchemaCrawlerOptions options,
@@ -422,7 +375,7 @@ public final class SchemaCrawler
     }
     else
     {
-      for (final ProcedureColumn column : columns)
+      for (final ProcedureColumn column: columns)
       {
         if (grepProcedureColumnInclusionRule.include(column.getFullName()))
         {
@@ -441,19 +394,21 @@ public final class SchemaCrawler
     if (!include)
     {
       LOGGER.log(Level.FINE, "Removing procedure " + procedure
-        + " since it does not match the grep pattern");
+                             + " since it does not match the grep pattern");
     }
 
     return include;
   }
 
   /**
-   * Special case for "grep" like functionality. Handle table if a table column inclusion rule is found, and at least
-   * one column matches the rule.
-   *
-   * @param options Options
-   * @param table   Table to check
-   *
+   * Special case for "grep" like functionality. Handle table if a table
+   * column inclusion rule is found, and at least one column matches the
+   * rule.
+   * 
+   * @param options
+   *        Options
+   * @param table
+   *        Table to check
    * @return Whether the column should be included
    */
   private static boolean grepMatch(final SchemaCrawlerOptions options,
@@ -471,7 +426,7 @@ public final class SchemaCrawler
     }
     else
     {
-      for (final Column column : columns)
+      for (final Column column: columns)
       {
         if (grepColumnInclusionRule.include(column.getFullName()))
         {
@@ -490,10 +445,69 @@ public final class SchemaCrawler
     if (!include)
     {
       LOGGER.log(Level.FINE, "Removing table " + table
-        + " since it does not match the grep pattern");
+                             + " since it does not match the grep pattern");
     }
 
     return include;
+  }
+
+  private final Connection connection;
+
+  /**
+   * Constructs a SchemaCrawler object, from a connection.
+   * 
+   * @param connection
+   *        An database connection.
+   * @throws SchemaCrawlerException
+   *         On a crawler exception
+   */
+  public SchemaCrawler(final Connection connection)
+    throws SchemaCrawlerException
+  {
+    if (connection == null)
+    {
+      throw new SchemaCrawlerException("No connection specified");
+    }
+    this.connection = connection;
+  }
+
+  /**
+   * Crawls the database, to obtain database metadata.
+   * 
+   * @param options
+   *        SchemaCrawler options that control what metadata is returned
+   * @return Database metadata
+   * @throws SchemaCrawlerException
+   *         On an exception
+   */
+  public Database crawl(final SchemaCrawlerOptions options)
+    throws SchemaCrawlerException
+  {
+    final MutableDatabase database = new MutableDatabase("database");
+
+    RetrieverConnection retrieverConnection = null;
+    try
+    {
+      SchemaCrawlerOptions schemaCrawlerOptions = options;
+      if (schemaCrawlerOptions == null)
+      {
+        schemaCrawlerOptions = new SchemaCrawlerOptions();
+      }
+      retrieverConnection = new RetrieverConnection(connection,
+                                                    schemaCrawlerOptions);
+
+      crawlSchemas(database, retrieverConnection, schemaCrawlerOptions);
+      crawlDatabaseInfo(database, retrieverConnection, schemaCrawlerOptions);
+      crawlColumnDataTypes(database, retrieverConnection, schemaCrawlerOptions);
+      crawlTables(database, retrieverConnection, schemaCrawlerOptions);
+      crawlProcedures(database, retrieverConnection, schemaCrawlerOptions);
+
+      return database;
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerException("Database access exception", e);
+    }
   }
 
 }

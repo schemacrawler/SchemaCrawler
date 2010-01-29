@@ -103,8 +103,8 @@ public final class Utility
   /**
    * Reads the stream fully, and returns a byte array of data.
    * 
-   * @param stream
-   *        Stream to read.
+   * @param reader
+   *        Reader to read.
    * @return Byte array
    */
   public static String readFully(final Reader reader)

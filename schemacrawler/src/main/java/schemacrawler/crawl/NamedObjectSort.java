@@ -33,29 +33,28 @@ enum NamedObjectSort
    * Alphabetical sort.
    */
   alphabetical
+  {
+    @Override
+    public int compare(final NamedObject namedObject1,
+                       final NamedObject namedObject2)
     {
-      @Override
-      public int compare(final NamedObject namedObject1,
-                         final NamedObject namedObject2)
-      {
-        return namedObject1.getFullName()
-          .compareToIgnoreCase(namedObject2
-            .getFullName());
-      }
-    },
+      return namedObject1.getFullName().compareToIgnoreCase(namedObject2
+        .getFullName());
+    }
+  },
 
   /**
    * Natural sort.
    */
   natural
+  {
+    @Override
+    public int compare(final NamedObject namedObject1,
+                       final NamedObject namedObject2)
     {
-      @Override
-      public int compare(final NamedObject namedObject1,
-                         final NamedObject namedObject2)
-      {
-        return namedObject1.compareTo(namedObject2);
-      }
-    };
+      return namedObject1.compareTo(namedObject2);
+    }
+  };
 
   static NamedObjectSort getNamedObjectSort(final boolean alphabeticalSort)
   {
@@ -71,8 +70,9 @@ enum NamedObjectSort
 
   /**
    * {@inheritDoc}
-   *
-   * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+   * 
+   * @see java.util.Comparator#compare(java.lang.Object,
+   *      java.lang.Object)
    */
   public abstract int compare(final NamedObject namedObject1,
                               final NamedObject namedObject2);

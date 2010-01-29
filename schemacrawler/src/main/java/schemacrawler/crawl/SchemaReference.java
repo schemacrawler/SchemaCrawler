@@ -42,7 +42,7 @@ final class SchemaReference
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
@@ -88,7 +88,7 @@ final class SchemaReference
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see java.lang.Object#hashCode()
    */
   @Override
@@ -96,8 +96,8 @@ final class SchemaReference
   {
     final int prime = 31;
     int result = 1;
-    result = prime * result + (catalogName == null ? 0 : catalogName.hashCode());
-    result = prime * result + (schemaName == null ? 0 : schemaName.hashCode());
+    result = prime * result + (catalogName == null? 0: catalogName.hashCode());
+    result = prime * result + (schemaName == null? 0: schemaName.hashCode());
     return result;
   }
 
@@ -129,9 +129,9 @@ final class SchemaReference
     {
       final boolean hasCatalogName = !Utility.isBlank(catalogName);
       final boolean hasSchemaName = !Utility.isBlank(schemaName);
-      fullName = (hasCatalogName ? catalogName : "")
-        + (hasCatalogName && hasSchemaName ? "." : "")
-        + (hasSchemaName ? schemaName : "");
+      fullName = (hasCatalogName? catalogName: "")
+                 + (hasCatalogName && hasSchemaName? ".": "")
+                 + (hasSchemaName? schemaName: "");
     }
   }
 

@@ -23,8 +23,8 @@ package schemacrawler.crawl;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import schemacrawler.schema.DatabaseProperty;
 import sf.util.Utility;
@@ -60,7 +60,7 @@ class MutableDatabaseProperty
       description = description.substring(get.length());
     }
 
-    for (final Entry<String, String> acronym : acronyms)
+    for (final Entry<String, String> acronym: acronyms)
     {
       description = description
         .replaceAll(acronym.getKey(), acronym.getValue());
@@ -73,8 +73,7 @@ class MutableDatabaseProperty
       final char ch = description.charAt(i);
       if (Character.isUpperCase(ch) || Character.isTitleCase(ch))
       {
-        buffer.append(' ')
-          .append(Character.toLowerCase(ch));
+        buffer.append(' ').append(Character.toLowerCase(ch));
       }
       else
       {
@@ -83,7 +82,7 @@ class MutableDatabaseProperty
     }
     description = buffer.toString();
 
-    for (final Entry<String, String> acronym : acronyms)
+    for (final Entry<String, String> acronym: acronyms)
     {
       description = description.replaceAll(acronym.getValue().toLowerCase(),
                                            acronym.getKey());
@@ -117,9 +116,8 @@ class MutableDatabaseProperty
     }
     else
     {
-      return getDescription().toLowerCase()
-        .compareTo(otherDbProperty
-          .getDescription().toLowerCase());
+      return getDescription().toLowerCase().compareTo(otherDbProperty
+        .getDescription().toLowerCase());
     }
   }
 
@@ -193,8 +191,8 @@ class MutableDatabaseProperty
   {
     final int prime = 31;
     int result = 1;
-    result = prime * result + (name == null ? 0 : name.hashCode());
-    result = prime * result + (value == null ? 0 : value.hashCode());
+    result = prime * result + (name == null? 0: name.hashCode());
+    result = prime * result + (value == null? 0: value.hashCode());
     return result;
   }
 

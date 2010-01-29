@@ -26,7 +26,7 @@ import schemacrawler.schema.ResultsColumn;
 
 /**
  * Represents a column in a result set.
- *
+ * 
  * @author Sualeh Fatehi
  */
 final class MutableResultsColumn
@@ -54,7 +54,7 @@ final class MutableResultsColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ResultsColumn#getDisplaySize()
    */
   public int getDisplaySize()
@@ -64,7 +64,7 @@ final class MutableResultsColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ResultsColumn#getLabel()
    */
   public String getLabel()
@@ -74,7 +74,7 @@ final class MutableResultsColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ResultsColumn#isAutoIncrement()
    */
   public boolean isAutoIncrement()
@@ -84,7 +84,7 @@ final class MutableResultsColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ResultsColumn#isCaseSensitive()
    */
   public boolean isCaseSensitive()
@@ -94,7 +94,7 @@ final class MutableResultsColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ResultsColumn#isCurrency()
    */
   public boolean isCurrency()
@@ -104,7 +104,7 @@ final class MutableResultsColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ResultsColumn#isDefinitelyWritable()
    */
   public boolean isDefinitelyWritable()
@@ -114,7 +114,7 @@ final class MutableResultsColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ResultsColumn#isReadOnly()
    */
   public boolean isReadOnly()
@@ -124,7 +124,7 @@ final class MutableResultsColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ResultsColumn#isSearchable()
    */
   public boolean isSearchable()
@@ -134,7 +134,7 @@ final class MutableResultsColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ResultsColumn#isSigned()
    */
   public boolean isSigned()
@@ -144,7 +144,7 @@ final class MutableResultsColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ResultsColumn#isWritable()
    */
   public boolean isWritable()

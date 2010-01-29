@@ -23,7 +23,7 @@ package schemacrawler.schema;
 
 /**
  * Represents a primary key in a table.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public interface PrimaryKey

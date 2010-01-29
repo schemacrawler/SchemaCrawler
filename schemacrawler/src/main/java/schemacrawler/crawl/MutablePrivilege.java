@@ -31,7 +31,7 @@ import sf.util.Utility;
 
 /**
  * Represents a privilege of a table or column.
- *
+ * 
  * @author Sualeh Fatehi
  */
 final class MutablePrivilege
@@ -143,9 +143,9 @@ final class MutablePrivilege
       final int prime = 31;
       int result = 1;
       result = prime * result + getOuterType().hashCode();
-      result = prime * result + (grantee == null ? 0 : grantee.hashCode());
-      result = prime * result + (grantor == null ? 0 : grantor.hashCode());
-      result = prime * result + (isGrantable ? 1231 : 1237);
+      result = prime * result + (grantee == null? 0: grantee.hashCode());
+      result = prime * result + (grantor == null? 0: grantor.hashCode());
+      result = prime * result + (isGrantable? 1231: 1237);
       return result;
     }
 

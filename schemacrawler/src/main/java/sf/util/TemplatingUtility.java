@@ -21,12 +21,16 @@
 package sf.util;
 
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 import java.util.Map.Entry;
 
 /**
  * Configuration properties.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public final class TemplatingUtility
@@ -36,9 +40,12 @@ public final class TemplatingUtility
   private static final String DELIMITER_END = "}";
 
   /**
-   * Expands a template using system properties. Variables in the template are in the form of ${variable}.
-   *
-   * @param template Template to expand.
+   * Expands a template using system properties. Variables in the
+   * template are in the form of ${variable}.
+   * 
+   * @param template
+   *        Template to expand.
+   * @return Expanded template
    */
   public static String expandTemplate(final String template)
   {
@@ -46,10 +53,14 @@ public final class TemplatingUtility
   }
 
   /**
-   * Expands a template using variable values in the provided map. Variables in the template are in the form of
-   * ${variable}.
-   *
-   * @param template Template to expand.
+   * Expands a template using variable values in the provided map.
+   * Variables in the template are in the form of ${variable}.
+   * 
+   * @param template
+   *        Template to expand.
+   * @param variablesMap
+   *        Variables and values.
+   * @return Expanded template
    */
   public static String expandTemplate(final String template,
                                       final Map<String, String> variablesMap)
@@ -91,7 +102,7 @@ public final class TemplatingUtility
         if (delimiterEndPosition > -1)
         {
           delimiterStartPosition = delimiterStartPosition
-            + DELIMITER_START.length();
+                                   + DELIMITER_START.length();
           final String key = template.substring(delimiterStartPosition,
                                                 delimiterEndPosition);
           final String value = variablesMap.get(key);
@@ -102,9 +113,7 @@ public final class TemplatingUtility
           else
           {
             // Do not substitute
-            buffer.append(DELIMITER_START)
-              .append(key)
-              .append(DELIMITER_END);
+            buffer.append(DELIMITER_START).append(key).append(DELIMITER_END);
           }
           // Advance current position
           currentPosition = delimiterEndPosition + DELIMITER_END.length();
@@ -120,9 +129,12 @@ public final class TemplatingUtility
   }
 
   /**
-   * Extracts variables from the template. Variables are in the form of ${variable}.
-   *
-   * @param template Template to extract variables from.
+   * Extracts variables from the template. Variables are in the form of
+   * ${variable}.
+   * 
+   * @param template
+   *        Template to extract variables from.
+   * @return Extracted variables
    */
   public static Set<String> extractTemplateVariables(final String template)
   {
@@ -142,7 +154,8 @@ public final class TemplatingUtility
         final String propertyKey = shrunkTemplate.substring(left + 2, right);
         keys.add(propertyKey);
         // Destroy key, so we can find the next one
-        shrunkTemplate = shrunkTemplate.substring(0, left) + shrunkTemplate.substring(right + 1);
+        shrunkTemplate = shrunkTemplate.substring(0, left)
+                         + shrunkTemplate.substring(right + 1);
       }
       else
       {
@@ -155,16 +168,18 @@ public final class TemplatingUtility
   }
 
   /**
-   * Does one pass over the values in the map, and expands each as a template, using the rest of the values in the same
-   * map. Variables in the template are in the form of ${variable}.
-   *
-   * @param variablesMap Map to expand.
+   * Does one pass over the values in the map, and expands each as a
+   * template, using the rest of the values in the same map. Variables
+   * in the template are in the form of ${variable}.
+   * 
+   * @param variablesMap
+   *        Map to expand.
    */
   public static void substituteVariables(final Map<String, String> variablesMap)
   {
     if (variablesMap != null && !variablesMap.isEmpty())
     {
-      for (final Map.Entry<String, String> entry : variablesMap.entrySet())
+      for (final Map.Entry<String, String> entry: variablesMap.entrySet())
       {
         variablesMap.put(entry.getKey(), expandTemplate(entry.getValue(),
                                                         variablesMap));
@@ -174,9 +189,9 @@ public final class TemplatingUtility
 
   /**
    * Copies properties into a map.
-   *
-   * @param properties Properties to copy
-   *
+   * 
+   * @param properties
+   *        Properties to copy
    * @return Map of properties and values
    */
   private static Map<String, String> propertiesMap(final Properties properties)
@@ -185,7 +200,7 @@ public final class TemplatingUtility
     if (properties != null)
     {
       final Set<Entry<Object, Object>> entries = properties.entrySet();
-      for (final Entry<Object, Object> entry : entries)
+      for (final Entry<Object, Object> entry: entries)
       {
         propertiesMap.put((String) entry.getKey(), (String) entry.getValue());
       }

@@ -23,7 +23,7 @@ package schemacrawler.schema;
 
 /**
  * Represents a table in the database.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public interface Table
@@ -32,156 +32,164 @@ public interface Table
 
   /**
    * Gets the list of check constraints.
-   *
+   * 
    * @return Check constraints for the table
    */
   CheckConstraint[] getCheckConstraints();
 
   /**
    * Gets a column by name.
-   *
-   * @param name Name
-   *
+   * 
+   * @param name
+   *        Name
    * @return Column.
    */
   Column getColumn(String name);
 
   /**
    * Gets the list of columns in ordinal order.
-   *
+   * 
    * @return Columns of the table
    */
   Column[] getColumns();
 
   /**
    * Gets a comma-separated list of columns.
-   *
+   * 
    * @return Comma-separated list of columns
    */
   String getColumnsListAsString();
 
   /**
-   * Gets the list of exported foreign keys. That is, only those whose primary key is referenced in another table.
-   *
+   * Gets the list of exported foreign keys. That is, only those whose
+   * primary key is referenced in another table.
+   * 
    * @return Exported foreign keys of the table.
    */
   ForeignKey[] getExportedForeignKeys();
 
   /**
-   * Gets a list of exported weak column associations that are derived by SchemaCrawler from the column names. That is,
-   * only those whose primary key is referenced in another table.
-   *
+   * Gets a list of exported weak column associations that are derived
+   * by SchemaCrawler from the column names. That is, only those whose
+   * primary key is referenced in another table.
+   * 
    * @return Exported weak associations for the table
    */
   ColumnMap[] getExportedWeakAssociations();
 
   /**
    * Gets a foreign key by name.
-   *
-   * @param name Name
-   *
+   * 
+   * @param name
+   *        Name
    * @return ForeignKey.
    */
   ForeignKey getForeignKey(String name);
 
   /**
-   * Gets the list of foreign keys. Same as calling getForeignKeys(TableAssociationType.all).
-   *
+   * Gets the list of foreign keys. Same as calling
+   * getForeignKeys(TableAssociationType.all).
+   * 
    * @return Foreign keys of the table.
    */
   ForeignKey[] getForeignKeys();
 
   /**
-   * Gets the list of imported foreign keys. That is, only those that reference a primary key another table.
-   *
+   * Gets the list of imported foreign keys. That is, only those that
+   * reference a primary key another table.
+   * 
    * @return Imported foreign keys of the table.
    */
   ForeignKey[] getImportedForeignKeys();
 
   /**
-   * Gets a list of imported weak column associations that are derived by SchemaCrawler from the column names. That is,
-   * only those that reference a primary key another table.
-   *
+   * Gets a list of imported weak column associations that are derived
+   * by SchemaCrawler from the column names. That is, only those that
+   * reference a primary key another table.
+   * 
    * @return Imported weak associations for the table
    */
   ColumnMap[] getImportedWeakAssociations();
 
   /**
    * Gets an index by name.
-   *
-   * @param name Name
-   *
+   * 
+   * @param name
+   *        Name
    * @return Index.
    */
   Index getIndex(String name);
 
   /**
    * Gets the list of indices.
-   *
+   * 
    * @return Indices of the table.
    */
   Index[] getIndices();
 
   /**
    * Gets the primary key.
-   *
+   * 
    * @return Primary key
    */
   PrimaryKey getPrimaryKey();
 
   /**
    * Gets a privilege by name.
-   *
-   * @param name Name
-   *
+   * 
+   * @param name
+   *        Name
    * @return Privilege.
    */
   Privilege getPrivilege(String name);
 
   /**
    * Gets the list of privileges.
-   *
+   * 
    * @return Privileges for the table.
    */
   Privilege[] getPrivileges();
 
   /**
-   * Gets the tables related to this one, based on the specified relationship type. Child tables are those who have a
-   * foreign key from this table. Parent tables are those to which this table has a foreign key.
-   *
-   * @param tableRelationshipType Table relationship type
-   *
+   * Gets the tables related to this one, based on the specified
+   * relationship type. Child tables are those who have a foreign key
+   * from this table. Parent tables are those to which this table has a
+   * foreign key.
+   * 
+   * @param tableRelationshipType
+   *        Table relationship type
    * @return Related tables.
    */
   Table[] getRelatedTables(final TableRelationshipType tableRelationshipType);
 
   /**
    * Gets a trigger by name.
-   *
-   * @param name Name
-   *
+   * 
+   * @param name
+   *        Name
    * @return Trigger.
    */
   Trigger getTrigger(String name);
 
   /**
    * Gets the list of triggers.
-   *
+   * 
    * @return Triggers for the table.
    */
   Trigger[] getTriggers();
 
   /**
    * Gets the table type.
-   *
+   * 
    * @return Table type.
    */
   TableType getType();
 
   /**
-   * Gets a list of exported weak column associations that are derived by SchemaCrawler from the column names. Same as
-   * calling getWeakAssociations(TableAssociationType.all).
-   *
+   * Gets a list of exported weak column associations that are derived
+   * by SchemaCrawler from the column names. Same as calling
+   * getWeakAssociations(TableAssociationType.all).
+   * 
    * @return Weak associations for the table
    */
   ColumnMap[] getWeakAssociations();

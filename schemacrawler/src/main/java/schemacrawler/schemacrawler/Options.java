@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 /**
  * Options.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public interface Options

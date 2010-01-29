@@ -26,8 +26,9 @@ import schemacrawler.schema.DependantObject;
 import sf.util.Utility;
 
 /**
- * Represents the dependent of a database object, such as a column or an index, which are dependents of a table.
- *
+ * Represents the dependent of a database object, such as a column or an
+ * index, which are dependents of a table.
+ * 
  * @author Sualeh Fatehi
  */
 abstract class AbstractDependantObject
@@ -50,7 +51,7 @@ abstract class AbstractDependantObject
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
@@ -85,7 +86,7 @@ abstract class AbstractDependantObject
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.crawl.AbstractDatabaseObject#getFullName()
    */
   @Override
@@ -97,7 +98,7 @@ abstract class AbstractDependantObject
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.DependantObject#getParent()
    */
   public final DatabaseObject getParent()
@@ -107,7 +108,7 @@ abstract class AbstractDependantObject
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see java.lang.Object#hashCode()
    */
   @Override
@@ -119,7 +120,7 @@ abstract class AbstractDependantObject
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see Object#toString()
    */
   @Override
@@ -135,8 +136,7 @@ abstract class AbstractDependantObject
       final StringBuilder buffer = new StringBuilder();
       if (parent != null && !Utility.isBlank(parent.getFullName()))
       {
-        buffer.append(parent.getFullName())
-          .append(".");
+        buffer.append(parent.getFullName()).append(".");
       }
       if (!Utility.isBlank(getName()))
       {
@@ -152,7 +152,7 @@ abstract class AbstractDependantObject
     {
       final int prime = 31;
       int result = super.hashCode();
-      result = prime * result + (parent == null ? 0 : parent.hashCode());
+      result = prime * result + (parent == null? 0: parent.hashCode());
       result = prime * result + super.hashCode();
       hashCode = result;
     }

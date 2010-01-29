@@ -27,7 +27,12 @@ import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.Field;
 import java.sql.Types;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,7 +42,7 @@ import sf.util.Utility;
 
 /**
  * Utility to work with java.sql.Types, and Java class name mappings.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public final class JavaSqlTypesGenerationUtility
@@ -60,10 +65,13 @@ public final class JavaSqlTypesGenerationUtility
   }
 
   /**
-   * Map java.sql.Types to Java classes. Since this information is not available in the JDK, we need to hard-code it.
-   *
-   * @see <a href="http://java.sun.com/j2se/1.4.2/docs/guide/jdbc/getstart/mapping.html#1004791">Mapping SQL and Java
-   *      Types</a>
+   * Map java.sql.Types to Java classes. Since this information is not
+   * available in the JDK, we need to hard-code it.
+   * 
+   * @return Map
+   * @see <a
+   *      href="http://java.sun.com/j2se/1.4.2/docs/guide/jdbc/getstart/mapping.html#1004791">Mapping
+   *      SQL and Java Types</a>
    */
   private static Map<String, String> getJavaSqlTypesClassNameMap()
   {
@@ -95,7 +103,7 @@ public final class JavaSqlTypesGenerationUtility
     javaSqlTypesPrimitivesClassMap.put("VARCHAR", String.class);
 
     final Map<String, String> javaSqlTypesClassNamesMap = new TreeMap<String, String>();
-    for (final Entry<String, Class<?>> javaSqlTypesPrimitivesClassMapping : javaSqlTypesPrimitivesClassMap
+    for (final Entry<String, Class<?>> javaSqlTypesPrimitivesClassMapping: javaSqlTypesPrimitivesClassMap
       .entrySet())
     {
       javaSqlTypesClassNamesMap
@@ -181,7 +189,7 @@ public final class JavaSqlTypesGenerationUtility
     final Map<String, Integer> javaSqlTypesMap = new HashMap<String, Integer>();
     final Map<String, JavaSqlTypeGroup> javaSqlTypeGroupsMap = getJavaSqlTypesGroupsMap();
     final Map<String, String> javaSqlTypesClassMap = getJavaSqlTypesClassNameMap();
-    for (final Field field : Types.class.getFields())
+    for (final Field field: Types.class.getFields())
     {
       try
       {
@@ -209,7 +217,7 @@ public final class JavaSqlTypesGenerationUtility
     final List<String> javaSqlTypeNames = new ArrayList<String>(javaSqlTypesMap
       .keySet());
     Collections.sort(javaSqlTypeNames);
-    for (final String javaSqlTypeName : javaSqlTypeNames)
+    for (final String javaSqlTypeName: javaSqlTypeNames)
     {
       writers[0].write(String.format("%s=%d\n",
                                      javaSqlTypeName,
@@ -233,7 +241,7 @@ public final class JavaSqlTypesGenerationUtility
                                        javaSqlTypeGroup.name()));
       }
     }
-    for (final Writer writer : writers)
+    for (final Writer writer: writers)
     {
       writer.flush();
       writer.close();

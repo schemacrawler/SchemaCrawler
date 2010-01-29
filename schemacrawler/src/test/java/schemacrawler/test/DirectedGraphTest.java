@@ -18,11 +18,14 @@
 package schemacrawler.test;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Arrays;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
+
 import sf.util.DirectedGraph;
 import sf.util.GraphException;
 
@@ -50,7 +53,12 @@ public class DirectedGraphTest
     {
       final DirectedGraph<String> graph = makeGraph();
 
-      assertEquals("Test run #" + (i + 1), Arrays.asList("E", "A", "D", "B", "C"), graph.topologicalSort());
+      assertEquals("Test run #" + (i + 1), Arrays.asList("E",
+                                                         "A",
+                                                         "D",
+                                                         "B",
+                                                         "C"), graph
+        .topologicalSort());
     }
   }
 
@@ -61,19 +69,22 @@ public class DirectedGraphTest
     final DirectedGraph<String> graph = makeGraph();
     graph.addDirectedEdge("C", "A");
 
-    assertEquals(Arrays.asList("E", "A", "D", "B", "C"), graph.topologicalSort());
+    assertEquals(Arrays.asList("E", "A", "D", "B", "C"), graph
+      .topologicalSort());
   }
 
   private DirectedGraph<String> makeGraph()
   {
 
     final DirectedGraph<String> graph = new DirectedGraph<String>()
-    {{
+    {
+      {
         addDirectedEdge("A", "B");
         addDirectedEdge("B", "C");
         addDirectedEdge("A", "D");
         addVertex("E");
-      }};
+      }
+    };
 
     return graph;
   }

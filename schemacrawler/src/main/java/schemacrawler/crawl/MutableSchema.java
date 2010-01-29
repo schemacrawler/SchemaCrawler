@@ -28,7 +28,7 @@ import schemacrawler.schema.Table;
 
 /**
  * Represents the database schema.
- *
+ * 
  * @author Sualeh Fatehi
  */
 class MutableSchema
@@ -56,7 +56,7 @@ class MutableSchema
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Schema#getCatalogName()
    */
   public String getCatalogName()
@@ -66,7 +66,7 @@ class MutableSchema
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Schema#getColumnDataType(java.lang.String)
    */
   public MutableColumnDataType getColumnDataType(final String name)
@@ -76,19 +76,18 @@ class MutableSchema
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Database#getSystemColumnDataTypes()
    */
   public ColumnDataType[] getColumnDataTypes()
   {
-    return columnDataTypes.values()
-      .toArray(new ColumnDataType[columnDataTypes
-        .size()]);
+    return columnDataTypes.values().toArray(new ColumnDataType[columnDataTypes
+      .size()]);
   }
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Schema#getFullName()
    */
   @Override
@@ -99,7 +98,7 @@ class MutableSchema
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Schema#getProcedure(java.lang.String)
    */
   public MutableProcedure getProcedure(final String name)
@@ -109,18 +108,17 @@ class MutableSchema
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Schema#getProcedures()
    */
   public Procedure[] getProcedures()
   {
-    return procedures.values()
-      .toArray(new Procedure[procedures.size()]);
+    return procedures.values().toArray(new Procedure[procedures.size()]);
   }
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Schema#getSchemaName()
    */
   public String getSchemaName()
@@ -130,7 +128,7 @@ class MutableSchema
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Schema#getTable(java.lang.String)
    */
   public MutableTable getTable(final String name)
@@ -140,13 +138,12 @@ class MutableSchema
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.Schema#getTables()
    */
   public Table[] getTables()
   {
-    return tables.values()
-      .toArray(new Table[tables.size()]);
+    return tables.values().toArray(new Table[tables.size()]);
   }
 
   void addColumnDataType(final MutableColumnDataType columnDataType)

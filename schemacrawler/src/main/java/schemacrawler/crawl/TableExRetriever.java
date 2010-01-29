@@ -38,8 +38,9 @@ import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 
 /**
- * A retriever uses database metadata to get the extended details about the database tables.
- *
+ * A retriever uses database metadata to get the extended details about
+ * the database tables.
+ * 
  * @author Sualeh Fatehi
  */
 final class TableExRetriever
@@ -56,9 +57,11 @@ final class TableExRetriever
   }
 
   /**
-   * Retrieves a check constraint information from the database, in the INFORMATION_SCHEMA format.
-   *
-   * @throws SQLException On a SQL exception
+   * Retrieves a check constraint information from the database, in the
+   * INFORMATION_SCHEMA format.
+   * 
+   * @throws SQLException
+   *         On a SQL exception
    */
   void retrieveCheckConstraintInformation()
     throws SQLException
@@ -173,7 +176,7 @@ final class TableExRetriever
         // results.getString("CONSTRAINT_SCHEMA");
         final String constraintName = results.getString("CONSTRAINT_NAME");
         LOGGER.log(Level.FINER, "Retrieving constraint definition: "
-          + constraintName);
+                                + constraintName);
         String definition = results.getString("CHECK_CLAUSE");
 
         final MutableCheckConstraint checkConstraint = checkConstraintsMap
@@ -181,13 +184,12 @@ final class TableExRetriever
         if (checkConstraint == null)
         {
           LOGGER.log(Level.FINEST, "Could not add check constraint to table: "
-            + constraintName);
+                                   + constraintName);
           continue;
         }
         final String text = checkConstraint.getDefinition();
 
-        if (!(text == null || text.trim()
-          .length() == 0))
+        if (!(text == null || text.trim().length() == 0))
         {
           definition = checkConstraint.getDefinition() + definition;
         }
@@ -210,7 +212,7 @@ final class TableExRetriever
     // Add check constraints to tables
     final Collection<MutableCheckConstraint> checkConstraintsCollection = checkConstraintsMap
       .values();
-    for (final MutableCheckConstraint checkConstraint : checkConstraintsCollection)
+    for (final MutableCheckConstraint checkConstraint: checkConstraintsCollection)
     {
       final MutableTable table = (MutableTable) checkConstraint.getParent();
       table.addCheckConstraint(checkConstraint);
@@ -233,7 +235,7 @@ final class TableExRetriever
     catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve table column privileges:"
-        + e.getMessage());
+                                + e.getMessage());
     }
     finally
     {
@@ -269,9 +271,11 @@ final class TableExRetriever
   }
 
   /**
-   * Retrieves a trigger information from the database, in the INFORMATION_SCHEMA format.
-   *
-   * @throws SQLException On a SQL exception
+   * Retrieves a trigger information from the database, in the
+   * INFORMATION_SCHEMA format.
+   * 
+   * @throws SQLException
+   *         On a SQL exception
    */
   void retrieveTriggerInformation()
     throws SQLException
@@ -370,9 +374,11 @@ final class TableExRetriever
   }
 
   /**
-   * Retrieves a view information from the database, in the INFORMATION_SCHEMA format.
-   *
-   * @throws SQLException On a SQL exception
+   * Retrieves a view information from the database, in the
+   * INFORMATION_SCHEMA format.
+   * 
+   * @throws SQLException
+   *         On a SQL exception
    */
   void retrieveViewInformation()
     throws SQLException
