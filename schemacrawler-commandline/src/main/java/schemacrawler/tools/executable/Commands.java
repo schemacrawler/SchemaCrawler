@@ -27,6 +27,17 @@ final class Commands
     }
   }
 
+  public Iterator<String> iterator()
+  {
+    return commands.iterator();
+  }
+
+  @Override
+  public String toString()
+  {
+    return commands.toString();
+  }
+
   void add(final String command)
   {
     if (!Utility.isBlank(command))
@@ -66,20 +77,9 @@ final class Commands
     }
   }
 
-  public Iterator<String> iterator()
-  {
-    return commands.iterator();
-  }
-
   int size()
   {
     return commands.size();
-  }
-
-  @Override
-  public String toString()
-  {
-    return commands.toString();
   }
 
 }
