@@ -70,7 +70,7 @@ public final class OperationExecutable
   protected void executeOn(final Database database, final Connection connection)
     throws Exception
   {
-    final OperationHandler handler = getDatabaseTraversalHandler(connection);
+    final OperationHandler handler = getHandler(connection);
 
     handler.begin();
     handler.handle(database.getSchemaCrawlerInfo(),
@@ -80,19 +80,17 @@ public final class OperationExecutable
     for (final Schema schema: database.getSchemas())
     {
       final Table[] tables = schema.getTables();
-      handler.handleTablesStart();
       for (final Table table: tables)
       {
         handler.handle(table);
       }
-      handler.handleTablesEnd();
     }
 
     handler.end();
 
   }
 
-  protected OperationHandler getDatabaseTraversalHandler(final Connection connection)
+  protected OperationHandler getHandler(final Connection connection)
     throws SchemaCrawlerException
   {
     final OperationHandler handler;

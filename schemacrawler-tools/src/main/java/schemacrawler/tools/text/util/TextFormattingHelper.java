@@ -37,6 +37,8 @@ public interface TextFormattingHelper
 
   /**
    * Creates an arrow symbol.
+   * 
+   * @return Arrow symbol
    */
   String createArrow();
 
@@ -85,6 +87,12 @@ public interface TextFormattingHelper
 
   /**
    * Creates a section header.
+   * 
+   * @param type
+   *        Type of header
+   * @param header
+   *        Header text
+   * @return Section header
    */
   String createHeader(DocumentHeaderType type, String header);
 
@@ -95,6 +103,8 @@ public interface TextFormattingHelper
    *        Name
    * @param description
    *        Description
+   * @param underscore
+   *        Whether to underscore the name row
    * @return Row as a string
    */
   String createNameRow(final String name,
@@ -130,24 +140,30 @@ public interface TextFormattingHelper
 
   /**
    * Creates a pre-formatted text section.
+   * 
+   * @param id
+   *        Element id
+   * @param text
+   *        Text
+   * @return Pre-formatted text section
    */
   String createPreformattedText(String id, String text);
 
   /**
-   * Called to handle the row output. Handler to be implemented by
-   * subclass.
+   * Creates a row of data.
    * 
    * @param columnData
    *        Column data
+   * @return Row of data
    */
   String createRow(final String[] columnData);
 
   /**
-   * Called to handle the header output. Handler to be implemented by
-   * subclass.
+   * Creates a header row for data.
    * 
    * @param columnNames
    *        Column names
+   * @return Header row for data
    */
   String createRowHeader(final String[] columnNames);
 

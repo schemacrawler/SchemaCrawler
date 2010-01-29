@@ -56,7 +56,7 @@ import sf.util.Utility;
  * 
  * @author Sualeh Fatehi
  */
-public final class SchemaTextFormatter
+final class SchemaTextFormatter
   extends BaseFormatter<SchemaTextOptions>
 {
 
@@ -78,12 +78,18 @@ public final class SchemaTextFormatter
   /**
    * Text formatting of schema.
    * 
+   * @param schemaTextDetailType
+   *        Types for text formatting of schema
    * @param options
    *        Options for text formatting of schema
+   * @param outputOptions
+   *        Options for text formatting of schema
+   * @throws SchemaCrawlerException
+   *         On an exception
    */
-  public SchemaTextFormatter(final SchemaTextDetailType schemaTextDetailType,
-                             final SchemaTextOptions options,
-                             final OutputOptions outputOptions)
+  SchemaTextFormatter(final SchemaTextDetailType schemaTextDetailType,
+                      final SchemaTextOptions options,
+                      final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
     super(options,
@@ -92,12 +98,7 @@ public final class SchemaTextFormatter
     this.schemaTextDetailType = schemaTextDetailType;
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see DatabaseTraversalHandler#begin()
-   */
-  public void begin()
+  void begin()
     throws SchemaCrawlerException
   {
     if (!outputOptions.isNoHeader())
@@ -106,12 +107,7 @@ public final class SchemaTextFormatter
     }
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see DatabaseTraversalHandler#end()
-   */
-  public void end()
+  void end()
     throws SchemaCrawlerException
   {
     if (!outputOptions.isNoFooter())
@@ -124,7 +120,7 @@ public final class SchemaTextFormatter
     LOGGER.log(Level.FINE, "Wrote output, " + outputOptions.getOutputFile());
   }
 
-  public void handle(final ColumnDataType columnDataType)
+  void handle(final ColumnDataType columnDataType)
     throws SchemaCrawlerException
   {
     if (schemaTextDetailType
@@ -142,7 +138,7 @@ public final class SchemaTextFormatter
    * @param procedure
    *        Procedure metadata.
    */
-  public void handle(final Procedure procedure)
+  void handle(final Procedure procedure)
   {
     final boolean underscore = schemaTextDetailType != SchemaTextDetailType.list_objects;
     final String procedureTypeDetail = "procedure, " + procedure.getType();
@@ -174,7 +170,7 @@ public final class SchemaTextFormatter
    * @param table
    *        Table metadata.
    */
-  public void handle(final Table table)
+  void handle(final Table table)
   {
     final boolean underscore = schemaTextDetailType != SchemaTextDetailType.list_objects;
     final String nameRow = formattingHelper.createNameRow(table.getFullName(),
@@ -215,11 +211,11 @@ public final class SchemaTextFormatter
     out.flush();
   }
 
-  public void handleColumnDataTypesEnd()
+  void handleColumnDataTypesEnd()
   {
   }
 
-  public void handleColumnDataTypesStart()
+  void handleColumnDataTypesStart()
   {
     if (schemaTextDetailType
       .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
@@ -229,7 +225,7 @@ public final class SchemaTextFormatter
     }
   }
 
-  public void handleProceduresEnd()
+  void handleProceduresEnd()
     throws SchemaCrawlerException
   {
     if (schemaTextDetailType == SchemaTextDetailType.list_objects)
@@ -238,7 +234,7 @@ public final class SchemaTextFormatter
     }
   }
 
-  public void handleProceduresStart()
+  void handleProceduresStart()
     throws SchemaCrawlerException
   {
     out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
@@ -250,7 +246,7 @@ public final class SchemaTextFormatter
     }
   }
 
-  public void handleTablesEnd()
+  void handleTablesEnd()
     throws SchemaCrawlerException
   {
     if (schemaTextDetailType == SchemaTextDetailType.list_objects)
@@ -259,7 +255,7 @@ public final class SchemaTextFormatter
     }
   }
 
-  public void handleTablesStart()
+  void handleTablesStart()
     throws SchemaCrawlerException
   {
     out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,

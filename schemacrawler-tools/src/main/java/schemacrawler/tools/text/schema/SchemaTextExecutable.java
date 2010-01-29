@@ -71,27 +71,6 @@ public final class SchemaTextExecutable
     this.schemaTextOptions = schemaTextOptions;
   }
 
-  private SchemaTextFormatter getDatabaseTraversalHandler()
-    throws SchemaCrawlerException
-  {
-    final SchemaTextFormatter formatter;
-    SchemaTextDetailType schemaTextDetailType;
-    try
-    {
-      schemaTextDetailType = SchemaTextDetailType.valueOf(command);
-    }
-    catch (final IllegalArgumentException e)
-    {
-      schemaTextDetailType = SchemaTextDetailType.standard_schema;
-    }
-    final SchemaTextOptions schemaTextOptions = getSchemaTextOptions();
-    formatter = new SchemaTextFormatter(schemaTextDetailType,
-                                        schemaTextOptions,
-                                        outputOptions);
-
-    return formatter;
-  }
-
   @Override
   protected void executeOn(final Database database, final Connection connection)
     throws Exception
@@ -146,6 +125,27 @@ public final class SchemaTextExecutable
 
     formatter.end();
 
+  }
+
+  private SchemaTextFormatter getDatabaseTraversalHandler()
+    throws SchemaCrawlerException
+  {
+    final SchemaTextFormatter formatter;
+    SchemaTextDetailType schemaTextDetailType;
+    try
+    {
+      schemaTextDetailType = SchemaTextDetailType.valueOf(command);
+    }
+    catch (final IllegalArgumentException e)
+    {
+      schemaTextDetailType = SchemaTextDetailType.standard_schema;
+    }
+    final SchemaTextOptions schemaTextOptions = getSchemaTextOptions();
+    formatter = new SchemaTextFormatter(schemaTextDetailType,
+                                        schemaTextOptions,
+                                        outputOptions);
+
+    return formatter;
   }
 
 }

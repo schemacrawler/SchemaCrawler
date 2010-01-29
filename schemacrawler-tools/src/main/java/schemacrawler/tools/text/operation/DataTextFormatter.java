@@ -42,7 +42,7 @@ import schemacrawler.tools.text.util.TextFormattingHelper.DocumentHeaderType;
  * 
  * @author Sualeh Fatehi
  */
-public final class DataTextFormatter
+final class DataTextFormatter
   extends BaseFormatter<OperationOptions>
 {
 
@@ -94,19 +94,23 @@ public final class DataTextFormatter
   /**
    * Text formatting of data.
    * 
+   * @param operation
+   *        Options for text formatting of data
    * @param options
    *        Options for text formatting of data
+   * @param outputOptions
+   *        Options for text formatting of data
    */
-  public DataTextFormatter(final Operation operation,
-                           final OperationOptions options,
-                           final OutputOptions outputOptions)
+  DataTextFormatter(final Operation operation,
+                    final OperationOptions options,
+                    final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
     super(options, /* printVerboseDatabaseInfo */false, outputOptions);
     this.operation = operation;
   }
 
-  public void begin()
+  void begin()
   {
     if (!outputOptions.isNoHeader())
     {
@@ -114,7 +118,7 @@ public final class DataTextFormatter
     }
   }
 
-  public void end()
+  void end()
   {
     if (operation == Operation.count)
     {
@@ -130,10 +134,7 @@ public final class DataTextFormatter
     outputOptions.closeOutputWriter(out);
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  public void handleData(final String title, final ResultSet rows)
+  void handleData(final String title, final ResultSet rows)
     throws SchemaCrawlerException
   {
     if (dataBlockCount == 0)

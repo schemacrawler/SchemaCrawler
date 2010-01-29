@@ -28,10 +28,8 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
-import schemacrawler.schema.Procedure;
 import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -42,7 +40,7 @@ import schemacrawler.tools.options.OutputOptions;
  * 
  * @author Sualeh Fatehi
  */
-public final class OperationHandler
+final class OperationHandler
 {
 
   private static final Logger LOGGER = Logger.getLogger(OperationHandler.class
@@ -52,17 +50,11 @@ public final class OperationHandler
   private final DataTextFormatter dataFormatter;
   private final Query query;
 
-  /**
-   * Text formatting of operations output.
-   * 
-   * @param options
-   *        Options for text formatting of operations output
-   */
-  public OperationHandler(final Operation operation,
-                          final Query query,
-                          final OperationOptions options,
-                          final OutputOptions outputOptions,
-                          final Connection connection)
+  OperationHandler(final Operation operation,
+                   final Query query,
+                   final OperationOptions options,
+                   final OutputOptions outputOptions,
+                   final Connection connection)
     throws SchemaCrawlerException
   {
     if (connection == null)
@@ -86,10 +78,16 @@ public final class OperationHandler
 
   /**
    * {@inheritDoc}
-   * 
-   * @see DatabaseTraversalHandler#begin()
    */
-  public void begin()
+  public void handle(final SchemaCrawlerInfo schemaCrawlerInfo,
+                     final DatabaseInfo databaseInfo,
+                     final JdbcDriverInfo jdbcDriverInfo)
+    throws SchemaCrawlerException
+  {
+    dataFormatter.handle(schemaCrawlerInfo, databaseInfo, jdbcDriverInfo);
+  }
+
+  void begin()
     throws SchemaCrawlerException
   {
     try
@@ -107,12 +105,7 @@ public final class OperationHandler
     dataFormatter.begin();
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see DatabaseTraversalHandler#end()
-   */
-  public void end()
+  void end()
     throws SchemaCrawlerException
   {
     if (!query.isQueryOver())
@@ -125,39 +118,7 @@ public final class OperationHandler
     dataFormatter.end();
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  public void handle(final ColumnDataType dataType)
-    throws SchemaCrawlerException
-  {
-    // No-op
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public void handle(final Procedure procedure)
-    throws SchemaCrawlerException
-  {
-    // No-op
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public void handle(final SchemaCrawlerInfo schemaCrawlerInfo,
-                     final DatabaseInfo databaseInfo,
-                     final JdbcDriverInfo jdbcDriverInfo)
-    throws SchemaCrawlerException
-  {
-    dataFormatter.handle(schemaCrawlerInfo, databaseInfo, jdbcDriverInfo);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public void handle(final Table table)
+  void handle(final Table table)
     throws SchemaCrawlerException
   {
     if (query.isQueryOver())
@@ -166,40 +127,6 @@ public final class OperationHandler
       final String sql = query.getQueryForTable(table);
       executeSqlAndHandleData(title, sql);
     }
-  }
-
-  public void handleColumnDataTypesEnd()
-  {
-    // No-op
-  }
-
-  public void handleColumnDataTypesStart()
-  {
-    // No-op
-  }
-
-  public void handleProceduresEnd()
-    throws SchemaCrawlerException
-  {
-    // No-op
-  }
-
-  public void handleProceduresStart()
-    throws SchemaCrawlerException
-  {
-    // No-op
-  }
-
-  public void handleTablesEnd()
-    throws SchemaCrawlerException
-  {
-    // No-op
-  }
-
-  public void handleTablesStart()
-    throws SchemaCrawlerException
-  {
-    // No-op
   }
 
   private void executeSqlAndHandleData(final String title, final String sql)
