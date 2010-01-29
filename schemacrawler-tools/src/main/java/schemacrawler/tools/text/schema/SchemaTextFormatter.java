@@ -48,7 +48,6 @@ import schemacrawler.schema.Privilege.Grant;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseFormatter;
-import schemacrawler.tools.text.base.DatabaseTraversalHandler;
 import schemacrawler.tools.text.util.TextFormattingHelper.DocumentHeaderType;
 import sf.util.Utility;
 
@@ -59,7 +58,6 @@ import sf.util.Utility;
  */
 public final class SchemaTextFormatter
   extends BaseFormatter<SchemaTextOptions>
-  implements DatabaseTraversalHandler
 {
 
   private static final Logger LOGGER = Logger

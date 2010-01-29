@@ -22,10 +22,17 @@ package schemacrawler.tools.text.schema;
 
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.Database;
+import schemacrawler.schema.Procedure;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.text.base.BaseSchemaCrawlerTextExecutable;
-import schemacrawler.tools.text.base.DatabaseTraversalHandler;
+import schemacrawler.tools.executable.BaseExecutable;
 
 /**
  * Basic SchemaCrawler executor.
@@ -33,7 +40,7 @@ import schemacrawler.tools.text.base.DatabaseTraversalHandler;
  * @author Sualeh Fatehi
  */
 public final class SchemaTextExecutable
-  extends BaseSchemaCrawlerTextExecutable
+  extends BaseExecutable
 {
 
   private static final long serialVersionUID = -6824567755397315920L;
@@ -64,11 +71,10 @@ public final class SchemaTextExecutable
     this.schemaTextOptions = schemaTextOptions;
   }
 
-  @Override
-  protected DatabaseTraversalHandler getDatabaseTraversalHandler(final Connection connection)
+  private SchemaTextFormatter getDatabaseTraversalHandler()
     throws SchemaCrawlerException
   {
-    final DatabaseTraversalHandler handler;
+    final SchemaTextFormatter formatter;
     SchemaTextDetailType schemaTextDetailType;
     try
     {
@@ -79,11 +85,67 @@ public final class SchemaTextExecutable
       schemaTextDetailType = SchemaTextDetailType.standard_schema;
     }
     final SchemaTextOptions schemaTextOptions = getSchemaTextOptions();
-    handler = new SchemaTextFormatter(schemaTextDetailType,
-                                      schemaTextOptions,
-                                      outputOptions);
+    formatter = new SchemaTextFormatter(schemaTextDetailType,
+                                        schemaTextOptions,
+                                        outputOptions);
 
-    return handler;
+    return formatter;
+  }
+
+  @Override
+  protected void executeOn(final Database database, final Connection connection)
+    throws Exception
+  {
+    final SchemaTextFormatter formatter = getDatabaseTraversalHandler();
+
+    formatter.begin();
+    formatter.handle(database.getSchemaCrawlerInfo(), database
+      .getDatabaseInfo(), database.getJdbcDriverInfo());
+
+    final List<ColumnDataType> columnDataTypes = new ArrayList<ColumnDataType>();
+    final List<Table> tables = new ArrayList<Table>();
+    final List<Procedure> procedures = new ArrayList<Procedure>();
+
+    columnDataTypes.addAll(Arrays.asList(database.getSystemColumnDataTypes()));
+    for (final Schema schema: database.getSchemas())
+    {
+      columnDataTypes.addAll(Arrays.asList(schema.getColumnDataTypes()));
+      tables.addAll(Arrays.asList(schema.getTables()));
+      procedures.addAll(Arrays.asList(schema.getProcedures()));
+    }
+
+    if (!columnDataTypes.isEmpty())
+    {
+      formatter.handleColumnDataTypesStart();
+      for (final ColumnDataType columnDataType: columnDataTypes)
+      {
+        formatter.handle(columnDataType);
+      }
+      formatter.handleColumnDataTypesEnd();
+    }
+
+    if (!tables.isEmpty())
+    {
+      formatter.handleTablesStart();
+      for (final Table table: tables)
+      {
+        formatter.handle(table);
+      }
+      formatter.handleTablesEnd();
+    }
+
+    if (!procedures.isEmpty())
+    {
+      formatter.handleProceduresStart();
+      for (final Procedure procedure: procedures)
+      {
+        formatter.handle(procedure);
+      }
+      formatter.handleProceduresEnd();
+    }
+
+    formatter.end();
+
   }
 
 }
