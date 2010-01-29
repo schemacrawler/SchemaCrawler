@@ -27,7 +27,7 @@ import sf.util.Utility;
 
 /**
  * Represents a database object.
- *
+ * 
  * @author Sualeh Fatehi
  */
 abstract class AbstractDatabaseObject
@@ -50,7 +50,7 @@ abstract class AbstractDatabaseObject
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
@@ -85,7 +85,7 @@ abstract class AbstractDatabaseObject
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see Object#toString()
    */
   @Override
@@ -97,7 +97,7 @@ abstract class AbstractDatabaseObject
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.DatabaseObject#getSchema()
    */
   public final Schema getSchema()
@@ -107,7 +107,7 @@ abstract class AbstractDatabaseObject
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see java.lang.Object#hashCode()
    */
   @Override
@@ -119,7 +119,7 @@ abstract class AbstractDatabaseObject
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see Object#toString()
    */
   @Override
@@ -135,8 +135,7 @@ abstract class AbstractDatabaseObject
       final StringBuilder buffer = new StringBuilder();
       if (schema != null && !Utility.isBlank(schema.getFullName()))
       {
-        buffer.append(schema.getFullName())
-          .append(".");
+        buffer.append(schema.getFullName()).append(".");
       }
       if (!Utility.isBlank(getName()))
       {
@@ -152,7 +151,7 @@ abstract class AbstractDatabaseObject
     {
       final int prime = 31;
       int result = super.hashCode();
-      result = prime * result + (schema == null ? 0 : schema.hashCode());
+      result = prime * result + (schema == null? 0: schema.hashCode());
       result = prime * result + super.hashCode();
       hashCode = result;
     }

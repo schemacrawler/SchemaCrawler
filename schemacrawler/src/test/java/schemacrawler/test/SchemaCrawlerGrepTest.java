@@ -18,14 +18,15 @@
 package schemacrawler.test;
 
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static org.junit.Assert.assertEquals;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
@@ -61,55 +62,55 @@ public class SchemaCrawlerGrepTest
     throws Exception
   {
     final String[] schemaNames = {
-      "INFORMATION_SCHEMA", "PUBLIC", "SCHEMACRAWLER"
+        "INFORMATION_SCHEMA", "PUBLIC", "SCHEMACRAWLER"
     };
     final int[] tableCounts = {
-      0, 4, 1
+        0, 4, 1
     };
     final String[][][] columnNames = {
-      {},
-      {
+        {},
         {
-          "CUSTOMER.ID",
-          "CUSTOMER.FIRSTNAME",
-          "CUSTOMER.LASTNAME",
-          "CUSTOMER.STREET",
-          "CUSTOMER.CITY"
+            {
+                "CUSTOMER.ID",
+                "CUSTOMER.FIRSTNAME",
+                "CUSTOMER.LASTNAME",
+                "CUSTOMER.STREET",
+                "CUSTOMER.CITY"
+            },
+            {
+                "CUSTOMERLIST.ID",
+                "CUSTOMERLIST.FIRSTNAME",
+                "CUSTOMERLIST.LASTNAME"
+            },
+            {
+                "INVOICE.ID", "INVOICE.CUSTOMERID", "INVOICE.TOTAL"
+            },
+            {
+                "PRODUCT.ID", "PRODUCT.NAME", "PRODUCT.PRICE"
+            },
         },
         {
-          "CUSTOMERLIST.ID",
-          "CUSTOMERLIST.FIRSTNAME",
-          "CUSTOMERLIST.LASTNAME"
-        },
-        {
-          "INVOICE.ID", "INVOICE.CUSTOMERID", "INVOICE.TOTAL"
-        },
-        {
-          "PRODUCT.ID", "PRODUCT.NAME", "PRODUCT.PRICE"
-        },
-      },
-      {
-        {
-          "PRODUCT2.ID", "PRODUCT2.NAME", "PRODUCT2.PRICE"
-        },
-      }
+          {
+              "PRODUCT2.ID", "PRODUCT2.NAME", "PRODUCT2.PRICE"
+          },
+        }
     };
     final String[][][] columnDataTypes = {
-      {}, {
-        {
-          "INTEGER", "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR"
+        {}, {
+            {
+                "INTEGER", "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR"
+            }, {
+                "INTEGER", "VARCHAR", "VARCHAR"
+            }, {
+                "INTEGER", "INTEGER", "FLOAT"
+            }, {
+                "INTEGER", "VARCHAR", "FLOAT"
+            },
         }, {
-          "INTEGER", "VARCHAR", "VARCHAR"
-        }, {
-          "INTEGER", "INTEGER", "FLOAT"
-        }, {
-          "INTEGER", "VARCHAR", "FLOAT"
-        },
-      }, {
-        {
-          "INTEGER", "VARCHAR", "FLOAT"
-        },
-      }
+          {
+              "INTEGER", "VARCHAR", "FLOAT"
+          },
+        }
     };
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -140,7 +141,7 @@ public class SchemaCrawlerGrepTest
           LOGGER.log(Level.FINE, column.toString());
           assertEquals("Column full name does not match",
                        schemaNames[schemaIdx] + "."
-                         + columnsNamesForTable[columnIdx],
+                           + columnsNamesForTable[columnIdx],
                        column.getFullName());
           assertEquals("Column type does not match",
                        columnDataTypes[schemaIdx][tableIdx][columnIdx],

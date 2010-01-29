@@ -26,8 +26,9 @@ import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.ProcedureColumnType;
 
 /**
- * Represents a column in a database procedure. Created from metadata returned by a JDBC call.
- *
+ * Represents a column in a database procedure. Created from metadata
+ * returned by a JDBC call.
+ * 
  * @author Sualeh Fatehi
  */
 final class MutableProcedureColumn
@@ -46,7 +47,7 @@ final class MutableProcedureColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see ProcedureColumn#getPrecision()
    */
   public int getPrecision()
@@ -56,7 +57,7 @@ final class MutableProcedureColumn
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see ProcedureColumn#getProcedureColumnType()
    */
   public ProcedureColumnType getProcedureColumnType()

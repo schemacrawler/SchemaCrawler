@@ -23,7 +23,7 @@ package schemacrawler.schema;
 
 /**
  * Represents a foreign-key mapping to a primary key in another table.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public interface ForeignKey
@@ -32,28 +32,28 @@ public interface ForeignKey
 
   /**
    * Gets the list of column pairs.
-   *
+   * 
    * @return Column pairs
    */
   ForeignKeyColumnMap[] getColumnPairs();
 
   /**
    * Gets the deferrability.
-   *
+   * 
    * @return Deferrability
    */
   ForeignKeyDeferrability getDeferrability();
 
   /**
    * Gets the delete rule.
-   *
+   * 
    * @return Delete rule
    */
   ForeignKeyUpdateRule getDeleteRule();
 
   /**
    * Gets the update rule.
-   *
+   * 
    * @return Update rule
    */
   ForeignKeyUpdateRule getUpdateRule();

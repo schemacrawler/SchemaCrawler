@@ -23,7 +23,7 @@ package schemacrawler.schema;
 
 /**
  * Represents a database object.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public interface DatabaseObject
@@ -32,7 +32,7 @@ public interface DatabaseObject
 
   /**
    * Gets the database schema.
-   *
+   * 
    * @return Database schema
    */
   Schema getSchema();

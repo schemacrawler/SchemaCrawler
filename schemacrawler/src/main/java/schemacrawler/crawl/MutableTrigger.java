@@ -21,11 +21,15 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.*;
+import schemacrawler.schema.ActionOrientationType;
+import schemacrawler.schema.ConditionTimingType;
+import schemacrawler.schema.EventManipulationType;
+import schemacrawler.schema.Table;
+import schemacrawler.schema.Trigger;
 
 /**
  * Represents a trigger.
- *
+ * 
  * @author Sualeh Fatehi
  */
 class MutableTrigger
@@ -105,8 +109,7 @@ class MutableTrigger
   {
     if (actionCondition != null)
     {
-      this.actionCondition
-        .append(actionCondition);
+      this.actionCondition.append(actionCondition);
     }
   }
 
@@ -114,8 +117,7 @@ class MutableTrigger
   {
     if (actionStatement != null)
     {
-      this.actionStatement
-        .append(actionStatement);
+      this.actionStatement.append(actionStatement);
     }
   }
 

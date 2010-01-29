@@ -48,17 +48,16 @@ public enum IndexColumnSortSequence
 
   /**
    * Find the enumeration value corresponding to the string.
-   *
-   * @param code Sort sequence code.
-   *
+   * 
+   * @param code
+   *        Sort sequence code.
    * @return Enumeration value
    */
   public static IndexColumnSortSequence valueOfFromCode(final String code)
   {
-    for (final IndexColumnSortSequence type : IndexColumnSortSequence.values())
+    for (final IndexColumnSortSequence type: IndexColumnSortSequence.values())
     {
-      if (type.getCode()
-        .equalsIgnoreCase(code))
+      if (type.getCode().equalsIgnoreCase(code))
       {
         return type;
       }
@@ -76,7 +75,7 @@ public enum IndexColumnSortSequence
 
   /**
    * Index sort sequence code.
-   *
+   * 
    * @return Index sort sequence code
    */
   String getCode()

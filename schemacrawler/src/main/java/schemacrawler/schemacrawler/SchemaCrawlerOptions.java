@@ -25,7 +25,7 @@ import schemacrawler.schema.TableType;
 
 /**
  * SchemaCrawler options.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawlerOptions
@@ -54,19 +54,15 @@ public final class SchemaCrawlerOptions
 
   private static final String SC_GREP_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.column.pattern.exclude";
   private static final String SC_GREP_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.column.pattern.include";
-  private static final String SC_GREP_PROCEDURE_COLUMN_PATTERN_EXCLUDE =
-    "schemacrawler.grep.procedure.inout.pattern.exclude";
-  private static final String SC_GREP_PROCEDURE_COLUMN_PATTERN_INCLUDE =
-    "schemacrawler.grep.procedure.inout.pattern.include";
+  private static final String SC_GREP_PROCEDURE_COLUMN_PATTERN_EXCLUDE = "schemacrawler.grep.procedure.inout.pattern.exclude";
+  private static final String SC_GREP_PROCEDURE_COLUMN_PATTERN_INCLUDE = "schemacrawler.grep.procedure.inout.pattern.include";
 
   private static final String SC_GREP_INVERT_MATCH = "schemacrawler.grep.invert-match";
 
   private static final String SC_SORT_ALPHABETICALLY_TABLES = "schemacrawler.sort_alphabetically.tables";
-  private static final String SC_SORT_ALPHABETICALLY_PROCEDURE_COLUMNS =
-    "schemacrawler.sort_alphabetically.procedure_columns";
+  private static final String SC_SORT_ALPHABETICALLY_PROCEDURE_COLUMNS = "schemacrawler.sort_alphabetically.procedure_columns";
   private static final String SC_SORT_ALPHABETICALLY_TABLE_INDEXES = "schemacrawler.sort_alphabetically.table_indices";
-  private static final String SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS =
-    "schemacrawler.sort_alphabetically.table_foreignkeys";
+  private static final String SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS = "schemacrawler.sort_alphabetically.table_foreignkeys";
   private static final String SC_SORT_ALPHABETICALLY_TABLE_COLUMNS = "schemacrawler.sort_alphabetically.table_columns";
 
   private static TableType[] copyTableTypes(final TableType[] tableTypes)
@@ -109,8 +105,9 @@ public final class SchemaCrawlerOptions
 
   /**
    * Options from properties.
-   *
-   * @param config    Configuration properties
+   * 
+   * @param config
+   *        Configuration properties
    */
   public SchemaCrawlerOptions(final Config config)
   {
@@ -134,41 +131,41 @@ public final class SchemaCrawlerOptions
     informationSchemaViews = new InformationSchemaViews(config);
 
     schemaInclusionRule = new InclusionRule(configProperties
-      .getStringValue(SC_SCHEMA_PATTERN_INCLUDE,
-                      InclusionRule.ALL),
+                                              .getStringValue(SC_SCHEMA_PATTERN_INCLUDE,
+                                                              InclusionRule.ALL),
                                             configProperties
                                               .getStringValue(SC_SCHEMA_PATTERN_EXCLUDE,
                                                               InclusionRule.NONE));
 
     tableInclusionRule = new InclusionRule(configProperties
-      .getStringValue(SC_TABLE_PATTERN_INCLUDE,
-                      InclusionRule.ALL),
+                                             .getStringValue(SC_TABLE_PATTERN_INCLUDE,
+                                                             InclusionRule.ALL),
                                            configProperties
                                              .getStringValue(SC_TABLE_PATTERN_EXCLUDE,
                                                              InclusionRule.NONE));
     columnInclusionRule = new InclusionRule(configProperties
-      .getStringValue(SC_COLUMN_PATTERN_INCLUDE,
-                      InclusionRule.ALL),
+                                              .getStringValue(SC_COLUMN_PATTERN_INCLUDE,
+                                                              InclusionRule.ALL),
                                             configProperties
                                               .getStringValue(SC_COLUMN_PATTERN_EXCLUDE,
                                                               InclusionRule.NONE));
 
     procedureInclusionRule = new InclusionRule(configProperties
-      .getStringValue(SC_PROCEDURE_PATTERN_INCLUDE,
-                      InclusionRule.ALL),
+                                                 .getStringValue(SC_PROCEDURE_PATTERN_INCLUDE,
+                                                                 InclusionRule.ALL),
                                                configProperties
                                                  .getStringValue(SC_PROCEDURE_PATTERN_EXCLUDE,
                                                                  InclusionRule.NONE));
     procedureColumnInclusionRule = new InclusionRule(configProperties
-      .getStringValue(SC_PROCEDURE_COLUMN_PATTERN_INCLUDE,
-                      InclusionRule.ALL),
+                                                       .getStringValue(SC_PROCEDURE_COLUMN_PATTERN_INCLUDE,
+                                                                       InclusionRule.ALL),
                                                      configProperties
                                                        .getStringValue(SC_PROCEDURE_COLUMN_PATTERN_EXCLUDE,
                                                                        InclusionRule.NONE));
 
     grepColumnInclusionRule = new InclusionRule(configProperties
-      .getStringValue(SC_GREP_COLUMN_PATTERN_INCLUDE,
-                      InclusionRule.ALL),
+                                                  .getStringValue(SC_GREP_COLUMN_PATTERN_INCLUDE,
+                                                                  InclusionRule.ALL),
                                                 configProperties
                                                   .getStringValue(SC_GREP_COLUMN_PATTERN_EXCLUDE,
                                                                   InclusionRule.NONE));
@@ -194,7 +191,7 @@ public final class SchemaCrawlerOptions
 
   /**
    * Gets the column inclusion rule.
-   *
+   * 
    * @return Column inclusion rule.
    */
   public InclusionRule getColumnInclusionRule()
@@ -204,7 +201,7 @@ public final class SchemaCrawlerOptions
 
   /**
    * Gets the column inclusion rule for grep.
-   *
+   * 
    * @return Column inclusion rule for grep.
    */
   public InclusionRule getGrepColumnInclusionRule()
@@ -214,7 +211,7 @@ public final class SchemaCrawlerOptions
 
   /**
    * Gets the procedure column rule for grep.
-   *
+   * 
    * @return Procedure column rule for grep.
    */
   public InclusionRule getGrepProcedureColumnInclusionRule()
@@ -224,7 +221,7 @@ public final class SchemaCrawlerOptions
 
   /**
    * Gets the information schema views.
-   *
+   * 
    * @return Information schema views.
    */
   public InformationSchemaViews getInformationSchemaViews()
@@ -234,7 +231,7 @@ public final class SchemaCrawlerOptions
 
   /**
    * Gets the procedure column rule.
-   *
+   * 
    * @return Procedure column rule.
    */
   public InclusionRule getProcedureColumnInclusionRule()
@@ -244,7 +241,7 @@ public final class SchemaCrawlerOptions
 
   /**
    * Gets the procedure inclusion rule.
-   *
+   * 
    * @return Procedure inclusion rule.
    */
   public InclusionRule getProcedureInclusionRule()
@@ -254,7 +251,7 @@ public final class SchemaCrawlerOptions
 
   /**
    * Gets the schema inclusion rule.
-   *
+   * 
    * @return Schema inclusion rule.
    */
   public InclusionRule getSchemaInclusionRule()
@@ -263,8 +260,9 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Gets the schema information level, identifying to what level the schema should be crawled.
-   *
+   * Gets the schema information level, identifying to what level the
+   * schema should be crawled.
+   * 
    * @return Schema information level.
    */
   public SchemaInfoLevel getSchemaInfoLevel()
@@ -281,7 +279,7 @@ public final class SchemaCrawlerOptions
 
   /**
    * Gets the table inclusion rule.
-   *
+   * 
    * @return Table inclusion rule.
    */
   public InclusionRule getTableInclusionRule()
@@ -291,7 +289,7 @@ public final class SchemaCrawlerOptions
 
   /**
    * Get the table types.
-   *
+   * 
    * @return Table types
    */
   public TableType[] getTableTypes()
@@ -302,7 +300,7 @@ public final class SchemaCrawlerOptions
 
   /**
    * Whether foreign keys are alphabetically sorted.
-   *
+   * 
    * @return Whether foreign keys are alphabetically sorted
    */
   public boolean isAlphabeticalSortForForeignKeys()
@@ -312,7 +310,7 @@ public final class SchemaCrawlerOptions
 
   /**
    * Whether indexes are alphabetically sorted.
-   *
+   * 
    * @return Whether indexes are alphabetically sorted
    */
   public boolean isAlphabeticalSortForIndexes()
@@ -322,7 +320,7 @@ public final class SchemaCrawlerOptions
 
   /**
    * Whether procedure columns are alphabetically sorted.
-   *
+   * 
    * @return Whether procedure columns are alphabetically sorted
    */
   public boolean isAlphabeticalSortForProcedureColumns()
@@ -332,7 +330,7 @@ public final class SchemaCrawlerOptions
 
   /**
    * Whether table columns are alphabetically sorted.
-   *
+   * 
    * @return Whether table columns are alphabetically sorted
    */
   public boolean isAlphabeticalSortForTableColumns()
@@ -342,7 +340,7 @@ public final class SchemaCrawlerOptions
 
   /**
    * Whether tables are alphabetically sorted.
-   *
+   * 
    * @return Whether tables are alphabetically sorted
    */
   public boolean isAlphabeticalSortForTables()
@@ -352,7 +350,7 @@ public final class SchemaCrawlerOptions
 
   /**
    * Whether to invert matches.
-   *
+   * 
    * @return Whether to invert matches.
    */
   public boolean isGrepInvertMatch()
@@ -362,7 +360,7 @@ public final class SchemaCrawlerOptions
 
   /**
    * Whether stored procedures are output.
-   *
+   * 
    * @return Whether stored procedures are output
    */
   public boolean isShowStoredProcedures()
@@ -372,8 +370,9 @@ public final class SchemaCrawlerOptions
 
   /**
    * Sets whether foreign keys should be alphabetically sorted.
-   *
-   * @param alphabeticalSort Alphabetical sort
+   * 
+   * @param alphabeticalSort
+   *        Alphabetical sort
    */
   public void setAlphabeticalSortForForeignKeys(final boolean alphabeticalSort)
   {
@@ -382,8 +381,9 @@ public final class SchemaCrawlerOptions
 
   /**
    * Sets whether indexes should be alphabetically sorted.
-   *
-   * @param alphabeticalSort Alphabetical sort
+   * 
+   * @param alphabeticalSort
+   *        Alphabetical sort
    */
   public void setAlphabeticalSortForIndexes(final boolean alphabeticalSort)
   {
@@ -392,8 +392,9 @@ public final class SchemaCrawlerOptions
 
   /**
    * Sets whether procedure columns should be alphabetically sorted.
-   *
-   * @param alphabeticalSort Alphabetical sort
+   * 
+   * @param alphabeticalSort
+   *        Alphabetical sort
    */
   public void setAlphabeticalSortForProcedureColumns(final boolean alphabeticalSort)
   {
@@ -402,8 +403,9 @@ public final class SchemaCrawlerOptions
 
   /**
    * Sets whether table columns should be alphabetically sorted.
-   *
-   * @param alphabeticalSort Alphabetical sort
+   * 
+   * @param alphabeticalSort
+   *        Alphabetical sort
    */
   public void setAlphabeticalSortForTableColumns(final boolean alphabeticalSort)
   {
@@ -412,8 +414,9 @@ public final class SchemaCrawlerOptions
 
   /**
    * Sets whether tables should be alphabetically sorted.
-   *
-   * @param alphabeticalSort Alphabetical sort
+   * 
+   * @param alphabeticalSort
+   *        Alphabetical sort
    */
   public void setAlphabeticalSortForTables(final boolean alphabeticalSort)
   {
@@ -422,8 +425,9 @@ public final class SchemaCrawlerOptions
 
   /**
    * Sets the column inclusion rule.
-   *
-   * @param columnInclusionRule Column inclusion rule
+   * 
+   * @param columnInclusionRule
+   *        Column inclusion rule
    */
   public void setColumnInclusionRule(final InclusionRule columnInclusionRule)
   {
@@ -436,8 +440,9 @@ public final class SchemaCrawlerOptions
 
   /**
    * Sets the column inclusion rule for grep.
-   *
-   * @param grepColumnInclusionRule Column inclusion rule for grep
+   * 
+   * @param grepColumnInclusionRule
+   *        Column inclusion rule for grep
    */
   public void setGrepColumnInclusionRule(final InclusionRule grepColumnInclusionRule)
   {
@@ -450,8 +455,9 @@ public final class SchemaCrawlerOptions
 
   /**
    * Set whether to invert matches.
-   *
-   * @param grepInvertMatch Whether to invert matches.
+   * 
+   * @param grepInvertMatch
+   *        Whether to invert matches.
    */
   public void setGrepInvertMatch(final boolean grepInvertMatch)
   {
@@ -460,8 +466,9 @@ public final class SchemaCrawlerOptions
 
   /**
    * Sets the procedure column inclusion rule for grep.
-   *
-   * @param grepProcedureColumnInclusionRule Procedure column inclusion rule for grep
+   * 
+   * @param grepProcedureColumnInclusionRule
+   *        Procedure column inclusion rule for grep
    */
   public void setGrepProcedureColumnInclusionRule(final InclusionRule grepProcedureColumnInclusionRule)
   {
@@ -474,8 +481,9 @@ public final class SchemaCrawlerOptions
 
   /**
    * Sets the information schema views.
-   *
-   * @param informationSchemaViews Information schema views.
+   * 
+   * @param informationSchemaViews
+   *        Information schema views.
    */
   public void setInformationSchemaViews(final InformationSchemaViews informationSchemaViews)
   {
@@ -491,8 +499,9 @@ public final class SchemaCrawlerOptions
 
   /**
    * Sets the procedure column inclusion rule.
-   *
-   * @param procedureColumnInclusionRule Procedure column inclusion rule
+   * 
+   * @param procedureColumnInclusionRule
+   *        Procedure column inclusion rule
    */
   public void setProcedureColumnInclusionRule(final InclusionRule procedureColumnInclusionRule)
   {
@@ -505,8 +514,9 @@ public final class SchemaCrawlerOptions
 
   /**
    * Sets the procedure inclusion rule.
-   *
-   * @param procedureInclusionRule Procedure inclusion rule
+   * 
+   * @param procedureInclusionRule
+   *        Procedure inclusion rule
    */
   public void setProcedureInclusionRule(final InclusionRule procedureInclusionRule)
   {
@@ -519,8 +529,9 @@ public final class SchemaCrawlerOptions
 
   /**
    * Sets the schema inclusion rule.
-   *
-   * @param schemaInclusionRule Schema inclusion rule
+   * 
+   * @param schemaInclusionRule
+   *        Schema inclusion rule
    */
   public void setSchemaInclusionRule(final InclusionRule schemaInclusionRule)
   {
@@ -532,9 +543,11 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Sets the schema information level, identifying to what level the schema should be crawled.
-   *
-   * @param schemaInfoLevel Schema information level.
+   * Sets the schema information level, identifying to what level the
+   * schema should be crawled.
+   * 
+   * @param schemaInfoLevel
+   *        Schema information level.
    */
   public void setSchemaInfoLevel(final SchemaInfoLevel schemaInfoLevel)
   {
@@ -543,8 +556,9 @@ public final class SchemaCrawlerOptions
 
   /**
    * Set show stored procedures.
-   *
-   * @param showStoredProcedures Show stored procedures
+   * 
+   * @param showStoredProcedures
+   *        Show stored procedures
    */
   public void setShowStoredProcedures(final boolean showStoredProcedures)
   {
@@ -553,8 +567,9 @@ public final class SchemaCrawlerOptions
 
   /**
    * Sets the table inclusion rule.
-   *
-   * @param tableInclusionRule Table inclusion rule
+   * 
+   * @param tableInclusionRule
+   *        Table inclusion rule
    */
   public void setTableInclusionRule(final InclusionRule tableInclusionRule)
   {
@@ -566,10 +581,13 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Sets table types from a comma-separated list of table types. For example: TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS
+   * Sets table types from a comma-separated list of table types. For
+   * example:
+   * TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS
    * ,SYNONYM
-   *
-   * @param tableTypesString Comma-separated list of table types.
+   * 
+   * @param tableTypesString
+   *        Comma-separated list of table types.
    */
   public void setTableTypes(final String tableTypesString)
   {
@@ -582,8 +600,9 @@ public final class SchemaCrawlerOptions
 
   /**
    * Sets table types from an array of table types.
-   *
-   * @param tableTypesArray Array of table types.
+   * 
+   * @param tableTypesArray
+   *        Array of table types.
    */
   public void setTableTypes(final TableType[] tableTypesArray)
   {
@@ -595,10 +614,13 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Sets table types from a comma-separated list of table types. For example: TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS
+   * Sets table types from a comma-separated list of table types. For
+   * example:
+   * TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS
    * ,SYNONYM
-   *
-   * @param tableTypesString Comma-separated list of table types.
+   * 
+   * @param tableTypesString
+   *        Comma-separated list of table types.
    */
   public void setTableTypesString(final String tableTypesString)
   {

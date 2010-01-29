@@ -57,14 +57,14 @@ public enum IndexType
 
   /**
    * Gets the value from the id.
-   *
-   * @param id Id of the enumeration.
-   *
+   * 
+   * @param id
+   *        Id of the enumeration.
    * @return IndexType
    */
   public static IndexType valueOf(final int id)
   {
-    for (final IndexType type : IndexType.values())
+    for (final IndexType type: IndexType.values())
     {
       if (type.getId() == id)
       {
@@ -84,7 +84,7 @@ public enum IndexType
 
   /**
    * Gets the id.
-   *
+   * 
    * @return id
    */
   public int getId()

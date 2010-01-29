@@ -23,7 +23,7 @@ package schemacrawler.schema;
 
 /**
  * Represents a result set, a result of a query.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public interface ResultsColumns
@@ -32,23 +32,23 @@ public interface ResultsColumns
 
   /**
    * Gets a column by name.
-   *
-   * @param name Name
-   *
+   * 
+   * @param name
+   *        Name
    * @return Column.
    */
   ResultsColumn getColumn(String name);
 
   /**
    * Gets the list of columns in ordinal order.
-   *
+   * 
    * @return Columns of the table.
    */
   ResultsColumn[] getColumns();
 
   /**
    * Gets a comma-separated list of columns.
-   *
+   * 
    * @return Comma-separated list of columns
    */
   String getColumnsListAsString();

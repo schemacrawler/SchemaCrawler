@@ -21,11 +21,16 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.*;
+import schemacrawler.schema.Column;
+import schemacrawler.schema.Index;
+import schemacrawler.schema.IndexColumn;
+import schemacrawler.schema.IndexType;
+import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.Table;
 
 /**
  * Represents an index on a database table.
- *
+ * 
  * @author Sualeh Fatehi
  */
 class MutableIndex
@@ -49,8 +54,12 @@ class MutableIndex
   }
 
   /**
-   * {@inheritDoc} <p> Note: Since indexes are not always explicitly named in databases, the sorting routine orders the
-   * indexes by the names of the columns in the index. </p>
+   * {@inheritDoc}
+   * <p>
+   * Note: Since indexes are not always explicitly named in databases,
+   * the sorting routine orders the indexes by the names of the columns
+   * in the index.
+   * </p>
    */
   @Override
   public int compareTo(final NamedObject obj)
@@ -95,7 +104,7 @@ class MutableIndex
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see Index#getCardinality()
    */
   public final int getCardinality()
@@ -105,18 +114,17 @@ class MutableIndex
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see Index#getColumns()
    */
   public IndexColumn[] getColumns()
   {
-    return columns.values()
-      .toArray(new IndexColumn[columns.size()]);
+    return columns.values().toArray(new IndexColumn[columns.size()]);
   }
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see Index#getPages()
    */
   public final int getPages()
@@ -126,7 +134,7 @@ class MutableIndex
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see Index#getType()
    */
   public final IndexType getType()
@@ -136,7 +144,7 @@ class MutableIndex
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see Index#isUnique()
    */
   public boolean isUnique()

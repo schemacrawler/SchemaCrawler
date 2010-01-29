@@ -28,21 +28,21 @@ public interface DatabaseProperty
 
   /**
    * Gets the description of the property.
-   *
+   * 
    * @return Description
    */
   String getDescription();
 
   /**
    * Gets the name of the property.
-   *
+   * 
    * @return Name
    */
   String getName();
 
   /**
    * Gets the value of the property.
-   *
+   * 
    * @return Value
    */
   Object getValue();

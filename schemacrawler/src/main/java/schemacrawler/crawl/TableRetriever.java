@@ -31,15 +31,20 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.*;
+import schemacrawler.schema.ForeignKeyDeferrability;
+import schemacrawler.schema.ForeignKeyUpdateRule;
+import schemacrawler.schema.IndexColumnSortSequence;
+import schemacrawler.schema.IndexType;
+import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import sf.util.TemplatingUtility;
 import sf.util.Utility;
 
 /**
- * A retriever uses database metadata to get the details about the database tables.
- *
+ * A retriever uses database metadata to get the details about the
+ * database tables.
+ * 
  * @author Sualeh Fatehi
  */
 final class TableRetriever
@@ -49,12 +54,96 @@ final class TableRetriever
   private static final Logger LOGGER = Logger.getLogger(TableRetriever.class
     .getName());
 
+  private static void createIndices(final MutableTable table,
+                                    final MetadataResultSet results)
+    throws SQLException
+  {
+    try
+    {
+      while (results.next())
+      {
+        // final String catalogName = results.getString("TABLE_CAT");
+        // final String schemaName = results.getString("TABLE_SCHEM");
+        // final String tableName = results.getString("TABLE_NAME");
+        String indexName = results.getString("INDEX_NAME");
+        if (Utility.isBlank(indexName))
+        {
+          indexName = UNKNOWN;
+        }
+        LOGGER.log(Level.FINER, String.format("Retrieving index: %s.%s", table
+          .getFullName(), indexName));
+        final String columnName = results.getString("COLUMN_NAME");
+        if (Utility.isBlank(columnName))
+        {
+          continue;
+        }
+
+        MutableIndex index = table.getIndex(indexName);
+        if (index == null)
+        {
+          index = new MutableIndex(table, indexName);
+          table.addIndex(index);
+        }
+
+        final boolean uniqueIndex = !results.getBoolean("NON_UNIQUE");
+        final int type = results.getInt("TYPE", IndexType.unknown.getId());
+        final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
+        final String sortSequence = results.getString("ASC_OR_DESC");
+        final int cardinality = results.getInt("CARDINALITY", 0);
+        final int pages = results.getInt("PAGES", 0);
+
+        final MutableColumn column = table.getColumn(columnName);
+        if (column != null)
+        {
+          column.setPartOfUniqueIndex(uniqueIndex);
+          final MutableIndexColumn indexColumn = new MutableIndexColumn(index,
+                                                                        column);
+          indexColumn.setIndexOrdinalPosition(ordinalPosition);
+          indexColumn.setSortSequence(IndexColumnSortSequence
+            .valueOfFromCode(sortSequence));
+          //
+          index.addColumn(indexColumn);
+          index.setUnique(uniqueIndex);
+          index.setType(IndexType.valueOf(type));
+          index.setCardinality(cardinality);
+          index.setPages(pages);
+          index.addAttributes(results.getAttributes());
+        }
+      }
+    }
+    finally
+    {
+      results.close();
+    }
+  }
+
+  private static MutableColumn lookupOrCreateColumn(final MutableTable table,
+                                                    final String columnName,
+                                                    final boolean add)
+  {
+    MutableColumn column = null;
+    if (table != null)
+    {
+      column = table.getColumn(columnName);
+    }
+    if (column == null)
+    {
+      column = new MutableColumn(table, columnName);
+      if (add)
+      {
+        LOGGER.log(Level.FINER, String.format("Adding column to table: %s",
+                                              column.getFullName()));
+        table.addColumn(column);
+      }
+    }
+    return column;
+  }
+
   TableRetriever(final RetrieverConnection retrieverConnection,
                  final MutableDatabase database)
   {
     super(retrieverConnection, database);
   }
-
 
   void retrieveColumns(final MutableTable table,
                        final InclusionRule columnInclusionRule)
@@ -92,9 +181,8 @@ final class TableRetriever
         // this is a wildcard character. We need to do another check to
         // see if the table name matches.
         if (columnInclusionRule.include(columnFullName)
-          && table.getName()
-          .equals(tableName)
-          && belongsToSchema(table, columnCatalogName, schemaName))
+            && table.getName().equals(tableName)
+            && belongsToSchema(table, columnCatalogName, schemaName))
         {
           column = lookupOrCreateColumn(table, columnName, true/* add */);
 
@@ -128,9 +216,9 @@ final class TableRetriever
     catch (final SQLException e)
     {
       final SQLException sqlEx = new SQLException("Could not retrieve columns for table "
-        + table
-        + ":"
-        + e.getMessage());
+                                                  + table
+                                                  + ":"
+                                                  + e.getMessage());
       sqlEx.setNextException(e);
       throw sqlEx;
     }
@@ -199,9 +287,9 @@ final class TableRetriever
     catch (final SQLException e)
     {
       final SQLException sqlEx = new SQLException("Could not retrieve indices for table "
-        + table
-        + ": "
-        + e.getMessage());
+                                                  + table
+                                                  + ": "
+                                                  + e.getMessage());
       sqlEx.setNextException(e);
       throw sqlEx;
     }
@@ -266,9 +354,9 @@ final class TableRetriever
     catch (final SQLException e)
     {
       final SQLException sqlEx = new SQLException("Could not retrieve primary keys for table "
-        + table
-        + ": "
-        + e.getMessage());
+                                                  + table
+                                                  + ": "
+                                                  + e.getMessage());
       sqlEx.setNextException(e);
       throw sqlEx;
     }
@@ -417,94 +505,10 @@ final class TableRetriever
 
   }
 
-  private static void createIndices(final MutableTable table,
-                                    final MetadataResultSet results)
-    throws SQLException
-  {
-    try
-    {
-      while (results.next())
-      {
-        // final String catalogName = results.getString("TABLE_CAT");
-        // final String schemaName = results.getString("TABLE_SCHEM");
-        // final String tableName = results.getString("TABLE_NAME");
-        String indexName = results.getString("INDEX_NAME");
-        if (Utility.isBlank(indexName))
-        {
-          indexName = UNKNOWN;
-        }
-        LOGGER.log(Level.FINER, String.format("Retrieving index: %s.%s", table
-          .getFullName(), indexName));
-        final String columnName = results.getString("COLUMN_NAME");
-        if (Utility.isBlank(columnName))
-        {
-          continue;
-        }
-
-        MutableIndex index = table.getIndex(indexName);
-        if (index == null)
-        {
-          index = new MutableIndex(table, indexName);
-          table.addIndex(index);
-        }
-
-        final boolean uniqueIndex = !results.getBoolean("NON_UNIQUE");
-        final int type = results.getInt("TYPE", IndexType.unknown.getId());
-        final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
-        final String sortSequence = results.getString("ASC_OR_DESC");
-        final int cardinality = results.getInt("CARDINALITY", 0);
-        final int pages = results.getInt("PAGES", 0);
-
-        final MutableColumn column = table.getColumn(columnName);
-        if (column != null)
-        {
-          column.setPartOfUniqueIndex(uniqueIndex);
-          final MutableIndexColumn indexColumn = new MutableIndexColumn(index,
-                                                                        column);
-          indexColumn.setIndexOrdinalPosition(ordinalPosition);
-          indexColumn.setSortSequence(IndexColumnSortSequence
-            .valueOfFromCode(sortSequence));
-          //
-          index.addColumn(indexColumn);
-          index.setUnique(uniqueIndex);
-          index.setType(IndexType.valueOf(type));
-          index.setCardinality(cardinality);
-          index.setPages(pages);
-          index.addAttributes(results.getAttributes());
-        }
-      }
-    }
-    finally
-    {
-      results.close();
-    }
-  }
-
-  private static MutableColumn lookupOrCreateColumn(final MutableTable table,
-                                                    final String columnName,
-                                                    final boolean add)
-  {
-    MutableColumn column = null;
-    if (table != null)
-    {
-      column = table.getColumn(columnName);
-    }
-    if (column == null)
-    {
-      column = new MutableColumn(table, columnName);
-      if (add)
-      {
-        LOGGER.log(Level.FINER, String.format("Adding column to table: %s",
-                                              column.getFullName()));
-        table.addColumn(column);
-      }
-    }
-    return column;
-  }
-
   /**
-   * Looks up a column in the database. If the column and table are not found, they are created, and added to the
-   * schema. This is prevent foreign key relationships from having a null pointer.
+   * Looks up a column in the database. If the column and table are not
+   * found, they are created, and added to the schema. This is prevent
+   * foreign key relationships from having a null pointer.
    */
   private MutableColumn lookupOrCreateColumn(final String catalogName,
                                              final String schemaName,
@@ -530,7 +534,7 @@ final class TableRetriever
         column = new MutableColumn(table, columnName);
         LOGGER.log(Level.FINER, String
           .format("Adding referenced foreign key column to table: %s", column
-          .getFullName()));
+            .getFullName()));
         table.addColumn(column);
       }
     }

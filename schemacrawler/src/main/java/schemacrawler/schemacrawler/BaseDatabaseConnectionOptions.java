@@ -39,7 +39,22 @@ abstract class BaseDatabaseConnectionOptions
   private static final Logger LOGGER = Logger
     .getLogger(BaseDatabaseConnectionOptions.class.getName());
 
+  static void loadJdbcDriver(final String jdbcDriverClassName)
+    throws SchemaCrawlerException
+  {
+    try
+    {
+      Class.forName(jdbcDriverClassName);
+    }
+    catch (final Exception e)
+    {
+      throw new SchemaCrawlerException("Could not load JDBC driver, "
+                                       + jdbcDriverClassName, e);
+    }
+  }
+
   private String user;
+
   private String password;
 
   public final Connection createConnection()
@@ -110,20 +125,6 @@ abstract class BaseDatabaseConnectionOptions
     builder.append("url=").append(getConnectionUrl()).append(Utility.NEWLINE);
     builder.append("user=").append(getUser()).append(Utility.NEWLINE);
     return builder.toString();
-  }
-
-  static void loadJdbcDriver(final String jdbcDriverClassName)
-    throws SchemaCrawlerException
-  {
-    try
-    {
-      Class.forName(jdbcDriverClassName);
-    }
-    catch (final Exception e)
-    {
-      throw new SchemaCrawlerException("Could not load JDBC driver, "
-                                       + jdbcDriverClassName, e);
-    }
   }
 
 }

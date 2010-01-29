@@ -21,11 +21,16 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.*;
+import schemacrawler.schema.Column;
+import schemacrawler.schema.ForeignKey;
+import schemacrawler.schema.ForeignKeyColumnMap;
+import schemacrawler.schema.ForeignKeyDeferrability;
+import schemacrawler.schema.ForeignKeyUpdateRule;
+import schemacrawler.schema.NamedObject;
 
 /**
  * Represents a foreign-key mapping to a primary key in another table.
- *
+ * 
  * @author Sualeh Fatehi
  */
 class MutableForeignKey
@@ -35,8 +40,7 @@ class MutableForeignKey
 
   private static final long serialVersionUID = 4121411795974895671L;
 
-  private final NamedObjectList<MutableForeignKeyColumnMap> columnPairs =
-    new NamedObjectList<MutableForeignKeyColumnMap>();
+  private final NamedObjectList<MutableForeignKeyColumnMap> columnPairs = new NamedObjectList<MutableForeignKeyColumnMap>();
   private ForeignKeyUpdateRule updateRule;
   private ForeignKeyUpdateRule deleteRule;
   private ForeignKeyDeferrability deferrability;
@@ -52,8 +56,12 @@ class MutableForeignKey
   }
 
   /**
-   * {@inheritDoc} <p> Note: Since foreign keys are not always explicitly named in databases, the sorting routine orders
-   * the foreign keys by the names of the columns in the foreign keys. </p>
+   * {@inheritDoc}
+   * <p>
+   * Note: Since foreign keys are not always explicitly named in
+   * databases, the sorting routine orders the foreign keys by the names
+   * of the columns in the foreign keys.
+   * </p>
    */
   @Override
   public int compareTo(final NamedObject obj)
@@ -95,19 +103,18 @@ class MutableForeignKey
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see ForeignKey#getColumnPairs()
    */
   public ForeignKeyColumnMap[] getColumnPairs()
   {
-    return columnPairs.values()
-      .toArray(new ForeignKeyColumnMap[columnPairs
-        .size()]);
+    return columnPairs.values().toArray(new ForeignKeyColumnMap[columnPairs
+      .size()]);
   }
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see ForeignKey#getDeferrability()
    */
   public final ForeignKeyDeferrability getDeferrability()
@@ -117,7 +124,7 @@ class MutableForeignKey
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see ForeignKey#getDeleteRule()
    */
   public final ForeignKeyUpdateRule getDeleteRule()
@@ -127,7 +134,7 @@ class MutableForeignKey
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see ForeignKey#getUpdateRule()
    */
   public final ForeignKeyUpdateRule getUpdateRule()

@@ -61,14 +61,14 @@ public enum ProcedureColumnType
 
   /**
    * Gets the enum value from the integer.
-   *
-   * @param id Id of the integer
-   *
+   * 
+   * @param id
+   *        Id of the integer
    * @return ForeignKeyDeferrability
    */
   public static ProcedureColumnType valueOf(final int id)
   {
-    for (final ProcedureColumnType type : ProcedureColumnType.values())
+    for (final ProcedureColumnType type: ProcedureColumnType.values())
     {
       if (type.getId() == id)
       {
@@ -90,7 +90,7 @@ public enum ProcedureColumnType
 
   /**
    * Gets the id.
-   *
+   * 
    * @return id
    */
   public int getId()
@@ -100,7 +100,7 @@ public enum ProcedureColumnType
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see Object#toString()
    */
   @Override

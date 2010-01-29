@@ -29,8 +29,9 @@ import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 
 /**
- * JDBC driver information. Created from metadata returned by a JDBC call, and other sources of information.
- *
+ * JDBC driver information. Created from metadata returned by a JDBC
+ * call, and other sources of information.
+ * 
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
 final class MutableJdbcDriverInfo
@@ -50,7 +51,7 @@ final class MutableJdbcDriverInfo
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.JdbcDriverInfo#getConnectionUrl()
    */
   public String getConnectionUrl()
@@ -60,7 +61,7 @@ final class MutableJdbcDriverInfo
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.JdbcDriverInfo#getDriverClassName()
    */
   public String getDriverClassName()
@@ -70,7 +71,7 @@ final class MutableJdbcDriverInfo
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.JdbcDriverInfo#getDriverName()
    */
   public String getDriverName()
@@ -80,7 +81,7 @@ final class MutableJdbcDriverInfo
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.JdbcDriverInfo#getDriverProperties()
    */
   public JdbcDriverProperty[] getDriverProperties()
@@ -93,7 +94,7 @@ final class MutableJdbcDriverInfo
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.JdbcDriverInfo#getDriverVersion()
    */
   public String getDriverVersion()
@@ -103,7 +104,7 @@ final class MutableJdbcDriverInfo
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.JdbcDriverInfo#isJdbcCompliant()
    */
   public boolean isJdbcCompliant()
@@ -113,33 +114,27 @@ final class MutableJdbcDriverInfo
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see Object#toString()
    */
   @Override
   public String toString()
   {
     final StringBuilder info = new StringBuilder();
-    info.append("-- driver: ")
-      .append(getDriverName())
-      .append(" ")
-      .append(getDriverVersion())
+    info.append("-- driver: ").append(getDriverName()).append(" ")
+      .append(getDriverVersion()).append(NEWLINE);
+    info.append("-- driver class: ").append(getDriverClassName())
       .append(NEWLINE);
-    info.append("-- driver class: ")
-      .append(getDriverClassName())
-      .append(NEWLINE);
-    info.append("-- url: ")
-      .append(getConnectionUrl())
-      .append(NEWLINE);
-    info.append("-- jdbc compliant: ")
-      .append(isJdbcCompliant());
+    info.append("-- url: ").append(getConnectionUrl()).append(NEWLINE);
+    info.append("-- jdbc compliant: ").append(isJdbcCompliant());
     return info.toString();
   }
 
   /**
    * Adds a JDBC driver property.
-   *
-   * @param jdbcDriverProperty JDBC driver property
+   * 
+   * @param jdbcDriverProperty
+   *        JDBC driver property
    */
   void addJdbcDriverProperty(final MutableJdbcDriverProperty jdbcDriverProperty)
   {

@@ -28,7 +28,7 @@ import schemacrawler.schema.Table;
 
 /**
  * Represents a primary key in a table.
- *
+ * 
  * @author Sualeh Fatehi
  */
 class MutablePrimaryKey
@@ -40,8 +40,9 @@ class MutablePrimaryKey
 
   /**
    * Copies information from an index.
-   *
-   * @param index Index
+   * 
+   * @param index
+   *        Index
    */
   MutablePrimaryKey(final Index index)
   {
@@ -52,7 +53,7 @@ class MutablePrimaryKey
     setType(index.getType());
     setUnique(index.isUnique());
     // Copy columns
-    for (final IndexColumn column : index.getColumns())
+    for (final IndexColumn column: index.getColumns())
     {
       addColumn((MutableIndexColumn) column);
     }
@@ -65,7 +66,7 @@ class MutablePrimaryKey
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see Index#isUnique()
    */
   @Override

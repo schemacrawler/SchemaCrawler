@@ -30,9 +30,9 @@ import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
 
 /**
- * Database and connection information. Created from metadata returned by a JDBC call, and other sources of
- * information.
- *
+ * Database and connection information. Created from metadata returned
+ * by a JDBC call, and other sources of information.
+ * 
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
 final class MutableDatabaseInfo
@@ -85,18 +85,15 @@ final class MutableDatabaseInfo
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see Object#toString()
    */
   @Override
   public String toString()
   {
     final StringBuilder info = new StringBuilder();
-    info.append("-- database: ")
-      .append(getProductName())
-      .append(" ")
-      .append(getProductVersion())
-      .append(NEWLINE);
+    info.append("-- database: ").append(getProductName()).append(" ")
+      .append(getProductVersion()).append(NEWLINE);
     return info.toString();
   }
 
@@ -104,8 +101,7 @@ final class MutableDatabaseInfo
   {
     if (dbProperties != null)
     {
-      this.dbProperties
-        .addAll(dbProperties);
+      this.dbProperties.addAll(dbProperties);
     }
   }
 

@@ -28,7 +28,7 @@ import schemacrawler.schema.View;
 
 /**
  * Represents a view in the database.
- *
+ * 
  * @author Sualeh Fatehi
  */
 class MutableView
@@ -58,7 +58,7 @@ class MutableView
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.View#getDefinition()
    */
   public String getDefinition()
@@ -68,7 +68,7 @@ class MutableView
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see View#getType()
    */
   @Override
@@ -89,8 +89,7 @@ class MutableView
   {
     if (definition != null)
     {
-      this.definition
-        .append(definition);
+      this.definition.append(definition);
     }
   }
 

@@ -22,7 +22,11 @@ package schemacrawler.crawl;
 
 
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +36,7 @@ import schemacrawler.schemacrawler.Config;
 
 /**
  * Utility to work with java.sql.Types, and Java class name mappings.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public final class JavaSqlTypesUtility
@@ -52,10 +56,11 @@ public final class JavaSqlTypesUtility
   }
 
   /**
-   * Lookup java.sql.Types type, and return more detailed information, including the mapped Java class.
-   *
-   * @param type java.sql.Types type
-   *
+   * Lookup java.sql.Types type, and return more detailed information,
+   * including the mapped Java class.
+   * 
+   * @param type
+   *        java.sql.Types type
    * @return JavaSqlType type
    */
   public static JavaSqlType lookupSqlDataType(final int type)
@@ -69,10 +74,11 @@ public final class JavaSqlTypesUtility
   }
 
   /**
-   * Lookup java.sql.Types type, and return more detailed information, including the mapped Java class.
-   *
-   * @param typeName java.sql.Types type name
-   *
+   * Lookup java.sql.Types type, and return more detailed information,
+   * including the mapped Java class.
+   * 
+   * @param typeName
+   *        java.sql.Types type name
    * @return JavaSqlType type
    */
   public static JavaSqlType lookupSqlDataType(final String typeName)
@@ -90,7 +96,7 @@ public final class JavaSqlTypesUtility
     final Map<Integer, JavaSqlType> javaSqlTypesByTypeMap = new HashMap<Integer, JavaSqlType>();
     if (javaSqlTypes != null)
     {
-      for (final JavaSqlType javaSqlType : javaSqlTypes)
+      for (final JavaSqlType javaSqlType: javaSqlTypes)
       {
         javaSqlTypesByTypeMap.put(javaSqlType.getJavaSqlType(), javaSqlType);
       }
@@ -103,7 +109,7 @@ public final class JavaSqlTypesUtility
     final Map<String, JavaSqlType> javaSqlTypesByTypeNameMap = new HashMap<String, JavaSqlType>();
     if (javaSqlTypes != null)
     {
-      for (final JavaSqlType javaSqlType : javaSqlTypes)
+      for (final JavaSqlType javaSqlType: javaSqlTypes)
       {
         javaSqlTypesByTypeNameMap.put(javaSqlType.getJavaSqlTypeName(),
                                       javaSqlType);
@@ -120,11 +126,11 @@ public final class JavaSqlTypesUtility
 
     final List<JavaSqlType> javaSqlTypes = new ArrayList<JavaSqlType>();
 
-    for (final Entry<String, String> javaSqlTypesEntry : javaSqlTypesProperties
+    for (final Entry<String, String> javaSqlTypesEntry: javaSqlTypesProperties
       .entrySet())
     {
       if (javaSqlTypesEntry.getKey() != null
-        && javaSqlTypesEntry.getValue() != null)
+          && javaSqlTypesEntry.getValue() != null)
       {
         final Integer javaSqlType = Integer.parseInt(javaSqlTypesEntry
           .getValue());
@@ -153,7 +159,7 @@ public final class JavaSqlTypesUtility
   {
     final Map<String, JavaSqlTypeGroup> javaSqlTypesGroupsMap = new HashMap<String, JavaSqlTypeGroup>();
     final Map<String, String> javaSqlTypesGroups = readPropertiesResource("/java.sql.Types.groups.properties");
-    for (final Entry<String, String> javaSqlTypesGroupsEntry : javaSqlTypesGroups
+    for (final Entry<String, String> javaSqlTypesGroupsEntry: javaSqlTypesGroups
       .entrySet())
     {
       try

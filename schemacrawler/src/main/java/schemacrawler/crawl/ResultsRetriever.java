@@ -30,8 +30,9 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.Utility;
 
 /**
- * A retriever uses database metadata to get the details about a result set.
- *
+ * A retriever uses database metadata to get the details about a result
+ * set.
+ * 
  * @author Sualeh Fatehi
  */
 final class ResultsRetriever
@@ -59,10 +60,14 @@ final class ResultsRetriever
   }
 
   /**
-   * Retrieves a list of columns from the results. There is no attempt to share table objects, since the tables cannot
-   * have children that are ResultColumns. Likewise, there is no attempt to share column data types.
-   *
-   * @throws SchemaCrawlerException On an exception
+   * Retrieves a list of columns from the results. There is no attempt
+   * to share table objects, since the tables cannot have children that
+   * are ResultColumns. Likewise, there is no attempt to share column
+   * data types.
+   * 
+   * @return List of columns from the results
+   * @throws SchemaCrawlerException
+   *         On an exception
    */
   ResultsColumns retrieveResults()
     throws SchemaCrawlerException

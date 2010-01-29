@@ -29,7 +29,7 @@ import schemacrawler.schema.ResultsColumns;
 
 /**
  * Represents a result set, a result of a query.
- *
+ * 
  * @author Sualeh Fatehi
  */
 class MutableResultsColumns
@@ -48,7 +48,7 @@ class MutableResultsColumns
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ResultsColumns#getColumn(java.lang.String)
    */
   public ResultsColumn getColumn(final String name)
@@ -58,18 +58,17 @@ class MutableResultsColumns
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ResultsColumns#getColumns()
    */
   public ResultsColumn[] getColumns()
   {
-    return columns.values()
-      .toArray(new ResultsColumn[columns.size()]);
+    return columns.values().toArray(new ResultsColumn[columns.size()]);
   }
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ResultsColumns#getColumnsListAsString()
    */
   public String getColumnsListAsString()
@@ -95,8 +94,7 @@ class MutableResultsColumns
 
   public Iterator<ResultsColumn> iterator()
   {
-    return Arrays.asList(getColumns())
-      .iterator();
+    return Arrays.asList(getColumns()).iterator();
   }
 
   void addColumn(final MutableResultsColumn column)

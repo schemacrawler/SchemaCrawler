@@ -47,7 +47,7 @@ public enum SearchableType
    * Searchable except with where .. like.
    */
   predBasic(DatabaseMetaData.typePredBasic,
-            "searchable except with where .. like"),
+    "searchable except with where .. like"),
   /**
    * Searchable.
    */
@@ -58,14 +58,14 @@ public enum SearchableType
 
   /**
    * Gets the enum value from the integer.
-   *
-   * @param id Id of the integer
-   *
+   * 
+   * @param id
+   *        Id of the integer
    * @return SearchableType
    */
   public static SearchableType valueOf(final int id)
   {
-    for (final SearchableType type : SearchableType.values())
+    for (final SearchableType type: SearchableType.values())
     {
       if (type.getId() == id)
       {
@@ -87,7 +87,7 @@ public enum SearchableType
 
   /**
    * Gets the id.
-   *
+   * 
    * @return id
    */
   public int getId()
@@ -97,7 +97,7 @@ public enum SearchableType
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see Object#toString()
    */
   @Override

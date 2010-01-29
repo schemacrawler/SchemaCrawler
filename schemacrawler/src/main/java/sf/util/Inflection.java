@@ -6,13 +6,17 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
- * Implementation of Rails' <a href='http://api.rubyonrails.org/classes/ActiveSupport/CoreExtensions/String/Inflection s
- * . h t m l ' > I n f l e c t i o n s < / a > to handle singularization and pluralization of 'Rails strings'. Copied
- * from <a href='http://code.google.com/p/rogueweb/'>rogueweb</a>'s port of Rails to Java.
- *
+ * Implementation of Rails' <a href='http://api.rubyonrails.org/classes/ActiveSupport/CoreExtensions/String/Inflection
+ * s . h t m l ' > I n f l e c t i o n s < / a > to handle
+ * singularization and pluralization of 'Rails strings'. Copied from <a
+ * href='http://code.google.com/p/rogueweb/'>rogueweb</a>'s port of
+ * Rails to Java.
+ * 
  * @author Anthony Eden
  */
-@SuppressWarnings({"ALL"})
+@SuppressWarnings( {
+  "ALL"
+})
 public class Inflection
 {
 
@@ -92,14 +96,14 @@ public class Inflection
 
   /**
    * Return true if the word is uncountable.
-   *
-   * @param word The word
-   *
+   * 
+   * @param word
+   *        The word
    * @return True if it is uncountable
    */
   public static boolean isUncountable(final String word)
   {
-    for (final String w : uncountable)
+    for (final String w: uncountable)
     {
       if (w.equalsIgnoreCase(word))
       {
@@ -111,9 +115,9 @@ public class Inflection
 
   /**
    * Return the pluralized version of a word.
-   *
-   * @param word The word
-   *
+   * 
+   * @param word
+   *        The word
    * @return The pluralized word
    */
   public static String pluralize(final String word)
@@ -123,7 +127,7 @@ public class Inflection
       return word;
     }
 
-    for (final Inflection inflection : plural)
+    for (final Inflection inflection: plural)
     {
       if (inflection.match(word))
       {
@@ -135,9 +139,9 @@ public class Inflection
 
   /**
    * Return the singularized version of a word.
-   *
-   * @param word The word
-   *
+   * 
+   * @param word
+   *        The word
    * @return The singularized word
    */
   public static String singularize(final String word)
@@ -147,7 +151,7 @@ public class Inflection
       return word;
     }
 
-    for (final Inflection inflection : singular)
+    for (final Inflection inflection: singular)
     {
       // System.out.println(word + " matches " + inflection.pattern +
       // "? (ignore case: " + inflection.ignoreCase + ")");
@@ -210,9 +214,9 @@ public class Inflection
 
   /**
    * Does the given word match?
-   *
-   * @param word The word
-   *
+   * 
+   * @param word
+   *        The word
    * @return True if it matches the inflection pattern
    */
   public boolean match(final String word)
@@ -222,16 +226,14 @@ public class Inflection
     {
       flags = flags | Pattern.CASE_INSENSITIVE;
     }
-    return Pattern.compile(pattern, flags)
-      .matcher(word)
-      .find();
+    return Pattern.compile(pattern, flags).matcher(word).find();
   }
 
   /**
    * Replace the word with its pattern.
-   *
-   * @param word The word
-   *
+   * 
+   * @param word
+   *        The word
    * @return The result
    */
   public String replace(final String word)
@@ -241,8 +243,7 @@ public class Inflection
     {
       flags = flags | Pattern.CASE_INSENSITIVE;
     }
-    return Pattern.compile(pattern, flags)
-      .matcher(word)
+    return Pattern.compile(pattern, flags).matcher(word)
       .replaceAll(replacement);
   }
 }

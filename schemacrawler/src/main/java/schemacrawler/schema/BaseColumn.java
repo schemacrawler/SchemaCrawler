@@ -23,7 +23,7 @@ package schemacrawler.schema;
 
 /**
  * Column for tables and procedures.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public interface BaseColumn
@@ -32,44 +32,46 @@ public interface BaseColumn
 
   /**
    * Get the number of fractional digits.
-   *
+   * 
    * @return Number of fractional digits
    */
   int getDecimalDigits();
 
   /**
    * Get the ordinal position of the column in the table, starting at 1.
-   *
+   * 
    * @return Ordinal position of the column in the table, starting at 1
    */
   int getOrdinalPosition();
 
   /**
-   * Get the column size. For char or date types this is the maximum number of characters, for numeric or decimal types
-   * this is precision.
-   *
+   * Get the column size. For char or date types this is the maximum
+   * number of characters, for numeric or decimal types this is
+   * precision.
+   * 
    * @return Column size
    */
   int getSize();
 
   /**
    * Get the data type of column.
-   *
+   * 
    * @return Column data type
    */
   ColumnDataType getType();
 
   /**
-   * Gets the width of the column, if the column width is required. (Column width is not significant for column types
-   * such as TIME and DATE.)
-   *
+   * Gets the width of the column, if the column width is required.
+   * (Column width is not significant for column types such as TIME and
+   * DATE.)
+   * 
    * @return Column width as a String
    */
   String getWidth();
 
   /**
    * Whether the column is nullable.
-   *
+   * 
    * @return Whether the column is nullable
    */
   boolean isNullable();

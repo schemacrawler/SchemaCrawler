@@ -24,7 +24,7 @@ import java.io.Serializable;
 
 /**
  * A wrapper around java.sql.Types.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public final class JavaSqlType
@@ -138,7 +138,7 @@ public final class JavaSqlType
 
   /**
    * The java.sql.Types type.
-   *
+   * 
    * @return java.sql.Types type
    */
   public int getJavaSqlType()
@@ -158,7 +158,7 @@ public final class JavaSqlType
 
   /**
    * The java.sql.Types type name.
-   *
+   * 
    * @return java.sql.Types type names
    */
   public String getJavaSqlTypeName()
@@ -173,14 +173,14 @@ public final class JavaSqlType
     int result = 1;
     result = prime * result + javaSqlType;
     result = prime * result
-      + (javaSqlTypeGroup == null ? 0 : javaSqlTypeGroup.hashCode());
+             + (javaSqlTypeGroup == null? 0: javaSqlTypeGroup.hashCode());
     result = prime
-      * result
-      + (javaSqlTypeMappedClassName == null ? 0
-      : javaSqlTypeMappedClassName
-      .hashCode());
+             * result
+             + (javaSqlTypeMappedClassName == null? 0
+                                                  : javaSqlTypeMappedClassName
+                                                    .hashCode());
     result = prime * result
-      + (javaSqlTypeName == null ? 0 : javaSqlTypeName.hashCode());
+             + (javaSqlTypeName == null? 0: javaSqlTypeName.hashCode());
     return result;
   }
 

@@ -39,12 +39,12 @@ public enum ForeignKeyDeferrability
    * Initially deferred.
    */
   initiallyDeferred(DatabaseMetaData.importedKeyInitiallyDeferred,
-                    "initially deferred"),
+    "initially deferred"),
   /**
    * Initially immediate.
    */
   initiallyImmediate(DatabaseMetaData.importedKeyInitiallyImmediate,
-                     "initially immediate"),
+    "initially immediate"),
   /**
    * Not deferrable.
    */
@@ -55,14 +55,14 @@ public enum ForeignKeyDeferrability
 
   /**
    * Gets the enum value from the integer.
-   *
-   * @param id Id of the integer
-   *
+   * 
+   * @param id
+   *        Id of the integer
    * @return ForeignKeyDeferrability
    */
   public static ForeignKeyDeferrability valueOf(final int id)
   {
-    for (final ForeignKeyDeferrability fkDeferrability : ForeignKeyDeferrability
+    for (final ForeignKeyDeferrability fkDeferrability: ForeignKeyDeferrability
       .values())
     {
       if (fkDeferrability.getId() == id)
@@ -85,7 +85,7 @@ public enum ForeignKeyDeferrability
 
   /**
    * Gets the id.
-   *
+   * 
    * @return id
    */
   public int getId()
@@ -95,7 +95,7 @@ public enum ForeignKeyDeferrability
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see Object#toString()
    */
   @Override

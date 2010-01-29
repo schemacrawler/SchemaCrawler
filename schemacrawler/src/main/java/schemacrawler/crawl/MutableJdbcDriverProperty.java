@@ -27,9 +27,9 @@ import java.util.Arrays;
 import schemacrawler.schema.JdbcDriverProperty;
 
 /**
- * Represents a JDBC driver property, and it's value. Created from metadata returned by a JDBC call, and other sources
- * of information.
- *
+ * Represents a JDBC driver property, and it's value. Created from
+ * metadata returned by a JDBC call, and other sources of information.
+ * 
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
 final class MutableJdbcDriverProperty
@@ -91,7 +91,7 @@ final class MutableJdbcDriverProperty
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.JdbcDriverProperty#getChoices()
    */
   public String[] getChoices()
@@ -108,7 +108,7 @@ final class MutableJdbcDriverProperty
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.JdbcDriverProperty#getDescription()
    */
   @Override
@@ -126,7 +126,7 @@ final class MutableJdbcDriverProperty
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.JdbcDriverProperty#getValue()
    */
   @Override
@@ -155,14 +155,14 @@ final class MutableJdbcDriverProperty
     final int prime = 31;
     int result = super.hashCode();
     result = prime * result + Arrays.hashCode(choices);
-    result = prime * result + (description == null ? 0 : description.hashCode());
-    result = prime * result + (required ? 1231 : 1237);
+    result = prime * result + (description == null? 0: description.hashCode());
+    result = prime * result + (required? 1231: 1237);
     return result;
   }
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.JdbcDriverProperty#isRequired()
    */
   public boolean isRequired()

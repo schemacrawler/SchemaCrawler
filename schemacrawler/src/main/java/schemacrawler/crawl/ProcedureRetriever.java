@@ -31,8 +31,9 @@ import schemacrawler.schema.ProcedureType;
 import schemacrawler.schemacrawler.InclusionRule;
 
 /**
- * A retriever uses database metadata to get the details about the database procedures.
- *
+ * A retriever uses database metadata to get the details about the
+ * database procedures.
+ * 
  * @author Sualeh Fatehi
  */
 final class ProcedureRetriever
@@ -74,9 +75,8 @@ final class ProcedureRetriever
                                                                          columnName);
         final String columnFullName = column.getFullName();
         if (columnInclusionRule.include(columnFullName)
-          && procedure.getName()
-          .equals(procedureName)
-          && belongsToSchema(procedure, columnCatalogName, schemaName))
+            && procedure.getName().equals(procedureName)
+            && belongsToSchema(procedure, columnCatalogName, schemaName))
         {
           LOGGER.log(Level.FINER, "Retrieving procedure column: " + columnName);
           final short columnType = results.getShort("COLUMN_TYPE", (short) 0);
@@ -107,9 +107,9 @@ final class ProcedureRetriever
     catch (final SQLException e)
     {
       final SQLException sqlEx = new SQLException("Could not retrieve columns for procedure "
-        + procedure
-        + ": "
-        + e.getMessage());
+                                                  + procedure
+                                                  + ": "
+                                                  + e.getMessage());
       sqlEx.setNextException(e);
       throw sqlEx;
     }
@@ -122,7 +122,6 @@ final class ProcedureRetriever
     }
 
   }
-
 
   void retrieveProcedures(final String catalogName,
                           final String schemaName,
@@ -145,8 +144,7 @@ final class ProcedureRetriever
         final String procedureName = results.getString("PROCEDURE_NAME");
         LOGGER.log(Level.FINER, "Retrieving procedure: " + procedureName);
         final short procedureType = results
-          .getShort("PROCEDURE_TYPE", (short) ProcedureType.unknown
-            .getId());
+          .getShort("PROCEDURE_TYPE", (short) ProcedureType.unknown.getId());
         final String remarks = results.getString("REMARKS");
 
         final MutableSchema schema = lookupSchema(catalogName, schemaName);

@@ -27,9 +27,9 @@ import schemacrawler.schema.SearchableType;
 import sf.util.Utility;
 
 /**
- * Represents a column type. Provides the java.sql.Types type, the java.sql.Types type name, and the database specific
- * data type name.
- *
+ * Represents a column type. Provides the java.sql.Types type, the
+ * java.sql.Types type name, and the database specific data type name.
+ * 
  * @author Sualeh Fatehi
  */
 final class MutableColumnDataType
@@ -73,7 +73,7 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ColumnDataType#getBaseType()
    */
   public ColumnDataType getBaseType()
@@ -83,7 +83,7 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ColumnDataType#getCreateParameters()
    */
   public String getCreateParameters()
@@ -93,7 +93,7 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ColumnDataType#getDatabaseSpecificTypeName()
    */
   public String getDatabaseSpecificTypeName()
@@ -103,7 +103,7 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ColumnDataType#getLiteralPrefix()
    */
   public String getLiteralPrefix()
@@ -113,7 +113,7 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ColumnDataType#getLiteralSuffix()
    */
   public String getLiteralSuffix()
@@ -123,7 +123,7 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ColumnDataType#getLocalTypeName()
    */
   public String getLocalTypeName()
@@ -133,7 +133,7 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ColumnDataType#getMaximumScale()
    */
   public int getMaximumScale()
@@ -143,7 +143,7 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ColumnDataType#getMinimumScale()
    */
   public int getMinimumScale()
@@ -153,7 +153,7 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ColumnDataType#getNumPrecisionRadix()
    */
   public int getNumPrecisionRadix()
@@ -163,7 +163,7 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ColumnDataType#getPrecision()
    */
   public long getPrecision()
@@ -173,7 +173,7 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ColumnDataType#getSearchable()
    */
   public SearchableType getSearchable()
@@ -183,7 +183,7 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ColumnDataType#getType()
    */
   public int getType()
@@ -193,7 +193,7 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ColumnDataType#getTypeClassName()
    */
   public String getTypeClassName()
@@ -203,7 +203,7 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ColumnDataType#getTypeName()
    */
   public String getTypeName()
@@ -213,7 +213,7 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ColumnDataType#isAutoIncrementable()
    */
   public boolean isAutoIncrementable()
@@ -223,7 +223,7 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ColumnDataType#isCaseSensitive()
    */
   public boolean isCaseSensitive()
@@ -233,7 +233,7 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ColumnDataType#isFixedPrecisionScale()
    */
   public boolean isFixedPrecisionScale()
@@ -243,7 +243,7 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ColumnDataType#isNullable()
    */
   public boolean isNullable()
@@ -253,7 +253,7 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ColumnDataType#isUnsigned()
    */
   public boolean isUnsigned()
@@ -263,7 +263,7 @@ final class MutableColumnDataType
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.ColumnDataType#isUserDefined()
    */
   public boolean isUserDefined()

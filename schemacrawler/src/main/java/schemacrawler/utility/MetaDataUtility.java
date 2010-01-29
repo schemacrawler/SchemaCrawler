@@ -27,7 +27,7 @@ import schemacrawler.schema.Column;
 
 /**
  * SchemaCrawler utility methods.
- *
+ * 
  * @author sfatehi
  */
 public final class MetaDataUtility
@@ -57,10 +57,11 @@ public final class MetaDataUtility
   }
 
   /**
-   * Lookup java.sql.Types type, and return more detailed information, including the mapped Java class.
-   *
-   * @param type java.sql.Types type
-   *
+   * Lookup java.sql.Types type, and return more detailed information,
+   * including the mapped Java class.
+   * 
+   * @param type
+   *        java.sql.Types type
    * @return JavaSqlType type
    */
   public static JavaSqlType lookupSqlDataType(final int type)
@@ -69,10 +70,11 @@ public final class MetaDataUtility
   }
 
   /**
-   * Lookup java.sql.Types type, and return more detailed information, including the mapped Java class.
-   *
-   * @param typeName java.sql.Types type name
-   *
+   * Lookup java.sql.Types type, and return more detailed information,
+   * including the mapped Java class.
+   * 
+   * @param typeName
+   *        java.sql.Types type name
    * @return JavaSqlType type
    */
   public static JavaSqlType lookupSqlDataType(final String typeName)

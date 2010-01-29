@@ -22,8 +22,9 @@ package schemacrawler.schema;
 
 
 /**
- * Represents the dependent of a database object, such as a column or an index, which are dependents of a table.
- *
+ * Represents the dependent of a database object, such as a column or an
+ * index, which are dependents of a table.
+ * 
  * @author Sualeh Fatehi
  */
 public interface DependantObject
@@ -32,7 +33,7 @@ public interface DependantObject
 
   /**
    * Gets the parent database object.
-   *
+   * 
    * @return Parent database object
    */
   DatabaseObject getParent();

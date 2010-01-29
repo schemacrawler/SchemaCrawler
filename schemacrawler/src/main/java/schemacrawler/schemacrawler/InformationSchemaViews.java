@@ -27,8 +27,9 @@ import java.util.Map;
 import sf.util.ObjectToString;
 
 /**
- * The database specific views to get additional database metadata in a standard format.
- *
+ * The database specific views to get additional database metadata in a
+ * standard format.
+ * 
  * @author Sualeh Fatehi
  */
 public final class InformationSchemaViews
@@ -56,23 +57,24 @@ public final class InformationSchemaViews
 
   /**
    * Information schema views from a map.
-   *
-   * @param informationSchemaViewsSql Map of information schema view definitions.
+   * 
+   * @param informationSchemaViewsSql
+   *        Map of information schema view definitions.
    */
   InformationSchemaViews(final Map<String, String> informationSchemaViewsSql)
   {
     informationSchemaQueries = new HashMap<String, String>();
     if (informationSchemaViewsSql != null)
     {
-      final String[] keys = new String[]{
-        KEY_INFORMATION_SCHEMA_VIEWS,
-        KEY_INFORMATION_SCHEMA_TRIGGERS,
-        KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS,
-        KEY_GET_INDEX_INFO,
-        KEY_INFORMATION_SCHEMA_ROUTINES,
-        KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS,
+      final String[] keys = new String[] {
+          KEY_INFORMATION_SCHEMA_VIEWS,
+          KEY_INFORMATION_SCHEMA_TRIGGERS,
+          KEY_INFORMATION_SCHEMA_TABLE_CONSTRAINTS,
+          KEY_GET_INDEX_INFO,
+          KEY_INFORMATION_SCHEMA_ROUTINES,
+          KEY_INFORMATION_SCHEMA_CHECK_CONSTRAINTS,
       };
-      for (final String key : keys)
+      for (final String key: keys)
       {
         if (informationSchemaViewsSql.containsKey(key))
         {
@@ -91,8 +93,9 @@ public final class InformationSchemaViews
   }
 
   /**
-   * Gets the table check constraints SQL from the additional configuration.
-   *
+   * Gets the table check constraints SQL from the additional
+   * configuration.
+   * 
    * @return Table check constraints SQL.
    */
   public String getCheckConstraints()
@@ -103,7 +106,7 @@ public final class InformationSchemaViews
 
   /**
    * Gets the index info SQL from the additional configuration.
-   *
+   * 
    * @return Index info constraints SQL.
    */
   public String getIndexInfo()
@@ -112,8 +115,9 @@ public final class InformationSchemaViews
   }
 
   /**
-   * Gets the procedure definitions SQL from the additional configuration.
-   *
+   * Gets the procedure definitions SQL from the additional
+   * configuration.
+   * 
    * @return Procedure defnitions SQL.
    */
   public String getRoutines()
@@ -123,7 +127,7 @@ public final class InformationSchemaViews
 
   /**
    * Gets the table constraints SQL from the additional configuration.
-   *
+   * 
    * @return Table constraints SQL.
    */
   public String getTableConstraints()
@@ -134,7 +138,7 @@ public final class InformationSchemaViews
 
   /**
    * Gets the trigger definitions SQL from the additional configuration.
-   *
+   * 
    * @return Trigger defnitions SQL.
    */
   public String getTriggers()
@@ -144,7 +148,7 @@ public final class InformationSchemaViews
 
   /**
    * Gets the view definitions SQL from the additional configuration.
-   *
+   * 
    * @return View defnitions SQL.
    */
   public String getViews()
@@ -187,9 +191,11 @@ public final class InformationSchemaViews
   }
 
   /**
-   * Sets the table check constraints SQL from the additional configuration.
-   *
-   * @param sql Table check constraints SQL.
+   * Sets the table check constraints SQL from the additional
+   * configuration.
+   * 
+   * @param sql
+   *        Table check constraints SQL.
    */
   public void setCheckConstraintsSql(final String sql)
   {
@@ -198,8 +204,9 @@ public final class InformationSchemaViews
 
   /**
    * Sets the index info SQL from the additional configuration.
-   *
-   * @param sql Index info constraints SQL.
+   * 
+   * @param sql
+   *        Index info constraints SQL.
    */
   public void setIndexInfoSql(final String sql)
   {
@@ -207,9 +214,11 @@ public final class InformationSchemaViews
   }
 
   /**
-   * Sets the procedure definitions SQL from the additional configuration.
-   *
-   * @param sql Procedure defnitions SQL.
+   * Sets the procedure definitions SQL from the additional
+   * configuration.
+   * 
+   * @param sql
+   *        Procedure defnitions SQL.
    */
   public void setRoutinesSql(final String sql)
   {
@@ -218,8 +227,9 @@ public final class InformationSchemaViews
 
   /**
    * Sets the table constraints SQL from the additional configuration.
-   *
-   * @param sql Table constraints SQL.
+   * 
+   * @param sql
+   *        Table constraints SQL.
    */
   public void setTableConstraintsSql(final String sql)
   {
@@ -228,8 +238,9 @@ public final class InformationSchemaViews
 
   /**
    * Sets the trigger definitions SQL from the additional configuration.
-   *
-   * @param sql Trigger defnitions SQL.
+   * 
+   * @param sql
+   *        Trigger defnitions SQL.
    */
   public void setTriggersSql(final String sql)
   {
@@ -238,8 +249,9 @@ public final class InformationSchemaViews
 
   /**
    * Sets the view definitions SQL from the additional configuration.
-   *
-   * @param sql View defnitions SQL.
+   * 
+   * @param sql
+   *        View defnitions SQL.
    */
   public void setViewsSql(final String sql)
   {

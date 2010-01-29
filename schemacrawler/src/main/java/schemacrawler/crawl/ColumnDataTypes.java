@@ -29,7 +29,7 @@ class ColumnDataTypes
   MutableColumnDataType lookupColumnDataTypeByType(final int type)
   {
     MutableColumnDataType columnDataType = null;
-    for (final MutableColumnDataType currentColumnDataType : this)
+    for (final MutableColumnDataType currentColumnDataType: this)
     {
       if (type == currentColumnDataType.getType())
       {

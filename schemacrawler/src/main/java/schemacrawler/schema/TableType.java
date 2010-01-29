@@ -62,13 +62,14 @@ public enum TableType
   /**
    * Synonym
    */
-  synonym,;
+  synonym, ;
 
   /**
-   * Converts an array of table types to an array of their corresponding string values.
-   *
-   * @param tableTypes Array of table types
-   *
+   * Converts an array of table types to an array of their corresponding
+   * string values.
+   * 
+   * @param tableTypes
+   *        Array of table types
    * @return Array of string table types
    */
   public static String[] toStrings(final TableType[] tableTypes)
@@ -79,7 +80,7 @@ public enum TableType
     }
 
     final List<String> tableTypeStrings = new ArrayList<String>(tableTypes.length);
-    for (final TableType tableType : tableTypes)
+    for (final TableType tableType: tableTypes)
     {
       if (tableType != null)
       {
@@ -90,10 +91,11 @@ public enum TableType
   }
 
   /**
-   * Converts an array of string table types to an array of their corresponding enumeration values.
-   *
-   * @param tableTypeStrings Array of string table types
-   *
+   * Converts an array of string table types to an array of their
+   * corresponding enumeration values.
+   * 
+   * @param tableTypeStrings
+   *        Array of string table types
    * @return Array of table types
    */
   public static TableType[] valueOf(final String[] tableTypeStrings)
@@ -104,7 +106,7 @@ public enum TableType
     }
 
     final List<TableType> tableTypes = new ArrayList<TableType>(tableTypeStrings.length);
-    for (final String tableTypeString : tableTypeStrings)
+    for (final String tableTypeString: tableTypeStrings)
     {
       tableTypes.add(valueOf(tableTypeString.toLowerCase(Locale.ENGLISH)));
     }

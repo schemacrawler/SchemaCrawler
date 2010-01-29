@@ -32,8 +32,9 @@ import schemacrawler.schema.RoutineBodyType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 
 /**
- * A retriever that uses database metadata to get the extended details about the database procedures.
- *
+ * A retriever that uses database metadata to get the extended details
+ * about the database procedures.
+ * 
  * @author Sualeh Fatehi
  */
 final class ProcedureExRetriever
@@ -51,8 +52,9 @@ final class ProcedureExRetriever
 
   /**
    * Retrieves a procedure definitions from the database.
-   *
-   * @throws SQLException On a SQL exception
+   * 
+   * @throws SQLException
+   *         On a SQL exception
    */
   void retrieveProcedureInformation()
     throws SQLException
@@ -95,7 +97,7 @@ final class ProcedureExRetriever
         if (procedure != null)
         {
           LOGGER.log(Level.FINER, "Retrieving procedure information: "
-            + procedureName);
+                                  + procedureName);
           final RoutineBodyType routineBodyType = RoutineBodyType
             .valueOf(results.getString("ROUTINE_BODY")
               .toLowerCase(Locale.ENGLISH));

@@ -29,8 +29,9 @@ import java.util.regex.Pattern;
 import sf.util.Utility;
 
 /**
- * Specifies inclusion and exclusion patterns that can be applied to the names of database objects.
- *
+ * Specifies inclusion and exclusion patterns that can be applied to the
+ * names of database objects.
+ * 
  * @author Sualeh Fatehi
  */
 public final class InclusionRule
@@ -56,9 +57,11 @@ public final class InclusionRule
 
   /**
    * Set include and exclude patterns.
-   *
-   * @param patternInclude Inclusion pattern
-   * @param patternExclude Exclusion pattern
+   * 
+   * @param patternInclude
+   *        Inclusion pattern
+   * @param patternExclude
+   *        Exclusion pattern
    */
   public InclusionRule(final Pattern patternInclude,
                        final Pattern patternExclude)
@@ -69,9 +72,11 @@ public final class InclusionRule
 
   /**
    * Set include and exclude patterns.
-   *
-   * @param patternInclude Inclusion pattern
-   * @param patternExclude Exclusion pattern
+   * 
+   * @param patternInclude
+   *        Inclusion pattern
+   * @param patternExclude
+   *        Exclusion pattern
    */
   public InclusionRule(final String patternInclude, final String patternExclude)
   {
@@ -125,17 +130,18 @@ public final class InclusionRule
     final int prime = 31;
     int result = 1;
     result = prime * result
-      + (patternExclude == null ? 0 : patternExclude.hashCode());
+             + (patternExclude == null? 0: patternExclude.hashCode());
     result = prime * result
-      + (patternInclude == null ? 0 : patternInclude.hashCode());
+             + (patternInclude == null? 0: patternInclude.hashCode());
     return result;
   }
 
   /**
-   * Checks whether to add a named object after considering the include and exclude patterns.
-   *
-   * @param name Name to check
-   *
+   * Checks whether to add a named object after considering the include
+   * and exclude patterns.
+   * 
+   * @param name
+   *        Name to check
    * @return Whether the name should be included or not
    */
   public boolean include(final String name)
@@ -145,17 +151,15 @@ public final class InclusionRule
     boolean include = false;
     if (!Utility.isBlank(name))
     {
-      if (!patternInclude.matcher(name)
-        .matches())
+      if (!patternInclude.matcher(name).matches())
       {
         actionMessage = "Excluding " + name
-          + " since it does not match the include pattern";
+                        + " since it does not match the include pattern";
       }
-      else if (patternExclude.matcher(name)
-        .matches())
+      else if (patternExclude.matcher(name).matches())
       {
         actionMessage = "Excluding " + name
-          + " since it matches the exclude pattern";
+                        + " since it matches the exclude pattern";
       }
       else
       {
@@ -182,7 +186,7 @@ public final class InclusionRule
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see java.lang.Object#toString()
    */
   @Override

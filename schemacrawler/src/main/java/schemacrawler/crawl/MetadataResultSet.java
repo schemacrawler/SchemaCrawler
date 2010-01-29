@@ -24,16 +24,22 @@ package schemacrawler.crawl;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import sf.util.Utility;
 
 /**
- * A wrapper around a JDBC resultset obtained from a database metadata call. This allows type-safe methods to obtain
- * boolean, integer and string data, while abstracting away the quirks of the JDBC metadata API.
- *
+ * A wrapper around a JDBC resultset obtained from a database metadata
+ * call. This allows type-safe methods to obtain boolean, integer and
+ * string data, while abstracting away the quirks of the JDBC metadata
+ * API.
+ * 
  * @author Sualeh Fatehi
  */
 final class MetadataResultSet
@@ -88,10 +94,12 @@ final class MetadataResultSet
   }
 
   /**
-   * Releases this <code>ResultSet</code> object's database and JDBC resources immediately instead of waiting for this
-   * to happen when it is automatically closed.
-   *
-   * @throws SQLException On an exception
+   * Releases this <code>ResultSet</code> object's database and JDBC
+   * resources immediately instead of waiting for this to happen when it
+   * is automatically closed.
+   * 
+   * @throws SQLException
+   *         On an exception
    */
   void close()
     throws SQLException
@@ -102,7 +110,7 @@ final class MetadataResultSet
   String currentRowToString()
   {
     final Map<String, String> currentRow = new HashMap<String, String>();
-    for (final String columnName : resultSetColumns)
+    for (final String columnName: resultSetColumns)
     {
       Object columnData;
       try
@@ -119,22 +127,23 @@ final class MetadataResultSet
   }
 
   /**
-   * Gets unread (and therefore unmapped) columns from the database metadata resultset, and makes them available as
-   * addiiotnal attributes.
-   *
+   * Gets unread (and therefore unmapped) columns from the database
+   * metadata resultset, and makes them available as addiiotnal
+   * attributes.
+   * 
    * @return Map of additional attributes to the database object
    */
   Map<String, Object> getAttributes()
   {
     final Set<String> unusedResultSetColumns = new HashSet<String>(resultSetColumns);
     // Retain unused columns
-    for (final String readColumn : readColumns)
+    for (final String readColumn: readColumns)
     {
       unusedResultSetColumns.remove(readColumn);
     }
     // Set attributes
     final Map<String, Object> attributes = new HashMap<String, Object>();
-    for (final String unusedColumnName : unusedResultSetColumns)
+    for (final String unusedColumnName: unusedResultSetColumns)
     {
       try
       {
@@ -144,17 +153,18 @@ final class MetadataResultSet
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING, "Could not read value for column "
-          + unusedColumnName, e);
+                                  + unusedColumnName, e);
       }
     }
     return attributes;
   }
 
   /**
-   * Checks if the value of a column from the result set evaluates to true.
-   *
-   * @param columnName Column name to check
-   *
+   * Checks if the value of a column from the result set evaluates to
+   * true.
+   * 
+   * @param columnName
+   *        Column name to check
    * @return Whether the string evaluates to true
    */
   boolean getBoolean(final String columnName)
@@ -176,25 +186,27 @@ final class MetadataResultSet
           catch (final NumberFormatException e)
           {
             value = stringValue.equalsIgnoreCase("YES")
-              || Boolean.valueOf(stringValue)
-              .booleanValue();
+                    || Boolean.valueOf(stringValue).booleanValue();
           }
         }
       }
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING, "Could not read boolean value for column "
-          + columnName, e);
+                                  + columnName, e);
       }
     }
     return value;
   }
 
   /**
-   * Reads the value of a column from the result set as an integer. If the value was null, returns the default.
-   *
-   * @param columnName Column name
-   *
+   * Reads the value of a column from the result set as an integer. If
+   * the value was null, returns the default.
+   * 
+   * @param columnName
+   *        Column name
+   * @param defaultValue
+   *        Default value
    * @return Integer value of the column, or the default if not available
    */
   int getInt(final String columnName, final int defaultValue)
@@ -214,17 +226,20 @@ final class MetadataResultSet
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING, "Could not read integer value for column "
-          + columnName, e);
+                                  + columnName, e);
       }
     }
     return value;
   }
 
   /**
-   * Reads the value of a column from the result set as a long. If the value was null, returns the default.
-   *
-   * @param columnName Column name
-   *
+   * Reads the value of a column from the result set as a long. If the
+   * value was null, returns the default.
+   * 
+   * @param columnName
+   *        Column name
+   * @param defaultValue
+   *        Default value
    * @return Long value of the column, or the default if not available
    */
   long getLong(final String columnName, final long defaultValue)
@@ -244,17 +259,20 @@ final class MetadataResultSet
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING, "Could not read long value for column "
-          + columnName, e);
+                                  + columnName, e);
       }
     }
     return value;
   }
 
   /**
-   * Reads the value of a column from the result set as a short. If the value was null, returns the default.
-   *
-   * @param columnName Column name
-   *
+   * Reads the value of a column from the result set as a short. If the
+   * value was null, returns the default.
+   * 
+   * @param columnName
+   *        Column name
+   * @param defaultValue
+   *        Default value
    * @return Short value of the column, or the default if not available
    */
   short getShort(final String columnName, final short defaultValue)
@@ -274,7 +292,7 @@ final class MetadataResultSet
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING, "Could not read short value for column "
-          + columnName, e);
+                                  + columnName, e);
       }
     }
     return value;
@@ -282,9 +300,9 @@ final class MetadataResultSet
 
   /**
    * Reads the value of a column from the result set as a string.
-   *
-   * @param columnName Column name
-   *
+   * 
+   * @param columnName
+   *        Column name
    * @return Short value of the column, or the default if not available
    */
   String getString(final String columnName)
@@ -303,20 +321,23 @@ final class MetadataResultSet
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING, "Could not read string value for column "
-          + columnName, e);
+                                  + columnName, e);
       }
     }
     return value;
   }
 
   /**
-   * Moves the cursor down one row from its current position. A <code>ResultSet</code> cursor is initially positioned
-   * before the first row; the first call to the method <code>next</code> makes the first row the current row; the
-   * second call makes the second row the current row, and so on.
-   *
-   * @return <code>true</code> if the new current row is valid; <code>false</code> if there are no more rows
-   *
-   * @throws SQLException On a database access error
+   * Moves the cursor down one row from its current position. A
+   * <code>ResultSet</code> cursor is initially positioned before the
+   * first row; the first call to the method <code>next</code> makes the
+   * first row the current row; the second call makes the second row the
+   * current row, and so on.
+   * 
+   * @return <code>true</code> if the new current row is valid;
+   *         <code>false</code> if there are no more rows
+   * @throws SQLException
+   *         On a database access error
    */
   boolean next()
     throws SQLException

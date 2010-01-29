@@ -26,7 +26,7 @@ import schemacrawler.schema.NamedObject;
 
 /**
  * Represents the dependent of a named object.
- *
+ * 
  * @author Sualeh Fatehi
  */
 abstract class AbstractDependantNamedObject
@@ -48,7 +48,7 @@ abstract class AbstractDependantNamedObject
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
@@ -83,7 +83,7 @@ abstract class AbstractDependantNamedObject
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see schemacrawler.schema.DependantNamedObject#getParent()
    */
   public final NamedObject getParent()
@@ -93,7 +93,7 @@ abstract class AbstractDependantNamedObject
 
   /**
    * {@inheritDoc}
-   *
+   * 
    * @see java.lang.Object#hashCode()
    */
   @Override
@@ -109,7 +109,7 @@ abstract class AbstractDependantNamedObject
     {
       final int prime = 31;
       int result = super.hashCode();
-      result = prime * result + (parent == null ? 0 : parent.hashCode());
+      result = prime * result + (parent == null? 0: parent.hashCode());
       result = prime * result + super.hashCode();
       hashCode = result;
     }

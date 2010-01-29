@@ -23,7 +23,7 @@ package schemacrawler.schema;
 
 /**
  * Represents a view in the database.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public interface View
@@ -31,23 +31,24 @@ public interface View
 {
 
   /**
-   * Type of WITH CHECK OPTION. Is CASCADE if the original view was created by using the WITH CHECK OPTION. Otherwise,
-   * NONE is returned.
-   *
+   * Type of WITH CHECK OPTION. Is CASCADE if the original view was
+   * created by using the WITH CHECK OPTION. Otherwise, NONE is
+   * returned.
+   * 
    * @return Check option.
    */
   CheckOptionType getCheckOption();
 
   /**
    * Gets the definition.
-   *
+   * 
    * @return Definition
    */
   String getDefinition();
 
   /**
    * Specifies whether the view is updatable.
-   *
+   * 
    * @return Whether the view is updatable.
    */
   boolean isUpdatable();

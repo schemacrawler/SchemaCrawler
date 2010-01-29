@@ -23,7 +23,7 @@ package schemacrawler.schema;
 
 /**
  * Represents a column in a database procedure.
- *
+ * 
  * @author Sualeh Fatehi
  */
 public interface ProcedureColumn
@@ -32,14 +32,14 @@ public interface ProcedureColumn
 
   /**
    * Gets the number of decimal digits precision for the column.
-   *
+   * 
    * @return The number of decimal digits precision for the column.
    */
   int getPrecision();
 
   /**
    * Gets the procedure type.
-   *
+   * 
    * @return Procedure type.
    */
   ProcedureColumnType getProcedureColumnType();

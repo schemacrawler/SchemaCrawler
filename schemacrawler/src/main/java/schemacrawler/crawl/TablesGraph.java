@@ -25,14 +25,14 @@ final class TablesGraph
       return;
     }
 
-    for (final MutableTable table : tables)
+    for (final MutableTable table: tables)
     {
       addVertex(table);
       final ForeignKey[] foreignKeys = table.getForeignKeys();
-      for (final ForeignKey foreignKey : foreignKeys)
+      for (final ForeignKey foreignKey: foreignKeys)
       {
         final ForeignKeyColumnMap[] columnPairs = foreignKey.getColumnPairs();
-        for (final ForeignKeyColumnMap columnPair : columnPairs)
+        for (final ForeignKeyColumnMap columnPair: columnPairs)
         {
           addDirectedEdge((MutableTable) columnPair.getPrimaryKeyColumn()
             .getParent(), (MutableTable) columnPair.getForeignKeyColumn()
@@ -53,7 +53,7 @@ final class TablesGraph
       final List<MutableTable> sortedTables = topologicalSort();
       final List<MutableView> sortedViews = new ArrayList<MutableView>();
       int sortIndex = 0;
-      for (final MutableTable table : sortedTables)
+      for (final MutableTable table: sortedTables)
       {
         if (table instanceof MutableView)
         {
@@ -65,7 +65,7 @@ final class TablesGraph
           sortIndex++;
         }
       }
-      for (final MutableView view : sortedViews)
+      for (final MutableView view: sortedViews)
       {
         view.setSortIndex(sortIndex);
         sortIndex++;
