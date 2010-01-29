@@ -36,7 +36,6 @@ import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.text.base.DatabaseTraversalHandler;
 
 /**
  * Text formatting of operations output.
@@ -44,7 +43,6 @@ import schemacrawler.tools.text.base.DatabaseTraversalHandler;
  * @author Sualeh Fatehi
  */
 public final class OperationHandler
-  implements DatabaseTraversalHandler
 {
 
   private static final Logger LOGGER = Logger.getLogger(OperationHandler.class

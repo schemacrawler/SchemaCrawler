@@ -28,27 +28,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 import schemacrawler.schema.Column;
-import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.JdbcDriverInfo;
-import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.text.base.DatabaseTraversalHandler;
 import schemacrawler.tools.text.util.HtmlFormattingHelper;
 import schemacrawler.utility.MetaDataUtility;
 import schemacrawler.utility.MetaDataUtility.Connectivity;
 import sf.util.Utility;
 
 final class DotWriter
-  implements DatabaseTraversalHandler
 {
+
   private static String printColumnAssociation(final String associationName,
                                                final Column primaryKeyColumn,
                                                final Column foreignKeyColumn)
@@ -99,6 +96,7 @@ final class DotWriter
   }
 
   private final PrintWriter out;
+
   private final Map<Schema, PastelColor> colorMap;
 
   DotWriter(final File dotFile)
@@ -120,14 +118,7 @@ final class DotWriter
     colorMap = new HashMap<Schema, PastelColor>();
   }
 
-  public void begin()
-  {
-    final String text = Utility.readFully(HtmlFormattingHelper.class
-      .getResourceAsStream("/dot.header.txt"));
-    out.println(text);
-  }
-
-  public void end()
+  public void close()
   {
     out.println("}");
     out.flush();
@@ -135,21 +126,16 @@ final class DotWriter
     out.close();
   }
 
-  public void handle(final ColumnDataType dataType)
-    throws SchemaCrawlerException
+  public void open()
   {
-    // No-operation
+    final String text = Utility.readFully(HtmlFormattingHelper.class
+      .getResourceAsStream("/dot.header.txt"));
+    out.println(text);
   }
 
-  public void handle(final Procedure procedure)
-    throws SchemaCrawlerException
-  {
-    // No-operation
-  }
-
-  public void handle(final SchemaCrawlerInfo schemaCrawlerInfo,
-                     final DatabaseInfo databaseInfo,
-                     final JdbcDriverInfo jdbcDriverInfo)
+  public void print(final SchemaCrawlerInfo schemaCrawlerInfo,
+                    final DatabaseInfo databaseInfo,
+                    final JdbcDriverInfo jdbcDriverInfo)
   {
     final StringBuilder graphInfo = new StringBuilder();
 
@@ -200,7 +186,7 @@ final class DotWriter
     out.println(graphLabel);
   }
 
-  public void handle(final Table table)
+  public void print(final Table table)
   {
     final Schema schema = table.getSchema();
     if (!colorMap.containsKey(schema))
@@ -277,40 +263,6 @@ final class DotWriter
     out.write(buffer.toString());
 
     printWeakAssociations(table.getWeakAssociations());
-  }
-
-  public void handleColumnDataTypesEnd()
-  {
-    // No-op
-  }
-
-  public void handleColumnDataTypesStart()
-  {
-    // No-op
-  }
-
-  public void handleProceduresEnd()
-    throws SchemaCrawlerException
-  {
-    // No-op
-  }
-
-  public void handleProceduresStart()
-    throws SchemaCrawlerException
-  {
-    // No-op
-  }
-
-  public void handleTablesEnd()
-    throws SchemaCrawlerException
-  {
-    // No-op
-  }
-
-  public void handleTablesStart()
-    throws SchemaCrawlerException
-  {
-    // No-op
   }
 
   private void printWeakAssociations(final ColumnMap[] weakAssociations)

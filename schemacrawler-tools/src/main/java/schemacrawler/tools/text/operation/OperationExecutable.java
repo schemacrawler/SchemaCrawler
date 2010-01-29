@@ -23,9 +23,11 @@ package schemacrawler.tools.text.operation;
 
 import java.sql.Connection;
 
+import schemacrawler.schema.Database;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.text.base.BaseSchemaCrawlerTextExecutable;
-import schemacrawler.tools.text.base.DatabaseTraversalHandler;
+import schemacrawler.tools.executable.BaseExecutable;
 
 /**
  * Basic SchemaCrawler executor.
@@ -33,7 +35,7 @@ import schemacrawler.tools.text.base.DatabaseTraversalHandler;
  * @author Sualeh Fatehi
  */
 public final class OperationExecutable
-  extends BaseSchemaCrawlerTextExecutable
+  extends BaseExecutable
 {
 
   private static final long serialVersionUID = -6824567755397315920L;
@@ -65,10 +67,35 @@ public final class OperationExecutable
   }
 
   @Override
-  protected DatabaseTraversalHandler getDatabaseTraversalHandler(final Connection connection)
+  protected void executeOn(final Database database, final Connection connection)
+    throws Exception
+  {
+    final OperationHandler handler = getDatabaseTraversalHandler(connection);
+
+    handler.begin();
+    handler.handle(database.getSchemaCrawlerInfo(),
+                   database.getDatabaseInfo(),
+                   database.getJdbcDriverInfo());
+
+    for (final Schema schema: database.getSchemas())
+    {
+      final Table[] tables = schema.getTables();
+      handler.handleTablesStart();
+      for (final Table table: tables)
+      {
+        handler.handle(table);
+      }
+      handler.handleTablesEnd();
+    }
+
+    handler.end();
+
+  }
+
+  protected OperationHandler getDatabaseTraversalHandler(final Connection connection)
     throws SchemaCrawlerException
   {
-    final DatabaseTraversalHandler handler;
+    final OperationHandler handler;
 
     // Determine the operation, or whether this command is a query
     Operation operation = null;
