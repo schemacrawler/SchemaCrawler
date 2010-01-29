@@ -194,7 +194,7 @@ public abstract class BaseFormatter<O extends Options>
     out.flush();
   }
 
-  private final void handle(final SchemaCrawlerInfo schemaCrawlerInfo)
+  private void handle(final SchemaCrawlerInfo schemaCrawlerInfo)
   {
     if (schemaCrawlerInfo == null)
     {

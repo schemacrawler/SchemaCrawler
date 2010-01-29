@@ -55,6 +55,8 @@ public enum Operation
   /**
    * Message format for the counts.
    * 
+   * @param number
+   *        Number value in the message
    * @return Message format for the counts
    */
   public String getCountMessage(final Number number)
