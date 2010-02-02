@@ -4,7 +4,7 @@
   default="velocity">
 
   <description>
-    Velocity - Integration of SchemaCrawler with Apache Jakarta Velocity.
+    Velocity - Integration of SchemaCrawler with Apache Velocity.
   </description>
   <property environment="env"/>
 
@@ -12,71 +12,62 @@
     Define the ant tasks (macros) that come with SchemaCrawler
   -->
   <typedef
-    resource="schemacrawler-integrations-antlib.xml"
+    resource="schemacrawler-antlib.xml"
     classpath="../schemacrawler-8.0.jar"/>
 
   <!-- Step 2.
-    Define the classpath to the database driver
+    Get Velocity and dependencies
   -->
-  <path id="db-driver-classpath">
+  <mkdir dir="../lib"/>
+  <get
+    src="http://www.ibiblio.org/maven/velocity/jars/velocity-1.5.jar"
+    dest="../lib/velocity-1.5.jar"
+    verbose="true"
+    usetimestamp="true"/>
+  <get
+    src="http://www.ibiblio.org/maven/commons-collections/jars/commons-collections-3.2.jar"
+    dest="../lib/commons-collections-3.2.jar"
+    verbose="true"
+    usetimestamp="true"/>
+  <get
+    src="http://www.ibiblio.org/maven/commons-lang/jars/commons-lang-2.3.jar"
+    dest="../lib/commons-lang-2.3.jar"
+    verbose="true"
+    usetimestamp="true"/>
+
+  <!-- Step 3.
+    Define the classpath to the database driverand to Velocity
+  -->
+  <path id="velocity-classpath">
+    <!-- SchemaCrawler jar, and database driver jar -->
     <fileset dir="..">
       <include name="*.jar"/>
     </fileset>
-  </path>
-
-  <!-- Step 3.
-    Define the classpath to Velocity
-  -->
-  <path id="velocity-classpath">
-    <fileset dir=".">
+     <!-- Velocity jars -->
+    <fileset dir="../lib">
       <include name="*.jar"/>
     </fileset>
   </path>
 
   <!-- Step 4.
-    Get Velocity and dependencies
-  -->
-  <get
-    src="http://www.ibiblio.org/maven/velocity/jars/velocity-1.5.jar"
-    dest="velocity-1.5.jar"
-    verbose="true"
-    usetimestamp="true"/>
-  <get
-    src="http://www.ibiblio.org/maven/log4j/jars/log4j-1.2.9.jar"
-    dest="log4j-1.2.9.jar"
-    verbose="true"
-    usetimestamp="true"/>
-  <get
-    src="http://www.ibiblio.org/maven/commons-collections/jars/commons-collections-3.2.jar"
-    dest="commons-collections-3.2.jar"
-    verbose="true"
-    usetimestamp="true"/>
-  <get
-    src="http://www.ibiblio.org/maven/commons-lang/jars/commons-lang-2.3.jar"
-    dest="commons-lang-2.3.jar"
-    verbose="true"
-    usetimestamp="true"/>
-
-  <!-- Step 5.
     Define an ant task that uses the <schemacrawler-velocity> macro
   -->
   <target name="velocity">
 
     <property
       name="velocity-template"
-      value="tables.vm"/>
+      location="tables.vm"/>
     <property
       name="outputfile"
       location="table-script-by-velocity.sql"/>
 
     <delete file="${outputfile}"/>
 
-    <schemacrawler-velocity
+    <schemacrawler
       datasource="hsqldb"
-      db-driver-classpath="db-driver-classpath"
-      velocity-classpath="velocity-classpath"
-      command="verbose_schema"
-      template="${velocity-template}"
+      db-driver-classpath="velocity-classpath"
+      command="velocity"
+      outputformat="${velocity-template}"
       outputfile="${outputfile}"/>
 
     <echo message="Output is in ${outputfile}"/>
