@@ -13,7 +13,7 @@
   <!-- Step 2.
        Define the classpath to the database driver
   -->
-  <path id="db-driver-classpath">
+  <path id="schemacrawler-classpath">
     <fileset dir="..">
       <include name="*.jar"/>
     </fileset>
@@ -29,7 +29,7 @@
     <delete file="${outputfile}"/>
 
     <schemacrawler
-      db-driver-classpath="db-driver-classpath"
+      schemacrawler-classpath="schemacrawler-classpath"
       user="sa"
       password=""
     	driver="org.hsqldb.jdbcDriver"

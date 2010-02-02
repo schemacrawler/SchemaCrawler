@@ -1,89 +1,59 @@
 <?xml version="1.0"?>
-<project
-  name="Spring Integration"
-  default="spring">
+<project name="Spring Integration"
+         default="spring">
 
-  <description>
-    SchemaCrawler integration with the Spring Framework.
-  </description>
-  <property environment="env"/>
+  <description>SchemaCrawler integration with the Spring Framework.</description>
 
-  <!-- Step 1.
-    Define the ant tasks (macros) that come with SchemaCrawler
-  -->
-  <typedef
-    resource="schemacrawler-integrations-antlib.xml"
-    classpath="../schemacrawler-8.0.jar"/>
+  <target name="dependencies_download">
 
-  <!-- Step 2.
-    Define the classpath to the database driver
-  -->
-  <path id="db-driver-classpath">
-    <fileset dir="..">
-      <include name="*.jar"/>
-    </fileset>
-  </path>
+    <!--
+      Set up Apache Ivy to download dependencies
+    -->
+    <property name="ivy.install.version" value="2.1.0" />
+    <property name="ivy.jar.dir" location=".." />
+    <property name="ivy.jar.file" location="${ivy.jar.dir}/ivy.jar" />
+    <get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar"
+         dest="${ivy.jar.file}"
+         usetimestamp="true" />
+    <path id="ivy.lib.path">
+      <fileset dir="${ivy.jar.dir}" includes="*.jar" />
+    </path>
+    <taskdef resource="org/apache/ivy/ant/antlib.xml"
+             classpathref="ivy.lib.path" />
 
-  <!-- Step 4.
-    Get Spring and dependencies
-  -->
-  <mkdir dir="../lib"/>
-  <get
-    src="http://ibiblio.org/pub/packages/maven2/org/springframework/spring/2.0.7/spring-2.0.7.jar"
-    dest="../lib/spring-2.0.7.jar"
-    verbose="true"
-    usetimestamp="true"/>
-  <get
-    src="http://ibiblio.org/pub/packages/maven2/commons-logging/commons-logging/1.1/commons-logging-1.1.jar"
-    dest="../lib/commons-logging-1.1.jar"
-    verbose="true"
-    usetimestamp="true"/>
-  <get
-    src="http://ibiblio.org/pub/packages/maven2/xerces/xerces/2.4.0/xerces-2.4.0.jar"
-    dest="../lib/xerces-2.4.0.jar"
-    verbose="true"
-    usetimestamp="true"/>
-  <get
-    src="http://www.ibiblio.org/maven/velocity/jars/velocity-1.5.jar"
-    dest="../lib/velocity-1.5.jar"
-    verbose="true"
-    usetimestamp="true"/>
-  <get
-    src="http://www.ibiblio.org/maven/commons-collections/jars/commons-collections-3.2.jar"
-    dest="../lib/commons-collections-3.2.jar"
-    verbose="true"
-    usetimestamp="true"/>
-  <get
-    src="http://www.ibiblio.org/maven/commons-lang/jars/commons-lang-2.3.jar"
-    dest="../lib/commons-lang-2.3.jar"
-    verbose="true"
-    usetimestamp="true"/>
-  <get
-    src="http://ibiblio.org/pub/packages/maven2/org/freemarker/freemarker/2.3.9/freemarker-2.3.9.jar"
-    dest="../lib/freemarker-2.3.9.jar"
-    verbose="true"
-    usetimestamp="true"/>
+    <!-- Download dependencies -->
+    <retrieve />
 
-  <!-- Step 3.
-    Define the classpath to Spring Integration
-  -->
-  <path id="spring-classpath">
-    <fileset dir="../lib">
-      <include name="*.jar"/>
-    </fileset>
-  </path>
+  </target>
 
-  <!-- Step 5.
-    Define an ant task that uses the <schemacrawler-spring> macro
-  -->
-  <target name="spring">
 
-    <schemacrawler-spring
-      db-driver-classpath="db-driver-classpath"
-      spring-classpath="spring-classpath"
-      context-file="context.xml"
-      executable="executableForSchema"
-      datasource="datasource"/>
+  <target name="spring" depends="dependencies_download">
+
+    <!-- Step 1.
+      Define the ant tasks (macros) that come with SchemaCrawler
+    -->
+    <typedef resource="schemacrawler-integrations-antlib.xml"
+             classpath="../schemacrawler-8.0.jar" />
+
+    <!-- Step 2.
+      Define the classpath to the database driver, and Spring
+    -->
+    <path id="schemacrawler-classpath">
+      <fileset dir="..">
+        <include name="*.jar" />
+      </fileset>
+      <fileset dir="./lib">
+        <include name="*.jar" />
+      </fileset>
+    </path>
+
+    <!-- Step 3.
+      Use an ant task that uses the <schemacrawler-spring> macro
+    -->
+    <schemacrawler-spring schemacrawler-classpath="schemacrawler-classpath"
+                          context-file="context.xml"
+                          executable="executableForSchema"
+                          datasource="datasource" />
 
   </target>
 

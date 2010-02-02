@@ -17,12 +17,8 @@
       default="datasource" />
 
     <attribute
-      name="db-driver-classpath"
-      default="${db-driver-classpath}" />
-
-    <attribute
-      name="spring-classpath"
-      default="${spring-classpath}" />
+      name="schemacrawler-classpath"
+      default="${schemacrawler-classpath}" />
 
     <attribute
       name="loglevel"
@@ -52,9 +48,7 @@
               name="*.jar" />
           </fileset>
           <path
-            refid="@{db-driver-classpath}" />
-          <path
-            refid="@{spring-classpath}" />
+            refid="@{schemacrawler-classpath}" />
         </classpath>
         <arg
           value="-context-file" />

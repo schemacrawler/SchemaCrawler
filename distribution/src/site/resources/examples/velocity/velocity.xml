@@ -3,56 +3,53 @@
   name="Velocity"
   default="velocity">
 
-  <description>
-    Velocity - Integration of SchemaCrawler with Apache Velocity.
-  </description>
+  <description>Velocity - Integration of SchemaCrawler with Apache Velocity.</description>
   <property environment="env"/>
 
-  <!-- Step 1.
-    Define the ant tasks (macros) that come with SchemaCrawler
-  -->
-  <typedef
-    resource="schemacrawler-antlib.xml"
-    classpath="../schemacrawler-8.0.jar"/>
+  <target name="dependencies_download">
 
-  <!-- Step 2.
-    Get Velocity and dependencies
-  -->
-  <mkdir dir="../lib"/>
-  <get
-    src="http://www.ibiblio.org/maven/velocity/jars/velocity-1.5.jar"
-    dest="../lib/velocity-1.5.jar"
-    verbose="true"
-    usetimestamp="true"/>
-  <get
-    src="http://www.ibiblio.org/maven/commons-collections/jars/commons-collections-3.2.jar"
-    dest="../lib/commons-collections-3.2.jar"
-    verbose="true"
-    usetimestamp="true"/>
-  <get
-    src="http://www.ibiblio.org/maven/commons-lang/jars/commons-lang-2.3.jar"
-    dest="../lib/commons-lang-2.3.jar"
-    verbose="true"
-    usetimestamp="true"/>
+    <!--
+      Set up Apache Ivy to download dependencies
+    -->
+    <property name="ivy.install.version" value="2.1.0" />
+    <property name="ivy.jar.dir" location=".." />
+    <property name="ivy.jar.file" location="${ivy.jar.dir}/ivy.jar" />
+    <get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar"
+         dest="${ivy.jar.file}"
+         usetimestamp="true" />
+    <path id="ivy.lib.path">
+      <fileset dir="${ivy.jar.dir}" includes="*.jar" />
+    </path>
+    <taskdef resource="org/apache/ivy/ant/antlib.xml"
+             classpathref="ivy.lib.path" />
 
-  <!-- Step 3.
-    Define the classpath to the database driverand to Velocity
-  -->
-  <path id="velocity-classpath">
-    <!-- SchemaCrawler jar, and database driver jar -->
-    <fileset dir="..">
-      <include name="*.jar"/>
-    </fileset>
-     <!-- Velocity jars -->
-    <fileset dir="../lib">
-      <include name="*.jar"/>
-    </fileset>
-  </path>
+    <!-- Download dependencies -->
+    <retrieve />
+
+  </target>
 
   <!-- Step 4.
     Define an ant task that uses the <schemacrawler-velocity> macro
   -->
-  <target name="velocity">
+  <target name="velocity" depends="dependencies_download">
+
+    <!-- Step 1.
+      Define the ant tasks (macros) that come with SchemaCrawler
+    -->
+    <typedef resource="schemacrawler-antlib.xml"
+             classpath="../schemacrawler-8.0.jar" />
+
+    <!-- Step 2.
+      Define the classpath to the database driver, and Apache Velocity
+    -->
+    <path id="schemacrawler-classpath">
+      <fileset dir="..">
+        <include name="*.jar" />
+      </fileset>
+      <fileset dir="./lib">
+        <include name="*.jar" />
+      </fileset>
+    </path>
 
     <property
       name="velocity-template"
@@ -65,7 +62,7 @@
 
     <schemacrawler
       datasource="hsqldb"
-      db-driver-classpath="velocity-classpath"
+      schemacrawler-classpath="schemacrawler-classpath"
       command="velocity"
       outputformat="${velocity-template}"
       outputfile="${outputfile}"/>
