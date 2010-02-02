@@ -296,9 +296,9 @@ for (final Catalog catalog: database.getCatalogs())
 						schemacrawler.config.override.properties)
           </li>
 					<li>
-						db-driver-classpath
+						schemacrawler-classpath
 						Database driver classpath (default value - value of the ant property value
-						${db-driver-classpath})
+						${schemacrawler-classpath})
           </li>
 					<li>
 						datasource

@@ -13,9 +13,9 @@
       default="schemacrawler.config.override.properties"/>
 
     <attribute
-      name="db-driver-classpath"
-      description="Database driver classpath"
-      default="${db-driver-classpath}"/>
+      name="schemacrawler-classpath"
+      description="SchemaCrawler jars, and database driver classpath"
+      default="${schemacrawler-classpath}"/>
 
     <!-- Either the datasource, or the connection properties should be
       provided. If both sets are provided, the datasource is ignored. -->
@@ -110,7 +110,7 @@
           <fileset dir="${schemacrawler.dir}">
             <include name="*.jar"/>
           </fileset>
-          <path refid="@{db-driver-classpath}"/>
+          <path refid="@{schemacrawler-classpath}"/>
         </classpath>
         <arg value="-g=@{config}"/>
         <arg value="-p=@{config-override}"/>
