@@ -66,6 +66,10 @@ public final class Main
         System.exit(0);
       }
 
+      // Spring shuold use JDK logging, like the rest of SchemaCrawler
+      System.setProperty("org.apache.commons.logging.Log",
+                         org.apache.commons.logging.impl.Jdk14Logger.class
+                           .getName());
       applicationOptions.applyApplicationLogLevel();
 
       final SpringOptions springOptions = new SpringOptionsParser(args)
