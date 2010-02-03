@@ -22,7 +22,6 @@ package schemacrawler.tools.text.schema;
 
 
 import java.util.Locale;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.ActionOrientationType;
@@ -117,7 +116,6 @@ final class SchemaTextFormatter
     out.flush();
     //
     outputOptions.closeOutputWriter(out);
-    LOGGER.log(Level.FINE, "Wrote output, " + outputOptions.getOutputFile());
   }
 
   void handle(final ColumnDataType columnDataType)
