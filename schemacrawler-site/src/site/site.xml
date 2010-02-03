@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<project name="SchemaCrawler">
-  <version/>
+<project
+  name="SchemaCrawler"
+>
+  <version />
   <bannerLeft>
     <name>SchemaCrawler</name>
     <src>images/schemacrawler.png</src>
@@ -13,67 +15,78 @@
     </src>
   </bannerRight>
   <poweredBy>
-    <logo name="Maven" href="http://maven.apache.org/"
-          img="http://maven.apache.org/images/logos/maven-button-1.png"/>
+    <logo
+      name="Maven"
+      href="http://maven.apache.org/"
+      img="http://maven.apache.org/images/logos/maven-button-1.png" />
   </poweredBy>
   <body>
     <links>
       <item
         name="Donations"
-        href="http://sourceforge.net/donate/index.php?group_id=148383"/>
+        href="http://sourceforge.net/donate/index.php?group_id=148383" />
       <item
         name="Download"
-        href="http://sourceforge.net/projects/schemacrawler/files/"/>
+        href="http://sourceforge.net/projects/schemacrawler/files/" />
     </links>
-    <menu name="SchemaCrawler">
+    <menu
+      name="SchemaCrawler"
+    >
       <item
         name="About SchemaCrawler"
-        href="index.html"/>
+        href="index.html" />
       <item
         name="Readme"
-        href="readme.html"/>
+        href="readme.html" />
       <item
         name="FAQS"
-        href="faq.html"/>
+        href="faq.html" />
       <item
         name="How-tos"
-        href="how-to.html"/>
+        href="how-to.html" />
       <item
         name="Bundled Distributions"
-        href="bundled.html"/>
+        href="bundled.html" />
       <item
         name="Who Uses"
-        href="who-uses.html"/>
+        href="who-uses.html" />
+    </menu>
+    <menu
+      name="Project Pages"
+    >
       <item
         name="Donations"
-        href="http://sourceforge.net/donate/index.php?group_id=148383"/>
+        href="http://sourceforge.net/donate/index.php?group_id=148383" />
       <item
         name="Download"
-        href="http://sourceforge.net/projects/schemacrawler/files/"/>
+        href="http://sourceforge.net/projects/schemacrawler/files/" />
       <item
         name="Change History"
-        href="changes-report.html"/>
+        href="changes-report.html" />
       <item
         name="Javadocs"
-        href="apidocs/index.html"/>
+        href="apidocs/index.html" />
       <item
         name="Source Code"
-        href="http://schemacrawler.svn.sourceforge.net/viewvc/schemacrawler/"/>
+        href="http://schemacrawler.svn.sourceforge.net/viewvc/schemacrawler/" />
       <item
         name="Project Page on SourceForge"
-        href="http://sourceforge.net/projects/schemacrawler/"/>
+        href="http://sourceforge.net/projects/schemacrawler/" />
     </menu>
-    <menu name="SchemaCrawler Special Features">
+    <menu
+      name="Special Features"
+    >
       <item
         name="Using INFORMATION_SCHEMA Views"
-        href="INFORMATION_SCHEMA.html"/>
+        href="INFORMATION_SCHEMA.html" />
       <item
         name="SchemaCrawler Grep"
-        href="schemacrawler_grep.html"/>
+        href="schemacrawler_grep.html" />
       <item
-        name="SchemaCrawler Database Diagramming"
-        href="schemacrawler_diagramming.html"/>
+        name="Database Diagramming"
+        href="schemacrawler_diagramming.html" />
     </menu>
-    <menu ref="reports"/>
+    <menu
+      ref="reports" />
   </body>
 </project>
