@@ -55,14 +55,13 @@ public final class CommandRegistry
     final Set<URL> commandRegistryUrls = new HashSet<URL>();
     try
     {
+      final ClassLoader classLoader = CommandRegistry.class.getClassLoader();
       Enumeration<URL> resources;
 
-      resources = Thread.currentThread().getContextClassLoader()
-        .getResources("tools.command.properties");
+      resources = classLoader.getResources("tools.command.properties");
       commandRegistryUrls.addAll(Collections.list(resources));
       //
-      resources = Thread.currentThread().getContextClassLoader()
-        .getResources("command.properties");
+      resources = classLoader.getResources("command.properties");
       commandRegistryUrls.addAll(Collections.list(resources));
     }
     catch (final IOException e)
