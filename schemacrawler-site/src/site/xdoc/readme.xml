@@ -20,7 +20,8 @@
 					distribution is the examples. Several examples on how to use
 					SchemaCrawler on the command line, as an ant task or Maven plugin,
 					as
-					an API, as well as how to use the
+					an API, how to script your database using JavaScript, how to use
+					the
 					<a href="http://velocity.apache.org/">Apache Velocity
           </a>
 					(templating) integration and how to create database diagrams with
