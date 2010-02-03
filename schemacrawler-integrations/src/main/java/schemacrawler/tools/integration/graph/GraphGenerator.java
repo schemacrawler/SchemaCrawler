@@ -52,8 +52,7 @@ final class GraphGenerator
       }
       catch (final EOFException e)
       {
-        LOGGER.log(Level.WARNING, "Could not read diagram generator output"
-                                  + e.getMessage());
+        LOGGER.log(Level.WARNING, "Could not read diagram generator output", e);
       }
     }
 
