@@ -67,7 +67,7 @@ public final class CommandRegistry
     }
     catch (final IOException e)
     {
-      throw new SchemaCrawlerException("Could not load command registry");
+      throw new SchemaCrawlerException("Could not load command registry", e);
     }
     for (final URL commandRegistryUrl: commandRegistryUrls)
     {
@@ -92,7 +92,7 @@ public final class CommandRegistry
     }
     if (commandRegistry.isEmpty())
     {
-      throw new SchemaCrawlerException("Could not load command registry");
+      throw new SchemaCrawlerException("Could not load any command registry");
     }
     return commandRegistry;
   }
