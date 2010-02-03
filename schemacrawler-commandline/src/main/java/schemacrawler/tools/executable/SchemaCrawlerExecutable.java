@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Database;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 
 public class SchemaCrawlerExecutable
@@ -29,6 +30,10 @@ public class SchemaCrawlerExecutable
   {
     final CommandRegistry commandRegistry = new CommandRegistry();
     final Commands commands = new Commands(getCommand());
+    if (commands.isEmpty())
+    {
+      throw new SchemaCrawlerException("No command specified");
+    }
     final List<Executable> executables = new ArrayList<Executable>();
     for (final String command: commands)
     {
