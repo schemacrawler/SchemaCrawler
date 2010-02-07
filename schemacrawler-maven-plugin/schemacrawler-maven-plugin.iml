@@ -41,7 +41,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: velocity:velocity-dep:1.4" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.maven.doxia:doxia-decoration-model:1.0-alpha-7" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: xmlunit:xmlunit:1.2" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: hsqldb:hsqldb:1.8.0.7" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: hsqldb:hsqldb:1.8.1.7" level="project" />
   </component>
 </module>
 

@@ -19,7 +19,7 @@
     <orderEntry type="library" exported="" name="Maven: org.apache.derby:derbyclient:10.5.3.0_1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: xmlunit:xmlunit:1.2" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: hsqldb:hsqldb:1.8.0.7" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: hsqldb:hsqldb:1.8.1.7" level="project" />
   </component>
 </module>
 
