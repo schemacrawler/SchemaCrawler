@@ -10,14 +10,14 @@ SchemaCrawler Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 product name,SchemaCrawler
-product version,8.0
+product version,8.1
 
 
 Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 database product name,HSQL Database Engine
-database product version,1.8.0
+database product version,1.8.1
 database user name,SA
 
 
@@ -181,7 +181,7 @@ JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 driver name,HSQL Database Engine Driver
-driver version,1.8.0
+driver version,1.8.1
 driver class name,org.hsqldb.jdbcDriver
 url,jdbc:hsqldb:hsql://localhost:9001/schemacrawler
 is JDBC compliant,false
@@ -2034,7 +2034,7 @@ ID,FIRSTNAME,LASTNAME
 PUBLIC.INVOICE
 ------------------------------------------------------------------------
 ID,CUSTOMERID,TOTAL
-0,0,2608.0
+0,0,2608.1
 1,33,1610.7
 2,23,3789.0
 3,21,5974.5
@@ -2077,7 +2077,7 @@ ID,CUSTOMERID,TOTAL
 40,4,5288.4
 41,19,5475.6
 42,38,1436.4
-43,13,4828.0
+43,13,4828.1
 44,32,3388.2
 45,42,4731.0
 46,24,5827.2
@@ -2759,7 +2759,7 @@ ID,NAME,PRICE
 10,Telephone Ice Tea,20.4
 11,Telephone Iron,8.8
 12,Clock Ice Tea,16.8
-13,Telephone Clock,18.0
+13,Telephone Clock,18.1
 14,Telephone Iron,12.4
 15,Ice Tea Chair,9.4
 16,Ice Tea Shoe,19.4
@@ -2769,7 +2769,7 @@ ID,NAME,PRICE
 20,Ice Tea Telephone,20.0
 21,Chair Chair,11.4
 22,Iron Iron,6.6
-23,Shoe Chair,8.0
+23,Shoe Chair,8.1
 24,Chair Shoe,7.2
 25,Shoe Shoe,16.2
 26,Shoe Shoe,25.2
@@ -2781,7 +2781,7 @@ ID,NAME,PRICE
 32,Clock Iron,19.0
 33,Iron Chair,18.2
 34,Chair Iron,25.6
-35,Telephone Shoe,8.0
+35,Telephone Shoe,8.1
 36,Ice Tea Iron,3.2
 37,Clock Shoe,9.4
 38,Clock Ice Tea,21.6
@@ -2791,7 +2791,7 @@ ID,NAME,PRICE
 42,Iron Chair,19.8
 43,Telephone Clock,9.4
 44,Ice Tea Ice Tea,9.6
-45,Iron Ice Tea,18.0
+45,Iron Ice Tea,18.1
 46,Ice Tea Clock,6.2
 47,Ice Tea Iron,17.8
 48,Clock Clock,21.0

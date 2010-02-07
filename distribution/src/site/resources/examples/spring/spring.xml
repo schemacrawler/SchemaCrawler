@@ -33,7 +33,7 @@
       Define the ant tasks (macros) that come with SchemaCrawler
     -->
     <typedef resource="schemacrawler-integrations-antlib.xml"
-             classpath="../schemacrawler-8.0.jar" />
+             classpath="../schemacrawler-8.1.jar" />
 
     <!-- Step 2.
       Define the classpath to the database driver, and Spring

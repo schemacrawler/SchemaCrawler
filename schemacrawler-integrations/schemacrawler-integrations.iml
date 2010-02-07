@@ -30,7 +30,7 @@
     <orderEntry type="library" scope="TEST" name="Maven: commons-io:commons-io:1.4" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: xmlunit:xmlunit:1.2" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: hsqldb:hsqldb:1.8.0.7" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: hsqldb:hsqldb:1.8.1.7" level="project" />
   </component>
 </module>
 

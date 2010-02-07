@@ -373,7 +373,7 @@ for (final Catalog catalog: database.getCatalogs())
 					Install the SchemaCrawler Maven plug-in by running the following
 					command, and following the instructions that
 					are printed out.
-					<code><![CDATA[java -cp schemacrawler-8.0.jar schemacrawler.tools.integration.maven.Main]]></code>
+					<code><![CDATA[java -cp schemacrawler-8.1.jar schemacrawler.tools.integration.maven.Main]]></code>
 				</p>
 				<p> Next, add a section to your Maven 2.0 project's pom.xml file,
 					similar to that below, changing what needs to
@@ -384,7 +384,7 @@ for (final Catalog catalog: database.getCatalogs())
     <plugin>
       <groupId>schemacrawler</groupId>
       <artifactId>schemacrawler-maven-plugin</artifactId>
-      <version>8.0</version>
+      <version>8.1</version>
       <configuration>
         <schemacrawler.config>schemacrawler.config.properties</schemacrawler.config>
         <schemacrawler.datasource>hsqldb</schemacrawler.datasource>
