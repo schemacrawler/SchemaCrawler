@@ -109,7 +109,7 @@ abstract class AbstractNamedObject
    * 
    * @see schemacrawler.schema.NamedObject#getAttributes()
    */
-  public Map<String, Object> getAttributes()
+  public final Map<String, Object> getAttributes()
   {
     return Collections.unmodifiableMap(attributeMap);
   }
