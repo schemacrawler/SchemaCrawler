@@ -24,7 +24,6 @@ package schemacrawler.integration.test;
 import static org.junit.Assert.fail;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -135,11 +134,10 @@ public class IntegrationTest
                                                                                     .getAbsolutePath());
     commandLine.execute();
 
-    final List<String> failures = new ArrayList<String>();
-    TestUtility.compareOutput(referenceFileName + ".txt",
-                              testOutputFile,
-                              OutputFormat.text,
-                              failures);
+    final List<String> failures = TestUtility.compareOutput(referenceFileName
+                                                                + ".txt",
+                                                            testOutputFile,
+                                                            OutputFormat.text);
     if (failures.size() > 0)
     {
       fail(failures.toString());
@@ -163,11 +161,10 @@ public class IntegrationTest
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());
 
-    final List<String> failures = new ArrayList<String>();
-    TestUtility.compareOutput(referenceFileName + ".txt",
-                              testOutputFile,
-                              OutputFormat.text,
-                              failures);
+    final List<String> failures = TestUtility.compareOutput(referenceFileName
+                                                                + ".txt",
+                                                            testOutputFile,
+                                                            OutputFormat.text);
     if (failures.size() > 0)
     {
       fail(failures.toString());
