@@ -26,6 +26,8 @@ import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.custommonkey.xmlunit.Validator;
@@ -35,10 +37,9 @@ import schemacrawler.tools.options.OutputFormat;
 public final class TestUtility
 {
 
-  public static void compareOutput(final String referenceFile,
-                                   final File testOutputFile,
-                                   final OutputFormat outputFormat,
-                                   final List<String> failures)
+  public static List<String> compareOutput(final String referenceFile,
+                                           final File testOutputFile,
+                                           final OutputFormat outputFormat)
     throws Exception
   {
 
@@ -46,10 +47,11 @@ public final class TestUtility
         || !testOutputFile.isFile() || !testOutputFile.canRead()
         || testOutputFile.length() == 0)
     {
-      failures.add("Output file not created - "
-                   + testOutputFile.getAbsolutePath());
-      return;
+      return Collections.singletonList("Output file not created - "
+                                       + testOutputFile.getAbsolutePath());
     }
+
+    final List<String> failures = new ArrayList<String>();
 
     final boolean contentEquals;
     final InputStream referenceStream = TestUtility.class
@@ -111,6 +113,7 @@ public final class TestUtility
       }
     }
 
+    return failures;
   }
 
   private static boolean contentEquals(final Reader input1, final Reader input2)
