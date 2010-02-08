@@ -26,7 +26,6 @@ import static org.junit.Assert.fail;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.custommonkey.xmlunit.XMLUnit;
@@ -152,11 +151,10 @@ public class SchemaCrawlerTextCommandsOutputTest
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());
 
-    final List<String> failures = new ArrayList<String>();
-    TestUtility.compareOutput("command_output/" + referenceFile,
-                              testOutputFile,
-                              outputOptions.getOutputFormat(),
-                              failures);
+    final List<String> failures = TestUtility
+      .compareOutput("command_output/" + referenceFile,
+                     testOutputFile,
+                     outputOptions.getOutputFormat());
     if (failures.size() > 0)
     {
       fail(failures.toString());
