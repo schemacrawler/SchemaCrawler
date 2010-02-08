@@ -278,11 +278,8 @@ final class WeakAssociationsAnalyzer
                 LOGGER.log(Level.FINE, String
                   .format("Found weak association: %s --> %s", fkColumn
                     .getFullName(), pkColumn.getFullName()));
-                final ColumnMap columnMap = new MutableColumnMap(pkColumn,
+                final ColumnMap columnMap = new WeakAssociation(pkColumn,
                                                                  fkColumn);
-
-                ((Table) pkColumn.getParent()).addWeakAssociation(columnMap);
-                ((Table) fkColumn.getParent()).addWeakAssociation(columnMap);
                 weakAssociations.add(columnMap);
               }
             }
