@@ -30,7 +30,7 @@ import schemacrawler.schema.ColumnMap;
  * 
  * @author Sualeh Fatehi
  */
-final class WeakAssociation
+public final class WeakAssociation
   implements ColumnMap, Comparable<ColumnMap>
 {
 

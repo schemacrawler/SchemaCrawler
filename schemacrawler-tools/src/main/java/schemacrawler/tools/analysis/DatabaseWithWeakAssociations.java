@@ -17,19 +17,120 @@ import java.util.logging.Logger;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.ColumnMap;
+import schemacrawler.schema.Database;
+import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
+import schemacrawler.schema.JdbcDriverInfo;
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.PrimaryKey;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
 import sf.util.Inflection;
 import sf.util.ObjectToString;
 import sf.util.Utility;
 
-final class WeakAssociationsAnalyzer
+public final class DatabaseWithWeakAssociations
+  implements Database
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(WeakAssociationsAnalyzer.class.getName());
+    .getLogger(DatabaseWithWeakAssociations.class.getName());
+
+  private final Database database;
+
+  public DatabaseWithWeakAssociations(final Database database)
+  {
+    if (database == null)
+    {
+      throw new IllegalArgumentException("No database provided");
+    }
+    this.database = database;
+
+    this.tables = new ArrayList<Table>();
+    for (final Schema schema: database.getSchemas())
+    {
+      for (final Table table: schema.getTables())
+      {
+        tables.add(table);
+      }
+    }
+
+    this.weakAssociations = new ArrayList<ColumnMap>();
+
+    analyzeTables();
+  }
+
+  public int compareTo(NamedObject o)
+  {
+    return database.compareTo(o);
+  }
+
+  public Object getAttribute(String name)
+  {
+    return database.getAttribute(name);
+  }
+
+  public Map<String, Object> getAttributes()
+  {
+    return database.getAttributes();
+  }
+
+  public DatabaseInfo getDatabaseInfo()
+  {
+    return database.getDatabaseInfo();
+  }
+
+  public String getFullName()
+  {
+    return database.getFullName();
+  }
+
+  public JdbcDriverInfo getJdbcDriverInfo()
+  {
+    return database.getJdbcDriverInfo();
+  }
+
+  public String getName()
+  {
+    return database.getName();
+  }
+
+  public String getRemarks()
+  {
+    return database.getRemarks();
+  }
+
+  public Schema getSchema(String name)
+  {
+    return database.getSchema(name);
+  }
+
+  public SchemaCrawlerInfo getSchemaCrawlerInfo()
+  {
+    return database.getSchemaCrawlerInfo();
+  }
+
+  public Schema[] getSchemas()
+  {
+    return database.getSchemas();
+  }
+
+  public ColumnDataType getSystemColumnDataType(String name)
+  {
+    return database.getSystemColumnDataType(name);
+  }
+
+  public ColumnDataType[] getSystemColumnDataTypes()
+  {
+    return database.getSystemColumnDataTypes();
+  }
+
+  public void setAttribute(String name, Object value)
+  {
+    database.setAttribute(name, value);
+  }
 
   /**
    * Finds table prefixes. A prefix ends with "_".
@@ -216,14 +317,7 @@ final class WeakAssociationsAnalyzer
   private final List<Table> tables;
   private final List<ColumnMap> weakAssociations;
 
-  WeakAssociationsAnalyzer(final List<Table> tables,
-                           final List<ColumnMap> weakAssociations)
-  {
-    this.tables = tables;
-    this.weakAssociations = weakAssociations;
-  }
-
-  void analyzeTables()
+  private void analyzeTables()
   {
     final Collection<String> prefixes = findTableNamePrefixes(tables);
     final Map<String, Table> tableMatchMap = mapTableNameMatches(tables,
@@ -279,7 +373,7 @@ final class WeakAssociationsAnalyzer
                   .format("Found weak association: %s --> %s", fkColumn
                     .getFullName(), pkColumn.getFullName()));
                 final ColumnMap columnMap = new WeakAssociation(pkColumn,
-                                                                 fkColumn);
+                                                                fkColumn);
                 weakAssociations.add(columnMap);
               }
             }
