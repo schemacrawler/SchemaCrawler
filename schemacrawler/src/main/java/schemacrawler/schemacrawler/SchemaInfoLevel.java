@@ -60,7 +60,6 @@ public final class SchemaInfoLevel
     maximum.setRetrieveTablePrivileges(true);
     maximum.setRetrieveTableColumnPrivileges(true);
     maximum.setRetrieveTriggerInformation(true);
-    maximum.setRetrieveWeakAssociations(true);
     return maximum;
   }
 
@@ -116,7 +115,6 @@ public final class SchemaInfoLevel
   private boolean retrieveTableColumnPrivileges;
   private boolean retrieveTriggerInformation;
   private boolean retrieveTableColumns;
-  private boolean retrieveWeakAssociations;
 
   public boolean isRetrieveAdditionalDatabaseInfo()
   {
@@ -218,11 +216,6 @@ public final class SchemaInfoLevel
     return retrieveViewInformation;
   }
 
-  public boolean isRetrieveWeakAssociations()
-  {
-    return retrieveWeakAssociations;
-  }
-
   public void setRetrieveAdditionalDatabaseInfo(final boolean retrieveAdditionalDatabaseInfo)
   {
     this.retrieveAdditionalDatabaseInfo = retrieveAdditionalDatabaseInfo;
@@ -321,11 +314,6 @@ public final class SchemaInfoLevel
   public void setRetrieveViewInformation(final boolean retrieveViewInformation)
   {
     this.retrieveViewInformation = retrieveViewInformation;
-  }
-
-  public void setRetrieveWeakAssociations(final boolean retrieveWeakAssociations)
-  {
-    this.retrieveWeakAssociations = retrieveWeakAssociations;
   }
 
 }
