@@ -24,13 +24,11 @@ package schemacrawler.crawl;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 import schemacrawler.schema.CheckConstraint;
 import schemacrawler.schema.Column;
-import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.Index;
@@ -71,7 +69,6 @@ class MutableTable
   private final NamedObjectList<MutableCheckConstraint> checkConstraints = new NamedObjectList<MutableCheckConstraint>();
   private final NamedObjectList<MutableTrigger> triggers = new NamedObjectList<MutableTrigger>();
   private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>();
-  private final Set<MutableColumnMap> weakAssociations = new LinkedHashSet<MutableColumnMap>();
   private int sortIndex;
 
   MutableTable(final Schema schema, final String name)
@@ -170,16 +167,6 @@ class MutableTable
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.Table#getExportedWeakAssociations()
-   */
-  public ColumnMap[] getExportedWeakAssociations()
-  {
-    return getWeakAssociations(TableAssociationType.exported);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see schemacrawler.schema.Table#getForeignKey(java.lang.String)
    */
   public MutableForeignKey getForeignKey(final String name)
@@ -200,16 +187,6 @@ class MutableTable
   public ForeignKey[] getImportedForeignKeys()
   {
     return getForeignKeys(TableAssociationType.imported);
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.Table#getImportedWeakAssociations()
-   */
-  public ColumnMap[] getImportedWeakAssociations()
-  {
-    return getWeakAssociations(TableAssociationType.imported);
   }
 
   /**
@@ -337,16 +314,6 @@ class MutableTable
     return type;
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.Table#getWeakAssociations()
-   */
-  public ColumnMap[] getWeakAssociations()
-  {
-    return getWeakAssociations(TableAssociationType.all);
-  }
-
   void addCheckConstraint(final MutableCheckConstraint checkConstraint)
   {
     checkConstraints.add(checkConstraint);
@@ -375,14 +342,6 @@ class MutableTable
   void addTrigger(final MutableTrigger trigger)
   {
     triggers.add(trigger);
-  }
-
-  void addWeakAssociation(final MutableColumnMap columnMap)
-  {
-    if (columnMap != null)
-    {
-      weakAssociations.add(columnMap);
-    }
   }
 
   int getSortIndex()
@@ -515,38 +474,6 @@ class MutableTable
       }
     }
     return foreignKeysList.toArray(new ForeignKey[foreignKeysList.size()]);
-  }
-
-  private ColumnMap[] getWeakAssociations(final TableAssociationType tableAssociationType)
-  {
-    final List<MutableColumnMap> weakAssociationsList = new ArrayList<MutableColumnMap>(weakAssociations);
-    if (tableAssociationType != null)
-    {
-      for (final Iterator<MutableColumnMap> iterator = weakAssociationsList
-        .iterator(); iterator.hasNext();)
-      {
-        final ColumnMap weakAssociation = iterator.next();
-        switch (tableAssociationType)
-        {
-          case exported:
-            if (!weakAssociation.getPrimaryKeyColumn().getParent().equals(this))
-            {
-              iterator.remove();
-            }
-            break;
-          case imported:
-            if (!weakAssociation.getForeignKeyColumn().getParent().equals(this))
-            {
-              iterator.remove();
-            }
-            break;
-          default:
-            break;
-        }
-      }
-    }
-    return weakAssociationsList.toArray(new ColumnMap[weakAssociationsList
-      .size()]);
   }
 
 }

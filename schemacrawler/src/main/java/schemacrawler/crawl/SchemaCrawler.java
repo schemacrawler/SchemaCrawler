@@ -24,13 +24,10 @@ package schemacrawler.crawl;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Column;
-import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
@@ -333,14 +330,6 @@ public final class SchemaCrawler
       allTables.setSortOrder(tablesSort);
       final TablesGraph tablesGraph = new TablesGraph(allTables);
       tablesGraph.setTablesSortIndices();
-
-      if (infoLevel.isRetrieveWeakAssociations())
-      {
-        final List<ColumnMap> weakAssociations = new ArrayList<ColumnMap>();
-        final WeakAssociationsAnalyzer tableAnalyzer = new WeakAssociationsAnalyzer(allTables,
-                                                                                    weakAssociations);
-        tableAnalyzer.analyzeTables();
-      }
     }
     catch (final SQLException e)
     {
