@@ -29,9 +29,6 @@ import java.util.Map;
  * 
  * @author Sualeh Fatehi
  */
-@SuppressWarnings( {
-    "unchecked", "ImplicitNumericConversion", "ImplicitNumericConversion"
-})
 public final class Entities
 {
 
