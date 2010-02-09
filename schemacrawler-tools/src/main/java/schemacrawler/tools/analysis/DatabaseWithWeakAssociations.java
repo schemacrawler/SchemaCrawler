@@ -6,8 +6,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.Map.Entry;
@@ -35,102 +38,10 @@ public final class DatabaseWithWeakAssociations
   implements Database
 {
 
+  private static final long serialVersionUID = -3953296149824921463L;
+
   private static final Logger LOGGER = Logger
     .getLogger(DatabaseWithWeakAssociations.class.getName());
-
-  private final Database database;
-
-  public DatabaseWithWeakAssociations(final Database database)
-  {
-    if (database == null)
-    {
-      throw new IllegalArgumentException("No database provided");
-    }
-    this.database = database;
-
-    this.tables = new ArrayList<Table>();
-    for (final Schema schema: database.getSchemas())
-    {
-      for (final Table table: schema.getTables())
-      {
-        tables.add(table);
-      }
-    }
-
-    this.weakAssociations = new ArrayList<ColumnMap>();
-
-    analyzeTables();
-  }
-
-  public int compareTo(NamedObject o)
-  {
-    return database.compareTo(o);
-  }
-
-  public Object getAttribute(String name)
-  {
-    return database.getAttribute(name);
-  }
-
-  public Map<String, Object> getAttributes()
-  {
-    return database.getAttributes();
-  }
-
-  public DatabaseInfo getDatabaseInfo()
-  {
-    return database.getDatabaseInfo();
-  }
-
-  public String getFullName()
-  {
-    return database.getFullName();
-  }
-
-  public JdbcDriverInfo getJdbcDriverInfo()
-  {
-    return database.getJdbcDriverInfo();
-  }
-
-  public String getName()
-  {
-    return database.getName();
-  }
-
-  public String getRemarks()
-  {
-    return database.getRemarks();
-  }
-
-  public Schema getSchema(String name)
-  {
-    return database.getSchema(name);
-  }
-
-  public SchemaCrawlerInfo getSchemaCrawlerInfo()
-  {
-    return database.getSchemaCrawlerInfo();
-  }
-
-  public Schema[] getSchemas()
-  {
-    return database.getSchemas();
-  }
-
-  public ColumnDataType getSystemColumnDataType(String name)
-  {
-    return database.getSystemColumnDataType(name);
-  }
-
-  public ColumnDataType[] getSystemColumnDataTypes()
-  {
-    return database.getSystemColumnDataTypes();
-  }
-
-  public void setAttribute(String name, Object value)
-  {
-    database.setAttribute(name, value);
-  }
 
   /**
    * Finds table prefixes. A prefix ends with "_".
@@ -314,8 +225,140 @@ public final class DatabaseWithWeakAssociations
     return matchMap;
   }
 
+  private final Database database;
   private final List<Table> tables;
-  private final List<ColumnMap> weakAssociations;
+  private final Map<String, List<ColumnMap>> weakAssociationsMap;
+
+  public DatabaseWithWeakAssociations(final Database database)
+  {
+    if (database == null)
+    {
+      throw new IllegalArgumentException("No database provided");
+    }
+    this.database = database;
+
+    tables = new ArrayList<Table>();
+    for (final Schema schema: database.getSchemas())
+    {
+      for (final Table table: schema.getTables())
+      {
+        tables.add(table);
+      }
+    }
+
+    weakAssociationsMap = new LinkedHashMap<String, List<ColumnMap>>();
+
+    analyzeTables();
+  }
+
+  public int compareTo(final NamedObject o)
+  {
+    return database.compareTo(o);
+  }
+
+  public Object getAttribute(final String name)
+  {
+    return database.getAttribute(name);
+  }
+
+  public Map<String, Object> getAttributes()
+  {
+    return database.getAttributes();
+  }
+
+  public DatabaseInfo getDatabaseInfo()
+  {
+    return database.getDatabaseInfo();
+  }
+
+  public String getFullName()
+  {
+    return database.getFullName();
+  }
+
+  public JdbcDriverInfo getJdbcDriverInfo()
+  {
+    return database.getJdbcDriverInfo();
+  }
+
+  public String getName()
+  {
+    return database.getName();
+  }
+
+  public String getRemarks()
+  {
+    return database.getRemarks();
+  }
+
+  public Schema getSchema(final String name)
+  {
+    return database.getSchema(name);
+  }
+
+  public SchemaCrawlerInfo getSchemaCrawlerInfo()
+  {
+    return database.getSchemaCrawlerInfo();
+  }
+
+  public Schema[] getSchemas()
+  {
+    return database.getSchemas();
+  }
+
+  public ColumnDataType getSystemColumnDataType(final String name)
+  {
+    return database.getSystemColumnDataType(name);
+  }
+
+  public ColumnDataType[] getSystemColumnDataTypes()
+  {
+    return database.getSystemColumnDataTypes();
+  }
+
+  public ColumnMap[] getWeakAssociations()
+  {
+    final Set<ColumnMap> weakAssociations = new HashSet<ColumnMap>();
+    for (final List<ColumnMap> weakAssociationsForTable: weakAssociationsMap
+      .values())
+    {
+      weakAssociations.addAll(weakAssociationsForTable);
+    }
+    return weakAssociations.toArray(new ColumnMap[weakAssociations.size()]);
+  }
+
+  public ColumnMap[] getWeakAssociationsForTable(final String tableFullName)
+  {
+    if (weakAssociationsMap.containsKey(tableFullName))
+    {
+      final List<ColumnMap> weakAssociationsForTable = weakAssociationsMap
+        .get(tableFullName);
+      return weakAssociationsForTable
+        .toArray(new ColumnMap[weakAssociationsForTable.size()]);
+    }
+    else
+    {
+      return new ColumnMap[0];
+    }
+  }
+
+  public void setAttribute(final String name, final Object value)
+  {
+    database.setAttribute(name, value);
+  }
+
+  private void addWeakAssociation(final Table table,
+                                  final ColumnMap weakAssociation)
+  {
+    List<ColumnMap> weakAssociations = weakAssociationsMap.get(table
+      .getFullName());
+    if (weakAssociations == null)
+    {
+      weakAssociations = new ArrayList<ColumnMap>();
+      weakAssociationsMap.put(table.getFullName(), weakAssociations);
+    }
+    weakAssociations.add(weakAssociation);
+  }
 
   private void analyzeTables()
   {
@@ -372,9 +415,12 @@ public final class DatabaseWithWeakAssociations
                 LOGGER.log(Level.FINE, String
                   .format("Found weak association: %s --> %s", fkColumn
                     .getFullName(), pkColumn.getFullName()));
-                final ColumnMap columnMap = new WeakAssociation(pkColumn,
-                                                                fkColumn);
-                weakAssociations.add(columnMap);
+                final ColumnMap weakAssociation = new WeakAssociation(pkColumn,
+                                                                      fkColumn);
+                addWeakAssociation((Table) pkColumn.getParent(),
+                                   weakAssociation);
+                addWeakAssociation((Table) fkColumn.getParent(),
+                                   weakAssociation);
               }
             }
           }
