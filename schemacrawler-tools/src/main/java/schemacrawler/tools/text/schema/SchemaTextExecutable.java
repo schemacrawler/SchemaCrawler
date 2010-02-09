@@ -32,6 +32,7 @@ import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.analysis.DatabaseWithWeakAssociations;
 import schemacrawler.tools.executable.BaseExecutable;
 
 /**
@@ -71,10 +72,33 @@ public final class SchemaTextExecutable
     this.schemaTextOptions = schemaTextOptions;
   }
 
+  private SchemaTextFormatter getDatabaseTraversalHandler()
+    throws SchemaCrawlerException
+  {
+    final SchemaTextFormatter formatter;
+    SchemaTextDetailType schemaTextDetailType;
+    try
+    {
+      schemaTextDetailType = SchemaTextDetailType.valueOf(command);
+    }
+    catch (final IllegalArgumentException e)
+    {
+      schemaTextDetailType = SchemaTextDetailType.standard_schema;
+    }
+    final SchemaTextOptions schemaTextOptions = getSchemaTextOptions();
+    formatter = new SchemaTextFormatter(schemaTextDetailType,
+                                        schemaTextOptions,
+                                        outputOptions);
+
+    return formatter;
+  }
+
   @Override
-  protected void executeOn(final Database database, final Connection connection)
+  protected void executeOn(final Database db, final Connection connection)
     throws Exception
   {
+    final DatabaseWithWeakAssociations database = new DatabaseWithWeakAssociations(db);
+
     final SchemaTextFormatter formatter = getDatabaseTraversalHandler();
 
     formatter.begin();
@@ -108,7 +132,8 @@ public final class SchemaTextExecutable
       formatter.handleTablesStart();
       for (final Table table: tables)
       {
-        formatter.handle(table);
+        formatter.handle(table, database.getWeakAssociationsForTable(table
+          .getFullName()));
       }
       formatter.handleTablesEnd();
     }
@@ -125,27 +150,6 @@ public final class SchemaTextExecutable
 
     formatter.end();
 
-  }
-
-  private SchemaTextFormatter getDatabaseTraversalHandler()
-    throws SchemaCrawlerException
-  {
-    final SchemaTextFormatter formatter;
-    SchemaTextDetailType schemaTextDetailType;
-    try
-    {
-      schemaTextDetailType = SchemaTextDetailType.valueOf(command);
-    }
-    catch (final IllegalArgumentException e)
-    {
-      schemaTextDetailType = SchemaTextDetailType.standard_schema;
-    }
-    final SchemaTextOptions schemaTextOptions = getSchemaTextOptions();
-    formatter = new SchemaTextFormatter(schemaTextDetailType,
-                                        schemaTextOptions,
-                                        outputOptions);
-
-    return formatter;
   }
 
 }

@@ -22,7 +22,6 @@ package schemacrawler.tools.text.schema;
 
 
 import java.util.Locale;
-import java.util.logging.Logger;
 
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.CheckConstraint;
@@ -59,9 +58,6 @@ final class SchemaTextFormatter
   extends BaseFormatter<SchemaTextOptions>
 {
 
-  private static final Logger LOGGER = Logger
-    .getLogger(SchemaTextFormatter.class.getName());
-
   private static String negate(final boolean positive, final String text)
   {
     String textValue = text;
@@ -95,174 +91,6 @@ final class SchemaTextFormatter
           schemaTextDetailType == SchemaTextDetailType.verbose_schema,
           outputOptions);
     this.schemaTextDetailType = schemaTextDetailType;
-  }
-
-  void begin()
-    throws SchemaCrawlerException
-  {
-    if (!outputOptions.isNoHeader())
-    {
-      out.println(formattingHelper.createDocumentStart());
-    }
-  }
-
-  void end()
-    throws SchemaCrawlerException
-  {
-    if (!outputOptions.isNoFooter())
-    {
-      out.println(formattingHelper.createDocumentEnd());
-    }
-    out.flush();
-    //
-    outputOptions.closeOutputWriter(out);
-  }
-
-  void handle(final ColumnDataType columnDataType)
-    throws SchemaCrawlerException
-  {
-    if (schemaTextDetailType
-      .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
-    {
-      out.print(formattingHelper.createObjectStart(""));
-      printColumnDataType(columnDataType);
-      out.print(formattingHelper.createObjectEnd());
-    }
-  }
-
-  /**
-   * Provides information on the database schema.
-   * 
-   * @param procedure
-   *        Procedure metadata.
-   */
-  void handle(final Procedure procedure)
-  {
-    final boolean underscore = schemaTextDetailType != SchemaTextDetailType.list_objects;
-    final String procedureTypeDetail = "procedure, " + procedure.getType();
-    final String nameRow = formattingHelper.createNameRow(procedure
-      .getFullName(), "[" + procedureTypeDetail + "]", underscore);
-
-    if (schemaTextDetailType != SchemaTextDetailType.list_objects)
-    {
-      out.print(formattingHelper.createObjectStart(""));
-    }
-
-    out.println(nameRow);
-
-    if (schemaTextDetailType != SchemaTextDetailType.list_objects)
-    {
-      printProcedureColumns(procedure.getColumns());
-      printDefinition(procedure.getDefinition());
-
-      out.println(formattingHelper.createObjectEnd());
-    }
-
-    out.flush();
-
-  }
-
-  /**
-   * Provides information on the database schema.
-   * 
-   * @param table
-   *        Table metadata.
-   */
-  void handle(final Table table)
-  {
-    final boolean underscore = schemaTextDetailType != SchemaTextDetailType.list_objects;
-    final String nameRow = formattingHelper.createNameRow(table.getFullName(),
-                                                          "[" + table.getType()
-                                                              + "]",
-                                                          underscore);
-
-    if (schemaTextDetailType != SchemaTextDetailType.list_objects)
-    {
-      out.print(formattingHelper.createObjectStart(""));
-    }
-
-    out.println(nameRow);
-
-    if (schemaTextDetailType != SchemaTextDetailType.list_objects)
-    {
-      printTableColumns(table.getColumns());
-
-      printPrimaryKey(table.getPrimaryKey());
-      printForeignKeys(table.getName(), table.getForeignKeys());
-      printWeakAssociations(table.getName(), table.getWeakAssociations());
-      printIndices(table.getIndices());
-      if (schemaTextDetailType
-        .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
-      {
-        printCheckConstraints(table.getCheckConstraints());
-        printPrivileges(table.getPrivileges());
-        printTriggers(table.getTriggers());
-      }
-      if (table instanceof View)
-      {
-        final View view = (View) table;
-        printDefinition(view.getDefinition());
-      }
-
-      out.println(formattingHelper.createObjectEnd());
-    }
-    out.flush();
-  }
-
-  void handleColumnDataTypesEnd()
-  {
-  }
-
-  void handleColumnDataTypesStart()
-  {
-    if (schemaTextDetailType
-      .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
-    {
-      out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                                "Data Types"));
-    }
-  }
-
-  void handleProceduresEnd()
-    throws SchemaCrawlerException
-  {
-    if (schemaTextDetailType == SchemaTextDetailType.list_objects)
-    {
-      out.print(formattingHelper.createObjectEnd());
-    }
-  }
-
-  void handleProceduresStart()
-    throws SchemaCrawlerException
-  {
-    out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                              "Procedures"));
-
-    if (schemaTextDetailType == SchemaTextDetailType.list_objects)
-    {
-      out.print(formattingHelper.createObjectStart(""));
-    }
-  }
-
-  void handleTablesEnd()
-    throws SchemaCrawlerException
-  {
-    if (schemaTextDetailType == SchemaTextDetailType.list_objects)
-    {
-      out.print(formattingHelper.createObjectEnd());
-    }
-  }
-
-  void handleTablesStart()
-    throws SchemaCrawlerException
-  {
-    out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
-                                              "Tables"));
-
-    if (schemaTextDetailType == SchemaTextDetailType.list_objects)
-    {
-      out.print(formattingHelper.createObjectStart(""));
-    }
   }
 
   private void printCheckConstraints(final CheckConstraint[] constraints)
@@ -616,6 +444,178 @@ final class SchemaTextFormatter
                                                  "[weak association]",
                                                  false));
       printColumnPairs(tableName, weakAssociation);
+    }
+  }
+
+  void begin()
+    throws SchemaCrawlerException
+  {
+    if (!outputOptions.isNoHeader())
+    {
+      out.println(formattingHelper.createDocumentStart());
+    }
+  }
+
+  void end()
+    throws SchemaCrawlerException
+  {
+    if (!outputOptions.isNoFooter())
+    {
+      out.println(formattingHelper.createDocumentEnd());
+    }
+    out.flush();
+    //
+    outputOptions.closeOutputWriter(out);
+  }
+
+  void handle(final ColumnDataType columnDataType)
+    throws SchemaCrawlerException
+  {
+    if (schemaTextDetailType
+      .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
+    {
+      out.print(formattingHelper.createObjectStart(""));
+      printColumnDataType(columnDataType);
+      out.print(formattingHelper.createObjectEnd());
+    }
+  }
+
+  /**
+   * Provides information on the database schema.
+   * 
+   * @param procedure
+   *        Procedure metadata.
+   */
+  void handle(final Procedure procedure)
+  {
+    final boolean underscore = schemaTextDetailType != SchemaTextDetailType.list_objects;
+    final String procedureTypeDetail = "procedure, " + procedure.getType();
+    final String nameRow = formattingHelper.createNameRow(procedure
+      .getFullName(), "[" + procedureTypeDetail + "]", underscore);
+
+    if (schemaTextDetailType != SchemaTextDetailType.list_objects)
+    {
+      out.print(formattingHelper.createObjectStart(""));
+    }
+
+    out.println(nameRow);
+
+    if (schemaTextDetailType != SchemaTextDetailType.list_objects)
+    {
+      printProcedureColumns(procedure.getColumns());
+      printDefinition(procedure.getDefinition());
+
+      out.println(formattingHelper.createObjectEnd());
+    }
+
+    out.flush();
+
+  }
+
+  /**
+   * Provides information on the database schema.
+   * 
+   * @param table
+   *        Table metadata.
+   */
+  void handle(final Table table, final ColumnMap[] weakAssociations)
+  {
+    final boolean underscore = schemaTextDetailType != SchemaTextDetailType.list_objects;
+    final String nameRow = formattingHelper.createNameRow(table.getFullName(),
+                                                          "[" + table.getType()
+                                                              + "]",
+                                                          underscore);
+
+    if (schemaTextDetailType != SchemaTextDetailType.list_objects)
+    {
+      out.print(formattingHelper.createObjectStart(""));
+    }
+
+    out.println(nameRow);
+
+    if (schemaTextDetailType != SchemaTextDetailType.list_objects)
+    {
+      printTableColumns(table.getColumns());
+
+      printPrimaryKey(table.getPrimaryKey());
+      printForeignKeys(table.getName(), table.getForeignKeys());
+      if (schemaTextDetailType
+        .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
+      {
+        printWeakAssociations(table.getName(), weakAssociations);
+      }
+      printIndices(table.getIndices());
+      if (schemaTextDetailType
+        .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
+      {
+        printCheckConstraints(table.getCheckConstraints());
+        printPrivileges(table.getPrivileges());
+        printTriggers(table.getTriggers());
+      }
+      if (table instanceof View)
+      {
+        final View view = (View) table;
+        printDefinition(view.getDefinition());
+      }
+
+      out.println(formattingHelper.createObjectEnd());
+    }
+    out.flush();
+  }
+
+  void handleColumnDataTypesEnd()
+  {
+  }
+
+  void handleColumnDataTypesStart()
+  {
+    if (schemaTextDetailType
+      .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
+    {
+      out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
+                                                "Data Types"));
+    }
+  }
+
+  void handleProceduresEnd()
+    throws SchemaCrawlerException
+  {
+    if (schemaTextDetailType == SchemaTextDetailType.list_objects)
+    {
+      out.print(formattingHelper.createObjectEnd());
+    }
+  }
+
+  void handleProceduresStart()
+    throws SchemaCrawlerException
+  {
+    out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
+                                              "Procedures"));
+
+    if (schemaTextDetailType == SchemaTextDetailType.list_objects)
+    {
+      out.print(formattingHelper.createObjectStart(""));
+    }
+  }
+
+  void handleTablesEnd()
+    throws SchemaCrawlerException
+  {
+    if (schemaTextDetailType == SchemaTextDetailType.list_objects)
+    {
+      out.print(formattingHelper.createObjectEnd());
+    }
+  }
+
+  void handleTablesStart()
+    throws SchemaCrawlerException
+  {
+    out.println(formattingHelper.createHeader(DocumentHeaderType.subTitle,
+                                              "Tables"));
+
+    if (schemaTextDetailType == SchemaTextDetailType.list_objects)
+    {
+      out.print(formattingHelper.createObjectStart(""));
     }
   }
 
