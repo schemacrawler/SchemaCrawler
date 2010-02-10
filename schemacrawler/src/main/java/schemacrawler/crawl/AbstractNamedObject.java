@@ -107,6 +107,32 @@ abstract class AbstractNamedObject
   /**
    * {@inheritDoc}
    * 
+   * @see schemacrawler.schema.NamedObject#getAttribute(java.lang.String,
+   *      java.lang.Object)
+   */
+  public final <T> T getAttribute(final String name, final T defaultValue)
+  {
+    final Object attributeValue = getAttribute(name);
+    if (attributeValue == null)
+    {
+      return defaultValue;
+    }
+    else
+    {
+      try
+      {
+        return (T) attributeValue;
+      }
+      catch (final ClassCastException e)
+      {
+        return defaultValue;
+      }
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
    * @see schemacrawler.schema.NamedObject#getAttributes()
    */
   public final Map<String, Object> getAttributes()
