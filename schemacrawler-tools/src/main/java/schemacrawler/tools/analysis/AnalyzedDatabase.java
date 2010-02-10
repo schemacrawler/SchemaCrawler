@@ -13,6 +13,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.Index;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
@@ -29,7 +30,9 @@ public final class AnalyzedDatabase
     .getName());
 
   private static final String TABLE_WTH_SINGLE_COLUMN = "table with single column";
+
   private static final String INCREMENTING_COLUMNS = "incrementing columns";
+  private static final String TABLE_WTH_NO_INDICES = "table with no indices";
 
   public static final Column[] getIncrementingColumns(final Table table)
   {
@@ -39,17 +42,19 @@ public final class AnalyzedDatabase
     }
     else
     {
-      final Object incrementingColumns = table
-        .getAttribute(INCREMENTING_COLUMNS);
-      if (incrementingColumns == null
-          || !(incrementingColumns instanceof Column[]))
-      {
-        return new Column[0];
-      }
-      else
-      {
-        return (Column[]) incrementingColumns;
-      }
+      return table.getAttribute(INCREMENTING_COLUMNS, new Column[0]);
+    }
+  }
+
+  public static final boolean isTableWithNoIndices(final Table table)
+  {
+    if (table == null)
+    {
+      return false;
+    }
+    else
+    {
+      return table.getAttribute(TABLE_WTH_NO_INDICES, Boolean.FALSE);
     }
   }
 
@@ -61,16 +66,7 @@ public final class AnalyzedDatabase
     }
     else
     {
-      final Boolean isTableWithSingleColumn = (Boolean) table
-        .getAttribute(TABLE_WTH_SINGLE_COLUMN);
-      if (isTableWithSingleColumn == null)
-      {
-        return false;
-      }
-      else
-      {
-        return isTableWithSingleColumn;
-      }
+      return table.getAttribute(TABLE_WTH_SINGLE_COLUMN, Boolean.FALSE);
     }
   }
 
@@ -158,6 +154,11 @@ public final class AnalyzedDatabase
     return database.getAttribute(name);
   }
 
+  public <T> T getAttribute(final String name, final T defaultValue)
+  {
+    return database.getAttribute(name, defaultValue);
+  }
+
   public Map<String, Object> getAttributes()
   {
     return database.getAttributes();
@@ -232,6 +233,12 @@ public final class AnalyzedDatabase
       if (incrementingColumns.length > 0)
       {
         table.setAttribute(INCREMENTING_COLUMNS, incrementingColumns);
+      }
+
+      final Index[] indices = table.getIndices();
+      if (indices.length == 0)
+      {
+        table.setAttribute(TABLE_WTH_NO_INDICES, Boolean.TRUE);
       }
     }
   }

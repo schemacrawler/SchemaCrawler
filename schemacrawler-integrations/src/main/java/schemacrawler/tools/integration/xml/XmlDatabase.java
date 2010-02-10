@@ -70,6 +70,11 @@ public final class XmlDatabase
     return database.getAttribute(name);
   }
 
+  public <T> T getAttribute(final String name, final T defaultValue)
+  {
+    return database.getAttribute(name, defaultValue);
+  }
+
   /**
    * {@inheritDoc}
    * 

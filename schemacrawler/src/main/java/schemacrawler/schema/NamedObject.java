@@ -43,6 +43,15 @@ public interface NamedObject
   Object getAttribute(String name);
 
   /**
+   * Gets an attribute.
+   * 
+   * @param name
+   *        Attribute name.
+   * @return Attribute value.
+   */
+  <T> T getAttribute(String name, T defaultValue);
+
+  /**
    * Gets all attributes.
    * 
    * @return Map of attributes

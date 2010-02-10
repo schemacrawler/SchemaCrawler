@@ -53,16 +53,7 @@ public final class DatabaseWithWeakAssociations
     }
     else
     {
-      final Object weakAssociations = table.getAttribute(WEAK_ASSOCIATIONS);
-      if (weakAssociations == null
-          || !(weakAssociations instanceof ColumnMap[]))
-      {
-        return new ColumnMap[0];
-      }
-      else
-      {
-        return (ColumnMap[]) weakAssociations;
-      }
+      return table.getAttribute(WEAK_ASSOCIATIONS, new ColumnMap[0]);
     }
   }
 
@@ -249,6 +240,7 @@ public final class DatabaseWithWeakAssociations
   }
 
   private final Database database;
+
   private final List<Table> tables;
   private final Map<String, List<ColumnMap>> weakAssociationsMap;
 
@@ -282,6 +274,11 @@ public final class DatabaseWithWeakAssociations
   public Object getAttribute(final String name)
   {
     return database.getAttribute(name);
+  }
+
+  public <T> T getAttribute(final String name, final T defaultValue)
+  {
+    return database.getAttribute(name, defaultValue);
   }
 
   public Map<String, Object> getAttributes()
