@@ -43,6 +43,29 @@ public final class DatabaseWithWeakAssociations
   private static final Logger LOGGER = Logger
     .getLogger(DatabaseWithWeakAssociations.class.getName());
 
+  private static final String WEAK_ASSOCIATIONS = "weak associations";
+
+  public static final ColumnMap[] getWeakAssociations(final Table table)
+  {
+    if (table == null)
+    {
+      return null;
+    }
+    else
+    {
+      final Object weakAssociations = table.getAttribute(WEAK_ASSOCIATIONS);
+      if (weakAssociations == null
+          || !(weakAssociations instanceof ColumnMap[]))
+      {
+        return new ColumnMap[0];
+      }
+      else
+      {
+        return (ColumnMap[]) weakAssociations;
+      }
+    }
+  }
+
   /**
    * Finds table prefixes. A prefix ends with "_".
    * 
@@ -358,6 +381,7 @@ public final class DatabaseWithWeakAssociations
       weakAssociationsMap.put(table.getFullName(), weakAssociations);
     }
     weakAssociations.add(weakAssociation);
+    table.setAttribute(WEAK_ASSOCIATIONS, weakAssociations);
   }
 
   private void analyzeTables()
