@@ -30,7 +30,6 @@ public final class AnalyzedDatabase
     .getName());
 
   private static final String TABLE_WTH_SINGLE_COLUMN = "table with single column";
-
   private static final String INCREMENTING_COLUMNS = "incrementing columns";
   private static final String TABLE_WTH_NO_INDICES = "table with no indices";
 
