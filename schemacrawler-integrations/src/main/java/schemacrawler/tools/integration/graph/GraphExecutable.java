@@ -27,6 +27,7 @@ import java.sql.Connection;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.tools.analysis.DatabaseWithWeakAssociations;
 import schemacrawler.tools.executable.BaseExecutable;
 
 /**
@@ -38,9 +39,29 @@ public final class GraphExecutable
   extends BaseExecutable
 {
 
+  enum GraphCommandType
+  {
+    graph, detailed_graph
+  }
+
+  private final GraphCommandType graphCommandType;
+
   public GraphExecutable()
   {
-    super("graph");
+    this(null);
+  }
+
+  public GraphExecutable(final String command)
+  {
+    super(command);
+    if (command == null)
+    {
+      graphCommandType = GraphCommandType.graph;
+    }
+    else
+    {
+      graphCommandType = GraphCommandType.valueOf(command);
+    }
   }
 
   /**
@@ -51,22 +72,30 @@ public final class GraphExecutable
     throws Exception
   {
     // Create dot file
+    final DatabaseWithWeakAssociations analyzedDatabase;
+    if (database instanceof DatabaseWithWeakAssociations)
+    {
+      analyzedDatabase = (DatabaseWithWeakAssociations) database;
+    }
+    else
+    {
+      analyzedDatabase = new DatabaseWithWeakAssociations(database);
+    }
     final File dotFile = File.createTempFile("schemacrawler.", ".dot");
     final DotWriter dotWriter = new DotWriter(dotFile);
-    if (database != null)
+    dotWriter.open();
+    dotWriter.print(database.getSchemaCrawlerInfo(),
+                    database.getDatabaseInfo(),
+                    database.getJdbcDriverInfo());
+    for (final Schema schema: database.getSchemas())
     {
-      dotWriter.open();
-      dotWriter.print(database.getSchemaCrawlerInfo(), database
-        .getDatabaseInfo(), database.getJdbcDriverInfo());
-      for (final Schema schema: database.getSchemas())
+      for (final Table table: schema.getTables())
       {
-        for (final Table table: schema.getTables())
-        {
-          dotWriter.print(table);
-        }
+        dotWriter.print(table);
       }
-      dotWriter.close();
     }
+    dotWriter.print(analyzedDatabase.getWeakAssociations());
+    dotWriter.close();
 
     // Create graph image
     final GraphGenerator dot = new GraphGenerator(dotFile);
@@ -74,5 +103,4 @@ public final class GraphExecutable
     dot.setDiagramFile(outputOptions.getOutputFile());
     dot.generateDiagram();
   }
-
 }

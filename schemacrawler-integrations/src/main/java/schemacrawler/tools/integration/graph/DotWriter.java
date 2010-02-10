@@ -96,7 +96,6 @@ final class DotWriter
   }
 
   private final PrintWriter out;
-
   private final Map<Schema, PastelColor> colorMap;
 
   DotWriter(final File dotFile)
@@ -261,11 +260,9 @@ final class DotWriter
 
     buffer.append(Utility.NEWLINE).append(Utility.NEWLINE);
     out.write(buffer.toString());
-
-    printWeakAssociations(table.getWeakAssociations());
   }
 
-  private void printWeakAssociations(final ColumnMap[] weakAssociations)
+  public void print(final ColumnMap[] weakAssociations)
   {
     if (weakAssociations == null)
     {
