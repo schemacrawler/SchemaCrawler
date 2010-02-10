@@ -1,3 +1,22 @@
+/* 
+ *
+ * SchemaCrawler
+ * http://sourceforge.net/projects/schemacrawler
+ * Copyright (c) 2000-2010, Sualeh Fatehi.
+ *
+ * This library is free software; you can redistribute it and/or modify it under the terms
+ * of the GNU Lesser General Public License as published by the Free Software Foundation;
+ * either version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * Boston, MA 02111-1307, USA.
+ *
+ */
 package schemacrawler.tools.analysis;
 
 
@@ -19,6 +38,7 @@ import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
+import sf.util.Utility;
 
 public final class AnalyzedDatabase
   implements Database
@@ -32,6 +52,8 @@ public final class AnalyzedDatabase
   private static final String TABLE_WTH_SINGLE_COLUMN = "table with single column";
   private static final String INCREMENTING_COLUMNS = "incrementing columns";
   private static final String TABLE_WTH_NO_INDICES = "table with no indices";
+  private static final String NULLABLE_COLUMN_IN_UNIQUE_INDEX = "nullable column in unique index";
+  private static final String NULL_DEFAULT_VALUE_MAY_BE_INTENDED = "NULL default value may be intended";
 
   public static final Column[] getIncrementingColumns(final Table table)
   {
@@ -42,6 +64,32 @@ public final class AnalyzedDatabase
     else
     {
       return table.getAttribute(INCREMENTING_COLUMNS, new Column[0]);
+    }
+  }
+
+  public static final boolean isNullableColumnInUniqueIndex(final Column column)
+  {
+    if (column == null)
+    {
+      return false;
+    }
+    else
+    {
+      return column
+        .getAttribute(NULLABLE_COLUMN_IN_UNIQUE_INDEX, Boolean.FALSE);
+    }
+  }
+
+  public static final boolean isNullDefaultValueMayBeIntended(final Column column)
+  {
+    if (column == null)
+    {
+      return false;
+    }
+    else
+    {
+      return column.getAttribute(NULL_DEFAULT_VALUE_MAY_BE_INTENDED,
+                                 Boolean.FALSE);
     }
   }
 
@@ -69,8 +117,7 @@ public final class AnalyzedDatabase
     }
   }
 
-  private static Column[] findIncrementingColumns(final Table table,
-                                                  final Column[] columns)
+  private static Column[] findIncrementingColumns(final Column[] columns)
   {
     final Pattern pattern = Pattern.compile("([^0-9]*)([0-9]+)");
 
@@ -120,7 +167,6 @@ public final class AnalyzedDatabase
   }
 
   private final Database database;
-
   private final List<Table> tables;
 
   public AnalyzedDatabase(final Database database)
@@ -222,22 +268,36 @@ public final class AnalyzedDatabase
   {
     for (final Table table: tables)
     {
+      final Index[] indices = table.getIndices();
+      if (indices.length == 0)
+      {
+        table.setAttribute(TABLE_WTH_NO_INDICES, Boolean.TRUE);
+      }
+
       final Column[] columns = table.getColumns();
       if (columns.length <= 1)
       {
         table.setAttribute(TABLE_WTH_SINGLE_COLUMN, Boolean.TRUE);
       }
-      final Column[] incrementingColumns = findIncrementingColumns(table,
-                                                                   columns);
+
+      final Column[] incrementingColumns = findIncrementingColumns(columns);
       if (incrementingColumns.length > 0)
       {
         table.setAttribute(INCREMENTING_COLUMNS, incrementingColumns);
       }
 
-      final Index[] indices = table.getIndices();
-      if (indices.length == 0)
+      for (final Column column: columns)
       {
-        table.setAttribute(TABLE_WTH_NO_INDICES, Boolean.TRUE);
+        if (column.isNullable() && column.isPartOfUniqueIndex())
+        {
+          column.setAttribute(NULLABLE_COLUMN_IN_UNIQUE_INDEX, Boolean.TRUE);
+        }
+        final String columnDefaultValue = column.getDefaultValue();
+        if (!Utility.isBlank(columnDefaultValue)
+            && columnDefaultValue.trim().equalsIgnoreCase("NULL"))
+        {
+          column.setAttribute(NULL_DEFAULT_VALUE_MAY_BE_INTENDED, Boolean.TRUE);
+        }
       }
     }
   }
