@@ -132,8 +132,8 @@ public final class SchemaTextExecutable
       formatter.handleTablesStart();
       for (final Table table: tables)
       {
-        formatter.handle(table, database.getWeakAssociationsForTable(table
-          .getFullName()));
+        formatter.handle(table, DatabaseWithWeakAssociations
+          .getWeakAssociations(table));
       }
       formatter.handleTablesEnd();
     }
