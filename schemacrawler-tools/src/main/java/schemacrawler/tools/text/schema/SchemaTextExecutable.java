@@ -97,7 +97,18 @@ public final class SchemaTextExecutable
   protected void executeOn(final Database db, final Connection connection)
     throws Exception
   {
-    final Database database = new DatabaseWithWeakAssociations(db);
+    // Determine what decorators to apply to the database
+    final Database database;
+    final String infoLevel = getSchemaCrawlerOptions().getSchemaInfoLevel()
+      .getTag();
+    if ("maximum".equals(infoLevel))
+    {
+      database = new DatabaseWithWeakAssociations(db);
+    }
+    else
+    {
+      database = db;
+    }
 
     final SchemaTextFormatter formatter = getDatabaseTraversalHandler();
 
