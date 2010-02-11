@@ -97,7 +97,7 @@ public final class SchemaTextExecutable
   protected void executeOn(final Database db, final Connection connection)
     throws Exception
   {
-    final DatabaseWithWeakAssociations database = new DatabaseWithWeakAssociations(db);
+    final Database database = new DatabaseWithWeakAssociations(db);
 
     final SchemaTextFormatter formatter = getDatabaseTraversalHandler();
 

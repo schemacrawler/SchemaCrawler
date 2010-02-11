@@ -170,9 +170,9 @@ public final class AnalyzedDatabase
     return incrementingColumns.toArray(new Column[incrementingColumns.size()]);
   }
 
-  private final Map<String, Column[]> incrementingColumnsMap;
   private final Database database;
   private final List<Table> tables;
+  private final Map<String, Column[]> incrementingColumnsMap;
   private final Map<String, Column[]> nullDefaultValueMayBeIntendedColumnsMap;
   private final Map<String, Column[]> nullableColumnsInUniqueIndexMap;
   private final List<Table> tablesWithNoIndex;
