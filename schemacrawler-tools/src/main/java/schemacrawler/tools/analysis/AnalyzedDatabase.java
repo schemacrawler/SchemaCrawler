@@ -430,4 +430,5 @@ public final class AnalyzedDatabase
     return nullDefaultValueMayBeIntendedColumns
       .toArray(new Column[nullDefaultValueMayBeIntendedColumns.size()]);
   }
+
 }
