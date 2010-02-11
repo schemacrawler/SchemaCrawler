@@ -467,9 +467,6 @@ FK_INVOICE_CUSTOMER                        [foreign key, with no action]
 FK_B_ITEM_INVOICE                          [foreign key, with no action]
   ID --> PUBLIC.ITEM.INVOICEID                                  
 
-                                                      [weak association]
-  ID --> SCHEMACRAWLER.ITEM.INVOICEID                              
-
 INDEX_INVOICE_CUSTOMER                                [non-unique index]
   CUSTOMERID                        ascending                   
 
@@ -543,9 +540,6 @@ SYS_IDX_47                                                 [primary key]
 
 FK_A_ITEM_PRODUCT                          [foreign key, with no action]
   ID --> PUBLIC.ITEM.PRODUCTID                                  
-
-                                                      [weak association]
-  ID --> SCHEMACRAWLER.ITEM.PRODUCTID                              
 
 DELETE                                                       [privilege]
   DBA --> SA (grantable)                                        
