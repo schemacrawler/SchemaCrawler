@@ -92,9 +92,10 @@ public final class GraphExecutable
       for (final Table table: schema.getTables())
       {
         dotWriter.print(table);
+        dotWriter
+          .print(DatabaseWithWeakAssociations.getWeakAssociations(table));
       }
     }
-    dotWriter.print(analyzedDatabase.getWeakAssociations());
     dotWriter.close();
 
     // Create graph image
