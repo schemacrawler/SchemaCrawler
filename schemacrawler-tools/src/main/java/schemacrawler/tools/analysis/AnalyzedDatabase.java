@@ -269,6 +269,57 @@ public final class AnalyzedDatabase
     return database.getName();
   }
 
+  public final Column[] getNullableColumnsInUniqueIndex()
+  {
+    final Set<Column> nullableColumnsInUniqueIndex = new HashSet<Column>();
+    for (final Column[] columns: nullableColumnsInUniqueIndexMap.values())
+    {
+      nullableColumnsInUniqueIndex.addAll(Arrays.asList(columns));
+    }
+    final Column[] nullableColumnsInUniqueIndexArray = nullableColumnsInUniqueIndex
+      .toArray(new Column[nullableColumnsInUniqueIndex.size()]);
+    Arrays.sort(nullableColumnsInUniqueIndexArray);
+    return nullableColumnsInUniqueIndexArray;
+  }
+
+  public final Column[] getNullableColumnsInUniqueIndexForTable(final String tableFullName)
+  {
+    if (nullableColumnsInUniqueIndexMap.containsKey(tableFullName))
+    {
+      return nullableColumnsInUniqueIndexMap.get(tableFullName);
+    }
+    else
+    {
+      return new Column[0];
+    }
+  }
+
+  public final Column[] getNullDefaultValueMayBeIntendedColumns()
+  {
+    final Set<Column> nullDefaultValueMayBeIntendedColumns = new HashSet<Column>();
+    for (final Column[] columns: nullDefaultValueMayBeIntendedColumnsMap
+      .values())
+    {
+      nullDefaultValueMayBeIntendedColumns.addAll(Arrays.asList(columns));
+    }
+    final Column[] nullDefaultValueMayBeIntendedColumnsArray = nullDefaultValueMayBeIntendedColumns
+      .toArray(new Column[nullDefaultValueMayBeIntendedColumns.size()]);
+    Arrays.sort(nullDefaultValueMayBeIntendedColumnsArray);
+    return nullDefaultValueMayBeIntendedColumnsArray;
+  }
+
+  public final Column[] getNullDefaultValueMayBeIntendedColumnsForTable(final String tableFullName)
+  {
+    if (nullDefaultValueMayBeIntendedColumnsMap.containsKey(tableFullName))
+    {
+      return nullDefaultValueMayBeIntendedColumnsMap.get(tableFullName);
+    }
+    else
+    {
+      return new Column[0];
+    }
+  }
+
   public String getRemarks()
   {
     return database.getRemarks();
