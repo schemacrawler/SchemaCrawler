@@ -44,6 +44,7 @@ public final class SchemaInfoLevel
     verbose.setRetrieveProcedureInformation(true);
     verbose.setRetrieveCheckConstraintInformation(true);
     verbose.setRetrieveViewInformation(true);
+    verbose.setTag("verbose");
     return verbose;
   }
 
@@ -60,6 +61,7 @@ public final class SchemaInfoLevel
     maximum.setRetrieveTablePrivileges(true);
     maximum.setRetrieveTableColumnPrivileges(true);
     maximum.setRetrieveTriggerInformation(true);
+    maximum.setTag("maximum");
     return maximum;
   }
 
@@ -76,6 +78,7 @@ public final class SchemaInfoLevel
     minimum.setRetrieveJdbcDriverInfo(true);
     minimum.setRetrieveTables(true);
     minimum.setRetrieveProcedures(true);
+    minimum.setTag("minimum");
     return minimum;
   }
 
@@ -92,9 +95,11 @@ public final class SchemaInfoLevel
     standard.setRetrieveTableColumns(true);
     standard.setRetrieveForeignKeys(true);
     standard.setRetrieveIndices(true);
+    standard.setTag("standard");
     return standard;
   }
 
+  private String tag;
   private boolean retrieveSchemaCrawlerInfo = true;
   private boolean retrieveJdbcDriverInfo = true;
   private boolean retrieveDatabaseInfo = true;
@@ -115,6 +120,11 @@ public final class SchemaInfoLevel
   private boolean retrieveTableColumnPrivileges;
   private boolean retrieveTriggerInformation;
   private boolean retrieveTableColumns;
+
+  public String getTag()
+  {
+    return tag;
+  }
 
   public boolean isRetrieveAdditionalDatabaseInfo()
   {
@@ -314,6 +324,17 @@ public final class SchemaInfoLevel
   public void setRetrieveViewInformation(final boolean retrieveViewInformation)
   {
     this.retrieveViewInformation = retrieveViewInformation;
+  }
+
+  public void setTag(final String tag)
+  {
+    this.tag = tag;
+  }
+
+  @Override
+  public String toString()
+  {
+    return tag == null? "": tag;
   }
 
 }

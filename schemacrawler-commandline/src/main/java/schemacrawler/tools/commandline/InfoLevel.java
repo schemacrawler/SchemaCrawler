@@ -22,7 +22,7 @@ package schemacrawler.tools.commandline;
 
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 
-public enum InfoLevel
+enum InfoLevel
 {
 
   minimum, standard, detailed, maximum;
