@@ -170,11 +170,13 @@ public final class AnalyzedDatabase
     return incrementingColumns.toArray(new Column[incrementingColumns.size()]);
   }
 
-  private final Map<String, Column[]> incrementingColumnsMap = new LinkedHashMap<String, Column[]>();
-
+  private final Map<String, Column[]> incrementingColumnsMap;
   private final Database database;
-
   private final List<Table> tables;
+  private final Map<String, Column[]> nullDefaultValueMayBeIntendedColumnsMap;
+  private final Map<String, Column[]> nullableColumnsInUniqueIndexMap;
+  private final List<Table> tablesWithNoIndex;
+  private final List<Table> tablesWithSingleColumn;
 
   public AnalyzedDatabase(final Database database)
   {
@@ -192,6 +194,12 @@ public final class AnalyzedDatabase
         tables.add(table);
       }
     }
+
+    incrementingColumnsMap = new LinkedHashMap<String, Column[]>();
+    nullDefaultValueMayBeIntendedColumnsMap = new LinkedHashMap<String, Column[]>();
+    nullableColumnsInUniqueIndexMap = new LinkedHashMap<String, Column[]>();
+    tablesWithNoIndex = new ArrayList<Table>();
+    tablesWithSingleColumn = new ArrayList<Table>();
 
     analyzeTables();
   }
@@ -291,6 +299,17 @@ public final class AnalyzedDatabase
     return database.getSystemColumnDataTypes();
   }
 
+  public Table[] getTablesWithNoIndex()
+  {
+    return tablesWithNoIndex.toArray(new Table[tablesWithNoIndex.size()]);
+  }
+
+  public Table[] getTablesWithSingleColumn()
+  {
+    return tablesWithSingleColumn.toArray(new Table[tablesWithSingleColumn
+      .size()]);
+  }
+
   public void setAttribute(final String name, final Object value)
   {
     database.setAttribute(name, value);
@@ -319,20 +338,45 @@ public final class AnalyzedDatabase
         incrementingColumnsMap.put(table.getFullName(), incrementingColumns);
       }
 
-      for (final Column column: columns)
-      {
-        if (column.isNullable() && column.isPartOfUniqueIndex())
-        {
-          column.setAttribute(NULLABLE_COLUMN_IN_UNIQUE_INDEX, Boolean.TRUE);
-        }
-        final String columnDefaultValue = column.getDefaultValue();
-        if (!Utility.isBlank(columnDefaultValue)
-            && columnDefaultValue.trim().equalsIgnoreCase("NULL"))
-        {
-          column.setAttribute(NULL_DEFAULT_VALUE_MAY_BE_INTENDED, Boolean.TRUE);
-        }
-      }
+      final Column[] nullableColumnsInUniqueIndex = findNullableColumnsInUniqueIndex(columns);
+      nullableColumnsInUniqueIndexMap.put(table.getFullName(),
+                                          nullableColumnsInUniqueIndex);
+
+      final Column[] nullDefaultValueMayBeIntendedColumns = findNullDefaultValueMayBeIntendedColumns(columns);
+      nullDefaultValueMayBeIntendedColumnsMap
+        .put(table.getFullName(), nullDefaultValueMayBeIntendedColumns);
     }
   }
 
+  private Column[] findNullableColumnsInUniqueIndex(final Column[] columns)
+  {
+    final List<Column> nullableColumnsInUniqueIndex = new ArrayList<Column>();
+    for (final Column column: columns)
+    {
+      if (column.isNullable() && column.isPartOfUniqueIndex())
+      {
+        column.setAttribute(NULLABLE_COLUMN_IN_UNIQUE_INDEX, Boolean.TRUE);
+        nullableColumnsInUniqueIndex.add(column);
+      }
+    }
+    return nullableColumnsInUniqueIndex
+      .toArray(new Column[nullableColumnsInUniqueIndex.size()]);
+  }
+
+  private Column[] findNullDefaultValueMayBeIntendedColumns(final Column[] columns)
+  {
+    final List<Column> nullDefaultValueMayBeIntendedColumns = new ArrayList<Column>();
+    for (final Column column: columns)
+    {
+      final String columnDefaultValue = column.getDefaultValue();
+      if (!Utility.isBlank(columnDefaultValue)
+          && columnDefaultValue.trim().equalsIgnoreCase("NULL"))
+      {
+        column.setAttribute(NULL_DEFAULT_VALUE_MAY_BE_INTENDED, Boolean.TRUE);
+        nullDefaultValueMayBeIntendedColumns.add(column);
+      }
+    }
+    return nullDefaultValueMayBeIntendedColumns
+      .toArray(new Column[nullDefaultValueMayBeIntendedColumns.size()]);
+  }
 }
