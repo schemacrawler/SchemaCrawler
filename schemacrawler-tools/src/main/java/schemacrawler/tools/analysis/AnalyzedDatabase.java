@@ -21,9 +21,13 @@ package schemacrawler.tools.analysis;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -166,7 +170,10 @@ public final class AnalyzedDatabase
     return incrementingColumns.toArray(new Column[incrementingColumns.size()]);
   }
 
+  private final Map<String, Column[]> incrementingColumnsMap = new LinkedHashMap<String, Column[]>();
+
   private final Database database;
+
   private final List<Table> tables;
 
   public AnalyzedDatabase(final Database database)
@@ -217,6 +224,31 @@ public final class AnalyzedDatabase
   public String getFullName()
   {
     return database.getFullName();
+  }
+
+  public final Column[] getIncrementingColumns()
+  {
+    final Set<Column> incrementingColumns = new HashSet<Column>();
+    for (final Column[] columns: incrementingColumnsMap.values())
+    {
+      incrementingColumns.addAll(Arrays.asList(columns));
+    }
+    final Column[] incrementingColumnsArray = incrementingColumns
+      .toArray(new Column[incrementingColumns.size()]);
+    Arrays.sort(incrementingColumnsArray);
+    return incrementingColumnsArray;
+  }
+
+  public final Column[] getIncrementingColumnsForTable(final String tableFullName)
+  {
+    if (incrementingColumnsMap.containsKey(tableFullName))
+    {
+      return incrementingColumnsMap.get(tableFullName);
+    }
+    else
+    {
+      return new Column[0];
+    }
   }
 
   public JdbcDriverInfo getJdbcDriverInfo()
@@ -284,6 +316,7 @@ public final class AnalyzedDatabase
       if (incrementingColumns.length > 0)
       {
         table.setAttribute(INCREMENTING_COLUMNS, incrementingColumns);
+        incrementingColumnsMap.put(table.getFullName(), incrementingColumns);
       }
 
       for (final Column column: columns)
