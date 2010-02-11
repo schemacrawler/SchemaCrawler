@@ -68,19 +68,23 @@ public final class GraphExecutable
    * {@inheritDoc}
    */
   @Override
-  protected void executeOn(final Database database, final Connection connection)
+  protected void executeOn(final Database db, final Connection connection)
     throws Exception
   {
-    // Create dot file
-    final DatabaseWithWeakAssociations analyzedDatabase;
-    if (database instanceof DatabaseWithWeakAssociations)
+    // Determine what decorators to apply to the database
+    final Database database;
+    final String infoLevel = getSchemaCrawlerOptions().getSchemaInfoLevel()
+      .getTag();
+    if ("maximum".equals(infoLevel))
     {
-      analyzedDatabase = (DatabaseWithWeakAssociations) database;
+      database = new DatabaseWithWeakAssociations(db);
     }
     else
     {
-      analyzedDatabase = new DatabaseWithWeakAssociations(database);
+      database = db;
     }
+
+    // Create dot file
     final File dotFile = File.createTempFile("schemacrawler.", ".dot");
     final DotWriter dotWriter = new DotWriter(dotFile);
     dotWriter.open();

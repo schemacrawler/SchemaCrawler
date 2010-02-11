@@ -259,7 +259,6 @@ public final class DatabaseWithWeakAssociations
   }
 
   private final Database database;
-
   private final List<Table> tables;
   private final Map<String, List<ColumnMap>> weakAssociationsMap;
 
