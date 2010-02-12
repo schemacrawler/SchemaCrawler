@@ -44,13 +44,13 @@ import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
 import sf.util.Utility;
 
-public final class AnalyzedDatabase
+public final class DatabaseLint
   implements Database
 {
 
   private static final long serialVersionUID = -3953296149824921463L;
 
-  private static final Logger LOGGER = Logger.getLogger(AnalyzedDatabase.class
+  private static final Logger LOGGER = Logger.getLogger(DatabaseLint.class
     .getName());
 
   private static final String TABLE_WTH_SINGLE_COLUMN = "table with single column";
@@ -178,7 +178,7 @@ public final class AnalyzedDatabase
   private final List<Table> tablesWithNoIndex;
   private final List<Table> tablesWithSingleColumn;
 
-  public AnalyzedDatabase(final Database database)
+  public DatabaseLint(final Database database)
   {
     if (database == null)
     {
