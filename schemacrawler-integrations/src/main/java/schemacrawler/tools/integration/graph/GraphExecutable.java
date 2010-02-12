@@ -28,6 +28,7 @@ import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.analysis.DatabaseWithWeakAssociations;
+import schemacrawler.tools.commandline.InfoLevel;
 import schemacrawler.tools.executable.BaseExecutable;
 
 /**
@@ -72,10 +73,18 @@ public final class GraphExecutable
     throws Exception
   {
     // Determine what decorators to apply to the database
+    InfoLevel infoLevel;
+    try
+    {
+      infoLevel = InfoLevel.valueOf(getSchemaCrawlerOptions()
+        .getSchemaInfoLevel().getTag());
+    }
+    catch (final Exception e)
+    {
+      infoLevel = InfoLevel.unknown;
+    }
     final Database database;
-    final String infoLevel = getSchemaCrawlerOptions().getSchemaInfoLevel()
-      .getTag();
-    if ("maximum".equals(infoLevel))
+    if (infoLevel.ordinal() >= InfoLevel.maximum.ordinal())
     {
       database = new DatabaseWithWeakAssociations(db);
     }
