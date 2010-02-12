@@ -44,6 +44,7 @@ import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schema.Privilege.Grant;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.analysis.DatabaseWithWeakAssociations;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseFormatter;
 import schemacrawler.tools.text.util.TextFormattingHelper.DocumentHeaderType;
@@ -518,7 +519,7 @@ final class SchemaTextFormatter
    * @param table
    *        Table metadata.
    */
-  void handle(final Table table, final ColumnMap[] weakAssociations)
+  void handle(final Table table)
   {
     final boolean underscore = schemaTextDetailType != SchemaTextDetailType.list_objects;
     final String nameRow = formattingHelper.createNameRow(table.getFullName(),
@@ -542,7 +543,8 @@ final class SchemaTextFormatter
       if (schemaTextDetailType
         .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
       {
-        printWeakAssociations(table.getName(), weakAssociations);
+        printWeakAssociations(table.getName(), DatabaseWithWeakAssociations
+          .getWeakAssociations(table));
       }
       printIndices(table.getIndices());
       if (schemaTextDetailType
