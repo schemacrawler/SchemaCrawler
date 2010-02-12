@@ -32,7 +32,9 @@ import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.analysis.DatabaseLint;
 import schemacrawler.tools.analysis.DatabaseWithWeakAssociations;
+import schemacrawler.tools.commandline.InfoLevel;
 import schemacrawler.tools.executable.BaseExecutable;
 
 /**
@@ -98,16 +100,25 @@ public final class SchemaTextExecutable
     throws Exception
   {
     // Determine what decorators to apply to the database
-    final Database database;
-    final String infoLevel = getSchemaCrawlerOptions().getSchemaInfoLevel()
-      .getTag();
-    if ("maximum".equals(infoLevel))
+    InfoLevel infoLevel;
+    try
     {
-      database = new DatabaseWithWeakAssociations(db);
+      infoLevel = InfoLevel.valueOf(getSchemaCrawlerOptions()
+        .getSchemaInfoLevel().getTag());
     }
-    else
+    catch (final Exception e)
     {
-      database = db;
+      infoLevel = InfoLevel.unknown;
+    }
+
+    Database database = db;
+    if (infoLevel.ordinal() >= InfoLevel.maximum.ordinal())
+    {
+      database = new DatabaseWithWeakAssociations(database);
+    }
+    if (infoLevel.ordinal() >= InfoLevel.lint.ordinal())
+    {
+      database = new DatabaseLint(database);
     }
 
     final SchemaTextFormatter formatter = getDatabaseTraversalHandler();
