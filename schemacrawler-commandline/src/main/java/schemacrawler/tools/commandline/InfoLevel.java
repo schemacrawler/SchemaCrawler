@@ -22,10 +22,10 @@ package schemacrawler.tools.commandline;
 
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 
-enum InfoLevel
+public enum InfoLevel
 {
 
-  minimum, standard, detailed, maximum;
+  minimum, standard, detailed, maximum, lint;
 
   public final SchemaInfoLevel getSchemaInfoLevel()
   {
@@ -42,6 +42,9 @@ enum InfoLevel
         schemaInfoLevel = SchemaInfoLevel.detailed();
         break;
       case maximum:
+        schemaInfoLevel = SchemaInfoLevel.maximum();
+        break;
+      case lint:
         schemaInfoLevel = SchemaInfoLevel.maximum();
         break;
       default:
