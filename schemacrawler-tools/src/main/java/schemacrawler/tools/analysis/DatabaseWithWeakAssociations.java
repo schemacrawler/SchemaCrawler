@@ -388,8 +388,13 @@ public final class DatabaseWithWeakAssociations
   private void addWeakAssociation(final Table table,
                                   final ColumnMap weakAssociation)
   {
-    final List<ColumnMap> weakAssociations = weakAssociationsMap.get(table
+    List<ColumnMap> weakAssociations = weakAssociationsMap.get(table
       .getFullName());
+    if (weakAssociations == null)
+    {
+      weakAssociations = new ArrayList<ColumnMap>();
+      weakAssociationsMap.put(table.getFullName(), weakAssociations);
+    }
     weakAssociations.add(weakAssociation);
   }
 
@@ -416,7 +421,6 @@ public final class DatabaseWithWeakAssociations
   {
     for (final Table table: tablesList)
     {
-      weakAssociationsMap.put(table.getFullName(), new ArrayList<ColumnMap>());
       final Map<String, Column> columnNameMatchesMap = mapColumnNameMatches(table);
       for (final Map.Entry<String, Column> columnEntry: columnNameMatchesMap
         .entrySet())
@@ -459,10 +463,14 @@ public final class DatabaseWithWeakAssociations
           }
         }
       }
+
       final List<ColumnMap> weakAssociations = weakAssociationsMap.get(table
         .getFullName());
-      table.setAttribute(WEAK_ASSOCIATIONS, weakAssociations
-        .toArray(new ColumnMap[weakAssociations.size()]));
+      if (weakAssociations != null)
+      {
+        table.setAttribute(WEAK_ASSOCIATIONS, weakAssociations
+          .toArray(new ColumnMap[weakAssociations.size()]));
+      }
     }
   }
 }
