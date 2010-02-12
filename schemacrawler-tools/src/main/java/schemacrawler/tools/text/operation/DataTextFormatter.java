@@ -110,6 +110,75 @@ final class DataTextFormatter
     this.operation = operation;
   }
 
+  void begin()
+  {
+    if (!outputOptions.isNoHeader())
+    {
+      out.println(formattingHelper.createDocumentStart());
+    }
+  }
+
+  void end()
+  {
+    if (operation == Operation.count)
+    {
+      out.println(formattingHelper.createObjectEnd());
+    }
+
+    if (!outputOptions.isNoFooter())
+    {
+      out.println(formattingHelper.createDocumentEnd());
+    }
+    out.flush();
+    //
+    outputOptions.closeOutputWriter(out);
+  }
+
+  void handleData(final String title, final ResultSet rows)
+    throws SchemaCrawlerException
+  {
+    if (dataBlockCount == 0)
+    {
+      printHeader();
+    }
+
+    if (operation == Operation.count)
+    {
+      handleAggregateOperationForTable(title, rows);
+    }
+    else
+    {
+      out.println(formattingHelper.createObjectStart(title));
+      try
+      {
+        final ResultSetMetaData rsm = rows.getMetaData();
+        final int columnCount = rsm.getColumnCount();
+        final String[] columnNames = new String[columnCount];
+        for (int i = 0; i < columnCount; i++)
+        {
+          columnNames[i] = rsm.getColumnName(i + 1);
+        }
+        out.println(formattingHelper.createRowHeader(columnNames));
+
+        if (options.isMergeRows() && columnCount > 1)
+        {
+          iterateRowsAndMerge(rows, columnNames);
+        }
+        else
+        {
+          iterateRows(rows, columnNames.length);
+        }
+      }
+      catch (final SQLException e)
+      {
+        throw new SchemaCrawlerException(e.getMessage(), e);
+      }
+      out.println(formattingHelper.createObjectEnd());
+    }
+
+    dataBlockCount++;
+  }
+
   private String convertColumnDataToString(final Object columnData)
   {
     String columnDataString;
@@ -270,75 +339,6 @@ final class DataTextFormatter
       out.println(formattingHelper
         .createObjectStart(operation.getDescription()));
     }
-  }
-
-  void begin()
-  {
-    if (!outputOptions.isNoHeader())
-    {
-      out.println(formattingHelper.createDocumentStart());
-    }
-  }
-
-  void end()
-  {
-    if (operation == Operation.count)
-    {
-      out.println(formattingHelper.createObjectEnd());
-    }
-
-    if (!outputOptions.isNoFooter())
-    {
-      out.println(formattingHelper.createDocumentEnd());
-    }
-    out.flush();
-    //
-    outputOptions.closeOutputWriter(out);
-  }
-
-  void handleData(final String title, final ResultSet rows)
-    throws SchemaCrawlerException
-  {
-    if (dataBlockCount == 0)
-    {
-      printHeader();
-    }
-
-    if (operation == Operation.count)
-    {
-      handleAggregateOperationForTable(title, rows);
-    }
-    else
-    {
-      out.println(formattingHelper.createObjectStart(title));
-      try
-      {
-        final ResultSetMetaData rsm = rows.getMetaData();
-        final int columnCount = rsm.getColumnCount();
-        final String[] columnNames = new String[columnCount];
-        for (int i = 0; i < columnCount; i++)
-        {
-          columnNames[i] = rsm.getColumnName(i + 1);
-        }
-        out.println(formattingHelper.createRowHeader(columnNames));
-
-        if (options.isMergeRows() && columnCount > 1)
-        {
-          iterateRowsAndMerge(rows, columnNames);
-        }
-        else
-        {
-          iterateRows(rows, columnNames.length);
-        }
-      }
-      catch (final SQLException e)
-      {
-        throw new SchemaCrawlerException(e.getMessage(), e);
-      }
-      out.println(formattingHelper.createObjectEnd());
-    }
-
-    dataBlockCount++;
   }
 
 }

@@ -145,7 +145,10 @@ public final class DatabaseLint
         }
       }
     }
-    for (final String columnNameBase: incrementingColumnsMap.keySet())
+
+    final HashSet<String> columnNameBases = new HashSet<String>(incrementingColumnsMap
+      .keySet());
+    for (final String columnNameBase: columnNameBases)
     {
       if (incrementingColumnsMap.get(columnNameBase) == 1)
       {
