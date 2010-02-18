@@ -372,6 +372,7 @@ final class TableRetriever
 
   void retrieveTables(final String catalogName,
                       final String schemaName,
+                      final String tableNamePattern,
                       final TableType[] tableTypes,
                       final InclusionRule tableInclusionRule)
     throws SQLException
@@ -382,7 +383,7 @@ final class TableRetriever
       results = new MetadataResultSet(getMetaData()
         .getTables(catalogName,
                    schemaName,
-                   "%",
+                   tableNamePattern,
                    TableType.toStrings(tableTypes)));
 
       while (results.next())

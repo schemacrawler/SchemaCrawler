@@ -248,6 +248,7 @@ public final class SchemaCrawler
       {
         retriever.retrieveTables(schemaNameObject.getCatalogName(),
                                  schemaNameObject.getSchemaName(),
+                                 options.getTableNamePattern(),
                                  options.getTableTypes(),
                                  options.getTableInclusionRule());
       }
