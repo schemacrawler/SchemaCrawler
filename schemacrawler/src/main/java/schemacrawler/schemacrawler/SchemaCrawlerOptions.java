@@ -76,6 +76,7 @@ public final class SchemaCrawlerOptions
   private TableType[] tableTypes;
   private boolean showStoredProcedures;
 
+  private String tableNamePattern;
   private InclusionRule tableInclusionRule;
   private InclusionRule columnInclusionRule;
 
@@ -84,14 +85,14 @@ public final class SchemaCrawlerOptions
 
   private InclusionRule grepColumnInclusionRule;
   private InclusionRule grepProcedureColumnInclusionRule;
-  private boolean grepInvertMatch;
 
+  private boolean grepInvertMatch;
   private boolean isAlphabeticalSortForTables;
   private boolean isAlphabeticalSortForTableColumns;
+
   private boolean isAlphabeticalSortForForeignKeys;
   private boolean isAlphabeticalSortForIndexes;
   private boolean isAlphabeticalSortForProcedureColumns;
-
   private SchemaInfoLevel schemaInfoLevel;
   private InformationSchemaViews informationSchemaViews;
 
@@ -285,6 +286,11 @@ public final class SchemaCrawlerOptions
   public InclusionRule getTableInclusionRule()
   {
     return tableInclusionRule;
+  }
+
+  public String getTableNamePattern()
+  {
+    return tableNamePattern;
   }
 
   /**
@@ -578,6 +584,11 @@ public final class SchemaCrawlerOptions
       throw new IllegalArgumentException("Cannot use null value in a setter");
     }
     this.tableInclusionRule = tableInclusionRule;
+  }
+
+  public void setTableNamePattern(final String tableNamePattern)
+  {
+    this.tableNamePattern = tableNamePattern;
   }
 
   /**
