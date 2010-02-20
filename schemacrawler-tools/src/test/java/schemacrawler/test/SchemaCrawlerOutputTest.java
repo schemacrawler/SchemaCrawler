@@ -26,6 +26,7 @@ import static org.junit.Assert.fail;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.custommonkey.xmlunit.XMLUnit;
@@ -111,6 +112,7 @@ public class SchemaCrawlerOutputTest
             + SchemaTextDetailType.list_objects,
     };
 
+    final List<String> failures = new ArrayList<String>();
     for (final OutputFormat outputFormat: OutputFormat.values())
     {
       for (final String command: commands)
@@ -143,15 +145,15 @@ public class SchemaCrawlerOutputTest
         executable.setAdditionalConfiguration(queriesConfig);
         executable.execute(connectionOptions.createConnection());
 
-        final List<String> failures = TestUtility
-          .compareOutput("composite_output/" + referenceFile,
-                         testOutputFile,
-                         outputFormat);
-        if (failures.size() > 0)
-        {
-          fail(failures.toString());
-        }
+        failures.addAll(TestUtility.compareOutput("composite_output/"
+                                                      + referenceFile,
+                                                  testOutputFile,
+                                                  outputFormat));
       }
+    }
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
     }
   }
 
@@ -159,6 +161,7 @@ public class SchemaCrawlerOutputTest
   public void compareInfoLevelOutput()
     throws Exception
   {
+    final List<String> failures = new ArrayList<String>();
     final SchemaInfoLevel[] schemaInfoLevels = new SchemaInfoLevel[] {};
     for (final SchemaInfoLevel infoLevel: schemaInfoLevels)
     {
@@ -194,17 +197,17 @@ public class SchemaCrawlerOutputTest
         executable.setOutputOptions(outputOptions);
         executable.execute(connectionOptions.createConnection());
 
-        final List<String> failures = TestUtility
-          .compareOutput("info_level_output/" + referenceFile,
-                         testOutputFile,
-                         outputOptions.getOutputFormat());
-        if (failures.size() > 0)
-        {
-          fail(failures.toString());
-        }
+        failures.addAll(TestUtility.compareOutput("info_level_output/"
+                                                      + referenceFile,
+                                                  testOutputFile,
+                                                  outputOptions
+                                                    .getOutputFormat()));
       }
     }
-
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
+    }
   }
 
 }
