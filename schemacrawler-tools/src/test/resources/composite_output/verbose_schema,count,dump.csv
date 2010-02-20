@@ -595,12 +595,6 @@ SYS_IDX_59,[primary key]
 "",INVOICEID,ascending
 "",ITEM,ascending
 ""
-"",[weak association]
-"",PUBLIC.PRODUCT.ID --> PRODUCTID,""
-""
-"",[weak association]
-"",PUBLIC.INVOICE.ID --> INVOICEID,""
-""
 DELETE,[privilege]
 "",DBA --> SA (grantable),""
 ""
