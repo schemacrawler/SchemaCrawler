@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.ColumnMap;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
@@ -34,14 +35,15 @@ import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
+import schemacrawler.tools.commandline.InfoLevel;
 
-public final class DatabaseLint
+public final class AnalyzedDatabase
   implements Database
 {
 
   private static final long serialVersionUID = -3953296149824921463L;
 
-  private static final Logger LOGGER = Logger.getLogger(DatabaseLint.class
+  private static final Logger LOGGER = Logger.getLogger(AnalyzedDatabase.class
     .getName());
 
   public static final Lint[] getLint(final Table table)
@@ -58,11 +60,24 @@ public final class DatabaseLint
     }
   }
 
+  public static final ColumnMap[] getWeakAssociations(final Table table)
+  {
+    if (table == null)
+    {
+      return null;
+    }
+    else
+    {
+      return table.getAttribute(WeakAssociationsAnalyzer.WEAK_ASSOCIATIONS_KEY,
+                                new ColumnMap[0]);
+    }
+  }
+
   private final Database database;
 
   private final List<Linter<Table>> tableLinters;
 
-  public DatabaseLint(final Database database)
+  public AnalyzedDatabase(final Database database, final InfoLevel infoLevel)
   {
     if (database == null)
     {
@@ -77,7 +92,7 @@ public final class DatabaseLint
         new LinterTableWithNullIntendedColumns(),
         new LinterTableWithSingleColumn()
     }));
-    analyzeTables();
+    analyzeTables(infoLevel);
   }
 
   public int compareTo(final NamedObject o)
@@ -155,17 +170,27 @@ public final class DatabaseLint
     database.setAttribute(name, value);
   }
 
-  private void analyzeTables()
+  private void analyzeTables(final InfoLevel infoLevel)
   {
+    final List<Table> allTables = new ArrayList<Table>();
     for (final Schema schema: database.getSchemas())
     {
       for (final Table table: schema.getTables())
       {
-        for (final Linter<Table> tableLinter: tableLinters)
+        allTables.add(table);
+        if (infoLevel.ordinal() >= InfoLevel.lint.ordinal())
         {
-          tableLinter.lint(table);
+          for (final Linter<Table> tableLinter: tableLinters)
+          {
+            tableLinter.lint(table);
+          }
         }
       }
+    }
+    if (infoLevel.ordinal() >= InfoLevel.maximum.ordinal())
+    {
+      final WeakAssociationsAnalyzer weakAssociationsAnalyzer = new WeakAssociationsAnalyzer(allTables);
+      weakAssociationsAnalyzer.analyzeTables();
     }
   }
 
