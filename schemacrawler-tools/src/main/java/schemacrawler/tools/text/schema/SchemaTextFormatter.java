@@ -21,7 +21,6 @@
 package schemacrawler.tools.text.schema;
 
 
-import java.util.Arrays;
 import java.util.Locale;
 
 import schemacrawler.schema.ActionOrientationType;
@@ -47,6 +46,7 @@ import schemacrawler.schema.Privilege.Grant;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.DatabaseLint;
 import schemacrawler.tools.analysis.DatabaseWithWeakAssociations;
+import schemacrawler.tools.analysis.Lint;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseFormatter;
 import schemacrawler.tools.text.util.TextFormattingHelper.DocumentHeaderType;
@@ -568,30 +568,29 @@ final class SchemaTextFormatter
 
   private void printLint(final Table table)
   {
-    final boolean hasNoIndices = DatabaseLint.isTableWithNoIndices(table);
-    final boolean hasSingleColumn = DatabaseLint.isTableWithSingleColumn(table);
-    final Column[] incrementingColumns = DatabaseLint
-      .getIncrementingColumns(table);
-    if (hasNoIndices || hasSingleColumn || incrementingColumns.length > 0)
+    final Lint[] lints = DatabaseLint.getLint(table);
+    if (lints != null && lints.length > 0)
     {
       out.println(formattingHelper.createEmptyRow());
       out.println(formattingHelper.createNameRow("", "[lint]", false));
-      if (hasNoIndices)
+      for (Lint lint: lints)
       {
-        out.println(formattingHelper
-          .createDefinitionRow("table has no indices"));
-      }
-      if (hasSingleColumn)
-      {
-        out.println(formattingHelper
-          .createDefinitionRow("table has only a single column"));
-      }
-      if (incrementingColumns.length > 0)
-      {
-        out.println(formattingHelper
-          .createDefinitionRow("table has incrementing column names"));
-        out.println(formattingHelper.createDefinitionRow(Arrays
-          .toString(incrementingColumns)));
+        final Object lintValue = lint.getLintValue();
+        if (lintValue instanceof Boolean)
+        {
+          if ((Boolean) lintValue)
+          {
+            out.println(formattingHelper.createDefinitionRow(lint
+              .getDescription()));
+          }
+        }
+        else
+        {
+          out.println(formattingHelper.createDefinitionRow(lint
+            .getDescription()));
+          out.println(formattingHelper
+            .createDefinitionRow(lintValue.toString()));
+        }
       }
     }
   }

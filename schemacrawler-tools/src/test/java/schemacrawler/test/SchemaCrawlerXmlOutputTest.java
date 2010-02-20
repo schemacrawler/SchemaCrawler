@@ -26,6 +26,7 @@ import static org.junit.Assert.fail;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.custommonkey.xmlunit.XMLUnit;
@@ -90,41 +91,25 @@ public class SchemaCrawlerXmlOutputTest
   }
 
   @Test
-  public void countOperatorValidXMLOutput()
+  public void validXMLOutput()
     throws Exception
   {
-    checkValidXmlOutput(Operation.count.name());
+    final List<String> failures = new ArrayList<String>();
+
+    checkValidXmlOutput(Operation.count.name(), failures);
+    checkValidXmlOutput(Operation.dump.name(), failures);
+    checkValidXmlOutput(SchemaTextDetailType.list_objects.name(), failures);
+    checkValidXmlOutput(SchemaTextDetailType.standard_schema.name(), failures);
+    checkValidXmlOutput(SchemaTextDetailType.verbose_schema.name(), failures);
+
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
+    }
   }
 
-  @Test
-  public void dumpOperatorValidXMLOutput()
-    throws Exception
-  {
-    checkValidXmlOutput(Operation.dump.name());
-  }
-
-  @Test
-  public void list_objectsValidXMLOutput()
-    throws Exception
-  {
-    checkValidXmlOutput(SchemaTextDetailType.list_objects.name());
-  }
-
-  @Test
-  public void standard_schemaValidXMLOutput()
-    throws Exception
-  {
-    checkValidXmlOutput(SchemaTextDetailType.standard_schema.name());
-  }
-
-  @Test
-  public void verbose_schemaValidXMLOutput()
-    throws Exception
-  {
-    checkValidXmlOutput(SchemaTextDetailType.verbose_schema.name());
-  }
-
-  private void checkValidXmlOutput(final String command)
+  private void checkValidXmlOutput(final String command,
+                                   final List<String> failures)
     throws IOException, Exception, SchemaCrawlerException
   {
     final String referenceFile = command + ".html";
@@ -147,14 +132,9 @@ public class SchemaCrawlerXmlOutputTest
     executable.setOutputOptions(outputOptions);
     executable.execute(testUtility.getConnection());
 
-    final List<String> failures = TestUtility
-      .compareOutput("xml_output/" + referenceFile,
-                     testOutputFile,
-                     OutputFormat.html);
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+    failures.addAll(TestUtility.compareOutput("xml_output/" + referenceFile,
+                                              testOutputFile,
+                                              OutputFormat.html));
   }
 
 }
