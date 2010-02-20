@@ -27,7 +27,7 @@ import java.sql.Connection;
 import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.tools.analysis.DatabaseWithWeakAssociations;
+import schemacrawler.tools.analysis.AnalyzedDatabase;
 import schemacrawler.tools.commandline.InfoLevel;
 import schemacrawler.tools.executable.BaseExecutable;
 
@@ -86,7 +86,7 @@ public final class GraphExecutable
     final Database database;
     if (infoLevel.ordinal() >= InfoLevel.maximum.ordinal())
     {
-      database = new DatabaseWithWeakAssociations(db);
+      database = new AnalyzedDatabase(db, infoLevel);
     }
     else
     {
@@ -105,8 +105,7 @@ public final class GraphExecutable
       for (final Table table: schema.getTables())
       {
         dotWriter.print(table);
-        dotWriter
-          .print(DatabaseWithWeakAssociations.getWeakAssociations(table));
+        dotWriter.print(AnalyzedDatabase.getWeakAssociations(table));
       }
     }
     dotWriter.close();

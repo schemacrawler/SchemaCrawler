@@ -73,11 +73,6 @@ final class TableRow
     }
   }
 
-  void add(final TableCell cell)
-  {
-    cells.add(cell);
-  }
-
   private String getFieldSeparator()
   {
     if (outputFormat == OutputFormat.csv)
@@ -128,6 +123,11 @@ final class TableRow
     }
 
     return buffer.toString();
+  }
+
+  void add(final TableCell cell)
+  {
+    cells.add(cell);
   }
 
 }
