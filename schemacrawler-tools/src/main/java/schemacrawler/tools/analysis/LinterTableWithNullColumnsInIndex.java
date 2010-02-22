@@ -4,7 +4,8 @@ package schemacrawler.tools.analysis;
 import java.util.ArrayList;
 import java.util.List;
 
-import schemacrawler.schema.Column;
+import schemacrawler.schema.Index;
+import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.Table;
 import sf.util.ObjectToString;
 
@@ -16,11 +17,11 @@ public class LinterTableWithNullColumnsInIndex
   {
     if (table != null)
     {
-      final Column[] nullableColumnsInUniqueIndex = findNullableColumnsInUniqueIndex(table
-        .getColumns());
+      final Index[] nullableColumnsInUniqueIndex = findNullableColumnsInUniqueIndex(table
+        .getIndices());
       if (nullableColumnsInUniqueIndex.length > 0)
       {
-        addLint(table, new Lint("nullable columns in unique index",
+        addLint(table, new Lint("unique indices have nullable columns",
           nullableColumnsInUniqueIndex)
         {
 
@@ -29,30 +30,38 @@ public class LinterTableWithNullColumnsInIndex
           @Override
           public String getLintValueAsString()
           {
-            final List<String> columnNames = new ArrayList<String>();
-            for (final Column column: nullableColumnsInUniqueIndex)
+            final List<String> indexNames = new ArrayList<String>();
+            for (final Index index: nullableColumnsInUniqueIndex)
             {
-              columnNames.add(column.getName());
+              indexNames.add(index.getName());
             }
-            return ObjectToString.toString(columnNames);
+            return ObjectToString.toString(indexNames);
           }
         });
       }
     }
   }
 
-  private Column[] findNullableColumnsInUniqueIndex(final Column[] columns)
+  private Index[] findNullableColumnsInUniqueIndex(final Index[] indices)
   {
-    final List<Column> nullableColumnsInUniqueIndex = new ArrayList<Column>();
-    for (final Column column: columns)
+    final List<Index> nullableColumnsInUniqueIndex = new ArrayList<Index>();
+    for (final Index index: indices)
     {
-      if (column.isNullable() && column.isPartOfUniqueIndex())
+      if (index.isUnique())
       {
-        nullableColumnsInUniqueIndex.add(column);
+        final IndexColumn[] columns = index.getColumns();
+        for (final IndexColumn indexColumn: columns)
+        {
+          if (indexColumn.isNullable())
+          {
+            nullableColumnsInUniqueIndex.add(index);
+            break;
+          }
+        }
       }
     }
     return nullableColumnsInUniqueIndex
-      .toArray(new Column[nullableColumnsInUniqueIndex.size()]);
+      .toArray(new Index[nullableColumnsInUniqueIndex.size()]);
   }
 
 }
