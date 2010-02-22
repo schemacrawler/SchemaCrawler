@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import sf.util.ObjectToString;
+import sf.util.Utility;
 
 public class LinterTableWithIncrementingColumns
   extends BaseLinter<Table>
@@ -21,9 +22,9 @@ public class LinterTableWithIncrementingColumns
   {
     if (table != null)
     {
-      final Column[] incrementingColumns = findIncrementingColumns(table
+      final HashMap<String, List<Column>> incrementingColumns = findIncrementingColumns(table
         .getColumns());
-      if (incrementingColumns.length > 0)
+      if (!incrementingColumns.isEmpty())
       {
         addLint(table, new Lint("incrementing columns", incrementingColumns)
         {
@@ -33,23 +34,30 @@ public class LinterTableWithIncrementingColumns
           @Override
           public String getLintValueAsString()
           {
-            final List<String> columnNames = new ArrayList<String>();
-            for (final Column column: incrementingColumns)
+            final StringBuilder buffer = new StringBuilder();
+            for (final List<Column> incrementingColumnsGroup: incrementingColumns
+              .values())
             {
-              columnNames.add(column.getName());
+              final List<String> columnNames = new ArrayList<String>();
+              for (final Column column: incrementingColumnsGroup)
+              {
+                columnNames.add(column.getName());
+              }
+              buffer.append(ObjectToString.toString(columnNames))
+                .append(Utility.NEWLINE);
             }
-            return ObjectToString.toString(columnNames);
+            return buffer.toString();
           }
         });
       }
     }
   }
 
-  private Column[] findIncrementingColumns(final Column[] columns)
+  private HashMap<String, List<Column>> findIncrementingColumns(final Column[] columns)
   {
     if (columns == null || columns.length <= 1)
     {
-      return new Column[0];
+      return new HashMap<String, List<Column>>();
     }
 
     final Pattern pattern = Pattern.compile("([^0-9]*)([0-9]+)");
@@ -85,21 +93,33 @@ public class LinterTableWithIncrementingColumns
       }
     }
 
-    final List<Column> incrementingColumns = new ArrayList<Column>();
+    final HashMap<String, List<Column>> incrementingColumns = new HashMap<String, List<Column>>();
+    for (final String columnNameBase: incrementingColumnsMap.keySet())
+    {
+      incrementingColumns.put(columnNameBase, new ArrayList<Column>());
+    }
+
     for (final Column column: columns)
     {
-      final Matcher matcher = pattern.matcher(column.getName());
+      final String columnName = column.getName();
+
+      if (incrementingColumnsMap.containsKey(columnName))
+      {
+        incrementingColumns.get(columnName).add(column);
+      }
+
+      final Matcher matcher = pattern.matcher(columnName);
       if (matcher.matches())
       {
         final String columnNameBase = matcher.group(1);
         if (incrementingColumnsMap.containsKey(columnNameBase))
         {
-          incrementingColumns.add(column);
+          incrementingColumns.get(columnNameBase).add(column);
         }
       }
     }
 
-    return incrementingColumns.toArray(new Column[incrementingColumns.size()]);
+    return incrementingColumns;
   }
 
 }

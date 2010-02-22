@@ -299,10 +299,9 @@ final class SchemaTextFormatter
         }
         else
         {
-          out.println(formattingHelper.createDefinitionRow(lint
-            .getDescription()));
-          out.println(formattingHelper.createDefinitionRow(lint
-            .getLintValueAsString()));
+          out.println(formattingHelper
+            .createDefinitionRow(lint.getDescription() + Utility.NEWLINE
+                                 + lint.getLintValueAsString()));
         }
       }
     }
