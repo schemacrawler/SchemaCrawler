@@ -16,7 +16,7 @@ public class LinterTableWithNoIndices
       final Index[] indices = table.getIndices();
       if (table.getPrimaryKey() == null && indices.length == 0)
       {
-        addLint(table, new Lint("table has no indices", Boolean.TRUE)
+        addLint(table, new Lint("no indices", Boolean.TRUE)
         {
 
           private static final long serialVersionUID = -9070658409181468265L;
