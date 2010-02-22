@@ -170,23 +170,31 @@ final class MetadataResultSet
   boolean getBoolean(final String columnName)
   {
     boolean value = false;
-    String stringValue = null;
     if (useColumn(columnName))
     {
       try
       {
-        stringValue = results.getString(columnName);
-        if (!Utility.isBlank(stringValue))
+        final Object booleanValue = results.getObject(columnName);
+        final String stringBooleanValue;
+        if (results.wasNull() || booleanValue == null)
+        {
+          stringBooleanValue = null;
+        }
+        else
+        {
+          stringBooleanValue = String.valueOf(booleanValue);
+        }
+        if (!Utility.isBlank(stringBooleanValue))
         {
           try
           {
-            final int booleanInt = Integer.parseInt(stringValue);
+            final int booleanInt = Integer.parseInt(stringBooleanValue);
             value = booleanInt != 0;
           }
           catch (final NumberFormatException e)
           {
-            value = stringValue.equalsIgnoreCase("YES")
-                    || Boolean.valueOf(stringValue).booleanValue();
+            value = stringBooleanValue.equalsIgnoreCase("YES")
+                    || Boolean.valueOf(stringBooleanValue).booleanValue();
           }
         }
       }
@@ -207,7 +215,8 @@ final class MetadataResultSet
    *        Column name
    * @param defaultValue
    *        Default value
-   * @return Integer value of the column, or the default if not available
+   * @return Integer value of the column, or the default if not
+   *         available
    */
   int getInt(final String columnName, final int defaultValue)
   {
