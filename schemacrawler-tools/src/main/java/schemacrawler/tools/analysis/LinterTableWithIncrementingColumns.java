@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
+import sf.util.ObjectToString;
 
 public class LinterTableWithIncrementingColumns
   extends BaseLinter<Table>
@@ -24,7 +25,22 @@ public class LinterTableWithIncrementingColumns
         .getColumns());
       if (incrementingColumns.length > 0)
       {
-        addLint(table, new Lint("incrementing columns", incrementingColumns));
+        addLint(table, new Lint("incrementing columns", incrementingColumns)
+        {
+
+          private static final long serialVersionUID = -9152369844685463520L;
+
+          @Override
+          public String getLintValueAsString()
+          {
+            final List<String> columnNames = new ArrayList<String>();
+            for (final Column column: incrementingColumns)
+            {
+              columnNames.add(column.getName());
+            }
+            return ObjectToString.toString(columnNames);
+          }
+        });
       }
     }
   }

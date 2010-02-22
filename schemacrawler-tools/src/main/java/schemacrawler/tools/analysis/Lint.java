@@ -3,8 +3,8 @@ package schemacrawler.tools.analysis;
 
 import java.io.Serializable;
 
-public final class Lint
-  implements Serializable
+public abstract class Lint
+  implements Serializable, Comparable<Lint>
 {
 
   private static final long serialVersionUID = -8627082144974643415L;
@@ -12,12 +12,24 @@ public final class Lint
   public static final String LINT_KEY = "schemacrawler.lint";
 
   private final String description;
-  private final Serializable lintValue;
+  private final Object lintValue;
 
-  public Lint(final String description, final Serializable lintValue)
+  Lint(final String description, final Serializable lintValue)
   {
     this.description = description;
     this.lintValue = lintValue;
+  }
+
+  public final int compareTo(final Lint lint)
+  {
+    if (description == null || lint == null)
+    {
+      return -1;
+    }
+    else
+    {
+      return description.compareTo(lint.description);
+    }
   }
 
   @Override
@@ -61,15 +73,17 @@ public final class Lint
     return true;
   }
 
-  public String getDescription()
+  public final String getDescription()
   {
     return description;
   }
 
-  public Serializable getLintValue()
+  public final Object getLintValue()
   {
     return lintValue;
   }
+
+  public abstract String getLintValueAsString();
 
   @Override
   public int hashCode()
@@ -84,7 +98,7 @@ public final class Lint
   @Override
   public String toString()
   {
-    return description + "=" + lintValue;
+    return description + "=" + getLintValueAsString();
   }
 
 }
