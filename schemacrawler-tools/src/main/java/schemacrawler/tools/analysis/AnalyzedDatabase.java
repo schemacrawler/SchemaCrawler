@@ -56,7 +56,9 @@ public final class AnalyzedDatabase
     {
       final List<Lint> lintList = table.getAttribute(Lint.LINT_KEY,
                                                      new ArrayList<Lint>());
-      return lintList.toArray(new Lint[lintList.size()]);
+      final Lint[] lintArray = lintList.toArray(new Lint[lintList.size()]);
+      Arrays.sort(lintArray);
+      return lintArray;
     }
   }
 

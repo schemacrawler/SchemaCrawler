@@ -15,7 +15,17 @@ public class LinterTableWithSingleColumn
       final Column[] columns = table.getColumns();
       if (columns.length <= 1)
       {
-        addLint(table, new Lint("table has single column", Boolean.TRUE));
+        addLint(table, new Lint("table has single column", Boolean.TRUE)
+        {
+
+          private static final long serialVersionUID = 2580606298217022285L;
+
+          @Override
+          public String getLintValueAsString()
+          {
+            return getLintValue().toString();
+          }
+        });
       }
     }
   }

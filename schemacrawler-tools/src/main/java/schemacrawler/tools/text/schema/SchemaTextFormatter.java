@@ -301,8 +301,8 @@ final class SchemaTextFormatter
         {
           out.println(formattingHelper.createDefinitionRow(lint
             .getDescription()));
-          out.println(formattingHelper
-            .createDefinitionRow(lintValue.toString()));
+          out.println(formattingHelper.createDefinitionRow(lint
+            .getLintValueAsString()));
         }
       }
     }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
+import sf.util.ObjectToString;
 
 public class LinterTableWithNullColumnsInIndex
   extends BaseLinter<Table>
@@ -20,7 +21,22 @@ public class LinterTableWithNullColumnsInIndex
       if (nullableColumnsInUniqueIndex.length > 0)
       {
         addLint(table, new Lint("nullable columns in unique index",
-                                nullableColumnsInUniqueIndex));
+          nullableColumnsInUniqueIndex)
+        {
+
+          private static final long serialVersionUID = -1954217739621236510L;
+
+          @Override
+          public String getLintValueAsString()
+          {
+            final List<String> columnNames = new ArrayList<String>();
+            for (final Column column: nullableColumnsInUniqueIndex)
+            {
+              columnNames.add(column.getName());
+            }
+            return ObjectToString.toString(columnNames);
+          }
+        });
       }
     }
   }
