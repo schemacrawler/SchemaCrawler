@@ -51,6 +51,7 @@ public enum InfoLevel
         schemaInfoLevel = SchemaInfoLevel.standard();
         break;
     }
+    schemaInfoLevel.setTag(name());
     return schemaInfoLevel;
   }
 
