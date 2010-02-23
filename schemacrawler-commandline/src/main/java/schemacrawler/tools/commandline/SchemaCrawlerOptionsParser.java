@@ -117,7 +117,6 @@ final class SchemaCrawlerOptionsParser
         final String infoLevel = optionInfoLevel.getValue();
         final SchemaInfoLevel schemaInfoLevel = InfoLevel.valueOf(infoLevel)
           .getSchemaInfoLevel();
-        schemaInfoLevel.setTag(infoLevel);
         options.setSchemaInfoLevel(schemaInfoLevel);
       }
       catch (final IllegalArgumentException e)

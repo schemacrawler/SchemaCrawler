@@ -84,7 +84,7 @@ public final class GraphExecutable
       infoLevel = InfoLevel.unknown;
     }
     final Database database;
-    if (infoLevel.ordinal() >= InfoLevel.maximum.ordinal())
+    if (infoLevel.ordinal() >= InfoLevel.lint.ordinal())
     {
       database = new AnalyzedDatabase(db, infoLevel);
     }

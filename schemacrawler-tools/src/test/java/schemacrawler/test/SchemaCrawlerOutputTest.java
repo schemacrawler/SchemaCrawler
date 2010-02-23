@@ -41,6 +41,7 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.tools.commandline.InfoLevel;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
@@ -162,9 +163,12 @@ public class SchemaCrawlerOutputTest
     throws Exception
   {
     final List<String> failures = new ArrayList<String>();
-    final SchemaInfoLevel[] schemaInfoLevels = new SchemaInfoLevel[] {};
-    for (final SchemaInfoLevel infoLevel: schemaInfoLevels)
+    for (final InfoLevel infoLevel: InfoLevel.values())
     {
+      if (infoLevel == InfoLevel.unknown)
+      {
+        continue;
+      }
       for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
         .values())
       {
@@ -186,7 +190,7 @@ public class SchemaCrawlerOutputTest
         final Config config = Config.load(SchemaCrawlerOutputTest.class
           .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions(config);
-        schemaCrawlerOptions.setSchemaInfoLevel(infoLevel);
+        schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
 
         final DatabaseConnectionOptions connectionOptions = testUtility
           .getDatabaseConnectionOptions();
