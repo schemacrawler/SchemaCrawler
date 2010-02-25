@@ -119,7 +119,7 @@ public class SortingTest
   }
 
   @SuppressWarnings("boxing")
-  private void checkColumnSort(String tableName,
+  private void checkColumnSort(final String tableName,
                                final String[] expectedValues,
                                final boolean sortAlphabetically)
     throws Exception
@@ -149,7 +149,7 @@ public class SortingTest
   }
 
   @SuppressWarnings("boxing")
-  private void checkFkSort(String tableName,
+  private void checkFkSort(final String tableName,
                            final String[] expectedValues,
                            final boolean sortAlphabetically)
     throws Exception
@@ -161,7 +161,7 @@ public class SortingTest
     assertNotNull("Schema not found", schema);
 
     final Table[] tables = schema.getTables();
-    assertEquals("Table count does not match", 5, tables.length);
+    assertEquals("Table count does not match", 6, tables.length);
     for (final Table table: tables)
     {
       if (table.getName().equals(tableName))
@@ -181,7 +181,7 @@ public class SortingTest
     }
   }
 
-  private void checkIndexSort(String tableName,
+  private void checkIndexSort(final String tableName,
                               final String[] expectedValues,
                               final boolean sortAlphabetically)
     throws Exception
@@ -193,7 +193,7 @@ public class SortingTest
     assertNotNull("Schema not found", schema);
 
     final Table[] tables = schema.getTables();
-    assertEquals("Table count does not match", 5, tables.length);
+    assertEquals("Table count does not match", 6, tables.length);
     for (final Table table: tables)
     {
       if (table.getName().equals(tableName))

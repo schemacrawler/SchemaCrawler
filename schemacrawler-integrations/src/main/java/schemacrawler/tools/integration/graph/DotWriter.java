@@ -132,6 +132,21 @@ final class DotWriter
     out.println(text);
   }
 
+  public void print(final ColumnMap[] weakAssociations)
+  {
+    if (weakAssociations == null)
+    {
+      return;
+    }
+
+    for (final ColumnMap columnMap: weakAssociations)
+    {
+      final Column primaryKeyColumn = columnMap.getPrimaryKeyColumn();
+      final Column foreignKeyColumn = columnMap.getForeignKeyColumn();
+      out.write(printColumnAssociation("", primaryKeyColumn, foreignKeyColumn));
+    }
+  }
+
   public void print(final SchemaCrawlerInfo schemaCrawlerInfo,
                     final DatabaseInfo databaseInfo,
                     final JdbcDriverInfo jdbcDriverInfo)
@@ -260,21 +275,6 @@ final class DotWriter
 
     buffer.append(Utility.NEWLINE).append(Utility.NEWLINE);
     out.write(buffer.toString());
-  }
-
-  public void print(final ColumnMap[] weakAssociations)
-  {
-    if (weakAssociations == null)
-    {
-      return;
-    }
-
-    for (final ColumnMap columnMap: weakAssociations)
-    {
-      final Column primaryKeyColumn = columnMap.getPrimaryKeyColumn();
-      final Column foreignKeyColumn = columnMap.getForeignKeyColumn();
-      out.write(printColumnAssociation("", primaryKeyColumn, foreignKeyColumn));
-    }
   }
 
 }

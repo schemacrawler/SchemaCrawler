@@ -80,7 +80,7 @@ public class SchemaSerializationTest
 
     final Schema schema = database.getSchema("PUBLIC");
     assertNotNull("Could not obtain schema", schema);
-    assertEquals("Unexpected number of tables in the schema", 5, schema
+    assertEquals("Unexpected number of tables in the schema", 6, schema
       .getTables().length);
 
     XmlDatabase xmlDatabase;
@@ -101,7 +101,7 @@ public class SchemaSerializationTest
     final Schema deserializedSchema = deserializedDatabase.getSchema("PUBLIC");
     assertNotNull("Could not obtain deserialized schema", deserializedSchema);
     assertEquals("Unexpected number of tables in the deserialized schema",
-                 5,
+                 6,
                  deserializedSchema.getTables().length);
 
     writer = new StringWriter();
