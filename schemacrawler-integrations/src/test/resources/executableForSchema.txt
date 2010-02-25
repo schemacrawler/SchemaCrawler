@@ -4,7 +4,93 @@ Tables
 ========================================================================
 
 
-PUBLIC.CUSTOMER                                                  [table]
+PUBLIC.AUTHORS                                                   [table]
+------------------------------------------------------------------------
+4   ADDRESS1                          VARCHAR(255)                
+5   ADDRESS2                          VARCHAR(255)                
+6   CITY                              VARCHAR(50)                 
+9   COUNTRY                           VARCHAR(50)                 
+2   FIRSTNAME                         VARCHAR(20) not null        
+1   ID                                INTEGER not null            
+3   LASTNAME                          VARCHAR(20) not null        
+8   POSTALCODE                        VARCHAR(10)                 
+7   STATE                             VARCHAR(2)                  
+
+SYS_IDX_47                                                 [primary key]
+1   ID                                ascending                   
+
+FK_Z_AUTHOR                                [foreign key, with no action]
+ 1  ID --> PUBLIC.BOOKAUTHORS.AUTHORID                              
+
+IDX_A_AUTHORS                                         [non-unique index]
+6   CITY                              ascending                   
+7   STATE                             ascending                   
+8   POSTALCODE                        ascending                   
+9   COUNTRY                           ascending                   
+
+IDX_B_AUTHORS                                         [non-unique index]
+3   LASTNAME                          ascending                   
+2   FIRSTNAME                         ascending                   
+
+
+PUBLIC.AUTHORSLIST                                                [view]
+------------------------------------------------------------------------
+2   FIRSTNAME                         VARCHAR(20)                 
+1   ID                                INTEGER                     
+3   LASTNAME                          VARCHAR(20)                 
+
+                                                            [definition]
+  SELECT Id, FirstName, LastName FROM Authors
+
+
+PUBLIC.BOOKAUTHORS                                               [table]
+------------------------------------------------------------------------
+2   AUTHORID                          INTEGER not null            
+1   BOOKID                            INTEGER not null            
+
+FK_Y_BOOK                                  [foreign key, with no action]
+ 1  PUBLIC.BOOKS.ID --> BOOKID                                    
+
+FK_Z_AUTHOR                                [foreign key, with no action]
+ 1  PUBLIC.AUTHORS.ID --> AUTHORID                                
+
+SYS_IDX_50                                            [non-unique index]
+1   BOOKID                            ascending                   
+
+SYS_IDX_52                                            [non-unique index]
+2   AUTHORID                          ascending                   
+
+UIDX_BOOKAUTHORS                                          [unique index]
+1   BOOKID                            ascending                   
+2   AUTHORID                          ascending                   
+
+
+PUBLIC.BOOKS                                                     [table]
+------------------------------------------------------------------------
+3   DESCRIPTION                       VARCHAR(255)                
+1   ID                                INTEGER not null            
+6   PRICE                             FLOAT(17, 0)                
+5   PUBLICATIONDATE                   TIMESTAMP                   
+4   PUBLISHERID                       INTEGER not null            
+2   TITLE                             VARCHAR(255) not null       
+
+SYS_IDX_48                                                 [primary key]
+1   ID                                ascending                   
+
+FK_Y_BOOK                                  [foreign key, with no action]
+ 1  ID --> PUBLIC.BOOKAUTHORS.BOOKID                              
+
+
+PUBLIC.PUBLISHERS                                                [table]
+------------------------------------------------------------------------
+1   ID                                INTEGER not null            
+2   PUBLISHER                         VARCHAR(255)                
+
+SYS_IDX_46                                                 [primary key]
+1   ID                                ascending                   
+
+
+SCHEMACRAWLER.CUSTOMER                                           [table]
 ------------------------------------------------------------------------
 5   CITY                              VARCHAR(255)                
 2   FIRSTNAME                         VARCHAR(255)                
@@ -12,14 +98,14 @@ PUBLIC.CUSTOMER                                                  [table]
 3   LASTNAME                          VARCHAR(255)                
 4   STREET                            VARCHAR(255)                
 
-SYS_IDX_46                                                 [primary key]
+SYS_IDX_57                                                 [primary key]
 1   ID                                ascending                   
 
 FK_INVOICE_CUSTOMER                        [foreign key, with no action]
- 1  ID --> PUBLIC.INVOICE.CUSTOMERID                              
+ 1  ID --> SCHEMACRAWLER.INVOICE.CUSTOMERID                              
 
 
-PUBLIC.CUSTOMERLIST                                               [view]
+SCHEMACRAWLER.CUSTOMERLIST                                        [view]
 ------------------------------------------------------------------------
 2   FIRSTNAME                         VARCHAR(255)                
 1   ID                                INTEGER                     
@@ -29,29 +115,29 @@ PUBLIC.CUSTOMERLIST                                               [view]
   SELECT ID, FIRSTNAME, LASTNAME FROM CUSTOMER
 
 
-PUBLIC.INVOICE                                                   [table]
+SCHEMACRAWLER.INVOICE                                            [table]
 ------------------------------------------------------------------------
 2   CUSTOMERID                        INTEGER                     
 1   ID                                INTEGER not null            
 3   TOTAL                             FLOAT(17, 0)                
 
-SYS_IDX_48                                                 [primary key]
+SYS_IDX_59                                                 [primary key]
 1   ID                                ascending                   
 
 FK_B_ITEM_INVOICE                          [foreign key, with no action]
- 1  ID --> PUBLIC.ITEM.INVOICEID                                  
+ 1  ID --> SCHEMACRAWLER.ITEM.INVOICEID                              
 
 FK_INVOICE_CUSTOMER                        [foreign key, with no action]
- 1  PUBLIC.CUSTOMER.ID --> CUSTOMERID                              
+ 1  SCHEMACRAWLER.CUSTOMER.ID --> CUSTOMERID                              
 
 INDEX_INVOICE_CUSTOMER                                [non-unique index]
 2   CUSTOMERID                        ascending                   
 
-SYS_IDX_50                                            [non-unique index]
+SYS_IDX_61                                            [non-unique index]
 2   CUSTOMERID                        ascending                   
 
 
-PUBLIC.ITEM                                                      [table]
+SCHEMACRAWLER.ITEM                                               [table]
 ------------------------------------------------------------------------
 5   COST                              FLOAT(17, 0)                
 1   INVOICEID                         INTEGER not null            
@@ -59,15 +145,15 @@ PUBLIC.ITEM                                                      [table]
 3   PRODUCTID                         INTEGER                     
 4   QUANTITY                          INTEGER                     
 
-SYS_IDX_52                                                 [primary key]
+SYS_IDX_63                                                 [primary key]
 1   INVOICEID                         ascending                   
 2   ITEM                              ascending                   
 
 FK_A_ITEM_PRODUCT                          [foreign key, with no action]
- 1  PUBLIC.PRODUCT.ID --> PRODUCTID                               
+ 1  SCHEMACRAWLER.PRODUCT.ID --> PRODUCTID                              
 
 FK_B_ITEM_INVOICE                          [foreign key, with no action]
- 1  PUBLIC.INVOICE.ID --> INVOICEID                               
+ 1  SCHEMACRAWLER.INVOICE.ID --> INVOICEID                              
 
 INDEX_ITEM_INVOICE                                    [non-unique index]
 1   INVOICEID                         ascending                   
@@ -75,27 +161,27 @@ INDEX_ITEM_INVOICE                                    [non-unique index]
 INDEX_ITEM_PRODUCT                                    [non-unique index]
 3   PRODUCTID                         ascending                   
 
-SYS_IDX_53                                            [non-unique index]
+SYS_IDX_64                                            [non-unique index]
 1   INVOICEID                         ascending                   
 
-SYS_IDX_55                                            [non-unique index]
+SYS_IDX_66                                            [non-unique index]
 3   PRODUCTID                         ascending                   
 
 
-PUBLIC.PRODUCT                                                   [table]
+SCHEMACRAWLER.PRODUCT                                            [table]
 ------------------------------------------------------------------------
 1   ID                                INTEGER not null            
 2   NAME                              VARCHAR(255)                
 3   PRICE                             FLOAT(17, 0)                
 
-SYS_IDX_47                                                 [primary key]
+SYS_IDX_58                                                 [primary key]
 1   ID                                ascending                   
 
 FK_A_ITEM_PRODUCT                          [foreign key, with no action]
- 1  ID --> PUBLIC.ITEM.PRODUCTID                                  
+ 1  ID --> SCHEMACRAWLER.ITEM.PRODUCTID                              
 
 
-PUBLIC.SUPPLIER                                                  [table]
+SCHEMACRAWLER.SUPPLIER                                           [table]
 ------------------------------------------------------------------------
 1   SUPPLIER_ID                       INTEGER                     
 2   SUPPLIER_NAME                     VARCHAR(255)                
@@ -107,29 +193,6 @@ INDEX_A_SUPPLIER                                      [non-unique index]
 INDEX_B_SUPPLIER                                      [non-unique index]
 1   SUPPLIER_ID                       ascending                   
 2   SUPPLIER_NAME                     ascending                   
-
-
-SCHEMACRAWLER.ITEM                                               [table]
-------------------------------------------------------------------------
-5   COST                              FLOAT(17, 0)                
-1   INVOICEID                         INTEGER not null            
-2   ITEM                              INTEGER not null            
-3   PRODUCTID                         INTEGER                     
-4   QUANTITY                          INTEGER                     
-
-SYS_IDX_59                                                 [primary key]
-1   INVOICEID                         ascending                   
-2   ITEM                              ascending                   
-
-
-SCHEMACRAWLER.PRODUCT2                                           [table]
-------------------------------------------------------------------------
-1   ID                                INTEGER not null            
-2   NAME                              VARCHAR(255)                
-3   PRICE                             FLOAT(17, 0)                
-
-SYS_IDX_61                                                 [primary key]
-1   ID                                ascending                   
 
 
 

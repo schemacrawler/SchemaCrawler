@@ -13,7 +13,7 @@
 
   <bean id="host" class="java.lang.String">
     <constructor-arg type="java.lang.String">
-      <value>192.168.1.100</value>
+      <value>172.17.30.50</value>
     </constructor-arg>
   </bean>
 

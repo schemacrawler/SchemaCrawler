@@ -25,6 +25,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -66,6 +67,7 @@ public class SpringIntegrationTest
   public void testExecutables()
     throws Exception
   {
+    final List<String> failures = new ArrayList<String>();
     for (final String beanDefinitionName: appContext.getBeanDefinitionNames())
     {
       final Object bean = appContext.getBean(beanDefinitionName);
@@ -75,9 +77,13 @@ public class SpringIntegrationTest
         if (!"graph".equals(executable.getCommand())
             && !(executable instanceof GraphExecutable))
         {
-          executeAndCheckForOutputFile(beanDefinitionName, executable);
+          executeAndCheckForOutputFile(beanDefinitionName, executable, failures);
         }
       }
+    }
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
     }
   }
 
@@ -91,11 +97,12 @@ public class SpringIntegrationTest
     final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
     assertNotNull("Could not obtain schema", schema);
 
-    assertEquals(6, schema.getTables().length);
+    assertEquals(5, schema.getTables().length);
   }
 
   private void executeAndCheckForOutputFile(final String executableName,
-                                            final Executable executable)
+                                            final Executable executable,
+                                            final List<String> failures)
     throws Exception
   {
     final File testOutputFile = File.createTempFile("schemacrawler."
@@ -107,14 +114,9 @@ public class SpringIntegrationTest
       .getAbsolutePath());
     executable.execute(testUtility.getConnection());
 
-    final List<String> failures = TestUtility
-      .compareOutput(executableName + ".txt",
-                     testOutputFile,
-                     (OutputFormat) null);
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+    failures.addAll(TestUtility.compareOutput(executableName + ".txt",
+                                              testOutputFile,
+                                              (OutputFormat) null));
   }
 
 }

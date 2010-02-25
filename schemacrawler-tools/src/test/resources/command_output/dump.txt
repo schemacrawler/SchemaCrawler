@@ -5,7 +5,137 @@ Dump
 
 
 
-PUBLIC.CUSTOMER
+PUBLIC.AUTHORS
+------------------------------------------------------------------------
+ID,FIRSTNAME,LASTNAME,ADDRESS1,ADDRESS2,CITY,STATE,POSTALCODE,COUNTRY
+1,Oren,Shaffer,900-2273 Integer Avenue,"",Farmer City,MD,37032,Cook Islands
+2,Octavia,Burke,955-7635 Natoque St.,"",Kalispell,MS,66863,Cape Verde
+3,Aiko,Stafford,Ap #554-7132 Dictum Street,"",Kankakee,ID,59675,Brunei Darussalam
+4,Christine,Aguilar,Ap #698-4255 Sodales Av.,"",Riverton,MA,24828,Ghana
+5,Kenneth,Curry,"P.O. Box 305, 8335 Cras St.","",Somersworth,ME,36619,Kazakhstan
+6,Lillian,Nieves,"P.O. Box 827, 1923 Ornare Avenue","",Sierra Vista,MA,12684,Mali
+7,Damian,Donaldson,5047 Eu Rd.,"",LaGrange,UT,64681,Thailand
+8,Jordan,Woodward,Ap #486-6702 Iaculis Road,"",Glen Cove,OH,18011,Libyan Arab Jamahiriya
+9,Adele,Holmes,7585 Magna. Ave,"",Villa Park,ME,00619,Cayman Islands
+10,Jillian,Mckee,1185 Per Ave,"",Rapid City,LA,11671,New Caledonia
+11,Mikayla,Knight,Ap #375-6798 Auctor St.,"",Sault Ste. Marie,CO,26558,Lesotho
+12,Denise,Dominguez,324-4875 Vitae Av.,"",Hudson,SD,41933,Russian Federation
+13,Ira,Dunn,8869 Velit Rd.,"",Lincoln,IA,74182,Zambia
+14,Elvis,Blevins,Ap #629-9258 In St.,"",Abilene,WY,19269,Saint Vincent and The Grenadines
+15,Theodore,Gilliam,"6293 Enim, Ave","",Baltimore,UT,86549,Saudi Arabia
+16,Jared,White,"P.O. Box 806, 6212 Adipiscing, Road","",Thibodaux,KS,90172,China
+17,Melyssa,Willis,Ap #467-9359 Ipsum Rd.,"",Roanoke,OH,45706,Niger
+18,Hilary,Marks,Ap #361-1093 Vitae Street,"",Fort Lauderdale,ID,10855,Venezuela
+19,Frances,Ellis,Ap #458-4569 Sem. Ave,"",Durham,MS,50037,Gambia
+20,Lenore,Cooley,"P.O. Box 937, 3415 Nulla Ave","",Half Moon Bay,OR,51967,Canada
+
+
+
+PUBLIC.AUTHORSLIST
+------------------------------------------------------------------------
+ID,FIRSTNAME,LASTNAME
+1,Oren,Shaffer
+2,Octavia,Burke
+3,Aiko,Stafford
+4,Christine,Aguilar
+5,Kenneth,Curry
+6,Lillian,Nieves
+7,Damian,Donaldson
+8,Jordan,Woodward
+9,Adele,Holmes
+10,Jillian,Mckee
+11,Mikayla,Knight
+12,Denise,Dominguez
+13,Ira,Dunn
+14,Elvis,Blevins
+15,Theodore,Gilliam
+16,Jared,White
+17,Melyssa,Willis
+18,Hilary,Marks
+19,Frances,Ellis
+20,Lenore,Cooley
+
+
+
+PUBLIC.BOOKAUTHORS
+------------------------------------------------------------------------
+BOOKID,AUTHORID
+1,7
+2,4
+2,6
+3,1
+3,4
+3,5
+3,6
+4,9
+5,5
+5,7
+6,1
+6,8
+7,8
+7,9
+8,6
+9,3
+9,6
+9,7
+10,1
+10,9
+
+
+
+PUBLIC.BOOKS
+------------------------------------------------------------------------
+ID,TITLE,DESCRIPTION,PUBLISHERID,PUBLICATIONDATE,PRICE
+1,Neque. In Ornare Sagittis,"Dis Parturient Montes, Nascetur Ridiculus Mus.",18,2000-10-27 00:00:00.0,69.99
+2,Duis Dignissim Tempor Arcu.,"Eu, Euismod Ac, Fermentum Vel,",20,2002-05-09 00:00:00.0,27.99
+3,"Lacinia Orci, Consectetuer Euismod Est","Sem Ut Cursus Luctus, Ipsum Leo Elementum Sem, Vitae Aliquam Eros Turpis Non Enim.",15,2006-04-14 00:00:00.0,37.99
+4,Vitae Sodales,"Rhoncus. Nullam Velit Dui, Semper Et, Lacinia Vitae, Sodales At,",1,2007-05-21 00:00:00.0,64.99
+5,Posuere Cubilia Curae; Phasellus Ornare.,"Risus A Ultricies Adipiscing, Enim Mi Tempor Lorem, Eget Mollis Lectus Pede",7,2010-05-14 00:00:00.0,83.99
+6,Tincidunt Aliquam Arcu.,"Tristique Pellentesque, Tellus Sem Mollis Dui,",13,2009-07-17 00:00:00.0,31.99
+7,"Auctor Quis, Tristique","Vel, Faucibus Id, Libero. Donec Consectetuer Mauris Id Sapien. Cras Dolor Dolor, Tempus Non, Lacinia",7,1999-06-09 00:00:00.0,76.99
+8,Sem. Nulla Interdum. Curabitur,Turpis. Nulla Aliquet. Proin Velit. Sed Malesuada Augue Ut,7,2009-01-24 00:00:00.0,30.99
+9,Lobortis Ultrices. Vivamus Rhoncus.,"Est, Mollis Non, Cursus Non, Egestas A, Dui. Cras Pellentesque. Sed Dictum.",1,2004-06-25 00:00:00.0,69.99
+10,"Quisque Purus Sapien, Gravida",Et Ultrices Posuere Cubilia Curae; Phasellus Ornare. Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus.,19,2005-11-14 00:00:00.0,34.99
+11,Phasellus,Egestas. Duis Ac Arcu. Nunc Mauris.,5,2003-10-19 00:00:00.0,89.99
+12,Non Massa Non,"Est Mauris, Rhoncus Id, Mollis",5,2002-05-04 00:00:00.0,64.99
+13,Gravida Mauris Ut Mi. Duis,"Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus. Proin Nisl Sem, Consequat Nec,",8,2005-08-03 00:00:00.0,25.99
+14,"Auctor Vitae,","Suspendisse Dui. Fusce Diam Nunc, Ullamcorper Eu, Euismod Ac, Fermentum Vel, Mauris. Integer Sem Elit, Pharetra",2,2009-02-09 00:00:00.0,84.99
+15,Ultrices Posuere Cubilia,"Elit, Pellentesque A, Facilisis Non, Bibendum Sed, Est. Nunc Laoreet Lectus Quis Massa. Mauris Vestibulum, Neque Sed",20,2001-08-28 00:00:00.0,77.99
+16,"Vitae, Aliquet Nec, Imperdiet",Cursus Purus. Nullam,6,2003-08-30 00:00:00.0,47.99
+17,"Parturient Montes, Nascetur Ridiculus","Ornare, Lectus Ante Dictum Mi, Ac Mattis Velit Justo Nec Ante. Maecenas Mi Felis, Adipiscing Fringilla, Porttitor Vulputate, Posuere Vulputate,",17,2005-06-24 00:00:00.0,36.99
+18,Lacus. Etiam Bibendum,Facilisi. Sed Neque. Sed,18,2008-01-28 00:00:00.0,63.99
+19,Luctus Lobortis.,"Rutrum. Fusce Dolor Quam, Elementum At, Egestas A, Scelerisque Sed, Sapien.",5,2006-08-23 00:00:00.0,67.99
+20,"Dui, In Sodales Elit Erat",Sociis Natoque Penatibus Et Magnis Dis Parturient,5,2002-09-29 00:00:00.0,43.99
+
+
+
+PUBLIC.PUBLISHERS
+------------------------------------------------------------------------
+ID,PUBLISHER
+1,Dalton Lewis
+2,Macaulay Bryant
+3,Nash Fox
+4,Leonard Bradshaw
+5,Brendan Kramer
+6,Tobias Mosley
+7,Zachary Tate
+8,Derek Lee
+9,Neil Tyson
+10,Shad Robinson
+11,Justin Schroeder
+12,Leonard Atkinson
+13,Hyatt Caldwell
+14,Neil Fletcher
+15,Ferdinand Tucker
+16,Barrett Mclaughlin
+17,Hayden Potts
+18,Neville Cardenas
+19,Allistair Gilbert
+20,Cooper Chapman
+
+
+
+SCHEMACRAWLER.CUSTOMER
 ------------------------------------------------------------------------
 ID,FIRSTNAME,LASTNAME,STREET,CITY
 0,Laura,Steel,429 Seventh Av.,Dallas
@@ -61,7 +191,7 @@ ID,FIRSTNAME,LASTNAME,STREET,CITY
 
 
 
-PUBLIC.CUSTOMERLIST
+SCHEMACRAWLER.CUSTOMERLIST
 ------------------------------------------------------------------------
 ID,FIRSTNAME,LASTNAME
 0,Laura,Steel
@@ -117,7 +247,7 @@ ID,FIRSTNAME,LASTNAME
 
 
 
-PUBLIC.INVOICE
+SCHEMACRAWLER.INVOICE
 ------------------------------------------------------------------------
 ID,CUSTOMERID,TOTAL
 0,0,2608.0
@@ -173,7 +303,7 @@ ID,CUSTOMERID,TOTAL
 
 
 
-PUBLIC.ITEM
+SCHEMACRAWLER.ITEM
 ------------------------------------------------------------------------
 INVOICEID,ITEM,PRODUCTID,QUANTITY,COST
 0,0,7,12,12.6
@@ -829,7 +959,7 @@ INVOICEID,ITEM,PRODUCTID,QUANTITY,COST
 
 
 
-PUBLIC.PRODUCT
+SCHEMACRAWLER.PRODUCT
 ------------------------------------------------------------------------
 ID,NAME,PRICE
 0,Iron Iron,5.4
@@ -885,52 +1015,9 @@ ID,NAME,PRICE
 
 
 
-PUBLIC.SUPPLIER
+SCHEMACRAWLER.SUPPLIER
 ------------------------------------------------------------------------
 SUPPLIER_ID,SUPPLIER_NAME
 1,IBM
-
-
-
-SCHEMACRAWLER.ITEM
-------------------------------------------------------------------------
-INVOICEID,ITEM,PRODUCTID,QUANTITY,COST
-0,0,7,12,12.6
-0,1,14,19,18.6
-0,2,47,3,26.7
-0,3,1,9,37.2
-0,4,47,1,26.7
-0,5,12,15,25.2
-0,6,16,9,29.1
-0,7,7,10,12.6
-0,8,0,23,8.1
-0,9,35,4,11.4
-0,10,4,8,19.2
-0,11,12,4,25.2
-0,12,1,11,37.2
-1,0,40,8,4.2
-1,1,0,9,8.1
-1,2,19,6,16.5
-1,3,38,8,32.4
-1,4,16,16,29.1
-1,5,25,9,24.3
-1,6,25,19,24.3
-
-
-
-SCHEMACRAWLER.PRODUCT2
-------------------------------------------------------------------------
-ID,NAME,PRICE
-0,Iron Iron,5.4
-1,Chair Shoe,24.8
-2,Telephone Clock,24.8
-3,Chair Chair,25.4
-4,Ice Tea Shoe,12.8
-5,Clock Clock,23.6
-6,Ice Tea Chair,9.8
-7,Telephone Shoe,8.4
-8,Ice Tea Clock,22.6
-9,Clock Telephone,17.2
-10,Telephone Ice Tea,20.4
 
 

@@ -64,22 +64,24 @@ public class ResultColumnsTest
   {
 
     final String[] columnNames = {
-        "PUBLIC.CUSTOMER.FIRSTNAME", "PUBLIC.CUSTOMER.LASTNAME", "ADDRESS", "",
+        "PUBLIC.BOOKS.BOOK", "", "PUBLIC.BOOKS.PRICE",
     };
     final String[] columnDataTypes = {
-        "VARCHAR", "VARCHAR", "VARCHAR", "DOUBLE",
+        "VARCHAR", "VARCHAR", "FLOAT",
     };
 
-    final String sql = "SELECT "
-                       + "  CUSTOMER.FIRSTNAME, "
-                       + "  CUSTOMER.LASTNAME, "
-                       + "  CUSTOMER.STREET + ', ' + CUSTOMER.CITY AS ADDRESS, "
-                       + "  SUM(INVOICE.TOTAL) " + "FROM " + "  CUSTOMER "
-                       + "  INNER JOIN INVOICE "
-                       + "  ON INVOICE.CUSTOMERID = CUSTOMER.ID " + "GROUP BY "
-                       + "  CUSTOMER.FIRSTNAME, " + "  CUSTOMER.LASTNAME, "
-                       + "  CUSTOMER.STREET, " + "  CUSTOMER.CITY "
-                       + "ORDER BY " + "  SUM(INVOICE.TOTAL) DESC";
+    final String sql = ""
+                       + "SELECT                                                                         "
+                       + " BOOKS.TITLE AS BOOK,                                                          "
+                       + " AUTHORS.FIRSTNAME + ' ' + AUTHORS.LASTNAME,                                   "
+                       + " BOOKS.PRICE                                                                   "
+                       + "FROM                                                                           "
+                       + " BOOKS                                                                         "
+                       + " INNER JOIN BOOKAUTHORS                                                        "
+                       + "   ON BOOKS.ID = BOOKAUTHORS.BOOKID                                            "
+                       + " INNER JOIN AUTHORS                                                            "
+                       + "   ON AUTHORS.ID = BOOKAUTHORS.AUTHORID                                        ";
+
     final Connection connection = testUtility.getConnection();
     final Statement statement = connection.createStatement();
     final ResultSet resultSet = statement.executeQuery(sql);
@@ -90,7 +92,9 @@ public class ResultColumnsTest
 
     assertNotNull("Could not obtain result columns", resultColumns);
     final ResultsColumn[] columns = resultColumns.getColumns();
-    assertEquals("Column count does not match", 4, columns.length);
+    assertEquals("Column count does not match",
+                 columnNames.length,
+                 columns.length);
     for (int columnIdx = 0; columnIdx < columns.length; columnIdx++)
     {
       final ResultsColumn column = columns[columnIdx];
