@@ -90,7 +90,7 @@ hr {
 	</tr>
 	<tr>
 		<td>database product version</td>
-		<td>1.8.1</td>
+		<td>1.8.0</td>
 	</tr>
 	<tr>
 		<td>database user name</td>
@@ -718,7 +718,7 @@ hr {
 	</tr>
 	<tr>
 		<td>driver version</td>
-		<td>1.8.1</td>
+		<td>1.8.0</td>
 	</tr>
 	<tr>
 		<td>driver class name</td>
@@ -1537,7 +1537,7 @@ hr {
 
 <table>
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.CUSTOMER</td>
+		<td colspan='2' class='name underscore'>PUBLIC.AUTHORS</td>
 		<td class='description underscore'>[table]</td>
 	</tr>
 	<tr>
@@ -1548,28 +1548,48 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>FIRSTNAME</td>
-		<td class='type'>VARCHAR(255)</td>
+		<td class='type'>VARCHAR(20) not null</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>LASTNAME</td>
+		<td class='type'>VARCHAR(20) not null</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ADDRESS1</td>
 		<td class='type'>VARCHAR(255)</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>STREET</td>
+		<td class='subname'>ADDRESS2</td>
 		<td class='type'>VARCHAR(255)</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>CITY</td>
-		<td class='type'>VARCHAR(255)</td>
+		<td class='type'>VARCHAR(50)</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>STATE</td>
+		<td class='type'>VARCHAR(2)</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>POSTALCODE</td>
+		<td class='type'>VARCHAR(10)</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>COUNTRY</td>
+		<td class='type'>VARCHAR(50)</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_46</td>
+		<td colspan='2' class='name'>SYS_IDX_47</td>
 		<td class='description'>[primary key]</td>
 	</tr>
 	<tr>
@@ -1581,12 +1601,396 @@ hr {
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_INVOICE_CUSTOMER</td>
+		<td colspan='2' class='name'>FK_Z_AUTHOR</td>
 		<td class='description'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>ID &#8594; PUBLIC.INVOICE.CUSTOMERID</td>
+		<td class='subname'>ID &#8594; PUBLIC.BOOKAUTHORS.AUTHORID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>IDX_B_AUTHORS</td>
+		<td class='description'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>LASTNAME</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>FIRSTNAME</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>IDX_A_AUTHORS</td>
+		<td class='description'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>CITY</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>STATE</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>POSTALCODE</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>COUNTRY</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[lint]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>incrementing columns
+ADDRESS1, ADDRESS2
+</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.AUTHORSLIST</td>
+		<td class='description underscore'>[view]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>INTEGER</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>FIRSTNAME</td>
+		<td class='type'>VARCHAR(20)</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>LASTNAME</td>
+		<td class='type'>VARCHAR(20)</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.BOOKAUTHORS</td>
+		<td class='description underscore'>[table]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>BOOKID</td>
+		<td class='type'>INTEGER not null</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>AUTHORID</td>
+		<td class='type'>INTEGER not null</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_Z_AUTHOR</td>
+		<td class='description'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PUBLIC.AUTHORS.ID &#8594; AUTHORID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_Y_BOOK</td>
+		<td class='description'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PUBLIC.BOOKS.ID &#8594; BOOKID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_52</td>
+		<td class='description'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>AUTHORID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_50</td>
+		<td class='description'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>BOOKID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UIDX_BOOKAUTHORS</td>
+		<td class='description'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>BOOKID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>AUTHORID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.BOOKS</td>
+		<td class='description underscore'>[table]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>INTEGER not null</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>TITLE</td>
+		<td class='type'>VARCHAR(255) not null</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DESCRIPTION</td>
+		<td class='type'>VARCHAR(255)</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PUBLISHERID</td>
+		<td class='type'>INTEGER not null</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PUBLICATIONDATE</td>
+		<td class='type'>TIMESTAMP</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PRICE</td>
+		<td class='type'>FLOAT(17, 0)</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_48</td>
+		<td class='description'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_Y_BOOK</td>
+		<td class='description'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID &#8594; PUBLIC.BOOKAUTHORS.BOOKID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[weak association]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PUBLIC.PUBLISHERS.ID &#8594; PUBLISHERID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -1642,7 +2046,202 @@ hr {
 
 <table>
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.CUSTOMERLIST</td>
+		<td colspan='2' class='name underscore'>PUBLIC.PUBLISHERS</td>
+		<td class='description underscore'>[table]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>INTEGER not null</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PUBLISHER</td>
+		<td class='type'>VARCHAR(255)</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_46</td>
+		<td class='description'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[weak association]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID &#8594; PUBLIC.BOOKS.PUBLISHERID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>SCHEMACRAWLER.CUSTOMER</td>
+		<td class='description underscore'>[table]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>INTEGER not null</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>FIRSTNAME</td>
+		<td class='type'>VARCHAR(255)</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>LASTNAME</td>
+		<td class='type'>VARCHAR(255)</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>STREET</td>
+		<td class='type'>VARCHAR(255)</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>CITY</td>
+		<td class='type'>VARCHAR(255)</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_57</td>
+		<td class='description'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_INVOICE_CUSTOMER</td>
+		<td class='description'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID &#8594; SCHEMACRAWLER.INVOICE.CUSTOMERID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>SCHEMACRAWLER.CUSTOMERLIST</td>
 		<td class='description underscore'>[view]</td>
 	</tr>
 	<tr>
@@ -1716,7 +2315,7 @@ hr {
 
 <table>
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.INVOICE</td>
+		<td colspan='2' class='name underscore'>SCHEMACRAWLER.INVOICE</td>
 		<td class='description underscore'>[table]</td>
 	</tr>
 	<tr>
@@ -1738,7 +2337,7 @@ hr {
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_48</td>
+		<td colspan='2' class='name'>SYS_IDX_59</td>
 		<td class='description'>[primary key]</td>
 	</tr>
 	<tr>
@@ -1755,7 +2354,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>PUBLIC.CUSTOMER.ID &#8594; CUSTOMERID</td>
+		<td class='subname'>SCHEMACRAWLER.CUSTOMER.ID &#8594; CUSTOMERID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -1764,18 +2363,6 @@ hr {
 	<tr>
 		<td colspan='2' class='name'>FK_B_ITEM_INVOICE</td>
 		<td class='description'>[foreign key, with no action]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID &#8594; PUBLIC.ITEM.INVOICEID</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[weak association]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -1798,389 +2385,12 @@ hr {
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_50</td>
+		<td colspan='2' class='name'>SYS_IDX_61</td>
 		<td class='description'>[non-unique index]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
 		<td class='subname'>CUSTOMERID</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>DELETE</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>INSERT</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SELECT</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>UPDATE</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.ITEM</td>
-		<td class='description underscore'>[table]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>INVOICEID</td>
-		<td class='type'>INTEGER not null</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ITEM</td>
-		<td class='type'>INTEGER not null</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PRODUCTID</td>
-		<td class='type'>INTEGER</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>QUANTITY</td>
-		<td class='type'>INTEGER</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>COST</td>
-		<td class='type'>FLOAT(17, 0)</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_IDX_52</td>
-		<td class='description'>[primary key]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>INVOICEID</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ITEM</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>FK_B_ITEM_INVOICE</td>
-		<td class='description'>[foreign key, with no action]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PUBLIC.INVOICE.ID &#8594; INVOICEID</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>FK_A_ITEM_PRODUCT</td>
-		<td class='description'>[foreign key, with no action]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PUBLIC.PRODUCT.ID &#8594; PRODUCTID</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>INDEX_ITEM_INVOICE</td>
-		<td class='description'>[non-unique index]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>INVOICEID</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_IDX_53</td>
-		<td class='description'>[non-unique index]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>INVOICEID</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>INDEX_ITEM_PRODUCT</td>
-		<td class='description'>[non-unique index]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PRODUCTID</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_IDX_55</td>
-		<td class='description'>[non-unique index]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PRODUCTID</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>DELETE</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>INSERT</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SELECT</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>UPDATE</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.PRODUCT</td>
-		<td class='description underscore'>[table]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID</td>
-		<td class='type'>INTEGER not null</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>NAME</td>
-		<td class='type'>VARCHAR(255)</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PRICE</td>
-		<td class='type'>FLOAT(17, 0)</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_IDX_47</td>
-		<td class='description'>[primary key]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>FK_A_ITEM_PRODUCT</td>
-		<td class='description'>[foreign key, with no action]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID &#8594; PUBLIC.ITEM.PRODUCTID</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[weak association]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>ID &#8594; SCHEMACRAWLER.ITEM.PRODUCTID</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>DELETE</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>INSERT</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SELECT</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>UPDATE</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.SUPPLIER</td>
-		<td class='description underscore'>[table]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>SUPPLIER_ID</td>
-		<td class='type'>INTEGER</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>SUPPLIER_NAME</td>
-		<td class='type'>VARCHAR(255)</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>INDEX_B_SUPPLIER</td>
-		<td class='description'>[non-unique index]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>SUPPLIER_ID</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>SUPPLIER_NAME</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>INDEX_A_SUPPLIER</td>
-		<td class='description'>[non-unique index]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>SUPPLIER_NAME</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>SUPPLIER_ID</td>
 		<td class='type'>ascending</td>
 	</tr>
 	<tr>
@@ -2268,7 +2478,7 @@ hr {
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_59</td>
+		<td colspan='2' class='name'>SYS_IDX_63</td>
 		<td class='description'>[primary key]</td>
 	</tr>
 	<tr>
@@ -2285,24 +2495,167 @@ hr {
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[weak association]</td>
+		<td colspan='2' class='name'>FK_B_ITEM_INVOICE</td>
+		<td class='description'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>PUBLIC.PRODUCT.ID &#8594; PRODUCTID</td>
+		<td class='subname'>SCHEMACRAWLER.INVOICE.ID &#8594; INVOICEID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[weak association]</td>
+		<td colspan='2' class='name'>FK_A_ITEM_PRODUCT</td>
+		<td class='description'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>PUBLIC.INVOICE.ID &#8594; INVOICEID</td>
+		<td class='subname'>SCHEMACRAWLER.PRODUCT.ID &#8594; PRODUCTID</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INDEX_ITEM_INVOICE</td>
+		<td class='description'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>INVOICEID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_64</td>
+		<td class='description'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>INVOICEID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INDEX_ITEM_PRODUCT</td>
+		<td class='description'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PRODUCTID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_66</td>
+		<td class='description'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PRODUCTID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>SCHEMACRAWLER.PRODUCT</td>
+		<td class='description underscore'>[table]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>INTEGER not null</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>NAME</td>
+		<td class='type'>VARCHAR(255)</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>PRICE</td>
+		<td class='type'>FLOAT(17, 0)</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_58</td>
+		<td class='description'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_A_ITEM_PRODUCT</td>
+		<td class='description'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>ID &#8594; SCHEMACRAWLER.ITEM.PRODUCTID</td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -2358,34 +2711,51 @@ hr {
 
 <table>
 	<tr>
-		<td colspan='2' class='name underscore'>SCHEMACRAWLER.PRODUCT2</td>
+		<td colspan='2' class='name underscore'>SCHEMACRAWLER.SUPPLIER</td>
 		<td class='description underscore'>[table]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>ID</td>
-		<td class='type'>INTEGER not null</td>
+		<td class='subname'>SUPPLIER_ID</td>
+		<td class='type'>INTEGER</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>NAME</td>
+		<td class='subname'>SUPPLIER_NAME</td>
 		<td class='type'>VARCHAR(255)</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>PRICE</td>
-		<td class='type'>FLOAT(17, 0)</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_61</td>
-		<td class='description'>[primary key]</td>
+		<td colspan='2' class='name'>INDEX_B_SUPPLIER</td>
+		<td class='description'>[non-unique index]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>ID</td>
+		<td class='subname'>SUPPLIER_ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>SUPPLIER_NAME</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INDEX_A_SUPPLIER</td>
+		<td class='description'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>SUPPLIER_NAME</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>SUPPLIER_ID</td>
 		<td class='type'>ascending</td>
 	</tr>
 	<tr>
@@ -3345,6 +3715,32 @@ hr {
 
 <table>
 	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.java.lang.Math.copySign</td>
+		<td class='description underscore'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>@p1</td>
+		<td class='type'>FLOAT(8, 17), in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>@p2</td>
+		<td class='type'>FLOAT(8, 17), in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>@p0</td>
+		<td class='type'>FLOAT(8, 17), result</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.java.lang.Math.cos</td>
 		<td class='description underscore'>[procedure, returns result]</td>
 	</tr>
@@ -3441,6 +3837,27 @@ hr {
 		<td class='ordinal'></td>
 		<td class='subname'>@p0</td>
 		<td class='type'>DOUBLE(8, 17), result</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.java.lang.Math.getExponent</td>
+		<td class='description underscore'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>@p1</td>
+		<td class='type'>FLOAT(8, 17), in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>@p0</td>
+		<td class='type'>INTEGER, result</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -3617,6 +4034,53 @@ hr {
 
 <table>
 	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.java.lang.Math.nextAfter</td>
+		<td class='description underscore'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>@p1</td>
+		<td class='type'>FLOAT(8, 17), in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>@p2</td>
+		<td class='type'>DOUBLE(8, 17), in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>@p0</td>
+		<td class='type'>FLOAT(8, 17), result</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.java.lang.Math.nextUp</td>
+		<td class='description underscore'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>@p1</td>
+		<td class='type'>FLOAT(8, 17), in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>@p0</td>
+		<td class='type'>FLOAT(8, 17), result</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.java.lang.Math.pow</td>
 		<td class='description underscore'>[procedure, returns result]</td>
 	</tr>
@@ -3692,6 +4156,32 @@ hr {
 		<td class='ordinal'></td>
 		<td class='subname'>@p0</td>
 		<td class='type'>INTEGER, result</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.java.lang.Math.scalb</td>
+		<td class='description underscore'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>@p1</td>
+		<td class='type'>FLOAT(8, 17), in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>@p2</td>
+		<td class='type'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>@p0</td>
+		<td class='type'>FLOAT(8, 17), result</td>
 	</tr>
 	<tr>
 		<td colspan='4'></td>
@@ -6278,36 +6768,48 @@ hr {
   <caption>Row Count</caption>
 
 	<tr>
-		<td colspan='2' class='name'>PUBLIC.CUSTOMER</td>
-		<td class='description'>50 rows</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.CUSTOMERLIST</td>
-		<td class='description'>50 rows</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.INVOICE</td>
-		<td class='description'>50 rows</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.ITEM</td>
-		<td class='description'>650 rows</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.PRODUCT</td>
-		<td class='description'>50 rows</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.SUPPLIER</td>
-		<td class='description'>1 rows</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SCHEMACRAWLER.ITEM</td>
+		<td colspan='2' class='name'>PUBLIC.AUTHORS</td>
 		<td class='description'>20 rows</td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SCHEMACRAWLER.PRODUCT2</td>
-		<td class='description'>11 rows</td>
+		<td colspan='2' class='name'>PUBLIC.AUTHORSLIST</td>
+		<td class='description'>20 rows</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>PUBLIC.BOOKAUTHORS</td>
+		<td class='description'>20 rows</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>PUBLIC.BOOKS</td>
+		<td class='description'>20 rows</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>PUBLIC.PUBLISHERS</td>
+		<td class='description'>20 rows</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SCHEMACRAWLER.CUSTOMER</td>
+		<td class='description'>50 rows</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SCHEMACRAWLER.CUSTOMERLIST</td>
+		<td class='description'>50 rows</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SCHEMACRAWLER.INVOICE</td>
+		<td class='description'>50 rows</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SCHEMACRAWLER.ITEM</td>
+		<td class='description'>650 rows</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SCHEMACRAWLER.PRODUCT</td>
+		<td class='description'>50 rows</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SCHEMACRAWLER.SUPPLIER</td>
+		<td class='description'>1 rows</td>
 	</tr>
 </table>
 <p></p>
@@ -6316,7 +6818,709 @@ hr {
 <h2>Dump</h2>
 
 <table>
-  <caption>PUBLIC.CUSTOMER</caption>
+  <caption>PUBLIC.AUTHORS</caption>
+
+	<tr>
+		<td class='name'>ID</td>
+		<td class='name'>FIRSTNAME</td>
+		<td class='name'>LASTNAME</td>
+		<td class='name'>ADDRESS1</td>
+		<td class='name'>ADDRESS2</td>
+		<td class='name'>CITY</td>
+		<td class='name'>STATE</td>
+		<td class='name'>POSTALCODE</td>
+		<td class='name'>COUNTRY</td>
+	</tr>
+	<tr>
+		<td>1</td>
+		<td>Oren</td>
+		<td>Shaffer</td>
+		<td>900-2273 Integer Avenue</td>
+		<td></td>
+		<td>Farmer City</td>
+		<td>MD</td>
+		<td>37032</td>
+		<td>Cook Islands</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>Octavia</td>
+		<td>Burke</td>
+		<td>955-7635 Natoque St.</td>
+		<td></td>
+		<td>Kalispell</td>
+		<td>MS</td>
+		<td>66863</td>
+		<td>Cape Verde</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>Aiko</td>
+		<td>Stafford</td>
+		<td>Ap #554-7132 Dictum Street</td>
+		<td></td>
+		<td>Kankakee</td>
+		<td>ID</td>
+		<td>59675</td>
+		<td>Brunei Darussalam</td>
+	</tr>
+	<tr>
+		<td>4</td>
+		<td>Christine</td>
+		<td>Aguilar</td>
+		<td>Ap #698-4255 Sodales Av.</td>
+		<td></td>
+		<td>Riverton</td>
+		<td>MA</td>
+		<td>24828</td>
+		<td>Ghana</td>
+	</tr>
+	<tr>
+		<td>5</td>
+		<td>Kenneth</td>
+		<td>Curry</td>
+		<td>P.O. Box 305, 8335 Cras St.</td>
+		<td></td>
+		<td>Somersworth</td>
+		<td>ME</td>
+		<td>36619</td>
+		<td>Kazakhstan</td>
+	</tr>
+	<tr>
+		<td>6</td>
+		<td>Lillian</td>
+		<td>Nieves</td>
+		<td>P.O. Box 827, 1923 Ornare Avenue</td>
+		<td></td>
+		<td>Sierra Vista</td>
+		<td>MA</td>
+		<td>12684</td>
+		<td>Mali</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>Damian</td>
+		<td>Donaldson</td>
+		<td>5047 Eu Rd.</td>
+		<td></td>
+		<td>LaGrange</td>
+		<td>UT</td>
+		<td>64681</td>
+		<td>Thailand</td>
+	</tr>
+	<tr>
+		<td>8</td>
+		<td>Jordan</td>
+		<td>Woodward</td>
+		<td>Ap #486-6702 Iaculis Road</td>
+		<td></td>
+		<td>Glen Cove</td>
+		<td>OH</td>
+		<td>18011</td>
+		<td>Libyan Arab Jamahiriya</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>Adele</td>
+		<td>Holmes</td>
+		<td>7585 Magna. Ave</td>
+		<td></td>
+		<td>Villa Park</td>
+		<td>ME</td>
+		<td>00619</td>
+		<td>Cayman Islands</td>
+	</tr>
+	<tr>
+		<td>10</td>
+		<td>Jillian</td>
+		<td>Mckee</td>
+		<td>1185 Per Ave</td>
+		<td></td>
+		<td>Rapid City</td>
+		<td>LA</td>
+		<td>11671</td>
+		<td>New Caledonia</td>
+	</tr>
+	<tr>
+		<td>11</td>
+		<td>Mikayla</td>
+		<td>Knight</td>
+		<td>Ap #375-6798 Auctor St.</td>
+		<td></td>
+		<td>Sault Ste. Marie</td>
+		<td>CO</td>
+		<td>26558</td>
+		<td>Lesotho</td>
+	</tr>
+	<tr>
+		<td>12</td>
+		<td>Denise</td>
+		<td>Dominguez</td>
+		<td>324-4875 Vitae Av.</td>
+		<td></td>
+		<td>Hudson</td>
+		<td>SD</td>
+		<td>41933</td>
+		<td>Russian Federation</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>Ira</td>
+		<td>Dunn</td>
+		<td>8869 Velit Rd.</td>
+		<td></td>
+		<td>Lincoln</td>
+		<td>IA</td>
+		<td>74182</td>
+		<td>Zambia</td>
+	</tr>
+	<tr>
+		<td>14</td>
+		<td>Elvis</td>
+		<td>Blevins</td>
+		<td>Ap #629-9258 In St.</td>
+		<td></td>
+		<td>Abilene</td>
+		<td>WY</td>
+		<td>19269</td>
+		<td>Saint Vincent and The Grenadines</td>
+	</tr>
+	<tr>
+		<td>15</td>
+		<td>Theodore</td>
+		<td>Gilliam</td>
+		<td>6293 Enim, Ave</td>
+		<td></td>
+		<td>Baltimore</td>
+		<td>UT</td>
+		<td>86549</td>
+		<td>Saudi Arabia</td>
+	</tr>
+	<tr>
+		<td>16</td>
+		<td>Jared</td>
+		<td>White</td>
+		<td>P.O. Box 806, 6212 Adipiscing, Road</td>
+		<td></td>
+		<td>Thibodaux</td>
+		<td>KS</td>
+		<td>90172</td>
+		<td>China</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>Melyssa</td>
+		<td>Willis</td>
+		<td>Ap #467-9359 Ipsum Rd.</td>
+		<td></td>
+		<td>Roanoke</td>
+		<td>OH</td>
+		<td>45706</td>
+		<td>Niger</td>
+	</tr>
+	<tr>
+		<td>18</td>
+		<td>Hilary</td>
+		<td>Marks</td>
+		<td>Ap #361-1093 Vitae Street</td>
+		<td></td>
+		<td>Fort Lauderdale</td>
+		<td>ID</td>
+		<td>10855</td>
+		<td>Venezuela</td>
+	</tr>
+	<tr>
+		<td>19</td>
+		<td>Frances</td>
+		<td>Ellis</td>
+		<td>Ap #458-4569 Sem. Ave</td>
+		<td></td>
+		<td>Durham</td>
+		<td>MS</td>
+		<td>50037</td>
+		<td>Gambia</td>
+	</tr>
+	<tr>
+		<td>20</td>
+		<td>Lenore</td>
+		<td>Cooley</td>
+		<td>P.O. Box 937, 3415 Nulla Ave</td>
+		<td></td>
+		<td>Half Moon Bay</td>
+		<td>OR</td>
+		<td>51967</td>
+		<td>Canada</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+  <caption>PUBLIC.AUTHORSLIST</caption>
+
+	<tr>
+		<td class='name'>ID</td>
+		<td class='name'>FIRSTNAME</td>
+		<td class='name'>LASTNAME</td>
+	</tr>
+	<tr>
+		<td>1</td>
+		<td>Oren</td>
+		<td>Shaffer</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>Octavia</td>
+		<td>Burke</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>Aiko</td>
+		<td>Stafford</td>
+	</tr>
+	<tr>
+		<td>4</td>
+		<td>Christine</td>
+		<td>Aguilar</td>
+	</tr>
+	<tr>
+		<td>5</td>
+		<td>Kenneth</td>
+		<td>Curry</td>
+	</tr>
+	<tr>
+		<td>6</td>
+		<td>Lillian</td>
+		<td>Nieves</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>Damian</td>
+		<td>Donaldson</td>
+	</tr>
+	<tr>
+		<td>8</td>
+		<td>Jordan</td>
+		<td>Woodward</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>Adele</td>
+		<td>Holmes</td>
+	</tr>
+	<tr>
+		<td>10</td>
+		<td>Jillian</td>
+		<td>Mckee</td>
+	</tr>
+	<tr>
+		<td>11</td>
+		<td>Mikayla</td>
+		<td>Knight</td>
+	</tr>
+	<tr>
+		<td>12</td>
+		<td>Denise</td>
+		<td>Dominguez</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>Ira</td>
+		<td>Dunn</td>
+	</tr>
+	<tr>
+		<td>14</td>
+		<td>Elvis</td>
+		<td>Blevins</td>
+	</tr>
+	<tr>
+		<td>15</td>
+		<td>Theodore</td>
+		<td>Gilliam</td>
+	</tr>
+	<tr>
+		<td>16</td>
+		<td>Jared</td>
+		<td>White</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>Melyssa</td>
+		<td>Willis</td>
+	</tr>
+	<tr>
+		<td>18</td>
+		<td>Hilary</td>
+		<td>Marks</td>
+	</tr>
+	<tr>
+		<td>19</td>
+		<td>Frances</td>
+		<td>Ellis</td>
+	</tr>
+	<tr>
+		<td>20</td>
+		<td>Lenore</td>
+		<td>Cooley</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+  <caption>PUBLIC.BOOKAUTHORS</caption>
+
+	<tr>
+		<td class='name'>BOOKID</td>
+		<td class='name'>AUTHORID</td>
+	</tr>
+	<tr>
+		<td>1</td>
+		<td>7</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>4</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>6</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>1</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>4</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>5</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>6</td>
+	</tr>
+	<tr>
+		<td>4</td>
+		<td>9</td>
+	</tr>
+	<tr>
+		<td>5</td>
+		<td>5</td>
+	</tr>
+	<tr>
+		<td>5</td>
+		<td>7</td>
+	</tr>
+	<tr>
+		<td>6</td>
+		<td>1</td>
+	</tr>
+	<tr>
+		<td>6</td>
+		<td>8</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>8</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>9</td>
+	</tr>
+	<tr>
+		<td>8</td>
+		<td>6</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>3</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>6</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>7</td>
+	</tr>
+	<tr>
+		<td>10</td>
+		<td>1</td>
+	</tr>
+	<tr>
+		<td>10</td>
+		<td>9</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+  <caption>PUBLIC.BOOKS</caption>
+
+	<tr>
+		<td class='name'>ID</td>
+		<td class='name'>TITLE</td>
+		<td class='name'>DESCRIPTION</td>
+		<td class='name'>PUBLISHERID</td>
+		<td class='name'>PUBLICATIONDATE</td>
+		<td class='name'>PRICE</td>
+	</tr>
+	<tr>
+		<td>1</td>
+		<td>Neque. In Ornare Sagittis</td>
+		<td>Dis Parturient Montes, Nascetur Ridiculus Mus.</td>
+		<td>18</td>
+		<td>2000-10-27 00:00:00.0</td>
+		<td>69.99</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>Duis Dignissim Tempor Arcu.</td>
+		<td>Eu, Euismod Ac, Fermentum Vel,</td>
+		<td>20</td>
+		<td>2002-05-09 00:00:00.0</td>
+		<td>27.99</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>Lacinia Orci, Consectetuer Euismod Est</td>
+		<td>Sem Ut Cursus Luctus, Ipsum Leo Elementum Sem, Vitae Aliquam Eros Turpis Non Enim.</td>
+		<td>15</td>
+		<td>2006-04-14 00:00:00.0</td>
+		<td>37.99</td>
+	</tr>
+	<tr>
+		<td>4</td>
+		<td>Vitae Sodales</td>
+		<td>Rhoncus. Nullam Velit Dui, Semper Et, Lacinia Vitae, Sodales At,</td>
+		<td>1</td>
+		<td>2007-05-21 00:00:00.0</td>
+		<td>64.99</td>
+	</tr>
+	<tr>
+		<td>5</td>
+		<td>Posuere Cubilia Curae; Phasellus Ornare.</td>
+		<td>Risus A Ultricies Adipiscing, Enim Mi Tempor Lorem, Eget Mollis Lectus Pede</td>
+		<td>7</td>
+		<td>2010-05-14 00:00:00.0</td>
+		<td>83.99</td>
+	</tr>
+	<tr>
+		<td>6</td>
+		<td>Tincidunt Aliquam Arcu.</td>
+		<td>Tristique Pellentesque, Tellus Sem Mollis Dui,</td>
+		<td>13</td>
+		<td>2009-07-17 00:00:00.0</td>
+		<td>31.99</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>Auctor Quis, Tristique</td>
+		<td>Vel, Faucibus Id, Libero. Donec Consectetuer Mauris Id Sapien. Cras Dolor Dolor, Tempus Non, Lacinia</td>
+		<td>7</td>
+		<td>1999-06-09 00:00:00.0</td>
+		<td>76.99</td>
+	</tr>
+	<tr>
+		<td>8</td>
+		<td>Sem. Nulla Interdum. Curabitur</td>
+		<td>Turpis. Nulla Aliquet. Proin Velit. Sed Malesuada Augue Ut</td>
+		<td>7</td>
+		<td>2009-01-24 00:00:00.0</td>
+		<td>30.99</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>Lobortis Ultrices. Vivamus Rhoncus.</td>
+		<td>Est, Mollis Non, Cursus Non, Egestas A, Dui. Cras Pellentesque. Sed Dictum.</td>
+		<td>1</td>
+		<td>2004-06-25 00:00:00.0</td>
+		<td>69.99</td>
+	</tr>
+	<tr>
+		<td>10</td>
+		<td>Quisque Purus Sapien, Gravida</td>
+		<td>Et Ultrices Posuere Cubilia Curae; Phasellus Ornare. Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus.</td>
+		<td>19</td>
+		<td>2005-11-14 00:00:00.0</td>
+		<td>34.99</td>
+	</tr>
+	<tr>
+		<td>11</td>
+		<td>Phasellus</td>
+		<td>Egestas. Duis Ac Arcu. Nunc Mauris.</td>
+		<td>5</td>
+		<td>2003-10-19 00:00:00.0</td>
+		<td>89.99</td>
+	</tr>
+	<tr>
+		<td>12</td>
+		<td>Non Massa Non</td>
+		<td>Est Mauris, Rhoncus Id, Mollis</td>
+		<td>5</td>
+		<td>2002-05-04 00:00:00.0</td>
+		<td>64.99</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>Gravida Mauris Ut Mi. Duis</td>
+		<td>Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus. Proin Nisl Sem, Consequat Nec,</td>
+		<td>8</td>
+		<td>2005-08-03 00:00:00.0</td>
+		<td>25.99</td>
+	</tr>
+	<tr>
+		<td>14</td>
+		<td>Auctor Vitae,</td>
+		<td>Suspendisse Dui. Fusce Diam Nunc, Ullamcorper Eu, Euismod Ac, Fermentum Vel, Mauris. Integer Sem Elit, Pharetra</td>
+		<td>2</td>
+		<td>2009-02-09 00:00:00.0</td>
+		<td>84.99</td>
+	</tr>
+	<tr>
+		<td>15</td>
+		<td>Ultrices Posuere Cubilia</td>
+		<td>Elit, Pellentesque A, Facilisis Non, Bibendum Sed, Est. Nunc Laoreet Lectus Quis Massa. Mauris Vestibulum, Neque Sed</td>
+		<td>20</td>
+		<td>2001-08-28 00:00:00.0</td>
+		<td>77.99</td>
+	</tr>
+	<tr>
+		<td>16</td>
+		<td>Vitae, Aliquet Nec, Imperdiet</td>
+		<td>Cursus Purus. Nullam</td>
+		<td>6</td>
+		<td>2003-08-30 00:00:00.0</td>
+		<td>47.99</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>Parturient Montes, Nascetur Ridiculus</td>
+		<td>Ornare, Lectus Ante Dictum Mi, Ac Mattis Velit Justo Nec Ante. Maecenas Mi Felis, Adipiscing Fringilla, Porttitor Vulputate, Posuere Vulputate,</td>
+		<td>17</td>
+		<td>2005-06-24 00:00:00.0</td>
+		<td>36.99</td>
+	</tr>
+	<tr>
+		<td>18</td>
+		<td>Lacus. Etiam Bibendum</td>
+		<td>Facilisi. Sed Neque. Sed</td>
+		<td>18</td>
+		<td>2008-01-28 00:00:00.0</td>
+		<td>63.99</td>
+	</tr>
+	<tr>
+		<td>19</td>
+		<td>Luctus Lobortis.</td>
+		<td>Rutrum. Fusce Dolor Quam, Elementum At, Egestas A, Scelerisque Sed, Sapien.</td>
+		<td>5</td>
+		<td>2006-08-23 00:00:00.0</td>
+		<td>67.99</td>
+	</tr>
+	<tr>
+		<td>20</td>
+		<td>Dui, In Sodales Elit Erat</td>
+		<td>Sociis Natoque Penatibus Et Magnis Dis Parturient</td>
+		<td>5</td>
+		<td>2002-09-29 00:00:00.0</td>
+		<td>43.99</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+  <caption>PUBLIC.PUBLISHERS</caption>
+
+	<tr>
+		<td class='name'>ID</td>
+		<td class='name'>PUBLISHER</td>
+	</tr>
+	<tr>
+		<td>1</td>
+		<td>Dalton Lewis</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>Macaulay Bryant</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>Nash Fox</td>
+	</tr>
+	<tr>
+		<td>4</td>
+		<td>Leonard Bradshaw</td>
+	</tr>
+	<tr>
+		<td>5</td>
+		<td>Brendan Kramer</td>
+	</tr>
+	<tr>
+		<td>6</td>
+		<td>Tobias Mosley</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>Zachary Tate</td>
+	</tr>
+	<tr>
+		<td>8</td>
+		<td>Derek Lee</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>Neil Tyson</td>
+	</tr>
+	<tr>
+		<td>10</td>
+		<td>Shad Robinson</td>
+	</tr>
+	<tr>
+		<td>11</td>
+		<td>Justin Schroeder</td>
+	</tr>
+	<tr>
+		<td>12</td>
+		<td>Leonard Atkinson</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>Hyatt Caldwell</td>
+	</tr>
+	<tr>
+		<td>14</td>
+		<td>Neil Fletcher</td>
+	</tr>
+	<tr>
+		<td>15</td>
+		<td>Ferdinand Tucker</td>
+	</tr>
+	<tr>
+		<td>16</td>
+		<td>Barrett Mclaughlin</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>Hayden Potts</td>
+	</tr>
+	<tr>
+		<td>18</td>
+		<td>Neville Cardenas</td>
+	</tr>
+	<tr>
+		<td>19</td>
+		<td>Allistair Gilbert</td>
+	</tr>
+	<tr>
+		<td>20</td>
+		<td>Cooper Chapman</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+  <caption>SCHEMACRAWLER.CUSTOMER</caption>
 
 	<tr>
 		<td class='name'>ID</td>
@@ -6679,7 +7883,7 @@ hr {
 <p></p>
 
 <table>
-  <caption>PUBLIC.CUSTOMERLIST</caption>
+  <caption>SCHEMACRAWLER.CUSTOMERLIST</caption>
 
 	<tr>
 		<td class='name'>ID</td>
@@ -6940,7 +8144,7 @@ hr {
 <p></p>
 
 <table>
-  <caption>PUBLIC.INVOICE</caption>
+  <caption>SCHEMACRAWLER.INVOICE</caption>
 
 	<tr>
 		<td class='name'>ID</td>
@@ -6950,7 +8154,7 @@ hr {
 	<tr>
 		<td>0</td>
 		<td>0</td>
-		<td>2608.1</td>
+		<td>2608.0</td>
 	</tr>
 	<tr>
 		<td>1</td>
@@ -7165,7 +8369,7 @@ hr {
 	<tr>
 		<td>43</td>
 		<td>13</td>
-		<td>4828.1</td>
+		<td>4828.0</td>
 	</tr>
 	<tr>
 		<td>44</td>
@@ -7196,4844 +8400,6 @@ hr {
 		<td>49</td>
 		<td>32</td>
 		<td>4944.3</td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-  <caption>PUBLIC.ITEM</caption>
-
-	<tr>
-		<td class='name'>INVOICEID</td>
-		<td class='name'>ITEM</td>
-		<td class='name'>PRODUCTID</td>
-		<td class='name'>QUANTITY</td>
-		<td class='name'>COST</td>
-	</tr>
-	<tr>
-		<td>0</td>
-		<td>0</td>
-		<td>7</td>
-		<td>12</td>
-		<td>12.6</td>
-	</tr>
-	<tr>
-		<td>0</td>
-		<td>1</td>
-		<td>14</td>
-		<td>19</td>
-		<td>18.6</td>
-	</tr>
-	<tr>
-		<td>0</td>
-		<td>2</td>
-		<td>47</td>
-		<td>3</td>
-		<td>26.7</td>
-	</tr>
-	<tr>
-		<td>0</td>
-		<td>3</td>
-		<td>1</td>
-		<td>9</td>
-		<td>37.2</td>
-	</tr>
-	<tr>
-		<td>0</td>
-		<td>4</td>
-		<td>47</td>
-		<td>1</td>
-		<td>26.7</td>
-	</tr>
-	<tr>
-		<td>0</td>
-		<td>5</td>
-		<td>12</td>
-		<td>15</td>
-		<td>25.2</td>
-	</tr>
-	<tr>
-		<td>0</td>
-		<td>6</td>
-		<td>16</td>
-		<td>9</td>
-		<td>29.1</td>
-	</tr>
-	<tr>
-		<td>0</td>
-		<td>7</td>
-		<td>7</td>
-		<td>10</td>
-		<td>12.6</td>
-	</tr>
-	<tr>
-		<td>0</td>
-		<td>8</td>
-		<td>0</td>
-		<td>23</td>
-		<td>8.1</td>
-	</tr>
-	<tr>
-		<td>0</td>
-		<td>9</td>
-		<td>35</td>
-		<td>4</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>0</td>
-		<td>10</td>
-		<td>4</td>
-		<td>8</td>
-		<td>19.2</td>
-	</tr>
-	<tr>
-		<td>0</td>
-		<td>11</td>
-		<td>12</td>
-		<td>4</td>
-		<td>25.2</td>
-	</tr>
-	<tr>
-		<td>0</td>
-		<td>12</td>
-		<td>1</td>
-		<td>11</td>
-		<td>37.2</td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>0</td>
-		<td>40</td>
-		<td>8</td>
-		<td>4.2</td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>1</td>
-		<td>0</td>
-		<td>9</td>
-		<td>8.1</td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>2</td>
-		<td>19</td>
-		<td>6</td>
-		<td>16.5</td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>3</td>
-		<td>38</td>
-		<td>8</td>
-		<td>32.4</td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>4</td>
-		<td>16</td>
-		<td>16</td>
-		<td>29.1</td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>5</td>
-		<td>25</td>
-		<td>9</td>
-		<td>24.3</td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>6</td>
-		<td>25</td>
-		<td>19</td>
-		<td>24.3</td>
-	</tr>
-	<tr>
-		<td>2</td>
-		<td>0</td>
-		<td>4</td>
-		<td>18</td>
-		<td>19.2</td>
-	</tr>
-	<tr>
-		<td>2</td>
-		<td>1</td>
-		<td>25</td>
-		<td>3</td>
-		<td>24.3</td>
-	</tr>
-	<tr>
-		<td>2</td>
-		<td>2</td>
-		<td>11</td>
-		<td>9</td>
-		<td>13.2</td>
-	</tr>
-	<tr>
-		<td>2</td>
-		<td>3</td>
-		<td>19</td>
-		<td>13</td>
-		<td>16.5</td>
-	</tr>
-	<tr>
-		<td>2</td>
-		<td>4</td>
-		<td>38</td>
-		<td>18</td>
-		<td>32.4</td>
-	</tr>
-	<tr>
-		<td>2</td>
-		<td>5</td>
-		<td>30</td>
-		<td>4</td>
-		<td>34.8</td>
-	</tr>
-	<tr>
-		<td>2</td>
-		<td>6</td>
-		<td>43</td>
-		<td>8</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>2</td>
-		<td>7</td>
-		<td>30</td>
-		<td>5</td>
-		<td>34.8</td>
-	</tr>
-	<tr>
-		<td>2</td>
-		<td>8</td>
-		<td>39</td>
-		<td>2</td>
-		<td>23.1</td>
-	</tr>
-	<tr>
-		<td>2</td>
-		<td>9</td>
-		<td>18</td>
-		<td>7</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>2</td>
-		<td>10</td>
-		<td>49</td>
-		<td>11</td>
-		<td>3.3</td>
-	</tr>
-	<tr>
-		<td>2</td>
-		<td>11</td>
-		<td>42</td>
-		<td>21</td>
-		<td>29.7</td>
-	</tr>
-	<tr>
-		<td>2</td>
-		<td>12</td>
-		<td>21</td>
-		<td>15</td>
-		<td>17.1</td>
-	</tr>
-	<tr>
-		<td>2</td>
-		<td>13</td>
-		<td>12</td>
-		<td>1</td>
-		<td>25.2</td>
-	</tr>
-	<tr>
-		<td>2</td>
-		<td>14</td>
-		<td>48</td>
-		<td>19</td>
-		<td>31.5</td>
-	</tr>
-	<tr>
-		<td>2</td>
-		<td>15</td>
-		<td>0</td>
-		<td>18</td>
-		<td>8.1</td>
-	</tr>
-	<tr>
-		<td>2</td>
-		<td>16</td>
-		<td>36</td>
-		<td>24</td>
-		<td>4.8</td>
-	</tr>
-	<tr>
-		<td>3</td>
-		<td>0</td>
-		<td>11</td>
-		<td>21</td>
-		<td>13.2</td>
-	</tr>
-	<tr>
-		<td>3</td>
-		<td>1</td>
-		<td>1</td>
-		<td>20</td>
-		<td>37.2</td>
-	</tr>
-	<tr>
-		<td>3</td>
-		<td>2</td>
-		<td>49</td>
-		<td>3</td>
-		<td>3.3</td>
-	</tr>
-	<tr>
-		<td>3</td>
-		<td>3</td>
-		<td>0</td>
-		<td>22</td>
-		<td>8.1</td>
-	</tr>
-	<tr>
-		<td>3</td>
-		<td>4</td>
-		<td>20</td>
-		<td>12</td>
-		<td>30.0</td>
-	</tr>
-	<tr>
-		<td>3</td>
-		<td>5</td>
-		<td>30</td>
-		<td>10</td>
-		<td>34.8</td>
-	</tr>
-	<tr>
-		<td>3</td>
-		<td>6</td>
-		<td>13</td>
-		<td>18</td>
-		<td>27.0</td>
-	</tr>
-	<tr>
-		<td>3</td>
-		<td>7</td>
-		<td>26</td>
-		<td>4</td>
-		<td>37.8</td>
-	</tr>
-	<tr>
-		<td>3</td>
-		<td>8</td>
-		<td>49</td>
-		<td>9</td>
-		<td>3.3</td>
-	</tr>
-	<tr>
-		<td>3</td>
-		<td>9</td>
-		<td>29</td>
-		<td>17</td>
-		<td>16.8</td>
-	</tr>
-	<tr>
-		<td>3</td>
-		<td>10</td>
-		<td>10</td>
-		<td>17</td>
-		<td>30.6</td>
-	</tr>
-	<tr>
-		<td>3</td>
-		<td>11</td>
-		<td>7</td>
-		<td>11</td>
-		<td>12.6</td>
-	</tr>
-	<tr>
-		<td>3</td>
-		<td>12</td>
-		<td>41</td>
-		<td>22</td>
-		<td>30.9</td>
-	</tr>
-	<tr>
-		<td>3</td>
-		<td>13</td>
-		<td>41</td>
-		<td>2</td>
-		<td>30.9</td>
-	</tr>
-	<tr>
-		<td>3</td>
-		<td>14</td>
-		<td>17</td>
-		<td>22</td>
-		<td>33.0</td>
-	</tr>
-	<tr>
-		<td>3</td>
-		<td>15</td>
-		<td>23</td>
-		<td>18</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>3</td>
-		<td>16</td>
-		<td>19</td>
-		<td>11</td>
-		<td>16.5</td>
-	</tr>
-	<tr>
-		<td>3</td>
-		<td>17</td>
-		<td>30</td>
-		<td>17</td>
-		<td>34.8</td>
-	</tr>
-	<tr>
-		<td>4</td>
-		<td>0</td>
-		<td>28</td>
-		<td>9</td>
-		<td>4.5</td>
-	</tr>
-	<tr>
-		<td>4</td>
-		<td>1</td>
-		<td>35</td>
-		<td>15</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>4</td>
-		<td>2</td>
-		<td>41</td>
-		<td>23</td>
-		<td>30.9</td>
-	</tr>
-	<tr>
-		<td>4</td>
-		<td>3</td>
-		<td>23</td>
-		<td>20</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>4</td>
-		<td>4</td>
-		<td>9</td>
-		<td>18</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>4</td>
-		<td>5</td>
-		<td>37</td>
-		<td>24</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>5</td>
-		<td>0</td>
-		<td>9</td>
-		<td>5</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>5</td>
-		<td>1</td>
-		<td>9</td>
-		<td>23</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>5</td>
-		<td>2</td>
-		<td>20</td>
-		<td>18</td>
-		<td>30.0</td>
-	</tr>
-	<tr>
-		<td>5</td>
-		<td>3</td>
-		<td>24</td>
-		<td>12</td>
-		<td>10.8</td>
-	</tr>
-	<tr>
-		<td>5</td>
-		<td>4</td>
-		<td>32</td>
-		<td>14</td>
-		<td>28.5</td>
-	</tr>
-	<tr>
-		<td>5</td>
-		<td>5</td>
-		<td>46</td>
-		<td>15</td>
-		<td>9.3</td>
-	</tr>
-	<tr>
-		<td>5</td>
-		<td>6</td>
-		<td>7</td>
-		<td>9</td>
-		<td>12.6</td>
-	</tr>
-	<tr>
-		<td>5</td>
-		<td>7</td>
-		<td>2</td>
-		<td>4</td>
-		<td>37.2</td>
-	</tr>
-	<tr>
-		<td>5</td>
-		<td>8</td>
-		<td>20</td>
-		<td>3</td>
-		<td>30.0</td>
-	</tr>
-	<tr>
-		<td>5</td>
-		<td>9</td>
-		<td>37</td>
-		<td>9</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>5</td>
-		<td>10</td>
-		<td>28</td>
-		<td>18</td>
-		<td>4.5</td>
-	</tr>
-	<tr>
-		<td>5</td>
-		<td>11</td>
-		<td>38</td>
-		<td>23</td>
-		<td>32.4</td>
-	</tr>
-	<tr>
-		<td>5</td>
-		<td>12</td>
-		<td>8</td>
-		<td>15</td>
-		<td>33.9</td>
-	</tr>
-	<tr>
-		<td>5</td>
-		<td>13</td>
-		<td>18</td>
-		<td>17</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>6</td>
-		<td>0</td>
-		<td>15</td>
-		<td>20</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>6</td>
-		<td>1</td>
-		<td>38</td>
-		<td>21</td>
-		<td>32.4</td>
-	</tr>
-	<tr>
-		<td>6</td>
-		<td>2</td>
-		<td>23</td>
-		<td>8</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>6</td>
-		<td>3</td>
-		<td>30</td>
-		<td>2</td>
-		<td>34.8</td>
-	</tr>
-	<tr>
-		<td>6</td>
-		<td>4</td>
-		<td>31</td>
-		<td>20</td>
-		<td>7.2</td>
-	</tr>
-	<tr>
-		<td>6</td>
-		<td>5</td>
-		<td>14</td>
-		<td>20</td>
-		<td>18.6</td>
-	</tr>
-	<tr>
-		<td>6</td>
-		<td>6</td>
-		<td>37</td>
-		<td>22</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>6</td>
-		<td>7</td>
-		<td>26</td>
-		<td>10</td>
-		<td>37.8</td>
-	</tr>
-	<tr>
-		<td>6</td>
-		<td>8</td>
-		<td>41</td>
-		<td>19</td>
-		<td>30.9</td>
-	</tr>
-	<tr>
-		<td>6</td>
-		<td>9</td>
-		<td>19</td>
-		<td>2</td>
-		<td>16.5</td>
-	</tr>
-	<tr>
-		<td>6</td>
-		<td>10</td>
-		<td>16</td>
-		<td>13</td>
-		<td>29.1</td>
-	</tr>
-	<tr>
-		<td>6</td>
-		<td>11</td>
-		<td>44</td>
-		<td>1</td>
-		<td>14.4</td>
-	</tr>
-	<tr>
-		<td>7</td>
-		<td>0</td>
-		<td>43</td>
-		<td>16</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>7</td>
-		<td>1</td>
-		<td>23</td>
-		<td>12</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>7</td>
-		<td>2</td>
-		<td>27</td>
-		<td>17</td>
-		<td>34.5</td>
-	</tr>
-	<tr>
-		<td>7</td>
-		<td>3</td>
-		<td>30</td>
-		<td>2</td>
-		<td>34.8</td>
-	</tr>
-	<tr>
-		<td>7</td>
-		<td>4</td>
-		<td>2</td>
-		<td>13</td>
-		<td>37.2</td>
-	</tr>
-	<tr>
-		<td>7</td>
-		<td>5</td>
-		<td>24</td>
-		<td>10</td>
-		<td>10.8</td>
-	</tr>
-	<tr>
-		<td>7</td>
-		<td>6</td>
-		<td>14</td>
-		<td>4</td>
-		<td>18.6</td>
-	</tr>
-	<tr>
-		<td>7</td>
-		<td>7</td>
-		<td>2</td>
-		<td>22</td>
-		<td>37.2</td>
-	</tr>
-	<tr>
-		<td>7</td>
-		<td>8</td>
-		<td>42</td>
-		<td>19</td>
-		<td>29.7</td>
-	</tr>
-	<tr>
-		<td>7</td>
-		<td>9</td>
-		<td>9</td>
-		<td>21</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>7</td>
-		<td>10</td>
-		<td>7</td>
-		<td>1</td>
-		<td>12.6</td>
-	</tr>
-	<tr>
-		<td>7</td>
-		<td>11</td>
-		<td>19</td>
-		<td>13</td>
-		<td>16.5</td>
-	</tr>
-	<tr>
-		<td>7</td>
-		<td>12</td>
-		<td>40</td>
-		<td>16</td>
-		<td>4.2</td>
-	</tr>
-	<tr>
-		<td>7</td>
-		<td>13</td>
-		<td>32</td>
-		<td>23</td>
-		<td>28.5</td>
-	</tr>
-	<tr>
-		<td>7</td>
-		<td>14</td>
-		<td>47</td>
-		<td>14</td>
-		<td>26.7</td>
-	</tr>
-	<tr>
-		<td>7</td>
-		<td>15</td>
-		<td>24</td>
-		<td>17</td>
-		<td>10.8</td>
-	</tr>
-	<tr>
-		<td>7</td>
-		<td>16</td>
-		<td>7</td>
-		<td>12</td>
-		<td>12.6</td>
-	</tr>
-	<tr>
-		<td>7</td>
-		<td>17</td>
-		<td>40</td>
-		<td>1</td>
-		<td>4.2</td>
-	</tr>
-	<tr>
-		<td>7</td>
-		<td>18</td>
-		<td>23</td>
-		<td>5</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>8</td>
-		<td>0</td>
-		<td>34</td>
-		<td>15</td>
-		<td>38.4</td>
-	</tr>
-	<tr>
-		<td>8</td>
-		<td>1</td>
-		<td>44</td>
-		<td>16</td>
-		<td>14.4</td>
-	</tr>
-	<tr>
-		<td>8</td>
-		<td>2</td>
-		<td>11</td>
-		<td>8</td>
-		<td>13.2</td>
-	</tr>
-	<tr>
-		<td>8</td>
-		<td>3</td>
-		<td>41</td>
-		<td>16</td>
-		<td>30.9</td>
-	</tr>
-	<tr>
-		<td>8</td>
-		<td>4</td>
-		<td>15</td>
-		<td>8</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>8</td>
-		<td>5</td>
-		<td>24</td>
-		<td>18</td>
-		<td>10.8</td>
-	</tr>
-	<tr>
-		<td>8</td>
-		<td>6</td>
-		<td>15</td>
-		<td>19</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>8</td>
-		<td>7</td>
-		<td>6</td>
-		<td>5</td>
-		<td>14.7</td>
-	</tr>
-	<tr>
-		<td>8</td>
-		<td>8</td>
-		<td>38</td>
-		<td>7</td>
-		<td>32.4</td>
-	</tr>
-	<tr>
-		<td>8</td>
-		<td>9</td>
-		<td>21</td>
-		<td>23</td>
-		<td>17.1</td>
-	</tr>
-	<tr>
-		<td>9</td>
-		<td>0</td>
-		<td>45</td>
-		<td>8</td>
-		<td>27.0</td>
-	</tr>
-	<tr>
-		<td>9</td>
-		<td>1</td>
-		<td>18</td>
-		<td>21</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>9</td>
-		<td>2</td>
-		<td>29</td>
-		<td>12</td>
-		<td>16.8</td>
-	</tr>
-	<tr>
-		<td>9</td>
-		<td>3</td>
-		<td>4</td>
-		<td>14</td>
-		<td>19.2</td>
-	</tr>
-	<tr>
-		<td>9</td>
-		<td>4</td>
-		<td>36</td>
-		<td>16</td>
-		<td>4.8</td>
-	</tr>
-	<tr>
-		<td>9</td>
-		<td>5</td>
-		<td>6</td>
-		<td>2</td>
-		<td>14.7</td>
-	</tr>
-	<tr>
-		<td>9</td>
-		<td>6</td>
-		<td>18</td>
-		<td>10</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>9</td>
-		<td>7</td>
-		<td>2</td>
-		<td>22</td>
-		<td>37.2</td>
-	</tr>
-	<tr>
-		<td>9</td>
-		<td>8</td>
-		<td>24</td>
-		<td>11</td>
-		<td>10.8</td>
-	</tr>
-	<tr>
-		<td>9</td>
-		<td>9</td>
-		<td>13</td>
-		<td>6</td>
-		<td>27.0</td>
-	</tr>
-	<tr>
-		<td>9</td>
-		<td>10</td>
-		<td>38</td>
-		<td>11</td>
-		<td>32.4</td>
-	</tr>
-	<tr>
-		<td>9</td>
-		<td>11</td>
-		<td>12</td>
-		<td>16</td>
-		<td>25.2</td>
-	</tr>
-	<tr>
-		<td>9</td>
-		<td>12</td>
-		<td>25</td>
-		<td>23</td>
-		<td>24.3</td>
-	</tr>
-	<tr>
-		<td>9</td>
-		<td>13</td>
-		<td>42</td>
-		<td>13</td>
-		<td>29.7</td>
-	</tr>
-	<tr>
-		<td>9</td>
-		<td>14</td>
-		<td>15</td>
-		<td>8</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>9</td>
-		<td>15</td>
-		<td>48</td>
-		<td>23</td>
-		<td>31.5</td>
-	</tr>
-	<tr>
-		<td>9</td>
-		<td>16</td>
-		<td>24</td>
-		<td>10</td>
-		<td>10.8</td>
-	</tr>
-	<tr>
-		<td>9</td>
-		<td>17</td>
-		<td>13</td>
-		<td>17</td>
-		<td>27.0</td>
-	</tr>
-	<tr>
-		<td>9</td>
-		<td>18</td>
-		<td>3</td>
-		<td>12</td>
-		<td>38.1</td>
-	</tr>
-	<tr>
-		<td>9</td>
-		<td>19</td>
-		<td>48</td>
-		<td>23</td>
-		<td>31.5</td>
-	</tr>
-	<tr>
-		<td>10</td>
-		<td>0</td>
-		<td>20</td>
-		<td>1</td>
-		<td>30.0</td>
-	</tr>
-	<tr>
-		<td>10</td>
-		<td>1</td>
-		<td>33</td>
-		<td>17</td>
-		<td>27.3</td>
-	</tr>
-	<tr>
-		<td>10</td>
-		<td>2</td>
-		<td>7</td>
-		<td>9</td>
-		<td>12.6</td>
-	</tr>
-	<tr>
-		<td>10</td>
-		<td>3</td>
-		<td>46</td>
-		<td>1</td>
-		<td>9.3</td>
-	</tr>
-	<tr>
-		<td>10</td>
-		<td>4</td>
-		<td>10</td>
-		<td>24</td>
-		<td>30.6</td>
-	</tr>
-	<tr>
-		<td>10</td>
-		<td>5</td>
-		<td>5</td>
-		<td>24</td>
-		<td>35.4</td>
-	</tr>
-	<tr>
-		<td>10</td>
-		<td>6</td>
-		<td>18</td>
-		<td>14</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>10</td>
-		<td>7</td>
-		<td>4</td>
-		<td>13</td>
-		<td>19.2</td>
-	</tr>
-	<tr>
-		<td>10</td>
-		<td>8</td>
-		<td>22</td>
-		<td>11</td>
-		<td>9.9</td>
-	</tr>
-	<tr>
-		<td>10</td>
-		<td>9</td>
-		<td>5</td>
-		<td>10</td>
-		<td>35.4</td>
-	</tr>
-	<tr>
-		<td>11</td>
-		<td>0</td>
-		<td>45</td>
-		<td>10</td>
-		<td>27.0</td>
-	</tr>
-	<tr>
-		<td>11</td>
-		<td>1</td>
-		<td>21</td>
-		<td>21</td>
-		<td>17.1</td>
-	</tr>
-	<tr>
-		<td>11</td>
-		<td>2</td>
-		<td>0</td>
-		<td>3</td>
-		<td>8.1</td>
-	</tr>
-	<tr>
-		<td>11</td>
-		<td>3</td>
-		<td>32</td>
-		<td>21</td>
-		<td>28.5</td>
-	</tr>
-	<tr>
-		<td>11</td>
-		<td>4</td>
-		<td>47</td>
-		<td>16</td>
-		<td>26.7</td>
-	</tr>
-	<tr>
-		<td>11</td>
-		<td>5</td>
-		<td>19</td>
-		<td>2</td>
-		<td>16.5</td>
-	</tr>
-	<tr>
-		<td>11</td>
-		<td>6</td>
-		<td>0</td>
-		<td>12</td>
-		<td>8.1</td>
-	</tr>
-	<tr>
-		<td>11</td>
-		<td>7</td>
-		<td>48</td>
-		<td>22</td>
-		<td>31.5</td>
-	</tr>
-	<tr>
-		<td>11</td>
-		<td>8</td>
-		<td>20</td>
-		<td>1</td>
-		<td>30.0</td>
-	</tr>
-	<tr>
-		<td>12</td>
-		<td>0</td>
-		<td>1</td>
-		<td>24</td>
-		<td>37.2</td>
-	</tr>
-	<tr>
-		<td>12</td>
-		<td>1</td>
-		<td>41</td>
-		<td>19</td>
-		<td>30.9</td>
-	</tr>
-	<tr>
-		<td>12</td>
-		<td>2</td>
-		<td>6</td>
-		<td>5</td>
-		<td>14.7</td>
-	</tr>
-	<tr>
-		<td>12</td>
-		<td>3</td>
-		<td>0</td>
-		<td>18</td>
-		<td>8.1</td>
-	</tr>
-	<tr>
-		<td>12</td>
-		<td>4</td>
-		<td>20</td>
-		<td>11</td>
-		<td>30.0</td>
-	</tr>
-	<tr>
-		<td>12</td>
-		<td>5</td>
-		<td>37</td>
-		<td>17</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>12</td>
-		<td>6</td>
-		<td>31</td>
-		<td>15</td>
-		<td>7.2</td>
-	</tr>
-	<tr>
-		<td>12</td>
-		<td>7</td>
-		<td>48</td>
-		<td>7</td>
-		<td>31.5</td>
-	</tr>
-	<tr>
-		<td>12</td>
-		<td>8</td>
-		<td>48</td>
-		<td>2</td>
-		<td>31.5</td>
-	</tr>
-	<tr>
-		<td>12</td>
-		<td>9</td>
-		<td>25</td>
-		<td>22</td>
-		<td>24.3</td>
-	</tr>
-	<tr>
-		<td>12</td>
-		<td>10</td>
-		<td>46</td>
-		<td>19</td>
-		<td>9.3</td>
-	</tr>
-	<tr>
-		<td>12</td>
-		<td>11</td>
-		<td>28</td>
-		<td>16</td>
-		<td>4.5</td>
-	</tr>
-	<tr>
-		<td>12</td>
-		<td>12</td>
-		<td>13</td>
-		<td>12</td>
-		<td>27.0</td>
-	</tr>
-	<tr>
-		<td>12</td>
-		<td>13</td>
-		<td>36</td>
-		<td>21</td>
-		<td>4.8</td>
-	</tr>
-	<tr>
-		<td>12</td>
-		<td>14</td>
-		<td>25</td>
-		<td>11</td>
-		<td>24.3</td>
-	</tr>
-	<tr>
-		<td>12</td>
-		<td>15</td>
-		<td>22</td>
-		<td>16</td>
-		<td>9.9</td>
-	</tr>
-	<tr>
-		<td>12</td>
-		<td>16</td>
-		<td>0</td>
-		<td>9</td>
-		<td>8.1</td>
-	</tr>
-	<tr>
-		<td>12</td>
-		<td>17</td>
-		<td>31</td>
-		<td>15</td>
-		<td>7.2</td>
-	</tr>
-	<tr>
-		<td>12</td>
-		<td>18</td>
-		<td>9</td>
-		<td>4</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>13</td>
-		<td>0</td>
-		<td>16</td>
-		<td>10</td>
-		<td>29.1</td>
-	</tr>
-	<tr>
-		<td>13</td>
-		<td>1</td>
-		<td>1</td>
-		<td>1</td>
-		<td>37.2</td>
-	</tr>
-	<tr>
-		<td>13</td>
-		<td>2</td>
-		<td>13</td>
-		<td>20</td>
-		<td>27.0</td>
-	</tr>
-	<tr>
-		<td>13</td>
-		<td>3</td>
-		<td>32</td>
-		<td>2</td>
-		<td>28.5</td>
-	</tr>
-	<tr>
-		<td>13</td>
-		<td>4</td>
-		<td>26</td>
-		<td>21</td>
-		<td>37.8</td>
-	</tr>
-	<tr>
-		<td>13</td>
-		<td>5</td>
-		<td>22</td>
-		<td>19</td>
-		<td>9.9</td>
-	</tr>
-	<tr>
-		<td>13</td>
-		<td>6</td>
-		<td>19</td>
-		<td>8</td>
-		<td>16.5</td>
-	</tr>
-	<tr>
-		<td>13</td>
-		<td>7</td>
-		<td>29</td>
-		<td>24</td>
-		<td>16.8</td>
-	</tr>
-	<tr>
-		<td>13</td>
-		<td>8</td>
-		<td>48</td>
-		<td>11</td>
-		<td>31.5</td>
-	</tr>
-	<tr>
-		<td>13</td>
-		<td>9</td>
-		<td>24</td>
-		<td>10</td>
-		<td>10.8</td>
-	</tr>
-	<tr>
-		<td>13</td>
-		<td>10</td>
-		<td>45</td>
-		<td>24</td>
-		<td>27.0</td>
-	</tr>
-	<tr>
-		<td>13</td>
-		<td>11</td>
-		<td>14</td>
-		<td>3</td>
-		<td>18.6</td>
-	</tr>
-	<tr>
-		<td>13</td>
-		<td>12</td>
-		<td>17</td>
-		<td>3</td>
-		<td>33.0</td>
-	</tr>
-	<tr>
-		<td>13</td>
-		<td>13</td>
-		<td>10</td>
-		<td>20</td>
-		<td>30.6</td>
-	</tr>
-	<tr>
-		<td>13</td>
-		<td>14</td>
-		<td>1</td>
-		<td>12</td>
-		<td>37.2</td>
-	</tr>
-	<tr>
-		<td>13</td>
-		<td>15</td>
-		<td>0</td>
-		<td>20</td>
-		<td>8.1</td>
-	</tr>
-	<tr>
-		<td>13</td>
-		<td>16</td>
-		<td>22</td>
-		<td>23</td>
-		<td>9.9</td>
-	</tr>
-	<tr>
-		<td>13</td>
-		<td>17</td>
-		<td>32</td>
-		<td>18</td>
-		<td>28.5</td>
-	</tr>
-	<tr>
-		<td>13</td>
-		<td>18</td>
-		<td>0</td>
-		<td>16</td>
-		<td>8.1</td>
-	</tr>
-	<tr>
-		<td>13</td>
-		<td>19</td>
-		<td>42</td>
-		<td>18</td>
-		<td>29.7</td>
-	</tr>
-	<tr>
-		<td>13</td>
-		<td>20</td>
-		<td>5</td>
-		<td>19</td>
-		<td>35.4</td>
-	</tr>
-	<tr>
-		<td>13</td>
-		<td>21</td>
-		<td>40</td>
-		<td>1</td>
-		<td>4.2</td>
-	</tr>
-	<tr>
-		<td>14</td>
-		<td>0</td>
-		<td>42</td>
-		<td>18</td>
-		<td>29.7</td>
-	</tr>
-	<tr>
-		<td>14</td>
-		<td>1</td>
-		<td>9</td>
-		<td>22</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>14</td>
-		<td>2</td>
-		<td>15</td>
-		<td>18</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>14</td>
-		<td>3</td>
-		<td>34</td>
-		<td>11</td>
-		<td>38.4</td>
-	</tr>
-	<tr>
-		<td>14</td>
-		<td>4</td>
-		<td>41</td>
-		<td>17</td>
-		<td>30.9</td>
-	</tr>
-	<tr>
-		<td>14</td>
-		<td>5</td>
-		<td>11</td>
-		<td>8</td>
-		<td>13.2</td>
-	</tr>
-	<tr>
-		<td>14</td>
-		<td>6</td>
-		<td>26</td>
-		<td>18</td>
-		<td>37.8</td>
-	</tr>
-	<tr>
-		<td>14</td>
-		<td>7</td>
-		<td>43</td>
-		<td>4</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>14</td>
-		<td>8</td>
-		<td>23</td>
-		<td>7</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>14</td>
-		<td>9</td>
-		<td>13</td>
-		<td>16</td>
-		<td>27.0</td>
-	</tr>
-	<tr>
-		<td>14</td>
-		<td>10</td>
-		<td>44</td>
-		<td>16</td>
-		<td>14.4</td>
-	</tr>
-	<tr>
-		<td>14</td>
-		<td>11</td>
-		<td>25</td>
-		<td>15</td>
-		<td>24.3</td>
-	</tr>
-	<tr>
-		<td>14</td>
-		<td>12</td>
-		<td>4</td>
-		<td>20</td>
-		<td>19.2</td>
-	</tr>
-	<tr>
-		<td>14</td>
-		<td>13</td>
-		<td>11</td>
-		<td>23</td>
-		<td>13.2</td>
-	</tr>
-	<tr>
-		<td>15</td>
-		<td>0</td>
-		<td>17</td>
-		<td>12</td>
-		<td>33.0</td>
-	</tr>
-	<tr>
-		<td>15</td>
-		<td>1</td>
-		<td>13</td>
-		<td>21</td>
-		<td>27.0</td>
-	</tr>
-	<tr>
-		<td>15</td>
-		<td>2</td>
-		<td>24</td>
-		<td>6</td>
-		<td>10.8</td>
-	</tr>
-	<tr>
-		<td>16</td>
-		<td>0</td>
-		<td>18</td>
-		<td>15</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>16</td>
-		<td>1</td>
-		<td>36</td>
-		<td>20</td>
-		<td>4.8</td>
-	</tr>
-	<tr>
-		<td>16</td>
-		<td>2</td>
-		<td>20</td>
-		<td>15</td>
-		<td>30.0</td>
-	</tr>
-	<tr>
-		<td>16</td>
-		<td>3</td>
-		<td>0</td>
-		<td>3</td>
-		<td>8.1</td>
-	</tr>
-	<tr>
-		<td>16</td>
-		<td>4</td>
-		<td>10</td>
-		<td>24</td>
-		<td>30.6</td>
-	</tr>
-	<tr>
-		<td>16</td>
-		<td>5</td>
-		<td>11</td>
-		<td>15</td>
-		<td>13.2</td>
-	</tr>
-	<tr>
-		<td>16</td>
-		<td>6</td>
-		<td>44</td>
-		<td>7</td>
-		<td>14.4</td>
-	</tr>
-	<tr>
-		<td>16</td>
-		<td>7</td>
-		<td>8</td>
-		<td>17</td>
-		<td>33.9</td>
-	</tr>
-	<tr>
-		<td>16</td>
-		<td>8</td>
-		<td>13</td>
-		<td>17</td>
-		<td>27.0</td>
-	</tr>
-	<tr>
-		<td>16</td>
-		<td>9</td>
-		<td>11</td>
-		<td>10</td>
-		<td>13.2</td>
-	</tr>
-	<tr>
-		<td>16</td>
-		<td>10</td>
-		<td>43</td>
-		<td>8</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>16</td>
-		<td>11</td>
-		<td>24</td>
-		<td>7</td>
-		<td>10.8</td>
-	</tr>
-	<tr>
-		<td>16</td>
-		<td>12</td>
-		<td>18</td>
-		<td>2</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>16</td>
-		<td>13</td>
-		<td>20</td>
-		<td>1</td>
-		<td>30.0</td>
-	</tr>
-	<tr>
-		<td>16</td>
-		<td>14</td>
-		<td>0</td>
-		<td>19</td>
-		<td>8.1</td>
-	</tr>
-	<tr>
-		<td>16</td>
-		<td>15</td>
-		<td>12</td>
-		<td>3</td>
-		<td>25.2</td>
-	</tr>
-	<tr>
-		<td>17</td>
-		<td>0</td>
-		<td>16</td>
-		<td>8</td>
-		<td>29.1</td>
-	</tr>
-	<tr>
-		<td>17</td>
-		<td>1</td>
-		<td>19</td>
-		<td>19</td>
-		<td>16.5</td>
-	</tr>
-	<tr>
-		<td>17</td>
-		<td>2</td>
-		<td>44</td>
-		<td>11</td>
-		<td>14.4</td>
-	</tr>
-	<tr>
-		<td>17</td>
-		<td>3</td>
-		<td>24</td>
-		<td>4</td>
-		<td>10.8</td>
-	</tr>
-	<tr>
-		<td>17</td>
-		<td>4</td>
-		<td>23</td>
-		<td>2</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>17</td>
-		<td>5</td>
-		<td>44</td>
-		<td>1</td>
-		<td>14.4</td>
-	</tr>
-	<tr>
-		<td>17</td>
-		<td>6</td>
-		<td>43</td>
-		<td>6</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>17</td>
-		<td>7</td>
-		<td>6</td>
-		<td>15</td>
-		<td>14.7</td>
-	</tr>
-	<tr>
-		<td>17</td>
-		<td>8</td>
-		<td>49</td>
-		<td>8</td>
-		<td>3.3</td>
-	</tr>
-	<tr>
-		<td>17</td>
-		<td>9</td>
-		<td>8</td>
-		<td>15</td>
-		<td>33.9</td>
-	</tr>
-	<tr>
-		<td>17</td>
-		<td>10</td>
-		<td>10</td>
-		<td>12</td>
-		<td>30.6</td>
-	</tr>
-	<tr>
-		<td>17</td>
-		<td>11</td>
-		<td>45</td>
-		<td>10</td>
-		<td>27.0</td>
-	</tr>
-	<tr>
-		<td>17</td>
-		<td>12</td>
-		<td>22</td>
-		<td>16</td>
-		<td>9.9</td>
-	</tr>
-	<tr>
-		<td>17</td>
-		<td>13</td>
-		<td>41</td>
-		<td>5</td>
-		<td>30.9</td>
-	</tr>
-	<tr>
-		<td>17</td>
-		<td>14</td>
-		<td>18</td>
-		<td>2</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>17</td>
-		<td>15</td>
-		<td>35</td>
-		<td>10</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>17</td>
-		<td>16</td>
-		<td>8</td>
-		<td>16</td>
-		<td>33.9</td>
-	</tr>
-	<tr>
-		<td>17</td>
-		<td>17</td>
-		<td>7</td>
-		<td>5</td>
-		<td>12.6</td>
-	</tr>
-	<tr>
-		<td>17</td>
-		<td>18</td>
-		<td>5</td>
-		<td>9</td>
-		<td>35.4</td>
-	</tr>
-	<tr>
-		<td>17</td>
-		<td>19</td>
-		<td>46</td>
-		<td>12</td>
-		<td>9.3</td>
-	</tr>
-	<tr>
-		<td>18</td>
-		<td>0</td>
-		<td>32</td>
-		<td>1</td>
-		<td>28.5</td>
-	</tr>
-	<tr>
-		<td>18</td>
-		<td>1</td>
-		<td>33</td>
-		<td>12</td>
-		<td>27.3</td>
-	</tr>
-	<tr>
-		<td>18</td>
-		<td>2</td>
-		<td>40</td>
-		<td>12</td>
-		<td>4.2</td>
-	</tr>
-	<tr>
-		<td>18</td>
-		<td>3</td>
-		<td>19</td>
-		<td>8</td>
-		<td>16.5</td>
-	</tr>
-	<tr>
-		<td>18</td>
-		<td>4</td>
-		<td>28</td>
-		<td>6</td>
-		<td>4.5</td>
-	</tr>
-	<tr>
-		<td>18</td>
-		<td>5</td>
-		<td>15</td>
-		<td>6</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>18</td>
-		<td>6</td>
-		<td>29</td>
-		<td>4</td>
-		<td>16.8</td>
-	</tr>
-	<tr>
-		<td>18</td>
-		<td>7</td>
-		<td>15</td>
-		<td>14</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>18</td>
-		<td>8</td>
-		<td>1</td>
-		<td>24</td>
-		<td>37.2</td>
-	</tr>
-	<tr>
-		<td>18</td>
-		<td>9</td>
-		<td>2</td>
-		<td>2</td>
-		<td>37.2</td>
-	</tr>
-	<tr>
-		<td>18</td>
-		<td>10</td>
-		<td>34</td>
-		<td>18</td>
-		<td>38.4</td>
-	</tr>
-	<tr>
-		<td>18</td>
-		<td>11</td>
-		<td>30</td>
-		<td>8</td>
-		<td>34.8</td>
-	</tr>
-	<tr>
-		<td>18</td>
-		<td>12</td>
-		<td>37</td>
-		<td>12</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>18</td>
-		<td>13</td>
-		<td>14</td>
-		<td>12</td>
-		<td>18.6</td>
-	</tr>
-	<tr>
-		<td>18</td>
-		<td>14</td>
-		<td>28</td>
-		<td>20</td>
-		<td>4.5</td>
-	</tr>
-	<tr>
-		<td>18</td>
-		<td>15</td>
-		<td>44</td>
-		<td>20</td>
-		<td>14.4</td>
-	</tr>
-	<tr>
-		<td>18</td>
-		<td>16</td>
-		<td>31</td>
-		<td>12</td>
-		<td>7.2</td>
-	</tr>
-	<tr>
-		<td>18</td>
-		<td>17</td>
-		<td>8</td>
-		<td>1</td>
-		<td>33.9</td>
-	</tr>
-	<tr>
-		<td>18</td>
-		<td>18</td>
-		<td>10</td>
-		<td>1</td>
-		<td>30.6</td>
-	</tr>
-	<tr>
-		<td>19</td>
-		<td>0</td>
-		<td>12</td>
-		<td>7</td>
-		<td>25.2</td>
-	</tr>
-	<tr>
-		<td>19</td>
-		<td>1</td>
-		<td>31</td>
-		<td>2</td>
-		<td>7.2</td>
-	</tr>
-	<tr>
-		<td>19</td>
-		<td>2</td>
-		<td>4</td>
-		<td>22</td>
-		<td>19.2</td>
-	</tr>
-	<tr>
-		<td>19</td>
-		<td>3</td>
-		<td>49</td>
-		<td>23</td>
-		<td>3.3</td>
-	</tr>
-	<tr>
-		<td>19</td>
-		<td>4</td>
-		<td>36</td>
-		<td>24</td>
-		<td>4.8</td>
-	</tr>
-	<tr>
-		<td>20</td>
-		<td>0</td>
-		<td>47</td>
-		<td>15</td>
-		<td>26.7</td>
-	</tr>
-	<tr>
-		<td>20</td>
-		<td>1</td>
-		<td>29</td>
-		<td>6</td>
-		<td>16.8</td>
-	</tr>
-	<tr>
-		<td>20</td>
-		<td>2</td>
-		<td>24</td>
-		<td>22</td>
-		<td>10.8</td>
-	</tr>
-	<tr>
-		<td>20</td>
-		<td>3</td>
-		<td>25</td>
-		<td>14</td>
-		<td>24.3</td>
-	</tr>
-	<tr>
-		<td>20</td>
-		<td>4</td>
-		<td>30</td>
-		<td>13</td>
-		<td>34.8</td>
-	</tr>
-	<tr>
-		<td>20</td>
-		<td>5</td>
-		<td>8</td>
-		<td>14</td>
-		<td>33.9</td>
-	</tr>
-	<tr>
-		<td>20</td>
-		<td>6</td>
-		<td>20</td>
-		<td>2</td>
-		<td>30.0</td>
-	</tr>
-	<tr>
-		<td>20</td>
-		<td>7</td>
-		<td>9</td>
-		<td>9</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>20</td>
-		<td>8</td>
-		<td>44</td>
-		<td>18</td>
-		<td>14.4</td>
-	</tr>
-	<tr>
-		<td>20</td>
-		<td>9</td>
-		<td>12</td>
-		<td>8</td>
-		<td>25.2</td>
-	</tr>
-	<tr>
-		<td>20</td>
-		<td>10</td>
-		<td>25</td>
-		<td>11</td>
-		<td>24.3</td>
-	</tr>
-	<tr>
-		<td>20</td>
-		<td>11</td>
-		<td>15</td>
-		<td>8</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>21</td>
-		<td>0</td>
-		<td>9</td>
-		<td>10</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>21</td>
-		<td>1</td>
-		<td>38</td>
-		<td>19</td>
-		<td>32.4</td>
-	</tr>
-	<tr>
-		<td>21</td>
-		<td>2</td>
-		<td>31</td>
-		<td>17</td>
-		<td>7.2</td>
-	</tr>
-	<tr>
-		<td>21</td>
-		<td>3</td>
-		<td>30</td>
-		<td>13</td>
-		<td>34.8</td>
-	</tr>
-	<tr>
-		<td>21</td>
-		<td>4</td>
-		<td>49</td>
-		<td>22</td>
-		<td>3.3</td>
-	</tr>
-	<tr>
-		<td>21</td>
-		<td>5</td>
-		<td>27</td>
-		<td>18</td>
-		<td>34.5</td>
-	</tr>
-	<tr>
-		<td>21</td>
-		<td>6</td>
-		<td>26</td>
-		<td>7</td>
-		<td>37.8</td>
-	</tr>
-	<tr>
-		<td>21</td>
-		<td>7</td>
-		<td>8</td>
-		<td>9</td>
-		<td>33.9</td>
-	</tr>
-	<tr>
-		<td>21</td>
-		<td>8</td>
-		<td>44</td>
-		<td>19</td>
-		<td>14.4</td>
-	</tr>
-	<tr>
-		<td>21</td>
-		<td>9</td>
-		<td>35</td>
-		<td>17</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>21</td>
-		<td>10</td>
-		<td>19</td>
-		<td>14</td>
-		<td>16.5</td>
-	</tr>
-	<tr>
-		<td>21</td>
-		<td>11</td>
-		<td>20</td>
-		<td>11</td>
-		<td>30.0</td>
-	</tr>
-	<tr>
-		<td>22</td>
-		<td>0</td>
-		<td>9</td>
-		<td>6</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>22</td>
-		<td>1</td>
-		<td>30</td>
-		<td>11</td>
-		<td>34.8</td>
-	</tr>
-	<tr>
-		<td>22</td>
-		<td>2</td>
-		<td>12</td>
-		<td>20</td>
-		<td>25.2</td>
-	</tr>
-	<tr>
-		<td>22</td>
-		<td>3</td>
-		<td>22</td>
-		<td>5</td>
-		<td>9.9</td>
-	</tr>
-	<tr>
-		<td>22</td>
-		<td>4</td>
-		<td>5</td>
-		<td>21</td>
-		<td>35.4</td>
-	</tr>
-	<tr>
-		<td>22</td>
-		<td>5</td>
-		<td>24</td>
-		<td>5</td>
-		<td>10.8</td>
-	</tr>
-	<tr>
-		<td>22</td>
-		<td>6</td>
-		<td>4</td>
-		<td>11</td>
-		<td>19.2</td>
-	</tr>
-	<tr>
-		<td>22</td>
-		<td>7</td>
-		<td>21</td>
-		<td>6</td>
-		<td>17.1</td>
-	</tr>
-	<tr>
-		<td>22</td>
-		<td>8</td>
-		<td>3</td>
-		<td>2</td>
-		<td>38.1</td>
-	</tr>
-	<tr>
-		<td>22</td>
-		<td>9</td>
-		<td>23</td>
-		<td>1</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>23</td>
-		<td>0</td>
-		<td>48</td>
-		<td>22</td>
-		<td>31.5</td>
-	</tr>
-	<tr>
-		<td>23</td>
-		<td>1</td>
-		<td>26</td>
-		<td>8</td>
-		<td>37.8</td>
-	</tr>
-	<tr>
-		<td>23</td>
-		<td>2</td>
-		<td>33</td>
-		<td>18</td>
-		<td>27.3</td>
-	</tr>
-	<tr>
-		<td>23</td>
-		<td>3</td>
-		<td>40</td>
-		<td>19</td>
-		<td>4.2</td>
-	</tr>
-	<tr>
-		<td>23</td>
-		<td>4</td>
-		<td>23</td>
-		<td>19</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>23</td>
-		<td>5</td>
-		<td>32</td>
-		<td>14</td>
-		<td>28.5</td>
-	</tr>
-	<tr>
-		<td>23</td>
-		<td>6</td>
-		<td>16</td>
-		<td>1</td>
-		<td>29.1</td>
-	</tr>
-	<tr>
-		<td>23</td>
-		<td>7</td>
-		<td>39</td>
-		<td>3</td>
-		<td>23.1</td>
-	</tr>
-	<tr>
-		<td>23</td>
-		<td>8</td>
-		<td>6</td>
-		<td>17</td>
-		<td>14.7</td>
-	</tr>
-	<tr>
-		<td>23</td>
-		<td>9</td>
-		<td>20</td>
-		<td>18</td>
-		<td>30.0</td>
-	</tr>
-	<tr>
-		<td>23</td>
-		<td>10</td>
-		<td>4</td>
-		<td>18</td>
-		<td>19.2</td>
-	</tr>
-	<tr>
-		<td>23</td>
-		<td>11</td>
-		<td>41</td>
-		<td>8</td>
-		<td>30.9</td>
-	</tr>
-	<tr>
-		<td>23</td>
-		<td>12</td>
-		<td>4</td>
-		<td>17</td>
-		<td>19.2</td>
-	</tr>
-	<tr>
-		<td>23</td>
-		<td>13</td>
-		<td>14</td>
-		<td>17</td>
-		<td>18.6</td>
-	</tr>
-	<tr>
-		<td>23</td>
-		<td>14</td>
-		<td>44</td>
-		<td>2</td>
-		<td>14.4</td>
-	</tr>
-	<tr>
-		<td>23</td>
-		<td>15</td>
-		<td>13</td>
-		<td>17</td>
-		<td>27.0</td>
-	</tr>
-	<tr>
-		<td>23</td>
-		<td>16</td>
-		<td>8</td>
-		<td>11</td>
-		<td>33.9</td>
-	</tr>
-	<tr>
-		<td>24</td>
-		<td>0</td>
-		<td>43</td>
-		<td>14</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>24</td>
-		<td>1</td>
-		<td>46</td>
-		<td>18</td>
-		<td>9.3</td>
-	</tr>
-	<tr>
-		<td>24</td>
-		<td>2</td>
-		<td>38</td>
-		<td>10</td>
-		<td>32.4</td>
-	</tr>
-	<tr>
-		<td>24</td>
-		<td>3</td>
-		<td>17</td>
-		<td>23</td>
-		<td>33.0</td>
-	</tr>
-	<tr>
-		<td>24</td>
-		<td>4</td>
-		<td>15</td>
-		<td>17</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>24</td>
-		<td>5</td>
-		<td>35</td>
-		<td>16</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>24</td>
-		<td>6</td>
-		<td>40</td>
-		<td>3</td>
-		<td>4.2</td>
-	</tr>
-	<tr>
-		<td>24</td>
-		<td>7</td>
-		<td>7</td>
-		<td>13</td>
-		<td>12.6</td>
-	</tr>
-	<tr>
-		<td>24</td>
-		<td>8</td>
-		<td>5</td>
-		<td>18</td>
-		<td>35.4</td>
-	</tr>
-	<tr>
-		<td>24</td>
-		<td>9</td>
-		<td>21</td>
-		<td>8</td>
-		<td>17.1</td>
-	</tr>
-	<tr>
-		<td>24</td>
-		<td>10</td>
-		<td>27</td>
-		<td>4</td>
-		<td>34.5</td>
-	</tr>
-	<tr>
-		<td>24</td>
-		<td>11</td>
-		<td>1</td>
-		<td>4</td>
-		<td>37.2</td>
-	</tr>
-	<tr>
-		<td>24</td>
-		<td>12</td>
-		<td>0</td>
-		<td>8</td>
-		<td>8.1</td>
-	</tr>
-	<tr>
-		<td>24</td>
-		<td>13</td>
-		<td>15</td>
-		<td>21</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>24</td>
-		<td>14</td>
-		<td>1</td>
-		<td>13</td>
-		<td>37.2</td>
-	</tr>
-	<tr>
-		<td>24</td>
-		<td>15</td>
-		<td>39</td>
-		<td>17</td>
-		<td>23.1</td>
-	</tr>
-	<tr>
-		<td>25</td>
-		<td>0</td>
-		<td>5</td>
-		<td>15</td>
-		<td>35.4</td>
-	</tr>
-	<tr>
-		<td>25</td>
-		<td>1</td>
-		<td>43</td>
-		<td>13</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>25</td>
-		<td>2</td>
-		<td>13</td>
-		<td>8</td>
-		<td>27.0</td>
-	</tr>
-	<tr>
-		<td>25</td>
-		<td>3</td>
-		<td>19</td>
-		<td>4</td>
-		<td>16.5</td>
-	</tr>
-	<tr>
-		<td>25</td>
-		<td>4</td>
-		<td>47</td>
-		<td>10</td>
-		<td>26.7</td>
-	</tr>
-	<tr>
-		<td>25</td>
-		<td>5</td>
-		<td>10</td>
-		<td>5</td>
-		<td>30.6</td>
-	</tr>
-	<tr>
-		<td>25</td>
-		<td>6</td>
-		<td>21</td>
-		<td>18</td>
-		<td>17.1</td>
-	</tr>
-	<tr>
-		<td>25</td>
-		<td>7</td>
-		<td>16</td>
-		<td>8</td>
-		<td>29.1</td>
-	</tr>
-	<tr>
-		<td>25</td>
-		<td>8</td>
-		<td>38</td>
-		<td>3</td>
-		<td>32.4</td>
-	</tr>
-	<tr>
-		<td>26</td>
-		<td>0</td>
-		<td>42</td>
-		<td>16</td>
-		<td>29.7</td>
-	</tr>
-	<tr>
-		<td>26</td>
-		<td>1</td>
-		<td>43</td>
-		<td>21</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>26</td>
-		<td>2</td>
-		<td>33</td>
-		<td>7</td>
-		<td>27.3</td>
-	</tr>
-	<tr>
-		<td>26</td>
-		<td>3</td>
-		<td>16</td>
-		<td>3</td>
-		<td>29.1</td>
-	</tr>
-	<tr>
-		<td>26</td>
-		<td>4</td>
-		<td>46</td>
-		<td>7</td>
-		<td>9.3</td>
-	</tr>
-	<tr>
-		<td>26</td>
-		<td>5</td>
-		<td>38</td>
-		<td>4</td>
-		<td>32.4</td>
-	</tr>
-	<tr>
-		<td>26</td>
-		<td>6</td>
-		<td>7</td>
-		<td>23</td>
-		<td>12.6</td>
-	</tr>
-	<tr>
-		<td>26</td>
-		<td>7</td>
-		<td>4</td>
-		<td>16</td>
-		<td>19.2</td>
-	</tr>
-	<tr>
-		<td>26</td>
-		<td>8</td>
-		<td>40</td>
-		<td>13</td>
-		<td>4.2</td>
-	</tr>
-	<tr>
-		<td>26</td>
-		<td>9</td>
-		<td>1</td>
-		<td>23</td>
-		<td>37.2</td>
-	</tr>
-	<tr>
-		<td>26</td>
-		<td>10</td>
-		<td>34</td>
-		<td>16</td>
-		<td>38.4</td>
-	</tr>
-	<tr>
-		<td>26</td>
-		<td>11</td>
-		<td>18</td>
-		<td>3</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>26</td>
-		<td>12</td>
-		<td>27</td>
-		<td>20</td>
-		<td>34.5</td>
-	</tr>
-	<tr>
-		<td>26</td>
-		<td>13</td>
-		<td>13</td>
-		<td>10</td>
-		<td>27.0</td>
-	</tr>
-	<tr>
-		<td>26</td>
-		<td>14</td>
-		<td>26</td>
-		<td>6</td>
-		<td>37.8</td>
-	</tr>
-	<tr>
-		<td>26</td>
-		<td>15</td>
-		<td>8</td>
-		<td>6</td>
-		<td>33.9</td>
-	</tr>
-	<tr>
-		<td>26</td>
-		<td>16</td>
-		<td>30</td>
-		<td>4</td>
-		<td>34.8</td>
-	</tr>
-	<tr>
-		<td>27</td>
-		<td>0</td>
-		<td>24</td>
-		<td>15</td>
-		<td>10.8</td>
-	</tr>
-	<tr>
-		<td>27</td>
-		<td>1</td>
-		<td>45</td>
-		<td>15</td>
-		<td>27.0</td>
-	</tr>
-	<tr>
-		<td>27</td>
-		<td>2</td>
-		<td>19</td>
-		<td>1</td>
-		<td>16.5</td>
-	</tr>
-	<tr>
-		<td>28</td>
-		<td>0</td>
-		<td>35</td>
-		<td>13</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>28</td>
-		<td>1</td>
-		<td>15</td>
-		<td>13</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>28</td>
-		<td>2</td>
-		<td>44</td>
-		<td>22</td>
-		<td>14.4</td>
-	</tr>
-	<tr>
-		<td>28</td>
-		<td>3</td>
-		<td>6</td>
-		<td>3</td>
-		<td>14.7</td>
-	</tr>
-	<tr>
-		<td>28</td>
-		<td>4</td>
-		<td>45</td>
-		<td>17</td>
-		<td>27.0</td>
-	</tr>
-	<tr>
-		<td>28</td>
-		<td>5</td>
-		<td>49</td>
-		<td>4</td>
-		<td>3.3</td>
-	</tr>
-	<tr>
-		<td>28</td>
-		<td>6</td>
-		<td>33</td>
-		<td>16</td>
-		<td>27.3</td>
-	</tr>
-	<tr>
-		<td>28</td>
-		<td>7</td>
-		<td>28</td>
-		<td>8</td>
-		<td>4.5</td>
-	</tr>
-	<tr>
-		<td>28</td>
-		<td>8</td>
-		<td>28</td>
-		<td>6</td>
-		<td>4.5</td>
-	</tr>
-	<tr>
-		<td>29</td>
-		<td>0</td>
-		<td>33</td>
-		<td>17</td>
-		<td>27.3</td>
-	</tr>
-	<tr>
-		<td>29</td>
-		<td>1</td>
-		<td>38</td>
-		<td>12</td>
-		<td>32.4</td>
-	</tr>
-	<tr>
-		<td>29</td>
-		<td>2</td>
-		<td>17</td>
-		<td>23</td>
-		<td>33.0</td>
-	</tr>
-	<tr>
-		<td>29</td>
-		<td>3</td>
-		<td>7</td>
-		<td>21</td>
-		<td>12.6</td>
-	</tr>
-	<tr>
-		<td>29</td>
-		<td>4</td>
-		<td>4</td>
-		<td>7</td>
-		<td>19.2</td>
-	</tr>
-	<tr>
-		<td>29</td>
-		<td>5</td>
-		<td>31</td>
-		<td>13</td>
-		<td>7.2</td>
-	</tr>
-	<tr>
-		<td>29</td>
-		<td>6</td>
-		<td>4</td>
-		<td>16</td>
-		<td>19.2</td>
-	</tr>
-	<tr>
-		<td>29</td>
-		<td>7</td>
-		<td>5</td>
-		<td>1</td>
-		<td>35.4</td>
-	</tr>
-	<tr>
-		<td>29</td>
-		<td>8</td>
-		<td>35</td>
-		<td>6</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>30</td>
-		<td>0</td>
-		<td>14</td>
-		<td>7</td>
-		<td>18.6</td>
-	</tr>
-	<tr>
-		<td>30</td>
-		<td>1</td>
-		<td>16</td>
-		<td>19</td>
-		<td>29.1</td>
-	</tr>
-	<tr>
-		<td>30</td>
-		<td>2</td>
-		<td>10</td>
-		<td>18</td>
-		<td>30.6</td>
-	</tr>
-	<tr>
-		<td>30</td>
-		<td>3</td>
-		<td>33</td>
-		<td>2</td>
-		<td>27.3</td>
-	</tr>
-	<tr>
-		<td>30</td>
-		<td>4</td>
-		<td>34</td>
-		<td>2</td>
-		<td>38.4</td>
-	</tr>
-	<tr>
-		<td>30</td>
-		<td>5</td>
-		<td>43</td>
-		<td>23</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>30</td>
-		<td>6</td>
-		<td>14</td>
-		<td>23</td>
-		<td>18.6</td>
-	</tr>
-	<tr>
-		<td>31</td>
-		<td>0</td>
-		<td>33</td>
-		<td>10</td>
-		<td>27.3</td>
-	</tr>
-	<tr>
-		<td>31</td>
-		<td>1</td>
-		<td>4</td>
-		<td>23</td>
-		<td>19.2</td>
-	</tr>
-	<tr>
-		<td>31</td>
-		<td>2</td>
-		<td>4</td>
-		<td>3</td>
-		<td>19.2</td>
-	</tr>
-	<tr>
-		<td>31</td>
-		<td>3</td>
-		<td>12</td>
-		<td>10</td>
-		<td>25.2</td>
-	</tr>
-	<tr>
-		<td>31</td>
-		<td>4</td>
-		<td>8</td>
-		<td>14</td>
-		<td>33.9</td>
-	</tr>
-	<tr>
-		<td>31</td>
-		<td>5</td>
-		<td>1</td>
-		<td>4</td>
-		<td>37.2</td>
-	</tr>
-	<tr>
-		<td>31</td>
-		<td>6</td>
-		<td>26</td>
-		<td>16</td>
-		<td>37.8</td>
-	</tr>
-	<tr>
-		<td>31</td>
-		<td>7</td>
-		<td>38</td>
-		<td>3</td>
-		<td>32.4</td>
-	</tr>
-	<tr>
-		<td>31</td>
-		<td>8</td>
-		<td>7</td>
-		<td>5</td>
-		<td>12.6</td>
-	</tr>
-	<tr>
-		<td>31</td>
-		<td>9</td>
-		<td>14</td>
-		<td>15</td>
-		<td>18.6</td>
-	</tr>
-	<tr>
-		<td>31</td>
-		<td>10</td>
-		<td>0</td>
-		<td>3</td>
-		<td>8.1</td>
-	</tr>
-	<tr>
-		<td>32</td>
-		<td>0</td>
-		<td>35</td>
-		<td>11</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>32</td>
-		<td>1</td>
-		<td>30</td>
-		<td>13</td>
-		<td>34.8</td>
-	</tr>
-	<tr>
-		<td>32</td>
-		<td>2</td>
-		<td>1</td>
-		<td>14</td>
-		<td>37.2</td>
-	</tr>
-	<tr>
-		<td>33</td>
-		<td>0</td>
-		<td>36</td>
-		<td>5</td>
-		<td>4.8</td>
-	</tr>
-	<tr>
-		<td>33</td>
-		<td>1</td>
-		<td>10</td>
-		<td>21</td>
-		<td>30.6</td>
-	</tr>
-	<tr>
-		<td>33</td>
-		<td>2</td>
-		<td>36</td>
-		<td>16</td>
-		<td>4.8</td>
-	</tr>
-	<tr>
-		<td>33</td>
-		<td>3</td>
-		<td>48</td>
-		<td>1</td>
-		<td>31.5</td>
-	</tr>
-	<tr>
-		<td>33</td>
-		<td>4</td>
-		<td>24</td>
-		<td>1</td>
-		<td>10.8</td>
-	</tr>
-	<tr>
-		<td>33</td>
-		<td>5</td>
-		<td>8</td>
-		<td>11</td>
-		<td>33.9</td>
-	</tr>
-	<tr>
-		<td>33</td>
-		<td>6</td>
-		<td>17</td>
-		<td>16</td>
-		<td>33.0</td>
-	</tr>
-	<tr>
-		<td>33</td>
-		<td>7</td>
-		<td>43</td>
-		<td>10</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>33</td>
-		<td>8</td>
-		<td>3</td>
-		<td>15</td>
-		<td>38.1</td>
-	</tr>
-	<tr>
-		<td>33</td>
-		<td>9</td>
-		<td>29</td>
-		<td>5</td>
-		<td>16.8</td>
-	</tr>
-	<tr>
-		<td>33</td>
-		<td>10</td>
-		<td>24</td>
-		<td>9</td>
-		<td>10.8</td>
-	</tr>
-	<tr>
-		<td>33</td>
-		<td>11</td>
-		<td>5</td>
-		<td>7</td>
-		<td>35.4</td>
-	</tr>
-	<tr>
-		<td>33</td>
-		<td>12</td>
-		<td>16</td>
-		<td>23</td>
-		<td>29.1</td>
-	</tr>
-	<tr>
-		<td>33</td>
-		<td>13</td>
-		<td>25</td>
-		<td>16</td>
-		<td>24.3</td>
-	</tr>
-	<tr>
-		<td>33</td>
-		<td>14</td>
-		<td>44</td>
-		<td>13</td>
-		<td>14.4</td>
-	</tr>
-	<tr>
-		<td>33</td>
-		<td>15</td>
-		<td>38</td>
-		<td>7</td>
-		<td>32.4</td>
-	</tr>
-	<tr>
-		<td>34</td>
-		<td>0</td>
-		<td>10</td>
-		<td>22</td>
-		<td>30.6</td>
-	</tr>
-	<tr>
-		<td>34</td>
-		<td>1</td>
-		<td>4</td>
-		<td>3</td>
-		<td>19.2</td>
-	</tr>
-	<tr>
-		<td>34</td>
-		<td>2</td>
-		<td>28</td>
-		<td>22</td>
-		<td>4.5</td>
-	</tr>
-	<tr>
-		<td>34</td>
-		<td>3</td>
-		<td>44</td>
-		<td>15</td>
-		<td>14.4</td>
-	</tr>
-	<tr>
-		<td>34</td>
-		<td>4</td>
-		<td>27</td>
-		<td>1</td>
-		<td>34.5</td>
-	</tr>
-	<tr>
-		<td>34</td>
-		<td>5</td>
-		<td>45</td>
-		<td>13</td>
-		<td>27.0</td>
-	</tr>
-	<tr>
-		<td>34</td>
-		<td>6</td>
-		<td>32</td>
-		<td>7</td>
-		<td>28.5</td>
-	</tr>
-	<tr>
-		<td>34</td>
-		<td>7</td>
-		<td>21</td>
-		<td>22</td>
-		<td>17.1</td>
-	</tr>
-	<tr>
-		<td>34</td>
-		<td>8</td>
-		<td>3</td>
-		<td>1</td>
-		<td>38.1</td>
-	</tr>
-	<tr>
-		<td>34</td>
-		<td>9</td>
-		<td>8</td>
-		<td>17</td>
-		<td>33.9</td>
-	</tr>
-	<tr>
-		<td>34</td>
-		<td>10</td>
-		<td>41</td>
-		<td>16</td>
-		<td>30.9</td>
-	</tr>
-	<tr>
-		<td>34</td>
-		<td>11</td>
-		<td>4</td>
-		<td>17</td>
-		<td>19.2</td>
-	</tr>
-	<tr>
-		<td>34</td>
-		<td>12</td>
-		<td>43</td>
-		<td>21</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>34</td>
-		<td>13</td>
-		<td>30</td>
-		<td>14</td>
-		<td>34.8</td>
-	</tr>
-	<tr>
-		<td>34</td>
-		<td>14</td>
-		<td>46</td>
-		<td>7</td>
-		<td>9.3</td>
-	</tr>
-	<tr>
-		<td>35</td>
-		<td>0</td>
-		<td>20</td>
-		<td>17</td>
-		<td>30.0</td>
-	</tr>
-	<tr>
-		<td>35</td>
-		<td>1</td>
-		<td>3</td>
-		<td>9</td>
-		<td>38.1</td>
-	</tr>
-	<tr>
-		<td>35</td>
-		<td>2</td>
-		<td>14</td>
-		<td>4</td>
-		<td>18.6</td>
-	</tr>
-	<tr>
-		<td>35</td>
-		<td>3</td>
-		<td>27</td>
-		<td>10</td>
-		<td>34.5</td>
-	</tr>
-	<tr>
-		<td>35</td>
-		<td>4</td>
-		<td>14</td>
-		<td>17</td>
-		<td>18.6</td>
-	</tr>
-	<tr>
-		<td>35</td>
-		<td>5</td>
-		<td>33</td>
-		<td>5</td>
-		<td>27.3</td>
-	</tr>
-	<tr>
-		<td>35</td>
-		<td>6</td>
-		<td>5</td>
-		<td>4</td>
-		<td>35.4</td>
-	</tr>
-	<tr>
-		<td>35</td>
-		<td>7</td>
-		<td>22</td>
-		<td>15</td>
-		<td>9.9</td>
-	</tr>
-	<tr>
-		<td>35</td>
-		<td>8</td>
-		<td>0</td>
-		<td>1</td>
-		<td>8.1</td>
-	</tr>
-	<tr>
-		<td>35</td>
-		<td>9</td>
-		<td>19</td>
-		<td>1</td>
-		<td>16.5</td>
-	</tr>
-	<tr>
-		<td>35</td>
-		<td>10</td>
-		<td>17</td>
-		<td>11</td>
-		<td>33.0</td>
-	</tr>
-	<tr>
-		<td>35</td>
-		<td>11</td>
-		<td>44</td>
-		<td>9</td>
-		<td>14.4</td>
-	</tr>
-	<tr>
-		<td>35</td>
-		<td>12</td>
-		<td>7</td>
-		<td>23</td>
-		<td>12.6</td>
-	</tr>
-	<tr>
-		<td>35</td>
-		<td>13</td>
-		<td>19</td>
-		<td>17</td>
-		<td>16.5</td>
-	</tr>
-	<tr>
-		<td>36</td>
-		<td>0</td>
-		<td>18</td>
-		<td>13</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>36</td>
-		<td>1</td>
-		<td>15</td>
-		<td>23</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>36</td>
-		<td>2</td>
-		<td>1</td>
-		<td>6</td>
-		<td>37.2</td>
-	</tr>
-	<tr>
-		<td>36</td>
-		<td>3</td>
-		<td>10</td>
-		<td>8</td>
-		<td>30.6</td>
-	</tr>
-	<tr>
-		<td>36</td>
-		<td>4</td>
-		<td>40</td>
-		<td>5</td>
-		<td>4.2</td>
-	</tr>
-	<tr>
-		<td>36</td>
-		<td>5</td>
-		<td>25</td>
-		<td>8</td>
-		<td>24.3</td>
-	</tr>
-	<tr>
-		<td>36</td>
-		<td>6</td>
-		<td>39</td>
-		<td>20</td>
-		<td>23.1</td>
-	</tr>
-	<tr>
-		<td>36</td>
-		<td>7</td>
-		<td>39</td>
-		<td>19</td>
-		<td>23.1</td>
-	</tr>
-	<tr>
-		<td>36</td>
-		<td>8</td>
-		<td>4</td>
-		<td>21</td>
-		<td>19.2</td>
-	</tr>
-	<tr>
-		<td>36</td>
-		<td>9</td>
-		<td>31</td>
-		<td>18</td>
-		<td>7.2</td>
-	</tr>
-	<tr>
-		<td>36</td>
-		<td>10</td>
-		<td>47</td>
-		<td>11</td>
-		<td>26.7</td>
-	</tr>
-	<tr>
-		<td>36</td>
-		<td>11</td>
-		<td>44</td>
-		<td>9</td>
-		<td>14.4</td>
-	</tr>
-	<tr>
-		<td>37</td>
-		<td>0</td>
-		<td>41</td>
-		<td>24</td>
-		<td>30.9</td>
-	</tr>
-	<tr>
-		<td>37</td>
-		<td>1</td>
-		<td>15</td>
-		<td>20</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>37</td>
-		<td>2</td>
-		<td>36</td>
-		<td>8</td>
-		<td>4.8</td>
-	</tr>
-	<tr>
-		<td>37</td>
-		<td>3</td>
-		<td>26</td>
-		<td>7</td>
-		<td>37.8</td>
-	</tr>
-	<tr>
-		<td>37</td>
-		<td>4</td>
-		<td>13</td>
-		<td>20</td>
-		<td>27.0</td>
-	</tr>
-	<tr>
-		<td>37</td>
-		<td>5</td>
-		<td>1</td>
-		<td>14</td>
-		<td>37.2</td>
-	</tr>
-	<tr>
-		<td>37</td>
-		<td>6</td>
-		<td>34</td>
-		<td>12</td>
-		<td>38.4</td>
-	</tr>
-	<tr>
-		<td>37</td>
-		<td>7</td>
-		<td>24</td>
-		<td>19</td>
-		<td>10.8</td>
-	</tr>
-	<tr>
-		<td>37</td>
-		<td>8</td>
-		<td>46</td>
-		<td>9</td>
-		<td>9.3</td>
-	</tr>
-	<tr>
-		<td>37</td>
-		<td>9</td>
-		<td>47</td>
-		<td>16</td>
-		<td>26.7</td>
-	</tr>
-	<tr>
-		<td>37</td>
-		<td>10</td>
-		<td>1</td>
-		<td>18</td>
-		<td>37.2</td>
-	</tr>
-	<tr>
-		<td>37</td>
-		<td>11</td>
-		<td>30</td>
-		<td>5</td>
-		<td>34.8</td>
-	</tr>
-	<tr>
-		<td>37</td>
-		<td>12</td>
-		<td>24</td>
-		<td>23</td>
-		<td>10.8</td>
-	</tr>
-	<tr>
-		<td>37</td>
-		<td>13</td>
-		<td>32</td>
-		<td>3</td>
-		<td>28.5</td>
-	</tr>
-	<tr>
-		<td>37</td>
-		<td>14</td>
-		<td>12</td>
-		<td>3</td>
-		<td>25.2</td>
-	</tr>
-	<tr>
-		<td>37</td>
-		<td>15</td>
-		<td>32</td>
-		<td>12</td>
-		<td>28.5</td>
-	</tr>
-	<tr>
-		<td>37</td>
-		<td>16</td>
-		<td>27</td>
-		<td>8</td>
-		<td>34.5</td>
-	</tr>
-	<tr>
-		<td>37</td>
-		<td>17</td>
-		<td>38</td>
-		<td>18</td>
-		<td>32.4</td>
-	</tr>
-	<tr>
-		<td>37</td>
-		<td>18</td>
-		<td>26</td>
-		<td>22</td>
-		<td>37.8</td>
-	</tr>
-	<tr>
-		<td>37</td>
-		<td>19</td>
-		<td>19</td>
-		<td>20</td>
-		<td>16.5</td>
-	</tr>
-	<tr>
-		<td>37</td>
-		<td>20</td>
-		<td>14</td>
-		<td>1</td>
-		<td>18.6</td>
-	</tr>
-	<tr>
-		<td>37</td>
-		<td>21</td>
-		<td>6</td>
-		<td>9</td>
-		<td>14.7</td>
-	</tr>
-	<tr>
-		<td>38</td>
-		<td>0</td>
-		<td>48</td>
-		<td>14</td>
-		<td>31.5</td>
-	</tr>
-	<tr>
-		<td>38</td>
-		<td>1</td>
-		<td>45</td>
-		<td>13</td>
-		<td>27.0</td>
-	</tr>
-	<tr>
-		<td>38</td>
-		<td>2</td>
-		<td>4</td>
-		<td>8</td>
-		<td>19.2</td>
-	</tr>
-	<tr>
-		<td>38</td>
-		<td>3</td>
-		<td>27</td>
-		<td>19</td>
-		<td>34.5</td>
-	</tr>
-	<tr>
-		<td>38</td>
-		<td>4</td>
-		<td>45</td>
-		<td>14</td>
-		<td>27.0</td>
-	</tr>
-	<tr>
-		<td>38</td>
-		<td>5</td>
-		<td>48</td>
-		<td>17</td>
-		<td>31.5</td>
-	</tr>
-	<tr>
-		<td>38</td>
-		<td>6</td>
-		<td>5</td>
-		<td>19</td>
-		<td>35.4</td>
-	</tr>
-	<tr>
-		<td>38</td>
-		<td>7</td>
-		<td>15</td>
-		<td>1</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>38</td>
-		<td>8</td>
-		<td>40</td>
-		<td>10</td>
-		<td>4.2</td>
-	</tr>
-	<tr>
-		<td>38</td>
-		<td>9</td>
-		<td>27</td>
-		<td>20</td>
-		<td>34.5</td>
-	</tr>
-	<tr>
-		<td>38</td>
-		<td>10</td>
-		<td>4</td>
-		<td>18</td>
-		<td>19.2</td>
-	</tr>
-	<tr>
-		<td>38</td>
-		<td>11</td>
-		<td>19</td>
-		<td>18</td>
-		<td>16.5</td>
-	</tr>
-	<tr>
-		<td>38</td>
-		<td>12</td>
-		<td>1</td>
-		<td>18</td>
-		<td>37.2</td>
-	</tr>
-	<tr>
-		<td>38</td>
-		<td>13</td>
-		<td>8</td>
-		<td>7</td>
-		<td>33.9</td>
-	</tr>
-	<tr>
-		<td>38</td>
-		<td>14</td>
-		<td>20</td>
-		<td>7</td>
-		<td>30.0</td>
-	</tr>
-	<tr>
-		<td>38</td>
-		<td>15</td>
-		<td>47</td>
-		<td>10</td>
-		<td>26.7</td>
-	</tr>
-	<tr>
-		<td>38</td>
-		<td>16</td>
-		<td>40</td>
-		<td>18</td>
-		<td>4.2</td>
-	</tr>
-	<tr>
-		<td>38</td>
-		<td>17</td>
-		<td>32</td>
-		<td>4</td>
-		<td>28.5</td>
-	</tr>
-	<tr>
-		<td>38</td>
-		<td>18</td>
-		<td>28</td>
-		<td>20</td>
-		<td>4.5</td>
-	</tr>
-	<tr>
-		<td>38</td>
-		<td>19</td>
-		<td>4</td>
-		<td>7</td>
-		<td>19.2</td>
-	</tr>
-	<tr>
-		<td>39</td>
-		<td>0</td>
-		<td>10</td>
-		<td>12</td>
-		<td>30.6</td>
-	</tr>
-	<tr>
-		<td>39</td>
-		<td>1</td>
-		<td>24</td>
-		<td>6</td>
-		<td>10.8</td>
-	</tr>
-	<tr>
-		<td>39</td>
-		<td>2</td>
-		<td>39</td>
-		<td>16</td>
-		<td>23.1</td>
-	</tr>
-	<tr>
-		<td>39</td>
-		<td>3</td>
-		<td>20</td>
-		<td>17</td>
-		<td>30.0</td>
-	</tr>
-	<tr>
-		<td>40</td>
-		<td>0</td>
-		<td>46</td>
-		<td>24</td>
-		<td>9.3</td>
-	</tr>
-	<tr>
-		<td>40</td>
-		<td>1</td>
-		<td>45</td>
-		<td>24</td>
-		<td>27.0</td>
-	</tr>
-	<tr>
-		<td>40</td>
-		<td>2</td>
-		<td>4</td>
-		<td>5</td>
-		<td>19.2</td>
-	</tr>
-	<tr>
-		<td>40</td>
-		<td>3</td>
-		<td>26</td>
-		<td>10</td>
-		<td>37.8</td>
-	</tr>
-	<tr>
-		<td>40</td>
-		<td>4</td>
-		<td>18</td>
-		<td>13</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>40</td>
-		<td>5</td>
-		<td>32</td>
-		<td>18</td>
-		<td>28.5</td>
-	</tr>
-	<tr>
-		<td>40</td>
-		<td>6</td>
-		<td>28</td>
-		<td>12</td>
-		<td>4.5</td>
-	</tr>
-	<tr>
-		<td>40</td>
-		<td>7</td>
-		<td>31</td>
-		<td>1</td>
-		<td>7.2</td>
-	</tr>
-	<tr>
-		<td>40</td>
-		<td>8</td>
-		<td>11</td>
-		<td>4</td>
-		<td>13.2</td>
-	</tr>
-	<tr>
-		<td>40</td>
-		<td>9</td>
-		<td>40</td>
-		<td>17</td>
-		<td>4.2</td>
-	</tr>
-	<tr>
-		<td>40</td>
-		<td>10</td>
-		<td>6</td>
-		<td>11</td>
-		<td>14.7</td>
-	</tr>
-	<tr>
-		<td>40</td>
-		<td>11</td>
-		<td>27</td>
-		<td>2</td>
-		<td>34.5</td>
-	</tr>
-	<tr>
-		<td>40</td>
-		<td>12</td>
-		<td>35</td>
-		<td>13</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>40</td>
-		<td>13</td>
-		<td>6</td>
-		<td>8</td>
-		<td>14.7</td>
-	</tr>
-	<tr>
-		<td>40</td>
-		<td>14</td>
-		<td>4</td>
-		<td>24</td>
-		<td>19.2</td>
-	</tr>
-	<tr>
-		<td>40</td>
-		<td>15</td>
-		<td>22</td>
-		<td>12</td>
-		<td>9.9</td>
-	</tr>
-	<tr>
-		<td>40</td>
-		<td>16</td>
-		<td>27</td>
-		<td>16</td>
-		<td>34.5</td>
-	</tr>
-	<tr>
-		<td>40</td>
-		<td>17</td>
-		<td>4</td>
-		<td>20</td>
-		<td>19.2</td>
-	</tr>
-	<tr>
-		<td>40</td>
-		<td>18</td>
-		<td>33</td>
-		<td>11</td>
-		<td>27.3</td>
-	</tr>
-	<tr>
-		<td>40</td>
-		<td>19</td>
-		<td>7</td>
-		<td>23</td>
-		<td>12.6</td>
-	</tr>
-	<tr>
-		<td>40</td>
-		<td>20</td>
-		<td>4</td>
-		<td>16</td>
-		<td>19.2</td>
-	</tr>
-	<tr>
-		<td>41</td>
-		<td>0</td>
-		<td>5</td>
-		<td>24</td>
-		<td>35.4</td>
-	</tr>
-	<tr>
-		<td>41</td>
-		<td>1</td>
-		<td>47</td>
-		<td>19</td>
-		<td>26.7</td>
-	</tr>
-	<tr>
-		<td>41</td>
-		<td>2</td>
-		<td>36</td>
-		<td>2</td>
-		<td>4.8</td>
-	</tr>
-	<tr>
-		<td>41</td>
-		<td>3</td>
-		<td>29</td>
-		<td>20</td>
-		<td>16.8</td>
-	</tr>
-	<tr>
-		<td>41</td>
-		<td>4</td>
-		<td>16</td>
-		<td>22</td>
-		<td>29.1</td>
-	</tr>
-	<tr>
-		<td>41</td>
-		<td>5</td>
-		<td>9</td>
-		<td>21</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>41</td>
-		<td>6</td>
-		<td>17</td>
-		<td>11</td>
-		<td>33.0</td>
-	</tr>
-	<tr>
-		<td>41</td>
-		<td>7</td>
-		<td>22</td>
-		<td>18</td>
-		<td>9.9</td>
-	</tr>
-	<tr>
-		<td>41</td>
-		<td>8</td>
-		<td>9</td>
-		<td>22</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>41</td>
-		<td>9</td>
-		<td>26</td>
-		<td>21</td>
-		<td>37.8</td>
-	</tr>
-	<tr>
-		<td>41</td>
-		<td>10</td>
-		<td>24</td>
-		<td>20</td>
-		<td>10.8</td>
-	</tr>
-	<tr>
-		<td>41</td>
-		<td>11</td>
-		<td>48</td>
-		<td>15</td>
-		<td>31.5</td>
-	</tr>
-	<tr>
-		<td>42</td>
-		<td>0</td>
-		<td>48</td>
-		<td>9</td>
-		<td>31.5</td>
-	</tr>
-	<tr>
-		<td>42</td>
-		<td>1</td>
-		<td>18</td>
-		<td>21</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>42</td>
-		<td>2</td>
-		<td>40</td>
-		<td>19</td>
-		<td>4.2</td>
-	</tr>
-	<tr>
-		<td>42</td>
-		<td>3</td>
-		<td>40</td>
-		<td>14</td>
-		<td>4.2</td>
-	</tr>
-	<tr>
-		<td>42</td>
-		<td>4</td>
-		<td>48</td>
-		<td>15</td>
-		<td>31.5</td>
-	</tr>
-	<tr>
-		<td>43</td>
-		<td>0</td>
-		<td>15</td>
-		<td>22</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>43</td>
-		<td>1</td>
-		<td>18</td>
-		<td>19</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>43</td>
-		<td>2</td>
-		<td>2</td>
-		<td>15</td>
-		<td>37.2</td>
-	</tr>
-	<tr>
-		<td>43</td>
-		<td>3</td>
-		<td>6</td>
-		<td>18</td>
-		<td>14.7</td>
-	</tr>
-	<tr>
-		<td>43</td>
-		<td>4</td>
-		<td>32</td>
-		<td>22</td>
-		<td>28.5</td>
-	</tr>
-	<tr>
-		<td>43</td>
-		<td>5</td>
-		<td>33</td>
-		<td>6</td>
-		<td>27.3</td>
-	</tr>
-	<tr>
-		<td>43</td>
-		<td>6</td>
-		<td>24</td>
-		<td>1</td>
-		<td>10.8</td>
-	</tr>
-	<tr>
-		<td>43</td>
-		<td>7</td>
-		<td>11</td>
-		<td>15</td>
-		<td>13.2</td>
-	</tr>
-	<tr>
-		<td>43</td>
-		<td>8</td>
-		<td>44</td>
-		<td>8</td>
-		<td>14.4</td>
-	</tr>
-	<tr>
-		<td>43</td>
-		<td>9</td>
-		<td>7</td>
-		<td>23</td>
-		<td>12.6</td>
-	</tr>
-	<tr>
-		<td>43</td>
-		<td>10</td>
-		<td>35</td>
-		<td>1</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>43</td>
-		<td>11</td>
-		<td>49</td>
-		<td>23</td>
-		<td>3.3</td>
-	</tr>
-	<tr>
-		<td>43</td>
-		<td>12</td>
-		<td>40</td>
-		<td>24</td>
-		<td>4.2</td>
-	</tr>
-	<tr>
-		<td>43</td>
-		<td>13</td>
-		<td>44</td>
-		<td>22</td>
-		<td>14.4</td>
-	</tr>
-	<tr>
-		<td>43</td>
-		<td>14</td>
-		<td>3</td>
-		<td>18</td>
-		<td>38.1</td>
-	</tr>
-	<tr>
-		<td>43</td>
-		<td>15</td>
-		<td>48</td>
-		<td>7</td>
-		<td>31.5</td>
-	</tr>
-	<tr>
-		<td>43</td>
-		<td>16</td>
-		<td>38</td>
-		<td>12</td>
-		<td>32.4</td>
-	</tr>
-	<tr>
-		<td>44</td>
-		<td>0</td>
-		<td>33</td>
-		<td>20</td>
-		<td>27.3</td>
-	</tr>
-	<tr>
-		<td>44</td>
-		<td>1</td>
-		<td>34</td>
-		<td>17</td>
-		<td>38.4</td>
-	</tr>
-	<tr>
-		<td>44</td>
-		<td>2</td>
-		<td>17</td>
-		<td>14</td>
-		<td>33.0</td>
-	</tr>
-	<tr>
-		<td>44</td>
-		<td>3</td>
-		<td>3</td>
-		<td>14</td>
-		<td>38.1</td>
-	</tr>
-	<tr>
-		<td>44</td>
-		<td>4</td>
-		<td>12</td>
-		<td>3</td>
-		<td>25.2</td>
-	</tr>
-	<tr>
-		<td>44</td>
-		<td>5</td>
-		<td>41</td>
-		<td>22</td>
-		<td>30.9</td>
-	</tr>
-	<tr>
-		<td>44</td>
-		<td>6</td>
-		<td>14</td>
-		<td>15</td>
-		<td>18.6</td>
-	</tr>
-	<tr>
-		<td>44</td>
-		<td>7</td>
-		<td>49</td>
-		<td>17</td>
-		<td>3.3</td>
-	</tr>
-	<tr>
-		<td>44</td>
-		<td>8</td>
-		<td>28</td>
-		<td>23</td>
-		<td>4.5</td>
-	</tr>
-	<tr>
-		<td>45</td>
-		<td>0</td>
-		<td>44</td>
-		<td>6</td>
-		<td>14.4</td>
-	</tr>
-	<tr>
-		<td>45</td>
-		<td>1</td>
-		<td>11</td>
-		<td>6</td>
-		<td>13.2</td>
-	</tr>
-	<tr>
-		<td>45</td>
-		<td>2</td>
-		<td>46</td>
-		<td>8</td>
-		<td>9.3</td>
-	</tr>
-	<tr>
-		<td>45</td>
-		<td>3</td>
-		<td>14</td>
-		<td>11</td>
-		<td>18.6</td>
-	</tr>
-	<tr>
-		<td>45</td>
-		<td>4</td>
-		<td>3</td>
-		<td>14</td>
-		<td>38.1</td>
-	</tr>
-	<tr>
-		<td>45</td>
-		<td>5</td>
-		<td>45</td>
-		<td>17</td>
-		<td>27.0</td>
-	</tr>
-	<tr>
-		<td>45</td>
-		<td>6</td>
-		<td>39</td>
-		<td>5</td>
-		<td>23.1</td>
-	</tr>
-	<tr>
-		<td>45</td>
-		<td>7</td>
-		<td>6</td>
-		<td>24</td>
-		<td>14.7</td>
-	</tr>
-	<tr>
-		<td>45</td>
-		<td>8</td>
-		<td>9</td>
-		<td>2</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>45</td>
-		<td>9</td>
-		<td>26</td>
-		<td>18</td>
-		<td>37.8</td>
-	</tr>
-	<tr>
-		<td>45</td>
-		<td>10</td>
-		<td>41</td>
-		<td>24</td>
-		<td>30.9</td>
-	</tr>
-	<tr>
-		<td>45</td>
-		<td>11</td>
-		<td>31</td>
-		<td>22</td>
-		<td>7.2</td>
-	</tr>
-	<tr>
-		<td>45</td>
-		<td>12</td>
-		<td>32</td>
-		<td>13</td>
-		<td>28.5</td>
-	</tr>
-	<tr>
-		<td>45</td>
-		<td>13</td>
-		<td>47</td>
-		<td>8</td>
-		<td>26.7</td>
-	</tr>
-	<tr>
-		<td>45</td>
-		<td>14</td>
-		<td>3</td>
-		<td>16</td>
-		<td>38.1</td>
-	</tr>
-	<tr>
-		<td>46</td>
-		<td>0</td>
-		<td>5</td>
-		<td>21</td>
-		<td>35.4</td>
-	</tr>
-	<tr>
-		<td>46</td>
-		<td>1</td>
-		<td>12</td>
-		<td>24</td>
-		<td>25.2</td>
-	</tr>
-	<tr>
-		<td>46</td>
-		<td>2</td>
-		<td>30</td>
-		<td>14</td>
-		<td>34.8</td>
-	</tr>
-	<tr>
-		<td>46</td>
-		<td>3</td>
-		<td>21</td>
-		<td>19</td>
-		<td>17.1</td>
-	</tr>
-	<tr>
-		<td>46</td>
-		<td>4</td>
-		<td>17</td>
-		<td>5</td>
-		<td>33.0</td>
-	</tr>
-	<tr>
-		<td>46</td>
-		<td>5</td>
-		<td>25</td>
-		<td>9</td>
-		<td>24.3</td>
-	</tr>
-	<tr>
-		<td>46</td>
-		<td>6</td>
-		<td>41</td>
-		<td>18</td>
-		<td>30.9</td>
-	</tr>
-	<tr>
-		<td>46</td>
-		<td>7</td>
-		<td>49</td>
-		<td>9</td>
-		<td>3.3</td>
-	</tr>
-	<tr>
-		<td>46</td>
-		<td>8</td>
-		<td>8</td>
-		<td>22</td>
-		<td>33.9</td>
-	</tr>
-	<tr>
-		<td>46</td>
-		<td>9</td>
-		<td>7</td>
-		<td>4</td>
-		<td>12.6</td>
-	</tr>
-	<tr>
-		<td>46</td>
-		<td>10</td>
-		<td>11</td>
-		<td>24</td>
-		<td>13.2</td>
-	</tr>
-	<tr>
-		<td>46</td>
-		<td>11</td>
-		<td>1</td>
-		<td>4</td>
-		<td>37.2</td>
-	</tr>
-	<tr>
-		<td>46</td>
-		<td>12</td>
-		<td>21</td>
-		<td>24</td>
-		<td>17.1</td>
-	</tr>
-	<tr>
-		<td>46</td>
-		<td>13</td>
-		<td>36</td>
-		<td>20</td>
-		<td>4.8</td>
-	</tr>
-	<tr>
-		<td>46</td>
-		<td>14</td>
-		<td>24</td>
-		<td>10</td>
-		<td>10.8</td>
-	</tr>
-	<tr>
-		<td>46</td>
-		<td>15</td>
-		<td>40</td>
-		<td>11</td>
-		<td>4.2</td>
-	</tr>
-	<tr>
-		<td>46</td>
-		<td>16</td>
-		<td>46</td>
-		<td>21</td>
-		<td>9.3</td>
-	</tr>
-	<tr>
-		<td>46</td>
-		<td>17</td>
-		<td>12</td>
-		<td>23</td>
-		<td>25.2</td>
-	</tr>
-	<tr>
-		<td>47</td>
-		<td>0</td>
-		<td>23</td>
-		<td>15</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>47</td>
-		<td>1</td>
-		<td>23</td>
-		<td>13</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>47</td>
-		<td>2</td>
-		<td>17</td>
-		<td>6</td>
-		<td>33.0</td>
-	</tr>
-	<tr>
-		<td>47</td>
-		<td>3</td>
-		<td>1</td>
-		<td>4</td>
-		<td>37.2</td>
-	</tr>
-	<tr>
-		<td>47</td>
-		<td>4</td>
-		<td>15</td>
-		<td>1</td>
-		<td>14.1</td>
-	</tr>
-	<tr>
-		<td>47</td>
-		<td>5</td>
-		<td>40</td>
-		<td>8</td>
-		<td>4.2</td>
-	</tr>
-	<tr>
-		<td>47</td>
-		<td>6</td>
-		<td>8</td>
-		<td>10</td>
-		<td>33.9</td>
-	</tr>
-	<tr>
-		<td>47</td>
-		<td>7</td>
-		<td>28</td>
-		<td>14</td>
-		<td>4.5</td>
-	</tr>
-	<tr>
-		<td>47</td>
-		<td>8</td>
-		<td>16</td>
-		<td>2</td>
-		<td>29.1</td>
-	</tr>
-	<tr>
-		<td>47</td>
-		<td>9</td>
-		<td>32</td>
-		<td>9</td>
-		<td>28.5</td>
-	</tr>
-	<tr>
-		<td>47</td>
-		<td>10</td>
-		<td>45</td>
-		<td>2</td>
-		<td>27.0</td>
-	</tr>
-	<tr>
-		<td>47</td>
-		<td>11</td>
-		<td>35</td>
-		<td>10</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>47</td>
-		<td>12</td>
-		<td>12</td>
-		<td>20</td>
-		<td>25.2</td>
-	</tr>
-	<tr>
-		<td>47</td>
-		<td>13</td>
-		<td>33</td>
-		<td>8</td>
-		<td>27.3</td>
-	</tr>
-	<tr>
-		<td>48</td>
-		<td>0</td>
-		<td>6</td>
-		<td>23</td>
-		<td>14.7</td>
-	</tr>
-	<tr>
-		<td>48</td>
-		<td>1</td>
-		<td>26</td>
-		<td>23</td>
-		<td>37.8</td>
-	</tr>
-	<tr>
-		<td>48</td>
-		<td>2</td>
-		<td>23</td>
-		<td>10</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>48</td>
-		<td>3</td>
-		<td>10</td>
-		<td>2</td>
-		<td>30.6</td>
-	</tr>
-	<tr>
-		<td>48</td>
-		<td>4</td>
-		<td>48</td>
-		<td>4</td>
-		<td>31.5</td>
-	</tr>
-	<tr>
-		<td>48</td>
-		<td>5</td>
-		<td>24</td>
-		<td>16</td>
-		<td>10.8</td>
-	</tr>
-	<tr>
-		<td>48</td>
-		<td>6</td>
-		<td>11</td>
-		<td>17</td>
-		<td>13.2</td>
-	</tr>
-	<tr>
-		<td>48</td>
-		<td>7</td>
-		<td>30</td>
-		<td>19</td>
-		<td>34.8</td>
-	</tr>
-	<tr>
-		<td>48</td>
-		<td>8</td>
-		<td>5</td>
-		<td>12</td>
-		<td>35.4</td>
-	</tr>
-	<tr>
-		<td>48</td>
-		<td>9</td>
-		<td>35</td>
-		<td>17</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>48</td>
-		<td>10</td>
-		<td>41</td>
-		<td>10</td>
-		<td>30.9</td>
-	</tr>
-	<tr>
-		<td>49</td>
-		<td>0</td>
-		<td>18</td>
-		<td>6</td>
-		<td>25.8</td>
-	</tr>
-	<tr>
-		<td>49</td>
-		<td>1</td>
-		<td>22</td>
-		<td>16</td>
-		<td>9.9</td>
-	</tr>
-	<tr>
-		<td>49</td>
-		<td>2</td>
-		<td>29</td>
-		<td>6</td>
-		<td>16.8</td>
-	</tr>
-	<tr>
-		<td>49</td>
-		<td>3</td>
-		<td>17</td>
-		<td>19</td>
-		<td>33.0</td>
-	</tr>
-	<tr>
-		<td>49</td>
-		<td>4</td>
-		<td>47</td>
-		<td>14</td>
-		<td>26.7</td>
-	</tr>
-	<tr>
-		<td>49</td>
-		<td>5</td>
-		<td>16</td>
-		<td>1</td>
-		<td>29.1</td>
-	</tr>
-	<tr>
-		<td>49</td>
-		<td>6</td>
-		<td>29</td>
-		<td>15</td>
-		<td>16.8</td>
-	</tr>
-	<tr>
-		<td>49</td>
-		<td>7</td>
-		<td>6</td>
-		<td>21</td>
-		<td>14.7</td>
-	</tr>
-	<tr>
-		<td>49</td>
-		<td>8</td>
-		<td>48</td>
-		<td>24</td>
-		<td>31.5</td>
-	</tr>
-	<tr>
-		<td>49</td>
-		<td>9</td>
-		<td>7</td>
-		<td>24</td>
-		<td>12.6</td>
-	</tr>
-	<tr>
-		<td>49</td>
-		<td>10</td>
-		<td>30</td>
-		<td>16</td>
-		<td>34.8</td>
-	</tr>
-	<tr>
-		<td>49</td>
-		<td>11</td>
-		<td>40</td>
-		<td>15</td>
-		<td>4.2</td>
-	</tr>
-	<tr>
-		<td>49</td>
-		<td>12</td>
-		<td>21</td>
-		<td>17</td>
-		<td>17.1</td>
-	</tr>
-	<tr>
-		<td>49</td>
-		<td>13</td>
-		<td>6</td>
-		<td>22</td>
-		<td>14.7</td>
-	</tr>
-	<tr>
-		<td>49</td>
-		<td>14</td>
-		<td>23</td>
-		<td>5</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>49</td>
-		<td>15</td>
-		<td>19</td>
-		<td>24</td>
-		<td>16.5</td>
-	</tr>
-	<tr>
-		<td>49</td>
-		<td>16</td>
-		<td>24</td>
-		<td>18</td>
-		<td>10.8</td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-  <caption>PUBLIC.PRODUCT</caption>
-
-	<tr>
-		<td class='name'>ID</td>
-		<td class='name'>NAME</td>
-		<td class='name'>PRICE</td>
-	</tr>
-	<tr>
-		<td>0</td>
-		<td>Iron Iron</td>
-		<td>5.4</td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>Chair Shoe</td>
-		<td>24.8</td>
-	</tr>
-	<tr>
-		<td>2</td>
-		<td>Telephone Clock</td>
-		<td>24.8</td>
-	</tr>
-	<tr>
-		<td>3</td>
-		<td>Chair Chair</td>
-		<td>25.4</td>
-	</tr>
-	<tr>
-		<td>4</td>
-		<td>Ice Tea Shoe</td>
-		<td>12.8</td>
-	</tr>
-	<tr>
-		<td>5</td>
-		<td>Clock Clock</td>
-		<td>23.6</td>
-	</tr>
-	<tr>
-		<td>6</td>
-		<td>Ice Tea Chair</td>
-		<td>9.8</td>
-	</tr>
-	<tr>
-		<td>7</td>
-		<td>Telephone Shoe</td>
-		<td>8.4</td>
-	</tr>
-	<tr>
-		<td>8</td>
-		<td>Ice Tea Clock</td>
-		<td>22.6</td>
-	</tr>
-	<tr>
-		<td>9</td>
-		<td>Clock Telephone</td>
-		<td>17.2</td>
-	</tr>
-	<tr>
-		<td>10</td>
-		<td>Telephone Ice Tea</td>
-		<td>20.4</td>
-	</tr>
-	<tr>
-		<td>11</td>
-		<td>Telephone Iron</td>
-		<td>8.8</td>
-	</tr>
-	<tr>
-		<td>12</td>
-		<td>Clock Ice Tea</td>
-		<td>16.8</td>
-	</tr>
-	<tr>
-		<td>13</td>
-		<td>Telephone Clock</td>
-		<td>18.1</td>
-	</tr>
-	<tr>
-		<td>14</td>
-		<td>Telephone Iron</td>
-		<td>12.4</td>
-	</tr>
-	<tr>
-		<td>15</td>
-		<td>Ice Tea Chair</td>
-		<td>9.4</td>
-	</tr>
-	<tr>
-		<td>16</td>
-		<td>Ice Tea Shoe</td>
-		<td>19.4</td>
-	</tr>
-	<tr>
-		<td>17</td>
-		<td>Clock Ice Tea</td>
-		<td>22.0</td>
-	</tr>
-	<tr>
-		<td>18</td>
-		<td>Chair Clock</td>
-		<td>17.2</td>
-	</tr>
-	<tr>
-		<td>19</td>
-		<td>Ice Tea Ice Tea</td>
-		<td>11.0</td>
-	</tr>
-	<tr>
-		<td>20</td>
-		<td>Ice Tea Telephone</td>
-		<td>20.0</td>
-	</tr>
-	<tr>
-		<td>21</td>
-		<td>Chair Chair</td>
-		<td>11.4</td>
-	</tr>
-	<tr>
-		<td>22</td>
-		<td>Iron Iron</td>
-		<td>6.6</td>
-	</tr>
-	<tr>
-		<td>23</td>
-		<td>Shoe Chair</td>
-		<td>8.1</td>
-	</tr>
-	<tr>
-		<td>24</td>
-		<td>Chair Shoe</td>
-		<td>7.2</td>
-	</tr>
-	<tr>
-		<td>25</td>
-		<td>Shoe Shoe</td>
-		<td>16.2</td>
-	</tr>
-	<tr>
-		<td>26</td>
-		<td>Shoe Shoe</td>
-		<td>25.2</td>
-	</tr>
-	<tr>
-		<td>27</td>
-		<td>Telephone Iron</td>
-		<td>23.0</td>
-	</tr>
-	<tr>
-		<td>28</td>
-		<td>Clock Iron</td>
-		<td>3.0</td>
-	</tr>
-	<tr>
-		<td>29</td>
-		<td>Chair Telephone</td>
-		<td>11.2</td>
-	</tr>
-	<tr>
-		<td>30</td>
-		<td>Shoe Iron</td>
-		<td>23.2</td>
-	</tr>
-	<tr>
-		<td>31</td>
-		<td>Ice Tea Telephone</td>
-		<td>4.8</td>
-	</tr>
-	<tr>
-		<td>32</td>
-		<td>Clock Iron</td>
-		<td>19.0</td>
-	</tr>
-	<tr>
-		<td>33</td>
-		<td>Iron Chair</td>
-		<td>18.2</td>
-	</tr>
-	<tr>
-		<td>34</td>
-		<td>Chair Iron</td>
-		<td>25.6</td>
-	</tr>
-	<tr>
-		<td>35</td>
-		<td>Telephone Shoe</td>
-		<td>8.1</td>
-	</tr>
-	<tr>
-		<td>36</td>
-		<td>Ice Tea Iron</td>
-		<td>3.2</td>
-	</tr>
-	<tr>
-		<td>37</td>
-		<td>Clock Shoe</td>
-		<td>9.4</td>
-	</tr>
-	<tr>
-		<td>38</td>
-		<td>Clock Ice Tea</td>
-		<td>21.6</td>
-	</tr>
-	<tr>
-		<td>39</td>
-		<td>Ice Tea Shoe</td>
-		<td>15.4</td>
-	</tr>
-	<tr>
-		<td>40</td>
-		<td>Shoe Clock</td>
-		<td>2.8</td>
-	</tr>
-	<tr>
-		<td>41</td>
-		<td>Clock Ice Tea</td>
-		<td>20.6</td>
-	</tr>
-	<tr>
-		<td>42</td>
-		<td>Iron Chair</td>
-		<td>19.8</td>
-	</tr>
-	<tr>
-		<td>43</td>
-		<td>Telephone Clock</td>
-		<td>9.4</td>
-	</tr>
-	<tr>
-		<td>44</td>
-		<td>Ice Tea Ice Tea</td>
-		<td>9.6</td>
-	</tr>
-	<tr>
-		<td>45</td>
-		<td>Iron Ice Tea</td>
-		<td>18.1</td>
-	</tr>
-	<tr>
-		<td>46</td>
-		<td>Ice Tea Clock</td>
-		<td>6.2</td>
-	</tr>
-	<tr>
-		<td>47</td>
-		<td>Ice Tea Iron</td>
-		<td>17.8</td>
-	</tr>
-	<tr>
-		<td>48</td>
-		<td>Clock Clock</td>
-		<td>21.0</td>
-	</tr>
-	<tr>
-		<td>49</td>
-		<td>Iron Iron</td>
-		<td>2.2</td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-  <caption>PUBLIC.SUPPLIER</caption>
-
-	<tr>
-		<td class='name'>SUPPLIER_ID</td>
-		<td class='name'>SUPPLIER_NAME</td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>IBM</td>
 	</tr>
 </table>
 <p></p>
@@ -12188,11 +8554,4421 @@ hr {
 		<td>19</td>
 		<td>24.3</td>
 	</tr>
+	<tr>
+		<td>2</td>
+		<td>0</td>
+		<td>4</td>
+		<td>18</td>
+		<td>19.2</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>1</td>
+		<td>25</td>
+		<td>3</td>
+		<td>24.3</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>2</td>
+		<td>11</td>
+		<td>9</td>
+		<td>13.2</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>3</td>
+		<td>19</td>
+		<td>13</td>
+		<td>16.5</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>4</td>
+		<td>38</td>
+		<td>18</td>
+		<td>32.4</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>5</td>
+		<td>30</td>
+		<td>4</td>
+		<td>34.8</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>6</td>
+		<td>43</td>
+		<td>8</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>7</td>
+		<td>30</td>
+		<td>5</td>
+		<td>34.8</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>8</td>
+		<td>39</td>
+		<td>2</td>
+		<td>23.1</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>9</td>
+		<td>18</td>
+		<td>7</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>10</td>
+		<td>49</td>
+		<td>11</td>
+		<td>3.3</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>11</td>
+		<td>42</td>
+		<td>21</td>
+		<td>29.7</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>12</td>
+		<td>21</td>
+		<td>15</td>
+		<td>17.1</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>13</td>
+		<td>12</td>
+		<td>1</td>
+		<td>25.2</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>14</td>
+		<td>48</td>
+		<td>19</td>
+		<td>31.5</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>15</td>
+		<td>0</td>
+		<td>18</td>
+		<td>8.1</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>16</td>
+		<td>36</td>
+		<td>24</td>
+		<td>4.8</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>0</td>
+		<td>11</td>
+		<td>21</td>
+		<td>13.2</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>1</td>
+		<td>1</td>
+		<td>20</td>
+		<td>37.2</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>2</td>
+		<td>49</td>
+		<td>3</td>
+		<td>3.3</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>3</td>
+		<td>0</td>
+		<td>22</td>
+		<td>8.1</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>4</td>
+		<td>20</td>
+		<td>12</td>
+		<td>30.0</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>5</td>
+		<td>30</td>
+		<td>10</td>
+		<td>34.8</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>6</td>
+		<td>13</td>
+		<td>18</td>
+		<td>27.0</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>7</td>
+		<td>26</td>
+		<td>4</td>
+		<td>37.8</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>8</td>
+		<td>49</td>
+		<td>9</td>
+		<td>3.3</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>9</td>
+		<td>29</td>
+		<td>17</td>
+		<td>16.8</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>10</td>
+		<td>10</td>
+		<td>17</td>
+		<td>30.6</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>11</td>
+		<td>7</td>
+		<td>11</td>
+		<td>12.6</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>12</td>
+		<td>41</td>
+		<td>22</td>
+		<td>30.9</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>13</td>
+		<td>41</td>
+		<td>2</td>
+		<td>30.9</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>14</td>
+		<td>17</td>
+		<td>22</td>
+		<td>33.0</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>15</td>
+		<td>23</td>
+		<td>18</td>
+		<td>11.4</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>16</td>
+		<td>19</td>
+		<td>11</td>
+		<td>16.5</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>17</td>
+		<td>30</td>
+		<td>17</td>
+		<td>34.8</td>
+	</tr>
+	<tr>
+		<td>4</td>
+		<td>0</td>
+		<td>28</td>
+		<td>9</td>
+		<td>4.5</td>
+	</tr>
+	<tr>
+		<td>4</td>
+		<td>1</td>
+		<td>35</td>
+		<td>15</td>
+		<td>11.4</td>
+	</tr>
+	<tr>
+		<td>4</td>
+		<td>2</td>
+		<td>41</td>
+		<td>23</td>
+		<td>30.9</td>
+	</tr>
+	<tr>
+		<td>4</td>
+		<td>3</td>
+		<td>23</td>
+		<td>20</td>
+		<td>11.4</td>
+	</tr>
+	<tr>
+		<td>4</td>
+		<td>4</td>
+		<td>9</td>
+		<td>18</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>4</td>
+		<td>5</td>
+		<td>37</td>
+		<td>24</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>5</td>
+		<td>0</td>
+		<td>9</td>
+		<td>5</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>5</td>
+		<td>1</td>
+		<td>9</td>
+		<td>23</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>5</td>
+		<td>2</td>
+		<td>20</td>
+		<td>18</td>
+		<td>30.0</td>
+	</tr>
+	<tr>
+		<td>5</td>
+		<td>3</td>
+		<td>24</td>
+		<td>12</td>
+		<td>10.8</td>
+	</tr>
+	<tr>
+		<td>5</td>
+		<td>4</td>
+		<td>32</td>
+		<td>14</td>
+		<td>28.5</td>
+	</tr>
+	<tr>
+		<td>5</td>
+		<td>5</td>
+		<td>46</td>
+		<td>15</td>
+		<td>9.3</td>
+	</tr>
+	<tr>
+		<td>5</td>
+		<td>6</td>
+		<td>7</td>
+		<td>9</td>
+		<td>12.6</td>
+	</tr>
+	<tr>
+		<td>5</td>
+		<td>7</td>
+		<td>2</td>
+		<td>4</td>
+		<td>37.2</td>
+	</tr>
+	<tr>
+		<td>5</td>
+		<td>8</td>
+		<td>20</td>
+		<td>3</td>
+		<td>30.0</td>
+	</tr>
+	<tr>
+		<td>5</td>
+		<td>9</td>
+		<td>37</td>
+		<td>9</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>5</td>
+		<td>10</td>
+		<td>28</td>
+		<td>18</td>
+		<td>4.5</td>
+	</tr>
+	<tr>
+		<td>5</td>
+		<td>11</td>
+		<td>38</td>
+		<td>23</td>
+		<td>32.4</td>
+	</tr>
+	<tr>
+		<td>5</td>
+		<td>12</td>
+		<td>8</td>
+		<td>15</td>
+		<td>33.9</td>
+	</tr>
+	<tr>
+		<td>5</td>
+		<td>13</td>
+		<td>18</td>
+		<td>17</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>6</td>
+		<td>0</td>
+		<td>15</td>
+		<td>20</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>6</td>
+		<td>1</td>
+		<td>38</td>
+		<td>21</td>
+		<td>32.4</td>
+	</tr>
+	<tr>
+		<td>6</td>
+		<td>2</td>
+		<td>23</td>
+		<td>8</td>
+		<td>11.4</td>
+	</tr>
+	<tr>
+		<td>6</td>
+		<td>3</td>
+		<td>30</td>
+		<td>2</td>
+		<td>34.8</td>
+	</tr>
+	<tr>
+		<td>6</td>
+		<td>4</td>
+		<td>31</td>
+		<td>20</td>
+		<td>7.2</td>
+	</tr>
+	<tr>
+		<td>6</td>
+		<td>5</td>
+		<td>14</td>
+		<td>20</td>
+		<td>18.6</td>
+	</tr>
+	<tr>
+		<td>6</td>
+		<td>6</td>
+		<td>37</td>
+		<td>22</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>6</td>
+		<td>7</td>
+		<td>26</td>
+		<td>10</td>
+		<td>37.8</td>
+	</tr>
+	<tr>
+		<td>6</td>
+		<td>8</td>
+		<td>41</td>
+		<td>19</td>
+		<td>30.9</td>
+	</tr>
+	<tr>
+		<td>6</td>
+		<td>9</td>
+		<td>19</td>
+		<td>2</td>
+		<td>16.5</td>
+	</tr>
+	<tr>
+		<td>6</td>
+		<td>10</td>
+		<td>16</td>
+		<td>13</td>
+		<td>29.1</td>
+	</tr>
+	<tr>
+		<td>6</td>
+		<td>11</td>
+		<td>44</td>
+		<td>1</td>
+		<td>14.4</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>0</td>
+		<td>43</td>
+		<td>16</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>1</td>
+		<td>23</td>
+		<td>12</td>
+		<td>11.4</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>2</td>
+		<td>27</td>
+		<td>17</td>
+		<td>34.5</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>3</td>
+		<td>30</td>
+		<td>2</td>
+		<td>34.8</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>4</td>
+		<td>2</td>
+		<td>13</td>
+		<td>37.2</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>5</td>
+		<td>24</td>
+		<td>10</td>
+		<td>10.8</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>6</td>
+		<td>14</td>
+		<td>4</td>
+		<td>18.6</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>7</td>
+		<td>2</td>
+		<td>22</td>
+		<td>37.2</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>8</td>
+		<td>42</td>
+		<td>19</td>
+		<td>29.7</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>9</td>
+		<td>9</td>
+		<td>21</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>10</td>
+		<td>7</td>
+		<td>1</td>
+		<td>12.6</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>11</td>
+		<td>19</td>
+		<td>13</td>
+		<td>16.5</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>12</td>
+		<td>40</td>
+		<td>16</td>
+		<td>4.2</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>13</td>
+		<td>32</td>
+		<td>23</td>
+		<td>28.5</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>14</td>
+		<td>47</td>
+		<td>14</td>
+		<td>26.7</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>15</td>
+		<td>24</td>
+		<td>17</td>
+		<td>10.8</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>16</td>
+		<td>7</td>
+		<td>12</td>
+		<td>12.6</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>17</td>
+		<td>40</td>
+		<td>1</td>
+		<td>4.2</td>
+	</tr>
+	<tr>
+		<td>7</td>
+		<td>18</td>
+		<td>23</td>
+		<td>5</td>
+		<td>11.4</td>
+	</tr>
+	<tr>
+		<td>8</td>
+		<td>0</td>
+		<td>34</td>
+		<td>15</td>
+		<td>38.4</td>
+	</tr>
+	<tr>
+		<td>8</td>
+		<td>1</td>
+		<td>44</td>
+		<td>16</td>
+		<td>14.4</td>
+	</tr>
+	<tr>
+		<td>8</td>
+		<td>2</td>
+		<td>11</td>
+		<td>8</td>
+		<td>13.2</td>
+	</tr>
+	<tr>
+		<td>8</td>
+		<td>3</td>
+		<td>41</td>
+		<td>16</td>
+		<td>30.9</td>
+	</tr>
+	<tr>
+		<td>8</td>
+		<td>4</td>
+		<td>15</td>
+		<td>8</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>8</td>
+		<td>5</td>
+		<td>24</td>
+		<td>18</td>
+		<td>10.8</td>
+	</tr>
+	<tr>
+		<td>8</td>
+		<td>6</td>
+		<td>15</td>
+		<td>19</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>8</td>
+		<td>7</td>
+		<td>6</td>
+		<td>5</td>
+		<td>14.7</td>
+	</tr>
+	<tr>
+		<td>8</td>
+		<td>8</td>
+		<td>38</td>
+		<td>7</td>
+		<td>32.4</td>
+	</tr>
+	<tr>
+		<td>8</td>
+		<td>9</td>
+		<td>21</td>
+		<td>23</td>
+		<td>17.1</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>0</td>
+		<td>45</td>
+		<td>8</td>
+		<td>27.0</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>1</td>
+		<td>18</td>
+		<td>21</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>2</td>
+		<td>29</td>
+		<td>12</td>
+		<td>16.8</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>3</td>
+		<td>4</td>
+		<td>14</td>
+		<td>19.2</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>4</td>
+		<td>36</td>
+		<td>16</td>
+		<td>4.8</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>5</td>
+		<td>6</td>
+		<td>2</td>
+		<td>14.7</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>6</td>
+		<td>18</td>
+		<td>10</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>7</td>
+		<td>2</td>
+		<td>22</td>
+		<td>37.2</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>8</td>
+		<td>24</td>
+		<td>11</td>
+		<td>10.8</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>9</td>
+		<td>13</td>
+		<td>6</td>
+		<td>27.0</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>10</td>
+		<td>38</td>
+		<td>11</td>
+		<td>32.4</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>11</td>
+		<td>12</td>
+		<td>16</td>
+		<td>25.2</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>12</td>
+		<td>25</td>
+		<td>23</td>
+		<td>24.3</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>13</td>
+		<td>42</td>
+		<td>13</td>
+		<td>29.7</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>14</td>
+		<td>15</td>
+		<td>8</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>15</td>
+		<td>48</td>
+		<td>23</td>
+		<td>31.5</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>16</td>
+		<td>24</td>
+		<td>10</td>
+		<td>10.8</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>17</td>
+		<td>13</td>
+		<td>17</td>
+		<td>27.0</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>18</td>
+		<td>3</td>
+		<td>12</td>
+		<td>38.1</td>
+	</tr>
+	<tr>
+		<td>9</td>
+		<td>19</td>
+		<td>48</td>
+		<td>23</td>
+		<td>31.5</td>
+	</tr>
+	<tr>
+		<td>10</td>
+		<td>0</td>
+		<td>20</td>
+		<td>1</td>
+		<td>30.0</td>
+	</tr>
+	<tr>
+		<td>10</td>
+		<td>1</td>
+		<td>33</td>
+		<td>17</td>
+		<td>27.3</td>
+	</tr>
+	<tr>
+		<td>10</td>
+		<td>2</td>
+		<td>7</td>
+		<td>9</td>
+		<td>12.6</td>
+	</tr>
+	<tr>
+		<td>10</td>
+		<td>3</td>
+		<td>46</td>
+		<td>1</td>
+		<td>9.3</td>
+	</tr>
+	<tr>
+		<td>10</td>
+		<td>4</td>
+		<td>10</td>
+		<td>24</td>
+		<td>30.6</td>
+	</tr>
+	<tr>
+		<td>10</td>
+		<td>5</td>
+		<td>5</td>
+		<td>24</td>
+		<td>35.4</td>
+	</tr>
+	<tr>
+		<td>10</td>
+		<td>6</td>
+		<td>18</td>
+		<td>14</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>10</td>
+		<td>7</td>
+		<td>4</td>
+		<td>13</td>
+		<td>19.2</td>
+	</tr>
+	<tr>
+		<td>10</td>
+		<td>8</td>
+		<td>22</td>
+		<td>11</td>
+		<td>9.9</td>
+	</tr>
+	<tr>
+		<td>10</td>
+		<td>9</td>
+		<td>5</td>
+		<td>10</td>
+		<td>35.4</td>
+	</tr>
+	<tr>
+		<td>11</td>
+		<td>0</td>
+		<td>45</td>
+		<td>10</td>
+		<td>27.0</td>
+	</tr>
+	<tr>
+		<td>11</td>
+		<td>1</td>
+		<td>21</td>
+		<td>21</td>
+		<td>17.1</td>
+	</tr>
+	<tr>
+		<td>11</td>
+		<td>2</td>
+		<td>0</td>
+		<td>3</td>
+		<td>8.1</td>
+	</tr>
+	<tr>
+		<td>11</td>
+		<td>3</td>
+		<td>32</td>
+		<td>21</td>
+		<td>28.5</td>
+	</tr>
+	<tr>
+		<td>11</td>
+		<td>4</td>
+		<td>47</td>
+		<td>16</td>
+		<td>26.7</td>
+	</tr>
+	<tr>
+		<td>11</td>
+		<td>5</td>
+		<td>19</td>
+		<td>2</td>
+		<td>16.5</td>
+	</tr>
+	<tr>
+		<td>11</td>
+		<td>6</td>
+		<td>0</td>
+		<td>12</td>
+		<td>8.1</td>
+	</tr>
+	<tr>
+		<td>11</td>
+		<td>7</td>
+		<td>48</td>
+		<td>22</td>
+		<td>31.5</td>
+	</tr>
+	<tr>
+		<td>11</td>
+		<td>8</td>
+		<td>20</td>
+		<td>1</td>
+		<td>30.0</td>
+	</tr>
+	<tr>
+		<td>12</td>
+		<td>0</td>
+		<td>1</td>
+		<td>24</td>
+		<td>37.2</td>
+	</tr>
+	<tr>
+		<td>12</td>
+		<td>1</td>
+		<td>41</td>
+		<td>19</td>
+		<td>30.9</td>
+	</tr>
+	<tr>
+		<td>12</td>
+		<td>2</td>
+		<td>6</td>
+		<td>5</td>
+		<td>14.7</td>
+	</tr>
+	<tr>
+		<td>12</td>
+		<td>3</td>
+		<td>0</td>
+		<td>18</td>
+		<td>8.1</td>
+	</tr>
+	<tr>
+		<td>12</td>
+		<td>4</td>
+		<td>20</td>
+		<td>11</td>
+		<td>30.0</td>
+	</tr>
+	<tr>
+		<td>12</td>
+		<td>5</td>
+		<td>37</td>
+		<td>17</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>12</td>
+		<td>6</td>
+		<td>31</td>
+		<td>15</td>
+		<td>7.2</td>
+	</tr>
+	<tr>
+		<td>12</td>
+		<td>7</td>
+		<td>48</td>
+		<td>7</td>
+		<td>31.5</td>
+	</tr>
+	<tr>
+		<td>12</td>
+		<td>8</td>
+		<td>48</td>
+		<td>2</td>
+		<td>31.5</td>
+	</tr>
+	<tr>
+		<td>12</td>
+		<td>9</td>
+		<td>25</td>
+		<td>22</td>
+		<td>24.3</td>
+	</tr>
+	<tr>
+		<td>12</td>
+		<td>10</td>
+		<td>46</td>
+		<td>19</td>
+		<td>9.3</td>
+	</tr>
+	<tr>
+		<td>12</td>
+		<td>11</td>
+		<td>28</td>
+		<td>16</td>
+		<td>4.5</td>
+	</tr>
+	<tr>
+		<td>12</td>
+		<td>12</td>
+		<td>13</td>
+		<td>12</td>
+		<td>27.0</td>
+	</tr>
+	<tr>
+		<td>12</td>
+		<td>13</td>
+		<td>36</td>
+		<td>21</td>
+		<td>4.8</td>
+	</tr>
+	<tr>
+		<td>12</td>
+		<td>14</td>
+		<td>25</td>
+		<td>11</td>
+		<td>24.3</td>
+	</tr>
+	<tr>
+		<td>12</td>
+		<td>15</td>
+		<td>22</td>
+		<td>16</td>
+		<td>9.9</td>
+	</tr>
+	<tr>
+		<td>12</td>
+		<td>16</td>
+		<td>0</td>
+		<td>9</td>
+		<td>8.1</td>
+	</tr>
+	<tr>
+		<td>12</td>
+		<td>17</td>
+		<td>31</td>
+		<td>15</td>
+		<td>7.2</td>
+	</tr>
+	<tr>
+		<td>12</td>
+		<td>18</td>
+		<td>9</td>
+		<td>4</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>0</td>
+		<td>16</td>
+		<td>10</td>
+		<td>29.1</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>1</td>
+		<td>1</td>
+		<td>1</td>
+		<td>37.2</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>2</td>
+		<td>13</td>
+		<td>20</td>
+		<td>27.0</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>3</td>
+		<td>32</td>
+		<td>2</td>
+		<td>28.5</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>4</td>
+		<td>26</td>
+		<td>21</td>
+		<td>37.8</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>5</td>
+		<td>22</td>
+		<td>19</td>
+		<td>9.9</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>6</td>
+		<td>19</td>
+		<td>8</td>
+		<td>16.5</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>7</td>
+		<td>29</td>
+		<td>24</td>
+		<td>16.8</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>8</td>
+		<td>48</td>
+		<td>11</td>
+		<td>31.5</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>9</td>
+		<td>24</td>
+		<td>10</td>
+		<td>10.8</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>10</td>
+		<td>45</td>
+		<td>24</td>
+		<td>27.0</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>11</td>
+		<td>14</td>
+		<td>3</td>
+		<td>18.6</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>12</td>
+		<td>17</td>
+		<td>3</td>
+		<td>33.0</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>13</td>
+		<td>10</td>
+		<td>20</td>
+		<td>30.6</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>14</td>
+		<td>1</td>
+		<td>12</td>
+		<td>37.2</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>15</td>
+		<td>0</td>
+		<td>20</td>
+		<td>8.1</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>16</td>
+		<td>22</td>
+		<td>23</td>
+		<td>9.9</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>17</td>
+		<td>32</td>
+		<td>18</td>
+		<td>28.5</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>18</td>
+		<td>0</td>
+		<td>16</td>
+		<td>8.1</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>19</td>
+		<td>42</td>
+		<td>18</td>
+		<td>29.7</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>20</td>
+		<td>5</td>
+		<td>19</td>
+		<td>35.4</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>21</td>
+		<td>40</td>
+		<td>1</td>
+		<td>4.2</td>
+	</tr>
+	<tr>
+		<td>14</td>
+		<td>0</td>
+		<td>42</td>
+		<td>18</td>
+		<td>29.7</td>
+	</tr>
+	<tr>
+		<td>14</td>
+		<td>1</td>
+		<td>9</td>
+		<td>22</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>14</td>
+		<td>2</td>
+		<td>15</td>
+		<td>18</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>14</td>
+		<td>3</td>
+		<td>34</td>
+		<td>11</td>
+		<td>38.4</td>
+	</tr>
+	<tr>
+		<td>14</td>
+		<td>4</td>
+		<td>41</td>
+		<td>17</td>
+		<td>30.9</td>
+	</tr>
+	<tr>
+		<td>14</td>
+		<td>5</td>
+		<td>11</td>
+		<td>8</td>
+		<td>13.2</td>
+	</tr>
+	<tr>
+		<td>14</td>
+		<td>6</td>
+		<td>26</td>
+		<td>18</td>
+		<td>37.8</td>
+	</tr>
+	<tr>
+		<td>14</td>
+		<td>7</td>
+		<td>43</td>
+		<td>4</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>14</td>
+		<td>8</td>
+		<td>23</td>
+		<td>7</td>
+		<td>11.4</td>
+	</tr>
+	<tr>
+		<td>14</td>
+		<td>9</td>
+		<td>13</td>
+		<td>16</td>
+		<td>27.0</td>
+	</tr>
+	<tr>
+		<td>14</td>
+		<td>10</td>
+		<td>44</td>
+		<td>16</td>
+		<td>14.4</td>
+	</tr>
+	<tr>
+		<td>14</td>
+		<td>11</td>
+		<td>25</td>
+		<td>15</td>
+		<td>24.3</td>
+	</tr>
+	<tr>
+		<td>14</td>
+		<td>12</td>
+		<td>4</td>
+		<td>20</td>
+		<td>19.2</td>
+	</tr>
+	<tr>
+		<td>14</td>
+		<td>13</td>
+		<td>11</td>
+		<td>23</td>
+		<td>13.2</td>
+	</tr>
+	<tr>
+		<td>15</td>
+		<td>0</td>
+		<td>17</td>
+		<td>12</td>
+		<td>33.0</td>
+	</tr>
+	<tr>
+		<td>15</td>
+		<td>1</td>
+		<td>13</td>
+		<td>21</td>
+		<td>27.0</td>
+	</tr>
+	<tr>
+		<td>15</td>
+		<td>2</td>
+		<td>24</td>
+		<td>6</td>
+		<td>10.8</td>
+	</tr>
+	<tr>
+		<td>16</td>
+		<td>0</td>
+		<td>18</td>
+		<td>15</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>16</td>
+		<td>1</td>
+		<td>36</td>
+		<td>20</td>
+		<td>4.8</td>
+	</tr>
+	<tr>
+		<td>16</td>
+		<td>2</td>
+		<td>20</td>
+		<td>15</td>
+		<td>30.0</td>
+	</tr>
+	<tr>
+		<td>16</td>
+		<td>3</td>
+		<td>0</td>
+		<td>3</td>
+		<td>8.1</td>
+	</tr>
+	<tr>
+		<td>16</td>
+		<td>4</td>
+		<td>10</td>
+		<td>24</td>
+		<td>30.6</td>
+	</tr>
+	<tr>
+		<td>16</td>
+		<td>5</td>
+		<td>11</td>
+		<td>15</td>
+		<td>13.2</td>
+	</tr>
+	<tr>
+		<td>16</td>
+		<td>6</td>
+		<td>44</td>
+		<td>7</td>
+		<td>14.4</td>
+	</tr>
+	<tr>
+		<td>16</td>
+		<td>7</td>
+		<td>8</td>
+		<td>17</td>
+		<td>33.9</td>
+	</tr>
+	<tr>
+		<td>16</td>
+		<td>8</td>
+		<td>13</td>
+		<td>17</td>
+		<td>27.0</td>
+	</tr>
+	<tr>
+		<td>16</td>
+		<td>9</td>
+		<td>11</td>
+		<td>10</td>
+		<td>13.2</td>
+	</tr>
+	<tr>
+		<td>16</td>
+		<td>10</td>
+		<td>43</td>
+		<td>8</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>16</td>
+		<td>11</td>
+		<td>24</td>
+		<td>7</td>
+		<td>10.8</td>
+	</tr>
+	<tr>
+		<td>16</td>
+		<td>12</td>
+		<td>18</td>
+		<td>2</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>16</td>
+		<td>13</td>
+		<td>20</td>
+		<td>1</td>
+		<td>30.0</td>
+	</tr>
+	<tr>
+		<td>16</td>
+		<td>14</td>
+		<td>0</td>
+		<td>19</td>
+		<td>8.1</td>
+	</tr>
+	<tr>
+		<td>16</td>
+		<td>15</td>
+		<td>12</td>
+		<td>3</td>
+		<td>25.2</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>0</td>
+		<td>16</td>
+		<td>8</td>
+		<td>29.1</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>1</td>
+		<td>19</td>
+		<td>19</td>
+		<td>16.5</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>2</td>
+		<td>44</td>
+		<td>11</td>
+		<td>14.4</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>3</td>
+		<td>24</td>
+		<td>4</td>
+		<td>10.8</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>4</td>
+		<td>23</td>
+		<td>2</td>
+		<td>11.4</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>5</td>
+		<td>44</td>
+		<td>1</td>
+		<td>14.4</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>6</td>
+		<td>43</td>
+		<td>6</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>7</td>
+		<td>6</td>
+		<td>15</td>
+		<td>14.7</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>8</td>
+		<td>49</td>
+		<td>8</td>
+		<td>3.3</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>9</td>
+		<td>8</td>
+		<td>15</td>
+		<td>33.9</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>10</td>
+		<td>10</td>
+		<td>12</td>
+		<td>30.6</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>11</td>
+		<td>45</td>
+		<td>10</td>
+		<td>27.0</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>12</td>
+		<td>22</td>
+		<td>16</td>
+		<td>9.9</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>13</td>
+		<td>41</td>
+		<td>5</td>
+		<td>30.9</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>14</td>
+		<td>18</td>
+		<td>2</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>15</td>
+		<td>35</td>
+		<td>10</td>
+		<td>11.4</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>16</td>
+		<td>8</td>
+		<td>16</td>
+		<td>33.9</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>17</td>
+		<td>7</td>
+		<td>5</td>
+		<td>12.6</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>18</td>
+		<td>5</td>
+		<td>9</td>
+		<td>35.4</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>19</td>
+		<td>46</td>
+		<td>12</td>
+		<td>9.3</td>
+	</tr>
+	<tr>
+		<td>18</td>
+		<td>0</td>
+		<td>32</td>
+		<td>1</td>
+		<td>28.5</td>
+	</tr>
+	<tr>
+		<td>18</td>
+		<td>1</td>
+		<td>33</td>
+		<td>12</td>
+		<td>27.3</td>
+	</tr>
+	<tr>
+		<td>18</td>
+		<td>2</td>
+		<td>40</td>
+		<td>12</td>
+		<td>4.2</td>
+	</tr>
+	<tr>
+		<td>18</td>
+		<td>3</td>
+		<td>19</td>
+		<td>8</td>
+		<td>16.5</td>
+	</tr>
+	<tr>
+		<td>18</td>
+		<td>4</td>
+		<td>28</td>
+		<td>6</td>
+		<td>4.5</td>
+	</tr>
+	<tr>
+		<td>18</td>
+		<td>5</td>
+		<td>15</td>
+		<td>6</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>18</td>
+		<td>6</td>
+		<td>29</td>
+		<td>4</td>
+		<td>16.8</td>
+	</tr>
+	<tr>
+		<td>18</td>
+		<td>7</td>
+		<td>15</td>
+		<td>14</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>18</td>
+		<td>8</td>
+		<td>1</td>
+		<td>24</td>
+		<td>37.2</td>
+	</tr>
+	<tr>
+		<td>18</td>
+		<td>9</td>
+		<td>2</td>
+		<td>2</td>
+		<td>37.2</td>
+	</tr>
+	<tr>
+		<td>18</td>
+		<td>10</td>
+		<td>34</td>
+		<td>18</td>
+		<td>38.4</td>
+	</tr>
+	<tr>
+		<td>18</td>
+		<td>11</td>
+		<td>30</td>
+		<td>8</td>
+		<td>34.8</td>
+	</tr>
+	<tr>
+		<td>18</td>
+		<td>12</td>
+		<td>37</td>
+		<td>12</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>18</td>
+		<td>13</td>
+		<td>14</td>
+		<td>12</td>
+		<td>18.6</td>
+	</tr>
+	<tr>
+		<td>18</td>
+		<td>14</td>
+		<td>28</td>
+		<td>20</td>
+		<td>4.5</td>
+	</tr>
+	<tr>
+		<td>18</td>
+		<td>15</td>
+		<td>44</td>
+		<td>20</td>
+		<td>14.4</td>
+	</tr>
+	<tr>
+		<td>18</td>
+		<td>16</td>
+		<td>31</td>
+		<td>12</td>
+		<td>7.2</td>
+	</tr>
+	<tr>
+		<td>18</td>
+		<td>17</td>
+		<td>8</td>
+		<td>1</td>
+		<td>33.9</td>
+	</tr>
+	<tr>
+		<td>18</td>
+		<td>18</td>
+		<td>10</td>
+		<td>1</td>
+		<td>30.6</td>
+	</tr>
+	<tr>
+		<td>19</td>
+		<td>0</td>
+		<td>12</td>
+		<td>7</td>
+		<td>25.2</td>
+	</tr>
+	<tr>
+		<td>19</td>
+		<td>1</td>
+		<td>31</td>
+		<td>2</td>
+		<td>7.2</td>
+	</tr>
+	<tr>
+		<td>19</td>
+		<td>2</td>
+		<td>4</td>
+		<td>22</td>
+		<td>19.2</td>
+	</tr>
+	<tr>
+		<td>19</td>
+		<td>3</td>
+		<td>49</td>
+		<td>23</td>
+		<td>3.3</td>
+	</tr>
+	<tr>
+		<td>19</td>
+		<td>4</td>
+		<td>36</td>
+		<td>24</td>
+		<td>4.8</td>
+	</tr>
+	<tr>
+		<td>20</td>
+		<td>0</td>
+		<td>47</td>
+		<td>15</td>
+		<td>26.7</td>
+	</tr>
+	<tr>
+		<td>20</td>
+		<td>1</td>
+		<td>29</td>
+		<td>6</td>
+		<td>16.8</td>
+	</tr>
+	<tr>
+		<td>20</td>
+		<td>2</td>
+		<td>24</td>
+		<td>22</td>
+		<td>10.8</td>
+	</tr>
+	<tr>
+		<td>20</td>
+		<td>3</td>
+		<td>25</td>
+		<td>14</td>
+		<td>24.3</td>
+	</tr>
+	<tr>
+		<td>20</td>
+		<td>4</td>
+		<td>30</td>
+		<td>13</td>
+		<td>34.8</td>
+	</tr>
+	<tr>
+		<td>20</td>
+		<td>5</td>
+		<td>8</td>
+		<td>14</td>
+		<td>33.9</td>
+	</tr>
+	<tr>
+		<td>20</td>
+		<td>6</td>
+		<td>20</td>
+		<td>2</td>
+		<td>30.0</td>
+	</tr>
+	<tr>
+		<td>20</td>
+		<td>7</td>
+		<td>9</td>
+		<td>9</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>20</td>
+		<td>8</td>
+		<td>44</td>
+		<td>18</td>
+		<td>14.4</td>
+	</tr>
+	<tr>
+		<td>20</td>
+		<td>9</td>
+		<td>12</td>
+		<td>8</td>
+		<td>25.2</td>
+	</tr>
+	<tr>
+		<td>20</td>
+		<td>10</td>
+		<td>25</td>
+		<td>11</td>
+		<td>24.3</td>
+	</tr>
+	<tr>
+		<td>20</td>
+		<td>11</td>
+		<td>15</td>
+		<td>8</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>21</td>
+		<td>0</td>
+		<td>9</td>
+		<td>10</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>21</td>
+		<td>1</td>
+		<td>38</td>
+		<td>19</td>
+		<td>32.4</td>
+	</tr>
+	<tr>
+		<td>21</td>
+		<td>2</td>
+		<td>31</td>
+		<td>17</td>
+		<td>7.2</td>
+	</tr>
+	<tr>
+		<td>21</td>
+		<td>3</td>
+		<td>30</td>
+		<td>13</td>
+		<td>34.8</td>
+	</tr>
+	<tr>
+		<td>21</td>
+		<td>4</td>
+		<td>49</td>
+		<td>22</td>
+		<td>3.3</td>
+	</tr>
+	<tr>
+		<td>21</td>
+		<td>5</td>
+		<td>27</td>
+		<td>18</td>
+		<td>34.5</td>
+	</tr>
+	<tr>
+		<td>21</td>
+		<td>6</td>
+		<td>26</td>
+		<td>7</td>
+		<td>37.8</td>
+	</tr>
+	<tr>
+		<td>21</td>
+		<td>7</td>
+		<td>8</td>
+		<td>9</td>
+		<td>33.9</td>
+	</tr>
+	<tr>
+		<td>21</td>
+		<td>8</td>
+		<td>44</td>
+		<td>19</td>
+		<td>14.4</td>
+	</tr>
+	<tr>
+		<td>21</td>
+		<td>9</td>
+		<td>35</td>
+		<td>17</td>
+		<td>11.4</td>
+	</tr>
+	<tr>
+		<td>21</td>
+		<td>10</td>
+		<td>19</td>
+		<td>14</td>
+		<td>16.5</td>
+	</tr>
+	<tr>
+		<td>21</td>
+		<td>11</td>
+		<td>20</td>
+		<td>11</td>
+		<td>30.0</td>
+	</tr>
+	<tr>
+		<td>22</td>
+		<td>0</td>
+		<td>9</td>
+		<td>6</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>22</td>
+		<td>1</td>
+		<td>30</td>
+		<td>11</td>
+		<td>34.8</td>
+	</tr>
+	<tr>
+		<td>22</td>
+		<td>2</td>
+		<td>12</td>
+		<td>20</td>
+		<td>25.2</td>
+	</tr>
+	<tr>
+		<td>22</td>
+		<td>3</td>
+		<td>22</td>
+		<td>5</td>
+		<td>9.9</td>
+	</tr>
+	<tr>
+		<td>22</td>
+		<td>4</td>
+		<td>5</td>
+		<td>21</td>
+		<td>35.4</td>
+	</tr>
+	<tr>
+		<td>22</td>
+		<td>5</td>
+		<td>24</td>
+		<td>5</td>
+		<td>10.8</td>
+	</tr>
+	<tr>
+		<td>22</td>
+		<td>6</td>
+		<td>4</td>
+		<td>11</td>
+		<td>19.2</td>
+	</tr>
+	<tr>
+		<td>22</td>
+		<td>7</td>
+		<td>21</td>
+		<td>6</td>
+		<td>17.1</td>
+	</tr>
+	<tr>
+		<td>22</td>
+		<td>8</td>
+		<td>3</td>
+		<td>2</td>
+		<td>38.1</td>
+	</tr>
+	<tr>
+		<td>22</td>
+		<td>9</td>
+		<td>23</td>
+		<td>1</td>
+		<td>11.4</td>
+	</tr>
+	<tr>
+		<td>23</td>
+		<td>0</td>
+		<td>48</td>
+		<td>22</td>
+		<td>31.5</td>
+	</tr>
+	<tr>
+		<td>23</td>
+		<td>1</td>
+		<td>26</td>
+		<td>8</td>
+		<td>37.8</td>
+	</tr>
+	<tr>
+		<td>23</td>
+		<td>2</td>
+		<td>33</td>
+		<td>18</td>
+		<td>27.3</td>
+	</tr>
+	<tr>
+		<td>23</td>
+		<td>3</td>
+		<td>40</td>
+		<td>19</td>
+		<td>4.2</td>
+	</tr>
+	<tr>
+		<td>23</td>
+		<td>4</td>
+		<td>23</td>
+		<td>19</td>
+		<td>11.4</td>
+	</tr>
+	<tr>
+		<td>23</td>
+		<td>5</td>
+		<td>32</td>
+		<td>14</td>
+		<td>28.5</td>
+	</tr>
+	<tr>
+		<td>23</td>
+		<td>6</td>
+		<td>16</td>
+		<td>1</td>
+		<td>29.1</td>
+	</tr>
+	<tr>
+		<td>23</td>
+		<td>7</td>
+		<td>39</td>
+		<td>3</td>
+		<td>23.1</td>
+	</tr>
+	<tr>
+		<td>23</td>
+		<td>8</td>
+		<td>6</td>
+		<td>17</td>
+		<td>14.7</td>
+	</tr>
+	<tr>
+		<td>23</td>
+		<td>9</td>
+		<td>20</td>
+		<td>18</td>
+		<td>30.0</td>
+	</tr>
+	<tr>
+		<td>23</td>
+		<td>10</td>
+		<td>4</td>
+		<td>18</td>
+		<td>19.2</td>
+	</tr>
+	<tr>
+		<td>23</td>
+		<td>11</td>
+		<td>41</td>
+		<td>8</td>
+		<td>30.9</td>
+	</tr>
+	<tr>
+		<td>23</td>
+		<td>12</td>
+		<td>4</td>
+		<td>17</td>
+		<td>19.2</td>
+	</tr>
+	<tr>
+		<td>23</td>
+		<td>13</td>
+		<td>14</td>
+		<td>17</td>
+		<td>18.6</td>
+	</tr>
+	<tr>
+		<td>23</td>
+		<td>14</td>
+		<td>44</td>
+		<td>2</td>
+		<td>14.4</td>
+	</tr>
+	<tr>
+		<td>23</td>
+		<td>15</td>
+		<td>13</td>
+		<td>17</td>
+		<td>27.0</td>
+	</tr>
+	<tr>
+		<td>23</td>
+		<td>16</td>
+		<td>8</td>
+		<td>11</td>
+		<td>33.9</td>
+	</tr>
+	<tr>
+		<td>24</td>
+		<td>0</td>
+		<td>43</td>
+		<td>14</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>24</td>
+		<td>1</td>
+		<td>46</td>
+		<td>18</td>
+		<td>9.3</td>
+	</tr>
+	<tr>
+		<td>24</td>
+		<td>2</td>
+		<td>38</td>
+		<td>10</td>
+		<td>32.4</td>
+	</tr>
+	<tr>
+		<td>24</td>
+		<td>3</td>
+		<td>17</td>
+		<td>23</td>
+		<td>33.0</td>
+	</tr>
+	<tr>
+		<td>24</td>
+		<td>4</td>
+		<td>15</td>
+		<td>17</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>24</td>
+		<td>5</td>
+		<td>35</td>
+		<td>16</td>
+		<td>11.4</td>
+	</tr>
+	<tr>
+		<td>24</td>
+		<td>6</td>
+		<td>40</td>
+		<td>3</td>
+		<td>4.2</td>
+	</tr>
+	<tr>
+		<td>24</td>
+		<td>7</td>
+		<td>7</td>
+		<td>13</td>
+		<td>12.6</td>
+	</tr>
+	<tr>
+		<td>24</td>
+		<td>8</td>
+		<td>5</td>
+		<td>18</td>
+		<td>35.4</td>
+	</tr>
+	<tr>
+		<td>24</td>
+		<td>9</td>
+		<td>21</td>
+		<td>8</td>
+		<td>17.1</td>
+	</tr>
+	<tr>
+		<td>24</td>
+		<td>10</td>
+		<td>27</td>
+		<td>4</td>
+		<td>34.5</td>
+	</tr>
+	<tr>
+		<td>24</td>
+		<td>11</td>
+		<td>1</td>
+		<td>4</td>
+		<td>37.2</td>
+	</tr>
+	<tr>
+		<td>24</td>
+		<td>12</td>
+		<td>0</td>
+		<td>8</td>
+		<td>8.1</td>
+	</tr>
+	<tr>
+		<td>24</td>
+		<td>13</td>
+		<td>15</td>
+		<td>21</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>24</td>
+		<td>14</td>
+		<td>1</td>
+		<td>13</td>
+		<td>37.2</td>
+	</tr>
+	<tr>
+		<td>24</td>
+		<td>15</td>
+		<td>39</td>
+		<td>17</td>
+		<td>23.1</td>
+	</tr>
+	<tr>
+		<td>25</td>
+		<td>0</td>
+		<td>5</td>
+		<td>15</td>
+		<td>35.4</td>
+	</tr>
+	<tr>
+		<td>25</td>
+		<td>1</td>
+		<td>43</td>
+		<td>13</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>25</td>
+		<td>2</td>
+		<td>13</td>
+		<td>8</td>
+		<td>27.0</td>
+	</tr>
+	<tr>
+		<td>25</td>
+		<td>3</td>
+		<td>19</td>
+		<td>4</td>
+		<td>16.5</td>
+	</tr>
+	<tr>
+		<td>25</td>
+		<td>4</td>
+		<td>47</td>
+		<td>10</td>
+		<td>26.7</td>
+	</tr>
+	<tr>
+		<td>25</td>
+		<td>5</td>
+		<td>10</td>
+		<td>5</td>
+		<td>30.6</td>
+	</tr>
+	<tr>
+		<td>25</td>
+		<td>6</td>
+		<td>21</td>
+		<td>18</td>
+		<td>17.1</td>
+	</tr>
+	<tr>
+		<td>25</td>
+		<td>7</td>
+		<td>16</td>
+		<td>8</td>
+		<td>29.1</td>
+	</tr>
+	<tr>
+		<td>25</td>
+		<td>8</td>
+		<td>38</td>
+		<td>3</td>
+		<td>32.4</td>
+	</tr>
+	<tr>
+		<td>26</td>
+		<td>0</td>
+		<td>42</td>
+		<td>16</td>
+		<td>29.7</td>
+	</tr>
+	<tr>
+		<td>26</td>
+		<td>1</td>
+		<td>43</td>
+		<td>21</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>26</td>
+		<td>2</td>
+		<td>33</td>
+		<td>7</td>
+		<td>27.3</td>
+	</tr>
+	<tr>
+		<td>26</td>
+		<td>3</td>
+		<td>16</td>
+		<td>3</td>
+		<td>29.1</td>
+	</tr>
+	<tr>
+		<td>26</td>
+		<td>4</td>
+		<td>46</td>
+		<td>7</td>
+		<td>9.3</td>
+	</tr>
+	<tr>
+		<td>26</td>
+		<td>5</td>
+		<td>38</td>
+		<td>4</td>
+		<td>32.4</td>
+	</tr>
+	<tr>
+		<td>26</td>
+		<td>6</td>
+		<td>7</td>
+		<td>23</td>
+		<td>12.6</td>
+	</tr>
+	<tr>
+		<td>26</td>
+		<td>7</td>
+		<td>4</td>
+		<td>16</td>
+		<td>19.2</td>
+	</tr>
+	<tr>
+		<td>26</td>
+		<td>8</td>
+		<td>40</td>
+		<td>13</td>
+		<td>4.2</td>
+	</tr>
+	<tr>
+		<td>26</td>
+		<td>9</td>
+		<td>1</td>
+		<td>23</td>
+		<td>37.2</td>
+	</tr>
+	<tr>
+		<td>26</td>
+		<td>10</td>
+		<td>34</td>
+		<td>16</td>
+		<td>38.4</td>
+	</tr>
+	<tr>
+		<td>26</td>
+		<td>11</td>
+		<td>18</td>
+		<td>3</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>26</td>
+		<td>12</td>
+		<td>27</td>
+		<td>20</td>
+		<td>34.5</td>
+	</tr>
+	<tr>
+		<td>26</td>
+		<td>13</td>
+		<td>13</td>
+		<td>10</td>
+		<td>27.0</td>
+	</tr>
+	<tr>
+		<td>26</td>
+		<td>14</td>
+		<td>26</td>
+		<td>6</td>
+		<td>37.8</td>
+	</tr>
+	<tr>
+		<td>26</td>
+		<td>15</td>
+		<td>8</td>
+		<td>6</td>
+		<td>33.9</td>
+	</tr>
+	<tr>
+		<td>26</td>
+		<td>16</td>
+		<td>30</td>
+		<td>4</td>
+		<td>34.8</td>
+	</tr>
+	<tr>
+		<td>27</td>
+		<td>0</td>
+		<td>24</td>
+		<td>15</td>
+		<td>10.8</td>
+	</tr>
+	<tr>
+		<td>27</td>
+		<td>1</td>
+		<td>45</td>
+		<td>15</td>
+		<td>27.0</td>
+	</tr>
+	<tr>
+		<td>27</td>
+		<td>2</td>
+		<td>19</td>
+		<td>1</td>
+		<td>16.5</td>
+	</tr>
+	<tr>
+		<td>28</td>
+		<td>0</td>
+		<td>35</td>
+		<td>13</td>
+		<td>11.4</td>
+	</tr>
+	<tr>
+		<td>28</td>
+		<td>1</td>
+		<td>15</td>
+		<td>13</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>28</td>
+		<td>2</td>
+		<td>44</td>
+		<td>22</td>
+		<td>14.4</td>
+	</tr>
+	<tr>
+		<td>28</td>
+		<td>3</td>
+		<td>6</td>
+		<td>3</td>
+		<td>14.7</td>
+	</tr>
+	<tr>
+		<td>28</td>
+		<td>4</td>
+		<td>45</td>
+		<td>17</td>
+		<td>27.0</td>
+	</tr>
+	<tr>
+		<td>28</td>
+		<td>5</td>
+		<td>49</td>
+		<td>4</td>
+		<td>3.3</td>
+	</tr>
+	<tr>
+		<td>28</td>
+		<td>6</td>
+		<td>33</td>
+		<td>16</td>
+		<td>27.3</td>
+	</tr>
+	<tr>
+		<td>28</td>
+		<td>7</td>
+		<td>28</td>
+		<td>8</td>
+		<td>4.5</td>
+	</tr>
+	<tr>
+		<td>28</td>
+		<td>8</td>
+		<td>28</td>
+		<td>6</td>
+		<td>4.5</td>
+	</tr>
+	<tr>
+		<td>29</td>
+		<td>0</td>
+		<td>33</td>
+		<td>17</td>
+		<td>27.3</td>
+	</tr>
+	<tr>
+		<td>29</td>
+		<td>1</td>
+		<td>38</td>
+		<td>12</td>
+		<td>32.4</td>
+	</tr>
+	<tr>
+		<td>29</td>
+		<td>2</td>
+		<td>17</td>
+		<td>23</td>
+		<td>33.0</td>
+	</tr>
+	<tr>
+		<td>29</td>
+		<td>3</td>
+		<td>7</td>
+		<td>21</td>
+		<td>12.6</td>
+	</tr>
+	<tr>
+		<td>29</td>
+		<td>4</td>
+		<td>4</td>
+		<td>7</td>
+		<td>19.2</td>
+	</tr>
+	<tr>
+		<td>29</td>
+		<td>5</td>
+		<td>31</td>
+		<td>13</td>
+		<td>7.2</td>
+	</tr>
+	<tr>
+		<td>29</td>
+		<td>6</td>
+		<td>4</td>
+		<td>16</td>
+		<td>19.2</td>
+	</tr>
+	<tr>
+		<td>29</td>
+		<td>7</td>
+		<td>5</td>
+		<td>1</td>
+		<td>35.4</td>
+	</tr>
+	<tr>
+		<td>29</td>
+		<td>8</td>
+		<td>35</td>
+		<td>6</td>
+		<td>11.4</td>
+	</tr>
+	<tr>
+		<td>30</td>
+		<td>0</td>
+		<td>14</td>
+		<td>7</td>
+		<td>18.6</td>
+	</tr>
+	<tr>
+		<td>30</td>
+		<td>1</td>
+		<td>16</td>
+		<td>19</td>
+		<td>29.1</td>
+	</tr>
+	<tr>
+		<td>30</td>
+		<td>2</td>
+		<td>10</td>
+		<td>18</td>
+		<td>30.6</td>
+	</tr>
+	<tr>
+		<td>30</td>
+		<td>3</td>
+		<td>33</td>
+		<td>2</td>
+		<td>27.3</td>
+	</tr>
+	<tr>
+		<td>30</td>
+		<td>4</td>
+		<td>34</td>
+		<td>2</td>
+		<td>38.4</td>
+	</tr>
+	<tr>
+		<td>30</td>
+		<td>5</td>
+		<td>43</td>
+		<td>23</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>30</td>
+		<td>6</td>
+		<td>14</td>
+		<td>23</td>
+		<td>18.6</td>
+	</tr>
+	<tr>
+		<td>31</td>
+		<td>0</td>
+		<td>33</td>
+		<td>10</td>
+		<td>27.3</td>
+	</tr>
+	<tr>
+		<td>31</td>
+		<td>1</td>
+		<td>4</td>
+		<td>23</td>
+		<td>19.2</td>
+	</tr>
+	<tr>
+		<td>31</td>
+		<td>2</td>
+		<td>4</td>
+		<td>3</td>
+		<td>19.2</td>
+	</tr>
+	<tr>
+		<td>31</td>
+		<td>3</td>
+		<td>12</td>
+		<td>10</td>
+		<td>25.2</td>
+	</tr>
+	<tr>
+		<td>31</td>
+		<td>4</td>
+		<td>8</td>
+		<td>14</td>
+		<td>33.9</td>
+	</tr>
+	<tr>
+		<td>31</td>
+		<td>5</td>
+		<td>1</td>
+		<td>4</td>
+		<td>37.2</td>
+	</tr>
+	<tr>
+		<td>31</td>
+		<td>6</td>
+		<td>26</td>
+		<td>16</td>
+		<td>37.8</td>
+	</tr>
+	<tr>
+		<td>31</td>
+		<td>7</td>
+		<td>38</td>
+		<td>3</td>
+		<td>32.4</td>
+	</tr>
+	<tr>
+		<td>31</td>
+		<td>8</td>
+		<td>7</td>
+		<td>5</td>
+		<td>12.6</td>
+	</tr>
+	<tr>
+		<td>31</td>
+		<td>9</td>
+		<td>14</td>
+		<td>15</td>
+		<td>18.6</td>
+	</tr>
+	<tr>
+		<td>31</td>
+		<td>10</td>
+		<td>0</td>
+		<td>3</td>
+		<td>8.1</td>
+	</tr>
+	<tr>
+		<td>32</td>
+		<td>0</td>
+		<td>35</td>
+		<td>11</td>
+		<td>11.4</td>
+	</tr>
+	<tr>
+		<td>32</td>
+		<td>1</td>
+		<td>30</td>
+		<td>13</td>
+		<td>34.8</td>
+	</tr>
+	<tr>
+		<td>32</td>
+		<td>2</td>
+		<td>1</td>
+		<td>14</td>
+		<td>37.2</td>
+	</tr>
+	<tr>
+		<td>33</td>
+		<td>0</td>
+		<td>36</td>
+		<td>5</td>
+		<td>4.8</td>
+	</tr>
+	<tr>
+		<td>33</td>
+		<td>1</td>
+		<td>10</td>
+		<td>21</td>
+		<td>30.6</td>
+	</tr>
+	<tr>
+		<td>33</td>
+		<td>2</td>
+		<td>36</td>
+		<td>16</td>
+		<td>4.8</td>
+	</tr>
+	<tr>
+		<td>33</td>
+		<td>3</td>
+		<td>48</td>
+		<td>1</td>
+		<td>31.5</td>
+	</tr>
+	<tr>
+		<td>33</td>
+		<td>4</td>
+		<td>24</td>
+		<td>1</td>
+		<td>10.8</td>
+	</tr>
+	<tr>
+		<td>33</td>
+		<td>5</td>
+		<td>8</td>
+		<td>11</td>
+		<td>33.9</td>
+	</tr>
+	<tr>
+		<td>33</td>
+		<td>6</td>
+		<td>17</td>
+		<td>16</td>
+		<td>33.0</td>
+	</tr>
+	<tr>
+		<td>33</td>
+		<td>7</td>
+		<td>43</td>
+		<td>10</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>33</td>
+		<td>8</td>
+		<td>3</td>
+		<td>15</td>
+		<td>38.1</td>
+	</tr>
+	<tr>
+		<td>33</td>
+		<td>9</td>
+		<td>29</td>
+		<td>5</td>
+		<td>16.8</td>
+	</tr>
+	<tr>
+		<td>33</td>
+		<td>10</td>
+		<td>24</td>
+		<td>9</td>
+		<td>10.8</td>
+	</tr>
+	<tr>
+		<td>33</td>
+		<td>11</td>
+		<td>5</td>
+		<td>7</td>
+		<td>35.4</td>
+	</tr>
+	<tr>
+		<td>33</td>
+		<td>12</td>
+		<td>16</td>
+		<td>23</td>
+		<td>29.1</td>
+	</tr>
+	<tr>
+		<td>33</td>
+		<td>13</td>
+		<td>25</td>
+		<td>16</td>
+		<td>24.3</td>
+	</tr>
+	<tr>
+		<td>33</td>
+		<td>14</td>
+		<td>44</td>
+		<td>13</td>
+		<td>14.4</td>
+	</tr>
+	<tr>
+		<td>33</td>
+		<td>15</td>
+		<td>38</td>
+		<td>7</td>
+		<td>32.4</td>
+	</tr>
+	<tr>
+		<td>34</td>
+		<td>0</td>
+		<td>10</td>
+		<td>22</td>
+		<td>30.6</td>
+	</tr>
+	<tr>
+		<td>34</td>
+		<td>1</td>
+		<td>4</td>
+		<td>3</td>
+		<td>19.2</td>
+	</tr>
+	<tr>
+		<td>34</td>
+		<td>2</td>
+		<td>28</td>
+		<td>22</td>
+		<td>4.5</td>
+	</tr>
+	<tr>
+		<td>34</td>
+		<td>3</td>
+		<td>44</td>
+		<td>15</td>
+		<td>14.4</td>
+	</tr>
+	<tr>
+		<td>34</td>
+		<td>4</td>
+		<td>27</td>
+		<td>1</td>
+		<td>34.5</td>
+	</tr>
+	<tr>
+		<td>34</td>
+		<td>5</td>
+		<td>45</td>
+		<td>13</td>
+		<td>27.0</td>
+	</tr>
+	<tr>
+		<td>34</td>
+		<td>6</td>
+		<td>32</td>
+		<td>7</td>
+		<td>28.5</td>
+	</tr>
+	<tr>
+		<td>34</td>
+		<td>7</td>
+		<td>21</td>
+		<td>22</td>
+		<td>17.1</td>
+	</tr>
+	<tr>
+		<td>34</td>
+		<td>8</td>
+		<td>3</td>
+		<td>1</td>
+		<td>38.1</td>
+	</tr>
+	<tr>
+		<td>34</td>
+		<td>9</td>
+		<td>8</td>
+		<td>17</td>
+		<td>33.9</td>
+	</tr>
+	<tr>
+		<td>34</td>
+		<td>10</td>
+		<td>41</td>
+		<td>16</td>
+		<td>30.9</td>
+	</tr>
+	<tr>
+		<td>34</td>
+		<td>11</td>
+		<td>4</td>
+		<td>17</td>
+		<td>19.2</td>
+	</tr>
+	<tr>
+		<td>34</td>
+		<td>12</td>
+		<td>43</td>
+		<td>21</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>34</td>
+		<td>13</td>
+		<td>30</td>
+		<td>14</td>
+		<td>34.8</td>
+	</tr>
+	<tr>
+		<td>34</td>
+		<td>14</td>
+		<td>46</td>
+		<td>7</td>
+		<td>9.3</td>
+	</tr>
+	<tr>
+		<td>35</td>
+		<td>0</td>
+		<td>20</td>
+		<td>17</td>
+		<td>30.0</td>
+	</tr>
+	<tr>
+		<td>35</td>
+		<td>1</td>
+		<td>3</td>
+		<td>9</td>
+		<td>38.1</td>
+	</tr>
+	<tr>
+		<td>35</td>
+		<td>2</td>
+		<td>14</td>
+		<td>4</td>
+		<td>18.6</td>
+	</tr>
+	<tr>
+		<td>35</td>
+		<td>3</td>
+		<td>27</td>
+		<td>10</td>
+		<td>34.5</td>
+	</tr>
+	<tr>
+		<td>35</td>
+		<td>4</td>
+		<td>14</td>
+		<td>17</td>
+		<td>18.6</td>
+	</tr>
+	<tr>
+		<td>35</td>
+		<td>5</td>
+		<td>33</td>
+		<td>5</td>
+		<td>27.3</td>
+	</tr>
+	<tr>
+		<td>35</td>
+		<td>6</td>
+		<td>5</td>
+		<td>4</td>
+		<td>35.4</td>
+	</tr>
+	<tr>
+		<td>35</td>
+		<td>7</td>
+		<td>22</td>
+		<td>15</td>
+		<td>9.9</td>
+	</tr>
+	<tr>
+		<td>35</td>
+		<td>8</td>
+		<td>0</td>
+		<td>1</td>
+		<td>8.1</td>
+	</tr>
+	<tr>
+		<td>35</td>
+		<td>9</td>
+		<td>19</td>
+		<td>1</td>
+		<td>16.5</td>
+	</tr>
+	<tr>
+		<td>35</td>
+		<td>10</td>
+		<td>17</td>
+		<td>11</td>
+		<td>33.0</td>
+	</tr>
+	<tr>
+		<td>35</td>
+		<td>11</td>
+		<td>44</td>
+		<td>9</td>
+		<td>14.4</td>
+	</tr>
+	<tr>
+		<td>35</td>
+		<td>12</td>
+		<td>7</td>
+		<td>23</td>
+		<td>12.6</td>
+	</tr>
+	<tr>
+		<td>35</td>
+		<td>13</td>
+		<td>19</td>
+		<td>17</td>
+		<td>16.5</td>
+	</tr>
+	<tr>
+		<td>36</td>
+		<td>0</td>
+		<td>18</td>
+		<td>13</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>36</td>
+		<td>1</td>
+		<td>15</td>
+		<td>23</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>36</td>
+		<td>2</td>
+		<td>1</td>
+		<td>6</td>
+		<td>37.2</td>
+	</tr>
+	<tr>
+		<td>36</td>
+		<td>3</td>
+		<td>10</td>
+		<td>8</td>
+		<td>30.6</td>
+	</tr>
+	<tr>
+		<td>36</td>
+		<td>4</td>
+		<td>40</td>
+		<td>5</td>
+		<td>4.2</td>
+	</tr>
+	<tr>
+		<td>36</td>
+		<td>5</td>
+		<td>25</td>
+		<td>8</td>
+		<td>24.3</td>
+	</tr>
+	<tr>
+		<td>36</td>
+		<td>6</td>
+		<td>39</td>
+		<td>20</td>
+		<td>23.1</td>
+	</tr>
+	<tr>
+		<td>36</td>
+		<td>7</td>
+		<td>39</td>
+		<td>19</td>
+		<td>23.1</td>
+	</tr>
+	<tr>
+		<td>36</td>
+		<td>8</td>
+		<td>4</td>
+		<td>21</td>
+		<td>19.2</td>
+	</tr>
+	<tr>
+		<td>36</td>
+		<td>9</td>
+		<td>31</td>
+		<td>18</td>
+		<td>7.2</td>
+	</tr>
+	<tr>
+		<td>36</td>
+		<td>10</td>
+		<td>47</td>
+		<td>11</td>
+		<td>26.7</td>
+	</tr>
+	<tr>
+		<td>36</td>
+		<td>11</td>
+		<td>44</td>
+		<td>9</td>
+		<td>14.4</td>
+	</tr>
+	<tr>
+		<td>37</td>
+		<td>0</td>
+		<td>41</td>
+		<td>24</td>
+		<td>30.9</td>
+	</tr>
+	<tr>
+		<td>37</td>
+		<td>1</td>
+		<td>15</td>
+		<td>20</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>37</td>
+		<td>2</td>
+		<td>36</td>
+		<td>8</td>
+		<td>4.8</td>
+	</tr>
+	<tr>
+		<td>37</td>
+		<td>3</td>
+		<td>26</td>
+		<td>7</td>
+		<td>37.8</td>
+	</tr>
+	<tr>
+		<td>37</td>
+		<td>4</td>
+		<td>13</td>
+		<td>20</td>
+		<td>27.0</td>
+	</tr>
+	<tr>
+		<td>37</td>
+		<td>5</td>
+		<td>1</td>
+		<td>14</td>
+		<td>37.2</td>
+	</tr>
+	<tr>
+		<td>37</td>
+		<td>6</td>
+		<td>34</td>
+		<td>12</td>
+		<td>38.4</td>
+	</tr>
+	<tr>
+		<td>37</td>
+		<td>7</td>
+		<td>24</td>
+		<td>19</td>
+		<td>10.8</td>
+	</tr>
+	<tr>
+		<td>37</td>
+		<td>8</td>
+		<td>46</td>
+		<td>9</td>
+		<td>9.3</td>
+	</tr>
+	<tr>
+		<td>37</td>
+		<td>9</td>
+		<td>47</td>
+		<td>16</td>
+		<td>26.7</td>
+	</tr>
+	<tr>
+		<td>37</td>
+		<td>10</td>
+		<td>1</td>
+		<td>18</td>
+		<td>37.2</td>
+	</tr>
+	<tr>
+		<td>37</td>
+		<td>11</td>
+		<td>30</td>
+		<td>5</td>
+		<td>34.8</td>
+	</tr>
+	<tr>
+		<td>37</td>
+		<td>12</td>
+		<td>24</td>
+		<td>23</td>
+		<td>10.8</td>
+	</tr>
+	<tr>
+		<td>37</td>
+		<td>13</td>
+		<td>32</td>
+		<td>3</td>
+		<td>28.5</td>
+	</tr>
+	<tr>
+		<td>37</td>
+		<td>14</td>
+		<td>12</td>
+		<td>3</td>
+		<td>25.2</td>
+	</tr>
+	<tr>
+		<td>37</td>
+		<td>15</td>
+		<td>32</td>
+		<td>12</td>
+		<td>28.5</td>
+	</tr>
+	<tr>
+		<td>37</td>
+		<td>16</td>
+		<td>27</td>
+		<td>8</td>
+		<td>34.5</td>
+	</tr>
+	<tr>
+		<td>37</td>
+		<td>17</td>
+		<td>38</td>
+		<td>18</td>
+		<td>32.4</td>
+	</tr>
+	<tr>
+		<td>37</td>
+		<td>18</td>
+		<td>26</td>
+		<td>22</td>
+		<td>37.8</td>
+	</tr>
+	<tr>
+		<td>37</td>
+		<td>19</td>
+		<td>19</td>
+		<td>20</td>
+		<td>16.5</td>
+	</tr>
+	<tr>
+		<td>37</td>
+		<td>20</td>
+		<td>14</td>
+		<td>1</td>
+		<td>18.6</td>
+	</tr>
+	<tr>
+		<td>37</td>
+		<td>21</td>
+		<td>6</td>
+		<td>9</td>
+		<td>14.7</td>
+	</tr>
+	<tr>
+		<td>38</td>
+		<td>0</td>
+		<td>48</td>
+		<td>14</td>
+		<td>31.5</td>
+	</tr>
+	<tr>
+		<td>38</td>
+		<td>1</td>
+		<td>45</td>
+		<td>13</td>
+		<td>27.0</td>
+	</tr>
+	<tr>
+		<td>38</td>
+		<td>2</td>
+		<td>4</td>
+		<td>8</td>
+		<td>19.2</td>
+	</tr>
+	<tr>
+		<td>38</td>
+		<td>3</td>
+		<td>27</td>
+		<td>19</td>
+		<td>34.5</td>
+	</tr>
+	<tr>
+		<td>38</td>
+		<td>4</td>
+		<td>45</td>
+		<td>14</td>
+		<td>27.0</td>
+	</tr>
+	<tr>
+		<td>38</td>
+		<td>5</td>
+		<td>48</td>
+		<td>17</td>
+		<td>31.5</td>
+	</tr>
+	<tr>
+		<td>38</td>
+		<td>6</td>
+		<td>5</td>
+		<td>19</td>
+		<td>35.4</td>
+	</tr>
+	<tr>
+		<td>38</td>
+		<td>7</td>
+		<td>15</td>
+		<td>1</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>38</td>
+		<td>8</td>
+		<td>40</td>
+		<td>10</td>
+		<td>4.2</td>
+	</tr>
+	<tr>
+		<td>38</td>
+		<td>9</td>
+		<td>27</td>
+		<td>20</td>
+		<td>34.5</td>
+	</tr>
+	<tr>
+		<td>38</td>
+		<td>10</td>
+		<td>4</td>
+		<td>18</td>
+		<td>19.2</td>
+	</tr>
+	<tr>
+		<td>38</td>
+		<td>11</td>
+		<td>19</td>
+		<td>18</td>
+		<td>16.5</td>
+	</tr>
+	<tr>
+		<td>38</td>
+		<td>12</td>
+		<td>1</td>
+		<td>18</td>
+		<td>37.2</td>
+	</tr>
+	<tr>
+		<td>38</td>
+		<td>13</td>
+		<td>8</td>
+		<td>7</td>
+		<td>33.9</td>
+	</tr>
+	<tr>
+		<td>38</td>
+		<td>14</td>
+		<td>20</td>
+		<td>7</td>
+		<td>30.0</td>
+	</tr>
+	<tr>
+		<td>38</td>
+		<td>15</td>
+		<td>47</td>
+		<td>10</td>
+		<td>26.7</td>
+	</tr>
+	<tr>
+		<td>38</td>
+		<td>16</td>
+		<td>40</td>
+		<td>18</td>
+		<td>4.2</td>
+	</tr>
+	<tr>
+		<td>38</td>
+		<td>17</td>
+		<td>32</td>
+		<td>4</td>
+		<td>28.5</td>
+	</tr>
+	<tr>
+		<td>38</td>
+		<td>18</td>
+		<td>28</td>
+		<td>20</td>
+		<td>4.5</td>
+	</tr>
+	<tr>
+		<td>38</td>
+		<td>19</td>
+		<td>4</td>
+		<td>7</td>
+		<td>19.2</td>
+	</tr>
+	<tr>
+		<td>39</td>
+		<td>0</td>
+		<td>10</td>
+		<td>12</td>
+		<td>30.6</td>
+	</tr>
+	<tr>
+		<td>39</td>
+		<td>1</td>
+		<td>24</td>
+		<td>6</td>
+		<td>10.8</td>
+	</tr>
+	<tr>
+		<td>39</td>
+		<td>2</td>
+		<td>39</td>
+		<td>16</td>
+		<td>23.1</td>
+	</tr>
+	<tr>
+		<td>39</td>
+		<td>3</td>
+		<td>20</td>
+		<td>17</td>
+		<td>30.0</td>
+	</tr>
+	<tr>
+		<td>40</td>
+		<td>0</td>
+		<td>46</td>
+		<td>24</td>
+		<td>9.3</td>
+	</tr>
+	<tr>
+		<td>40</td>
+		<td>1</td>
+		<td>45</td>
+		<td>24</td>
+		<td>27.0</td>
+	</tr>
+	<tr>
+		<td>40</td>
+		<td>2</td>
+		<td>4</td>
+		<td>5</td>
+		<td>19.2</td>
+	</tr>
+	<tr>
+		<td>40</td>
+		<td>3</td>
+		<td>26</td>
+		<td>10</td>
+		<td>37.8</td>
+	</tr>
+	<tr>
+		<td>40</td>
+		<td>4</td>
+		<td>18</td>
+		<td>13</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>40</td>
+		<td>5</td>
+		<td>32</td>
+		<td>18</td>
+		<td>28.5</td>
+	</tr>
+	<tr>
+		<td>40</td>
+		<td>6</td>
+		<td>28</td>
+		<td>12</td>
+		<td>4.5</td>
+	</tr>
+	<tr>
+		<td>40</td>
+		<td>7</td>
+		<td>31</td>
+		<td>1</td>
+		<td>7.2</td>
+	</tr>
+	<tr>
+		<td>40</td>
+		<td>8</td>
+		<td>11</td>
+		<td>4</td>
+		<td>13.2</td>
+	</tr>
+	<tr>
+		<td>40</td>
+		<td>9</td>
+		<td>40</td>
+		<td>17</td>
+		<td>4.2</td>
+	</tr>
+	<tr>
+		<td>40</td>
+		<td>10</td>
+		<td>6</td>
+		<td>11</td>
+		<td>14.7</td>
+	</tr>
+	<tr>
+		<td>40</td>
+		<td>11</td>
+		<td>27</td>
+		<td>2</td>
+		<td>34.5</td>
+	</tr>
+	<tr>
+		<td>40</td>
+		<td>12</td>
+		<td>35</td>
+		<td>13</td>
+		<td>11.4</td>
+	</tr>
+	<tr>
+		<td>40</td>
+		<td>13</td>
+		<td>6</td>
+		<td>8</td>
+		<td>14.7</td>
+	</tr>
+	<tr>
+		<td>40</td>
+		<td>14</td>
+		<td>4</td>
+		<td>24</td>
+		<td>19.2</td>
+	</tr>
+	<tr>
+		<td>40</td>
+		<td>15</td>
+		<td>22</td>
+		<td>12</td>
+		<td>9.9</td>
+	</tr>
+	<tr>
+		<td>40</td>
+		<td>16</td>
+		<td>27</td>
+		<td>16</td>
+		<td>34.5</td>
+	</tr>
+	<tr>
+		<td>40</td>
+		<td>17</td>
+		<td>4</td>
+		<td>20</td>
+		<td>19.2</td>
+	</tr>
+	<tr>
+		<td>40</td>
+		<td>18</td>
+		<td>33</td>
+		<td>11</td>
+		<td>27.3</td>
+	</tr>
+	<tr>
+		<td>40</td>
+		<td>19</td>
+		<td>7</td>
+		<td>23</td>
+		<td>12.6</td>
+	</tr>
+	<tr>
+		<td>40</td>
+		<td>20</td>
+		<td>4</td>
+		<td>16</td>
+		<td>19.2</td>
+	</tr>
+	<tr>
+		<td>41</td>
+		<td>0</td>
+		<td>5</td>
+		<td>24</td>
+		<td>35.4</td>
+	</tr>
+	<tr>
+		<td>41</td>
+		<td>1</td>
+		<td>47</td>
+		<td>19</td>
+		<td>26.7</td>
+	</tr>
+	<tr>
+		<td>41</td>
+		<td>2</td>
+		<td>36</td>
+		<td>2</td>
+		<td>4.8</td>
+	</tr>
+	<tr>
+		<td>41</td>
+		<td>3</td>
+		<td>29</td>
+		<td>20</td>
+		<td>16.8</td>
+	</tr>
+	<tr>
+		<td>41</td>
+		<td>4</td>
+		<td>16</td>
+		<td>22</td>
+		<td>29.1</td>
+	</tr>
+	<tr>
+		<td>41</td>
+		<td>5</td>
+		<td>9</td>
+		<td>21</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>41</td>
+		<td>6</td>
+		<td>17</td>
+		<td>11</td>
+		<td>33.0</td>
+	</tr>
+	<tr>
+		<td>41</td>
+		<td>7</td>
+		<td>22</td>
+		<td>18</td>
+		<td>9.9</td>
+	</tr>
+	<tr>
+		<td>41</td>
+		<td>8</td>
+		<td>9</td>
+		<td>22</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>41</td>
+		<td>9</td>
+		<td>26</td>
+		<td>21</td>
+		<td>37.8</td>
+	</tr>
+	<tr>
+		<td>41</td>
+		<td>10</td>
+		<td>24</td>
+		<td>20</td>
+		<td>10.8</td>
+	</tr>
+	<tr>
+		<td>41</td>
+		<td>11</td>
+		<td>48</td>
+		<td>15</td>
+		<td>31.5</td>
+	</tr>
+	<tr>
+		<td>42</td>
+		<td>0</td>
+		<td>48</td>
+		<td>9</td>
+		<td>31.5</td>
+	</tr>
+	<tr>
+		<td>42</td>
+		<td>1</td>
+		<td>18</td>
+		<td>21</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>42</td>
+		<td>2</td>
+		<td>40</td>
+		<td>19</td>
+		<td>4.2</td>
+	</tr>
+	<tr>
+		<td>42</td>
+		<td>3</td>
+		<td>40</td>
+		<td>14</td>
+		<td>4.2</td>
+	</tr>
+	<tr>
+		<td>42</td>
+		<td>4</td>
+		<td>48</td>
+		<td>15</td>
+		<td>31.5</td>
+	</tr>
+	<tr>
+		<td>43</td>
+		<td>0</td>
+		<td>15</td>
+		<td>22</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>43</td>
+		<td>1</td>
+		<td>18</td>
+		<td>19</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>43</td>
+		<td>2</td>
+		<td>2</td>
+		<td>15</td>
+		<td>37.2</td>
+	</tr>
+	<tr>
+		<td>43</td>
+		<td>3</td>
+		<td>6</td>
+		<td>18</td>
+		<td>14.7</td>
+	</tr>
+	<tr>
+		<td>43</td>
+		<td>4</td>
+		<td>32</td>
+		<td>22</td>
+		<td>28.5</td>
+	</tr>
+	<tr>
+		<td>43</td>
+		<td>5</td>
+		<td>33</td>
+		<td>6</td>
+		<td>27.3</td>
+	</tr>
+	<tr>
+		<td>43</td>
+		<td>6</td>
+		<td>24</td>
+		<td>1</td>
+		<td>10.8</td>
+	</tr>
+	<tr>
+		<td>43</td>
+		<td>7</td>
+		<td>11</td>
+		<td>15</td>
+		<td>13.2</td>
+	</tr>
+	<tr>
+		<td>43</td>
+		<td>8</td>
+		<td>44</td>
+		<td>8</td>
+		<td>14.4</td>
+	</tr>
+	<tr>
+		<td>43</td>
+		<td>9</td>
+		<td>7</td>
+		<td>23</td>
+		<td>12.6</td>
+	</tr>
+	<tr>
+		<td>43</td>
+		<td>10</td>
+		<td>35</td>
+		<td>1</td>
+		<td>11.4</td>
+	</tr>
+	<tr>
+		<td>43</td>
+		<td>11</td>
+		<td>49</td>
+		<td>23</td>
+		<td>3.3</td>
+	</tr>
+	<tr>
+		<td>43</td>
+		<td>12</td>
+		<td>40</td>
+		<td>24</td>
+		<td>4.2</td>
+	</tr>
+	<tr>
+		<td>43</td>
+		<td>13</td>
+		<td>44</td>
+		<td>22</td>
+		<td>14.4</td>
+	</tr>
+	<tr>
+		<td>43</td>
+		<td>14</td>
+		<td>3</td>
+		<td>18</td>
+		<td>38.1</td>
+	</tr>
+	<tr>
+		<td>43</td>
+		<td>15</td>
+		<td>48</td>
+		<td>7</td>
+		<td>31.5</td>
+	</tr>
+	<tr>
+		<td>43</td>
+		<td>16</td>
+		<td>38</td>
+		<td>12</td>
+		<td>32.4</td>
+	</tr>
+	<tr>
+		<td>44</td>
+		<td>0</td>
+		<td>33</td>
+		<td>20</td>
+		<td>27.3</td>
+	</tr>
+	<tr>
+		<td>44</td>
+		<td>1</td>
+		<td>34</td>
+		<td>17</td>
+		<td>38.4</td>
+	</tr>
+	<tr>
+		<td>44</td>
+		<td>2</td>
+		<td>17</td>
+		<td>14</td>
+		<td>33.0</td>
+	</tr>
+	<tr>
+		<td>44</td>
+		<td>3</td>
+		<td>3</td>
+		<td>14</td>
+		<td>38.1</td>
+	</tr>
+	<tr>
+		<td>44</td>
+		<td>4</td>
+		<td>12</td>
+		<td>3</td>
+		<td>25.2</td>
+	</tr>
+	<tr>
+		<td>44</td>
+		<td>5</td>
+		<td>41</td>
+		<td>22</td>
+		<td>30.9</td>
+	</tr>
+	<tr>
+		<td>44</td>
+		<td>6</td>
+		<td>14</td>
+		<td>15</td>
+		<td>18.6</td>
+	</tr>
+	<tr>
+		<td>44</td>
+		<td>7</td>
+		<td>49</td>
+		<td>17</td>
+		<td>3.3</td>
+	</tr>
+	<tr>
+		<td>44</td>
+		<td>8</td>
+		<td>28</td>
+		<td>23</td>
+		<td>4.5</td>
+	</tr>
+	<tr>
+		<td>45</td>
+		<td>0</td>
+		<td>44</td>
+		<td>6</td>
+		<td>14.4</td>
+	</tr>
+	<tr>
+		<td>45</td>
+		<td>1</td>
+		<td>11</td>
+		<td>6</td>
+		<td>13.2</td>
+	</tr>
+	<tr>
+		<td>45</td>
+		<td>2</td>
+		<td>46</td>
+		<td>8</td>
+		<td>9.3</td>
+	</tr>
+	<tr>
+		<td>45</td>
+		<td>3</td>
+		<td>14</td>
+		<td>11</td>
+		<td>18.6</td>
+	</tr>
+	<tr>
+		<td>45</td>
+		<td>4</td>
+		<td>3</td>
+		<td>14</td>
+		<td>38.1</td>
+	</tr>
+	<tr>
+		<td>45</td>
+		<td>5</td>
+		<td>45</td>
+		<td>17</td>
+		<td>27.0</td>
+	</tr>
+	<tr>
+		<td>45</td>
+		<td>6</td>
+		<td>39</td>
+		<td>5</td>
+		<td>23.1</td>
+	</tr>
+	<tr>
+		<td>45</td>
+		<td>7</td>
+		<td>6</td>
+		<td>24</td>
+		<td>14.7</td>
+	</tr>
+	<tr>
+		<td>45</td>
+		<td>8</td>
+		<td>9</td>
+		<td>2</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>45</td>
+		<td>9</td>
+		<td>26</td>
+		<td>18</td>
+		<td>37.8</td>
+	</tr>
+	<tr>
+		<td>45</td>
+		<td>10</td>
+		<td>41</td>
+		<td>24</td>
+		<td>30.9</td>
+	</tr>
+	<tr>
+		<td>45</td>
+		<td>11</td>
+		<td>31</td>
+		<td>22</td>
+		<td>7.2</td>
+	</tr>
+	<tr>
+		<td>45</td>
+		<td>12</td>
+		<td>32</td>
+		<td>13</td>
+		<td>28.5</td>
+	</tr>
+	<tr>
+		<td>45</td>
+		<td>13</td>
+		<td>47</td>
+		<td>8</td>
+		<td>26.7</td>
+	</tr>
+	<tr>
+		<td>45</td>
+		<td>14</td>
+		<td>3</td>
+		<td>16</td>
+		<td>38.1</td>
+	</tr>
+	<tr>
+		<td>46</td>
+		<td>0</td>
+		<td>5</td>
+		<td>21</td>
+		<td>35.4</td>
+	</tr>
+	<tr>
+		<td>46</td>
+		<td>1</td>
+		<td>12</td>
+		<td>24</td>
+		<td>25.2</td>
+	</tr>
+	<tr>
+		<td>46</td>
+		<td>2</td>
+		<td>30</td>
+		<td>14</td>
+		<td>34.8</td>
+	</tr>
+	<tr>
+		<td>46</td>
+		<td>3</td>
+		<td>21</td>
+		<td>19</td>
+		<td>17.1</td>
+	</tr>
+	<tr>
+		<td>46</td>
+		<td>4</td>
+		<td>17</td>
+		<td>5</td>
+		<td>33.0</td>
+	</tr>
+	<tr>
+		<td>46</td>
+		<td>5</td>
+		<td>25</td>
+		<td>9</td>
+		<td>24.3</td>
+	</tr>
+	<tr>
+		<td>46</td>
+		<td>6</td>
+		<td>41</td>
+		<td>18</td>
+		<td>30.9</td>
+	</tr>
+	<tr>
+		<td>46</td>
+		<td>7</td>
+		<td>49</td>
+		<td>9</td>
+		<td>3.3</td>
+	</tr>
+	<tr>
+		<td>46</td>
+		<td>8</td>
+		<td>8</td>
+		<td>22</td>
+		<td>33.9</td>
+	</tr>
+	<tr>
+		<td>46</td>
+		<td>9</td>
+		<td>7</td>
+		<td>4</td>
+		<td>12.6</td>
+	</tr>
+	<tr>
+		<td>46</td>
+		<td>10</td>
+		<td>11</td>
+		<td>24</td>
+		<td>13.2</td>
+	</tr>
+	<tr>
+		<td>46</td>
+		<td>11</td>
+		<td>1</td>
+		<td>4</td>
+		<td>37.2</td>
+	</tr>
+	<tr>
+		<td>46</td>
+		<td>12</td>
+		<td>21</td>
+		<td>24</td>
+		<td>17.1</td>
+	</tr>
+	<tr>
+		<td>46</td>
+		<td>13</td>
+		<td>36</td>
+		<td>20</td>
+		<td>4.8</td>
+	</tr>
+	<tr>
+		<td>46</td>
+		<td>14</td>
+		<td>24</td>
+		<td>10</td>
+		<td>10.8</td>
+	</tr>
+	<tr>
+		<td>46</td>
+		<td>15</td>
+		<td>40</td>
+		<td>11</td>
+		<td>4.2</td>
+	</tr>
+	<tr>
+		<td>46</td>
+		<td>16</td>
+		<td>46</td>
+		<td>21</td>
+		<td>9.3</td>
+	</tr>
+	<tr>
+		<td>46</td>
+		<td>17</td>
+		<td>12</td>
+		<td>23</td>
+		<td>25.2</td>
+	</tr>
+	<tr>
+		<td>47</td>
+		<td>0</td>
+		<td>23</td>
+		<td>15</td>
+		<td>11.4</td>
+	</tr>
+	<tr>
+		<td>47</td>
+		<td>1</td>
+		<td>23</td>
+		<td>13</td>
+		<td>11.4</td>
+	</tr>
+	<tr>
+		<td>47</td>
+		<td>2</td>
+		<td>17</td>
+		<td>6</td>
+		<td>33.0</td>
+	</tr>
+	<tr>
+		<td>47</td>
+		<td>3</td>
+		<td>1</td>
+		<td>4</td>
+		<td>37.2</td>
+	</tr>
+	<tr>
+		<td>47</td>
+		<td>4</td>
+		<td>15</td>
+		<td>1</td>
+		<td>14.1</td>
+	</tr>
+	<tr>
+		<td>47</td>
+		<td>5</td>
+		<td>40</td>
+		<td>8</td>
+		<td>4.2</td>
+	</tr>
+	<tr>
+		<td>47</td>
+		<td>6</td>
+		<td>8</td>
+		<td>10</td>
+		<td>33.9</td>
+	</tr>
+	<tr>
+		<td>47</td>
+		<td>7</td>
+		<td>28</td>
+		<td>14</td>
+		<td>4.5</td>
+	</tr>
+	<tr>
+		<td>47</td>
+		<td>8</td>
+		<td>16</td>
+		<td>2</td>
+		<td>29.1</td>
+	</tr>
+	<tr>
+		<td>47</td>
+		<td>9</td>
+		<td>32</td>
+		<td>9</td>
+		<td>28.5</td>
+	</tr>
+	<tr>
+		<td>47</td>
+		<td>10</td>
+		<td>45</td>
+		<td>2</td>
+		<td>27.0</td>
+	</tr>
+	<tr>
+		<td>47</td>
+		<td>11</td>
+		<td>35</td>
+		<td>10</td>
+		<td>11.4</td>
+	</tr>
+	<tr>
+		<td>47</td>
+		<td>12</td>
+		<td>12</td>
+		<td>20</td>
+		<td>25.2</td>
+	</tr>
+	<tr>
+		<td>47</td>
+		<td>13</td>
+		<td>33</td>
+		<td>8</td>
+		<td>27.3</td>
+	</tr>
+	<tr>
+		<td>48</td>
+		<td>0</td>
+		<td>6</td>
+		<td>23</td>
+		<td>14.7</td>
+	</tr>
+	<tr>
+		<td>48</td>
+		<td>1</td>
+		<td>26</td>
+		<td>23</td>
+		<td>37.8</td>
+	</tr>
+	<tr>
+		<td>48</td>
+		<td>2</td>
+		<td>23</td>
+		<td>10</td>
+		<td>11.4</td>
+	</tr>
+	<tr>
+		<td>48</td>
+		<td>3</td>
+		<td>10</td>
+		<td>2</td>
+		<td>30.6</td>
+	</tr>
+	<tr>
+		<td>48</td>
+		<td>4</td>
+		<td>48</td>
+		<td>4</td>
+		<td>31.5</td>
+	</tr>
+	<tr>
+		<td>48</td>
+		<td>5</td>
+		<td>24</td>
+		<td>16</td>
+		<td>10.8</td>
+	</tr>
+	<tr>
+		<td>48</td>
+		<td>6</td>
+		<td>11</td>
+		<td>17</td>
+		<td>13.2</td>
+	</tr>
+	<tr>
+		<td>48</td>
+		<td>7</td>
+		<td>30</td>
+		<td>19</td>
+		<td>34.8</td>
+	</tr>
+	<tr>
+		<td>48</td>
+		<td>8</td>
+		<td>5</td>
+		<td>12</td>
+		<td>35.4</td>
+	</tr>
+	<tr>
+		<td>48</td>
+		<td>9</td>
+		<td>35</td>
+		<td>17</td>
+		<td>11.4</td>
+	</tr>
+	<tr>
+		<td>48</td>
+		<td>10</td>
+		<td>41</td>
+		<td>10</td>
+		<td>30.9</td>
+	</tr>
+	<tr>
+		<td>49</td>
+		<td>0</td>
+		<td>18</td>
+		<td>6</td>
+		<td>25.8</td>
+	</tr>
+	<tr>
+		<td>49</td>
+		<td>1</td>
+		<td>22</td>
+		<td>16</td>
+		<td>9.9</td>
+	</tr>
+	<tr>
+		<td>49</td>
+		<td>2</td>
+		<td>29</td>
+		<td>6</td>
+		<td>16.8</td>
+	</tr>
+	<tr>
+		<td>49</td>
+		<td>3</td>
+		<td>17</td>
+		<td>19</td>
+		<td>33.0</td>
+	</tr>
+	<tr>
+		<td>49</td>
+		<td>4</td>
+		<td>47</td>
+		<td>14</td>
+		<td>26.7</td>
+	</tr>
+	<tr>
+		<td>49</td>
+		<td>5</td>
+		<td>16</td>
+		<td>1</td>
+		<td>29.1</td>
+	</tr>
+	<tr>
+		<td>49</td>
+		<td>6</td>
+		<td>29</td>
+		<td>15</td>
+		<td>16.8</td>
+	</tr>
+	<tr>
+		<td>49</td>
+		<td>7</td>
+		<td>6</td>
+		<td>21</td>
+		<td>14.7</td>
+	</tr>
+	<tr>
+		<td>49</td>
+		<td>8</td>
+		<td>48</td>
+		<td>24</td>
+		<td>31.5</td>
+	</tr>
+	<tr>
+		<td>49</td>
+		<td>9</td>
+		<td>7</td>
+		<td>24</td>
+		<td>12.6</td>
+	</tr>
+	<tr>
+		<td>49</td>
+		<td>10</td>
+		<td>30</td>
+		<td>16</td>
+		<td>34.8</td>
+	</tr>
+	<tr>
+		<td>49</td>
+		<td>11</td>
+		<td>40</td>
+		<td>15</td>
+		<td>4.2</td>
+	</tr>
+	<tr>
+		<td>49</td>
+		<td>12</td>
+		<td>21</td>
+		<td>17</td>
+		<td>17.1</td>
+	</tr>
+	<tr>
+		<td>49</td>
+		<td>13</td>
+		<td>6</td>
+		<td>22</td>
+		<td>14.7</td>
+	</tr>
+	<tr>
+		<td>49</td>
+		<td>14</td>
+		<td>23</td>
+		<td>5</td>
+		<td>11.4</td>
+	</tr>
+	<tr>
+		<td>49</td>
+		<td>15</td>
+		<td>19</td>
+		<td>24</td>
+		<td>16.5</td>
+	</tr>
+	<tr>
+		<td>49</td>
+		<td>16</td>
+		<td>24</td>
+		<td>18</td>
+		<td>10.8</td>
+	</tr>
 </table>
 <p></p>
 
 <table>
-  <caption>SCHEMACRAWLER.PRODUCT2</caption>
+  <caption>SCHEMACRAWLER.PRODUCT</caption>
 
 	<tr>
 		<td class='name'>ID</td>
@@ -12253,6 +13029,215 @@ hr {
 		<td>10</td>
 		<td>Telephone Ice Tea</td>
 		<td>20.4</td>
+	</tr>
+	<tr>
+		<td>11</td>
+		<td>Telephone Iron</td>
+		<td>8.8</td>
+	</tr>
+	<tr>
+		<td>12</td>
+		<td>Clock Ice Tea</td>
+		<td>16.8</td>
+	</tr>
+	<tr>
+		<td>13</td>
+		<td>Telephone Clock</td>
+		<td>18.0</td>
+	</tr>
+	<tr>
+		<td>14</td>
+		<td>Telephone Iron</td>
+		<td>12.4</td>
+	</tr>
+	<tr>
+		<td>15</td>
+		<td>Ice Tea Chair</td>
+		<td>9.4</td>
+	</tr>
+	<tr>
+		<td>16</td>
+		<td>Ice Tea Shoe</td>
+		<td>19.4</td>
+	</tr>
+	<tr>
+		<td>17</td>
+		<td>Clock Ice Tea</td>
+		<td>22.0</td>
+	</tr>
+	<tr>
+		<td>18</td>
+		<td>Chair Clock</td>
+		<td>17.2</td>
+	</tr>
+	<tr>
+		<td>19</td>
+		<td>Ice Tea Ice Tea</td>
+		<td>11.0</td>
+	</tr>
+	<tr>
+		<td>20</td>
+		<td>Ice Tea Telephone</td>
+		<td>20.0</td>
+	</tr>
+	<tr>
+		<td>21</td>
+		<td>Chair Chair</td>
+		<td>11.4</td>
+	</tr>
+	<tr>
+		<td>22</td>
+		<td>Iron Iron</td>
+		<td>6.6</td>
+	</tr>
+	<tr>
+		<td>23</td>
+		<td>Shoe Chair</td>
+		<td>8.0</td>
+	</tr>
+	<tr>
+		<td>24</td>
+		<td>Chair Shoe</td>
+		<td>7.2</td>
+	</tr>
+	<tr>
+		<td>25</td>
+		<td>Shoe Shoe</td>
+		<td>16.2</td>
+	</tr>
+	<tr>
+		<td>26</td>
+		<td>Shoe Shoe</td>
+		<td>25.2</td>
+	</tr>
+	<tr>
+		<td>27</td>
+		<td>Telephone Iron</td>
+		<td>23.0</td>
+	</tr>
+	<tr>
+		<td>28</td>
+		<td>Clock Iron</td>
+		<td>3.0</td>
+	</tr>
+	<tr>
+		<td>29</td>
+		<td>Chair Telephone</td>
+		<td>11.2</td>
+	</tr>
+	<tr>
+		<td>30</td>
+		<td>Shoe Iron</td>
+		<td>23.2</td>
+	</tr>
+	<tr>
+		<td>31</td>
+		<td>Ice Tea Telephone</td>
+		<td>4.8</td>
+	</tr>
+	<tr>
+		<td>32</td>
+		<td>Clock Iron</td>
+		<td>19.0</td>
+	</tr>
+	<tr>
+		<td>33</td>
+		<td>Iron Chair</td>
+		<td>18.2</td>
+	</tr>
+	<tr>
+		<td>34</td>
+		<td>Chair Iron</td>
+		<td>25.6</td>
+	</tr>
+	<tr>
+		<td>35</td>
+		<td>Telephone Shoe</td>
+		<td>8.0</td>
+	</tr>
+	<tr>
+		<td>36</td>
+		<td>Ice Tea Iron</td>
+		<td>3.2</td>
+	</tr>
+	<tr>
+		<td>37</td>
+		<td>Clock Shoe</td>
+		<td>9.4</td>
+	</tr>
+	<tr>
+		<td>38</td>
+		<td>Clock Ice Tea</td>
+		<td>21.6</td>
+	</tr>
+	<tr>
+		<td>39</td>
+		<td>Ice Tea Shoe</td>
+		<td>15.4</td>
+	</tr>
+	<tr>
+		<td>40</td>
+		<td>Shoe Clock</td>
+		<td>2.8</td>
+	</tr>
+	<tr>
+		<td>41</td>
+		<td>Clock Ice Tea</td>
+		<td>20.6</td>
+	</tr>
+	<tr>
+		<td>42</td>
+		<td>Iron Chair</td>
+		<td>19.8</td>
+	</tr>
+	<tr>
+		<td>43</td>
+		<td>Telephone Clock</td>
+		<td>9.4</td>
+	</tr>
+	<tr>
+		<td>44</td>
+		<td>Ice Tea Ice Tea</td>
+		<td>9.6</td>
+	</tr>
+	<tr>
+		<td>45</td>
+		<td>Iron Ice Tea</td>
+		<td>18.0</td>
+	</tr>
+	<tr>
+		<td>46</td>
+		<td>Ice Tea Clock</td>
+		<td>6.2</td>
+	</tr>
+	<tr>
+		<td>47</td>
+		<td>Ice Tea Iron</td>
+		<td>17.8</td>
+	</tr>
+	<tr>
+		<td>48</td>
+		<td>Clock Clock</td>
+		<td>21.0</td>
+	</tr>
+	<tr>
+		<td>49</td>
+		<td>Iron Iron</td>
+		<td>2.2</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+  <caption>SCHEMACRAWLER.SUPPLIER</caption>
+
+	<tr>
+		<td class='name'>SUPPLIER_ID</td>
+		<td class='name'>SUPPLIER_NAME</td>
+	</tr>
+	<tr>
+		<td>1</td>
+		<td>IBM</td>
 	</tr>
 </table>
 <p></p>
