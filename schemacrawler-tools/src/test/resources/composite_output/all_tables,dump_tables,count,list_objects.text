@@ -88,6 +88,7 @@ TABLE_CAT,TABLE_SCHEM,TABLE_NAME,TABLE_TYPE,REMARKS,TYPE_CAT,TYPE_SCHEM,TYPE_NAM
 <null>,PUBLIC,AUTHORS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
 <null>,PUBLIC,BOOKAUTHORS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
 <null>,PUBLIC,BOOKS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
+<null>,PUBLIC,GLOBALCOUNT,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
 <null>,PUBLIC,PUBLISHERS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
 <null>,SCHEMACRAWLER,CUSTOMER,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
 <null>,SCHEMACRAWLER,INVOICE,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
@@ -206,6 +207,12 @@ ID,TITLE,DESCRIPTION,PUBLISHERID,PUBLICATIONDATE,PRICE
 18,Lacus. Etiam Bibendum,Facilisi. Sed Neque. Sed,18,2008-01-28 00:00:00.0,63.99
 19,Luctus Lobortis.,"Rutrum. Fusce Dolor Quam, Elementum At, Egestas A, Scelerisque Sed, Sapien.",5,2006-08-23 00:00:00.0,67.99
 20,"Dui, In Sodales Elit Erat",Sociis Natoque Penatibus Et Magnis Dis Parturient,5,2002-09-29 00:00:00.0,43.99
+
+
+
+PUBLIC.GLOBALCOUNT
+------------------------------------------------------------------------
+GLOBALCOUNT
 
 
 
@@ -1134,6 +1141,7 @@ PUBLIC.AUTHORS                                                   20 rows
 PUBLIC.AUTHORSLIST                                               20 rows
 PUBLIC.BOOKAUTHORS                                               20 rows
 PUBLIC.BOOKS                                                     20 rows
+PUBLIC.GLOBALCOUNT                                                 empty
 PUBLIC.PUBLISHERS                                                20 rows
 SCHEMACRAWLER.CUSTOMER                                           50 rows
 SCHEMACRAWLER.CUSTOMERLIST                                       50 rows
@@ -1153,6 +1161,7 @@ PUBLIC.AUTHORS                                                   [table]
 PUBLIC.AUTHORSLIST                                                [view]
 PUBLIC.BOOKAUTHORS                                               [table]
 PUBLIC.BOOKS                                                     [table]
+PUBLIC.GLOBALCOUNT                                               [table]
 PUBLIC.PUBLISHERS                                                [table]
 SCHEMACRAWLER.CUSTOMER                                           [table]
 SCHEMACRAWLER.CUSTOMERLIST                                        [view]

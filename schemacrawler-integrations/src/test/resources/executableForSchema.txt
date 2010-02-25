@@ -81,6 +81,11 @@ FK_Y_BOOK                                  [foreign key, with no action]
  1  ID --> PUBLIC.BOOKAUTHORS.BOOKID                              
 
 
+PUBLIC.GLOBALCOUNT                                               [table]
+------------------------------------------------------------------------
+1   GLOBALCOUNT                       INTEGER                     
+
+
 PUBLIC.PUBLISHERS                                                [table]
 ------------------------------------------------------------------------
 1   ID                                INTEGER not null            
@@ -98,7 +103,7 @@ SCHEMACRAWLER.CUSTOMER                                           [table]
 3   LASTNAME                          VARCHAR(255)                
 4   STREET                            VARCHAR(255)                
 
-SYS_IDX_57                                                 [primary key]
+SYS_IDX_58                                                 [primary key]
 1   ID                                ascending                   
 
 FK_INVOICE_CUSTOMER                        [foreign key, with no action]
@@ -121,7 +126,7 @@ SCHEMACRAWLER.INVOICE                                            [table]
 1   ID                                INTEGER not null            
 3   TOTAL                             FLOAT(17, 0)                
 
-SYS_IDX_59                                                 [primary key]
+SYS_IDX_60                                                 [primary key]
 1   ID                                ascending                   
 
 FK_B_ITEM_INVOICE                          [foreign key, with no action]
@@ -133,7 +138,7 @@ FK_INVOICE_CUSTOMER                        [foreign key, with no action]
 INDEX_INVOICE_CUSTOMER                                [non-unique index]
 2   CUSTOMERID                        ascending                   
 
-SYS_IDX_61                                            [non-unique index]
+SYS_IDX_62                                            [non-unique index]
 2   CUSTOMERID                        ascending                   
 
 
@@ -145,7 +150,7 @@ SCHEMACRAWLER.ITEM                                               [table]
 3   PRODUCTID                         INTEGER                     
 4   QUANTITY                          INTEGER                     
 
-SYS_IDX_63                                                 [primary key]
+SYS_IDX_64                                                 [primary key]
 1   INVOICEID                         ascending                   
 2   ITEM                              ascending                   
 
@@ -161,10 +166,10 @@ INDEX_ITEM_INVOICE                                    [non-unique index]
 INDEX_ITEM_PRODUCT                                    [non-unique index]
 3   PRODUCTID                         ascending                   
 
-SYS_IDX_64                                            [non-unique index]
+SYS_IDX_65                                            [non-unique index]
 1   INVOICEID                         ascending                   
 
-SYS_IDX_66                                            [non-unique index]
+SYS_IDX_67                                            [non-unique index]
 3   PRODUCTID                         ascending                   
 
 
@@ -174,7 +179,7 @@ SCHEMACRAWLER.PRODUCT                                            [table]
 2   NAME                              VARCHAR(255)                
 3   PRICE                             FLOAT(17, 0)                
 
-SYS_IDX_58                                                 [primary key]
+SYS_IDX_59                                                 [primary key]
 1   ID                                ascending                   
 
 FK_A_ITEM_PRODUCT                          [foreign key, with no action]

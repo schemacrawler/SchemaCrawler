@@ -32,6 +32,8 @@ o--> BOOKS
      o--> PUBLICATIONDATE
      o--> PUBLISHERID
      o--> TITLE
+o--> GLOBALCOUNT
+     o--> GLOBALCOUNT
 o--> PUBLISHERS
      o--> ID
      o--> PUBLISHER

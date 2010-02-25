@@ -78,7 +78,7 @@ public class SchemaCrawlerTest
         "INFORMATION_SCHEMA", "PUBLIC", "SCHEMACRAWLER"
     };
     final int[] tableCounts = {
-        0, 5, 6
+        0, 6, 6
     };
     final String[][][] columnNames = {
         {},
@@ -109,6 +109,9 @@ public class SchemaCrawlerTest
                 "BOOKS.PUBLISHERID",
                 "BOOKS.PUBLICATIONDATE",
                 "BOOKS.PRICE",
+            },
+            {
+              "GLOBALCOUNT.GLOBALCOUNT",
             },
             {
                 "PUBLISHERS.ID", "PUBLISHERS.PUBLISHER",
@@ -172,6 +175,9 @@ public class SchemaCrawlerTest
                 "INTEGER",
                 "TIMESTAMP",
                 "FLOAT"
+            },
+            {
+              "INTEGER",
             },
             {
                 "INTEGER", "VARCHAR",
@@ -238,46 +244,46 @@ public class SchemaCrawlerTest
   {
 
     final int[] tableCounts = {
-        0, 5, 6
+        0, 6, 6
     };
     final int[][] tableColumnCounts = {
         {}, {
-            9, 3, 2, 6, 2
+            9, 3, 2, 6, 1, 2
         }, {
             5, 3, 3, 5, 3, 2
         }
     };
     final int[][] checkConstraints = {
         {}, {
-            0, 0, 0, 0, 0, 0
+            0, 0, 0, 0, 0, 0, 0
         }, {
             0, 0, 0, 0, 0, 0
         }
     };
     final int[][] indexCounts = {
         {}, {
-            2, 0, 3, 0, 0,
+            2, 0, 3, 0, 0, 0,
         }, {
             0, 0, 2, 4, 0, 2
         }
     };
     final int[][] fkCounts = {
         {}, {
-            1, 0, 2, 1, 0,
+            1, 0, 2, 1, 0, 0,
         }, {
             1, 0, 2, 2, 1, 0
         }
     };
     final int[][] exportedFkCounts = {
         {}, {
-            1, 0, 0, 1, 0,
+            1, 0, 0, 1, 0, 0,
         }, {
             1, 0, 1, 0, 1, 0
         }
     };
     final int[][] importedFkCounts = {
         {}, {
-            0, 0, 2, 0, 0,
+            0, 0, 2, 0, 0, 0,
         }, {
             0, 0, 1, 2, 0, 0
         }
@@ -396,7 +402,12 @@ public class SchemaCrawlerTest
     final String[][] tableNames = {
         {},
         {
-            "AUTHORS", "AUTHORSLIST", "BOOKAUTHORS", "BOOKS", "PUBLISHERS",
+            "AUTHORS",
+            "AUTHORSLIST",
+            "BOOKAUTHORS",
+            "BOOKS",
+            "GLOBALCOUNT",
+            "PUBLISHERS",
         },
         {
             "CUSTOMER",
@@ -409,7 +420,7 @@ public class SchemaCrawlerTest
     };
     final String[][] tableTypes = {
         {}, {
-            "TABLE", "VIEW", "TABLE", "TABLE", "TABLE",
+            "TABLE", "VIEW", "TABLE", "TABLE", "TABLE", "TABLE",
         }, {
             "TABLE", "VIEW", "TABLE", "TABLE", "TABLE", "TABLE",
         }

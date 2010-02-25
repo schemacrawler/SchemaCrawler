@@ -531,6 +531,27 @@ UPDATE                                                       [privilege]
   DBA --> SA (grantable)                                        
 
 
+PUBLIC.GLOBALCOUNT                                               [table]
+------------------------------------------------------------------------
+  GLOBALCOUNT                       INTEGER                     
+
+DELETE                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+INSERT                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+SELECT                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+UPDATE                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+                                                                  [lint]
+  no indices
+  single column
+
+
 PUBLIC.PUBLISHERS                                                [table]
 ------------------------------------------------------------------------
   ID                                INTEGER not null            
@@ -563,7 +584,7 @@ SCHEMACRAWLER.CUSTOMER                                           [table]
   STREET                            VARCHAR(255)                
   CITY                              VARCHAR(255)                
 
-SYS_IDX_57                                                 [primary key]
+SYS_IDX_58                                                 [primary key]
   ID                                ascending                   
 
 FK_INVOICE_CUSTOMER                        [foreign key, with no action]
@@ -608,7 +629,7 @@ SCHEMACRAWLER.INVOICE                                            [table]
   CUSTOMERID                        INTEGER                     
   TOTAL                             FLOAT(17, 0)                
 
-SYS_IDX_59                                                 [primary key]
+SYS_IDX_60                                                 [primary key]
   ID                                ascending                   
 
 FK_INVOICE_CUSTOMER                        [foreign key, with no action]
@@ -620,7 +641,7 @@ FK_B_ITEM_INVOICE                          [foreign key, with no action]
 INDEX_INVOICE_CUSTOMER                                [non-unique index]
   CUSTOMERID                        ascending                   
 
-SYS_IDX_61                                            [non-unique index]
+SYS_IDX_62                                            [non-unique index]
   CUSTOMERID                        ascending                   
 
 DELETE                                                       [privilege]
@@ -644,7 +665,7 @@ SCHEMACRAWLER.ITEM                                               [table]
   QUANTITY                          INTEGER                     
   COST                              FLOAT(17, 0)                
 
-SYS_IDX_63                                                 [primary key]
+SYS_IDX_64                                                 [primary key]
   INVOICEID                         ascending                   
   ITEM                              ascending                   
 
@@ -657,13 +678,13 @@ FK_A_ITEM_PRODUCT                          [foreign key, with no action]
 INDEX_ITEM_INVOICE                                    [non-unique index]
   INVOICEID                         ascending                   
 
-SYS_IDX_64                                            [non-unique index]
+SYS_IDX_65                                            [non-unique index]
   INVOICEID                         ascending                   
 
 INDEX_ITEM_PRODUCT                                    [non-unique index]
   PRODUCTID                         ascending                   
 
-SYS_IDX_66                                            [non-unique index]
+SYS_IDX_67                                            [non-unique index]
   PRODUCTID                         ascending                   
 
 DELETE                                                       [privilege]
@@ -685,7 +706,7 @@ SCHEMACRAWLER.PRODUCT                                            [table]
   NAME                              VARCHAR(255)                
   PRICE                             FLOAT(17, 0)                
 
-SYS_IDX_58                                                 [primary key]
+SYS_IDX_59                                                 [primary key]
   ID                                ascending                   
 
 FK_A_ITEM_PRODUCT                          [foreign key, with no action]
@@ -2040,6 +2061,7 @@ PUBLIC.AUTHORS                                                   20 rows
 PUBLIC.AUTHORSLIST                                               20 rows
 PUBLIC.BOOKAUTHORS                                               20 rows
 PUBLIC.BOOKS                                                     20 rows
+PUBLIC.GLOBALCOUNT                                                 empty
 PUBLIC.PUBLISHERS                                                20 rows
 SCHEMACRAWLER.CUSTOMER                                           50 rows
 SCHEMACRAWLER.CUSTOMERLIST                                       50 rows
@@ -2157,6 +2179,12 @@ ID,TITLE,DESCRIPTION,PUBLISHERID,PUBLICATIONDATE,PRICE
 18,Lacus. Etiam Bibendum,Facilisi. Sed Neque. Sed,18,2008-01-28 00:00:00.0,63.99
 19,Luctus Lobortis.,"Rutrum. Fusce Dolor Quam, Elementum At, Egestas A, Scelerisque Sed, Sapien.",5,2006-08-23 00:00:00.0,67.99
 20,"Dui, In Sodales Elit Erat",Sociis Natoque Penatibus Et Magnis Dis Parturient,5,2002-09-29 00:00:00.0,43.99
+
+
+
+PUBLIC.GLOBALCOUNT
+------------------------------------------------------------------------
+GLOBALCOUNT
 
 
 

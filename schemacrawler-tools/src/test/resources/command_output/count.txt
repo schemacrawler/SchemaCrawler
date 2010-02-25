@@ -11,6 +11,7 @@ PUBLIC.AUTHORS                                                   20 rows
 PUBLIC.AUTHORSLIST                                               20 rows
 PUBLIC.BOOKAUTHORS                                               20 rows
 PUBLIC.BOOKS                                                     20 rows
+PUBLIC.GLOBALCOUNT                                                 empty
 PUBLIC.PUBLISHERS                                                20 rows
 SCHEMACRAWLER.CUSTOMER                                           50 rows
 SCHEMACRAWLER.CUSTOMERLIST                                       50 rows

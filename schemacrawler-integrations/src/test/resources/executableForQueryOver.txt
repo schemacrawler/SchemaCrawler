@@ -99,6 +99,12 @@ ID,TITLE,DESCRIPTION,PUBLISHERID,PUBLICATIONDATE,PRICE
 
 
 
+PUBLIC.GLOBALCOUNT
+------------------------------------------------------------------------
+GLOBALCOUNT
+
+
+
 PUBLIC.PUBLISHERS
 ------------------------------------------------------------------------
 ID,PUBLISHER

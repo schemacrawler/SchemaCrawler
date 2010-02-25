@@ -43,6 +43,12 @@ CREATE TABLE BookAuthors
 )
 ;
 
+CREATE TABLE GlobalCount
+(
+  GlobalCount INTEGER
+)
+;
+
 -- Views
 CREATE VIEW AuthorsList AS SELECT Id, FirstName, LastName FROM Authors
 ;

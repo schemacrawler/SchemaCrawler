@@ -97,7 +97,8 @@ public class SpringIntegrationTest
     final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
     assertNotNull("Could not obtain schema", schema);
 
-    assertEquals(5, schema.getTables().length);
+    assertEquals("Unexpected number of tables in the schema", 6, schema
+      .getTables().length);
   }
 
   private void executeAndCheckForOutputFile(final String executableName,
