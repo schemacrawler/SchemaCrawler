@@ -78,10 +78,42 @@ public class SchemaCrawlerTest
         "INFORMATION_SCHEMA", "PUBLIC", "SCHEMACRAWLER"
     };
     final int[] tableCounts = {
-        0, 6, 2
+        0, 5, 6
     };
     final String[][][] columnNames = {
         {},
+        {
+            {
+                "AUTHORS.ID",
+                "AUTHORS.FIRSTNAME",
+                "AUTHORS.LASTNAME",
+                "AUTHORS.ADDRESS1",
+                "AUTHORS.ADDRESS2",
+                "AUTHORS.CITY",
+                "AUTHORS.STATE",
+                "AUTHORS.POSTALCODE",
+                "AUTHORS.COUNTRY",
+            },
+            {
+                "AUTHORSLIST.ID",
+                "AUTHORSLIST.FIRSTNAME",
+                "AUTHORSLIST.LASTNAME",
+            },
+            {
+                "BOOKAUTHORS.BOOKID", "BOOKAUTHORS.AUTHORID",
+            },
+            {
+                "BOOKS.ID",
+                "BOOKS.TITLE",
+                "BOOKS.DESCRIPTION",
+                "BOOKS.PUBLISHERID",
+                "BOOKS.PUBLICATIONDATE",
+                "BOOKS.PRICE",
+            },
+            {
+                "PUBLISHERS.ID", "PUBLISHERS.PUBLISHER",
+            },
+        },
         {
             {
                 "CUSTOMER.ID",
@@ -110,23 +142,42 @@ public class SchemaCrawlerTest
             },
             {
                 "SUPPLIER.SUPPLIER_ID", "SUPPLIER.SUPPLIER_NAME"
-            }
+            },
         },
-        {
-            {
-                "ITEM.INVOICEID",
-                "ITEM.ITEM",
-                "ITEM.PRODUCTID",
-                "ITEM.QUANTITY",
-                "ITEM.COST"
-            },
-            {
-                "PRODUCT2.ID", "PRODUCT2.NAME", "PRODUCT2.PRICE"
-            },
-        }
     };
     final String[][][] columnDataTypes = {
-        {}, {
+        {},
+        {
+            {
+                "INTEGER",
+                "VARCHAR",
+                "VARCHAR",
+                "VARCHAR",
+                "VARCHAR",
+                "VARCHAR",
+                "VARCHAR",
+                "VARCHAR",
+                "VARCHAR",
+            },
+            {
+                "INTEGER", "VARCHAR", "VARCHAR",
+            },
+            {
+                "INTEGER", "INTEGER",
+            },
+            {
+                "INTEGER",
+                "VARCHAR",
+                "VARCHAR",
+                "INTEGER",
+                "TIMESTAMP",
+                "FLOAT"
+            },
+            {
+                "INTEGER", "VARCHAR",
+            },
+        },
+        {
             {
                 "INTEGER", "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR"
             }, {
@@ -140,13 +191,7 @@ public class SchemaCrawlerTest
             }, {
                 "INTEGER", "VARCHAR"
             }
-        }, {
-            {
-                "INTEGER", "INTEGER", "INTEGER", "INTEGER", "FLOAT"
-            }, {
-                "INTEGER", "VARCHAR", "FLOAT"
-            },
-        }
+        },
     };
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -172,11 +217,11 @@ public class SchemaCrawlerTest
         {
           final Column column = columns[columnIdx];
           LOGGER.log(Level.FINE, column.toString());
-          assertEquals("Column full name does not match",
+          assertEquals("Column full name does not match for column " + column,
                        schemaNames[schemaIdx] + "."
                            + columnsNamesForTable[columnIdx],
                        column.getFullName());
-          assertEquals("Column type does not match",
+          assertEquals("Column type does not match for column " + column,
                        columnDataTypes[schemaIdx][tableIdx][columnIdx],
                        column.getType().getDatabaseSpecificTypeName());
           assertEquals("Column JDBC type does not match",
@@ -193,34 +238,48 @@ public class SchemaCrawlerTest
   {
 
     final int[] tableCounts = {
-        0, 6, 2
+        0, 5, 6
     };
     final int[][] tableColumnCounts = {
         {}, {
-            5, 3, 3, 5, 3, 2
+            9, 3, 2, 6, 2
         }, {
-            5, 3,
+            5, 3, 3, 5, 3, 2
         }
     };
     final int[][] checkConstraints = {
         {}, {
             0, 0, 0, 0, 0, 0
         }, {
-            0, 0
+            0, 0, 0, 0, 0, 0
         }
     };
     final int[][] indexCounts = {
         {}, {
-            0, 0, 2, 4, 0, 2
+            2, 0, 3, 0, 0,
         }, {
-            0, 0
+            0, 0, 2, 4, 0, 2
         }
     };
     final int[][] fkCounts = {
         {}, {
-            1, 0, 2, 2, 1, 0
+            1, 0, 2, 1, 0,
         }, {
-            0, 0
+            1, 0, 2, 2, 1, 0
+        }
+    };
+    final int[][] exportedFkCounts = {
+        {}, {
+            1, 0, 0, 1, 0,
+        }, {
+            1, 0, 1, 0, 1, 0
+        }
+    };
+    final int[][] importedFkCounts = {
+        {}, {
+            0, 0, 2, 0, 0,
+        }, {
+            0, 0, 1, 2, 0, 0
         }
     };
 
@@ -256,49 +315,6 @@ public class SchemaCrawlerTest
                                    table.getFullName()),
                      fkCounts[schemaIdx][tableIdx],
                      table.getForeignKeys().length);
-      }
-    }
-  }
-
-  @Test
-  public void fkCounts()
-    throws Exception
-  {
-
-    final int[] tableCounts = {
-        0, 6, 2
-    };
-    final int[][] exportedFkCounts = {
-        {}, {
-            1, 0, 1, 0, 1, 0
-        }, {
-            0, 0
-        }
-    };
-    final int[][] importedFkCounts = {
-        {}, {
-            0, 0, 1, 2, 0, 0
-        }, {
-            0, 0
-        }
-    };
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
-
-    final Database database = testUtility.getDatabase(schemaCrawlerOptions);
-    final Schema[] schemas = database.getSchemas();
-    assertEquals("Schema count does not match", 3, schemas.length);
-    for (int schemaIdx = 0; schemaIdx < schemas.length; schemaIdx++)
-    {
-      final Schema schema = schemas[schemaIdx];
-      final Table[] tables = schema.getTables();
-      assertEquals("Table count does not match",
-                   tableCounts[schemaIdx],
-                   tables.length);
-      for (int tableIdx = 0; tableIdx < tables.length; tableIdx++)
-      {
-        final Table table = tables[tableIdx];
         assertEquals(String
           .format("Table %s exported foreign key count does not match", table
             .getFullName()), exportedFkCounts[schemaIdx][tableIdx], table
@@ -380,22 +396,22 @@ public class SchemaCrawlerTest
     final String[][] tableNames = {
         {},
         {
+            "AUTHORS", "AUTHORSLIST", "BOOKAUTHORS", "BOOKS", "PUBLISHERS",
+        },
+        {
             "CUSTOMER",
             "CUSTOMERLIST",
             "INVOICE",
             "ITEM",
             "PRODUCT",
-            "SUPPLIER"
-        },
-        {
-            "ITEM", "PRODUCT2"
+            "SUPPLIER",
         }
     };
     final String[][] tableTypes = {
         {}, {
-            "TABLE", "VIEW", "TABLE", "TABLE", "TABLE", "TABLE"
+            "TABLE", "VIEW", "TABLE", "TABLE", "TABLE",
         }, {
-            "TABLE", "TABLE"
+            "TABLE", "VIEW", "TABLE", "TABLE", "TABLE", "TABLE",
         }
     };
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -442,7 +458,7 @@ public class SchemaCrawlerTest
     final Database database = testUtility.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();
     assertEquals("Schema count does not match", 3, schemas.length);
-    final Schema schema = schemas[1];
+    final Schema schema = schemas[2];
 
     assertTrue("CUSTOMER -- CUSTOMER", schema.getTable("CUSTOMER")
       .compareTo(schema.getTable("CUSTOMER")) == 0);
@@ -571,7 +587,7 @@ public class SchemaCrawlerTest
       {
         foundTrigger = true;
         assertEquals("Triggers full name does not match",
-                     "PUBLIC.CUSTOMER.SCTRIGGER",
+                     "PUBLIC.AUTHORS.TRG_AUTHORS",
                      trigger.getFullName());
         assertEquals("Trigger EventManipulationType does not match",
                      EventManipulationType.delete,
@@ -596,7 +612,7 @@ public class SchemaCrawlerTest
 
     final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
     assertNotNull("Schema not found", schema);
-    final View view = (View) schema.getTable("CUSTOMERLIST");
+    final View view = (View) schema.getTable("AUTHORSLIST");
     assertNotNull("View not found", view);
     assertNotNull("View definition not found", view.getDefinition());
     assertFalse("View definition not found", view.getDefinition().trim()

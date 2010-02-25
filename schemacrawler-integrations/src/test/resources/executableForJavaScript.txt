@@ -8,6 +8,34 @@
 -- jdbc compliant: false
 INFORMATION_SCHEMA
 PUBLIC
+o--> AUTHORS
+     o--> ADDRESS1
+     o--> ADDRESS2
+     o--> CITY
+     o--> COUNTRY
+     o--> FIRSTNAME
+     o--> ID
+     o--> LASTNAME
+     o--> POSTALCODE
+     o--> STATE
+o--> AUTHORSLIST
+     o--> FIRSTNAME
+     o--> ID
+     o--> LASTNAME
+o--> BOOKAUTHORS
+     o--> AUTHORID
+     o--> BOOKID
+o--> BOOKS
+     o--> DESCRIPTION
+     o--> ID
+     o--> PRICE
+     o--> PUBLICATIONDATE
+     o--> PUBLISHERID
+     o--> TITLE
+o--> PUBLISHERS
+     o--> ID
+     o--> PUBLISHER
+SCHEMACRAWLER
 o--> CUSTOMER
      o--> CITY
      o--> FIRSTNAME
@@ -35,14 +63,3 @@ o--> PRODUCT
 o--> SUPPLIER
      o--> SUPPLIER_ID
      o--> SUPPLIER_NAME
-SCHEMACRAWLER
-o--> ITEM
-     o--> COST
-     o--> INVOICEID
-     o--> ITEM
-     o--> PRODUCTID
-     o--> QUANTITY
-o--> PRODUCT2
-     o--> ID
-     o--> NAME
-     o--> PRICE

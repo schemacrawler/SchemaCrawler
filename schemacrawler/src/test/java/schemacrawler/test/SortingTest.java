@@ -60,13 +60,29 @@ public class SortingTest
   {
 
     final String[] sortedAlpha = new String[] {
-        "CUSTOMERID", "ID", "TOTAL"
+        "ADDRESS1",
+        "ADDRESS2",
+        "CITY",
+        "COUNTRY",
+        "FIRSTNAME",
+        "ID",
+        "LASTNAME",
+        "POSTALCODE",
+        "STATE",
     };
     final String[] sortedNatural = new String[] {
-        "ID", "CUSTOMERID", "TOTAL"
+        "ID",
+        "FIRSTNAME",
+        "LASTNAME",
+        "ADDRESS1",
+        "ADDRESS2",
+        "CITY",
+        "STATE",
+        "POSTALCODE",
+        "COUNTRY",
     };
-    checkColumnSort(sortedAlpha, true);
-    checkColumnSort(sortedNatural, false);
+    checkColumnSort("AUTHORS", sortedAlpha, true);
+    checkColumnSort("AUTHORS", sortedNatural, false);
 
   }
 
@@ -76,13 +92,13 @@ public class SortingTest
   {
 
     final String[] sortedAlpha = new String[] {
-        "FK_A_ITEM_PRODUCT", "FK_B_ITEM_INVOICE"
+        "FK_Y_BOOK", "FK_Z_AUTHOR",
     };
     final String[] sortedNatural = new String[] {
-        "FK_B_ITEM_INVOICE", "FK_A_ITEM_PRODUCT"
+        "FK_Z_AUTHOR", "FK_Y_BOOK",
     };
-    checkFkSort(sortedAlpha, true);
-    checkFkSort(sortedNatural, false);
+    checkFkSort("BOOKAUTHORS", sortedAlpha, true);
+    checkFkSort("BOOKAUTHORS", sortedNatural, false);
 
   }
 
@@ -92,18 +108,19 @@ public class SortingTest
   {
 
     final String[] sortedAlpha = new String[] {
-        "INDEX_A_SUPPLIER", "INDEX_B_SUPPLIER"
+        "IDX_A_AUTHORS", "IDX_B_AUTHORS"
     };
     final String[] sortedNatural = new String[] {
-        "INDEX_B_SUPPLIER", "INDEX_A_SUPPLIER"
+        "IDX_B_AUTHORS", "IDX_A_AUTHORS"
     };
-    checkIndexSort(sortedAlpha, true);
-    checkIndexSort(sortedNatural, false);
+    checkIndexSort("AUTHORS", sortedAlpha, true);
+    checkIndexSort("AUTHORS", sortedNatural, false);
 
   }
 
   @SuppressWarnings("boxing")
-  private void checkColumnSort(final String[] expectedValues,
+  private void checkColumnSort(String tableName,
+                               final String[] expectedValues,
                                final boolean sortAlphabetically)
     throws Exception
   {
@@ -113,12 +130,14 @@ public class SortingTest
     final Schema schema = testUtility.getSchema(schemaCrawlerOptions, "PUBLIC");
     assertNotNull("Schema not found", schema);
 
-    final Table table = schema.getTable("INVOICE");
-    assertNotNull("Table INVOICE not found", table);
-    if (table.getName().equals("INVOICE"))
+    final Table table = schema.getTable(tableName);
+    assertNotNull("Table " + tableName + " not found", table);
+    if (table.getName().equals(tableName))
     {
       final Column[] columns = table.getColumns();
-      assertEquals("Column count does not match", 3, columns.length);
+      assertEquals("Column count does not match",
+                   expectedValues.length,
+                   columns.length);
       for (int i = 0; i < columns.length; i++)
       {
         final Column column = columns[i];
@@ -130,7 +149,8 @@ public class SortingTest
   }
 
   @SuppressWarnings("boxing")
-  private void checkFkSort(final String[] expectedValues,
+  private void checkFkSort(String tableName,
+                           final String[] expectedValues,
                            final boolean sortAlphabetically)
     throws Exception
   {
@@ -141,13 +161,15 @@ public class SortingTest
     assertNotNull("Schema not found", schema);
 
     final Table[] tables = schema.getTables();
-    assertEquals("Table count does not match", 6, tables.length);
+    assertEquals("Table count does not match", 5, tables.length);
     for (final Table table: tables)
     {
-      if (table.getName().equals("ITEM"))
+      if (table.getName().equals(tableName))
       {
         final ForeignKey[] foreignKeys = table.getForeignKeys();
-        assertEquals("Foreign key count does not match", 2, foreignKeys.length);
+        assertEquals("Foreign key count does not match",
+                     expectedValues.length,
+                     foreignKeys.length);
         for (int i = 0; i < foreignKeys.length; i++)
         {
           final ForeignKey foreignKey = foreignKeys[i];
@@ -159,7 +181,8 @@ public class SortingTest
     }
   }
 
-  private void checkIndexSort(final String[] expectedValues,
+  private void checkIndexSort(String tableName,
+                              final String[] expectedValues,
                               final boolean sortAlphabetically)
     throws Exception
   {
@@ -170,13 +193,15 @@ public class SortingTest
     assertNotNull("Schema not found", schema);
 
     final Table[] tables = schema.getTables();
-    assertEquals("Table count does not match", 6, tables.length);
+    assertEquals("Table count does not match", 5, tables.length);
     for (final Table table: tables)
     {
-      if (table.getName().equals("SUPPLIER"))
+      if (table.getName().equals(tableName))
       {
         final Index[] indices = table.getIndices();
-        assertEquals("Index count does not match", 2, indices.length);
+        assertEquals("Index count does not match",
+                     expectedValues.length,
+                     indices.length);
         for (int i = 0; i < indices.length; i++)
         {
           final Index index = indices[i];

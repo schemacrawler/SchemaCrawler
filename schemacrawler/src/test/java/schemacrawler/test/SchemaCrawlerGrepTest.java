@@ -65,58 +65,27 @@ public class SchemaCrawlerGrepTest
         "INFORMATION_SCHEMA", "PUBLIC", "SCHEMACRAWLER"
     };
     final int[] tableCounts = {
-        0, 4, 1
+        0, 1, 0
     };
     final String[][][] columnNames = {
-        {},
-        {
-            {
-                "CUSTOMER.ID",
-                "CUSTOMER.FIRSTNAME",
-                "CUSTOMER.LASTNAME",
-                "CUSTOMER.STREET",
-                "CUSTOMER.CITY"
-            },
-            {
-                "CUSTOMERLIST.ID",
-                "CUSTOMERLIST.FIRSTNAME",
-                "CUSTOMERLIST.LASTNAME"
-            },
-            {
-                "INVOICE.ID", "INVOICE.CUSTOMERID", "INVOICE.TOTAL"
-            },
-            {
-                "PRODUCT.ID", "PRODUCT.NAME", "PRODUCT.PRICE"
-            },
-        },
-        {
+        {}, {
           {
-              "PRODUCT2.ID", "PRODUCT2.NAME", "PRODUCT2.PRICE"
+              "BOOKAUTHORS.BOOKID", "BOOKAUTHORS.AUTHORID",
           },
-        }
+        }, {}
     };
     final String[][][] columnDataTypes = {
         {}, {
-            {
-                "INTEGER", "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR"
-            }, {
-                "INTEGER", "VARCHAR", "VARCHAR"
-            }, {
-                "INTEGER", "INTEGER", "FLOAT"
-            }, {
-                "INTEGER", "VARCHAR", "FLOAT"
-            },
-        }, {
           {
-              "INTEGER", "VARCHAR", "FLOAT"
+              "INTEGER", "INTEGER",
           },
-        }
+        }, {}
     };
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
 
     schemaCrawlerOptions
-      .setGrepColumnInclusionRule(new InclusionRule(".*\\..*\\.ID", ""));
+      .setGrepColumnInclusionRule(new InclusionRule(".*\\..*\\.BOOKID", ""));
 
     final Database database = testUtility.getDatabase(schemaCrawlerOptions);
     final Schema[] schemas = database.getSchemas();

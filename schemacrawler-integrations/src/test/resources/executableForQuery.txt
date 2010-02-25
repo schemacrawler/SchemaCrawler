@@ -53,13 +53,16 @@ TABLE_CAT,TABLE_SCHEM,TABLE_NAME,TABLE_TYPE,REMARKS,TYPE_CAT,TYPE_SCHEM,TYPE_NAM
 <null>,INFORMATION_SCHEMA,SYSTEM_VIEW_COLUMN_USAGE,SYSTEM TABLE,one row for each column of a table that is explicitly or implicitly referenced in the <query expression> of the view being described.,<null>,<null>,<null>,<null>,<null>,MEMORY,true
 <null>,INFORMATION_SCHEMA,SYSTEM_VIEW_ROUTINE_USAGE,SYSTEM TABLE,"one row for each SQL-invoked routine identified as the subject routine of either a <routine invocation>, a <method reference>, a <method invocation>, or a <static method invocation> contained in a <view definition>",<null>,<null>,<null>,<null>,<null>,MEMORY,true
 <null>,INFORMATION_SCHEMA,SYSTEM_VIEW_TABLE_USAGE,SYSTEM TABLE,one row for each table identified by a <table name> simply contained in a <table reference> that is contained in the <query expression> of a view,<null>,<null>,<null>,<null>,<null>,MEMORY,true
-<null>,PUBLIC,CUSTOMER,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
-<null>,PUBLIC,INVOICE,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
-<null>,PUBLIC,ITEM,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
-<null>,PUBLIC,PRODUCT,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
-<null>,PUBLIC,SUPPLIER,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
+<null>,PUBLIC,AUTHORS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
+<null>,PUBLIC,BOOKAUTHORS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
+<null>,PUBLIC,BOOKS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
+<null>,PUBLIC,PUBLISHERS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
+<null>,SCHEMACRAWLER,CUSTOMER,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
+<null>,SCHEMACRAWLER,INVOICE,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
 <null>,SCHEMACRAWLER,ITEM,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
-<null>,SCHEMACRAWLER,PRODUCT2,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
-<null>,PUBLIC,CUSTOMERLIST,VIEW,<null>,<null>,<null>,<null>,<null>,<null>,<null>,true
+<null>,SCHEMACRAWLER,PRODUCT,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
+<null>,SCHEMACRAWLER,SUPPLIER,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
+<null>,PUBLIC,AUTHORSLIST,VIEW,<null>,<null>,<null>,<null>,<null>,<null>,<null>,true
+<null>,SCHEMACRAWLER,CUSTOMERLIST,VIEW,<null>,<null>,<null>,<null>,<null>,<null>,<null>,true
 
 

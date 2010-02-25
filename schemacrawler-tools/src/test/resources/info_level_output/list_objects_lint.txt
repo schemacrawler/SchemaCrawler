@@ -36,13 +36,16 @@ Tables
 ========================================================================
 
 
-PUBLIC.CUSTOMER                                                  [table]
-PUBLIC.CUSTOMERLIST                                               [view]
-PUBLIC.INVOICE                                                   [table]
-PUBLIC.ITEM                                                      [table]
-PUBLIC.PRODUCT                                                   [table]
-PUBLIC.SUPPLIER                                                  [table]
+PUBLIC.AUTHORS                                                   [table]
+PUBLIC.AUTHORSLIST                                                [view]
+PUBLIC.BOOKAUTHORS                                               [table]
+PUBLIC.BOOKS                                                     [table]
+PUBLIC.PUBLISHERS                                                [table]
+SCHEMACRAWLER.CUSTOMER                                           [table]
+SCHEMACRAWLER.CUSTOMERLIST                                        [view]
+SCHEMACRAWLER.INVOICE                                            [table]
 SCHEMACRAWLER.ITEM                                               [table]
-SCHEMACRAWLER.PRODUCT2                                           [table]
+SCHEMACRAWLER.PRODUCT                                            [table]
+SCHEMACRAWLER.SUPPLIER                                           [table]
 
 

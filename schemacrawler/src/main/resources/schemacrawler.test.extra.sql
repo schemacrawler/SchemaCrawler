@@ -1,2 +1,2 @@
 -- Triggers
-CREATE TRIGGER SCTRIGGER BEFORE DELETE ON CUSTOMER FOR EACH ROW CALL "org.hsqldb.sample.TriggerSample";
+CREATE TRIGGER TRG_Authors BEFORE DELETE ON Authors FOR EACH ROW CALL "org.hsqldb.sample.TriggerSample";
