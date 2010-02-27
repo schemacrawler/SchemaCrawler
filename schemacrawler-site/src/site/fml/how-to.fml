@@ -169,9 +169,8 @@ schemacrawler.format.hide_constraint_names=false
 					containing the database schema will be available.
 					A "connection" variable will also be available, and you will be able
 					to execute SQL against your database.
-					Run
-					<code>schemacrawler.tools.integration.scripting.Main </code>
-					, with the correct options. See the example in the
+					Run SchemaCrawler with the command line options - 
+					<code>-command script -outputformat &lt;your script file&gt;</code>. See the example in the
 					<code>examples\javascript</code>
 					directory for more details.
 				</p>
@@ -186,9 +185,9 @@ schemacrawler.format.hide_constraint_names=false
 					SchemaCrawler integrates with
 					<a href="http://velocity.apache.org/">Apache Velocity</a>
 					to allow for templated ouput. Put Velocity on your classpath, and
-					create your template, and run
-					<code>schemacrawler.tools.integration.velocity.Main </code>
-					, with the correct options. See the Velocity example in the
+					create your template, and run SchemaCrawler with the command line options - 
+          <code>-command script -outputformat &lt;your script file&gt;</code>.
+					<code>-command velocity -outputformat &lt;your Velocity template&gt;</code>. See the Velocity example in the
 					<code>_distrib\velocity</code>
 					directory for more details.
 				</p>
@@ -202,10 +201,9 @@ schemacrawler.format.hide_constraint_names=false
 				<p>
 					SchemaCrawler integrates with
 					<a href="http://www.graphviz.org/">Graphviz</a>
-					to produce graph images. Install Graphviz, and run
-					<code>schemacrawler.tools.integration.graph.Main</code>
-					, with the correct options, for example,
-					<code>-outputformat png -outputfile=graph.png</code>
+					to produce graph images. Install Graphviz, and run SchemaCrawler with the correct command line options - 
+          for example,
+					<code>-command graph -outputformat png -outputfile=graph.png</code>
 					. See the diagram example in the
 					<code>_distrib\diagram</code>
 					directory for more details.
