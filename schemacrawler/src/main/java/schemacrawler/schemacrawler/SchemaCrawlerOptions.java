@@ -288,6 +288,11 @@ public final class SchemaCrawlerOptions
     return tableInclusionRule;
   }
 
+  /**
+   * Gets the table name pattern.
+   * 
+   * @return Table name pattern
+   */
   public String getTableNamePattern()
   {
     return tableNamePattern;
@@ -586,6 +591,17 @@ public final class SchemaCrawlerOptions
     this.tableInclusionRule = tableInclusionRule;
   }
 
+  /**
+   * Sets the table name pattern, using the JDBC syntax for wildcards (_
+   * and *). The table name pattern is case-sensitive, and matches just
+   * the table name - not the fully qualified table name. The table name
+   * pattern restricts the tables retrieved at an early stage in the
+   * retrieval process, so it must be used only when performance needs
+   * to be tuned.
+   * 
+   * @param tableNamePattern
+   *        Table name pattern
+   */
   public void setTableNamePattern(final String tableNamePattern)
   {
     this.tableNamePattern = tableNamePattern;
