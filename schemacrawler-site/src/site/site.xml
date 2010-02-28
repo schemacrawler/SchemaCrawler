@@ -41,7 +41,7 @@
       <item name="SchemaCrawler Grep" href="features/schemacrawler_grep.html" />
       <item name="Database Diagramming" href="features/diagramming.html" />
       <item name="Database Scripting" href="features/scripting.html" />
-      <item name="Database Lint" href="features/lint.html" />
+      <item name="Schema Lint" href="features/lint.html" />
     </menu>
     <menu ref="reports" />
   </body>
