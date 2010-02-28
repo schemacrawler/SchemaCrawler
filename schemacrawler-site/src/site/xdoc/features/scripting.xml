@@ -1,0 +1,53 @@
+<!DOCTYPE document PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+  "http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+  <properties>
+    <title>SchemaCrawler Database Scripting</title>
+    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
+  </properties>
+  <body>
+    <section name="SchemaCrawler Database Scripting">
+      <subsection name="SchemaCrawler Database Scripting">
+        <p>
+          SchemaCrawler is a command-line tool that allows you to script against your database, using JavaScript.
+          Database meta-data is provided to your script, as the "database" object, and you can use any of the API
+          methods to obtain details about your schema. A live database connection is provided to your script as the
+          "connection" object. You can use standard JDBC to script against the database. J2SE 6 is required for this
+          functionality to work.
+        </p>
+        <p>
+          An hypothetical example of SchemaCrawler JavaScript support is in the following script, which attempts to drop
+          all the tables in the database.
+          <source><![CDATA[
+var dropTables = function()
+{
+  var statement = connection.createStatement();
+  var schemas = database.schemas;
+  for (var i = 0; i < schemas.length; i++)
+  {
+    var tables = schemas[i].tables;
+    for (var j = (tables.length - 1); j >= 0; j--)
+    {
+      var table = tables[j];
+      var sql = "DROP " + table.type + " " + table.fullName;
+      println("Executing SQL: " + sql);
+      try
+      {
+        statement.executeUpdate(sql);
+      } catch (e)
+      {
+        println("Not dropping any more tables, due to exception " + e.message);
+        return;
+      }
+    }
+  }
+};
+
+dropTables();          
+          ]]>
+          </source>
+        </p>
+      </subsection>
+    </section>
+  </body>
+</document>
