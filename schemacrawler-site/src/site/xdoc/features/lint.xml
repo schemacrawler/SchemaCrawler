@@ -13,6 +13,18 @@
           <a href="http://en.wikipedia.org/wiki/Lint_(software)">lint</a>
           your database to find potential issues.
         </p>
+        <ul>
+          <li>Tables with incrementing column names, for example, a table with column names like contact1, contact2 and
+            so on can indicate de-normalization. SchemaCrawler Lint will flag such tables with a lint message.</li>
+          <li>SchemaCrawler Lint will flag tables with just a single column with a lint message, since this could
+            indicate a schema design smell.</li>
+          <li>SchemaCrawler Lint will flag tables with no indices with a lint message.</li>
+          <li>Tables where the default value is 'NULL' instead of NULL may indicate a error when creating a table.
+            SchemaCrawler Lint will flag such tables with a lint message.</li>
+          <li> SchemaCrawler Lint will flag tables that have nullable columns in a unique index, with a lint message.
+          </li>
+        </ul>
+        <p></p>
       </subsection>
     </section>
   </body>
