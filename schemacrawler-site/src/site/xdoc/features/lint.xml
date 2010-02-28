@@ -26,7 +26,14 @@
           <li>SchemaCrawler Lint will flag tables that have nullable columns in a unique index, with a lint message.
           </li>
         </ul>
-        <p>SchemaCrawler Lint also analyzes the database for weak associations.</p>
+        <p>SchemaCrawler Lint also analyzes the database for weak associations. Weak associations are inferred
+          associations between tables, similar to forign keys, even if there is no
+          foreign key defined in the database
+          between the tables. Ruby on Rails table schemes are supported, as well as
+          other simple naming conventions.
+          Table name prefixes are automatically detected. Weak associations are output
+          in the graphs as a dotted line,
+          and are also output in the text formats.</p>
       </subsection>
     </section>
   </body>
