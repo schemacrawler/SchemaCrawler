@@ -1,0 +1,19 @@
+<!DOCTYPE document PUBLIC "-//Apache Software Foundation//DTD XDOC 1.0//EN"
+  "http://maven.apache.org/dtd/xdoc_1_0.dtd">
+<document>
+  <properties>
+    <title>SchemaCrawler Lint</title>
+    <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
+  </properties>
+  <body>
+    <section name="SchemaCrawler Lint">
+      <subsection name="SchemaCrawler Lint">
+        <p>
+          SchemaCrawler can analyze and
+          <a href="http://en.wikipedia.org/wiki/Lint_(software)">lint</a>
+          your database to find potential issues.
+        </p>
+      </subsection>
+    </section>
+  </body>
+</document>
