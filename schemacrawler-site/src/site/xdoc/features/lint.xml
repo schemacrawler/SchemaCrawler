@@ -11,7 +11,9 @@
         <p>
           SchemaCrawler can analyze and
           <a href="http://en.wikipedia.org/wiki/Lint_(software)">lint</a>
-          your database to find potential issues.
+          your database to find potential issues. SchemaCrawler Lint can be run using the
+          <code>-infolevel=lint</code>
+          command-line option.
         </p>
         <ul>
           <li>Tables with incrementing column names, for example, a table with column names like contact1, contact2 and
@@ -21,10 +23,10 @@
           <li>SchemaCrawler Lint will flag tables with no indices with a lint message.</li>
           <li>Tables where the default value is 'NULL' instead of NULL may indicate a error when creating a table.
             SchemaCrawler Lint will flag such tables with a lint message.</li>
-          <li> SchemaCrawler Lint will flag tables that have nullable columns in a unique index, with a lint message.
+          <li>SchemaCrawler Lint will flag tables that have nullable columns in a unique index, with a lint message.
           </li>
         </ul>
-        <p></p>
+        <p>SchemaCrawler Lint also analyzes the database for weak associations.</p>
       </subsection>
     </section>
   </body>
