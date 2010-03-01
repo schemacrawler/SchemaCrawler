@@ -42,13 +42,11 @@ import schemacrawler.schema.Database;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
-import schemacrawler.tools.integration.xml.XmlDatabase;
+import schemacrawler.tools.integration.serialization.XmlDatabase;
 import schemacrawler.utility.TestDatabase;
 
 public class SchemaSerializationTest
 {
-
-  private static final boolean DEBUG = false;
 
   private static TestDatabase testUtility = new TestDatabase();
 
@@ -112,17 +110,17 @@ public class SchemaSerializationTest
     assertNotSame("Catalog was not serialized to XML", 0, xmlSerializedCatalog2
       .trim().length());
 
-    final DetailedDiff myDiff = new DetailedDiff(new Diff(xmlSerializedCatalog1,
-                                                          xmlSerializedCatalog2));
-    final List<?> allDifferences = myDiff.getAllDifferences();
-    if (DEBUG || !myDiff.similar())
+    final DetailedDiff xmlDiff = new DetailedDiff(new Diff(xmlSerializedCatalog1,
+                                                           xmlSerializedCatalog2));
+    final List<?> allDifferences = xmlDiff.getAllDifferences();
+    if (!xmlDiff.similar())
     {
       IOUtils.write(xmlSerializedCatalog1,
-                    new FileWriter("/temp/serialized-schema-1.xml"));
+                    new FileWriter("serialized-schema-1.xml"));
       IOUtils.write(xmlSerializedCatalog2,
-                    new FileWriter("/temp/serialized-schema-2.xml"));
+                    new FileWriter("serialized-schema-2.xml"));
     }
-    assertEquals(myDiff.toString(), 0, allDifferences.size());
+    assertEquals(xmlDiff.toString(), 0, allDifferences.size());
   }
 
 }

@@ -22,7 +22,7 @@ package schemacrawler.crawl;
 
 
 import java.util.Arrays;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.Set;
 
 import schemacrawler.schema.JdbcDriverInfo;
@@ -47,7 +47,7 @@ final class MutableJdbcDriverInfo
   private String driverVersion;
   private String connectionUrl;
   private boolean jdbcCompliant;
-  private final Set<MutableJdbcDriverProperty> jdbcDriverProperties = new LinkedHashSet<MutableJdbcDriverProperty>();
+  private final Set<MutableJdbcDriverProperty> jdbcDriverProperties = new HashSet<MutableJdbcDriverProperty>();
 
   /**
    * {@inheritDoc}

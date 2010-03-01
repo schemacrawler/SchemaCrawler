@@ -25,7 +25,7 @@ import java.io.Serializable;
 import sf.util.Utility;
 
 final class SchemaReference
-  implements Serializable
+  implements Serializable, Comparable<SchemaReference>
 {
 
   private static final long serialVersionUID = -5309848447599233878L;
@@ -38,6 +38,18 @@ final class SchemaReference
   {
     this.catalogName = catalogName;
     this.schemaName = schemaName;
+  }
+
+  public int compareTo(final SchemaReference otherSchemaRef)
+  {
+    if (otherSchemaRef == null)
+    {
+      return -1;
+    }
+    else
+    {
+      return getFullName().compareTo(otherSchemaRef.getFullName());
+    }
   }
 
   /**

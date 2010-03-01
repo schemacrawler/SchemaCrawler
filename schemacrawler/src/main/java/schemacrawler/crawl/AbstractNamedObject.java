@@ -22,7 +22,7 @@ package schemacrawler.crawl;
 
 
 import java.util.Collections;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 
 import schemacrawler.schema.NamedObject;
@@ -42,7 +42,7 @@ abstract class AbstractNamedObject
   private final String name;
 
   private String remarks;
-  private final Map<String, Object> attributeMap = new LinkedHashMap<String, Object>();
+  private final Map<String, Object> attributeMap = new HashMap<String, Object>();
 
   AbstractNamedObject(final String name)
   {
