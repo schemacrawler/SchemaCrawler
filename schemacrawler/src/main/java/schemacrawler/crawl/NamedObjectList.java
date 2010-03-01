@@ -24,8 +24,8 @@ package schemacrawler.crawl;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -98,7 +98,7 @@ class NamedObjectList<N extends NamedObject>
   /**
    * Needs to be sorted, so serialization does not break.
    */
-  private final Map<String, N> objects = new LinkedHashMap<String, N>();
+  private final Map<String, N> objects = new HashMap<String, N>();
 
   /**
    * {@inheritDoc}

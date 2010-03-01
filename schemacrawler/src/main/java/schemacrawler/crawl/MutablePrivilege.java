@@ -22,7 +22,7 @@ package schemacrawler.crawl;
 
 
 import java.util.Arrays;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.Set;
 
 import schemacrawler.schema.DatabaseObject;
@@ -164,7 +164,7 @@ final class MutablePrivilege
 
   }
 
-  private final Set<Grant> grants = new LinkedHashSet<Grant>();
+  private final Set<Grant> grants = new HashSet<Grant>();
 
   private static final long serialVersionUID = -1117664231494271886L;
 

@@ -22,7 +22,7 @@ package schemacrawler.crawl;
 
 
 import java.util.Collections;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 
 import schemacrawler.Version;
@@ -48,7 +48,7 @@ final class MutableSchemaCrawlerInfo
   /**
    * Needs to be sorted, so serialization does not break.
    */
-  private final Map<String, String> systemProperties = new LinkedHashMap<String, String>();
+  private final Map<String, String> systemProperties = new HashMap<String, String>();
 
   public String getSchemaCrawlerAbout()
   {
