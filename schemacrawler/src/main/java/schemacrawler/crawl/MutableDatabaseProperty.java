@@ -50,51 +50,9 @@ class MutableDatabaseProperty
     acronyms = Collections.unmodifiableSet(acronymsMap.entrySet());
   }
 
-  private static String createDescription(final String name)
-  {
-
-    final String get = "get";
-    String description = name;
-    if (description.startsWith(get))
-    {
-      description = description.substring(get.length());
-    }
-
-    for (final Entry<String, String> acronym: acronyms)
-    {
-      description = description
-        .replaceAll(acronym.getKey(), acronym.getValue());
-    }
-
-    final int strLen = description.length();
-    final StringBuilder buffer = new StringBuilder(strLen);
-    for (int i = 0; i < strLen; i++)
-    {
-      final char ch = description.charAt(i);
-      if (Character.isUpperCase(ch) || Character.isTitleCase(ch))
-      {
-        buffer.append(' ').append(Character.toLowerCase(ch));
-      }
-      else
-      {
-        buffer.append(ch);
-      }
-    }
-    description = buffer.toString();
-
-    for (final Entry<String, String> acronym: acronyms)
-    {
-      description = description.replaceAll(acronym.getValue().toLowerCase(),
-                                           acronym.getKey());
-      description = description
-        .replaceAll(acronym.getValue(), acronym.getKey());
-    }
-
-    return description.trim();
-  }
-
   private final String name;
-  private final String description;
+
+  private transient String description;
   private final Object value;
 
   MutableDatabaseProperty(final String name, final Object value)
@@ -104,7 +62,6 @@ class MutableDatabaseProperty
       throw new IllegalArgumentException("No description provided");
     }
     this.name = name.trim();
-    description = createDescription(name);
     this.value = value;
   }
 
@@ -167,6 +124,7 @@ class MutableDatabaseProperty
    */
   public String getDescription()
   {
+    buildDescription();
     return description;
   }
 
@@ -200,6 +158,51 @@ class MutableDatabaseProperty
   public String toString()
   {
     return name + "=" + value;
+  }
+
+  private void buildDescription()
+  {
+    if (description == null)
+    {
+      final String get = "get";
+      description = name;
+      if (description.startsWith(get))
+      {
+        description = description.substring(get.length());
+      }
+
+      for (final Entry<String, String> acronym: acronyms)
+      {
+        description = description.replaceAll(acronym.getKey(), acronym
+          .getValue());
+      }
+
+      final int strLen = description.length();
+      final StringBuilder buffer = new StringBuilder(strLen);
+      for (int i = 0; i < strLen; i++)
+      {
+        final char ch = description.charAt(i);
+        if (Character.isUpperCase(ch) || Character.isTitleCase(ch))
+        {
+          buffer.append(' ').append(Character.toLowerCase(ch));
+        }
+        else
+        {
+          buffer.append(ch);
+        }
+      }
+      description = buffer.toString();
+
+      for (final Entry<String, String> acronym: acronyms)
+      {
+        description = description.replaceAll(acronym.getValue().toLowerCase(),
+                                             acronym.getKey());
+        description = description.replaceAll(acronym.getValue(), acronym
+          .getKey());
+      }
+
+      description = description.trim();
+    }
   }
 
 }
