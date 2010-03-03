@@ -98,7 +98,6 @@ public final class XmlDatabase
           final List entryList = new ArrayList(map.entrySet());
           Collections.sort(entryList, new Comparator()
           {
-            @Override
             public int compare(final Object o1, final Object o2)
             {
               return ((Comparable) ((Map.Entry) o1).getKey())
@@ -192,7 +191,6 @@ public final class XmlDatabase
    * 
    * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
-  @Override
   public int compareTo(final NamedObject o)
   {
     return database.compareTo(o);
@@ -209,13 +207,11 @@ public final class XmlDatabase
    * 
    * @see schemacrawler.schema.NamedObject#getAttribute(java.lang.String)
    */
-  @Override
   public Object getAttribute(final String name)
   {
     return database.getAttribute(name);
   }
 
-  @Override
   public <T> T getAttribute(final String name, final T defaultValue)
   {
     return database.getAttribute(name, defaultValue);
@@ -226,7 +222,6 @@ public final class XmlDatabase
    * 
    * @see schemacrawler.schema.NamedObject#getAttributes()
    */
-  @Override
   public Map<String, Object> getAttributes()
   {
     return database.getAttributes();
@@ -237,7 +232,6 @@ public final class XmlDatabase
    * 
    * @see schemacrawler.schema.Database#getDatabaseInfo()
    */
-  @Override
   public DatabaseInfo getDatabaseInfo()
   {
     return database.getDatabaseInfo();
@@ -248,7 +242,6 @@ public final class XmlDatabase
    * 
    * @see schemacrawler.schema.NamedObject#getFullName()
    */
-  @Override
   public String getFullName()
   {
     return database.getFullName();
@@ -259,7 +252,6 @@ public final class XmlDatabase
    * 
    * @see schemacrawler.schema.Database#getJdbcDriverInfo()
    */
-  @Override
   public JdbcDriverInfo getJdbcDriverInfo()
   {
     return database.getJdbcDriverInfo();
@@ -270,7 +262,6 @@ public final class XmlDatabase
    * 
    * @see schemacrawler.schema.NamedObject#getName()
    */
-  @Override
   public String getName()
   {
     return database.getName();
@@ -281,7 +272,6 @@ public final class XmlDatabase
    * 
    * @see schemacrawler.schema.NamedObject#getRemarks()
    */
-  @Override
   public String getRemarks()
   {
     return database.getRemarks();
@@ -292,7 +282,6 @@ public final class XmlDatabase
    * 
    * @see schemacrawler.schema.Database#getSchema(java.lang.String)
    */
-  @Override
   public Schema getSchema(final String schemaName)
   {
     return database.getSchema(schemaName);
@@ -303,7 +292,6 @@ public final class XmlDatabase
    * 
    * @see schemacrawler.schema.Database#getSchemaCrawlerInfo()
    */
-  @Override
   public SchemaCrawlerInfo getSchemaCrawlerInfo()
   {
     return database.getSchemaCrawlerInfo();
@@ -314,7 +302,6 @@ public final class XmlDatabase
    * 
    * @see schemacrawler.schema.Database#getSchemas()
    */
-  @Override
   public Schema[] getSchemas()
   {
     return database.getSchemas();
@@ -325,7 +312,6 @@ public final class XmlDatabase
    * 
    * @see schemacrawler.schema.Database#getSystemColumnDataType(java.lang.String)
    */
-  @Override
   public ColumnDataType getSystemColumnDataType(final String name)
   {
     return database.getSystemColumnDataType(name);
@@ -336,7 +322,6 @@ public final class XmlDatabase
    * 
    * @see schemacrawler.schema.Database#getSystemColumnDataTypes()
    */
-  @Override
   public ColumnDataType[] getSystemColumnDataTypes()
   {
     return database.getSystemColumnDataTypes();
@@ -356,7 +341,6 @@ public final class XmlDatabase
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  @Override
   public void save(final Writer writer)
     throws SchemaCrawlerException
   {
@@ -381,7 +365,6 @@ public final class XmlDatabase
    * @see schemacrawler.schema.NamedObject#setAttribute(java.lang.String,
    *      java.lang.Object)
    */
-  @Override
   public void setAttribute(final String name, final Object value)
   {
     database.setAttribute(name, value);
