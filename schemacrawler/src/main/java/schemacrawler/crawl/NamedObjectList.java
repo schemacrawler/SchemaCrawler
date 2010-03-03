@@ -94,10 +94,6 @@ class NamedObjectList<N extends NamedObject>
   }
 
   private NamedObjectSort sort = NamedObjectSort.natural;
-
-  /**
-   * Needs to be sorted, so serialization does not break.
-   */
   private final Map<String, N> objects = new HashMap<String, N>();
 
   /**
