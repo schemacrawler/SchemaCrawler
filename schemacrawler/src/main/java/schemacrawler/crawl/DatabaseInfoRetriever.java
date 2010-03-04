@@ -183,9 +183,10 @@ final class DatabaseInfoRetriever
                        "Retrieving database property using method: " + method);
           }
           final ResultSet results = (ResultSet) method.invoke(dbMetaData);
+          final List<String> resultsList = readResultsVector(results);
           dbProperties
-            .add(new MutableDatabaseProperty(method.getName(),
-                                             readResultsVector(results)));
+            .add(new MutableDatabaseProperty(method.getName(), resultsList
+              .toArray(new String[resultsList.size()])));
         }
         else if (isDatabasePropertyResultSetType(method))
         {
