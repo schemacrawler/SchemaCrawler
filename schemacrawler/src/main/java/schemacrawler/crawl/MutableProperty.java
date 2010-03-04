@@ -20,6 +20,8 @@
 package schemacrawler.crawl;
 
 
+import java.io.Serializable;
+
 import schemacrawler.schema.Property;
 import sf.util.Utility;
 
@@ -30,9 +32,9 @@ abstract class MutableProperty
   private static final long serialVersionUID = -7150431683440256142L;
 
   private final String name;
-  private final Object value;
+  private final Serializable value;
 
-  MutableProperty(final String name, final Object value)
+  MutableProperty(final String name, final Serializable value)
   {
     if (Utility.isBlank(name))
     {
@@ -99,7 +101,7 @@ abstract class MutableProperty
   /**
    * {@inheritDoc}
    */
-  public Object getValue()
+  public Serializable getValue()
   {
     return value;
   }
