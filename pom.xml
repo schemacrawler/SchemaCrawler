@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>schemacrawler</groupId>
+  <groupId>net.sourceforge.schemacrawler</groupId>
   <artifactId>schemacrawler-all</artifactId>
   <packaging>pom</packaging>
   <version>8.1</version>
@@ -35,6 +35,13 @@
     <connection>scm:svn:https://schemacrawler.svn.sourceforge.net/svnroot/schemacrawler</connection>
     <url>https://schemacrawler.svn.sourceforge.net/svnroot/schemacrawler/</url>
   </scm>
+  <distributionManagement>
+    <snapshotRepository>
+      <id>sonatype-nexus-snapshots</id>
+      <name>Sonatype Nexus Snapshots</name>
+      <url>http://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>  
   <modules>
     <module>schemacrawler</module>
     <module>schemacrawler-commandline</module>
