@@ -73,8 +73,8 @@ class MutableDatabaseProperty
     }
     else
     {
-      return getName().toLowerCase().compareTo(otherDbProperty.getName()
-        .toLowerCase());
+      return getDescription().toLowerCase().compareTo(otherDbProperty
+        .getDescription().toLowerCase());
     }
   }
 
