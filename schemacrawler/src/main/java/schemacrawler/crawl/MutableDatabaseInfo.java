@@ -46,7 +46,7 @@ final class MutableDatabaseInfo
   private String userName;
   private String productName;
   private String productVersion;
-  private final Set<DatabaseProperty> dbProperties = new HashSet<DatabaseProperty>();
+  private final Set<DatabaseProperty> databaseProperties = new HashSet<DatabaseProperty>();
 
   /**
    * {@inheritDoc}
@@ -69,8 +69,8 @@ final class MutableDatabaseInfo
    */
   public DatabaseProperty[] getProperties()
   {
-    final DatabaseProperty[] properties = dbProperties
-      .toArray(new DatabaseProperty[dbProperties.size()]);
+    final DatabaseProperty[] properties = databaseProperties
+      .toArray(new DatabaseProperty[databaseProperties.size()]);
     Arrays.sort(properties);
     return properties;
   }
@@ -101,7 +101,7 @@ final class MutableDatabaseInfo
   {
     if (dbProperties != null)
     {
-      this.dbProperties.addAll(dbProperties);
+      this.databaseProperties.addAll(dbProperties);
     }
   }
 
