@@ -22,7 +22,6 @@ package schemacrawler.crawl;
 
 
 import java.sql.DriverPropertyInfo;
-import java.util.Arrays;
 
 import schemacrawler.schema.JdbcDriverProperty;
 
@@ -33,7 +32,7 @@ import schemacrawler.schema.JdbcDriverProperty;
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
 final class MutableJdbcDriverProperty
-  extends MutableDatabaseProperty
+  extends MutableProperty
   implements JdbcDriverProperty
 {
 
@@ -51,42 +50,17 @@ final class MutableJdbcDriverProperty
     choices = driverPropertyInfo.choices;
   }
 
-  @Override
-  public boolean equals(final Object obj)
+  public int compareTo(final JdbcDriverProperty otherProperty)
   {
-    if (this == obj)
+    if (otherProperty == null)
     {
-      return true;
+      return -1;
     }
-    if (!super.equals(obj))
+    else
     {
-      return false;
+      return getName().toLowerCase().compareTo(otherProperty.getName()
+        .toLowerCase());
     }
-    if (getClass() != obj.getClass())
-    {
-      return false;
-    }
-    final MutableJdbcDriverProperty other = (MutableJdbcDriverProperty) obj;
-    if (!Arrays.equals(choices, other.choices))
-    {
-      return false;
-    }
-    if (description == null)
-    {
-      if (other.description != null)
-      {
-        return false;
-      }
-    }
-    else if (!description.equals(other.description))
-    {
-      return false;
-    }
-    if (required != other.required)
-    {
-      return false;
-    }
-    return true;
   }
 
   /**
@@ -111,7 +85,6 @@ final class MutableJdbcDriverProperty
    * 
    * @see schemacrawler.schema.JdbcDriverProperty#getDescription()
    */
-  @Override
   public String getDescription()
   {
     if (description != null)
@@ -126,38 +99,11 @@ final class MutableJdbcDriverProperty
 
   /**
    * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.JdbcDriverProperty#getValue()
    */
   @Override
   public String getValue()
   {
-    final Object valueObject = super.getValue();
-    final String value;
-    if (valueObject == null)
-    {
-      value = null;
-    }
-    else if (getName().equalsIgnoreCase("password"))
-    {
-      value = "*****";
-    }
-    else
-    {
-      value = String.valueOf(valueObject);
-    }
-    return value;
-  }
-
-  @Override
-  public int hashCode()
-  {
-    final int prime = 31;
-    int result = super.hashCode();
-    result = prime * result + Arrays.hashCode(choices);
-    result = prime * result + (description == null? 0: description.hashCode());
-    result = prime * result + (required? 1231: 1237);
-    return result;
+    return (String) super.getValue();
   }
 
   /**

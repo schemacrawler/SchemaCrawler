@@ -2,11 +2,11 @@
 <project>
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>schemacrawler</groupId>
+    <groupId>net.sourceforge.schemacrawler</groupId>
     <artifactId>schemacrawler-all</artifactId>
     <version>8.1</version>
   </parent>
-  <groupId>schemacrawler</groupId>
+  <groupId>net.sourceforge.schemacrawler</groupId>
   <artifactId>schemacrawler-sqlserver</artifactId>
   <packaging>jar</packaging>
   <name>SchemaCrawler for Microsoft SQL Server</name>
@@ -18,7 +18,7 @@
   </licenses>
   <dependencies>
     <dependency>
-      <groupId>schemacrawler</groupId>
+      <groupId>net.sourceforge.schemacrawler</groupId>
       <artifactId>schemacrawler-integrations</artifactId>
       <version>${project.version}</version>
     </dependency>

@@ -2,47 +2,47 @@
 <project>
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>schemacrawler</groupId>
+    <groupId>net.sourceforge.schemacrawler</groupId>
     <artifactId>schemacrawler-all</artifactId>
     <version>8.1</version>
   </parent>
-  <groupId>schemacrawler</groupId>
+  <groupId>net.sourceforge.schemacrawler</groupId>
   <artifactId>schemacrawler-test</artifactId>
   <packaging>pom</packaging>
   <name>SchemaCrawler Test</name>
   <dependencies>
     <dependency>
-      <groupId>schemacrawler</groupId>
+      <groupId>net.sourceforge.schemacrawler</groupId>
       <artifactId>schemacrawler-integrations</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>schemacrawler</groupId>
+      <groupId>net.sourceforge.schemacrawler</groupId>
       <artifactId>schemacrawler-sqlserver</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>schemacrawler</groupId>
+      <groupId>net.sourceforge.schemacrawler</groupId>
       <artifactId>schemacrawler-oracle</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>schemacrawler</groupId>
+      <groupId>net.sourceforge.schemacrawler</groupId>
       <artifactId>schemacrawler-mysql</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>schemacrawler</groupId>
+      <groupId>net.sourceforge.schemacrawler</groupId>
       <artifactId>schemacrawler-postgresql</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>schemacrawler</groupId>
+      <groupId>net.sourceforge.schemacrawler</groupId>
       <artifactId>schemacrawler-sqlite</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>schemacrawler</groupId>
+      <groupId>net.sourceforge.schemacrawler</groupId>
       <artifactId>schemacrawler-derby</artifactId>
       <version>${project.version}</version>
     </dependency>

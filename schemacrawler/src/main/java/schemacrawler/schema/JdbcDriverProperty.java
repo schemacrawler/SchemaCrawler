@@ -27,7 +27,7 @@ package schemacrawler.schema;
  * @author sfatehi
  */
 public interface JdbcDriverProperty
-  extends DatabaseProperty
+  extends Property, Comparable<JdbcDriverProperty>
 {
 
   /**

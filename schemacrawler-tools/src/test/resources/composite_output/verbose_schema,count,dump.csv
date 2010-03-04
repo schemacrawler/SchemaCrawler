@@ -190,14 +190,9 @@ is JDBC compliant,false
 JDBC Driver Properties
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
-user,[driver property]
+default_schema,[driver property]
 "",""
-"",required
-"",value,null
-
-password,[driver property]
-"",""
-"",required
+"","not required; choices [true, false]"
 "",value,null
 
 get_column_name,[driver property]
@@ -210,14 +205,19 @@ ifexists,[driver property]
 "","not required; choices [true, false]"
 "",value,null
 
-default_schema,[driver property]
+password,[driver property]
 "",""
-"","not required; choices [true, false]"
+"",required
 "",value,null
 
 shutdown,[driver property]
 "",""
 "","not required; choices [true, false]"
+"",value,null
+
+user,[driver property]
+"",""
+"",required
 "",value,null
 
 

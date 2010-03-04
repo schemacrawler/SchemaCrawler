@@ -27,9 +27,9 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import schemacrawler.schema.DatabaseProperty;
-import sf.util.Utility;
 
 class MutableDatabaseProperty
+  extends MutableProperty
   implements DatabaseProperty
 {
 
@@ -50,19 +50,12 @@ class MutableDatabaseProperty
     acronyms = Collections.unmodifiableSet(acronymsMap.entrySet());
   }
 
-  private final String name;
-
   private transient String description;
-  private final Object value;
 
   MutableDatabaseProperty(final String name, final Object value)
   {
-    if (Utility.isBlank(name))
-    {
-      throw new IllegalArgumentException("No description provided");
-    }
-    this.name = name.trim();
-    this.value = value;
+    super(name, value);
+    buildDescription();
   }
 
   public int compareTo(final DatabaseProperty otherDbProperty)
@@ -78,47 +71,6 @@ class MutableDatabaseProperty
     }
   }
 
-  @Override
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
-      return true;
-    }
-    if (obj == null)
-    {
-      return false;
-    }
-    if (!(obj instanceof MutableDatabaseProperty))
-    {
-      return false;
-    }
-    final MutableDatabaseProperty other = (MutableDatabaseProperty) obj;
-    if (name == null)
-    {
-      if (other.name != null)
-      {
-        return false;
-      }
-    }
-    else if (!name.equals(other.name))
-    {
-      return false;
-    }
-    if (value == null)
-    {
-      if (other.value != null)
-      {
-        return false;
-      }
-    }
-    else if (!value.equals(other.value))
-    {
-      return false;
-    }
-    return true;
-  }
-
   /**
    * {@inheritDoc}
    */
@@ -128,36 +80,10 @@ class MutableDatabaseProperty
     return description;
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public Object getValue()
-  {
-    return value;
-  }
-
-  @Override
-  public int hashCode()
-  {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (name == null? 0: name.hashCode());
-    result = prime * result + (value == null? 0: value.hashCode());
-    return result;
-  }
-
   @Override
   public String toString()
   {
-    return name + "=" + value;
+    return getDescription() + " = " + getValue();
   }
 
   private void buildDescription()
@@ -165,7 +91,7 @@ class MutableDatabaseProperty
     if (description == null)
     {
       final String get = "get";
-      description = name;
+      description = getName();
       if (description.startsWith(get))
       {
         description = description.substring(get.length());
