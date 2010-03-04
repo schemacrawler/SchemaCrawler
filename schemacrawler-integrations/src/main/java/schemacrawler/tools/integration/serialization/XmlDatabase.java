@@ -119,48 +119,39 @@ public final class XmlDatabase
         }
       }, 5000);
 
+      final String[] xmlElements = new String[] {
+          "checkConstraint",
+          "column",
+          "columnMap",
+          "columnDataType",
+          "database",
+          "databaseProperty",
+          "foreignKey",
+          "foreignKeyColumnMap",
+          "index",
+          "indexColumn",
+          "jdbcDriverProperty",
+          "primaryKey",
+          "privilege",
+          "procedure",
+          "procedureColumn",
+          "resultsColumn",
+          "resultsColumns",
+          "schema",
+          "table",
+          "trigger",
+          "view",
+      };
+      for (final String xmlElement: xmlElements)
+      {
+        xStream.alias(xmlElement, Class.forName("schemacrawler.crawl.Mutable"
+                                                + xmlElement.substring(0, 1)
+                                                  .toUpperCase()
+                                                + xmlElement.substring(1)));
+      }
       xStream.alias("grant", Class
         .forName("schemacrawler.crawl.MutablePrivilege$PrivilegeGrant"));
-      xStream.alias("checkConstraint", Class
-        .forName("schemacrawler.crawl.MutableCheckConstraint"));
-      xStream.alias("column", Class
-        .forName("schemacrawler.crawl.MutableColumn"));
-      xStream.alias("dataType", Class
-        .forName("schemacrawler.crawl.MutableColumnDataType"));
-      xStream.alias("columnMap", Class
-        .forName("schemacrawler.crawl.MutableColumnMap"));
-      xStream.alias("database", Class
-        .forName("schemacrawler.crawl.MutableDatabase"));
-      xStream.alias("databaseProperty", Class
-        .forName("schemacrawler.crawl.MutableDatabaseProperty"));
-      xStream.alias("foreign-key", Class
-        .forName("schemacrawler.crawl.MutableForeignKey"));
-      xStream.alias("foreignKeyColumnMap", Class
-        .forName("schemacrawler.crawl.MutableForeignKeyColumnMap"));
-      xStream.alias("index", Class.forName("schemacrawler.crawl.MutableIndex"));
-      xStream.alias("indexColumn", Class
-        .forName("schemacrawler.crawl.MutableIndexColumn"));
-      xStream.alias("jdbcDriverProperty", Class
-        .forName("schemacrawler.crawl.MutableJdbcDriverProperty"));
-      xStream.alias("primaryKey", Class
-        .forName("schemacrawler.crawl.MutablePrimaryKey"));
-      xStream.alias("privilege", Class
-        .forName("schemacrawler.crawl.MutablePrivilege"));
-      xStream.alias("procedure", Class
-        .forName("schemacrawler.crawl.MutableProcedure"));
-      xStream.alias("procedureInOut", Class
-        .forName("schemacrawler.crawl.MutableProcedureColumn"));
-      xStream.alias("resultsColumn", Class
-        .forName("schemacrawler.crawl.MutableResultsColumn"));
-      xStream.alias("resultsColumns", Class
-        .forName("schemacrawler.crawl.MutableResultsColumns"));
-      xStream.alias("schema", Class
-        .forName("schemacrawler.crawl.MutableSchema"));
-      xStream.alias("table", Class.forName("schemacrawler.crawl.MutableTable"));
-      xStream.alias("trigger", Class
-        .forName("schemacrawler.crawl.MutableTrigger"));
-      xStream.alias("view", Class.forName("schemacrawler.crawl.MutableView"));
-      xStream.alias("schemaRef", Class
+      xStream.alias("schemaReference", Class
         .forName("schemacrawler.crawl.SchemaReference"));
 
       return xStream;
