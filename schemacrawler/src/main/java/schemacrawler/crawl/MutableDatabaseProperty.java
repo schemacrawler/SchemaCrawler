@@ -20,6 +20,7 @@
 package schemacrawler.crawl;
 
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -54,7 +55,7 @@ class MutableDatabaseProperty
 
   MutableDatabaseProperty(final String name, final Object value)
   {
-    super(name, value);
+    super(name, (Serializable) value);
     buildDescription();
   }
 
