@@ -246,7 +246,6 @@ PUBLIC.AUTHORSLIST                                                [view]
   LASTNAME                          VARCHAR(20)                 
 
 
-
 PUBLIC.BOOKAUTHORS                                               [table]
 ------------------------------------------------------------------------
   BOOKID                            INTEGER not null            
@@ -319,7 +318,6 @@ SCHEMACRAWLER.CUSTOMERLIST                                        [view]
   ID                                INTEGER                     
   FIRSTNAME                         VARCHAR(255)                
   LASTNAME                          VARCHAR(255)                
-
 
 
 SCHEMACRAWLER.INVOICE                                            [table]

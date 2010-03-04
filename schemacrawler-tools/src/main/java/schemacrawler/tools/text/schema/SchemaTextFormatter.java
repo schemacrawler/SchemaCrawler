@@ -151,7 +151,13 @@ final class SchemaTextFormatter
     if (schemaTextDetailType != SchemaTextDetailType.list_objects)
     {
       printProcedureColumns(procedure.getColumns());
-      printDefinition(procedure.getDefinition());
+      printText("definition", procedure.getDefinition());
+
+      if (schemaTextDetailType
+        .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
+      {
+        printText("remarks", procedure.getRemarks());
+      }
 
       out.println(formattingHelper.createObjectEnd());
     }
@@ -203,11 +209,12 @@ final class SchemaTextFormatter
       if (table instanceof View)
       {
         final View view = (View) table;
-        printDefinition(view.getDefinition());
+        printText("definition", view.getDefinition());
       }
       if (schemaTextDetailType
         .isGreaterThanOrEqualTo(SchemaTextDetailType.verbose_schema))
       {
+        printText("remarks", table.getRemarks());
         printLint(table);
       }
       out.println(formattingHelper.createObjectEnd());
@@ -364,18 +371,6 @@ final class SchemaTextFormatter
                                                        + fkColumnName,
                                                    ""));
     }
-  }
-
-  private void printDefinition(final String definition)
-  {
-    out.println(formattingHelper.createEmptyRow());
-
-    if (sf.util.Utility.isBlank(definition))
-    {
-      return;
-    }
-    out.println(formattingHelper.createNameRow("", "[definition]", false));
-    out.println(formattingHelper.createDefinitionRow(definition));
   }
 
   private void printForeignKeys(final String tableName,
@@ -591,6 +586,17 @@ final class SchemaTextFormatter
                                                    columnName,
                                                    columnDetails));
     }
+  }
+
+  private void printText(final String heading, final String text)
+  {
+    if (sf.util.Utility.isBlank(text))
+    {
+      return;
+    }
+    out.println(formattingHelper.createEmptyRow());
+    out.println(formattingHelper.createNameRow("", "[" + heading + "]", false));
+    out.println(formattingHelper.createDefinitionRow(text));
   }
 
   private void printTriggers(final Trigger[] triggers)
