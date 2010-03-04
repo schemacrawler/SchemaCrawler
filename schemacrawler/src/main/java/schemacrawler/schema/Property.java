@@ -26,10 +26,25 @@ public interface Property
   extends Serializable
 {
 
-  String getName();
-
+  /**
+   * Gets the description of the property.
+   * 
+   * @return Description
+   */
   String getDescription();
 
-  Serializable getValue();
+  /**
+   * Gets the name of the property.
+   * 
+   * @return Name
+   */
+  String getName();
+
+  /**
+   * Gets the value of the property.
+   * 
+   * @return Value
+   */
+  Object getValue();
 
 }
