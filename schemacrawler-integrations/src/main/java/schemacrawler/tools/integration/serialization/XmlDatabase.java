@@ -119,6 +119,8 @@ public final class XmlDatabase
         }
       }, 5000);
 
+      xStream.alias("grant", Class
+        .forName("schemacrawler.crawl.MutablePrivilege$PrivilegeGrant"));
       xStream.alias("checkConstraint", Class
         .forName("schemacrawler.crawl.MutableCheckConstraint"));
       xStream.alias("column", Class
