@@ -44,7 +44,6 @@ PUBLIC.AUTHORSLIST                                                [view]
 ------------------------------------------------------------------------
 
 
-
 PUBLIC.BOOKAUTHORS                                               [table]
 ------------------------------------------------------------------------
 
@@ -67,7 +66,6 @@ SCHEMACRAWLER.CUSTOMER                                           [table]
 
 SCHEMACRAWLER.CUSTOMERLIST                                        [view]
 ------------------------------------------------------------------------
-
 
 
 SCHEMACRAWLER.INVOICE                                            [table]
