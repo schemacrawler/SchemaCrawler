@@ -63,8 +63,8 @@ public final class TestUtility
     }
     else
     {
-      contentEquals = contentEquals(new FileReader(testOutputFile),
-                                    new InputStreamReader(referenceStream));
+      contentEquals = contentEquals(new InputStreamReader(referenceStream),
+                                    new FileReader(testOutputFile));
     }
 
     final boolean isOutputValidXml;
@@ -116,45 +116,44 @@ public final class TestUtility
     return failures;
   }
 
-  private static boolean contentEquals(final Reader input1, final Reader input2)
+  private static boolean contentEquals(final Reader expectedInputReader,
+                                       final Reader actualInputReader)
     throws Exception
   {
-    if (input1 == null || input2 == null)
+    if (expectedInputReader == null || actualInputReader == null)
     {
       return false;
     }
 
-    boolean contentEquals = true;
-    final BufferedReader reader1 = new BufferedReader(input1);
-    final BufferedReader reader2 = new BufferedReader(input2);
+    final BufferedReader expectedBufferedReader = new BufferedReader(expectedInputReader);
+    final BufferedReader actualBufferedReader = new BufferedReader(actualInputReader);
     try
     {
-      String line1 = reader1.readLine();
-      while (null != line1)
+      String line;
+      while ((line = expectedBufferedReader.readLine()) != null)
       {
-        final String line2 = reader2.readLine();
-        if (line2 == null)
+        if (!line.equals(actualBufferedReader.readLine()))
         {
-          contentEquals = false;
-          break;
+          return false;
         }
-        if (!line1.trim().equals(line2.trim()))
-        {
-          contentEquals = false;
-          break;
-        }
-        line1 = reader1.readLine();
       }
 
-      final String line2 = reader2.readLine();
-      contentEquals = line2 == null;
+      if (actualBufferedReader.readLine() != null)
+      {
+        return false;
+      }
+      if (expectedBufferedReader.readLine() != null)
+      {
+        return false;
+      }
+
+      return true;
     }
     finally
     {
-      reader1.close();
-      reader2.close();
+      expectedBufferedReader.close();
+      actualBufferedReader.close();
     }
-    return contentEquals;
   }
 
   private TestUtility()
