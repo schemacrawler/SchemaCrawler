@@ -9,7 +9,7 @@
   </parent>
   <groupId>net.sourceforge.schemacrawler</groupId>
   <artifactId>distribution</artifactId>
-  <packaging>pom</packaging>
+  <packaging>jar</packaging>
   <name>SchemaCrawler Distribution</name>
   <dependencies>
     <dependency>
@@ -124,21 +124,11 @@
         </dependencies>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-help-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>effective-pom</id>
-            <phase>package</phase>
-            <goals>
-              <goal>effective-pom</goal>
-            </goals>
-            <configuration>
-              <output>schemacrawler-effective-pom.xml</output>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <configuration>
+          <skip>false</skip>
+        </configuration>
+      </plugin>       
     </plugins>
   </build>
 </project>
