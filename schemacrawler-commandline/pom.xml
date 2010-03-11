@@ -10,11 +10,11 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.sourceforge.schemacrawler</groupId>
   <artifactId>schemacrawler-commandline</artifactId>
-  <name>SchemaCrawler - Commandline</name>
+  <name>SchemaCrawler Commandline</name>
   <dependencies>
     <dependency>
       <groupId>net.sourceforge.schemacrawler</groupId>
-      <artifactId>schemacrawler</artifactId>
+      <artifactId>schemacrawler-api</artifactId>
       <version>${project.version}</version>
     </dependency>
   </dependencies>

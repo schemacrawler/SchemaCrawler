@@ -14,9 +14,14 @@
   <dependencies>
     <dependency>
       <groupId>net.sourceforge.schemacrawler</groupId>
-      <artifactId>schemacrawler</artifactId>
+      <artifactId>schemacrawler-api</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>net.sourceforge.schemacrawler</groupId>
+      <artifactId>schemacrawler-commandline</artifactId>
+      <version>${project.version}</version>
+    </dependency>    
     <dependency>
       <groupId>net.sourceforge.schemacrawler</groupId>
       <artifactId>schemacrawler-tools</artifactId>
