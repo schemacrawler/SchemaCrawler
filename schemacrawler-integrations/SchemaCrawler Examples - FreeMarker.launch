@@ -9,8 +9,8 @@
 <booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.classpathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="schemacrawler.Main"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-g &quot;${workspace_loc:SchemaCrawler - Website/src/site/resources/config}/schemacrawler.config.properties&quot; &#13;&#10;-c hsqldb &#13;&#10;-command=freemarker&#13;&#10;--loglevel=FINE&#13;&#10;-outputformat &quot;${workspace_loc:SchemaCrawler - Integrations/src/test/resources}/plaintextschema.ftl&quot; &#13;&#10;--outputfile=freemarker.output.txt"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-g &quot;${workspace_loc:SchemaCrawler - Website/src/site/resources/config}/schemacrawler.config.properties&quot; &#13;&#10;-c hsqldb &#13;&#10;-command=freemarker&#13;&#10;--loglevel=FINE&#13;&#10;-outputformat &quot;${workspace_loc:SchemaCrawler - 4 - Integrations/src/test/resources}/plaintextschema.ftl&quot; &#13;&#10;--outputfile=freemarker.output.txt"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SchemaCrawler - 4 - Integrations"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.sourcepathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:SchemaCrawler - Integrations/target}"/>
+<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:SchemaCrawler - 4 - Integrations/target}"/>
 </launchConfiguration>
