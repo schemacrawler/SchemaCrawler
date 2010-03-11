@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>SchemaCrawler - API</name>
+	<name>SchemaCrawler - 1 - API</name>
 	<comment>SchemaCrawler is an API that improves on the standard JDBC metadata.</comment>
 	<projects>
 	</projects>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>SchemaCrawler - Maven Plugin</name>
+	<name>SchemaCrawler - 5 - Maven Plugin</name>
+	<comment></comment>
 	<projects>
 		<project>SchemaCrawler - Main</project>
 		<project>SchemaCrawler - Tools</project>
