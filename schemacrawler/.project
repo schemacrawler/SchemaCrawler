@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>SchemaCrawler - Distribution</name>
+	<comment></comment>
 	<projects>
 		<project>SchemaCrawler - Differencer</project>
 		<project>SchemaCrawler for Microsoft SQL Server</project>

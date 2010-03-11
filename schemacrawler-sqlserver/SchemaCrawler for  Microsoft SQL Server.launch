@@ -13,5 +13,5 @@
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-port=1433&#13;&#10;-database=schemacrawler &#13;&#10;-schemas=schemacrawler.dbo&#13;&#10;-user=schemacrawler &#13;&#10;-password=schemacrawler&#13;&#10;-command=verbose_schema&#13;&#10;--loglevel=FINER"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SchemaCrawler for Microsoft SQL Server"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.maven.ide.eclipse.launchconfig.sourcepathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:SchemaCrawler - Tools/target}"/>
+<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:SchemaCrawler - 3 - Tools/target}"/>
 </launchConfiguration>
