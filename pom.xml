@@ -63,7 +63,7 @@
     <module>schemacrawler-sqlite</module>
     <module>schemacrawler-sqlserver</module>
     <module>schemacrawler-site</module>
-    <module>distribution</module>
+    <module>schemacrawler</module>
   </modules>
   <dependencies>
     <dependency>

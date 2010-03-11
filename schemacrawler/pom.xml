@@ -8,7 +8,7 @@
     <version>8.2-SNAPSHOT</version>
   </parent>
   <groupId>net.sourceforge.schemacrawler</groupId>
-  <artifactId>distribution</artifactId>
+  <artifactId>schemacrawler</artifactId>
   <packaging>jar</packaging>
   <name>SchemaCrawler Distribution</name>
   <dependencies>

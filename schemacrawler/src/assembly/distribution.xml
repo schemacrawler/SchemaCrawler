@@ -2,9 +2,9 @@
 <project name="schemacrawler" default="make-distribution" basedir=".">
 
   <property name="distribution.assembly"
-            location="${SchemaCrawler.home}/distribution/src/assembly" />
+            location="${SchemaCrawler.home}/schemacrawler/src/assembly" />
   <property name="distribution.target"
-            location="${SchemaCrawler.home}/distribution/target" />
+            location="${SchemaCrawler.home}/schemacrawler/target" />
   <property name="schemacrawler.distribution.jar"
             value="${distribution.target}/schemacrawler-${SchemaCrawler.version}.jar" />
   <property name="schemacrawler.distribution.sources.jar"
@@ -269,12 +269,6 @@
         <exclude name="schemacrawler*.jar" />
       </fileset>
     </delete>
-    <move 
-        file="${distribution.target}/schemacrawler-${SchemaCrawler.version}.jar" 
-        tofile="${distribution.target}/distribution-${SchemaCrawler.version}.jar"/>
-    <move 
-        file="${distribution.target}/schemacrawler-${SchemaCrawler.version}-sources.jar" 
-        tofile="${distribution.target}/distribution-${SchemaCrawler.version}-sources.jar"/>
         
   </target>
 
