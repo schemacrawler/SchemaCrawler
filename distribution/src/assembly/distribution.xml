@@ -7,7 +7,9 @@
             location="${SchemaCrawler.home}/distribution/target" />
   <property name="schemacrawler.distibution.jar"
             value="${distribution.target}/schemacrawler-${SchemaCrawler.version}.jar" />
-
+  <property name="schemacrawler.distibution.sources.jar"
+            value="${distribution.target}/schemacrawler-${SchemaCrawler.version}-sources.jar" />
+            
   <taskdef resource="net/sf/antcontrib/antcontrib.properties" />
 
   <target name="make-distribution"
@@ -86,6 +88,21 @@
       <zipfileset dir="${SchemaCrawler.home}/schemacrawler-maven-plugin/target/classes" />
     </jar>
 
+    <jar destfile="${schemacrawler.distibution.sources.jar}" index="true">
+      <manifest>
+        <attribute name="Product" value="SchemaCrawler" />
+        <attribute name="Version" value="${SchemaCrawler.version}" />
+        <attribute name="Author" value="Sualeh Fatehi sualeh@hotmail.com" />
+        <attribute name="Copyright" value="(c) 2003-2010, Sualeh Fatehi" />
+        <attribute name="Main-Class" value="schemacrawler.Main" />
+      </manifest>
+      <zipfileset src="${SchemaCrawler.home}/schemacrawler/target/schemacrawler-${SchemaCrawler.version}-sources.jar" />
+      <zipfileset src="${SchemaCrawler.home}/schemacrawler-commandline/target/schemacrawler-commandline-${SchemaCrawler.version}-sources.jar" />
+      <zipfileset src="${SchemaCrawler.home}/schemacrawler-tools/target/schemacrawler-tools-${SchemaCrawler.version}-sources.jar" />
+      <zipfileset src="${SchemaCrawler.home}/schemacrawler-integrations/target/schemacrawler-integrations-${SchemaCrawler.version}-sources.jar" />
+      <zipfileset src="${SchemaCrawler.home}/schemacrawler-maven-plugin/target/schemacrawler-maven-plugin-${SchemaCrawler.version}-sources.jar" />
+    </jar>
+    
   </target>
 
 
@@ -249,9 +266,16 @@
       <fileset dir="${distribution.target}">
         <include name="*.*" />
         <exclude name="schemacrawler*.zip" />
+        <exclude name="schemacrawler*.jar" />
       </fileset>
     </delete>
-
+    <move 
+        file="${distribution.target}/schemacrawler-${SchemaCrawler.version}.jar" 
+        tofile="${distribution.target}/distribution-${SchemaCrawler.version}.jar"/>
+    <move 
+        file="${distribution.target}/schemacrawler-${SchemaCrawler.version}-sources.jar" 
+        tofile="${distribution.target}/distribution-${SchemaCrawler.version}-sources.jar"/>
+        
   </target>
 
 
