@@ -37,18 +37,11 @@
     <url>https://schemacrawler.svn.sourceforge.net/svnroot/schemacrawler/</url>
   </scm>
   <distributionManagement>
-    <!--
     <snapshotRepository>
       <id>sonatype-nexus-snapshots</id>
       <name>Sonatype Nexus Snapshots</name>
       <url>http://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>    
-    -->
-    <snapshotRepository>
-      <id>local-nexus-snapshots</id>
-      <name>Local Nexus Snapshots</name>
-      <url>http://localhost:8081/nexus/content/repositories/snapshots/</url>
-    </snapshotRepository>    
+    </snapshotRepository>   
   </distributionManagement>
   <modules>
     <module>schemacrawler-api</module>
