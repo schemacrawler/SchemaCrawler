@@ -173,7 +173,7 @@
         <include name="*.wsf" />
         <exclude name="StartDatabase*.*" />
       </fileset>
-      <fileset dir="${SchemaCrawler.home}/distribution">
+      <fileset dir="${SchemaCrawler.home}/schemacrawler">
         <include name="README.txt" />
       </fileset>
     </copy>
