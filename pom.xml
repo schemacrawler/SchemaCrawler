@@ -51,7 +51,7 @@
     </snapshotRepository>    
   </distributionManagement>
   <modules>
-    <module>schemacrawler</module>
+    <module>schemacrawler-api</module>
     <module>schemacrawler-commandline</module>
     <module>schemacrawler-tools</module>
     <module>schemacrawler-integrations</module>

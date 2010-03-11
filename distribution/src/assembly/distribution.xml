@@ -5,9 +5,9 @@
             location="${SchemaCrawler.home}/distribution/src/assembly" />
   <property name="distribution.target"
             location="${SchemaCrawler.home}/distribution/target" />
-  <property name="schemacrawler.distibution.jar"
+  <property name="schemacrawler.distribution.jar"
             value="${distribution.target}/schemacrawler-${SchemaCrawler.version}.jar" />
-  <property name="schemacrawler.distibution.sources.jar"
+  <property name="schemacrawler.distribution.sources.jar"
             value="${distribution.target}/schemacrawler-${SchemaCrawler.version}-sources.jar" />
             
   <taskdef resource="net/sf/antcontrib/antcontrib.properties" />
@@ -73,7 +73,7 @@
 
   <target name="make-super-jar">
 
-    <jar destfile="${schemacrawler.distibution.jar}" index="true">
+    <jar destfile="${schemacrawler.distribution.jar}" index="true">
       <manifest>
         <attribute name="Product" value="SchemaCrawler" />
         <attribute name="Version" value="${SchemaCrawler.version}" />
@@ -81,14 +81,14 @@
         <attribute name="Copyright" value="(c) 2003-2010, Sualeh Fatehi" />
         <attribute name="Main-Class" value="schemacrawler.Main" />
       </manifest>
-      <zipfileset dir="${SchemaCrawler.home}/schemacrawler/target/classes" />
+      <zipfileset dir="${SchemaCrawler.home}/schemacrawler-api/target/classes" />
       <zipfileset dir="${SchemaCrawler.home}/schemacrawler-commandline/target/classes" />
       <zipfileset dir="${SchemaCrawler.home}/schemacrawler-tools/target/classes" />
       <zipfileset dir="${SchemaCrawler.home}/schemacrawler-integrations/target/classes" />
       <zipfileset dir="${SchemaCrawler.home}/schemacrawler-maven-plugin/target/classes" />
     </jar>
 
-    <jar destfile="${schemacrawler.distibution.sources.jar}" index="true">
+    <jar destfile="${schemacrawler.distribution.sources.jar}" index="true">
       <manifest>
         <attribute name="Product" value="SchemaCrawler" />
         <attribute name="Version" value="${SchemaCrawler.version}" />
@@ -96,7 +96,7 @@
         <attribute name="Copyright" value="(c) 2003-2010, Sualeh Fatehi" />
         <attribute name="Main-Class" value="schemacrawler.Main" />
       </manifest>
-      <zipfileset src="${SchemaCrawler.home}/schemacrawler/target/schemacrawler-${SchemaCrawler.version}-sources.jar" />
+      <zipfileset src="${SchemaCrawler.home}/schemacrawler-api/target/schemacrawler-api-${SchemaCrawler.version}-sources.jar" />
       <zipfileset src="${SchemaCrawler.home}/schemacrawler-commandline/target/schemacrawler-commandline-${SchemaCrawler.version}-sources.jar" />
       <zipfileset src="${SchemaCrawler.home}/schemacrawler-tools/target/schemacrawler-tools-${SchemaCrawler.version}-sources.jar" />
       <zipfileset src="${SchemaCrawler.home}/schemacrawler-integrations/target/schemacrawler-integrations-${SchemaCrawler.version}-sources.jar" />
@@ -114,7 +114,7 @@
     <mkdir dir="${distribution.staging.dir}/examples" />
 
     <!-- Copy super-jar -->
-    <copy file="${schemacrawler.distibution.jar}"
+    <copy file="${schemacrawler.distribution.jar}"
           todir="${distribution.staging.dir}/examples" />
 
     <!-- Copy licenses -->
@@ -156,7 +156,7 @@
     </copy>
 
     <!-- Create super jar -->
-    <copy file="${schemacrawler.distibution.jar}"
+    <copy file="${schemacrawler.distribution.jar}"
           todir="${distribution.staging.dir}/schemacrawler/lib" />
 
     <!-- Get licenses -->
@@ -226,7 +226,7 @@
     <property name="website.location"
               location="${SchemaCrawler.home}/schemacrawler-site/target/site" />
     <property name="website.apidocs.location"
-              location="${SchemaCrawler.home}/schemacrawler/target/site/apidocs" />
+              location="${SchemaCrawler.home}/schemacrawler-api/target/site/apidocs" />
     <mkdir dir="${website.location}" />
     <mkdir dir="${website.apidocs.location}" />
     <property name="website.zip.prefix"
@@ -310,7 +310,7 @@
            whenempty="fail">
         <zipfileset dir="${distribution.target}/@{database}-launches"
                     prefix="schemacrawler-@{database}-${SchemaCrawler.version}" />
-        <zipfileset file="${schemacrawler.distibution.jar}"
+        <zipfileset file="${schemacrawler.distribution.jar}"
                     prefix="schemacrawler-@{database}-${SchemaCrawler.version}/lib" />
       </zip>
 
