@@ -62,6 +62,13 @@
 				</ul>
 			</subsection>
 		</section>
+		<section name="Using SchemaCrawler in Your Projects">
+			<subsection name="Maven Repositores">
+				<p>
+					
+				</p>
+			</subsection>
+		</section>
 		<section name="Building From the Source Code">
 			<subsection name="Maven Build">
 				<p>

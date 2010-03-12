@@ -41,7 +41,7 @@
       <id>sonatype-nexus-snapshots</id>
       <name>Sonatype Nexus Snapshots</name>
       <url>http://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>   
+    </snapshotRepository>
   </distributionManagement>
   <modules>
     <module>schemacrawler-api</module>
@@ -121,12 +121,6 @@
           <autoVersionSubmodules>true</autoVersionSubmodules>
         </configuration>
       </plugin>
-      <plugin>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>      
     </plugins>
   </build>
 </project>
