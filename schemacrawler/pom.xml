@@ -16,46 +16,49 @@
       <groupId>net.sourceforge.schemacrawler</groupId>
       <artifactId>schemacrawler-integrations</artifactId>
       <version>${project.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.schemacrawler</groupId>
       <artifactId>schemacrawler-maven-plugin</artifactId>
       <version>${project.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.schemacrawler</groupId>
       <artifactId>schemacrawler-derby</artifactId>
       <version>${project.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.schemacrawler</groupId>
       <artifactId>schemacrawler-mysql</artifactId>
       <version>${project.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.schemacrawler</groupId>
       <artifactId>schemacrawler-oracle</artifactId>
       <version>${project.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.schemacrawler</groupId>
       <artifactId>schemacrawler-postgresql</artifactId>
       <version>${project.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.schemacrawler</groupId>
       <artifactId>schemacrawler-sqlite</artifactId>
       <version>${project.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>net.sourceforge.schemacrawler</groupId>
       <artifactId>schemacrawler-sqlserver</artifactId>
       <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.ant</groupId>
-      <artifactId>ant</artifactId>
-      <version>1.7.1</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
   <build>
