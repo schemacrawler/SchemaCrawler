@@ -21,19 +21,9 @@
   <build>
     <plugins>
       <plugin>
-        <artifactId>maven-jar-plugin</artifactId>
+        <artifactId>maven-deploy-plugin</artifactId>
         <configuration>
-          <archive>
-            <index>true</index>
-            <manifest>
-              <mainClass>schemacrawler.LauncherMain</mainClass>
-              <addClasspath>true</addClasspath>
-            </manifest>
-            <manifestEntries>
-              <Project>${project.name}, ${project.version}</Project>
-              <Author>Sualeh Fatehi, sualeh@hotmail.com</Author>
-            </manifestEntries>
-          </archive>
+          <skip>true</skip>
         </configuration>
       </plugin>
     </plugins>

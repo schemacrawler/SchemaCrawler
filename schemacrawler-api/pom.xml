@@ -15,6 +15,16 @@
   <name>SchemaCrawler API</name>
   <description>SchemaCrawler is an API that improves on the standard JDBC metadata.</description>
   <url>http://sourceforge.net/projects/schemacrawler</url>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
   <reporting>
     <plugins>
       <plugin>
