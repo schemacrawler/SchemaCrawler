@@ -13,13 +13,6 @@
   <artifactId>schemacrawler-site</artifactId>
   <packaging>pom</packaging>
   <name>SchemaCrawler Website</name>
-  <dependencies>
-    <dependency>
-      <groupId>net.sourceforge.schemacrawler</groupId>
-      <artifactId>schemacrawler-integrations</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-  </dependencies>
   <build>
     <plugins>
       <plugin>
@@ -27,6 +20,23 @@
         <configuration>
           <skip>true</skip>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>site</id>
+            <phase>package</phase>
+            <goals>
+              <goal>site</goal>
+            </goals>
+            <configuration>
+              <generateReports>true</generateReports>
+              <generateSitemap>true</generateSitemap>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
