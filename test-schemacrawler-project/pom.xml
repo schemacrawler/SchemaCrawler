@@ -7,14 +7,6 @@
 	<name>Test SchemaCrawler Project</name>
 	<repositories>
 		<repository>
-			<id>sonatype-nexus-snapshots</id>
-			<name>Sonatype Nexus Snapshots</name>
-			<url>http://oss.sonatype.org/content/repositories/snapshots</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<repository>
 			<id>sonatype-nexus</id>
 			<name>Sonatype Nexus</name>
 			<url>http://oss.sonatype.org/content/groups/public</url>
