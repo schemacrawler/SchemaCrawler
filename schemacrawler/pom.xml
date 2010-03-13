@@ -14,18 +14,6 @@
   <dependencies>
     <dependency>
       <groupId>net.sourceforge.schemacrawler</groupId>
-      <artifactId>schemacrawler-integrations</artifactId>
-      <version>${project.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>net.sourceforge.schemacrawler</groupId>
-      <artifactId>schemacrawler-maven-plugin</artifactId>
-      <version>${project.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>net.sourceforge.schemacrawler</groupId>
       <artifactId>schemacrawler-derby</artifactId>
       <version>${project.version}</version>
       <scope>provided</scope>
