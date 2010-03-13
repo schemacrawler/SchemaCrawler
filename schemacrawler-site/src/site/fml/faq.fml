@@ -297,8 +297,20 @@ Or, the following:
     <faq id="maven">
       <question> Can SchemaCrawler be used with Maven? </question>
       <answer>
-        <p> Yes, SchemaCrawler comes with a Maven plug-in. You can generate a SchemaCrawler report along with other
-          reports for your Maven generated site. </p>
+        <p>Yes SchemaCrawler can be used in a Maven project as an API, or to generate Maven reports in your projects. In
+          order to use SchemaCrawler in your Maven projects, add a repositories pointing to the location of the
+          Sonatype
+          Nexus public repository in your pom.xml. Then, add a dependency to SchemaCrawler in your pom.xml.</p>
+        <p>
+          <i>
+            See the example in the
+            <code>examples\maven</code>
+            directory.
+          </i>
+        </p>
+        <p>SchemaCrawler comes with a Maven plug-in. You can generate a SchemaCrawler report along with other
+          reports for
+          your Maven generated site. </p>
         <p>
           <i>
             See the example in the
@@ -476,14 +488,17 @@ Or, the following:
         </p>
         <p>
           <img src="http://www.gnu.org/graphics/gplv3-88x31.png" alt="GPL" />
-          SchemaCrawler is also distributed bundled with a JDBC driver for different database systems such as 
-          <a href="http://www.oracle.com/">Oracle</a>,
+          SchemaCrawler is also distributed bundled with a JDBC driver for different database systems such as
+          <a href="http://www.oracle.com/">Oracle</a>
+          ,
           <a href="http://www.microsoft.com/sqlserver">Microsoft SQL Server</a>
           ,
           <a href="http://www.mysql.com/">MySQL</a>
           and
           <a href="http://www.postgresql.org/">PostgreSQL</a>
-          . These <a href="bundled.html">bundled distributions</a> are distributed under the
+          . These
+          <a href="bundled.html">bundled distributions</a>
+          are distributed under the
           <a href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License (GPL) license.</a>
           The JDBC drivers that are packaged with these SchemaCrawler distributions are in their binary form, and retain
           their original license.
