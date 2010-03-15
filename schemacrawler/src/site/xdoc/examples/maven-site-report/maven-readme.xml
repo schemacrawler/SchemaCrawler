@@ -37,7 +37,7 @@
             distribution directory.
           </li>
           <li>Install the SchemaCrawler Maven plug-in by running
-            <span class="code">java -cp schemacrawler-8.1.jar;hsqldb.jar
+            <span class="code">java -cp schemacrawler-8.2-SNAPSHOT.jar;hsqldb.jar
               schemacrawler.tools.integration.maven.Main
             </span>
             and following the
