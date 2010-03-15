@@ -1,8 +1,0 @@
-
-How to Install the SchemaCrawler Maven Plugin
-
-1. Install maven (http://maven.apache.org/), and make sure that mvn is on your path.
-
-2. Install the SchemaCrawler Maven plug-in by running the install-schemacrawler-maven-plugin shell.cmd (install-schemacrawler-maven-plugin shell.sh on Unix) shell script.
-
-3. Verify the SchemaCrawler Maven plug-in installation by running verify-schemacrawler-maven-plugin.cmd (verify-schemacrawler-maven-plugin.sh on Unix) shell script

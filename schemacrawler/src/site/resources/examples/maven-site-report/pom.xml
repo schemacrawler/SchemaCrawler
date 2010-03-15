@@ -1,16 +1,25 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>net.sourceforge.schemacrawler</groupId>
-  <artifactId>maven-plugin-test-project</artifactId>
-  <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
-  <name>SchemaCrawler - Maven Plugin Test Project</name>
+	<groupId>com.example</groupId>
+	<artifactId>test-schemacrawler-report-project</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Test SchemaCrawler Report Project</name>
+  <pluginRepositories>
+    <pluginRepository>
+			<id>sonatype-nexus</id>
+			<name>Sonatype Nexus</name>
+			<url>http://oss.sonatype.org/content/groups/public</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+    </pluginRepository>
+  </pluginRepositories>
   <reporting>
     <plugins>
       <plugin>
         <groupId>net.sourceforge.schemacrawler</groupId>
-        <artifactId>schemacrawler-maven-plugin</artifactId>
+        <artifactId>schemacrawler</artifactId>
         <version>8.2-SNAPSHOT</version>
         <configuration>
           <schemacrawler.config>schemacrawler.config.properties</schemacrawler.config>
