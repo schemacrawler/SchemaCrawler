@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <project>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>schemacrawler</groupId>
-  <artifactId>schemacrawler-maven-plugin</artifactId>
+  <groupId>net.sourceforge.schemacrawler</groupId>
+  <artifactId>schemacrawler</artifactId>
   <version>4.0</version>
   <packaging>maven-plugin</packaging>
   <name>SchemaCrawler Maven Plugin</name>
@@ -35,11 +35,6 @@
       <groupId>org.apache.maven</groupId>
       <artifactId>maven-plugin-api</artifactId>
       <version>2.0</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-lang</groupId>
-      <artifactId>commons-lang</artifactId>
-      <version>2.1</version>
     </dependency>
     <dependency>
       <groupId>org.codehaus.plexus</groupId>
