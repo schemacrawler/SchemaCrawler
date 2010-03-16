@@ -26,7 +26,7 @@
     <plugins>
       <plugin>
         <groupId>net.sourceforge.schemacrawler</groupId>
-        <artifactId>schemacrawler-maven-plugin</artifactId>
+        <artifactId>schemacrawler-integrations</artifactId>
         <version>8.2-SNAPSHOT</version>
         <configuration>
           <schemacrawler.config>schemacrawler.config.properties</schemacrawler.config>
