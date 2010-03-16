@@ -117,7 +117,7 @@
 						<phase>deploy</phase>
 						<configuration>
 							<file>target/schemacrawler-${project.version}.jar</file>
-							<!-- <pomFile>../schemacrawler-maven-plugin/pom.xml</pomFile> -->
+							<pomFile>../schemacrawler-integrations/src/main/resources/schemacrawler-maven-plugin.pom</pomFile>
 							<repositoryId>sonatype-nexus-snapshots</repositoryId>
 							<repositoryLayout>default</repositoryLayout>
 							<url>http://oss.sonatype.org/content/repositories/snapshots</url>
