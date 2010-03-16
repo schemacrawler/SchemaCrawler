@@ -9,7 +9,7 @@
             value="${distribution.target}/schemacrawler-${SchemaCrawler.version}.jar" />
   <property name="schemacrawler.distribution.sources.jar"
             value="${distribution.target}/schemacrawler-${SchemaCrawler.version}-sources.jar" />
-            
+
   <taskdef resource="net/sf/antcontrib/antcontrib.properties" />
 
   <target name="make-distribution"
@@ -85,7 +85,6 @@
       <zipfileset dir="${SchemaCrawler.home}/schemacrawler-commandline/target/classes" />
       <zipfileset dir="${SchemaCrawler.home}/schemacrawler-tools/target/classes" />
       <zipfileset dir="${SchemaCrawler.home}/schemacrawler-integrations/target/classes" />
-      <zipfileset dir="${SchemaCrawler.home}/schemacrawler-maven-plugin/target/classes" />
     </jar>
 
     <jar destfile="${schemacrawler.distribution.sources.jar}" index="true">
@@ -100,9 +99,8 @@
       <zipfileset src="${SchemaCrawler.home}/schemacrawler-commandline/target/schemacrawler-commandline-${SchemaCrawler.version}-sources.jar" />
       <zipfileset src="${SchemaCrawler.home}/schemacrawler-tools/target/schemacrawler-tools-${SchemaCrawler.version}-sources.jar" />
       <zipfileset src="${SchemaCrawler.home}/schemacrawler-integrations/target/schemacrawler-integrations-${SchemaCrawler.version}-sources.jar" />
-      <zipfileset src="${SchemaCrawler.home}/schemacrawler-maven-plugin/target/schemacrawler-maven-plugin-${SchemaCrawler.version}-sources.jar" />
     </jar>
-    
+
   </target>
 
 
@@ -269,7 +267,7 @@
         <exclude name="schemacrawler*.jar" />
       </fileset>
     </delete>
-        
+
   </target>
 
 

@@ -48,7 +48,6 @@
     <module>schemacrawler-commandline</module>
     <module>schemacrawler-tools</module>
     <module>schemacrawler-integrations</module>
-    <module>schemacrawler-maven-plugin</module>
     <module>schemacrawler-derby</module>
     <module>schemacrawler-mysql</module>
     <module>schemacrawler-oracle</module>
