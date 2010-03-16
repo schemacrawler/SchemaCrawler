@@ -110,6 +110,27 @@
           <skip>false</skip>
         </configuration>
       </plugin>
+			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>deploy</phase>
+						<configuration>
+							<file>target/schemacrawler-${project.version}.jar</file>
+							<repositoryId>sonatype-nexus-snapshots</repositoryId>
+							<repositoryLayout>default</repositoryLayout>
+							<url>http://oss.sonatype.org/content/repositories/snapshots</url>
+							<groupId>net.sourceforge.schemacrawler</groupId>
+							<artifactId>schemacrawler-maven-plugin</artifactId>
+							<packaging>maven-plugin</packaging>
+							<version>${project.version}</version>
+						</configuration>
+						<goals>
+							<goal>deploy-file</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>      
     </plugins>
   </build>
 </project>
