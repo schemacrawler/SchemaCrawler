@@ -1,16 +1,18 @@
-<?xml version="1.0"?>
-<project>
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>schemacrawler</groupId>
+  <groupId>net.sourceforge.schemacrawler</groupId>
   <artifactId>schemacrawler-maven-plugin</artifactId>
-  <version>4.0</version>
   <packaging>maven-plugin</packaging>
+  <version>8.2-SNAPSHOT</version>
   <name>SchemaCrawler Maven Plugin</name>
   <description>SchemaCrawler is a command-line tool to output your database schema and data in a readable form. The
     output is designed to be diff-ed with previous versions of your database schema. SchemaCrawler is also an API that
     improves on the standard JDBC metadata.
   </description>
-  <url>http://sourceforge.net/projects/schemacrawler</url>
+  <url>http://schemacrawler.sourceforge.net</url>
   <inceptionYear>2003</inceptionYear>
   <licenses>
     <license>
@@ -30,6 +32,9 @@
       <timezone>-5</timezone>
     </developer>
   </developers>
+  <organization>
+    <name>Sualeh Fatehi</name>
+  </organization>
   <dependencies>
     <dependency>
       <groupId>org.apache.maven</groupId>
