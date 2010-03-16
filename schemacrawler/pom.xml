@@ -122,7 +122,7 @@
 							<repositoryLayout>default</repositoryLayout>
 							<url>http://oss.sonatype.org/content/repositories/snapshots</url>
 							<groupId>net.sourceforge.schemacrawler</groupId>
-							<artifactId>schemacrawler-maven-plugin</artifactId>
+							<artifactId>schemacrawler-integrations</artifactId>
 							<packaging>maven-plugin</packaging>
 							<version>${project.version}</version>
 						</configuration>
