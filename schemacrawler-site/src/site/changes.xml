@@ -6,7 +6,7 @@
   </properties>
   <body>
     <release version="8.2" date="2010-03-15">
-      <action dev="Sualeh Fatehi" type=add><![CDATA[
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added SchemaCrawler to the Sonatype Maven public repository. Added a new Maven project example.
       ]]></action>
       <action dev="Sualeh Fatehi" type="update"><![CDATA[
@@ -14,7 +14,7 @@
       ]]></action>
     </release>
     <release version="8.1" date="2010-02-28">
-      <action dev="Sualeh Fatehi" type=add><![CDATA[
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added SchemaCrawler lint, to highlight potential normalization issues, such as incrementing 
         column names, and other issues. A new -infolevel value, lint, was added.
       ]]></action>
