@@ -117,6 +117,7 @@
 						<phase>deploy</phase>
 						<configuration>
 							<file>target/schemacrawler-${project.version}.jar</file>
+							<pomFile>../schemacrawler-maven-plugin/pom.xml</pomFile>
 							<repositoryId>sonatype-nexus-snapshots</repositoryId>
 							<repositoryLayout>default</repositoryLayout>
 							<url>http://oss.sonatype.org/content/repositories/snapshots</url>
@@ -130,7 +131,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>      
+			</plugin>
     </plugins>
   </build>
 </project>
