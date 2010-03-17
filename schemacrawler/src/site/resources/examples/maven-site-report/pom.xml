@@ -29,11 +29,12 @@
         <artifactId>schemacrawler-integrations</artifactId>
         <version>8.2-SNAPSHOT</version>
         <configuration>
-          <schemacrawler.config>schemacrawler.config.properties</schemacrawler.config>
-          <schemacrawler.datasource>hsqldb</schemacrawler.datasource>
-          <schemacrawler.command>verbose_schema</schemacrawler.command>
-          <schemacrawler.outputformat>html</schemacrawler.outputformat>
-          <schemacrawler.jdbc.driver.classpath>hsqldb.jar</schemacrawler.jdbc.driver.classpath>
+          <config>schemacrawler.config.properties</config>
+          <driver>org.hsqldb.jdbcDriver</driver>
+          <url>jdbc:hsqldb:hsql://localhost:9001/schemacrawler</url>
+          <user>sa</user>
+          <command>verbose_schema</command>
+          <jdbc.driver.classpath>hsqldb.jar</jdbc.driver.classpath>
         </configuration>
       </plugin>
     </plugins>
