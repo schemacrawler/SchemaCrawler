@@ -43,6 +43,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.commandline.InfoLevel;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.ObjectToString;
 import sf.util.Utility;
@@ -306,6 +307,7 @@ public class SchemaCrawlerMojo
 
       // Create report
       final Sink sink = getSink();
+      getLog().info(sink.getClass().getName());
       sink.head();
       sink.title();
       sink.text("SchemaCrawler Report");
@@ -329,6 +331,7 @@ public class SchemaCrawlerMojo
   private OutputOptions createOutputOptions(final File outputFile)
   {
     final OutputOptions outputOptions = new OutputOptions();
+    outputOptions.setOutputFormatValue(OutputFormat.html.name());
     outputOptions.setAppendOutput(false);
     outputOptions.setNoHeader(true);
     outputOptions.setNoFooter(true);
