@@ -303,18 +303,17 @@ Or, the following:
           Nexus public repository in your pom.xml. Then, add a dependency to SchemaCrawler in your pom.xml.</p>
         <p>
           <i>
-            See the example in the
-            <code>examples\maven</code>
+            See the example in the <code>examples\maven-project</code> 
             directory.
           </i>
         </p>
-        <p>SchemaCrawler comes with a Maven plug-in. You can generate a SchemaCrawler report along with other
+        <p>Using the SchemaCrawler Maven plug-in, you can generate a SchemaCrawler report along with other
           reports for
           your Maven generated site. </p>
         <p>
           <i>
             See the example in the
-            <code>examples\maven</code>
+            <code>examples\maven-site-report</code>
             directory.
           </i>
         </p>

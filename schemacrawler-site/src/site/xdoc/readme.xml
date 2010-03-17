@@ -76,12 +76,18 @@
     <id>sonatype-nexus</id>
     <name>Sonatype Nexus</name>
     <url>http://oss.sonatype.org/content/groups/public</url>
+    <releases>
+      <enabled>true</enabled>
+      <updatePolicy>daily</updatePolicy>
+      <checksumPolicy>fail</checksumPolicy>
+    </releases>
     <snapshots>
       <enabled>true</enabled>
+      <updatePolicy>always</updatePolicy>
+      <checksumPolicy>fail</checksumPolicy>
     </snapshots>
   </repository>
 </repositories>
-  </repositories>
 				]]></source>
         <p>Then, add a dependency to SchemaCrawler in your pom.xml.</p>
         <source><![CDATA[

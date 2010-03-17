@@ -164,9 +164,11 @@ schemacrawler.format.hide_constraint_names=false
           When SchemaCrawler is used with J2SE 6 and above, it has built-in
           support to be used with JavaScript scripts.
           Write your JavaScript file, assuming that a "database" variable
-          containing the database schema will be available.
+          containing the database schema will be
+          available.
           A "connection" variable will also be available, and you will be able
-          to execute SQL against your database.
+          to execute SQL against your
+          database.
           Run SchemaCrawler with the command line options -
           <code>-command script -outputformat &lt;your script file&gt;</code>
           . See the example in the
@@ -184,7 +186,8 @@ schemacrawler.format.hide_constraint_names=false
           SchemaCrawler integrates with
           <a href="http://velocity.apache.org/">Apache Velocity</a>
           to allow for templated ouput. Put Velocity on your classpath, and
-          create your template, and run SchemaCrawler with the command line options -
+          create your template, and run SchemaCrawler
+          with the command line options -
           <code>-command script -outputformat &lt;your script file&gt;</code>
           .
           <code>-command velocity -outputformat &lt;your Velocity template&gt;</code>
@@ -203,7 +206,8 @@ schemacrawler.format.hide_constraint_names=false
           SchemaCrawler integrates with
           <a href="http://www.graphviz.org/">Graphviz</a>
           to produce graph images. Install Graphviz, and run SchemaCrawler with the correct command line options -
-          for example,
+          for
+          example,
           <code>-command graph -outputformat png -outputfile=graph.png</code>
           . See the diagram example in the
           <code>_distrib\diagram</code>
@@ -272,7 +276,7 @@ for (final Catalog catalog: database.getCatalogs())
         How to use SchemaCrawler in a Maven Project
       </question>
       <answer>
-        <p>In order to use SchemaCrawler in your Maven projects, add a repositories pointing to the location of the
+        <p>In order to use SchemaCrawler in your Maven projects, add a repository pointing to the location of the
           Sonatype Nexus public repository in your pom.xml.</p>
         <source><![CDATA[
 <repositories>
@@ -281,12 +285,18 @@ for (final Catalog catalog: database.getCatalogs())
     <id>sonatype-nexus</id>
     <name>Sonatype Nexus</name>
     <url>http://oss.sonatype.org/content/groups/public</url>
+    <releases>
+      <enabled>true</enabled>
+      <updatePolicy>daily</updatePolicy>
+      <checksumPolicy>fail</checksumPolicy>
+    </releases>
     <snapshots>
       <enabled>true</enabled>
+      <updatePolicy>always</updatePolicy>
+      <checksumPolicy>fail</checksumPolicy>
     </snapshots>
   </repository>
 </repositories>
-  </repositories>
         ]]></source>
         <p>Then, add a dependency to SchemaCrawler in your pom.xml.</p>
         <source><![CDATA[
@@ -394,26 +404,38 @@ for (final Catalog catalog: database.getCatalogs())
       <answer>
         <p> SchemaCrawler comes with a Maven reports plug-in. You can
           generate a SchemaCrawler report along with other
-          reports for your Maven generated site. </p>
-        <p>
-          <i>
-            See the example in the
-            <code>_distrib\examples\maven</code>
-            directory.
-          </i>
-        </p>
-        <p>
-          Install the SchemaCrawler Maven plug-in by running the following
-          command, and following the instructions that
-          are printed out.
-          <code><![CDATA[java -cp schemacrawler-8.2-SNAPSHOT.jar schemacrawler.tools.integration.maven.Main]]></code>
-        </p>
-        <p> Next, add a section to your Maven 2.0 project's pom.xml file,
+          reports for your Maven generated site. In order to use the SchemaCrawler Maven reports plug-in in your Maven
+          projects, add a pluginRepository pointing to the location of the
+          Sonatype Nexus public repository in your
+          pom.xml.</p>
+        <source><![CDATA[
+<pluginRepositories>
+  ...
+  <pluginRepository>
+    <id>sonatype-nexus</id>
+    <name>Sonatype Nexus</name>
+    <url>http://oss.sonatype.org/content/groups/public</url>
+    <releases>
+      <enabled>true</enabled>
+      <updatePolicy>daily</updatePolicy>
+      <checksumPolicy>fail</checksumPolicy>
+    </releases>
+    <snapshots>
+      <enabled>true</enabled>
+      <updatePolicy>always</updatePolicy>
+      <checksumPolicy>fail</checksumPolicy>
+    </snapshots>
+  </pluginRepository>
+</pluginRepositories>
+        ]]></source>
+        <p> Next, add a section to your Maven project's pom.xml file,
           similar to that below, changing what needs to
-          be changed: </p>
+          be
+          changed: </p>
         <source><![CDATA[
 <reporting>
   <plugins>
+    ...
     <plugin>
       <groupId>schemacrawler</groupId>
       <artifactId>schemacrawler-maven-plugin</artifactId>
@@ -478,10 +500,13 @@ for (final Catalog catalog: database.getCatalogs())
           <i>
             Tables are sorted in alphabetical order by default. If you turn
             alphabetical sorting off, the tables
-            will be displayed in "create" order - that is, tables with no
-            foreign-key dependencies will be displayed first. The "drop" order is
+            will be
+            displayed in "create" order - that is, tables with no
+            foreign-key dependencies will be displayed first. The
+            "drop" order is
             the reverse of the "create" order. Use the following command-line
-            arguments to obtain tables in "create" order:
+            arguments to obtain tables
+            in "create" order:
             <code>-command=brief_schema -sorttables=false -show_stored_procedures=false</code>
           </i>
         </p>

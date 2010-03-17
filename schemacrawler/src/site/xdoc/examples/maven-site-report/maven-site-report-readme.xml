@@ -2,14 +2,15 @@
   "http://maven.apache.org/dtd/xdoc_1_0.dtd">
 <document>
   <properties>
-    <title>SchemaCrawler - Maven Plug-in Example</title>
+    <title>SchemaCrawler - Maven Site Report Plug-in Example</title>
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-    <section name="SchemaCrawler - Maven Plug-in Example">
+    <section name="SchemaCrawler - Maven Site Report Plug-in Example">
       <subsection name="Description">
-        <p>The SchemaCrawler Maven plug-in example demonstrates the use of SchemaCrawler
-          to generate a Maven site report.
+        <p>The SchemaCrawler Maven site report plug-in example demonstrates the use of SchemaCrawler
+          to generate a Maven
+          site report.
         </p>
       </subsection>
       <subsection name="How to Run">
@@ -22,10 +23,10 @@
             and make sure that Maven is on your path.
           </li>
           <li>
-            Copy the SchemaCrawler jar file and
+            Copy 
             <span class="code">schemacrawler.config.properties</span>
             into the
-            <span class="code">maven</span>
+            <span class="code">maven-site-report</span>
             example directory.
           </li>
           <li>
@@ -36,17 +37,11 @@
           <li>Start the database server by running StartDatabaseServer script from the
             distribution directory.
           </li>
-          <li>Install the SchemaCrawler Maven plug-in by running
-            <span class="code">java -cp schemacrawler-8.2-SNAPSHOT.jar;hsqldb.jar
-              schemacrawler.tools.integration.maven.Main
-            </span>
-            and following the
-            instructions.
-          </li>
           <li>
             Run mvn site.
           </li>
-          <li>See the output produced in the
+          <li>
+            See the output produced in the
             <span class="code">target/site</span>
             directory.
           </li>
@@ -57,10 +52,13 @@
           <li>Try modifying the schemacrawler.config.properties with regular
             expressions, logging, and so on.
           </li>
-          <li>Try using different SchemaCrawler commands in the Maven test project's
-            pom.xml file. (For a complete list of SchemaCrawler commands, run
+          <li>
+            Try using different SchemaCrawler commands in the Maven test project's
+            pom.xml file. (For a complete list of
+            SchemaCrawler commands, run
             <span class="code">java -jar
-              &lt;schemacrawler-jar&gt;</span>.)
+              &lt;schemacrawler-jar&gt;</span>
+            .)
           </li>
           <li>Try defining a new database connection, using your favorite database and
             driver.
