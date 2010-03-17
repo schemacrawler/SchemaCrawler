@@ -111,6 +111,28 @@
         </configuration>
       </plugin>
 			<plugin>
+				<artifactId>maven-install-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<configuration>
+							<file>target/schemacrawler-${project.version}.jar</file>
+							<sources>target/schemacrawler-${project.version}-sources.jar</sources>
+							<pomFile>../schemacrawler-integrations/src/main/resources/schemacrawler-maven-plugin.pom</pomFile>
+							<repositoryLayout>default</repositoryLayout>
+							<groupId>net.sourceforge.schemacrawler</groupId>
+							<artifactId>schemacrawler-integrations</artifactId>
+							<packaging>maven-plugin</packaging>
+							<version>${project.version}</version>
+							<createChecksum>true</createChecksum>
+						</configuration>
+						<goals>
+							<goal>install-file</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>	      
+			<plugin>
 				<artifactId>maven-deploy-plugin</artifactId>
 				<executions>
 					<execution>
@@ -131,7 +153,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin>		
     </plugins>
   </build>
 </project>

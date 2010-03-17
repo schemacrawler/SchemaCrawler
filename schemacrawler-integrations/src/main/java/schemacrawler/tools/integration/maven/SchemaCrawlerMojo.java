@@ -21,28 +21,38 @@ package schemacrawler.tools.integration.maven;
 
 
 import java.io.File;
-import java.io.IOException;
+import java.io.FileReader;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Arrays;
 import java.util.Locale;
 
+import org.apache.maven.doxia.sink.Sink;
 import org.apache.maven.doxia.siterenderer.Renderer;
-import org.apache.maven.doxia.siterenderer.RendererException;
-import org.apache.maven.doxia.siterenderer.sink.SiteRendererSink;
-import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
 import org.apache.maven.reporting.MavenReport;
 import org.apache.maven.reporting.MavenReportException;
-import org.codehaus.doxia.sink.Sink;
+
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.ConnectionOptions;
+import schemacrawler.schemacrawler.DatabaseConnectionOptions;
+import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.commandline.InfoLevel;
+import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.OutputOptions;
+import sf.util.ObjectToString;
+import sf.util.Utility;
 
 /**
  * Generates a SchemaCrawler report of the database.
  * 
  * @goal schemacrawler
  * @execute phase="generate-sources"
+ * @phase site
  */
 public class SchemaCrawlerMojo
   extends AbstractMavenReport
@@ -50,22 +60,33 @@ public class SchemaCrawlerMojo
 {
 
   /**
-   * @parameter expression="${project}"
+   * Directory where reports will go.
+   * 
+   * @parameter expression="${project.reporting.outputDirectory}"
    * @required
    * @readonly
    */
-  protected MavenProject project;
+  private String outputDirectory;
+
+  /**
+   * @parameter default-value="${project}"
+   * @required
+   * @readonly
+   */
+  private MavenProject project;
 
   /**
    * @component
+   * @required
+   * @readonly
    */
   private Renderer siteRenderer;
 
   /**
    * JDBC driver classpath.
    * 
-   * @parameter expression="${schemacrawler.jdbc.driver.classpath}"
-   *            alias="schemacrawler.jdbc.driver.classpath"
+   * @parameter expression="${jdbc.driver.classpath}"
+   *            alias="jdbc.driver.classpath"
    * @required
    */
   private String jdbcDriverClasspath;
@@ -73,9 +94,8 @@ public class SchemaCrawlerMojo
   /**
    * Config file.
    * 
-   * @parameter expression="${schemacrawler.config}"
-   *            alias="schemacrawler.config"
-   *            default-value="schemacrawler.config.properties"
+   * @parameter expression="${config}" alias="config"
+   *            default-value="config.properties"
    * @required
    */
   private String config;
@@ -83,145 +103,138 @@ public class SchemaCrawlerMojo
   /**
    * Config override file.
    * 
-   * @parameter expression="${schemacrawler.config-override}"
-   *            alias="schemacrawler.config-override"
+   * @parameter expression="${config-override}" alias="config-override"
    *            default-value="schemacrawler.config.override.properties"
    */
   private String configOverride;
 
   /**
-   * Datasource.
+   * JDBC driver class name.
    * 
-   * @parameter expression="${schemacrawler.datasource}"
-   *            alias="schemacrawler.datasource"
+   * @parameter expression="${driver}" alias="driver"
    * @required
    */
-  private String datasource;
+  private String driver;
+
+  /**
+   * Database connection string.
+   * 
+   * @parameter expression="${url}" alias="url"
+   * @required
+   */
+  private String url;
+
+  /**
+   *Database connection user name.
+   * 
+   * @parameter expression="${user}" alias="user"
+   * @required
+   */
+  private String user;
+
+  /**
+   *Database connection user password.
+   * 
+   * @parameter expression="${password}" alias="password"
+   * @required
+   */
+  private String password;
 
   /**
    * Command.
    * 
-   * @parameter expression="${schemacrawler.command}"
-   *            alias="schemacrawler.command"
+   * @parameter expression="${command}" alias="command"
    * @required
    */
   private String command;
 
   /**
-   * Whether the header should be suppressed.
+   * Sort tables alphabetically.
    * 
-   * @parameter expression="${schemacrawler.no-header}"
-   *            alias="schemacrawler.no-header" default-value="false"
+   * @parameter expression="${sorttables}" alias="sorttables"
    */
-  private boolean noHeader;
+  private String sorttables = "true";
 
   /**
-   * Whether the footer should be suppressed.
+   * Sort columns in a table alphabetically.
    * 
-   * @parameter expression="${schemacrawler.no-footer}"
-   *            alias="schemacrawler.no-footer" default-value="false"
+   * @parameter expression="${sortcolumns}" alias="sortcolumns"
    */
-  private boolean noFooter;
+  private String sortcolumns = "false";
 
   /**
-   * Whether the info should be suppressed.
+   * Sort parameters in a stored procedure alphabetically.
    * 
-   * @parameter expression="${schemacrawler.no-info}"
-   *            alias="schemacrawler.no-footer" default-value="false"
+   * @parameter expression="${sortinout}" alias="sortinout"
    */
-  private boolean noInfo;
+  private String sortinout = "false";
 
   /**
-   * Output format.
+   * The info level determines the amount of database metadata
+   * retrieved, and also determines the time taken to crawl the schema.
    * 
-   * @parameter expression="${schemacrawler.outputformat}"
-   *            alias="schemacrawler.outputformat" default-value="text"
+   * @parameter expression="${infolevel}" alias="infolevel"
    */
-  private String outputFormat;
+  private String infolevel = InfoLevel.standard.name();
 
   /**
-   * Output file.
-   * 
-   * @parameter expression="${schemacrawler.outputfile}"
-   *            alias="schemacrawler.outputfile"
-   *            default-value="schemacrawler.report.html"
+   * @parameter expression="${schemas}" alias="schemas"
    */
-  private String outputFile;
+  private String schemas = InclusionRule.ALL;
 
   /**
-   * Whether to append to the output.
+   * Comma-separated list of table types of
+   * TABLE,VIEW,SYSTEM_TABLE,GLOBAL_TEMPORARY,LOCAL_TEMPORARY,ALIAS
    * 
-   * @parameter expression="${schemacrawler.append}"
-   *            alias="schemacrawler.append" default-value="false"
+   * @parameter expression="${table_types}" alias="table_types"
    */
-  private boolean append;
+  private String table_types;
 
   /**
-   * {@inheritDoc}
+   * Whether to show procedures, or not.
    * 
-   * @see org.apache.maven.reporting.MavenReport#canGenerateReport()
+   * @parameter expression="${show_stored_procedures}"
+   *            alias="show_stored_procedures"
    */
-  @Override
-  public boolean canGenerateReport()
-  {
-    // TODO: Test database connection?
-    return true;
-  }
+  private String show_stored_procedures = Boolean.TRUE.toString();
 
   /**
-   * {@inheritDoc}
+   * Regular expression to match fully qualified table names, in the
+   * form "CATALOGNAME.SCHEMANAME.TABLENAME" - for example,
+   * .*\.C.*|.*\.P.* Tables that do not match the pattern are not
+   * displayed.
+   * 
+   * @parameter expression="${tables}" alias="tables"
    */
-  @Override
-  public void execute()
-    throws MojoExecutionException
-  {
-    final String errorMessage = "An error has occurred in "
-                                + getName(Locale.ENGLISH)
-                                + " report generation.";
-    try
-    {
-      final String outputDirectory = getOutputDirectory();
-      final SiteRendererSink sink = siteRenderer
-        .createSink(new File(outputDirectory), getOutputName() + ".html");
-      generate(sink, Locale.getDefault());
-    }
-    catch (final RendererException e)
-    {
-      throw new MojoExecutionException(errorMessage, e);
-    }
-    catch (final IOException e)
-    {
-      throw new MojoExecutionException(errorMessage, e);
-    }
-    catch (final MavenReportException e)
-    {
-      throw new MojoExecutionException(errorMessage, e);
-    }
-  }
+  private String tables = InclusionRule.ALL;
 
   /**
-   * {@inheritDoc}
+   * Regular expression to match fully qualified column names, in the
+   * form "CATALOGNAME.SCHEMANAME.TABLENAME.COLUMNNAME" - for example,
+   * .*\.STREET|.*\.PRICE matches columns named STREET or PRICE in any
+   * table Columns that match the pattern are not displayed
    * 
-   * @see org.apache.maven.reporting.MavenReport#generate(org.codehaus.doxia.sink.Sink,
-   *      java.util.Locale)
+   * @parameter expression="${excludecolumns}" alias="excludecolumns"
    */
-  @Override
-  public void generate(final Sink sink, final Locale locale)
-    throws MavenReportException
-  {
-    executeReport(locale);
-  }
+  private String excludecolumns = InclusionRule.ALL;
 
   /**
-   * {@inheritDoc}
+   * Regular expression to match fully qualified procedure names, in the
+   * form "CATALOGNAME.SCHEMANAME.PROCEDURENAME" - for example,
+   * .*\.C.*|.*\.P.* matches any procedures whose names start with C or
+   * P Procedures that do not match the pattern are not displayed
    * 
-   * @see org.apache.maven.reporting.MavenReport#getCategoryName()
+   * @parameter expression="${schemas}" alias="schemas"
    */
-  @Override
-  public String getCategoryName()
-  {
-    return CATEGORY_PROJECT_REPORTS;
-  }
+  private String procedures = InclusionRule.ALL;
+
+  /**
+   * Regular expression to match fully qualified parameter names.
+   * Parameters that match the pattern are not displayed
+   * 
+   * @parameter expression="${schemas}" alias="schemas"
+   */
+  private String excludeinout = InclusionRule.ALL;
 
   /**
    * {@inheritDoc}
@@ -250,19 +263,7 @@ public class SchemaCrawlerMojo
    */
   public String getOutputName()
   {
-    final String outputFilename = new File(outputFile).getName();
-    return outputFilename.substring(0, outputFilename.lastIndexOf('.'));
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
-   * @see org.apache.maven.reporting.MavenReport#getReportOutputDirectory()
-   */
-  @Override
-  public File getReportOutputDirectory()
-  {
-    return new File(outputFile).getParentFile();
+    return "schemacrawler";
   }
 
   /**
@@ -276,62 +277,99 @@ public class SchemaCrawlerMojo
     return true;
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see org.apache.maven.reporting.MavenReport#setReportOutputDirectory(java.io.File)
-   */
-  @Override
-  public void setReportOutputDirectory(final File directory)
-  {
-    // Get the output filename
-    final String outputFilename = new File(outputFile).getName();
-    // Set the new path
-    if (directory.exists() && directory.isDirectory())
-    {
-      outputFile = new File(directory, outputFilename).getAbsolutePath();
-    }
-  }
-
   @Override
   protected void executeReport(final Locale locale)
     throws MavenReportException
   {
-
-    // Build command line
-    final String[] args = new String[] {
-        "-g",
-        config,
-        "-p",
-        configOverride,
-        "-c",
-        datasource,
-        "-command",
-        command,
-        "-noheader=" + noHeader,
-        "-nofooter=" + noFooter,
-        "-noinfo=" + noInfo,
-        "-outputformat",
-        outputFormat,
-        "-outputfile",
-        outputFile,
-        "-append",
-        String.valueOf(append),
-    };
-
-    // Execute command
-    final String commandLine = schemacrawler.Main.class.getName() + " ~"
-                               + Arrays.asList(args);
+    final Executable executable = new SchemaCrawlerExecutable(command);
     try
     {
       fixClassPath();
-      getLog().info(commandLine);
-      schemacrawler.Main.main(args);
+
+      final File outputFile = File.createTempFile("schemacrawler.report.",
+                                                  ".html");
+      final Config additionalConfiguration = Config
+        .load(config, configOverride);
+
+      // Execute SchemaCrawler
+      executable.setOutputOptions(createOutputOptions(outputFile));
+      executable.setSchemaCrawlerOptions(createSchemaCrawlerOptions());
+      executable.setAdditionalConfiguration(additionalConfiguration);
+
+      final ConnectionOptions connectionOptions = new DatabaseConnectionOptions(driver,
+                                                                                url);
+      connectionOptions.setUser(user);
+      connectionOptions.setPassword(password);
+
+      getLog().debug(ObjectToString.toString(executable));
+      executable.execute(connectionOptions.createConnection());
+
+      // Create report
+      final Sink sink = getSink();
+      sink.head();
+      sink.title();
+      sink.text("SchemaCrawler Report");
+      sink.title_();
+      sink.head_();
+
+      sink.body();
+      sink.rawText(Utility.readFully(new FileReader(outputFile)));
+      sink.body_();
+
+      sink.flush();
+      sink.close();
     }
     catch (final Exception e)
     {
-      throw new MavenReportException("Error executing: " + commandLine, e);
+      throw new MavenReportException("Error executing:\n"
+                                     + ObjectToString.toString(executable), e);
     }
+  }
+
+  private OutputOptions createOutputOptions(final File outputFile)
+  {
+    final OutputOptions outputOptions = new OutputOptions();
+    outputOptions.setAppendOutput(false);
+    outputOptions.setNoHeader(true);
+    outputOptions.setNoFooter(true);
+    outputOptions.setOutputFileName(outputFile.getAbsolutePath());
+    return outputOptions;
+  }
+
+  private SchemaCrawlerOptions createSchemaCrawlerOptions()
+  {
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    if (!Utility.isBlank(table_types))
+    {
+      schemaCrawlerOptions.setTableTypes(table_types);
+    }
+    // schemaCrawlerOptions.setShowStoredProcedures(Boolean
+    // .parseBoolean(show_stored_procedures));
+    // schemaCrawlerOptions.setAlphabeticalSortForTables(Boolean
+    // .parseBoolean(sorttables));
+    // schemaCrawlerOptions.setAlphabeticalSortForTableColumns(Boolean
+    // .parseBoolean(sortcolumns));
+    // schemaCrawlerOptions.setAlphabeticalSortForProcedureColumns(Boolean
+    // .parseBoolean(sortinout));
+    // schemaCrawlerOptions.setSchemaInfoLevel(InfoLevel.valueOf(infolevel)
+    // .getSchemaInfoLevel());
+    // schemaCrawlerOptions
+    // .setSchemaInclusionRule(new InclusionRule(schemas,
+    // InclusionRule.NONE));
+    // schemaCrawlerOptions
+    // .setTableInclusionRule(new InclusionRule(tables,
+    // InclusionRule.NONE));
+    // schemaCrawlerOptions
+    // .setProcedureInclusionRule(new InclusionRule(procedures,
+    // InclusionRule.NONE));
+    // schemaCrawlerOptions
+    // .setColumnInclusionRule(new InclusionRule(InclusionRule.ALL,
+    // excludecolumns));
+    // schemaCrawlerOptions
+    // .setProcedureColumnInclusionRule(new
+    // InclusionRule(InclusionRule.ALL,
+    // excludeinout));
+    return schemaCrawlerOptions;
   }
 
   /**
@@ -340,7 +378,7 @@ public class SchemaCrawlerMojo
   @Override
   protected String getOutputDirectory()
   {
-    return new File(outputFile).getParentFile().getAbsolutePath();
+    return outputDirectory;
   }
 
   /**
