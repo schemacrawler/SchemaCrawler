@@ -38,7 +38,6 @@ import org.apache.maven.reporting.MavenReportException;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
-import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.commandline.InfoLevel;
 import schemacrawler.tools.executable.Executable;
@@ -61,27 +60,11 @@ public class SchemaCrawlerMojo
 {
 
   /**
-   * Directory where reports will go.
-   * 
-   * @parameter expression="${project.reporting.outputDirectory}"
-   * @required
-   * @readonly
-   */
-  private String outputDirectory;
-
-  /**
    * @parameter default-value="${project}"
    * @required
    * @readonly
    */
   private MavenProject project;
-
-  /**
-   * @component
-   * @required
-   * @readonly
-   */
-  private Renderer siteRenderer;
 
   /**
    * JDBC driver classpath.
@@ -150,38 +133,12 @@ public class SchemaCrawlerMojo
   private String command;
 
   /**
-   * Sort tables alphabetically.
-   * 
-   * @parameter expression="${sorttables}" alias="sorttables"
-   */
-  private String sorttables = "true";
-
-  /**
-   * Sort columns in a table alphabetically.
-   * 
-   * @parameter expression="${sortcolumns}" alias="sortcolumns"
-   */
-  private String sortcolumns = "false";
-
-  /**
-   * Sort parameters in a stored procedure alphabetically.
-   * 
-   * @parameter expression="${sortinout}" alias="sortinout"
-   */
-  private String sortinout = "false";
-
-  /**
    * The info level determines the amount of database metadata
    * retrieved, and also determines the time taken to crawl the schema.
    * 
    * @parameter expression="${infolevel}" alias="infolevel"
    */
-  private String infolevel = InfoLevel.standard.name();
-
-  /**
-   * @parameter expression="${schemas}" alias="schemas"
-   */
-  private String schemas = InclusionRule.ALL;
+  private final String infolevel = InfoLevel.standard.name();
 
   /**
    * Comma-separated list of table types of
@@ -197,45 +154,7 @@ public class SchemaCrawlerMojo
    * @parameter expression="${show_stored_procedures}"
    *            alias="show_stored_procedures"
    */
-  private String show_stored_procedures = Boolean.TRUE.toString();
-
-  /**
-   * Regular expression to match fully qualified table names, in the
-   * form "CATALOGNAME.SCHEMANAME.TABLENAME" - for example,
-   * .*\.C.*|.*\.P.* Tables that do not match the pattern are not
-   * displayed.
-   * 
-   * @parameter expression="${tables}" alias="tables"
-   */
-  private String tables = InclusionRule.ALL;
-
-  /**
-   * Regular expression to match fully qualified column names, in the
-   * form "CATALOGNAME.SCHEMANAME.TABLENAME.COLUMNNAME" - for example,
-   * .*\.STREET|.*\.PRICE matches columns named STREET or PRICE in any
-   * table Columns that match the pattern are not displayed
-   * 
-   * @parameter expression="${excludecolumns}" alias="excludecolumns"
-   */
-  private String excludecolumns = InclusionRule.ALL;
-
-  /**
-   * Regular expression to match fully qualified procedure names, in the
-   * form "CATALOGNAME.SCHEMANAME.PROCEDURENAME" - for example,
-   * .*\.C.*|.*\.P.* matches any procedures whose names start with C or
-   * P Procedures that do not match the pattern are not displayed
-   * 
-   * @parameter expression="${schemas}" alias="schemas"
-   */
-  private String procedures = InclusionRule.ALL;
-
-  /**
-   * Regular expression to match fully qualified parameter names.
-   * Parameters that match the pattern are not displayed
-   * 
-   * @parameter expression="${schemas}" alias="schemas"
-   */
-  private String excludeinout = InclusionRule.ALL;
+  private final String show_stored_procedures = Boolean.TRUE.toString();
 
   /**
    * {@inheritDoc}
@@ -267,15 +186,101 @@ public class SchemaCrawlerMojo
     return "schemacrawler";
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see org.apache.maven.reporting.MavenReport#isExternalReport()
-   */
-  @Override
-  public boolean isExternalReport()
+  private OutputOptions createOutputOptions(final File outputFile)
   {
-    return true;
+    final OutputOptions outputOptions = new OutputOptions();
+    outputOptions.setOutputFormatValue(OutputFormat.html.name());
+    outputOptions.setAppendOutput(false);
+    outputOptions.setNoHeader(true);
+    outputOptions.setNoFooter(true);
+    outputOptions.setOutputFileName(outputFile.getAbsolutePath());
+    return outputOptions;
+  }
+
+  private SchemaCrawlerOptions createSchemaCrawlerOptions()
+  {
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    if (!Utility.isBlank(table_types))
+    {
+      schemaCrawlerOptions.setTableTypes(table_types);
+    }
+    // schemaCrawlerOptions.setShowStoredProcedures(Boolean
+    // .parseBoolean(show_stored_procedures));
+    // schemaCrawlerOptions.setAlphabeticalSortForTables(Boolean
+    // .parseBoolean(sorttables));
+    // schemaCrawlerOptions.setAlphabeticalSortForTableColumns(Boolean
+    // .parseBoolean(sortcolumns));
+    // schemaCrawlerOptions.setAlphabeticalSortForProcedureColumns(Boolean
+    // .parseBoolean(sortinout));
+    // schemaCrawlerOptions.setSchemaInfoLevel(InfoLevel.valueOf(infolevel)
+    // .getSchemaInfoLevel());
+    // schemaCrawlerOptions
+    // .setSchemaInclusionRule(new InclusionRule(schemas,
+    // InclusionRule.NONE));
+    // schemaCrawlerOptions
+    // .setTableInclusionRule(new InclusionRule(tables,
+    // InclusionRule.NONE));
+    // schemaCrawlerOptions
+    // .setProcedureInclusionRule(new InclusionRule(procedures,
+    // InclusionRule.NONE));
+    // schemaCrawlerOptions
+    // .setColumnInclusionRule(new InclusionRule(InclusionRule.ALL,
+    // excludecolumns));
+    // schemaCrawlerOptions
+    // .setProcedureColumnInclusionRule(new
+    // InclusionRule(InclusionRule.ALL,
+    // excludeinout));
+    return schemaCrawlerOptions;
+  }
+
+  /**
+   * The JDBC driver classpath comes from the configuration of the
+   * SchemaCrawler plugin. The current classloader needs to be "fixed"
+   * to include the JDBC driver in the classpath.
+   * 
+   * @throws MavenReportException
+   */
+  private void fixClassPath()
+    throws MavenReportException
+  {
+    URL[] jdbcJarUrls = new URL[0];
+    try
+    {
+
+      final String[] jdbcJarPaths = jdbcDriverClasspath.split(System
+        .getProperty("path.separator"));
+      jdbcJarUrls = new URL[jdbcJarPaths.length];
+      for (int i = 0; i < jdbcJarPaths.length; i++)
+      {
+        final String jdbcJarPath = jdbcJarPaths[i];
+        jdbcJarUrls[i] = new File(jdbcJarPath).getCanonicalFile().toURI()
+          .toURL();
+      }
+
+      final Method addUrlMethod = URLClassLoader.class
+        .getDeclaredMethod("addURL", new Class[] {
+          URL.class
+        });
+
+      final URLClassLoader classLoader = (URLClassLoader) getClass()
+        .getClassLoader();
+
+      addUrlMethod.setAccessible(true);
+
+      for (final URL jdbcJarUrl: jdbcJarUrls)
+      {
+        addUrlMethod.invoke(classLoader, jdbcJarUrl);
+      }
+
+      getLog().info("Fixed SchemaCrawler classpath: "
+                    + Arrays.asList(classLoader.getURLs()));
+
+    }
+    catch (final Exception e)
+    {
+      throw new MavenReportException("Error fixing classpath with "
+                                     + Arrays.asList(jdbcJarUrls), e);
+    }
   }
 
   @Override
@@ -328,60 +333,13 @@ public class SchemaCrawlerMojo
     }
   }
 
-  private OutputOptions createOutputOptions(final File outputFile)
-  {
-    final OutputOptions outputOptions = new OutputOptions();
-    outputOptions.setOutputFormatValue(OutputFormat.html.name());
-    outputOptions.setAppendOutput(false);
-    outputOptions.setNoHeader(true);
-    outputOptions.setNoFooter(true);
-    outputOptions.setOutputFileName(outputFile.getAbsolutePath());
-    return outputOptions;
-  }
-
-  private SchemaCrawlerOptions createSchemaCrawlerOptions()
-  {
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    if (!Utility.isBlank(table_types))
-    {
-      schemaCrawlerOptions.setTableTypes(table_types);
-    }
-    // schemaCrawlerOptions.setShowStoredProcedures(Boolean
-    // .parseBoolean(show_stored_procedures));
-    // schemaCrawlerOptions.setAlphabeticalSortForTables(Boolean
-    // .parseBoolean(sorttables));
-    // schemaCrawlerOptions.setAlphabeticalSortForTableColumns(Boolean
-    // .parseBoolean(sortcolumns));
-    // schemaCrawlerOptions.setAlphabeticalSortForProcedureColumns(Boolean
-    // .parseBoolean(sortinout));
-    // schemaCrawlerOptions.setSchemaInfoLevel(InfoLevel.valueOf(infolevel)
-    // .getSchemaInfoLevel());
-    // schemaCrawlerOptions
-    // .setSchemaInclusionRule(new InclusionRule(schemas,
-    // InclusionRule.NONE));
-    // schemaCrawlerOptions
-    // .setTableInclusionRule(new InclusionRule(tables,
-    // InclusionRule.NONE));
-    // schemaCrawlerOptions
-    // .setProcedureInclusionRule(new InclusionRule(procedures,
-    // InclusionRule.NONE));
-    // schemaCrawlerOptions
-    // .setColumnInclusionRule(new InclusionRule(InclusionRule.ALL,
-    // excludecolumns));
-    // schemaCrawlerOptions
-    // .setProcedureColumnInclusionRule(new
-    // InclusionRule(InclusionRule.ALL,
-    // excludeinout));
-    return schemaCrawlerOptions;
-  }
-
   /**
    * @see org.apache.maven.reporting.AbstractMavenReport#getOutputDirectory()
    */
   @Override
   protected String getOutputDirectory()
   {
-    return outputDirectory;
+    return null; // Unused in the Maven API
   }
 
   /**
@@ -399,57 +357,7 @@ public class SchemaCrawlerMojo
   @Override
   protected Renderer getSiteRenderer()
   {
-    return siteRenderer;
-  }
-
-  /**
-   * The JDBC driver classpath comes from the configuration of the
-   * SchemaCrawler plugin. The current classloader needs to be "fixed"
-   * to include the JDBC driver in the classpath.
-   * 
-   * @throws MavenReportException
-   */
-  private void fixClassPath()
-    throws MavenReportException
-  {
-    URL[] jdbcJarUrls = new URL[0];
-    try
-    {
-
-      final String[] jdbcJarPaths = jdbcDriverClasspath.split(System
-        .getProperty("path.separator"));
-      jdbcJarUrls = new URL[jdbcJarPaths.length];
-      for (int i = 0; i < jdbcJarPaths.length; i++)
-      {
-        final String jdbcJarPath = jdbcJarPaths[i];
-        jdbcJarUrls[i] = new File(jdbcJarPath).getCanonicalFile().toURI()
-          .toURL();
-      }
-
-      final Method addUrlMethod = URLClassLoader.class
-        .getDeclaredMethod("addURL", new Class[] {
-          URL.class
-        });
-
-      final URLClassLoader classLoader = (URLClassLoader) getClass()
-        .getClassLoader();
-
-      addUrlMethod.setAccessible(true);
-
-      for (final URL jdbcJarUrl: jdbcJarUrls)
-      {
-        addUrlMethod.invoke(classLoader, jdbcJarUrl);
-      }
-
-      getLog().info("Fixed SchemaCrawler classpath: "
-                    + Arrays.asList(classLoader.getURLs()));
-
-    }
-    catch (final Exception e)
-    {
-      throw new MavenReportException("Error fixing classpath with "
-                                     + Arrays.asList(jdbcJarUrls), e);
-    }
+    return null; // Unused in the Maven API
   }
 
 }
