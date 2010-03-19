@@ -44,6 +44,7 @@ import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.text.util.HtmlFormattingHelper;
 import sf.util.ObjectToString;
 import sf.util.Utility;
 
@@ -311,12 +312,17 @@ public class SchemaCrawlerMojo
       executable.execute(connectionOptions.createConnection());
 
       // Create report
+      final String styleSheet = Utility.readFully(HtmlFormattingHelper.class
+        .getResourceAsStream("/schemacrawler-report-output.css"));
+
       final Sink sink = getSink();
       getLog().info(sink.getClass().getName());
       sink.head();
       sink.title();
       sink.text("SchemaCrawler Report");
       sink.title_();
+      sink.rawText("<style type='text/css'>" + Utility.NEWLINE + styleSheet
+                   + Utility.NEWLINE + "  </style>" + Utility.NEWLINE);
       sink.head_();
 
       sink.body();
