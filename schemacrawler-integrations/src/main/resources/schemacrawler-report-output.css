@@ -1,0 +1,24 @@
+.underscore {
+	border-bottom: 1px solid #BBBBBB;
+}
+
+.name {
+	font-weight: bold;
+}
+
+.description {
+	text-align: right;
+}
+
+.ordinal {
+}
+
+.subname {
+}
+
+.type {
+}
+
+.definition {
+	white-space: pre;
+}
