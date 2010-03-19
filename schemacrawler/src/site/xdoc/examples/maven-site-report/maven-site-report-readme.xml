@@ -9,8 +9,7 @@
     <section name="SchemaCrawler - Maven Site Report Plug-in Example">
       <subsection name="Description">
         <p>The SchemaCrawler Maven site report plug-in example demonstrates the use of SchemaCrawler
-          to generate a Maven
-          site report.
+          to generate a Maven site report.
         </p>
       </subsection>
       <subsection name="How to Run">
@@ -31,14 +30,14 @@
           </li>
           <li>
             Copy the hsqldb jar file from distribution directory into the
-            <span class="code">maven</span>
+            <span class="code">maven-site-report</span>
             example directory.
           </li>
           <li>Start the database server by running StartDatabaseServer script from the
             distribution directory.
           </li>
           <li>
-            Run mvn site.
+            Run <span class="code">mvn -Dpassword= site</span>
           </li>
           <li>
             See the output produced in the
@@ -54,11 +53,7 @@
           </li>
           <li>
             Try using different SchemaCrawler commands in the Maven test project's
-            pom.xml file. (For a complete list of
-            SchemaCrawler commands, run
-            <span class="code">java -jar
-              &lt;schemacrawler-jar&gt;</span>
-            .)
+            pom.xml file.
           </li>
           <li>Try defining a new database connection, using your favorite database and
             driver.
