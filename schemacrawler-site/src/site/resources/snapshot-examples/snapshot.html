@@ -76,7 +76,7 @@ hr {
 	</tr>
 	<tr>
 		<td>product version</td>
-		<td>8.1</td>
+		<td>8.2-SNAPSHOT</td>
 	</tr>
 </table>
 <p></p>
@@ -739,7 +739,7 @@ hr {
 
 <table>
 	<tr>
-		<td colspan='2' class='name'>user</td>
+		<td colspan='2' class='name'>default_schema</td>
 		<td class='description'>[driver property]</td>
 	</tr>
 	<tr>
@@ -748,27 +748,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>required</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>value</td>
-		<td class='type'>null</td>
-	</tr>
-</table>
-<p></p>
-<table>
-	<tr>
-		<td colspan='2' class='name'>password</td>
-		<td class='description'>[driver property]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'></td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>required</td>
+		<td colspan='2' class='definition'>not required; choices [true, false]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -819,7 +799,7 @@ hr {
 <p></p>
 <table>
 	<tr>
-		<td colspan='2' class='name'>default_schema</td>
+		<td colspan='2' class='name'>password</td>
 		<td class='description'>[driver property]</td>
 	</tr>
 	<tr>
@@ -828,7 +808,7 @@ hr {
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>not required; choices [true, false]</td>
+		<td colspan='2' class='definition'>required</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -849,6 +829,26 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td colspan='2' class='definition'>not required; choices [true, false]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>value</td>
+		<td class='type'>null</td>
+	</tr>
+</table>
+<p></p>
+<table>
+	<tr>
+		<td colspan='2' class='name'>user</td>
+		<td class='description'>[driver property]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'></td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>required</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
@@ -1785,9 +1785,6 @@ ADDRESS1, ADDRESS2
 		<td class='subname'>DBA &#8594; SA (grantable)</td>
 		<td class='type'></td>
 	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
 </table>
 <p></p>
 
@@ -2383,9 +2380,6 @@ ADDRESS1, ADDRESS2
 		<td class='subname'>DBA &#8594; SA (grantable)</td>
 		<td class='type'></td>
 	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
 </table>
 <p></p>
 
@@ -2906,6 +2900,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the absolute value of the given &lt;code&gt;double&lt;/code&gt; value.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -2926,6 +2928,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the arc cosine of an angle, in the range of 0.0 through &lt;i&gt;pi&lt;/i&gt;. Special case: &lt;ul&gt;&lt;li&gt;If the argument is NaN or its absolute value is greater than 1, then the result is NaN.&lt;/ul&gt; &lt;p&gt; A result must be within 1 ulp of the correctly rounded result. Results must be semi-monotonic.</td>
 	</tr>
 </table>
 <p></p>
@@ -2948,6 +2958,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the Unicode code value of the leftmost character of &lt;code&gt;s&lt;/code&gt; as an &lt;code&gt;int&lt;/code&gt;. This is the same as the ASCII value if the string contains only ASCII characters.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -2969,6 +2987,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the arc sine of an angle, in the range of -&lt;i&gt;pi&lt;/i&gt;/2 through &lt;i&gt;pi&lt;/i&gt;/2. Special cases: &lt;ul&gt;&lt;li&gt;If the argument is NaN or its absolute value is greater than 1, then the result is NaN. &lt;li&gt;If the argument is zero, then the result is a zero with the same sign as the argument.&lt;/ul&gt; &lt;p&gt; A result must be within 1 ulp of the correctly rounded result. Results must be semi-monotonic.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -2989,6 +3015,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the arc tangent of an angle, in the range of -&lt;i&gt;pi&lt;/i&gt;/2 through &lt;i&gt;pi&lt;/i&gt;/2. Special cases: &lt;ul&gt;&lt;li&gt;If the argument is NaN, then the result is NaN. &lt;li&gt;If the argument is zero, then the result is a zero with the same sign as the argument.&lt;/ul&gt; &lt;p&gt; A result must be within 1 ulp of the correctly rounded result. Results must be semi-monotonic.</td>
 	</tr>
 </table>
 <p></p>
@@ -3016,6 +3050,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Converts rectangular coordinates (&lt;code&gt;x&lt;/code&gt;,&amp;nbsp;&lt;code&gt;y&lt;/code&gt;) to polar (r,&amp;nbsp;&lt;i&gt;theta&lt;/i&gt;). This method computes the phase &lt;i&gt;theta&lt;/i&gt; by computing an arc tangent of &lt;code&gt;y/x&lt;/code&gt; in the range of -&lt;i&gt;pi&lt;/i&gt; to &lt;i&gt;pi&lt;/i&gt;. Special cases: &lt;ul&gt;&lt;li&gt;If either argument is NaN, then the result is NaN. &lt;li&gt;If the first argument is positive zero and the second argument is positive, or the first argument is positive and finite and the second argument is positive infinity, then the result is positive zero. &lt;li&gt;If the first argument is negative zero and the second argument is positive, or the first argument is negative and finite and the second argument is positive infinity, then the result is negative zero. &lt;li&gt;If the first argument is positive zero and the second argument is negative, or the first argument is positive and finite and the second argument is negative infinity, then the result is the &lt;code&gt;double&lt;/code&gt; value closest to &lt;i&gt;pi&lt;/i&gt;. &lt;li&gt;If the first argument is negative zero and the second argument is negative, or the first argument is negative and finite and the second argument is negative infinity, then the result is the &lt;code&gt;double&lt;/code&gt; value closest to -&lt;i&gt;pi&lt;/i&gt;. &lt;li&gt;If the first argument is positive and the second argument is positive zero or negative zero, or the first argument is positive infinity and the second argument is finite, then the result is the &lt;code&gt;double&lt;/code&gt; value closest to &lt;i&gt;pi&lt;/i&gt;/2. &lt;li&gt;If the first argument is negative and the second argument is positive zero or negative zero, or the first argument is negative infinity and the second argument is finite, then the result is the &lt;code&gt;double&lt;/code&gt; value closest to -&lt;i&gt;pi&lt;/i&gt;/2. &lt;li&gt;If both arguments are positive infinity, then the result is the &lt;code&gt;double&lt;/code&gt; value closest to &lt;i&gt;pi&lt;/i&gt;/4. &lt;li&gt;If the first argument is positive infinity and the second argument is negative infinity, then the result is the &lt;code&gt;double&lt;/code&gt; value closest to 3*&lt;i&gt;pi&lt;/i&gt;/4. &lt;li&gt;If the first argument is negative infinity and the second argument is positive infinity, then the result is the &lt;code&gt;double&lt;/code&gt; value closest to -&lt;i&gt;pi&lt;/i&gt;/4. &lt;li&gt;If both arguments are negative infinity, then the result is the &lt;code&gt;double&lt;/code&gt; value closest to -3*&lt;i&gt;pi&lt;/i&gt;/4.&lt;/ul&gt; &lt;p&gt; A result must be within 2 ulps of the correctly rounded result. Results must be semi-monotonic.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -3036,6 +3078,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the number of bits in the given &lt;code&gt;String&lt;/code&gt;. This includes trailing blanks.</td>
 	</tr>
 </table>
 <p></p>
@@ -3063,6 +3113,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the bit-wise logical &lt;em&gt;and&lt;/em&gt; of the given integer values.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -3089,6 +3147,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the bit-wise logical &lt;em&gt;xor&lt;/em&gt; of the given integer values.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -3112,9 +3178,6 @@ ADDRESS1, ADDRESS2
 		<td class='subname'>@p0</td>
 		<td class='type'>INTEGER, result</td>
 	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
 </table>
 <p></p>
 
@@ -3135,6 +3198,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the smallest (closest to negative infinity) &lt;code&gt;double&lt;/code&gt; value that is not less than the argument and is equal to a mathematical integer. Special cases: &lt;ul&gt;&lt;li&gt;If the argument value is already equal to a mathematical integer, then the result is the same as the argument. &lt;li&gt;If the argument is NaN or an infinity or positive zero or negative zero, then the result is the same as the argument. &lt;li&gt;If the argument value is less than zero but greater than -1.0, then the result is negative zero.&lt;/ul&gt; Note that the value of &lt;code&gt;Math.ceil(x)&lt;/code&gt; is exactly the value of &lt;code&gt;-Math.floor(-x)&lt;/code&gt;.</td>
 	</tr>
 </table>
 <p></p>
@@ -3157,6 +3228,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the character string corresponding to the given ASCII (or Unicode) value. &lt;b&gt;Note:&lt;/b&gt; &lt;p&gt; In some SQL CLI implementations, a &lt;CODE&gt;null&lt;/CODE&gt; is returned if the range is outside 0..255. In HSQLDB, the corresponding Unicode character is returned unchecked.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -3178,6 +3257,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the number of characters in the given &lt;code&gt;String&lt;/code&gt;. This includes trailing blanks.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -3198,6 +3285,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the number of characters in the given &lt;code&gt;String&lt;/code&gt;. This includes trailing blanks.</td>
 	</tr>
 </table>
 <p></p>
@@ -3225,6 +3320,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a &lt;CODE&gt;String&lt;/CODE&gt; object that is the result of an &lt;em&gt;SQL-style&lt;/em&gt; concatenation of the given &lt;CODE&gt;String&lt;/CODE&gt; objects. &lt;p&gt; &lt;b&gt;Note:&lt;/b&gt; by &lt;em&gt;SQL-style&lt;/em&gt;, it is meant: &lt;UL&gt; &lt;LI&gt; if both &lt;CODE&gt;String&lt;/CODE&gt; objects are &lt;CODE&gt;null&lt;/CODE&gt;, return &lt;CODE&gt;null&lt;/CODE&gt; &lt;LI&gt; if only one string is &lt;CODE&gt;null&lt;/CODE&gt;, return the other &lt;LI&gt; if both &lt;CODE&gt;String&lt;/CODE&gt; objects are non-null, return as a &lt;CODE&gt;String&lt;/CODE&gt; object the character sequence obtained by listing, in left to right order, the characters of the first string followed by the characters of the second &lt;/UL&gt;</td>
+	</tr>
 </table>
 <p></p>
 
@@ -3245,6 +3348,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the trigonometric cosine of an angle. Special cases: &lt;ul&gt;&lt;li&gt;If the argument is NaN or an infinity, then the result is NaN.&lt;/ul&gt; &lt;p&gt; A result must be within 1 ulp of the correctly rounded result. Results must be semi-monotonic.</td>
 	</tr>
 </table>
 <p></p>
@@ -3267,6 +3378,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the cotangent of the given &lt;code&gt;double&lt;/code&gt; value expressed in radians.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -3280,9 +3399,6 @@ ADDRESS1, ADDRESS2
 		<td class='subname'>@p0</td>
 		<td class='type'>DATE, result</td>
 	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
 </table>
 <p></p>
 
@@ -3295,9 +3411,6 @@ ADDRESS1, ADDRESS2
 		<td class='ordinal'></td>
 		<td class='subname'>@p0</td>
 		<td class='type'>TIME, result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
 	</tr>
 </table>
 <p></p>
@@ -3314,6 +3427,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the name of the database corresponding to this connection.</td>
 	</tr>
 </table>
 <p></p>
@@ -3346,6 +3467,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the number of date and time boundaries crossed between two specified datetime values.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -3366,6 +3495,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the day of the month from the given date value, as an integer value in the range of 1-31.</td>
 	</tr>
 </table>
 <p></p>
@@ -3388,6 +3525,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a character string containing the name of the day (Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday ) for the day portion of the given &lt;code&gt;java.sql.Date&lt;/code&gt;.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -3408,6 +3553,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the day of the month from the given date value, as an integer value in the range of 1-31.</td>
 	</tr>
 </table>
 <p></p>
@@ -3430,6 +3583,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the day of the week from the given date value, as an integer value in the range 1-7, where 1 represents Sunday.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -3451,6 +3612,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the day of the year from the given date value, as an integer value in the range 1-366.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -3471,6 +3640,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Converts an angle measured in radians to an approximately equivalent angle measured in degrees. The conversion from radians to degrees is generally inexact; users should &lt;i&gt;not&lt;/i&gt; expect &lt;code&gt;cos(toRadians(90.0))&lt;/code&gt; to exactly equal &lt;code&gt;0.0&lt;/code&gt;.</td>
 	</tr>
 </table>
 <p></p>
@@ -3498,6 +3675,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a count of the characters that do not match when comparing the 4 digit numeric SOUNDEX character sequences for the given &lt;code&gt;String&lt;/code&gt; objects. If either &lt;code&gt;String&lt;/code&gt; object is &lt;code&gt;null&lt;/code&gt;, zero is returned.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -3518,6 +3703,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns Euler&apos;s number &lt;i&gt;e&lt;/i&gt; raised to the power of a &lt;code&gt;double&lt;/code&gt; value. Special cases: &lt;ul&gt;&lt;li&gt;If the argument is NaN, the result is NaN. &lt;li&gt;If the argument is positive infinity, then the result is positive infinity. &lt;li&gt;If the argument is negative infinity, then the result is positive zero.&lt;/ul&gt; &lt;p&gt; A result must be within 1 ulp of the correctly rounded result. Results must be semi-monotonic.</td>
 	</tr>
 </table>
 <p></p>
@@ -3540,6 +3733,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the largest (closest to positive infinity) &lt;code&gt;double&lt;/code&gt; value that is not greater than the argument and is equal to a mathematical integer. Special cases: &lt;ul&gt;&lt;li&gt;If the argument value is already equal to a mathematical integer, then the result is the same as the argument. &lt;li&gt;If the argument is NaN or an infinity or positive zero or negative zero, then the result is the same as the argument.&lt;/ul&gt;</td>
+	</tr>
 </table>
 <p></p>
 
@@ -3560,6 +3761,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Converts a &lt;code&gt;String&lt;/code&gt; of hexidecimal digit characters to a raw binary value, represented as a &lt;code&gt;String&lt;/code&gt;.&lt;p&gt; The given &lt;code&gt;String&lt;/code&gt; object must consist of a sequence of 4 digit hexidecimal character substrings.&lt;p&gt; If its length is not evenly divisible by 4, &lt;code&gt;null&lt;/code&gt; is returned. If any any of its 4 character subsequences cannot be parsed as a 4 digit, base 16 value, then a NumberFormatException is thrown. This conversion has the effect of reducing the character count 4:1.</td>
 	</tr>
 </table>
 <p></p>
@@ -3582,6 +3791,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the hour from the given time value, as an integer value in the range of 0-23.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -3597,6 +3814,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Retrieves the last auto-generated integer indentity value used by this connection. As of 1.7.1 this is a dummy function. The return value is supplied directly by Function.java</td>
 	</tr>
 </table>
 <p></p>
@@ -3634,6 +3859,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a character sequence which is the result of writing the first &lt;code&gt;length&lt;/code&gt; number of characters from the second given &lt;code&gt;String&lt;/code&gt; over the first string. The start position in the first string where the characters are overwritten is given by &lt;code&gt;start&lt;/code&gt;.&lt;p&gt; &lt;b&gt;Note:&lt;/b&gt; In order of precedence, boundry conditions are handled as follows:&lt;p&gt; &lt;UL&gt; &lt;LI&gt;if either supplied &lt;code&gt;String&lt;/code&gt; is null, then the other is returned; the check starts with the first given &lt;code&gt;String&lt;/code&gt;. &lt;LI&gt;if &lt;code&gt;start&lt;/code&gt; is less than one, &lt;code&gt;s1&lt;/code&gt; is returned &lt;LI&gt;if &lt;code&gt;length&lt;/code&gt; is less than or equal to zero, &lt;code&gt;s1&lt;/code&gt; is returned &lt;LI&gt;if the length of &lt;code&gt;s2&lt;/code&gt; is zero, &lt;code&gt;s1&lt;/code&gt; is returned &lt;LI&gt;if &lt;code&gt;start&lt;/code&gt; is greater than the length of &lt;code&gt;s1&lt;/code&gt;, &lt;code&gt;s1&lt;/code&gt; is returned &lt;LI&gt;if &lt;code&gt;length&lt;/code&gt; is such that, taken together with &lt;code&gt;start&lt;/code&gt;, the indicated interval extends beyond the end of &lt;code&gt;s1&lt;/code&gt;, then the insertion is performed precisely as if upon a copy of &lt;code&gt;s1&lt;/code&gt; extended in length to just include the indicated interval &lt;/UL&gt;</td>
+	</tr>
 </table>
 <p></p>
 
@@ -3654,6 +3887,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the absolute value of a &lt;code&gt;long&lt;/code&gt; value. If the argument is not negative, the argument is returned. If the argument is negative, the negation of the argument is returned. &lt;p&gt; Note that if the argument is equal to the value of &lt;code&gt;Long.MIN_VALUE&lt;/code&gt;, the most negative representable &lt;code&gt;long&lt;/code&gt; value, the result is that same value, which is negative.</td>
 	</tr>
 </table>
 <p></p>
@@ -3676,6 +3917,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the arc cosine of an angle, in the range of 0.0 through &lt;i&gt;pi&lt;/i&gt;. Special case: &lt;ul&gt;&lt;li&gt;If the argument is NaN or its absolute value is greater than 1, then the result is NaN.&lt;/ul&gt; &lt;p&gt; A result must be within 1 ulp of the correctly rounded result. Results must be semi-monotonic.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -3697,6 +3946,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the arc sine of an angle, in the range of -&lt;i&gt;pi&lt;/i&gt;/2 through &lt;i&gt;pi&lt;/i&gt;/2. Special cases: &lt;ul&gt;&lt;li&gt;If the argument is NaN or its absolute value is greater than 1, then the result is NaN. &lt;li&gt;If the argument is zero, then the result is a zero with the same sign as the argument.&lt;/ul&gt; &lt;p&gt; A result must be within 1 ulp of the correctly rounded result. Results must be semi-monotonic.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -3717,6 +3974,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the arc tangent of an angle, in the range of -&lt;i&gt;pi&lt;/i&gt;/2 through &lt;i&gt;pi&lt;/i&gt;/2. Special cases: &lt;ul&gt;&lt;li&gt;If the argument is NaN, then the result is NaN. &lt;li&gt;If the argument is zero, then the result is a zero with the same sign as the argument.&lt;/ul&gt; &lt;p&gt; A result must be within 1 ulp of the correctly rounded result. Results must be semi-monotonic.</td>
 	</tr>
 </table>
 <p></p>
@@ -3744,6 +4009,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Converts rectangular coordinates (&lt;code&gt;x&lt;/code&gt;,&amp;nbsp;&lt;code&gt;y&lt;/code&gt;) to polar (r,&amp;nbsp;&lt;i&gt;theta&lt;/i&gt;). This method computes the phase &lt;i&gt;theta&lt;/i&gt; by computing an arc tangent of &lt;code&gt;y/x&lt;/code&gt; in the range of -&lt;i&gt;pi&lt;/i&gt; to &lt;i&gt;pi&lt;/i&gt;. Special cases: &lt;ul&gt;&lt;li&gt;If either argument is NaN, then the result is NaN. &lt;li&gt;If the first argument is positive zero and the second argument is positive, or the first argument is positive and finite and the second argument is positive infinity, then the result is positive zero. &lt;li&gt;If the first argument is negative zero and the second argument is positive, or the first argument is negative and finite and the second argument is positive infinity, then the result is negative zero. &lt;li&gt;If the first argument is positive zero and the second argument is negative, or the first argument is positive and finite and the second argument is negative infinity, then the result is the &lt;code&gt;double&lt;/code&gt; value closest to &lt;i&gt;pi&lt;/i&gt;. &lt;li&gt;If the first argument is negative zero and the second argument is negative, or the first argument is negative and finite and the second argument is negative infinity, then the result is the &lt;code&gt;double&lt;/code&gt; value closest to -&lt;i&gt;pi&lt;/i&gt;. &lt;li&gt;If the first argument is positive and the second argument is positive zero or negative zero, or the first argument is positive infinity and the second argument is finite, then the result is the &lt;code&gt;double&lt;/code&gt; value closest to &lt;i&gt;pi&lt;/i&gt;/2. &lt;li&gt;If the first argument is negative and the second argument is positive zero or negative zero, or the first argument is negative infinity and the second argument is finite, then the result is the &lt;code&gt;double&lt;/code&gt; value closest to -&lt;i&gt;pi&lt;/i&gt;/2. &lt;li&gt;If both arguments are positive infinity, then the result is the &lt;code&gt;double&lt;/code&gt; value closest to &lt;i&gt;pi&lt;/i&gt;/4. &lt;li&gt;If the first argument is positive infinity and the second argument is negative infinity, then the result is the &lt;code&gt;double&lt;/code&gt; value closest to 3*&lt;i&gt;pi&lt;/i&gt;/4. &lt;li&gt;If the first argument is negative infinity and the second argument is positive infinity, then the result is the &lt;code&gt;double&lt;/code&gt; value closest to -&lt;i&gt;pi&lt;/i&gt;/4. &lt;li&gt;If both arguments are negative infinity, then the result is the &lt;code&gt;double&lt;/code&gt; value closest to -3*&lt;i&gt;pi&lt;/i&gt;/4.&lt;/ul&gt; &lt;p&gt; A result must be within 2 ulps of the correctly rounded result. Results must be semi-monotonic.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -3761,9 +4034,6 @@ ADDRESS1, ADDRESS2
 		<td class='ordinal'></td>
 		<td class='subname'>@p0</td>
 		<td class='type'>DOUBLE(8, 17), result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
 	</tr>
 </table>
 <p></p>
@@ -3786,31 +4056,13 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
-</table>
-<p></p>
-
-<table>
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.java.lang.Math.copySign</td>
-		<td class='description underscore'>[procedure, returns result]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>@p1</td>
-		<td class='type'>FLOAT(8, 17), in</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>@p2</td>
-		<td class='type'>FLOAT(8, 17), in</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>@p0</td>
-		<td class='type'>FLOAT(8, 17), result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
+		<td colspan='2' class='definition'>Returns the smallest (closest to negative infinity) &lt;code&gt;double&lt;/code&gt; value that is not less than the argument and is equal to a mathematical integer. Special cases: &lt;ul&gt;&lt;li&gt;If the argument value is already equal to a mathematical integer, then the result is the same as the argument. &lt;li&gt;If the argument is NaN or an infinity or positive zero or negative zero, then the result is the same as the argument. &lt;li&gt;If the argument value is less than zero but greater than -1.0, then the result is negative zero.&lt;/ul&gt; Note that the value of &lt;code&gt;Math.ceil(x)&lt;/code&gt; is exactly the value of &lt;code&gt;-Math.floor(-x)&lt;/code&gt;.</td>
 	</tr>
 </table>
 <p></p>
@@ -3833,6 +4085,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the trigonometric cosine of an angle. Special cases: &lt;ul&gt;&lt;li&gt;If the argument is NaN or an infinity, then the result is NaN.&lt;/ul&gt; &lt;p&gt; A result must be within 1 ulp of the correctly rounded result. Results must be semi-monotonic.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -3850,9 +4110,6 @@ ADDRESS1, ADDRESS2
 		<td class='ordinal'></td>
 		<td class='subname'>@p0</td>
 		<td class='type'>DOUBLE(8, 17), result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
 	</tr>
 </table>
 <p></p>
@@ -3875,6 +4132,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns Euler&apos;s number &lt;i&gt;e&lt;/i&gt; raised to the power of a &lt;code&gt;double&lt;/code&gt; value. Special cases: &lt;ul&gt;&lt;li&gt;If the argument is NaN, the result is NaN. &lt;li&gt;If the argument is positive infinity, then the result is positive infinity. &lt;li&gt;If the argument is negative infinity, then the result is positive zero.&lt;/ul&gt; &lt;p&gt; A result must be within 1 ulp of the correctly rounded result. Results must be semi-monotonic.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -3892,9 +4157,6 @@ ADDRESS1, ADDRESS2
 		<td class='ordinal'></td>
 		<td class='subname'>@p0</td>
 		<td class='type'>DOUBLE(8, 17), result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
 	</tr>
 </table>
 <p></p>
@@ -3917,26 +4179,13 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
-</table>
-<p></p>
-
-<table>
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.java.lang.Math.getExponent</td>
-		<td class='description underscore'>[procedure, returns result]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>@p1</td>
-		<td class='type'>FLOAT(8, 17), in</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>@p0</td>
-		<td class='type'>INTEGER, result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
+		<td colspan='2' class='definition'>Returns the largest (closest to positive infinity) &lt;code&gt;double&lt;/code&gt; value that is not greater than the argument and is equal to a mathematical integer. Special cases: &lt;ul&gt;&lt;li&gt;If the argument value is already equal to a mathematical integer, then the result is the same as the argument. &lt;li&gt;If the argument is NaN or an infinity or positive zero or negative zero, then the result is the same as the argument.&lt;/ul&gt;</td>
 	</tr>
 </table>
 <p></p>
@@ -3960,9 +4209,6 @@ ADDRESS1, ADDRESS2
 		<td class='ordinal'></td>
 		<td class='subname'>@p0</td>
 		<td class='type'>DOUBLE(8, 17), result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
 	</tr>
 </table>
 <p></p>
@@ -3990,6 +4236,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Computes the remainder operation on two arguments as prescribed by the IEEE 754 standard. The remainder value is mathematically equal to &lt;code&gt;f1&amp;nbsp;-&amp;nbsp;f2&lt;/code&gt;&amp;nbsp;&amp;times;&amp;nbsp;&lt;i&gt;n&lt;/i&gt;, where &lt;i&gt;n&lt;/i&gt; is the mathematical integer closest to the exact mathematical value of the quotient &lt;code&gt;f1/f2&lt;/code&gt;, and if two mathematical integers are equally close to &lt;code&gt;f1/f2&lt;/code&gt;, then &lt;i&gt;n&lt;/i&gt; is the integer that is even. If the remainder is zero, its sign is the same as the sign of the first argument. Special cases: &lt;ul&gt;&lt;li&gt;If either argument is NaN, or the first argument is infinite, or the second argument is positive zero or negative zero, then the result is NaN. &lt;li&gt;If the first argument is finite and the second argument is infinite, then the result is the same as the first argument.&lt;/ul&gt;</td>
+	</tr>
 </table>
 <p></p>
 
@@ -4011,6 +4265,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the natural logarithm (base &lt;i&gt;e&lt;/i&gt;) of a &lt;code&gt;double&lt;/code&gt; value. Special cases: &lt;ul&gt;&lt;li&gt;If the argument is NaN or less than zero, then the result is NaN. &lt;li&gt;If the argument is positive infinity, then the result is positive infinity. &lt;li&gt;If the argument is positive zero or negative zero, then the result is negative infinity.&lt;/ul&gt; &lt;p&gt; A result must be within 1 ulp of the correctly rounded result. Results must be semi-monotonic.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -4029,9 +4291,6 @@ ADDRESS1, ADDRESS2
 		<td class='subname'>@p0</td>
 		<td class='type'>DOUBLE(8, 17), result</td>
 	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
 </table>
 <p></p>
 
@@ -4049,9 +4308,6 @@ ADDRESS1, ADDRESS2
 		<td class='ordinal'></td>
 		<td class='subname'>@p0</td>
 		<td class='type'>DOUBLE(8, 17), result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
 	</tr>
 </table>
 <p></p>
@@ -4079,6 +4335,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the greater of two &lt;code&gt;long&lt;/code&gt; values. That is, the result is the argument closer to the value of &lt;code&gt;Long.MAX_VALUE&lt;/code&gt;. If the arguments have the same value, the result is that same value.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -4105,52 +4369,13 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
-</table>
-<p></p>
-
-<table>
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.java.lang.Math.nextAfter</td>
-		<td class='description underscore'>[procedure, returns result]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>@p1</td>
-		<td class='type'>FLOAT(8, 17), in</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>@p2</td>
-		<td class='type'>DOUBLE(8, 17), in</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>@p0</td>
-		<td class='type'>FLOAT(8, 17), result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.java.lang.Math.nextUp</td>
-		<td class='description underscore'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>@p1</td>
-		<td class='type'>FLOAT(8, 17), in</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>@p0</td>
-		<td class='type'>FLOAT(8, 17), result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
+		<td colspan='2' class='definition'>Returns the smaller of two &lt;code&gt;long&lt;/code&gt; values. That is, the result is the argument closer to the value of &lt;code&gt;Long.MIN_VALUE&lt;/code&gt;. If the arguments have the same value, the result is that same value.</td>
 	</tr>
 </table>
 <p></p>
@@ -4178,6 +4403,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns of value of the first argument raised to the power of the second argument. Special cases: &lt;ul&gt;&lt;li&gt;If the second argument is positive or negative zero, then the result is 1.0. &lt;li&gt;If the second argument is 1.0, then the result is the same as the first argument. &lt;li&gt;If the second argument is NaN, then the result is NaN. &lt;li&gt;If the first argument is NaN and the second argument is nonzero, then the result is NaN. &lt;li&gt;If the absolute value of the first argument is greater than 1 and the second argument is positive infinity, or the absolute value of the first argument is less than 1 and the second argument is negative infinity, then the result is positive infinity. &lt;li&gt;If the absolute value of the first argument is greater than 1 and the second argument is negative infinity, or the absolute value of the first argument is less than 1 and the second argument is positive infinity, then the result is positive zero. &lt;li&gt;If the absolute value of the first argument equals 1 and the second argument is infinite, then the result is NaN. &lt;li&gt;If the first argument is positive zero and the second argument is greater than zero, or the first argument is positive infinity and the second argument is less than zero, then the result is positive zero. &lt;li&gt;If the first argument is positive zero and the second argument is less than zero, or the first argument is positive infinity and the second argument is greater than zero, then the result is positive infinity. &lt;li&gt;If the first argument is negative zero and the second argument is greater than zero but not a finite odd integer, or the first argument is negative infinity and the second argument is less than zero but not a finite odd integer, then the result is positive zero. &lt;li&gt;If the first argument is negative zero and the second argument is a positive finite odd integer, or the first argument is negative infinity and the second argument is a negative finite odd integer, then the result is negative zero. &lt;li&gt;If the first argument is negative zero and the second argument is less than zero but not a finite odd integer, or the first argument is negative infinity and the second argument is greater than zero but not a finite odd integer, then the result is positive infinity. &lt;li&gt;If the first argument is negative zero and the second argument is a negative finite odd integer, or the first argument is negative infinity and the second argument is a positive finite odd integer, then the result is negative infinity. &lt;li&gt;If the first argument is less than zero and the second argument is a finite even integer, then the result is equal to the result of raising the absolute value of the first argument to the power of the second argument. &lt;li&gt;If the first argument is less than zero and the second argument is a finite odd integer, then the result is equal to the negative of the result of raising the absolute value of the first argument to the power of the second argument. &lt;li&gt;If the first argument is finite and less than zero and the second argument is finite and not an integer, then the result is NaN. &lt;li&gt;If both arguments are integers, then the result is exactly equal to the mathematical result of raising the first argument to the power of the second argument if that result can in fact be represented exactly as a double value.&lt;/ul&gt; &lt;p&gt;(In the foregoing descriptions, a floating-point value is considered to be an integer if and only if it is a fixed point of the method {@link #ceil &lt;tt&gt;ceil&lt;/tt&gt;} or, equivalently, a fixed point of the method {@link #floor &lt;tt&gt;floor&lt;/tt&gt;}. A value is a fixed point of a one-argument method if and only if the result of applying the method to the value is equal to the value.) &lt;p&gt; A result must be within 1 ulp of the correctly rounded result. Results must be semi-monotonic.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -4193,6 +4426,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a &lt;code&gt;double&lt;/code&gt; value with a positive sign, greater than or equal to &lt;code&gt;0.0&lt;/code&gt; and less than &lt;code&gt;1.0&lt;/code&gt;. Returned values are chosen pseudorandomly with (approximately) uniform distribution from that range. &lt;p&gt; When this method is first called, it creates a single new pseudorandom-number generator, exactly as if by the expression &lt;blockquote&gt;&lt;pre&gt;new java.util.Random&lt;/pre&gt;&lt;/blockquote&gt; This new pseudorandom-number generator is used thereafter for all calls to this method and is used nowhere else. &lt;p&gt; This method is properly synchronized to allow correct use by more than one thread. However, if many threads need to generate pseudorandom numbers at a great rate, it may reduce contention for each thread to have its own pseudorandom-number generator.</td>
 	</tr>
 </table>
 <p></p>
@@ -4215,6 +4456,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the &lt;code&gt;double&lt;/code&gt; value that is closest in value to the argument and is equal to a mathematical integer. If two &lt;code&gt;double&lt;/code&gt; values that are mathematical integers are equally close, the result is the integer value that is even. Special cases: &lt;ul&gt;&lt;li&gt;If the argument value is already equal to a mathematical integer, then the result is the same as the argument. &lt;li&gt;If the argument is NaN or an infinity or positive zero or negative zero, then the result is the same as the argument.&lt;/ul&gt;</td>
+	</tr>
 </table>
 <p></p>
 
@@ -4236,31 +4485,13 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
-</table>
-<p></p>
-
-<table>
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.java.lang.Math.scalb</td>
-		<td class='description underscore'>[procedure, returns result]</td>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
 	</tr>
 	<tr>
 		<td class='ordinal'></td>
-		<td class='subname'>@p1</td>
-		<td class='type'>FLOAT(8, 17), in</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>@p2</td>
-		<td class='type'>INTEGER, in</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>@p0</td>
-		<td class='type'>FLOAT(8, 17), result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
+		<td colspan='2' class='definition'>Returns the closest &lt;code&gt;int&lt;/code&gt; to the argument. The result is rounded to an integer by adding 1/2, taking the floor of the result, and casting the result to type &lt;code&gt;int&lt;/code&gt;. In other words, the result is equal to the value of the expression: &lt;p&gt;&lt;pre&gt;(int)Math.floor(a + 0.5f)&lt;/pre&gt; &lt;p&gt; Special cases: &lt;ul&gt;&lt;li&gt;If the argument is NaN, the result is 0. &lt;li&gt;If the argument is negative infinity or any value less than or equal to the value of &lt;code&gt;Integer.MIN_VALUE&lt;/code&gt;, the result is equal to the value of &lt;code&gt;Integer.MIN_VALUE&lt;/code&gt;. &lt;li&gt;If the argument is positive infinity or any value greater than or equal to the value of &lt;code&gt;Integer.MAX_VALUE&lt;/code&gt;, the result is equal to the value of &lt;code&gt;Integer.MAX_VALUE&lt;/code&gt;.&lt;/ul&gt;</td>
 	</tr>
 </table>
 <p></p>
@@ -4279,9 +4510,6 @@ ADDRESS1, ADDRESS2
 		<td class='ordinal'></td>
 		<td class='subname'>@p0</td>
 		<td class='type'>FLOAT(8, 17), result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
 	</tr>
 </table>
 <p></p>
@@ -4304,6 +4532,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the trigonometric sine of an angle. Special cases: &lt;ul&gt;&lt;li&gt;If the argument is NaN or an infinity, then the result is NaN. &lt;li&gt;If the argument is zero, then the result is a zero with the same sign as the argument.&lt;/ul&gt; &lt;p&gt; A result must be within 1 ulp of the correctly rounded result. Results must be semi-monotonic.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -4321,9 +4557,6 @@ ADDRESS1, ADDRESS2
 		<td class='ordinal'></td>
 		<td class='subname'>@p0</td>
 		<td class='type'>DOUBLE(8, 17), result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
 	</tr>
 </table>
 <p></p>
@@ -4346,6 +4579,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the correctly rounded positive square root of a &lt;code&gt;double&lt;/code&gt; value. Special cases: &lt;ul&gt;&lt;li&gt;If the argument is NaN or less than zero, then the result is NaN. &lt;li&gt;If the argument is positive infinity, then the result is positive infinity. &lt;li&gt;If the argument is positive zero or negative zero, then the result is the same as the argument.&lt;/ul&gt; Otherwise, the result is the &lt;code&gt;double&lt;/code&gt; value closest to the true mathematical square root of the argument value.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -4367,6 +4608,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the trigonometric tangent of an angle. Special cases: &lt;ul&gt;&lt;li&gt;If the argument is NaN or an infinity, then the result is NaN. &lt;li&gt;If the argument is zero, then the result is a zero with the same sign as the argument.&lt;/ul&gt; &lt;p&gt; A result must be within 1 ulp of the correctly rounded result. Results must be semi-monotonic.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -4384,9 +4633,6 @@ ADDRESS1, ADDRESS2
 		<td class='ordinal'></td>
 		<td class='subname'>@p0</td>
 		<td class='type'>DOUBLE(8, 17), result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
 	</tr>
 </table>
 <p></p>
@@ -4409,6 +4655,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Converts an angle measured in radians to an approximately equivalent angle measured in degrees. The conversion from radians to degrees is generally inexact; users should &lt;i&gt;not&lt;/i&gt; expect &lt;code&gt;cos(toRadians(90.0))&lt;/code&gt; to exactly equal &lt;code&gt;0.0&lt;/code&gt;.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -4430,6 +4684,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Converts an angle measured in degrees to an approximately equivalent angle measured in radians. The conversion from degrees to radians is generally inexact.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -4447,9 +4709,6 @@ ADDRESS1, ADDRESS2
 		<td class='ordinal'></td>
 		<td class='subname'>@p0</td>
 		<td class='type'>FLOAT(8, 17), result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
 	</tr>
 </table>
 <p></p>
@@ -4471,6 +4730,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a copy of the given &lt;code&gt;String&lt;/code&gt;, with all upper case characters converted to lower case. This uses the default Java String conversion.</td>
 	</tr>
 </table>
 <p></p>
@@ -4498,6 +4765,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the leftmost &lt;code&gt;count&lt;/code&gt; characters from the given &lt;code&gt;String&lt;/code&gt;. &lt;p&gt; &lt;b&gt;Note:&lt;/b&gt; boundry conditions are handled in the following order of precedence: &lt;UL&gt; &lt;LI&gt;if &lt;code&gt;s&lt;/code&gt; is &lt;code&gt;null&lt;/code&gt;, then &lt;code&gt;null&lt;/code&gt; is returned &lt;LI&gt;if &lt;code&gt;count&lt;/code&gt; is less than 1, then a zero-length &lt;code&gt;String&lt;/code&gt; is returned &lt;LI&gt;if &lt;code&gt;count&lt;/code&gt; is greater than the length of &lt;code&gt;s&lt;/code&gt;, then a copy of &lt;code&gt;s&lt;/code&gt; is returned &lt;/UL&gt;</td>
+	</tr>
 </table>
 <p></p>
 
@@ -4518,6 +4793,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the number of characters in the given &lt;code&gt;String&lt;/code&gt;. This includes trailing blanks.</td>
 	</tr>
 </table>
 <p></p>
@@ -4550,6 +4833,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the starting position of the first occurrence of the given &lt;code&gt;search&lt;/code&gt; &lt;code&gt;String&lt;/code&gt; object within the given &lt;code&gt;String&lt;/code&gt; object, &lt;code&gt;s&lt;/code&gt;. The search for the first occurrence of &lt;code&gt;search&lt;/code&gt; begins with the first character position in &lt;code&gt;s&lt;/code&gt;, unless the optional argument, &lt;code&gt;start&lt;/code&gt;, is specified (non-null). If &lt;code&gt;start&lt;/code&gt; is specified, the search begins with the character position indicated by the value of &lt;code&gt;start&lt;/code&gt;, where the first character position in &lt;code&gt;s&lt;/code&gt; is indicated by the value 1. If &lt;code&gt;search&lt;/code&gt; is not found within &lt;code&gt;s&lt;/code&gt;, the value 0 is returned.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -4570,6 +4861,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the natural logarithm (base &lt;i&gt;e&lt;/i&gt;) of a &lt;code&gt;double&lt;/code&gt; value. Special cases: &lt;ul&gt;&lt;li&gt;If the argument is NaN or less than zero, then the result is NaN. &lt;li&gt;If the argument is positive infinity, then the result is positive infinity. &lt;li&gt;If the argument is positive zero or negative zero, then the result is negative infinity.&lt;/ul&gt; &lt;p&gt; A result must be within 1 ulp of the correctly rounded result. Results must be semi-monotonic.</td>
 	</tr>
 </table>
 <p></p>
@@ -4592,6 +4891,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the base 10 logarithm of the given &lt;code&gt;double&lt;/code&gt; value.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -4612,6 +4919,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a copy of the given &lt;code&gt;String&lt;/code&gt;, with all upper case characters converted to lower case. This uses the default Java String conversion.</td>
 	</tr>
 </table>
 <p></p>
@@ -4634,6 +4949,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the characters of the given &lt;code&gt;String&lt;/code&gt;, with the leading spaces removed. Characters such as TAB are not removed.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -4654,6 +4977,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the minute from the given time value, as integer value in the range of 0-59.</td>
 	</tr>
 </table>
 <p></p>
@@ -4681,6 +5012,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the remainder (modulus) of the first given integer divided by the second. &lt;p&gt;</td>
+	</tr>
 </table>
 <p></p>
 
@@ -4701,6 +5040,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the month from the given date value, as an integer value in the range of 1-12 or 0-11. &lt;p&gt; If the sql_month database property is set &lt;code&gt;true&lt;/code&gt;, then the range is 1-12, else 0-11</td>
 	</tr>
 </table>
 <p></p>
@@ -4723,6 +5070,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a character string containing the name of month (January, February, March, April, May, June, July, August, September, October, November, December) for the month portion of the given date value.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -4735,9 +5090,6 @@ ADDRESS1, ADDRESS2
 		<td class='ordinal'></td>
 		<td class='subname'>@p0</td>
 		<td class='type'>TIMESTAMP, result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
 	</tr>
 </table>
 <p></p>
@@ -4760,6 +5112,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the number of bytes in the given &lt;code&gt;String&lt;/code&gt;. This includes trailing blanks.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -4781,6 +5141,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the absolute value of the given &lt;code&gt;double&lt;/code&gt; value.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -4801,6 +5169,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the Unicode code value of the leftmost character of &lt;code&gt;s&lt;/code&gt; as an &lt;code&gt;int&lt;/code&gt;. This is the same as the ASCII value if the string contains only ASCII characters.</td>
 	</tr>
 </table>
 <p></p>
@@ -4828,6 +5204,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the bit-wise logical &lt;em&gt;and&lt;/em&gt; of the given integer values.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -4848,6 +5232,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the number of bits in the given &lt;code&gt;String&lt;/code&gt;. This includes trailing blanks.</td>
 	</tr>
 </table>
 <p></p>
@@ -4875,6 +5267,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the bit-wise logical &lt;em&gt;xor&lt;/em&gt; of the given integer values.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -4898,9 +5298,6 @@ ADDRESS1, ADDRESS2
 		<td class='subname'>@p0</td>
 		<td class='type'>INTEGER, result</td>
 	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
 </table>
 <p></p>
 
@@ -4921,6 +5318,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the character string corresponding to the given ASCII (or Unicode) value. &lt;b&gt;Note:&lt;/b&gt; &lt;p&gt; In some SQL CLI implementations, a &lt;CODE&gt;null&lt;/CODE&gt; is returned if the range is outside 0..255. In HSQLDB, the corresponding Unicode character is returned unchecked.</td>
 	</tr>
 </table>
 <p></p>
@@ -4948,6 +5353,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a &lt;CODE&gt;String&lt;/CODE&gt; object that is the result of an &lt;em&gt;SQL-style&lt;/em&gt; concatenation of the given &lt;CODE&gt;String&lt;/CODE&gt; objects. &lt;p&gt; &lt;b&gt;Note:&lt;/b&gt; by &lt;em&gt;SQL-style&lt;/em&gt;, it is meant: &lt;UL&gt; &lt;LI&gt; if both &lt;CODE&gt;String&lt;/CODE&gt; objects are &lt;CODE&gt;null&lt;/CODE&gt;, return &lt;CODE&gt;null&lt;/CODE&gt; &lt;LI&gt; if only one string is &lt;CODE&gt;null&lt;/CODE&gt;, return the other &lt;LI&gt; if both &lt;CODE&gt;String&lt;/CODE&gt; objects are non-null, return as a &lt;CODE&gt;String&lt;/CODE&gt; object the character sequence obtained by listing, in left to right order, the characters of the first string followed by the characters of the second &lt;/UL&gt;</td>
+	</tr>
 </table>
 <p></p>
 
@@ -4969,6 +5382,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the cotangent of the given &lt;code&gt;double&lt;/code&gt; value expressed in radians.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -4982,9 +5403,6 @@ ADDRESS1, ADDRESS2
 		<td class='subname'>@p0</td>
 		<td class='type'>DATE, result</td>
 	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
 </table>
 <p></p>
 
@@ -4997,9 +5415,6 @@ ADDRESS1, ADDRESS2
 		<td class='ordinal'></td>
 		<td class='subname'>@p0</td>
 		<td class='type'>TIME, result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
 	</tr>
 </table>
 <p></p>
@@ -5016,6 +5431,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the name of the database corresponding to this connection.</td>
 	</tr>
 </table>
 <p></p>
@@ -5048,6 +5471,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the number of date and time boundaries crossed between two specified datetime values.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -5068,6 +5499,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a character string containing the name of the day (Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday ) for the day portion of the given &lt;code&gt;java.sql.Date&lt;/code&gt;.</td>
 	</tr>
 </table>
 <p></p>
@@ -5090,6 +5529,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the day of the month from the given date value, as an integer value in the range of 1-31.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -5111,6 +5558,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the day of the week from the given date value, as an integer value in the range 1-7, where 1 represents Sunday.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -5131,6 +5586,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the day of the year from the given date value, as an integer value in the range 1-366.</td>
 	</tr>
 </table>
 <p></p>
@@ -5158,6 +5621,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a count of the characters that do not match when comparing the 4 digit numeric SOUNDEX character sequences for the given &lt;code&gt;String&lt;/code&gt; objects. If either &lt;code&gt;String&lt;/code&gt; object is &lt;code&gt;null&lt;/code&gt;, zero is returned.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -5174,6 +5645,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Retrieves the autocommit status of this connection. &lt;p&gt;</td>
+	</tr>
 </table>
 <p></p>
 
@@ -5186,9 +5665,6 @@ ADDRESS1, ADDRESS2
 		<td class='ordinal'></td>
 		<td class='subname'>@p0</td>
 		<td class='type'>LONGVARCHAR, result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
 	</tr>
 </table>
 <p></p>
@@ -5206,6 +5682,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Retrieves the major version number of this database. &lt;p&gt;</td>
+	</tr>
 </table>
 <p></p>
 
@@ -5221,6 +5705,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Retrieves the major version number of this database. &lt;p&gt;</td>
 	</tr>
 </table>
 <p></p>
@@ -5238,6 +5730,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Retrieves the name of this database product. &lt;p&gt;</td>
+	</tr>
 </table>
 <p></p>
 
@@ -5253,6 +5753,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Retrieves the version number of this database product. &lt;p&gt;</td>
 	</tr>
 </table>
 <p></p>
@@ -5275,6 +5783,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Converts a &lt;code&gt;String&lt;/code&gt; of hexidecimal digit characters to a raw binary value, represented as a &lt;code&gt;String&lt;/code&gt;.&lt;p&gt; The given &lt;code&gt;String&lt;/code&gt; object must consist of a sequence of 4 digit hexidecimal character substrings.&lt;p&gt; If its length is not evenly divisible by 4, &lt;code&gt;null&lt;/code&gt; is returned. If any any of its 4 character subsequences cannot be parsed as a 4 digit, base 16 value, then a NumberFormatException is thrown. This conversion has the effect of reducing the character count 4:1.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -5296,6 +5812,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the hour from the given time value, as an integer value in the range of 0-23.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -5311,6 +5835,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Retrieves the last auto-generated integer indentity value used by this connection. As of 1.7.1 this is a dummy function. The return value is supplied directly by Function.java</td>
 	</tr>
 </table>
 <p></p>
@@ -5348,6 +5880,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a character sequence which is the result of writing the first &lt;code&gt;length&lt;/code&gt; number of characters from the second given &lt;code&gt;String&lt;/code&gt; over the first string. The start position in the first string where the characters are overwritten is given by &lt;code&gt;start&lt;/code&gt;.&lt;p&gt; &lt;b&gt;Note:&lt;/b&gt; In order of precedence, boundry conditions are handled as follows:&lt;p&gt; &lt;UL&gt; &lt;LI&gt;if either supplied &lt;code&gt;String&lt;/code&gt; is null, then the other is returned; the check starts with the first given &lt;code&gt;String&lt;/code&gt;. &lt;LI&gt;if &lt;code&gt;start&lt;/code&gt; is less than one, &lt;code&gt;s1&lt;/code&gt; is returned &lt;LI&gt;if &lt;code&gt;length&lt;/code&gt; is less than or equal to zero, &lt;code&gt;s1&lt;/code&gt; is returned &lt;LI&gt;if the length of &lt;code&gt;s2&lt;/code&gt; is zero, &lt;code&gt;s1&lt;/code&gt; is returned &lt;LI&gt;if &lt;code&gt;start&lt;/code&gt; is greater than the length of &lt;code&gt;s1&lt;/code&gt;, &lt;code&gt;s1&lt;/code&gt; is returned &lt;LI&gt;if &lt;code&gt;length&lt;/code&gt; is such that, taken together with &lt;code&gt;start&lt;/code&gt;, the indicated interval extends beyond the end of &lt;code&gt;s1&lt;/code&gt;, then the insertion is performed precisely as if upon a copy of &lt;code&gt;s1&lt;/code&gt; extended in length to just include the indicated interval &lt;/UL&gt;</td>
+	</tr>
 </table>
 <p></p>
 
@@ -5363,6 +5903,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Retrieves whether this connection is in read-only mode. &lt;p&gt;</td>
 	</tr>
 </table>
 <p></p>
@@ -5380,6 +5928,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Retrieves whether this database is in read-only mode. &lt;p&gt;</td>
+	</tr>
 </table>
 <p></p>
 
@@ -5395,6 +5951,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Retrieves whether the files of this database are in read-only mode.</td>
 	</tr>
 </table>
 <p></p>
@@ -5416,6 +5980,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a copy of the given &lt;code&gt;String&lt;/code&gt;, with all upper case characters converted to lower case. This uses the default Java String conversion.</td>
 	</tr>
 </table>
 <p></p>
@@ -5443,6 +6015,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the leftmost &lt;code&gt;count&lt;/code&gt; characters from the given &lt;code&gt;String&lt;/code&gt;. &lt;p&gt; &lt;b&gt;Note:&lt;/b&gt; boundry conditions are handled in the following order of precedence: &lt;UL&gt; &lt;LI&gt;if &lt;code&gt;s&lt;/code&gt; is &lt;code&gt;null&lt;/code&gt;, then &lt;code&gt;null&lt;/code&gt; is returned &lt;LI&gt;if &lt;code&gt;count&lt;/code&gt; is less than 1, then a zero-length &lt;code&gt;String&lt;/code&gt; is returned &lt;LI&gt;if &lt;code&gt;count&lt;/code&gt; is greater than the length of &lt;code&gt;s&lt;/code&gt;, then a copy of &lt;code&gt;s&lt;/code&gt; is returned &lt;/UL&gt;</td>
+	</tr>
 </table>
 <p></p>
 
@@ -5463,6 +6043,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the number of characters in the given &lt;code&gt;String&lt;/code&gt;. This includes trailing blanks.</td>
 	</tr>
 </table>
 <p></p>
@@ -5495,6 +6083,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the starting position of the first occurrence of the given &lt;code&gt;search&lt;/code&gt; &lt;code&gt;String&lt;/code&gt; object within the given &lt;code&gt;String&lt;/code&gt; object, &lt;code&gt;s&lt;/code&gt;. The search for the first occurrence of &lt;code&gt;search&lt;/code&gt; begins with the first character position in &lt;code&gt;s&lt;/code&gt;, unless the optional argument, &lt;code&gt;start&lt;/code&gt;, is specified (non-null). If &lt;code&gt;start&lt;/code&gt; is specified, the search begins with the character position indicated by the value of &lt;code&gt;start&lt;/code&gt;, where the first character position in &lt;code&gt;s&lt;/code&gt; is indicated by the value 1. If &lt;code&gt;search&lt;/code&gt; is not found within &lt;code&gt;s&lt;/code&gt;, the value 0 is returned.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -5515,6 +6111,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the base 10 logarithm of the given &lt;code&gt;double&lt;/code&gt; value.</td>
 	</tr>
 </table>
 <p></p>
@@ -5537,6 +6141,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the characters of the given &lt;code&gt;String&lt;/code&gt;, with the leading spaces removed. Characters such as TAB are not removed.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -5557,6 +6169,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the minute from the given time value, as integer value in the range of 0-59.</td>
 	</tr>
 </table>
 <p></p>
@@ -5584,6 +6204,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the remainder (modulus) of the first given integer divided by the second. &lt;p&gt;</td>
+	</tr>
 </table>
 <p></p>
 
@@ -5604,6 +6232,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the month from the given date value, as an integer value in the range of 1-12 or 0-11. &lt;p&gt; If the sql_month database property is set &lt;code&gt;true&lt;/code&gt;, then the range is 1-12, else 0-11</td>
 	</tr>
 </table>
 <p></p>
@@ -5626,6 +6262,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a character string containing the name of month (January, February, March, April, May, June, July, August, September, October, November, December) for the month portion of the given date value.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -5638,9 +6282,6 @@ ADDRESS1, ADDRESS2
 		<td class='ordinal'></td>
 		<td class='subname'>@p0</td>
 		<td class='type'>TIMESTAMP, result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
 	</tr>
 </table>
 <p></p>
@@ -5663,6 +6304,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the number of bytes in the given &lt;code&gt;String&lt;/code&gt;. This includes trailing blanks.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -5678,6 +6327,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the constant value, pi.</td>
 	</tr>
 </table>
 <p></p>
@@ -5705,6 +6362,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the starting position of the first occurrence of the given &lt;code&gt;search&lt;/code&gt; &lt;code&gt;String&lt;/code&gt; object within the given &lt;code&gt;String&lt;/code&gt; object, &lt;code&gt;s&lt;/code&gt;.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -5725,6 +6390,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the quarter of the year in the given date value, as an integer value in the range of 1-4.</td>
 	</tr>
 </table>
 <p></p>
@@ -5747,6 +6420,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the next pseudorandom, uniformly distributed &lt;CODE&gt;double&lt;/CODE&gt; value between 0.0 and 1.0 from a single, system-wide random number generator&apos;s sequence, optionally re-seeding (and thus resetting) the generator sequence. If the seed value is &lt;CODE&gt;null&lt;/CODE&gt;, then the underlying random number generator retrieves the next value in its current sequence, else the seed alters the state of the generator object so as to be in exactly the same state as if it had just been created with the seed value.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -5767,6 +6448,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Converts a raw binary value, as represented by the given &lt;code&gt;String&lt;/code&gt;, to the equivalent &lt;code&gt;String&lt;/code&gt; of hexidecimal digit characters. &lt;p&gt; This conversion has the effect of expanding the character count 1:4.</td>
 	</tr>
 </table>
 <p></p>
@@ -5793,6 +6482,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a &lt;code&gt;String&lt;/code&gt; composed of the given &lt;code&gt;String&lt;/code&gt;, repeated &lt;code&gt;count&lt;/code&gt; times.</td>
 	</tr>
 </table>
 <p></p>
@@ -5825,6 +6522,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Replaces all occurrences of &lt;code&gt;replace&lt;/code&gt; in &lt;code&gt;s&lt;/code&gt; with the &lt;code&gt;String&lt;/code&gt; object: &lt;code&gt;with&lt;/code&gt;</td>
+	</tr>
 </table>
 <p></p>
 
@@ -5850,6 +6555,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the rightmost &lt;code&gt;count&lt;/code&gt; characters of the given &lt;code&gt;String&lt;/code&gt;, &lt;code&gt;s&lt;/code&gt;. &lt;b&gt;Note:&lt;/b&gt; boundry conditions are handled in the following order of precedence: &lt;UL&gt; &lt;LI&gt; if &lt;code&gt;s&lt;/code&gt; is &lt;CODE&gt;null&lt;/CODE&gt;, &lt;CODE&gt;null&lt;/CODE&gt; is returned &lt;LI&gt; if &lt;code&gt;count&lt;/code&gt; is less than one, a zero-length &lt;code&gt;String&lt;/code&gt; is returned &lt;LI&gt; if &lt;code&gt;count&lt;/code&gt; is greater than the length of &lt;code&gt;s&lt;/code&gt;, a copy of &lt;code&gt;s&lt;/code&gt; is returned &lt;/UL&gt;</td>
 	</tr>
 </table>
 <p></p>
@@ -5877,6 +6590,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the given &lt;code&gt;double&lt;/code&gt; value, rounded to the given &lt;code&gt;int&lt;/code&gt; places right of the decimal point. If the supplied rounding place value is negative, rounding is performed to the left of the decimal point, using its magnitude (absolute value).</td>
+	</tr>
 </table>
 <p></p>
 
@@ -5897,6 +6618,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Retrieves a &lt;em&gt;magically&lt;/em&gt; rounded &lt;/code&gt;double&lt;/code&gt; value produced from the given &lt;code&gt;double&lt;/code&gt; value. This method provides special handling for numbers close to zero and performs rounding only for numbers within a specific range, returning precisely the given value if it does not lie in this range. &lt;p&gt; Special handling includes: &lt;p&gt; &lt;UL&gt; &lt;LI&gt; input in the interval -0.0000000000001..0.0000000000001 returns 0.0 &lt;LI&gt; input outside the interval -1000000000000..1000000000000 returns input unchanged &lt;LI&gt; input is converted to String form &lt;LI&gt; input with a &lt;CODE&gt;String&lt;/CODE&gt; form length greater than 16 returns input unchaged &lt;LI&gt; &lt;CODE&gt;String&lt;/CODE&gt; form with last four characters of &apos;...000x&apos; where x != &apos;.&apos; is converted to &apos;...0000&apos; &lt;LI&gt; &lt;CODE&gt;String&lt;/CODE&gt; form with last four characters of &apos;...9999&apos; is converted to &apos;...999999&apos; &lt;LI&gt; the &lt;CODE&gt;java.lang.Double.doubleValue&lt;/CODE&gt; of the &lt;CODE&gt;String&lt;/CODE&gt; form is returned &lt;/UL&gt;</td>
 	</tr>
 </table>
 <p></p>
@@ -5919,6 +6648,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the characters of the given &lt;code&gt;String&lt;/code&gt;, with trailing spaces removed.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -5939,6 +6676,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the second of the given time value, as an integer value in the range of 0-59.</td>
 	</tr>
 </table>
 <p></p>
@@ -5961,6 +6706,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns an indicator of the sign of the given &lt;code&gt;double&lt;/code&gt; value. If the value is less than zero, -1 is returned. If the value equals zero, 0 is returned. If the value is greater than zero, 1 is returned.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -5982,6 +6735,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a four character code representing the sound of the given &lt;code&gt;String&lt;/code&gt;. Non-ASCCI characters in the input &lt;code&gt;String&lt;/code&gt; are ignored. &lt;p&gt; This method was rewritten for HSQLDB by fredt@users to comply with the description at &lt;a href=&quot;http://www.nara.gov/genealogy/coding.html&quot;&gt; http://www.nara.gov/genealogy/coding.html&lt;/a&gt;.&lt;p&gt;</td>
+	</tr>
 </table>
 <p></p>
 
@@ -6002,6 +6763,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a &lt;code&gt;String&lt;/code&gt; consisting of &lt;code&gt;count&lt;/code&gt; spaces, or &lt;code&gt;null&lt;/code&gt; if &lt;code&gt;count&lt;/code&gt; is less than zero. &lt;p&gt;</td>
 	</tr>
 </table>
 <p></p>
@@ -6034,6 +6803,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the characters from the given &lt;code&gt;String&lt;/code&gt;, staring at the indicated one-based &lt;code&gt;start&lt;/code&gt; position and extending the (optional) indicated &lt;code&gt;length&lt;/code&gt;. If &lt;code&gt;length&lt;/code&gt; is not specified (is &lt;code&gt;null&lt;/code&gt;), the remainder of &lt;code&gt;s&lt;/code&gt; is implied.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -6056,9 +6833,6 @@ ADDRESS1, ADDRESS2
 		<td class='ordinal'></td>
 		<td class='subname'>@p0</td>
 		<td class='type'>LONGVARCHAR, result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
 	</tr>
 </table>
 <p></p>
@@ -6096,6 +6870,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Retrieves a character sequence derived from &lt;code&gt;s&lt;/code&gt; with the leading, trailing or both leading and trailing occurances of &lt;code&gt;trimstr&lt;/code&gt; removed</td>
+	</tr>
 </table>
 <p></p>
 
@@ -6122,6 +6904,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the given &lt;code&gt;double&lt;/code&gt; value, truncated to the given &lt;code&gt;int&lt;/code&gt; places right of the decimal point. If the given place value is negative, the given &lt;code&gt;double&lt;/code&gt; value is truncated to the left of the decimal point, using the magnitude (aboslute value) of the place value.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -6143,6 +6933,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a copy of the given &lt;code&gt;String&lt;/code&gt;, with all lower case characters converted to upper case using the default Java method.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -6158,6 +6956,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the user&apos;s authorization name (the user&apos;s name as known to this database).</td>
 	</tr>
 </table>
 <p></p>
@@ -6180,6 +6986,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the week of the year from the given date value, as an integer value in the range of 1-53.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -6201,6 +7015,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the year from the given date value, as an integer value in the range of 1-9999.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -6216,6 +7038,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the constant value, pi.</td>
 	</tr>
 </table>
 <p></p>
@@ -6243,6 +7073,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns of value of the first argument raised to the power of the second argument. Special cases: &lt;ul&gt;&lt;li&gt;If the second argument is positive or negative zero, then the result is 1.0. &lt;li&gt;If the second argument is 1.0, then the result is the same as the first argument. &lt;li&gt;If the second argument is NaN, then the result is NaN. &lt;li&gt;If the first argument is NaN and the second argument is nonzero, then the result is NaN. &lt;li&gt;If the absolute value of the first argument is greater than 1 and the second argument is positive infinity, or the absolute value of the first argument is less than 1 and the second argument is negative infinity, then the result is positive infinity. &lt;li&gt;If the absolute value of the first argument is greater than 1 and the second argument is negative infinity, or the absolute value of the first argument is less than 1 and the second argument is positive infinity, then the result is positive zero. &lt;li&gt;If the absolute value of the first argument equals 1 and the second argument is infinite, then the result is NaN. &lt;li&gt;If the first argument is positive zero and the second argument is greater than zero, or the first argument is positive infinity and the second argument is less than zero, then the result is positive zero. &lt;li&gt;If the first argument is positive zero and the second argument is less than zero, or the first argument is positive infinity and the second argument is greater than zero, then the result is positive infinity. &lt;li&gt;If the first argument is negative zero and the second argument is greater than zero but not a finite odd integer, or the first argument is negative infinity and the second argument is less than zero but not a finite odd integer, then the result is positive zero. &lt;li&gt;If the first argument is negative zero and the second argument is a positive finite odd integer, or the first argument is negative infinity and the second argument is a negative finite odd integer, then the result is negative zero. &lt;li&gt;If the first argument is negative zero and the second argument is less than zero but not a finite odd integer, or the first argument is negative infinity and the second argument is greater than zero but not a finite odd integer, then the result is positive infinity. &lt;li&gt;If the first argument is negative zero and the second argument is a negative finite odd integer, or the first argument is negative infinity and the second argument is a positive finite odd integer, then the result is negative infinity. &lt;li&gt;If the first argument is less than zero and the second argument is a finite even integer, then the result is equal to the result of raising the absolute value of the first argument to the power of the second argument. &lt;li&gt;If the first argument is less than zero and the second argument is a finite odd integer, then the result is equal to the negative of the result of raising the absolute value of the first argument to the power of the second argument. &lt;li&gt;If the first argument is finite and less than zero and the second argument is finite and not an integer, then the result is NaN. &lt;li&gt;If both arguments are integers, then the result is exactly equal to the mathematical result of raising the first argument to the power of the second argument if that result can in fact be represented exactly as a double value.&lt;/ul&gt; &lt;p&gt;(In the foregoing descriptions, a floating-point value is considered to be an integer if and only if it is a fixed point of the method {@link #ceil &lt;tt&gt;ceil&lt;/tt&gt;} or, equivalently, a fixed point of the method {@link #floor &lt;tt&gt;floor&lt;/tt&gt;}. A value is a fixed point of a one-argument method if and only if the result of applying the method to the value is equal to the value.) &lt;p&gt; A result must be within 1 ulp of the correctly rounded result. Results must be semi-monotonic.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -6263,6 +7101,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the quarter of the year in the given date value, as an integer value in the range of 1-4.</td>
 	</tr>
 </table>
 <p></p>
@@ -6285,6 +7131,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Converts an angle measured in degrees to an approximately equivalent angle measured in radians. The conversion from degrees to radians is generally inexact.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -6300,6 +7154,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a &lt;code&gt;double&lt;/code&gt; value with a positive sign, greater than or equal to &lt;code&gt;0.0&lt;/code&gt; and less than &lt;code&gt;1.0&lt;/code&gt;. Returned values are chosen pseudorandomly with (approximately) uniform distribution from that range. &lt;p&gt; When this method is first called, it creates a single new pseudorandom-number generator, exactly as if by the expression &lt;blockquote&gt;&lt;pre&gt;new java.util.Random&lt;/pre&gt;&lt;/blockquote&gt; This new pseudorandom-number generator is used thereafter for all calls to this method and is used nowhere else. &lt;p&gt; This method is properly synchronized to allow correct use by more than one thread. However, if many threads need to generate pseudorandom numbers at a great rate, it may reduce contention for each thread to have its own pseudorandom-number generator.</td>
 	</tr>
 </table>
 <p></p>
@@ -6321,6 +7183,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Converts a raw binary value, as represented by the given &lt;code&gt;String&lt;/code&gt;, to the equivalent &lt;code&gt;String&lt;/code&gt; of hexidecimal digit characters. &lt;p&gt; This conversion has the effect of expanding the character count 1:4.</td>
 	</tr>
 </table>
 <p></p>
@@ -6347,6 +7217,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a &lt;code&gt;String&lt;/code&gt; composed of the given &lt;code&gt;String&lt;/code&gt;, repeated &lt;code&gt;count&lt;/code&gt; times.</td>
 	</tr>
 </table>
 <p></p>
@@ -6379,6 +7257,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Replaces all occurrences of &lt;code&gt;replace&lt;/code&gt; in &lt;code&gt;s&lt;/code&gt; with the &lt;code&gt;String&lt;/code&gt; object: &lt;code&gt;with&lt;/code&gt;</td>
+	</tr>
 </table>
 <p></p>
 
@@ -6404,6 +7290,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the rightmost &lt;code&gt;count&lt;/code&gt; characters of the given &lt;code&gt;String&lt;/code&gt;, &lt;code&gt;s&lt;/code&gt;. &lt;b&gt;Note:&lt;/b&gt; boundry conditions are handled in the following order of precedence: &lt;UL&gt; &lt;LI&gt; if &lt;code&gt;s&lt;/code&gt; is &lt;CODE&gt;null&lt;/CODE&gt;, &lt;CODE&gt;null&lt;/CODE&gt; is returned &lt;LI&gt; if &lt;code&gt;count&lt;/code&gt; is less than one, a zero-length &lt;code&gt;String&lt;/code&gt; is returned &lt;LI&gt; if &lt;code&gt;count&lt;/code&gt; is greater than the length of &lt;code&gt;s&lt;/code&gt;, a copy of &lt;code&gt;s&lt;/code&gt; is returned &lt;/UL&gt;</td>
 	</tr>
 </table>
 <p></p>
@@ -6431,6 +7325,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the given &lt;code&gt;double&lt;/code&gt; value, rounded to the given &lt;code&gt;int&lt;/code&gt; places right of the decimal point. If the supplied rounding place value is negative, rounding is performed to the left of the decimal point, using its magnitude (absolute value).</td>
+	</tr>
 </table>
 <p></p>
 
@@ -6451,6 +7353,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Retrieves a &lt;em&gt;magically&lt;/em&gt; rounded &lt;/code&gt;double&lt;/code&gt; value produced from the given &lt;code&gt;double&lt;/code&gt; value. This method provides special handling for numbers close to zero and performs rounding only for numbers within a specific range, returning precisely the given value if it does not lie in this range. &lt;p&gt; Special handling includes: &lt;p&gt; &lt;UL&gt; &lt;LI&gt; input in the interval -0.0000000000001..0.0000000000001 returns 0.0 &lt;LI&gt; input outside the interval -1000000000000..1000000000000 returns input unchanged &lt;LI&gt; input is converted to String form &lt;LI&gt; input with a &lt;CODE&gt;String&lt;/CODE&gt; form length greater than 16 returns input unchaged &lt;LI&gt; &lt;CODE&gt;String&lt;/CODE&gt; form with last four characters of &apos;...000x&apos; where x != &apos;.&apos; is converted to &apos;...0000&apos; &lt;LI&gt; &lt;CODE&gt;String&lt;/CODE&gt; form with last four characters of &apos;...9999&apos; is converted to &apos;...999999&apos; &lt;LI&gt; the &lt;CODE&gt;java.lang.Double.doubleValue&lt;/CODE&gt; of the &lt;CODE&gt;String&lt;/CODE&gt; form is returned &lt;/UL&gt;</td>
 	</tr>
 </table>
 <p></p>
@@ -6473,6 +7383,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the characters of the given &lt;code&gt;String&lt;/code&gt;, with trailing spaces removed.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -6493,6 +7411,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the second of the given time value, as an integer value in the range of 0-59.</td>
 	</tr>
 </table>
 <p></p>
@@ -6515,6 +7441,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns an indicator of the sign of the given &lt;code&gt;double&lt;/code&gt; value. If the value is less than zero, -1 is returned. If the value equals zero, 0 is returned. If the value is greater than zero, 1 is returned.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -6535,6 +7469,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the trigonometric sine of an angle. Special cases: &lt;ul&gt;&lt;li&gt;If the argument is NaN or an infinity, then the result is NaN. &lt;li&gt;If the argument is zero, then the result is a zero with the same sign as the argument.&lt;/ul&gt; &lt;p&gt; A result must be within 1 ulp of the correctly rounded result. Results must be semi-monotonic.</td>
 	</tr>
 </table>
 <p></p>
@@ -6557,6 +7499,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a four character code representing the sound of the given &lt;code&gt;String&lt;/code&gt;. Non-ASCCI characters in the input &lt;code&gt;String&lt;/code&gt; are ignored. &lt;p&gt; This method was rewritten for HSQLDB by fredt@users to comply with the description at &lt;a href=&quot;http://www.nara.gov/genealogy/coding.html&quot;&gt; http://www.nara.gov/genealogy/coding.html&lt;/a&gt;.&lt;p&gt;</td>
+	</tr>
 </table>
 <p></p>
 
@@ -6578,6 +7528,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a &lt;code&gt;String&lt;/code&gt; consisting of &lt;code&gt;count&lt;/code&gt; spaces, or &lt;code&gt;null&lt;/code&gt; if &lt;code&gt;count&lt;/code&gt; is less than zero. &lt;p&gt;</td>
+	</tr>
 </table>
 <p></p>
 
@@ -6598,6 +7556,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the correctly rounded positive square root of a &lt;code&gt;double&lt;/code&gt; value. Special cases: &lt;ul&gt;&lt;li&gt;If the argument is NaN or less than zero, then the result is NaN. &lt;li&gt;If the argument is positive infinity, then the result is positive infinity. &lt;li&gt;If the argument is positive zero or negative zero, then the result is the same as the argument.&lt;/ul&gt; Otherwise, the result is the &lt;code&gt;double&lt;/code&gt; value closest to the true mathematical square root of the argument value.</td>
 	</tr>
 </table>
 <p></p>
@@ -6630,6 +7596,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the characters from the given &lt;code&gt;String&lt;/code&gt;, staring at the indicated one-based &lt;code&gt;start&lt;/code&gt; position and extending the (optional) indicated &lt;code&gt;length&lt;/code&gt;. If &lt;code&gt;length&lt;/code&gt; is not specified (is &lt;code&gt;null&lt;/code&gt;), the remainder of &lt;code&gt;s&lt;/code&gt; is implied.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -6661,6 +7635,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the characters from the given &lt;code&gt;String&lt;/code&gt;, staring at the indicated one-based &lt;code&gt;start&lt;/code&gt; position and extending the (optional) indicated &lt;code&gt;length&lt;/code&gt;. If &lt;code&gt;length&lt;/code&gt; is not specified (is &lt;code&gt;null&lt;/code&gt;), the remainder of &lt;code&gt;s&lt;/code&gt; is implied.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -6681,6 +7663,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the trigonometric tangent of an angle. Special cases: &lt;ul&gt;&lt;li&gt;If the argument is NaN or an infinity, then the result is NaN. &lt;li&gt;If the argument is zero, then the result is a zero with the same sign as the argument.&lt;/ul&gt; &lt;p&gt; A result must be within 1 ulp of the correctly rounded result. Results must be semi-monotonic.</td>
 	</tr>
 </table>
 <p></p>
@@ -6704,9 +7694,6 @@ ADDRESS1, ADDRESS2
 		<td class='ordinal'></td>
 		<td class='subname'>@p0</td>
 		<td class='type'>LONGVARCHAR, result</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
 	</tr>
 </table>
 <p></p>
@@ -6734,6 +7721,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the given &lt;code&gt;double&lt;/code&gt; value, truncated to the given &lt;code&gt;int&lt;/code&gt; places right of the decimal point. If the given place value is negative, the given &lt;code&gt;double&lt;/code&gt; value is truncated to the left of the decimal point, using the magnitude (aboslute value) of the place value.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -6754,6 +7749,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a copy of the given &lt;code&gt;String&lt;/code&gt;, with all lower case characters converted to upper case using the default Java method.</td>
 	</tr>
 </table>
 <p></p>
@@ -6776,6 +7779,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a copy of the given &lt;code&gt;String&lt;/code&gt;, with all lower case characters converted to upper case using the default Java method.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -6791,6 +7802,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the user&apos;s authorization name (the user&apos;s name as known to this database).</td>
 	</tr>
 </table>
 <p></p>
@@ -6813,6 +7832,14 @@ ADDRESS1, ADDRESS2
 	<tr>
 		<td colspan='4'></td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the week of the year from the given date value, as an integer value in the range of 1-53.</td>
+	</tr>
 </table>
 <p></p>
 
@@ -6833,6 +7860,14 @@ ADDRESS1, ADDRESS2
 	</tr>
 	<tr>
 		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the year from the given date value, as an integer value in the range of 1-9999.</td>
 	</tr>
 </table>
 <p></p>
