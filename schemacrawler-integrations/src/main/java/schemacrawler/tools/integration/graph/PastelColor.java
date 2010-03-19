@@ -33,7 +33,8 @@ public final class PastelColor
 
   private static int colorValue()
   {
-    return (int) (Math.random() * 60 + 190);
+    final int colorBase = 180;
+    return (int) (Math.random() * (255 - colorBase) + colorBase);
   }
 
   private final Color color;
