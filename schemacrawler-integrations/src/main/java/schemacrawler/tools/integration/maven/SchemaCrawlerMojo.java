@@ -38,6 +38,7 @@ import org.apache.maven.reporting.MavenReportException;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
+import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.commandline.InfoLevel;
 import schemacrawler.tools.executable.Executable;
@@ -134,12 +135,38 @@ public class SchemaCrawlerMojo
   private String command;
 
   /**
+   * Sort tables alphabetically.
+   * 
+   * @parameter expression="${sorttables}" alias="sorttables"
+   */
+  private String sorttables = "true";
+
+  /**
+   * Sort columns in a table alphabetically.
+   * 
+   * @parameter expression="${sortcolumns}" alias="sortcolumns"
+   */
+  private String sortcolumns = "false";
+
+  /**
+   * Sort parameters in a stored procedure alphabetically.
+   * 
+   * @parameter expression="${sortinout}" alias="sortinout"
+   */
+  private String sortinout = "false";
+
+  /**
    * The info level determines the amount of database metadata
    * retrieved, and also determines the time taken to crawl the schema.
    * 
    * @parameter expression="${infolevel}" alias="infolevel"
    */
-  private final String infolevel = InfoLevel.standard.name();
+  private String infolevel = InfoLevel.standard.name();
+
+  /**
+   * @parameter expression="${schemas}" alias="schemas"
+   */
+  private String schemas = InclusionRule.ALL;
 
   /**
    * Comma-separated list of table types of
@@ -155,7 +182,45 @@ public class SchemaCrawlerMojo
    * @parameter expression="${show_stored_procedures}"
    *            alias="show_stored_procedures"
    */
-  private final String show_stored_procedures = Boolean.TRUE.toString();
+  private String show_stored_procedures = Boolean.TRUE.toString();
+
+  /**
+   * Regular expression to match fully qualified table names, in the
+   * form "CATALOGNAME.SCHEMANAME.TABLENAME" - for example,
+   * .*\.C.*|.*\.P.* Tables that do not match the pattern are not
+   * displayed.
+   * 
+   * @parameter expression="${tables}" alias="tables"
+   */
+  private String tables = InclusionRule.ALL;
+
+  /**
+   * Regular expression to match fully qualified column names, in the
+   * form "CATALOGNAME.SCHEMANAME.TABLENAME.COLUMNNAME" - for example,
+   * .*\.STREET|.*\.PRICE matches columns named STREET or PRICE in any
+   * table Columns that match the pattern are not displayed
+   * 
+   * @parameter expression="${excludecolumns}" alias="excludecolumns"
+   */
+  private String excludecolumns = InclusionRule.NONE;
+
+  /**
+   * Regular expression to match fully qualified procedure names, in the
+   * form "CATALOGNAME.SCHEMANAME.PROCEDURENAME" - for example,
+   * .*\.C.*|.*\.P.* matches any procedures whose names start with C or
+   * P Procedures that do not match the pattern are not displayed
+   * 
+   * @parameter expression="${schemas}" alias="schemas"
+   */
+  private String procedures = InclusionRule.ALL;
+
+  /**
+   * Regular expression to match fully qualified parameter names.
+   * Parameters that match the pattern are not displayed
+   * 
+   * @parameter expression="${schemas}" alias="schemas"
+   */
+  private String excludeinout = InclusionRule.NONE;
 
   /**
    * {@inheritDoc}
@@ -205,32 +270,29 @@ public class SchemaCrawlerMojo
     {
       schemaCrawlerOptions.setTableTypes(table_types);
     }
-    // schemaCrawlerOptions.setShowStoredProcedures(Boolean
-    // .parseBoolean(show_stored_procedures));
-    // schemaCrawlerOptions.setAlphabeticalSortForTables(Boolean
-    // .parseBoolean(sorttables));
-    // schemaCrawlerOptions.setAlphabeticalSortForTableColumns(Boolean
-    // .parseBoolean(sortcolumns));
-    // schemaCrawlerOptions.setAlphabeticalSortForProcedureColumns(Boolean
-    // .parseBoolean(sortinout));
-    // schemaCrawlerOptions.setSchemaInfoLevel(InfoLevel.valueOf(infolevel)
-    // .getSchemaInfoLevel());
-    // schemaCrawlerOptions
-    // .setSchemaInclusionRule(new InclusionRule(schemas,
-    // InclusionRule.NONE));
-    // schemaCrawlerOptions
-    // .setTableInclusionRule(new InclusionRule(tables,
-    // InclusionRule.NONE));
-    // schemaCrawlerOptions
-    // .setProcedureInclusionRule(new InclusionRule(procedures,
-    // InclusionRule.NONE));
-    // schemaCrawlerOptions
-    // .setColumnInclusionRule(new InclusionRule(InclusionRule.ALL,
-    // excludecolumns));
-    // schemaCrawlerOptions
-    // .setProcedureColumnInclusionRule(new
-    // InclusionRule(InclusionRule.ALL,
-    // excludeinout));
+    schemaCrawlerOptions.setShowStoredProcedures(Boolean
+      .parseBoolean(show_stored_procedures));
+    schemaCrawlerOptions.setAlphabeticalSortForTables(Boolean
+      .parseBoolean(sorttables));
+    schemaCrawlerOptions.setAlphabeticalSortForTableColumns(Boolean
+      .parseBoolean(sortcolumns));
+    schemaCrawlerOptions.setAlphabeticalSortForProcedureColumns(Boolean
+      .parseBoolean(sortinout));
+    schemaCrawlerOptions.setSchemaInfoLevel(InfoLevel.valueOf(infolevel)
+      .getSchemaInfoLevel());
+    schemaCrawlerOptions
+      .setSchemaInclusionRule(new InclusionRule(schemas, InclusionRule.NONE));
+    schemaCrawlerOptions
+      .setTableInclusionRule(new InclusionRule(tables, InclusionRule.NONE));
+    schemaCrawlerOptions
+      .setProcedureInclusionRule(new InclusionRule(procedures,
+                                                   InclusionRule.NONE));
+    schemaCrawlerOptions
+      .setColumnInclusionRule(new InclusionRule(InclusionRule.ALL,
+                                                excludecolumns));
+    schemaCrawlerOptions
+      .setProcedureColumnInclusionRule(new InclusionRule(InclusionRule.ALL,
+                                                         excludeinout));
     return schemaCrawlerOptions;
   }
 
