@@ -4,7 +4,7 @@
   <parent>
     <groupId>net.sourceforge.schemacrawler</groupId>
     <artifactId>schemacrawler-all</artifactId>
-    <version>8.2-SNAPSHOT</version>
+    <version>8.2</version>
   </parent>
   <groupId>net.sourceforge.schemacrawler</groupId>
   <artifactId>schemacrawler-oracle</artifactId>
