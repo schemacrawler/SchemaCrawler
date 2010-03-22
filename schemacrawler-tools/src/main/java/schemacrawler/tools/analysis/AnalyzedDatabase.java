@@ -92,7 +92,8 @@ public final class AnalyzedDatabase
         new LinterTableWithNoIndices(),
         new LinterTableWithNullColumnsInIndex(),
         new LinterTableWithNullIntendedColumns(),
-        new LinterTableWithSingleColumn()
+        new LinterTableWithSingleColumn(),
+        new LinterTableWithSpacesInColumnNames(),
     }));
     analyzeTables(infoLevel);
   }
