@@ -20,7 +20,7 @@ public class LinterTableWithSpacesInColumnNames
         .getColumns());
       if (columnsWithSpacesInNames.length > 0)
       {
-        addLint(table, new Lint("columns with spaces in name",
+        addLint(table, new Lint("spaces in column names",
           columnsWithSpacesInNames)
         {
 
