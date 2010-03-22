@@ -189,7 +189,7 @@ class NamedObjectList<N extends NamedObject>
   {
     final List<N> all = new ArrayList<N>(objects.values());
     Collections.sort(all, sort);
-    return Collections.unmodifiableList(all);
+    return all;
   }
 
 }
