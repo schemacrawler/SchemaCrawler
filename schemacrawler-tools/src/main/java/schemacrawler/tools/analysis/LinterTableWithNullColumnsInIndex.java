@@ -21,7 +21,7 @@ public class LinterTableWithNullColumnsInIndex
         .getIndices());
       if (nullableColumnsInUniqueIndex.length > 0)
       {
-        addLint(table, new Lint("unique indices have nullable columns",
+        addLint(table, new Lint("unique indices with nullable columns",
           nullableColumnsInUniqueIndex)
         {
 
