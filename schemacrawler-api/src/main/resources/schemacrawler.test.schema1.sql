@@ -62,6 +62,7 @@ CREATE INDEX IDX_A_Authors ON Authors(City, State, PostalCode, Country)
 ;
 
 -- Data
+
 INSERT INTO Publishers (Id,Publisher) VALUES (1,'Dalton Lewis');
 INSERT INTO Publishers (Id,Publisher) VALUES (2,'Macaulay Bryant');
 INSERT INTO Publishers (Id,Publisher) VALUES (3,'Nash Fox');
