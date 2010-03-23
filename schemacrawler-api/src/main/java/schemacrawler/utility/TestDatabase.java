@@ -117,9 +117,9 @@ public class TestDatabase
     try
     {
       final String[] scriptResources = new String[] {
-          "/schemacrawler.test.sql",
+          "/schemacrawler.test.schema1.sql",
           "/schemacrawler.test.extra.sql",
-          "/schemacrawler.test.other.sql"
+          "/schemacrawler.test.schema2.sql"
       };
       if (dataSource != null)
       {
