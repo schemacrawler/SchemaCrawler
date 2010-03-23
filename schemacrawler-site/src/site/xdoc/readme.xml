@@ -96,7 +96,7 @@
   <dependency>
     <groupId>net.sourceforge.schemacrawler</groupId>
     <artifactId>schemacrawler</artifactId>
-    <version>8.2-SNAPSHOT</version>
+    <version>8.2</version>
   </dependency>
 </dependencies>
         ]]></source>
