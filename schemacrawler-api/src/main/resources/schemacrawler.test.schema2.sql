@@ -17,7 +17,7 @@ CREATE TABLE Sales
   CONSTRAINT FK_Sales_Regions FOREIGN KEY (PostalCode, Country) REFERENCES Regions (PostalCode, Country)
 );
 
--- Sample Data
+-- Data
 
 INSERT INTO Regions (City,State,PostalCode,Country) VALUES ('Duluth','ND','82539','USA');
 INSERT INTO Regions (City,State,PostalCode,Country) VALUES ('Ogdensburg','AZ','50786','USA');
