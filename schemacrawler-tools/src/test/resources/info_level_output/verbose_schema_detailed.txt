@@ -292,7 +292,7 @@ FK_Y_BOOK                                  [foreign key, with no action]
 
 PUBLIC.GLOBALCOUNT                                               [table]
 ------------------------------------------------------------------------
-  GLOBALCOUNT                       INTEGER                     
+  Global Count                      INTEGER                     
 
 
 PUBLIC.PUBLISHERS                                                [table]
@@ -304,112 +304,37 @@ SYS_IDX_46                                                 [primary key]
   ID                                ascending                   
 
 
-SCHEMACRAWLER.CUSTOMER                                           [table]
+SALES.REGIONS                                                    [table]
 ------------------------------------------------------------------------
-  ID                                INTEGER not null            
-  FIRSTNAME                         VARCHAR(255)                
-  LASTNAME                          VARCHAR(255)                
-  STREET                            VARCHAR(255)                
-  CITY                              VARCHAR(255)                
+  CITY                              VARCHAR(50) not null        
+  STATE                             VARCHAR(2) not null         
+  POSTALCODE                        VARCHAR(10) not null        
+  COUNTRY                           VARCHAR(50) not null        
 
 SYS_IDX_58                                                 [primary key]
-  ID                                ascending                   
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
 
-FK_INVOICE_CUSTOMER                        [foreign key, with no action]
-  ID --> SCHEMACRAWLER.INVOICE.CUSTOMERID                              
+FK_SALES_REGIONS                           [foreign key, with no action]
+  POSTALCODE --> SALES.SALES.POSTALCODE                              
+  COUNTRY --> SALES.SALES.COUNTRY                               
 
 
-SCHEMACRAWLER.CUSTOMERLIST                                        [view]
+SALES.SALES                                                      [table]
 ------------------------------------------------------------------------
-  ID                                INTEGER                     
-  FIRSTNAME                         VARCHAR(255)                
-  LASTNAME                          VARCHAR(255)                
+  POSTALCODE                        VARCHAR(10) not null        
+  COUNTRY                           VARCHAR(50) not null        
+  BOOKID                            INTEGER                     
+  PERIODENDDATE                     TIMESTAMP                   
+  TOTALAMOUNT                       FLOAT(17, 0)                
 
-                                                            [definition]
-  SELECT ID, FIRSTNAME, LASTNAME FROM CUSTOMER
+FK_SALES_REGIONS                           [foreign key, with no action]
+  SALES.REGIONS.POSTALCODE --> POSTALCODE                              
+  SALES.REGIONS.COUNTRY --> COUNTRY                              
 
-
-SCHEMACRAWLER.INVOICE                                            [table]
-------------------------------------------------------------------------
-  ID                                INTEGER not null            
-  CUSTOMERID                        INTEGER                     
-  TOTAL                             FLOAT(17, 0)                
-
-SYS_IDX_60                                                 [primary key]
-  ID                                ascending                   
-
-FK_INVOICE_CUSTOMER                        [foreign key, with no action]
-  SCHEMACRAWLER.CUSTOMER.ID --> CUSTOMERID                              
-
-FK_B_ITEM_INVOICE                          [foreign key, with no action]
-  ID --> SCHEMACRAWLER.ITEM.INVOICEID                              
-
-INDEX_INVOICE_CUSTOMER                                [non-unique index]
-  CUSTOMERID                        ascending                   
-
-SYS_IDX_62                                            [non-unique index]
-  CUSTOMERID                        ascending                   
-
-
-SCHEMACRAWLER.ITEM                                               [table]
-------------------------------------------------------------------------
-  INVOICEID                         INTEGER not null            
-  ITEM                              INTEGER not null            
-  PRODUCTID                         INTEGER                     
-  QUANTITY                          INTEGER                     
-  COST                              FLOAT(17, 0)                
-
-SYS_IDX_64                                                 [primary key]
-  INVOICEID                         ascending                   
-  ITEM                              ascending                   
-
-FK_B_ITEM_INVOICE                          [foreign key, with no action]
-  SCHEMACRAWLER.INVOICE.ID --> INVOICEID                              
-
-FK_A_ITEM_PRODUCT                          [foreign key, with no action]
-  SCHEMACRAWLER.PRODUCT.ID --> PRODUCTID                              
-
-INDEX_ITEM_INVOICE                                    [non-unique index]
-  INVOICEID                         ascending                   
-
-SYS_IDX_65                                            [non-unique index]
-  INVOICEID                         ascending                   
-
-INDEX_ITEM_PRODUCT                                    [non-unique index]
-  PRODUCTID                         ascending                   
-
-SYS_IDX_67                                            [non-unique index]
-  PRODUCTID                         ascending                   
-
-
-SCHEMACRAWLER.PRODUCT                                            [table]
-------------------------------------------------------------------------
-  ID                                INTEGER not null            
-  NAME                              VARCHAR(255)                
-  PRICE                             FLOAT(17, 0)                
-
-SYS_IDX_59                                                 [primary key]
-  ID                                ascending                   
-
-FK_A_ITEM_PRODUCT                          [foreign key, with no action]
-  ID --> SCHEMACRAWLER.ITEM.PRODUCTID                              
-
-
-SCHEMACRAWLER.SUPPLIER                                           [table]
-------------------------------------------------------------------------
-  SUPPLIER_ID                       INTEGER                     
-  SUPPLIER_NAME                     VARCHAR(255)                
-
-INDEX_B_SUPPLIER                                      [non-unique index]
-  SUPPLIER_ID                       ascending                   
-  SUPPLIER_NAME                     ascending                   
-
-INDEX_A_SUPPLIER                                      [non-unique index]
-  SUPPLIER_NAME                     ascending                   
-  SUPPLIER_ID                       ascending                   
-
-CHECK_UPPERCASE_SUPPLIER_NAME                         [check constraint]
-  SUPPLIER.SUPPLIER_NAME=UPPER(SUPPLIER.SUPPLIER_NAME)
+SYS_IDX_60                                            [non-unique index]
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
 
 
 

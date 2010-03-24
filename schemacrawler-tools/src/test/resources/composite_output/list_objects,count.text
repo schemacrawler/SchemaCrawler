@@ -42,12 +42,8 @@ PUBLIC.BOOKAUTHORS                                               [table]
 PUBLIC.BOOKS                                                     [table]
 PUBLIC.GLOBALCOUNT                                               [table]
 PUBLIC.PUBLISHERS                                                [table]
-SCHEMACRAWLER.CUSTOMER                                           [table]
-SCHEMACRAWLER.CUSTOMERLIST                                        [view]
-SCHEMACRAWLER.INVOICE                                            [table]
-SCHEMACRAWLER.ITEM                                               [table]
-SCHEMACRAWLER.PRODUCT                                            [table]
-SCHEMACRAWLER.SUPPLIER                                           [table]
+SALES.REGIONS                                                    [table]
+SALES.SALES                                                      [table]
 
 
 
@@ -64,12 +60,8 @@ PUBLIC.BOOKAUTHORS                                               20 rows
 PUBLIC.BOOKS                                                     20 rows
 PUBLIC.GLOBALCOUNT                                                 empty
 PUBLIC.PUBLISHERS                                                20 rows
-SCHEMACRAWLER.CUSTOMER                                           50 rows
-SCHEMACRAWLER.CUSTOMERLIST                                       50 rows
-SCHEMACRAWLER.INVOICE                                            50 rows
-SCHEMACRAWLER.ITEM                                              650 rows
-SCHEMACRAWLER.PRODUCT                                            50 rows
-SCHEMACRAWLER.SUPPLIER                                            1 rows
+SALES.REGIONS                                                    20 rows
+SALES.SALES                                                      20 rows
 
 
 
