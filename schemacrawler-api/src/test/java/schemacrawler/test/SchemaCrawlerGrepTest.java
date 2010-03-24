@@ -62,24 +62,38 @@ public class SchemaCrawlerGrepTest
     throws Exception
   {
     final String[] schemaNames = {
-        "INFORMATION_SCHEMA", "PUBLIC", "SCHEMACRAWLER"
+        "INFORMATION_SCHEMA", "PUBLIC", "SALES"
     };
     final int[] tableCounts = {
-        0, 1, 0
+        0, 1, 1
     };
     final String[][][] columnNames = {
-        {}, {
+        {},
+        {
           {
               "BOOKAUTHORS.BOOKID", "BOOKAUTHORS.AUTHORID",
           },
-        }, {}
+        },
+        {
+          {
+              "SALES.POSTALCODE",
+              "SALES.COUNTRY",
+              "SALES.BOOKID",
+              "SALES.PERIODENDDATE",
+              "SALES.TOTALAMOUNT",
+          },
+        }
     };
     final String[][][] columnDataTypes = {
         {}, {
           {
               "INTEGER", "INTEGER",
           },
-        }, {}
+        }, {
+          {
+              "VARCHAR", "VARCHAR", "INTEGER", "TIMESTAMP", "FLOAT",
+          },
+        }
     };
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -122,5 +136,4 @@ public class SchemaCrawlerGrepTest
       }
     }
   }
-
 }
