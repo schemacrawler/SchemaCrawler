@@ -32,6 +32,7 @@ import java.util.logging.Logger;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import schemacrawler.schema.Column;
@@ -75,10 +76,10 @@ public class SchemaCrawlerTest
     throws Exception
   {
     final String[] schemaNames = {
-        "INFORMATION_SCHEMA", "PUBLIC", "SCHEMACRAWLER"
+        "INFORMATION_SCHEMA", "PUBLIC", "SALES"
     };
     final int[] tableCounts = {
-        0, 6, 6
+        0, 6, 2
     };
     final String[][][] columnNames = {
         {},
@@ -111,7 +112,7 @@ public class SchemaCrawlerTest
                 "BOOKS.PRICE",
             },
             {
-              "GLOBALCOUNT.GLOBALCOUNT",
+              "GLOBALCOUNT.Global Count",
             },
             {
                 "PUBLISHERS.ID", "PUBLISHERS.PUBLISHER",
@@ -119,32 +120,17 @@ public class SchemaCrawlerTest
         },
         {
             {
-                "CUSTOMER.ID",
-                "CUSTOMER.FIRSTNAME",
-                "CUSTOMER.LASTNAME",
-                "CUSTOMER.STREET",
-                "CUSTOMER.CITY"
+                "REGIONS.CITY",
+                "REGIONS.STATE",
+                "REGIONS.POSTALCODE",
+                "REGIONS.COUNTRY",
             },
             {
-                "CUSTOMERLIST.ID",
-                "CUSTOMERLIST.FIRSTNAME",
-                "CUSTOMERLIST.LASTNAME",
-            },
-            {
-                "INVOICE.ID", "INVOICE.CUSTOMERID", "INVOICE.TOTAL"
-            },
-            {
-                "ITEM.INVOICEID",
-                "ITEM.ITEM",
-                "ITEM.PRODUCTID",
-                "ITEM.QUANTITY",
-                "ITEM.COST"
-            },
-            {
-                "PRODUCT.ID", "PRODUCT.NAME", "PRODUCT.PRICE"
-            },
-            {
-                "SUPPLIER.SUPPLIER_ID", "SUPPLIER.SUPPLIER_NAME"
+                "SALES.POSTALCODE",
+                "SALES.COUNTRY",
+                "SALES.BOOKID",
+                "SALES.PERIODENDDATE",
+                "SALES.TOTALAMOUNT",
             },
         },
     };
@@ -185,18 +171,10 @@ public class SchemaCrawlerTest
         },
         {
             {
-                "INTEGER", "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR"
+                "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR"
             }, {
-                "INTEGER", "VARCHAR", "VARCHAR"
-            }, {
-                "INTEGER", "INTEGER", "FLOAT"
-            }, {
-                "INTEGER", "INTEGER", "INTEGER", "INTEGER", "FLOAT"
-            }, {
-                "INTEGER", "VARCHAR", "FLOAT"
-            }, {
-                "INTEGER", "VARCHAR"
-            }
+                "VARCHAR", "VARCHAR", "INTEGER", "TIMESTAMP", "FLOAT",
+            },
         },
     };
 
@@ -244,48 +222,48 @@ public class SchemaCrawlerTest
   {
 
     final int[] tableCounts = {
-        0, 6, 6
+        0, 6, 2
     };
     final int[][] tableColumnCounts = {
         {}, {
             9, 3, 2, 6, 1, 2
         }, {
-            5, 3, 3, 5, 3, 2
+            4, 5
         }
     };
     final int[][] checkConstraints = {
         {}, {
             0, 0, 0, 0, 0, 0, 0
         }, {
-            0, 0, 0, 0, 0, 0
+            0, 0
         }
     };
     final int[][] indexCounts = {
         {}, {
             2, 0, 3, 0, 0, 0,
         }, {
-            0, 0, 2, 4, 0, 2
+            0, 1
         }
     };
     final int[][] fkCounts = {
         {}, {
             1, 0, 2, 1, 0, 0,
         }, {
-            1, 0, 2, 2, 1, 0
+            1, 1
         }
     };
     final int[][] exportedFkCounts = {
         {}, {
             1, 0, 0, 1, 0, 0,
         }, {
-            1, 0, 1, 0, 1, 0
+            1, 0
         }
     };
     final int[][] importedFkCounts = {
         {}, {
             0, 0, 2, 0, 0, 0,
         }, {
-            0, 0, 1, 2, 0, 0
+            0, 1
         }
     };
 
@@ -397,7 +375,7 @@ public class SchemaCrawlerTest
   {
 
     final String[] schemaNames = {
-        "INFORMATION_SCHEMA", "PUBLIC", "SCHEMACRAWLER"
+        "INFORMATION_SCHEMA", "PUBLIC", "SALES"
     };
     final String[][] tableNames = {
         {},
@@ -410,19 +388,14 @@ public class SchemaCrawlerTest
             "PUBLISHERS",
         },
         {
-            "CUSTOMER",
-            "CUSTOMERLIST",
-            "INVOICE",
-            "ITEM",
-            "PRODUCT",
-            "SUPPLIER",
+            "REGIONS", "SALES",
         }
     };
     final String[][] tableTypes = {
         {}, {
             "TABLE", "VIEW", "TABLE", "TABLE", "TABLE", "TABLE",
         }, {
-            "TABLE", "VIEW", "TABLE", "TABLE", "TABLE", "TABLE",
+            "TABLE", "TABLE",
         }
     };
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -453,6 +426,7 @@ public class SchemaCrawlerTest
     }
   }
 
+  @Ignore
   @Test
   public void tablesSort()
     throws Exception
