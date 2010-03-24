@@ -58,12 +58,8 @@ TABLE_CAT,TABLE_SCHEM,TABLE_NAME,TABLE_TYPE,REMARKS,TYPE_CAT,TYPE_SCHEM,TYPE_NAM
 <null>,PUBLIC,BOOKS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
 <null>,PUBLIC,GLOBALCOUNT,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
 <null>,PUBLIC,PUBLISHERS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
-<null>,SCHEMACRAWLER,CUSTOMER,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
-<null>,SCHEMACRAWLER,INVOICE,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
-<null>,SCHEMACRAWLER,ITEM,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
-<null>,SCHEMACRAWLER,PRODUCT,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
-<null>,SCHEMACRAWLER,SUPPLIER,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
+<null>,SALES,REGIONS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
+<null>,SALES,SALES,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
 <null>,PUBLIC,AUTHORSLIST,VIEW,<null>,<null>,<null>,<null>,<null>,<null>,<null>,true
-<null>,SCHEMACRAWLER,CUSTOMERLIST,VIEW,<null>,<null>,<null>,<null>,<null>,<null>,<null>,true
 
 
