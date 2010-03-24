@@ -33,35 +33,19 @@ o--> BOOKS
      o--> PUBLISHERID
      o--> TITLE
 o--> GLOBALCOUNT
-     o--> GLOBALCOUNT
+     o--> Global Count
 o--> PUBLISHERS
      o--> ID
      o--> PUBLISHER
-SCHEMACRAWLER
-o--> CUSTOMER
+SALES
+o--> REGIONS
      o--> CITY
-     o--> FIRSTNAME
-     o--> ID
-     o--> LASTNAME
-     o--> STREET
-o--> CUSTOMERLIST
-     o--> FIRSTNAME
-     o--> ID
-     o--> LASTNAME
-o--> INVOICE
-     o--> CUSTOMERID
-     o--> ID
-     o--> TOTAL
-o--> ITEM
-     o--> COST
-     o--> INVOICEID
-     o--> ITEM
-     o--> PRODUCTID
-     o--> QUANTITY
-o--> PRODUCT
-     o--> ID
-     o--> NAME
-     o--> PRICE
-o--> SUPPLIER
-     o--> SUPPLIER_ID
-     o--> SUPPLIER_NAME
+     o--> COUNTRY
+     o--> POSTALCODE
+     o--> STATE
+o--> SALES
+     o--> BOOKID
+     o--> COUNTRY
+     o--> PERIODENDDATE
+     o--> POSTALCODE
+     o--> TOTALAMOUNT
