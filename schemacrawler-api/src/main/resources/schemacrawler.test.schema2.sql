@@ -12,7 +12,7 @@ CREATE TABLE Sales
   PostalCode VARCHAR(10) NOT NULL,
   Country VARCHAR(50) NOT NULL,
   BookId INTEGER,
-  PeriodEndDate DATETIME,
+  PeriodEndDate TIMESTAMP,
   TotalAmount FLOAT,  
   CONSTRAINT FK_Sales_Regions FOREIGN KEY (PostalCode, Country) REFERENCES Regions (PostalCode, Country)
 );

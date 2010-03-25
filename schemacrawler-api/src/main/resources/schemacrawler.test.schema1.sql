@@ -28,7 +28,7 @@ CREATE TABLE Books
   Title VARCHAR(255) NOT NULL,
   Description VARCHAR(255),
   PublisherId INTEGER NOT NULL,
-  PublicationDate DATETIME,
+  PublicationDate TIMESTAMP,
   Price FLOAT,
   CONSTRAINT PK_Books PRIMARY KEY (Id)
 )
