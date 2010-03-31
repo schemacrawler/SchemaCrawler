@@ -75,7 +75,8 @@ final class ProcedureExRetriever
     try
     {
       results = new MetadataResultSet(statement
-        .executeQuery(procedureDefinitionsSql));
+        .executeQuery(procedureDefinitionsSql), getRetrieverConnection()
+        .getIdentifierQuoteString());
     }
     catch (final SQLException e)
     {

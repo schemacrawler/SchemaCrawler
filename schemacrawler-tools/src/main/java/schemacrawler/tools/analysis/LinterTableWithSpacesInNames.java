@@ -21,7 +21,7 @@ public class LinterTableWithSpacesInNames
       final String tableName = table.getName();
       if (tableName.contains(" "))
       {
-        spacesInNamesList.add(0, "[" + tableName + "]");
+        spacesInNamesList.add(0, tableName);
       }
       if (!spacesInNamesList.isEmpty())
       {

@@ -50,11 +50,13 @@ final class MetadataResultSet
 
   private static final int FETCHSIZE = 20;
 
+  private final String identifierQuoteString;
   private final ResultSet results;
   private final Set<String> resultSetColumns;
   private Set<String> readColumns;
 
-  MetadataResultSet(final ResultSet resultSet)
+  MetadataResultSet(final ResultSet resultSet,
+                    final String identifierQuoteString)
   {
     if (resultSet == null)
     {
@@ -91,6 +93,15 @@ final class MetadataResultSet
     this.resultSetColumns = Collections.unmodifiableSet(resultSetColumns);
 
     readColumns = new HashSet<String>();
+
+    if (Utility.isBlank(identifierQuoteString))
+    {
+      this.identifierQuoteString = null;
+    }
+    else
+    {
+      this.identifierQuoteString = identifierQuoteString;
+    }
   }
 
   /**
@@ -334,6 +345,37 @@ final class MetadataResultSet
       }
     }
     return value;
+  }
+
+  String getQuotedName(final String columnName)
+  {
+    String value = null;
+    if (useColumn(columnName))
+    {
+      try
+      {
+        value = results.getString(columnName);
+        if (results.wasNull())
+        {
+          value = null;
+        }
+        else
+        {
+          if (identifierQuoteString != null
+              && Utility.containsWhitespace(value))
+          {
+            value = identifierQuoteString + value + identifierQuoteString;
+          }
+        }
+      }
+      catch (final SQLException e)
+      {
+        LOGGER.log(Level.WARNING, "Could not read string value for column "
+                                  + columnName, e);
+      }
+    }
+    return value;
+
   }
 
   /**

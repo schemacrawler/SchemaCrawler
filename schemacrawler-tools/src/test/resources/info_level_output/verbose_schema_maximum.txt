@@ -509,7 +509,7 @@ PUBLIC.BOOKS                                                     [table]
   TITLE                             VARCHAR(255) not null       
   DESCRIPTION                       VARCHAR(255)                
   PUBLISHERID                       INTEGER not null            
-  PUBLICATIONDATE                   TIMESTAMP                   
+  PUBLICATIONDATE                   DATE                        
   PRICE                             FLOAT(17, 0)                
 
 SYS_IDX_48                                                 [primary key]
@@ -533,7 +533,7 @@ UPDATE                                                       [privilege]
 
 PUBLIC.GLOBALCOUNT                                               [table]
 ------------------------------------------------------------------------
-  Global Count                      INTEGER                     
+  "Global Count"                    INTEGER                     
 
 DELETE                                                       [privilege]
   DBA --> SA (grantable)                                        
@@ -602,7 +602,7 @@ SALES.SALES                                                      [table]
   POSTALCODE                        VARCHAR(10) not null        
   COUNTRY                           VARCHAR(50) not null        
   BOOKID                            INTEGER                     
-  PERIODENDDATE                     TIMESTAMP                   
+  PERIODENDDATE                     DATE                        
   TOTALAMOUNT                       FLOAT(17, 0)                
 
 FK_SALES_REGIONS                           [foreign key, with no action]

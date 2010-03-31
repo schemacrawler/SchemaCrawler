@@ -33,7 +33,7 @@ o--> BOOKS
      o--> PUBLISHERID
      o--> TITLE
 o--> GLOBALCOUNT
-     o--> Global Count
+     o--> "Global Count"
 o--> PUBLISHERS
      o--> ID
      o--> PUBLISHER

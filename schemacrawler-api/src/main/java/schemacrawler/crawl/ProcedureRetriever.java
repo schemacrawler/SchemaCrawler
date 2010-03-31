@@ -62,14 +62,15 @@ final class ProcedureRetriever
         .getProcedureColumns(procedure.getSchema().getCatalogName(),
                              procedure.getSchema().getSchemaName(),
                              procedure.getName(),
-                             null));
+                             null), getRetrieverConnection()
+        .getIdentifierQuoteString());
 
       while (results.next())
       {
         final String columnCatalogName = results.getString("PROCEDURE_CAT");
         final String schemaName = results.getString("PROCEDURE_SCHEM");
-        final String procedureName = results.getString("PROCEDURE_NAME");
-        final String columnName = results.getString("COLUMN_NAME");
+        final String procedureName = results.getQuotedName("PROCEDURE_NAME");
+        final String columnName = results.getQuotedName("COLUMN_NAME");
 
         final MutableProcedureColumn column = new MutableProcedureColumn(procedure,
                                                                          columnName);
@@ -133,7 +134,9 @@ final class ProcedureRetriever
     {
       results = new MetadataResultSet(getMetaData().getProcedures(catalogName,
                                                                   schemaName,
-                                                                  "%"));
+                                                                  "%"),
+                                      getRetrieverConnection()
+                                        .getIdentifierQuoteString());
 
       while (results.next())
       {
@@ -141,7 +144,7 @@ final class ProcedureRetriever
         // results.getString("PROCEDURE_CAT");
         // final String schemaName =
         // results.getString("PROCEDURE_SCHEM");
-        final String procedureName = results.getString("PROCEDURE_NAME");
+        final String procedureName = results.getQuotedName("PROCEDURE_NAME");
         LOGGER.log(Level.FINER, "Retrieving procedure: " + procedureName);
         final short procedureType = results
           .getShort("PROCEDURE_TYPE", (short) ProcedureType.unknown.getId());
@@ -176,5 +179,4 @@ final class ProcedureRetriever
       }
     }
   }
-
 }

@@ -509,7 +509,7 @@ PUBLIC.BOOKS,[table]
 "",TITLE,VARCHAR(255) not null
 "",DESCRIPTION,VARCHAR(255)
 "",PUBLISHERID,INTEGER not null
-"",PUBLICATIONDATE,TIMESTAMP
+"",PUBLICATIONDATE,DATE
 "",PRICE,"FLOAT(17, 0)"
 ""
 SYS_IDX_48,[primary key]
@@ -533,7 +533,7 @@ UPDATE,[privilege]
 
 PUBLIC.GLOBALCOUNT,[table]
 ------------------------------------------------------------------------
-"",Global Count,INTEGER
+"","""Global Count""",INTEGER
 ""
 DELETE,[privilege]
 "",DBA --> SA (grantable),""
@@ -602,7 +602,7 @@ SALES.SALES,[table]
 "",POSTALCODE,VARCHAR(10) not null
 "",COUNTRY,VARCHAR(50) not null
 "",BOOKID,INTEGER
-"",PERIODENDDATE,TIMESTAMP
+"",PERIODENDDATE,DATE
 "",TOTALAMOUNT,"FLOAT(17, 0)"
 ""
 FK_SALES_REGIONS,"[foreign key, with no action]"
@@ -733,26 +733,32 @@ BOOKID,AUTHORID
 PUBLIC.BOOKS
 ------------------------------------------------------------------------
 ID,TITLE,DESCRIPTION,PUBLISHERID,PUBLICATIONDATE,PRICE
-1,Neque. In Ornare Sagittis,"Dis Parturient Montes, Nascetur Ridiculus Mus.",18,2000-10-27 00:00:00.0,69.99
-2,Duis Dignissim Tempor Arcu.,"Eu, Euismod Ac, Fermentum Vel,",20,2002-05-09 00:00:00.0,27.99
-3,"Lacinia Orci, Consectetuer Euismod Est","Sem Ut Cursus Luctus, Ipsum Leo Elementum Sem, Vitae Aliquam Eros Turpis Non Enim.",15,2006-04-14 00:00:00.0,37.99
-4,Vitae Sodales,"Rhoncus. Nullam Velit Dui, Semper Et, Lacinia Vitae, Sodales At,",1,2007-05-21 00:00:00.0,64.99
-5,Posuere Cubilia Curae; Phasellus Ornare.,"Risus A Ultricies Adipiscing, Enim Mi Tempor Lorem, Eget Mollis Lectus Pede",7,2010-05-14 00:00:00.0,83.99
-6,Tincidunt Aliquam Arcu.,"Tristique Pellentesque, Tellus Sem Mollis Dui,",13,2009-07-17 00:00:00.0,31.99
-7,"Auctor Quis, Tristique","Vel, Faucibus Id, Libero. Donec Consectetuer Mauris Id Sapien. Cras Dolor Dolor, Tempus Non, Lacinia",7,1999-06-09 00:00:00.0,76.99
-8,Sem. Nulla Interdum. Curabitur,Turpis. Nulla Aliquet. Proin Velit. Sed Malesuada Augue Ut,7,2009-01-24 00:00:00.0,30.99
-9,Lobortis Ultrices. Vivamus Rhoncus.,"Est, Mollis Non, Cursus Non, Egestas A, Dui. Cras Pellentesque. Sed Dictum.",1,2004-06-25 00:00:00.0,69.99
-10,"Quisque Purus Sapien, Gravida",Et Ultrices Posuere Cubilia Curae; Phasellus Ornare. Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus.,19,2005-11-14 00:00:00.0,34.99
-11,Phasellus,Egestas. Duis Ac Arcu. Nunc Mauris.,5,2003-10-19 00:00:00.0,89.99
-12,Non Massa Non,"Est Mauris, Rhoncus Id, Mollis",5,2002-05-04 00:00:00.0,64.99
-13,Gravida Mauris Ut Mi. Duis,"Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus. Proin Nisl Sem, Consequat Nec,",8,2005-08-03 00:00:00.0,25.99
-14,"Auctor Vitae,","Suspendisse Dui. Fusce Diam Nunc, Ullamcorper Eu, Euismod Ac, Fermentum Vel, Mauris. Integer Sem Elit, Pharetra",2,2009-02-09 00:00:00.0,84.99
-15,Ultrices Posuere Cubilia,"Elit, Pellentesque A, Facilisis Non, Bibendum Sed, Est. Nunc Laoreet Lectus Quis Massa. Mauris Vestibulum, Neque Sed",20,2001-08-28 00:00:00.0,77.99
-16,"Vitae, Aliquet Nec, Imperdiet",Cursus Purus. Nullam,6,2003-08-30 00:00:00.0,47.99
-17,"Parturient Montes, Nascetur Ridiculus","Ornare, Lectus Ante Dictum Mi, Ac Mattis Velit Justo Nec Ante. Maecenas Mi Felis, Adipiscing Fringilla, Porttitor Vulputate, Posuere Vulputate,",17,2005-06-24 00:00:00.0,36.99
-18,Lacus. Etiam Bibendum,Facilisi. Sed Neque. Sed,18,2008-01-28 00:00:00.0,63.99
-19,Luctus Lobortis.,"Rutrum. Fusce Dolor Quam, Elementum At, Egestas A, Scelerisque Sed, Sapien.",5,2006-08-23 00:00:00.0,67.99
-20,"Dui, In Sodales Elit Erat",Sociis Natoque Penatibus Et Magnis Dis Parturient,5,2002-09-29 00:00:00.0,43.99
+1,Neque. In Ornare Sagittis,"Dis Parturient Montes, Nascetur Ridiculus Mus.",18,2000-10-27,69.99
+2,Duis Dignissim Tempor Arcu.,"Eu, Euismod Ac, Fermentum Vel,",20,2002-05-09,27.99
+3,"Lacinia Orci, Consectetuer Euismod Est","Sem Ut Cursus Luctus, Ipsum Leo Elementum Sem, Vitae Aliquam Eros Turpis Non Enim.",15,2006-04-14,37.99
+4,Vitae Sodales,"Rhoncus. Nullam Velit Dui, Semper Et, Lacinia Vitae, Sodales At,",1,2007-05-21,64.99
+5,Posuere Cubilia Curae; Phasellus Ornare.,"Risus A Ultricies Adipiscing, Enim Mi Tempor Lorem, Eget Mollis Lectus Pede",7,2010-05-14,83.99
+6,Tincidunt Aliquam Arcu.,"Tristique Pellentesque, Tellus Sem Mollis Dui,",13,2009-07-17,31.99
+7,"Auctor Quis, Tristique","Vel, Faucibus Id, Libero. Donec Consectetuer Mauris Id Sapien. Cras Dolor Dolor, Tempus Non, Lacinia",7,1999-06-09,76.99
+8,Sem. Nulla Interdum. Curabitur,Turpis. Nulla Aliquet. Proin Velit. Sed Malesuada Augue Ut,7,2009-01-24,30.99
+9,Lobortis Ultrices. Vivamus Rhoncus.,"Est, Mollis Non, Cursus Non, Egestas A, Dui. Cras Pellentesque. Sed Dictum.",1,2004-06-25,69.99
+10,"Quisque Purus Sapien, Gravida",Et Ultrices Posuere Cubilia Curae; Phasellus Ornare. Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus.,19,2005-11-14,34.99
+11,Phasellus,Egestas. Duis Ac Arcu. Nunc Mauris.,5,2003-10-19,89.99
+12,Non Massa Non,"Est Mauris, Rhoncus Id, Mollis",5,2002-05-04,64.99
+13,Gravida Mauris Ut Mi. Duis,"Fusce Mollis. Duis Sit Amet Diam Eu Dolor Egestas Rhoncus. Proin Nisl Sem, Consequat Nec,",8,2005-08-03,25.99
+14,"Auctor Vitae,","Suspendisse Dui. Fusce Diam Nunc, Ullamcorper Eu, Euismod Ac, Fermentum Vel, Mauris. Integer Sem Elit, Pharetra",2,2009-02-09,84.99
+15,Ultrices Posuere Cubilia,"Elit, Pellentesque A, Facilisis Non, Bibendum Sed, Est. Nunc Laoreet Lectus Quis Massa. Mauris Vestibulum, Neque Sed",20,2001-08-28,77.99
+16,"Vitae, Aliquet Nec, Imperdiet",Cursus Purus. Nullam,6,2003-08-30,47.99
+17,"Parturient Montes, Nascetur Ridiculus","Ornare, Lectus Ante Dictum Mi, Ac Mattis Velit Justo Nec Ante. Maecenas Mi Felis, Adipiscing Fringilla, Porttitor Vulputate, Posuere Vulputate,",17,2005-06-24,36.99
+18,Lacus. Etiam Bibendum,Facilisi. Sed Neque. Sed,18,2008-01-28,63.99
+19,Luctus Lobortis.,"Rutrum. Fusce Dolor Quam, Elementum At, Egestas A, Scelerisque Sed, Sapien.",5,2006-08-23,67.99
+20,"Dui, In Sodales Elit Erat",Sociis Natoque Penatibus Et Magnis Dis Parturient,5,2002-09-29,43.99
+
+
+
+PUBLIC.GLOBALCOUNT
+------------------------------------------------------------------------
+Global Count
 
 
 
@@ -811,26 +817,26 @@ Woburn,NV,27392,USA
 SALES.SALES
 ------------------------------------------------------------------------
 POSTALCODE,COUNTRY,BOOKID,PERIODENDDATE,TOTALAMOUNT
-13078,USA,1,2001-07-18 00:00:00.0,18257.0
-13078,USA,1,2001-09-29 00:00:00.0,14895.0
-13078,USA,6,2003-12-28 00:00:00.0,6083.0
-13078,USA,6,2006-06-11 00:00:00.0,7840.0
-17131,USA,2,2002-04-30 00:00:00.0,17887.0
-17131,USA,2,2004-11-13 00:00:00.0,16317.0
-17131,USA,7,2000-03-08 00:00:00.0,6951.0
-17131,USA,7,2003-03-21 00:00:00.0,18431.0
-20239,USA,3,2004-08-28 00:00:00.0,18747.0
-20239,USA,3,2005-07-27 00:00:00.0,6712.0
-20239,USA,8,2008-03-29 00:00:00.0,11013.0
-20239,USA,8,2008-08-15 00:00:00.0,17514.0
-24179,USA,4,2005-12-24 00:00:00.0,11103.0
-24179,USA,4,2009-02-14 00:00:00.0,5885.0
-24179,USA,9,2000-05-16 00:00:00.0,13595.0
-24179,USA,9,2004-04-10 00:00:00.0,14069.0
-26131,USA,5,2001-12-02 00:00:00.0,14798.0
-26131,USA,5,2004-11-03 00:00:00.0,15348.0
-26131,USA,10,2000-09-20 00:00:00.0,14476.0
-26131,USA,10,2005-12-03 00:00:00.0,17069.0
+13078,USA,1,2001-07-18,18257.0
+13078,USA,1,2001-09-29,14895.0
+13078,USA,6,2003-12-28,6083.0
+13078,USA,6,2006-06-11,7840.0
+17131,USA,2,2002-04-30,17887.0
+17131,USA,2,2004-11-13,16317.0
+17131,USA,7,2000-03-08,6951.0
+17131,USA,7,2003-03-21,18431.0
+20239,USA,3,2004-08-28,18747.0
+20239,USA,3,2005-07-27,6712.0
+20239,USA,8,2008-03-29,11013.0
+20239,USA,8,2008-08-15,17514.0
+24179,USA,4,2005-12-24,11103.0
+24179,USA,4,2009-02-14,5885.0
+24179,USA,9,2000-05-16,13595.0
+24179,USA,9,2004-04-10,14069.0
+26131,USA,5,2001-12-02,14798.0
+26131,USA,5,2004-11-03,15348.0
+26131,USA,10,2000-09-20,14476.0
+26131,USA,10,2005-12-03,17069.0
 
 
 

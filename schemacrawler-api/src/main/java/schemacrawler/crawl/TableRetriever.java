@@ -64,7 +64,7 @@ final class TableRetriever
       {
         // final String catalogName = results.getString("TABLE_CAT");
         // final String schemaName = results.getString("TABLE_SCHEM");
-        // final String tableName = results.getString("TABLE_NAME");
+        // final String tableName = results.getQuotedName("TABLE_NAME");
         String indexName = results.getString("INDEX_NAME");
         if (Utility.isBlank(indexName))
         {
@@ -72,7 +72,7 @@ final class TableRetriever
         }
         LOGGER.log(Level.FINER, String.format("Retrieving index: %s.%s", table
           .getFullName(), indexName));
-        final String columnName = results.getString("COLUMN_NAME");
+        final String columnName = results.getQuotedName("COLUMN_NAME");
         if (Utility.isBlank(columnName))
         {
           continue;
@@ -156,7 +156,7 @@ final class TableRetriever
         .getColumns(table.getSchema().getCatalogName(),
                     table.getSchema().getSchemaName(),
                     table.getName(),
-                    null));
+                    null), getRetrieverConnection().getIdentifierQuoteString());
 
       while (results.next())
       {
@@ -167,8 +167,8 @@ final class TableRetriever
         //
         final String columnCatalogName = results.getString("TABLE_CAT");
         final String schemaName = results.getString("TABLE_SCHEM");
-        final String tableName = results.getString("TABLE_NAME");
-        final String columnName = results.getString("COLUMN_NAME");
+        final String tableName = results.getQuotedName("TABLE_NAME");
+        final String columnName = results.getQuotedName("COLUMN_NAME");
         LOGGER.log(Level.FINER, String.format("Retrieving column: %s.%s",
                                               tableName,
                                               columnName));
@@ -242,11 +242,17 @@ final class TableRetriever
     final DatabaseMetaData metaData = getMetaData();
 
     results = new MetadataResultSet(metaData.getImportedKeys(table.getSchema()
-      .getCatalogName(), table.getSchema().getSchemaName(), table.getName()));
+                                      .getCatalogName(), table.getSchema()
+                                      .getSchemaName(), table.getName()),
+                                    getRetrieverConnection()
+                                      .getIdentifierQuoteString());
     createForeignKeys(results, foreignKeys);
 
     results = new MetadataResultSet(metaData.getExportedKeys(table.getSchema()
-      .getCatalogName(), table.getSchema().getSchemaName(), table.getName()));
+                                      .getCatalogName(), table.getSchema()
+                                      .getSchemaName(), table.getName()),
+                                    getRetrieverConnection()
+                                      .getIdentifierQuoteString());
     createForeignKeys(results, foreignKeys);
   }
 
@@ -270,7 +276,9 @@ final class TableRetriever
         LOGGER.log(Level.FINE, "Using getIndexInfo SQL:\n" + indexInfoSql);
         final Connection connection = getDatabaseConnection();
         statement = connection.createStatement();
-        results = new MetadataResultSet(statement.executeQuery(indexInfoSql));
+        results = new MetadataResultSet(statement.executeQuery(indexInfoSql),
+                                        getRetrieverConnection()
+                                          .getIdentifierQuoteString());
         createIndices(table, results);
       }
       else
@@ -280,7 +288,8 @@ final class TableRetriever
                         table.getSchema().getSchemaName(),
                         table.getName(),
                         unique,
-                        true/* approximate */));
+                        true/* approximate */), getRetrieverConnection()
+          .getIdentifierQuoteString());
         createIndices(table, results);
       }
     }
@@ -317,7 +326,8 @@ final class TableRetriever
       results = new MetadataResultSet(getMetaData()
         .getPrimaryKeys(table.getSchema().getCatalogName(),
                         table.getSchema().getSchemaName(),
-                        table.getName()));
+                        table.getName()), getRetrieverConnection()
+        .getIdentifierQuoteString());
 
       MutablePrimaryKey primaryKey;
       while (results.next())
@@ -325,7 +335,7 @@ final class TableRetriever
         // final String catalogName = results.getString("TABLE_CAT");
         // final String schemaName = results.getString("TABLE_SCHEM");
         // final String tableName = results.getString("TABLE_NAME");
-        final String columnName = results.getString("COLUMN_NAME");
+        final String columnName = results.getQuotedName("COLUMN_NAME");
         final String primaryKeyName = results.getString("PK_NAME");
         final int keySequence = Integer.parseInt(results.getString("KEY_SEQ"));
 
@@ -384,7 +394,8 @@ final class TableRetriever
         .getTables(catalogName,
                    schemaName,
                    tableNamePattern,
-                   TableType.toStrings(tableTypes)));
+                   TableType.toStrings(tableTypes)), getRetrieverConnection()
+        .getIdentifierQuoteString());
 
       while (results.next())
       {
@@ -451,13 +462,13 @@ final class TableRetriever
 
         final String pkTableCatalogName = results.getString("PKTABLE_CAT");
         final String pkTableSchemaName = results.getString("PKTABLE_SCHEM");
-        final String pkTableName = results.getString("PKTABLE_NAME");
-        final String pkColumnName = results.getString("PKCOLUMN_NAME");
+        final String pkTableName = results.getQuotedName("PKTABLE_NAME");
+        final String pkColumnName = results.getQuotedName("PKCOLUMN_NAME");
 
         final String fkTableCatalogName = results.getString("FKTABLE_CAT");
         final String fkTableSchemaName = results.getString("FKTABLE_SCHEM");
-        final String fkTableName = results.getString("FKTABLE_NAME");
-        final String fkColumnName = results.getString("FKCOLUMN_NAME");
+        final String fkTableName = results.getQuotedName("FKTABLE_NAME");
+        final String fkColumnName = results.getQuotedName("FKCOLUMN_NAME");
 
         MutableForeignKey foreignKey = foreignKeys.lookup(foreignKeyName);
         if (foreignKey == null)

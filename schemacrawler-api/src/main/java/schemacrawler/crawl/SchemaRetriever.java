@@ -138,7 +138,7 @@ final class SchemaRetriever
     if (supportsSchemas)
     {
       final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getSchemas());
+        .getSchemas(), getRetrieverConnection().getIdentifierQuoteString());
       try
       {
         while (results.next())
