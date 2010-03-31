@@ -87,7 +87,8 @@ final class TableExRetriever
     {
       statement = connection.createStatement();
       results = new MetadataResultSet(statement
-        .executeQuery(tableConstraintsInformationSql));
+        .executeQuery(tableConstraintsInformationSql), getRetrieverConnection()
+        .getIdentifierQuoteString());
 
       while (results.next())
       {
@@ -167,7 +168,8 @@ final class TableExRetriever
     {
       statement = connection.createStatement();
       results = new MetadataResultSet(statement
-        .executeQuery(checkConstraintInformationSql));
+        .executeQuery(checkConstraintInformationSql), getRetrieverConnection()
+        .getIdentifierQuoteString());
       while (results.next())
       {
         // final String catalogName =
@@ -229,7 +231,9 @@ final class TableExRetriever
       results = new MetadataResultSet(getMetaData().getColumnPrivileges(null,
                                                                         null,
                                                                         "%",
-                                                                        "%"));
+                                                                        "%"),
+                                      getRetrieverConnection()
+                                        .getIdentifierQuoteString());
       createPrivileges(results, true);
     }
     catch (final SQLException e)
@@ -254,7 +258,9 @@ final class TableExRetriever
     {
       results = new MetadataResultSet(getMetaData().getTablePrivileges(null,
                                                                        null,
-                                                                       "%"));
+                                                                       "%"),
+                                      getRetrieverConnection()
+                                        .getIdentifierQuoteString());
       createPrivileges(results, false);
     }
     catch (final SQLException e)
@@ -296,7 +302,8 @@ final class TableExRetriever
     try
     {
       results = new MetadataResultSet(statement
-        .executeQuery(triggerInformationSql));
+        .executeQuery(triggerInformationSql), getRetrieverConnection()
+        .getIdentifierQuoteString());
 
       while (results.next())
       {
@@ -399,7 +406,8 @@ final class TableExRetriever
     try
     {
       results = new MetadataResultSet(statement
-        .executeQuery(viewInformationSql));
+        .executeQuery(viewInformationSql), getRetrieverConnection()
+        .getIdentifierQuoteString());
 
       while (results.next())
       {
@@ -455,11 +463,11 @@ final class TableExRetriever
     {
       final String catalogName = results.getString("TABLE_CAT");
       final String schemaName = results.getString("TABLE_SCHEM");
-      final String tableName = results.getString("TABLE_NAME");
+      final String tableName = results.getQuotedName("TABLE_NAME");
       final String columnName;
       if (privilegesForColumn)
       {
-        columnName = results.getString("COLUMN_NAME");
+        columnName = results.getQuotedName("COLUMN_NAME");
       }
       else
       {

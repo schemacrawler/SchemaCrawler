@@ -32,6 +32,7 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 /**
  * Utility methods.
@@ -49,6 +50,9 @@ public final class Utility
    */
   public static final String NEWLINE = System.getProperty("line.separator");
 
+  private static final Pattern containsWhitespacePattern = Pattern
+    .compile(".*\\s.*");
+
   public static String commonPrefix(final String string1, final String string2)
   {
     final int index = indexOfDifference(string1, string2);
@@ -59,6 +63,25 @@ public final class Utility
     else
     {
       return string1.substring(0, index).toLowerCase();
+    }
+  }
+
+  /**
+   * Checks if the text contains whitespace.
+   * 
+   * @param text
+   *        Text to check.
+   * @return Whether the string contains whitespace.
+   */
+  public static boolean containsWhitespace(final String text)
+  {
+    if (text == null)
+    {
+      return false;
+    }
+    else
+    {
+      return containsWhitespacePattern.matcher(text).matches();
     }
   }
 

@@ -91,7 +91,7 @@ public class SchemaCrawlerGrepTest
           },
         }, {
           {
-              "VARCHAR", "VARCHAR", "INTEGER", "TIMESTAMP", "FLOAT",
+              "VARCHAR", "VARCHAR", "INTEGER", "DATE", "FLOAT",
           },
         }
     };

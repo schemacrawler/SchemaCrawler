@@ -112,7 +112,7 @@ public class SchemaCrawlerTest
                 "BOOKS.PRICE",
             },
             {
-              "GLOBALCOUNT.Global Count",
+              "GLOBALCOUNT.\"Global Count\"",
             },
             {
                 "PUBLISHERS.ID", "PUBLISHERS.PUBLISHER",
@@ -155,12 +155,7 @@ public class SchemaCrawlerTest
                 "INTEGER", "INTEGER",
             },
             {
-                "INTEGER",
-                "VARCHAR",
-                "VARCHAR",
-                "INTEGER",
-                "TIMESTAMP",
-                "FLOAT"
+                "INTEGER", "VARCHAR", "VARCHAR", "INTEGER", "DATE", "FLOAT"
             },
             {
               "INTEGER",
@@ -173,7 +168,7 @@ public class SchemaCrawlerTest
             {
                 "VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR"
             }, {
-                "VARCHAR", "VARCHAR", "INTEGER", "TIMESTAMP", "FLOAT",
+                "VARCHAR", "VARCHAR", "INTEGER", "DATE", "FLOAT",
             },
         },
     };
