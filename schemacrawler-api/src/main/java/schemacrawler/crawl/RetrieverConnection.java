@@ -39,7 +39,6 @@ final class RetrieverConnection
   private final Connection connection;
   private final DatabaseMetaData metaData;
   private final InformationSchemaViews informationSchemaViews;
-  private final boolean supportsCatalogs;
 
   RetrieverConnection(final Connection connection,
                       final SchemaCrawlerOptions options)
@@ -60,7 +59,6 @@ final class RetrieverConnection
     }
     this.connection = connection;
     metaData = connection.getMetaData();
-    supportsCatalogs = metaData.supportsCatalogsInTableDefinitions();
     informationSchemaViews = schemaCrawlerOptions.getInformationSchemaViews();
   }
 
@@ -82,11 +80,6 @@ final class RetrieverConnection
   DatabaseMetaData getMetaData()
   {
     return metaData;
-  }
-
-  boolean isSupportsCatalogs()
-  {
-    return supportsCatalogs;
   }
 
 }
