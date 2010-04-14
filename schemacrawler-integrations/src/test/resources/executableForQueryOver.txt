@@ -59,17 +59,27 @@ ID,FIRSTNAME,LASTNAME
 
 PUBLIC.BOOKAUTHORS
 ------------------------------------------------------------------------
-BOOKID,AUTHORID
-1,7
-2,46
-3,1456
-4,9
-5,75
-6,81
-7,98
-8,6
-9,736
-10,19
+BOOKID,AUTHORID,UPDATE
+1,7,<null>
+2,4,<null>
+2,6,<null>
+3,1,<null>
+3,4,<null>
+3,5,<null>
+3,6,<null>
+4,9,<null>
+5,7,<null>
+5,5,<null>
+6,8,<null>
+6,1,<null>
+7,9,<null>
+7,8,<null>
+8,6,<null>
+9,7,<null>
+9,3,<null>
+9,6,<null>
+10,1,<null>
+10,9,<null>
 
 
 
