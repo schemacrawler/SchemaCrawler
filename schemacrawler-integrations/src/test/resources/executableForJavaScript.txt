@@ -25,6 +25,7 @@ o--> AUTHORSLIST
 o--> BOOKAUTHORS
      o--> AUTHORID
      o--> BOOKID
+     o--> UPDATE
 o--> BOOKS
      o--> DESCRIPTION
      o--> ID

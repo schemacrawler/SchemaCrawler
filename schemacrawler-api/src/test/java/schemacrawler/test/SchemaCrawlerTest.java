@@ -101,7 +101,9 @@ public class SchemaCrawlerTest
                 "AUTHORSLIST.LASTNAME",
             },
             {
-                "BOOKAUTHORS.BOOKID", "BOOKAUTHORS.AUTHORID",
+                "BOOKAUTHORS.BOOKID",
+                "BOOKAUTHORS.AUTHORID",
+                "BOOKAUTHORS.UPDATE",
             },
             {
                 "BOOKS.ID",
@@ -112,7 +114,7 @@ public class SchemaCrawlerTest
                 "BOOKS.PRICE",
             },
             {
-              "GLOBALCOUNT.\"Global Count\"",
+                "GLOBALCOUNT.\"Global Count\"", "GLOBALCOUNT.UPDATE",
             },
             {
                 "PUBLISHERS.ID", "PUBLISHERS.PUBLISHER",
@@ -152,13 +154,13 @@ public class SchemaCrawlerTest
                 "INTEGER", "VARCHAR", "VARCHAR",
             },
             {
-                "INTEGER", "INTEGER",
+                "INTEGER", "INTEGER", "INTEGER",
             },
             {
                 "INTEGER", "VARCHAR", "VARCHAR", "INTEGER", "DATE", "FLOAT"
             },
             {
-              "INTEGER",
+                "INTEGER", "INTEGER",
             },
             {
                 "INTEGER", "VARCHAR",
@@ -221,7 +223,7 @@ public class SchemaCrawlerTest
     };
     final int[][] tableColumnCounts = {
         {}, {
-            9, 3, 2, 6, 1, 2
+            9, 3, 3, 6, 1, 2
         }, {
             4, 5
         }

@@ -71,7 +71,9 @@ public class SchemaCrawlerGrepTest
         {},
         {
           {
-              "BOOKAUTHORS.BOOKID", "BOOKAUTHORS.AUTHORID",
+              "BOOKAUTHORS.BOOKID",
+              "BOOKAUTHORS.AUTHORID",
+              "BOOKAUTHORS.UPDATE",
           },
         },
         {
@@ -87,7 +89,7 @@ public class SchemaCrawlerGrepTest
     final String[][][] columnDataTypes = {
         {}, {
           {
-              "INTEGER", "INTEGER",
+              "INTEGER", "INTEGER", "INTEGER",
           },
         }, {
           {

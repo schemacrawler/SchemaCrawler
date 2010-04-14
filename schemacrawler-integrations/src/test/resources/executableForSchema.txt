@@ -47,6 +47,7 @@ PUBLIC.BOOKAUTHORS                                               [table]
 ------------------------------------------------------------------------
 2   AUTHORID                          INTEGER not null            
 1   BOOKID                            INTEGER not null            
+3   UPDATE                            INTEGER                     
 
 FK_Y_BOOK                                  [foreign key, with no action]
  1  PUBLIC.BOOKS.ID --> BOOKID                                    
