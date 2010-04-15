@@ -473,7 +473,7 @@ PUBLIC.BOOKAUTHORS,[table]
 ------------------------------------------------------------------------
 "",BOOKID,INTEGER not null
 "",AUTHORID,INTEGER not null
-"",UPDATE,INTEGER
+"","""UPDATE""",INTEGER
 ""
 FK_Z_AUTHOR,"[foreign key, with no action]"
 "",PUBLIC.AUTHORS.ID --> AUTHORID,""

@@ -76,7 +76,7 @@ PUBLIC.BOOKAUTHORS                                               [table]
 ------------------------------------------------------------------------
   BOOKID                            INTEGER not null            
   AUTHORID                          INTEGER not null            
-  UPDATE                            INTEGER                     
+  "UPDATE"                          INTEGER                     
 
 FK_Z_AUTHOR                                [foreign key, with no action]
   PUBLIC.AUTHORS.ID --> AUTHORID                                
@@ -164,6 +164,58 @@ Procedures
 ========================================================================
 
 
+PUBLIC."CHAR"                                [procedure, returns result]
+------------------------------------------------------------------------
+
+
+PUBLIC."DAY"                                 [procedure, returns result]
+------------------------------------------------------------------------
+
+
+PUBLIC."HOUR"                                [procedure, returns result]
+------------------------------------------------------------------------
+
+
+PUBLIC."IDENTITY"                            [procedure, returns result]
+------------------------------------------------------------------------
+
+
+PUBLIC."INSERT"                              [procedure, returns result]
+------------------------------------------------------------------------
+
+
+PUBLIC."LEFT"                                [procedure, returns result]
+------------------------------------------------------------------------
+
+
+PUBLIC."MINUTE"                              [procedure, returns result]
+------------------------------------------------------------------------
+
+
+PUBLIC."MONTH"                               [procedure, returns result]
+------------------------------------------------------------------------
+
+
+PUBLIC."REPEAT"                              [procedure, returns result]
+------------------------------------------------------------------------
+
+
+PUBLIC."RIGHT"                               [procedure, returns result]
+------------------------------------------------------------------------
+
+
+PUBLIC."SECOND"                              [procedure, returns result]
+------------------------------------------------------------------------
+
+
+PUBLIC."USER"                                [procedure, returns result]
+------------------------------------------------------------------------
+
+
+PUBLIC."YEAR"                                [procedure, returns result]
+------------------------------------------------------------------------
+
+
 PUBLIC.ABS                                   [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               DOUBLE(8, 17), in           
@@ -234,12 +286,6 @@ PUBLIC.CEILING                               [procedure, returns result]
   @p0                               DOUBLE(8, 17), result       
 
 
-PUBLIC.CHAR                                  [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               INTEGER, in                 
-  @p0                               LONGVARCHAR, result         
-
-
 PUBLIC.CHAR_LENGTH                           [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               LONGVARCHAR, in             
@@ -294,12 +340,6 @@ PUBLIC.DATEDIFF                              [procedure, returns result]
   @p0                               BIGINT, result              
 
 
-PUBLIC.DAY                                   [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DATE, in                    
-  @p0                               INTEGER, result             
-
-
 PUBLIC.DAYNAME                               [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               DATE, in                    
@@ -352,26 +392,6 @@ PUBLIC.FLOOR                                 [procedure, returns result]
 PUBLIC.HEXTORAW                              [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               LONGVARCHAR, in             
-  @p0                               LONGVARCHAR, result         
-
-
-PUBLIC.HOUR                                  [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               TIME, in                    
-  @p0                               INTEGER, result             
-
-
-PUBLIC.IDENTITY                              [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               INTEGER, result             
-
-
-PUBLIC.INSERT                                [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR, in             
-  @p2                               INTEGER, in                 
-  @p3                               INTEGER, in                 
-  @p4                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
 
 
@@ -611,13 +631,6 @@ PUBLIC.LCASE                                 [procedure, returns result]
   @p0                               LONGVARCHAR, result         
 
 
-PUBLIC.LEFT                                  [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR, in             
-  @p2                               INTEGER, in                 
-  @p0                               LONGVARCHAR, result         
-
-
 PUBLIC.LENGTH                                [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               LONGVARCHAR, in             
@@ -656,22 +669,10 @@ PUBLIC.LTRIM                                 [procedure, returns result]
   @p0                               LONGVARCHAR, result         
 
 
-PUBLIC.MINUTE                                [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               TIME, in                    
-  @p0                               INTEGER, result             
-
-
 PUBLIC.MOD                                   [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               INTEGER, in                 
   @p2                               INTEGER, in                 
-  @p0                               INTEGER, result             
-
-
-PUBLIC.MONTH                                 [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DATE, in                    
   @p0                               INTEGER, result             
 
 
@@ -1134,25 +1135,11 @@ PUBLIC.RAWTOHEX                              [procedure, returns result]
   @p0                               LONGVARCHAR, result         
 
 
-PUBLIC.REPEAT                                [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR, in             
-  @p2                               INTEGER, in                 
-  @p0                               LONGVARCHAR, result         
-
-
 PUBLIC.REPLACE                               [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               LONGVARCHAR, in             
   @p2                               LONGVARCHAR, in             
   @p3                               LONGVARCHAR, in             
-  @p0                               LONGVARCHAR, result         
-
-
-PUBLIC.RIGHT                                 [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR, in             
-  @p2                               INTEGER, in                 
   @p0                               LONGVARCHAR, result         
 
 
@@ -1173,12 +1160,6 @@ PUBLIC.RTRIM                                 [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               LONGVARCHAR, in             
   @p0                               LONGVARCHAR, result         
-
-
-PUBLIC.SECOND                                [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               TIME, in                    
-  @p0                               INTEGER, result             
 
 
 PUBLIC.SIGN                                  [procedure, returns result]
@@ -1259,18 +1240,7 @@ PUBLIC.UPPER                                 [procedure, returns result]
   @p0                               LONGVARCHAR, result         
 
 
-PUBLIC.USER                                  [procedure, returns result]
-------------------------------------------------------------------------
-  @p0                               LONGVARCHAR, result         
-
-
 PUBLIC.WEEK                                  [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               DATE, in                    
-  @p0                               INTEGER, result             
-
-
-PUBLIC.YEAR                                  [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               DATE, in                    
   @p0                               INTEGER, result             

@@ -327,7 +327,7 @@ final class DatabaseInfoRetriever
     final Schema systemSchema = new MutableSchema();
 
     final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getTypeInfo(), getRetrieverConnection().getIdentifierQuoteString());
+      .getTypeInfo(), getRetrieverConnection().getDatabaseSystemParameters());
     try
     {
       while (results.next())
@@ -392,8 +392,7 @@ final class DatabaseInfoRetriever
     throws SQLException
   {
     final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getUDTs(catalogName, schemaName, "%", null), getRetrieverConnection()
-      .getIdentifierQuoteString());
+      .getUDTs(catalogName, schemaName, "%", null), getRetrieverConnection().getDatabaseSystemParameters());
     try
     {
       while (results.next())

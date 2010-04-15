@@ -127,8 +127,7 @@ public class TestDatabase
         statement = connection.createStatement();
         for (final String scriptResource: scriptResources)
         {
-          final String script = Utility.readFully(TestDatabase.class
-            .getResourceAsStream(scriptResource));
+          final String script = Utility.readResourceFully(scriptResource);
           statement.execute(script);
           connection.commit();
         }

@@ -60,8 +60,8 @@ public final class Main
         .getOptions();
       if (applicationOptions.isShowHelp())
       {
-        final String text = Utility.readFully(Main.class
-          .getResourceAsStream("/help/SchemaCrawler.spring.txt"));
+        final String text = Utility
+          .readResourceFully("/help/SchemaCrawler.spring.txt");
         System.out.println(text);
         System.exit(0);
       }

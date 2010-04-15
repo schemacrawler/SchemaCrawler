@@ -50,13 +50,13 @@ final class MetadataResultSet
 
   private static final int FETCHSIZE = 20;
 
-  private final String identifierQuoteString;
   private final ResultSet results;
   private final Set<String> resultSetColumns;
   private Set<String> readColumns;
+  private final DatabaseSystemParameters dbSystemParameters;
 
   MetadataResultSet(final ResultSet resultSet,
-                    final String identifierQuoteString)
+                    final DatabaseSystemParameters dbSystemParameters)
   {
     if (resultSet == null)
     {
@@ -93,15 +93,17 @@ final class MetadataResultSet
     this.resultSetColumns = Collections.unmodifiableSet(resultSetColumns);
 
     readColumns = new HashSet<String>();
+    this.dbSystemParameters = dbSystemParameters;
+  }
 
-    if (Utility.isBlank(identifierQuoteString))
+  private boolean useColumn(final String columnName)
+  {
+    final boolean useColumn = columnName != null;
+    if (useColumn)
     {
-      this.identifierQuoteString = null;
+      readColumns.add(columnName);
     }
-    else
-    {
-      this.identifierQuoteString = identifierQuoteString;
-    }
+    return useColumn;
   }
 
   /**
@@ -285,6 +287,29 @@ final class MetadataResultSet
     return value;
   }
 
+  String getQuotedName(final String columnName)
+  {
+    String value = null;
+    if (useColumn(columnName))
+    {
+      try
+      {
+        value = results.getString(columnName);
+        if (results.wasNull())
+        {
+          value = null;
+        }
+        value = dbSystemParameters.quoteName(value);
+      }
+      catch (final SQLException e)
+      {
+        LOGGER.log(Level.WARNING, "Could not read string value for column "
+                                  + columnName, e);
+      }
+    }
+    return value;
+  }
+
   /**
    * Reads the value of a column from the result set as a short. If the
    * value was null, returns the default.
@@ -347,37 +372,6 @@ final class MetadataResultSet
     return value;
   }
 
-  String getQuotedName(final String columnName)
-  {
-    String value = null;
-    if (useColumn(columnName))
-    {
-      try
-      {
-        value = results.getString(columnName);
-        if (results.wasNull())
-        {
-          value = null;
-        }
-        else
-        {
-          if (identifierQuoteString != null
-              && Utility.containsWhitespace(value))
-          {
-            value = identifierQuoteString + value + identifierQuoteString;
-          }
-        }
-      }
-      catch (final SQLException e)
-      {
-        LOGGER.log(Level.WARNING, "Could not read string value for column "
-                                  + columnName, e);
-      }
-    }
-    return value;
-
-  }
-
   /**
    * Moves the cursor down one row from its current position. A
    * <code>ResultSet</code> cursor is initially positioned before the
@@ -395,16 +389,6 @@ final class MetadataResultSet
   {
     readColumns = new HashSet<String>();
     return results.next();
-  }
-
-  private boolean useColumn(final String columnName)
-  {
-    final boolean useColumn = columnName != null;
-    if (useColumn)
-    {
-      readColumns.add(columnName);
-    }
-    return useColumn;
   }
 
 }

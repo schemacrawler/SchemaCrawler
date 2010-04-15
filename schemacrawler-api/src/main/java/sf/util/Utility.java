@@ -124,6 +124,11 @@ public final class Utility
     return readFully(reader);
   }
 
+  public static String readResourceFully(final String resource)
+  {
+    return readFully(Utility.class.getResourceAsStream(resource));
+  }
+
   /**
    * Reads the stream fully, and returns a byte array of data.
    * 

@@ -45,8 +45,8 @@ public final class HtmlFormattingHelper
 
   private static String htmlHeader()
   {
-    final String styleSheet = Utility.readFully(HtmlFormattingHelper.class
-      .getResourceAsStream("/schemacrawler-output.css"));
+    final String styleSheet = Utility
+      .readResourceFully("/schemacrawler-output.css");
 
     return ""
            + "<?xml version='1.0' encoding='UTF-8'?>"
