@@ -62,8 +62,7 @@ final class ProcedureRetriever
         .getProcedureColumns(procedure.getSchema().getCatalogName(),
                              procedure.getSchema().getSchemaName(),
                              procedure.getName(),
-                             null), getRetrieverConnection()
-        .getIdentifierQuoteString());
+                             null), getRetrieverConnection().getDatabaseSystemParameters());
 
       while (results.next())
       {
@@ -135,8 +134,7 @@ final class ProcedureRetriever
       results = new MetadataResultSet(getMetaData().getProcedures(catalogName,
                                                                   schemaName,
                                                                   "%"),
-                                      getRetrieverConnection()
-                                        .getIdentifierQuoteString());
+                                      getRetrieverConnection().getDatabaseSystemParameters());
 
       while (results.next())
       {

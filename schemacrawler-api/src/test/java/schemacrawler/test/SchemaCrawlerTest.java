@@ -103,7 +103,7 @@ public class SchemaCrawlerTest
             {
                 "BOOKAUTHORS.BOOKID",
                 "BOOKAUTHORS.AUTHORID",
-                "BOOKAUTHORS.UPDATE",
+                "BOOKAUTHORS.\"UPDATE\"",
             },
             {
                 "BOOKS.ID",
@@ -314,8 +314,8 @@ public class SchemaCrawlerTest
   {
 
     final InformationSchemaViews informationSchemaViews = new InformationSchemaViews();
-    informationSchemaViews.setRoutinesSql(Utility.readFully(this.getClass()
-      .getResourceAsStream("/procedure_definitions.sql")));
+    informationSchemaViews.setRoutinesSql(Utility
+      .readResourceFully("/procedure_definitions.sql"));
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setShowStoredProcedures(true);

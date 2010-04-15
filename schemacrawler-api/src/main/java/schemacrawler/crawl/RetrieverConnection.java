@@ -39,8 +39,7 @@ final class RetrieverConnection
   private final Connection connection;
   private final DatabaseMetaData metaData;
   private final InformationSchemaViews informationSchemaViews;
-  private final String catalogSeparator;
-  private final String identifierQuoteString;
+  private final DatabaseSystemParameters dbParameters;
 
   RetrieverConnection(final Connection connection,
                       final SchemaCrawlerOptions options)
@@ -62,8 +61,7 @@ final class RetrieverConnection
     this.connection = connection;
     metaData = connection.getMetaData();
 
-    catalogSeparator = metaData.getCatalogSeparator();
-    identifierQuoteString = metaData.getIdentifierQuoteString();
+    dbParameters = new DatabaseSystemParameters(connection);
 
     informationSchemaViews = schemaCrawlerOptions.getInformationSchemaViews();
   }
@@ -71,6 +69,11 @@ final class RetrieverConnection
   Connection getConnection()
   {
     return connection;
+  }
+
+  DatabaseSystemParameters getDatabaseSystemParameters()
+  {
+    return dbParameters;
   }
 
   /**
@@ -86,11 +89,6 @@ final class RetrieverConnection
   DatabaseMetaData getMetaData()
   {
     return metaData;
-  }
-
-  String getIdentifierQuoteString()
-  {
-    return identifierQuoteString;
   }
 
 }

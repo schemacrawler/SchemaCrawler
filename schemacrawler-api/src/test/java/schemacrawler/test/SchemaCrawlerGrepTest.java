@@ -73,7 +73,7 @@ public class SchemaCrawlerGrepTest
           {
               "BOOKAUTHORS.BOOKID",
               "BOOKAUTHORS.AUTHORID",
-              "BOOKAUTHORS.UPDATE",
+              "BOOKAUTHORS.\"UPDATE\"",
           },
         },
         {

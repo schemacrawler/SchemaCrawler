@@ -43,8 +43,7 @@ public final class Version
 
   static
   {
-    ABOUT = Utility.readFully(Version.class
-      .getResourceAsStream("/help/SchemaCrawler.txt"));
+    ABOUT = Utility.readResourceFully("/help/SchemaCrawler.txt");
 
     String[] productLine;
     try

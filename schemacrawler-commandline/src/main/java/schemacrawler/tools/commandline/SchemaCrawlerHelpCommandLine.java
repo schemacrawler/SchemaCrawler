@@ -48,9 +48,7 @@ public final class SchemaCrawlerHelpCommandLine
     {
       helpResourceName = helpResource;
     }
-    final String helpText = Utility
-      .readFully(SchemaCrawlerHelpCommandLine.class
-        .getResourceAsStream(helpResourceName));
+    final String helpText = Utility.readResourceFully(helpResourceName);
     System.out.println(helpText);
   }
 

@@ -119,6 +119,18 @@ final class SchemaReference
     return getFullName();
   }
 
+  private void buildFullName()
+  {
+    if (fullName == null)
+    {
+      final boolean hasCatalogName = !Utility.isBlank(catalogName);
+      final boolean hasSchemaName = !Utility.isBlank(schemaName);
+      fullName = (hasCatalogName? catalogName: "")
+                 + (hasCatalogName && hasSchemaName? ".": "")
+                 + (hasSchemaName? schemaName: "");
+    }
+  }
+
   String getCatalogName()
   {
     return catalogName;
@@ -133,18 +145,6 @@ final class SchemaReference
   String getSchemaName()
   {
     return schemaName;
-  }
-
-  private void buildFullName()
-  {
-    if (fullName == null)
-    {
-      final boolean hasCatalogName = !Utility.isBlank(catalogName);
-      final boolean hasSchemaName = !Utility.isBlank(schemaName);
-      fullName = (hasCatalogName? catalogName: "")
-                 + (hasCatalogName && hasSchemaName? ".": "")
-                 + (hasSchemaName? schemaName: "");
-    }
   }
 
 }

@@ -101,7 +101,7 @@ final class MutableDatabaseInfo
   {
     if (dbProperties != null)
     {
-      this.databaseProperties.addAll(dbProperties);
+      databaseProperties.addAll(dbProperties);
     }
   }
 

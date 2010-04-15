@@ -38,7 +38,6 @@ import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.text.util.HtmlFormattingHelper;
 import schemacrawler.utility.MetaDataUtility;
 import schemacrawler.utility.MetaDataUtility.Connectivity;
 import sf.util.Utility;
@@ -127,8 +126,7 @@ final class DotWriter
 
   public void open()
   {
-    final String text = Utility.readFully(HtmlFormattingHelper.class
-      .getResourceAsStream("/dot.header.txt"));
+    final String text = Utility.readResourceFully("/dot.header.txt");
     out.println(text);
   }
 
