@@ -26,9 +26,8 @@ import java.util.List;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import sf.util.ObjectToString;
-import sf.util.Utility;
 
-public class LinterTableWithNullIntendedColumns
+public class LinterTableWithQuotedNames
   extends BaseLinter<Table>
 {
 
@@ -36,12 +35,19 @@ public class LinterTableWithNullIntendedColumns
   {
     if (table != null)
     {
-      final Column[] nullDefaultValueMayBeIntendedColumns = findNullDefaultValueMayBeIntendedColumns(table
+      final List<String> spacesInNamesList = findColumnsWithQuotedNames(table
         .getColumns());
-      if (nullDefaultValueMayBeIntendedColumns.length > 0)
+      final String tableName = table.getName();
+      if (isQuotedName(tableName))
       {
-        addLint(table, new Lint("columns where NULL may be intended",
-          nullDefaultValueMayBeIntendedColumns)
+        spacesInNamesList.add(0, tableName);
+      }
+      if (!spacesInNamesList.isEmpty())
+      {
+        final String[] spacesInNames = spacesInNamesList
+          .toArray(new String[spacesInNamesList.size()]);
+        addLint(table, new Lint("spaces in names, or reserved words",
+          spacesInNames)
         {
 
           private static final long serialVersionUID = 4306137113072609086L;
@@ -49,32 +55,34 @@ public class LinterTableWithNullIntendedColumns
           @Override
           public String getLintValueAsString()
           {
-            final List<String> columnNames = new ArrayList<String>();
-            for (final Column column: nullDefaultValueMayBeIntendedColumns)
-            {
-              columnNames.add(column.getName());
-            }
-            return ObjectToString.toString(columnNames);
+            return ObjectToString.toString(spacesInNames);
           }
         });
       }
     }
   }
 
-  private Column[] findNullDefaultValueMayBeIntendedColumns(final Column[] columns)
+  private List<String> findColumnsWithQuotedNames(final Column[] columns)
   {
-    final List<Column> nullDefaultValueMayBeIntendedColumns = new ArrayList<Column>();
+    final List<String> columnsWithQuotedNames = new ArrayList<String>();
     for (final Column column: columns)
     {
-      final String columnDefaultValue = column.getDefaultValue();
-      if (!Utility.isBlank(columnDefaultValue)
-          && columnDefaultValue.trim().equalsIgnoreCase("NULL"))
+      final String columnName = column.getName();
+      if (isQuotedName(columnName))
       {
-        nullDefaultValueMayBeIntendedColumns.add(column);
+        columnsWithQuotedNames.add(columnName);
       }
     }
-    return nullDefaultValueMayBeIntendedColumns
-      .toArray(new Column[nullDefaultValueMayBeIntendedColumns.size()]);
+    return columnsWithQuotedNames;
+  }
+
+  private boolean isQuotedName(final String name)
+  {
+    final int nameLength = name.length();
+    final char[] namechars = new char[nameLength];
+    name.getChars(0, nameLength, namechars, 0);
+    return !Character.isJavaIdentifierStart(namechars[0])
+           && namechars[0] == namechars[nameLength - 1];
   }
 
 }
