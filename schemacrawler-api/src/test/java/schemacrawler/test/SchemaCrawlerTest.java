@@ -329,8 +329,9 @@ public class SchemaCrawlerTest
     {
       assertNotNull("Procedure definition is null, for "
                     + procedure.getFullName(), procedure.getDefinition());
-      assertFalse("Procedure definition not found", procedure.getDefinition()
-        .trim().equals(""));
+      assertFalse("Procedure definition not found, for "
+                  + procedure.getFullName(), procedure.getDefinition().trim()
+        .equals(""));
     }
 
   }

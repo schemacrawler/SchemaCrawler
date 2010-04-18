@@ -65,7 +65,7 @@ final class TableRetriever
         // final String catalogName = results.getString("TABLE_CAT");
         // final String schemaName = results.getString("TABLE_SCHEM");
         // final String tableName = results.getQuotedName("TABLE_NAME");
-        String indexName = results.getString("INDEX_NAME");
+        String indexName = results.getQuotedName("INDEX_NAME");
         if (Utility.isBlank(indexName))
         {
           indexName = UNKNOWN;
@@ -153,7 +153,7 @@ final class TableRetriever
     {
       while (results.next())
       {
-        String foreignKeyName = results.getString("FK_NAME");
+        String foreignKeyName = results.getQuotedName("FK_NAME");
         if (Utility.isBlank(foreignKeyName))
         {
           foreignKeyName = UNKNOWN;
@@ -264,7 +264,8 @@ final class TableRetriever
         .getColumns(table.getSchema().getCatalogName(),
                     table.getSchema().getSchemaName(),
                     table.getName(),
-                    null), getRetrieverConnection().getDatabaseSystemParameters());
+                    null), getRetrieverConnection()
+        .getDatabaseSystemParameters());
 
       while (results.next())
       {
@@ -352,13 +353,15 @@ final class TableRetriever
     results = new MetadataResultSet(metaData.getImportedKeys(table.getSchema()
                                       .getCatalogName(), table.getSchema()
                                       .getSchemaName(), table.getName()),
-                                    getRetrieverConnection().getDatabaseSystemParameters());
+                                    getRetrieverConnection()
+                                      .getDatabaseSystemParameters());
     createForeignKeys(results, foreignKeys);
 
     results = new MetadataResultSet(metaData.getExportedKeys(table.getSchema()
                                       .getCatalogName(), table.getSchema()
                                       .getSchemaName(), table.getName()),
-                                    getRetrieverConnection().getDatabaseSystemParameters());
+                                    getRetrieverConnection()
+                                      .getDatabaseSystemParameters());
     createForeignKeys(results, foreignKeys);
   }
 
@@ -383,7 +386,8 @@ final class TableRetriever
         final Connection connection = getDatabaseConnection();
         statement = connection.createStatement();
         results = new MetadataResultSet(statement.executeQuery(indexInfoSql),
-                                        getRetrieverConnection().getDatabaseSystemParameters());
+                                        getRetrieverConnection()
+                                          .getDatabaseSystemParameters());
         createIndices(table, results);
       }
       else
@@ -393,7 +397,8 @@ final class TableRetriever
                         table.getSchema().getSchemaName(),
                         table.getName(),
                         unique,
-                        true/* approximate */), getRetrieverConnection().getDatabaseSystemParameters());
+                        true/* approximate */), getRetrieverConnection()
+          .getDatabaseSystemParameters());
         createIndices(table, results);
       }
     }
@@ -430,16 +435,17 @@ final class TableRetriever
       results = new MetadataResultSet(getMetaData()
         .getPrimaryKeys(table.getSchema().getCatalogName(),
                         table.getSchema().getSchemaName(),
-                        table.getName()), getRetrieverConnection().getDatabaseSystemParameters());
+                        table.getName()), getRetrieverConnection()
+        .getDatabaseSystemParameters());
 
       MutablePrimaryKey primaryKey;
       while (results.next())
       {
         // final String catalogName = results.getString("TABLE_CAT");
         // final String schemaName = results.getString("TABLE_SCHEM");
-        // final String tableName = results.getString("TABLE_NAME");
+        // final String tableName = results.getQuotedName("TABLE_NAME");
         final String columnName = results.getQuotedName("COLUMN_NAME");
-        final String primaryKeyName = results.getString("PK_NAME");
+        final String primaryKeyName = results.getQuotedName("PK_NAME");
         final int keySequence = Integer.parseInt(results.getString("KEY_SEQ"));
 
         primaryKey = table.getPrimaryKey();
@@ -497,13 +503,14 @@ final class TableRetriever
         .getTables(catalogName,
                    schemaName,
                    tableNamePattern,
-                   TableType.toStrings(tableTypes)), getRetrieverConnection().getDatabaseSystemParameters());
+                   TableType.toStrings(tableTypes)), getRetrieverConnection()
+        .getDatabaseSystemParameters());
 
       while (results.next())
       {
         // final String catalogName = results.getString("TABLE_CAT");
         // final String schemaName = results.getString("TABLE_SCHEM");
-        final String tableName = results.getString("TABLE_NAME");
+        final String tableName = results.getQuotedName("TABLE_NAME");
         LOGGER.log(Level.FINER, String.format("Retrieving table: %s.%s",
                                               schemaName,
                                               tableName));
