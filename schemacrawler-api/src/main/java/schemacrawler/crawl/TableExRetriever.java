@@ -166,19 +166,20 @@ final class TableExRetriever
     {
       statement = connection.createStatement();
       results = new MetadataResultSet(statement
-        .executeQuery(tableConstraintsInformationSql), getRetrieverConnection().getDatabaseSystemParameters());
+        .executeQuery(tableConstraintsInformationSql), getRetrieverConnection()
+        .getDatabaseSystemParameters());
 
       while (results.next())
       {
         final String catalogName = results.getString("CONSTRAINT_CATALOG");
         final String schemaName = results.getString("CONSTRAINT_SCHEMA");
-        final String constraintName = results.getString("CONSTRAINT_NAME");
+        final String constraintName = results.getQuotedName("CONSTRAINT_NAME");
         LOGGER.log(Level.FINER, "Retrieving constraint: " + constraintName);
         // final String tableCatalogName =
         // results.getString("TABLE_CATALOG");
         // final String tableSchemaName =
         // results.getString("TABLE_SCHEMA");
-        final String tableName = results.getString("TABLE_NAME");
+        final String tableName = results.getQuotedName("TABLE_NAME");
 
         final MutableTable table = lookupTable(catalogName,
                                                schemaName,
@@ -246,14 +247,15 @@ final class TableExRetriever
     {
       statement = connection.createStatement();
       results = new MetadataResultSet(statement
-        .executeQuery(checkConstraintInformationSql), getRetrieverConnection().getDatabaseSystemParameters());
+        .executeQuery(checkConstraintInformationSql), getRetrieverConnection()
+        .getDatabaseSystemParameters());
       while (results.next())
       {
         // final String catalogName =
         // results.getString("CONSTRAINT_CATALOG");
         // final String schemaName =
         // results.getString("CONSTRAINT_SCHEMA");
-        final String constraintName = results.getString("CONSTRAINT_NAME");
+        final String constraintName = results.getQuotedName("CONSTRAINT_NAME");
         LOGGER.log(Level.FINER, "Retrieving constraint definition: "
                                 + constraintName);
         String definition = results.getString("CHECK_CLAUSE");
@@ -309,7 +311,8 @@ final class TableExRetriever
                                                                         null,
                                                                         "%",
                                                                         "%"),
-                                      getRetrieverConnection().getDatabaseSystemParameters());
+                                      getRetrieverConnection()
+                                        .getDatabaseSystemParameters());
       createPrivileges(results, true);
     }
     catch (final SQLException e)
@@ -335,7 +338,8 @@ final class TableExRetriever
       results = new MetadataResultSet(getMetaData().getTablePrivileges(null,
                                                                        null,
                                                                        "%"),
-                                      getRetrieverConnection().getDatabaseSystemParameters());
+                                      getRetrieverConnection()
+                                        .getDatabaseSystemParameters());
       createPrivileges(results, false);
     }
     catch (final SQLException e)
@@ -377,13 +381,14 @@ final class TableExRetriever
     try
     {
       results = new MetadataResultSet(statement
-        .executeQuery(triggerInformationSql), getRetrieverConnection().getDatabaseSystemParameters());
+        .executeQuery(triggerInformationSql), getRetrieverConnection()
+        .getDatabaseSystemParameters());
 
       while (results.next())
       {
         final String catalogName = results.getString("TRIGGER_CATALOG");
         final String schemaName = results.getString("TRIGGER_SCHEMA");
-        final String triggerName = results.getString("TRIGGER_NAME");
+        final String triggerName = results.getQuotedName("TRIGGER_NAME");
         LOGGER.log(Level.FINER, "Retrieving trigger: " + triggerName);
 
         // final String eventObjectCatalog = results
@@ -480,13 +485,14 @@ final class TableExRetriever
     try
     {
       results = new MetadataResultSet(statement
-        .executeQuery(viewInformationSql), getRetrieverConnection().getDatabaseSystemParameters());
+        .executeQuery(viewInformationSql), getRetrieverConnection()
+        .getDatabaseSystemParameters());
 
       while (results.next())
       {
         final String catalogName = results.getString("TABLE_CATALOG");
         final String schemaName = results.getString("TABLE_SCHEMA");
-        final String viewName = results.getString("TABLE_NAME");
+        final String viewName = results.getQuotedName("TABLE_NAME");
 
         final MutableView view = (MutableView) lookupTable(catalogName,
                                                            schemaName,
