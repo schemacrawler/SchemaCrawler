@@ -44,7 +44,7 @@ final class MutableForeignKeyColumnMap
 
   MutableForeignKeyColumnMap(final NamedObject parent, final String name)
   {
-    super(parent, name);
+    super(parent, name, name);
   }
 
   /**

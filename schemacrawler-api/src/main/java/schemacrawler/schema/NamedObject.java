@@ -73,6 +73,14 @@ public interface NamedObject
   String getName();
 
   /**
+   * Getter for quoted name of object.
+   * 
+   * @return Quoted name of the object, if the database requires the
+   *         name to be quoted
+   */
+  String getQuotedName();
+
+  /**
    * Getter for remarks.
    * 
    * @return Remarks

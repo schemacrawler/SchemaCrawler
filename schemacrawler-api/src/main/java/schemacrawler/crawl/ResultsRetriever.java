@@ -73,7 +73,6 @@ final class ResultsRetriever
     throws SchemaCrawlerException
   {
     final MutableResultsColumns resultColumns = new MutableResultsColumns("");
-
     try
     {
       final MutableDatabase database = new MutableDatabase("results");
@@ -90,7 +89,9 @@ final class ResultsRetriever
 
         final MutableSchema schema = database
           .addSchema(catalogName, schemaName);
-        final MutableTable table = new MutableTable(schema, tableName);
+        final MutableTable table = new MutableTable(schema,
+                                                    tableName,
+                                                    quoteName(tableName));
         schema.addTable(table);
 
         final String databaseSpecificTypeName = resultsMetaData
@@ -106,7 +107,8 @@ final class ResultsRetriever
 
         final String columnName = resultsMetaData.getColumnName(i);
         final MutableResultsColumn column = new MutableResultsColumn(table,
-                                                                     columnName);
+                                                                     columnName,
+                                                                     quoteName(columnName));
         column.setOrdinalPosition(i);
         column.setType(columnDataType);
 

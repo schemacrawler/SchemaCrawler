@@ -46,9 +46,9 @@ class MutableTrigger
   private ActionOrientationType actionOrientation;
   private ConditionTimingType conditionTiming;
 
-  MutableTrigger(final Table parent, final String name)
+  MutableTrigger(final Table parent, final String name, final String quotedName)
   {
-    super(parent, name);
+    super(parent, name, quotedName);
     // Default values
     eventManipulationType = EventManipulationType.unknown;
     actionOrientation = ActionOrientationType.unknown;

@@ -53,7 +53,6 @@ final class MetadataResultSet
   private final ResultSet results;
   private final Set<String> resultSetColumns;
   private Set<String> readColumns;
-  private final DatabaseSystemParameters dbSystemParameters;
 
   MetadataResultSet(final ResultSet resultSet,
                     final DatabaseSystemParameters dbSystemParameters)
@@ -93,7 +92,6 @@ final class MetadataResultSet
     this.resultSetColumns = Collections.unmodifiableSet(resultSetColumns);
 
     readColumns = new HashSet<String>();
-    this.dbSystemParameters = dbSystemParameters;
   }
 
   private boolean useColumn(final String columnName)

@@ -53,7 +53,6 @@ final class ProcedureRetriever
                                 final InclusionRule columnInclusionRule)
     throws SQLException
   {
-
     MetadataResultSet results = null;
     int ordinalNumber = 0;
     try
@@ -73,7 +72,8 @@ final class ProcedureRetriever
         final String columnName = results.getString("COLUMN_NAME");
 
         final MutableProcedureColumn column = new MutableProcedureColumn(procedure,
-                                                                         columnName);
+                                                                         columnName,
+                                                                         quoteName(columnName));
         final String columnFullName = column.getFullName();
         if (columnInclusionRule.include(columnFullName)
             && procedure.getName().equals(procedureName)
@@ -160,7 +160,8 @@ final class ProcedureRetriever
         }
 
         final MutableProcedure procedure = new MutableProcedure(schema,
-                                                                procedureName);
+                                                                procedureName,
+                                                                quoteName(procedureName));
         if (procedureInclusionRule.include(procedure.getFullName()))
         {
           procedure.setType(ProcedureType.valueOf(procedureType));

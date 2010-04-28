@@ -44,9 +44,11 @@ class MutableColumn
   private MutableColumn referencedColumn;
   private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>();
 
-  MutableColumn(final DatabaseObject parent, final String name)
+  MutableColumn(final DatabaseObject parent,
+                final String name,
+                final String quotedName)
   {
-    super(parent, name);
+    super(parent, name, quotedName);
   }
 
   /**

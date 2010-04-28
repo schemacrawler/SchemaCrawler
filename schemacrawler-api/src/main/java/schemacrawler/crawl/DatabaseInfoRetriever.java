@@ -392,7 +392,8 @@ final class DatabaseInfoRetriever
     throws SQLException
   {
     final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getUDTs(catalogName, schemaName, "%", null), getRetrieverConnection().getDatabaseSystemParameters());
+      .getUDTs(catalogName, schemaName, "%", null), getRetrieverConnection()
+      .getDatabaseSystemParameters());
     try
     {
       while (results.next())

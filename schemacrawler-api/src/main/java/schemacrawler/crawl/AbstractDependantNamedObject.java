@@ -40,9 +40,11 @@ abstract class AbstractDependantNamedObject
 
   private transient int hashCode;
 
-  AbstractDependantNamedObject(final NamedObject parent, final String name)
+  AbstractDependantNamedObject(final NamedObject parent,
+                               final String name,
+                               final String quotedName)
   {
-    super(name);
+    super(name, quotedName);
     this.parent = parent;
   }
 
