@@ -42,9 +42,9 @@ class MutableView
   private CheckOptionType checkOption;
   private boolean updatable;
 
-  MutableView(final Schema schema, final String name)
+  MutableView(final Schema schema, final String name, final String quotedName)
   {
-    super(schema, name);
+    super(schema, name, quotedName);
     definition = new StringBuilder();
   }
 

@@ -138,21 +138,21 @@ public class SchemaCrawlerMojo
    * 
    * @parameter expression="${sorttables}" alias="sorttables"
    */
-  private String sorttables = "true";
+  private final String sorttables = "true";
 
   /**
    * Sort columns in a table alphabetically.
    * 
    * @parameter expression="${sortcolumns}" alias="sortcolumns"
    */
-  private String sortcolumns = "false";
+  private final String sortcolumns = "false";
 
   /**
    * Sort parameters in a stored procedure alphabetically.
    * 
    * @parameter expression="${sortinout}" alias="sortinout"
    */
-  private String sortinout = "false";
+  private final String sortinout = "false";
 
   /**
    * The info level determines the amount of database metadata
@@ -160,12 +160,12 @@ public class SchemaCrawlerMojo
    * 
    * @parameter expression="${infolevel}" alias="infolevel"
    */
-  private String infolevel = InfoLevel.standard.name();
+  private final String infolevel = InfoLevel.standard.name();
 
   /**
    * @parameter expression="${schemas}" alias="schemas"
    */
-  private String schemas = InclusionRule.ALL;
+  private final String schemas = InclusionRule.ALL;
 
   /**
    * Comma-separated list of table types of
@@ -181,7 +181,7 @@ public class SchemaCrawlerMojo
    * @parameter expression="${show_stored_procedures}"
    *            alias="show_stored_procedures"
    */
-  private String show_stored_procedures = Boolean.TRUE.toString();
+  private final String show_stored_procedures = Boolean.TRUE.toString();
 
   /**
    * Regular expression to match fully qualified table names, in the
@@ -191,7 +191,7 @@ public class SchemaCrawlerMojo
    * 
    * @parameter expression="${tables}" alias="tables"
    */
-  private String tables = InclusionRule.ALL;
+  private final String tables = InclusionRule.ALL;
 
   /**
    * Regular expression to match fully qualified column names, in the
@@ -201,7 +201,7 @@ public class SchemaCrawlerMojo
    * 
    * @parameter expression="${excludecolumns}" alias="excludecolumns"
    */
-  private String excludecolumns = InclusionRule.NONE;
+  private final String excludecolumns = InclusionRule.NONE;
 
   /**
    * Regular expression to match fully qualified procedure names, in the
@@ -211,7 +211,7 @@ public class SchemaCrawlerMojo
    * 
    * @parameter expression="${schemas}" alias="schemas"
    */
-  private String procedures = InclusionRule.ALL;
+  private final String procedures = InclusionRule.ALL;
 
   /**
    * Regular expression to match fully qualified parameter names.
@@ -219,7 +219,7 @@ public class SchemaCrawlerMojo
    * 
    * @parameter expression="${schemas}" alias="schemas"
    */
-  private String excludeinout = InclusionRule.NONE;
+  private final String excludeinout = InclusionRule.NONE;
 
   /**
    * {@inheritDoc}

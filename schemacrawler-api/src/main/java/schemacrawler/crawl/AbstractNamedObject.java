@@ -40,13 +40,14 @@ abstract class AbstractNamedObject
   private static final long serialVersionUID = -1486322887991472729L;
 
   private final String name;
-
+  private final String quotedName;
   private String remarks;
   private final Map<String, Object> attributeMap = new HashMap<String, Object>();
 
-  AbstractNamedObject(final String name)
+  AbstractNamedObject(final String name, final String quotedName)
   {
     this.name = name;
+    this.quotedName = quotedName;
   }
 
   /**
@@ -158,6 +159,11 @@ abstract class AbstractNamedObject
   public final String getName()
   {
     return name;
+  }
+
+  public String getQuotedName()
+  {
+    return quotedName;
   }
 
   /**

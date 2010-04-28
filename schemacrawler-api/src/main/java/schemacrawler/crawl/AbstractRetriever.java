@@ -125,6 +125,12 @@ abstract class AbstractRetriever
     this.database = database;
   }
 
+  protected String quoteName(final String name)
+  {
+    return getRetrieverConnection().getDatabaseSystemParameters()
+      .quoteName(name);
+  }
+
   Connection getDatabaseConnection()
   {
     return retrieverConnection.getConnection();

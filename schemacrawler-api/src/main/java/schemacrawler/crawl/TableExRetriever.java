@@ -201,7 +201,8 @@ final class TableExRetriever
         if (constraintType.equalsIgnoreCase("check"))
         {
           final MutableCheckConstraint checkConstraint = new MutableCheckConstraint(table,
-                                                                                    constraintName);
+                                                                                    constraintName,
+                                                                                    quoteName(constraintName));
           checkConstraint.setDeferrable(deferrable);
           checkConstraint.setInitiallyDeferred(initiallyDeferred);
 
@@ -432,7 +433,9 @@ final class TableExRetriever
         MutableTrigger trigger = table.lookupTrigger(triggerName);
         if (trigger == null)
         {
-          trigger = new MutableTrigger(table, triggerName);
+          trigger = new MutableTrigger(table,
+                                       triggerName,
+                                       quoteName(triggerName));
         }
         trigger.setEventManipulationType(eventManipulationType);
         trigger.setActionOrder(actionOrder);

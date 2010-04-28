@@ -71,9 +71,9 @@ class MutableTable
   private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>();
   private int sortIndex;
 
-  MutableTable(final Schema schema, final String name)
+  MutableTable(final Schema schema, final String name, final String quotedName)
   {
-    super(schema, name);
+    super(schema, name, quotedName);
   }
 
   /**

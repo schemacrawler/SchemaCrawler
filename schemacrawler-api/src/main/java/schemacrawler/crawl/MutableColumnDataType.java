@@ -64,7 +64,7 @@ final class MutableColumnDataType
 
   MutableColumnDataType(final Schema schema, final String name)
   {
-    super(schema, name);
+    super(schema, name, name);
     // Default values
     searchable = SearchableType.unknown;
     setTypeFromJavaSqlType(JavaSqlType.UNKNOWN);

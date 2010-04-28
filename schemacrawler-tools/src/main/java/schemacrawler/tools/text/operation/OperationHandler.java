@@ -87,48 +87,6 @@ final class OperationHandler
     dataFormatter.handle(schemaCrawlerInfo, databaseInfo, jdbcDriverInfo);
   }
 
-  void begin()
-    throws SchemaCrawlerException
-  {
-    try
-    {
-      if (connection.isClosed())
-      {
-        throw new SchemaCrawlerException("Connection is closed");
-      }
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerException("Connection is closed", e);
-    }
-
-    dataFormatter.begin();
-  }
-
-  void end()
-    throws SchemaCrawlerException
-  {
-    if (!query.isQueryOver())
-    {
-      final String title = query.getName();
-      final String sql = query.getQuery();
-      executeSqlAndHandleData(title, sql);
-    }
-
-    dataFormatter.end();
-  }
-
-  void handle(final Table table)
-    throws SchemaCrawlerException
-  {
-    if (query.isQueryOver())
-    {
-      final String title = table.getFullName();
-      final String sql = query.getQueryForTable(table);
-      executeSqlAndHandleData(title, sql);
-    }
-  }
-
   private void executeSqlAndHandleData(final String title, final String sql)
     throws SchemaCrawlerException
   {
@@ -169,6 +127,48 @@ final class OperationHandler
       {
         LOGGER.log(Level.WARNING, "Error releasing resources", e);
       }
+    }
+  }
+
+  void begin()
+    throws SchemaCrawlerException
+  {
+    try
+    {
+      if (connection.isClosed())
+      {
+        throw new SchemaCrawlerException("Connection is closed");
+      }
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerException("Connection is closed", e);
+    }
+
+    dataFormatter.begin();
+  }
+
+  void end()
+    throws SchemaCrawlerException
+  {
+    if (!query.isQueryOver())
+    {
+      final String title = query.getName();
+      final String sql = query.getQuery();
+      executeSqlAndHandleData(title, sql);
+    }
+
+    dataFormatter.end();
+  }
+
+  void handle(final Table table)
+    throws SchemaCrawlerException
+  {
+    if (query.isQueryOver())
+    {
+      final String title = table.getFullName();
+      final String sql = query.getQueryForTable(table);
+      executeSqlAndHandleData(title, sql);
     }
   }
 

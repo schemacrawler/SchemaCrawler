@@ -50,7 +50,7 @@ class MutableSchema
 
   MutableSchema(final SchemaReference schemaRef)
   {
-    super(schemaRef.getFullName());
+    super(schemaRef.getFullName(), schemaRef.getFullName());
     this.schemaRef = schemaRef;
   }
 

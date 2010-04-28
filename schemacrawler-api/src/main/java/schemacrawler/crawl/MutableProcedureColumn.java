@@ -40,9 +40,11 @@ final class MutableProcedureColumn
 
   private ProcedureColumnType procedureColumnType;
 
-  MutableProcedureColumn(final DatabaseObject parent, final String name)
+  MutableProcedureColumn(final DatabaseObject parent,
+                         final String name,
+                         final String quotedName)
   {
-    super(parent, name);
+    super(parent, name, quotedName);
   }
 
   /**
