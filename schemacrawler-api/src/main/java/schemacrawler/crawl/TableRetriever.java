@@ -64,15 +64,15 @@ final class TableRetriever
       {
         // final String catalogName = results.getString("TABLE_CAT");
         // final String schemaName = results.getString("TABLE_SCHEM");
-        // final String tableName = results.getQuotedName("TABLE_NAME");
-        String indexName = results.getQuotedName("INDEX_NAME");
+        // final String tableName = results.getString("TABLE_NAME");
+        String indexName = results.getString("INDEX_NAME");
         if (Utility.isBlank(indexName))
         {
           indexName = UNKNOWN;
         }
         LOGGER.log(Level.FINER, String.format("Retrieving index: %s.%s", table
           .getFullName(), indexName));
-        final String columnName = results.getQuotedName("COLUMN_NAME");
+        final String columnName = results.getString("COLUMN_NAME");
         if (Utility.isBlank(columnName))
         {
           continue;
@@ -153,7 +153,7 @@ final class TableRetriever
     {
       while (results.next())
       {
-        String foreignKeyName = results.getQuotedName("FK_NAME");
+        String foreignKeyName = results.getString("FK_NAME");
         if (Utility.isBlank(foreignKeyName))
         {
           foreignKeyName = UNKNOWN;
@@ -162,13 +162,13 @@ final class TableRetriever
 
         final String pkTableCatalogName = results.getString("PKTABLE_CAT");
         final String pkTableSchemaName = results.getString("PKTABLE_SCHEM");
-        final String pkTableName = results.getQuotedName("PKTABLE_NAME");
-        final String pkColumnName = results.getQuotedName("PKCOLUMN_NAME");
+        final String pkTableName = results.getString("PKTABLE_NAME");
+        final String pkColumnName = results.getString("PKCOLUMN_NAME");
 
         final String fkTableCatalogName = results.getString("FKTABLE_CAT");
         final String fkTableSchemaName = results.getString("FKTABLE_SCHEM");
-        final String fkTableName = results.getQuotedName("FKTABLE_NAME");
-        final String fkColumnName = results.getQuotedName("FKCOLUMN_NAME");
+        final String fkTableName = results.getString("FKTABLE_NAME");
+        final String fkColumnName = results.getString("FKCOLUMN_NAME");
 
         MutableForeignKey foreignKey = foreignKeys.lookup(foreignKeyName);
         if (foreignKey == null)
@@ -276,8 +276,8 @@ final class TableRetriever
         //
         final String columnCatalogName = results.getString("TABLE_CAT");
         final String schemaName = results.getString("TABLE_SCHEM");
-        final String tableName = results.getQuotedName("TABLE_NAME");
-        final String columnName = results.getQuotedName("COLUMN_NAME");
+        final String tableName = results.getString("TABLE_NAME");
+        final String columnName = results.getString("COLUMN_NAME");
         LOGGER.log(Level.FINER, String.format("Retrieving column: %s.%s",
                                               tableName,
                                               columnName));
@@ -443,9 +443,9 @@ final class TableRetriever
       {
         // final String catalogName = results.getString("TABLE_CAT");
         // final String schemaName = results.getString("TABLE_SCHEM");
-        // final String tableName = results.getQuotedName("TABLE_NAME");
-        final String columnName = results.getQuotedName("COLUMN_NAME");
-        final String primaryKeyName = results.getQuotedName("PK_NAME");
+        // final String tableName = results.getString("TABLE_NAME");
+        final String columnName = results.getString("COLUMN_NAME");
+        final String primaryKeyName = results.getString("PK_NAME");
         final int keySequence = Integer.parseInt(results.getString("KEY_SEQ"));
 
         primaryKey = table.getPrimaryKey();
@@ -510,7 +510,7 @@ final class TableRetriever
       {
         // final String catalogName = results.getString("TABLE_CAT");
         // final String schemaName = results.getString("TABLE_SCHEM");
-        final String tableName = results.getQuotedName("TABLE_NAME");
+        final String tableName = results.getString("TABLE_NAME");
         LOGGER.log(Level.FINER, String.format("Retrieving table: %s.%s",
                                               schemaName,
                                               tableName));
