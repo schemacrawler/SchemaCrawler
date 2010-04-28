@@ -287,29 +287,6 @@ final class MetadataResultSet
     return value;
   }
 
-  String getQuotedName(final String columnName)
-  {
-    String value = null;
-    if (useColumn(columnName))
-    {
-      try
-      {
-        value = results.getString(columnName);
-        if (results.wasNull())
-        {
-          value = null;
-        }
-        value = dbSystemParameters.quoteName(value);
-      }
-      catch (final SQLException e)
-      {
-        LOGGER.log(Level.WARNING, "Could not read string value for column "
-                                  + columnName, e);
-      }
-    }
-    return value;
-  }
-
   /**
    * Reads the value of a column from the result set as a short. If the
    * value was null, returns the default.

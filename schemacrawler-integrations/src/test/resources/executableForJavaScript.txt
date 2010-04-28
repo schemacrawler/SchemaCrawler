@@ -23,9 +23,9 @@ o--> AUTHORSLIST
      o--> ID
      o--> LASTNAME
 o--> BOOKAUTHORS
-     o--> "UPDATE"
      o--> AUTHORID
      o--> BOOKID
+     o--> UPDATE
 o--> BOOKS
      o--> DESCRIPTION
      o--> ID
@@ -34,7 +34,7 @@ o--> BOOKS
      o--> PUBLISHERID
      o--> TITLE
 o--> GLOBALCOUNT
-     o--> "Global Count"
+     o--> Global Count
 o--> PUBLISHERS
      o--> ID
      o--> PUBLISHER

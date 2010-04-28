@@ -102,7 +102,7 @@ public class SchemaCrawlerTest
             {
                 "BOOKAUTHORS.BOOKID",
                 "BOOKAUTHORS.AUTHORID",
-                "BOOKAUTHORS.\"UPDATE\"",
+                "BOOKAUTHORS.UPDATE",
             },
             {
                 "BOOKS.ID",
@@ -113,7 +113,7 @@ public class SchemaCrawlerTest
                 "BOOKS.PRICE",
             },
             {
-                "GLOBALCOUNT.\"Global Count\"", "GLOBALCOUNT.UPDATE",
+                "GLOBALCOUNT.Global Count", "GLOBALCOUNT.UPDATE",
             },
             {
                 "PUBLISHERS.ID", "PUBLISHERS.PUBLISHER",
