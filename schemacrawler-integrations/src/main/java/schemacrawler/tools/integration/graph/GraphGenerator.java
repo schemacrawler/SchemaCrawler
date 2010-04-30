@@ -1,15 +1,15 @@
 package schemacrawler.tools.integration.graph;
 
 
-import java.io.BufferedReader;
-import java.io.EOFException;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,54 +29,51 @@ final class GraphGenerator
       .getProperty("schemacrawler.graph_generator", "dot");
     command.add(0, graphGenerator);
     LOGGER.log(Level.INFO, "Executing: " + command);
-    final ProcessBuilder pb = new ProcessBuilder(command);
-    pb.redirectErrorStream(true);
-    final Process process = pb.start();
-    final BufferedReader reader = new BufferedReader(new InputStreamReader(process
-      .getInputStream()));
 
-    final StringBuilder buffer = new StringBuilder();
-    String line;
+    final ExecutorService threadPool = Executors.newFixedThreadPool(2);
     try
     {
-      while ((line = reader.readLine()) != null)
+      final Process process = new ProcessBuilder(command).start();
+
+      final StreamReaderTask inReaderTask = new StreamReaderTask(process
+        .getInputStream());
+      threadPool.execute(inReaderTask);
+      final StreamReaderTask errReaderTask = new StreamReaderTask(process
+        .getErrorStream());
+      threadPool.execute(errReaderTask);
+
+      final int exitCode = process.waitFor();
+
+      if (exitCode != 0)
       {
-        buffer.append(line);
+        final String processError = errReaderTask.get();
+        throw new IOException(processError);
       }
+      else
+      {
+        final String processOutput = inReaderTask.get();
+        if (!Utility.isBlank(processOutput))
+        {
+          LOGGER.log(Level.INFO, processOutput);
+        }
+        final String processError = errReaderTask.get();
+        if (!Utility.isBlank(processError))
+        {
+          LOGGER.log(Level.WARNING, processError);
+        }
+      }
+    }
+    catch (InterruptedException e)
+    {
+      throw new IOException(e.getMessage(), e);
+    }
+    catch (ExecutionException e)
+    {
+      throw new IOException(e.getMessage(), e);
     }
     finally
     {
-      try
-      {
-        reader.close();
-      }
-      catch (final EOFException e)
-      {
-        LOGGER.log(Level.WARNING, "Could not read diagram generator output", e);
-      }
-    }
-
-    int exitCode = 0;
-    try
-    {
-      exitCode = process.waitFor();
-    }
-    catch (final InterruptedException e)
-    {
-      //
-    }
-
-    process.getInputStream().close();
-    process.getOutputStream().close();
-    process.getErrorStream().close();
-
-    if (exitCode != 0)
-    {
-      throw new IOException(buffer.toString());
-    }
-    else if (buffer.length() > 0)
-    {
-      LOGGER.log(Level.INFO, buffer.toString());
+      threadPool.shutdown();
     }
   }
 
