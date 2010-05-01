@@ -3,7 +3,6 @@ package schemacrawler.tools.integration.graph;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -21,14 +20,37 @@ final class GraphGenerator
   private static final Logger LOGGER = Logger.getLogger(GraphGenerator.class
     .getName());
 
-  private static void executeGraphGeneratorProcess(final String... args)
+  private final File dotFile;
+  private String graphOutputFormat;
+  private File diagramFile;
+
+  GraphGenerator(final File dotFile)
     throws IOException
   {
-    final List<String> command = new ArrayList<String>(Arrays.asList(args));
+    if (dotFile == null || !dotFile.exists() || !dotFile.canRead())
+    {
+      throw new IOException("Cannot read the input DOT file, " + dotFile);
+    }
+    this.dotFile = dotFile;
+    graphOutputFormat = "png";
+  }
+
+  void generateDiagram()
+    throws IOException
+  {
+    final File diagramFile = getDiagramFile();
+
     final String graphGenerator = System
       .getProperty("schemacrawler.graph_generator", "dot");
-    command.add(0, graphGenerator);
-    LOGGER.log(Level.INFO, "Executing: " + command);
+    final String[] command = new String[] {
+        graphGenerator,
+        "-q",
+        "-T" + graphOutputFormat,
+        "-o",
+        diagramFile.getAbsolutePath(),
+        dotFile.getAbsolutePath()
+    };
+    LOGGER.log(Level.INFO, "Executing: " + Arrays.toString(command));
 
     final ExecutorService threadPool = Executors.newFixedThreadPool(2);
     try
@@ -44,19 +66,26 @@ final class GraphGenerator
 
       final int exitCode = process.waitFor();
 
+      final String processOutput = inReaderTask.get();
+      final String processError = errReaderTask.get();
+
       if (exitCode != 0)
       {
-        final String processError = errReaderTask.get();
-        throw new IOException(processError);
+        if (!Utility.isBlank(processError))
+        {
+          throw new IOException(processError);
+        }
+        else
+        {
+          throw new IOException(processOutput);
+        }
       }
       else
       {
-        final String processOutput = inReaderTask.get();
         if (!Utility.isBlank(processOutput))
         {
           LOGGER.log(Level.INFO, processOutput);
         }
-        final String processError = errReaderTask.get();
         if (!Utility.isBlank(processError))
         {
           LOGGER.log(Level.WARNING, processError);
@@ -75,34 +104,6 @@ final class GraphGenerator
     {
       threadPool.shutdown();
     }
-  }
-
-  private final File dotFile;
-  private String graphOutputFormat;
-  private File diagramFile;
-
-  GraphGenerator(final File dotFile)
-    throws IOException
-  {
-    if (dotFile == null || !dotFile.exists() || !dotFile.canRead())
-    {
-      throw new IOException("Cannot read the input DOT file, " + dotFile);
-    }
-    this.dotFile = dotFile;
-    graphOutputFormat = "png";
-
-    executeGraphGeneratorProcess("-V");
-  }
-
-  void generateDiagram()
-    throws IOException
-  {
-    final File diagramFile = getDiagramFile();
-    executeGraphGeneratorProcess("-q",
-                                 "-T" + graphOutputFormat,
-                                 "-o",
-                                 diagramFile.getAbsolutePath(),
-                                 dotFile.getAbsolutePath());
   }
 
   File getDiagramFile()
