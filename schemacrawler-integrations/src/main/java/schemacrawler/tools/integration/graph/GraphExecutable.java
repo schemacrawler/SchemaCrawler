@@ -111,9 +111,8 @@ public final class GraphExecutable
     dotWriter.close();
 
     // Create graph image
-    final GraphGenerator dot = new GraphGenerator(dotFile);
-    dot.setGraphOutputFormat(outputOptions.getOutputFormatValue());
-    dot.setDiagramFile(outputOptions.getOutputFile());
+    final GraphGenerator dot = new GraphGenerator(dotFile, outputOptions
+      .getOutputFormatValue(), outputOptions.getOutputFile());
     dot.generateDiagram();
   }
 }

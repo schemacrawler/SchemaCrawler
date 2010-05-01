@@ -21,10 +21,12 @@ final class GraphGenerator
     .getName());
 
   private final File dotFile;
-  private String graphOutputFormat;
-  private File diagramFile;
+  private final String graphOutputFormat;
+  private final File diagramFile;
 
-  GraphGenerator(final File dotFile)
+  GraphGenerator(final File dotFile,
+                 final String outputFormat,
+                 final File diagramOutputFile)
     throws IOException
   {
     if (dotFile == null || !dotFile.exists() || !dotFile.canRead())
@@ -32,7 +34,8 @@ final class GraphGenerator
       throw new IOException("Cannot read the input DOT file, " + dotFile);
     }
     this.dotFile = dotFile;
-    graphOutputFormat = "png";
+    graphOutputFormat = determineGraphOutputFormat(outputFormat);
+    diagramFile = determineDiagramFile(diagramOutputFile);
   }
 
   void generateDiagram()
@@ -92,11 +95,11 @@ final class GraphGenerator
         }
       }
     }
-    catch (InterruptedException e)
+    catch (final InterruptedException e)
     {
       throw new IOException(e.getMessage(), e);
     }
-    catch (ExecutionException e)
+    catch (final ExecutionException e)
     {
       throw new IOException(e.getMessage(), e);
     }
@@ -121,22 +124,24 @@ final class GraphGenerator
     return graphOutputFormat;
   }
 
-  final void setDiagramFile(final File diagramFile)
+  private File determineDiagramFile(final File diagramOutputFile)
   {
-    if (diagramFile == null)
+    File diagramFile;
+    if (diagramOutputFile == null)
     {
-      this.diagramFile = new File(".", "schemacrawler." + UUID.randomUUID()
-                                       + "." + graphOutputFormat);
+      diagramFile = new File(".", "schemacrawler." + UUID.randomUUID() + "."
+                                  + graphOutputFormat);
     }
     else
     {
-      this.diagramFile = diagramFile;
+      diagramFile = diagramOutputFile;
     }
+    return diagramFile;
   }
 
-  void setGraphOutputFormat(final String outputFormat)
+  private String determineGraphOutputFormat(final String outputFormat)
   {
-    graphOutputFormat = outputFormat;
+    String graphOutputFormat = outputFormat;
     final List<String> outputFormats = Arrays.asList("canon",
                                                      "cmap",
                                                      "cmapx",
@@ -173,6 +178,7 @@ final class GraphGenerator
     {
       graphOutputFormat = "png";
     }
+    return graphOutputFormat;
   }
 
 }
