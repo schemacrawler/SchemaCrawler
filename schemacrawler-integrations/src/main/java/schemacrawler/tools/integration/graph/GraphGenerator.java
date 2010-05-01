@@ -1,14 +1,20 @@
 package schemacrawler.tools.integration.graph;
 
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,7 +47,6 @@ final class GraphGenerator
   void generateDiagram()
     throws IOException
   {
-    final File diagramFile = getDiagramFile();
 
     final String graphGenerator = System
       .getProperty("schemacrawler.graph_generator", "dot");
@@ -55,47 +60,58 @@ final class GraphGenerator
     };
     LOGGER.log(Level.INFO, "Executing: " + Arrays.toString(command));
 
-    final ExecutorService threadPool = Executors.newFixedThreadPool(2);
     try
     {
+      final class StreamReader
+        implements Callable<String>
+      {
+
+        private final InputStream in;
+
+        StreamReader(final InputStream in)
+        {
+          this.in = in;
+        }
+
+        public String call()
+          throws Exception
+        {
+          final Reader reader = new BufferedReader(new InputStreamReader(in));
+          return Utility.readFully(reader);
+        }
+      }
+
+      final ExecutorService threadPool = Executors.newFixedThreadPool(2);
       final Process process = new ProcessBuilder(command).start();
 
-      final StreamReaderTask inReaderTask = new StreamReaderTask(process
-        .getInputStream());
+      final FutureTask<String> inReaderTask = new FutureTask<String>(new StreamReader(process
+        .getInputStream()));
       threadPool.execute(inReaderTask);
-      final StreamReaderTask errReaderTask = new StreamReaderTask(process
-        .getErrorStream());
+      final FutureTask<String> errReaderTask = new FutureTask<String>(new StreamReader(process
+        .getErrorStream()));
       threadPool.execute(errReaderTask);
 
       final int exitCode = process.waitFor();
 
       final String processOutput = inReaderTask.get();
+      if (!Utility.isBlank(processOutput))
+      {
+        LOGGER.log(Level.INFO, processOutput);
+      }
       final String processError = errReaderTask.get();
+      if (!Utility.isBlank(processError))
+      {
+        LOGGER.log(Level.WARNING, processError);
+      }
+
+      threadPool.shutdown();
 
       if (exitCode != 0)
       {
-        if (!Utility.isBlank(processError))
-        {
-          throw new IOException(processError);
-        }
-        else
-        {
-          throw new IOException(processOutput);
-        }
-      }
-      else
-      {
-        if (!Utility.isBlank(processOutput))
-        {
-          LOGGER.log(Level.INFO, processOutput);
-        }
-        if (!Utility.isBlank(processError))
-        {
-          LOGGER.log(Level.WARNING, processError);
-        }
+        throw new IOException("Process returned exit code " + exitCode);
       }
     }
-    catch (final InterruptedException e)
+    catch (final SecurityException e)
     {
       throw new IOException(e.getMessage(), e);
     }
@@ -103,9 +119,9 @@ final class GraphGenerator
     {
       throw new IOException(e.getMessage(), e);
     }
-    finally
+    catch (final InterruptedException e)
     {
-      threadPool.shutdown();
+      throw new IOException(e.getMessage(), e);
     }
   }
 
