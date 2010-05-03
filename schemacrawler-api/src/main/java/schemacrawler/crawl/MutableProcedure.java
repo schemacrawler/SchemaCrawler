@@ -47,9 +47,9 @@ final class MutableProcedure
 
   MutableProcedure(final Schema schema,
                    final String name,
-                   final String quotedName)
+                   final String quoteCharacter)
   {
-    super(schema, name, quotedName);
+    super(schema, name, quoteCharacter);
     // Default values
     procedureType = ProcedureType.unknown;
     routineBodyType = RoutineBodyType.unknown;

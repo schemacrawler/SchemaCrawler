@@ -113,7 +113,7 @@ public class SchemaCrawlerTest
                 "BOOKS.PRICE",
             },
             {
-                "GLOBALCOUNT.Global Count", "GLOBALCOUNT.UPDATE",
+              "GLOBALCOUNT.Global Count",
             },
             {
                 "PUBLISHERS.ID", "PUBLISHERS.PUBLISHER",

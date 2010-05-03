@@ -45,9 +45,9 @@ abstract class AbstractDependantObject
 
   AbstractDependantObject(final DatabaseObject parent,
                           final String name,
-                          final String quotedName)
+                          final String quoteCharacter)
   {
-    super(parent.getSchema(), name, quotedName);
+    super(parent.getSchema(), name, quoteCharacter);
     this.parent = parent;
   }
 
@@ -136,13 +136,15 @@ abstract class AbstractDependantObject
     if (fullName == null)
     {
       final StringBuilder buffer = new StringBuilder();
-      if (parent != null && !Utility.isBlank(parent.getFullName()))
+      final String parentFullName = parent.getFullName();
+      if (parent != null && !Utility.isBlank(parentFullName))
       {
-        buffer.append(parent.getFullName()).append(".");
+        buffer.append(parentFullName).append(".");
       }
-      if (!Utility.isBlank(getName()))
+      final String quotedName = getName();
+      if (!Utility.isBlank(quotedName))
       {
-        buffer.append(getName());
+        buffer.append(quotedName);
       }
       fullName = buffer.toString();
     }

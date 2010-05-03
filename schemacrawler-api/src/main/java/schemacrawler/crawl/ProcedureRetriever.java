@@ -61,8 +61,7 @@ final class ProcedureRetriever
         .getProcedureColumns(procedure.getSchema().getCatalogName(),
                              procedure.getSchema().getSchemaName(),
                              procedure.getName(),
-                             null), getRetrieverConnection()
-        .getDatabaseSystemParameters());
+                             null), getDatabaseSystemParameters());
 
       while (results.next())
       {
@@ -73,7 +72,7 @@ final class ProcedureRetriever
 
         final MutableProcedureColumn column = new MutableProcedureColumn(procedure,
                                                                          columnName,
-                                                                         quoteName(columnName));
+                                                                         quoteCharacter(columnName));
         final String columnFullName = column.getFullName();
         if (columnInclusionRule.include(columnFullName)
             && procedure.getName().equals(procedureName)
@@ -135,8 +134,7 @@ final class ProcedureRetriever
       results = new MetadataResultSet(getMetaData().getProcedures(catalogName,
                                                                   schemaName,
                                                                   "%"),
-                                      getRetrieverConnection()
-                                        .getDatabaseSystemParameters());
+                                      getDatabaseSystemParameters());
 
       while (results.next())
       {
@@ -161,7 +159,7 @@ final class ProcedureRetriever
 
         final MutableProcedure procedure = new MutableProcedure(schema,
                                                                 procedureName,
-                                                                quoteName(procedureName));
+                                                                quoteCharacter(procedureName));
         if (procedureInclusionRule.include(procedure.getFullName()))
         {
           procedure.setType(ProcedureType.valueOf(procedureType));

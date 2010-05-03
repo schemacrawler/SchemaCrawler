@@ -64,7 +64,7 @@ final class MutableColumnDataType
 
   MutableColumnDataType(final Schema schema, final String name)
   {
-    super(schema, name, name);
+    super(schema, name, null);
     // Default values
     searchable = SearchableType.unknown;
     setTypeFromJavaSqlType(JavaSqlType.UNKNOWN);
@@ -271,16 +271,6 @@ final class MutableColumnDataType
     return userDefined;
   }
 
-  private void setTypeFromJavaSqlType(final JavaSqlType javaSqlType)
-  {
-    if (javaSqlType != null)
-    {
-      this.javaSqlType = javaSqlType.getJavaSqlType();
-      javaSqlTypeName = javaSqlType.getJavaSqlTypeName();
-      javaSqlTypeMappedClassName = javaSqlType.getJavaSqlTypeMappedClassName();
-    }
-  }
-
   void setAutoIncrementable(final boolean autoIncrementable)
   {
     this.autoIncrementable = autoIncrementable;
@@ -368,6 +358,16 @@ final class MutableColumnDataType
   void setUserDefined(final boolean userDefined)
   {
     this.userDefined = userDefined;
+  }
+
+  private void setTypeFromJavaSqlType(final JavaSqlType javaSqlType)
+  {
+    if (javaSqlType != null)
+    {
+      this.javaSqlType = javaSqlType.getJavaSqlType();
+      javaSqlTypeName = javaSqlType.getJavaSqlTypeName();
+      javaSqlTypeMappedClassName = javaSqlType.getJavaSqlTypeMappedClassName();
+    }
   }
 
 }

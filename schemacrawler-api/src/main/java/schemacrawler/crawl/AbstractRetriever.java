@@ -110,7 +110,6 @@ abstract class AbstractRetriever
   }
 
   private final RetrieverConnection retrieverConnection;
-
   final MutableDatabase database;
 
   AbstractRetriever()
@@ -125,10 +124,29 @@ abstract class AbstractRetriever
     this.database = database;
   }
 
-  protected String quoteName(final String name)
+  protected DatabaseSystemParameters getDatabaseSystemParameters()
   {
-    return getRetrieverConnection().getDatabaseSystemParameters()
-      .quoteName(name);
+    if (retrieverConnection != null)
+    {
+      return retrieverConnection.getDatabaseSystemParameters();
+    }
+    else
+    {
+      return null;
+    }
+  }
+
+  protected String quoteCharacter(final String name)
+  {
+    final DatabaseSystemParameters dbSystemParameters = getDatabaseSystemParameters();
+    if (dbSystemParameters != null && dbSystemParameters.needsToBeQuoted(name))
+    {
+      return dbSystemParameters.getIdentifierQuoteString();
+    }
+    else
+    {
+      return null;
+    }
   }
 
   Connection getDatabaseConnection()
