@@ -346,6 +346,8 @@ Procedures
 
 PUBLIC."CHAR"                                [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               INTEGER, in                 
+  @p0                               LONGVARCHAR, result         
 
                                                             [definition]
   org.hsqldb.Library.character(int)
@@ -356,6 +358,8 @@ PUBLIC."CHAR"                                [procedure, returns result]
 
 PUBLIC."DAY"                                 [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               DATE, in                    
+  @p0                               INTEGER, result             
 
                                                             [definition]
   org.hsqldb.Library.dayofmonth(java.sql.Date)
@@ -366,6 +370,8 @@ PUBLIC."DAY"                                 [procedure, returns result]
 
 PUBLIC."HOUR"                                [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               TIME, in                    
+  @p0                               INTEGER, result             
 
                                                             [definition]
   org.hsqldb.Library.hour(java.sql.Time)
@@ -376,6 +382,7 @@ PUBLIC."HOUR"                                [procedure, returns result]
 
 PUBLIC."IDENTITY"                            [procedure, returns result]
 ------------------------------------------------------------------------
+  @p0                               INTEGER, result             
 
                                                             [definition]
   org.hsqldb.Library.identity()
@@ -386,6 +393,11 @@ PUBLIC."IDENTITY"                            [procedure, returns result]
 
 PUBLIC."INSERT"                              [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               LONGVARCHAR, in             
+  @p2                               INTEGER, in                 
+  @p3                               INTEGER, in                 
+  @p4                               LONGVARCHAR, in             
+  @p0                               LONGVARCHAR, result         
 
                                                             [definition]
   org.hsqldb.Library.insert(java.lang.String,int,int,java.lang.String)
@@ -396,6 +408,9 @@ PUBLIC."INSERT"                              [procedure, returns result]
 
 PUBLIC."LEFT"                                [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               LONGVARCHAR, in             
+  @p2                               INTEGER, in                 
+  @p0                               LONGVARCHAR, result         
 
                                                             [definition]
   org.hsqldb.Library.left(java.lang.String,int)
@@ -406,6 +421,8 @@ PUBLIC."LEFT"                                [procedure, returns result]
 
 PUBLIC."MINUTE"                              [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               TIME, in                    
+  @p0                               INTEGER, result             
 
                                                             [definition]
   org.hsqldb.Library.minute(java.sql.Time)
@@ -416,6 +433,8 @@ PUBLIC."MINUTE"                              [procedure, returns result]
 
 PUBLIC."MONTH"                               [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               DATE, in                    
+  @p0                               INTEGER, result             
 
                                                             [definition]
   org.hsqldb.Library.month(java.sql.Date)
@@ -426,6 +445,9 @@ PUBLIC."MONTH"                               [procedure, returns result]
 
 PUBLIC."REPEAT"                              [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               LONGVARCHAR, in             
+  @p2                               INTEGER, in                 
+  @p0                               LONGVARCHAR, result         
 
                                                             [definition]
   org.hsqldb.Library.repeat(java.lang.String,java.lang.Integer)
@@ -436,6 +458,9 @@ PUBLIC."REPEAT"                              [procedure, returns result]
 
 PUBLIC."RIGHT"                               [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               LONGVARCHAR, in             
+  @p2                               INTEGER, in                 
+  @p0                               LONGVARCHAR, result         
 
                                                             [definition]
   org.hsqldb.Library.right(java.lang.String,int)
@@ -446,6 +471,8 @@ PUBLIC."RIGHT"                               [procedure, returns result]
 
 PUBLIC."SECOND"                              [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               TIME, in                    
+  @p0                               INTEGER, result             
 
                                                             [definition]
   org.hsqldb.Library.second(java.sql.Time)
@@ -456,6 +483,7 @@ PUBLIC."SECOND"                              [procedure, returns result]
 
 PUBLIC."USER"                                [procedure, returns result]
 ------------------------------------------------------------------------
+  @p0                               LONGVARCHAR, result         
 
                                                             [definition]
   org.hsqldb.Library.user(java.sql.Connection)
@@ -466,6 +494,8 @@ PUBLIC."USER"                                [procedure, returns result]
 
 PUBLIC."YEAR"                                [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               DATE, in                    
+  @p0                               INTEGER, result             
 
                                                             [definition]
   org.hsqldb.Library.year(java.sql.Date)

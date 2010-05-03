@@ -238,4 +238,29 @@ abstract class AbstractRetriever
     return table;
   }
 
+  protected String getUnquotedName(final String name)
+  {
+    final String unquotedName;
+    if (!Utility.isBlank(name))
+    {
+      final DatabaseSystemParameters dbSystemParameters = getDatabaseSystemParameters();
+      if (name.startsWith(dbSystemParameters.getIdentifierQuoteString())
+          && name.endsWith(dbSystemParameters.getIdentifierQuoteString()))
+      {
+        final int quoteLength = dbSystemParameters.getIdentifierQuoteString()
+          .length();
+        unquotedName = name.substring(quoteLength, name.length() - quoteLength);
+      }
+      else
+      {
+        unquotedName = name;
+      }
+    }
+    else
+    {
+      unquotedName = name;
+    }
+    return unquotedName;
+  }
+
 }

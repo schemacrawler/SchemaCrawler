@@ -340,6 +340,8 @@ Procedures
 
 PUBLIC."CHAR"                                [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               INTEGER, in                 
+  @p0                               LONGVARCHAR, result         
 
                                                                [remarks]
   Returns the character string corresponding to the given ASCII (or Unicode) value. <b>Note:</b> <p> In some SQL CLI implementations, a <CODE>null</CODE> is returned if the range is outside 0..255. In HSQLDB, the corresponding Unicode character is returned unchecked.
@@ -347,6 +349,8 @@ PUBLIC."CHAR"                                [procedure, returns result]
 
 PUBLIC."DAY"                                 [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               DATE, in                    
+  @p0                               INTEGER, result             
 
                                                                [remarks]
   Returns the day of the month from the given date value, as an integer value in the range of 1-31.
@@ -354,6 +358,8 @@ PUBLIC."DAY"                                 [procedure, returns result]
 
 PUBLIC."HOUR"                                [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               TIME, in                    
+  @p0                               INTEGER, result             
 
                                                                [remarks]
   Returns the hour from the given time value, as an integer value in the range of 0-23.
@@ -361,6 +367,7 @@ PUBLIC."HOUR"                                [procedure, returns result]
 
 PUBLIC."IDENTITY"                            [procedure, returns result]
 ------------------------------------------------------------------------
+  @p0                               INTEGER, result             
 
                                                                [remarks]
   Retrieves the last auto-generated integer indentity value used by this connection. As of 1.7.1 this is a dummy function. The return value is supplied directly by Function.java
@@ -368,6 +375,11 @@ PUBLIC."IDENTITY"                            [procedure, returns result]
 
 PUBLIC."INSERT"                              [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               LONGVARCHAR, in             
+  @p2                               INTEGER, in                 
+  @p3                               INTEGER, in                 
+  @p4                               LONGVARCHAR, in             
+  @p0                               LONGVARCHAR, result         
 
                                                                [remarks]
   Returns a character sequence which is the result of writing the first <code>length</code> number of characters from the second given <code>String</code> over the first string. The start position in the first string where the characters are overwritten is given by <code>start</code>.<p> <b>Note:</b> In order of precedence, boundry conditions are handled as follows:<p> <UL> <LI>if either supplied <code>String</code> is null, then the other is returned; the check starts with the first given <code>String</code>. <LI>if <code>start</code> is less than one, <code>s1</code> is returned <LI>if <code>length</code> is less than or equal to zero, <code>s1</code> is returned <LI>if the length of <code>s2</code> is zero, <code>s1</code> is returned <LI>if <code>start</code> is greater than the length of <code>s1</code>, <code>s1</code> is returned <LI>if <code>length</code> is such that, taken together with <code>start</code>, the indicated interval extends beyond the end of <code>s1</code>, then the insertion is performed precisely as if upon a copy of <code>s1</code> extended in length to just include the indicated interval </UL>
@@ -375,6 +387,9 @@ PUBLIC."INSERT"                              [procedure, returns result]
 
 PUBLIC."LEFT"                                [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               LONGVARCHAR, in             
+  @p2                               INTEGER, in                 
+  @p0                               LONGVARCHAR, result         
 
                                                                [remarks]
   Returns the leftmost <code>count</code> characters from the given <code>String</code>. <p> <b>Note:</b> boundry conditions are handled in the following order of precedence: <UL> <LI>if <code>s</code> is <code>null</code>, then <code>null</code> is returned <LI>if <code>count</code> is less than 1, then a zero-length <code>String</code> is returned <LI>if <code>count</code> is greater than the length of <code>s</code>, then a copy of <code>s</code> is returned </UL>
@@ -382,6 +397,8 @@ PUBLIC."LEFT"                                [procedure, returns result]
 
 PUBLIC."MINUTE"                              [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               TIME, in                    
+  @p0                               INTEGER, result             
 
                                                                [remarks]
   Returns the minute from the given time value, as integer value in the range of 0-59.
@@ -389,6 +406,8 @@ PUBLIC."MINUTE"                              [procedure, returns result]
 
 PUBLIC."MONTH"                               [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               DATE, in                    
+  @p0                               INTEGER, result             
 
                                                                [remarks]
   Returns the month from the given date value, as an integer value in the range of 1-12 or 0-11. <p> If the sql_month database property is set <code>true</code>, then the range is 1-12, else 0-11
@@ -396,6 +415,9 @@ PUBLIC."MONTH"                               [procedure, returns result]
 
 PUBLIC."REPEAT"                              [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               LONGVARCHAR, in             
+  @p2                               INTEGER, in                 
+  @p0                               LONGVARCHAR, result         
 
                                                                [remarks]
   Returns a <code>String</code> composed of the given <code>String</code>, repeated <code>count</code> times.
@@ -403,6 +425,9 @@ PUBLIC."REPEAT"                              [procedure, returns result]
 
 PUBLIC."RIGHT"                               [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               LONGVARCHAR, in             
+  @p2                               INTEGER, in                 
+  @p0                               LONGVARCHAR, result         
 
                                                                [remarks]
   Returns the rightmost <code>count</code> characters of the given <code>String</code>, <code>s</code>. <b>Note:</b> boundry conditions are handled in the following order of precedence: <UL> <LI> if <code>s</code> is <CODE>null</CODE>, <CODE>null</CODE> is returned <LI> if <code>count</code> is less than one, a zero-length <code>String</code> is returned <LI> if <code>count</code> is greater than the length of <code>s</code>, a copy of <code>s</code> is returned </UL>
@@ -410,6 +435,8 @@ PUBLIC."RIGHT"                               [procedure, returns result]
 
 PUBLIC."SECOND"                              [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               TIME, in                    
+  @p0                               INTEGER, result             
 
                                                                [remarks]
   Returns the second of the given time value, as an integer value in the range of 0-59.
@@ -417,6 +444,7 @@ PUBLIC."SECOND"                              [procedure, returns result]
 
 PUBLIC."USER"                                [procedure, returns result]
 ------------------------------------------------------------------------
+  @p0                               LONGVARCHAR, result         
 
                                                                [remarks]
   Returns the user's authorization name (the user's name as known to this database).
@@ -424,6 +452,8 @@ PUBLIC."USER"                                [procedure, returns result]
 
 PUBLIC."YEAR"                                [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               DATE, in                    
+  @p0                               INTEGER, result             
 
                                                                [remarks]
   Returns the year from the given date value, as an integer value in the range of 1-9999.
