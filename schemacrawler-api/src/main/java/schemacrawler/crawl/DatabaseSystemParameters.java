@@ -103,27 +103,21 @@ public class DatabaseSystemParameters
     return supportsSchemas;
   }
 
-  String quoteName(final String name)
+  boolean needsToBeQuoted(final String name)
   {
-    final String quotedName;
-    if (name == null)
+    final boolean needsToBeQuoted;
+    if (name != null
+        && identifierQuoteString != null
+        && (Utility.containsWhitespace(name) || reservedWords.contains(name
+          .toUpperCase())))
     {
-      quotedName = null;
+      needsToBeQuoted = true;
     }
     else
     {
-      if (identifierQuoteString != null
-          && (Utility.containsWhitespace(name) || reservedWords.contains(name
-            .toUpperCase())))
-      {
-        quotedName = identifierQuoteString + name + identifierQuoteString;
-      }
-      else
-      {
-        quotedName = name;
-      }
+      needsToBeQuoted = false;
     }
-    return quotedName;
+    return needsToBeQuoted;
   }
 
 }

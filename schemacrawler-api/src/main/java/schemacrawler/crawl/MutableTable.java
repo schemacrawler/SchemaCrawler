@@ -71,9 +71,11 @@ class MutableTable
   private final NamedObjectList<MutablePrivilege> privileges = new NamedObjectList<MutablePrivilege>();
   private int sortIndex;
 
-  MutableTable(final Schema schema, final String name, final String quotedName)
+  MutableTable(final Schema schema,
+               final String name,
+               final String quoteCharacter)
   {
-    super(schema, name, quotedName);
+    super(schema, name, quoteCharacter);
   }
 
   /**
@@ -314,54 +316,6 @@ class MutableTable
     return type;
   }
 
-  private ForeignKey[] getForeignKeys(final TableAssociationType tableAssociationType)
-  {
-    final List<MutableForeignKey> foreignKeysList = new ArrayList<MutableForeignKey>(foreignKeys
-      .values());
-    if (tableAssociationType != null
-        && tableAssociationType != TableAssociationType.all)
-    {
-      for (final Iterator<MutableForeignKey> iterator = foreignKeysList
-        .iterator(); iterator.hasNext();)
-      {
-        final MutableForeignKey mutableForeignKey = iterator.next();
-        final ForeignKeyColumnMap[] columnPairs = mutableForeignKey
-          .getColumnPairs();
-        boolean isExportedKey = false;
-        boolean isImportedKey = false;
-        for (final ForeignKeyColumnMap columnPair: columnPairs)
-        {
-          if (columnPair.getPrimaryKeyColumn().getParent().equals(this))
-          {
-            isExportedKey = true;
-          }
-          if (columnPair.getForeignKeyColumn().getParent().equals(this))
-          {
-            isImportedKey = true;
-          }
-        }
-        switch (tableAssociationType)
-        {
-          case exported:
-            if (!isExportedKey)
-            {
-              iterator.remove();
-            }
-            break;
-          case imported:
-            if (!isImportedKey)
-            {
-              iterator.remove();
-            }
-            break;
-          default:
-            break;
-        }
-      }
-    }
-    return foreignKeysList.toArray(new ForeignKey[foreignKeysList.size()]);
-  }
-
   void addCheckConstraint(final MutableCheckConstraint checkConstraint)
   {
     checkConstraints.add(checkConstraint);
@@ -474,6 +428,54 @@ class MutableTable
       throw new IllegalArgumentException("Null table type");
     }
     this.type = type;
+  }
+
+  private ForeignKey[] getForeignKeys(final TableAssociationType tableAssociationType)
+  {
+    final List<MutableForeignKey> foreignKeysList = new ArrayList<MutableForeignKey>(foreignKeys
+      .values());
+    if (tableAssociationType != null
+        && tableAssociationType != TableAssociationType.all)
+    {
+      for (final Iterator<MutableForeignKey> iterator = foreignKeysList
+        .iterator(); iterator.hasNext();)
+      {
+        final MutableForeignKey mutableForeignKey = iterator.next();
+        final ForeignKeyColumnMap[] columnPairs = mutableForeignKey
+          .getColumnPairs();
+        boolean isExportedKey = false;
+        boolean isImportedKey = false;
+        for (final ForeignKeyColumnMap columnPair: columnPairs)
+        {
+          if (columnPair.getPrimaryKeyColumn().getParent().equals(this))
+          {
+            isExportedKey = true;
+          }
+          if (columnPair.getForeignKeyColumn().getParent().equals(this))
+          {
+            isImportedKey = true;
+          }
+        }
+        switch (tableAssociationType)
+        {
+          case exported:
+            if (!isExportedKey)
+            {
+              iterator.remove();
+            }
+            break;
+          case imported:
+            if (!isImportedKey)
+            {
+              iterator.remove();
+            }
+            break;
+          default:
+            break;
+        }
+      }
+    }
+    return foreignKeysList.toArray(new ForeignKey[foreignKeysList.size()]);
   }
 
 }

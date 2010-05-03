@@ -45,10 +45,54 @@ final class SchemaRetriever
     throws SQLException
   {
     super(retrieverConnection, database);
-    supportsCatalogs = retrieverConnection.getDatabaseSystemParameters()
-      .isSupportsCatalogs();
-    supportsSchemas = retrieverConnection.getDatabaseSystemParameters()
-      .isSupportsSchemas();
+    final DatabaseSystemParameters dbSystemParameters = getDatabaseSystemParameters();
+    supportsCatalogs = dbSystemParameters.isSupportsCatalogs();
+    supportsSchemas = dbSystemParameters.isSupportsSchemas();
+  }
+
+  /**
+   * Retrieves a list of schemas from the database.
+   * 
+   * @param schemaInclusionRule
+   *        Schema inclusion rule
+   * @throws SQLException
+   *         On an exception
+   */
+  void retrieveSchemas(final InclusionRule schemaInclusionRule)
+    throws SQLException
+  {
+    final Set<SchemaReference> schemaRefs = retrieveAllSchemas();
+
+    // Filter out schemas
+    for (final Iterator<SchemaReference> iterator = schemaRefs.iterator(); iterator
+      .hasNext();)
+    {
+      final SchemaReference schemaRef = iterator.next();
+      final String schemaFullName = schemaRef.getFullName();
+      if (schemaInclusionRule != null && schemaFullName != null
+          && !schemaInclusionRule.include(schemaFullName))
+      {
+        LOGGER.log(Level.FINER, "Dropping schema, since schema is excluded: "
+                                + schemaRef.getFullName());
+        iterator.remove();
+        // continue
+      }
+    }
+
+    // Create schemas for the catalogs, as well as create the schema
+    // reference cache
+    for (final SchemaReference schemaRef: schemaRefs)
+    {
+      database.addSchema(schemaRef);
+    }
+
+    // Add an empty schema reference for databases that do not support
+    // neither catalogs nor schemas
+    if (!supportsCatalogs && !supportsSchemas)
+    {
+      database.addSchema(new SchemaReference(null, null));
+    }
+
   }
 
   /**
@@ -84,7 +128,7 @@ final class SchemaRetriever
     if (supportsSchemas)
     {
       final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getSchemas(), getRetrieverConnection().getDatabaseSystemParameters());
+        .getSchemas(), getDatabaseSystemParameters());
       try
       {
         while (results.next())
@@ -139,51 +183,6 @@ final class SchemaRetriever
       }
     }
     return schemaRefs;
-  }
-
-  /**
-   * Retrieves a list of schemas from the database.
-   * 
-   * @param schemaInclusionRule
-   *        Schema inclusion rule
-   * @throws SQLException
-   *         On an exception
-   */
-  void retrieveSchemas(final InclusionRule schemaInclusionRule)
-    throws SQLException
-  {
-    final Set<SchemaReference> schemaRefs = retrieveAllSchemas();
-
-    // Filter out schemas
-    for (final Iterator<SchemaReference> iterator = schemaRefs.iterator(); iterator
-      .hasNext();)
-    {
-      final SchemaReference schemaRef = iterator.next();
-      final String schemaFullName = schemaRef.getFullName();
-      if (schemaInclusionRule != null && schemaFullName != null
-          && !schemaInclusionRule.include(schemaFullName))
-      {
-        LOGGER.log(Level.FINER, "Dropping schema, since schema is excluded: "
-                                + schemaRef.getFullName());
-        iterator.remove();
-        // continue
-      }
-    }
-
-    // Create schemas for the catalogs, as well as create the schema
-    // reference cache
-    for (final SchemaReference schemaRef: schemaRefs)
-    {
-      database.addSchema(schemaRef);
-    }
-
-    // Add an empty schema reference for databases that do not support
-    // neither catalogs nor schemas
-    if (!supportsCatalogs && !supportsSchemas)
-    {
-      database.addSchema(new SchemaReference(null, null));
-    }
-
   }
 
 }

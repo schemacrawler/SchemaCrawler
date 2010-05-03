@@ -44,9 +44,9 @@ abstract class AbstractDatabaseObject
 
   AbstractDatabaseObject(final Schema schema,
                          final String name,
-                         final String quotedName)
+                         final String quoteCharacter)
   {
-    super(name, quotedName);
+    super(name, quoteCharacter);
     this.schema = schema;
   }
 
@@ -135,13 +135,15 @@ abstract class AbstractDatabaseObject
     if (fullName == null)
     {
       final StringBuilder buffer = new StringBuilder();
-      if (schema != null && !Utility.isBlank(schema.getFullName()))
+      final String schemaFullName = schema.getFullName();
+      if (schema != null && !Utility.isBlank(schemaFullName))
       {
-        buffer.append(schema.getFullName()).append(".");
+        buffer.append(schemaFullName).append(".");
       }
-      if (!Utility.isBlank(getName()))
+      final String quotedName = getName();
+      if (!Utility.isBlank(quotedName))
       {
-        buffer.append(getName());
+        buffer.append(quotedName);
       }
       fullName = buffer.toString();
     }

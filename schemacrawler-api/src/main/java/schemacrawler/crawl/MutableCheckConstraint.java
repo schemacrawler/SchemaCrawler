@@ -40,9 +40,9 @@ class MutableCheckConstraint
 
   MutableCheckConstraint(final DatabaseObject parent,
                          final String name,
-                         final String quotedName)
+                         final String quoteCharacter)
   {
-    super(parent, name, quotedName);
+    super(parent, name, quoteCharacter);
   }
 
   /**

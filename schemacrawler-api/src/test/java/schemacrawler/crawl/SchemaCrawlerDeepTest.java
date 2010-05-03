@@ -76,10 +76,10 @@ public class SchemaCrawlerDeepTest
 
     final MutableTable table1 = new MutableTable(table0.getSchema(),
                                                  "Test Table 1",
-                                                 "\"Test Table 1\"");
+                                                 "\'");
     final MutableTable table2 = new MutableTable(table0.getSchema(),
                                                  "Test Table 2",
-                                                 "\"Test Table 2\"");
+                                                 "\'");
     final MutablePrimaryKey primaryKey = (MutablePrimaryKey) table0
       .getPrimaryKey();
     table1.setPrimaryKey(primaryKey);

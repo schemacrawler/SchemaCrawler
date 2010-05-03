@@ -91,7 +91,7 @@ final class ResultsRetriever
           .addSchema(catalogName, schemaName);
         final MutableTable table = new MutableTable(schema,
                                                     tableName,
-                                                    quoteName(tableName));
+                                                    quoteCharacter(tableName));
         schema.addTable(table);
 
         final String databaseSpecificTypeName = resultsMetaData
@@ -108,7 +108,7 @@ final class ResultsRetriever
         final String columnName = resultsMetaData.getColumnName(i);
         final MutableResultsColumn column = new MutableResultsColumn(table,
                                                                      columnName,
-                                                                     quoteName(columnName));
+                                                                     quoteCharacter(columnName));
         column.setOrdinalPosition(i);
         column.setType(columnDataType);
 

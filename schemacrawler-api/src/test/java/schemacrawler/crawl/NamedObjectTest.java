@@ -47,7 +47,7 @@ public class NamedObjectTest
       final MutableSchema schema = database.addSchema("CATALOG", schemaName);
       for (final String tableName: tableNames)
       {
-        table = new MutableTable(schema, tableName, tableName);
+        table = new MutableTable(schema, tableName, null);
         table.setType(TableType.table);
         tables.add(table);
       }
