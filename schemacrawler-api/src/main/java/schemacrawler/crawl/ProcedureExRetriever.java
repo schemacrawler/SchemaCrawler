@@ -89,7 +89,7 @@ final class ProcedureExRetriever
       {
         final String catalogName = results.getString("ROUTINE_CATALOG");
         final String schemaName = results.getString("ROUTINE_SCHEMA");
-        final String procedureName = results.getString("ROUTINE_NAME");
+        final String procedureName = results.getQuotedName("ROUTINE_NAME");
 
         final MutableProcedure procedure = lookupProcedure(catalogName,
                                                            schemaName,

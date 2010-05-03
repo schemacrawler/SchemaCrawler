@@ -136,19 +136,6 @@ abstract class AbstractRetriever
     }
   }
 
-  protected String quoteCharacter(final String name)
-  {
-    final DatabaseSystemParameters dbSystemParameters = getDatabaseSystemParameters();
-    if (dbSystemParameters != null && dbSystemParameters.needsToBeQuoted(name))
-    {
-      return dbSystemParameters.getIdentifierQuoteString();
-    }
-    else
-    {
-      return null;
-    }
-  }
-
   Connection getDatabaseConnection()
   {
     return retrieverConnection.getConnection();

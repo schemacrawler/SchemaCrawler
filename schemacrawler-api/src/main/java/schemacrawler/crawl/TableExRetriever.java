@@ -94,13 +94,13 @@ final class TableExRetriever
       {
         final String catalogName = results.getString("CONSTRAINT_CATALOG");
         final String schemaName = results.getString("CONSTRAINT_SCHEMA");
-        final String constraintName = results.getString("CONSTRAINT_NAME");
+        final String constraintName = results.getQuotedName("CONSTRAINT_NAME");
         LOGGER.log(Level.FINER, "Retrieving constraint: " + constraintName);
         // final String tableCatalogName =
         // results.getString("TABLE_CATALOG");
         // final String tableSchemaName =
         // results.getString("TABLE_SCHEMA");
-        final String tableName = results.getString("TABLE_NAME");
+        final String tableName = results.getQuotedName("TABLE_NAME");
 
         final MutableTable table = lookupTable(catalogName,
                                                schemaName,
@@ -122,8 +122,7 @@ final class TableExRetriever
         if (constraintType.equalsIgnoreCase("check"))
         {
           final MutableCheckConstraint checkConstraint = new MutableCheckConstraint(table,
-                                                                                    constraintName,
-                                                                                    quoteCharacter(constraintName));
+                                                                                    constraintName);
           checkConstraint.setDeferrable(deferrable);
           checkConstraint.setInitiallyDeferred(initiallyDeferred);
 
@@ -177,7 +176,7 @@ final class TableExRetriever
         // results.getString("CONSTRAINT_CATALOG");
         // final String schemaName =
         // results.getString("CONSTRAINT_SCHEMA");
-        final String constraintName = results.getString("CONSTRAINT_NAME");
+        final String constraintName = results.getQuotedName("CONSTRAINT_NAME");
         LOGGER.log(Level.FINER, "Retrieving constraint definition: "
                                 + constraintName);
         String definition = results.getString("CHECK_CLAUSE");
@@ -307,7 +306,7 @@ final class TableExRetriever
       {
         final String catalogName = results.getString("TRIGGER_CATALOG");
         final String schemaName = results.getString("TRIGGER_SCHEMA");
-        final String triggerName = results.getString("TRIGGER_NAME");
+        final String triggerName = results.getQuotedName("TRIGGER_NAME");
         LOGGER.log(Level.FINER, "Retrieving trigger: " + triggerName);
 
         // final String eventObjectCatalog = results
@@ -351,9 +350,7 @@ final class TableExRetriever
         MutableTrigger trigger = table.lookupTrigger(triggerName);
         if (trigger == null)
         {
-          trigger = new MutableTrigger(table,
-                                       triggerName,
-                                       quoteCharacter(triggerName));
+          trigger = new MutableTrigger(table, triggerName);
         }
         trigger.setEventManipulationType(eventManipulationType);
         trigger.setActionOrder(actionOrder);
@@ -412,7 +409,7 @@ final class TableExRetriever
       {
         final String catalogName = results.getString("TABLE_CATALOG");
         final String schemaName = results.getString("TABLE_SCHEMA");
-        final String viewName = results.getString("TABLE_NAME");
+        final String viewName = results.getQuotedName("TABLE_NAME");
 
         final MutableView view = (MutableView) lookupTable(catalogName,
                                                            schemaName,
@@ -462,11 +459,11 @@ final class TableExRetriever
     {
       final String catalogName = results.getString("TABLE_CAT");
       final String schemaName = results.getString("TABLE_SCHEM");
-      final String tableName = results.getString("TABLE_NAME");
+      final String tableName = results.getQuotedName("TABLE_NAME");
       final String columnName;
       if (privilegesForColumn)
       {
-        columnName = results.getString("COLUMN_NAME");
+        columnName = results.getQuotedName("COLUMN_NAME");
       }
       else
       {

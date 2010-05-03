@@ -46,7 +46,7 @@ class MutablePrimaryKey
    */
   MutablePrimaryKey(final MutableIndex index)
   {
-    super((Table) index.getParent(), index.getName(), index.getQuoteCharacter());
+    super((Table) index.getParent(), index.getName());
     setCardinality(index.getCardinality());
     setPages(index.getPages());
     setRemarks(index.getRemarks());
@@ -59,11 +59,9 @@ class MutablePrimaryKey
     }
   }
 
-  MutablePrimaryKey(final Table parent,
-                    final String name,
-                    final String quoteCharacter)
+  MutablePrimaryKey(final Table parent, final String name)
   {
-    super(parent, name, quoteCharacter);
+    super(parent, name);
   }
 
   /**

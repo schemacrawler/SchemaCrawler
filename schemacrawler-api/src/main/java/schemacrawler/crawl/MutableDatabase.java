@@ -55,7 +55,7 @@ final class MutableDatabase
 
   MutableDatabase(final String name)
   {
-    super(name, null);
+    super(name);
     databaseInfo = new MutableDatabaseInfo();
     jdbcDriverInfo = new MutableJdbcDriverInfo();
     schemaCrawlerInfo = new MutableSchemaCrawlerInfo();

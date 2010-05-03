@@ -38,11 +38,9 @@ class MutableCheckConstraint
   private boolean initiallyDeferred;
   private String definition;
 
-  MutableCheckConstraint(final DatabaseObject parent,
-                         final String name,
-                         final String quoteCharacter)
+  MutableCheckConstraint(final DatabaseObject parent, final String name)
   {
-    super(parent, name, quoteCharacter);
+    super(parent, name);
   }
 
   /**

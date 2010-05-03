@@ -43,7 +43,7 @@ class MutableResultsColumns
 
   MutableResultsColumns(final String name)
   {
-    super(name, null);
+    super(name);
   }
 
   /**

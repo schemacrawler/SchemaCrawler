@@ -47,11 +47,9 @@ final class MutableResultsColumn
   private boolean signed;
   private boolean writable;
 
-  MutableResultsColumn(final DatabaseObject parent,
-                       final String name,
-                       final String quoteCharacter)
+  MutableResultsColumn(final DatabaseObject parent, final String name)
   {
-    super(parent, name, quoteCharacter);
+    super(parent, name);
   }
 
   /**

@@ -263,16 +263,6 @@ public final class XmlDatabase
   /**
    * {@inheritDoc}
    * 
-   * @see schemacrawler.schema.NamedObject#getQuotedName()
-   */
-  public String getQuotedName()
-  {
-    return database.getQuotedName();
-  }
-
-  /**
-   * {@inheritDoc}
-   * 
    * @see schemacrawler.schema.NamedObject#getRemarks()
    */
   public String getRemarks()

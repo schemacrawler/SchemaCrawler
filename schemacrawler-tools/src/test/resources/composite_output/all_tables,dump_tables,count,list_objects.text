@@ -206,6 +206,12 @@ ID,TITLE,DESCRIPTION,PUBLISHERID,PUBLICATIONDATE,PRICE
 
 
 
+PUBLIC.GLOBALCOUNT
+------------------------------------------------------------------------
+Global Count
+
+
+
 PUBLIC.PUBLISHERS
 ------------------------------------------------------------------------
 ID,PUBLISHER

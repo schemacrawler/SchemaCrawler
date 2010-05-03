@@ -44,7 +44,7 @@ abstract class AbstractDependantNamedObject
                                final String name,
                                final String quoteCharacter)
   {
-    super(name, quoteCharacter);
+    super(name);
     this.parent = parent;
   }
 

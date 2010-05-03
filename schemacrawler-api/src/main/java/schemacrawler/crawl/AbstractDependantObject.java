@@ -43,11 +43,9 @@ abstract class AbstractDependantObject
 
   private transient int hashCode;
 
-  AbstractDependantObject(final DatabaseObject parent,
-                          final String name,
-                          final String quoteCharacter)
+  AbstractDependantObject(final DatabaseObject parent, final String name)
   {
-    super(parent.getSchema(), name, quoteCharacter);
+    super(parent.getSchema(), name);
     this.parent = parent;
   }
 
