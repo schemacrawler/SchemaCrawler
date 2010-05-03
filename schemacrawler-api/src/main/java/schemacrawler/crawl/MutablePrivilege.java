@@ -170,7 +170,7 @@ final class MutablePrivilege
 
   MutablePrivilege(final DatabaseObject parent, final String name)
   {
-    super(parent, name, null);
+    super(parent, name);
   }
 
   public Grant[] getGrants()

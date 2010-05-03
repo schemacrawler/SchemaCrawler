@@ -473,7 +473,7 @@ PUBLIC.BOOKAUTHORS,[table]
 ------------------------------------------------------------------------
 "",BOOKID,INTEGER not null
 "",AUTHORID,INTEGER not null
-"",UPDATE,INTEGER
+"","""UPDATE""",INTEGER
 ""
 FK_Z_AUTHOR,"[foreign key, with no action]"
 "",PUBLIC.AUTHORS.ID --> AUTHORID,""
@@ -534,7 +534,7 @@ UPDATE,[privilege]
 
 PUBLIC.GLOBALCOUNT,[table]
 ------------------------------------------------------------------------
-"",Global Count,INTEGER
+"","""Global Count""",INTEGER
 ""
 DELETE,[privilege]
 "",DBA --> SA (grantable),""
@@ -754,6 +754,12 @@ ID,TITLE,DESCRIPTION,PUBLISHERID,PUBLICATIONDATE,PRICE
 18,Lacus. Etiam Bibendum,Facilisi. Sed Neque. Sed,18,2008-01-28,63.99
 19,Luctus Lobortis.,"Rutrum. Fusce Dolor Quam, Elementum At, Egestas A, Scelerisque Sed, Sapien.",5,2006-08-23,67.99
 20,"Dui, In Sodales Elit Erat",Sociis Natoque Penatibus Et Magnis Dis Parturient,5,2002-09-29,43.99
+
+
+
+PUBLIC.GLOBALCOUNT
+------------------------------------------------------------------------
+Global Count
 
 
 

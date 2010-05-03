@@ -46,11 +46,9 @@ abstract class AbstractColumn
   private int decimalDigits;
   private boolean nullable;
 
-  AbstractColumn(final DatabaseObject parent,
-                 final String name,
-                 final String quoteCharacter)
+  AbstractColumn(final DatabaseObject parent, final String name)
   {
-    super(parent, name, quoteCharacter);
+    super(parent, name);
   }
 
   /**

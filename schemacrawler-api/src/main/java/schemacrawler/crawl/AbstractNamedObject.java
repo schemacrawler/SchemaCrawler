@@ -40,15 +40,12 @@ abstract class AbstractNamedObject
   private static final long serialVersionUID = -1486322887991472729L;
 
   private final String name;
-  private final String quoteCharacter;
-  private transient String quotedName;
   private String remarks;
   private final Map<String, Object> attributeMap = new HashMap<String, Object>();
 
-  AbstractNamedObject(final String name, final String quoteCharacter)
+  AbstractNamedObject(final String name)
   {
     this.name = name;
-    this.quoteCharacter = quoteCharacter;
   }
 
   /**
@@ -162,12 +159,6 @@ abstract class AbstractNamedObject
     return name;
   }
 
-  public String getQuotedName()
-  {
-    buildQuotedName();
-    return quotedName;
-  }
-
   /**
    * {@inheritDoc}
    * 
@@ -226,11 +217,6 @@ abstract class AbstractNamedObject
     }
   }
 
-  String getQuoteCharacter()
-  {
-    return quoteCharacter;
-  }
-
   final void setRemarks(final String remarks)
   {
     if (remarks == null)
@@ -240,21 +226,6 @@ abstract class AbstractNamedObject
     else
     {
       this.remarks = remarks;
-    }
-  }
-
-  private void buildQuotedName()
-  {
-    if (quotedName == null)
-    {
-      if (quoteCharacter == null)
-      {
-        quotedName = name;
-      }
-      else
-      {
-        quotedName = quoteCharacter + name + quoteCharacter;
-      }
     }
   }
 

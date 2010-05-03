@@ -138,16 +138,6 @@ public final class AnalyzedDatabase
     return database.getName();
   }
 
-  /**
-   * {@inheritDoc}
-   * 
-   * @see schemacrawler.schema.NamedObject#getQuotedName()
-   */
-  public String getQuotedName()
-  {
-    return database.getQuotedName();
-  }
-
   public String getRemarks()
   {
     return database.getRemarks();

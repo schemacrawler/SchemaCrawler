@@ -45,11 +45,9 @@ final class MutableProcedure
   private RoutineBodyType routineBodyType;
   private final StringBuilder definition;
 
-  MutableProcedure(final Schema schema,
-                   final String name,
-                   final String quoteCharacter)
+  MutableProcedure(final Schema schema, final String name)
   {
-    super(schema, name, quoteCharacter);
+    super(schema, name);
     // Default values
     procedureType = ProcedureType.unknown;
     routineBodyType = RoutineBodyType.unknown;

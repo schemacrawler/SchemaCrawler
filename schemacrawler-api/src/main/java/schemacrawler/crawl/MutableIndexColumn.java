@@ -23,7 +23,7 @@ final class MutableIndexColumn
 
   MutableIndexColumn(final Index index, final MutableColumn column)
   {
-    super(column.getParent(), column.getName(), column.getQuoteCharacter());
+    super(column.getParent(), column.getName());
     this.index = index;
     this.column = column;
   }

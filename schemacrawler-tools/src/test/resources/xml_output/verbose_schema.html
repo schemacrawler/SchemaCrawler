@@ -196,6 +196,253 @@ hr {
 
 <table>
 	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.&quot;CHAR&quot;</td>
+		<td class='description underscore'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the character string corresponding to the given ASCII (or Unicode) value. &lt;b&gt;Note:&lt;/b&gt; &lt;p&gt; In some SQL CLI implementations, a &lt;CODE&gt;null&lt;/CODE&gt; is returned if the range is outside 0..255. In HSQLDB, the corresponding Unicode character is returned unchecked.</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.&quot;DAY&quot;</td>
+		<td class='description underscore'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the day of the month from the given date value, as an integer value in the range of 1-31.</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.&quot;HOUR&quot;</td>
+		<td class='description underscore'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the hour from the given time value, as an integer value in the range of 0-23.</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.&quot;IDENTITY&quot;</td>
+		<td class='description underscore'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Retrieves the last auto-generated integer indentity value used by this connection. As of 1.7.1 this is a dummy function. The return value is supplied directly by Function.java</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.&quot;INSERT&quot;</td>
+		<td class='description underscore'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a character sequence which is the result of writing the first &lt;code&gt;length&lt;/code&gt; number of characters from the second given &lt;code&gt;String&lt;/code&gt; over the first string. The start position in the first string where the characters are overwritten is given by &lt;code&gt;start&lt;/code&gt;.&lt;p&gt; &lt;b&gt;Note:&lt;/b&gt; In order of precedence, boundry conditions are handled as follows:&lt;p&gt; &lt;UL&gt; &lt;LI&gt;if either supplied &lt;code&gt;String&lt;/code&gt; is null, then the other is returned; the check starts with the first given &lt;code&gt;String&lt;/code&gt;. &lt;LI&gt;if &lt;code&gt;start&lt;/code&gt; is less than one, &lt;code&gt;s1&lt;/code&gt; is returned &lt;LI&gt;if &lt;code&gt;length&lt;/code&gt; is less than or equal to zero, &lt;code&gt;s1&lt;/code&gt; is returned &lt;LI&gt;if the length of &lt;code&gt;s2&lt;/code&gt; is zero, &lt;code&gt;s1&lt;/code&gt; is returned &lt;LI&gt;if &lt;code&gt;start&lt;/code&gt; is greater than the length of &lt;code&gt;s1&lt;/code&gt;, &lt;code&gt;s1&lt;/code&gt; is returned &lt;LI&gt;if &lt;code&gt;length&lt;/code&gt; is such that, taken together with &lt;code&gt;start&lt;/code&gt;, the indicated interval extends beyond the end of &lt;code&gt;s1&lt;/code&gt;, then the insertion is performed precisely as if upon a copy of &lt;code&gt;s1&lt;/code&gt; extended in length to just include the indicated interval &lt;/UL&gt;</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.&quot;LEFT&quot;</td>
+		<td class='description underscore'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the leftmost &lt;code&gt;count&lt;/code&gt; characters from the given &lt;code&gt;String&lt;/code&gt;. &lt;p&gt; &lt;b&gt;Note:&lt;/b&gt; boundry conditions are handled in the following order of precedence: &lt;UL&gt; &lt;LI&gt;if &lt;code&gt;s&lt;/code&gt; is &lt;code&gt;null&lt;/code&gt;, then &lt;code&gt;null&lt;/code&gt; is returned &lt;LI&gt;if &lt;code&gt;count&lt;/code&gt; is less than 1, then a zero-length &lt;code&gt;String&lt;/code&gt; is returned &lt;LI&gt;if &lt;code&gt;count&lt;/code&gt; is greater than the length of &lt;code&gt;s&lt;/code&gt;, then a copy of &lt;code&gt;s&lt;/code&gt; is returned &lt;/UL&gt;</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.&quot;MINUTE&quot;</td>
+		<td class='description underscore'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the minute from the given time value, as integer value in the range of 0-59.</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.&quot;MONTH&quot;</td>
+		<td class='description underscore'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the month from the given date value, as an integer value in the range of 1-12 or 0-11. &lt;p&gt; If the sql_month database property is set &lt;code&gt;true&lt;/code&gt;, then the range is 1-12, else 0-11</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.&quot;REPEAT&quot;</td>
+		<td class='description underscore'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns a &lt;code&gt;String&lt;/code&gt; composed of the given &lt;code&gt;String&lt;/code&gt;, repeated &lt;code&gt;count&lt;/code&gt; times.</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.&quot;RIGHT&quot;</td>
+		<td class='description underscore'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the rightmost &lt;code&gt;count&lt;/code&gt; characters of the given &lt;code&gt;String&lt;/code&gt;, &lt;code&gt;s&lt;/code&gt;. &lt;b&gt;Note:&lt;/b&gt; boundry conditions are handled in the following order of precedence: &lt;UL&gt; &lt;LI&gt; if &lt;code&gt;s&lt;/code&gt; is &lt;CODE&gt;null&lt;/CODE&gt;, &lt;CODE&gt;null&lt;/CODE&gt; is returned &lt;LI&gt; if &lt;code&gt;count&lt;/code&gt; is less than one, a zero-length &lt;code&gt;String&lt;/code&gt; is returned &lt;LI&gt; if &lt;code&gt;count&lt;/code&gt; is greater than the length of &lt;code&gt;s&lt;/code&gt;, a copy of &lt;code&gt;s&lt;/code&gt; is returned &lt;/UL&gt;</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.&quot;SECOND&quot;</td>
+		<td class='description underscore'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the second of the given time value, as an integer value in the range of 0-59.</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.&quot;USER&quot;</td>
+		<td class='description underscore'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the user&apos;s authorization name (the user&apos;s name as known to this database).</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.&quot;YEAR&quot;</td>
+		<td class='description underscore'>[procedure, returns result]</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description'>[remarks]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td colspan='2' class='definition'>Returns the year from the given date value, as an integer value in the range of 1-9999.</td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.ABS</td>
 		<td class='description underscore'>[procedure, returns result]</td>
 	</tr>
@@ -394,25 +641,6 @@ hr {
 
 <table>
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.CHAR</td>
-		<td class='description underscore'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[remarks]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>Returns the character string corresponding to the given ASCII (or Unicode) value. &lt;b&gt;Note:&lt;/b&gt; &lt;p&gt; In some SQL CLI implementations, a &lt;CODE&gt;null&lt;/CODE&gt; is returned if the range is outside 0..255. In HSQLDB, the corresponding Unicode character is returned unchecked.</td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.CHAR_LENGTH</td>
 		<td class='description underscore'>[procedure, returns result]</td>
 	</tr>
@@ -556,25 +784,6 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td colspan='2' class='definition'>Returns the number of date and time boundaries crossed between two specified datetime values.</td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.DAY</td>
-		<td class='description underscore'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[remarks]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>Returns the day of the month from the given date value, as an integer value in the range of 1-31.</td>
 	</tr>
 </table>
 <p></p>
@@ -746,63 +955,6 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td colspan='2' class='definition'>Converts a &lt;code&gt;String&lt;/code&gt; of hexidecimal digit characters to a raw binary value, represented as a &lt;code&gt;String&lt;/code&gt;.&lt;p&gt; The given &lt;code&gt;String&lt;/code&gt; object must consist of a sequence of 4 digit hexidecimal character substrings.&lt;p&gt; If its length is not evenly divisible by 4, &lt;code&gt;null&lt;/code&gt; is returned. If any any of its 4 character subsequences cannot be parsed as a 4 digit, base 16 value, then a NumberFormatException is thrown. This conversion has the effect of reducing the character count 4:1.</td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.HOUR</td>
-		<td class='description underscore'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[remarks]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>Returns the hour from the given time value, as an integer value in the range of 0-23.</td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.IDENTITY</td>
-		<td class='description underscore'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[remarks]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>Retrieves the last auto-generated integer indentity value used by this connection. As of 1.7.1 this is a dummy function. The return value is supplied directly by Function.java</td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.INSERT</td>
-		<td class='description underscore'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[remarks]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>Returns a character sequence which is the result of writing the first &lt;code&gt;length&lt;/code&gt; number of characters from the second given &lt;code&gt;String&lt;/code&gt; over the first string. The start position in the first string where the characters are overwritten is given by &lt;code&gt;start&lt;/code&gt;.&lt;p&gt; &lt;b&gt;Note:&lt;/b&gt; In order of precedence, boundry conditions are handled as follows:&lt;p&gt; &lt;UL&gt; &lt;LI&gt;if either supplied &lt;code&gt;String&lt;/code&gt; is null, then the other is returned; the check starts with the first given &lt;code&gt;String&lt;/code&gt;. &lt;LI&gt;if &lt;code&gt;start&lt;/code&gt; is less than one, &lt;code&gt;s1&lt;/code&gt; is returned &lt;LI&gt;if &lt;code&gt;length&lt;/code&gt; is less than or equal to zero, &lt;code&gt;s1&lt;/code&gt; is returned &lt;LI&gt;if the length of &lt;code&gt;s2&lt;/code&gt; is zero, &lt;code&gt;s1&lt;/code&gt; is returned &lt;LI&gt;if &lt;code&gt;start&lt;/code&gt; is greater than the length of &lt;code&gt;s1&lt;/code&gt;, &lt;code&gt;s1&lt;/code&gt; is returned &lt;LI&gt;if &lt;code&gt;length&lt;/code&gt; is such that, taken together with &lt;code&gt;start&lt;/code&gt;, the indicated interval extends beyond the end of &lt;code&gt;s1&lt;/code&gt;, then the insertion is performed precisely as if upon a copy of &lt;code&gt;s1&lt;/code&gt; extended in length to just include the indicated interval &lt;/UL&gt;</td>
 	</tr>
 </table>
 <p></p>
@@ -1366,25 +1518,6 @@ hr {
 
 <table>
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.LEFT</td>
-		<td class='description underscore'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[remarks]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>Returns the leftmost &lt;code&gt;count&lt;/code&gt; characters from the given &lt;code&gt;String&lt;/code&gt;. &lt;p&gt; &lt;b&gt;Note:&lt;/b&gt; boundry conditions are handled in the following order of precedence: &lt;UL&gt; &lt;LI&gt;if &lt;code&gt;s&lt;/code&gt; is &lt;code&gt;null&lt;/code&gt;, then &lt;code&gt;null&lt;/code&gt; is returned &lt;LI&gt;if &lt;code&gt;count&lt;/code&gt; is less than 1, then a zero-length &lt;code&gt;String&lt;/code&gt; is returned &lt;LI&gt;if &lt;code&gt;count&lt;/code&gt; is greater than the length of &lt;code&gt;s&lt;/code&gt;, then a copy of &lt;code&gt;s&lt;/code&gt; is returned &lt;/UL&gt;</td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.LENGTH</td>
 		<td class='description underscore'>[procedure, returns result]</td>
 	</tr>
@@ -1499,25 +1632,6 @@ hr {
 
 <table>
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.MINUTE</td>
-		<td class='description underscore'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[remarks]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>Returns the minute from the given time value, as integer value in the range of 0-59.</td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.MOD</td>
 		<td class='description underscore'>[procedure, returns result]</td>
 	</tr>
@@ -1531,25 +1645,6 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td colspan='2' class='definition'>Returns the remainder (modulus) of the first given integer divided by the second. &lt;p&gt;</td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.MONTH</td>
-		<td class='description underscore'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[remarks]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>Returns the month from the given date value, as an integer value in the range of 1-12 or 0-11. &lt;p&gt; If the sql_month database property is set &lt;code&gt;true&lt;/code&gt;, then the range is 1-12, else 0-11</td>
 	</tr>
 </table>
 <p></p>
@@ -2904,25 +2999,6 @@ hr {
 
 <table>
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.REPEAT</td>
-		<td class='description underscore'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[remarks]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>Returns a &lt;code&gt;String&lt;/code&gt; composed of the given &lt;code&gt;String&lt;/code&gt;, repeated &lt;code&gt;count&lt;/code&gt; times.</td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.REPLACE</td>
 		<td class='description underscore'>[procedure, returns result]</td>
 	</tr>
@@ -2936,25 +3012,6 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td colspan='2' class='definition'>Replaces all occurrences of &lt;code&gt;replace&lt;/code&gt; in &lt;code&gt;s&lt;/code&gt; with the &lt;code&gt;String&lt;/code&gt; object: &lt;code&gt;with&lt;/code&gt;</td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.RIGHT</td>
-		<td class='description underscore'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[remarks]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>Returns the rightmost &lt;code&gt;count&lt;/code&gt; characters of the given &lt;code&gt;String&lt;/code&gt;, &lt;code&gt;s&lt;/code&gt;. &lt;b&gt;Note:&lt;/b&gt; boundry conditions are handled in the following order of precedence: &lt;UL&gt; &lt;LI&gt; if &lt;code&gt;s&lt;/code&gt; is &lt;CODE&gt;null&lt;/CODE&gt;, &lt;CODE&gt;null&lt;/CODE&gt; is returned &lt;LI&gt; if &lt;code&gt;count&lt;/code&gt; is less than one, a zero-length &lt;code&gt;String&lt;/code&gt; is returned &lt;LI&gt; if &lt;code&gt;count&lt;/code&gt; is greater than the length of &lt;code&gt;s&lt;/code&gt;, a copy of &lt;code&gt;s&lt;/code&gt; is returned &lt;/UL&gt;</td>
 	</tr>
 </table>
 <p></p>
@@ -3012,25 +3069,6 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td colspan='2' class='definition'>Returns the characters of the given &lt;code&gt;String&lt;/code&gt;, with trailing spaces removed.</td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.SECOND</td>
-		<td class='description underscore'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[remarks]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>Returns the second of the given time value, as an integer value in the range of 0-59.</td>
 	</tr>
 </table>
 <p></p>
@@ -3254,25 +3292,6 @@ hr {
 
 <table>
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.USER</td>
-		<td class='description underscore'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[remarks]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>Returns the user&apos;s authorization name (the user&apos;s name as known to this database).</td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.WEEK</td>
 		<td class='description underscore'>[procedure, returns result]</td>
 	</tr>
@@ -3286,25 +3305,6 @@ hr {
 	<tr>
 		<td class='ordinal'></td>
 		<td colspan='2' class='definition'>Returns the week of the year from the given date value, as an integer value in the range of 1-53.</td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.YEAR</td>
-		<td class='description underscore'>[procedure, returns result]</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description'>[remarks]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td colspan='2' class='definition'>Returns the year from the given date value, as an integer value in the range of 1-9999.</td>
 	</tr>
 </table>
 <p></p>

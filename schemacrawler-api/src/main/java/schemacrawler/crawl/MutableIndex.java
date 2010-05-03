@@ -46,11 +46,9 @@ class MutableIndex
   private int cardinality;
   private int pages;
 
-  MutableIndex(final Table parent,
-               final String name,
-               final String quoteCharacter)
+  MutableIndex(final Table parent, final String name)
   {
-    super(parent, name, quoteCharacter);
+    super(parent, name);
     // Default values
     type = IndexType.unknown;
   }

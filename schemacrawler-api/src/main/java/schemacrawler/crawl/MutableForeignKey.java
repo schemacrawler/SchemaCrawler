@@ -45,9 +45,9 @@ class MutableForeignKey
   private ForeignKeyUpdateRule deleteRule;
   private ForeignKeyDeferrability deferrability;
 
-  MutableForeignKey(final String name, final String quoteCharacter)
+  MutableForeignKey(final String name)
   {
-    super(name, quoteCharacter);
+    super(name);
 
     // Default values
     updateRule = ForeignKeyUpdateRule.unknown;
