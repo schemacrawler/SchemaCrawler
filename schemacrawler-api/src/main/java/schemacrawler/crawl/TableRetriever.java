@@ -70,7 +70,7 @@ final class TableRetriever
       results = new MetadataResultSet(getMetaData()
         .getColumns(table.getSchema().getCatalogName(),
                     table.getSchema().getSchemaName(),
-                    table.getName(),
+                    getUnquotedName(table.getName()),
                     null), getDatabaseSystemParameters());
 
       while (results.next())
@@ -158,13 +158,15 @@ final class TableRetriever
 
     results = new MetadataResultSet(metaData.getImportedKeys(table.getSchema()
                                       .getCatalogName(), table.getSchema()
-                                      .getSchemaName(), table.getName()),
+                                      .getSchemaName(), getUnquotedName(table
+                                      .getName())),
                                     getDatabaseSystemParameters());
     createForeignKeys(results, foreignKeys);
 
     results = new MetadataResultSet(metaData.getExportedKeys(table.getSchema()
                                       .getCatalogName(), table.getSchema()
-                                      .getSchemaName(), table.getName()),
+                                      .getSchemaName(), getUnquotedName(table
+                                      .getName())),
                                     getDatabaseSystemParameters());
     createForeignKeys(results, foreignKeys);
   }
@@ -198,7 +200,7 @@ final class TableRetriever
         results = new MetadataResultSet(getMetaData()
           .getIndexInfo(table.getSchema().getCatalogName(),
                         table.getSchema().getSchemaName(),
-                        table.getName(),
+                        getUnquotedName(table.getName()),
                         unique,
                         true/* approximate */), getDatabaseSystemParameters());
         createIndices(table, results);
@@ -234,9 +236,13 @@ final class TableRetriever
     try
     {
       results = new MetadataResultSet(getMetaData()
-        .getPrimaryKeys(table.getSchema().getCatalogName(),
-                        table.getSchema().getSchemaName(),
-                        table.getName()), getDatabaseSystemParameters());
+                                        .getPrimaryKeys(table.getSchema()
+                                                          .getCatalogName(),
+                                                        table.getSchema()
+                                                          .getSchemaName(),
+                                                        getUnquotedName(table
+                                                          .getName())),
+                                      getDatabaseSystemParameters());
 
       MutablePrimaryKey primaryKey;
       while (results.next())

@@ -60,7 +60,7 @@ final class ProcedureRetriever
       results = new MetadataResultSet(getMetaData()
         .getProcedureColumns(procedure.getSchema().getCatalogName(),
                              procedure.getSchema().getSchemaName(),
-                             procedure.getName(),
+                             getUnquotedName(procedure.getName()),
                              null), getDatabaseSystemParameters());
 
       while (results.next())

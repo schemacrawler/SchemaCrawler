@@ -166,54 +166,84 @@ Procedures
 
 PUBLIC."CHAR"                                [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               INTEGER, in                 
+  @p0                               LONGVARCHAR, result         
 
 
 PUBLIC."DAY"                                 [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               DATE, in                    
+  @p0                               INTEGER, result             
 
 
 PUBLIC."HOUR"                                [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               TIME, in                    
+  @p0                               INTEGER, result             
 
 
 PUBLIC."IDENTITY"                            [procedure, returns result]
 ------------------------------------------------------------------------
+  @p0                               INTEGER, result             
 
 
 PUBLIC."INSERT"                              [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               LONGVARCHAR, in             
+  @p2                               INTEGER, in                 
+  @p3                               INTEGER, in                 
+  @p4                               LONGVARCHAR, in             
+  @p0                               LONGVARCHAR, result         
 
 
 PUBLIC."LEFT"                                [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               LONGVARCHAR, in             
+  @p2                               INTEGER, in                 
+  @p0                               LONGVARCHAR, result         
 
 
 PUBLIC."MINUTE"                              [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               TIME, in                    
+  @p0                               INTEGER, result             
 
 
 PUBLIC."MONTH"                               [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               DATE, in                    
+  @p0                               INTEGER, result             
 
 
 PUBLIC."REPEAT"                              [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               LONGVARCHAR, in             
+  @p2                               INTEGER, in                 
+  @p0                               LONGVARCHAR, result         
 
 
 PUBLIC."RIGHT"                               [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               LONGVARCHAR, in             
+  @p2                               INTEGER, in                 
+  @p0                               LONGVARCHAR, result         
 
 
 PUBLIC."SECOND"                              [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               TIME, in                    
+  @p0                               INTEGER, result             
 
 
 PUBLIC."USER"                                [procedure, returns result]
 ------------------------------------------------------------------------
+  @p0                               LONGVARCHAR, result         
 
 
 PUBLIC."YEAR"                                [procedure, returns result]
 ------------------------------------------------------------------------
+  @p1                               DATE, in                    
+  @p0                               INTEGER, result             
 
 
 PUBLIC.ABS                                   [procedure, returns result]
