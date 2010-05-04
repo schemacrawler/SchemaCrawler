@@ -36,6 +36,11 @@ Tables
 ========================================================================
 
 
+PUBLIC."Global Counts"                                           [table]
+------------------------------------------------------------------------
+  "Global Count"                    INTEGER                     
+
+
 PUBLIC.AUTHORS                                                   [table]
 ------------------------------------------------------------------------
   ID                                INTEGER not null            
@@ -109,11 +114,6 @@ SYS_IDX_48                                                 [primary key]
 
 FK_Y_BOOK                                  [foreign key, with no action]
   ID --> PUBLIC.BOOKAUTHORS.BOOKID                              
-
-
-PUBLIC.GLOBALCOUNT                                               [table]
-------------------------------------------------------------------------
-  "Global Count"                    INTEGER                     
 
 
 PUBLIC.PUBLISHERS                                                [table]

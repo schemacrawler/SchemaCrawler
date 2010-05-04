@@ -400,6 +400,29 @@ Tables
 ========================================================================
 
 
+PUBLIC."Global Counts"                                           [table]
+------------------------------------------------------------------------
+  "Global Count"                    INTEGER                     
+
+DELETE                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+INSERT                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+SELECT                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+UPDATE                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+                                                                  [lint]
+  no indices
+  single column
+  spaces in names, or reserved words
+"Global Counts", "Global Count"
+
+
 PUBLIC.AUTHORS                                                   [table]
 ------------------------------------------------------------------------
   ID                                INTEGER not null            
@@ -542,29 +565,6 @@ SELECT                                                       [privilege]
 
 UPDATE                                                       [privilege]
   DBA --> SA (grantable)                                        
-
-
-PUBLIC.GLOBALCOUNT                                               [table]
-------------------------------------------------------------------------
-  "Global Count"                    INTEGER                     
-
-DELETE                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-INSERT                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-SELECT                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-UPDATE                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-                                                                  [lint]
-  no indices
-  single column
-  spaces in names, or reserved words
-"Global Count"
 
 
 PUBLIC.PUBLISHERS                                                [table]

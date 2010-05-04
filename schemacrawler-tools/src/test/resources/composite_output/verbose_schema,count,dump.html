@@ -1537,6 +1537,67 @@ hr {
 
 <table>
 	<tr>
+		<td colspan='2' class='name underscore'>PUBLIC.&quot;Global Counts&quot;</td>
+		<td class='description underscore'>[table]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>&quot;Global Count&quot;</td>
+		<td class='type'>INTEGER</td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='4'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='ordinal'></td>
+		<td class='subname'>DBA &#8594; SA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p></p>
+
+<table>
+	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.AUTHORS</td>
 		<td class='description underscore'>[table]</td>
 	</tr>
@@ -2056,67 +2117,6 @@ hr {
 
 <table>
 	<tr>
-		<td colspan='2' class='name underscore'>PUBLIC.GLOBALCOUNT</td>
-		<td class='description underscore'>[table]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>&quot;Global Count&quot;</td>
-		<td class='type'>INTEGER</td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>DELETE</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>INSERT</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SELECT</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='4'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>UPDATE</td>
-		<td class='description'>[privilege]</td>
-	</tr>
-	<tr>
-		<td class='ordinal'></td>
-		<td class='subname'>DBA &#8594; SA (grantable)</td>
-		<td class='type'></td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-	<tr>
 		<td colspan='2' class='name underscore'>PUBLIC.PUBLISHERS</td>
 		<td class='description underscore'>[table]</td>
 	</tr>
@@ -2425,6 +2425,10 @@ hr {
   <caption>Row Count</caption>
 
 	<tr>
+		<td colspan='2' class='name'>PUBLIC.&quot;Global Counts&quot;</td>
+		<td class='description'>empty</td>
+	</tr>
+	<tr>
 		<td colspan='2' class='name'>PUBLIC.AUTHORS</td>
 		<td class='description'>20 rows</td>
 	</tr>
@@ -2439,10 +2443,6 @@ hr {
 	<tr>
 		<td colspan='2' class='name'>PUBLIC.BOOKS</td>
 		<td class='description'>20 rows</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PUBLIC.GLOBALCOUNT</td>
-		<td class='description'>empty</td>
 	</tr>
 	<tr>
 		<td colspan='2' class='name'>PUBLIC.PUBLISHERS</td>
@@ -2461,6 +2461,15 @@ hr {
 
 <p>&nbsp;</p>
 <h2>Dump</h2>
+
+<table>
+  <caption>PUBLIC."Global Counts"</caption>
+
+	<tr>
+		<td class='name'>Global Count</td>
+	</tr>
+</table>
+<p></p>
 
 <table>
   <caption>PUBLIC.AUTHORS</caption>
@@ -3091,15 +3100,6 @@ hr {
 		<td>5</td>
 		<td>2002-09-29</td>
 		<td>43.99</td>
-	</tr>
-</table>
-<p></p>
-
-<table>
-  <caption>PUBLIC.GLOBALCOUNT</caption>
-
-	<tr>
-		<td class='name'>Global Count</td>
 	</tr>
 </table>
 <p></p>
