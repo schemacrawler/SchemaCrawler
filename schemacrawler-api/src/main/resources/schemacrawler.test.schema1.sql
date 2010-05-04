@@ -44,7 +44,7 @@ CREATE TABLE BookAuthors
 )
 ;
 
-CREATE TABLE GlobalCount
+CREATE TABLE "Global Counts"
 (
   "Global Count" INTEGER
 )
