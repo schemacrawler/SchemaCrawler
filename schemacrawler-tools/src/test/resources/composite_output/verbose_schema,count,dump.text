@@ -400,6 +400,23 @@ Tables
 ========================================================================
 
 
+PUBLIC."Global Counts"                                           [table]
+------------------------------------------------------------------------
+  "Global Count"                    INTEGER                     
+
+DELETE                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+INSERT                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+SELECT                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+UPDATE                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+
 PUBLIC.AUTHORS                                                   [table]
 ------------------------------------------------------------------------
   ID                                INTEGER not null            
@@ -532,23 +549,6 @@ UPDATE                                                       [privilege]
   DBA --> SA (grantable)                                        
 
 
-PUBLIC.GLOBALCOUNT                                               [table]
-------------------------------------------------------------------------
-  "Global Count"                    INTEGER                     
-
-DELETE                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-INSERT                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-SELECT                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-UPDATE                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-
 PUBLIC.PUBLISHERS                                                [table]
 ------------------------------------------------------------------------
   ID                                INTEGER not null            
@@ -636,11 +636,11 @@ Row Count
 
 Row Count
 ------------------------------------------------------------------------
+PUBLIC."Global Counts"                                             empty
 PUBLIC.AUTHORS                                                   20 rows
 PUBLIC.AUTHORSLIST                                               20 rows
 PUBLIC.BOOKAUTHORS                                               20 rows
 PUBLIC.BOOKS                                                     20 rows
-PUBLIC.GLOBALCOUNT                                                 empty
 PUBLIC.PUBLISHERS                                                20 rows
 SALES.REGIONS                                                    20 rows
 SALES.SALES                                                      20 rows
@@ -650,6 +650,12 @@ SALES.SALES                                                      20 rows
 
 Dump
 ========================================================================
+
+
+
+PUBLIC."Global Counts"
+------------------------------------------------------------------------
+Global Count
 
 
 
@@ -754,12 +760,6 @@ ID,TITLE,DESCRIPTION,PUBLISHERID,PUBLICATIONDATE,PRICE
 18,Lacus. Etiam Bibendum,Facilisi. Sed Neque. Sed,18,2008-01-28,63.99
 19,Luctus Lobortis.,"Rutrum. Fusce Dolor Quam, Elementum At, Egestas A, Scelerisque Sed, Sapien.",5,2006-08-23,67.99
 20,"Dui, In Sodales Elit Erat",Sociis Natoque Penatibus Et Magnis Dis Parturient,5,2002-09-29,43.99
-
-
-
-PUBLIC.GLOBALCOUNT
-------------------------------------------------------------------------
-Global Count
 
 
 

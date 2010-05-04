@@ -4,11 +4,11 @@ Tables
 ========================================================================
 
 
+PUBLIC."Global Counts"                                           [table]
 PUBLIC.AUTHORS                                                   [table]
 PUBLIC.AUTHORSLIST                                                [view]
 PUBLIC.BOOKAUTHORS                                               [table]
 PUBLIC.BOOKS                                                     [table]
-PUBLIC.GLOBALCOUNT                                               [table]
 PUBLIC.PUBLISHERS                                                [table]
 SALES.REGIONS                                                    [table]
 SALES.SALES                                                      [table]

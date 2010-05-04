@@ -400,6 +400,23 @@ Tables
 ========================================================================
 
 
+PUBLIC."Global Counts"                                           [table]
+------------------------------------------------------------------------
+  "Global Count"                    INTEGER                     
+
+DELETE                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+INSERT                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+SELECT                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+UPDATE                                                       [privilege]
+  DBA --> SA (grantable)                                        
+
+
 PUBLIC.AUTHORS                                                   [table]
 ------------------------------------------------------------------------
   ID                                INTEGER not null            
@@ -518,23 +535,6 @@ SYS_IDX_48                                                 [primary key]
 
 FK_Y_BOOK                                  [foreign key, with no action]
   ID --> PUBLIC.BOOKAUTHORS.BOOKID                              
-
-DELETE                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-INSERT                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-SELECT                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-UPDATE                                                       [privilege]
-  DBA --> SA (grantable)                                        
-
-
-PUBLIC.GLOBALCOUNT                                               [table]
-------------------------------------------------------------------------
-  "Global Count"                    INTEGER                     
 
 DELETE                                                       [privilege]
   DBA --> SA (grantable)                                        

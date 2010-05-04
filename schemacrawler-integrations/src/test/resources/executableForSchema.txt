@@ -4,6 +4,11 @@ Tables
 ========================================================================
 
 
+PUBLIC."Global Counts"                                           [table]
+------------------------------------------------------------------------
+1   "Global Count"                    INTEGER                     
+
+
 PUBLIC.AUTHORS                                                   [table]
 ------------------------------------------------------------------------
 4   ADDRESS1                          VARCHAR(255)                
@@ -80,11 +85,6 @@ SYS_IDX_48                                                 [primary key]
 
 FK_Y_BOOK                                  [foreign key, with no action]
  1  ID --> PUBLIC.BOOKAUTHORS.BOOKID                              
-
-
-PUBLIC.GLOBALCOUNT                                               [table]
-------------------------------------------------------------------------
-1   "Global Count"                    INTEGER                     
 
 
 PUBLIC.PUBLISHERS                                                [table]

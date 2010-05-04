@@ -56,7 +56,7 @@ TABLE_CAT,TABLE_SCHEM,TABLE_NAME,TABLE_TYPE,REMARKS,TYPE_CAT,TYPE_SCHEM,TYPE_NAM
 <null>,PUBLIC,AUTHORS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
 <null>,PUBLIC,BOOKAUTHORS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
 <null>,PUBLIC,BOOKS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
-<null>,PUBLIC,GLOBALCOUNT,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
+<null>,PUBLIC,Global Counts,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
 <null>,PUBLIC,PUBLISHERS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
 <null>,SALES,REGIONS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
 <null>,SALES,SALES,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false

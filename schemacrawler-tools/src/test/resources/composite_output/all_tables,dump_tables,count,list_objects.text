@@ -88,7 +88,7 @@ TABLE_CAT,TABLE_SCHEM,TABLE_NAME,TABLE_TYPE,REMARKS,TYPE_CAT,TYPE_SCHEM,TYPE_NAM
 <null>,PUBLIC,AUTHORS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
 <null>,PUBLIC,BOOKAUTHORS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
 <null>,PUBLIC,BOOKS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
-<null>,PUBLIC,GLOBALCOUNT,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
+<null>,PUBLIC,Global Counts,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
 <null>,PUBLIC,PUBLISHERS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
 <null>,SALES,REGIONS,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
 <null>,SALES,SALES,TABLE,<null>,<null>,<null>,<null>,<null>,<null>,MEMORY,false
@@ -99,6 +99,12 @@ TABLE_CAT,TABLE_SCHEM,TABLE_NAME,TABLE_TYPE,REMARKS,TYPE_CAT,TYPE_SCHEM,TYPE_NAM
 
 Query
 ========================================================================
+
+
+
+PUBLIC."Global Counts"
+------------------------------------------------------------------------
+Global Count
 
 
 
@@ -206,12 +212,6 @@ ID,TITLE,DESCRIPTION,PUBLISHERID,PUBLICATIONDATE,PRICE
 
 
 
-PUBLIC.GLOBALCOUNT
-------------------------------------------------------------------------
-Global Count
-
-
-
 PUBLIC.PUBLISHERS
 ------------------------------------------------------------------------
 ID,PUBLISHER
@@ -298,11 +298,11 @@ Row Count
 
 Row Count
 ------------------------------------------------------------------------
+PUBLIC."Global Counts"                                             empty
 PUBLIC.AUTHORS                                                   20 rows
 PUBLIC.AUTHORSLIST                                               20 rows
 PUBLIC.BOOKAUTHORS                                               20 rows
 PUBLIC.BOOKS                                                     20 rows
-PUBLIC.GLOBALCOUNT                                                 empty
 PUBLIC.PUBLISHERS                                                20 rows
 SALES.REGIONS                                                    20 rows
 SALES.SALES                                                      20 rows
@@ -314,11 +314,11 @@ Tables
 ========================================================================
 
 
+PUBLIC."Global Counts"                                           [table]
 PUBLIC.AUTHORS                                                   [table]
 PUBLIC.AUTHORSLIST                                                [view]
 PUBLIC.BOOKAUTHORS                                               [table]
 PUBLIC.BOOKS                                                     [table]
-PUBLIC.GLOBALCOUNT                                               [table]
 PUBLIC.PUBLISHERS                                                [table]
 SALES.REGIONS                                                    [table]
 SALES.SALES                                                      [table]

@@ -7,6 +7,11 @@
 -- url: jdbc:hsqldb:mem:schemacrawler
 -- jdbc compliant: false
 
+CREATE TABLE "Global Counts"
+(
+  "Global Count" INTEGER
+);
+
 CREATE TABLE AUTHORS
 (
   ADDRESS1 VARCHAR,
@@ -35,11 +40,6 @@ CREATE TABLE BOOKS
   PUBLICATIONDATE DATE,
   PUBLISHERID INTEGER NOT NULL,
   TITLE VARCHAR NOT NULL
-);
-
-CREATE TABLE GLOBALCOUNT
-(
-  "Global Count" INTEGER
 );
 
 CREATE TABLE PUBLISHERS
