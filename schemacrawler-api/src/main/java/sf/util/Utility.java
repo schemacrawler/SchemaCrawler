@@ -85,6 +85,29 @@ public final class Utility
     }
   }
 
+  public static String convertForComparison(final String text)
+  {
+    final String textWithoutQuotes;
+    if (!isBlank(text))
+    {
+      final char[] charArray = text.toCharArray();
+      final StringBuilder builder = new StringBuilder();
+      for (final char ch: charArray)
+      {
+        if (Character.isLetterOrDigit(ch) || ch == '_' || ch == '.')
+        {
+          builder.append(Character.toLowerCase(ch));
+        }
+      }
+      textWithoutQuotes = builder.toString();
+    }
+    else
+    {
+      textWithoutQuotes = text;
+    }
+    return textWithoutQuotes;
+  }
+
   /**
    * Checks if the text is null or empty.
    * 
@@ -210,29 +233,6 @@ public final class Utility
 
     final Logger rootLogger = Logger.getLogger("");
     rootLogger.setLevel(logLevel);
-  }
-
-  public static String convertForComparison(final String text)
-  {
-    final String textWithoutQuotes;
-    if (!isBlank(text))
-    {
-      final char[] charArray = text.toCharArray();
-      final StringBuilder builder = new StringBuilder();
-      for (char ch: charArray)
-      {
-        if (Character.isLetterOrDigit(ch))
-        {
-          builder.append(Character.toLowerCase(ch));
-        }
-      }
-      textWithoutQuotes = builder.toString();
-    }
-    else
-    {
-      textWithoutQuotes = text;
-    }
-    return textWithoutQuotes;
   }
 
   private static int indexOfDifference(final String string1,

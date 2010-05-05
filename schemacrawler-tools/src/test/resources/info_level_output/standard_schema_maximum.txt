@@ -222,6 +222,15 @@ PUBLIC.ATAN2                                 [procedure, returns result]
   java.lang.Math.atan2(double,double)
 
 
+PUBLIC.BIT_LENGTH                            [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR, in             
+  @p0                               INTEGER, result             
+
+                                                            [definition]
+  org.hsqldb.Library.bitLength(java.lang.String)
+
+
 PUBLIC.BITAND                                [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               INTEGER, in                 
@@ -230,15 +239,6 @@ PUBLIC.BITAND                                [procedure, returns result]
 
                                                             [definition]
   org.hsqldb.Library.bitand(int,int)
-
-
-PUBLIC.BIT_LENGTH                            [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR, in             
-  @p0                               INTEGER, result             
-
-                                                            [definition]
-  org.hsqldb.Library.bitLength(java.lang.String)
 
 
 PUBLIC.BITOR                                 [procedure, returns result]
@@ -279,7 +279,7 @@ PUBLIC."CHAR"                                [procedure, returns result]
   org.hsqldb.Library.character(int)
 
 
-PUBLIC.CHARACTER_LENGTH                      [procedure, returns result]
+PUBLIC.CHAR_LENGTH                           [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               LONGVARCHAR, in             
   @p0                               INTEGER, result             
@@ -288,7 +288,7 @@ PUBLIC.CHARACTER_LENGTH                      [procedure, returns result]
   org.hsqldb.Library.length(java.lang.String)
 
 
-PUBLIC.CHAR_LENGTH                           [procedure, returns result]
+PUBLIC.CHARACTER_LENGTH                      [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               LONGVARCHAR, in             
   @p0                               INTEGER, result             

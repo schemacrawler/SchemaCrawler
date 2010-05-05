@@ -730,6 +730,18 @@ PUBLIC.ATAN2                                 [procedure, returns result]
   Converts rectangular coordinates (<code>x</code>,&nbsp;<code>y</code>) to polar (r,&nbsp;<i>theta</i>). This method computes the phase <i>theta</i> by computing an arc tangent of <code>y/x</code> in the range of -<i>pi</i> to <i>pi</i>. Special cases: <ul><li>If either argument is NaN, then the result is NaN. <li>If the first argument is positive zero and the second argument is positive, or the first argument is positive and finite and the second argument is positive infinity, then the result is positive zero. <li>If the first argument is negative zero and the second argument is positive, or the first argument is negative and finite and the second argument is positive infinity, then the result is negative zero. <li>If the first argument is positive zero and the second argument is negative, or the first argument is positive and finite and the second argument is negative infinity, then the result is the <code>double</code> value closest to <i>pi</i>. <li>If the first argument is negative zero and the second argument is negative, or the first argument is negative and finite and the second argument is negative infinity, then the result is the <code>double</code> value closest to -<i>pi</i>. <li>If the first argument is positive and the second argument is positive zero or negative zero, or the first argument is positive infinity and the second argument is finite, then the result is the <code>double</code> value closest to <i>pi</i>/2. <li>If the first argument is negative and the second argument is positive zero or negative zero, or the first argument is negative infinity and the second argument is finite, then the result is the <code>double</code> value closest to -<i>pi</i>/2. <li>If both arguments are positive infinity, then the result is the <code>double</code> value closest to <i>pi</i>/4. <li>If the first argument is positive infinity and the second argument is negative infinity, then the result is the <code>double</code> value closest to 3*<i>pi</i>/4. <li>If the first argument is negative infinity and the second argument is positive infinity, then the result is the <code>double</code> value closest to -<i>pi</i>/4. <li>If both arguments are negative infinity, then the result is the <code>double</code> value closest to -3*<i>pi</i>/4.</ul> <p> A result must be within 2 ulps of the correctly rounded result. Results must be semi-monotonic.
 
 
+PUBLIC.BIT_LENGTH                            [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR, in             
+  @p0                               INTEGER, result             
+
+                                                            [definition]
+  org.hsqldb.Library.bitLength(java.lang.String)
+
+                                                               [remarks]
+  Returns the number of bits in the given <code>String</code>. This includes trailing blanks.
+
+
 PUBLIC.BITAND                                [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               INTEGER, in                 
@@ -741,18 +753,6 @@ PUBLIC.BITAND                                [procedure, returns result]
 
                                                                [remarks]
   Returns the bit-wise logical <em>and</em> of the given integer values.
-
-
-PUBLIC.BIT_LENGTH                            [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR, in             
-  @p0                               INTEGER, result             
-
-                                                            [definition]
-  org.hsqldb.Library.bitLength(java.lang.String)
-
-                                                               [remarks]
-  Returns the number of bits in the given <code>String</code>. This includes trailing blanks.
 
 
 PUBLIC.BITOR                                 [procedure, returns result]
@@ -802,7 +802,7 @@ PUBLIC."CHAR"                                [procedure, returns result]
   Returns the character string corresponding to the given ASCII (or Unicode) value. <b>Note:</b> <p> In some SQL CLI implementations, a <CODE>null</CODE> is returned if the range is outside 0..255. In HSQLDB, the corresponding Unicode character is returned unchecked.
 
 
-PUBLIC.CHARACTER_LENGTH                      [procedure, returns result]
+PUBLIC.CHAR_LENGTH                           [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               LONGVARCHAR, in             
   @p0                               INTEGER, result             
@@ -814,7 +814,7 @@ PUBLIC.CHARACTER_LENGTH                      [procedure, returns result]
   Returns the number of characters in the given <code>String</code>. This includes trailing blanks.
 
 
-PUBLIC.CHAR_LENGTH                           [procedure, returns result]
+PUBLIC.CHARACTER_LENGTH                      [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               LONGVARCHAR, in             
   @p0                               INTEGER, result             

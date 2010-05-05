@@ -201,16 +201,16 @@ PUBLIC.ATAN2                                 [procedure, returns result]
   @p0                               DOUBLE(8, 17), result       
 
 
+PUBLIC.BIT_LENGTH                            [procedure, returns result]
+------------------------------------------------------------------------
+  @p1                               LONGVARCHAR, in             
+  @p0                               INTEGER, result             
+
+
 PUBLIC.BITAND                                [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               INTEGER, in                 
   @p2                               INTEGER, in                 
-  @p0                               INTEGER, result             
-
-
-PUBLIC.BIT_LENGTH                            [procedure, returns result]
-------------------------------------------------------------------------
-  @p1                               LONGVARCHAR, in             
   @p0                               INTEGER, result             
 
 
@@ -240,13 +240,13 @@ PUBLIC."CHAR"                                [procedure, returns result]
   @p0                               LONGVARCHAR, result         
 
 
-PUBLIC.CHARACTER_LENGTH                      [procedure, returns result]
+PUBLIC.CHAR_LENGTH                           [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               LONGVARCHAR, in             
   @p0                               INTEGER, result             
 
 
-PUBLIC.CHAR_LENGTH                           [procedure, returns result]
+PUBLIC.CHARACTER_LENGTH                      [procedure, returns result]
 ------------------------------------------------------------------------
   @p1                               LONGVARCHAR, in             
   @p0                               INTEGER, result             
