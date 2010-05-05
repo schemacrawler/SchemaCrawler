@@ -84,17 +84,19 @@ final class DotWriter
 
   public void print(final ColumnMap[] weakAssociations)
   {
-    if (weakAssociations == null)
+    if (weakAssociations != null)
     {
-      return;
+      out.write(Utility.NEWLINE);
+      for (final ColumnMap columnMap: weakAssociations)
+      {
+        final Column primaryKeyColumn = columnMap.getPrimaryKeyColumn();
+        final Column foreignKeyColumn = columnMap.getForeignKeyColumn();
+        out
+          .write(printColumnAssociation("", primaryKeyColumn, foreignKeyColumn));
+      }
     }
-
-    for (final ColumnMap columnMap: weakAssociations)
-    {
-      final Column primaryKeyColumn = columnMap.getPrimaryKeyColumn();
-      final Column foreignKeyColumn = columnMap.getForeignKeyColumn();
-      out.write(printColumnAssociation("", primaryKeyColumn, foreignKeyColumn));
-    }
+    out.write(Utility.NEWLINE);
+    out.write(Utility.NEWLINE);
   }
 
   public void print(final SchemaCrawlerInfo schemaCrawlerInfo,
@@ -223,7 +225,6 @@ final class DotWriter
       }
     }
 
-    buffer.append(Utility.NEWLINE).append(Utility.NEWLINE);
     out.write(buffer.toString());
   }
 
