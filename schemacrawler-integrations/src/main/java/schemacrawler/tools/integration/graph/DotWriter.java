@@ -46,7 +46,6 @@ final class DotWriter
 {
 
   private final PrintWriter out;
-
   private final Map<Schema, PastelColor> colorMap;
 
   DotWriter(final File dotFile)
