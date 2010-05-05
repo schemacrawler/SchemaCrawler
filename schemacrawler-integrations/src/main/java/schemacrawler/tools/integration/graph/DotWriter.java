@@ -45,56 +45,8 @@ import sf.util.Utility;
 final class DotWriter
 {
 
-  private static String printColumnAssociation(final String associationName,
-                                               final Column primaryKeyColumn,
-                                               final Column foreignKeyColumn)
-  {
-    final Connectivity connectivity = MetaDataUtility
-      .getConnectivity(foreignKeyColumn);
-    final String pkSymbol = "teetee";
-    final String fkSymbol;
-    if (connectivity != null)
-    {
-      switch (connectivity)
-      {
-        case OneToOne:
-          fkSymbol = "teeodot";
-          break;
-        case OneToMany:
-          fkSymbol = "crowodot";
-          break;
-        default:
-          fkSymbol = "none";
-          break;
-      }
-    }
-    else
-    {
-      fkSymbol = "none";
-    }
-    final String style;
-    if (Utility.isBlank(associationName))
-    {
-      style = "dashed";
-    }
-    else
-    {
-      style = "solid";
-    }
-
-    return String
-      .format("  \"%s\":\"%s.start\":w -> \"%s\":\"%s.end\":e [label=\"%s\" style=\"%s\" arrowhead=\"%s\" arrowtail=\"%s\"];%n",
-              primaryKeyColumn.getParent().getFullName(),
-              primaryKeyColumn.getName(),
-              foreignKeyColumn.getParent().getFullName(),
-              foreignKeyColumn.getName(),
-              associationName,
-              style,
-              fkSymbol,
-              pkSymbol);
-  }
-
   private final PrintWriter out;
+
   private final Map<Schema, PastelColor> colorMap;
 
   DotWriter(final File dotFile)
@@ -209,7 +161,7 @@ final class DotWriter
     final PastelColor tableBgColor = bgcolor.shade();
     final StringBuilder buffer = new StringBuilder();
     final String tableName = table.getFullName();
-    buffer.append("  \"").append(tableName).append("\" [")
+    buffer.append("  \"").append(escape(tableName)).append("\" [")
       .append(Utility.NEWLINE).append("    label=<").append(Utility.NEWLINE);
     buffer
       .append("      <table border=\"1\" cellborder=\"0\" cellspacing=\"0\">")
@@ -237,13 +189,13 @@ final class DotWriter
         columnBgcolor = bgcolor.tint();
       }
       buffer.append("        <tr>").append(Utility.NEWLINE);
-      buffer.append("          <td port=\"").append(columnName)
+      buffer.append("          <td port=\"").append(unescape(columnName))
         .append(".start\" bgcolor=\"").append(columnBgcolor)
         .append("\" align=\"left\">").append(columnName).append("</td>")
         .append(Utility.NEWLINE);
       buffer.append("          <td bgcolor=\"").append(columnBgcolor)
         .append("\"> </td>").append(Utility.NEWLINE);
-      buffer.append("          <td port=\"").append(columnName)
+      buffer.append("          <td port=\"").append(unescape(columnName))
         .append(".end\" align=\"right\" bgcolor=\"").append(columnBgcolor)
         .append("\">").append(column.getType().getDatabaseSpecificTypeName())
         .append(column.getWidth()).append("</td>").append(Utility.NEWLINE);
@@ -273,6 +225,65 @@ final class DotWriter
 
     buffer.append(Utility.NEWLINE).append(Utility.NEWLINE);
     out.write(buffer.toString());
+  }
+
+  private String escape(final String text)
+  {
+    return text.replace("\"", "\"\"");
+  }
+
+  private String printColumnAssociation(final String associationName,
+                                        final Column primaryKeyColumn,
+                                        final Column foreignKeyColumn)
+  {
+    final Connectivity connectivity = MetaDataUtility
+      .getConnectivity(foreignKeyColumn);
+    final String pkSymbol = "teetee";
+    final String fkSymbol;
+    if (connectivity != null)
+    {
+      switch (connectivity)
+      {
+        case OneToOne:
+          fkSymbol = "teeodot";
+          break;
+        case OneToMany:
+          fkSymbol = "crowodot";
+          break;
+        default:
+          fkSymbol = "none";
+          break;
+      }
+    }
+    else
+    {
+      fkSymbol = "none";
+    }
+    final String style;
+    if (Utility.isBlank(associationName))
+    {
+      style = "dashed";
+    }
+    else
+    {
+      style = "solid";
+    }
+
+    return String
+      .format("  \"%s\":\"%s.start\":w -> \"%s\":\"%s.end\":e [label=\"%s\" style=\"%s\" arrowhead=\"%s\" arrowtail=\"%s\"];%n",
+              escape(primaryKeyColumn.getParent().getFullName()),
+              unescape(primaryKeyColumn.getName()),
+              escape(foreignKeyColumn.getParent().getFullName()),
+              unescape(foreignKeyColumn.getName()),
+              escape(associationName),
+              style,
+              fkSymbol,
+              pkSymbol);
+  }
+
+  private String unescape(final String text)
+  {
+    return text.replace("\"", "");
   }
 
 }
