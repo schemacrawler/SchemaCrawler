@@ -24,6 +24,7 @@ package schemacrawler.crawl;
 import java.util.Comparator;
 
 import schemacrawler.schema.NamedObject;
+import sf.util.Utility;
 
 enum NamedObjectSort
   implements Comparator<NamedObject>
@@ -38,8 +39,8 @@ enum NamedObjectSort
     public int compare(final NamedObject namedObject1,
                        final NamedObject namedObject2)
     {
-      return namedObject1.getFullName().compareToIgnoreCase(namedObject2
-        .getFullName());
+      return Utility.convertForComparison(namedObject1.getFullName())
+        .compareTo(Utility.convertForComparison(namedObject2.getFullName()));
     }
   },
 
