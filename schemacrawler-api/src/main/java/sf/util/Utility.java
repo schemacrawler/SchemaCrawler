@@ -212,6 +212,29 @@ public final class Utility
     rootLogger.setLevel(logLevel);
   }
 
+  public static String convertForComparison(final String text)
+  {
+    final String textWithoutQuotes;
+    if (!isBlank(text))
+    {
+      final char[] charArray = text.toCharArray();
+      final StringBuilder builder = new StringBuilder();
+      for (char ch: charArray)
+      {
+        if (Character.isLetterOrDigit(ch))
+        {
+          builder.append(Character.toLowerCase(ch));
+        }
+      }
+      textWithoutQuotes = builder.toString();
+    }
+    else
+    {
+      textWithoutQuotes = text;
+    }
+    return textWithoutQuotes;
+  }
+
   private static int indexOfDifference(final String string1,
                                        final String string2)
   {

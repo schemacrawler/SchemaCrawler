@@ -36,10 +36,6 @@ Tables
 ========================================================================
 
 
-PUBLIC."Global Counts"                                           [table]
-------------------------------------------------------------------------
-
-
 PUBLIC.AUTHORS                                                   [table]
 ------------------------------------------------------------------------
 
@@ -53,6 +49,10 @@ PUBLIC.BOOKAUTHORS                                               [table]
 
 
 PUBLIC.BOOKS                                                     [table]
+------------------------------------------------------------------------
+
+
+PUBLIC."Global Counts"                                           [table]
 ------------------------------------------------------------------------
 
 
@@ -72,97 +72,6 @@ SALES.SALES                                                      [table]
 
 Procedures
 ========================================================================
-
-
-PUBLIC."CHAR"                                [procedure, returns result]
-------------------------------------------------------------------------
-
-                                                               [remarks]
-  Returns the character string corresponding to the given ASCII (or Unicode) value. <b>Note:</b> <p> In some SQL CLI implementations, a <CODE>null</CODE> is returned if the range is outside 0..255. In HSQLDB, the corresponding Unicode character is returned unchecked.
-
-
-PUBLIC."DAY"                                 [procedure, returns result]
-------------------------------------------------------------------------
-
-                                                               [remarks]
-  Returns the day of the month from the given date value, as an integer value in the range of 1-31.
-
-
-PUBLIC."HOUR"                                [procedure, returns result]
-------------------------------------------------------------------------
-
-                                                               [remarks]
-  Returns the hour from the given time value, as an integer value in the range of 0-23.
-
-
-PUBLIC."IDENTITY"                            [procedure, returns result]
-------------------------------------------------------------------------
-
-                                                               [remarks]
-  Retrieves the last auto-generated integer indentity value used by this connection. As of 1.7.1 this is a dummy function. The return value is supplied directly by Function.java
-
-
-PUBLIC."INSERT"                              [procedure, returns result]
-------------------------------------------------------------------------
-
-                                                               [remarks]
-  Returns a character sequence which is the result of writing the first <code>length</code> number of characters from the second given <code>String</code> over the first string. The start position in the first string where the characters are overwritten is given by <code>start</code>.<p> <b>Note:</b> In order of precedence, boundry conditions are handled as follows:<p> <UL> <LI>if either supplied <code>String</code> is null, then the other is returned; the check starts with the first given <code>String</code>. <LI>if <code>start</code> is less than one, <code>s1</code> is returned <LI>if <code>length</code> is less than or equal to zero, <code>s1</code> is returned <LI>if the length of <code>s2</code> is zero, <code>s1</code> is returned <LI>if <code>start</code> is greater than the length of <code>s1</code>, <code>s1</code> is returned <LI>if <code>length</code> is such that, taken together with <code>start</code>, the indicated interval extends beyond the end of <code>s1</code>, then the insertion is performed precisely as if upon a copy of <code>s1</code> extended in length to just include the indicated interval </UL>
-
-
-PUBLIC."LEFT"                                [procedure, returns result]
-------------------------------------------------------------------------
-
-                                                               [remarks]
-  Returns the leftmost <code>count</code> characters from the given <code>String</code>. <p> <b>Note:</b> boundry conditions are handled in the following order of precedence: <UL> <LI>if <code>s</code> is <code>null</code>, then <code>null</code> is returned <LI>if <code>count</code> is less than 1, then a zero-length <code>String</code> is returned <LI>if <code>count</code> is greater than the length of <code>s</code>, then a copy of <code>s</code> is returned </UL>
-
-
-PUBLIC."MINUTE"                              [procedure, returns result]
-------------------------------------------------------------------------
-
-                                                               [remarks]
-  Returns the minute from the given time value, as integer value in the range of 0-59.
-
-
-PUBLIC."MONTH"                               [procedure, returns result]
-------------------------------------------------------------------------
-
-                                                               [remarks]
-  Returns the month from the given date value, as an integer value in the range of 1-12 or 0-11. <p> If the sql_month database property is set <code>true</code>, then the range is 1-12, else 0-11
-
-
-PUBLIC."REPEAT"                              [procedure, returns result]
-------------------------------------------------------------------------
-
-                                                               [remarks]
-  Returns a <code>String</code> composed of the given <code>String</code>, repeated <code>count</code> times.
-
-
-PUBLIC."RIGHT"                               [procedure, returns result]
-------------------------------------------------------------------------
-
-                                                               [remarks]
-  Returns the rightmost <code>count</code> characters of the given <code>String</code>, <code>s</code>. <b>Note:</b> boundry conditions are handled in the following order of precedence: <UL> <LI> if <code>s</code> is <CODE>null</CODE>, <CODE>null</CODE> is returned <LI> if <code>count</code> is less than one, a zero-length <code>String</code> is returned <LI> if <code>count</code> is greater than the length of <code>s</code>, a copy of <code>s</code> is returned </UL>
-
-
-PUBLIC."SECOND"                              [procedure, returns result]
-------------------------------------------------------------------------
-
-                                                               [remarks]
-  Returns the second of the given time value, as an integer value in the range of 0-59.
-
-
-PUBLIC."USER"                                [procedure, returns result]
-------------------------------------------------------------------------
-
-                                                               [remarks]
-  Returns the user's authorization name (the user's name as known to this database).
-
-
-PUBLIC."YEAR"                                [procedure, returns result]
-------------------------------------------------------------------------
-
-                                                               [remarks]
-  Returns the year from the given date value, as an integer value in the range of 1-9999.
 
 
 PUBLIC.ABS                                   [procedure, returns result]
@@ -207,18 +116,18 @@ PUBLIC.ATAN2                                 [procedure, returns result]
   Converts rectangular coordinates (<code>x</code>,&nbsp;<code>y</code>) to polar (r,&nbsp;<i>theta</i>). This method computes the phase <i>theta</i> by computing an arc tangent of <code>y/x</code> in the range of -<i>pi</i> to <i>pi</i>. Special cases: <ul><li>If either argument is NaN, then the result is NaN. <li>If the first argument is positive zero and the second argument is positive, or the first argument is positive and finite and the second argument is positive infinity, then the result is positive zero. <li>If the first argument is negative zero and the second argument is positive, or the first argument is negative and finite and the second argument is positive infinity, then the result is negative zero. <li>If the first argument is positive zero and the second argument is negative, or the first argument is positive and finite and the second argument is negative infinity, then the result is the <code>double</code> value closest to <i>pi</i>. <li>If the first argument is negative zero and the second argument is negative, or the first argument is negative and finite and the second argument is negative infinity, then the result is the <code>double</code> value closest to -<i>pi</i>. <li>If the first argument is positive and the second argument is positive zero or negative zero, or the first argument is positive infinity and the second argument is finite, then the result is the <code>double</code> value closest to <i>pi</i>/2. <li>If the first argument is negative and the second argument is positive zero or negative zero, or the first argument is negative infinity and the second argument is finite, then the result is the <code>double</code> value closest to -<i>pi</i>/2. <li>If both arguments are positive infinity, then the result is the <code>double</code> value closest to <i>pi</i>/4. <li>If the first argument is positive infinity and the second argument is negative infinity, then the result is the <code>double</code> value closest to 3*<i>pi</i>/4. <li>If the first argument is negative infinity and the second argument is positive infinity, then the result is the <code>double</code> value closest to -<i>pi</i>/4. <li>If both arguments are negative infinity, then the result is the <code>double</code> value closest to -3*<i>pi</i>/4.</ul> <p> A result must be within 2 ulps of the correctly rounded result. Results must be semi-monotonic.
 
 
-PUBLIC.BIT_LENGTH                            [procedure, returns result]
-------------------------------------------------------------------------
-
-                                                               [remarks]
-  Returns the number of bits in the given <code>String</code>. This includes trailing blanks.
-
-
 PUBLIC.BITAND                                [procedure, returns result]
 ------------------------------------------------------------------------
 
                                                                [remarks]
   Returns the bit-wise logical <em>and</em> of the given integer values.
+
+
+PUBLIC.BIT_LENGTH                            [procedure, returns result]
+------------------------------------------------------------------------
+
+                                                               [remarks]
+  Returns the number of bits in the given <code>String</code>. This includes trailing blanks.
 
 
 PUBLIC.BITOR                                 [procedure, returns result]
@@ -239,14 +148,21 @@ PUBLIC.CEILING                               [procedure, returns result]
   Returns the smallest (closest to negative infinity) <code>double</code> value that is not less than the argument and is equal to a mathematical integer. Special cases: <ul><li>If the argument value is already equal to a mathematical integer, then the result is the same as the argument. <li>If the argument is NaN or an infinity or positive zero or negative zero, then the result is the same as the argument. <li>If the argument value is less than zero but greater than -1.0, then the result is negative zero.</ul> Note that the value of <code>Math.ceil(x)</code> is exactly the value of <code>-Math.floor(-x)</code>.
 
 
-PUBLIC.CHAR_LENGTH                           [procedure, returns result]
+PUBLIC."CHAR"                                [procedure, returns result]
+------------------------------------------------------------------------
+
+                                                               [remarks]
+  Returns the character string corresponding to the given ASCII (or Unicode) value. <b>Note:</b> <p> In some SQL CLI implementations, a <CODE>null</CODE> is returned if the range is outside 0..255. In HSQLDB, the corresponding Unicode character is returned unchecked.
+
+
+PUBLIC.CHARACTER_LENGTH                      [procedure, returns result]
 ------------------------------------------------------------------------
 
                                                                [remarks]
   Returns the number of characters in the given <code>String</code>. This includes trailing blanks.
 
 
-PUBLIC.CHARACTER_LENGTH                      [procedure, returns result]
+PUBLIC.CHAR_LENGTH                           [procedure, returns result]
 ------------------------------------------------------------------------
 
                                                                [remarks]
@@ -294,6 +210,13 @@ PUBLIC.DATEDIFF                              [procedure, returns result]
 
                                                                [remarks]
   Returns the number of date and time boundaries crossed between two specified datetime values.
+
+
+PUBLIC."DAY"                                 [procedure, returns result]
+------------------------------------------------------------------------
+
+                                                               [remarks]
+  Returns the day of the month from the given date value, as an integer value in the range of 1-31.
 
 
 PUBLIC.DAYNAME                               [procedure, returns result]
@@ -357,6 +280,27 @@ PUBLIC.HEXTORAW                              [procedure, returns result]
 
                                                                [remarks]
   Converts a <code>String</code> of hexidecimal digit characters to a raw binary value, represented as a <code>String</code>.<p> The given <code>String</code> object must consist of a sequence of 4 digit hexidecimal character substrings.<p> If its length is not evenly divisible by 4, <code>null</code> is returned. If any any of its 4 character subsequences cannot be parsed as a 4 digit, base 16 value, then a NumberFormatException is thrown. This conversion has the effect of reducing the character count 4:1.
+
+
+PUBLIC."HOUR"                                [procedure, returns result]
+------------------------------------------------------------------------
+
+                                                               [remarks]
+  Returns the hour from the given time value, as an integer value in the range of 0-23.
+
+
+PUBLIC."IDENTITY"                            [procedure, returns result]
+------------------------------------------------------------------------
+
+                                                               [remarks]
+  Retrieves the last auto-generated integer indentity value used by this connection. As of 1.7.1 this is a dummy function. The return value is supplied directly by Function.java
+
+
+PUBLIC."INSERT"                              [procedure, returns result]
+------------------------------------------------------------------------
+
+                                                               [remarks]
+  Returns a character sequence which is the result of writing the first <code>length</code> number of characters from the second given <code>String</code> over the first string. The start position in the first string where the characters are overwritten is given by <code>start</code>.<p> <b>Note:</b> In order of precedence, boundry conditions are handled as follows:<p> <UL> <LI>if either supplied <code>String</code> is null, then the other is returned; the check starts with the first given <code>String</code>. <LI>if <code>start</code> is less than one, <code>s1</code> is returned <LI>if <code>length</code> is less than or equal to zero, <code>s1</code> is returned <LI>if the length of <code>s2</code> is zero, <code>s1</code> is returned <LI>if <code>start</code> is greater than the length of <code>s1</code>, <code>s1</code> is returned <LI>if <code>length</code> is such that, taken together with <code>start</code>, the indicated interval extends beyond the end of <code>s1</code>, then the insertion is performed precisely as if upon a copy of <code>s1</code> extended in length to just include the indicated interval </UL>
 
 
 PUBLIC.java.lang.Math.abs                    [procedure, returns result]
@@ -580,6 +524,13 @@ PUBLIC.LCASE                                 [procedure, returns result]
   Returns a copy of the given <code>String</code>, with all upper case characters converted to lower case. This uses the default Java String conversion.
 
 
+PUBLIC."LEFT"                                [procedure, returns result]
+------------------------------------------------------------------------
+
+                                                               [remarks]
+  Returns the leftmost <code>count</code> characters from the given <code>String</code>. <p> <b>Note:</b> boundry conditions are handled in the following order of precedence: <UL> <LI>if <code>s</code> is <code>null</code>, then <code>null</code> is returned <LI>if <code>count</code> is less than 1, then a zero-length <code>String</code> is returned <LI>if <code>count</code> is greater than the length of <code>s</code>, then a copy of <code>s</code> is returned </UL>
+
+
 PUBLIC.LENGTH                                [procedure, returns result]
 ------------------------------------------------------------------------
 
@@ -622,11 +573,25 @@ PUBLIC.LTRIM                                 [procedure, returns result]
   Returns the characters of the given <code>String</code>, with the leading spaces removed. Characters such as TAB are not removed.
 
 
+PUBLIC."MINUTE"                              [procedure, returns result]
+------------------------------------------------------------------------
+
+                                                               [remarks]
+  Returns the minute from the given time value, as integer value in the range of 0-59.
+
+
 PUBLIC.MOD                                   [procedure, returns result]
 ------------------------------------------------------------------------
 
                                                                [remarks]
   Returns the remainder (modulus) of the first given integer divided by the second. <p>
+
+
+PUBLIC."MONTH"                               [procedure, returns result]
+------------------------------------------------------------------------
+
+                                                               [remarks]
+  Returns the month from the given date value, as an integer value in the range of 1-12 or 0-11. <p> If the sql_month database property is set <code>true</code>, then the range is 1-12, else 0-11
 
 
 PUBLIC.MONTHNAME                             [procedure, returns result]
@@ -1133,11 +1098,25 @@ PUBLIC.RAWTOHEX                              [procedure, returns result]
   Converts a raw binary value, as represented by the given <code>String</code>, to the equivalent <code>String</code> of hexidecimal digit characters. <p> This conversion has the effect of expanding the character count 1:4.
 
 
+PUBLIC."REPEAT"                              [procedure, returns result]
+------------------------------------------------------------------------
+
+                                                               [remarks]
+  Returns a <code>String</code> composed of the given <code>String</code>, repeated <code>count</code> times.
+
+
 PUBLIC.REPLACE                               [procedure, returns result]
 ------------------------------------------------------------------------
 
                                                                [remarks]
   Replaces all occurrences of <code>replace</code> in <code>s</code> with the <code>String</code> object: <code>with</code>
+
+
+PUBLIC."RIGHT"                               [procedure, returns result]
+------------------------------------------------------------------------
+
+                                                               [remarks]
+  Returns the rightmost <code>count</code> characters of the given <code>String</code>, <code>s</code>. <b>Note:</b> boundry conditions are handled in the following order of precedence: <UL> <LI> if <code>s</code> is <CODE>null</CODE>, <CODE>null</CODE> is returned <LI> if <code>count</code> is less than one, a zero-length <code>String</code> is returned <LI> if <code>count</code> is greater than the length of <code>s</code>, a copy of <code>s</code> is returned </UL>
 
 
 PUBLIC.ROUND                                 [procedure, returns result]
@@ -1159,6 +1138,13 @@ PUBLIC.RTRIM                                 [procedure, returns result]
 
                                                                [remarks]
   Returns the characters of the given <code>String</code>, with trailing spaces removed.
+
+
+PUBLIC."SECOND"                              [procedure, returns result]
+------------------------------------------------------------------------
+
+                                                               [remarks]
+  Returns the second of the given time value, as an integer value in the range of 0-59.
 
 
 PUBLIC.SIGN                                  [procedure, returns result]
@@ -1242,11 +1228,25 @@ PUBLIC.UPPER                                 [procedure, returns result]
   Returns a copy of the given <code>String</code>, with all lower case characters converted to upper case using the default Java method.
 
 
+PUBLIC."USER"                                [procedure, returns result]
+------------------------------------------------------------------------
+
+                                                               [remarks]
+  Returns the user's authorization name (the user's name as known to this database).
+
+
 PUBLIC.WEEK                                  [procedure, returns result]
 ------------------------------------------------------------------------
 
                                                                [remarks]
   Returns the week of the year from the given date value, as an integer value in the range of 1-53.
+
+
+PUBLIC."YEAR"                                [procedure, returns result]
+------------------------------------------------------------------------
+
+                                                               [remarks]
+  Returns the year from the given date value, as an integer value in the range of 1-9999.
 
 
 

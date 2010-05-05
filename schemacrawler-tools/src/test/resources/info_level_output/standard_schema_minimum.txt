@@ -36,10 +36,6 @@ Tables
 ========================================================================
 
 
-PUBLIC."Global Counts"                                           [table]
-------------------------------------------------------------------------
-
-
 PUBLIC.AUTHORS                                                   [table]
 ------------------------------------------------------------------------
 
@@ -53,6 +49,10 @@ PUBLIC.BOOKAUTHORS                                               [table]
 
 
 PUBLIC.BOOKS                                                     [table]
+------------------------------------------------------------------------
+
+
+PUBLIC."Global Counts"                                           [table]
 ------------------------------------------------------------------------
 
 
@@ -72,58 +72,6 @@ SALES.SALES                                                      [table]
 
 Procedures
 ========================================================================
-
-
-PUBLIC."CHAR"                                [procedure, returns result]
-------------------------------------------------------------------------
-
-
-PUBLIC."DAY"                                 [procedure, returns result]
-------------------------------------------------------------------------
-
-
-PUBLIC."HOUR"                                [procedure, returns result]
-------------------------------------------------------------------------
-
-
-PUBLIC."IDENTITY"                            [procedure, returns result]
-------------------------------------------------------------------------
-
-
-PUBLIC."INSERT"                              [procedure, returns result]
-------------------------------------------------------------------------
-
-
-PUBLIC."LEFT"                                [procedure, returns result]
-------------------------------------------------------------------------
-
-
-PUBLIC."MINUTE"                              [procedure, returns result]
-------------------------------------------------------------------------
-
-
-PUBLIC."MONTH"                               [procedure, returns result]
-------------------------------------------------------------------------
-
-
-PUBLIC."REPEAT"                              [procedure, returns result]
-------------------------------------------------------------------------
-
-
-PUBLIC."RIGHT"                               [procedure, returns result]
-------------------------------------------------------------------------
-
-
-PUBLIC."SECOND"                              [procedure, returns result]
-------------------------------------------------------------------------
-
-
-PUBLIC."USER"                                [procedure, returns result]
-------------------------------------------------------------------------
-
-
-PUBLIC."YEAR"                                [procedure, returns result]
-------------------------------------------------------------------------
 
 
 PUBLIC.ABS                                   [procedure, returns result]
@@ -150,11 +98,11 @@ PUBLIC.ATAN2                                 [procedure, returns result]
 ------------------------------------------------------------------------
 
 
-PUBLIC.BIT_LENGTH                            [procedure, returns result]
+PUBLIC.BITAND                                [procedure, returns result]
 ------------------------------------------------------------------------
 
 
-PUBLIC.BITAND                                [procedure, returns result]
+PUBLIC.BIT_LENGTH                            [procedure, returns result]
 ------------------------------------------------------------------------
 
 
@@ -170,11 +118,15 @@ PUBLIC.CEILING                               [procedure, returns result]
 ------------------------------------------------------------------------
 
 
-PUBLIC.CHAR_LENGTH                           [procedure, returns result]
+PUBLIC."CHAR"                                [procedure, returns result]
 ------------------------------------------------------------------------
 
 
 PUBLIC.CHARACTER_LENGTH                      [procedure, returns result]
+------------------------------------------------------------------------
+
+
+PUBLIC.CHAR_LENGTH                           [procedure, returns result]
 ------------------------------------------------------------------------
 
 
@@ -203,6 +155,10 @@ PUBLIC.DATABASE                              [procedure, returns result]
 
 
 PUBLIC.DATEDIFF                              [procedure, returns result]
+------------------------------------------------------------------------
+
+
+PUBLIC."DAY"                                 [procedure, returns result]
 ------------------------------------------------------------------------
 
 
@@ -239,6 +195,18 @@ PUBLIC.FLOOR                                 [procedure, returns result]
 
 
 PUBLIC.HEXTORAW                              [procedure, returns result]
+------------------------------------------------------------------------
+
+
+PUBLIC."HOUR"                                [procedure, returns result]
+------------------------------------------------------------------------
+
+
+PUBLIC."IDENTITY"                            [procedure, returns result]
+------------------------------------------------------------------------
+
+
+PUBLIC."INSERT"                              [procedure, returns result]
 ------------------------------------------------------------------------
 
 
@@ -394,6 +362,10 @@ PUBLIC.LCASE                                 [procedure, returns result]
 ------------------------------------------------------------------------
 
 
+PUBLIC."LEFT"                                [procedure, returns result]
+------------------------------------------------------------------------
+
+
 PUBLIC.LENGTH                                [procedure, returns result]
 ------------------------------------------------------------------------
 
@@ -418,7 +390,15 @@ PUBLIC.LTRIM                                 [procedure, returns result]
 ------------------------------------------------------------------------
 
 
+PUBLIC."MINUTE"                              [procedure, returns result]
+------------------------------------------------------------------------
+
+
 PUBLIC.MOD                                   [procedure, returns result]
+------------------------------------------------------------------------
+
+
+PUBLIC."MONTH"                               [procedure, returns result]
 ------------------------------------------------------------------------
 
 
@@ -722,7 +702,15 @@ PUBLIC.RAWTOHEX                              [procedure, returns result]
 ------------------------------------------------------------------------
 
 
+PUBLIC."REPEAT"                              [procedure, returns result]
+------------------------------------------------------------------------
+
+
 PUBLIC.REPLACE                               [procedure, returns result]
+------------------------------------------------------------------------
+
+
+PUBLIC."RIGHT"                               [procedure, returns result]
 ------------------------------------------------------------------------
 
 
@@ -735,6 +723,10 @@ PUBLIC.ROUNDMAGIC                            [procedure, returns result]
 
 
 PUBLIC.RTRIM                                 [procedure, returns result]
+------------------------------------------------------------------------
+
+
+PUBLIC."SECOND"                              [procedure, returns result]
 ------------------------------------------------------------------------
 
 
@@ -786,7 +778,15 @@ PUBLIC.UPPER                                 [procedure, returns result]
 ------------------------------------------------------------------------
 
 
+PUBLIC."USER"                                [procedure, returns result]
+------------------------------------------------------------------------
+
+
 PUBLIC.WEEK                                  [procedure, returns result]
+------------------------------------------------------------------------
+
+
+PUBLIC."YEAR"                                [procedure, returns result]
 ------------------------------------------------------------------------
 
 
