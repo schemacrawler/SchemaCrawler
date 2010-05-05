@@ -59,7 +59,7 @@ final class GraphGenerator
         diagramFile.getAbsolutePath(),
         dotFile.getAbsolutePath()
     };
-    LOGGER.log(Level.INFO, "Executing: " + Arrays.toString(command));
+    LOGGER.log(Level.CONFIG, "Executing: " + Arrays.toString(command));
 
     final ExecutorService threadPool = Executors.newFixedThreadPool(2);
     try
