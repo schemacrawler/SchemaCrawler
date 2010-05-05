@@ -1,0 +1,28 @@
+digraph "SchemaCrawler_Diagram" {
+
+  graph [
+    nodesep="0.18"
+    ranksep="0.46"
+    rankdir="RL"
+    fontname="Helvetica"
+    fontsize="10"
+    truecolor="true"
+    size="8.5,11"
+    dpi="300"
+    ratio="fill"
+    packmode="node"
+    overlap="false"
+  ];
+  
+  node [
+    fontname="Helvetica"
+    fontsize="10"
+    shape="plaintext"
+  ];
+  
+  edge [
+    fontname="Helvetica"
+    fontsize="8"  
+    arrowsize="0.6"
+  ];
+
