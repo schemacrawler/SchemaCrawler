@@ -43,6 +43,8 @@ abstract class AbstractRetriever
 
   static final String UNKNOWN = "<unknown>";
 
+  protected final DatabaseSystemParameters dbSystemParameters;
+
   /**
    * Checks whether the provided database object belongs to the
    * specified schema.
@@ -113,26 +115,26 @@ abstract class AbstractRetriever
   final MutableDatabase database;
 
   AbstractRetriever()
+    throws SQLException
   {
     this(null, null);
   }
 
   AbstractRetriever(final RetrieverConnection retrieverConnection,
                     final MutableDatabase database)
+    throws SQLException
   {
     this.retrieverConnection = retrieverConnection;
     this.database = database;
-  }
 
-  protected DatabaseSystemParameters getDatabaseSystemParameters()
-  {
     if (retrieverConnection != null)
     {
-      return retrieverConnection.getDatabaseSystemParameters();
+      dbSystemParameters = new DatabaseSystemParameters(retrieverConnection
+        .getConnection());
     }
     else
     {
-      return null;
+      dbSystemParameters = null;
     }
   }
 
@@ -238,17 +240,17 @@ abstract class AbstractRetriever
     return table;
   }
 
-  protected String getUnquotedName(final String name)
+  protected String unquotedName(final String name)
   {
     final String unquotedName;
-    if (!Utility.isBlank(name))
+    if (dbSystemParameters != null && !Utility.isBlank(name))
     {
-      final DatabaseSystemParameters dbSystemParameters = getDatabaseSystemParameters();
-      if (name.startsWith(dbSystemParameters.getIdentifierQuoteString())
-          && name.endsWith(dbSystemParameters.getIdentifierQuoteString()))
+      final String identifierQuoteString = dbSystemParameters
+        .getIdentifierQuoteString();
+      if (name.startsWith(identifierQuoteString)
+          && name.endsWith(identifierQuoteString))
       {
-        final int quoteLength = dbSystemParameters.getIdentifierQuoteString()
-          .length();
+        final int quoteLength = identifierQuoteString.length();
         unquotedName = name.substring(quoteLength, name.length() - quoteLength);
       }
       else
@@ -261,6 +263,29 @@ abstract class AbstractRetriever
       unquotedName = name;
     }
     return unquotedName;
+  }
+
+  protected String quotedName(final String name)
+  {
+    final String quotedName;
+    if (dbSystemParameters != null && !Utility.isBlank(name))
+    {
+      final String identifierQuoteString = dbSystemParameters
+        .getIdentifierQuoteString();
+      if (dbSystemParameters.needsToBeQuoted(name))
+      {
+        quotedName = identifierQuoteString + name + identifierQuoteString;
+      }
+      else
+      {
+        quotedName = name;
+      }
+    }
+    else
+    {
+      quotedName = name;
+    }
+    return quotedName;
   }
 
 }

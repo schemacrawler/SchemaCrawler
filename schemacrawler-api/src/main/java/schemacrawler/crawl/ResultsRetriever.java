@@ -42,7 +42,7 @@ final class ResultsRetriever
   private final ResultSetMetaData resultsMetaData;
 
   ResultsRetriever(final ResultSet resultSet)
-    throws SchemaCrawlerException
+    throws SchemaCrawlerException, SQLException
   {
     if (resultSet == null)
     {

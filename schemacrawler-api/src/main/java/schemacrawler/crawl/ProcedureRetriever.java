@@ -45,6 +45,7 @@ final class ProcedureRetriever
 
   ProcedureRetriever(final RetrieverConnection retrieverConnection,
                      final MutableDatabase database)
+    throws SQLException
   {
     super(retrieverConnection, database);
   }
@@ -60,15 +61,16 @@ final class ProcedureRetriever
       results = new MetadataResultSet(getMetaData()
         .getProcedureColumns(procedure.getSchema().getCatalogName(),
                              procedure.getSchema().getSchemaName(),
-                             getUnquotedName(procedure.getName()),
-                             null), getDatabaseSystemParameters());
+                             unquotedName(procedure.getName()),
+                             null));
 
       while (results.next())
       {
         final String columnCatalogName = results.getString("PROCEDURE_CAT");
         final String schemaName = results.getString("PROCEDURE_SCHEM");
-        final String procedureName = results.getQuotedName("PROCEDURE_NAME");
-        final String columnName = results.getQuotedName("COLUMN_NAME");
+        final String procedureName = quotedName(results
+          .getString("PROCEDURE_NAME"));
+        final String columnName = quotedName(results.getString("COLUMN_NAME"));
 
         final MutableProcedureColumn column = new MutableProcedureColumn(procedure,
                                                                          columnName);
@@ -132,8 +134,7 @@ final class ProcedureRetriever
     {
       results = new MetadataResultSet(getMetaData().getProcedures(catalogName,
                                                                   schemaName,
-                                                                  "%"),
-                                      getDatabaseSystemParameters());
+                                                                  "%"));
 
       while (results.next())
       {
@@ -141,7 +142,8 @@ final class ProcedureRetriever
         // results.getString("PROCEDURE_CAT");
         // final String schemaName =
         // results.getString("PROCEDURE_SCHEM");
-        final String procedureName = results.getQuotedName("PROCEDURE_NAME");
+        final String procedureName = quotedName(results
+          .getString("PROCEDURE_NAME"));
         LOGGER.log(Level.FINER, "Retrieving procedure: " + procedureName);
         final short procedureType = results
           .getShort("PROCEDURE_TYPE", (short) ProcedureType.unknown.getId());
