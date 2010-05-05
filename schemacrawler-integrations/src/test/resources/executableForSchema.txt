@@ -172,17 +172,17 @@ PUBLIC.ATAN2                                 [procedure, returns result]
 2   @p2                               DOUBLE(8, 17), in           
 
 
+PUBLIC.BIT_LENGTH                            [procedure, returns result]
+------------------------------------------------------------------------
+2   @p0                               INTEGER, result             
+1   @p1                               LONGVARCHAR, in             
+
+
 PUBLIC.BITAND                                [procedure, returns result]
 ------------------------------------------------------------------------
 3   @p0                               INTEGER, result             
 1   @p1                               INTEGER, in                 
 2   @p2                               INTEGER, in                 
-
-
-PUBLIC.BIT_LENGTH                            [procedure, returns result]
-------------------------------------------------------------------------
-2   @p0                               INTEGER, result             
-1   @p1                               LONGVARCHAR, in             
 
 
 PUBLIC.BITOR                                 [procedure, returns result]
@@ -211,13 +211,13 @@ PUBLIC."CHAR"                                [procedure, returns result]
 1   @p1                               INTEGER, in                 
 
 
-PUBLIC.CHARACTER_LENGTH                      [procedure, returns result]
+PUBLIC.CHAR_LENGTH                           [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               INTEGER, result             
 1   @p1                               LONGVARCHAR, in             
 
 
-PUBLIC.CHAR_LENGTH                           [procedure, returns result]
+PUBLIC.CHARACTER_LENGTH                      [procedure, returns result]
 ------------------------------------------------------------------------
 2   @p0                               INTEGER, result             
 1   @p1                               LONGVARCHAR, in             

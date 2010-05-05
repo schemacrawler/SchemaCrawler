@@ -98,11 +98,11 @@ PUBLIC.ATAN2                                 [procedure, returns result]
 ------------------------------------------------------------------------
 
 
-PUBLIC.BITAND                                [procedure, returns result]
+PUBLIC.BIT_LENGTH                            [procedure, returns result]
 ------------------------------------------------------------------------
 
 
-PUBLIC.BIT_LENGTH                            [procedure, returns result]
+PUBLIC.BITAND                                [procedure, returns result]
 ------------------------------------------------------------------------
 
 
@@ -122,11 +122,11 @@ PUBLIC."CHAR"                                [procedure, returns result]
 ------------------------------------------------------------------------
 
 
-PUBLIC.CHARACTER_LENGTH                      [procedure, returns result]
+PUBLIC.CHAR_LENGTH                           [procedure, returns result]
 ------------------------------------------------------------------------
 
 
-PUBLIC.CHAR_LENGTH                           [procedure, returns result]
+PUBLIC.CHARACTER_LENGTH                      [procedure, returns result]
 ------------------------------------------------------------------------
 
 
