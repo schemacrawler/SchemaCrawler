@@ -35,7 +35,8 @@ final class GraphGenerator
                  final File diagramOutputFile)
     throws IOException
   {
-    if (dotFile == null || !dotFile.exists() || !dotFile.canRead())
+    if (dotFile == null || dotFile.isDirectory() || !dotFile.exists()
+        || !dotFile.canRead())
     {
       throw new IOException("Cannot read the input DOT file, " + dotFile);
     }
@@ -60,6 +61,7 @@ final class GraphGenerator
     };
     LOGGER.log(Level.INFO, "Executing: " + Arrays.toString(command));
 
+    final ExecutorService threadPool = Executors.newFixedThreadPool(2);
     try
     {
       final class StreamReader
@@ -81,7 +83,6 @@ final class GraphGenerator
         }
       }
 
-      final ExecutorService threadPool = Executors.newFixedThreadPool(2);
       final Process process = new ProcessBuilder(command).start();
 
       final FutureTask<String> inReaderTask = new FutureTask<String>(new StreamReader(process
@@ -99,16 +100,14 @@ final class GraphGenerator
         LOGGER.log(Level.INFO, processOutput);
       }
       final String processError = errReaderTask.get();
+      if (exitCode != 0)
+      {
+        throw new IOException(String
+          .format("Process returned exit code %d\n%s", exitCode, processError));
+      }
       if (!Utility.isBlank(processError))
       {
         LOGGER.log(Level.WARNING, processError);
-      }
-
-      threadPool.shutdown();
-
-      if (exitCode != 0)
-      {
-        throw new IOException("Process returned exit code " + exitCode);
       }
     }
     catch (final SecurityException e)
@@ -122,6 +121,10 @@ final class GraphGenerator
     catch (final InterruptedException e)
     {
       throw new IOException(e.getMessage(), e);
+    }
+    finally
+    {
+      threadPool.shutdown();
     }
   }
 
