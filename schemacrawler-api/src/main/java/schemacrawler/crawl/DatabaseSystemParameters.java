@@ -36,7 +36,7 @@ import java.util.logging.Logger;
 import schemacrawler.schemacrawler.Options;
 import sf.util.Utility;
 
-public class DatabaseSystemParameters
+final class DatabaseSystemParameters
   implements Options
 {
 
@@ -51,7 +51,7 @@ public class DatabaseSystemParameters
   private final String identifierQuoteString;
   private final List<String> reservedWords;
 
-  public DatabaseSystemParameters(final Connection connection)
+  DatabaseSystemParameters(final Connection connection)
     throws SQLException
   {
     final DatabaseMetaData dbMetaData = connection.getMetaData();
@@ -83,12 +83,12 @@ public class DatabaseSystemParameters
     reservedWords = Collections.unmodifiableList(reservedWordsList);
   }
 
-  public String getCatalogSeparator()
+  String getCatalogSeparator()
   {
     return catalogSeparator;
   }
 
-  public String getIdentifierQuoteString()
+  String getIdentifierQuoteString()
   {
     return identifierQuoteString;
   }
