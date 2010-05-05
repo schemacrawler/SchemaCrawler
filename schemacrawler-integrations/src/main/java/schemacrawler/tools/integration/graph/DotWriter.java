@@ -161,7 +161,7 @@ final class DotWriter
     final PastelColor tableBgColor = bgcolor.shade();
     final StringBuilder buffer = new StringBuilder();
     final String tableName = table.getFullName();
-    buffer.append("  \"").append(escape(tableName)).append("\" [")
+    buffer.append("  \"").append(unescape(tableName)).append("\" [")
       .append(Utility.NEWLINE).append("    label=<").append(Utility.NEWLINE);
     buffer
       .append("      <table border=\"1\" cellborder=\"0\" cellspacing=\"0\">")
