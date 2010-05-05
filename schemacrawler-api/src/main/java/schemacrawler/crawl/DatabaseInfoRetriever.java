@@ -130,6 +130,7 @@ final class DatabaseInfoRetriever
 
   DatabaseInfoRetriever(final RetrieverConnection retrieverConnection,
                         final MutableDatabase database)
+    throws SQLException
   {
     super(retrieverConnection, database);
   }
@@ -327,7 +328,7 @@ final class DatabaseInfoRetriever
     final Schema systemSchema = new MutableSchema();
 
     final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getTypeInfo(), getDatabaseSystemParameters());
+      .getTypeInfo());
     try
     {
       while (results.next())
@@ -392,11 +393,7 @@ final class DatabaseInfoRetriever
     throws SQLException
   {
     final MetadataResultSet results = new MetadataResultSet(getMetaData()
-                                                              .getUDTs(catalogName,
-                                                                       schemaName,
-                                                                       "%",
-                                                                       null),
-                                                            getDatabaseSystemParameters());
+      .getUDTs(catalogName, schemaName, "%", null));
     try
     {
       while (results.next())

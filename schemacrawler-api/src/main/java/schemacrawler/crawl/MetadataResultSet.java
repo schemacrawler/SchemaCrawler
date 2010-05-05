@@ -51,12 +51,10 @@ final class MetadataResultSet
   private static final int FETCHSIZE = 20;
 
   private final ResultSet results;
-  private final DatabaseSystemParameters dbSystemParameters;
   private final Set<String> resultSetColumns;
   private Set<String> readColumns;
 
-  MetadataResultSet(final ResultSet resultSet,
-                    final DatabaseSystemParameters dbSystemParameters)
+  MetadataResultSet(final ResultSet resultSet)
   {
     if (resultSet == null)
     {
@@ -76,12 +74,6 @@ final class MetadataResultSet
     {
       LOGGER.log(Level.WARNING, "Could not set fetch size", e);
     }
-
-    if (dbSystemParameters == null)
-    {
-      throw new IllegalArgumentException("No database system parameters provided");
-    }
-    this.dbSystemParameters = dbSystemParameters;
 
     final Set<String> resultSetColumns = new HashSet<String>();
     try
@@ -339,27 +331,6 @@ final class MetadataResultSet
       {
         LOGGER.log(Level.WARNING, "Could not read string value for column "
                                   + columnName, e);
-      }
-    }
-    return value;
-  }
-
-  /**
-   * Reads the value of a column from the result set as a string.
-   * 
-   * @param columnName
-   *        Column name
-   * @return Short value of the column, or the default if not available
-   */
-  String getQuotedName(final String columnName)
-  {
-    String value = getString(columnName);
-    if (value != null)
-    {
-      if (dbSystemParameters.needsToBeQuoted(value))
-      {
-        value = dbSystemParameters.getIdentifierQuoteString() + value
-                + dbSystemParameters.getIdentifierQuoteString();
       }
     }
     return value;

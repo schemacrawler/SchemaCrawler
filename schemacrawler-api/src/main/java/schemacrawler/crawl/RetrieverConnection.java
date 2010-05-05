@@ -39,7 +39,6 @@ final class RetrieverConnection
   private final Connection connection;
   private final DatabaseMetaData metaData;
   private final InformationSchemaViews informationSchemaViews;
-  private final DatabaseSystemParameters dbParameters;
 
   RetrieverConnection(final Connection connection,
                       final SchemaCrawlerOptions options)
@@ -61,19 +60,12 @@ final class RetrieverConnection
     this.connection = connection;
     metaData = connection.getMetaData();
 
-    dbParameters = new DatabaseSystemParameters(connection);
-
     informationSchemaViews = schemaCrawlerOptions.getInformationSchemaViews();
   }
 
   Connection getConnection()
   {
     return connection;
-  }
-
-  DatabaseSystemParameters getDatabaseSystemParameters()
-  {
-    return dbParameters;
   }
 
   /**

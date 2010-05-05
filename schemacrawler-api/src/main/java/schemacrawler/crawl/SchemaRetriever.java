@@ -45,7 +45,6 @@ final class SchemaRetriever
     throws SQLException
   {
     super(retrieverConnection, database);
-    final DatabaseSystemParameters dbSystemParameters = getDatabaseSystemParameters();
     supportsCatalogs = dbSystemParameters.isSupportsCatalogs();
     supportsSchemas = dbSystemParameters.isSupportsSchemas();
   }
@@ -128,7 +127,7 @@ final class SchemaRetriever
     if (supportsSchemas)
     {
       final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getSchemas(), getDatabaseSystemParameters());
+        .getSchemas());
       try
       {
         while (results.next())

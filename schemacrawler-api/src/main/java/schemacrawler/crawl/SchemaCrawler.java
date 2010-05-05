@@ -70,6 +70,11 @@ public final class SchemaCrawler
       LOGGER.log(Level.WARNING, e.getMessage(), e);
       resultColumns = null;
     }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, e.getMessage(), e);
+      resultColumns = null;
+    }
     return resultColumns;
   }
 
