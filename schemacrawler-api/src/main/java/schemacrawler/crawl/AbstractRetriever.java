@@ -43,8 +43,6 @@ abstract class AbstractRetriever
 
   static final String UNKNOWN = "<unknown>";
 
-  protected final DatabaseSystemParameters dbSystemParameters;
-
   /**
    * Checks whether the provided database object belongs to the
    * specified schema.
@@ -110,6 +108,8 @@ abstract class AbstractRetriever
     }
     return values;
   }
+
+  protected final DatabaseSystemParameters dbSystemParameters;
 
   private final RetrieverConnection retrieverConnection;
   final MutableDatabase database;
@@ -240,7 +240,30 @@ abstract class AbstractRetriever
     return table;
   }
 
-  protected String unquotedName(final String name)
+  String quotedName(final String name)
+  {
+    final String quotedName;
+    if (dbSystemParameters != null && !Utility.isBlank(name))
+    {
+      final String identifierQuoteString = dbSystemParameters
+        .getIdentifierQuoteString();
+      if (dbSystemParameters.needsToBeQuoted(name))
+      {
+        quotedName = identifierQuoteString + name + identifierQuoteString;
+      }
+      else
+      {
+        quotedName = name;
+      }
+    }
+    else
+    {
+      quotedName = name;
+    }
+    return quotedName;
+  }
+
+  String unquotedName(final String name)
   {
     final String unquotedName;
     if (dbSystemParameters != null && !Utility.isBlank(name))
@@ -263,29 +286,6 @@ abstract class AbstractRetriever
       unquotedName = name;
     }
     return unquotedName;
-  }
-
-  protected String quotedName(final String name)
-  {
-    final String quotedName;
-    if (dbSystemParameters != null && !Utility.isBlank(name))
-    {
-      final String identifierQuoteString = dbSystemParameters
-        .getIdentifierQuoteString();
-      if (dbSystemParameters.needsToBeQuoted(name))
-      {
-        quotedName = identifierQuoteString + name + identifierQuoteString;
-      }
-      else
-      {
-        quotedName = name;
-      }
-    }
-    else
-    {
-      quotedName = name;
-    }
-    return quotedName;
   }
 
 }
