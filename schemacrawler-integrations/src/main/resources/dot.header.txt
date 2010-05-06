@@ -9,7 +9,6 @@ digraph "SchemaCrawler_Diagram" {
     truecolor="true"
     size="8.5,11"
     dpi="300"
-    ratio="fill"
     packmode="node"
     overlap="false"
   ];
