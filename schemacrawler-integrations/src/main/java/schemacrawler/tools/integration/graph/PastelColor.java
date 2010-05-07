@@ -29,24 +29,35 @@ public final class PastelColor
 
   private static final long serialVersionUID = 7256039994498918504L;
 
-  private static final double FACTOR = 0.87;
-
-  private static int colorValue()
+  public static String toHTMLColorValue(final Color color)
   {
-    final int colorBase = 180;
+    return "#" + Integer.toHexString(color.getRGB()).substring(2).toUpperCase();
+  }
+
+  private static int colorValue(final int colorBase)
+  {
     return (int) (Math.random() * (255 - colorBase) + colorBase);
   }
 
+  private final double factor;
   private final Color color;
 
   public PastelColor()
   {
-    color = new Color(colorValue(), colorValue(), colorValue());
+    this(180, 0.87);
   }
 
-  private PastelColor(final Color color)
+  public PastelColor(final Color color, final double factor)
   {
     this.color = color;
+    this.factor = factor;
+  }
+
+  public PastelColor(final int colorBase, final double factor)
+  {
+    this(new Color(colorValue(colorBase),
+                   colorValue(colorBase),
+                   colorValue(colorBase)), factor);
   }
 
   public Color getColor()
@@ -56,23 +67,25 @@ public final class PastelColor
 
   public PastelColor shade()
   {
-    return new PastelColor(new Color(Math.max((int) (color.getRed() * FACTOR),
+    return new PastelColor(new Color(Math.max((int) (color.getRed() * factor),
                                               0), Math.max((int) (color
-      .getGreen() * FACTOR), 0), Math.max((int) (color.getBlue() * FACTOR), 0)));
+                             .getGreen() * factor), 0), Math.max((int) (color
+                             .getBlue() * factor), 0)),
+                           factor);
   }
 
   public PastelColor tint()
   {
-    return new PastelColor(new Color(Math.min((int) (color.getRed() / FACTOR),
+    return new PastelColor(new Color(Math.min((int) (color.getRed() / factor),
                                               255), Math.min((int) (color
-      .getGreen() / FACTOR), 255), Math.min((int) (color.getBlue() / FACTOR),
-                                            255)));
+      .getGreen() / factor), 255), Math.min((int) (color.getBlue() / factor),
+                                            255)), factor);
   }
 
   @Override
   public String toString()
   {
-    return "#" + Integer.toHexString(color.getRGB()).substring(2).toUpperCase();
+    return toHTMLColorValue(color);
   }
 
 }
