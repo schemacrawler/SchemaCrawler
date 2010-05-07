@@ -162,7 +162,7 @@ final class DotWriter
     final PastelColor bgcolor = colorMap.get(schema);
     final PastelColor tableBgColor = bgcolor.shade();
     final StringBuilder buffer = new StringBuilder();
-    buffer.append("  \"").append(nodeName(table)).append("\" [")
+    buffer.append("  \"").append(nodeId(table)).append("\" [")
       .append(Utility.NEWLINE).append("    label=<").append(Utility.NEWLINE);
     buffer
       .append("      <table border=\"1\" cellborder=\"0\" cellspacing=\"0\">")
@@ -189,13 +189,13 @@ final class DotWriter
         columnBgcolor = bgcolor.tint();
       }
       buffer.append("        <tr>").append(Utility.NEWLINE);
-      buffer.append("          <td port=\"").append(nodeName(column))
+      buffer.append("          <td port=\"").append(nodeId(column))
         .append(".start\" bgcolor=\"").append(columnBgcolor)
         .append("\" align=\"left\">").append(column.getName()).append("</td>")
         .append(Utility.NEWLINE);
       buffer.append("          <td bgcolor=\"").append(columnBgcolor)
         .append("\"> </td>").append(Utility.NEWLINE);
-      buffer.append("          <td port=\"").append(nodeName(column))
+      buffer.append("          <td port=\"").append(nodeId(column))
         .append(".end\" align=\"right\" bgcolor=\"").append(columnBgcolor)
         .append("\">").append(column.getType().getDatabaseSpecificTypeName())
         .append(column.getWidth()).append("</td>").append(Utility.NEWLINE);
@@ -226,12 +226,7 @@ final class DotWriter
     out.write(buffer.toString());
   }
 
-  private String escape(final String text)
-  {
-    return text.replace("\"", "\"\"");
-  }
-
-  private String nodeName(final NamedObject namedOjbect)
+  private String nodeId(final NamedObject namedOjbect)
   {
     if (namedOjbect == null)
     {
@@ -282,12 +277,12 @@ final class DotWriter
     }
 
     return String
-      .format("  \"%s\":\"%s.start\":w -> \"%s\":\"%s.end\":e [label=\"%s\" style=\"%s\" arrowhead=\"%s\" arrowtail=\"%s\"];%n",
-              nodeName(primaryKeyColumn.getParent()),
-              nodeName(primaryKeyColumn),
-              nodeName(foreignKeyColumn.getParent()),
-              nodeName(foreignKeyColumn),
-              escape(associationName),
+      .format("  \"%s\":\"%s.start\":w -> \"%s\":\"%s.end\":e [label=<%s> style=\"%s\" arrowhead=\"%s\" arrowtail=\"%s\"];%n",
+              nodeId(primaryKeyColumn.getParent()),
+              nodeId(primaryKeyColumn),
+              nodeId(foreignKeyColumn.getParent()),
+              nodeId(foreignKeyColumn),
+              associationName,
               style,
               fkSymbol,
               pkSymbol);
