@@ -159,46 +159,54 @@ final class DotWriter
     {
       colorMap.put(schema, new PastelColor());
     }
-    final PastelColor bgcolor = colorMap.get(schema);
-    final PastelColor tableBgColor = bgcolor.shade();
+    final PastelColor bgcolor = colorMap.get(schema).tint();
+    final PastelColor tableNameBgColor = colorMap.get(schema);
     final StringBuilder buffer = new StringBuilder();
     buffer.append("  \"").append(nodeId(table)).append("\" [")
       .append(Utility.NEWLINE).append("    label=<").append(Utility.NEWLINE);
     buffer
-      .append("      <table border=\"1\" cellborder=\"0\" cellspacing=\"0\">")
-      .append(Utility.NEWLINE);
+      .append("      <table border=\"1\" cellborder=\"0\" cellspacing=\"0\" bgcolor=\"")
+      .append(bgcolor).append("\">").append(Utility.NEWLINE);
     buffer.append("        <tr>").append(Utility.NEWLINE);
 
     buffer.append("          <td colspan=\"2\" bgcolor=\"")
-      .append(tableBgColor).append("\" align=\"left\">").append(table
-        .getFullName()).append("</td>").append(Utility.NEWLINE);
-    buffer.append("          <td bgcolor=\"").append(tableBgColor)
+      .append(tableNameBgColor)
+      .append("\" align=\"left\"><font face=\"Sans - Bold\">").append(table
+        .getFullName()).append("</font></td>").append(Utility.NEWLINE);
+    buffer.append("          <td bgcolor=\"").append(tableNameBgColor)
       .append("\" align=\"right\">").append((table instanceof View? "[view]"
                                                                   : "[table]"))
       .append("</td>").append(Utility.NEWLINE);
     buffer.append("        </tr>").append(Utility.NEWLINE);
     for (final Column column: table.getColumns())
     {
-      final PastelColor columnBgcolor;
-      if (column.isPartOfPrimaryKey())
-      {
-        columnBgcolor = bgcolor;
-      }
-      else
-      {
-        columnBgcolor = bgcolor.tint();
-      }
       buffer.append("        <tr>").append(Utility.NEWLINE);
       buffer.append("          <td port=\"").append(nodeId(column))
-        .append(".start\" bgcolor=\"").append(columnBgcolor)
-        .append("\" align=\"left\">").append(column.getName()).append("</td>")
-        .append(Utility.NEWLINE);
-      buffer.append("          <td bgcolor=\"").append(columnBgcolor)
-        .append("\"> </td>").append(Utility.NEWLINE);
+        .append(".start\" align=\"left\">");
+      if (column.isPartOfPrimaryKey())
+      {
+        buffer.append("<font face=\"Sans - Bold - Italic\">");
+      }
+      buffer.append(column.getName());
+      if (column.isPartOfPrimaryKey())
+      {
+        buffer.append("</font>");
+      }
+      buffer.append("</td>").append(Utility.NEWLINE);
+      buffer.append("          <td> </td>").append(Utility.NEWLINE);
       buffer.append("          <td port=\"").append(nodeId(column))
-        .append(".end\" align=\"right\" bgcolor=\"").append(columnBgcolor)
-        .append("\">").append(column.getType().getDatabaseSpecificTypeName())
-        .append(column.getWidth()).append("</td>").append(Utility.NEWLINE);
+        .append(".end\" align=\"right\">");
+      if (column.isPartOfPrimaryKey())
+      {
+        buffer.append("<font face=\"Sans - Bold - Italic\">");
+      }
+      buffer.append(column.getType().getDatabaseSpecificTypeName())
+        .append(column.getWidth());
+      if (column.isPartOfPrimaryKey())
+      {
+        buffer.append("</font>");
+      }
+      buffer.append("</td>").append(Utility.NEWLINE);
       buffer.append("        </tr>").append(Utility.NEWLINE);
     }
     buffer.append("      </table>").append(Utility.NEWLINE);
