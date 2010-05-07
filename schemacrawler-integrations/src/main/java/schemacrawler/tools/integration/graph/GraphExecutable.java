@@ -30,6 +30,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.tools.analysis.AnalyzedDatabase;
 import schemacrawler.tools.commandline.InfoLevel;
 import schemacrawler.tools.executable.BaseExecutable;
+import sf.util.Utility;
 
 /**
  * Main executor for the graphing integration.
@@ -113,6 +114,14 @@ public final class GraphExecutable
     // Create graph image
     final GraphGenerator dot = new GraphGenerator(dotFile, outputOptions
       .getOutputFormatValue(), outputOptions.getOutputFile());
-    dot.generateDiagram();
+    try
+    {
+      dot.generateDiagram();
+    }
+    catch (final Exception e)
+    {
+      System.out.println(Utility.readResourceFully("/dot.error.txt"));
+      throw e;
+    }
   }
 }
