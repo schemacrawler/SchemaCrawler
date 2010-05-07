@@ -33,6 +33,7 @@ import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnMap;
 import schemacrawler.schema.JdbcDriverInfo;
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Table;
@@ -161,8 +162,7 @@ final class DotWriter
     final PastelColor bgcolor = colorMap.get(schema);
     final PastelColor tableBgColor = bgcolor.shade();
     final StringBuilder buffer = new StringBuilder();
-    final String tableName = table.getFullName();
-    buffer.append("  \"").append(unescape(tableName)).append("\" [")
+    buffer.append("  \"").append(nodeName(table)).append("\" [")
       .append(Utility.NEWLINE).append("    label=<").append(Utility.NEWLINE);
     buffer
       .append("      <table border=\"1\" cellborder=\"0\" cellspacing=\"0\">")
@@ -170,8 +170,8 @@ final class DotWriter
     buffer.append("        <tr>").append(Utility.NEWLINE);
 
     buffer.append("          <td colspan=\"2\" bgcolor=\"")
-      .append(tableBgColor).append("\" align=\"left\">").append(tableName)
-      .append("</td>").append(Utility.NEWLINE);
+      .append(tableBgColor).append("\" align=\"left\">").append(table
+        .getFullName()).append("</td>").append(Utility.NEWLINE);
     buffer.append("          <td bgcolor=\"").append(tableBgColor)
       .append("\" align=\"right\">").append((table instanceof View? "[view]"
                                                                   : "[table]"))
@@ -179,7 +179,6 @@ final class DotWriter
     buffer.append("        </tr>").append(Utility.NEWLINE);
     for (final Column column: table.getColumns())
     {
-      final String columnName = column.getName();
       final PastelColor columnBgcolor;
       if (column.isPartOfPrimaryKey())
       {
@@ -190,13 +189,13 @@ final class DotWriter
         columnBgcolor = bgcolor.tint();
       }
       buffer.append("        <tr>").append(Utility.NEWLINE);
-      buffer.append("          <td port=\"").append(unescape(columnName))
+      buffer.append("          <td port=\"").append(nodeName(column))
         .append(".start\" bgcolor=\"").append(columnBgcolor)
-        .append("\" align=\"left\">").append(columnName).append("</td>")
+        .append("\" align=\"left\">").append(column.getName()).append("</td>")
         .append(Utility.NEWLINE);
       buffer.append("          <td bgcolor=\"").append(columnBgcolor)
         .append("\"> </td>").append(Utility.NEWLINE);
-      buffer.append("          <td port=\"").append(unescape(columnName))
+      buffer.append("          <td port=\"").append(nodeName(column))
         .append(".end\" align=\"right\" bgcolor=\"").append(columnBgcolor)
         .append("\">").append(column.getType().getDatabaseSpecificTypeName())
         .append(column.getWidth()).append("</td>").append(Utility.NEWLINE);
@@ -230,6 +229,19 @@ final class DotWriter
   private String escape(final String text)
   {
     return text.replace("\"", "\"\"");
+  }
+
+  private String nodeName(final NamedObject namedOjbect)
+  {
+    if (namedOjbect == null)
+    {
+      return "";
+    }
+    else
+    {
+      return Utility.convertForComparison(namedOjbect.getName()) + "_"
+             + Integer.toHexString(namedOjbect.getFullName().hashCode());
+    }
   }
 
   private String printColumnAssociation(final String associationName,
@@ -271,19 +283,14 @@ final class DotWriter
 
     return String
       .format("  \"%s\":\"%s.start\":w -> \"%s\":\"%s.end\":e [label=\"%s\" style=\"%s\" arrowhead=\"%s\" arrowtail=\"%s\"];%n",
-              escape(primaryKeyColumn.getParent().getFullName()),
-              unescape(primaryKeyColumn.getName()),
-              escape(foreignKeyColumn.getParent().getFullName()),
-              unescape(foreignKeyColumn.getName()),
+              nodeName(primaryKeyColumn.getParent()),
+              nodeName(primaryKeyColumn),
+              nodeName(foreignKeyColumn.getParent()),
+              nodeName(foreignKeyColumn),
               escape(associationName),
               style,
               fkSymbol,
               pkSymbol);
-  }
-
-  private String unescape(final String text)
-  {
-    return text.replace("\"", "");
   }
 
 }
