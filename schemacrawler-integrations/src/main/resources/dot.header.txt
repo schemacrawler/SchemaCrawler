@@ -5,8 +5,7 @@ digraph "SchemaCrawler_Diagram" {
     ranksep="0.46"
     rankdir="RL"
     fontname="Helvetica"
-    fontsize="10"
-    truecolor="true"
+    fontsize="8"
     size="8.5,11"
     dpi="300"
     packmode="node"
@@ -15,12 +14,12 @@ digraph "SchemaCrawler_Diagram" {
   
   node [
     fontname="Helvetica"
-    fontsize="10"
+    fontsize="8"
     shape="plaintext"
   ];
   
   edge [
-    fontname="Helvetica-Bold"
+    fontname="Helvetica"
     fontsize="8"  
     arrowsize="0.6"
   ];

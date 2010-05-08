@@ -21,6 +21,7 @@
 package schemacrawler.tools.integration.graph;
 
 
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -47,7 +48,7 @@ final class DotWriter
 {
 
   private final PrintWriter out;
-  private final Map<Schema, PastelColor> colorMap;
+  private final Map<Schema, String> colorMap;
 
   DotWriter(final File dotFile)
     throws SchemaCrawlerException
@@ -65,7 +66,7 @@ final class DotWriter
       throw new SchemaCrawlerException("Cannot open dot file for output", e);
     }
 
-    colorMap = new HashMap<Schema, PastelColor>();
+    colorMap = new HashMap<Schema, String>();
   }
 
   public void close()
@@ -156,10 +157,10 @@ final class DotWriter
   {
     final Schema schema = table.getSchema();
 
-    final PastelColor tableNameBgColor;
+    final String tableNameBgColor;
     if (!colorMap.containsKey(schema))
     {
-      tableNameBgColor = new PastelColor(200, 0.8);
+      tableNameBgColor = newPastelHTMLColorValue();
       colorMap.put(schema, tableNameBgColor);
     }
     else
@@ -180,7 +181,7 @@ final class DotWriter
     buffer
       .append("          <td colspan=\"2\" bgcolor=\"")
       .append(tableNameBgColor)
-      .append("\" align=\"left\"><font face=\"Helvetica-Bold\" point-size=\"11\">")
+      .append("\" align=\"left\"><font face=\"Helvetica-Bold\" point-size=\"9\">")
       .append(table.getFullName()).append("</font></td>")
       .append(Utility.NEWLINE);
     buffer.append("          <td bgcolor=\"").append(tableNameBgColor)
@@ -296,6 +297,13 @@ final class DotWriter
               style,
               fkSymbol,
               pkSymbol);
+  }
+
+  public String newPastelHTMLColorValue()
+  {
+    final Color color = Color.getHSBColor((float) Math.random(), (float) Math
+      .max(Math.min(Math.random(), 0.1), 0.3), 0.9f);
+    return "#" + Integer.toHexString(color.getRGB()).substring(2).toUpperCase();
   }
 
 }
