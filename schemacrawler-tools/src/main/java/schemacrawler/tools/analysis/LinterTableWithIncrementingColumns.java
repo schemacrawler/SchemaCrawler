@@ -120,7 +120,7 @@ public class LinterTableWithIncrementingColumns
 
     for (final Column column: columns)
     {
-      final String columnName = column.getName();
+      final String columnName = Utility.convertForComparison(column.getName());
 
       if (incrementingColumnsMap.containsKey(columnName))
       {
