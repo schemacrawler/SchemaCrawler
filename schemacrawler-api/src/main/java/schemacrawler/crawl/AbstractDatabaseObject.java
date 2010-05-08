@@ -42,8 +42,7 @@ abstract class AbstractDatabaseObject
   private transient String fullName;
   private transient int hashCode;
 
-  AbstractDatabaseObject(final Schema schema,
-                         final String name)
+  AbstractDatabaseObject(final Schema schema, final String name)
   {
     super(name);
     this.schema = schema;
